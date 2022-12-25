@@ -1,0 +1,127 @@
+package model.states;
+
+import model.Model;
+import model.characters.GameCharacter;
+import model.quests.Quest;
+
+public class EveningState extends GameState {
+    private final boolean freeRations;
+    private boolean freeLodging;
+    private Quest goOnQuest;
+
+    public EveningState(Model model, boolean freeLodging, boolean freeRations) {
+        super(model);
+        this.freeLodging = freeLodging;
+        this.freeRations = freeRations;
+    }
+
+    public EveningState(Model model) {
+        this(model, false, false);
+    }
+
+    @Override
+    public GameState run(Model model) {
+        setCurrentTerrainSubview(model);
+        print("Evening has come. ");
+        if (model.getCurrentHex().givesQuests() &&
+                !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
+            Quest q = model.getQuestDeck().getRandomQuest();
+            println("The party is offered a quest by " + q.getProviderName() + ".");
+            println(q.getBeforehandInfo());
+            print(", will you go tomorrow (Y/N)? ");
+            if (yesNoInput()) {
+                this.goOnQuest = q;
+                println("You accepted the quest.");
+                model.getQuestDeck().accept(q, model.getCurrentHex().getLocation());
+                q.accept(model.getParty());
+            } else {
+                println("You declined the quest.");
+            }
+        }
+        if (freeLodging) {
+            println("The party receives food and lodging for free.");
+            model.getParty().lodging(0);
+        } else if (freeRations) {
+            println("The party has received rations for free.");
+            model.getParty().consumeRations(true);
+        } else if (model.getCurrentHex().hasLodging()) {
+            buyRations(model);
+            lodging(model);
+        } else {
+            notLodging(model);
+        }
+        model.incrementDay();
+        if (this.goOnQuest == null) {
+            return new DailyActionState(model);
+        } else {
+            return new QuestState(model, goOnQuest);
+        }
+    }
+
+    private void buyRations(Model model) {
+        println("You can buy rations here at a rate of 5 per gold.");
+        if (model.getParty().getGold() == 0) {
+            println("But you can't afford any.");
+            return;
+        }
+        while (model.getParty().getInventory().getFood() < model.getParty().rationsLimit()) {
+            int maxBuy = model.getParty().rationsLimit() - model.getParty().getInventory().getFood();
+            String sitch = "Your party can carry an additional ";
+            int cost = (int)Math.ceil(maxBuy / 5.0);
+            if (cost > model.getParty().getGold()) {
+                sitch = "You can afford to buy ";
+                maxBuy = model.getParty().getGold() * 5;
+                cost = model.getParty().getGold();
+            }
+            print(sitch + maxBuy + " rations.");
+            print(" Do you want to Buy Max (M), Buy 5 (B) or are you done (Q)? ");
+            char choice = lineInput().toUpperCase().charAt(0);
+            if (choice == 'M') {
+                model.getParty().addToGold(-cost);
+                model.getParty().addToFood(cost*5);
+                break;
+            } else if (choice == 'Q') {
+                break;
+            } else if (choice == 'B') {
+                model.getParty().addToGold(-1);
+                model.getParty().addToFood(5);
+            }
+        }
+    }
+
+    private void lodging(Model model) {
+        // TODO: Different ration cost in different locations (Village/Inn = 2, Castle = 3, Temple = 0)
+        int cost = 2 * model.getParty().size();
+        if (cost > model.getParty().getGold()) {
+            print("You cannot afford to pay for food and lodging here. ");
+            notLodging(model);
+        } else {
+            print("Do you want to pay " + cost + " gold for food and lodging (y/n)? ");
+            if (yesNoInput()) {
+                model.getParty().lodging(cost);
+            } else {
+                notLodging(model);
+            }
+        }
+    }
+
+    private void notLodging(Model model) {
+        if (hasEnoughFood(model)) {
+            println("The party makes camp and consumes rations.");
+            model.getParty().consumeRations();
+        } else {
+            println("There are not enough rations for everybody. Everybody starves and sleeps outside.");
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (gc.getSP() > 0) {
+                    gc.addToSP(-1);
+                } else if (gc.getHP() > 2) {
+                    gc.addToHP(-1);
+                }
+            }
+        }
+    }
+
+    private boolean hasEnoughFood(Model model) {
+        return model.getParty().getFood() >= model.getParty().size();
+    }
+}

@@ -1,0 +1,75 @@
+package sound;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ClientSoundManager extends SoundManager {
+
+    private static Map<String, ClientSound> loadedSounds = new HashMap<>();
+    private static SoundJLayer effectsSoundQueue;
+    private static String backgroundSound = "nothing";
+    private static SoundJLayer bgSoundLayer;
+
+    public static void playSound(String key) {
+        SoundJLayer sjl = new SoundJLayer(getSoundResource(key));
+        sjl.play();
+    }
+
+    private static ClientSound getSoundResource(String key) {
+        if (!loadedSounds.keySet().contains(key)) {
+            loadSoundResource(key);
+        }
+        return loadedSounds.get(key);
+    }
+
+    public static void loadSoundResource(String key) {
+        System.out.println("Resources " + key + " isn't loaded, loading it");
+        byte[] bytes = SoundManager.decodeAsBase64(SoundManager.getSoundAsBase64(key));
+        loadedSounds.put(key, new ClientSound(bytes, 1.0f));
+    }
+
+
+    public static void playSoundsInSuccession(String[] split) {
+        List<ClientSound> byteList = new ArrayList<>();
+        for (String s : split) {
+            System.out.println("Sound to play: " + s);
+            byteList.add(getSoundResource(s));
+        }
+        if (effectsSoundQueue == null || !effectsSoundQueue.isPlaying()) {
+            System.out.println("No sound effect going on, making new one");
+            effectsSoundQueue = new SoundJLayer(byteList);
+            effectsSoundQueue.play();
+        } else {
+            System.out.println("Already playing something, adding to queue");
+            effectsSoundQueue.addToQueue(byteList);
+        }
+
+    }
+
+    private static synchronized void playBackgroundSound(String ambientSound) {
+        if (!backgroundSound.equals(ambientSound)) {
+            if (bgSoundLayer != null) {
+                bgSoundLayer.stop();
+            }
+            if (!ambientSound.equals("nothing")) {
+                bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound), true);
+                bgSoundLayer.play();
+            }
+            backgroundSound = ambientSound;
+        }
+    }
+
+    public static void stopPlayingBackgroundSound() {
+        if (bgSoundLayer != null) {
+            bgSoundLayer.stop();
+            System.out.println("STOPPING AMBIENT SOUND");
+        }
+    }
+
+    public static void playBackgroundMusic(BackgroundMusic song) {
+        stopPlayingBackgroundSound();
+        playBackgroundSound(song.getFileName());
+    }
+}

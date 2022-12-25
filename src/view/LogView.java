@@ -1,0 +1,68 @@
+package view;
+
+import model.Model;
+import view.widget.TopText;
+
+import java.awt.event.KeyEvent;
+
+public class LogView extends GameView {
+    private TopText topText = new TopText();
+    private GameView nextView;
+    private GameView previousView;
+
+    public LogView(GameView previous) {
+        super(false);
+        previousView = previous;
+        nextView = previous;
+    }
+
+    @Override
+    public void transitionedTo(Model model) {
+        update(model);
+        model.getScreenHandler().setForegroundEnabled(false);
+        setTimeToTransition(false);
+    }
+
+    @Override
+    public void transitionedFrom(Model model) {
+        model.getScreenHandler().setForegroundEnabled(true);
+    }
+
+    @Override
+    protected void internalUpdate(Model model) {
+        model.getScreenHandler().clearAll();
+        BorderFrame.drawFrameTop(model.getScreenHandler());
+        topText.drawYourself(model);
+        drawLog(model, DrawingArea.WINDOW_ROWS-2, 2);
+    }
+
+    public static void drawLog(Model model, int totalRows, int rowOffset) {
+        int row = Math.min(totalRows, model.getLog().size()) - 1 + rowOffset;
+        int count = 0;
+        for (String s : model.getLog().getContents()) {
+            BorderFrame.drawString(model.getScreenHandler(), s, 0, row--, MyColors.LIGHT_GREEN);
+            count++;
+            if (count == totalRows) {
+                break;
+            }
+        }
+    }
+
+    @Override
+    public GameView getNextView(Model model) {
+        return nextView;
+    }
+
+    @Override
+    public void handleKeyEvent(KeyEvent keyEvent, Model model) {
+         if (keyEvent.getKeyChar() == '§') {
+             nextView = previousView;
+            setTimeToTransition(true);
+         }  if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setTimeToTransition(true);
+            nextView = new MenuView(this);
+        }  if (model.getLog().isAcceptingInput()) {
+            model.getLog().keyTyped(keyEvent, model);
+        }
+    }
+}
