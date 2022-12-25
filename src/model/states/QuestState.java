@@ -43,7 +43,7 @@ public class QuestState extends GameState {
             currentPosition = currentPosition.run(model, this);
         }
         currentPosition.run(model, this); // Success or fail node run.
-        print(" Press enter to continue.");
+        print("Press enter to continue.");
         waitForReturn();
         setCurrentTerrainSubview(model);
         return new EveningState(model);

@@ -1,10 +1,6 @@
 package model.quests;
 
-import model.Model;
-import model.states.GameState;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public abstract class QuestJunction extends QuestNode {

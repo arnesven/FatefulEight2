@@ -4,7 +4,9 @@ import model.Model;
 import model.SteppingMatrix;
 import model.quests.Quest;
 import model.quests.QuestNode;
+import model.quests.QuestScene;
 import model.states.QuestState;
+import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
 import view.sprites.LoopingSprite;
@@ -17,7 +19,8 @@ import java.awt.event.KeyEvent;
 public class QuestSubView extends SubView {
     private final QuestState state;
     private final Quest quest;
-    private static final Sprite bgSprite = new FilledBlockSprite(MyColors.GRAY);
+    private static final MyColors BACKGROUND_COLOR = MyColors.GRAY;
+    private static final Sprite bgSprite = new FilledBlockSprite(BACKGROUND_COLOR);
     private final SteppingMatrix<QuestNode> matrix;
     private static final LoopingSprite questCursor = new QuestCursorSprite();
 
