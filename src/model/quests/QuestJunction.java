@@ -25,19 +25,18 @@ public abstract class QuestJunction extends QuestNode {
         return row;
     }
 
-    public QuestNode getConnection(int index) {
-        return connections.get(index).getNode();
+    public QuestEdge getConnection(int index) {
+        return connections.get(index);
     }
-
 
     public void connectTo(QuestEdge edge) {
         this.connections.add(edge);
     }
 
-    protected List<QuestEdge> getConnections() {
+    public List<QuestEdge> getConnections() {
         return connections;
     }
-    
+
     protected List<QuestNode> getConnectedNodes() {
         List<QuestNode> nodes = new ArrayList<>();
         for (QuestEdge e : connections) {

@@ -3,14 +3,13 @@ package model.quests.scenes;
 import model.Model;
 import model.classes.Skill;
 import model.quests.QuestNode;
-import model.quests.QuestSubScene;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
 
-public class CollaborativeSkillCheckSubScene extends QuestSubScene {
+public class CollaborativeSkillCheckSubScene extends SkillQuestSubScene {
     private final Skill skill;
     private final int difficulty;
     private static final Sprite32x32 SPRITE = new Sprite32x32("colabskillscene", "quest.png", 0x11,

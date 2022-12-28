@@ -48,4 +48,9 @@ public abstract class CombatSubScene extends QuestSubScene {
         state.transitionToQuestView(model);
         return getSuccessConnection();
     }
+
+    @Override
+    protected MyColors getSuccessEdgeColor() {
+        return MyColors.WHITE;
+    }
 }

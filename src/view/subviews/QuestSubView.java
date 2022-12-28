@@ -2,9 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.quests.Quest;
-import model.quests.QuestNode;
-import model.quests.QuestScene;
+import model.quests.*;
 import model.states.QuestState;
 import view.BorderFrame;
 import view.MyColors;
@@ -34,7 +32,26 @@ public class QuestSubView extends SubView {
     protected void drawArea(Model model) {
         model.getScreenHandler().clearSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
         drawBackground(model);
+        drawEdges(model);
         drawSubScenes(model, matrix);
+    }
+
+    private void drawEdges(Model model) {
+        for (QuestJunction j : quest.getJunctions()) {
+            for (QuestEdge edge : j.getConnections()) {
+                edge.drawYourself(model.getScreenHandler(), j, X_OFFSET, Y_OFFSET);
+            }
+        }
+        for (QuestScene qs : quest.getScenes()) {
+            for (QuestSubScene qss : qs) {
+                if (qss.getSuccessEdge() != null) {
+                    qss.getSuccessEdge().drawYourself(model.getScreenHandler(), qss, X_OFFSET, Y_OFFSET);
+                }
+                if (qss.getFailEdge() != null) {
+                    qss.getFailEdge().drawYourself(model.getScreenHandler(), qss, X_OFFSET, Y_OFFSET);
+                }
+            }
+        }
     }
 
     private void drawBackground(Model model) {

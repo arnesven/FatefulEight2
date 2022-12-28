@@ -1,5 +1,7 @@
 package model.quests;
 
+import view.MyColors;
+
 import java.io.Serializable;
 
 public abstract class QuestSubScene extends QuestNode implements Serializable {
@@ -25,19 +27,33 @@ public abstract class QuestSubScene extends QuestNode implements Serializable {
         return row;
     }
 
-    public void connectFail(QuestEdge questNode) {
-        this.failConnection = questNode;
+    public void connectFail(QuestNode questNode) {
+        this.failConnection = new QuestEdge(questNode, QuestEdge.HORIZONTAL, MyColors.LIGHT_RED);
     }
 
-    public void connectSuccess(QuestEdge questNode) {
-        this.successConnection = questNode;
+    public void connectSuccess(QuestNode questNode, boolean align) {
+        this.successConnection = new QuestEdge(questNode, align, getSuccessEdgeColor());
+    }
+
+    protected abstract MyColors getSuccessEdgeColor();
+
+    public void connectSuccess(QuestNode questNode) {
+        connectSuccess(questNode, QuestEdge.HORIZONTAL);
     }
 
     public QuestNode getSuccessConnection() {
         return successConnection.getNode();
     }
 
+    public QuestEdge getSuccessEdge() {
+        return successConnection;
+    }
+
     public QuestNode getFailConnection() {
         return failConnection.getNode();
+    }
+
+    public QuestEdge getFailEdge() {
+        return failConnection;
     }
 }

@@ -13,7 +13,7 @@ import view.sprites.Sprite32x32;
 
 import java.awt.*;
 
-public class CollectiveSkillCheckSubScene extends QuestSubScene {
+public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
     private final Skill skill;
     private final int difficulty;
 

@@ -22,6 +22,11 @@ public class TrapSubScene extends QuestSubScene {
     }
 
     @Override
+    protected MyColors getSuccessEdgeColor() {
+        return MyColors.WHITE;
+    }
+
+    @Override
     public void drawYourself(Model model, int xPos, int yPos) {
         model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
     }

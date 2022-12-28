@@ -49,7 +49,7 @@ public class QuestDecisionPoint extends QuestJunction {
         SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
         state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
         if (!result.isSuccessful()) {
-            return getConnection(0);
+            return getConnection(0).getNode();
         }
         return questNodeInput(state);
     }
