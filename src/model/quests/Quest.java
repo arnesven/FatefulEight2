@@ -1,7 +1,11 @@
 package model.quests;
 
 import model.Party;
+import util.MyPair;
+import view.sprites.Sprite;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,4 +94,5 @@ public abstract class Quest implements Serializable {
         this.successEnding.setNumberOfStartingPartyMembers(party.size());
     }
 
+    public List<QuestBackground> getBackgroundSprites() { return new ArrayList<>(); }
 }

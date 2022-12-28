@@ -23,7 +23,7 @@ public class SimpleJunction extends QuestJunction {
 
     @Override
     public String getDescription() {
-        return "Simple Junction";
+        return "";
     }
 
     @Override

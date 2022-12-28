@@ -2,8 +2,15 @@ package model.quests;
 
 import model.classes.Skill;
 import model.quests.scenes.*;
+import util.MyPair;
+import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.subviews.QuestSubView;
+import view.widget.QuestBackground;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeepDungeonQuest extends Quest {
@@ -13,6 +20,7 @@ public class DeepDungeonQuest extends Quest {
             "Recently, an antiques dealer has been " +
             "looking for a crew to clear it and bring " +
             "back an ancient magical artifact.";
+    private static List<QuestBackground> bgSprites = makeBackground();
 
     public DeepDungeonQuest() {
         super("Deep Dungeon", "an antiques dealer", QuestDifficulty.HARD, 1, 50, text);
@@ -28,10 +36,10 @@ public class DeepDungeonQuest extends Quest {
                                 new SoloSkillCheckSubScene(3, 3, Skill.Security, 9),
                                 new CollectiveSkillCheckSubScene(5, 3, Skill.Acrobatics, 4))),
                 new QuestScene("Puzzle",
-                        List.of(new CollaborativeSkillCheckSubScene(2, 4, Skill.Logic, 11))),
+                        List.of(new CollaborativeSkillCheckSubScene(1, 6, Skill.Logic, 11))),
                 new QuestScene("Vampire Guardian",
                         List.of(new VampireCombatSubScene(4, 7),
-                        new SoloSkillCheckSubScene(6, 7, Skill.Persuade, 10))));
+                        new SoloSkillCheckSubScene(5, 7, Skill.Persuade, 10))));
     }
 
     @Override
@@ -71,4 +79,62 @@ public class DeepDungeonQuest extends Quest {
         scenes.get(3).get(1).connectSuccess(getSuccessEndingNode());
     }
 
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> result = new ArrayList<>();
+        result.add(new QuestBackground(new Point(0, 0), new WallSprite(0x31)));
+        for (int col = 1; col < 8; ++col) {
+            if (col < 5) {
+                result.add(new QuestBackground(new Point(col, 0), new WallSprite(0x30)));
+            } else {
+                result.add(new QuestBackground(new Point(col, 0), new WallSprite(0x32)));
+            }
+        }
+
+        for (int row = 1; row < 3; ++row) {
+            for (int col = 5; col < 8; ++col) {
+                result.add(new QuestBackground(new Point(col, row), new WallSprite(0x32)));
+            }
+        }
+
+        result.add(new QuestBackground(new Point(1, 2), new WallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(2, 3), new WallSprite(0x34), false));
+        result.add(new QuestBackground(new Point(2, 4), new WallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(3, 5), new WallSprite(0x30), false));
+        for (int row = 2; row < 9; ++row) {
+            result.add(new QuestBackground(new Point(0, row), new WallSprite(0x32), false));
+            result.add(new QuestBackground(new Point(7, row), new WallSprite(0x32), false));
+            if (row < 6) {
+                result.add(new QuestBackground(new Point(6, row), new WallSprite(0x32), false));
+            }
+        }
+
+        result.add(new QuestBackground(new Point(2, 2), new WallSprite(0x33), false));
+        result.add(new QuestBackground(new Point(3, 2), new WallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(5, 2), new WallSprite(0x30), false));
+
+        result.add(new QuestBackground(new Point(2, 5), new WallSprite(0x33), false));
+        result.add(new QuestBackground(new Point(4, 5), new WallSprite(0x31), false));
+        result.add(new QuestBackground(new Point(5, 5), new WallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(6, 6), new WallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(2, 6), new WallSprite(0x34), false));
+
+        result.add(new QuestBackground(new Point(2, 7), new WallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(3, 7), new WallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(2, 8), new WallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(3, 8), new WallSprite(0x32), false));
+        return result;
+    }
+
+
+    private static class WallSprite extends Sprite32x32 {
+        public WallSprite(int num) {
+            super("wall", "quest.png", num, MyColors.DARK_GRAY, MyColors.DARK_RED, MyColors.TAN, MyColors.YELLOW);
+        }
+    }
 }

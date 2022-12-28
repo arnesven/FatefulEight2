@@ -4,12 +4,14 @@ import model.Model;
 import model.SteppingMatrix;
 import model.quests.*;
 import model.states.QuestState;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.QuestCursorSprite;
 import view.sprites.Sprite;
+import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,7 +19,7 @@ import java.awt.event.KeyEvent;
 public class QuestSubView extends AvatarSubView {
     private final QuestState state;
     private final Quest quest;
-    private static final MyColors BACKGROUND_COLOR = MyColors.GRAY;
+    private static final MyColors BACKGROUND_COLOR = MyColors.DARK_GRAY;
     private static final Sprite bgSprite = new FilledBlockSprite(BACKGROUND_COLOR);
     private final SteppingMatrix<QuestNode> matrix;
     private static final LoopingSprite questCursor = new QuestCursorSprite();
@@ -61,6 +63,15 @@ public class QuestSubView extends AvatarSubView {
             for (int x = X_OFFSET; x < X_MAX; ++x) {
                 model.getScreenHandler().put(x, y, bgSprite);
             }
+        }
+        for (QuestBackground pair : quest.getBackgroundSprites()) {
+            Point converted = convertToScreen(pair.position);
+            if (pair.shifted) {
+                converted.y -= 2;
+            }
+            model.getScreenHandler().clearSpace(converted.x, converted.x+4,
+                    converted.y, converted.y+4);
+            model.getScreenHandler().put(converted.x, converted.y, pair.sprite);
         }
     }
 
