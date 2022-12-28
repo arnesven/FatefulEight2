@@ -54,6 +54,7 @@ public abstract class CombatSubScene extends QuestSubScene {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
         CombatEvent combat = new CombatEvent(model, enemies);
+        combat.setFleeingEnabled(false);
         combat.run(model);
         state.transitionToQuestView(model);
         defeated = true;

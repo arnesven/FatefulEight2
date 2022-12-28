@@ -135,7 +135,7 @@ public class GameCharacter extends Combatant {
         char selectedAction;
         while (true) {
             String options = "Attack (A), Item (I), Magic (M), Pass (P)";
-            if (isLeader()) {
+            if (isLeader() && combatEvent.fleeingEnabled()) {
                 options += ", Flee (F)";
             }
             combatEvent.print("Select combat action; " + options + ": ");
@@ -160,7 +160,7 @@ public class GameCharacter extends Combatant {
                     }
                     break;
                 }
-            } else if (isLeader() && selectedAction == 'F') {
+            } else if (isLeader() && selectedAction == 'F' && combatEvent.fleeingEnabled()) {
                 if (model.getParty().size() > 1) {
                     SkillCheckResult result = testSkill(Skill.Leadership, 5);
                     combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
@@ -168,7 +168,11 @@ public class GameCharacter extends Combatant {
                         combatEvent.setPartyFled(true);
                     }
                     break;
+                } else {
+                    combatEvent.setPartyFled(true);
                 }
+            } else if (selectedAction == 'P') {
+                break;
             }
         }
 
@@ -459,7 +463,7 @@ public class GameCharacter extends Combatant {
         }
         damage = damage - reduction;
         addToHP(-1 * damage);
-        combatEvent.println(enemy.getName() + " deals " + damage + " to " + getName() + reductionString + ".");
+        combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getName() + reductionString + ".");
         combatEvent.addStrikeEffect(this, model, damage, false);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }

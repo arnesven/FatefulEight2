@@ -61,7 +61,7 @@ public class Model {
         //gameView = new MainGameView();
 
         gameView.transitionedTo(this);
-        //state = new WaitForStartOfGameState(this);
+    //    state = new WaitForStartOfGameState(this);
 
         GameCharacter gc = getAllCharacters().get(0);
         gc.setLevel(5);

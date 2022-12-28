@@ -29,6 +29,7 @@ public class CombatEvent extends DailyEventState {
     private boolean selectingFormation;
     private List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
+    private boolean fleeingEnabled = true;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {
         super(model);
@@ -294,4 +295,11 @@ public class CombatEvent extends DailyEventState {
         }
     }
 
+    public boolean fleeingEnabled() {
+        return fleeingEnabled;
+    }
+
+    public void setFleeingEnabled(boolean fleeingEnabled) {
+        this.fleeingEnabled = fleeingEnabled;
+    }
 }
