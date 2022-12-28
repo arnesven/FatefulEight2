@@ -5,6 +5,8 @@ import model.SteppingMatrix;
 import model.quests.Quest;
 import model.quests.QuestEdge;
 import model.quests.QuestNode;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.subviews.CollapsingTransition;
 import view.subviews.QuestSubView;
 
@@ -36,9 +38,11 @@ public class QuestState extends GameState {
         currentPosition = quest.getStartNode();
         transitionToQuestView(model);
         println("The party sets out on a quest.");
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         println(quest.getText());
         print("Press enter to start quest.");
         waitForReturn();
+
 
         while (currentPosition != quest.getSuccessEndingNode() && currentPosition != quest.getFailEndingNode()) {
             QuestEdge edgeToFollow = currentPosition.run(model, this);

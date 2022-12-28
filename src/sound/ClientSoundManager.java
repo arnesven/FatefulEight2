@@ -61,14 +61,14 @@ public class ClientSoundManager extends SoundManager {
         }
     }
 
-    public static void stopPlayingBackgroundSound() {
+    public synchronized static void stopPlayingBackgroundSound() {
         if (bgSoundLayer != null) {
             bgSoundLayer.stop();
             System.out.println("STOPPING AMBIENT SOUND");
         }
     }
 
-    public static void playBackgroundMusic(BackgroundMusic song) {
+    public synchronized static void playBackgroundMusic(BackgroundMusic song) {
         stopPlayingBackgroundSound();
         playBackgroundSound(song.getFileName());
     }

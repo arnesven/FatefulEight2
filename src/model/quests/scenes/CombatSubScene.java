@@ -8,6 +8,8 @@ import model.quests.QuestNode;
 import model.quests.QuestSubScene;
 import model.states.CombatEvent;
 import model.states.QuestState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -55,6 +57,7 @@ public abstract class CombatSubScene extends QuestSubScene {
         combat.run(model);
         state.transitionToQuestView(model);
         defeated = true;
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         return getSuccessEdge();
     }
 
