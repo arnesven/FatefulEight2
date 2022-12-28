@@ -53,4 +53,12 @@ public class StandardCombatLoot extends CombatLoot {
     public int getGold() {
         return gold;
     }
+
+    protected List<Item> getItems() {
+        return items;
+    }
+
+    protected void setGold(int g) {
+        gold = g;
+    }
 }
