@@ -68,8 +68,9 @@ public class QuestSubView extends AvatarSubView {
         for (int row = 0; row < matrix.getRows(); ++row) {
             for (int col = 0; col < matrix.getColumns(); ++col) {
                 if (matrix.getElementAt(col, row) != null) {
-                    int xPos = X_OFFSET + col*4;
-                    int yPos = Y_OFFSET + row*4;
+                    Point conv = convertToScreen(new Point(col, row));
+                    int xPos = conv.x;
+                    int yPos = conv.y;
                     matrix.getElementAt(col, row).drawYourself(model, xPos, yPos);
 
                     if (state.getCurrentPosition() == matrix.getElementAt(col, row) && avatarEnabled) {
@@ -145,7 +146,7 @@ public class QuestSubView extends AvatarSubView {
         }
     }
 
-    private Point convertToScreen(Point p) {
-        return new Point(X_OFFSET + p.x*4, Y_OFFSET + p.y*4);
+    public static Point convertToScreen(Point p) {
+        return new Point(X_OFFSET + p.x*4, Y_OFFSET + p.y*4 + 2);
     }
 }

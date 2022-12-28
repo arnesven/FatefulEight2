@@ -4,6 +4,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
+import view.subviews.QuestSubView;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -71,8 +72,8 @@ public class QuestEdge implements Serializable {
                 goRightWithArrow(screenHandler, mid, to, xOffset, yOffset, dx);
                 cornerNum = (dx<0?1:0) + (dy<0?0:2);
             }
-
-            screenHandler.register("corner", new Point(xOffset + 4*mid.x + 1, yOffset +4*mid.y + 1), specialSprites[cornerNum]);
+            Point conv = QuestSubView.convertToScreen(mid);
+            screenHandler.register("corner", new Point(conv.x + 1, conv.y + 1), specialSprites[cornerNum]);
         }
     }
 
@@ -85,16 +86,17 @@ public class QuestEdge implements Serializable {
     }
 
     private void goRightWithArrow(ScreenHandler screenHandler, Point from, Point to, int xOffset, int yOffset, int dx) {
+        Point conv = QuestSubView.convertToScreen(to);
         if (dx < 0) {
             goStraight(screenHandler, to, from, xOffset, yOffset, true);
-            screenHandler.clearForeground(xOffset + 4*to.x + 2, xOffset + 4*to.x + 3,
-                    yOffset +4*to.y+1, yOffset +4*to.y+1);
-            screenHandler.register("arrow", new Point(xOffset + 4*to.x + 3, yOffset +4*to.y+1), specialSprites[6]);
+            screenHandler.clearForeground(conv.x + 2, conv.x + 3,
+                    conv.y+1, conv.y+1);
+            screenHandler.register("arrow", new Point(conv.x + 3, conv.y+1), specialSprites[6]);
         } else {
             goStraight(screenHandler, from, to, xOffset, yOffset, true);
-            screenHandler.clearForeground(xOffset + 4*to.x - 1, xOffset + 4*to.x,
-                    yOffset +4*to.y+1, yOffset +4*to.y+1);
-            screenHandler.register("arrow", new Point(xOffset + 4*to.x - 1, yOffset +4*to.y+1), specialSprites[5]);
+            screenHandler.clearForeground(conv.x - 1, conv.x,
+                    conv.y+1, conv.y+1);
+            screenHandler.register("arrow", new Point(conv.x - 1, conv.y+1), specialSprites[5]);
         }
     }
 
@@ -108,16 +110,17 @@ public class QuestEdge implements Serializable {
     }
 
     private void goDownWithArrow(ScreenHandler screenHandler, Point from, Point to, int xOffset, int yOffset, int dy) {
+        Point conv = QuestSubView.convertToScreen(to);
         if (dy < 0) {
             goStraight(screenHandler, to, from, xOffset, yOffset, false);
-            screenHandler.clearForeground(xOffset + 4*to.x + 1,xOffset + 4*to.x + 1,
-                    yOffset +4*to.y+2, yOffset +4*to.y+3);
-            screenHandler.register("arrow", new Point(xOffset + 4*to.x + 1, yOffset +4*to.y+3), specialSprites[4]);
+            screenHandler.clearForeground(conv.x + 1,conv.x + 1,
+                    conv.y+2, conv.y+3);
+            screenHandler.register("arrow", new Point(conv.x + 1, conv.y+3), specialSprites[4]);
         } else {
             goStraight(screenHandler, from, to, xOffset, yOffset, false);
-            screenHandler.clearForeground(xOffset + 4*to.x + 1,xOffset + 4*to.x + 1,
-                    yOffset +4*to.y-1, yOffset +4*to.y);
-            screenHandler.register("arrow", new Point(xOffset + 4*to.x + 1, yOffset +4*to.y-1), specialSprites[7]);
+            screenHandler.clearForeground(conv.x + 1,conv.x + 1,
+                    conv.y-1, conv.y);
+            screenHandler.register("arrow", new Point(conv.x + 1, conv.y-1), specialSprites[7]);
         }
     }
 
@@ -126,13 +129,14 @@ public class QuestEdge implements Serializable {
         to = new Point(to);
         int times = 0;
         while ((from.x != to.x && horizontal) || (from.y != to.y && !horizontal)) {
+            Point conv = QuestSubView.convertToScreen(from);
             if (horizontal) {
-                screenHandler.register("horipath1", new Point(xOffset + 4 * from.x + 2, yOffset + 4 * from.y + 1), horizontalSprite);
-                screenHandler.register("horipath2", new Point(xOffset + 4 * from.x + 4, yOffset + 4 * from.y + 1), horizontalSprite);
+                screenHandler.register("horipath1", new Point(conv.x + 2, conv.y + 1), horizontalSprite);
+                screenHandler.register("horipath2", new Point(conv.x + 4, conv.y + 1), horizontalSprite);
                 from.x++;
             } else {
-                screenHandler.register("vertipath1", new Point(xOffset + 4 * from.x + 1, yOffset + 4 * from.y + 2), verticalSprite);
-                screenHandler.register("vertipath2", new Point(xOffset + 4 * from.x + 1, yOffset + 4 * from.y + 4), verticalSprite);
+                screenHandler.register("vertipath1", new Point(conv.x + 1, conv.y + 2), verticalSprite);
+                screenHandler.register("vertipath2", new Point(conv.x + 1, conv.y + 4), verticalSprite);
                 from.y++;
             }
             if (times++ > 100) {
