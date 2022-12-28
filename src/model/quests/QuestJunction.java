@@ -7,7 +7,7 @@ public abstract class QuestJunction extends QuestNode {
 
     private final int column;
     private final int row;
-    private List<QuestNode> connections;
+    private List<QuestEdge> connections;
 
     public QuestJunction(int column, int row) {
         this.column = column;
@@ -26,14 +26,23 @@ public abstract class QuestJunction extends QuestNode {
     }
 
     public QuestNode getConnection(int index) {
-        return connections.get(0);
+        return connections.get(index).getNode();
     }
 
-    public void connectTo(QuestNode questNode) {
-        this.connections.add(questNode);
+
+    public void connectTo(QuestEdge edge) {
+        this.connections.add(edge);
     }
 
-    protected List<QuestNode> getConnections() {
+    protected List<QuestEdge> getConnections() {
         return connections;
+    }
+    
+    protected List<QuestNode> getConnectedNodes() {
+        List<QuestNode> nodes = new ArrayList<>();
+        for (QuestEdge e : connections) {
+            nodes.add(e.getNode());
+        }
+        return nodes;
     }
 }

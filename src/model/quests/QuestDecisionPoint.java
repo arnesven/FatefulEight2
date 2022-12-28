@@ -13,10 +13,10 @@ import java.util.List;
 
 public class QuestDecisionPoint extends QuestJunction {
 
-    public QuestDecisionPoint(int column, int row, List<QuestNode> connections) {
+    public QuestDecisionPoint(int column, int row, List<QuestEdge> connections) {
         super(column, row);
-        for (QuestNode q : connections) {
-            connectTo(q);
+        for (QuestEdge c : connections) {
+            connectTo(c);
         }
     }
 
@@ -37,7 +37,7 @@ public class QuestDecisionPoint extends QuestJunction {
         do {
             state.print("Please select which sub-scene to advance to.");
             state.waitForReturn();
-            if (super.getConnections().contains(state.getSelectedElement())) {
+            if (super.getConnectedNodes().contains(state.getSelectedElement())) {
                 return state.getSelectedElement();
             }
             state.println("The selected sub-scene is not reachable from your current position.");

@@ -7,8 +7,8 @@ public abstract class QuestSubScene extends QuestNode implements Serializable {
     private final int col;
     private final int row;
 
-    private QuestNode failConnection;
-    private QuestNode successConnection;
+    private QuestEdge failConnection;
+    private QuestEdge successConnection;
 
     public QuestSubScene(int col, int row) {
         this.col = col;
@@ -25,19 +25,19 @@ public abstract class QuestSubScene extends QuestNode implements Serializable {
         return row;
     }
 
-    public void connectFail(QuestNode questNode) {
+    public void connectFail(QuestEdge questNode) {
         this.failConnection = questNode;
     }
 
-    public void connectSuccess(QuestNode questNode) {
+    public void connectSuccess(QuestEdge questNode) {
         this.successConnection = questNode;
     }
 
     public QuestNode getSuccessConnection() {
-        return successConnection;
+        return successConnection.getNode();
     }
 
     public QuestNode getFailConnection() {
-        return failConnection;
+        return failConnection.getNode();
     }
 }

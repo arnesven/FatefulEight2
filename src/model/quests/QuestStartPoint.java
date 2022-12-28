@@ -10,7 +10,7 @@ import java.util.List;
 public class QuestStartPoint extends QuestDecisionPoint {
     private final Sprite32x32 SPRITE = new Sprite32x32("startpoint", "quest.png", 0x02, MyColors.BLACK, MyColors.WHITE, MyColors.RED);
 
-    public QuestStartPoint(List<QuestNode> connections) {
+    public QuestStartPoint(List<QuestEdge> connections) {
         super(0, 0, connections);
     }
 

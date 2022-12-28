@@ -36,31 +36,36 @@ public class DeepDungeonQuest extends Quest {
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        return List.of(new QuestStartPoint(List.of(scenes.get(0).get(0), scenes.get(0).get(1))),
+        return List.of(new QuestStartPoint(
+                List.of(new QuestEdge(scenes.get(0).get(0)), new QuestEdge(scenes.get(0).get(1)))),
                 new QuestDecisionPoint(5, 1,
-                        List.of(scenes.get(1).get(0), scenes.get(1).get(1), scenes.get(1).get(2), scenes.get(2).get(0))),
+                        List.of(new QuestEdge(scenes.get(1).get(0)),
+                                new QuestEdge(scenes.get(1).get(1)),
+                                new QuestEdge(scenes.get(1).get(2)),
+                                new QuestEdge(scenes.get(2).get(0)))),
                 new QuestDecisionPoint(5, 5,
-                        List.of(scenes.get(3).get(0), scenes.get(3).get(1))));
+                        List.of(new QuestEdge(scenes.get(3).get(0)),
+                                new QuestEdge(scenes.get(3).get(1)))));
     }
 
     @Override
     protected void connectScenesToJunctions(List<QuestScene> scenes, List<QuestJunction> junctions) {
-        scenes.get(0).get(0).connectSuccess(junctions.get(1));
-        scenes.get(0).get(1).connectFail(scenes.get(0).get(0));
-        scenes.get(0).get(1).connectSuccess(junctions.get(1));
+        scenes.get(0).get(0).connectSuccess(new QuestEdge(junctions.get(1)));
+        scenes.get(0).get(1).connectFail(new QuestEdge(scenes.get(0).get(0)));
+        scenes.get(0).get(1).connectSuccess(new QuestEdge(junctions.get(1)));
 
-        scenes.get(1).get(0).connectSuccess(junctions.get(2));
-        scenes.get(1).get(1).connectFail(scenes.get(1).get(0));
-        scenes.get(1).get(1).connectSuccess(junctions.get(2));
-        scenes.get(1).get(2).connectFail(scenes.get(1).get(0));
-        scenes.get(1).get(2).connectSuccess(junctions.get(2));
+        scenes.get(1).get(0).connectSuccess(new QuestEdge(junctions.get(2)));
+        scenes.get(1).get(1).connectFail(new QuestEdge(scenes.get(1).get(0)));
+        scenes.get(1).get(1).connectSuccess(new QuestEdge(junctions.get(2)));
+        scenes.get(1).get(2).connectFail(new QuestEdge(scenes.get(1).get(0)));
+        scenes.get(1).get(2).connectSuccess(new QuestEdge(junctions.get(2)));
 
-        scenes.get(2).get(0).connectFail(getFailEndingNode());
-        scenes.get(2).get(0).connectSuccess(junctions.get(2));
+        scenes.get(2).get(0).connectFail(new QuestEdge(getFailEndingNode()));
+        scenes.get(2).get(0).connectSuccess(new QuestEdge(junctions.get(2)));
 
-        scenes.get(3).get(0).connectSuccess(getSuccessEndingNode());
-        scenes.get(3).get(1).connectFail(scenes.get(3).get(0));
-        scenes.get(3).get(1).connectSuccess(getSuccessEndingNode());
+        scenes.get(3).get(0).connectSuccess(new QuestEdge(getSuccessEndingNode()));
+        scenes.get(3).get(1).connectFail(new QuestEdge(scenes.get(3).get(0)));
+        scenes.get(3).get(1).connectSuccess(new QuestEdge(getSuccessEndingNode()));
     }
 
 }
