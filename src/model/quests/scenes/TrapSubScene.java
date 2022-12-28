@@ -3,6 +3,7 @@ package model.quests.scenes;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.quests.QuestSubScene;
 import model.states.QuestState;
@@ -37,7 +38,7 @@ public class TrapSubScene extends QuestSubScene {
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         state.print("Each party member takes 1D10-4 damage. Press enter to continue.");
         state.waitForReturn();
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
@@ -46,6 +47,6 @@ public class TrapSubScene extends QuestSubScene {
             state.println(gc.getName() + " takes " + result + " damage.");
         }
         model.setGameOver(model.getParty().isWipedOut());
-        return getSuccessConnection();
+        return getSuccessEdge();
     }
 }

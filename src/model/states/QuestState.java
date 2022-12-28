@@ -3,11 +3,12 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.quests.Quest;
-import model.quests.QuestJunction;
+import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import view.subviews.CollapsingTransition;
 import view.subviews.QuestSubView;
-import view.subviews.SubView;
+
+import java.awt.*;
 
 public class QuestState extends GameState {
     public static final int QUEST_MATRIX_ROWS = 9;
@@ -40,7 +41,10 @@ public class QuestState extends GameState {
         waitForReturn();
 
         while (currentPosition != quest.getSuccessEndingNode() && currentPosition != quest.getFailEndingNode()) {
-            currentPosition = currentPosition.run(model, this);
+            QuestEdge edgeToFollow = currentPosition.run(model, this);
+            questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
+                    edgeToFollow);
+            currentPosition = edgeToFollow.getNode();
         }
         currentPosition.run(model, this); // Success or fail node run.
         print("Press enter to continue.");
@@ -67,5 +71,9 @@ public class QuestState extends GameState {
 
     public void transitionToQuestView(Model model) {
         CollapsingTransition.transition(model, questSubView);
+    }
+
+    public void setSelectedElement(QuestNode node) {
+        matrix.setSelectedPoint(node);
     }
 }

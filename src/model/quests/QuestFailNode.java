@@ -35,9 +35,9 @@ public class QuestFailNode extends QuestNode {
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         state.println("You have failed the quest!");
-        return this;
+        return new QuestEdge(this);
     }
 
 }

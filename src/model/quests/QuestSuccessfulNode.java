@@ -39,7 +39,7 @@ public class QuestSuccessfulNode extends QuestNode {
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         state.print("Quest completed! You receive " + (reward.getGold() * numberOfPartyMembers) + " gold");
         if (reward.getReputation() > 0) {
             state.println(" and your reputation increases!");
@@ -47,7 +47,7 @@ public class QuestSuccessfulNode extends QuestNode {
             state.println(".");
         }
         reward.giveYourself(model.getParty(), numberOfPartyMembers);
-        return this;
+        return new QuestEdge(this);
     }
 
     public void setNumberOfStartingPartyMembers(int size) {

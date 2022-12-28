@@ -51,8 +51,8 @@ public class QuestEdge implements Serializable {
     public void drawYourself(ScreenHandler screenHandler, QuestNode startPoint, int xOffset, int yOffset) {
         int dx = node.getColumn() - startPoint.getColumn();
         int dy = node.getRow() - startPoint.getRow();
-        Point from = new Point(startPoint.getColumn(), startPoint.getRow());
-        Point to = new Point(node.getColumn(), node.getRow());
+        Point from = startPoint.getPosition();
+        Point to = node.getPosition();
         if (dx == 0 && dy != 0) {
             goDownWithArrow(screenHandler, from, to, xOffset, yOffset, dy);
         } else if (dy == 0 && dx != 0) {
@@ -141,4 +141,7 @@ public class QuestEdge implements Serializable {
         }
     }
 
+    public boolean getAlignment() {
+        return alignment;
+    }
 }

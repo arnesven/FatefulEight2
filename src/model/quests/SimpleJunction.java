@@ -27,7 +27,7 @@ public class SimpleJunction extends QuestJunction {
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
-        return getConnectedNodes().get(0);
+    public QuestEdge run(Model model, QuestState state) {
+        return getConnections().get(0);
     }
 }

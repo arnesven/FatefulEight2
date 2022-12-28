@@ -2,6 +2,7 @@ package model.quests.scenes;
 
 import model.Model;
 import model.classes.Skill;
+import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.states.QuestState;
 import view.MyColors;
@@ -33,13 +34,13 @@ public class CollaborativeSkillCheckSubScene extends SkillQuestSubScene {
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
         boolean success = model.getParty().doCollaborativeSkillCheck(model, state, skill, difficulty);
         state.setCursorEnabled(true);
         if (success) {
-            return getSuccessConnection();
+            return getSuccessEdge();
         }
-        return getFailConnection();
+        return getFailEdge();
     }
 }

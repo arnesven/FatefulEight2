@@ -5,7 +5,11 @@ import java.util.List;
 
 public class SkeletonCombatSubScene extends CombatSubScene {
     public SkeletonCombatSubScene(int col, int row) {
-        super(col, row, List.of(new SkeletonEnemy('A'), new SkeletonEnemy('A'), new SkeletonEnemy('A'), new SkeletonEnemy('A')));
+        super(col, row, List.of(
+//                new SkeletonEnemy('A'),
+//                new SkeletonEnemy('A'),
+//                new SkeletonEnemy('A'),
+                new SkeletonEnemy('A')));
     }
 
     @Override

@@ -62,6 +62,7 @@ public class Model {
 
         gameView.transitionedTo(this);
         //state = new WaitForStartOfGameState(this);
+
         GameCharacter gc = getAllCharacters().get(0);
         gc.setLevel(5);
         gameData.party.getInventory().add(new BastardSword());

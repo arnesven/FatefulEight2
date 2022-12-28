@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.states.QuestState;
 
+import java.awt.*;
 import java.io.Serializable;
 
 public abstract class QuestNode implements Serializable {
@@ -10,5 +11,9 @@ public abstract class QuestNode implements Serializable {
     public abstract int getRow();
     public abstract void drawYourself(Model model, int xPos, int yPos);
     public abstract String getDescription();
-    public abstract QuestNode run(Model model, QuestState state);
+    public abstract QuestEdge run(Model model, QuestState state);
+
+    public Point getPosition() {
+        return new Point(getColumn(), getRow());
+    }
 }

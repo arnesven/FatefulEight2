@@ -3,6 +3,7 @@ package model.quests.scenes;
 import model.Model;
 import model.classes.Skill;
 import model.quests.Quest;
+import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.quests.QuestSubScene;
 import model.states.GameState;
@@ -38,14 +39,14 @@ public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
         boolean success = model.getParty().doCollectiveSkillCheck(model, state, skill, difficulty);
         state.setCursorEnabled(true);
         if (success) {
-            return getSuccessConnection();
+            return getSuccessEdge();
         }
-        return getFailConnection();
+        return getFailEdge();
     }
 
 }

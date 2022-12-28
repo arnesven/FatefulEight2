@@ -33,23 +33,27 @@ public class QuestDecisionPoint extends QuestJunction {
         return "Leader decision point: Solo Leadership 6";
     }
 
-    public QuestNode questNodeInput(QuestState state) {
+    public QuestEdge questNodeInput(QuestState state) {
+        state.setSelectedElement(getConnections().get(0).getNode());
         do {
-            state.print("Please select which sub-scene to advance to.");
+            state.print("Please select which location to advance to.");
             state.waitForReturn();
-            if (super.getConnectedNodes().contains(state.getSelectedElement())) {
-                return state.getSelectedElement();
+            for (QuestEdge edge : getConnections()) {
+                if (edge.getNode() == state.getSelectedElement()) {
+                    return edge;
+                }
             }
-            state.println("The selected sub-scene is not reachable from your current position.");
+            state.println("The selected location is not reachable from your current position.");
         } while (true);
     }
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
         state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
+        model.getLog().waitForAnimationToFinish();
         if (!result.isSuccessful()) {
-            return getConnection(0).getNode();
+            return getConnection(0);
         }
         return questNodeInput(state);
     }

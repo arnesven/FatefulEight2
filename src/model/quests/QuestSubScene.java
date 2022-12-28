@@ -41,16 +41,8 @@ public abstract class QuestSubScene extends QuestNode implements Serializable {
         connectSuccess(questNode, QuestEdge.HORIZONTAL);
     }
 
-    public QuestNode getSuccessConnection() {
-        return successConnection.getNode();
-    }
-
     public QuestEdge getSuccessEdge() {
         return successConnection;
-    }
-
-    public QuestNode getFailConnection() {
-        return failConnection.getNode();
     }
 
     public QuestEdge getFailEdge() {

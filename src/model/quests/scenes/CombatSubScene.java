@@ -3,6 +3,7 @@ package model.quests.scenes;
 import model.Model;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
+import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.quests.QuestSubScene;
 import model.states.CombatEvent;
@@ -40,13 +41,13 @@ public abstract class CombatSubScene extends QuestSubScene {
     protected abstract String getCombatDetails();
 
     @Override
-    public QuestNode run(Model model, QuestState state) {
+    public QuestEdge run(Model model, QuestState state) {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
         CombatEvent combat = new CombatEvent(model, enemies);
         combat.run(model);
         state.transitionToQuestView(model);
-        return getSuccessConnection();
+        return getSuccessEdge();
     }
 
     @Override
