@@ -142,8 +142,11 @@ public class CombatSubView extends SubView {
         if (model.getParty().getPartyMembers().contains(combatant)) {
             return model.getParty().getInitiativeSymbol(combatant);
         }
-        int offset = ((Enemy)combatant).getEnemyGroup() - 'A';
-        return CharSprite.make((char)0x04+offset, MyColors.WHITE, MyColors.GRAY, MyColors.BLACK);
+        int offset = 0;
+        if (combatant instanceof Enemy) {
+            offset = ((Enemy) combatant).getEnemyGroup() - 'A';
+        }
+        return CharSprite.make((char) 0x04 + offset, MyColors.WHITE, MyColors.GRAY, MyColors.BLACK);
     }
 
     private void drawBackground(Model model) {

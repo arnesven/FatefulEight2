@@ -20,6 +20,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     private static final Sprite32x32 SPRITE = new Sprite32x32("combatsubscene", "quest.png", 0x03,
             MyColors.BLACK, MyColors.WHITE, MyColors.GRAY, MyColors.BROWN);
     private final List<Enemy> enemies;
+    private boolean defeated = false;
 
     public CombatSubScene(int col, int row, List<Enemy> enemies) {
         super(col, row);
@@ -29,8 +30,14 @@ public abstract class CombatSubScene extends QuestSubScene {
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
         model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
-        Sprite enemyAvatar = enemies.get(0).getAvatar();
-        model.getScreenHandler().register(enemyAvatar.getName(), new Point(xPos, yPos), enemyAvatar);
+        if (!hasBeenDefeated()) {
+            Sprite enemyAvatar = enemies.get(0).getAvatar();
+            model.getScreenHandler().register(enemyAvatar.getName(), new Point(xPos, yPos), enemyAvatar);
+        }
+    }
+
+    private boolean hasBeenDefeated() {
+        return defeated;
     }
 
     @Override
@@ -47,6 +54,7 @@ public abstract class CombatSubScene extends QuestSubScene {
         CombatEvent combat = new CombatEvent(model, enemies);
         combat.run(model);
         state.transitionToQuestView(model);
+        defeated = true;
         return getSuccessEdge();
     }
 
