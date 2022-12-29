@@ -4,6 +4,8 @@ import model.Party;
 import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
+import view.subviews.CombatTheme;
+import view.subviews.DungeonTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -50,8 +52,15 @@ public abstract class Quest implements Serializable {
     }
 
     public String getBeforehandInfo() {
-        return "Upon completion you will be paidr " + reward.getGold() + " gold per party member" +
-                (reward.getReputation()>0?", and your reputation will increase.":".") +
+        String reputation = ".";
+        if (reward.getReputation() > 0) {
+            reputation = ", and your reputation will increase.";
+        } else if (reward.getReputation() < 0) {
+            reputation = ", but your reputation will DECREASE.";
+        }
+
+        return "Upon completion you will be paid " + reward.getGold() + " gold per party member" +
+                reputation +
                 " The party collectively appraises this quest to be " +
                 difficulty.toString().toLowerCase() + ".";
     }
@@ -98,4 +107,8 @@ public abstract class Quest implements Serializable {
     public List<QuestBackground> getBackgroundSprites() { return new ArrayList<>(); }
 
     public abstract MyColors getBackgroundColor();
+
+    public CombatTheme getCombatTheme() {
+        return new DungeonTheme();
+    }
 }

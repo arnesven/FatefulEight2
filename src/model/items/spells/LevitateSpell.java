@@ -9,7 +9,7 @@ public class LevitateSpell extends Spell {
     private static final Sprite SPRITE = new ItemSprite(15, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public LevitateSpell() {
-        super("Levitate", 12, MyColors.BLUE, 1, 1); // TODO: Difficulty 9
+        super("Levitate", 12, MyColors.BLUE, 1, 1);
     }
 
     @Override

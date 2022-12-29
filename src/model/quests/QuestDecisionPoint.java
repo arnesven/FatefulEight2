@@ -56,7 +56,7 @@ public class QuestDecisionPoint extends QuestJunction {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
             model.getLog().waitForAnimationToFinish();
         }
-        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 1); // TODO: 6
+        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
         state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
         model.getLog().waitForAnimationToFinish();
         if (!result.isSuccessful()) {

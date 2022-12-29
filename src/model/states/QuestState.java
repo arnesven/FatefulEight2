@@ -8,6 +8,7 @@ import model.quests.QuestNode;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.subviews.CollapsingTransition;
+import view.subviews.CombatTheme;
 import view.subviews.QuestSubView;
 
 import java.awt.*;
@@ -79,5 +80,9 @@ public class QuestState extends GameState {
 
     public void setSelectedElement(QuestNode node) {
         matrix.setSelectedPoint(node);
+    }
+
+    public CombatTheme getCombatTheme() {
+        return quest.getCombatTheme();
     }
 }

@@ -46,6 +46,8 @@ public class QuestSuccessfulNode extends QuestNode {
         state.print("Quest completed! You receive " + (reward.getGold() * numberOfPartyMembers) + " gold");
         if (reward.getReputation() > 0) {
             state.println(" and your reputation increases!");
+        } else if (reward.getReputation() < 0) {
+            state.println(" but your reputation as decreased!");
         } else {
             state.println(".");
         }
