@@ -14,7 +14,10 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import view.MyColors;
+import view.sprites.Sprite32x32;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,15 @@ public class MansionHeistQuest extends Quest {
             "Watch out for those guards though. If " +
             "you are caught, incarceration or fines " +
             "will follow.";
+
+    private static final MansionSprite[] mansionSprites = new MansionSprite[]{
+            new MansionSprite(0), new MansionSprite(1),new MansionSprite(2),
+            new MansionSprite(3), new MansionSprite(4),new MansionSprite(5)};
+    private static final Sprite32x32 solidWall = new Sprite32x32("solidwall", "quest.png", 0x35,
+            MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.CYAN, MyColors.CYAN);
+    private static final Sprite32x32 blockWall = new Sprite32x32("blockWall", "quest.png", 0x32,
+            MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.CYAN, MyColors.CYAN);
+    private static List<QuestBackground> bgSprites = makeBackground();
 
     private static final String endText = "You return to your contact and deliver the contents of Lady Golbrads safe.";
 
@@ -109,6 +121,11 @@ public class MansionHeistQuest extends Quest {
         return MyColors.DARK_BROWN;
     }
 
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
     private class GuardsCombatScene extends CombatSubScene {
         private final int amount;
         private final String location;
@@ -155,6 +172,61 @@ public class MansionHeistQuest extends Quest {
                     }
                 }
             } while (true);
+        }
+    }
+
+
+    private static List<QuestBackground> makeBackground() {
+        Sprite32x32[][] grid = new Sprite32x32[8][9];
+        grid[0][0] = mansionSprites[1];
+        grid[1][0] = mansionSprites[2];
+        grid[2][0] = mansionSprites[0];
+        grid[3][0] = mansionSprites[2];
+        grid[4][0] = mansionSprites[4];
+        grid[5][0] = mansionSprites[0];
+        grid[6][0] = mansionSprites[2];
+        grid[7][0] = mansionSprites[0];
+
+        grid[4][1] = solidWall;
+
+        grid[4][2] = mansionSprites[5];
+        grid[5][2] = mansionSprites[1];
+        grid[6][2] = mansionSprites[0];
+        grid[7][2] = mansionSprites[0];
+
+        grid[0][3] = mansionSprites[0];
+        grid[1][3] = mansionSprites[0];
+        grid[2][3] = mansionSprites[3];
+        grid[3][3] = mansionSprites[0];
+        grid[4][3] = mansionSprites[3];
+        grid[5][3] = mansionSprites[0];
+        grid[6][3] = mansionSprites[0];
+        grid[7][3] = mansionSprites[0];
+
+        for (int col = 0; col < 8; col++) {
+            grid[col][6] = mansionSprites[0];
+        }
+        grid[3][6] = mansionSprites[1];
+
+        for (int row = 3; row < 9; ++row) {
+            grid[0][row] = blockWall;
+            grid[7][row] = blockWall;
+        }
+
+        List<QuestBackground> result = new ArrayList<>();
+        for (int col = 0; col < grid.length; ++col) {
+            for (int row = 0; row < grid[0].length; ++row) {
+                if (grid[col][row] != null) {
+                    result.add(new QuestBackground(new Point(col, row), grid[col][row], row < 3));
+                }
+            }
+        }
+        return result;
+    }
+
+    private static class MansionSprite extends Sprite32x32 {
+        public MansionSprite(int i) {
+            super("mansion"+i, "quest.png", 0x40 + i, MyColors.DARK_GRAY, MyColors.TAN, MyColors.DARK_BROWN, MyColors.CYAN);
         }
     }
 }
