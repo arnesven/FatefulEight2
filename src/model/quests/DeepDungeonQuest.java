@@ -20,40 +20,50 @@ public class DeepDungeonQuest extends Quest {
             "Recently, an antiques dealer has been " +
             "looking for a crew to clear it and bring " +
             "back an ancient magical artifact.";
+    private static final String endText = "With the vampire dealt with, you are free to collect the" +
+            "artifact. The party returns to the antiques dealer and collects the reward.";
     private static List<QuestBackground> bgSprites = makeBackground();
 
     public DeepDungeonQuest() {
-        super("Deep Dungeon", "an antiques dealer", QuestDifficulty.HARD, 1, 50, text);
+        super("Deep Dungeon", "an antiques dealer", QuestDifficulty.HARD, 1, 50, text, endText);
     }
 
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Skeleton Sentries",
                         List.of(new SkeletonCombatSubScene(2, 1),
-                                new CollectiveSkillCheckSubScene(2, 0, Skill.Sneak, 5))),
+                                new CollectiveSkillCheckSubScene(2, 0, Skill.Sneak, 5,
+                                        "Maybe we can sneak past them."))),
                 new QuestScene("Mechanical Trap",
                         List.of(new TrapSubScene(4, 3),
-                                new SoloSkillCheckSubScene(3, 3, Skill.Security, 9),
-                                new CollectiveSkillCheckSubScene(5, 3, Skill.Acrobatics, 4))),
+                                new SoloSkillCheckSubScene(3, 3, Skill.Security, 9,
+                                        "Do you think you can disable that?"),
+                                new CollectiveSkillCheckSubScene(5, 3, Skill.Acrobatics, 4,
+                                        "We're going to have to be very careful now."))),
                 new QuestScene("Puzzle",
-                        List.of(new CollaborativeSkillCheckSubScene(1, 6, Skill.Logic, 11))),
+                        List.of(new CollaborativeSkillCheckSubScene(1, 6, Skill.Logic, 11,
+                                "There some kind of mechanism here. Wait it's a puzzle! But what's the solution?"))),
                 new QuestScene("Vampire Guardian",
                         List.of(new VampireCombatSubScene(4, 7),
-                        new SoloSkillCheckSubScene(5, 7, Skill.Persuade, 10))));
+                        new SoloSkillCheckSubScene(5, 7, Skill.Persuade, 10,
+                                "do you think you can talk any sense into him?"))));
     }
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
         QuestJunction junc0 = new QuestStartPoint(
-                List.of(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL), new QuestEdge(scenes.get(0).get(1))));
+                List.of(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL), new QuestEdge(scenes.get(0).get(1))),
+                "Looks like we have some skeleton sentries up ahead.");
         QuestJunction junc1 = new QuestDecisionPoint(4, 2,
                 List.of(new QuestEdge(scenes.get(1).get(0)),
                         new QuestEdge(scenes.get(1).get(1)),
                         new QuestEdge(scenes.get(1).get(2)),
-                        new QuestEdge(scenes.get(2).get(0))));
+                        new QuestEdge(scenes.get(2).get(0))),
+                "Watch out, that looks like a booby trap right there.");
         QuestJunction junc2 = new QuestDecisionPoint(4, 6,
                 List.of(new QuestEdge(scenes.get(3).get(0)),
-                        new QuestEdge(scenes.get(3).get(1))));
+                        new QuestEdge(scenes.get(3).get(1))),
+                "Is that a vampire lord?");
         return List.of(junc0, junc1, junc2,
                 new SimpleJunction(4, 1, new QuestEdge(junc1)),
                 new SimpleJunction(4, 4, new QuestEdge(junc2)));

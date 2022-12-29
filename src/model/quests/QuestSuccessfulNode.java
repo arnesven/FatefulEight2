@@ -12,10 +12,12 @@ public class QuestSuccessfulNode extends QuestNode {
     private static final Sprite32x32 SPRITE = new Sprite32x32("collectiveskill", "quest.png", 0x05,
             MyColors.BLACK, MyColors.WHITE, MyColors.GREEN, MyColors.GREEN);
     private final Reward reward;
+    private final String text;
     private int numberOfPartyMembers;
 
-    public QuestSuccessfulNode(Reward reward) {
+    public QuestSuccessfulNode(Reward reward, String text) {
         this.reward = reward;
+        this.text = text;
     }
 
     @Override
@@ -40,6 +42,7 @@ public class QuestSuccessfulNode extends QuestNode {
 
     @Override
     public QuestEdge run(Model model, QuestState state) {
+        state.println(text);
         state.print("Quest completed! You receive " + (reward.getGold() * numberOfPartyMembers) + " gold");
         if (reward.getReputation() > 0) {
             state.println(" and your reputation increases!");

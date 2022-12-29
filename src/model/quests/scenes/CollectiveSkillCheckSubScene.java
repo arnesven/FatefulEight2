@@ -20,12 +20,14 @@ public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
 
     private static final Sprite32x32 SPRITE = new Sprite32x32("collectiveskill", "quest.png", 0x04,
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+    private final String leaderTalk;
 
 
-    public CollectiveSkillCheckSubScene(int col,  int row, Skill skill, int difficulty) {
+    public CollectiveSkillCheckSubScene(int col,  int row, Skill skill, int difficulty, String leaderTalk) {
         super(col, row);
         this.skill = skill;
         this.difficulty = difficulty;
+        this.leaderTalk = leaderTalk;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
+        leaderSay(model, leaderTalk);
         boolean success = model.getParty().doCollectiveSkillCheck(model, state, skill, difficulty);
         state.setCursorEnabled(true);
         if (success) {

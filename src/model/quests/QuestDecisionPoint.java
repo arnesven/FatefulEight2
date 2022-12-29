@@ -13,11 +13,14 @@ import java.util.List;
 
 public class QuestDecisionPoint extends QuestJunction {
 
-    public QuestDecisionPoint(int column, int row, List<QuestEdge> connections) {
+    private final String leaderTalk;
+
+    public QuestDecisionPoint(int column, int row, List<QuestEdge> connections, String leaderTalk) {
         super(column, row);
         for (QuestEdge c : connections) {
             connectTo(c);
         }
+        this.leaderTalk = leaderTalk;
     }
 
     private final Sprite32x32 SPRITE = new Sprite32x32("decisionpoint", "quest.png", 0x12, MyColors.BLACK, MyColors.WHITE, MyColors.RED);
@@ -49,6 +52,10 @@ public class QuestDecisionPoint extends QuestJunction {
 
     @Override
     public QuestEdge run(Model model, QuestState state) {
+        if (!leaderTalk.equals("")) {
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
+            model.getLog().waitForAnimationToFinish();
+        }
         SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
         state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
         model.getLog().waitForAnimationToFinish();

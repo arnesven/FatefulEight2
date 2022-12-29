@@ -355,7 +355,24 @@ public class Party implements Serializable {
         event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
         event.print(" (Recommended " + best.getName() + "): ");
         GameCharacter performer = partyMemberInput(model, event, best);
+        boolean before = MyRandom.randInt(2) == 0;
+        if (before) {
+            partyMemberSay(model, performer, List.of("Leave it to me!", "Shouldn't be too hard.", "I think I can do it.",
+                    "I'll do my best.", "You can count on me.", "I'll give it my all.", "I'll give it a try.",
+                    "Time to roll up my sleeves."));
+            model.getLog().waitForAnimationToFinish();
+        }
         SkillCheckResult result = doSkillCheckWithReRoll(model, event, performer, skill, difficulty, 20, 0);
+        if (!before) {
+            if (result.isSuccessful()) {
+                partyMemberSay(model, performer, List.of("Piece of cake!", "All done.", "No trouble at all.",
+                        "That was fun!", "Child's play!", "I rock!"));
+            } else {
+                partyMemberSay(model, performer, List.of("Sorry!", "Nope, can't do it.", "Aaaagh!#", "Phooey",
+                        "Well, I tried.", "What, I failed?", "Darn it!"));
+            }
+            model.getLog().waitForAnimationToFinish();
+        }
         return result.isSuccessful();
     }
 
@@ -378,6 +395,14 @@ public class Party implements Serializable {
             }
         }
         SkillCheckResult result = doSkillCheckWithReRoll(model, event, performer, skill, difficulty, 15, bonus);
+        if (result.isSuccessful()) {
+            partyMemberSay(model, getLeader(), List.of("We did it!", "Good job team!", "We're great!", "Alright!",
+                    "You guys are awesome!3", "Spectacular!", "Phenomenal!", "Outstanding!", "Huzzah!"));
+        } else {
+            partyMemberSay(model, getLeader(), List.of("...", "That could have gone better", "Shoot!#",
+                    "Come on, we have to do better.", "Well, better luck next time.", "Damn, so close!"));
+        }
+        model.getLog().waitForAnimationToFinish();
         return result.isSuccessful();
     }
 

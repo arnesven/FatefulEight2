@@ -1,5 +1,6 @@
 package model.quests.scenes;
 
+import model.Model;
 import model.quests.QuestSubScene;
 import view.MyColors;
 
@@ -12,5 +13,12 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
     @Override
     protected MyColors getSuccessEdgeColor() {
         return MyColors.LIGHT_GREEN;
+    }
+
+    protected void leaderSay(Model model, String text) {
+        if (!text.equals("")) {
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+            model.getLog().waitForAnimationToFinish();
+        }
     }
 }

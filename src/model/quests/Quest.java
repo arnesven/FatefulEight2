@@ -21,7 +21,7 @@ public abstract class Quest implements Serializable {
     private QuestSuccessfulNode successEnding;
     private QuestNode failEnding;
 
-    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, String text) {
+    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, String text, String endText) {
         this.name = name;
         this.provider = provider;
         this.difficulty = difficulty;
@@ -29,7 +29,7 @@ public abstract class Quest implements Serializable {
         this.text = text;
         scenes = buildScenes();
         junctions = buildJunctions(scenes);
-        successEnding = new QuestSuccessfulNode(reward);
+        successEnding = new QuestSuccessfulNode(reward, endText);
         failEnding = new QuestFailNode();
         connectScenesToJunctions(scenes, junctions);
     }

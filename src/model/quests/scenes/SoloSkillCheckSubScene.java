@@ -15,11 +15,13 @@ public class SoloSkillCheckSubScene extends SkillQuestSubScene {
     private final int difficulty;
     private static final Sprite32x32 SPRITE = new Sprite32x32("soloskillscene", "quest.png", 0x10,
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+    private final String leaderTalk;
 
-    public SoloSkillCheckSubScene(int col, int row, Skill skill, int difficulty) {
+    public SoloSkillCheckSubScene(int col, int row, Skill skill, int difficulty, String leaderTalk) {
         super(col, row);
         this.skill = skill;
         this.difficulty = difficulty;
+        this.leaderTalk = leaderTalk;
     }
 
     @Override
@@ -35,6 +37,9 @@ public class SoloSkillCheckSubScene extends SkillQuestSubScene {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
+        if (model.getParty().size() > 1) {
+            leaderSay(model, leaderTalk);
+        }
         boolean success = model.getParty().doSoloSkillCheck(model, state, skill, difficulty);
         state.setCursorEnabled(true);
         if (success) {
