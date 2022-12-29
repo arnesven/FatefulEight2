@@ -13,6 +13,7 @@ import sound.ClientSoundManager;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DungeonTheme;
 
 import java.awt.*;
 import java.util.List;
@@ -53,8 +54,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     public QuestEdge run(Model model, QuestState state) {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
-        CombatEvent combat = new CombatEvent(model, enemies);
-        combat.setFleeingEnabled(false);
+        CombatEvent combat = new CombatEvent(model, enemies, new DungeonTheme(), false);
         combat.run(model);
         state.transitionToQuestView(model);
         defeated = true;
