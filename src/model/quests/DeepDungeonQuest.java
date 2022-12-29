@@ -1,7 +1,11 @@
 package model.quests;
 
+import model.Model;
 import model.classes.Skill;
+import model.items.spells.LevitateSpell;
 import model.quests.scenes.*;
+import model.states.QuestState;
+import model.states.SpellCastException;
 import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -54,12 +58,7 @@ public class DeepDungeonQuest extends Quest {
         QuestJunction junc0 = new QuestStartPoint(
                 List.of(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL), new QuestEdge(scenes.get(0).get(1))),
                 "Looks like we have some skeleton sentries up ahead.");
-        QuestJunction junc1 = new QuestDecisionPoint(4, 2,
-                List.of(new QuestEdge(scenes.get(1).get(0)),
-                        new QuestEdge(scenes.get(1).get(1)),
-                        new QuestEdge(scenes.get(1).get(2)),
-                        new QuestEdge(scenes.get(2).get(0))),
-                "Watch out, that looks like a booby trap right there.");
+        QuestJunction junc1 = new BoobyTrapJunction(scenes);
         QuestJunction junc2 = new QuestDecisionPoint(4, 6,
                 List.of(new QuestEdge(scenes.get(3).get(0)),
                         new QuestEdge(scenes.get(3).get(1))),
@@ -145,6 +144,36 @@ public class DeepDungeonQuest extends Quest {
     private static class WallSprite extends Sprite32x32 {
         public WallSprite(int num) {
             super("wall", "quest.png", num, MyColors.DARK_GRAY, MyColors.DARK_RED, MyColors.TAN, MyColors.YELLOW);
+        }
+    }
+
+    private class BoobyTrapJunction extends QuestDecisionPoint {
+        public BoobyTrapJunction(List<QuestScene> scenes) {
+            super(4, 2,
+                    List.of(new QuestEdge(scenes.get(1).get(0)),
+                            new QuestEdge(scenes.get(1).get(1)),
+                            new QuestEdge(scenes.get(1).get(2)),
+                            new QuestEdge(scenes.get(2).get(0))),
+                    "Watch out, that looks like a booby trap right there.");
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            model.getSpellHandler().acceptSpell(new LevitateSpell().getName());
+            do {
+                try {
+                    return super.run(model, state);
+                } catch (SpellCastException sce) {
+                    if (sce.getSpell() instanceof LevitateSpell) {
+                        state.println("");
+                        boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
+                        if (success) {
+                            state.println(sce.getCaster().getFirstName() + " levitates the party over the booby trap!");
+                            return new QuestEdge(getJunctions().get(2));
+                        }
+                    }
+                }
+            } while (true);
         }
     }
 }

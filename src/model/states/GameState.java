@@ -3,7 +3,9 @@ package model.states;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.items.spells.Spell;
 import model.quests.QuestNode;
+import util.MyPair;
 import view.subviews.CollapsingTransition;
 import view.subviews.OnTheRoadSubView;
 import view.subviews.SubView;
@@ -44,9 +46,13 @@ public abstract class GameState {
         return internalInput();
     }
 
-    public void waitForReturn() {
+    public void waitForReturn(boolean stopForSpell) {
         model.getLog().waitForReturn();
-        internalInput();
+        internalInput(stopForSpell);
+    }
+
+    public void waitForReturn() {
+        waitForReturn(false);
     }
 
     public boolean yesNoInput() {
@@ -61,10 +67,14 @@ public abstract class GameState {
         }
     }
 
-    private String internalInput() {
+    private String internalInput(boolean stopForSpell) {
         while (!model.gameExited()) {
             if (model.getLog().inputReady()) {
                 return model.getLog().getInput();
+            }
+            if (stopForSpell && model.getSpellHandler().spellReady()) {
+                MyPair<Spell, GameCharacter> pair = model.getSpellHandler().getCastSpell();
+                throw new SpellCastException(pair.first, pair.second);
             }
             try {
                 Thread.sleep(20);
@@ -74,6 +84,10 @@ public abstract class GameState {
         }
         System.exit(0);
         throw new IllegalStateException("Program failed to exit");
+    }
+
+    private String internalInput() {
+        return internalInput(false);
     }
 
     protected void setCurrentTerrainSubview(Model model) {

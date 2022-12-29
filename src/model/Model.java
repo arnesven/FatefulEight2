@@ -3,7 +3,6 @@ package model;
 import model.actions.DailyAction;
 import model.characters.*;
 import model.items.accessories.LeatherCap;
-import model.items.clothing.ChainMail;
 import model.items.clothing.StuddedJerkin;
 import model.items.spells.LevitateSpell;
 import model.items.weapons.BastardSword;
@@ -12,7 +11,6 @@ import model.map.World;
 import model.map.WorldHex;
 import model.races.Race;
 import model.states.*;
-import model.states.events.LumberMillEvent;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.sprites.AnimationManager;
@@ -48,6 +46,7 @@ public class Model {
     private boolean changes;
     private GameLog log;
     private GameState state;
+    private SpellHandler spellHandler = new SpellHandler();
     private boolean gameExited = false;
     private boolean gameOver = false;
     private boolean gameStarted = false;
@@ -261,5 +260,9 @@ public class Model {
 
     public QuestDeck getQuestDeck() {
         return gameData.questDeck;
+    }
+
+    public SpellHandler getSpellHandler() {
+        return spellHandler;
     }
 }

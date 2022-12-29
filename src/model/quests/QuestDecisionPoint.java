@@ -40,7 +40,7 @@ public class QuestDecisionPoint extends QuestJunction {
         state.setSelectedElement(getConnections().get(0).getNode());
         do {
             state.print("Please select which location to advance to.");
-            state.waitForReturn();
+            state.waitForReturn(true);
             for (QuestEdge edge : getConnections()) {
                 if (edge.getNode() == state.getSelectedElement()) {
                     return edge;
@@ -56,7 +56,7 @@ public class QuestDecisionPoint extends QuestJunction {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
             model.getLog().waitForAnimationToFinish();
         }
-        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
+        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 1); // TODO: 6
         state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
         model.getLog().waitForAnimationToFinish();
         if (!result.isSuccessful()) {
