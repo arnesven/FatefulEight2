@@ -93,6 +93,10 @@ public class DeepDungeonQuest extends Quest {
         return bgSprites;
     }
 
+    @Override
+    public MyColors getBackgroundColor() {
+        return MyColors.GRAY_RED;
+    }
 
     private static List<QuestBackground> makeBackground() {
         List<QuestBackground> result = new ArrayList<>();
@@ -125,7 +129,7 @@ public class DeepDungeonQuest extends Quest {
 
         result.add(new QuestBackground(new Point(2, 2), new WallSprite(0x33), false));
         result.add(new QuestBackground(new Point(3, 2), new WallSprite(0x30), false));
-        result.add(new QuestBackground(new Point(5, 2), new WallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(5, 2), new WallSprite(0x30), true));
 
         result.add(new QuestBackground(new Point(2, 5), new WallSprite(0x33), false));
         result.add(new QuestBackground(new Point(4, 5), new WallSprite(0x31), false));
@@ -143,7 +147,7 @@ public class DeepDungeonQuest extends Quest {
 
     private static class WallSprite extends Sprite32x32 {
         public WallSprite(int num) {
-            super("wall", "quest.png", num, MyColors.DARK_GRAY, MyColors.DARK_RED, MyColors.TAN, MyColors.YELLOW);
+            super("wall", "quest.png", num, MyColors.GRAY_RED, MyColors.DARK_RED, MyColors.TAN, MyColors.YELLOW);
         }
     }
 

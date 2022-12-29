@@ -19,8 +19,8 @@ import java.awt.event.KeyEvent;
 public class QuestSubView extends AvatarSubView {
     private final QuestState state;
     private final Quest quest;
-    private static final MyColors BACKGROUND_COLOR = MyColors.DARK_GRAY;
-    private static final Sprite bgSprite = new FilledBlockSprite(BACKGROUND_COLOR);
+    private MyColors backgroundColor;
+    private Sprite bgSprite;
     private final SteppingMatrix<QuestNode> matrix;
     private static final LoopingSprite questCursor = new QuestCursorSprite();
     private boolean avatarEnabled;
@@ -30,6 +30,8 @@ public class QuestSubView extends AvatarSubView {
         this.quest = quest;
         this.matrix = matrix;
         avatarEnabled = true;
+        backgroundColor = quest.getBackgroundColor();
+        bgSprite = new FilledBlockSprite(backgroundColor);
     }
 
     @Override

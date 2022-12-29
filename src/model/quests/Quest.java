@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Party;
 import util.MyPair;
+import view.MyColors;
 import view.sprites.Sprite;
 import view.widget.QuestBackground;
 
@@ -95,4 +96,6 @@ public abstract class Quest implements Serializable {
     }
 
     public List<QuestBackground> getBackgroundSprites() { return new ArrayList<>(); }
+
+    public abstract MyColors getBackgroundColor();
 }
