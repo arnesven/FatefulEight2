@@ -22,23 +22,15 @@ public class CombatSubView extends SubView {
     public static final String TITLE_TEXT = "COMBAT";
     private final CombatEvent combat;
     private final CombatMatrix combatMatrix;
-    private Random random;
-    private Sprite treeUpperSprite = new Sprite32x32("treeupper", "combat.png", 0x10, MyColors.DARK_GREEN, MyColors.GREEN, MyColors.CYAN);
-    private Sprite treeLowerSprite = new Sprite32x32("treelower", "combat.png", 0x11, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.DARK_GRAY);
-    private Sprite grassLineSprite = new Sprite32x32("treelower", "combat.png", 0x12, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.GREEN);
-    private Sprite upperContour = new Sprite32x32("treecontourupper", "combat.png", 0x20, MyColors.BLACK, MyColors.DARK_GRAY, MyColors.WHITE);
-    private Sprite lowerContour = new Sprite32x32("treecontourlower", "combat.png", 0x21, MyColors.BLACK, MyColors.RED, MyColors.RED);
-    private Sprite[] grassSprites = new Sprite[3];
+    private final CombatTheme theme;
     private Sprite initiativeMarker = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
     private Set<MyPair<Point, RunOnceAnimationSprite>> ongoingEffects;
 
-    public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix) {
+    public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
-        for (int i = 0; i < 3; ++i) {
-            grassSprites[i] = new Sprite32x32("grass"+i, "combat.png", 0x13+i, MyColors.GREEN, MyColors.LIGHT_GREEN, MyColors.BEIGE);
-        }
         ongoingEffects = new HashSet<>();
         this.combatMatrix = combatMatrix;
+        this.theme = theme;
     }
 
 
@@ -57,7 +49,7 @@ public class CombatSubView extends SubView {
     public void drawArea(Model model) {
         ScreenHandler screenHandler = model.getScreenHandler();
         screenHandler.clearSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
-        drawBackground(model);
+        theme.drawBackground(model, X_OFFSET, Y_OFFSET);
 
         drawCombatants(model);
         drawEffects(model);
@@ -147,20 +139,6 @@ public class CombatSubView extends SubView {
             offset = ((Enemy) combatant).getEnemyGroup() - 'A';
         }
         return CharSprite.make((char) 0x04 + offset, MyColors.WHITE, MyColors.GRAY, MyColors.BLACK);
-    }
-
-    private void drawBackground(Model model) {
-        this.random = new Random(555);
-        for (int i = 0; i < 8; ++i) {
-            model.getScreenHandler().put(X_OFFSET + i*4, Y_OFFSET, treeUpperSprite);
-            model.getScreenHandler().register(upperContour.getName() + i, new Point(X_OFFSET + i*4, Y_OFFSET), upperContour);
-            model.getScreenHandler().put(X_OFFSET  + i*4, Y_OFFSET + 4, treeLowerSprite);
-            model.getScreenHandler().register(lowerContour.getName() + i, new Point(X_OFFSET + i*4, Y_OFFSET+4), lowerContour);
-            model.getScreenHandler().put(X_OFFSET  + i*4, Y_OFFSET + 8, grassLineSprite);
-            for (int y= 0; y < 6; y++) {
-                model.getScreenHandler().put(X_OFFSET + i*4, Y_OFFSET + (y+3)*4, grassSprites[random.nextInt(grassSprites.length)]);
-            }
-        }
     }
 
     public void addStrikeEffect(Combatant target, Model model, int damge, boolean critical) {

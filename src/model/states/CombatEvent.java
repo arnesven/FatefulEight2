@@ -10,9 +10,7 @@ import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.sprites.AnimationManager;
-import view.subviews.CombatSubView;
-import view.subviews.CombatSummarySubView;
-import view.subviews.StripedTransition;
+import view.subviews.*;
 
 import java.util.*;
 
@@ -29,9 +27,9 @@ public class CombatEvent extends DailyEventState {
     private boolean selectingFormation;
     private List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
-    private boolean fleeingEnabled = true;
+    private boolean fleeingEnabled;
 
-    public CombatEvent(Model model, List<Enemy> startingEnemies) {
+    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled) {
         super(model);
         selectingFormation = true;
         combatMatrix = new CombatMatrix();
@@ -41,7 +39,12 @@ public class CombatEvent extends DailyEventState {
         combatMatrix.addParty(model.getParty());
         setInitiativeOrder(model);
         destroyedEnemies = new HashMap<>();
-        this.subView = new CombatSubView(this, combatMatrix);
+        this.subView = new CombatSubView(this, combatMatrix, theme);
+        this.fleeingEnabled = fleeingEnabled;
+    }
+
+    public CombatEvent(Model model, List<Enemy> startingEnemies) {
+        this(model, startingEnemies, new GrassCombatTheme(), true);
     }
 
     @Override
