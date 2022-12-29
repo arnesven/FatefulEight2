@@ -137,7 +137,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     private static List<? extends Weapon> allBows() {
         return List.of(new TrainingBow(), new ShortBow(), new CompositeBow(), new RepeatingCrossbow(),
-                new HuntersBow(), new YewBow(), new BoneBow(), new Crossbow());
+                new HuntersBow(), new YewBow(), new BoneBow(), new Crossbow(), new LongBow());
     }
 
     private static List<? extends Weapon> allWands() {
