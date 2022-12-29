@@ -69,7 +69,7 @@ public class ClientSoundManager extends SoundManager {
     }
 
     public synchronized static void playBackgroundMusic(BackgroundMusic song) {
-        stopPlayingBackgroundSound();
+        //stopPlayingBackgroundSound();
         playBackgroundSound(song.getFileName());
     }
 }

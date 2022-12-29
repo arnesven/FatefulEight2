@@ -64,7 +64,7 @@ public abstract class SelectableListMenu extends GameView {
         if (!(previous instanceof SelectableListMenu)) {
             previous.update(model);
         }
-        model.getScreenHandler().clearForeground(xStart, xStart + width, yStart-2, yStart + height);
+        clearPreviousForeground(model, xStart, yStart);
         BorderFrame.drawFrame(model.getScreenHandler(),
                 xStart, yStart, width, height,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
@@ -75,6 +75,10 @@ public abstract class SelectableListMenu extends GameView {
         if (innerMenu != null) {
             innerMenu.internalUpdate(model);
         }
+    }
+
+    protected void clearPreviousForeground(Model model, int xStart, int yStart) {
+        model.getScreenHandler().clearForeground(xStart, xStart + width, yStart-2, yStart + height);
     }
 
     protected void drawNonScrollingParts(Model model, int xStart, int yStart) {

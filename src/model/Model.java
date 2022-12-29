@@ -5,6 +5,7 @@ import model.characters.*;
 import model.items.accessories.LeatherCap;
 import model.items.clothing.ChainMail;
 import model.items.clothing.StuddedJerkin;
+import model.items.spells.LevitateSpell;
 import model.items.weapons.BastardSword;
 import model.log.GameLog;
 import model.map.World;
@@ -68,6 +69,7 @@ public class Model {
         gameData.party.getInventory().add(new BastardSword());
         gameData.party.getInventory().add(new StuddedJerkin());
         gameData.party.getInventory().add(new LeatherCap());
+        gameData.party.getInventory().add(new LevitateSpell());
         getParty().add(gc);
         state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }

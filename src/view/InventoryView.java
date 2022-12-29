@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.items.EquipableItem;
 import model.items.Equipment;
 import model.items.Item;
+import model.items.spells.Spell;
 import model.items.weapons.Weapon;
 import util.Arithmetics;
 import util.MyStrings;
@@ -28,6 +29,11 @@ public class InventoryView extends SelectableListMenu {
 
     public InventoryView(GameView previous) {
         super(previous, WIDTH-29, HEIGHT-3);
+    }
+
+    @Override
+    protected void clearPreviousForeground(Model model, int xStart, int yStart) {
+        model.getScreenHandler().clearForeground(xStart, xStart + WIDTH, yStart-4, yStart + HEIGHT);
     }
 
     @Override
@@ -183,6 +189,9 @@ public class InventoryView extends SelectableListMenu {
                             } else {
                                 setInnerMenu(new SimpleMessageView(EquipItemMenu.this, errorMessage), model);
                             }
+                        } else if (itemToEquip instanceof Spell) {
+                            System.out.println(gc.getName() + " casts " + itemToEquip.getName() + "!");
+                            setTimeToTransition(true);
                         } else {
                             setTimeToTransition(true);
                         }
