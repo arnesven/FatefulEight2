@@ -39,7 +39,7 @@ public abstract class Spell extends Item {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
             return false;
         }
-        SkillCheckResult result = caster.testSkill(getSkillForColor(color), difficulty);
+        SkillCheckResult result = caster.testSkill(getSkillForColor(color), difficulty, caster.getRankForSkill(Skill.SpellCasting));
         if (result.isSuccessful()) {
             state.println(getName() + " was successfully cast (" + result.asString() + ")");
         } else {

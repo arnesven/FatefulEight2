@@ -6,6 +6,7 @@ import model.items.accessories.LeatherCap;
 import model.items.clothing.StuddedJerkin;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.LevitateSpell;
+import model.items.spells.TurnUndeadSpell;
 import model.items.weapons.BastardSword;
 import model.log.GameLog;
 import model.map.World;
@@ -71,6 +72,7 @@ public class Model {
         gameData.party.getInventory().add(new LeatherCap());
         gameData.party.getInventory().add(new LevitateSpell());
         gameData.party.getInventory().add(new HarmonizeSpell());
+        gameData.party.getInventory().add(new TurnUndeadSpell());
         getParty().add(gc);
         getParty().add(getAllCharacters().get(1));
         state = new QuestState(this, gameData.questDeck.getRandomQuest());

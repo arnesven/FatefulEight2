@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
+import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.*;
 import model.states.QuestState;
 import model.states.SpellCastException;
@@ -26,7 +27,7 @@ public class DeepDungeonQuest extends Quest {
             "Recently, an antiques dealer has been " +
             "looking for a crew to clear it and bring " +
             "back an ancient magical artifact.";
-    private static final String endText = "With the vampire dealt with, you are free to collect the" +
+    private static final String endText = "With the vampire dealt with, you are free to collect the " +
             "artifact. The party returns to the antiques dealer and collects the reward.";
     private static List<QuestBackground> bgSprites = makeBackground();
 
@@ -57,14 +58,19 @@ public class DeepDungeonQuest extends Quest {
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        QuestJunction junc0 = new QuestStartPoint(
+        QuestJunction junc0 = new DeepDungeonStartingPoint(
                 List.of(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL), new QuestEdge(scenes.get(0).get(1))),
                 "Looks like we have some skeleton sentries up ahead.");
         QuestJunction junc1 = new BoobyTrapJunction(scenes);
-        QuestJunction junc2 = new QuestDecisionPoint(4, 6,
+        QuestDecisionPoint junc2 = new QuestDecisionPoint(4, 6,
                 List.of(new QuestEdge(scenes.get(3).get(0)),
                         new QuestEdge(scenes.get(3).get(1))),
                 "Is that a vampire lord?");
+        junc2.addSpellCallback(new TurnUndeadSpell().getName(), (model, state, spell, caster) -> {
+            state.println("The vampire lord withers and turns into dust before your eyes.");
+            ((CombatSubScene)getScenes().get(3).get(0)).setDefeated(true);
+            return new QuestEdge(getSuccessEndingNode());
+        });
         return List.of(junc0, junc1, junc2,
                 new SimpleJunction(4, 1, new QuestEdge(junc1)),
                 new SimpleJunction(4, 4, new QuestEdge(junc2)));
@@ -165,6 +171,17 @@ public class DeepDungeonQuest extends Quest {
             this.addSpellCallback(new LevitateSpell().getName(), (model, state, spell, caster) -> {
                 state.println(caster.getFirstName() + " levitates the party over the booby trap!");
                 return new QuestEdge(getJunctions().get(2));
+            });
+        }
+    }
+
+    private class DeepDungeonStartingPoint extends QuestStartPoint {
+        public DeepDungeonStartingPoint(List<QuestEdge> questEdges, String s) {
+            super(questEdges, s);
+            addSpellCallback(new TurnUndeadSpell().getName(), (model, state, spell, caster) -> {
+                state.println("The Skeletons are immediately reduced to dust.");
+                ((CombatSubScene)getScenes().get(0).get(0)).setDefeated(true);
+                return new QuestEdge(getJunctions().get(1));
             });
         }
     }

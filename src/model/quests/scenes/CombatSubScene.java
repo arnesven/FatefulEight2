@@ -42,6 +42,9 @@ public abstract class CombatSubScene extends QuestSubScene {
     private boolean hasBeenDefeated() {
         return defeated;
     }
+    public void setDefeated(boolean d) {
+        defeated = d;
+    }
 
     @Override
     public final String getDescription() {

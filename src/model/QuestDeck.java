@@ -15,8 +15,8 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
     private Map<Quest, HexLocation> acceptedQuests = new HashMap<>();
 
     public Quest getRandomQuest() {
-        return new MansionHeistQuest();
-        //return new DeepDungeonQuest();
+        //return new MansionHeistQuest();
+        return new DeepDungeonQuest();
     }
 
     public void accept(Quest quest, HexLocation location) {
