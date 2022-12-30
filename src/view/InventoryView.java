@@ -194,7 +194,8 @@ public class InventoryView extends SelectableListMenu {
                                 setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
                                         "You cannot cast " + itemToEquip.getName() + " right now."), model);
                             } else {
-                                setTimeToTransition(true);
+                                InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
+                                        gc.getFirstName() + " is casting " + itemToEquip.getName() + "..."), model);
                             }
                         } else {
                             setTimeToTransition(true);

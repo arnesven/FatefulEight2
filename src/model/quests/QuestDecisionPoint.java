@@ -81,6 +81,7 @@ public class QuestDecisionPoint extends QuestJunction {
             } catch (SpellCastException sce) {
                 state.println("");
                 boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
+                model.getLog().waitForAnimationToFinish();
                 if (success) {
                     return spellCallbacks.get(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
                 }
