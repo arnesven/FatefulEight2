@@ -3,6 +3,7 @@ package model;
 import model.actions.DailyAction;
 import model.characters.*;
 import model.items.accessories.LeatherCap;
+import model.items.clothing.FullPlateArmor;
 import model.items.clothing.StuddedJerkin;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.LevitateSpell;
@@ -73,8 +74,11 @@ public class Model {
         gameData.party.getInventory().add(new LevitateSpell());
         gameData.party.getInventory().add(new HarmonizeSpell());
         gameData.party.getInventory().add(new TurnUndeadSpell());
+        gameData.party.getInventory().add(new FullPlateArmor());
         getParty().add(gc);
-        getParty().add(getAllCharacters().get(1));
+        for (int i = 1; i < 8; ++i) {
+            getParty().add(getAllCharacters().get(i));
+        }
         state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 

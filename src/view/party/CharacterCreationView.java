@@ -78,9 +78,13 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private GameCharacter makeCharacter() {
         String firstName = buffers.get(0).first.toString();
-        firstName = firstName.substring(0, firstName.indexOf("þ"));
+        if (firstName.contains("þ")) {
+            firstName = firstName.substring(0, firstName.indexOf("þ"));
+        }
         String lastName = buffers.get(1).first.toString();
-        lastName = lastName.substring(0, lastName.indexOf("þ"));
+        if (lastName.contains("þ")) {
+            lastName = lastName.substring(0, lastName.indexOf("þ"));
+        }
         return new GameCharacter(firstName, lastName, raceSet[selectedRace], classSet[selectedClass], makeAppearance(),
                 new CharacterClass[]{classSet[other1], classSet[other2], classSet[other3]});
     }

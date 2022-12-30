@@ -33,7 +33,7 @@ public class MenuView extends GameView {
                 new MyPair<>("Party", new PartyView(previous)),
                 new MyPair<>("Map", new FullMapView(previous)),
                 new MyPair<>("Inventory", new InventoryView(previous)),
-                new MyPair<>("Skills", new NotImplementedView(previous)),
+                new MyPair<>("Skills", new SkillsView(previous)),
                 new MyPair<>("Spells", new SpellsView(previous)),
                 new MyPair<>("Exit Game", null));
     }
