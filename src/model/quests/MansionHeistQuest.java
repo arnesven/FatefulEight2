@@ -15,6 +15,8 @@ import model.states.QuestState;
 import model.states.SpellCastException;
 import view.MyColors;
 import view.sprites.Sprite32x32;
+import view.subviews.CombatTheme;
+import view.subviews.MansionTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -42,6 +44,11 @@ public class MansionHeistQuest extends Quest {
 
     public MansionHeistQuest() {
         super("Mansion Heist", "a shady contact", QuestDifficulty.MEDIUM, -1, 35, text, endText);
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new MansionTheme();
     }
 
     @Override
