@@ -1,12 +1,14 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.MansionGuardEnemy;
 import model.enemies.SoldierEnemy;
 import model.items.spells.LevitateSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
@@ -160,25 +162,10 @@ public class MansionHeistQuest extends Quest {
     private class MansionHeistStartingPoint extends QuestStartPoint {
         public MansionHeistStartingPoint(List<QuestEdge> questEdges, String text) {
             super(questEdges, text);
-        }
-
-        @Override
-        public QuestEdge run(Model model, QuestState state) {
-            model.getSpellHandler().acceptSpell(new LevitateSpell().getName());
-            do {
-                try {
-                    return super.run(model, state);
-                } catch (SpellCastException sce) {
-                    if (sce.getSpell() instanceof LevitateSpell) {
-                        state.println("");
-                        boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
-                        if (success) {
-                            state.println(sce.getCaster().getFirstName() + " levitates the party to the second floor!");
-                            return new QuestEdge(getJunctions().get(1));
-                        }
-                    }
-                }
-            } while (true);
+            addSpellCallback(new LevitateSpell().getName(), (model, state, spell, caster) -> {
+                state.println(caster.getFirstName() + " levitates the party to the second floor!");
+                return new QuestEdge(getJunctions().get(1));
+            });
         }
     }
 

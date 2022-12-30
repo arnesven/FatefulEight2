@@ -1,8 +1,10 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.spells.LevitateSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.*;
 import model.states.QuestState;
 import model.states.SpellCastException;
@@ -159,25 +161,11 @@ public class DeepDungeonQuest extends Quest {
                             new QuestEdge(scenes.get(1).get(2)),
                             new QuestEdge(scenes.get(2).get(0))),
                     "Watch out, that looks like a booby trap right there.");
-        }
 
-        @Override
-        public QuestEdge run(Model model, QuestState state) {
-            model.getSpellHandler().acceptSpell(new LevitateSpell().getName());
-            do {
-                try {
-                    return super.run(model, state);
-                } catch (SpellCastException sce) {
-                    if (sce.getSpell() instanceof LevitateSpell) {
-                        state.println("");
-                        boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
-                        if (success) {
-                            state.println(sce.getCaster().getFirstName() + " levitates the party over the booby trap!");
-                            return new QuestEdge(getJunctions().get(2));
-                        }
-                    }
-                }
-            } while (true);
+            this.addSpellCallback(new LevitateSpell().getName(), (model, state, spell, caster) -> {
+                state.println(caster.getFirstName() + " levitates the party over the booby trap!");
+                return new QuestEdge(getJunctions().get(2));
+            });
         }
     }
 }

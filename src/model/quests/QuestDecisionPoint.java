@@ -5,15 +5,19 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.GameState;
 import model.states.QuestState;
+import model.states.SpellCastException;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class QuestDecisionPoint extends QuestJunction {
 
     private final String leaderTalk;
+    private final Map<String, SpellCallback> spellCallbacks = new HashMap<>();
 
     public QuestDecisionPoint(int column, int row, List<QuestEdge> connections, String leaderTalk) {
         super(column, row);
@@ -50,6 +54,10 @@ public class QuestDecisionPoint extends QuestJunction {
         } while (true);
     }
 
+    public void addSpellCallback(String s, SpellCallback callback) {
+        spellCallbacks.put(s, callback);
+    }
+
     @Override
     public QuestEdge run(Model model, QuestState state) {
         if (!leaderTalk.equals("")) {
@@ -62,6 +70,21 @@ public class QuestDecisionPoint extends QuestJunction {
         if (!result.isSuccessful()) {
             return getConnection(0);
         }
-        return questNodeInput(state);
+
+        for (String spellName : spellCallbacks.keySet()) {
+            model.getSpellHandler().acceptSpell(spellName);
+        }
+
+        do {
+            try {
+                return questNodeInput(state);
+            } catch (SpellCastException sce) {
+                state.println("");
+                boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
+                if (success) {
+                    return spellCallbacks.get(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+                }
+            }
+        } while (true);
     }
 }
