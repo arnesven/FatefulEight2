@@ -49,7 +49,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(13,8);
+        position = new Point(12,9);
         cursorSprites = makeCursorSprites();
     }
 

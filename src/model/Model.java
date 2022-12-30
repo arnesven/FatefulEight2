@@ -64,22 +64,22 @@ public class Model {
         //gameView = new MainGameView();
 
         gameView.transitionedTo(this);
-    //    state = new WaitForStartOfGameState(this);
+        state = new WaitForStartOfGameState(this);
 
-        GameCharacter gc = getAllCharacters().get(0);
-        gc.setLevel(5);
-        gameData.party.getInventory().add(new BastardSword());
-        gameData.party.getInventory().add(new StuddedJerkin());
-        gameData.party.getInventory().add(new LeatherCap());
-        gameData.party.getInventory().add(new LevitateSpell());
-        gameData.party.getInventory().add(new HarmonizeSpell());
-        gameData.party.getInventory().add(new TurnUndeadSpell());
-        gameData.party.getInventory().add(new FullPlateArmor());
-        getParty().add(gc);
-        for (int i = 1; i < 8; ++i) {
-            getParty().add(getAllCharacters().get(i));
-        }
-        state = new QuestState(this, gameData.questDeck.getRandomQuest());
+//        GameCharacter gc = getAllCharacters().get(0);
+//        gc.setLevel(5);
+//        gameData.party.getInventory().add(new BastardSword());
+//        gameData.party.getInventory().add(new StuddedJerkin());
+//        gameData.party.getInventory().add(new LeatherCap());
+//        gameData.party.getInventory().add(new LevitateSpell());
+//        gameData.party.getInventory().add(new HarmonizeSpell());
+//        gameData.party.getInventory().add(new TurnUndeadSpell());
+//        gameData.party.getInventory().add(new FullPlateArmor());
+//        getParty().add(gc);
+//        for (int i = 1; i < 8; ++i) {
+//            getParty().add(getAllCharacters().get(i));
+//        }
+//        state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
     public void startGame(boolean loadFromFile) {

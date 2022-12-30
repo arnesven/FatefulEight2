@@ -1,10 +1,14 @@
 package view;
 
 import model.Model;
+import view.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 
 public class IntroGameView extends GameView {
+
+    private static Sprite splashSprite = makeSprite();
+
     public IntroGameView() {
         super(true);
     }
@@ -21,9 +25,8 @@ public class IntroGameView extends GameView {
 
     @Override
     public void internalUpdate(Model model) {
-        String message = "Fateful Eight - Intro Screen";
-        BorderFrame.drawCentered(model.getScreenHandler(), message, 20, MyColors.WHITE);
-        BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 22, MyColors.WHITE);
+        BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 40, MyColors.WHITE);
+        model.getScreenHandler().put(0, 0, splashSprite);
     }
 
     @Override
@@ -34,5 +37,12 @@ public class IntroGameView extends GameView {
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         super.setTimeToTransition(true);
+    }
+
+
+    private static Sprite makeSprite() {
+        Sprite sp = new Sprite("splash", "splash.png", 0, 0, 640, 400);
+        MyColors.transformImage(sp);
+        return sp;
     }
 }

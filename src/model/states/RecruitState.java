@@ -50,10 +50,14 @@ public class RecruitState extends GameState {
     public GameState run(Model model) {
         if (recruitables.size() > 0) {
             model.setSubView(new RecruitSubView(recruitMatrix));
+            String dismiss = "Dismiss (D) ";
+            if (model.getParty().size() == 1) {
+                dismiss = "";
+            }
             print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
                     " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
                     recruitableNames() + ". " +
-                    "Do you want to recruit (R), Dismiss (D) or are you done (Q)? ");
+                    "Do you want to recruit (R), " + dismiss + "or are you done (Q)? ");
             do {
                 char selectedAction = lineInput().toUpperCase().charAt(0);
                 if (selectedAction == 'R') {
