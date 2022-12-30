@@ -70,6 +70,7 @@ public class Model {
         gameData.party.getInventory().add(new LeatherCap());
         gameData.party.getInventory().add(new LevitateSpell());
         getParty().add(gc);
+        getParty().add(getAllCharacters().get(1));
         state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 

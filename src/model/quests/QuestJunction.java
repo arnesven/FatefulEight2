@@ -5,8 +5,8 @@ import java.util.List;
 
 public abstract class QuestJunction extends QuestNode {
 
-    private final int column;
-    private final int row;
+    private int column;
+    private int row;
     private List<QuestEdge> connections;
 
     public QuestJunction(int column, int row) {
@@ -20,9 +20,17 @@ public abstract class QuestJunction extends QuestNode {
         return column;
     }
 
+    protected void setColumn(int c) {
+        column = c;
+    }
+
     @Override
     public int getRow() {
         return row;
+    }
+
+    protected void setRow(int r) {
+        row = r;
     }
 
     public QuestEdge getConnection(int index) {

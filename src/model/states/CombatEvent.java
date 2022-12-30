@@ -283,7 +283,8 @@ public class CombatEvent extends DailyEventState {
                 backMovers.add(combatant);
             }
         } else {
-            println("Cannot change formation for dead view.party member.");
+            println("");
+            println("Cannot change formation for dead party member.");
         }
     }
 

@@ -6,15 +6,11 @@ import model.classes.Skill;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.MansionGuardEnemy;
-import model.enemies.SoldierEnemy;
 import model.items.spells.LevitateSpell;
-import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
-import model.states.QuestState;
-import model.states.SpellCastException;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
@@ -37,9 +33,13 @@ public class MansionHeistQuest extends Quest {
             new MansionSprite(0), new MansionSprite(1),new MansionSprite(2),
             new MansionSprite(3), new MansionSprite(4),new MansionSprite(5)};
     private static final Sprite32x32 solidWall = new Sprite32x32("solidwall", "quest.png", 0x35,
-            MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.CYAN, MyColors.CYAN);
+            MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.DARK_BROWN, MyColors.CYAN);
     private static final Sprite32x32 blockWall = new Sprite32x32("blockWall", "quest.png", 0x32,
             MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.CYAN, MyColors.CYAN);
+    private static final Sprite32x32 outdoors = new Sprite32x32("outdoors", "combat.png", 0x13,
+            MyColors.DARK_GREEN, MyColors.GREEN, MyColors.CYAN, MyColors.CYAN);
+    private static final Sprite32x32 outdoorWall = new Sprite32x32("outdoorWall", "quest.png", 0x35,
+            MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.DARK_BROWN, MyColors.CYAN);
     private static List<QuestBackground> bgSprites = makeBackground();
 
     private static final String endText = "You return to your contact and deliver the contents of Lady Golbrads safe.";
@@ -60,7 +60,7 @@ public class MansionHeistQuest extends Quest {
                                 new SoloSkillCheckSubScene(2, 0, Skill.Persuade, 8,
                                         "Perhaps we can come up with an convincing reason for why we are here."))),
                         new QuestScene("Side Entrance",
-                            List.of(new CollectiveSkillCheckSubScene(1, 2, Skill.SeekInfo, 10,
+                            List.of(new CollaborativeSkillCheckSubScene(1, 3, Skill.SeekInfo, 10,
                                 "There could be a side entrance to the mansion. If we ask around a bit we may have an easier time doing this job."))),
                         new QuestScene("First Floor Guards",
                                 List.of(new GuardsCombatScene(3, 4, 3, "upstairs"),
@@ -81,7 +81,7 @@ public class MansionHeistQuest extends Quest {
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
         QuestJunction qd0 = new MansionHeistStartingPoint(List.of(
                 new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL),
-                new QuestEdge(scenes.get(0).get(1)),
+                new QuestEdge(scenes.get(0).get(1), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(1).get(0), QuestEdge.VERTICAL)),
                 "Hmm, how to deal with the mansion's ground floor?");
 
@@ -162,6 +162,7 @@ public class MansionHeistQuest extends Quest {
     private class MansionHeistStartingPoint extends QuestStartPoint {
         public MansionHeistStartingPoint(List<QuestEdge> questEdges, String text) {
             super(questEdges, text);
+            this.setRow(3);
             addSpellCallback(new LevitateSpell().getName(), (model, state, spell, caster) -> {
                 state.println(caster.getFirstName() + " levitates the party to the second floor!");
                 return new QuestEdge(getJunctions().get(1));
@@ -181,29 +182,40 @@ public class MansionHeistQuest extends Quest {
         grid[6][0] = mansionSprites[2];
         grid[7][0] = mansionSprites[0];
 
-        grid[4][1] = solidWall;
+        grid[4][1] = mansionSprites[5];
+        grid[5][1] = mansionSprites[1];
+        grid[6][1] = mansionSprites[0];
+        grid[7][1] = mansionSprites[0];
 
-        grid[4][2] = mansionSprites[5];
-        grid[5][2] = mansionSprites[1];
+        grid[0][2] = mansionSprites[1];
+        grid[1][2] = mansionSprites[4];
+        grid[2][2] = mansionSprites[3];
+        grid[3][2] = mansionSprites[0];
+        grid[4][2] = mansionSprites[3];
+        grid[5][2] = mansionSprites[0];
         grid[6][2] = mansionSprites[0];
         grid[7][2] = mansionSprites[0];
 
-        grid[0][3] = mansionSprites[0];
-        grid[1][3] = mansionSprites[0];
-        grid[2][3] = mansionSprites[3];
-        grid[3][3] = mansionSprites[0];
-        grid[4][3] = mansionSprites[3];
-        grid[5][3] = mansionSprites[0];
-        grid[6][3] = mansionSprites[0];
-        grid[7][3] = mansionSprites[0];
+        grid[1][3] = outdoorWall;
+
+
+        grid[1][4] = outdoorWall;
+        grid[1][5] = outdoorWall;
 
         for (int col = 0; col < 8; col++) {
             grid[col][6] = mansionSprites[0];
         }
         grid[3][6] = mansionSprites[1];
 
-        for (int row = 3; row < 9; ++row) {
-            grid[0][row] = blockWall;
+        for (int row = 2; row < 9; ++row) {
+            if (row > 5) {
+                grid[0][row] = blockWall;
+            } else if (row > 2) {
+                grid[0][row] = outdoors;
+                grid[6][row] = blockWall;
+            } else {
+                grid[6][row] = blockWall;
+            }
             grid[7][row] = blockWall;
         }
 
@@ -211,7 +223,7 @@ public class MansionHeistQuest extends Quest {
         for (int col = 0; col < grid.length; ++col) {
             for (int row = 0; row < grid[0].length; ++row) {
                 if (grid[col][row] != null) {
-                    result.add(new QuestBackground(new Point(col, row), grid[col][row], row < 3));
+                    result.add(new QuestBackground(new Point(col, row), grid[col][row], row == 0 || (row < 2 && col > 3)));
                 }
             }
         }
