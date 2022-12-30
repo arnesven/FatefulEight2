@@ -22,9 +22,8 @@ import java.util.List;
 public class InventoryView extends SelectableListMenu {
     private static final int WIDTH = 48;
     private static final int HEIGHT = 29;
-    private AnimatedCharSprite arrowSprite = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
+    private static AnimatedCharSprite arrowSprite = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
     private static ItemTab[] tabNames = makeTabs();
-
     private int selectedTab = 0;
 
     public InventoryView(GameView previous) {

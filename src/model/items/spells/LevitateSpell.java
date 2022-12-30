@@ -19,7 +19,7 @@ public class LevitateSpell extends Spell {
 
     @Override
     public String getShoppingDetails() {
-        return "A spell for moving an object through the air via telekinetic means.";
+        return "A spell for moving objects through the air via telekinesis.";
     }
 
     @Override

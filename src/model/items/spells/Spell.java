@@ -11,6 +11,7 @@ import model.states.GameState;
 import view.MyColors;
 
 public abstract class Spell extends Item {
+    public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK};
     private final MyColors color;
     private final int difficulty;
     private final int hpCost;
