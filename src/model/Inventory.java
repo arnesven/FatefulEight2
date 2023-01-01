@@ -5,12 +5,14 @@ import model.items.accessories.*;
 import model.items.clothing.Clothing;
 import model.items.clothing.DragonArmor;
 import model.items.clothing.WarmCape;
+import model.items.potions.Potion;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Inventory implements Serializable {
@@ -18,6 +20,7 @@ public class Inventory implements Serializable {
     private List<Clothing> clothing = new ArrayList<>();
     private List<Accessory> accessories = new ArrayList<>();
     private List<Spell> spells = new ArrayList<>();
+    private List<Potion> potions = new ArrayList<>();
     private int food = 10;
 
     public Inventory() { }
@@ -36,6 +39,8 @@ public class Inventory implements Serializable {
 
     public void add(Spell spell) { spells.add(spell); }
 
+    public void add(Potion potion) { potions.add(potion); }
+
     public List<Weapon> getWeapons() {
         return weapons;
     }
@@ -43,6 +48,8 @@ public class Inventory implements Serializable {
     public List<Clothing> getClothing() {
         return clothing;
     }
+
+    public List<Potion> getPotions() { return potions; }
 
     public void remove(Weapon weapon) {
         this.weapons.remove(weapon);
@@ -66,6 +73,7 @@ public class Inventory implements Serializable {
         items.addAll(clothing);
         items.addAll(accessories);
         items.addAll(spells);
+        items.addAll(potions);
         return items;
     }
 

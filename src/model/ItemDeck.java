@@ -3,6 +3,8 @@ package model;
 import model.items.*;
 import model.items.accessories.*;
 import model.items.clothing.*;
+import model.items.potions.HealthPotion;
+import model.items.potions.Potion;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
 import model.items.weapons.SkullWand;
@@ -53,6 +55,10 @@ public class ItemDeck extends ArrayList<Item> {
 
     public Weapon getRandomWand() { return (Weapon) MyRandom.sample(allWands()).copy(); }
 
+    public Potion getRandomPotion() {
+        return (Potion)MyRandom.sample(allPotions()).copy();
+    }
+
     public Item getRandomItem() { return draw(1).get(0); }
 
     private static Collection<? extends Item> allItems() {
@@ -65,7 +71,12 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allHeadGear());
         allItems.addAll(allShields());
         allItems.addAll(allSpells());
+        allItems.addAll(allPotions());
         return allItems;
+    }
+
+    private static List<Potion> allPotions() {
+        return List.of(new HealthPotion());
     }
 
     private static List<HeadGearItem> allHeadGear() {

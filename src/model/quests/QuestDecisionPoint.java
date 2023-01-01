@@ -3,7 +3,6 @@ package model.quests;
 import model.Model;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.states.GameState;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import view.MyColors;
@@ -64,28 +63,49 @@ public class QuestDecisionPoint extends QuestJunction {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
             model.getLog().waitForAnimationToFinish();
         }
-        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
-        state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
-        model.getLog().waitForAnimationToFinish();
-        if (!result.isSuccessful()) {
+
+        if (leadershipTestFailed(model, state)) {
             return getConnection(0);
         }
 
-        for (String spellName : spellCallbacks.keySet()) {
-            model.getSpellHandler().acceptSpell(spellName);
-        }
-
+        acceptAllSpells(model);
+        QuestEdge finalEdge;
         do {
             try {
-                return questNodeInput(state);
+                finalEdge = questNodeInput(state);
+                break;
             } catch (SpellCastException sce) {
                 state.println("");
                 boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
                 model.getLog().waitForAnimationToFinish();
                 if (success) {
-                    return spellCallbacks.get(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+                    finalEdge = spellCallbacks.get(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+                    break;
                 }
             }
         } while (true);
+
+        unacceptAllSpells(model);
+        return finalEdge;
+    }
+
+    private boolean leadershipTestFailed(Model model, QuestState state) {
+        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
+        state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
+        model.getLog().waitForAnimationToFinish();
+        return !result.isSuccessful();
+    }
+
+    private void acceptAllSpells(Model model) {
+        for (String spellName : spellCallbacks.keySet()) {
+            model.getSpellHandler().acceptSpell(spellName);
+        }
+    }
+
+
+    private void unacceptAllSpells(Model model) {
+        for (String spellName : spellCallbacks.keySet()) {
+            model.getSpellHandler().unacceptSpell(spellName);
+        }
     }
 }

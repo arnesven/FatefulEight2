@@ -33,4 +33,8 @@ public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
         remove(p);
         return p;
     }
+
+    public void unacceptSpell(String spellName) {
+        acceptedSpells.remove(spellName);
+    }
 }

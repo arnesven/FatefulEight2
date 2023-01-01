@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.items.EquipableItem;
 import model.items.Equipment;
 import model.items.Item;
+import model.items.UsableItem;
+import model.items.potions.Potion;
 import model.items.spells.Spell;
 import model.items.weapons.Weapon;
 import util.Arithmetics;
@@ -147,7 +149,9 @@ public class InventoryView extends SelectableListMenu {
                 new ItemTab("Other   ") {
                     @Override
                     public List<? extends Item> getItems(Model model) {
-                        return model.getParty().getInventory().getSpells();
+                        List<Item> result = new ArrayList<>(model.getParty().getInventory().getSpells());
+                        result.addAll(model.getParty().getInventory().getPotions());
+                        return result;
                     }
                 }};
     }
@@ -167,8 +171,13 @@ public class InventoryView extends SelectableListMenu {
 
         @Override
         protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-            String label = itemToEquip instanceof  EquipableItem ? "Equip" : "Cast?";
-            return List.of(new TextDecoration(label, xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
+            String label = "Equip";
+            if (itemToEquip instanceof Spell) {
+                label = "Cast";
+            } else if (itemToEquip instanceof UsableItem){
+                label = "Use";
+            }
+            return List.of(new TextDecoration(label+"?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         }
 
         @Override
@@ -189,12 +198,22 @@ public class InventoryView extends SelectableListMenu {
                                 setInnerMenu(new SimpleMessageView(EquipItemMenu.this, errorMessage), model);
                             }
                         } else if (itemToEquip instanceof Spell) {
-                            if (!model.getSpellHandler().tryCast((Spell)itemToEquip, gc)) {
+                            if (!model.getSpellHandler().tryCast((Spell) itemToEquip, gc)) {
                                 setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
                                         "You cannot cast " + itemToEquip.getName() + " right now."), model);
                             } else {
                                 InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
                                         gc.getFirstName() + " is casting " + itemToEquip.getName() + "..."), model);
+                            }
+                        } else if (itemToEquip instanceof UsableItem) {
+                            if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
+                                String message = ((UsableItem) itemToEquip).useYourself(model, gc);
+                                if (!message.equals("")) {
+                                    InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this, message), model);
+                                }
+                                setTimeToTransition(true);
+                            } else {
+                                InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this, itemToEquip.getName() + " cannot be used on " + gc.getName() + "."), model);
                             }
                         } else {
                             setTimeToTransition(true);

@@ -13,6 +13,7 @@ public class FaeriesEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        // TODO: Faeries attack party if party evil enough?
         println("Exhausted after a day of travelling through the rough " +
                 "the party stumbles into a clearing. As you sit down to " +
                 "rest you notice small glowing orbs all around you. ");

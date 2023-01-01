@@ -24,9 +24,7 @@ import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
 import java.awt.Point;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class GameCharacter extends Combatant {
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
@@ -145,37 +143,84 @@ public class GameCharacter extends Combatant {
                 if (target instanceof GameCharacter) {
                     combatEvent.println("You cannot attack a party member.");
                 } else {
-                    for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
-                        SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this));
-                        int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
-                        String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
-                        if (result.isCritical() && equipment.getWeapon().allowsCriticalHits()) {
-                            damage *= 2;
-                            extraInfo += " x2 Critical Hit";
-                        }
-                        extraInfo += ")";
-                        combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
-                        combatEvent.addStrikeEffect(target, model, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
-                        combatEvent.doDamageToEnemy(target, damage, this);
-                    }
+                    performAttack(model, combatEvent, target);
                     break;
                 }
             } else if (isLeader() && selectedAction == 'F' && combatEvent.fleeingEnabled()) {
                 if (model.getParty().size() > 1) {
-                    SkillCheckResult result = testSkill(Skill.Leadership, 5);
-                    combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
-                    if (result.isSuccessful()) {
-                        combatEvent.setPartyFled(true);
-                    }
+                    performFleeFromBattle(model, combatEvent);
                     break;
                 } else {
                     combatEvent.setPartyFled(true);
+                }
+            } else if (selectedAction == 'I') {
+                Set<UsableItem> usableItems = new HashSet<>();
+                usableItems.addAll(model.getParty().getInventory().getPotions());
+                if (usableItems.size() > 0) {
+                    boolean used = performUseItem(model, combatEvent, usableItems);
+                    if (used) {
+                        break;
+                    }
+                } else {
+                    combatEvent.println("You have no usable items.");
                 }
             } else if (selectedAction == 'P') {
                 break;
             }
         }
 
+    }
+
+    private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
+        for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
+            SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this));
+            int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
+            String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
+            if (result.isCritical() && equipment.getWeapon().allowsCriticalHits()) {
+                damage *= 2;
+                extraInfo += " x2 Critical Hit";
+            }
+            extraInfo += ")";
+            combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
+            combatEvent.addStrikeEffect(target, model, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
+            combatEvent.doDamageToEnemy(target, damage, this);
+        }
+    }
+
+    private void performFleeFromBattle(Model model, CombatEvent combatEvent) {
+        SkillCheckResult result = testSkill(Skill.Leadership, 5);
+        combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
+        if (result.isSuccessful()) {
+            combatEvent.setPartyFled(true);
+        }
+    }
+
+
+    private boolean performUseItem(Model model, CombatEvent combatEvent, Set<UsableItem> usableItems) {
+        List<UsableItem> items = new ArrayList<>(usableItems);
+        combatEvent.print("Which item would you like to use? ");
+        for (int i = 0; i < items.size(); ++i) {
+            combatEvent.print(items.get(i).getName() + " (" + (i+1) + "), ");
+        }
+        combatEvent.print("or cancel (Q)? ");
+        try {
+            int selected = Integer.parseInt(combatEvent.lineInput());
+            if (0 < selected && selected <= items.size()) {
+                UsableItem item = items.get(selected-1);
+                combatEvent.print("On whom do you wish to use the " + item.getName() + "?");
+                GameCharacter target = model.getParty().partyMemberInput(model, combatEvent, this);
+                if (item.canBeUsedOn(model, target)) {
+                    String message = item.useYourself(model, target);
+                    combatEvent.println(message);
+                    return true;
+                } else {
+                    combatEvent.println(item.getName() + " cannot be used on " + target.getFirstName() + ".");
+                }
+            }
+        } catch (NumberFormatException nfe) {
+
+        }
+        return false;
     }
 
     private boolean mayAttackFromBackRow() {

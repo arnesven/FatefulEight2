@@ -1,6 +1,8 @@
 package model.items;
 
 import model.Inventory;
+import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
