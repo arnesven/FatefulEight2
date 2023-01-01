@@ -82,7 +82,7 @@ public class Model {
 //        state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
-    public void startGame(boolean loadFromFile) throws FileNotFoundException {
+    public void startGame(boolean loadFromFile) throws FileNotFoundException, CorruptSaveFileException {
         if (loadFromFile) {
             ObjectInputStream ois = null;
             try {
@@ -93,7 +93,7 @@ public class Model {
             } catch (FileNotFoundException fnfe) {
                 throw fnfe;
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new CorruptSaveFileException();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

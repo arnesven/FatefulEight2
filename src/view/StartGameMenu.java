@@ -1,5 +1,6 @@
 package view;
 
+import model.CorruptSaveFileException;
 import model.Model;
 import view.sprites.ArrowSprites;
 
@@ -55,6 +56,8 @@ public class StartGameMenu extends GameView {
             } catch (FileNotFoundException e) {
                 model.transitionToDialog(new SimpleMessageView(this, "No save file found."));
                 //setTimeToTransition(true);
+            } catch (CorruptSaveFileException csfe) {
+                model.transitionToDialog(new SimpleMessageView(this, "Save file is incompatible or corrupt. Loading aborted."));
             }
 
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
