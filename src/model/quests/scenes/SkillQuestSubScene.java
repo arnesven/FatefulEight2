@@ -18,7 +18,6 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
     protected void leaderSay(Model model, String text) {
         if (!text.equals("")) {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
-            model.getLog().waitForAnimationToFinish();
         }
     }
 }

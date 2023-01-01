@@ -61,7 +61,6 @@ public class QuestDecisionPoint extends QuestJunction {
     public QuestEdge run(Model model, QuestState state) {
         if (!leaderTalk.equals("")) {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
-            model.getLog().waitForAnimationToFinish();
         }
 
         if (leadershipTestFailed(model, state)) {

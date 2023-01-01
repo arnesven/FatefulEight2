@@ -13,7 +13,6 @@ public class BanditRaidEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("This farmstead has been plagued by bandits for some time.");
-        model.getLog().waitForAnimationToFinish();
         model.getParty().randomPartyMemberSay(model, List.of("It's time to teach this rabble a lesson."));
         BanditEvent.generateBanditCombat(model);
         new GuestEvent(model).doEvent(model);

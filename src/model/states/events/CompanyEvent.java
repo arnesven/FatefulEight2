@@ -33,9 +33,7 @@ public class CompanyEvent extends DailyEventState {
             do {
                 gc2 = MyRandom.sample(model.getParty().getPartyMembers());
             } while (gc1 == gc2);
-            model.getLog().waitForAnimationToFinish();
             model.getParty().partyMemberSay(model, gc1, "We shouldn't have set up camp next to this rowdy bunch.");
-            model.getLog().waitForAnimationToFinish();
             model.getParty().partyMemberSay(model, gc2, "Needless to say, they aren't good company.");
         }
         int soldiers = model.getParty().partyStrength() / 12 + 2;

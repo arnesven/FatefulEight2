@@ -18,7 +18,6 @@ public class WitchHutEvent extends DailyEventState {
         println("A small hut in a dank grove. Light emanates from " +
                 "the window. Inside a witch is stirring a cauldron and " +
                 "mumbling strange rhymes.");
-        model.getLog().waitForAnimationToFinish();
         model.getParty().randomPartyMemberSay(model, List.of("Is that an incantation or she just insane?"));
         println("She beckons you inside and offers to sell you a bottle of the draft.");
 

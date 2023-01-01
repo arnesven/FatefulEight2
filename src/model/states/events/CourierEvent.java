@@ -31,7 +31,6 @@ public class CourierEvent extends DailyEventState {
         println("He hands you a letter which reads: \"You have been summoned by the honorable " + destination.getLordName() + " to " +
                 destination.getPlaceName() + ".\"");
         println("That's all the letter says. You stare blankly at it and then look at the messenger.");
-        model.getLog().waitForAnimationToFinish();
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Do you know what this is about?");
         println("\"Sorry, I'm just a messenger.\" And he quickly takes off in the same direction from which he came.");
         println("You put the letter in your pocket and continue on your journey.");

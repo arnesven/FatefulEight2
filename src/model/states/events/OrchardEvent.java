@@ -23,7 +23,6 @@ public class OrchardEvent extends DailyEventState {
         int avail = model.getParty().rationsLimit() - model.getParty().getFood();
         int gained = Math.min(avail, 5*model.getParty().size());
         println("The party gains " + gained + " rations.");
-        model.getLog().waitForAnimationToFinish();
         model.getParty().randomPartyMemberSay(model, List.of("Yummy!3"));
     }
 }

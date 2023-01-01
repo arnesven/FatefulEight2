@@ -279,6 +279,7 @@ public class Party implements Serializable {
     }
 
     public void partyMemberSay(Model model, GameCharacter gc, String text) {
+        model.getLog().waitForAnimationToFinish();
         int spriteNum = 2;
         if (text.charAt(text.length()-1) == '!') {
             spriteNum = 0;
@@ -360,7 +361,6 @@ public class Party implements Serializable {
             partyMemberSay(model, performer, List.of("Leave it to me!", "Shouldn't be too hard.", "I think I can do it.",
                     "I'll do my best.", "You can count on me.", "I'll give it my all.", "I'll give it a try.",
                     "Time to roll up my sleeves."));
-            model.getLog().waitForAnimationToFinish();
         }
         SkillCheckResult result = doSkillCheckWithReRoll(model, event, performer, skill, difficulty, 20, 0);
         if (!before) {
@@ -371,7 +371,6 @@ public class Party implements Serializable {
                 partyMemberSay(model, performer, List.of("Sorry!", "Nope, can't do it.", "Aaaagh!#", "Phooey",
                         "Well, I tried.", "What, I failed?", "Darn it!"));
             }
-            model.getLog().waitForAnimationToFinish();
         }
         return result.isSuccessful();
     }
@@ -402,7 +401,6 @@ public class Party implements Serializable {
             partyMemberSay(model, getLeader(), List.of("...", "That could have gone better", "Shoot!#",
                     "Come on, we have to do better.", "Well, better luck next time.", "Damn, so close!"));
         }
-        model.getLog().waitForAnimationToFinish();
         return result.isSuccessful();
     }
 

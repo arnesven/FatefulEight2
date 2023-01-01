@@ -20,17 +20,17 @@ public class ViperEnemy extends Enemy {
 
     @Override
     public int getMaxHP() {
-        return 3;
+        return 2;
     }
 
     @Override
     public int getSpeed() {
-        return 5;
+        return 8;
     }
 
     @Override
     public int getDamage() {
-        return 1;
+        return 3;
     }
 
     @Override

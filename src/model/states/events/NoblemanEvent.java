@@ -20,7 +20,6 @@ public class NoblemanEvent extends DailyEventState {
         int amount = 10 * model.getParty().size();
         model.getParty().addToGold(amount);
         println("The party receives " + amount + " gold from the nobleman.");
-        model.getLog().waitForAnimationToFinish();
         model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
                 List.of("Much obliged.", "This extra coin will come in handy.", "It's for a worthy cause.",
                         "A good deed sir.", "Perhaps we can pay you back one day...",
@@ -29,7 +28,6 @@ public class NoblemanEvent extends DailyEventState {
         print("The nobleman also offers to inspire you to take on the high life, ");
         change.areYouInterested(model);
         println("You part ways with the nobleman.");
-        model.getLog().waitForAnimationToFinish();
         model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
                 List.of("What a sucker...", "Such a nice person.", "We should hang out with noblemen more often."));
     }
