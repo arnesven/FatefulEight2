@@ -12,10 +12,10 @@ public class ImageSubView extends SubView {
     private final String imageName;
     private final boolean convert;
 
-    public ImageSubView(String imageName, String title, String townName, boolean convert) {
+    public ImageSubView(String imageName, String title, String undertext, boolean convert) {
         this.imageName = imageName;
         this.title = title;
-        this.undertext = "The town of " + townName;
+        this.undertext = undertext;
         this.convert = convert;
     }
 
