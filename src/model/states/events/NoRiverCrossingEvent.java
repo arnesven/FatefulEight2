@@ -20,5 +20,7 @@ public class NoRiverCrossingEvent extends RiverEvent {
         model.getParty().randomPartyMemberSay(model, List.of("We can't cross here.", "I'm actually not a very good swimmer.",
                 "It looks cold...", "We should try to find somewhere else to cross.", "That current will sweep us away.",
                 "Looks dangerous!"));
+        print("The party cannot cross the river today. Press enter to continue.");
+        waitForReturn();
     }
 }
