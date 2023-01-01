@@ -29,13 +29,17 @@ public class BanditEvent extends DailyEventState {
             println("You pay off the bandits and continue on your journey.");
         } else {
             println("\"You refuse? Hey, lads, we need to teach this lot some manners!\"");
-            List<Enemy> enemies = new ArrayList<>();
-            int numberOfEnemies = Math.max(2, model.getParty().partyStrength() / (new BanditEnemy('A')).getThreat());
-            for (int i = numberOfEnemies; i > 0; --i) {
-                enemies.add(new BanditEnemy('A'));
-            }
-            CombatEvent combat = new CombatEvent(model, enemies);
-            combat.run(model);
+            generateBanditCombat(model);
         }
+    }
+
+    public static void generateBanditCombat(Model model) {
+        List<Enemy> enemies = new ArrayList<>();
+        int numberOfEnemies = Math.max(2, model.getParty().partyStrength() / (new BanditEnemy('A')).getThreat());
+        for (int i = numberOfEnemies; i > 0; --i) {
+            enemies.add(new BanditEnemy('A'));
+        }
+        CombatEvent combat = new CombatEvent(model, enemies);
+        combat.run(model);
     }
 }

@@ -36,11 +36,15 @@ public class FieldsHex extends WorldHex {
             List<DailyEventState> events = new ArrayList<>();
 //            events.add(new HalflingEvent(model));     // 4%
 //            events.add(new PlowingFieldsEvent(model)); // 4%
-//            events.add(new GuestsEvent(model));  // 16%
+//            events.add(new GuestEvent(model));  // 16%
+//            events.add(new GuestEvent(model));  // 16%
+//            events.add(new GuestEvent(model));  // 16%
+//            events.add(new GuestEvent(model));  // 16%
 //            events.add(new ChoppingWoodEvent(model)); // 4%
 //            events.add(new FaeriesEvent(model));
 //            events.add(new OrchardEvent(model));
-            events.add(new FarmersChildEvent(model));
+//            events.add(new FarmersChildEvent(model));
+            events.add(new BanditRaidEvent(model));
             return MyRandom.sample(events);
         }
         return new NoEventState(model);
