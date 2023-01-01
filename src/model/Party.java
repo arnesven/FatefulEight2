@@ -41,6 +41,7 @@ public class Party implements Serializable {
     private List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
     private List<LordLocation> destinations = new ArrayList<>();
     private Point position;
+    private Point previousPosition;
     private int gold = 30;
     private int reputation = 0;
     private boolean onRoad = true;
@@ -49,7 +50,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(12,9);
+        position = new Point(14,8);
         cursorSprites = makeCursorSprites();
     }
 
@@ -104,6 +105,7 @@ public class Party implements Serializable {
     }
 
     public void move(int dx, int dy) {
+        this.previousPosition = new Point(position);
         World.move(position, dx, dy);
 
     }

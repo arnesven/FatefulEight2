@@ -42,6 +42,11 @@ public class World implements Serializable {
         return new Point(screenX, screenY);
     }
 
+    public boolean crossesRiver(Point position, String directionName) {
+        WorldHex hex = getHex(position);
+        return hex.getRiversInDirection(directionName);
+    }
+
 
     public void drawYourself(Model model, Point viewPoint, Point partyPosition,
                              int mapXRange, int mapYRange, int yOffset, Point cursorPos,

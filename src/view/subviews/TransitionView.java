@@ -30,7 +30,7 @@ public abstract class TransitionView extends SubView implements Animation {
     public void drawYourself(Model model) {
         super.drawYourself(model);
         innerView.drawYourself(model);
-        model.getScreenHandler().clearForeground();
+        model.getScreenHandler().clearForeground(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
         drawAnimation(model, steps);
     }
 

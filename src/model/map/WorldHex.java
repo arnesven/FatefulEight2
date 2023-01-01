@@ -61,7 +61,6 @@ public abstract class WorldHex implements Serializable {
         return generateTerrainSpecificEvent(model);
     }
 
-
     protected abstract DailyEventState generateTerrainSpecificEvent(Model model);
 
     private void setHexSprites() {
@@ -240,5 +239,39 @@ public abstract class WorldHex implements Serializable {
 
     public boolean givesQuests() {
         return hexLocation != null && hexLocation.givesQuests();
+    }
+
+    public boolean getRiversInDirection(String directionName) {
+        if (directionName.equals("SE")) {
+            return (rivers & SOUTH_EAST) != 0;
+        }
+        if (directionName.equals("S")) {
+            return (rivers & SOUTH) != 0;
+        }
+        if (directionName.equals("SW")) {
+            return (rivers & SOUTH_WEST) != 0;
+        }
+        if (directionName.equals("NE")) {
+            return (rivers & NORTH_EAST) != 0;
+        }
+        if (directionName.equals("N")) {
+            return (rivers & NORTH) != 0;
+        }
+        if (directionName.equals("NW")) {
+            return (rivers & NORTH_WEST) != 0;
+        }
+        throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
+    }
+
+    public RiverEvent generateRiverEvent(Model model) {
+//        int d10Roll = MyRandom.rollD10();
+//        if (d10Roll <= 4) {
+//            return new ShallowsEvent(model);
+//        } else if (d10Roll >= 9) {
+//            return new NoRiverCrossingEvent(model);
+//        }
+        return MyRandom.sample(List.of(
+                new FerryEvent(model)
+        ));
     }
 }

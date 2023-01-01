@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.map.World;
+import model.states.events.RiverEvent;
 import view.sprites.Sprite;
 import view.sprites.ViewPointMarkerSprite;
 import view.subviews.MapSubView;
@@ -28,11 +29,25 @@ public class TravelState extends GameState {
         } while (selectedDir.x == 0 && selectedDir.y == 0);
         Point newPosition = new Point(model.getParty().getPosition());
         World.move(newPosition, selectedDir.x, selectedDir.y);
+
+        if (model.getWorld().crossesRiver(model.getParty().getPosition(), mapSubView.getSelectedDirectionName())) {
+            println("The party comes to a river.");
+            CollapsingTransition.transition(model, RiverEvent.subView);
+            RiverEvent river = model.getCurrentHex().generateRiverEvent(model);
+            GameState state = river.run(model);
+            if (state instanceof GameOverState || river.eventPreventsCrossing(model)) {
+                setCurrentTerrainSubview(model);
+                return state;
+            }
+            CollapsingTransition.transition(model, mapSubView);
+        }
+
         mapSubView.drawAvatarEnabled(false);
         mapSubView.addMovementAnimation(
                 model.getParty().getLeader().getAvatarSprite(),
                 World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
                 World.translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+        println("Press enter to continue.");
         waitForReturn();
         mapSubView.removeMovementAnimation();
 

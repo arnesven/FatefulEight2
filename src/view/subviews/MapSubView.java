@@ -14,19 +14,18 @@ public class MapSubView extends AvatarSubView {
     public static final int MAP_HEIGHT_HEXES = 10;
     public static final String TITLE_TEXT = "WORLD MAP";
     private final boolean isEven;
+    private final List<Point> directions;
     private SteppingMatrix<Point> matrix;
     private boolean avatarEnabled = true;
 
     public MapSubView(Model model) {
         matrix = new SteppingMatrix<>(3, 3);
         isEven = model.getParty().getPosition().x % 2 == 0;
-        List<Point> directions;
         if (isEven) {
             directions = java.util.List.of(new Point(1, 1), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1), new Point(1, 0));
         } else {
             directions = java.util.List.of(new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(-1, -1), new Point(0, -1), new Point(1, -1));
         }
-        java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
         matrix.addElement(1, 1, new Point(0, 0));
 
 
@@ -87,5 +86,10 @@ public class MapSubView extends AvatarSubView {
 
     public void drawAvatarEnabled(boolean b) {
         this.avatarEnabled = b;
+    }
+
+    public String getSelectedDirectionName() {
+        java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
+        return shorts.get(directions.indexOf(matrix.getSelectedElement()));
     }
 }
