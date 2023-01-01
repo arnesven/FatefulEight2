@@ -82,24 +82,25 @@ public class Model {
 //        state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
-    public void startGame(boolean loadFromFile) throws FileNotFoundException, CorruptSaveFileException {
-        if (loadFromFile) {
-            ObjectInputStream ois = null;
-            try {
-                ois = new ObjectInputStream(new FileInputStream("savefile.ff8"));
-                gameData = (GameData) ois.readObject();
-                state = new DailyActionState(this);
-                log.setContent(gameData.logContent);
-            } catch (FileNotFoundException fnfe) {
-                throw fnfe;
-            } catch (IOException e) {
-                throw new CorruptSaveFileException();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            state = new ChooseStartingCharacterState(this);
+    public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream(filename));
+            gameData = (GameData) ois.readObject();
+            state = new DailyActionState(this);
+            log.setContent(gameData.logContent);
+        } catch (FileNotFoundException fnfe) {
+            throw fnfe;
+        } catch (IOException e) {
+            throw new CorruptSaveFileException();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+        gameStarted = true;
+    }
+
+    public void startGameNoLoad() {
+        state = new ChooseStartingCharacterState(this);
         gameStarted = true;
     }
 
@@ -257,10 +258,10 @@ public class Model {
         gameData.day++;
     }
 
-    public void saveToFile() {
+    public void saveToFile(String filename) {
         try {
             gameData.logContent = log.getContents();
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("savefile.ff8"));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename + "_save.ff8"));
             oos.writeObject(gameData);
             oos.close();
         } catch (IOException e) {

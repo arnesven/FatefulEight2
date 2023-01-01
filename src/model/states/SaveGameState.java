@@ -9,8 +9,8 @@ public class SaveGameState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        println("Saving game...");
-        model.saveToFile();
+        println("Saving game in slot 1...");
+        model.saveToFile("slot1");
         return new DailyActionState(model);
     }
 }

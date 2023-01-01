@@ -50,16 +50,12 @@ public class StartGameMenu extends GameView {
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                model.startGame(cursorPos == 1);
+            if (cursorPos == 0) {
+                model.startGameNoLoad();
                 setTimeToTransition(true);
-            } catch (FileNotFoundException e) {
-                model.transitionToDialog(new SimpleMessageView(this, "No save file found."));
-                //setTimeToTransition(true);
-            } catch (CorruptSaveFileException csfe) {
-                model.transitionToDialog(new SimpleMessageView(this, "Save file is incompatible or corrupt. Loading aborted."));
+            } else {
+                model.transitionToDialog(new SelectSaveSlotMenu(this));
             }
-
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             cursorPos = cursorPos - 1;
             if (cursorPos == -1) {

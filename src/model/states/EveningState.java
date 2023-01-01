@@ -52,6 +52,7 @@ public class EveningState extends GameState {
         }
         model.incrementDay();
         if (this.goOnQuest == null) {
+            model.saveToFile("auto");
             return new DailyActionState(model);
         } else {
             return new QuestState(model, goOnQuest);
