@@ -82,14 +82,19 @@ public class Model {
 //        state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
-    public void startGame(boolean loadFromFile) {
+    public void startGame(boolean loadFromFile) throws FileNotFoundException {
         if (loadFromFile) {
+            ObjectInputStream ois = null;
             try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("savefile.ff8"));
+                ois = new ObjectInputStream(new FileInputStream("savefile.ff8"));
                 gameData = (GameData) ois.readObject();
                 state = new DailyActionState(this);
                 log.setContent(gameData.logContent);
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (FileNotFoundException fnfe) {
+                throw fnfe;
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } else {

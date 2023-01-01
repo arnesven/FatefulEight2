@@ -25,7 +25,7 @@ public class CombatSummarySubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX,
-                new FilledBlockSprite(MyColors.BLUE));
+                blueBlock);
 
         BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + enemies,
                 X_OFFSET+3, Y_OFFSET+3, MyColors.WHITE, MyColors.BLUE);

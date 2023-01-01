@@ -39,7 +39,7 @@ public class ChangeClassSubView extends SubView {
 
     @Override
     protected void drawArea(Model model) {
-        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, new FilledBlockSprite(MyColors.BLUE));
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
         BorderFrame.drawCentered(model.getScreenHandler(), targetClass.getFullName().toUpperCase(), 5,
                 MyColors.WHITE, MyColors.BLUE);
         if (details) {

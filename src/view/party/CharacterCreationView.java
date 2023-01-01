@@ -14,6 +14,7 @@ import view.BorderFrame;
 import view.DrawingArea;
 import view.GameView;
 import view.MyColors;
+import view.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class CharacterCreationView extends SelectableListMenu {
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);
+        System.out.println("  Made app");
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
             app.applyFacialHair(raceSet[selectedRace]);
@@ -93,6 +95,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private void rebuildAppearance() {
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
+        Sprite.resetCallCount();
     }
 
     public GameCharacter getFinishedCharacter() {

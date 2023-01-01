@@ -64,6 +64,8 @@ public class SimpleMessageView extends SelectableListMenu {
 
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+            setTimeToTransition(true);
+        }
     }
 }

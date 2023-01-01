@@ -28,6 +28,7 @@ public abstract class CharacterAppearance implements Serializable {
     private final PortraitSprite FRAME_UR_CORNER = new PortraitFrameSprite(PortraitFrameSprite.UR_CORNER);
     private final PortraitSprite FRAME_LEFT = new PortraitFrameSprite(PortraitFrameSprite.LEFT);
     private final PortraitSprite FRAME_RIGHT = new PortraitFrameSprite(PortraitFrameSprite.RIGHT);
+    private static final PortraitSprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
     private final Race race;
     private final MyColors hairColor;
     private final boolean femaleGender;
@@ -41,6 +42,7 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     private void refresh() {
+        System.out.println(" REFRESH START");
         grid = new PortraitSprite[7][7];
         this.grid[0][0] = FRAME_UL_CORNER;
         this.grid[1][0] = FRAME_TOP;
@@ -51,19 +53,19 @@ public abstract class CharacterAppearance implements Serializable {
         this.grid[6][0] = FRAME_UR_CORNER;
 
         this.grid[0][1] = FRAME_LEFT;
-        this.grid[1][1] = new FilledBlockSprite(MyColors.BLACK);
+        this.grid[1][1] = blackBlock;
         this.grid[2][1] = new FaceSpriteWithHair(getHeadTopLeft(), hairColor);
         this.grid[3][1] = new FaceSpriteWithHair(getHeadTop(), hairColor);
         this.grid[4][1] = new FaceSpriteWithHair(getHeadTopRight(), hairColor);
-        this.grid[5][1] = new FilledBlockSprite(MyColors.BLACK);
+        this.grid[5][1] = blackBlock;
         this.grid[6][1] = FRAME_RIGHT;
 
         this.grid[0][2] = FRAME_LEFT;
-        this.grid[1][2] = new FilledBlockSprite(MyColors.BLACK);
+        this.grid[1][2] = blackBlock;
         this.grid[2][2] = new FaceSpriteWithHair(getForeheadLeft(), hairColor);
         this.grid[3][2] = new FaceSpriteWithHair(getForeheadCenter(), hairColor);
         this.grid[4][2] = new FaceSpriteWithHair(getForeheadRight(), hairColor);
-        this.grid[5][2] = new FilledBlockSprite(MyColors.BLACK);
+        this.grid[5][2] = blackBlock;
         this.grid[6][2] = FRAME_RIGHT;
 
         this.grid[0][3] = FRAME_LEFT;
@@ -75,11 +77,11 @@ public abstract class CharacterAppearance implements Serializable {
         this.grid[6][3] = FRAME_RIGHT;
 
         this.grid[0][4] = FRAME_LEFT;
-        this.grid[1][4] = new FilledBlockSprite(MyColors.BLACK);
+        this.grid[1][4] = blackBlock;
         this.grid[2][4] = new FaceSpriteWithHair(getLeftCheek(), hairColor);
         this.grid[3][4] = new MouthSprite(getMouth(), hairColor);
         this.grid[4][4] = new FaceSpriteWithHair(getRightCheek(), hairColor);
-        this.grid[5][4] = new FilledBlockSprite(MyColors.BLACK);
+        this.grid[5][4] = blackBlock;
         this.grid[6][4] = FRAME_RIGHT;
 
         this.grid[0][5] = SHOULDER_LEFT_TOP;

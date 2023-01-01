@@ -4,6 +4,7 @@ import model.Model;
 import view.sprites.ArrowSprites;
 
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 
 public class StartGameMenu extends GameView {
     private static final int X_START = 6;
@@ -29,6 +30,7 @@ public class StartGameMenu extends GameView {
 
     @Override
     public void internalUpdate(Model model) {
+        model.getScreenHandler().clearAll();
         int row = Y_START;
         for (String s : options) {
             BorderFrame.drawString(model.getScreenHandler(), s, X_START, row, MyColors.WHITE);
@@ -47,8 +49,14 @@ public class StartGameMenu extends GameView {
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            setTimeToTransition(true);
-            model.startGame(cursorPos == 1);
+            try {
+                model.startGame(cursorPos == 1);
+                setTimeToTransition(true);
+            } catch (FileNotFoundException e) {
+                model.transitionToDialog(new SimpleMessageView(this, "No save file found."));
+                //setTimeToTransition(true);
+            }
+
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             cursorPos = cursorPos - 1;
             if (cursorPos == -1) {

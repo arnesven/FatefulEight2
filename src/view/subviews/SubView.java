@@ -3,6 +3,9 @@ package view.subviews;
 import model.Model;
 import view.BorderFrame;
 import view.DrawingArea;
+import view.MyColors;
+import view.sprites.FilledBlockSprite;
+import view.sprites.Sprite;
 import view.widget.CenterText;
 import view.widget.TitleText;
 
@@ -13,6 +16,7 @@ public abstract class SubView {
     protected static final int Y_MAX = Y_OFFSET+38;
     protected static final int X_OFFSET = BorderFrame.CHARACTER_WINDOW_COLUMNS + 1;
     protected static final int X_MAX = DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS - 1;
+    protected static final Sprite blueBlock = new FilledBlockSprite(MyColors.BLUE);
 
     private TitleText topCenterText = new TitleText();
     private CenterText lowCenterText;

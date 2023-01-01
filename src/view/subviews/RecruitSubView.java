@@ -22,7 +22,7 @@ public class RecruitSubView extends SubView {
 
     @Override
     protected void drawArea(Model model) {
-        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, new FilledBlockSprite(MyColors.BLUE));
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
         drawRecruitables(model);
         drawCursor(model);
     }

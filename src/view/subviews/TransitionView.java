@@ -1,8 +1,11 @@
 package view.subviews;
 
 import model.Model;
+import view.MyColors;
 import view.sprites.Animation;
 import view.sprites.AnimationManager;
+import view.sprites.FilledBlockSprite;
+import view.sprites.Sprite;
 
 public abstract class TransitionView extends SubView implements Animation {
     private final String title;
@@ -11,6 +14,7 @@ public abstract class TransitionView extends SubView implements Animation {
     private final SubView toView;
     private boolean doingFrom;
     private int steps;
+    protected static final Sprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
 
     public TransitionView(SubView fromView, SubView toView, String title, int stepsStart) {
         this.title = title;
