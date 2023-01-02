@@ -480,4 +480,8 @@ public class Party implements Serializable {
     public void addToReputation(int rep) {
         reputation += rep;
     }
+
+    public Point getPreviousPosition() {
+        return previousPosition;
+    }
 }

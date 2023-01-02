@@ -53,7 +53,10 @@ public class TravelState extends GameState {
 
         model.getCurrentHex().travelFrom(model);
         model.getParty().move(selectedDir.x, selectedDir.y);
-        if (model.getParty().isOnRoad() && !model.getCurrentHex().hasRoad()) {
+        if (model.getParty().isOnRoad() &&
+                !model.getWorld().travelingAlongRoad(model.getParty().getPosition(),
+                        model.getParty().getPreviousPosition(),
+                        mapSubView.getSelectedDirectionName())) {
             model.getParty().setOnRoad(false);
         }
         setCurrentTerrainSubview(model);

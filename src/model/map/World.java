@@ -167,6 +167,33 @@ public class World implements Serializable {
         return getHex(p).canTravelTo(model);
     }
 
+    public boolean travelingAlongRoad(Point position, Point previousPosition, String direction) {
+        return getHex(previousPosition).getRoadInDirection(direction) &&
+                getHex(position).getRoadInDirection(opposite(direction));
+    }
+
+    private String opposite(String directionName) {
+        if (directionName.equals("SE")) {
+            return "NW";
+        }
+        if (directionName.equals("S")) {
+            return "N";
+        }
+        if (directionName.equals("SW")) {
+            return "NE";
+        }
+        if (directionName.equals("NE")) {
+            return "SW";
+        }
+        if (directionName.equals("N")) {
+            return "S";
+        }
+        if (directionName.equals("NW")) {
+            return "SE";
+        }
+        throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
+    }
+
     private static class Interval {
         public int from;
         public int to;

@@ -15,6 +15,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.HexSprite;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -241,26 +242,34 @@ public abstract class WorldHex implements Serializable {
         return hexLocation != null && hexLocation.givesQuests();
     }
 
-    public boolean getRiversInDirection(String directionName) {
+    private boolean getRoadOrRiverInDirection(String directionName, int roadOrRiver) {
         if (directionName.equals("SE")) {
-            return (rivers & SOUTH_EAST) != 0;
+            return (roadOrRiver & SOUTH_EAST) != 0;
         }
         if (directionName.equals("S")) {
-            return (rivers & SOUTH) != 0;
+            return (roadOrRiver & SOUTH) != 0;
         }
         if (directionName.equals("SW")) {
-            return (rivers & SOUTH_WEST) != 0;
+            return (roadOrRiver & SOUTH_WEST) != 0;
         }
         if (directionName.equals("NE")) {
-            return (rivers & NORTH_EAST) != 0;
+            return (roadOrRiver & NORTH_EAST) != 0;
         }
         if (directionName.equals("N")) {
-            return (rivers & NORTH) != 0;
+            return (roadOrRiver & NORTH) != 0;
         }
         if (directionName.equals("NW")) {
-            return (rivers & NORTH_WEST) != 0;
+            return (roadOrRiver & NORTH_WEST) != 0;
         }
         throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
+    }
+
+    public boolean getRiversInDirection(String directionName) {
+        return getRoadOrRiverInDirection(directionName, rivers);
+    }
+
+    public boolean getRoadInDirection(String directionName) {
+        return getRoadOrRiverInDirection(directionName, roads);
     }
 
     public RiverEvent generateRiverEvent(Model model) {
@@ -274,4 +283,5 @@ public abstract class WorldHex implements Serializable {
                 new FerryEvent(model)
         ));
     }
+
 }
