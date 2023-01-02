@@ -188,7 +188,7 @@ public class GameCharacter extends Combatant {
     }
 
     private void performFleeFromBattle(Model model, CombatEvent combatEvent) {
-        SkillCheckResult result = testSkill(Skill.Leadership, 5);
+        SkillCheckResult result = testSkill(Skill.Leadership, 3 + model.getParty().size());
         combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
         if (result.isSuccessful()) {
             combatEvent.setPartyFled(true);
