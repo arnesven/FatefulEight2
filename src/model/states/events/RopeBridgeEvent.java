@@ -33,29 +33,7 @@ public class RopeBridgeEvent extends RiverEvent {
                 println("The party manages to cross without incident.");
             } else {
                 for (GameCharacter gc : failers) {
-                    SkillCheckResult result = gc.testSkill(Skill.Endurance, 8);
-                    println(gc.getName() + " has fallen into the river and tries to swim across! " + result.asString());
-                    if (result.isSuccessful()) {
-                        model.getParty().partyMemberSay(model, gc, List.of("I'm okay!", "Gaah, that was tough!#", "Brrr, it was cold!",
-                                "I just felt like having a dip."));
-                    } else {
-                        boolean wasLeader = gc.isLeader();
-                        println(gc.getName() + " has been swept away by the current and drowns!");
-                        model.getParty().remove(gc, false, false, 0);
-                        if (model.getParty().size() == 0) {
-                            println("Your last party member has been eliminated. Press any key to continue.");
-                            waitForReturn();
-                            model.setGameOver(true);
-                            return;
-                        } else {
-                            model.getParty().randomPartyMemberSay(model, List.of(gc.getFirstName().toUpperCase() + "!!!"));
-                            model.getParty().randomPartyMemberSay(model, List.of("..."));
-                            model.getParty().randomPartyMemberSay(model, List.of("Gone! " + gc.getFirstName() + " is gone!"));
-                            if (wasLeader) {
-                                println(model.getParty().getLeader().getName() + " is now the new leader of the party.");
-                            }
-                        }
-                    }
+                    fallIntoRiver(model, gc, "has fallen into the river and tries to swim across!");
                 }
             }
         } else {
