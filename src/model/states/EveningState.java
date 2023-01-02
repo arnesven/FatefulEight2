@@ -27,8 +27,8 @@ public class EveningState extends GameState {
                 !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
             Quest q = model.getQuestDeck().getRandomQuest();
             println("The party is offered a quest by " + q.getProviderName() + ".");
-            println(q.getBeforehandInfo());
-            print(", will you go tomorrow (Y/N)? ");
+            print(q.getBeforehandInfo());
+            print(" Will you go tomorrow (Y/N)? ");
             if (yesNoInput()) {
                 this.goOnQuest = q;
                 println("You accepted the quest.");
