@@ -11,8 +11,8 @@ import view.MyColors;
 public class SwampHex extends WorldHex {
     private static SubView subView = new ImageSubView("theswamp", "THE SWAMP", "A nasty bog...", true);;
 
-    public SwampHex(int roads, int rivers, HexLocation location) {
-        super(MyColors.TAN, roads, rivers, location);
+    public SwampHex(int roads, int rivers) {
+        super(MyColors.GREEN, roads, rivers, new SwampLocation());
         super.setMusic(BackgroundMusic.mysticSong);
     }
 

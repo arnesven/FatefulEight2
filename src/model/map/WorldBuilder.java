@@ -283,7 +283,7 @@ public class WorldBuilder {
         } else if (c == 'p') {
             return new PlainsHex(roads, rivers, location);
         } else if (c == 'b') {
-            return new SwampHex(roads, rivers, location);
+            return new SwampHex(roads, rivers);
         } else if (c == 'M') {
             return new MountainHex(roads, rivers);
         } else if (c == 'm') {
