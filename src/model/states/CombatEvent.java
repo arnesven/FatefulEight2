@@ -306,4 +306,8 @@ public class CombatEvent extends DailyEventState {
     public void setFleeingEnabled(boolean fleeingEnabled) {
         this.fleeingEnabled = fleeingEnabled;
     }
+
+    public boolean fled() {
+        return partyFled;
+    }
 }

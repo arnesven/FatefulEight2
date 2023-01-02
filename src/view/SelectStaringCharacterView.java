@@ -6,6 +6,7 @@ import model.classes.CharacterClass;
 import util.Arithmetics;
 import view.party.CharacterCreationView;
 import view.party.SelectableListMenu;
+import view.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -30,6 +31,7 @@ public class SelectStaringCharacterView extends SelectableListMenu {
         classSet = gc.getClasses();
         gc.setClass(classSet[selectedClass]);
         gc.setEquipment(classSet[selectedClass].getStartingEquipment());
+        Sprite.resetCallCount();
         return gc;
     }
 

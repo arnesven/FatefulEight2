@@ -4,15 +4,12 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
-import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Equipment;
 import sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
-import view.party.SelectableListMenu;
 import view.sprites.ArrowSprites;
-import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
@@ -45,6 +42,8 @@ public class ChangeClassSubView extends SubView {
         if (details) {
             GameCharacter gc = matrix.getSelectedElement();
             if (gc != null) {
+                model.getScreenHandler().put(X_OFFSET + 14, Y_OFFSET + 6, ArrowSprites.RIGHT);
+                model.getScreenHandler().put(X_OFFSET + 15, Y_OFFSET + 6, ArrowSprites.RIGHT);
                 model.getScreenHandler().put(X_OFFSET + 16, Y_OFFSET + 6, ArrowSprites.RIGHT);
                 drawCharacterDetails(model, gc, X_OFFSET + 0, Y_OFFSET + 3);
                 drawCharacterDetails(model, charMap.get(gc), X_OFFSET + 17, Y_OFFSET + 3);
@@ -56,7 +55,7 @@ public class ChangeClassSubView extends SubView {
     }
 
     private void drawCharacterDetails(Model model, GameCharacter gc, int midX, int row) {
-        drawCharacter(model, gc, midX + 4, row);
+        drawCharacter(model, gc, midX + 3, row);
         row += 10;
         BorderFrame.drawString(model.getScreenHandler(), String.format("Max Health  %3d", gc.getMaxHP()), midX, row++, MyColors.WHITE, MyColors.BLUE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("Speed       %3d", gc.getSpeed()), midX, row++, MyColors.WHITE, MyColors.BLUE);
