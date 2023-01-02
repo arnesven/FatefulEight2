@@ -406,18 +406,26 @@ public class Party implements Serializable {
         return result.isSuccessful();
     }
 
-    public boolean doCollectiveSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
+    public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {
         event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
         event.waitForReturn();
+        List<GameCharacter> failers = new ArrayList<>();
         for (GameCharacter gc : partyMembers) {
             SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
             if (!individualResult.isSuccessful()) {
-                event.println(gc.getName() + " has failed, the collective skill check has failed!");
-                return false;
+                failers.add(gc);
             }
         }
-        event.println("Each party member successfully completed the skill check!");
-        return true;
+        if (failers.isEmpty()) {
+            event.println("Each party member successfully completed the skill check!");
+        } else {
+            event.println("The collective skill check has failed.");
+        }
+        return failers;
+    }
+
+    public boolean doCollectiveSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
+        return doCollectiveSkillCheckWithFailers(model, event, skill, difficulty).isEmpty();
     }
 
     private SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {
@@ -466,7 +474,11 @@ public class Party implements Serializable {
         }
         partyMembers.remove(gc);
         if (gc == leader) {
-            leader = partyMembers.get(0);
+            if (partyMembers.isEmpty()) {
+                leader = null;
+            } else {
+                leader = partyMembers.get(0);
+            }
         }
         return amount;
     }

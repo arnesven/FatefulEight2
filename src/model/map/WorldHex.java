@@ -281,7 +281,8 @@ public abstract class WorldHex implements Serializable {
 //        }
         return MyRandom.sample(List.of(
              //   new FerryEvent(model),
-                new BlackKnightEvent(model)
+              //  new BlackKnightEvent(model),
+                new RopeBridgeEvent(model)
 
         ));
     }

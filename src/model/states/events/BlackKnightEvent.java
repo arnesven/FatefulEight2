@@ -43,6 +43,7 @@ public class BlackKnightEvent extends RiverEvent {
             }
         } else {
             println("The party decides to not provoke the black knight today.");
+            didFlee = true;
         }
     }
 }

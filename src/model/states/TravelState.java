@@ -35,7 +35,9 @@ public class TravelState extends GameState {
             CollapsingTransition.transition(model, RiverEvent.subView);
             RiverEvent river = model.getCurrentHex().generateRiverEvent(model);
             GameState state = river.run(model);
-            if (state instanceof GameOverState || river.eventPreventsCrossing(model)) {
+            if (state instanceof GameOverState) {
+                return state;
+            } if (river.eventPreventsCrossing(model)) {
                 setCurrentTerrainSubview(model);
                 return state;
             }
