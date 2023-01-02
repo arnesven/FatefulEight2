@@ -62,7 +62,6 @@ public class Model {
         log = new GameLog();
         subView = new EmptySubView();
         gameView = new IntroGameView();
-        //gameView = new MainGameView();
 
         gameView.transitionedTo(this);
         state = new WaitForStartOfGameState(this);
