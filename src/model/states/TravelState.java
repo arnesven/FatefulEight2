@@ -3,13 +3,10 @@ package model.states;
 import model.Model;
 import model.map.World;
 import model.states.events.RiverEvent;
-import view.sprites.Sprite;
-import view.sprites.ViewPointMarkerSprite;
 import view.subviews.MapSubView;
 import view.subviews.CollapsingTransition;
 
 import java.awt.*;
-import java.util.List;
 
 public class TravelState extends GameState {
 
@@ -51,15 +48,19 @@ public class TravelState extends GameState {
 
         model.getCurrentHex().travelFrom(model);
         model.getParty().move(selectedDir.x, selectedDir.y);
-        if (model.getParty().isOnRoad() &&
-                !model.getWorld().travelingAlongRoad(model.getParty().getPosition(),
-                        model.getParty().getPreviousPosition(),
-                        mapSubView.getSelectedDirectionName())) {
+        if (partyNoLongerOnRoad(model, mapSubView)) {
             model.getParty().setOnRoad(false);
         }
         setCurrentTerrainSubview(model);
         model.getCurrentHex().travelTo(model);
         return nextState(model);
+    }
+
+    protected boolean partyNoLongerOnRoad(Model model, MapSubView mapSubView) {
+        return model.getParty().isOnRoad() &&
+                !model.getWorld().travelingAlongRoad(model.getParty().getPosition(),
+                        model.getParty().getPreviousPosition(),
+                        mapSubView.getSelectedDirectionName());
     }
 
     protected GameState nextState(Model model) {

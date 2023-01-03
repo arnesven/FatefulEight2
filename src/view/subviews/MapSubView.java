@@ -89,7 +89,7 @@ public class MapSubView extends AvatarSubView {
         this.avatarEnabled = b;
     }
 
-    private String getNameForDirection(Point direction) {
+    public String getNameForDirection(Point direction) {
         java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
         return shorts.get(directions.indexOf(direction));
     }
@@ -98,13 +98,7 @@ public class MapSubView extends AvatarSubView {
         return getNameForDirection(matrix.getSelectedElement());
     }
 
-    public List<Point> getRunAwayDirections(Model model) {
-        List<Point> result = new ArrayList<>();
-        for (Point dir : directions) {
-            if (!model.getWorld().crossesRiver(model.getParty().getPosition(), getNameForDirection(dir))) {
-                result.add(dir);
-            }
-        }
-        return result;
+    public List<Point> getDirections(Model model) {
+        return directions;
     }
 }
