@@ -47,6 +47,9 @@ public class QuestState extends GameState {
 
         while (currentPosition != quest.getSuccessEndingNode() && currentPosition != quest.getFailEndingNode()) {
             QuestEdge edgeToFollow = currentPosition.run(model, this);
+            if (model.getParty().isWipedOut()) {
+                return new GameOverState(model);
+            }
             questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
                     edgeToFollow);
             currentPosition = edgeToFollow.getNode();

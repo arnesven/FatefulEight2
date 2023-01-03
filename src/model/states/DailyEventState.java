@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.races.Race;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,5 +62,29 @@ public abstract class DailyEventState extends GameState {
 
     protected boolean haveFledCombat() {
         return fledCombat;
+    }
+
+    protected void removeKilledPartyMembers(Model model, boolean abandonEquipment) {
+        List<GameCharacter> toRemove = new ArrayList<>();
+        StringBuffer buf = new StringBuffer();
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc.isDead()) {
+                toRemove.add(gc);
+                buf.append(gc.getFullName() + ", ");
+            }
+        }
+        if (toRemove.isEmpty()) {
+            return;
+        }
+
+        for (GameCharacter gc : toRemove) {
+            model.getParty().remove(gc, !abandonEquipment, false, 0);
+        }
+        print(buf.toString().substring(0, buf.length()-2) + " has died.");
+        if (!abandonEquipment && model.getParty().size() > 0) {
+            println(" you bury them and collect the equipment.");
+        } else {
+            println("");
+        }
     }
 }

@@ -25,6 +25,7 @@ public class SaberfishEvent extends RiverEvent {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             gc.addToHP(-1);
         }
+        removeKilledPartyMembers(model, false);
         model.getParty().randomPartyMemberSay(model, List.of("Ouch!#", "Damn fishies!#", "Stop eating me!#",
                 "I though fish were vegetarians.", "Hey! that hurt..."));
         GameCharacter gc = MyRandom.sample(model.getParty().getPartyMembers());

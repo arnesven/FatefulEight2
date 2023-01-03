@@ -30,6 +30,7 @@ public class RapidsEvent extends RiverEvent {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             gc.addToHP(-2);
         }
+        removeKilledPartyMembers(model, false);
         println("Press enter to continue.");
         waitForReturn();
         RunAwayState runAwayState = new RapidsRunAwayState(model);

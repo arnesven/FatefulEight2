@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.NoEventState;
+import model.states.events.BerriesEvent;
 import model.states.events.StoneCircleEvent;
 import model.states.events.StormEvent;
 import model.states.events.UnicornEvent;
@@ -37,7 +38,8 @@ public class PlainsHex extends WorldHex {
             return MyRandom.sample(List.of(
  //                   new StormEvent(model),
  //                   new UnicornEvent(model),
-                    new StoneCircleEvent(model)
+//                    new StoneCircleEvent(model),
+                    new BerriesEvent(model)
             ));
         //}
        // return new NoEventState(model);

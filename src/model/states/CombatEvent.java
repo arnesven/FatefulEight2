@@ -114,30 +114,6 @@ public class CombatEvent extends DailyEventState {
         return sum;
     }
 
-    private void removeKilledPartyMembers(Model model, boolean partyFled) {
-        List<GameCharacter> toRemove = new ArrayList<>();
-        StringBuffer buf = new StringBuffer();
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.isDead()) {
-                toRemove.add(gc);
-                buf.append(gc.getFullName() + ", ");
-            }
-        }
-        if (toRemove.isEmpty()) {
-            return;
-        }
-
-        for (GameCharacter gc : toRemove) {
-            model.getParty().remove(gc, !partyFled, false, 0);
-        }
-        print(buf.toString().substring(0, buf.length()-2) + " has perished in combat");
-        if (!partyFled) {
-            println(" you bury them and collect the equipment.");
-        } else {
-            println("");
-        }
-    }
-
     private void setFormation(Model model) {
         selectingFormation = true;
         backMovers.clear();

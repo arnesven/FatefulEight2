@@ -37,6 +37,7 @@ public abstract class Spell extends Item {
         caster.addToHP(-hpCost);
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
+            model.getParty().remove(caster, true, false, 0);
             return false;
         }
         SkillCheckResult result = caster.testSkill(getSkillForColor(color), difficulty, caster.getRankForSkill(Skill.SpellCasting));
