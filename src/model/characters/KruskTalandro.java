@@ -2,6 +2,7 @@ package model.characters;
 
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.Beard;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.CharacterEyes;
 import model.races.Race;
 import view.MyColors;
@@ -27,5 +28,10 @@ public class KruskTalandro extends AdvancedAppearance {
             left.setColor1(MyColors.GRAY);
             addSpriteOnTop(2+i, 3, left);
         }
+    }
+
+    @Override
+    public CharacterAppearance copy() {
+        return new KruskTalandro();
     }
 }

@@ -34,6 +34,7 @@ public class MerchantEvent extends DailyEventState {
                 new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
                 items.get(2).getCost()-2, items.get(3).getCost()-2,
                 items.get(4).getCost()+10, items.get(5).getCost()+10});
+        merchantShop.setSellingEnabled(false);
         merchantShop.run(model);
     }
 }

@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.CharacterEyes;
 import model.races.Race;
 import view.MyColors;
@@ -14,5 +15,10 @@ public class LonnieLiebgott extends AdvancedAppearance {
     @Override
     public boolean hairInForehead() {
         return false;
+    }
+
+    @Override
+    public CharacterAppearance copy() {
+        return new LonnieLiebgott();
     }
 }

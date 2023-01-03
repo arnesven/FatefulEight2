@@ -1,9 +1,6 @@
 package model.characters;
 
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.Beard;
-import model.characters.appearance.CharacterEyes;
-import model.characters.appearance.ExplicitHairStyle;
+import model.characters.appearance.*;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
@@ -32,4 +29,8 @@ public class MialeeSeverin extends AdvancedAppearance {
         return new FaceSpriteWithHair(0x83, hairColor);
     }
 
+    @Override
+    public CharacterAppearance copy() {
+        return new MialeeSeverin();
+    }
 }

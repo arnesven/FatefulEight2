@@ -409,7 +409,7 @@ public class Party implements Serializable {
         if (result.isSuccessful() && size() > 1) {
             partyMemberSay(model, getLeader(), List.of("We did it!", "Good job team!", "We're great!", "Alright!",
                     "You guys are awesome!3", "Spectacular!", "Phenomenal!", "Outstanding!", "Huzzah!"));
-        } else {
+        } else if (size() > 1) {
             partyMemberSay(model, getLeader(), List.of("...", "That could have gone better", "Shoot!#",
                     "Come on, we have to do better.", "Well, better luck next time.", "Damn, so close!"));
         }

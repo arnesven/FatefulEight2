@@ -16,4 +16,8 @@ public class MordKroft extends AdvancedAppearance {
         getSprite(3, 4).setColor4(MyColors.BEIGE);
     }
 
+    @Override
+    public CharacterAppearance copy() {
+        return new MordKroft();
+    }
 }

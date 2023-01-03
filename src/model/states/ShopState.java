@@ -68,7 +68,7 @@ public class ShopState extends GameState {
                         model.getParty().addToGold(-1 * cost);
                         println("You bought " + it.getName() + " for " + cost + " gold.");
                         sellItems.addElementLast(it);
-                        if (buyItems.getElementList().isEmpty() && !sellingEnabled) {
+                        if (buyItems.getElementList().isEmpty() && (!sellingEnabled || sellItems.getElementList().isEmpty())) {
                             break;
                         }
                     }

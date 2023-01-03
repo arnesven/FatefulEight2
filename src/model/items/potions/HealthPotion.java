@@ -22,7 +22,7 @@ public class HealthPotion extends Potion {
 
     @Override
     public String getShoppingDetails() {
-        return "Restores 5 HP of one party member.";
+        return ", Restores 5 HP of one party member.";
     }
 
     @Override

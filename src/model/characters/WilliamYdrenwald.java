@@ -2,6 +2,7 @@ package model.characters;
 
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.Beard;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.CharacterEyes;
 import model.races.Race;
 import view.MyColors;
@@ -17,4 +18,8 @@ public class WilliamYdrenwald extends AdvancedAppearance {
         return false;
     }
 
+    @Override
+    public CharacterAppearance copy() {
+        return new WilliamYdrenwald();
+    }
 }

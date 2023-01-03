@@ -15,4 +15,9 @@ public class ZhandraMerkatys extends AdvancedAppearance {
         super.specialization();
         getSprite(3, 4).setColor2(MyColors.RED);
     }
+
+    @Override
+    public CharacterAppearance copy() {
+        return new ZhandraMerkatys();
+    }
 }

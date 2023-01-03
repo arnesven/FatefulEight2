@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.CharacterEyes;
 import model.characters.appearance.HairStyle3x2;
 import model.races.Race;
@@ -12,6 +13,10 @@ public class GorgaBonecrag extends AdvancedAppearance {
                 new HairStyle3x2(0x9D, false), null);
     }
 
+    @Override
+    public CharacterAppearance copy() {
+        return new GorgaBonecrag();
+    }
 
     @Override
     protected void specialization() {

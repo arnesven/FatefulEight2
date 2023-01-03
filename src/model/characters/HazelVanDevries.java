@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.CharacterEyes;
 import model.characters.appearance.HairStyle3x2;
 import model.races.Race;
@@ -28,5 +29,10 @@ public class HazelVanDevries extends AdvancedAppearance {
     protected void specialization() {
         setSprite(1, 4, new FaceSpriteWithHair(0xF0, getHairColor()));
         setSprite(5, 4, new FaceSpriteWithHair(0xF1, getHairColor()));
+    }
+
+    @Override
+    public CharacterAppearance copy() {
+        return new HazelVanDevries();
     }
 }
