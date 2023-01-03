@@ -59,7 +59,7 @@ public class EveningState extends GameState {
         }
     }
 
-    private void buyRations(Model model) {
+    public void buyRations(Model model) {
         println("You can buy rations here at a rate of 5 per gold.");
         if (model.getParty().getGold() == 0) {
             println("But you can't afford any.");

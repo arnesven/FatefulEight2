@@ -2,7 +2,7 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
-import model.states.NoEventState;
+import model.states.events.NoEventState;
 import sound.BackgroundMusic;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;

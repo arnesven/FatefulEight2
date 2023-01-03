@@ -1,6 +1,7 @@
-package model.states;
+package model.states.events;
 
 import model.Model;
+import model.states.DailyEventState;
 
 public class NoEventState extends DailyEventState {
     public NoEventState(Model model) {

@@ -2,7 +2,7 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
-import model.states.NoEventState;
+import model.states.events.NoEventState;
 import model.states.events.*;
 import util.MyRandom;
 import view.subviews.SubView;
