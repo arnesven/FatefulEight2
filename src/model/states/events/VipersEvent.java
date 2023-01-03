@@ -33,7 +33,6 @@ public class VipersEvent extends DailyEventState {
         for (int i = numberOfEnemies; i > 0; --i) {
             enemies.add(new ViperEnemy('A'));
         }
-        CombatEvent combat = new CombatEvent(model, enemies);
-        combat.run(model);
+        runCombat(enemies);
     }
 }

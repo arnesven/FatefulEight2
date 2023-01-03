@@ -28,8 +28,7 @@ public class WolfEvent extends DailyEventState {
             for (int i = numberOfEnemies; i > 0; --i) {
                 enemies.add(new WolfEnemy('A'));
             }
-            CombatEvent combat = new CombatEvent(model, enemies);
-            combat.run(model);
+            runCombat(enemies);
         }
     }
 

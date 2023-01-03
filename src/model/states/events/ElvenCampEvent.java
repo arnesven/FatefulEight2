@@ -35,8 +35,6 @@ public class ElvenCampEvent extends DailyEventState {
             }
         }
 
-        CombatEvent combat = setupCombatWithElves(model);
-
         int roll = MyRandom.rollD10() + elves;
         if (roll >= 8) {
             println("The elves are celebrating the voyage of the moon and sun and will gladly share their campsite" +
@@ -52,22 +50,21 @@ public class ElvenCampEvent extends DailyEventState {
                         " pay no further attention to the party.");
             } else {
                 println("The elves attack you!");
-                combat.run(model);
+                runCombat(setupCombatWithElves(model));
             }
         } else {
             println("You have apparently committed some kind of transgression and angered the elves. They attack you!");
-            combat.run(model);
+            runCombat(setupCombatWithElves(model));
         }
     }
 
-    private CombatEvent setupCombatWithElves(Model model) {
+    private List<Enemy> setupCombatWithElves(Model model) {
         List<Enemy> enemies = new ArrayList<>();
         int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (new ElfEnemy('A')).getThreat());
         for (int i = numberOfEnemies; i > 0; --i) {
             enemies.add(new ElfEnemy('A'));
         }
-        CombatEvent combat = new CombatEvent(model, enemies);
-        return combat;
+        return enemies;
     }
 
     @Override

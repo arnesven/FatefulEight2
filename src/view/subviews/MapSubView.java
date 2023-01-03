@@ -7,12 +7,13 @@ import view.sprites.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapSubView extends AvatarSubView {
     public static final int MAP_WIDTH_HEXES = 8;
     public static final int MAP_HEIGHT_HEXES = 10;
-    public static final String TITLE_TEXT = "WORLD MAP";
+    public static final String TITLE_TEXT = "TRAVEL";
     private final boolean isEven;
     private final List<Point> directions;
     private SteppingMatrix<Point> matrix;
@@ -88,8 +89,22 @@ public class MapSubView extends AvatarSubView {
         this.avatarEnabled = b;
     }
 
-    public String getSelectedDirectionName() {
+    private String getNameForDirection(Point direction) {
         java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
-        return shorts.get(directions.indexOf(matrix.getSelectedElement()));
+        return shorts.get(directions.indexOf(direction));
+    }
+
+    public String getSelectedDirectionName() {
+        return getNameForDirection(matrix.getSelectedElement());
+    }
+
+    public List<Point> getRunAwayDirections(Model model) {
+        List<Point> result = new ArrayList<>();
+        for (Point dir : directions) {
+            if (!model.getWorld().crossesRiver(model.getParty().getPosition(), getNameForDirection(dir))) {
+                result.add(dir);
+            }
+        }
+        return result;
     }
 }

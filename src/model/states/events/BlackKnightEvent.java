@@ -31,11 +31,9 @@ public class BlackKnightEvent extends RiverEvent {
         model.getParty().randomPartyMemberSay(model, List.of("I think we're going to have to fight him if we want to cross here."));
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
-            CombatEvent combat = new CombatEvent(model, List.of(new BlackKnightEnemy('A')));
-            combat.run(model);
+            runCombat(List.of(new BlackKnightEnemy('A')));
             CollapsingTransition.transition(model, RiverEvent.subView);
-            didFlee = combat.fled();
-            if (!didFlee) {
+            if (!super.haveFledCombat()) {
                 println("Black knight: \"You have proven a worthy adversary.\"");
                 println("The black knight offers to instruct you in his martial ways, ");
                 ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.BKN);

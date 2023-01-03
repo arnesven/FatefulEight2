@@ -46,8 +46,7 @@ public class ElfEvent extends DailyEventState {
             if (yesNoInput()) {
                 List<Enemy> list = new ArrayList<>();
                 list.add(new SwordsmanEnemy('A', Race.DARK_ELF));
-                CombatEvent combat = new CombatEvent(model, list);
-                combat.run(model);
+                runCombat(list);
             }
         } else if (dieRoll <= 9) {
             print(" mage who offers to sell you a spell for 15 gold. Do you accept? ");

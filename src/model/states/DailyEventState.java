@@ -2,12 +2,15 @@ package model.states;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.enemies.Enemy;
 import model.races.Race;
 
 import java.util.Collections;
 import java.util.List;
 
 public abstract class DailyEventState extends GameState {
+    private boolean fledCombat = false;
+
     public DailyEventState(Model model) {
         super(model);
     }
@@ -17,6 +20,9 @@ public abstract class DailyEventState extends GameState {
         doEvent(model);
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);
+        }
+        if (fledCombat) {
+            return new RunAwayState(model);
         }
         return new EveningState(model, isFreeLodging(), isFreeRations());
     }
@@ -45,5 +51,15 @@ public abstract class DailyEventState extends GameState {
             RecruitState recruitState = new RecruitState(model, list);
             recruitState.run(model);
         }
+    }
+
+    protected void runCombat(List<Enemy> enemies) {
+        CombatEvent combat = new CombatEvent(getModel(), enemies);
+        combat.run(getModel());
+        fledCombat = combat.fled();
+    }
+
+    protected boolean haveFledCombat() {
+        return fledCombat;
     }
 }

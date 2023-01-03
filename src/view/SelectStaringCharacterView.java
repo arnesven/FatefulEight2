@@ -30,6 +30,7 @@ public class SelectStaringCharacterView extends SelectableListMenu {
         GameCharacter gc = currentSet[selectedIndex];
         classSet = gc.getClasses();
         gc.setClass(classSet[selectedClass]);
+        gc.addToHP(1000); // Start with max hp for class.
         gc.setEquipment(classSet[selectedClass].getStartingEquipment());
         Sprite.resetCallCount();
         return gc;

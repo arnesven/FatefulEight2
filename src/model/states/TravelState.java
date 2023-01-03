@@ -18,19 +18,15 @@ public class TravelState extends GameState {
     }
 
     @Override
-    public GameState run(Model model) {
+    public final GameState run(Model model) {
         MapSubView mapSubView = new MapSubView(model);
         CollapsingTransition.transition(model, mapSubView);
-        Point selectedDir;
-        do {
-            print("Please select an adjacent hex to travel to: ");
-            waitForReturn();
-            selectedDir = mapSubView.getSelectedDirection(model);
-        } while (selectedDir.x == 0 && selectedDir.y == 0);
+
+        Point selectedDir = selectDirection(model, mapSubView);
         Point newPosition = new Point(model.getParty().getPosition());
         World.move(newPosition, selectedDir.x, selectedDir.y);
 
-        if (model.getWorld().crossesRiver(model.getParty().getPosition(), mapSubView.getSelectedDirectionName())) {
+        if (checkRiverCrossing(model, mapSubView)) {
             println("The party comes to a river.");
             CollapsingTransition.transition(model, RiverEvent.subView);
             RiverEvent river = model.getCurrentHex().generateRiverEvent(model);
@@ -63,6 +59,24 @@ public class TravelState extends GameState {
         }
         setCurrentTerrainSubview(model);
         model.getCurrentHex().travelTo(model);
+        return nextState(model);
+    }
+
+    protected GameState nextState(Model model) {
         return model.getCurrentHex().generateEvent(model);
+    }
+
+    protected boolean checkRiverCrossing(Model model, MapSubView mapSubView) {
+        return model.getWorld().crossesRiver(model.getParty().getPosition(), mapSubView.getSelectedDirectionName());
+    }
+
+    protected Point selectDirection(Model model, MapSubView mapSubView) {
+        Point selectedDir;
+        do {
+            print("Please select an adjacent hex to travel to: ");
+            waitForReturn();
+            selectedDir = mapSubView.getSelectedDirection(model);
+        } while (selectedDir.x == 0 && selectedDir.y == 0);
+        return selectedDir;
     }
 }

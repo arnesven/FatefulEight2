@@ -147,12 +147,8 @@ public class GameCharacter extends Combatant {
                     break;
                 }
             } else if (isLeader() && selectedAction == 'F' && combatEvent.fleeingEnabled()) {
-                if (model.getParty().size() > 1) {
-                    performFleeFromBattle(model, combatEvent);
-                    break;
-                } else {
-                    combatEvent.setPartyFled(true);
-                }
+                performFleeFromBattle(model, combatEvent);
+                break;
             } else if (selectedAction == 'I') {
                 Set<UsableItem> usableItems = new HashSet<>();
                 usableItems.addAll(model.getParty().getInventory().getPotions());
@@ -188,10 +184,21 @@ public class GameCharacter extends Combatant {
     }
 
     private void performFleeFromBattle(Model model, CombatEvent combatEvent) {
-        SkillCheckResult result = testSkill(Skill.Leadership, 3 + model.getParty().size());
-        combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
-        if (result.isSuccessful()) {
-            combatEvent.setPartyFled(true);
+        if (model.getParty().size() > 1) {
+            SkillCheckResult result = testSkill(Skill.Leadership, 3 + model.getParty().size());
+            combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
+            if (result.isSuccessful()) {
+                combatEvent.setPartyFled(true);
+            }
+        } else {
+            int d10 = MyRandom.rollD10();
+            combatEvent.print("Trying to escape from combat (D10 roll=" + d10);
+            if (d10 >= 5) {
+                combatEvent.println(" >=5, SUCCESS.");
+                combatEvent.setPartyFled(true);
+            } else {
+                combatEvent.println(" <5 FAIL. Can't get away!");
+            }
         }
     }
 
