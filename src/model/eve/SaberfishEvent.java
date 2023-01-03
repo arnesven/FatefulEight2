@@ -1,0 +1,41 @@
+package model.eve;
+
+import model.Model;
+import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.states.events.RiverEvent;
+import util.MyRandom;
+
+import java.util.List;
+
+public class SaberfishEvent extends RiverEvent {
+    public SaberfishEvent(Model model) {
+        super(model);
+    }
+
+    @Override
+    public boolean eventPreventsCrossing(Model model) {
+        return false;
+    }
+
+    @Override
+    protected void doEvent(Model model) {
+        println("The party wades out into the shallows, vicious fish start " +
+                "nipping at their legs!");
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            gc.addToHP(-1);
+        }
+        model.getParty().randomPartyMemberSay(model, List.of("Ouch!#", "Damn fishies!#", "Stop eating me!#",
+                "I though fish were vegetarians.", "Hey! that hurt..."));
+        GameCharacter gc = MyRandom.sample(model.getParty().getPartyMembers());
+        SkillCheckResult result = gc.testSkill(Skill.Survival, 10);
+        if (result.isSuccessful()) {
+            println(gc.getName() + " manages to catch some of the fish! (Survival " + result.asString() + ")");
+            model.getParty().addToFood(MyRandom.randInt(2,5));
+            model.getParty().partyMemberSay(model, gc, List.of("They are actually quite tasty.",
+                    "Eat or get eaten...", "Gotcha you little devil!", "Hey look, dinner!",
+                    "Anybody care for fish tonight?"));
+        }
+    }
+}

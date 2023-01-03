@@ -5,6 +5,7 @@ import model.actions.DailyAction;
 import model.actions.GetOffRoadAction;
 import model.actions.GetOnRoadAction;
 import model.actions.StayInHexAction;
+import model.eve.SaberfishEvent;
 import model.states.*;
 import model.states.events.*;
 import sound.BackgroundMusic;
@@ -273,19 +274,21 @@ public abstract class WorldHex implements Serializable {
     }
 
     public RiverEvent generateRiverEvent(Model model) {
-//        int d10Roll = MyRandom.rollD10();
-//        if (d10Roll <= 4) {
-//            return new ShallowsEvent(model);
-//        } else if (d10Roll >= 9) {
-//            return new NoRiverCrossingEvent(model);
-//        }
+        int d10Roll = MyRandom.rollD10();
+        if (d10Roll <= 4) {
+            return new ShallowsEvent(model);
+        } else if (d10Roll >= 9) {
+            return new NoRiverCrossingEvent(model);
+        }
         return MyRandom.sample(List.of(
-//                new FerryEvent(model),
-//                new BlackKnightEvent(model),
-//                new RopeBridgeEvent(model),
-//                new DeadBodyEvent(model),
-//                new UndertowEvent(model),
-                new RapidsEvent(model)
+                new FerryEvent(model),
+                new BlackKnightEvent(model),
+                new RopeBridgeEvent(model),
+                new DeadBodyEvent(model),
+                new UndertowEvent(model),
+                new RapidsEvent(model),
+                new SaberfishEvent(model)
+//                new RaftEvent(model) // TODO: implement
         ));
     }
 
