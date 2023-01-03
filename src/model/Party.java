@@ -354,12 +354,17 @@ public class Party implements Serializable {
     }
 
     public boolean doSoloSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
-        GameCharacter best = findBestPerformer(skill);
-        event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
-        event.print(" (Recommended " + best.getName() + "): ");
-        GameCharacter performer = partyMemberInput(model, event, best);
+        GameCharacter performer;
+        if (size() > 1) {
+            GameCharacter best = findBestPerformer(skill);
+            event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
+            event.print(" (Recommended " + best.getName() + "): ");
+            performer = partyMemberInput(model, event, best);
+        } else {
+            performer = partyMembers.get(0);
+        }
         boolean before = MyRandom.randInt(2) == 0;
-        if (before) {
+        if (before && size() > 1) {
             partyMemberSay(model, performer, List.of("Leave it to me!", "Shouldn't be too hard.", "I think I can do it.",
                     "I'll do my best.", "You can count on me.", "I'll give it my all.", "I'll give it a try.",
                     "Time to roll up my sleeves."));
@@ -378,10 +383,15 @@ public class Party implements Serializable {
     }
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
-        GameCharacter best = findBestPerformer(skill);
-        event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
-        event.print(" (Recommended " + best.getName() + "): ");
-        GameCharacter performer = partyMemberInput(model, event, best);
+        GameCharacter performer;
+        if (size() > 1) {
+            GameCharacter best = findBestPerformer(skill);
+            event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
+            event.print(" (Recommended " + best.getName() + "): ");
+            performer = partyMemberInput(model, event, best);
+        } else {
+            performer = partyMembers.get(0);
+        }
         int bonus = 0;
         for (GameCharacter gc : partyMembers) {
             if (gc != performer) {
@@ -396,7 +406,7 @@ public class Party implements Serializable {
             }
         }
         SkillCheckResult result = doSkillCheckWithReRoll(model, event, performer, skill, difficulty, 15, bonus);
-        if (result.isSuccessful()) {
+        if (result.isSuccessful() && size() > 1) {
             partyMemberSay(model, getLeader(), List.of("We did it!", "Good job team!", "We're great!", "Alright!",
                     "You guys are awesome!3", "Spectacular!", "Phenomenal!", "Outstanding!", "Huzzah!"));
         } else {

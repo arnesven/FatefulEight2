@@ -1,6 +1,7 @@
 package model;
 
 import model.actions.DailyAction;
+import model.actions.StayInHexAction;
 import model.characters.*;
 import model.items.accessories.LeatherCap;
 import model.items.clothing.FullPlateArmor;
@@ -38,6 +39,7 @@ public class Model {
         public int day = 1;
         public CharacterCollection allCharacters = new CharacterCollection();
         public List<String> logContent;
+        public boolean mustStayInHex = false;
     }
 
     private GameData gameData = new GameData();
@@ -168,6 +170,10 @@ public class Model {
     }
 
     public List<DailyAction> getDailyActions() {
+        if (gameData.mustStayInHex) {
+            gameData.mustStayInHex = false;
+            return List.of(new StayInHexAction(this));
+        }
         return getParty().getDailyAction(this);
     }
 
@@ -272,5 +278,9 @@ public class Model {
 
     public SpellHandler getSpellHandler() {
         return spellHandler;
+    }
+
+    public void mustStayInHex(boolean b) {
+        gameData.mustStayInHex = b;
     }
 }

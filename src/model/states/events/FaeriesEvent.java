@@ -21,7 +21,7 @@ public class FaeriesEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("No, it's something else..."));
         model.getParty().randomPartyMemberSay(model, List.of("There are voices, as if children are laughing and singing."));
         model.getParty().randomPartyMemberSay(model, List.of("Faeries!3"));
-        println("Each party member regains 3 HP and 1 SP");
+        println("Each party member regains 3 health and 1 stamina.");
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             gc.addToHP(3);
             gc.addToSP(1);

@@ -5,7 +5,7 @@ import model.actions.DailyAction;
 import model.actions.GetOffRoadAction;
 import model.actions.GetOnRoadAction;
 import model.actions.StayInHexAction;
-import model.eve.SaberfishEvent;
+import model.states.events.SaberfishEvent;
 import model.states.*;
 import model.states.events.*;
 import sound.BackgroundMusic;
@@ -16,7 +16,6 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.HexSprite;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

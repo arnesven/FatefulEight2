@@ -1,10 +1,9 @@
-package model.eve;
+package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.states.events.RiverEvent;
 import util.MyRandom;
 
 import java.util.List;

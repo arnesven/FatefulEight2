@@ -3,9 +3,13 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.NoEventState;
+import model.states.events.StormEvent;
+import util.MyRandom;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
+
+import java.util.List;
 
 public class PlainsHex extends WorldHex {
     private static SubView subView = new ImageSubView("theplains", "THE PLAINS", "You are on the plains.", true);
@@ -27,7 +31,12 @@ public class PlainsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return new NoEventState(model);
+        //if (MyRandom.rollD10() >= 5) {
+            return MyRandom.sample(List.of(
+                    new StormEvent(model)
+            ));
+        //}
+       // return new NoEventState(model);
     }
 
 }
