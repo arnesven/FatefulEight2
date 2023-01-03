@@ -65,4 +65,8 @@ public class ChangeClassEvent extends DailyEventState {
             println("but nobody in the party is suitable for that kind of training.");
         }
     }
+
+    public int noOfCandidates() {
+        return candidates.size();
+    }
 }
