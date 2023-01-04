@@ -32,7 +32,7 @@ public class TownLocation extends HexLocation implements LordLocation {
         super("Town of " + townName);
         this.townName = townName;
         this.lordName = lordName;
-        subView = new ImageSubView("town", "TOWN", townName, true);
+        subView = new ImageSubView("town", "TOWN", "town of " + townName, true);
     }
 
     @Override

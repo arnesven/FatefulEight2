@@ -57,7 +57,7 @@ public abstract class AvatarSubView extends SubView {
         }
 
         @Override
-        public void stepAnimation(long elapsedTimeMs, Model model) {
+        public synchronized void stepAnimation(long elapsedTimeMs, Model model) {
             if (from == null) {
                 System.err.println("From was null!");
             }

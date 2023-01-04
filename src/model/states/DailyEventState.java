@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.races.Race;
+import view.subviews.CombatTheme;
+import view.subviews.GrassCombatTheme;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,10 +56,14 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    protected void runCombat(List<Enemy> enemies) {
-        CombatEvent combat = new CombatEvent(getModel(), enemies);
+    protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
+        CombatEvent combat = new CombatEvent(getModel(), enemies, theme, fleeingEnabled);
         combat.run(getModel());
         fledCombat = combat.fled();
+    }
+
+    protected void runCombat(List<Enemy> enemies) {
+        runCombat(enemies, new GrassCombatTheme(), true);
     }
 
     protected boolean haveFledCombat() {

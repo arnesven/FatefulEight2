@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.combat.TownCombatTheme;
 import model.enemies.MuggerEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -18,9 +19,10 @@ public class MuggingEvent extends DailyEventState {
                 " an alley.");
         println("Thug: \"Okay kid, hand it over!\"");
         model.getParty().randomPartyMemberSay(model, List.of("Are we just gonna let these bozos take our stuff?"));
-        print("Fight the muggers? (Y/N)");
+        print("Fight the muggers? (Y/N) ");
         if (yesNoInput()) {
-            runCombat(List.of(new MuggerEnemy('A'), new MuggerEnemy('A')));
+            runCombat(List.of(new MuggerEnemy('A'), new MuggerEnemy('A')),
+                    new TownCombatTheme(), true);
         } else {
             model.getParty().randomPartyMemberSay(model, List.of("Here, take this and leave us alone."));
             int foodTaken = MyRandom.randInt(model.getParty().getFood());
