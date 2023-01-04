@@ -6,6 +6,7 @@ import model.actions.RecruitAction;
 import model.actions.SaveGameAction;
 import model.items.*;
 import model.states.*;
+import model.states.events.SilentNoEventState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
@@ -65,4 +66,8 @@ public class InnLocation extends HexLocation {
         return list;
     }
 
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        return new SilentNoEventState(model);
+    }
 }

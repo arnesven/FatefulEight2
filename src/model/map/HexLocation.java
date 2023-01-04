@@ -2,6 +2,8 @@ package model.map;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.states.DailyEventState;
+import model.states.events.NoEventState;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.ScreenHandler;
@@ -53,5 +55,9 @@ public abstract class HexLocation {
 
     public boolean givesQuests() {
         return false;
+    }
+
+    public DailyEventState generateEvent(Model model) {
+        return new NoEventState(model);
     }
 }

@@ -15,12 +15,16 @@ public class BanditEnemy extends Enemy {
     private static final LoopingSprite halfOrcSprite = new BanditSprite(Race.HALF_ORC.getColor());
     private final Race race;
 
-    public BanditEnemy(char enemyGroup) {
-        super(enemyGroup, "Bandit");
+    public BanditEnemy(char enemyGroup, String name) {
+        super(enemyGroup, name);
         this.race = MyRandom.randInt(2) == 1 ? Race.NORTHERN_HUMAN : Race.HALF_ORC;
     }
 
-    @Override
+    public BanditEnemy(char enemyGroup) {
+        this(enemyGroup, "Bandit");
+    }
+
+        @Override
     public int getMaxHP() {
         return 5;
     }

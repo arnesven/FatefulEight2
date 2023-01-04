@@ -5,9 +5,12 @@ import model.actions.DailyAction;
 import model.actions.RecruitAction;
 import model.actions.SaveGameAction;
 import model.items.Item;
+import model.states.DailyEventState;
 import model.states.RecruitState;
 import model.states.SaveGameState;
 import model.states.ShopState;
+import model.states.events.MuggingEvent;
+import model.states.events.NoEventState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyRandom;
@@ -95,5 +98,15 @@ public class TownLocation extends HexLocation implements LordLocation {
     @Override
     public boolean givesQuests() {
         return true;
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        if (MyRandom.rollD10() >= 3) {
+            return MyRandom.sample(List.of(
+                    new MuggingEvent(model)
+            ));
+        }
+        return new NoEventState(model);
     }
 }

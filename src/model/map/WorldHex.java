@@ -59,6 +59,9 @@ public abstract class WorldHex implements Serializable {
         if (model.getParty().isOnRoad()) {
             return generateOnRoadEvent(model);
         }
+        if (!hexLocation.isDecoration()) {
+            return hexLocation.generateEvent(model);
+        }
         return generateTerrainSpecificEvent(model);
     }
 
