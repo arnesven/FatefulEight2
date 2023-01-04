@@ -30,17 +30,17 @@ public class PlainsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        //if (MyRandom.rollD10() >= 5) {
+        if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
- //                   new StormEvent(model),
- //                   new UnicornEvent(model),
-//                    new StoneCircleEvent(model),
-//                    new BerriesEvent(model),
-//                    new NomadCampEvent(model),
+                    new StormEvent(model),
+                    new UnicornEvent(model),
+                    new StoneCircleEvent(model),
+                    new BerriesEvent(model),
+                    new NomadCampEvent(model),
                     new HalflingVillage(model)
             ));
-        //}
-       // return new NoEventState(model);
+        }
+        return new NoEventState(model);
     }
 
 }

@@ -7,6 +7,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Optional;
 
 public abstract class AvatarSubView extends SubView {
     private MovementAnimation movementAnimation;
@@ -57,6 +58,12 @@ public abstract class AvatarSubView extends SubView {
 
         @Override
         public void stepAnimation(long elapsedTimeMs, Model model) {
+            if (from == null) {
+                System.err.println("From was null!");
+            }
+            if (shift == null) {
+                System.err.println("Shift was null!");
+            }
             double calcX = 8 * from.x + shift.x;
             double calcY = 8 * from.y + shift.y;
             if (new Point2D.Double(8*to.x, 8*to.y).distance(calcX, calcY) > 0.5) {
