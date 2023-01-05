@@ -29,8 +29,8 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneDuring(Model model, TownDailyActionState state, int timeOfDay) {
-        if (timeOfDay == TownDailyActionState.MORNING) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState state) {
+        if (state.isMorning()) {
             state.println("It's too early to make camp yet!");
             return false;
         }

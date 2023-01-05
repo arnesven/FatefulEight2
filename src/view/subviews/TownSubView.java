@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-public class TownSubView extends AvatarSubView {
+public class TownSubView extends DailyActionSubView {
     public static final MyColors GROUND_COLOR = MyColors.GREEN;
     public static final MyColors PATH_COLOR = MyColors.DARK_GRAY;
     public static final MyColors STREET_COLOR = MyColors.GRAY;

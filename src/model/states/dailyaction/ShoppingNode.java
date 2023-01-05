@@ -40,8 +40,8 @@ class ShoppingNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneDuring(Model model, TownDailyActionState townDailyActionState, int timeOfDay) {
-        if (timeOfDay == TownDailyActionState.MORNING) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
+        if (townDailyActionState.isMorning()) {
             return true;
         }
         townDailyActionState.println("The shop is closed. Please come again tomorrow.");

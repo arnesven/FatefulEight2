@@ -42,7 +42,7 @@ public abstract class DailyActionNode implements Serializable {
         return new Point(0, -2);
     }
 
-    public abstract boolean canBeDoneDuring(Model model, TownDailyActionState townDailyActionState, int timeOfDay);
+    public abstract boolean canBeDoneRightNow(AdvancedDailyActionState state);
 
     public boolean exitsTown() {
         return false;

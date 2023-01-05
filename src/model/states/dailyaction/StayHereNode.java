@@ -29,8 +29,8 @@ class StayHereNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneDuring(Model model, TownDailyActionState townDailyActionState, int timeOfDay) {
-        if (timeOfDay == TownDailyActionState.MORNING) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
+        if (townDailyActionState.isMorning()) {
             return true;
         }
         townDailyActionState.println("It's too late in the day for that.");

@@ -19,7 +19,7 @@ public class TavernNode extends DailyActionNode {
     private static final Sprite INN_SIGN = new SignSprite("innisgn", 0x07, MyColors.BLACK, MyColors.WHITE);
 
     public TavernNode() {
-        super("Recruit");
+        super("Visit Tavern");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TavernNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneDuring(Model model, TownDailyActionState townDailyActionState, int timeOfDay) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
         return true;
     }
 
