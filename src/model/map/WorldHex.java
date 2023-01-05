@@ -59,7 +59,7 @@ public abstract class WorldHex implements Serializable {
         if (model.getParty().isOnRoad()) {
             return generateOnRoadEvent(model);
         }
-        if (!hexLocation.isDecoration()) {
+        if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.generateEvent(model);
         }
         return generateTerrainSpecificEvent(model);
@@ -294,4 +294,17 @@ public abstract class WorldHex implements Serializable {
         ));
     }
 
+    public GameState getDailyActionState(Model model) {
+        if (hexLocation != null && !hexLocation.isDecoration()) {
+            return hexLocation.getDailyActionState(model);
+        }
+        return new DailyActionState(model);
+    }
+
+    public GameState getEveningState(Model model, boolean freeLodging, boolean freeRations) {
+        if (hexLocation != null && !hexLocation.isDecoration()) {
+            return hexLocation.getEveningState(model, freeLodging, freeRations);
+        }
+        return new EveningState(model, freeLodging, freeRations);
+    }
 }

@@ -53,8 +53,6 @@ public class NomadCampEvent extends DailyEventState {
 
         int roll = MyRandom.rollD10() + bonus;
         Attitude attitude = roll < 5 ? Attitude.Hostile : (roll < 8 ? Attitude.Neutral : Attitude.Friendly);
-        println("DEBUG: Roll was " + roll);
-
         if (roll < 3 || roll == 5 || roll == 8) {
             println("This tribe is a warrior clan and appears to be " + attitude.toString().toLowerCase() + ".");
         } else if (roll % 3 == 0) {

@@ -23,19 +23,13 @@ public class DrawingArea extends JComponent {
         g.setColor(MyColors.DARK_GRAY.toAwtColor());
         g.fillRect(0, 0, getWidth(), getHeight());
         if (this.buffer != null) {
-            BufferedImage b2 = new BufferedImage(buffer.getWidth(), buffer.getHeight(), buffer.getType());
-            Graphics g2 = b2.getGraphics();
-            g2.drawImage(buffer, 0, 0, null);
-            if (screenHandler.foregroundEnabled()) {
-                screenHandler.drawForeground(g2, 0, 0);
-            }
             int xoffset = (getWidth() - SCREEN_WIDTH*magnification) / 2;
             int yoffset = (getHeight() - SCREEN_HEIGHT*magnification) / 2;
             g.setColor(MyColors.BLACK.toAwtColor());
             g.fillRect(xoffset, yoffset,
                     SCREEN_WIDTH * magnification,
                     SCREEN_HEIGHT * magnification);
-            g.drawImage(b2, xoffset, yoffset, b2.getWidth()*magnification, b2.getHeight()*magnification, null);
+            g.drawImage(buffer, xoffset, yoffset, buffer.getWidth()*magnification, buffer.getHeight()*magnification, null);
         }
     }
 
@@ -48,6 +42,9 @@ public class DrawingArea extends JComponent {
         BufferedImage img = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
         screenHandler.drawBackground(g);
+        if (screenHandler.foregroundEnabled()) {
+            screenHandler.drawForeground(g, 0, 0);
+        }
         this.buffer = img;
     }
 

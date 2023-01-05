@@ -60,7 +60,7 @@ public class ImageSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return undertext;
+        return undertext + " - EVENT";
     }
 
     @Override

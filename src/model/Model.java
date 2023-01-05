@@ -82,7 +82,7 @@ public class Model {
         try {
             ois = new ObjectInputStream(new FileInputStream(filename));
             gameData = (GameData) ois.readObject();
-            state = new DailyActionState(this);
+            state = getCurrentHex().getDailyActionState(this);
             log.setContent(gameData.logContent);
         } catch (FileNotFoundException fnfe) {
             throw fnfe;

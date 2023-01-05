@@ -5,10 +5,8 @@ import model.actions.DailyAction;
 import model.actions.RecruitAction;
 import model.actions.SaveGameAction;
 import model.items.Item;
-import model.states.DailyEventState;
-import model.states.RecruitState;
-import model.states.SaveGameState;
-import model.states.ShopState;
+import model.states.*;
+import model.states.dailyaction.TownDailyActionState;
 import model.states.events.MuggingEvent;
 import model.states.events.NoEventState;
 import sound.BackgroundMusic;
@@ -27,12 +25,14 @@ public class TownLocation extends HexLocation implements LordLocation {
     private final String townName;
     private final SubView subView;
     private final String lordName;
+    private final boolean isCoastal;
 
-    public TownLocation(String townName, String lordName) {
+    public TownLocation(String townName, String lordName, boolean isCoastal) {
         super("Town of " + townName);
         this.townName = townName;
         this.lordName = lordName;
-        subView = new ImageSubView("town", "TOWN", "town of " + townName, true);
+        subView = new ImageSubView("town", "TOWN", "Town of " + townName, true);
+        this.isCoastal = isCoastal;
     }
 
     @Override
@@ -108,5 +108,15 @@ public class TownLocation extends HexLocation implements LordLocation {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public GameState getDailyActionState(Model model) {
+        return new TownDailyActionState(model, isCoastal, false);
+    }
+
+    @Override
+    public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        return new TownDailyActionState(model, isCoastal, true);
     }
 }

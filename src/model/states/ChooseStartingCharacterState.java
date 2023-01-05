@@ -48,6 +48,6 @@ public class ChooseStartingCharacterState extends GameState {
         model.getParty().add(gc);
         model.getParty().addToGold(gc.getCharClass().getStartingGold());
         println(gc.getFullName() + " the " + gc.getRace().getName() + " " + gc.getCharClass().getFullName() + ".");
-        return new DailyActionState(model);
+        return model.getCurrentHex().getDailyActionState(model);
     }
 }

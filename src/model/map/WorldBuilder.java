@@ -213,7 +213,7 @@ public class WorldBuilder {
     }
 
     private static void addTown(Map<Point, HexContents> contents, int x, int y, String townName, String lordName, int roads, int rivers) {
-        contents.put(new Point(x, y), new HexContents(new TownLocation(townName, lordName), roads, rivers));
+        contents.put(new Point(x, y), new HexContents(new TownLocation(townName, lordName, rivers != 0), roads, rivers));
     }
 
 

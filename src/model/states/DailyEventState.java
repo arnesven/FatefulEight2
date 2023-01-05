@@ -27,7 +27,7 @@ public abstract class DailyEventState extends GameState {
         if (fledCombat) {
             return new RunAwayState(model);
         }
-        return new EveningState(model, isFreeLodging(), isFreeRations());
+        return model.getCurrentHex().getEveningState(model, isFreeLodging(), isFreeRations());
     }
 
     protected boolean isFreeRations() {

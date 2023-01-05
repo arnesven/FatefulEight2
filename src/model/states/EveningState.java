@@ -23,6 +23,32 @@ public class EveningState extends GameState {
     public GameState run(Model model) {
         setCurrentTerrainSubview(model);
         print("Evening has come. ");
+        checkForQuest(model);
+        if (freeLodging) {
+            println("The party receives food and lodging for free.");
+            model.getParty().lodging(0);
+        } else if (freeRations) {
+            println("The party has received rations for free.");
+            model.getParty().consumeRations(true);
+        } else if (model.getCurrentHex().hasLodging()) {
+            buyRations(model);
+            lodging(model);
+        } else {
+            notLodging(model);
+        }
+        model.incrementDay();
+        return nextState(model);
+    }
+
+    protected GameState nextState(Model model) {
+        if (this.goOnQuest == null) {
+            model.saveToFile("auto");
+            return model.getCurrentHex().getDailyActionState(model);
+        }
+        return new QuestState(model, goOnQuest);
+    }
+
+    protected void checkForQuest(Model model) {
         if (model.getCurrentHex().givesQuests() &&
                 !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
             Quest q = model.getQuestDeck().getRandomQuest();
@@ -37,25 +63,6 @@ public class EveningState extends GameState {
             } else {
                 println("You declined the quest.");
             }
-        }
-        if (freeLodging) {
-            println("The party receives food and lodging for free.");
-            model.getParty().lodging(0);
-        } else if (freeRations) {
-            println("The party has received rations for free.");
-            model.getParty().consumeRations(true);
-        } else if (model.getCurrentHex().hasLodging()) {
-            buyRations(model);
-            lodging(model);
-        } else {
-            notLodging(model);
-        }
-        model.incrementDay();
-        if (this.goOnQuest == null) {
-            model.saveToFile("auto");
-            return new DailyActionState(model);
-        } else {
-            return new QuestState(model, goOnQuest);
         }
     }
 
@@ -106,7 +113,7 @@ public class EveningState extends GameState {
         }
     }
 
-    private void notLodging(Model model) {
+    protected void notLodging(Model model) {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();

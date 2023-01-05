@@ -1,8 +1,7 @@
-package model;
+package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
-import model.items.weapons.BluntWeapon;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 

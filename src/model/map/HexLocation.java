@@ -2,7 +2,10 @@ package model.map;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.states.DailyActionState;
 import model.states.DailyEventState;
+import model.states.EveningState;
+import model.states.GameState;
 import model.states.events.NoEventState;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
@@ -59,5 +62,13 @@ public abstract class HexLocation {
 
     public DailyEventState generateEvent(Model model) {
         return new NoEventState(model);
+    }
+
+    public GameState getDailyActionState(Model model) {
+        return new DailyActionState(model);
+    }
+
+    public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        return new EveningState(model, freeLodge, freeRations);
     }
 }

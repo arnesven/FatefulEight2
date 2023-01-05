@@ -27,14 +27,28 @@ public abstract class AvatarSubView extends SubView {
     }
 
     public void removeMovementAnimation() {
+        AnimationManager.unregister(movementAnimation);
         movementAnimation = null;
     }
 
-    protected boolean movementAnimationIsDone() {
+    private boolean movementAnimationIsDone() {
         if (movementAnimation == null) {
             return true;
         }
         return movementAnimation.isDone();
+    }
+
+    protected void waitForAnimation() {
+        while (true) {
+            if (movementAnimationIsDone()) {
+                break;
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private class MovementAnimation implements Animation {
@@ -50,23 +64,18 @@ public abstract class AvatarSubView extends SubView {
             this.from = fromPoint;
             this.to = toPoint;
             this.sprite = avatarSprite;
-            AnimationManager.registerPausable(this);
             this.shift = new Point2D.Double(0.0, 0.0);
             steps = fromPoint.distance(toPoint)/1.5;
             this.diff = new Point2D.Double((to.x - from.x) / steps, (to.y - from.y) / steps);
+            AnimationManager.registerPausable(this);
         }
 
         @Override
         public synchronized void stepAnimation(long elapsedTimeMs, Model model) {
-            if (from == null) {
-                System.err.println("From was null!");
-            }
-            if (shift == null) {
-                System.err.println("Shift was null!");
-            }
             double calcX = 8 * from.x + shift.x;
             double calcY = 8 * from.y + shift.y;
-            if (new Point2D.Double(8*to.x, 8*to.y).distance(calcX, calcY) > 0.5) {
+            double distance = new Point2D.Double(8*to.x, 8*to.y).distance(calcX, calcY);
+            if (distance >= 1) {
                 shift.x = shift.x + diff.x;
                 shift.y = shift.y + diff.y;
             } else {

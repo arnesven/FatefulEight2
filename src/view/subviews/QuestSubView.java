@@ -146,19 +146,6 @@ public class QuestSubView extends AvatarSubView {
         setDrawAvatarEnabled(true);
     }
 
-    private void waitForAnimation() {
-        while (true) {
-            if (super.movementAnimationIsDone()) {
-                break;
-            }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public static Point convertToScreen(Point p) {
         return new Point(X_OFFSET + p.x*4, Y_OFFSET + p.y*4 + 2);
     }

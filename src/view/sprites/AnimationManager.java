@@ -1,6 +1,7 @@
 package view.sprites;
 
 import model.Model;
+import view.subviews.AvatarSubView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,5 +25,9 @@ public class AnimationManager {
 
     public static void synchAnimations() {
         animatons.forEach((animation -> animation.synch()));
+    }
+
+    public static void unregister(Animation ani) {
+        animatons.remove(ani);
     }
 }

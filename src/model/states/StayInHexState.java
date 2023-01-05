@@ -9,6 +9,6 @@ public class StayInHexState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        return model.getCurrentHex().generateEvent(model);
+        return model.getCurrentHex().generateEvent(model).run(model);
     }
 }
