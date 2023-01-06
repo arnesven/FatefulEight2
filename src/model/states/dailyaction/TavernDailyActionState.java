@@ -15,12 +15,18 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         super(model);
         this.inTown = inTown;
         addNode(1, 3, new RecruitNode(model));
-        addNode(6, 1, new LodgingNode(model, freeLodging));
+        addNode(6, 1, new LodgingNode(freeLodging));
         if (inTown) {
-            addNode(3, 7, new ExitTavernNode());
+            Point doorPos = getDoorPosition();
+            addNode(doorPos.x, doorPos.y, new ExitTavernNode());
         } else {
             addNode(7, 8, new TravelFromInnNode());
+            addNode(1, 8, new CampOutsideOfTownNode(false));
         }
+    }
+
+    public static Point getDoorPosition() {
+        return new Point(3, 7);
     }
 
     @Override

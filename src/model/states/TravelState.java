@@ -42,9 +42,7 @@ public class TravelState extends GameState {
                 model.getParty().getLeader().getAvatarSprite(),
                 World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
                 World.translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
-        print("Press enter to continue.");
-        waitForReturn();
-        mapSubView.removeMovementAnimation();
+        mapSubView.waitForAnimation();
 
         model.getCurrentHex().travelFrom(model);
         model.getParty().move(selectedDir.x, selectedDir.y);

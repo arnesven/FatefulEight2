@@ -38,7 +38,7 @@ public abstract class AvatarSubView extends SubView {
         return movementAnimation.isDone();
     }
 
-    protected void waitForAnimation() {
+    public void waitForAnimation() {
         while (true) {
             if (movementAnimationIsDone()) {
                 break;

@@ -13,8 +13,8 @@ public class LodgingNode extends DailyActionNode {
             MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
     private final boolean freeLodging;
 
-    public LodgingNode(Model model, boolean freeLodging) {
-        super("Stay at the tavern for the night (" + EveningState.lodgingCost(model) + " gold).");
+    public LodgingNode(boolean freeLodging) {
+        super("Stay at the tavern for the night.");
         this.freeLodging = freeLodging;
     }
 
@@ -38,7 +38,11 @@ public class LodgingNode extends DailyActionNode {
             state.println("You can't afford to pay for food and lodging here.");
             return false;
         }
-        return true;
+        state.print("Pay " + EveningState.lodgingCost(model) + " for food and lodging here? (Y/N) ");
+        if (state.yesNoInput()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

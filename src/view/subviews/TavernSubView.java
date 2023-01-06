@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.ExitTavernNode;
+import model.states.dailyaction.TavernDailyActionState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -25,7 +26,8 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN);
     private final boolean inTown;
 
-    public TavernSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
+    public TavernSubView(AdvancedDailyActionState state,
+                         SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
         super(state, matrix);
         this.inTown = inTown;
     }
@@ -55,7 +57,7 @@ public class TavernSubView extends DailyActionSubView {
             }
         }
         if (!inTown) {
-            Point p = convertToScreen(new Point(3, 7));
+            Point p = convertToScreen(TavernDailyActionState.getDoorPosition());
             model.getScreenHandler().put(p.x, p.y, ExitTavernNode.DOOR);
         }
     }
@@ -67,4 +69,19 @@ public class TavernSubView extends DailyActionSubView {
         }
         return "INN";
     }
+
+    public void animateMovement(Model model, Point from, Point to) {
+        if (insideToOutside(from, to) || insideToOutside(to, from)) {
+            super.animateMovement(model, from, TavernDailyActionState.getDoorPosition());
+            super.animateMovement(model, TavernDailyActionState.getDoorPosition(), to);
+        } else {
+            super.animateMovement(model, from, to);
+        }
+    }
+
+    private boolean insideToOutside(Point from, Point to) {
+        return to.y != AdvancedDailyActionState.TOWN_MATRIX_ROWS-1 &&
+                from.y == AdvancedDailyActionState.TOWN_MATRIX_ROWS-1;
+    }
+
 }
