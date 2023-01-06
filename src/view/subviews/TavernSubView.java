@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.races.Race;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.ExitTavernNode;
@@ -24,6 +25,14 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.BROWN, FLOOR_COLOR, MyColors.TAN);
     private static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN);
+    private static final Sprite BAR_UPPER = new Sprite32x32("barupper", "world_foreground.png", 0x15,
+            MyColors.BLACK, MyColors.TAN, Race.NORTHERN_HUMAN.getColor(), MyColors.BEIGE);
+    private static final Sprite BAR_LOWER = new Sprite32x32("barlower", "world_foreground.png", 0x25,
+            MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
+    private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
+            MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+    private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
+            MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private final boolean inTown;
 
     public TavernSubView(AdvancedDailyActionState state,
@@ -60,6 +69,17 @@ public class TavernSubView extends DailyActionSubView {
             Point p = convertToScreen(TavernDailyActionState.getDoorPosition());
             model.getScreenHandler().put(p.x, p.y, ExitTavernNode.DOOR);
         }
+
+        drawForeground(model, 2, 0, WINDOW);
+        drawForeground(model, 1, 1, PLANT);
+        drawForeground(model, 1, 3, BAR_UPPER);
+        drawForeground(model, 1, 4, BAR_LOWER);
+
+    }
+
+    private void drawForeground(Model model, int x, int y, Sprite sprite) {
+        Point p = convertToScreen(new Point(x, y));
+        model.getScreenHandler().register(sprite.getName(), p, sprite);
     }
 
     @Override

@@ -16,6 +16,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
     private final AdvancedDailyActionState state;
     private final SteppingMatrix<DailyActionNode> matrix;
     private boolean avatarEnabled = true;
+    private boolean cursorEnabled = true;
 
     public DailyActionSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
         this.state = state;
@@ -33,7 +34,9 @@ public abstract class DailyActionSubView extends AvatarSubView {
         if (avatarEnabled) {
             drawAvatar(model);
         }
-        drawCursor(model);
+        if (cursorEnabled) {
+            drawCursor(model);
+        }
     }
 
     protected abstract void drawBackground(Model model);
@@ -88,5 +91,9 @@ public abstract class DailyActionSubView extends AvatarSubView {
         waitForAnimation();
         removeMovementAnimation();
         setDrawAvatarEnabled(true);
+    }
+
+    public void setCursorEnabled(boolean b) {
+        cursorEnabled = b;
     }
 }

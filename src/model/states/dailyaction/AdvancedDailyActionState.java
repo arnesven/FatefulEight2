@@ -56,7 +56,9 @@ public abstract class AdvancedDailyActionState extends GameState {
                 if (daily.exitsTown()) {
                     break;
                 } else {
+                    subView.setCursorEnabled(false);
                     GameState nextState = daily.getDailyAction(model, this).run(model);
+                    subView.setCursorEnabled(true);
                     daily.setTimeOfDay(model, this);
                     if (daily.returnNextState() && nextState != null) {
                         return nextState;

@@ -31,7 +31,7 @@ public class EveningState extends GameState {
             println("The party has received rations for free.");
             model.getParty().consumeRations(true);
         } else if (model.getCurrentHex().hasLodging()) {
-            buyRations(model);
+            buyRations(model, this);
             lodging(model);
         } else {
             notLodging(model);
@@ -66,10 +66,10 @@ public class EveningState extends GameState {
         }
     }
 
-    public void buyRations(Model model) {
-        println("You can buy rations here at a rate of 5 per gold.");
+    public static void buyRations(Model model, GameState state) {
+        state.println("You can buy rations here at a rate of 5 per gold.");
         if (model.getParty().getGold() == 0) {
-            println("But you can't afford any.");
+            state.println("But you can't afford any.");
             return;
         }
         while (model.getParty().getInventory().getFood() < model.getParty().rationsLimit()) {
@@ -81,9 +81,9 @@ public class EveningState extends GameState {
                 maxBuy = model.getParty().getGold() * 5;
                 cost = model.getParty().getGold();
             }
-            print(sitch + maxBuy + " rations.");
-            print(" Do you want to Buy Max (M), Buy 5 (B) or are you done (Q)? ");
-            char choice = lineInput().toUpperCase().charAt(0);
+            state.print(sitch + maxBuy + " rations.");
+            state.print(" Do you want to Buy Max (M), Buy 5 (B) or are you done (Q)? ");
+            char choice = state.lineInput().toUpperCase().charAt(0);
             if (choice == 'M') {
                 model.getParty().addToGold(-cost);
                 model.getParty().addToFood(cost*5);

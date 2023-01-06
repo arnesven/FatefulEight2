@@ -41,7 +41,7 @@ public class HalflingVillage extends DailyEventState {
         } else {
             println("The halflings welcome you as if you were related to them.");
         }
-        new EveningState(model).buyRations(model);
+        EveningState.buyRations(model, this);
         new HalflingEvent(model).doEvent(model);
     }
 

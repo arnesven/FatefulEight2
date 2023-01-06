@@ -11,7 +11,7 @@ import view.subviews.TavernSubView;
 
 public class RecruitNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("table", "world_foreground.png", 0x04,
-            MyColors.BLACK, MyColors.BROWN, MyColors.BROWN);
+            MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
     private final RecruitState recruitState;
 
     public RecruitNode(Model model) {
