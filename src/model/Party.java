@@ -304,6 +304,7 @@ public class Party implements Serializable {
         p.x += 3;
         p.y += 2;
         CalloutSprite spr = new CalloutSprite(spriteNum);
+        callouts.removeIf((MyPair<Point, TimedAnimationSprite> pair) -> pair.first.x == p.x && pair.first.y == p.y);
         callouts.add(new MyPair<>(p, spr));
     }
 
