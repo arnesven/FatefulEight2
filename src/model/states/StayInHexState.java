@@ -9,6 +9,7 @@ public class StayInHexState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        setCurrentTerrainSubview(model);
         return model.getCurrentHex().generateEvent(model).run(model);
     }
 }

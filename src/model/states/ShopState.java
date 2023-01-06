@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.*;
+import view.subviews.CollapsingTransition;
 import view.subviews.ShopSubView;
 
 import java.util.*;
@@ -43,7 +44,7 @@ public class ShopState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        model.setSubView(subView);
+        CollapsingTransition.transition(model, subView);
         while (true) {
             if (sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
                 print("Do you want to Buy (B), Sell (S) or are you Done (Q)? ");

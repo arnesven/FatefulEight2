@@ -329,7 +329,7 @@ public class GameCharacter extends Combatant {
         return 1;
     }
 
-    public Sprite getAvatarSprite() {
+    public AvatarSprite getAvatarSprite() {
         return avatarSprite;
     }
 

@@ -23,6 +23,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         } else {
             addNode(7, 8, new TravelFromInnNode());
             addNode(1, 8, new CampOutsideOfTownNode(false));
+            addNode(4, 2, new InnShoppingNode(model));
         }
     }
 
@@ -32,7 +33,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
 
     @Override
     protected Point getStartingPosition() {
-        return new Point(3, 5);
+        return new Point(3, 4);
     }
 
     @Override

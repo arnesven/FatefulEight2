@@ -27,7 +27,7 @@ class ShoppingNode extends DailyActionNodeWithSign {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new ShopState(model, "general store", shopInventory, null);
+        return new ShopState(model, getName(), shopInventory, null);
     }
 
     @Override

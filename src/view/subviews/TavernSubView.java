@@ -2,17 +2,17 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.characters.GameCharacter;
 import model.races.Race;
-import model.states.dailyaction.AdvancedDailyActionState;
-import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.ExitTavernNode;
-import model.states.dailyaction.TavernDailyActionState;
+import model.states.dailyaction.*;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 import java.util.Random;
 
 public class TavernSubView extends DailyActionSubView {
@@ -34,6 +34,9 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
     private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
+    private static final Sprite MERCHANT = new Sprite32x32("merchant", "world_foreground.png", 0x65,
+            MyColors.BLACK, MyColors.GOLD, Race.NORTHERN_HUMAN.getColor(), MyColors.RED);
+
     private final boolean inTown;
     private final MyRandom random;
     private final Sprite[] colorGuys;
@@ -88,6 +91,22 @@ public class TavernSubView extends DailyActionSubView {
 
         drawDecorations(model);
         drawRecruitArea(model);
+        drawPartyArea(model);
+    }
+
+    private void drawPartyArea(Model model) {
+        List<Point> points = List.of(new Point(6, 6), new Point(6, 5),
+                new Point(5, 6), new Point(6, 4), new Point(4, 6),
+                new Point(5, 4), new Point(4, 5));
+        int i = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (!gc.isLeader()) {
+                LoopingSprite spr = gc.getAvatarSprite();
+                spr.synch();
+                drawForeground(model, points.get(i).x, points.get(i).y, spr);
+                i++;
+            }
+        }
     }
 
     private void drawDecorations(Model model) {
@@ -95,6 +114,11 @@ public class TavernSubView extends DailyActionSubView {
         drawForeground(model, 1, 1, PLANT);
         drawForeground(model, 1, 3, BAR_UPPER);
         drawForeground(model, 1, 4, BAR_LOWER);
+        drawForeground(model, 5, 5, RecruitNode.TABLE);
+        drawForeground(model, 5, 1, RecruitNode.TABLE);
+        if (!inTown) {
+            drawForeground(model, 4, 1, MERCHANT);
+        }
     }
 
 

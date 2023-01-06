@@ -10,7 +10,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.TavernSubView;
 
 public class RecruitNode extends DailyActionNode {
-    private static final Sprite SPRITE = new Sprite32x32("table", "world_foreground.png", 0x04,
+    public static final Sprite TABLE = new Sprite32x32("table", "world_foreground.png", 0x04,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
     private final RecruitState recruitState;
 
@@ -31,7 +31,7 @@ public class RecruitNode extends DailyActionNode {
 
     @Override
     public Sprite getForegroundSprite() {
-        return SPRITE;
+        return TABLE;
     }
 
     @Override
