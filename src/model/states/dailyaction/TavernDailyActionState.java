@@ -9,11 +9,18 @@ import view.subviews.TavernSubView;
 import java.awt.*;
 
 public class TavernDailyActionState extends AdvancedDailyActionState {
-    public TavernDailyActionState(Model model, boolean freeLodging) {
+    private final boolean inTown;
+
+    public TavernDailyActionState(Model model, boolean freeLodging, boolean inTown) {
         super(model);
+        this.inTown = inTown;
         addNode(1, 3, new RecruitNode(model));
-        addNode(6, 1, new LodgingNode(freeLodging));
-        addNode(3, 7, new ExitTavernNode());
+        addNode(6, 1, new LodgingNode(model, freeLodging));
+        if (inTown) {
+            addNode(3, 7, new ExitTavernNode());
+        } else {
+            addNode(7, 8, new TravelFromInnNode());
+        }
     }
 
     @Override
@@ -24,6 +31,6 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
     @Override
     protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState,
                                              SteppingMatrix<DailyActionNode> matrix) {
-        return new TavernSubView(advancedDailyActionState, matrix);
+        return new TavernSubView(advancedDailyActionState, matrix, inTown);
     }
 }

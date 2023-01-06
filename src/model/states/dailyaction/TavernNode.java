@@ -25,7 +25,7 @@ public class TavernNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new TavernDailyActionState(model, freeLodging);
+        return new TavernDailyActionState(model, freeLodging, true);
     }
 
     @Override

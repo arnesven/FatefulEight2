@@ -6,6 +6,7 @@ import model.actions.RecruitAction;
 import model.actions.SaveGameAction;
 import model.items.*;
 import model.states.*;
+import model.states.dailyaction.TavernDailyActionState;
 import model.states.events.SilentNoEventState;
 import util.MyRandom;
 import view.MyColors;
@@ -69,5 +70,15 @@ public class InnLocation extends HexLocation {
     @Override
     public DailyEventState generateEvent(Model model) {
         return new SilentNoEventState(model);
+    }
+
+    @Override
+    public GameState getDailyActionState(Model model) {
+        return new TavernDailyActionState(model, false, false);
+    }
+
+    @Override
+    public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        return new TavernDailyActionState(model, freeLodge, false);
     }
 }

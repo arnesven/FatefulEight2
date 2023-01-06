@@ -7,7 +7,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 public class ExitTavernNode extends DailyActionNode {
-    private static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
+    public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
 
     public ExitTavernNode() {

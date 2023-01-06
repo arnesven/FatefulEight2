@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.ExitTavernNode;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -22,9 +23,11 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.BROWN, FLOOR_COLOR, MyColors.TAN);
     private static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN);
+    private final boolean inTown;
 
-    public TavernSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
+    public TavernSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
         super(state, matrix);
+        this.inTown = inTown;
     }
 
     @Override
@@ -51,10 +54,17 @@ public class TavernSubView extends DailyActionSubView {
                 }
             }
         }
+        if (!inTown) {
+            Point p = convertToScreen(new Point(3, 7));
+            model.getScreenHandler().put(p.x, p.y, ExitTavernNode.DOOR);
+        }
     }
 
     @Override
     protected String getPlaceType() {
-        return "TAVERN";
+        if (inTown) {
+            return "TAVERN";
+        }
+        return "INN";
     }
 }

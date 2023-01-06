@@ -13,8 +13,8 @@ public class LodgingNode extends DailyActionNode {
             MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
     private final boolean freeLodging;
 
-    public LodgingNode(boolean freeLodging) {
-        super("Stay at the tavern for the night.");
+    public LodgingNode(Model model, boolean freeLodging) {
+        super("Stay at the tavern for the night (" + EveningState.lodgingCost(model) + " gold).");
         this.freeLodging = freeLodging;
     }
 
@@ -30,7 +30,7 @@ public class LodgingNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (!state.isEvening()) {
+        if (state.isMorning()) {
             state.println("It's too early to hit the sack.");
             return false;
         }
