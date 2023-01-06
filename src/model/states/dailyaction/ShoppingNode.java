@@ -13,7 +13,7 @@ import view.subviews.TownSubView;
 
 import java.util.List;
 
-class ShoppingNode extends DailyActionNode {
+class ShoppingNode extends DailyActionNodeWithSign {
     private static final Sprite SPRITE = new Sprite32x32("shopping", "world_foreground.png", 0x22,
             TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SIGN = new SignSprite("generalsign", 0x06, MyColors.BLUE, MyColors.WHITE);
@@ -25,7 +25,7 @@ class ShoppingNode extends DailyActionNode {
     }
 
     @Override
-    public GameState getDailyAction(Model model) {
+    public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return new ShopState(model, "general store", shopInventory, null);
     }
 
@@ -40,7 +40,7 @@ class ShoppingNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
         if (townDailyActionState.isMorning()) {
             return true;
         }

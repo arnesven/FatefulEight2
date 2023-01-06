@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.states.GameState;
 import view.subviews.*;
 
@@ -11,21 +12,13 @@ public abstract class AdvancedDailyActionState extends GameState {
 
     public static final int TOWN_MATRIX_ROWS = 9;
     public static final int TOWN_MATRIX_COLUMNS = 8;
-    public static final int MORNING = 0;
-    public static final int EVENING = 1;
     private DailyActionSubView subView;
     private Point currentPosition;
-    private int timeOfDay;
     private SteppingMatrix<DailyActionNode> matrix;
 
-    public AdvancedDailyActionState(Model model, boolean isEvening) {
+    public AdvancedDailyActionState(Model model) {
         super(model);
         matrix = new SteppingMatrix<>(TOWN_MATRIX_COLUMNS, TOWN_MATRIX_ROWS);
-        if (!isEvening) {
-            timeOfDay = MORNING;
-        } else {
-            timeOfDay = EVENING;
-        }
         currentPosition = getStartingPosition();
     }
 
@@ -55,22 +48,25 @@ public abstract class AdvancedDailyActionState extends GameState {
             }
             waitForReturn();
             daily = matrix.getSelectedElement();
-            if (daily.canBeDoneRightNow(this)) {
+            if (daily.canBeDoneRightNow(this, model)) {
                 Point destination = new Point(matrix.getSelectedPoint());
                 subView.animateMovement(model, new Point(currentPosition.x, currentPosition.y), destination);
                 if (daily.exitsTown()) {
                     break;
                 } else {
-                    daily.getDailyAction(model).run(model);
+                    GameState nextState = daily.getDailyAction(model, this).run(model);
                     if (!daily.isFreeAction()) {
-                        timeOfDay = EVENING;
+                        model.setTimeOfDay(TimeOfDay.EVENING);
                     }
                     currentPosition = destination;
+                    if (daily.returnNextState()) {
+                        return nextState;
+                    }
                 }
             }
         }
 
-        return daily.getDailyAction(model);
+        return daily.getDailyAction(model, this);
     }
 
     public Point getCurrentPosition() {
@@ -78,6 +74,6 @@ public abstract class AdvancedDailyActionState extends GameState {
     }
 
     public boolean isMorning() {
-        return timeOfDay == MORNING;
+        return getModel().getTimeOfDay() == TimeOfDay.MORNING;
     }
 }

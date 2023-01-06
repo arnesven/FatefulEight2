@@ -15,8 +15,7 @@ public abstract class DailyActionNode implements Serializable {
         this.name = name;
     }
 
-    public abstract GameState getDailyAction(Model model);
-
+    public abstract GameState getDailyAction(Model model, AdvancedDailyActionState state);
 
     public String getName() {
         return name;
@@ -32,8 +31,6 @@ public abstract class DailyActionNode implements Serializable {
         model.getScreenHandler().put(p.x, p.y, getBackgroundSprite());
         Sprite fg = getForegroundSprite();
         if (fg != null) {
-            p.x += 2;
-            p.y += 2;
             model.getScreenHandler().register("objectforeground", p, fg);
         }
     }
@@ -42,11 +39,15 @@ public abstract class DailyActionNode implements Serializable {
         return new Point(0, -2);
     }
 
-    public abstract boolean canBeDoneRightNow(AdvancedDailyActionState state);
+    public abstract boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model);
 
     public boolean exitsTown() {
         return false;
     }
 
     public abstract boolean isFreeAction();
+
+    public boolean returnNextState() {
+        return false;
+    }
 }

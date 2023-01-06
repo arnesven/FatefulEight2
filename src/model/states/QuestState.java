@@ -58,7 +58,7 @@ public class QuestState extends GameState {
         print("Press enter to continue.");
         waitForReturn();
         setCurrentTerrainSubview(model);
-        return new EveningState(model);
+        return model.getCurrentHex().getEveningState(model, false, false);
     }
 
     public QuestNode getCurrentPosition() {

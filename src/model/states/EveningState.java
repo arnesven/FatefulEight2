@@ -97,10 +97,9 @@ public class EveningState extends GameState {
         }
     }
 
-    private void lodging(Model model) {
-        // TODO: Different ration cost in different locations (Village/Inn = 2, Castle = 3, Temple = 0)
-        int cost = 2 * model.getParty().size();
-        if (cost > model.getParty().getGold()) {
+    protected void lodging(Model model) {
+        int cost = lodgingCost(model);
+        if (!partyCanAffordLodging(model)) {
             print("You cannot afford to pay for food and lodging here. ");
             notLodging(model);
         } else {
@@ -111,6 +110,16 @@ public class EveningState extends GameState {
                 notLodging(model);
             }
         }
+    }
+
+    public static boolean partyCanAffordLodging(Model model) {
+        // TODO: Different ration cost in different locations (Village/Inn = 2, Castle = 3, Temple = 0)
+        int cost = lodgingCost(model);
+        return cost <= model.getParty().getGold();
+    }
+
+    protected static int lodgingCost(Model model) {
+        return 2 * model.getParty().size();
     }
 
     protected void notLodging(Model model) {

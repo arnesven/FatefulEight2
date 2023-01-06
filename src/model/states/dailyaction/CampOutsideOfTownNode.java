@@ -19,7 +19,7 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     }
 
     @Override
-    public GameState getDailyAction(Model model) {
+    public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return new NoLodgingState(model, freeRations);
     }
 
@@ -29,7 +29,7 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState state) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         if (state.isMorning()) {
             state.println("It's too early to make camp yet!");
             return false;

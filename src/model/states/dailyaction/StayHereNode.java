@@ -8,8 +8,6 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.TownSubView;
 
-import java.awt.*;
-
 class StayHereNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("stayhere", "world_foreground.png", 0x12,
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.GRAY, MyColors.BROWN);
@@ -19,7 +17,7 @@ class StayHereNode extends DailyActionNode {
     }
 
     @Override
-    public GameState getDailyAction(Model model) {
+    public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return new StayInHexState(model);
     }
 
@@ -29,7 +27,7 @@ class StayHereNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
         if (townDailyActionState.isMorning()) {
             return true;
         }

@@ -32,6 +32,7 @@ import java.util.List;
 
 public class Model {
 
+
     private static class GameData implements Serializable {
         public Party party = new Party();
         public ItemDeck itemDeck = new ItemDeck();
@@ -40,6 +41,7 @@ public class Model {
         public CharacterCollection allCharacters = new CharacterCollection();
         public List<String> logContent;
         public boolean mustStayInHex = false;
+        public TimeOfDay timeOfDay = TimeOfDay.MORNING;
     }
 
     private GameData gameData = new GameData();
@@ -255,6 +257,7 @@ public class Model {
 
     public void incrementDay() {
         gameData.day++;
+        gameData.timeOfDay = TimeOfDay.MORNING;
     }
 
     public void saveToFile(String filename) {
@@ -282,5 +285,13 @@ public class Model {
 
     public void mustStayInHex(boolean b) {
         gameData.mustStayInHex = b;
+    }
+
+    public void setTimeOfDay(TimeOfDay time) {
+        gameData.timeOfDay = time;
+    }
+
+    public TimeOfDay getTimeOfDay() {
+        return gameData.timeOfDay;
     }
 }

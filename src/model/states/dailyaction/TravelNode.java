@@ -17,7 +17,7 @@ class TravelNode extends DailyActionNode {
     }
 
     @Override
-    public GameState getDailyAction(Model model) {
+    public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         return new TravelState(model);
     }
 
@@ -27,7 +27,7 @@ class TravelNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
         if (townDailyActionState.isMorning()) {
             return true;
         }

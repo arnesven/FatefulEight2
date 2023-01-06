@@ -112,11 +112,11 @@ public class TownLocation extends HexLocation implements LordLocation {
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TownDailyActionState(model, isCoastal, false);
+        return new TownDailyActionState(model, isCoastal);
     }
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new TownDailyActionState(model, isCoastal, true);
+        return new TownDailyActionState(model, isCoastal);
     }
 }

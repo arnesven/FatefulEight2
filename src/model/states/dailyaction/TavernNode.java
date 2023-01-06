@@ -2,7 +2,6 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.states.GameState;
-import model.states.RecruitState;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
@@ -17,14 +16,16 @@ public class TavernNode extends DailyActionNode {
     private static final Sprite SPRITE2 = new Sprite32x32("innupper", "world_foreground.png", 0x23,
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite INN_SIGN = new SignSprite("innisgn", 0x07, MyColors.BLACK, MyColors.WHITE);
+    private final boolean freeLodging;
 
-    public TavernNode() {
+    public TavernNode(boolean freeLodging) {
         super("Visit Tavern");
+        this.freeLodging = freeLodging;
     }
 
     @Override
-    public GameState getDailyAction(Model model) {
-        return new RecruitState(model);
+    public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        return new TavernDailyActionState(model, freeLodging);
     }
 
     @Override
@@ -56,12 +57,17 @@ public class TavernNode extends DailyActionNode {
     }
 
     @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState) {
+    public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
         return true;
     }
 
     @Override
     public boolean isFreeAction() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public boolean returnNextState() {
+        return true;
     }
 }
