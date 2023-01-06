@@ -16,7 +16,7 @@ public class ExitTavernNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new ExitTavernState(model);
+        return null;
     }
 
     @Override
@@ -30,23 +30,10 @@ public class ExitTavernNode extends DailyActionNode {
     }
 
     @Override
-    public boolean isFreeAction() {
-        return true;
-    }
-
-    @Override
     public boolean exitsTown() {
         return true;
     }
 
-    private class ExitTavernState extends GameState {
-        public ExitTavernState(Model model) {
-            super(model);
-        }
-
-        @Override
-        public GameState run(Model model) {
-            return null;
-        }
-    }
+    @Override
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 }

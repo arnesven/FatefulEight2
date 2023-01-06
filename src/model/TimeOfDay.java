@@ -1,5 +1,5 @@
 package model;
 
 public enum TimeOfDay {
-    MORNING, EVENING
+    MORNING, MIDDAY, EVENING
 }

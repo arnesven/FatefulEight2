@@ -202,6 +202,7 @@ public class Model {
             if (nextState != null) {
                 state = nextState;
             }
+            System.out.println("Main loop!");
         }
     }
 

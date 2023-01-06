@@ -41,7 +41,8 @@ class TravelNode extends DailyActionNode {
     }
 
     @Override
-    public boolean isFreeAction() {
-        return false;
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        // Done by state
     }
+
 }

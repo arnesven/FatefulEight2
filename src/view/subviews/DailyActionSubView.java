@@ -71,7 +71,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
 
     @Override
     protected String getTitleText(Model model) {
-        return getPlaceType() + " - " + (state.isMorning()?"MORNING":"EVENING");
+        return getPlaceType() + " - " + (state.isMorning()?"MORNING":(state.isEvening()?"EVENING":"MIDDAY"));
     }
 
     protected abstract String getPlaceType();

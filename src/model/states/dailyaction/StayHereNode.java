@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.GameState;
 import model.states.StayInHexState;
 import view.MyColors;
@@ -28,16 +29,16 @@ class StayHereNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
-        if (townDailyActionState.isMorning()) {
-            return true;
+        if (townDailyActionState.isEvening()) {
+            townDailyActionState.println("It's too late in the day for that.");
+            return false;
         }
-        townDailyActionState.println("It's too late in the day for that.");
-        return false;
+        return true;
     }
 
     @Override
-    public boolean isFreeAction() {
-        return false;
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        model.setTimeOfDay(TimeOfDay.EVENING);
     }
 
 }

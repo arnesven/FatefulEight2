@@ -30,7 +30,7 @@ public class LodgingNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (state.isMorning()) {
+        if (!state.isEvening()) {
             state.println("It's too early to hit the sack.");
             return false;
         }
@@ -42,13 +42,13 @@ public class LodgingNode extends DailyActionNode {
     }
 
     @Override
-    public boolean isFreeAction() {
-        return true;
+    public boolean exitsTown() {
+        return false;
     }
 
     @Override
-    public boolean exitsTown() {
-        return false;
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        // done by state
     }
 
     @Override

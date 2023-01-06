@@ -45,7 +45,7 @@ public abstract class DailyActionNode implements Serializable {
         return false;
     }
 
-    public abstract boolean isFreeAction();
+    public abstract void setTimeOfDay(Model model, AdvancedDailyActionState state);
 
     public boolean returnNextState() {
         return false;

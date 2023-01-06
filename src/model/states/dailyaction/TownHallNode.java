@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.EveningState;
 import model.states.GameState;
 import view.MyColors;
@@ -46,16 +47,18 @@ public class TownHallNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
-        if (townDailyActionState.isMorning()) {
-            return true;
+        if (townDailyActionState.isEvening()) {
+            townDailyActionState.println("It's too late in the day for that.");
+            return false;
         }
-        townDailyActionState.println("It's too late in the day for that.");
-        return false;
+        return true;
     }
 
     @Override
-    public boolean isFreeAction() {
-        return true;
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (state.isMorning()) {
+            model.setTimeOfDay(TimeOfDay.MIDDAY);
+        }
     }
 
     private static class VisitTownHallEvent extends GameState {

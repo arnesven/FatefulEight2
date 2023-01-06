@@ -62,9 +62,7 @@ public class TavernNode extends DailyActionNode {
     }
 
     @Override
-    public boolean isFreeAction() {
-        return true;
-    }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 
     @Override
     public boolean returnNextState() {

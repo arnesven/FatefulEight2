@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.GameState;
 import model.states.RecruitState;
 import view.MyColors;
@@ -11,14 +12,16 @@ import view.subviews.TavernSubView;
 public class RecruitNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("table", "world_foreground.png", 0x04,
             MyColors.BLACK, MyColors.BROWN, MyColors.BROWN);
+    private final RecruitState recruitState;
 
-    public RecruitNode() {
+    public RecruitNode(Model model) {
         super("Recruit Adventurers");
+        this.recruitState = new RecruitState(model);
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new RecruitState(model);
+        return recruitState;
     }
 
     @Override
@@ -33,15 +36,17 @@ public class RecruitNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (state.isMorning()) {
-            return true;
+        if (state.isEvening()) {
+            state.println("It's too late in the day for that.");
+            return false;
         }
-        state.println("All the adventurers have already left for today!");
-        return false;
+        return true;
     }
 
     @Override
-    public boolean isFreeAction() {
-        return false;
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (state.isMorning()) {
+            model.setTimeOfDay(TimeOfDay.MIDDAY);
+        }
     }
 }

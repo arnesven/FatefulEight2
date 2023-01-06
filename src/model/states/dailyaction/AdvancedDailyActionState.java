@@ -7,6 +7,7 @@ import model.states.GameState;
 import view.subviews.*;
 
 import java.awt.*;
+import java.sql.Time;
 
 public abstract class AdvancedDailyActionState extends GameState {
 
@@ -34,14 +35,14 @@ public abstract class AdvancedDailyActionState extends GameState {
     @Override
     public GameState run(Model model) {
         subView = makeSubView(model, this, matrix);
-        DailyActionNode daily;
-        while (true) {
+        DailyActionNode daily = null;
+        while (!model.gameExited()) {
             if (model.getSubView() != subView) {
                 CollapsingTransition.transition(model, subView);
             }
             String place = model.getCurrentHex().getPlaceName();
             print("You are " + place + ". ");
-            if (isMorning()) {
+            if (!isEvening()) {
                 print("Please select your daily action.");
             } else {
                 print("Please select how you will spend the evening.");
@@ -51,19 +52,18 @@ public abstract class AdvancedDailyActionState extends GameState {
             if (daily.canBeDoneRightNow(this, model)) {
                 Point destination = new Point(matrix.getSelectedPoint());
                 subView.animateMovement(model, new Point(currentPosition.x, currentPosition.y), destination);
+                currentPosition = destination;
                 if (daily.exitsTown()) {
                     break;
                 } else {
                     GameState nextState = daily.getDailyAction(model, this).run(model);
-                    if (!daily.isFreeAction()) {
-                        model.setTimeOfDay(TimeOfDay.EVENING);
-                    }
-                    currentPosition = destination;
-                    if (daily.returnNextState()) {
+                    daily.setTimeOfDay(model, this);
+                    if (daily.returnNextState() && nextState != null) {
                         return nextState;
                     }
                 }
             }
+            System.out.println("Advanced daily action loop");
         }
 
         return daily.getDailyAction(model, this);
@@ -76,4 +76,7 @@ public abstract class AdvancedDailyActionState extends GameState {
     public boolean isMorning() {
         return getModel().getTimeOfDay() == TimeOfDay.MORNING;
     }
+
+    public boolean isEvening() { return getModel().getTimeOfDay() == TimeOfDay.EVENING; }
+
 }

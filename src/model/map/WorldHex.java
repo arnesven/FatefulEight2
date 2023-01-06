@@ -56,11 +56,11 @@ public abstract class WorldHex implements Serializable {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
-        if (model.getParty().isOnRoad()) {
-            return generateOnRoadEvent(model);
-        }
         if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.generateEvent(model);
+        }
+        if (model.getParty().isOnRoad()) {
+            return generateOnRoadEvent(model);
         }
         return generateTerrainSpecificEvent(model);
     }

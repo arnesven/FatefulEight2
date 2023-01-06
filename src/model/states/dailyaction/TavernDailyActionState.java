@@ -11,7 +11,7 @@ import java.awt.*;
 public class TavernDailyActionState extends AdvancedDailyActionState {
     public TavernDailyActionState(Model model, boolean freeLodging) {
         super(model);
-        addNode(1, 3, new RecruitNode());
+        addNode(1, 3, new RecruitNode(model));
         addNode(6, 1, new LodgingNode(freeLodging));
         addNode(3, 7, new ExitTavernNode());
     }

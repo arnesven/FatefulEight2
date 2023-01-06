@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.items.Item;
 import model.states.GameState;
 import model.states.ShopState;
@@ -41,15 +42,17 @@ class ShoppingNode extends DailyActionNodeWithSign {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
-        if (townDailyActionState.isMorning()) {
-            return true;
+        if (townDailyActionState.isEvening()) {
+            townDailyActionState.println("The shop is closed. Please come again tomorrow.");
+            return false;
         }
-        townDailyActionState.println("The shop is closed. Please come again tomorrow.");
-        return false;
+        return true;
     }
 
     @Override
-    public boolean isFreeAction() {
-        return true;
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (state.isMorning()) {
+            model.setTimeOfDay(TimeOfDay.MIDDAY);
+        }
     }
 }
