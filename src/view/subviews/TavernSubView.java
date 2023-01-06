@@ -7,6 +7,7 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.ExitTavernNode;
 import model.states.dailyaction.TavernDailyActionState;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -34,11 +35,26 @@ public class TavernSubView extends DailyActionSubView {
     private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private final boolean inTown;
+    private final MyRandom random;
+    private final Sprite[] colorGuys;
+    private boolean[] showColorGuys;
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
         super(state, matrix);
         this.inTown = inTown;
+        random = new MyRandom();
+        colorGuys = new Sprite32x32[]{
+                new Sprite32x32("colorguy1", "avatars.png", 0x87,
+                        MyColors.BLACK, random.nextColor(), random.nextRace().getColor()),
+                new Sprite32x32("colorguy2", "avatars.png", 0x87,
+                        MyColors.BLACK, random.nextColor(), random.nextRace().getColor()),
+                new Sprite32x32("colorguy3", "avatars.png", 0x87,
+                        MyColors.BLACK, random.nextColor(), random.nextRace().getColor())
+        };
+        do {
+            showColorGuys = new boolean[]{random.flipCoin(), random.flipCoin(), random.flipCoin()};
+        } while (!showColorGuys[0] && !showColorGuys[1] && !showColorGuys[2]);
     }
 
     @Override
@@ -70,11 +86,28 @@ public class TavernSubView extends DailyActionSubView {
             model.getScreenHandler().put(p.x, p.y, ExitTavernNode.DOOR);
         }
 
+        drawDecorations(model);
+        drawRecruitArea(model);
+    }
+
+    private void drawDecorations(Model model) {
         drawForeground(model, 2, 0, WINDOW);
         drawForeground(model, 1, 1, PLANT);
         drawForeground(model, 1, 3, BAR_UPPER);
         drawForeground(model, 1, 4, BAR_LOWER);
+    }
 
+
+    private void drawRecruitArea(Model model) {
+        if (showColorGuys[0]) {
+            drawForeground(model, 1, 5, colorGuys[0]);
+        }
+        if (showColorGuys[1]) {
+            drawForeground(model, 1, 6, colorGuys[1]);
+        }
+        if (showColorGuys[2]) {
+            drawForeground(model, 2, 6, colorGuys[2]);
+        }
     }
 
     private void drawForeground(Model model, int x, int y, Sprite sprite) {

@@ -1,5 +1,9 @@
 package util;
 
+import model.races.Race;
+import view.MyColors;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -23,5 +27,17 @@ public class MyRandom {
 
     public static int randInt(int a, int b) {
         return a + randInt(b - a + 1);
+    }
+
+    public MyColors nextColor() {
+        return sample(Arrays.asList(MyColors.values()));
+    }
+
+    public boolean flipCoin() {
+        return random.nextBoolean();
+    }
+
+    public Race nextRace() {
+        return sample(Arrays.asList(Race.allRaces));
     }
 }
