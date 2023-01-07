@@ -229,6 +229,77 @@ public class World implements Serializable {
         throw new IllegalArgumentException("Hex not found in world.");
     }
 
+    public void dijkstrasBySea(WorldHex startingHex) {
+        clearWaterPaths();
+        List<WaterPath> currentSet = new ArrayList<>(startingHex.getWaterPaths());
+        int distance = 0;
+        while (!currentSet.isEmpty()) {
+            List<WaterPath> nextSet = new ArrayList<>();
+            for (WaterPath p : currentSet) {
+                p.setDistance(distance);
+
+                for (WaterPath p2 : p.getHex().getWaterPaths()) {
+                    if (!nextSet.contains(p2) && p2.isDistanceUnset()) {
+                        nextSet.add(p2);
+                    }
+                }
+
+                if (p.getOtherHex() != null) {
+                    for (WaterPath p2 : p.getOtherHex().getWaterPaths()) {
+                        if (!nextSet.contains(p2) && p2.isDistanceUnset()) {
+                            nextSet.add(p2);
+                        }
+                    }
+                }
+            }
+            distance++;
+            currentSet = nextSet;
+        }
+    }
+
+    public void clearWaterPaths() {
+        for (WaterPath p : waterWays) {
+            p.clearDistance();
+        }
+    }
+
+    public Point findClosestWaterPath(Point currentPos) {
+        WaterPath cheapest = null;
+        int cost = 100000;
+        for (WaterPath p : hexes[currentPos.x][currentPos.y].getWaterPaths()) {
+            if (p.getDistance() < cost) {
+                cheapest = p;
+                cost = p.getDistance();
+            }
+        }
+        if (cheapest == null) {
+            throw new IllegalStateException("Could not find cheapest water path!");
+        }
+
+        WorldHex otherHex = cheapest.getOtherHex();
+        if (cheapest.getOtherHex() == null) {
+            throw new IllegalStateException("Could not find other hex.");
+        }
+
+        cost = 100000;
+        WaterPath otherCheapest = null;
+        for (WaterPath p : otherHex.getWaterPaths()) {
+            if (p.getDistance() < cost) {
+                otherCheapest = p;
+                cost = p.getDistance();
+            }
+        }
+
+        if (otherCheapest == null) {
+            throw new IllegalStateException("Could not find cheapest for other hex.");
+        }
+
+        if (otherCheapest.getDistance() < cheapest.getDistance()) {
+            return getPositionForHex(otherHex);
+        }
+        return getPositionForHex(cheapest.getHex());
+    }
+
     private static class Interval {
         public int from;
         public int to;
@@ -251,10 +322,10 @@ public class World implements Serializable {
                         if (p == null) {
                             p = new WaterPath(hexes[x][y], dir);
                             paths.add(p);
+                        } else {
+                            p.setOtherHex(hexes[x][y]);
                         }
-
                         hexes[x][y].addWaterPath(p);
-
                     }
                 }
             }
@@ -264,7 +335,19 @@ public class World implements Serializable {
 
     private WaterPath getOppositeWaterPath(Set<WaterPath> paths, int x, int y, int dir) {
         int opDir = WorldHex.directionForName(opposite(WorldHex.nameForDirection(dir)));
-        // TODO: find the hex "on the other side"
+        List<Point> directions = getDirectionsForPosition(new Point(x, y));
+        java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
+        Point direction = directions.get(shorts.indexOf(WorldHex.nameForDirection(dir)));
+
+        for (WaterPath wp : paths) {
+            Point current = new Point(x, y);
+            World.move(current, direction.x, direction.y);
+            Point target = getPositionForHex(wp.getHex());
+            if (wp.getDirection() == opDir && current.x == target.x && current.y == target.y) {
+                System.out.println("Found opposing water path at " + x + "," + y);
+                return wp;
+            }
+        }
         return null;
     }
 }

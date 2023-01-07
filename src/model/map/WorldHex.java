@@ -334,4 +334,8 @@ public abstract class WorldHex implements Serializable {
     public void addWaterPath(WaterPath p) {
         waterPaths.add(p);
     }
+
+    public List<WaterPath> getWaterPaths() {
+        return waterPaths;
+    }
 }

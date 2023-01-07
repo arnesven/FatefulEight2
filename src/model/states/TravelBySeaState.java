@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.map.TownLocation;
 import model.map.World;
+import model.map.WorldHex;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -51,19 +52,30 @@ public class TravelBySeaState extends GameState {
         CollapsingTransition.transition(model, mapSubView);
         Point newPosition = model.getWorld().getPositionForHex(ship.first.getHex());
 
-        mapSubView.addMovementAnimation(
-                shipAvatar,
-                World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                World.translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
-        mapSubView.waitForAnimation();
-        mapSubView.removeMovementAnimation();
+        model.getWorld().dijkstrasBySea(ship.first.getHex());
+
+        Point currentPos = model.getParty().getPosition();
+        do {
+            Point closest = model.getWorld().findClosestWaterPath(currentPos);
+            if (closest.equals(currentPos)) {
+                break;
+            }
+            mapSubView.addMovementAnimation(
+                    shipAvatar,
+                    World.translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                    World.translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+            mapSubView.waitForAnimation();
+            mapSubView.removeMovementAnimation();
+            model.getParty().setPosition(closest);
+            currentPos = closest;
+        } while (!(currentPos.x == newPosition.x && currentPos.y == newPosition.y));
+
 
         model.getCurrentHex().travelFrom(model);
         model.incrementDay();
         model.incrementDay();
         model.getParty().setPosition(newPosition);
         model.getCurrentHex().travelTo(model);
-        waitForReturn();
     }
 
     public boolean didTravel() {
