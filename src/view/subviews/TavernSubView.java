@@ -36,6 +36,8 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private static final Sprite MERCHANT = new Sprite32x32("merchant", "world_foreground.png", 0x65,
             MyColors.BLACK, MyColors.GOLD, Race.NORTHERN_HUMAN.getColor(), MyColors.RED);
+    private static final Sprite SIGN = new Sprite32x32("innsign", "world_foreground.png", 0x64,
+            MyColors.BLACK, MyColors.BROWN, MyColors.BEIGE);
 
     private final boolean inTown;
     private final MyRandom random;
@@ -116,6 +118,7 @@ public class TavernSubView extends DailyActionSubView {
         drawForeground(model, 1, 4, BAR_LOWER);
         drawForeground(model, 5, 5, RecruitNode.TABLE);
         drawForeground(model, 5, 1, RecruitNode.TABLE);
+        drawForeground(model, 4, 7, SIGN);
         if (!inTown) {
             drawForeground(model, 4, 1, MERCHANT);
         }

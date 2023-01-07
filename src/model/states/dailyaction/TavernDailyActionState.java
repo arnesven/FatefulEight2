@@ -24,6 +24,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(7, 8, new TravelFromInnNode());
             addNode(1, 8, new CampOutsideOfTownNode(false));
             addNode(4, 2, new InnShoppingNode(model));
+            addNode(2, 1, new SaveGameNode());
         }
     }
 
