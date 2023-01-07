@@ -25,7 +25,7 @@ public class ItemDeck extends ArrayList<Item> {
         Collections.shuffle(this);
     }
 
-    public List<? extends Item> draw(int count, Prevalence prevalence) {
+    public List<Item> draw(int count, Prevalence prevalence) {
         List<Item> drawn = new ArrayList<>();
         for (int i = count; i > 0; --i) {
             Item it;
@@ -37,7 +37,7 @@ public class ItemDeck extends ArrayList<Item> {
         return drawn;
     }
 
-    public List<? extends Item> draw(int count) {
+    public List<Item> draw(int count) {
         return draw(count, Prevalence.unspecified);
     }
 
