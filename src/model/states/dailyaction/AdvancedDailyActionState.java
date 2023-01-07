@@ -7,7 +7,6 @@ import model.states.GameState;
 import view.subviews.*;
 
 import java.awt.*;
-import java.sql.Time;
 
 public abstract class AdvancedDailyActionState extends GameState {
 
@@ -53,7 +52,7 @@ public abstract class AdvancedDailyActionState extends GameState {
                 Point destination = new Point(matrix.getSelectedPoint());
                 subView.animateMovement(model, new Point(currentPosition.x, currentPosition.y), destination);
                 currentPosition = destination;
-                if (daily.exitsTown()) {
+                if (daily.exitsCurrentLocale()) {
                     break;
                 } else {
                     subView.setCursorEnabled(false);

@@ -12,14 +12,21 @@ import java.awt.*;
 
 public class GoTheDocksNode extends DailyActionNode {
     private static Sprite ship = new ShipAtDocksSprite();
+    private final TravelBySeaState travelState;
 
-    public GoTheDocksNode() {
+    public GoTheDocksNode(Model model) {
         super("Go to the docks");
+        this.travelState = new TravelBySeaState(model);
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new TravelBySeaState(model);
+        return travelState;
+    }
+
+    @Override
+    public boolean returnNextState() {
+        return travelState.didTravel();
     }
 
     @Override

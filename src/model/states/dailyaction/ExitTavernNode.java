@@ -30,7 +30,7 @@ public class ExitTavernNode extends DailyActionNode {
     }
 
     @Override
-    public boolean exitsTown() {
+    public boolean exitsCurrentLocale() {
         return true;
     }
 

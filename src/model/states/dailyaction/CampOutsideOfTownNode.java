@@ -38,7 +38,7 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     }
 
     @Override
-    public boolean exitsTown() {
+    public boolean exitsCurrentLocale() {
         return true;
     }
 

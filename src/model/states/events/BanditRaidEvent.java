@@ -15,11 +15,13 @@ public class BanditRaidEvent extends DailyEventState {
         println("This farmstead has been plagued by bandits for some time.");
         model.getParty().randomPartyMemberSay(model, List.of("It's time to teach this rabble a lesson."));
         runCombat(BanditEvent.generateBanditEnemies(model));
-        new GuestEvent(model).doEvent(model);
+        if (!haveFledCombat()) {
+            new GuestEvent(model).doEvent(model);
+        }
     }
 
     @Override
     protected boolean isFreeRations() {
-        return true;
+        return !haveFledCombat();
     }
 }

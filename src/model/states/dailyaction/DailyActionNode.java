@@ -41,7 +41,7 @@ public abstract class DailyActionNode implements Serializable {
 
     public abstract boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model);
 
-    public boolean exitsTown() {
+    public boolean exitsCurrentLocale() {
         return false;
     }
 

@@ -46,7 +46,7 @@ public class LodgingNode extends DailyActionNode {
     }
 
     @Override
-    public boolean exitsTown() {
+    public boolean exitsCurrentLocale() {
         return false;
     }
 

@@ -2,15 +2,23 @@ package model.states;
 
 import model.Model;
 import model.map.TownLocation;
+import model.map.World;
 import util.MyPair;
 import util.MyRandom;
+import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CollapsingTransition;
 import view.subviews.MapSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 
 public class TravelBySeaState extends GameState {
     private final MyPair<TownLocation, Integer> ship;
+    private boolean didTravel = false;
+    private Sprite shipAvatar = new Sprite32x32("shipavatar", "world.png", 0x26,
+            MyColors.BLACK, MyColors.BEIGE, MyColors.BROWN);
 
     public TravelBySeaState(Model model) {
         super(model);
@@ -34,18 +42,58 @@ public class TravelBySeaState extends GameState {
                 println("Ok. But come back soon if you change your mind. The ship will not wait for you.");
             }
         }
-        return null;
+        return model.getCurrentHex().getDailyActionState(model);
     }
 
     private void travelTo(Model model, TownLocation first) {
-        CollapsingTransition.transition(model, new MapSubView(model));
+        didTravel = true;
+        MapSubView mapSubView = new SeaTravelMapSubView(model, first);
+        CollapsingTransition.transition(model, mapSubView);
+        Point newPosition = model.getWorld().getPositionForHex(ship.first.getHex());
+
+        mapSubView.addMovementAnimation(
+                shipAvatar,
+                World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                World.translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+        mapSubView.waitForAnimation();
+        mapSubView.removeMovementAnimation();
 
         model.getCurrentHex().travelFrom(model);
-        Point newPosition = model.getWorld().getPositionForHex(ship.first.getHex());
         model.incrementDay();
         model.incrementDay();
         model.getParty().setPosition(newPosition);
         model.getCurrentHex().travelTo(model);
+        waitForReturn();
+    }
+
+    public boolean didTravel() {
+        return didTravel;
+    }
+
+
+    private static class SeaTravelMapSubView extends MapSubView {
+        private final TownLocation destination;
+
+        public SeaTravelMapSubView(Model model, TownLocation first) {
+            super(model);
+            this.destination = first;
+        }
+
+        @Override
+        protected String getTitleText(Model model) {
+            return "TRAVEL BY SEA";
+        }
+
+        @Override
+        protected String getUnderText(Model model) {
+            return "You are traveling by sea to " + destination.getTownName() + ".";
+        }
+
+        @Override
+        public void specificDrawArea(Model model) {
+            model.getWorld().drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
+                    MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, model.getParty().getPosition(), false);
+        }
     }
 
     private MyPair<TownLocation, Integer> rollOnTable(Model model, TownLocation currentLocation) {
@@ -158,4 +206,5 @@ public class TravelBySeaState extends GameState {
             return new MyPair<>(destinations[roll-1], costs[roll-1]);
         }
     }
+
 }

@@ -48,8 +48,8 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,16, 0, SOUTH_WEST | SOUTH_EAST, 0);
 
         addTemple(contents, 1, 1, "Crystal");
-        addTown(contents, 7, 1, "East Durham", "Mayor Bison", 0, 0);
-        addTown(contents, 11, 1, "Cape Paxton", "Mayor Dargola", NORTH, 0);
+        addTown(contents, 7, 1, "East Durham", "Mayor Bison", 0, SOUTH_EAST);
+        addTown(contents, 11, 1, "Cape Paxton", "Mayor Dargola", NORTH, SOUTH_WEST);
         addRoadsAndRivers(contents, 13, 1, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 15, 1, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents,17, 1, NORTH_WEST | SOUTH_EAST, 0);
@@ -71,7 +71,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,14, 4, NORTH_WEST | SOUTH, 0);
 
 
-        addTown(contents, 0, 5, "Roukon", "Mayor Stephens", SOUTH_EAST, 0);
+        addTown(contents, 0, 5, "Roukon", "Mayor Stephens", SOUTH_EAST, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents,14, 5, SOUTH | NORTH, 0);
 
         addRoadsAndRivers(contents, 1, 6, NORTH_WEST | SOUTH_EAST, 0);
