@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.map.World;
 import view.sprites.*;
 
 import java.awt.*;
@@ -14,21 +15,14 @@ public class MapSubView extends AvatarSubView {
     public static final int MAP_WIDTH_HEXES = 8;
     public static final int MAP_HEIGHT_HEXES = 10;
     public static final String TITLE_TEXT = "TRAVEL";
-    private final boolean isEven;
     private final List<Point> directions;
     private SteppingMatrix<Point> matrix;
     private boolean avatarEnabled = true;
 
     public MapSubView(Model model) {
         matrix = new SteppingMatrix<>(3, 3);
-        isEven = model.getParty().getPosition().x % 2 == 0;
-        if (isEven) {
-            directions = java.util.List.of(new Point(1, 1), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1), new Point(1, 0));
-        } else {
-            directions = java.util.List.of(new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(-1, -1), new Point(0, -1), new Point(1, -1));
-        }
+        directions = World.getDirectionsForPosition(model.getParty().getPosition());
         matrix.addElement(1, 1, new Point(0, 0));
-
 
         addIfOkToMoveTo(model,2, 2, directions.get(0));
         addIfOkToMoveTo(model, 1, 2, directions.get(1));

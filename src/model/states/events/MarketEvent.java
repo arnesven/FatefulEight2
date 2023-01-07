@@ -18,7 +18,7 @@ public class MarketEvent extends DailyEventState {
         println("Pushy merchant: \"Hey you! You gotta 'ave a look at my stuff. Premium quality and damn fine prices!\"");
         model.getParty().randomPartyMemberSay(model, List.of("Doesn't hurt to look.",
                 "I'm sure it's the same junk as usual, but let's look.",
-                "He looks very honest... why don't we see what he has for sale."));
+                "He looks very honest... why don't we see what he has for sale?"));
         waitForReturn();
         List<Item> items = model.getItemDeck().draw(12);
         int[] prices = new int[12];

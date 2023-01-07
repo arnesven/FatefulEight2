@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.Party;
 import model.actions.DailyAction;
 import model.states.DailyActionState;
 import model.states.DailyEventState;
@@ -13,10 +14,12 @@ import view.ScreenHandler;
 import view.sprites.Sprite;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class HexLocation {
+public abstract class HexLocation implements Serializable {
     private final String name;
+    private WorldHex hex;
 
     public HexLocation(String name) {
         this.name = name;
@@ -70,5 +73,13 @@ public abstract class HexLocation {
 
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
         return new EveningState(model, freeLodge, freeRations);
+    }
+
+    public void setHex(WorldHex hex) {
+        this.hex = hex;
+    }
+
+    public WorldHex getHex() {
+        return hex;
     }
 }

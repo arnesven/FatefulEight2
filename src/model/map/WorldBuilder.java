@@ -222,7 +222,11 @@ public class WorldBuilder {
         Map<Point, HexContents> hexContents = makeHexContents();
         for (int y = 0; y < worldTemplate.length; ++y) {
             for (int x = 0; x < WORLD_WIDTH; ++x) {
-                hexes[x][y] = makeHex(worldTemplate[y].charAt(x), hexContents.get(new Point(x, y)));
+                HexContents contents = hexContents.get(new Point(x, y));
+                hexes[x][y] = makeHex(worldTemplate[y].charAt(x), contents);
+                if (contents != null && contents.location != null) {
+                    contents.location.setHex(hexes[x][y]);
+                }
             }
         }
 

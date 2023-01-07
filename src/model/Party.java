@@ -50,7 +50,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(14,7);  // Inn is at 12,9
+        position = new Point(13,7);  // Inn is at 12,9
         cursorSprites = makeCursorSprites();
     }
 
@@ -107,7 +107,11 @@ public class Party implements Serializable {
     public void move(int dx, int dy) {
         this.previousPosition = new Point(position);
         World.move(position, dx, dy);
+    }
 
+    public void setPosition(Point newPosition) {
+        this.previousPosition = new Point(position);
+        this.position = new Point(newPosition);
     }
 
     public int getGold() {

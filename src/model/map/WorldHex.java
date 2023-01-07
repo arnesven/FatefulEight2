@@ -39,6 +39,7 @@ public abstract class WorldHex implements Serializable {
     private int rivers;
     private HexLocation hexLocation;
     private BackgroundMusic music;
+    private List<WaterPath> waterPaths = new ArrayList<>();
 
 
     public WorldHex(MyColors color, int roads, int rivers, HexLocation location) {
@@ -246,23 +247,45 @@ public abstract class WorldHex implements Serializable {
     }
 
     private boolean getRoadOrRiverInDirection(String directionName, int roadOrRiver) {
+        return (roadOrRiver & directionForName(directionName)) != 0;
+    }
+
+    public static String nameForDirection(int dir) {
+        switch (dir) {
+            case NORTH:
+                return "N";
+            case NORTH_EAST:
+                return "NE";
+            case SOUTH_EAST:
+                return "SE";
+            case SOUTH:
+                return "S";
+            case SOUTH_WEST:
+                return "SW";
+            case NORTH_WEST:
+                return "NW";
+        }
+        throw new IllegalStateException("Illegal direction " + dir + ".");
+    }
+
+    public static int directionForName(String directionName) {
         if (directionName.equals("SE")) {
-            return (roadOrRiver & SOUTH_EAST) != 0;
+            return SOUTH_EAST;
         }
         if (directionName.equals("S")) {
-            return (roadOrRiver & SOUTH) != 0;
+            return SOUTH;
         }
         if (directionName.equals("SW")) {
-            return (roadOrRiver & SOUTH_WEST) != 0;
+            return SOUTH_WEST;
         }
         if (directionName.equals("NE")) {
-            return (roadOrRiver & NORTH_EAST) != 0;
+            return NORTH_EAST;
         }
         if (directionName.equals("N")) {
-            return (roadOrRiver & NORTH) != 0;
+            return NORTH;
         }
         if (directionName.equals("NW")) {
-            return (roadOrRiver & NORTH_WEST) != 0;
+            return NORTH_WEST;
         }
         throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
     }
@@ -306,5 +329,9 @@ public abstract class WorldHex implements Serializable {
             return hexLocation.getEveningState(model, freeLodging, freeRations);
         }
         return new EveningState(model, freeLodging, freeRations);
+    }
+
+    public void addWaterPath(WaterPath p) {
+        waterPaths.add(p);
     }
 }

@@ -16,6 +16,10 @@ public class AssassinEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        if (model.getParty().partyStrength() < 15) {
+            new NoEventState(model).run(model);
+            return;
+        }
         println("You hear a rumor that someone has put a bounty on one of the party members.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                 List.of("If we ask around a bit maybe we can intercept the assassin."));

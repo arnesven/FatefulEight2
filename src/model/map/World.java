@@ -9,19 +9,23 @@ import view.subviews.SubView;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Set;
 
 public class World implements Serializable {
 
+    private final Set<WaterPath> waterWays;
     //  x   y
     private WorldHex[][] hexes;
     private ViewPointMarker cursor = new HexCursorMarker();
-    private boolean avatarEnabled = true;
 
     public World() {
         hexes = WorldBuilder.buildWorld();
+        waterWays = makeWaterWays();
     }
+
 
     public static Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
         Interval xVals = calcXValues(viewPoint.x, mapXRange);
@@ -40,6 +44,13 @@ public class World implements Serializable {
         int screenY = yOffset - 2 + 4 * row + y_extra;
 
         return new Point(screenX, screenY);
+    }
+
+    public static List<Point> getDirectionsForPosition(Point position) {
+        if (position.x % 2 == 0) {
+            return java.util.List.of(new Point(1, 1), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1), new Point(1, 0));
+        }
+        return java.util.List.of(new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(-1, -1), new Point(0, -1), new Point(1, -1));
     }
 
     public boolean crossesRiver(Point position, String directionName) {
@@ -194,6 +205,30 @@ public class World implements Serializable {
         throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
     }
 
+    public TownLocation getTownByName(String townName) {
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() != null) {
+                    if (hexes[x][y].getLocation().getName().contains(townName)) {
+                        return (TownLocation) hexes[x][y].getLocation();
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("No town found for \"" + townName + "\"");
+    }
+
+    public Point getPositionForHex(WorldHex hex) {
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y] == hex) {
+                    return new Point(x, y);
+                }
+            }
+        }
+        throw new IllegalArgumentException("Hex not found in world.");
+    }
+
     private static class Interval {
         public int from;
         public int to;
@@ -202,5 +237,34 @@ public class World implements Serializable {
             from = xMin;
             to = xMax;
         }
+    }
+
+    private Set<WaterPath> makeWaterWays() {
+        int[] directions = new int[]{WorldHex.NORTH, WorldHex.NORTH_EAST, WorldHex.SOUTH_EAST,
+                WorldHex.SOUTH, WorldHex.SOUTH_WEST, WorldHex.NORTH_WEST};
+        Set<WaterPath> paths = new HashSet<>();
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                for (int dir : directions) {
+                    if ((hexes[x][y].getRivers() & dir) != 0) {
+                        WaterPath p = getOppositeWaterPath(paths, x, y, dir);
+                        if (p == null) {
+                            p = new WaterPath(hexes[x][y], dir);
+                            paths.add(p);
+                        }
+
+                        hexes[x][y].addWaterPath(p);
+
+                    }
+                }
+            }
+        }
+        return paths;
+    }
+
+    private WaterPath getOppositeWaterPath(Set<WaterPath> paths, int x, int y, int dir) {
+        int opDir = WorldHex.directionForName(opposite(WorldHex.nameForDirection(dir)));
+        // TODO: find the hex "on the other side"
+        return null;
     }
 }

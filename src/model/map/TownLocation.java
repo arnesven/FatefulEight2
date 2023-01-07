@@ -121,4 +121,8 @@ public class TownLocation extends HexLocation implements LordLocation {
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
         return new TownDailyActionState(model, isCoastal);
     }
+
+    public String getTownName() {
+        return townName;
+    }
 }
