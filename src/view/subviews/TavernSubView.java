@@ -112,7 +112,7 @@ public class TavernSubView extends DailyActionSubView {
     }
 
     private void drawDecorations(Model model) {
-        drawForeground(model, 2, 0, WINDOW);
+        drawForeground(model, 3, 0, WINDOW);
         drawForeground(model, 1, 1, PLANT);
         drawForeground(model, 1, 3, BAR_UPPER);
         drawForeground(model, 1, 4, BAR_LOWER);
