@@ -7,6 +7,7 @@ import model.actions.SaveGameAction;
 import model.items.Item;
 import model.states.*;
 import model.states.dailyaction.TownDailyActionState;
+import model.states.events.AssassinEvent;
 import model.states.events.MuggingEvent;
 import model.states.events.NoEventState;
 import sound.BackgroundMusic;
@@ -104,7 +105,8 @@ public class TownLocation extends HexLocation implements LordLocation {
     public DailyEventState generateEvent(Model model) {
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
-                    new MuggingEvent(model)
+ //                   new MuggingEvent(model),
+                    new AssassinEvent(model)
             ));
         }
         return new NoEventState(model);

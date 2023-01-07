@@ -9,6 +9,7 @@ public class GameOverState extends GameState {
 
     @Override
     public GameState run(Model model) {
-       return this;
+        waitForReturn();
+        return this;
     }
 }
