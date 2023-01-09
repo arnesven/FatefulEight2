@@ -17,10 +17,12 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(6, 1, new ShoppingNode(model));
         super.addNode(1, 4, new TavernNode(freeLodging));
         super.addNode(3, 2, new TownHallNode());
-        super.addNode(2, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations));
+        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations));
         super.addNode(TOWN_MATRIX_COLUMNS-1, TOWN_MATRIX_ROWS-2, new TravelNode());
         addNode(7, 2, new SaveGameNode());
-        addNode(2, 0, new GoTheDocksNode(model));
+        if (isCoastal) {
+            addNode(2, 0, new GoTheDocksNode(model));
+        }
         this.isCoastal = isCoastal;
 
     }

@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
 import sprites.CombatCursorSprite;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x16;
@@ -36,7 +37,7 @@ public class TownSubView extends DailyActionSubView {
         if (isCoastal) {
             drawDocks(model);
         } else {
-            // TODO: draw more grass
+            drawTopRowGrass(model);
         }
     }
 
@@ -51,6 +52,16 @@ public class TownSubView extends DailyActionSubView {
             model.getScreenHandler().put(p.x, p.y, DOCK);
             p.y -= 2;
             model.getScreenHandler().put(p.x, p.y, WATER);
+        }
+    }
+
+    private void drawTopRowGrass(Model model) {
+        Random random = new Random(8);
+        for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {
+            Point p = convertToScreen(new Point(col, 0));
+            model.getScreenHandler().put(p.x, p.y, GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+            p.y -= 2;
+            model.getScreenHandler().put(p.x, p.y, GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
         }
     }
 
