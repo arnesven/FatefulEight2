@@ -39,7 +39,7 @@ public class Party implements Serializable {
     private List<GameCharacter> frontRow = new ArrayList<>();
     private List<GameCharacter> backRow = new ArrayList<>();
     private List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
-    private List<LordLocation> destinations = new ArrayList<>();
+    private List<String> destinations = new ArrayList<>();
     private Point position;
     private Point previousPosition;
     private int gold = 30;
@@ -50,7 +50,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(20,6);  // Inn is at 12,9
+        position = new Point(12,9);  // Inn is at 12,9
         cursorSprites = makeCursorSprites();
     }
 
@@ -325,7 +325,7 @@ public class Party implements Serializable {
     }
 
     public void addDestination(LordLocation destination) {
-        this.destinations.add(destination);
+        this.destinations.add(destination.getPlaceName());
     }
 
     public void giveXP(Model model, GameCharacter gc, int xp) {
