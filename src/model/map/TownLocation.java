@@ -103,10 +103,11 @@ public class TownLocation extends HexLocation implements LordLocation {
     public DailyEventState generateEvent(Model model) {
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
-                    new MuggingEvent(model),
-                    new AssassinEvent(model),
-                    new MarketEvent(model),
-                    new CourierEvent(model)
+//                    new MuggingEvent(model),
+//                    new AssassinEvent(model),
+//                    new MarketEvent(model),
+//                    new CourierEvent(model),
+                    new BorrowedMoneyEvent(model)
             ));
         }
         return new NoEventState(model);

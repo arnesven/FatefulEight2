@@ -443,7 +443,7 @@ public class Party implements Serializable {
         return doCollectiveSkillCheckWithFailers(model, event, skill, difficulty).isEmpty();
     }
 
-    private SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {
+    public SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {
         SkillCheckResult result;
         do {
             result = performer.testSkill(skill, difficulty, bonus);
@@ -510,5 +510,20 @@ public class Party implements Serializable {
 
     public Point getPreviousPosition() {
         return previousPosition;
+    }
+
+    public GameCharacter getRandomPartyMember() {
+        return MyRandom.sample(getPartyMembers());
+    }
+
+    public GameCharacter getRandomPartyMember(GameCharacter butNot) {
+        if (size() < 2) {
+            throw new IllegalStateException("Cannot call getRandomPartyMember with parameter when party size < 2");
+        }
+        GameCharacter gc = butNot;
+        while (gc == butNot) {
+            gc = getRandomPartyMember();
+        }
+        return gc;
     }
 }
