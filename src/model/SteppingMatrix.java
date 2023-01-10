@@ -101,40 +101,87 @@ public class SteppingMatrix<T> {
         }
     }
 
-    public void step(int dx, int dy) {
+    public void step(int dx, int dy, boolean firstTime) {
         if (list.size() < 2) {
             return;
         }
 
+        T nextSelected = findExactMatch(dx, dy, firstTime);
+        if (nextSelected != null) {
+            selected = getPositionFor(nextSelected);
+            return;
+        }
+        nextSelected = findApproxMatch(dx, dy, firstTime);
+        if (nextSelected != null) {
+            selected = getPositionFor(nextSelected);
+            return;
+        }
+        if (firstTime) {
+            step(-dx, -dy, false);
+        }
+    }
+
+    public void step(int dx, int dy) {
+        step(dx, dy, true);
+    }
+
+    private T findExactMatch(int dx, int dy, boolean searchForward) {
         List<T> candidates = new ArrayList<>();
         candidates.addAll(list);
         candidates.remove(getSelectedElement());
-
         final Point origin = getPositionFor(getSelectedElement());
-        final Point steppedPoint = new Point(selected.x + dx, selected.y + dy);
 
-        Collections.sort(candidates, new Comparator<T>() {
-            @Override
-            public int compare(T c1, T c2) {
-                Point p1 = getPositionFor(c1);
-                Double angleC1 = angleBetween(origin, steppedPoint, p1);
-                Point p2 = getPositionFor(c2);
-                Double angleC2 = angleBetween(origin, steppedPoint, p2);
-                if (angleC1.equals(angleC2)) {
-                    Double distance1 = origin.distance(p1);
-                    Double distance2 = origin.distance(p2);
-                    return distance1.compareTo(distance2);
-                }
-                return angleC1.compareTo(angleC2);
+        candidates.removeIf((T t) -> {
+            Point p = getPositionFor(t);
+            if (dx != 0) {
+                return Math.signum(p.x - origin.x) != Math.signum(dx) || p.y != origin.y;
             }
+            return Math.signum(p.y - origin.y) != Math.signum(dy) || p.x != origin.x;
         });
-        selected = getPositionFor(candidates.get(0));
+
+        if (candidates.isEmpty()) {
+            return null;
+        }
+        sortByDistance(candidates, origin);
+        if (searchForward) {
+            return candidates.get(0);
+        }
+        return candidates.get(candidates.size()-1);
     }
 
-    private static double angleBetween(Point origin, Point p1, Point p2) {
-        double angle1 = Math.atan2(p1.y - origin.y, p1.x - origin.x);
-        double angle2 = Math.atan2(p2.y - origin.y, p2.x - origin.x);
-        return Math.abs(angle1 - angle2);
+
+    private T findApproxMatch(int dx, int dy, boolean searchForward) {
+        List<T> candidates = new ArrayList<>();
+        candidates.addAll(list);
+        candidates.remove(getSelectedElement());
+        final Point origin = getPositionFor(getSelectedElement());
+
+        candidates.removeIf((T t) -> {
+                    Point p = getPositionFor(t);
+                    if (dx != 0) {
+                        return Math.signum(p.x - origin.x) != Math.signum(dx);
+                    }
+                    return Math.signum(p.y - origin.y) != Math.signum(dy);
+                }
+        );
+        if (candidates.isEmpty()) {
+            return null;
+        }
+        sortByDistance(candidates, origin);
+        if (searchForward) {
+            return candidates.get(0);
+        }
+        return candidates.get(candidates.size()-1);
+    }
+
+    private void sortByDistance(List<T> candidates, Point origin) {
+        Collections.sort(candidates, (c1, c2) -> {
+            Point p1 = getPositionFor(c1);
+            Point p2 = getPositionFor(c2);
+            Double distance1 = origin.distance(p1);
+            Double distance2 = origin.distance(p2);
+            return distance1.compareTo(distance2);
+        });
     }
 
     public boolean handleKeyEvent(KeyEvent keyEvent) {
