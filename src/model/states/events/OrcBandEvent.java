@@ -23,6 +23,7 @@ public class OrcBandEvent extends DailyEventState {
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
             println("You stay hidden as the throng passes by.");
+            // TODO: Follow them ? to -> Orc Stronghold / Campsite / Ambush?
         } else {
             List<Enemy> enemies = new ArrayList<>();
             for (int i = 0; i < 6; ++i) {

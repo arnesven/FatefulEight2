@@ -1,5 +1,6 @@
 package model.map;
 
+import model.map.locations.LowerThelnTown;
 import view.MyColors;
 
 import java.awt.*;
@@ -84,7 +85,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 2, 7, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 3, 7, NORTH_WEST | SOUTH_EAST, SOUTH | SOUTH_EAST);
         addTown(contents, 4, 7, "Ebonshire", "Lady Enid", NORTH_WEST, NORTH_WEST);
-        addTown(contents, 13, 7, "Lower Theln", "Mayor Engels", 0, NORTH | NORTH_EAST);
+        addTown(contents, 13, 7, new LowerThelnTown(), 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 14, 7, NORTH_WEST | NORTH | SOUTH, NORTH | NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 15, 7, 0, SOUTH_WEST);
         addRoadsAndRivers(contents, 16, 7, 0, SOUTH);
@@ -214,6 +215,10 @@ public class WorldBuilder {
 
     private static void addTown(Map<Point, HexContents> contents, int x, int y, String townName, String lordName, int roads, int rivers) {
         contents.put(new Point(x, y), new HexContents(new TownLocation(townName, lordName, rivers != 0), roads, rivers));
+    }
+
+    private static void addTown(Map<Point, HexContents> contents, int x, int y, TownLocation town, int roads, int rivers) {
+        contents.put(new Point(x, y), new HexContents(town, roads, rivers));
     }
 
 

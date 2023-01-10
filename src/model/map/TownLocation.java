@@ -35,22 +35,6 @@ public class TownLocation extends HexLocation implements LordLocation {
     }
 
     @Override
-    public boolean hasDailyActions() {
-        return true;
-    }
-
-    @Override
-    public List<DailyAction> getDailyActions(Model model) {
-        List<DailyAction> list = new ArrayList<>();
-        List<Item> shopInventory = ShopState.makeRandomShopInventory(model,
-                MyRandom.randInt(10, 20), MyRandom.randInt(5,39), MyRandom.randInt(6));
-        list.add(new DailyAction("Shop", new ShopState(model, "town merchant", shopInventory, null)));
-        list.add(new RecruitAction(model));
-        list.add(new SaveGameAction(model));
-        return list;
-    }
-
-    @Override
     protected Sprite getLowerSprite() {
         return HexLocationSprite.make("townlower", 0x90, MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY);
     }
