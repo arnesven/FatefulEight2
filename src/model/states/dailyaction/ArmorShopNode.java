@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ArmorShopNode extends GeneralShopNode {
     private static final Sprite ARMOR_SIGN = new SignSprite("armorsign", 0x17,
-            MyColors.DARK_GREEN, MyColors.WHITE);;
+            MyColors.DARK_GREEN, MyColors.WHITE);
 
     public ArmorShopNode(Model model, int column, int row) {
         super(model, column, row, "Armor Shop");

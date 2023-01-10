@@ -1,6 +1,7 @@
 package model.map;
 
 import model.map.locations.LowerThelnTown;
+import model.map.locations.UpperThelnTown;
 import view.MyColors;
 
 import java.awt.*;
@@ -134,7 +135,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 12, 11, NORTH | SOUTH, 0);
         addRoadsAndRivers(contents, 15, 11, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 16, 11, NORTH_WEST | NORTH_EAST, 0);
-        addTown(contents, 17, 11, "Upper Theln", "Mayor Rutherford", SOUTH_WEST, NORTH_EAST);
+        addTown(contents, 17, 11, new UpperThelnTown(), SOUTH_WEST, NORTH_EAST);
         addTown(contents, 22, 11, "Saint Quellin", "Councilman Egon", SOUTH_EAST, 0);
 
         addRoadsAndRivers(contents, 2, 12, 0, NORTH_EAST | SOUTH_EAST);
