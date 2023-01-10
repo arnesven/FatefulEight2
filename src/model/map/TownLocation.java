@@ -19,6 +19,7 @@ import view.sprites.Sprite;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,12 +102,16 @@ public class TownLocation extends HexLocation implements LordLocation {
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TownDailyActionState(model, isCoastal, getShops(model));
+        return new TownDailyActionState(model, getTownName(), isCoastal, getShops(model), getTavernPosition());
+    }
+
+    protected Point getTavernPosition() {
+        return new Point(1, 4);
     }
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new TownDailyActionState(model, isCoastal, getShops(model), freeLodge, freeRations);
+        return new TownDailyActionState(model, getTownName(), isCoastal, getShops(model), getTavernPosition(), freeLodge, freeRations);
     }
 
     protected List<GeneralShopNode> getShops(Model model) {

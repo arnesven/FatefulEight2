@@ -1,6 +1,7 @@
 package model.map;
 
 import model.map.locations.LowerThelnTown;
+import model.map.locations.SaintQuellinTown;
 import model.map.locations.UpperThelnTown;
 import view.MyColors;
 
@@ -136,7 +137,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 15, 11, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 16, 11, NORTH_WEST | NORTH_EAST, 0);
         addTown(contents, 17, 11, new UpperThelnTown(), SOUTH_WEST, NORTH_EAST);
-        addTown(contents, 22, 11, "Saint Quellin", "Councilman Egon", SOUTH_EAST, 0);
+        addTown(contents, 22, 11, new SaintQuellinTown(), SOUTH_EAST, 0);
 
         addRoadsAndRivers(contents, 2, 12, 0, NORTH_EAST | SOUTH_EAST);
         addTown(contents, 3, 12, "Little Erinde", "Mayor Gorda", NORTH_EAST | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);

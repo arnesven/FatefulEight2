@@ -23,6 +23,10 @@ public abstract class DailyActionSubView extends AvatarSubView {
         this.matrix = matrix;
     }
 
+    public SteppingMatrix<DailyActionNode> getMatrix() {
+        return matrix;
+    }
+
     public static Point convertToScreen(Point p) {
         return new Point(X_OFFSET + p.x*4, Y_OFFSET + p.y*4 + 2);
     }

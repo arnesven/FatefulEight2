@@ -24,11 +24,17 @@ public class TownSubView extends DailyActionSubView {
     private static final Sprite WATER = makeWaterSprite();
     private static final Sprite DOCK = new Sprite32x32("towndock", "world_foreground.png", 0x42,
             MyColors.LIGHT_BLUE, MyColors.DARK_BLUE, MyColors.BROWN, MyColors.DARK_GRAY);
+    private static final Sprite TOWN_HOUSE = new Sprite32x32("townhouse", "world_foreground.png", 0x43,
+            MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+    private static final double TOWN_DENSITY = 0.25;
     private final boolean isCoastal;
+    private final String townName;
 
-    public TownSubView(TownDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean isCoastal) {
+
+    public TownSubView(TownDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean isCoastal, String townName) {
         super(state, matrix);
         this.isCoastal = isCoastal;
+        this.townName = townName;
     }
 
     @Override
@@ -39,6 +45,21 @@ public class TownSubView extends DailyActionSubView {
         } else {
             drawTopRowGrass(model);
         }
+        Random rnd = new Random(townName.hashCode());
+        for (int col = 0; col < 8; col++) {
+            for (int row = 1; row < 8; row++) {
+                if (getMatrix().getElementAt(col, row) == null && rnd.nextDouble() > (1.0-TOWN_DENSITY)
+                 && !((1 < col && col < 5) && (2 < row && row < 6))) {
+                    Point p = convertToScreen(new Point(col, row));
+                    model.getScreenHandler().register(TOWN_HOUSE.getName(), p, TOWN_HOUSE);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected String getUnderText(Model model) {
+        return townName + ": " + super.getUnderText(model);
     }
 
     @Override
