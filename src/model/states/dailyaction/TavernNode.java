@@ -12,9 +12,9 @@ import java.awt.*;
 
 public class TavernNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("innlower", "world_foreground.png", 0x33,
-            TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+            MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SPRITE2 = new Sprite32x32("innupper", "world_foreground.png", 0x23,
-            TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+            MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite INN_SIGN = new SignSprite("innisgn", 0x07, MyColors.BLACK, MyColors.WHITE);
     private final boolean freeLodging;
 
@@ -40,8 +40,10 @@ public class TavernNode extends DailyActionNode {
 
     @Override
     public void drawYourself(Model model, Point p) {
-        model.getScreenHandler().put(p.x, p.y, getBackgroundSprite());
-        model.getScreenHandler().put(p.x, p.y-4, SPRITE2);
+        model.getScreenHandler().register(getBackgroundSprite().getName(), new Point(p), getBackgroundSprite());
+        Point p2 = new Point(p);
+        p2.y -= 4;
+        model.getScreenHandler().register(SPRITE2.getName(), p2, SPRITE2);
         Sprite fg = getForegroundSprite();
         if (fg != null) {
             p.x += 2;

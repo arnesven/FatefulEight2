@@ -6,6 +6,8 @@ import model.actions.RecruitAction;
 import model.actions.SaveGameAction;
 import model.items.Item;
 import model.states.*;
+import model.states.dailyaction.GeneralShopNode;
+import model.states.dailyaction.ShoppingNode;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.events.*;
 import sound.BackgroundMusic;
@@ -99,12 +101,16 @@ public class TownLocation extends HexLocation implements LordLocation {
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TownDailyActionState(model, isCoastal);
+        return new TownDailyActionState(model, isCoastal, getShops(model));
     }
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new TownDailyActionState(model, isCoastal);
+        return new TownDailyActionState(model, isCoastal, getShops(model), freeLodge, freeRations);
+    }
+
+    protected List<GeneralShopNode> getShops(Model model) {
+        return List.of(new GeneralShopNode(model, 6, 1));
     }
 
     public String getTownName() {

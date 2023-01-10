@@ -12,16 +12,21 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.TownSubView;
 
+import java.awt.*;
 import java.util.List;
 
-class ShoppingNode extends DailyActionNodeWithSign {
+public class ShoppingNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("shopping", "world_foreground.png", 0x22,
-            TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+            MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SIGN = new SignSprite("generalsign", 0x06, MyColors.BLUE, MyColors.WHITE);
     private List<Item> shopInventory;
     public ShoppingNode(Model model) {
         super("General Store");
-         shopInventory = ShopState.makeRandomShopInventory(model,
+         shopInventory = makeInventory(model);
+    }
+
+    private List<Item> makeInventory(Model model) {
+        return ShopState.makeRandomShopInventory(model,
                 MyRandom.randInt(5, 9), MyRandom.randInt(4, 6), MyRandom.randInt(2));
     }
 
@@ -38,6 +43,16 @@ class ShoppingNode extends DailyActionNodeWithSign {
     @Override
     public Sprite getForegroundSprite() {
         return SIGN;
+    }
+
+    public void drawYourself(Model model, Point p) {
+        model.getScreenHandler().register(getBackgroundSprite().getName(), new Point(p), getBackgroundSprite());
+        Sprite fg = getForegroundSprite();
+        if (fg != null) {
+            p.x += 2;
+            p.y += 2;
+            model.getScreenHandler().register("objectforeground", p, fg, 1);
+        }
     }
 
     @Override

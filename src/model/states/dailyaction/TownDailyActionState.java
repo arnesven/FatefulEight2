@@ -5,16 +5,16 @@ import model.SteppingMatrix;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownSubView;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 
 public class TownDailyActionState extends AdvancedDailyActionState {
 
     private final boolean isCoastal;
 
-    public TownDailyActionState(Model model, boolean isCoastal, boolean freeLodging, boolean freeRations) {
+    public TownDailyActionState(Model model, boolean isCoastal, List<GeneralShopNode> shops, boolean freeLodging, boolean freeRations) {
         super(model);
         super.addNode(3, 4, new StayHereNode());
-        super.addNode(6, 1, new ShoppingNode(model));
         super.addNode(1, 4, new TavernNode(freeLodging));
         super.addNode(3, 2, new TownHallNode());
         super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations));
@@ -23,12 +23,15 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         if (isCoastal) {
             addNode(2, 0, new GoTheDocksNode(model));
         }
+        for (GeneralShopNode shop : shops) {
+            addNode(shop.getColumn(), shop.getRow(), shop);
+        }
         this.isCoastal = isCoastal;
 
     }
 
-    public TownDailyActionState(Model model, boolean isCoastal) {
-        this(model, isCoastal, false, false);
+    public TownDailyActionState(Model model, boolean isCoastal, List<GeneralShopNode> shops) {
+        this(model, isCoastal, shops, false, false);
     }
 
     @Override
