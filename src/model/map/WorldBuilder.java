@@ -1,9 +1,6 @@
 package model.map;
 
-import model.map.locations.LowerThelnTown;
-import model.map.locations.SaintQuellinTown;
-import model.map.locations.SouthMeadhomeTown;
-import model.map.locations.UpperThelnTown;
+import model.map.locations.*;
 import view.MyColors;
 
 import java.awt.*;
@@ -75,7 +72,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,14, 4, NORTH_WEST | SOUTH, 0);
 
 
-        addTown(contents, 0, 5, "Roukon", "Mayor Stephens", SOUTH_EAST, NORTH | NORTH_EAST);
+        addTown(contents, 0, 5, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents,14, 5, SOUTH | NORTH, 0);
 
         addRoadsAndRivers(contents, 1, 6, NORTH_WEST | SOUTH_EAST, 0);

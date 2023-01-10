@@ -26,7 +26,7 @@ public class TownSubView extends DailyActionSubView {
             MyColors.LIGHT_BLUE, MyColors.DARK_BLUE, MyColors.BROWN, MyColors.DARK_GRAY);
     private static final Sprite TOWN_HOUSE = new Sprite32x32("townhouse", "world_foreground.png", 0x43,
             MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
-    private static final double TOWN_DENSITY = 0.25;
+    private static final double TOWN_DENSITY = 0.3;
     private final boolean isCoastal;
     private final String townName;
 
