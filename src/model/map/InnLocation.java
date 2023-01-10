@@ -59,7 +59,7 @@ public class InnLocation extends HexLocation {
     @Override
     public List<DailyAction> getDailyActions(Model model) {
         List<DailyAction> list = new ArrayList<>();
-        List<Item> shopInventory = ShopState.makeRandomShopInventory(model,
+        List<Item> shopInventory = ShopState.makeGeneralShopInventory(model,
                 MyRandom.randInt(5, 9), MyRandom.randInt(4,6), MyRandom.randInt(2));
         list.add(new DailyAction("Shop", new ShopState(model, "innkeeper", shopInventory, null)));
         list.add(new RecruitAction(model));

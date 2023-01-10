@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Item implements Serializable {
+public abstract class Item implements Serializable, Comparable<Item> {
 
     public static final Sprite EMPTY_ITEM_SPRITE = new ItemSprite(0xF, 0);
     private final String name;
@@ -65,5 +65,12 @@ public abstract class Item implements Serializable {
 
     public Prevalence getPrevalence() {
         return Prevalence.uncommon;
+    }
+
+    @Override
+    public int compareTo(Item t1) {
+        String st1 = getClass().getSuperclass().getName();
+        String st2 = t1.getClass().getSuperclass().getName();
+        return st2.compareTo(st1);
     }
 }

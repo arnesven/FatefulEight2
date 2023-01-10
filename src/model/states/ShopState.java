@@ -105,19 +105,12 @@ public class ShopState extends GameState {
     }
 
 
-    public static List<Item> makeRandomShopInventory(Model model, int commons, int uncommons, int rares) {
+    public static List<Item> makeGeneralShopInventory(Model model, int commons, int uncommons, int rares) {
         List<Item> shopInventory = new ArrayList<>();
         shopInventory.addAll(model.getItemDeck().draw(commons, Prevalence.common));
         shopInventory.addAll(model.getItemDeck().draw(uncommons, Prevalence.uncommon));
         shopInventory.addAll(model.getItemDeck().draw(rares, Prevalence.rare));
-        Collections.sort(shopInventory, new Comparator<Item>() {
-            @Override
-            public int compare(Item item, Item t1) {
-                String st1 = item.getClass().getSuperclass().getName();
-                String st2 = t1.getClass().getSuperclass().getName();
-                return st2.compareTo(st1);
-            }
-        });
+        Collections.sort(shopInventory);
         return shopInventory;
     }
 }

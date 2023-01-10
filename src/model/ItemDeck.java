@@ -25,16 +25,20 @@ public class ItemDeck extends ArrayList<Item> {
         Collections.shuffle(this);
     }
 
-    public List<Item> draw(int count, Prevalence prevalence) {
+    public List<Item> draw(List<? extends Item> source, int count, Prevalence prevalence) {
         List<Item> drawn = new ArrayList<>();
         for (int i = count; i > 0; --i) {
             Item it;
             do {
-                it = MyRandom.sample(this);
+                it = MyRandom.sample(source);
             } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified);
             drawn.add(it.copy());
         }
         return drawn;
+    }
+
+    public List<Item> draw(int count, Prevalence prevalence) {
+        return draw(this, count, prevalence);
     }
 
     public List<Item> draw(int count) {
@@ -75,22 +79,22 @@ public class ItemDeck extends ArrayList<Item> {
         return allItems;
     }
 
-    private static List<Potion> allPotions() {
+    public static List<Potion> allPotions() {
         return List.of(new HealthPotion());
     }
 
-    private static List<HeadGearItem> allHeadGear() {
+    public static List<HeadGearItem> allHeadGear() {
         return List.of(new LeatherCap(), new JestersHat(), new PaintedMask(), new Crown(), new BoneMask(),
                 new WolfHead(), new Circlet(), new Tiara(), new Diadem(), new SkullCap(), new Helm(),
                 new FullHelm(), new GreatHelm());
     }
 
-    private static List<GlovesItem> allGloves() {
+    public static List<GlovesItem> allGloves() {
         return List.of(new DeftGloves(), new LeatherGloves(), new FancyGloves(), new ChainGloves(),
                 new SteelGauntlets(), new PlateGauntlets());
     }
 
-    private static List<ShieldItem> allShields() {
+    public static List<ShieldItem> allShields() {
         return List.of(
                 new Buckler(),
                 new LargeShield(),
@@ -100,7 +104,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new TowerShield());
     }
 
-    private static List<ShoesItem> allShoes() {
+    public static List<ShoesItem> allShoes() {
         return List.of(
                 new GoodShoes(),
                 new ComfyShoes(),
@@ -109,7 +113,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new PlatedBoots());
     }
 
-    private static List<JewelryItem> allJewelry() {
+    public static List<JewelryItem> allJewelry() {
         return List.of(new GrayRing(), new SkullRing(), new TopazRing(),
                 new RedRing(), new GreenRing(), new BlackRing(), new BlueRing(),
                 new RubyRing(), new SapphireRing(), new HeavyRing(),
@@ -118,7 +122,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new Pentagram(), new PlateNecklace(), new AnkhPendant(), new ShinyAmulet());
     }
 
-    private static List<Clothing> allApparel() {
+    public static List<Clothing> allApparel() {
         return List.of(new StuddedTunic(), new StuddedJerkin(), new OutlawArmor(), new LeatherArmor(),
                 new RingMail(), new ChainMail(), new DragonArmor(), new ScaleArmor(), new BreastPlate(),
                 new FullPlateArmor(), new WarmCape(), new FancyJerkin(), new PilgrimsCloak(),
@@ -126,11 +130,11 @@ public class ItemDeck extends ArrayList<Item> {
                 new MesmersRobes(), new LeatherTunic(), new QuiltedArmor());
     }
 
-    private static List<Spell> allSpells() {
+    public static List<Spell> allSpells() {
         return List.of(new HarmonizeSpell());
     }
 
-    private static List<Weapon> allWeapons() {
+    public static List<Weapon> allWeapons() {
         List<Weapon> allWeapons = new ArrayList<>();
         allWeapons.addAll(allBlades());
         allWeapons.addAll(allBluntWeapons());
@@ -141,33 +145,33 @@ public class ItemDeck extends ArrayList<Item> {
         return allWeapons;
     }
 
-    private static List<? extends Weapon> allSpears() {
+    public static List<? extends Weapon> allSpears() {
         return List.of(new WoodenSpear(), new Spear(), new Javelins(), new Trident(),
                 new Glaive(), new Halberd(), new Pike());
     }
 
-    private static List<? extends Weapon> allBows() {
+    public static List<? extends Weapon> allBows() {
         return List.of(new TrainingBow(), new ShortBow(), new CompositeBow(), new RepeatingCrossbow(),
                 new HuntersBow(), new YewBow(), new BoneBow(), new Crossbow(), new LongBow());
     }
 
-    private static List<? extends Weapon> allWands() {
+    public static List<? extends Weapon> allWands() {
         return List.of(new OldWand(), new PineWand(), new ClaspedOrb(), new YewWand(), new OrbWand(),
                 new BoneWand(), new SkullWand());
     }
 
-    private static List<? extends Weapon> allAxes() {
+    public static List<? extends Weapon> allAxes() {
         return List.of(new Hatchet(), new ThrowingAxes(), new Pickaxe(), new BattleAxe(), new DoubleAxe(),
                 new GreatAxe());
     }
 
-    private static List<? extends Weapon> allBluntWeapons() {
+    public static List<? extends Weapon> allBluntWeapons() {
         return List.of(new Club(), new LongStaff(), new OldStaff(), new MagesStaff(),
                 new Scepter(), new MorningStar(), new Flail(), new Warhammer(), new Mace(),
                 new GrandMaul());
     }
 
-    private static List<? extends Weapon> allBlades() {
+    public static List<? extends Weapon> allBlades() {
         return List.of(new Dirk(), new Dagger(), new ThrowingKnives(), new ShortSword(),
                 new OrcishKnife(), new RitualDagger(), new Scimitar(), new Falchion(),
                 new Broadsword(), new Longsword(), new Katana(), new TwoHandedSword(),

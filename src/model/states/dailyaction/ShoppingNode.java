@@ -15,20 +15,17 @@ import view.subviews.TownSubView;
 import java.awt.*;
 import java.util.List;
 
-public class ShoppingNode extends DailyActionNode {
+public abstract class ShoppingNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("shopping", "world_foreground.png", 0x22,
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SIGN = new SignSprite("generalsign", 0x06, MyColors.BLUE, MyColors.WHITE);
     private List<Item> shopInventory;
-    public ShoppingNode(Model model) {
-        super("General Store");
+    public ShoppingNode(Model model, String name) {
+        super(name);
          shopInventory = makeInventory(model);
     }
 
-    private List<Item> makeInventory(Model model) {
-        return ShopState.makeRandomShopInventory(model,
-                MyRandom.randInt(5, 9), MyRandom.randInt(4, 6), MyRandom.randInt(2));
-    }
+    protected abstract List<Item> makeInventory(Model model);
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
