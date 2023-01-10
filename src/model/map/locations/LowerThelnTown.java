@@ -13,7 +13,7 @@ public class LowerThelnTown extends TownLocation {
     }
 
     @Override
-    protected List<GeneralShopNode> getShops(Model model) {
+    public List<GeneralShopNode> getShops(Model model) {
         return List.of(new GeneralShopNode(model, 1, 1),
                 new ArmorShopNode(model, 5, 5));
     }

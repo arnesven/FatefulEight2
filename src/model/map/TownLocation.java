@@ -102,23 +102,27 @@ public class TownLocation extends HexLocation implements LordLocation {
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TownDailyActionState(model, getTownName(), isCoastal, getShops(model), getTavernPosition());
+        return new TownDailyActionState(model, isCoastal, this);
     }
 
-    protected Point getTavernPosition() {
+    public Point getTavernPosition() {
         return new Point(1, 4);
     }
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new TownDailyActionState(model, getTownName(), isCoastal, getShops(model), getTavernPosition(), freeLodge, freeRations);
+        return new TownDailyActionState(model, isCoastal, this, freeLodge, freeRations);
     }
 
-    protected List<GeneralShopNode> getShops(Model model) {
+    public List<GeneralShopNode> getShops(Model model) {
         return List.of(new GeneralShopNode(model, 6, 1));
     }
 
     public String getTownName() {
         return townName;
+    }
+
+    public boolean noBoat() {
+        return false;
     }
 }

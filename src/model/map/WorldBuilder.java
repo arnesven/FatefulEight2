@@ -2,6 +2,7 @@ package model.map;
 
 import model.map.locations.LowerThelnTown;
 import model.map.locations.SaintQuellinTown;
+import model.map.locations.SouthMeadhomeTown;
 import model.map.locations.UpperThelnTown;
 import view.MyColors;
 
@@ -171,7 +172,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 4, 15, SOUTH_WEST | SOUTH_EAST, 0);
         addInn(contents, 7, 15, "Hunter's Inn", SOUTH, 0);
         addTemple(contents, 10, 15, "the Surf");
-        addTown(contents, 12, 15, "South Meadhome", "Mayor Calhoun", 0, NORTH | NORTH_EAST);
+        addTown(contents, 12, 15, new SouthMeadhomeTown(), 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 13, 15, 0, SOUTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 14, 15, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 15, 15, 0, SOUTH | SOUTH_EAST | NORTH_EAST);

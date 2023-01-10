@@ -14,13 +14,13 @@ public class SaintQuellinTown extends TownLocation {
     }
 
     @Override
-    protected List<GeneralShopNode> getShops(Model model) {
+    public List<GeneralShopNode> getShops(Model model) {
         return List.of(new GeneralShopNode(model, 1, 5),
                 new AccessoryShopNode(model, 1, 3));
     }
 
     @Override
-    protected Point getTavernPosition() {
+    public Point getTavernPosition() {
         return new Point(5, 5);
     }
 }
