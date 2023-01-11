@@ -80,7 +80,7 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public Point getTavernPosition() {
-        return new Point(6, 3);
+        return new Point(6, 4);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new GeneralShopNode(model, 1, 3)); // TODO: make method abstract
+        return List.of(new GeneralShopNode(model, 1, 4)); // TODO: make method abstract
     }
 
     @Override
@@ -118,5 +118,9 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
         return new TownDailyActionState(model, false, this, freeLodge, freeRations);
     }
 
+    @Override
+    public Point getTravelNodePosition() {
+        return new Point(AdvancedDailyActionState.TOWN_MATRIX_COLUMNS-1, AdvancedDailyActionState.TOWN_MATRIX_ROWS-1);
+    }
 
 }

@@ -122,6 +122,11 @@ public class TownLocation extends HexLocation implements UrbanLocation {
         return new TownSubView(advancedDailyActionState, matrix, isCoastal, getTownName());
     }
 
+    @Override
+    public Point getTravelNodePosition() {
+        return new Point(AdvancedDailyActionState.TOWN_MATRIX_COLUMNS-1, AdvancedDailyActionState.TOWN_MATRIX_ROWS-2);
+    }
+
     public String getTownName() {
         return townName;
     }

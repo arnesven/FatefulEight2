@@ -22,7 +22,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
         super.addNode(3, 3, new TownHallNode());
         super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations));
-        super.addNode(TOWN_MATRIX_COLUMNS-1, TOWN_MATRIX_ROWS-2, new TravelNode());
+        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode());
         addNode(7, 2, new SaveGameNode());
         if (isCoastal && !urbanLocation.noBoat()) {
             addNode(2, 0, new GoTheDocksNode(model));
