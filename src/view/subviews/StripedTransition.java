@@ -17,6 +17,7 @@ public class StripedTransition extends TransitionView {
     }
 
     protected void drawAnimation(Model model, int steps) {
+        model.getScreenHandler().clearForeground(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
         if (vertical) {
             for (int col = X_OFFSET; col < X_MAX; ++col) {
                 if (col % 2 == 0) {
