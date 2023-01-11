@@ -24,8 +24,14 @@ public class TownSubView extends DailyActionSubView {
     private static final Sprite WATER = makeWaterSprite();
     private static final Sprite DOCK = new Sprite32x32("towndock", "world_foreground.png", 0x42,
             MyColors.LIGHT_BLUE, MyColors.DARK_BLUE, MyColors.BROWN, MyColors.DARK_GRAY);
-    private static final Sprite TOWN_HOUSE = new Sprite32x32("townhouse", "world_foreground.png", 0x43,
-            MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+    private static final Sprite[] TOWN_HOUSES = new Sprite[]{
+            new Sprite32x32("townhouse", "world_foreground.png", 0x43,
+                    MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.CYAN),
+            new Sprite32x32("townhouse2", "world_foreground.png", 0x53,
+                    MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.PINK),
+            new Sprite32x32("townhouse3", "world_foreground.png", 0x73,
+                    MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.WHITE)};
+
     private static final double TOWN_DENSITY = 0.3;
     private final boolean isCoastal;
     private final String townName;
@@ -51,7 +57,8 @@ public class TownSubView extends DailyActionSubView {
                 if (getMatrix().getElementAt(col, row) == null && rnd.nextDouble() > (1.0-TOWN_DENSITY)
                  && !((1 < col && col < 5) && (2 < row && row < 6))) {
                     Point p = convertToScreen(new Point(col, row));
-                    model.getScreenHandler().register(TOWN_HOUSE.getName(), p, TOWN_HOUSE);
+                    Sprite townHouse = TOWN_HOUSES[rnd.nextInt(3)];
+                    model.getScreenHandler().register(townHouse.getName(), p, townHouse);
                 }
             }
         }

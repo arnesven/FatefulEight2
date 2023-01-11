@@ -138,12 +138,12 @@ public class WorldBuilder {
         addTown(contents, 22, 11, new SaintQuellinTown(), SOUTH_EAST, 0);
 
         addRoadsAndRivers(contents, 2, 12, 0, NORTH_EAST | SOUTH_EAST);
-        addTown(contents, 3, 12, "Little Erinde", "Mayor Gorda", NORTH_EAST | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);
+        addTown(contents, 3, 12, new LittleErindeTown(), NORTH_EAST | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 4, 12, NORTH_WEST | SOUTH, 0);
         addRoadsAndRivers(contents, 6, 12, 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 7, 12, 0, SOUTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 8, 12, 0, SOUTH_WEST | SOUTH);
-        addTown(contents, 9, 12, "Ackerville", "Elder Treva", 0, 0);
+        addTown(contents, 9, 12, new AckervilleTown(), 0, 0);
         addRoadsAndRivers(contents, 12, 12, NORTH | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 23, 12, SOUTH_EAST | NORTH_WEST, 0);
         addRoadsAndRivers(contents, 24, 12, SOUTH | NORTH_WEST, 0);
@@ -174,10 +174,10 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 14, 15, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 15, 15, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 16, 15, 0, NORTH_WEST);
-        addTown(contents, 18, 15, "Sheffield", "Mayor Jorgensen", NORTH, 0);
+        addTown(contents, 18, 15, new SheffieldTown(), NORTH, 0);
         addCastle(contents, 21, 15, "Castle Ardh", "Lord Aldeck", MyColors.BLUE, NORTH_EAST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 22, 15, NORTH_WEST | SOUTH_EAST, 0);
-        addTown(contents, 24, 15, "Bullsville", "Mayor Oppenberg", SOUTH_WEST, 0);
+        addTown(contents, 24, 15, new BullsVilleTown(), SOUTH_WEST, 0);
 
         addCastle(contents, 2, 16, "Sunblaze Castle", "Prince Elozi", MyColors.YELLOW, NORTH_EAST, 0);
         addRoadsAndRivers(contents, 3, 16, SOUTH_WEST | NORTH_EAST, 0);
