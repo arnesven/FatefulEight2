@@ -88,10 +88,10 @@ public class ScreenHandler {
         }
     }
 
-    public void fillForeground(int xStart, int xEnd, int yStart, int yEnd, Sprite sprite) {
+    public void fillForeground(int xStart, int xEnd, int yStart, int yEnd, Sprite sprite, int prio) {
         for (int y = yStart; y < yEnd; ++y) {
             for (int x = xStart; x < xEnd; ++x) {
-                register(sprite.getName()+""+x+""+y, new Point(x, y), sprite);
+                register(sprite.getName()+""+x+""+y, new Point(x, y), sprite, prio);
             }
         }
     }

@@ -21,17 +21,17 @@ public class StripedTransition extends TransitionView {
         if (vertical) {
             for (int col = X_OFFSET; col < X_MAX; ++col) {
                 if (col % 2 == 0) {
-                    model.getScreenHandler().fillForeground(col, col + 1, Y_OFFSET, Y_MAX - steps, blackBlock);
+                    model.getScreenHandler().fillForeground(col, col + 1, Y_OFFSET, Y_MAX - steps, blackBlock, 3);
                 } else {
-                    model.getScreenHandler().fillForeground(col, col + 1, Y_OFFSET + steps, Y_MAX, blackBlock);
+                    model.getScreenHandler().fillForeground(col, col + 1, Y_OFFSET + steps, Y_MAX, blackBlock, 3);
                 }
             }
         } else {
             for (int row = Y_OFFSET; row < Y_MAX; ++row) {
                 if (row % 2 == 0) {
-                    model.getScreenHandler().fillForeground(X_OFFSET + steps, X_MAX, row, row + 1, blackBlock);
+                    model.getScreenHandler().fillForeground(X_OFFSET + steps, X_MAX, row, row + 1, blackBlock, 3);
                 } else {
-                    model.getScreenHandler().fillForeground(X_OFFSET, X_MAX - steps + 1, row, row + 1, blackBlock);
+                    model.getScreenHandler().fillForeground(X_OFFSET, X_MAX - steps + 1, row, row + 1, blackBlock, 3);
                 }
             }
         }

@@ -15,18 +15,18 @@ public class CollapsingTransition extends TransitionView {
 
     @Override
     protected void drawAnimation(Model model, int steps) {
-        int toClear = steps+1;
+        int toClear = steps;
         model.getScreenHandler().clearForeground(X_OFFSET+toClear, X_MAX-toClear, Y_OFFSET+toClear, Y_MAX-toClear);
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+(STEPS_START-steps),
-                blackBlock);
+                blackBlock, 3);
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_MAX-(STEPS_START-steps), Y_MAX,
-                blackBlock);
+                blackBlock, 3);
 
         if (steps < STEPS_START - 1) {
             model.getScreenHandler().fillForeground(X_OFFSET, X_OFFSET+(STEPS_START-steps-1), Y_OFFSET, Y_MAX,
-                    blackBlock);
+                    blackBlock, 3);
             model.getScreenHandler().fillForeground(X_MAX-(STEPS_START-steps-1), X_MAX, Y_OFFSET, Y_MAX,
-                    blackBlock);
+                    blackBlock, 3);
         }
     }
 
