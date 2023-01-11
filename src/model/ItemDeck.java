@@ -6,7 +6,9 @@ import model.items.clothing.*;
 import model.items.potions.HealthPotion;
 import model.items.potions.Potion;
 import model.items.spells.HarmonizeSpell;
+import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
+import model.items.spells.TurnUndeadSpell;
 import model.items.weapons.SkullWand;
 import model.items.weapons.*;
 import util.MyRandom;
@@ -131,7 +133,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<Spell> allSpells() {
-        return List.of(new HarmonizeSpell());
+        return List.of(new HarmonizeSpell(), new LevitateSpell(), new TurnUndeadSpell());
     }
 
     public static List<Weapon> allWeapons() {

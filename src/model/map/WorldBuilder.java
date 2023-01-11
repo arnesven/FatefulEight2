@@ -49,15 +49,15 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,16, 0, SOUTH_WEST | SOUTH_EAST, 0);
 
         addTemple(contents, 1, 1, "Crystal");
-        addTown(contents, 7, 1, "East Durham", "Mayor Bison", 0, SOUTH_EAST);
-        addTown(contents, 11, 1, "Cape Paxton", "Mayor Dargola", NORTH, SOUTH_WEST);
+        addTown(contents, 7, 1, new EastDurhamTown(), 0, SOUTH_EAST);
+        addTown(contents, 11, 1, new CapePaxtonTown(), NORTH, SOUTH_WEST);
         addRoadsAndRivers(contents, 13, 1, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 15, 1, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents,17, 1, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,18, 1, NORTH_WEST | SOUTH, 0);
         addCastle(contents, 22, 1, "Arkvale Castle", "Queen Valstine", MyColors.WHITE, SOUTH, 0);
 
-        addTown(contents, 18, 2, "Urntown", "Elder Marten", NORTH | SOUTH, 0);
+        addTown(contents, 18, 2, new UrnTownTown(), NORTH | SOUTH, 0);
         addRoadsAndRivers(contents,22, 2, SOUTH_WEST | NORTH, 0);
 
         addCastle(contents, 1, 3, "Bogdown Castle", "King Burod", MyColors.DARK_GREEN, 0, 0);
@@ -78,13 +78,13 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 1, 6, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 2, 6, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 14, 6, SOUTH | NORTH, SOUTH_WEST | SOUTH | NORTH_WEST);
-        addTown(contents, 20, 6, "Ashtonshire", "Sheriff Alderborne", 0, 0);
+        addTown(contents, 20, 6, new AshtonshireTown(), 0, 0);
 
         addRoadsAndRivers(contents, 0, 7, 0, SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 1, 7, 0, SOUTH);
         addRoadsAndRivers(contents, 2, 7, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 3, 7, NORTH_WEST | SOUTH_EAST, SOUTH | SOUTH_EAST);
-        addTown(contents, 4, 7, "Ebonshire", "Lady Enid", NORTH_WEST, NORTH_WEST);
+        addTown(contents, 4, 7, new EbonshireTown(), NORTH_WEST, NORTH_WEST);
         addTown(contents, 13, 7, new LowerThelnTown(), 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 14, 7, NORTH_WEST | NORTH | SOUTH, NORTH | NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 15, 7, 0, SOUTH_WEST);
