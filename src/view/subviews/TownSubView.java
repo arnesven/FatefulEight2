@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
 import sprites.CombatCursorSprite;
@@ -37,7 +38,7 @@ public class TownSubView extends DailyActionSubView {
     private final String townName;
 
 
-    public TownSubView(TownDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean isCoastal, String townName) {
+    public TownSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean isCoastal, String townName) {
         super(state, matrix);
         this.isCoastal = isCoastal;
         this.townName = townName;

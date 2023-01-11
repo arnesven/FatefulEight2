@@ -7,10 +7,8 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
-import model.map.LordLocation;
+import model.map.UrbanLocation;
 import model.map.World;
-import model.states.DailyEventState;
-import model.states.EveningState;
 import model.states.GameState;
 import sprites.CombatCursorSprite;
 import util.MyPair;
@@ -50,7 +48,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(24, 15);  // Inn is at 12,9
+        position = new Point(14, 7);  // Inn is at 12,9
         cursorSprites = makeCursorSprites();
     }
 
@@ -324,7 +322,7 @@ public class Party implements Serializable {
         return size() * 20;
     }
 
-    public void addDestination(LordLocation destination) {
+    public void addDestination(UrbanLocation destination) {
         this.destinations.add(destination.getPlaceName());
     }
 

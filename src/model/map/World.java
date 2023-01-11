@@ -4,7 +4,6 @@ import model.Model;
 import view.DrawingArea;
 import view.ScreenHandler;
 import view.sprites.Sprite;
-import view.subviews.MapSubView;
 import view.subviews.SubView;
 
 import java.awt.Point;
@@ -156,12 +155,12 @@ public class World implements Serializable {
         }
     }
 
-    public List<LordLocation> getLordLocations() {
-        List<LordLocation> result = new ArrayList<LordLocation>();
+    public List<UrbanLocation> getLordLocations() {
+        List<UrbanLocation> result = new ArrayList<UrbanLocation>();
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {
                 if (hexes[x][y].hasLord()) {
-                    result.add((LordLocation)(hexes[x][y].getLocation()));
+                    result.add((UrbanLocation)(hexes[x][y].getLocation()));
                 }
             }
         }

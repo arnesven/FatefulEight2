@@ -229,7 +229,7 @@ public abstract class WorldHex implements Serializable {
 
     public boolean hasLord() {
         if (hexLocation != null) {
-            return hexLocation instanceof LordLocation;
+            return hexLocation instanceof UrbanLocation;
         }
         return false;
     }

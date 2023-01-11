@@ -1,13 +1,11 @@
 package model.map;
 
 import model.Model;
-import model.actions.DailyAction;
-import model.actions.RecruitAction;
-import model.actions.SaveGameAction;
-import model.items.Item;
+import model.SteppingMatrix;
 import model.states.*;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.GeneralShopNode;
-import model.states.dailyaction.ShoppingNode;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.events.*;
 import sound.BackgroundMusic;
@@ -16,14 +14,15 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
+import view.subviews.DailyActionSubView;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
+import view.subviews.TownSubView;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class TownLocation extends HexLocation implements LordLocation {
+public class TownLocation extends HexLocation implements UrbanLocation {
     private final String townName;
     private final SubView subView;
     private final String lordName;
@@ -116,6 +115,11 @@ public class TownLocation extends HexLocation implements LordLocation {
 
     public List<GeneralShopNode> getShops(Model model) {
         return List.of(new GeneralShopNode(model, 6, 1));
+    }
+
+    @Override
+    public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
+        return new TownSubView(advancedDailyActionState, matrix, isCoastal, getTownName());
     }
 
     public String getTownName() {

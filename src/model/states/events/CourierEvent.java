@@ -1,7 +1,7 @@
 package model.states.events;
 
 import model.Model;
-import model.map.LordLocation;
+import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -22,8 +22,8 @@ public class CourierEvent extends DailyEventState {
 
                         @Override
     protected void doEvent(Model model) {
-        List<LordLocation> list = model.getWorld().getLordLocations();
-        LordLocation destination = MyRandom.sample(list);
+        List<UrbanLocation> list = model.getWorld().getLordLocations();
+        UrbanLocation destination = MyRandom.sample(list);
         if (withIntro) {
             println("A courier catches up to you and asks you to stop while he catches his breath.");
         }
