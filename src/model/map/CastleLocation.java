@@ -14,10 +14,7 @@ import sound.ClientSoundManager;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
-import view.subviews.DailyActionSubView;
-import view.subviews.ImageSubView;
-import view.subviews.SubView;
-import view.subviews.TownSubView;
+import view.subviews.*;
 
 import java.awt.Point;
 import java.util.List;
@@ -95,7 +92,7 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new TownSubView(advancedDailyActionState, matrix, false, getPlaceName());
+        return new CastleSubView(advancedDailyActionState, matrix, getPlaceName(), castleColor);
     }
 
     @Override
