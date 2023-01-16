@@ -6,16 +6,25 @@ import model.states.NoLodgingState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.CastleSubView;
 import view.subviews.TownSubView;
 
 public class CampOutsideOfTownNode extends DailyActionNode {
-    private static final Sprite SPRITE = new Sprite32x32("travel", "world_foreground.png", 0x52,
-            MyColors.GREEN, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
+    private static final Sprite SPRITE1 = new Sprite32x32("travel", "world_foreground.png", 0x52,
+            TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
+    private static final Sprite SPRITE2 = new Sprite32x32("travel", "world_foreground.png", 0x52,
+            CastleSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
     private final boolean freeRations;
+    private final Sprite sprite;
 
-    public CampOutsideOfTownNode(boolean freeRations) {
+    public CampOutsideOfTownNode(boolean freeRations, MyColors color) {
         super("Make camp on the outskirts of town");
         this.freeRations = freeRations;
+        if (color == TownSubView.GROUND_COLOR) {
+            sprite = SPRITE1;
+        } else {
+            sprite = SPRITE2;
+        }
     }
 
     @Override
@@ -25,7 +34,7 @@ public class CampOutsideOfTownNode extends DailyActionNode {
 
     @Override
     public Sprite getBackgroundSprite() {
-        return SPRITE;
+        return sprite;
     }
 
     @Override

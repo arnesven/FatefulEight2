@@ -3,7 +3,6 @@ package model.states.dailyaction;
 import model.Model;
 import model.SteppingMatrix;
 import model.map.UrbanLocation;
-import model.map.TownLocation;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownSubView;
 
@@ -21,8 +20,8 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 4, new StayHereNode());
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
         super.addNode(3, 3, new TownHallNode());
-        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations));
-        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode());
+        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, TownSubView.GROUND_COLOR));
+        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode(TownSubView.GROUND_COLOR));
         addNode(7, 2, new SaveGameNode());
         if (isCoastal && !urbanLocation.noBoat()) {
             addNode(2, 0, new GoTheDocksNode(model));

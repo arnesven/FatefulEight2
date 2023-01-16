@@ -4,10 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.states.DailyEventState;
 import model.states.GameState;
-import model.states.dailyaction.AdvancedDailyActionState;
-import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.GeneralShopNode;
-import model.states.dailyaction.TownDailyActionState;
+import model.states.dailyaction.*;
 import model.states.events.NoEventState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -107,12 +104,12 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public GameState getDailyActionState(Model model) {
-        return new TownDailyActionState(model, false, this);
+        return new CastleDailyActionState(model, this);
     }
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new TownDailyActionState(model, false, this, freeLodge, freeRations);
+        return new CastleDailyActionState(model, this, freeLodge, freeRations);
     }
 
     @Override

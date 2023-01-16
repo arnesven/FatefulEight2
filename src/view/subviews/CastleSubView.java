@@ -14,8 +14,10 @@ import java.util.Map;
 
 public class CastleSubView extends DailyActionSubView {
 
-    private static final MyColors GROUND_COLOR = MyColors.TAN;
-    private static final Sprite ground = new Sprite32x32("castleGround", "world_foreground.png", 0x72,
+    public static final MyColors GROUND_COLOR = MyColors.TAN;
+    private static final Sprite ground = new Sprite32x32("castleGround", "world_foreground.png", 0x02,
+            GROUND_COLOR, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY);
+    private static final Sprite groundNoPath = new Sprite32x32("castleGroundNoPath", "world_foreground.png", 0x72,
             GROUND_COLOR, MyColors.GRAY, MyColors.LIGHT_GRAY);
     private static final Sprite towerUL = new Sprite32x32("towerUL", "world_foreground.png", 0x16,
             MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, GROUND_COLOR);
@@ -52,7 +54,7 @@ public class CastleSubView extends DailyActionSubView {
         this.color = color;
 
         rows = new Sprite[][]{
-                new Sprite[]{ground, ground, makeSprite(0x08, color), makeSprite(0x09, color), makeSprite(0xA, color), ground, ground, ground},
+                new Sprite[]{groundNoPath, groundNoPath, makeSprite(0x08, color), makeSprite(0x09, color), makeSprite(0xA, color), groundNoPath, groundNoPath, groundNoPath},
                 new Sprite[]{towerUL, horiWall, makeSprite(0x18, color), makeSprite(0x19, color), makeSprite(0x1A, color),  horiWall, horiWall, towerUR},
                 new Sprite[]{vertiWall, ground, makeSprite(0x28, color), makeSprite(0x29, color), makeSprite(0x2A, color), ground, ground, vertiWall},
                 new Sprite[]{vertiWall, ground, castleLL, castleLC, castleLR, ground, ground, vertiWall},
