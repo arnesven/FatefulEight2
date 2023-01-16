@@ -18,8 +18,8 @@ public class HarmonizeSpell extends Spell {
     }
 
     @Override
-    public String getShoppingDetails() {
-        return ", A spell for calming bests.";
+    public String getDescription() {
+        return "A spell for calming bests.";
     }
 
     @Override

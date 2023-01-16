@@ -32,6 +32,12 @@ public abstract class Spell extends Item {
         return color;
     }
 
+    public final String getShoppingDetails() {
+        return ", " + getDescription();
+    }
+
+    public abstract String getDescription();
+
     public boolean castYourself(Model model, GameState state, GameCharacter caster) {
         state.println(caster.getName() + " tries to cast " + getName() + "...");
         caster.addToHP(-hpCost);

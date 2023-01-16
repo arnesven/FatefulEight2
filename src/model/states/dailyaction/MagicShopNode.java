@@ -21,7 +21,7 @@ public class MagicShopNode extends GeneralShopNode {
             MyColors.RED, MyColors.WHITE);
 
     public MagicShopNode(Model model, int col, int row) {
-        super(model, col, row);
+        super(model, col, row, "Magic Shop");
     }
 
     @Override

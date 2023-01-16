@@ -19,7 +19,7 @@ public class WeaponShopNode extends GeneralShopNode {
             MyColors.PURPLE, MyColors.WHITE);
 
     public WeaponShopNode(Model model, int column, int row) {
-        super(model, column, row);
+        super(model, column, row, "Weapon Shop");
     }
 
     @Override

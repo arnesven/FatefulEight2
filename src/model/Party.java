@@ -48,7 +48,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(21, 15);  // Inn is at 12,9, castle at 1,3
+        position = new Point(1, 3);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
     }
 

@@ -18,7 +18,7 @@ public class LevitateSpell extends Spell {
     }
 
     @Override
-    public String getShoppingDetails() {
+    public String getDescription() {
         return "A spell for moving objects through the air via telekinesis.";
     }
 

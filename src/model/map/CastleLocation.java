@@ -16,7 +16,7 @@ import view.subviews.*;
 import java.awt.Point;
 import java.util.List;
 
-public class CastleLocation extends HexLocation implements UrbanLocation {
+public abstract class CastleLocation extends HexLocation implements UrbanLocation {
     private final String lordName;
     private MyColors castleColor;
     private final SubView subView;
@@ -80,11 +80,6 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
     @Override
     public boolean noBoat() {
         return true;
-    }
-
-    @Override
-    public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new GeneralShopNode(model, 1, 4)); // TODO: make method abstract
     }
 
     @Override

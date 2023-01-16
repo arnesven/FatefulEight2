@@ -18,7 +18,7 @@ public class TurnUndeadSpell extends Spell {
     }
 
     @Override
-    public String getShoppingDetails() {
+    public String getDescription() {
         return "A spell for disintegrating undead.";
     }
 

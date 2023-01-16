@@ -96,7 +96,7 @@ public class SpellsView extends SelectableListMenu {
                     item.drawYourself(model.getScreenHandler(), x, y);
                     Spell sp = (Spell)item;
                     int i = 1;
-                    for (String s : MyStrings.partition(sp.getShoppingDetails(), 16)) {
+                    for (String s : MyStrings.partition(sp.getDescription(), 16)) {
                         print(model.getScreenHandler(),x + 5, y + (i++), s);
                     }
                 }
