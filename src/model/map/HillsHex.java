@@ -2,6 +2,8 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
+import model.states.events.BarbarianEvent;
+import model.states.events.NoEventState;
 import model.states.events.OrcBandEvent;
 import util.MyRandom;
 import view.subviews.SubView;
@@ -29,7 +31,12 @@ public class HillsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return MyRandom.sample(List.of(new OrcBandEvent(model)));
-        //return new NoEventState(model);
+        if (MyRandom.rollD10() >= 5) {
+            return MyRandom.sample(List.of(
+                    new OrcBandEvent(model),
+                    new BarbarianEvent(model)
+            ));
+        }
+        return new NoEventState(model);
     }
 }

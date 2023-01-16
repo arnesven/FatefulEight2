@@ -29,6 +29,13 @@ public class MyRandom {
         return a + randInt(b - a + 1);
     }
 
+    public static String randomGender() {
+        if (random.nextBoolean()) {
+            return "he";
+        }
+        return "she";
+    }
+
     public MyColors nextColor() {
         return sample(Arrays.asList(MyColors.values()));
     }
