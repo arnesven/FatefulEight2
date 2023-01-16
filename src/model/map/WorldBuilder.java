@@ -55,12 +55,12 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 15, 1, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents,17, 1, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,18, 1, NORTH_WEST | SOUTH, 0);
-        addCastle(contents, 22, 1, "Arkvale Castle", "Queen Valstine", MyColors.WHITE, SOUTH, 0);
+        addCastle(contents, 22, 1, new ArkvaleCastle(), SOUTH, 0);
 
         addTown(contents, 18, 2, new UrnTownTown(), NORTH | SOUTH, 0);
         addRoadsAndRivers(contents,22, 2, SOUTH_WEST | NORTH, 0);
 
-        addCastle(contents, 1, 3, "Bogdown Castle", "King Burod", MyColors.DARK_GREEN, 0, 0);
+        addCastle(contents, 1, 3, new BogdownCastle(), 0, 0);
         addRuins(contents, 5, 3, "Urh", 0, 0);
         addInn(contents, 12, 3, "Waterfront Inn", SOUTH_EAST, 0);
         addRoadsAndRivers(contents,18, 3, NORTH | NORTH_EAST, 0);
@@ -175,11 +175,11 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 15, 15, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 16, 15, 0, NORTH_WEST);
         addTown(contents, 18, 15, new SheffieldTown(), NORTH, 0);
-        addCastle(contents, 21, 15, "Castle Ardh", "Lord Aldeck", MyColors.BLUE, NORTH_EAST | SOUTH_EAST, 0);
+        addCastle(contents, 21, 15, new ArdhCastle(), NORTH_EAST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 22, 15, NORTH_WEST | SOUTH_EAST, 0);
         addTown(contents, 24, 15, new BullsVilleTown(), SOUTH_WEST, 0);
 
-        addCastle(contents, 2, 16, "Sunblaze Castle", "Prince Elozi", MyColors.YELLOW, NORTH_EAST, 0);
+        addCastle(contents, 2, 16, new SunblazeCastle(), NORTH_EAST, 0);
         addRoadsAndRivers(contents, 3, 16, SOUTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 5, 16, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 6, 16, NORTH_WEST | NORTH_EAST, 0);
@@ -205,8 +205,8 @@ public class WorldBuilder {
         contents.put(new Point(x, y), new HexContents(new TempleLocation(templeName), 0, 0));
     }
 
-    private static void addCastle(Map<Point, HexContents> contents, int x, int y, String castleName, String lordName, MyColors castleColor, int roads, int rivers) {
-        contents.put(new Point(x, y), new HexContents(new CastleLocation(castleName, castleColor, lordName), roads, rivers));
+    private static void addCastle(Map<Point, HexContents> contents, int x, int y, CastleLocation castle, int roads, int rivers) {
+        contents.put(new Point(x, y), new HexContents(castle, roads, rivers));
     }
 
     private static void addInn(Map<Point, HexContents> contents, int x, int y, String innName, int roads, int rivers) {
