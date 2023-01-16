@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.map.World;
 import model.states.events.RiverEvent;
+import view.subviews.EmptySubView;
 import view.subviews.MapSubView;
 import view.subviews.CollapsingTransition;
 
@@ -43,6 +44,7 @@ public class TravelState extends GameState {
                 World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
                 World.translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
         mapSubView.waitForAnimation();
+        CollapsingTransition.transition(model, new EmptySubView());
 
         model.getCurrentHex().travelFrom(model);
         model.getParty().move(selectedDir.x, selectedDir.y);

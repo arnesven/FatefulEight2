@@ -117,4 +117,7 @@ public class CastleLocation extends HexLocation implements UrbanLocation {
         return new Point(AdvancedDailyActionState.TOWN_MATRIX_COLUMNS-1, AdvancedDailyActionState.TOWN_MATRIX_ROWS-1);
     }
 
+    public String getLordTitle() {
+        return lordName.split(" ")[0].toLowerCase();
+    }
 }

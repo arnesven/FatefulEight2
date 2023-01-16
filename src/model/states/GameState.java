@@ -4,7 +4,6 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.items.spells.Spell;
-import model.quests.QuestNode;
 import util.MyPair;
 import view.subviews.CollapsingTransition;
 import view.subviews.OnTheRoadSubView;

@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.TavernDailyActionState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -94,5 +95,21 @@ public class CastleSubView extends DailyActionSubView {
     @Override
     protected String getPlaceType() {
         return "CASTLE";
+    }
+
+    @Override
+    public void animateMovement(Model model, Point from, Point to) {
+        Point gatePosition = new Point(3, 7);
+        if (insideToOutside(from, to) || insideToOutside(to, from)) {
+            super.animateMovement(model, from, gatePosition);
+            super.animateMovement(model, gatePosition, to);
+        } else {
+            super.animateMovement(model, from, to);
+        }
+    }
+
+    private boolean insideToOutside(Point from, Point to) {
+        return to.y != AdvancedDailyActionState.TOWN_MATRIX_ROWS-1 &&
+                from.y == AdvancedDailyActionState.TOWN_MATRIX_ROWS-1;
     }
 }
