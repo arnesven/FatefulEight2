@@ -5,6 +5,7 @@ import model.states.DailyEventState;
 import model.states.events.BarbarianEvent;
 import model.states.events.NoEventState;
 import model.states.events.OrcBandEvent;
+import model.states.events.TrollEvent;
 import util.MyRandom;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
@@ -34,6 +35,7 @@ public class HillsHex extends WorldHex {
         if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
+                    new TrollEvent(model),
                     new BarbarianEvent(model)
             ));
         }
