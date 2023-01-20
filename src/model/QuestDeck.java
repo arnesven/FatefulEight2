@@ -4,6 +4,7 @@ import model.map.HexLocation;
 import model.quests.DeepDungeonQuest;
 import model.quests.MansionHeistQuest;
 import model.quests.Quest;
+import model.quests.UnsuspectingLoversQuest;
 import util.MyRandom;
 
 import java.io.Serializable;
@@ -17,7 +18,11 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
     private Map<Quest, HexLocation> acceptedQuests = new HashMap<>();
 
     public Quest getRandomQuest() {
-        return MyRandom.sample(List.of(new MansionHeistQuest(), new DeepDungeonQuest()));
+        return MyRandom.sample(List.of(
+                // new DeepDungeonQuest(),
+                // new MansionHeistQuest(),
+                new UnsuspectingLoversQuest()
+                ));
     }
 
     public void accept(Quest quest, HexLocation location) {

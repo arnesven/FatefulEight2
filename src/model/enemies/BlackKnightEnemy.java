@@ -9,7 +9,7 @@ import model.races.Race;
 import view.sprites.Sprite;
 
 public class BlackKnightEnemy extends Enemy {
-    private static Sprite avatar = Classes.BKN.getAvatar(Race.SOUTHERN_HUMAN);;
+    private static Sprite avatar = Classes.BKN.getAvatar(Race.SOUTHERN_HUMAN);
 
     public BlackKnightEnemy(char enemyGroup) {
         super(enemyGroup, "Black Knight");

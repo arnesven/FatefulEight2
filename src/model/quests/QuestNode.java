@@ -16,4 +16,8 @@ public abstract class QuestNode implements Serializable {
     public Point getPosition() {
         return new Point(getColumn(), getRow());
     }
+
+    protected boolean isEligibleForSelection(Model model, QuestState state) {
+        return true;
+    }
 }

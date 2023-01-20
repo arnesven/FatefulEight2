@@ -39,14 +39,16 @@ public class QuestDecisionPoint extends QuestJunction {
         return "Leader decision point: Solo Leadership 6";
     }
 
-    public QuestEdge questNodeInput(QuestState state) {
+    public QuestEdge questNodeInput(Model model, QuestState state) {
         state.setSelectedElement(getConnections().get(0).getNode());
         do {
             state.print("Please select which location to advance to.");
             state.waitForReturn(true);
             for (QuestEdge edge : getConnections()) {
                 if (edge.getNode() == state.getSelectedElement()) {
-                    return edge;
+                    if (edge.getNode().isEligibleForSelection(model, state)) {
+                        return edge;
+                    }
                 }
             }
             state.println("The selected location is not reachable from your current position.");
@@ -71,7 +73,7 @@ public class QuestDecisionPoint extends QuestJunction {
         QuestEdge finalEdge;
         do {
             try {
-                finalEdge = questNodeInput(state);
+                finalEdge = questNodeInput(model, state);
                 break;
             } catch (SpellCastException sce) {
                 state.println("");

@@ -88,7 +88,7 @@ public class QuestSubView extends AvatarSubView {
 
                     if (state.getCurrentPosition() == matrix.getElementAt(col, row) && avatarEnabled) {
                         model.getScreenHandler().register("questAvatar", new Point(xPos, yPos),
-                                model.getParty().getLeader().getAvatarSprite());
+                                model.getParty().getLeader().getAvatarSprite(), 2);
                     }
 
                     if (matrix.getSelectedElement() == matrix.getElementAt(col, row) && state.isCursorEnabled()) {

@@ -19,22 +19,26 @@ public abstract class Quest implements Serializable {
     private final String text;
     private final String provider;
     private final QuestDifficulty difficulty;
-    private List<QuestScene> scenes;
-    private List<QuestJunction> junctions;
-    private QuestSuccessfulNode successEnding;
-    private QuestNode failEnding;
+    private final List<QuestScene> scenes;
+    private final List<QuestJunction> junctions;
+    private final QuestSuccessfulNode successEnding;
+    private final QuestNode failEnding;
 
-    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, String text, String endText) {
+    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, int exp, String text, String endText) {
         this.name = name;
         this.provider = provider;
         this.difficulty = difficulty;
-        this.reward = new Reward(partyRep, gold);
+        this.reward = new Reward(partyRep, gold, exp);
         this.text = text;
         scenes = buildScenes();
         junctions = buildJunctions(scenes);
         successEnding = new QuestSuccessfulNode(reward, endText);
         failEnding = new QuestFailNode();
         connectScenesToJunctions(scenes, junctions);
+    }
+
+    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, String text, String endText) {
+        this(name, provider, difficulty, partyRep, gold, 0, text, endText);
     }
 
     protected abstract List<QuestScene> buildScenes();
@@ -52,15 +56,7 @@ public abstract class Quest implements Serializable {
     }
 
     public String getBeforehandInfo() {
-        String reputation = ".";
-        if (reward.getReputation() > 0) {
-            reputation = ", and your reputation will increase.";
-        } else if (reward.getReputation() < 0) {
-            reputation = ", but your reputation will DECREASE.";
-        }
-
-        return "Upon completion you will be paid " + reward.getGold() + " gold per party member" +
-                reputation +
+        return "Upon completion" + reward.getDescription() +
                 " The party collectively appraises this quest to be " +
                 difficulty.toString().toLowerCase() + ".";
     }

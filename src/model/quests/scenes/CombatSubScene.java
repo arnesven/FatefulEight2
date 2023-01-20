@@ -23,11 +23,17 @@ public abstract class CombatSubScene extends QuestSubScene {
     private static final Sprite32x32 SPRITE = new Sprite32x32("combatsubscene", "quest.png", 0x03,
             MyColors.BLACK, MyColors.WHITE, MyColors.GRAY, MyColors.BROWN);
     private final List<Enemy> enemies;
+    private final boolean fleeingEnabled;
     private boolean defeated = false;
 
-    public CombatSubScene(int col, int row, List<Enemy> enemies) {
+    public CombatSubScene(int col, int row, List<Enemy> enemies, boolean fleeingEnabled) {
         super(col, row);
         this.enemies = enemies;
+        this.fleeingEnabled = fleeingEnabled;
+    }
+
+    public CombatSubScene(int col, int row, List<Enemy> enemies) {
+        this(col, row, enemies, false);
     }
 
     @Override
@@ -57,11 +63,14 @@ public abstract class CombatSubScene extends QuestSubScene {
     public QuestEdge run(Model model, QuestState state) {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
-        CombatEvent combat = new CombatEvent(model, enemies, state.getCombatTheme(), false);
+        CombatEvent combat = new CombatEvent(model, enemies, state.getCombatTheme(), fleeingEnabled);
         combat.run(model);
         state.transitionToQuestView(model);
-        defeated = true;
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+        if (combat.fled()) {
+            return getFailEdge();
+        }
+        defeated = true;
         return getSuccessEdge();
     }
 
