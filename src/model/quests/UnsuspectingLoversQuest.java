@@ -14,8 +14,13 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
+import view.subviews.TownSubView;
+import view.widget.QuestBackground;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UnsuspectingLoversQuest extends Quest {
@@ -29,6 +34,7 @@ public class UnsuspectingLoversQuest extends Quest {
 
     private static final String endText = "Jason and Tamara both thank you for bringing them together. What a happy ending!";
     private final TownCombatTheme theme;
+    private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public UnsuspectingLoversQuest() {
         super("Unsuspecting Lovers", "a local matchmaker", QuestDifficulty.EASY, 0, 25, 50, text, endText);
@@ -103,6 +109,34 @@ public class UnsuspectingLoversQuest extends Quest {
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.BLACK;
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
+    private static List<QuestBackground> makeBgSprites() {
+        List<QuestBackground> list = new ArrayList<>();
+        for (int col = 0; col < 8; col++) {
+            list.add(new QuestBackground(new Point(col, 0), TownSubView.STREET, true));
+        }
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 8; col++) {
+                list.add(new QuestBackground(new Point(col, row), TownSubView.STREET, false));
+            }
+        }
+        Sprite townHouse = new Sprite32x32("townhousequest", "quest.png", 0x50,
+                TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.CYAN);
+        list.add(new QuestBackground(new Point(1, 0), townHouse, false));
+        list.add(new QuestBackground(new Point(3, 1), townHouse, false));
+        list.add(new QuestBackground(new Point(2, 3), townHouse, false));
+        list.add(new QuestBackground(new Point(5, 4), townHouse, false));
+        list.add(new QuestBackground(new Point(6, 4), townHouse, false));
+        list.add(new QuestBackground(new Point(5, 5), townHouse, false));
+        list.add(new QuestBackground(new Point(6, 5), townHouse, false));
+        list.add(new QuestBackground(new Point(2, 5), townHouse, false));
+        return list;
     }
 
     private static class ReducePartyRepCombatSubScene extends CombatSubScene {

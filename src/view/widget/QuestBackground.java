@@ -1,6 +1,5 @@
 package view.widget;
 
-import model.quests.DeepDungeonQuest;
 import view.sprites.Sprite;
 
 import java.awt.*;

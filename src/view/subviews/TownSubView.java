@@ -20,7 +20,7 @@ public class TownSubView extends DailyActionSubView {
     public static final MyColors GROUND_COLOR = MyColors.GREEN;
     public static final MyColors PATH_COLOR = MyColors.DARK_GRAY;
     public static final MyColors STREET_COLOR = MyColors.GRAY;
-    private static final Sprite STREET = new Sprite32x32("streetground", "world_foreground.png", 0x02, GROUND_COLOR, PATH_COLOR, MyColors.TAN);
+    public static final Sprite STREET = new Sprite32x32("streetground", "world_foreground.png", 0x02, GROUND_COLOR, PATH_COLOR, MyColors.TAN);
     private static final Sprite STREET_INNER = new Sprite32x32("streetground", "world_foreground.png", 0x02, STREET_COLOR, PATH_COLOR, MyColors.TAN);
     private static final Sprite WATER = makeWaterSprite();
     private static final Sprite DOCK = new Sprite32x32("towndock", "world_foreground.png", 0x42,
