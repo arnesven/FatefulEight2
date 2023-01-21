@@ -6,12 +6,12 @@ import model.classes.Skill;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
 import model.combat.TownCombatTheme;
-import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
+import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -37,7 +37,7 @@ public class UnsuspectingLoversQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public UnsuspectingLoversQuest() {
-        super("Unsuspecting Lovers", "a local matchmaker", QuestDifficulty.EASY, 0, 25, 50, text, endText);
+        super("Unsuspecting Lovers", "Jason and Tamara's parents", QuestDifficulty.EASY, 0, 25, 50, text, endText);
         this.theme = new TownCombatTheme();
     }
 
@@ -81,9 +81,15 @@ public class UnsuspectingLoversQuest extends Quest {
                         new QuestEdge(scenes.get(3).get(1))),
                         "To set the mood, some proper entertainment is required.");
 
+        DecorativeJunction jason = new SpriteDecorativeJunction(7, 0,
+                Classes.None.getAvatar(Race.SOUTHERN_HUMAN), "Jason");
+
+        DecorativeJunction tamara = new SpriteDecorativeJunction(6, 6,
+                Classes.PRI.getAvatar(Race.WOOD_ELF), "Tamara");
+
         return List.of(new PauseQuestJunction(0, 0, new QuestEdge(scenes.get(0).get(0)),
                 "We'll get these two lovebirds together in no time."),
-                qd1, qd2, qd3);
+                qd1, qd2, qd3, jason, tamara);
     }
 
     @Override
@@ -153,6 +159,16 @@ public class UnsuspectingLoversQuest extends Quest {
         protected MyColors getSuccessEdgeColor() {
             return MyColors.LIGHT_GREEN;
         }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            QuestEdge qe = super.run(model, state);
+            if (qe == getSuccessEdge()) {
+                model.getParty().addToReputation(-1);
+                state.print("The party loses 1 reputation!");
+            }
+            return qe;
+        }
     }
 
     private static class InterloperEnemy extends Enemy {
@@ -187,4 +203,5 @@ public class UnsuspectingLoversQuest extends Quest {
             return new NoCombatLoot();
         }
     }
+
 }
