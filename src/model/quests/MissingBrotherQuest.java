@@ -124,46 +124,6 @@ public class MissingBrotherQuest extends Quest {
         return new GrassCombatTheme();
     }
 
-    private static List<QuestBackground> makeBackgroundSprites() {
-        List<QuestBackground> result = new ArrayList<>();
-        Random rand = new Random(1234);
-        for (int row = 0; row < 9; ++row) {
-            for (int col = 0; col < 8; ++col) {
-                result.add(new QuestBackground(new Point(col, row),
-                        GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)]));
-            }
-        }
-        final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
-                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
-        result.add(new QuestBackground(new Point(7, 6), townSprite));
-        final Sprite halfTown = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
-                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
-        result.add(new QuestBackground(new Point(0, 0), halfTown, true));
-        final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
-                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
-        result.add(new QuestBackground(new Point(6, 2), woods, true));
-        result.add(new QuestBackground(new Point(6, 3), woods, true));
-        final Sprite woodsHalf = new Sprite32x32("woodshalfqmb", "quest.png", 0x54,
-                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
-        for (int i = 1; i < 6; ++i) {
-            result.add(new QuestBackground(new Point(i, 1), woodsHalf, true));
-            if (i != 5) {
-                result.add(new QuestBackground(new Point(i, 2), woodsHalf, true));
-            }
-            result.add(new QuestBackground(new Point(i, 5), woodsHalf, true));
-        }
-        result.add(new QuestBackground(new Point(6, 1), woodsHalf, true));
-        result.add(new QuestBackground(new Point(6, 4), woods, true));
-        final Sprite woodsCorr = new Sprite32x32("woodscorrqmb", "quest.png", 0x55,
-                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
-        for (int i = 2; i < 9; ++i) {
-            result.add(new QuestBackground(new Point(0, i), woodsCorr, true));
-        }
-
-
-        return result;
-    }
-
     private static class WildBeastsCombatSubScene extends CombatSubScene {
         public WildBeastsCombatSubScene(int col, int row) {
             super(col, row, List.of(new BearEnemy('A'), new BearEnemy('A')));
@@ -195,5 +155,65 @@ public class MissingBrotherQuest extends Quest {
             }
             return list;
         }
+    }
+
+    private static List<QuestBackground> makeBackgroundSprites() {
+        List<QuestBackground> result = new ArrayList<>();
+        Random rand = new Random(1234);
+        for (int row = 1; row < 9; ++row) {
+            for (int col = 0; col < 8; ++col) {
+                if (row != 8) {
+                    result.add(new QuestBackground(new Point(col, row),
+                            GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)]));
+                }
+            }
+        }
+        final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
+                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(7, 6), townSprite));
+        final Sprite halfTown = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
+                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(0, 0), halfTown, true));
+        final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(6, 2), woods, true));
+        result.add(new QuestBackground(new Point(6, 3), woods, true));
+        final Sprite woodsHalf = new Sprite32x32("woodshalfqmb", "quest.png", 0x54,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+        for (int i = 1; i < 6; ++i) {
+            result.add(new QuestBackground(new Point(i, 1), woodsHalf, true));
+            if (i != 5) {
+                result.add(new QuestBackground(new Point(i, 2), woodsHalf, true));
+            }
+            result.add(new QuestBackground(new Point(i, 5), woodsHalf, true));
+        }
+        result.add(new QuestBackground(new Point(6, 1), woodsHalf, true));
+        result.add(new QuestBackground(new Point(6, 4), woods, true));
+        final Sprite woodsCorr = new Sprite32x32("woodscorrqmb", "quest.png", 0x55,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+        for (int i = 2; i < 9; ++i) {
+            result.add(new QuestBackground(new Point(0, i), woodsCorr, true));
+        }
+        final Sprite camp = new Sprite32x32("campqmb", "quest.png", 0x56,
+                MyColors.BLACK, MyColors.BROWN, MyColors.TAN, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(5,7), camp, false));
+        final Sprite horseCart = new Sprite32x32("horsecart", "quest.png", 0x57,
+                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(1,0), horseCart, true));
+
+        final Sprite roadTop = new Sprite32x32("roadtop", "quest.png", 0x60,
+                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+        final Sprite roadRight = new Sprite32x32("roadRight", "quest.png", 0x61,
+                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+        final Sprite roadCorner = new Sprite32x32("roadCorner", "quest.png", 0x62,
+                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+
+        for (int i = 2; i < 7; ++i) {
+            result.add(new QuestBackground(new Point(i,0), roadTop, true));
+            result.add(new QuestBackground(new Point(7, i-1), roadRight, true));
+        }
+        result.add(new QuestBackground(new Point(7,0), roadCorner, true));
+
+        return result;
     }
 }

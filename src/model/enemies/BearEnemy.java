@@ -19,7 +19,7 @@ public class BearEnemy extends BigEnemy {
 
     @Override
     public int getMaxHP() {
-        return 12;
+        return 10;
     }
 
     @Override
