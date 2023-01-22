@@ -11,6 +11,7 @@ import model.states.QuestState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.MyColors;
+import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.DungeonTheme;
@@ -41,7 +42,11 @@ public abstract class CombatSubScene extends QuestSubScene {
         model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
         if (!hasBeenDefeated()) {
             Sprite enemyAvatar = enemies.get(0).getAvatar();
-            model.getScreenHandler().register(enemyAvatar.getName(), new Point(xPos, yPos), enemyAvatar);
+            int xOff = 0;
+            if (enemyAvatar.getWidth() > SPRITE.getWidth()) {
+                xOff = (SPRITE.getWidth() - enemyAvatar.getWidth()) / 8 / 2;
+            }
+            model.getScreenHandler().register(enemyAvatar.getName(), new Point(xPos+xOff, yPos), enemyAvatar);
         }
     }
 

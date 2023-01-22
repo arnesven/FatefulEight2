@@ -19,12 +19,12 @@ public class BearEnemy extends BigEnemy {
 
     @Override
     public int getMaxHP() {
-        return 10;
+        return 12;
     }
 
     @Override
     public int getSpeed() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class BearEnemy extends BigEnemy {
 
     @Override
     public int getDamage() {
-        return 3;
+        return 4;
     }
 
     @Override
