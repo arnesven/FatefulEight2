@@ -14,7 +14,7 @@ public class DrawingArea extends JComponent {
     private BufferedImage buffer = null;
 
     public DrawingArea() {
-        this.magnification = 2;
+        magnification = 2;
         screenHandler = new ScreenHandler();
     }
 
@@ -44,6 +44,12 @@ public class DrawingArea extends JComponent {
         screenHandler.drawBackground(g);
         if (screenHandler.foregroundEnabled()) {
             screenHandler.drawForeground(g, 0, 0);
+        }
+        if (screenHandler.getFadeLevel() > 0.0) {
+            Color col = screenHandler.getFadeColor().toAwtColor();
+            Color c2 = new Color(col.getRed(), col.getGreen(), col.getBlue(), (int)(0xFF * (screenHandler.getFadeLevel())));
+            g.setColor(c2);
+            g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
         this.buffer = img;
     }

@@ -13,6 +13,8 @@ public class ScreenHandler {
     private Map<Point, Sprite> backgroundSprites = new HashMap<>();
     private PriorityQueue<ForegroundObject> foregroundSprites = new PriorityQueue<>();
     private boolean enableForeground = true;
+    private double fadeLevel;
+    private MyColors fadeColor;
 
     public ScreenHandler() {
         this.state = 0;
@@ -77,6 +79,7 @@ public class ScreenHandler {
     public synchronized void clearAll() {
         backgroundSprites.clear();
         foregroundSprites.clear();
+        setFade(0.0, MyColors.BLACK);
     }
 
 
@@ -116,6 +119,19 @@ public class ScreenHandler {
 
     public void setForegroundEnabled(boolean b) {
         enableForeground = b;
+    }
+
+    public void setFade(double fadeLevel, MyColors black) {
+        this.fadeLevel = fadeLevel;
+        this.fadeColor = black;
+    }
+
+    public double getFadeLevel() {
+        return fadeLevel;
+    }
+
+    public MyColors getFadeColor() {
+        return fadeColor;
     }
 
     private class ForegroundObject implements Comparable<ForegroundObject> {
