@@ -8,7 +8,7 @@ import model.races.Race;
 import view.sprites.Sprite;
 
 public class NomadEnemy extends Enemy {
-    private static final Sprite SPRITE = Classes.AMZ.getAvatar(Race.NORTHERN_HUMAN);
+    private static final Sprite SPRITE = Classes.AMZ.getAvatar(Race.NORTHERN_HUMAN, null);
 
     public NomadEnemy(char enemyGroup, String name) {
         super(enemyGroup, name);

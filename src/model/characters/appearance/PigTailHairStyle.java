@@ -3,8 +3,8 @@ package model.characters.appearance;
 import view.sprites.FaceSpriteWithHair;
 
 public class PigTailHairStyle extends HairStyle3x2 {
-    public PigTailHairStyle(int num, boolean inForehead) {
-        super(num, inForehead, true, false, false);
+    public PigTailHairStyle(int num, boolean inForehead, int normalAvatar) {
+        super(num, inForehead, true, false, false, normalAvatar, 0x36);
     }
 
     @Override

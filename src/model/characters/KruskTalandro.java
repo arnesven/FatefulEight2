@@ -1,9 +1,6 @@
 package model.characters;
 
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.Beard;
-import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.CharacterEyes;
+import model.characters.appearance.*;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite8x8;
@@ -11,7 +8,7 @@ import view.sprites.Sprite8x8;
 public class KruskTalandro extends AdvancedAppearance {
     public KruskTalandro() {
         super(Race.HALF_ORC, false, MyColors.DARK_GRAY, 7, 2,
-                new CharacterEyes(1), null, new Beard(0x09));
+                new CharacterEyes(1), new BaldHairStyle(), new Beard(0x09));
     }
 
     @Override

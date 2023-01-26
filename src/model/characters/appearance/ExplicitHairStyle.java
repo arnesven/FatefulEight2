@@ -7,8 +7,11 @@ public class ExplicitHairStyle extends HairStyle {
     private final int topLeft;
     private final int top;
     private final int topRight;
+    private final int avatarNormalHair;
+    private final int avatarBackHair;
 
-    public ExplicitHairStyle(boolean inForehead, int left, int center, int right, int topLeft, int top, int topRight) {
+    public ExplicitHairStyle(boolean inForehead, int left, int center, int right, int topLeft, int top, int topRight,
+                             int avatarNormalHair, int avatarBackHair) {
         super(inForehead);
         this.left = left;
         this.center = center;
@@ -16,6 +19,8 @@ public class ExplicitHairStyle extends HairStyle {
         this.topLeft = topLeft;
         this.top = top;
         this.topRight = topRight;
+        this.avatarNormalHair = avatarNormalHair;
+        this.avatarBackHair = avatarBackHair;
     }
 
     public int getForeheadLeft() { return left; }
@@ -29,5 +34,15 @@ public class ExplicitHairStyle extends HairStyle {
     public int getHeadTop() { return top; }
 
     public int getHeadTopRight() {return topRight; }
+
+    @Override
+    public int getNormalHair() {
+        return avatarNormalHair;
+    }
+
+    @Override
+    public int getBackHairOnly() {
+        return avatarBackHair;
+    }
 
 }

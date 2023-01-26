@@ -1,12 +1,10 @@
 package view.sprites;
 
-import model.Model;
+import model.characters.appearance.CharacterAppearance;
 import model.races.Race;
 import view.MyColors;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import java.util.List;
 
 public class AvatarSprite extends LoopingSprite {
 
@@ -15,8 +13,8 @@ public class AvatarSprite extends LoopingSprite {
     private int count = 0;
     private int delay = 16;
 
-    public AvatarSprite(Race race, int num, MyColors color2, MyColors color4) {
-        super("partymarker", "avatars.png", num+(race.isShort()?4:0), 32);
+    public AvatarSprite(Race race, int num, MyColors color2, MyColors color4, Sprite hairSprite) {
+        super("partymarker", "avatars.png", num+(race.isShort()?4:0), 32, 32, List.of(hairSprite));
         setFrames(4);
         setColor1(MyColors.BLACK);
         setColor2(color2);
@@ -26,8 +24,8 @@ public class AvatarSprite extends LoopingSprite {
         deadSprite.setColor4(color4);
     }
 
-    public AvatarSprite(Race race, int num, MyColors color2) {
-        this(race, num, color2, color2);
+    public AvatarSprite(Race race, int num, MyColors color2, Sprite hairSprite) {
+        this(race, num, color2, color2, hairSprite);
     }
 
     public Sprite getDead() {

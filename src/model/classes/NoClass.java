@@ -18,8 +18,8 @@ public class NoClass extends CharacterClass {
     }
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x87, MyColors.BEIGE);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x87, MyColors.BEIGE, appearance.getNormalHair());
     }
 
     @Override

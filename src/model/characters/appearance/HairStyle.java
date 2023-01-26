@@ -7,6 +7,7 @@ import model.characters.VzaniHairStyle;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.FilledBlockSprite;
+import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
 
 import java.io.Serializable;
@@ -22,28 +23,28 @@ public abstract class HairStyle implements Serializable {
             MyColors.LIGHT_BLUE, MyColors.CYAN
     };
     public static HairStyle[] allHairStyles = new HairStyle[]{
-            new BaldHairStyle(), new FemaleLongHairStyle(), new FemaleLongHairStyle(0x9),
-            new FemaleLongHairStyle(0x5D), new FemaleLongHairStyle(0xA7), new ShortFemaleHair(),
-            new ShortFemaleHair(0x5D), new ShortFemaleHair(0xA7),
-            new HairStyle3x2(0x9, true),
-            new HairStyle3x2(0x9, true, true, true, true),
-            new HairStyle3x2(0x3D, true, true, false, false),
-            new HairStyle3x2(0x5D, true, true, true, true),
-            new HairStyle3x2(0x5D, true, true, true, false),
-            new HairStyle3x2(0x9D, false),
-            new HairStyle3x2(0xC, false),
-            new HairStyle3x2(0xC, false, true, true, true),
-            new ExplicitHairStyle(true, 0x04, 0xEF, 0x14, 0x05, 0xFC, 0x15),
-            new ExplicitHairStyle(false, 0x02, 0xFF, 0x12, 0x03, 0xFD, 0x13),
+            new BaldHairStyle(), new FemaleLongHairStyle(), new FemaleLongHairStyle(0x9, 0x03),
+            new FemaleLongHairStyle(0x5D, 0x04), new FemaleLongHairStyle(0xA7, 0x05), new ShortFemaleHair(),
+            new ShortFemaleHair(0x5D, 0x13), new ShortFemaleHair(0xA7, 0x15),
+            new HairStyle3x2(0x9, true, 0x10),
+            new HairStyle3x2(0x9, true, true, true, true, 0x06, 0x07),
+            new HairStyle3x2(0x3D, true, true, false, false, 0x08, 0x00),
+            new HairStyle3x2(0x5D, true, true, true, true, 0x09, 0x07),
+            new HairStyle3x2(0x5D, true, true, true, false, 0x19, 0x00),
+            new HairStyle3x2(0x9D, false, 0x18),
+            new HairStyle3x2(0xC, false, 0x17),
+            new HairStyle3x2(0xC, false, true, true, true, 0x27, 0x07),
+            new ExplicitHairStyle(true, 0x04, 0xEF, 0x14, 0x05, 0xFC, 0x15, 0x10, 0x00),
+            new ExplicitHairStyle(false, 0x02, 0xFF, 0x12, 0x03, 0xFD, 0x13, 0x20, 0x00),
             new TopKnotHairStyle(MyColors.BEIGE, true),
             new MordKroftHairStyle(),
-            new MordKroftHairStyle(0xC, true, true, true, true),
-            new HairStyle3x2(6, false),
-            new HairStyle3x2(0xA7, false, true, false, false),
-            new HairStyle3x2(0xA7, false, true, true, true),
+            new SpecialMordKroftHairStyle(),
+            new HairStyle3x2(6, false, 0x16),
+            new HairStyle3x2(0xA7, false, true, false, false, 0x24, 0x00),
+            new HairStyle3x2(0xA7, false, true, true, true, 0x05, 0x07),
             new TorhildHairstyle(),
-            new PigTailHairStyle(0x9, true),
-            new PigTailHairStyle(0xC, true),
+            new PigTailHairStyle(0x9, true, 0x26),
+            new PigTailHairStyle(0xC, true, 0x37),
             new VzaniHairStyle()
     };
     private final boolean onTop;
@@ -103,4 +104,8 @@ public abstract class HairStyle implements Serializable {
             }
         }
     }
+
+    public abstract int getNormalHair();
+
+    public abstract int getBackHairOnly();
 }

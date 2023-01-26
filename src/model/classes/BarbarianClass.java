@@ -30,8 +30,8 @@ public class BarbarianClass extends CharacterClass {
     }
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x80, CLOTHING_COLOR);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x80, CLOTHING_COLOR, appearance.getNormalHair());
     }
 
     @Override
@@ -42,5 +42,14 @@ public class BarbarianClass extends CharacterClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    @Override
+    public void manipulateAvatar(CharacterAppearance appearance, Race race) {
+        super.finalizeLook(appearance);
+        if (!race.isShort()) {
+            appearance.getNormalHair().shiftUpPx(appearance.getNormalHair().getUpShift() + 2);
+            appearance.getBackHairOnly().shiftUpPx(appearance.getBackHairOnly().getUpShift() + 2);
+        }
     }
 }

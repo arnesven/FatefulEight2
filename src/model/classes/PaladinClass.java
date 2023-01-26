@@ -33,8 +33,8 @@ public class PaladinClass extends CharacterClass {
     }
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x10, MyColors.WHITE);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x10, MyColors.WHITE, appearance.getNormalHair());
     }
 
     @Override

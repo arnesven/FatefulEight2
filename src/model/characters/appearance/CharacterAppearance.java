@@ -29,6 +29,10 @@ public abstract class CharacterAppearance implements Serializable {
     private final PortraitSprite FRAME_LEFT = new PortraitFrameSprite(PortraitFrameSprite.LEFT);
     private final PortraitSprite FRAME_RIGHT = new PortraitFrameSprite(PortraitFrameSprite.RIGHT);
     private static final PortraitSprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
+    private static Sprite hairSprite = new Sprite32x32("standardhair", "hair.png",0x0,
+            MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
+    private static Sprite noHairSprite = new Sprite32x32("nohair", "hair.png",0x0,
+            MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private final Race race;
     private final MyColors hairColor;
     private final boolean femaleGender;
@@ -39,6 +43,10 @@ public abstract class CharacterAppearance implements Serializable {
         this.hairColor = hairColor;
         this.race = race;
         this.femaleGender = femaleGender;
+    }
+
+    public static Sprite noHair() {
+        return noHairSprite;
     }
 
     private void refresh() {
@@ -197,6 +205,7 @@ public abstract class CharacterAppearance implements Serializable {
         }
         charClass.putClothesOn(this);
         setRaceSkinColor(race);
+        charClass.manipulateAvatar(this, race);
         charClass.finalizeLook(this);
         if (charClass.showFacialHair()) {
             applyFacialHair(race);
@@ -282,5 +291,13 @@ public abstract class CharacterAppearance implements Serializable {
 
     public boolean isFemale() {
         return femaleGender;
+    }
+
+    public Sprite getNormalHair() {
+        return hairSprite;
+    }
+
+    public Sprite getBackHairOnly() {
+        return getNormalHair();
     }
 }

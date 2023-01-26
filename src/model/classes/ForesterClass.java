@@ -32,8 +32,8 @@ public class ForesterClass extends CharacterClass {
     }
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x30, MyColors.RED, MyColors.DARK_GREEN);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x30, MyColors.RED, MyColors.DARK_GREEN, appearance.getBackHairOnly());
     }
 
     @Override

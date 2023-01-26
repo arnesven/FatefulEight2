@@ -89,9 +89,9 @@ public class Sprite implements Serializable {
         this(other.name + suffix, other.mapPath, other.getColumn(), other.getRow(), other.getWidth(), other.getHeight(), other.getLayers());
     }
 
-    public static Sprite blankSprite() {
-        return new Sprite("dummy", "animal.png", 0, null);
-    }
+ //   public static Sprite blankSprite() {
+ //       return new Sprite("dummy", "animal.png", 0, null);
+  //  }
 
 
     protected List<Sprite> getLayers() {
@@ -322,6 +322,10 @@ public class Sprite implements Serializable {
 
     public void shiftUpPx(int i) {
         downShift = -i;
+    }
+
+    public int getUpShift() {
+        return -downShift;
     }
 
     public void setName(String s) {

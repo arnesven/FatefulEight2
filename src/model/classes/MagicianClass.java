@@ -42,8 +42,8 @@ public class MagicianClass extends CharacterClass {
     }
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x47, MyColors.DARK_PURPLE, MyColors.DARK_RED);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x47, MyColors.DARK_PURPLE, MyColors.DARK_RED, appearance.getBackHairOnly());
     }
 
     @Override

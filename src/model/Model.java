@@ -76,7 +76,7 @@ public class Model {
         gameData.party.add(getAllCharacters().get(0));
 //        gameData.party.getInventory().add(new HealthPotion());
 //        gameData.party.getInventory().add(new TurnUndeadSpell());
-        state = new QuestState(this, gameData.questDeck.getRandomQuest());
+//        state = new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
     public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {

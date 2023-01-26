@@ -70,7 +70,7 @@ public class GameCharacter extends Combatant {
     }
 
     private AvatarSprite makeAvatarSprite() {
-        return charClass.getAvatar(race);
+        return charClass.getAvatar(race, appearance);
     }
 
     public void drawYourself(ScreenHandler screenHandler, int col, int row, MyColors color) {

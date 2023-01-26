@@ -4,11 +4,11 @@ import view.sprites.FaceSpriteWithHair;
 
 public class ShortFemaleHair extends HairStyle3x2 {
     public ShortFemaleHair() {
-        super(0x9, true, true, true, false);
+        super(0x9, true, true, true, false, 0x11, 0x12);
     }
 
-    public ShortFemaleHair(int num) {
-        super(num, true, true, true, false);
+    public ShortFemaleHair(int num, int normalAvatar) {
+        super(num, true, true, true, false, normalAvatar, 0x12);
     }
 
     @Override

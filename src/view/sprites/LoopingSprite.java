@@ -6,7 +6,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoopingSprite extends Sprite implements Animation {
 
@@ -14,9 +15,13 @@ public class LoopingSprite extends Sprite implements Animation {
     private int count = 0;
     private int delay = 16;
 
-    public LoopingSprite(String name, String mapPath, int num, int width, int height) {
-        super(name, mapPath, num % 16, num / 16, width, height);
+    public LoopingSprite(String name, String mapPath, int num, int width, int height, List<Sprite> layers) {
+        super(name, mapPath, num % 16, num / 16, width, height, layers);
         AnimationManager.register(this);
+    }
+
+    public LoopingSprite(String name, String mapPath, int num, int width, int height) {
+        this(name, mapPath, num, width, height, new ArrayList<>());
     }
 
     public LoopingSprite(String name, String mapPath, int num, int size) {

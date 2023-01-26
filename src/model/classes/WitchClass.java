@@ -32,8 +32,8 @@ public class WitchClass extends CharacterClass {
 
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x20, MyColors.DARK_GRAY);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x20, MyColors.DARK_GRAY, appearance.getBackHairOnly());
     }
 
     @Override

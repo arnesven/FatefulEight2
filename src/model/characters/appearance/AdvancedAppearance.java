@@ -2,6 +2,8 @@ package model.characters.appearance;
 
 import model.races.Race;
 import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 public class AdvancedAppearance extends CharacterAppearance {
     private final int mouth;
@@ -9,6 +11,8 @@ public class AdvancedAppearance extends CharacterAppearance {
     private final CharacterEyes eyes;
     private final HairStyle hairStyle;
     private final Beard beard;
+    private Sprite32x32 avatarNormalHair;
+    private Sprite32x32 avatarBackHair;
 
     public AdvancedAppearance(Race race, boolean femaleGender, MyColors hairColor,
                               int mouth, int nose, CharacterEyes eyes, HairStyle hair,
@@ -19,6 +23,24 @@ public class AdvancedAppearance extends CharacterAppearance {
         this.eyes = eyes;
         this.hairStyle = hair;
         this.beard = beard;
+        makeAvatarHairSprites(hair, race);
+    }
+
+    private void makeAvatarHairSprites(HairStyle hair, Race race) {
+        this.avatarNormalHair = new Sprite32x32("avatarNormalHair"+hair.toString(), "hair.png", hairStyle.getNormalHair(),
+                getHairColor(), MyColors.WHITE, MyColors.GOLD);
+        this.avatarBackHair =  new Sprite32x32("avatarBackHair"+hair.toString(), "hair.png", hairStyle.getBackHairOnly(),
+                getHairColor(), MyColors.WHITE, MyColors.GOLD);
+        if (race.isShort()) {
+            avatarNormalHair.shiftUpPx(-2);
+            avatarBackHair.shiftUpPx(-2);
+        }
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        makeAvatarHairSprites(hairStyle, getRace());
     }
 
     @Override
@@ -157,5 +179,15 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (hairStyle != null) {
             hairStyle.addHairInBack(this);
         }
+    }
+
+    @Override
+    public Sprite getNormalHair() {
+        return avatarNormalHair;
+    }
+
+    @Override
+    public Sprite getBackHairOnly() {
+        return avatarBackHair;
     }
 }

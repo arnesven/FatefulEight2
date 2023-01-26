@@ -62,7 +62,7 @@ public abstract class CharacterClass implements Serializable {
         return 0;
     }
 
-    public abstract AvatarSprite getAvatar(Race race);
+    public abstract AvatarSprite getAvatar(Race race, CharacterAppearance appearance);
 
     public abstract Equipment getStartingEquipment();
 
@@ -94,6 +94,10 @@ public abstract class CharacterClass implements Serializable {
 
     public int id() {
         return id;
+    }
+
+    public void manipulateAvatar(CharacterAppearance appearance, Race race) {
+
     }
 
     protected static class WeightedSkill implements Serializable {

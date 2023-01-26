@@ -13,7 +13,7 @@ public class AssassinEnemy extends Enemy {
 
     public AssassinEnemy(char a) {
         super(a, "Assassin");
-        this.sprite = Classes.ASN.getAvatar(new MyRandom().nextRace());
+        this.sprite = Classes.ASN.getAvatar(new MyRandom().nextRace(), null);
     }
 
     @Override

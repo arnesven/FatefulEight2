@@ -16,6 +16,7 @@ import view.GameView;
 import view.MyColors;
 import view.sprites.Sprite;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,10 @@ public class CharacterCreationView extends SelectableListMenu {
             public void drawYourself(Model model, int x, int y) {
                 String title = "- CUSTOM CHARACTER -";
                 BorderFrame.drawCentered(model.getScreenHandler(), title, y++, MyColors.WHITE, MyColors.BLUE);
-                lastAppearance.drawYourself(model.getScreenHandler(), x+COLUMN_SKIP+19, y+2);
+                lastAppearance.drawYourself(model.getScreenHandler(), x+COLUMN_SKIP+17, y+2);
+                model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
+                        new Point(x+COLUMN_SKIP+26, y+3),
+                        lastCharacter.getAvatarSprite());
                 y++;
                 String[] labels = new String[]{"First Name", "Last Name", "", "Gender", "Race", "", "Eyes", "Nose",
                         "Mouth", "Beard", "Hair Color", "Hair", "", "Class", "", "Other Class 1",

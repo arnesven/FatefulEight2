@@ -40,8 +40,8 @@ public class SpyClass extends CharacterClass {
     }
 
     @Override
-    public AvatarSprite getAvatar(Race race) {
-        return new AvatarSprite(race, 0x57, MyColors.BLUE);
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x57, MyColors.BLUE, appearance.getBackHairOnly());
     }
 
     @Override

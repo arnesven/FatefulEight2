@@ -1,7 +1,5 @@
 package model.characters.appearance;
 
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.BaldHairStyle;
 import view.MyColors;
 import view.sprites.FaceAndClothesSprite;
 import view.sprites.FaceAndClothesSpriteWithBack;
@@ -21,5 +19,10 @@ public class TopKnotHairStyle extends BaldHairStyle {
         FaceAndClothesSprite topKnot2 = new FaceAndClothesSprite(0x77, appearance.getHairColor());
         appearance.setSprite(3, 1, topKnot);
         appearance.setSprite(3, 0, topKnot2);
+    }
+
+    @Override
+    public int getNormalHair() {
+        return 0x21;
     }
 }

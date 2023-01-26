@@ -1,7 +1,6 @@
 package model.enemies;
 
 import model.Model;
-import model.classes.BlackKnightClass;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
@@ -9,7 +8,7 @@ import model.races.Race;
 import view.sprites.Sprite;
 
 public class BlackKnightEnemy extends Enemy {
-    private static Sprite avatar = Classes.BKN.getAvatar(Race.SOUTHERN_HUMAN);
+    private static Sprite avatar = Classes.BKN.getAvatar(Race.SOUTHERN_HUMAN, null);
 
     public BlackKnightEnemy(char enemyGroup) {
         super(enemyGroup, "Black Knight");

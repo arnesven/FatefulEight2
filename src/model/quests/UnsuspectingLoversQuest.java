@@ -82,10 +82,10 @@ public class UnsuspectingLoversQuest extends Quest {
                         "To set the mood, some proper entertainment is required.");
 
         DecorativeJunction jason = new SpriteDecorativeJunction(7, 0,
-                Classes.None.getAvatar(Race.SOUTHERN_HUMAN), "Jason");
+                Classes.None.getAvatar(Race.SOUTHERN_HUMAN, null), "Jason");
 
         DecorativeJunction tamara = new SpriteDecorativeJunction(6, 6,
-                Classes.PRI.getAvatar(Race.WOOD_ELF), "Tamara");
+                Classes.PRI.getAvatar(Race.WOOD_ELF, null), "Tamara");
 
         return List.of(new PauseQuestJunction(0, 0, new QuestEdge(scenes.get(0).get(0)),
                 "We'll get these two lovebirds together in no time."),
@@ -172,7 +172,7 @@ public class UnsuspectingLoversQuest extends Quest {
     }
 
     private static class InterloperEnemy extends Enemy {
-        private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN);
+        private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, null);
 
         public InterloperEnemy(char a) {
             super(a, "Interloper");
