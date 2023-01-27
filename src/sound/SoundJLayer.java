@@ -24,6 +24,7 @@ public class SoundJLayer extends PlaybackListener implements Runnable
     private boolean isPlaying;
     private static boolean soundIsOn = true;
     private AudioDevice device;
+    private float oldVolume = 1.0f;
 
     public SoundJLayer(String filePath, boolean doesRepeat) {
         this.doesRepeat = doesRepeat;
@@ -174,6 +175,7 @@ public class SoundJLayer extends PlaybackListener implements Runnable
                         if (volControl.getValue() == newGain) {
                             return false;
                         }
+                        this.oldVolume = newGain;
                         volControl.setValue(newGain);
                         return true;
                     }
@@ -183,6 +185,34 @@ public class SoundJLayer extends PlaybackListener implements Runnable
             ie.printStackTrace();
         }
         return false;
+    }
+
+    public void increaseVolume() {
+        try {
+            setVolume(oldVolume + 10.0f);
+        } catch (VolumeChangerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void decreaseVolume() {
+        try {
+            setVolume(oldVolume - 10.0f);
+        } catch (VolumeChangerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setLowVolume(boolean b) {
+        try {
+            if (b) {
+                setVolume(-10.0f);
+            } else {
+                setVolume(1.0f);
+            }
+        } catch (VolumeChangerException e) {
+            e.printStackTrace();
+        }
     }
 
 

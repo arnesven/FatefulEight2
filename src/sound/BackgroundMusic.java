@@ -6,6 +6,7 @@ public enum BackgroundMusic {
     citySong("3_fast_city"),
     mysticSong("5_mystic_ruin");
 
+    public static final float VOLUME = -15.0f;
     private final String fileName;
 
     BackgroundMusic(String filename) {

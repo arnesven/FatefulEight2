@@ -2,6 +2,7 @@ package view;
 
 import jdk.jshell.spi.ExecutionControl;
 import model.Model;
+import sound.SoundEffects;
 import util.MyPair;
 import view.party.PartyView;
 import view.sprites.ArrowSprites;
@@ -10,6 +11,7 @@ import view.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.logging.SocketHandler;
 
 public class MenuView extends GameView {
 
@@ -77,17 +79,21 @@ public class MenuView extends GameView {
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
+            SoundEffects.menuQuit();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             cursorPos = cursorPos - 1;
             if (cursorPos == -1) {
                 cursorPos = options.size() - 1;
             }
             madeChanges();
+            SoundEffects.menuUp();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
             cursorPos = (cursorPos + 1) % options.size();
             madeChanges();
+            SoundEffects.menuDown();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
             GameView nextView = options.get(cursorPos).second;
+            SoundEffects.menuSelect();
             if (nextView != null) {
                 if (nextView.isValid(model)){
                     this.nextView = nextView;

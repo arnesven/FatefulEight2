@@ -1,6 +1,8 @@
 package view.party;
 
 import model.Model;
+import sound.ClientSoundManager;
+import sound.SoundEffects;
 import view.*;
 import view.sprites.AnimatedCharSprite;
 import view.sprites.ArrowSprites;
@@ -142,13 +144,17 @@ public abstract class SelectableListMenu extends GameView {
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
+            SoundEffects.menuQuit();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            SoundEffects.menuDown();
             handleKeyDown(model);
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            SoundEffects.menuUp();
             handleKeyUp(model);
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+            SoundEffects.menuSelect();
             ListContent lc = buildContent(model, getXStart(), getYStart()).get(selectedRow);
             if (lc.isEnabled(model)) {
                 lc.performAction(model, lc.position.x, lc.position.y);
