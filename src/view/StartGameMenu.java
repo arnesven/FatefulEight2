@@ -2,6 +2,7 @@ package view;
 
 import model.CorruptSaveFileException;
 import model.Model;
+import sound.SoundEffects;
 import view.sprites.ArrowSprites;
 
 import java.awt.event.KeyEvent;
@@ -57,12 +58,14 @@ public class StartGameMenu extends GameView {
                 model.transitionToDialog(new SelectSaveSlotMenu(this));
             }
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            SoundEffects.matrixSelect();
             cursorPos = cursorPos - 1;
             if (cursorPos == -1) {
                 cursorPos = options.length - 1;
             }
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            SoundEffects.matrixSelect();
             cursorPos = (cursorPos + 1) % options.length;
             madeChanges();
         }
