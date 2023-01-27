@@ -37,4 +37,12 @@ public class SoundEffects {
     public static void sellItem() {
         play("coin");
     }
+
+    public static void gameLoaded() {
+        play("load");
+    }
+
+    public static void gameSaved() {
+        play("save");
+    }
 }

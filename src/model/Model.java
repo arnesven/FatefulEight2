@@ -18,6 +18,7 @@ import model.races.Race;
 import model.states.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import sound.SoundEffects;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
 import view.subviews.SubView;
@@ -86,6 +87,7 @@ public class Model {
             gameData = (GameData) ois.readObject();
             state = getCurrentHex().getDailyActionState(this);
             log.setContent(gameData.logContent);
+            SoundEffects.gameLoaded();
         } catch (FileNotFoundException fnfe) {
             throw fnfe;
         } catch (IOException e) {

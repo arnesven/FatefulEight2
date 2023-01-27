@@ -45,7 +45,7 @@ public class ShopSubView extends SubView {
                     if ((title.equals("BUYING") && priceMap.get(it) > model.getParty().getGold()) ||
                             (title.equals("SELLING") && !inventory.contains(it))) {
                         model.getScreenHandler().register("crossedout", new Point(xPos, yPos), crossSprite);
-                    } 
+                    }
                 } else {
                     model.getScreenHandler().put(xPos, yPos, Item.EMPTY_ITEM_SPRITE);
                 }
