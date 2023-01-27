@@ -300,4 +300,8 @@ public abstract class CharacterAppearance implements Serializable {
     public Sprite getBackHairOnly() {
         return getNormalHair();
     }
+
+    public Sprite getFacialOnly() {
+        return getNormalHair();
+    }
 }

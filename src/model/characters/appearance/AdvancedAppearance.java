@@ -5,6 +5,9 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdvancedAppearance extends CharacterAppearance {
     private final int mouth;
     private final int nose;
@@ -13,6 +16,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     private final Beard beard;
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
+    private Sprite avatarFacial;
 
     public AdvancedAppearance(Race race, boolean femaleGender, MyColors hairColor,
                               int mouth, int nose, CharacterEyes eyes, HairStyle hair,
@@ -27,10 +31,18 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     private void makeAvatarHairSprites(HairStyle hair, Race race) {
+        List<Sprite> beardSprite = new ArrayList<>();
+        if (beard != null) {
+            this.avatarFacial = new Sprite32x32("avatarBeard"+beard.toString(),"hair.png",
+                    beard.getAvatarSprite(),  getHairColor(), MyColors.WHITE, MyColors.GOLD);
+            beardSprite.add(avatarFacial);
+        } else {
+            this.avatarFacial = CharacterAppearance.noHair();
+        }
         this.avatarNormalHair = new Sprite32x32("avatarNormalHair"+hair.toString(), "hair.png", hairStyle.getNormalHair(),
-                getHairColor(), MyColors.WHITE, MyColors.GOLD);
+                getHairColor(), beardSprite);
         this.avatarBackHair =  new Sprite32x32("avatarBackHair"+hair.toString(), "hair.png", hairStyle.getBackHairOnly(),
-                getHairColor(), MyColors.WHITE, MyColors.GOLD);
+                getHairColor(), beardSprite);
         if (race.isShort()) {
             avatarNormalHair.shiftUpPx(-2);
             avatarBackHair.shiftUpPx(-2);
@@ -189,5 +201,10 @@ public class AdvancedAppearance extends CharacterAppearance {
     @Override
     public Sprite getBackHairOnly() {
         return avatarBackHair;
+    }
+
+    @Override
+    public Sprite getFacialOnly() {
+        return avatarFacial;
     }
 }

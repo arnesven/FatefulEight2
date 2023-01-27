@@ -8,7 +8,7 @@ public class BigBeard extends Beard {
     private final MyColors lineColor;
 
     public BigBeard(MyColors lineColor) {
-        super(0xFB, 0xFB);
+        super(new int[]{0xFB, 0xFB}, 0x44);
         this.lineColor = lineColor;
     }
 

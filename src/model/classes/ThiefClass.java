@@ -33,7 +33,7 @@ public class ThiefClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x00, MyColors.BROWN, CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0x00, MyColors.BROWN, appearance.getFacialOnly());
     }
 
     @Override
@@ -44,5 +44,13 @@ public class ThiefClass extends CharacterClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    @Override
+    public void manipulateAvatar(CharacterAppearance appearance, Race race) {
+        super.finalizeLook(appearance);
+        if (race.isShort()) {
+            appearance.getFacialOnly().shiftUpPx(-2);
+        }
     }
 }

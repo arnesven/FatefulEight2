@@ -11,7 +11,7 @@ public class VzaniAngler extends AdvancedAppearance {
         super(Race.HALFLING, true, MyColors.WHITE,
                 3, 4, new CharacterEyes(4, 5),
                 new VzaniHairStyle(),
-                new Beard(3));
+                new Beard(3, 0x00));
     }
 
 }

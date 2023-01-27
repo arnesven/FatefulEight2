@@ -8,7 +8,7 @@ import view.sprites.Sprite8x8;
 public class KruskTalandro extends AdvancedAppearance {
     public KruskTalandro() {
         super(Race.HALF_ORC, false, MyColors.DARK_GRAY, 7, 2,
-                new CharacterEyes(1), new BaldHairStyle(), new Beard(0x09));
+                new CharacterEyes(1), new BaldHairStyle(), new Beard(0x09, 0x00));
     }
 
     @Override

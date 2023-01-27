@@ -10,7 +10,7 @@ public class LongBeard extends Beard {
     private final MyColors lineColor;
 
     public LongBeard(MyColors lineColor) {
-        super(0);
+        super(0, 0x45);
         this.lineColor = lineColor;
     }
 
