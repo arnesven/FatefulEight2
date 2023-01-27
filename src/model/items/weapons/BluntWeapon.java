@@ -22,4 +22,9 @@ public abstract class BluntWeapon extends Weapon {
     public boolean isTwoHanded() {
         return twoHander;
     }
+
+    @Override
+    public String getSound() {
+        return "wood";
+    }
 }

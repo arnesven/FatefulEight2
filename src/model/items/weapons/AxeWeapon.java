@@ -14,4 +14,9 @@ public abstract class AxeWeapon extends Weapon {
     public boolean isTwoHanded() {
         return twoHander;
     }
+
+    @Override
+    public String getSound() {
+        return "wood";
+    }
 }

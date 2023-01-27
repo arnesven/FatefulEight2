@@ -12,4 +12,9 @@ public abstract class PolearmWeapon extends Weapon {
     public boolean isTwoHanded() {
         return true;
     }
+
+    @Override
+    public String getSound() {
+        return "wood-small";
+    }
 }

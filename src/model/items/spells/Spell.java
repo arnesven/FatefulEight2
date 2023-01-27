@@ -71,4 +71,9 @@ public abstract class Spell extends Item {
                 throw new IllegalStateException("Unrecognized magic color " + color.toString());
         }
     }
+
+    @Override
+    public String getSound() {
+        return "book";
+    }
 }

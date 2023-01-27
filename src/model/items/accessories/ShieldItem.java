@@ -14,4 +14,8 @@ public abstract class ShieldItem extends Accessory {
         return heavyArmor;
     }
 
+    @Override
+    public String getSound() {
+        return "wood";
+    }
 }

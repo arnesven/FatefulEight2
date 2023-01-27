@@ -42,4 +42,9 @@ public class UnarmedCombatWeapon extends Weapon {
     public boolean allowsCriticalHits() {
         return false;
     }
+
+    @Override
+    public String getSound() {
+        return "";
+    }
 }

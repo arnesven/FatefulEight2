@@ -20,4 +20,9 @@ public abstract class WandWeapon extends Weapon {
         }
         return super.getSkillToUse(gc);
     }
+
+    @Override
+    public String getSound() {
+        return "wood-small";
+    }
 }

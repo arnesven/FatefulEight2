@@ -77,7 +77,5 @@ public abstract class Item implements Serializable, Comparable<Item> {
         return st2.compareTo(st1);
     }
 
-    public String getSound() {
-        return "";
-    }
+    public abstract String getSound();
 }
