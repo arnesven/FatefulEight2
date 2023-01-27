@@ -81,15 +81,23 @@ public class ShopState extends GameState {
                     toggleBuySell();
                 } else {
                     Item it = sellItems.getSelectedElement();
-                    sellItems.remove(it);
-                    int money = it.getCost() / 2;
-                    model.getParty().addToGold(money);
-                    println("You sold " + it.getName() + " for " + money + " gold.");
-                    SoundEffects.sellItem();
+                    if (!isCurrentlyEquipped(model, it)) {
+                        sellItems.remove(it);
+                        int money = it.getCost() / 2;
+                        model.getParty().addToGold(money);
+                        println("You sold " + it.getName() + " for " + money + " gold.");
+                        SoundEffects.sellItem();
+                    } else {
+                        println("You cannot sell an item that is currently equipped.");
+                    }
                 }
             }
         }
         return new EveningState(model);
+    }
+
+    private boolean isCurrentlyEquipped(Model model, Item it) {
+        return !model.getParty().getInventory().getAllItems().contains(it);
     }
 
     private void toggleBuySell() {
