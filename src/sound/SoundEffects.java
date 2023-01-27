@@ -23,4 +23,18 @@ public class SoundEffects {
     public static void menuQuit() {
         play("menu_quit");
     }
+
+    public static void matrixSelect() {
+        play("matrix_select");
+    }
+
+    public static void playSound(String sound) {
+        if (!sound.equals("")) {
+            play(sound);
+        }
+    }
+
+    public static void sellItem() {
+        play("coin");
+    }
 }

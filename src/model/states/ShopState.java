@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.*;
+import sound.SoundEffects;
 import view.subviews.CollapsingTransition;
 import view.subviews.ShopSubView;
 
@@ -68,6 +69,7 @@ public class ShopState extends GameState {
                         model.getParty().getInventory().addItem(it);
                         model.getParty().addToGold(-1 * cost);
                         println("You bought " + it.getName() + " for " + cost + " gold.");
+                        SoundEffects.playSound(it.getSound());
                         sellItems.addElementLast(it);
                         if (buyItems.getElementList().isEmpty() && (!sellingEnabled || sellItems.getElementList().isEmpty())) {
                             break;
@@ -83,6 +85,7 @@ public class ShopState extends GameState {
                     int money = it.getCost() / 2;
                     model.getParty().addToGold(money);
                     println("You sold " + it.getName() + " for " + money + " gold.");
+                    SoundEffects.sellItem();
                 }
             }
         }

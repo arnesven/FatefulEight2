@@ -2,6 +2,7 @@ package model;
 
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
+import sound.SoundEffects;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -105,7 +106,7 @@ public class SteppingMatrix<T> {
         if (list.size() < 2) {
             return;
         }
-
+        SoundEffects.matrixSelect();
         T nextSelected = findExactMatch(dx, dy, firstTime);
         if (nextSelected != null) {
             selected = getPositionFor(nextSelected);

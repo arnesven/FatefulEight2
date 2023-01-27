@@ -43,4 +43,9 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     public void equipYourself(GameCharacter gc) {
         gc.equipClothingFromInventory(this);
     }
+
+    @Override
+    public String getSound() {
+        return "chainmail1";
+    }
 }

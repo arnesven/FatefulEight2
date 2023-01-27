@@ -21,4 +21,9 @@ public abstract class BladedWeapon extends Weapon {
     public final int getSpeedModifier() {
         return speedBonus;
     }
+
+    @Override
+    public String getSound() {
+        return "blade";
+    }
 }

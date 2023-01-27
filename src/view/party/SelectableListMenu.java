@@ -56,6 +56,7 @@ public abstract class SelectableListMenu extends GameView {
 
     @Override
     public void transitionedTo(Model model) {
+        SoundEffects.menuSelect();
         setTimeToTransition(false);
     }
 
@@ -154,7 +155,6 @@ public abstract class SelectableListMenu extends GameView {
             handleKeyUp(model);
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            SoundEffects.menuSelect();
             ListContent lc = buildContent(model, getXStart(), getYStart()).get(selectedRow);
             if (lc.isEnabled(model)) {
                 lc.performAction(model, lc.position.x, lc.position.y);

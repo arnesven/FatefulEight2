@@ -9,6 +9,7 @@ import model.items.UsableItem;
 import model.items.potions.Potion;
 import model.items.spells.Spell;
 import model.items.weapons.Weapon;
+import sound.SoundEffects;
 import util.Arithmetics;
 import util.MyStrings;
 import view.party.FixedPositionSelectableListMenu;
@@ -194,6 +195,7 @@ public class InventoryView extends SelectableListMenu {
                                 ((EquipableItem) itemToEquip).equipYourself(gc);
                                 setTimeToTransition(true);
                                 InventoryView.this.checkForSelectedRowReset(model);
+                                SoundEffects.playSound(itemToEquip.getSound());
                             } else {
                                 setInnerMenu(new SimpleMessageView(EquipItemMenu.this, errorMessage), model);
                             }

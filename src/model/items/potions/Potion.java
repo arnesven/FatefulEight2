@@ -13,4 +13,9 @@ public abstract class Potion extends UsableItem {
     public void addYourself(Inventory inventory) {
         inventory.add(this);
     }
+
+    @Override
+    public String getSound() {
+        return "bottle";
+    }
 }

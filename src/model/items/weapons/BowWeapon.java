@@ -17,4 +17,9 @@ public abstract class BowWeapon extends Weapon {
     public boolean isTwoHanded() {
         return true;
     }
+
+    @Override
+    public String getSound() {
+        return "wood-small";
+    }
 }

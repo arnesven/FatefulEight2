@@ -3,6 +3,7 @@ package view.party;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import sound.SoundEffects;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public abstract class SetEquipmentMenu extends FixedPositionSelectableListMenu {
                 public void performAction(Model model, int x, int y) {
                     boolean success = SetEquipmentMenu.this.doAction(model, item, person);
                     if (success) {
+                        SoundEffects.playSound(item.getSound());
                         setTimeToTransition(true);
                     }
                 }
