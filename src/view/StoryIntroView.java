@@ -30,7 +30,7 @@ public class StoryIntroView extends GameView implements Animation {
             "\"Not much different, I'm afraid.\"\n\n" +
             "The innkeeper arrives with your meal.\n\n" +
             "\"Sorry about this loud lot\". The innkeeper gestures at the large party of adventurers crowded around a " +
-            "big round table at the center of room. \"But they do pay well!\"\n" +
+            "big round table at the center of the room. \"But they do pay well!\"\n" +
             "\"Must've just come back from a quest or some such.\" Your friend remarks.\n" +
             "The rowdy group bursts into song, and several other patrons join in. When the song is done, " +
             "the leader of the group announces: \"Next round is on us Bolero's Company!\"\n" +
@@ -54,7 +54,8 @@ public class StoryIntroView extends GameView implements Animation {
             "fall asleep, properly intoxicated on both ale and the prospect of a new adventure.\n\n" +
             "However, when you awake your friend has already left. Perhaps sobering up made him reconsider his change of career.\n" +
             "You however are convinced that adventuring is what you were meant for..."};
-    private static MyColors[] textColors = new MyColors[]{MyColors.BLACK, MyColors.DARK_GRAY, MyColors.DARK_RED,
+
+    private static final MyColors[] textColors = new MyColors[]{MyColors.BLACK, MyColors.DARK_GRAY, MyColors.DARK_RED,
             MyColors.ORANGE, MyColors.LIGHT_YELLOW, MyColors.WHITE};
     private boolean fadeIn;
     private String[] textParts;
@@ -94,13 +95,13 @@ public class StoryIntroView extends GameView implements Animation {
     protected void internalUpdate(Model model) {
         ((ImageSubView)InnLocation.getSubView()).drawArea(model, 2, 5);
         for (int i = 0; i < textParts.length; ++i) {
+            MyColors textColor;
             if (!fadeOut) {
-                MyColors textColor = textColors[Math.max(0, Math.min(colorIndex - i, textColors.length - 1))];
-                BorderFrame.drawString(model.getScreenHandler(), textParts[i], 35, TEXT_START_ROW + i, textColor, MyColors.BLACK);
+                textColor = textColors[Math.max(0, Math.min(colorIndex - i, textColors.length - 1))];
             } else {
-                MyColors textColor = textColors[Math.max(0, textColors.length - colorIndex - 1)];
-                BorderFrame.drawString(model.getScreenHandler(), textParts[i], 35, TEXT_START_ROW + i, textColor, MyColors.BLACK);
+                textColor = textColors[Math.max(0, textColors.length - colorIndex - 1)];
             }
+            BorderFrame.drawString(model.getScreenHandler(), textParts[i], 35, TEXT_START_ROW + i, textColor, MyColors.BLACK);
         }
         if (fadeOut && colorIndex > textColors.length) {
             fadeOut = false;
