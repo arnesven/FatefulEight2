@@ -45,7 +45,7 @@ public class StartGameMenu extends GameView {
 
     @Override
     public GameView getNextView(Model model) {
-        return new MainGameView();
+        return new StoryIntroView();
     }
 
     @Override

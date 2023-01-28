@@ -28,6 +28,17 @@ public class MyStrings {
         }
     }
 
+    public static String[] partitionWithLineBreaks(String text, int maxWidth) {
+        List<String> strs = new ArrayList<>();
+        String[] parts = text.split("\n");
+        for (String s : parts) {
+            for (String s2 : partition(s, maxWidth)) {
+                strs.add(s2);
+            }
+        }
+        return strs.toArray(new String[0]);
+    }
+
     public static String withPlus(int x) {
         if (x > 0) {
             return "+" + x;

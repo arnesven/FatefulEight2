@@ -23,20 +23,25 @@ public class ImageSubView extends SubView {
         this(imageName, title, undertext, true);
     }
 
-    @Override
-    public void drawArea(Model model) {
+    public void drawArea(Model model, int xStart, int yStart) {
         if (imgsprite == null) {
             makeImage();
         }
-        model.getScreenHandler().clearSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
+        model.getScreenHandler().clearSpace(xStart, xStart + (X_MAX - X_OFFSET),
+                                            yStart, yStart + (Y_MAX - Y_OFFSET));
         for (int x = 0; x < 32; ++x) {
             for (int y = 0; y < 38; ++y) {
-                model.getScreenHandler().put(X_OFFSET+x, Y_OFFSET+y, imgsprite[x][y]);
+                model.getScreenHandler().put(xStart+x, yStart+y, imgsprite[x][y]);
             }
         }
     }
 
-    private void makeImage() {
+    @Override
+    public void drawArea(Model model) {
+        drawArea(model, X_OFFSET, Y_OFFSET);
+    }
+
+        private void makeImage() {
         imgsprite = new Sprite[32][38];
         boolean alreadyConverted = SpriteManager.isRegistered(imageName+0+":"+0+":" + "0");
         if (alreadyConverted) {

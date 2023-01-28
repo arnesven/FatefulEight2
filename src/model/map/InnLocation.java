@@ -51,6 +51,10 @@ public class InnLocation extends HexLocation {
         return subView;
     }
 
+    public static SubView getSubView() {
+        return subView;
+    }
+
     @Override
     public boolean hasDailyActions() {
         return true;
