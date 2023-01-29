@@ -14,6 +14,6 @@ public class TutorialTravelDialog extends HelpDialog {
             "at that particular location.";
 
     public TutorialTravelDialog(GameView view) {
-        super(view, 26, "Traveling", text);
+        super(view, 28, "Traveling", text);
     }
 }

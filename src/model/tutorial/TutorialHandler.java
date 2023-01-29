@@ -1,6 +1,8 @@
 package model.tutorial;
 
 import model.Model;
+import model.states.DailyEventState;
+import model.states.events.PeskyCrowEvent;
 import view.help.*;
 
 import java.io.Serializable;
@@ -61,6 +63,14 @@ public class TutorialHandler implements Serializable {
         runOnce("travel", () -> {
             model.transitionToDialog(new TutorialTravelDialog(model.getView()));
         });
+    }
+
+    public DailyEventState getTutorialEvent(Model model) {
+        if (!tutorialEnabled || keys.contains("event")) {
+            return null;
+        }
+        keys.add("event");
+        return new PeskyCrowEvent(model);
     }
 
     private interface TutorialStep {

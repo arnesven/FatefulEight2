@@ -21,7 +21,7 @@ public abstract class HelpDialog extends SelectableListMenu {
 
     public HelpDialog(GameView previous, int width, int height, String title, String text) {
         super(previous, width, height);
-        this.textWidth = width;
+        this.textWidth = width-1;
         this.title = title;
         this.text = text;
     }

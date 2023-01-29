@@ -57,6 +57,10 @@ public abstract class WorldHex implements Serializable {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
+        DailyEventState tutorialEvent = model.getTutorial().getTutorialEvent(model);
+        if (tutorialEvent != null) {
+            return tutorialEvent;
+        }
         if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.generateEvent(model);
         }
