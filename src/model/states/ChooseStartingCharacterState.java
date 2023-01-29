@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import util.MyRandom;
 import view.SelectStaringCharacterView;
+import view.help.TutorialStartDialog;
 import view.party.CharacterCreationView;
 
 public class ChooseStartingCharacterState extends GameState {

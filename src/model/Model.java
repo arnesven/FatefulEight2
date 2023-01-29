@@ -16,6 +16,7 @@ import model.map.World;
 import model.map.WorldHex;
 import model.races.Race;
 import model.states.*;
+import model.tutorial.TutorialHandler;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
@@ -33,7 +34,6 @@ import java.util.List;
 
 public class Model {
 
-
     private static class GameData implements Serializable {
         public Party party = new Party();
         public ItemDeck itemDeck = new ItemDeck();
@@ -43,6 +43,7 @@ public class Model {
         public List<String> logContent;
         public boolean mustStayInHex = false;
         public TimeOfDay timeOfDay = TimeOfDay.MORNING;
+        public TutorialHandler tutorial = new TutorialHandler();
     }
 
     private GameData gameData = new GameData();
@@ -296,5 +297,9 @@ public class Model {
 
     public TimeOfDay getTimeOfDay() {
         return gameData.timeOfDay;
+    }
+
+    public TutorialHandler getTutorial() {
+        return gameData.tutorial;
     }
 }

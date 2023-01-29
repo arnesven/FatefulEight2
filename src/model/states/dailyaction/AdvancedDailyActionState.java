@@ -4,6 +4,8 @@ import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.states.GameState;
+import model.tutorial.TutorialHandler;
+import view.help.TutorialStartDialog;
 import view.subviews.*;
 
 import java.awt.*;
@@ -39,6 +41,7 @@ public abstract class AdvancedDailyActionState extends GameState {
             if (model.getSubView() != subView) {
                 CollapsingTransition.transition(model, subView);
             }
+            model.getTutorial().start(model);
             String place = model.getCurrentHex().getPlaceName();
             print("You are " + place + ". ");
             if (!isEvening()) {

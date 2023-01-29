@@ -8,6 +8,8 @@ import view.sprites.AnimationManager;
 import view.subviews.ImageSubView;
 
 import java.awt.event.KeyEvent;
+import java.security.Key;
+import java.sql.Struct;
 
 public class StoryIntroView extends GameView implements Animation {
 
@@ -93,6 +95,8 @@ public class StoryIntroView extends GameView implements Animation {
 
     @Override
     protected void internalUpdate(Model model) {
+        BorderFrame.drawString(model.getScreenHandler(), "ESC = SKIP", 5, DrawingArea.WINDOW_ROWS-3, MyColors.GRAY, MyColors.BLACK);
+
         ((ImageSubView)InnLocation.getSubView()).drawArea(model, 2, 5);
         for (int i = 0; i < textParts.length; ++i) {
             MyColors textColor;
@@ -122,6 +126,11 @@ public class StoryIntroView extends GameView implements Animation {
             } else {
                 fadeOut = true;
             }
+            totalTime = 0;
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            exitFade = true;
+            fadeOut = false;
+            fadeIn = false;
             totalTime = 0;
         }
     }
