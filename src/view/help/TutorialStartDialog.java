@@ -12,20 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TutorialStartDialog extends SelectableListMenu {
+public class TutorialStartDialog extends HelpDialog {
 
     private static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLUE);
 
 
-    private static final String text = "You've decided to leave your old life behind to become an adventurer.\n\n" +
+    private static final String text = "Welcome to Fateful Eight!\n\n" +
+            "You've decided to leave your old life behind to become an adventurer.\n\n" +
             "Your objective is to achieve a party reputation of 6 within 100 days.\n\n\n\n" +
             "You have many things to learn about adventuring, but perhaps you already know it? " +
             "Would you like to enable the tutorial?";
-    private static final int DIALOG_WIDTH = 35;
-    private static final int DIALOG_HEIGHT = 20;
 
     public TutorialStartDialog(GameView previous) {
-        super(previous, DIALOG_WIDTH, DIALOG_HEIGHT);
+        super(previous, text);
     }
 
     @Override
@@ -35,13 +34,7 @@ public class TutorialStartDialog extends SelectableListMenu {
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-        List<DrawableObject> textContent = new ArrayList<>();
-        textContent.add(new TextDecoration("Welcome to Fateful Eight!", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, true));
-        String[] parts = MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH);
-        int i = 0;
-        for ( ; i < parts.length; ++i) {
-            textContent.add(new TextDecoration(parts[i], xStart+2, yStart+3+i, MyColors.WHITE, MyColors.BLUE, true));
-        }
+        List<DrawableObject> textContent = super.buildDecorations(model, xStart, yStart);
         textContent.add(new DrawableObject(xStart+10, yStart+11) {
             @Override
             public void drawYourself(Model model, int x, int y) {

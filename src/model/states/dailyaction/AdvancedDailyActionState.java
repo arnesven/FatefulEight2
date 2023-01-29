@@ -49,6 +49,7 @@ public abstract class AdvancedDailyActionState extends GameState {
             } else {
                 print("Please select how you will spend the evening.");
             }
+            model.getTutorial().theInn(model);
             waitForReturn();
             daily = matrix.getSelectedElement();
             if (daily.canBeDoneRightNow(this, model)) {

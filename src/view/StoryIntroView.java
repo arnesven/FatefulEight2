@@ -95,7 +95,7 @@ public class StoryIntroView extends GameView implements Animation {
 
     @Override
     protected void internalUpdate(Model model) {
-        BorderFrame.drawString(model.getScreenHandler(), "ESC = SKIP", 5, DrawingArea.WINDOW_ROWS-3, MyColors.GRAY, MyColors.BLACK);
+        BorderFrame.drawString(model.getScreenHandler(), "ESC = SKIP", 8, DrawingArea.WINDOW_ROWS-4, MyColors.GRAY, MyColors.BLACK);
 
         ((ImageSubView)InnLocation.getSubView()).drawArea(model, 2, 5);
         for (int i = 0; i < textParts.length; ++i) {
@@ -139,7 +139,7 @@ public class StoryIntroView extends GameView implements Animation {
     public void stepAnimation(long elapsedTimeMs, Model model) {
         totalTime += elapsedTimeMs;
         if (fadeIn) {
-            double fadeLevel = 1.0 - (double) totalTime / 3000;
+            double fadeLevel = 1.0 - (double) totalTime / 2000;
             model.getScreenHandler().setFade(fadeLevel, MyColors.BLACK);
             if (fadeLevel <= 0.0) {
                 fadeIn = false;
@@ -147,7 +147,7 @@ public class StoryIntroView extends GameView implements Animation {
             }
             madeChanges();
         } else if (exitFade) {
-            double fadeLevel = Math.min(1.0, (double) totalTime / 3000);
+            double fadeLevel = Math.min(1.0, (double) totalTime / 2000);
             model.getScreenHandler().setFade(fadeLevel, MyColors.BLACK);
             if (fadeLevel >= 1.0) {
                 setTimeToTransition(true);
