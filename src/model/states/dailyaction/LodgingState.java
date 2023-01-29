@@ -18,6 +18,7 @@ public class LodgingState extends EveningState {
     public GameState run(Model model) {
         setCurrentTerrainSubview(model);
         print("Evening has come. ");
+        model.getTutorial().evening(model);
         checkForQuest(model);
         if (freeLodging) {
             println("The party receives food and lodging for free.");

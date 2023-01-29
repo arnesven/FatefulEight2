@@ -1,10 +1,7 @@
 package model.tutorial;
 
 import model.Model;
-import view.help.TutorialInnDialog;
-import view.help.TutorialRecruitDialog;
-import view.help.TutorialShoppingDialog;
-import view.help.TutorialStartDialog;
+import view.help.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -51,6 +48,18 @@ public class TutorialHandler implements Serializable {
     public void shopping(Model model) {
         runOnce("shopping", () -> {
             model.transitionToDialog(new TutorialShoppingDialog(model.getView()));
+        });
+    }
+
+    public void evening(Model model) {
+        runOnce("evening", () -> {
+            model.transitionToDialog(new TutorialEveningDialog(model.getView()));
+        });
+    }
+
+    public void travel(Model model) {
+        runOnce("travel", () -> {
+            model.transitionToDialog(new TutorialTravelDialog(model.getView()));
         });
     }
 

@@ -20,6 +20,8 @@ public class TravelState extends GameState {
         MapSubView mapSubView = new MapSubView(model);
         CollapsingTransition.transition(model, mapSubView);
 
+        model.getTutorial().travel(model);
+
         Point selectedDir = selectDirection(model, mapSubView);
         Point newPosition = new Point(model.getParty().getPosition());
         World.move(newPosition, selectedDir.x, selectedDir.y);
