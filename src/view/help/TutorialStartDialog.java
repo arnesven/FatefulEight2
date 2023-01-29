@@ -37,7 +37,7 @@ public class TutorialStartDialog extends SelectableListMenu {
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = new ArrayList<>();
         textContent.add(new TextDecoration("Welcome to Fateful Eight!", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, true));
-        String[] parts = MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-2);
+        String[] parts = MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH);
         int i = 0;
         for ( ; i < parts.length; ++i) {
             textContent.add(new TextDecoration(parts[i], xStart+2, yStart+3+i, MyColors.WHITE, MyColors.BLUE, true));

@@ -47,7 +47,8 @@ public class DrawingArea extends JComponent {
         }
         if (screenHandler.getFadeLevel() > 0.0) {
             Color col = screenHandler.getFadeColor().toAwtColor();
-            Color c2 = new Color(col.getRed(), col.getGreen(), col.getBlue(), (int)(0xFF * (screenHandler.getFadeLevel())));
+            double d = Math.round(screenHandler.getFadeLevel() * 20.0) / 20.0;
+            Color c2 = new Color(col.getRed(), col.getGreen(), col.getBlue(), (int)(0xFF * d));
             g.setColor(c2);
             g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
