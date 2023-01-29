@@ -73,6 +73,8 @@ public class ShopSubView extends SubView {
             int cost = it.getCost();
             if (title.equals("BUYING")) {
                 cost = priceMap.get(it);
+            } else {
+                cost /= 2;
             }
             return it.getName() + " " + cost + " gold" + it.getShoppingDetails();
         }

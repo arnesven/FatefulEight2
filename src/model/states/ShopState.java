@@ -52,6 +52,7 @@ public class ShopState extends GameState {
             } else {
                 print("Do you want to Buy (B) or are you Done (Q)? ");
             }
+            model.getTutorial().shopping(model);
             char selectedAction = lineInput().toUpperCase().charAt(0);
             if (selectedAction == 'Q') {
                 break;
