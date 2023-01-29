@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import view.help.HelpView;
 import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
@@ -61,6 +62,9 @@ public class LogView extends GameView {
          }  if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
             nextView = new MenuView(this);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
+            setTimeToTransition(true);
+            nextView = new HelpView(this);
         }  if (model.getLog().isAcceptingInput()) {
             model.getLog().keyTyped(keyEvent, model);
         }

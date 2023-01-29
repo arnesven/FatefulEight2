@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import view.help.HelpView;
 import view.widget.CenterText;
 import view.widget.MiniLog;
 import view.widget.TitleText;
@@ -57,6 +58,9 @@ public class MainGameView extends GameView {
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
             nextView = new MenuView(this);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
+            setTimeToTransition(true);
+            nextView = new HelpView(this);
         } else if (model.getSubView().handleKeyEvent(keyEvent, model)) {
             //
         } else if (model.getLog().isAcceptingInput()) {

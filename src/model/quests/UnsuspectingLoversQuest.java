@@ -1,6 +1,8 @@
 package model.quests;
 
 import model.Model;
+import model.characters.DeniseBoyd;
+import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.CombatLoot;
@@ -82,10 +84,10 @@ public class UnsuspectingLoversQuest extends Quest {
                         "To set the mood, some proper entertainment is required.");
 
         DecorativeJunction jason = new SpriteDecorativeJunction(7, 0,
-                Classes.None.getAvatar(Race.SOUTHERN_HUMAN, null), "Jason");
+                Classes.None.getAvatar(Race.SOUTHERN_HUMAN, new DefaultAppearance()), "Jason");
 
         DecorativeJunction tamara = new SpriteDecorativeJunction(6, 6,
-                Classes.PRI.getAvatar(Race.WOOD_ELF, null), "Tamara");
+                Classes.PRI.getAvatar(Race.WOOD_ELF, new DeniseBoyd()), "Tamara");
 
         return List.of(new PauseQuestJunction(0, 0, new QuestEdge(scenes.get(0).get(0)),
                 "We'll get these two lovebirds together in no time."),
@@ -172,7 +174,7 @@ public class UnsuspectingLoversQuest extends Quest {
     }
 
     private static class InterloperEnemy extends Enemy {
-        private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, null);
+        private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, new DefaultAppearance());
 
         public InterloperEnemy(char a) {
             super(a, "Interloper");

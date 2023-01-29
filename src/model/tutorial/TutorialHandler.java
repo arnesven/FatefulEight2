@@ -34,7 +34,7 @@ public class TutorialHandler implements Serializable {
         runOnce("theInn", () -> {
             model.getLog().waitForAnimationToFinish();
             if (tutorialEnabled) {
-                model.transitionToDialog(new TutorialInnDialog(model.getView()));
+                model.transitionToDialog(new TutorialDailyActions(model.getView()));
             }
         });
     }

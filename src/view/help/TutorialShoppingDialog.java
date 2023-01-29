@@ -3,7 +3,7 @@ package view.help;
 import view.GameView;
 
 public class TutorialShoppingDialog extends HelpDialog {
-    private static final String text = "Shopping\n\n" +
+    private static final String text =
             "Merchants are found in many locations and are always eager to sell you their wares." +
             "In towns and at inns and castles, merchants trade at normal rates but may sell different " +
             "types of items. Merchants who appear in other locations may have different prices, so pay attention " +
@@ -12,6 +12,6 @@ public class TutorialShoppingDialog extends HelpDialog {
             " the characters in your party. The normal rate for selling is half the item's gold value.";
 
     public TutorialShoppingDialog(GameView view) {
-        super(view, 25, text);
+        super(view, 25, "Shopping", text);
     }
 }

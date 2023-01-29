@@ -17,14 +17,19 @@ public class TutorialStartDialog extends HelpDialog {
     private static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLUE);
 
 
-    private static final String text = "Welcome to Fateful Eight!\n\n" +
+    private static final String text =
             "You've decided to leave your old life behind to become an adventurer.\n\n" +
             "Your objective is to achieve a party reputation of 6 within 100 days.\n\n\n\n" +
             "You have many things to learn about adventuring, but perhaps you already know it? " +
             "Would you like to enable the tutorial?";
 
     public TutorialStartDialog(GameView previous) {
-        super(previous, text);
+        super(previous, "Welcome to Fateful Eight!", text);
+    }
+
+    @Override
+    public String getTitle() {
+        return "Objective";
     }
 
     @Override
@@ -35,11 +40,11 @@ public class TutorialStartDialog extends HelpDialog {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = super.buildDecorations(model, xStart, yStart);
-        textContent.add(new DrawableObject(xStart+10, yStart+11) {
+        textContent.add(new DrawableObject(xStart+16, yStart+11) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                model.getScreenHandler().put(38, y, CharSprite.make('6', MyColors.YELLOW, MyColors.BLUE, MyColors.BLUE));
-                model.getScreenHandler().put(39, y, REP_ICON_SPRITE);
+                model.getScreenHandler().put(x, y, CharSprite.make('6', MyColors.YELLOW, MyColors.BLUE, MyColors.BLUE));
+                model.getScreenHandler().put(x+1, y, REP_ICON_SPRITE);
             }
         });
         return textContent;

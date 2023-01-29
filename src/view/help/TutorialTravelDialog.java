@@ -3,7 +3,7 @@ package view.help;
 import view.GameView;
 
 public class TutorialTravelDialog extends HelpDialog {
-    private static final String text = "Traveling\n\n" +
+    private static final String text =
             "Traveling is a full-day daily action and often results in resolving an event. " +
             "What event is generated depends on the type of terrain traveled to. Some events " +
             "result in combat. If you flee from combat during an event you will move to a random " +
@@ -14,6 +14,6 @@ public class TutorialTravelDialog extends HelpDialog {
             "at that particular location.";
 
     public TutorialTravelDialog(GameView view) {
-        super(view, 26, text);
+        super(view, 26, "Traveling", text);
     }
 }

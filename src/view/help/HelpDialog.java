@@ -17,27 +17,30 @@ public abstract class HelpDialog extends SelectableListMenu {
 
     private final int textWidth;
     private final String text;
+    private final String title;
 
-    public HelpDialog(GameView previous, int width, int height, String text) {
+    public HelpDialog(GameView previous, int width, int height, String title, String text) {
         super(previous, width, height);
         this.textWidth = width;
+        this.title = title;
         this.text = text;
     }
 
-    public HelpDialog(GameView previous, int height, String text) {
-        this(previous, DIALOG_WIDTH, height, text);
+    public HelpDialog(GameView previous, int height, String title, String text) {
+        this(previous, DIALOG_WIDTH, height, title, text);
     }
 
-    public HelpDialog(GameView previous, String text) {
-        this(previous, DIALOG_WIDTH, DIALOG_HEIGHT, text);
+    public HelpDialog(GameView previous, String title, String text) {
+        this(previous, DIALOG_WIDTH, DIALOG_HEIGHT, title, text);
     }
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = new ArrayList<>();
+        textContent.add(new TextDecoration(title, xStart+2, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         String[] parts = MyStrings.partitionWithLineBreaks(text, textWidth);
         for (int i = 0 ; i < parts.length; ++i) {
-            textContent.add(new TextDecoration(parts[i], xStart+2, yStart+1+i, MyColors.WHITE, MyColors.BLUE, true));
+            textContent.add(new TextDecoration(parts[i], xStart+2, yStart+3+i, MyColors.WHITE, MyColors.BLUE, false));
         }
         return textContent;
     }
@@ -63,5 +66,9 @@ public abstract class HelpDialog extends SelectableListMenu {
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
 
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
