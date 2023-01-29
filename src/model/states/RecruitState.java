@@ -7,6 +7,7 @@ import model.characters.*;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
+import model.tutorial.TutorialHandler;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.RecruitSubView;
@@ -48,6 +49,8 @@ public class RecruitState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        model.getTutorial().recruit(model);
+
         if (recruitables.size() > 0) {
             model.setSubView(new RecruitSubView(recruitMatrix));
             String dismiss = "Dismiss (D) ";

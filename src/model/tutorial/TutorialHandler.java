@@ -2,6 +2,7 @@ package model.tutorial;
 
 import model.Model;
 import view.help.TutorialInnDialog;
+import view.help.TutorialRecruitDialog;
 import view.help.TutorialStartDialog;
 
 import java.io.Serializable;
@@ -37,6 +38,12 @@ public class TutorialHandler implements Serializable {
             if (tutorialEnabled) {
                 model.transitionToDialog(new TutorialInnDialog(model.getView()));
             }
+        });
+    }
+
+    public void recruit(Model model) {
+        runOnce("recruit", () -> {
+            model.transitionToDialog(new TutorialRecruitDialog(model.getView()));
         });
     }
 
