@@ -12,6 +12,6 @@ public class TutorialShoppingDialog extends HelpDialog {
             " the characters in your party. The normal rate for selling is half the item's gold value.";
 
     public TutorialShoppingDialog(GameView view) {
-        super(view, 25, "Shopping", text);
+        super(view,  "Shopping", text);
     }
 }

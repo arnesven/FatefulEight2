@@ -31,13 +31,13 @@ public abstract class HelpDialog extends SelectableListMenu {
     }
 
     public HelpDialog(GameView previous, String title, String text) {
-        this(previous, DIALOG_WIDTH, DIALOG_HEIGHT, title, text);
+        this(previous, DIALOG_WIDTH, MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-1).length+6, title, text);
     }
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = new ArrayList<>();
-        textContent.add(new TextDecoration(title, xStart+2, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
+        textContent.add(new TextDecoration(title.toUpperCase(), xStart+2, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         String[] parts = MyStrings.partitionWithLineBreaks(text, textWidth);
         for (int i = 0 ; i < parts.length; ++i) {
             textContent.add(new TextDecoration(parts[i], xStart+2, yStart+3+i, MyColors.WHITE, MyColors.BLUE, false));

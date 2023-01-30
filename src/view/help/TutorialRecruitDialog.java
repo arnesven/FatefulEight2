@@ -16,6 +16,6 @@ public class TutorialRecruitDialog extends HelpDialog {
             "Think carefully about what characters you draft to your party!";
 
     public TutorialRecruitDialog(GameView previous) {
-        super(previous, 30, "Recruiting", text);
+        super(previous, "Recruiting", text);
     }
 }

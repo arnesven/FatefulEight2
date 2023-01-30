@@ -12,6 +12,6 @@ public class TutorialEveningDialog extends HelpDialog {
             "Stamina points are used to re-roll skill checks.";
 
     public TutorialEveningDialog(GameView view) {
-        super(view, 24, "Evening", text);
+        super(view, "Evening", text);
     }
 }
