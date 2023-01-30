@@ -80,6 +80,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void combatActions(Model model) {
+        runOnce("combatActions", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCombatActionsDialog(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

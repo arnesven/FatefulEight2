@@ -125,23 +125,18 @@ public class GameCharacter extends Combatant {
         if (!getsCombatTurn()) {
             return;
         }
-        if (party.getBackRow().contains(this) && !mayAttackFromBackRow()) {
-            combatEvent.println(getFirstName() + " can't attack from back row!");
-            return;
-        }
         combatEvent.print(getFirstName() + "'s turn. ");
         char selectedAction;
         while (true) {
-            String options = "Attack (A), Item (I), Magic (M), Pass (P)";
-            if (isLeader() && combatEvent.fleeingEnabled()) {
-                options += ", Flee (F)";
-            }
-            combatEvent.print("Select combat action; " + options + ": ");
+            combatEvent.print("Select combat action; " + getCombatActions(combatEvent) + ": ");
+            model.getTutorial().combatActions(model);
             selectedAction = combatEvent.lineInput().toUpperCase().charAt(0);
             if (selectedAction == 'A') {
                 Combatant target = combatEvent.getSelectedEnemy();
                 if (target instanceof GameCharacter) {
                     combatEvent.println("You cannot attack a party member.");
+                } else if (!canAttackInCombat()) {
+                    combatEvent.println(getFirstName() + " can't attack from back row!");
                 } else {
                     performAttack(model, combatEvent, target);
                     break;
@@ -165,6 +160,21 @@ public class GameCharacter extends Combatant {
             }
         }
 
+    }
+
+    private boolean canAttackInCombat() {
+        return !party.getBackRow().contains(this) || mayAttackFromBackRow();
+    }
+
+    private String getCombatActions(CombatEvent combatEvent) {
+        String options = "Item (I), Spell (S), Pass (P)";
+        if (canAttackInCombat()) {
+            options = "Attack (A), " + options;
+        }
+        if (isLeader() && combatEvent.fleeingEnabled()) {
+            options += ", Flee (F)";
+        }
+        return options;
     }
 
     private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {

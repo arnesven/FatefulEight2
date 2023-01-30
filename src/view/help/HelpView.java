@@ -18,9 +18,10 @@ public class HelpView extends SelectableListMenu {
     private int index;
 
     public HelpView(GameView view) {
-        super(view, WIDTH, 38);
+        super(view, WIDTH, 42);
         chapters = new HelpDialog[]{
             new TutorialStartDialog(null),
+            new TutorialCombatActionsDialog(null),
             new TutorialCombatFormationDialog(null),
             new TutorialDailyActions(null),
             new TutorialEveningDialog(null),
