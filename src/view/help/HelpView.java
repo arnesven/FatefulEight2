@@ -29,6 +29,7 @@ public class HelpView extends SelectableListMenu {
             new TutorialEveningDialog(null),
             new TutorialEquipmentDialog(null),
             new TutorialLeaderDialog(null),
+            new TutorialQuests(null),
             new TutorialRecruitDialog(null),
             new TutorialShoppingDialog(null),
             new TutorialSkillChecksDialog(null),

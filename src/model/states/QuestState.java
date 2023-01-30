@@ -42,6 +42,7 @@ public class QuestState extends GameState {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         println(quest.getText());
         print("Press enter to start quest.");
+        model.getTutorial().quests(model);
         waitForReturn();
 
 

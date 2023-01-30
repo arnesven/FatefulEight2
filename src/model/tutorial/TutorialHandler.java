@@ -123,6 +123,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void quests(Model model) {
+        runOnce("quests", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialQuests(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
