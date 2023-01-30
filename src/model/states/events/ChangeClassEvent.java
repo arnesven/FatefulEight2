@@ -31,6 +31,7 @@ public class ChangeClassEvent extends DailyEventState {
         model.setSubView(subView);
         do {
             print("Do you want the selected character to change class (C) or are you done (Q)? ");
+            model.getTutorial().classes(model);
             char selectedAction = lineInput().toUpperCase().charAt(0);
             if (selectedAction == 'C') {
                 subView.toggleDetails();

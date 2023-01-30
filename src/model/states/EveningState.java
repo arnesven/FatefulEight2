@@ -36,6 +36,7 @@ public class EveningState extends GameState {
         } else {
             notLodging(model);
         }
+        model.getTutorial().evening(model);
         model.incrementDay();
         return nextState(model);
     }

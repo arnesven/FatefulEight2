@@ -55,6 +55,7 @@ public class TutorialHandler implements Serializable {
 
     public void evening(Model model) {
         runOnce("evening", () -> {
+            model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialEveningDialog(model.getView()));
         });
     }
@@ -112,6 +113,13 @@ public class TutorialHandler implements Serializable {
         runOnce("equipment", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialEquipmentDialog(model.getView()));
+        });
+    }
+
+    public void classes(Model model) {
+        runOnce("classes", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialClassesDialog(model.getView()));
         });
     }
 

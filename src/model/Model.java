@@ -67,20 +67,14 @@ public class Model {
         this.screenHandler = screenHandler;
         log = new GameLog();
         subView = new EmptySubView();
-//        gameView = new IntroGameView();
-        gameView = new MainGameView();
+        gameView = new IntroGameView();
+//        gameView = new MainGameView();
 
         gameView.transitionedTo(this);
         state = new WaitForStartOfGameState(this);
 
-        GameCharacter gc = getAllCharacters().get(1);
-        gameData.party.add(gc);
-//        gc.addToHP(-3);
-//        gameData.party.add(getAllCharacters().get(0));
-//        gameData.party.getInventory().add(new HealthPotion());
-//        gameData.party.getInventory().add(new TurnUndeadSpell());
-
-        state = getCurrentHex().getDailyActionState(this);//new QuestState(this, gameData.questDeck.getRandomQuest());
+//        GameCharacter gc = getAllCharacters().get(1);
+//        state = getCurrentHex().getDailyActionState(this);//new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
     public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
