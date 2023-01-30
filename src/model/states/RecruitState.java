@@ -78,6 +78,7 @@ public class RecruitState extends GameState {
                             model.getParty().addToGold(amount);
                             println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
                         }
+                        model.getTutorial().leader(model);
                         if (recruitables.size() == 0) {
                             break;
                         }
