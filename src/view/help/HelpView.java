@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HelpView extends SelectableListMenu {
 
-    private static final int WIDTH = 53;
+    private static final int WIDTH = 57;
     private final HelpDialog[] chapters;
     private int index;
 
@@ -21,6 +21,7 @@ public class HelpView extends SelectableListMenu {
         super(view, WIDTH, 38);
         chapters = new HelpDialog[]{
             new TutorialStartDialog(null),
+            new TutorialCombatFormationDialog(null),
             new TutorialDailyActions(null),
             new TutorialEveningDialog(null),
             new TutorialRecruitDialog(null),
@@ -37,15 +38,21 @@ public class HelpView extends SelectableListMenu {
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-        return List.of(new TextDecoration("Help Sections", xStart+1, yStart + 1, MyColors.WHITE, MyColors.BLUE, false),
-                new DrawableObject(xStart+1, yStart+1) {
+        return List.of(new TextDecoration("Help Sections", xStart + 1, yStart + 1, MyColors.WHITE, MyColors.BLUE, false),
+                new DrawableObject(xStart + 1, yStart + 1) {
                     @Override
                     public void drawYourself(Model model, int x, int y) {
-                        BorderFrame.drawFrame(model.getScreenHandler(), x+16, y-1, 36, getHeight(),
+                        BorderFrame.drawFrame(model.getScreenHandler(), x + 20, y - 1, 36, getHeight(),
                                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, false);
-                        for (DrawableObject dObject : chapters[index].buildDecorations(model, x+16, y-1)) {
+                        for (DrawableObject dObject : chapters[index].buildDecorations(model, x + 20, y - 1)) {
                             dObject.drawYourself(model, dObject.position.x, dObject.position.y);
                         }
+                    }
+                },
+                new DrawableObject(xStart + 1, yStart + index + 2) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        print(model.getScreenHandler(), x, y, (char)0x10+"");
                     }
                 });
     }
@@ -56,11 +63,16 @@ public class HelpView extends SelectableListMenu {
         for (int i = 0; i < chapters.length; ++i) {
             HelpDialog chapter = chapters[i];
             int finalI = i;
-            content.add(new SelectableListContent(xStart+2, yStart+ finalI +2, chapter.getTitle()) {
+            content.add(new SelectableListContent(xStart+2, yStart+finalI+2, chapter.getTitle()) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     index = finalI;
                     HelpView.this.madeChanges();
+                }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return true;
                 }
             });
         }

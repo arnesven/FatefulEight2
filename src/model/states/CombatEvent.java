@@ -119,6 +119,7 @@ public class CombatEvent extends DailyEventState {
         backMovers.clear();
         combatMatrix.moveSelectedToParty();
         print("Use SPACE to toggle a character's formation. Press enter when you are done.");
+        getModel().getTutorial().combatFormation(getModel());
         waitForReturn();
         selectingFormation = false;
     }
@@ -163,6 +164,7 @@ public class CombatEvent extends DailyEventState {
     private void checkForOpportunityAttacks(Model model) {
         for (GameCharacter backMover : backMovers) {
             if (frontRowIsOverrun(model)) {
+                // TODO: use stamina to re-roll.
                 SkillCheckResult result = backMover.testSkill(Skill.Acrobatics, 7);
                 if (result.isSuccessful()) {
                     println(backMover.getFirstName() + " avoided opportunity attack while moving back (Acrobatics " + result.asString() + ").");

@@ -73,6 +73,13 @@ public class TutorialHandler implements Serializable {
         return new PeskyCrowEvent(model);
     }
 
+    public void combatFormation(Model model) {
+        runOnce("combatFormation", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCombatFormationDialog(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
