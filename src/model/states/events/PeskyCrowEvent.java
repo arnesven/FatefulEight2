@@ -2,8 +2,9 @@ package model.states.events;
 
 import model.Model;
 import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
 import model.enemies.Enemy;
+import model.items.potions.HealthPotion;
+import model.combat.SingleItemCombatLoot;
 import model.states.DailyEventState;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -53,7 +54,7 @@ public class PeskyCrowEvent extends DailyEventState {
 
         @Override
         public CombatLoot getLoot(Model model) {
-            return new NoCombatLoot();
+            return new SingleItemCombatLoot(new HealthPotion());
         }
     }
 
