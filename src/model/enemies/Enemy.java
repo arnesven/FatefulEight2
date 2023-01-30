@@ -76,6 +76,7 @@ public abstract class Enemy extends Combatant {
 
     public void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
         target.getAttackedBy(this, model, combatEvent);
+        model.getTutorial().combatDamage(model);
         if (target.isDead()) {
             combatEvent.println(target.getName() + " has been slain in combat!");
             if (target.isLeader() && model.getParty().appointNewLeader()) {
