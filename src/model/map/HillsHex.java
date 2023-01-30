@@ -2,10 +2,7 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
-import model.states.events.BarbarianEvent;
-import model.states.events.NoEventState;
-import model.states.events.OrcBandEvent;
-import model.states.events.TrollEvent;
+import model.states.events.*;
 import util.MyRandom;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
@@ -36,7 +33,8 @@ public class HillsHex extends WorldHex {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
                     new TrollEvent(model),
-                    new BarbarianEvent(model)
+                    new BarbarianEvent(model),
+                    new WizardsAbodeEvent(model)
             ));
         }
         return new NoEventState(model);

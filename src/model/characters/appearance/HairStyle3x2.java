@@ -1,7 +1,5 @@
 package model.characters.appearance;
 
-import view.sprites.Sprite;
-
 public class HairStyle3x2 extends HairStyle {
     private final int avatarNormal;
     private final int avatarBack;
