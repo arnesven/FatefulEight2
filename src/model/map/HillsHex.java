@@ -34,7 +34,8 @@ public class HillsHex extends WorldHex {
                     new OrcBandEvent(model),
                     new TrollEvent(model),
                     new BarbarianEvent(model),
-                    new WizardsAbodeEvent(model)
+                    new WizardsAbodeEvent(model),
+                    new WatchtowerEvent(model)
             ));
         }
         return new NoEventState(model);
