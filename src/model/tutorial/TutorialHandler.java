@@ -101,6 +101,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void skillChecks(Model model) {
+        runOnce("skillChecks", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialSkillChecksDialog(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

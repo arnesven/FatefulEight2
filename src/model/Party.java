@@ -362,6 +362,7 @@ public class Party implements Serializable {
             GameCharacter best = findBestPerformer(skill);
             event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
             event.print(" (Recommended " + best.getName() + "): ");
+            model.getTutorial().skillChecks(model);
             performer = partyMemberInput(model, event, best);
         } else {
             performer = partyMembers.get(0);
@@ -391,6 +392,7 @@ public class Party implements Serializable {
             GameCharacter best = findBestPerformer(skill);
             event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
             event.print(" (Recommended " + best.getName() + "): ");
+            model.getTutorial().skillChecks(model);
             performer = partyMemberInput(model, event, best);
         } else {
             performer = partyMembers.get(0);
@@ -398,7 +400,7 @@ public class Party implements Serializable {
         int bonus = 0;
         for (GameCharacter gc : partyMembers) {
             if (gc != performer) {
-                SkillCheckResult assistResult = gc.testSkill(skill, difficulty);
+                SkillCheckResult assistResult = gc.testSkill(skill, 7);
                 if (assistResult.isSuccessful()) {
                     giveXP(model, gc, 5);
                     event.println(gc.getName() + " helps out (" + assistResult.asString() + ").");
@@ -421,6 +423,7 @@ public class Party implements Serializable {
 
     public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {
         event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
+        model.getTutorial().skillChecks(model);
         event.waitForReturn();
         List<GameCharacter> failers = new ArrayList<>();
         for (GameCharacter gc : partyMembers) {
