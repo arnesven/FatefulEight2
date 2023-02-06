@@ -191,7 +191,7 @@ public class RecruitState extends GameState {
         }
 
         if (model.getDay() - model.getParty().getLastSuccessfulRecruitDay() < 7) {
-            sum -= 1;
+            sum -= 2;
             texts.add("");
         }
         return new MyPair<>(sum, MyRandom.sample(texts));

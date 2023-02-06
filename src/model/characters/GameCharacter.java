@@ -88,7 +88,16 @@ public class GameCharacter extends Combatant {
         drawAppearance(screenHandler, col, row+3);
 
         BorderFrame.drawString(screenHandler, String.format("%5d XP  %1d SP", this.getXP(), this.getSP()), col+8, row+2, DEFAULT_TEXT_COLOR);
-        BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP %2d AP", this.getHP(), this.getMaxHP(), this.getAP()), col+8, row+3, DEFAULT_TEXT_COLOR);
+        MyColors healthColor = DEFAULT_TEXT_COLOR;
+        if (getHP() < 3) {
+            healthColor = MyColors.RED;
+        } else if (getHP() == getMaxHP()) {
+            healthColor = MyColors.GREEN;
+        } else {
+            healthColor = MyColors.YELLOW;
+        }
+        BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP(), this.getAP()), col+8, row+3, healthColor);
+        BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getHP(), this.getMaxHP(), this.getAP()), col+17, row+3, DEFAULT_TEXT_COLOR);
         BorderFrame.drawString(screenHandler, String.format("SPEED %2d %s", this.getSpeed(), isLeader() ? "LEADER" : ""), col+8, row+4, DEFAULT_TEXT_COLOR);
         BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
 

@@ -10,7 +10,7 @@ public class TutorialEveningDialog extends HelpDialog {
             "If you do not have enough rations for your party everybody starves. When starving, " +
             "each character loses 1 Stamina Point if able, otherwise they lose 1 Health Point (but " +
             "a character can never be reduced to 0 HP by starving).\n\n" +
-            "Rations can be purchased at inns and taverns (in Towns and Castles)\n\n" +
+            "Rations can be purchased at inns and taverns (in Towns and Castles).\n\n" +
             "At various other locations there may be lodging available, albeit at a cost. A real meal, " +
             "and resting in a feather bed lets characters recover 2 Health Points and 1 Stamina Point.\n\n" +
             "Stamina points are used to re-roll skill checks.";
