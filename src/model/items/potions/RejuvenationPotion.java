@@ -1,8 +1,8 @@
-package model.items;
+package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.items.potions.Potion;
+import model.items.Item;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;

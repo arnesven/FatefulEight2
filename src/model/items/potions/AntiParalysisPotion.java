@@ -1,9 +1,10 @@
-package model.items;
+package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.ParalysisCondition;
-import model.items.potions.Potion;
+import model.items.Item;
+import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
