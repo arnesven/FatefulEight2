@@ -8,6 +8,8 @@ import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
 import model.states.events.NoEventState;
+import view.MyColors;
+import view.sprites.Sprite16x16;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.ScreenHandler;
@@ -18,8 +20,16 @@ import java.io.Serializable;
 import java.util.List;
 
 public abstract class HexLocation implements Serializable {
+    public static final int FLAG_NONE = 0;
+    public static final int FLAG_FAILURE = 1;
+    public static final int FLAG_SUCCESS = 2;
+    private static final Sprite SUCCESS_FLAG = new Sprite16x16("successflag", "world_foreground.png", 0x63,
+            MyColors.BLACK, MyColors.WHITE, MyColors.GREEN, MyColors.GREEN);
+    private static final Sprite FAILURE_FLAG = new Sprite16x16("failureflag", "world_foreground.png", 0x73,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private final String name;
     private WorldHex hex;
+    private int flag = FLAG_NONE;
 
     public HexLocation(String name) {
         this.name = name;
@@ -31,6 +41,11 @@ public abstract class HexLocation implements Serializable {
 
     public void drawUpperHalf(ScreenHandler screenHandler, int x, int y) {
         screenHandler.register(name + "uppersprite"+x+""+y, new Point(x, y), getUpperSprite());
+        if (flag == FLAG_SUCCESS) {
+            screenHandler.register("flagsuccess"+x+""+y, new Point(x+2, y), SUCCESS_FLAG, 1);
+        } else if (flag == FLAG_FAILURE) {
+            screenHandler.register("flagfailure"+x+""+y, new Point(x+2, y), FAILURE_FLAG, 1);
+        }
     }
 
     public void drawLowerHalf(ScreenHandler screenHandler, int x, int y) {
@@ -81,5 +96,9 @@ public abstract class HexLocation implements Serializable {
 
     public WorldHex getHex() {
         return hex;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

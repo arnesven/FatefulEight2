@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.map.HexLocation;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -51,6 +52,7 @@ public class QuestSuccessfulNode extends QuestNode {
         } else {
             state.println(".");
         }
+        model.getCurrentHex().getLocation().setFlag(HexLocation.FLAG_SUCCESS);
         reward.giveYourself(model, numberOfPartyMembers);
         return new QuestEdge(this);
     }

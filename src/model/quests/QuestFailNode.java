@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.map.HexLocation;
 import model.states.GameState;
 import model.states.QuestState;
 import view.MyColors;
@@ -37,6 +38,7 @@ public class QuestFailNode extends QuestNode {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         state.println("You have failed the quest!");
+        model.getCurrentHex().getLocation().setFlag(HexLocation.FLAG_FAILURE);
         return new QuestEdge(this);
     }
 

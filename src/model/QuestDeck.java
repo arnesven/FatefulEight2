@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
-    private Map<Quest, HexLocation> acceptedQuests = new HashMap<>();
+    private final Map<Quest, HexLocation> acceptedQuests = new HashMap<>();
 
     public Quest getRandomQuest() {
         return MyRandom.sample(List.of(
@@ -28,6 +28,6 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
     }
 
     public boolean alreadyDone(HexLocation location) {
-        return acceptedQuests.values().contains(location);
+        return acceptedQuests.containsValue(location);
     }
 }
