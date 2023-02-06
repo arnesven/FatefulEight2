@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.Condition;
 import model.enemies.Enemy;
 import model.items.*;
 import model.items.accessories.Accessory;
@@ -44,7 +45,7 @@ public class GameCharacter extends Combatant {
     private int currentSp = 1;
     private int currentXp = 0;
     private Party party;
-    private String status = "OK";
+    private Set<Condition> conditions = new HashSet<>();
 
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
@@ -111,18 +112,14 @@ public class GameCharacter extends Combatant {
     @Override
     public void addToHP(int i) {
         super.addToHP(i);
-        if (getHP() == 0) {
-            setStatus("DEAD");
-        }
-    }
-
-    private void setStatus(String stat) {
-        this.status = stat;
     }
 
     @Override
     public void takeCombatTurn(Model model, CombatEvent combatEvent) {
         if (!getsCombatTurn()) {
+            if (!isDead()) {
+                combatEvent.println(getName() + " turn was skipped.");
+            }
             return;
         }
         combatEvent.print(getFirstName() + "'s turn. ");
@@ -245,7 +242,7 @@ public class GameCharacter extends Combatant {
     }
 
     private boolean getsCombatTurn() {
-        return !isDead();
+        return !isDead() && !Condition.disablesCombatTurn(conditions);
     }
 
     public int getRankForSkill(Skill skill) {
@@ -268,7 +265,13 @@ public class GameCharacter extends Combatant {
     }
 
     public String getStatus() {
-        return status;
+        if (isDead()) {
+            return "DEAD";
+        }
+        if (conditions.isEmpty()) {
+            return "OK";
+        }
+        return Condition.getCharacterStatus(conditions);
     }
 
     public int getSP() {
@@ -528,5 +531,9 @@ public class GameCharacter extends Combatant {
         combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getName() + reductionString + ".");
         combatEvent.addStrikeEffect(this, model, damage, false);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
+    }
+
+    public void addCondition(Condition cond) {
+        conditions.add(cond);
     }
 }

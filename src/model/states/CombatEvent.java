@@ -200,7 +200,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private boolean combatDone(Model model) {
-        return allEnemiesDead() || model.getParty().isWipedOut()  || partyFled;
+        return allEnemiesDead() || model.getParty().isWipedOut() || partyFled;
     }
 
     private boolean allEnemiesDead() {

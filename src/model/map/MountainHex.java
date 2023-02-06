@@ -2,7 +2,10 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
+import model.states.events.MineEvent;
+import model.states.events.MinerEvent;
 import model.states.events.NoEventState;
+import util.MyRandom;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
@@ -26,6 +29,9 @@ public class MountainHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
+        if (MyRandom.rollD10() > 0) {
+            return new MinerEvent(model);
+        }
         return new NoEventState(model);
     }
 }

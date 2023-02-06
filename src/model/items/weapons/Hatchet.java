@@ -1,6 +1,5 @@
 package model.items.weapons;
 
-import model.classes.Skill;
 import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
