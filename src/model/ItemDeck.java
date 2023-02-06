@@ -5,6 +5,7 @@ import model.items.accessories.*;
 import model.items.clothing.*;
 import model.items.potions.HealthPotion;
 import model.items.potions.Potion;
+import model.items.potions.StaminaPotion;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
@@ -82,7 +83,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<Potion> allPotions() {
-        return List.of(new HealthPotion());
+        return List.of(new HealthPotion(), new StaminaPotion(), new RejuvenationPotion(), new AntiParalysisPotion());
     }
 
     public static List<HeadGearItem> allHeadGear() {

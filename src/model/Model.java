@@ -3,10 +3,14 @@ package model;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
+import model.combat.ParalysisCondition;
+import model.items.AntiParalysisPotion;
+import model.items.RejuvenationPotion;
 import model.items.accessories.LeatherCap;
 import model.items.clothing.FullPlateArmor;
 import model.items.clothing.StuddedJerkin;
 import model.items.potions.HealthPotion;
+import model.items.potions.StaminaPotion;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.LevitateSpell;
 import model.items.spells.TurnUndeadSpell;
@@ -72,8 +76,11 @@ public class Model {
 
         gameView.transitionedTo(this);
         state = new WaitForStartOfGameState(this);
-
-//        GameCharacter gc = getAllCharacters().get(1);
+        getParty().getInventory().add(new AntiParalysisPotion());
+        getParty().getInventory().add(new RejuvenationPotion());
+        GameCharacter gc = getAllCharacters().get(1);
+        getParty().add(gc);
+        getParty().getPartyMembers().get(0).addCondition(new ParalysisCondition());
 //        state = getCurrentHex().getDailyActionState(this);//new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 

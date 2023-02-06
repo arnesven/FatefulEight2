@@ -8,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Condition;
+import model.combat.ParalysisCondition;
 import model.enemies.Enemy;
 import model.items.*;
 import model.items.accessories.Accessory;
@@ -535,5 +536,26 @@ public class GameCharacter extends Combatant {
 
     public void addCondition(Condition cond) {
         conditions.add(cond);
+    }
+
+    public boolean hasCondition(Class<ParalysisCondition> condition) {
+        for (Condition cond : conditions) {
+            if (cond.getClass().equals(condition)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeCondition(Class<ParalysisCondition> condition) {
+        Condition found = null;
+        for (Condition cond : conditions) {
+            if (cond.getClass().equals(condition)) {
+                found = cond;
+            }
+        }
+        if (found != null) {
+            conditions.remove(found);
+        }
     }
 }

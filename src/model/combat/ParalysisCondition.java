@@ -2,7 +2,7 @@ package model.combat;
 
 public class ParalysisCondition extends Condition {
     public ParalysisCondition() {
-        super("Paralysis", "PLZ");
+        super("Paralysis", "PAR");
     }
 
     @Override

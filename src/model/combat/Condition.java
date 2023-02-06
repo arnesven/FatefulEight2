@@ -35,12 +35,4 @@ public abstract class Condition implements Serializable {
     }
 
     protected abstract boolean noCombatTurn();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Condition condition = (Condition) o;
-        return Objects.equals(shortName, condition.shortName);
-    }
 }
