@@ -1,9 +1,10 @@
 package model.combat;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
-public abstract class Condition {
+public abstract class Condition implements Serializable {
     private String name;
     private String shortName;
     public Condition(String name, String shortName) {

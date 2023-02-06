@@ -19,7 +19,7 @@ public class StormEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("Looks like bad weather...", "Here it comes...",
                 "Get ready to get wet.", "Well it could be worse."));
         println("Soon a strong torrent of rain is coming. The party " +
-                " is now severely impeded by the downpour and the strong wind.");
+                "is now severely impeded by the downpour and the strong wind.");
         model.getParty().randomPartyMemberSay(model, List.of("It's worse.", "Why does this always happen to me?",
                 "Even my underwear is wet!", "Can we get a fire going?"));
         print("Do you seek shelter (Y) or trudge on through the storm (N)? ");

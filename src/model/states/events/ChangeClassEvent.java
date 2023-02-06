@@ -36,7 +36,7 @@ public class ChangeClassEvent extends DailyEventState {
             if (selectedAction == 'C') {
                 subView.toggleDetails();
                 GameCharacter gc = matrix.getSelectedElement();
-                print("Are you sure you want to make " + gc.getName() + " a " + targetClasss.getFullName() + "? ");
+                print("Are you sure you want to make " + gc.getName() + " a " + targetClasss.getFullName() + "? (Y/N) ");
                 if (yesNoInput()) {
                     gc.setClass(targetClasss); // TODO: Potentially unequip heavy armor.
                     if (gc.getLevel() == 0) {
@@ -58,7 +58,7 @@ public class ChangeClassEvent extends DailyEventState {
 
     public void areYouInterested(Model model) {
         if (candidates.size() > 0) {
-            print("are you interested? ");
+            print("are you interested? (Y/N) ");
             if (yesNoInput()) {
                 doEvent(model);
             }

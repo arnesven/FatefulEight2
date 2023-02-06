@@ -5,8 +5,8 @@ import view.GameView;
 public class TutorialQuests extends HelpDialog {
     private static final String text =
             "Quests are encountered in towns and castles. Quests are the main way of getting " +
-            "Party Reputation. Each evening you spend at a town" +
-            "and castle, you will be offered a random quest. If you accept, the party will " +
+            "Party Reputation. Each evening you spend at a town " +
+            "or castle, you will be offered a random quest. If you accept, the party will " +
             "set on out on the quest the following day. Only one quest can be accepted per " +
             "town or castle.\n\n" +
             "During quests, the leader will make decisions about which paths to take. At " +

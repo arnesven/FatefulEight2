@@ -45,12 +45,13 @@ public class PartyView extends SelectableListMenu {
         GameCharacter gc = model.getParty().getPartyMember(selectedCharacter);
         content.add(new ListContent(xStart+1, yStart+1, String.format("%-39sExp %4d", gc.getFullName(), gc.getXP())));
         String secondRow = gc.getRace().getName() + " " + gc.getCharClass().getFullName() + " (" + gc.getCharClass().getShortName() + ") lvl " + gc.getLevel();
-        content.add(new SelectableListContent(xStart+1, yStart+2,String.format("%-38sNext %4d",  secondRow, GameCharacter.getXPForNextLevel(gc.getLevel()))) {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                setInnerMenu(new ChangeClassMenu(PartyView.this, gc, x, y), model);
-            }
-        });
+        content.add(new ListContent(xStart+1, yStart+2,String.format("%-38sNext %4d",  secondRow, GameCharacter.getXPForNextLevel(gc.getLevel()))));
+//        content.add(new SelectableListContent(xStart+1, yStart+2,String.format("%-38sNext %4d",  secondRow, GameCharacter.getXPForNextLevel(gc.getLevel()))) {
+//            @Override
+//            public void performAction(Model model, int x, int y) {
+//                setInnerMenu(new ChangeClassMenu(PartyView.this, gc, x, y), model);
+//            }
+//        });
         //content.add(new ListContent(xStart+1, yStart+2, String.format("%-34sNext %4d",  secondRow, GameCharacter.getXPForNextLevel(gc.getLevel()))));
 
         int x = xStart+9;

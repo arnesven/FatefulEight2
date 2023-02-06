@@ -3,7 +3,9 @@ package model.quests;
 import model.Party;
 import model.characters.GameCharacter;
 
-public class Reward {
+import java.io.Serializable;
+
+public class Reward implements Serializable {
     private final int rep;
     private final int gold;
     private final int exp;
