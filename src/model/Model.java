@@ -67,11 +67,6 @@ public class Model {
 
         gameView.transitionedTo(this);
         state = new WaitForStartOfGameState(this);
-        getParty().getInventory().add(new AntiParalysisPotion());
-        getParty().getInventory().add(new RejuvenationPotion());
-        GameCharacter gc = getAllCharacters().get(1);
-        getParty().add(gc);
-        getParty().getPartyMembers().get(0).addCondition(new ParalysisCondition());
 //        state = getCurrentHex().getDailyActionState(this);//new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
