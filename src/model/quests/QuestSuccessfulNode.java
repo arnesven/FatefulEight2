@@ -51,7 +51,7 @@ public class QuestSuccessfulNode extends QuestNode {
         } else {
             state.println(".");
         }
-        reward.giveYourself(model.getParty(), numberOfPartyMembers);
+        reward.giveYourself(model, numberOfPartyMembers);
         return new QuestEdge(this);
     }
 

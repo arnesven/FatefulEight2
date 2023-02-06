@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
 
@@ -24,10 +25,12 @@ public class Reward implements Serializable {
         return gold;
     }
 
-    public void giveYourself(Party party, int numberOfPartyMembers) {
+    public void giveYourself(Model model, int numberOfPartyMembers) {
+        Party party = model.getParty();
         party.addToGold(gold * numberOfPartyMembers);
         party.addToReputation(rep);
-        party.getPartyMembers().forEach((GameCharacter gc) -> gc.addToXP(exp));
+        for (GameCharacter gc : party.getPartyMembers())
+        party.giveXP(model, gc, exp);
     }
 
     public String getDescription() {
