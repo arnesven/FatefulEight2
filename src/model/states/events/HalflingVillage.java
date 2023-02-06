@@ -10,13 +10,15 @@ import model.states.EveningState;
 import java.util.List;
 
 public class HalflingVillage extends DailyEventState {
+    private boolean free = false;
+
     public HalflingVillage(Model model) {
         super(model);
     }
 
     @Override
     protected boolean isFreeRations() {
-        return true;
+        return free;
     }
 
     @Override
@@ -34,6 +36,7 @@ public class HalflingVillage extends DailyEventState {
     }
 
     private void foundVillage(Model model, GameCharacter halflingCharacter) {
+        free = true;
         print("The party stumbles upon a little miniature village. ");
         if (!allHalflings(model.getParty())) {
             println("The halflings quickly race for their dwellings.");

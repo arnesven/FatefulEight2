@@ -70,7 +70,7 @@ public class CombatSubView extends SubView {
         model.getScreenHandler().register("combatcursor", p, cursor, 2);
     }
 
-    private void drawEffects(Model model) {
+    private synchronized void drawEffects(Model model) {
         List<MyPair<Point, RunOnceAnimationSprite>> toRemove = new ArrayList<>();
         for (MyPair<Point, RunOnceAnimationSprite> p : ongoingEffects) {
             if (!p.second.isDone()) {
@@ -141,7 +141,7 @@ public class CombatSubView extends SubView {
         return CharSprite.make((char) 0x04 + offset, MyColors.WHITE, MyColors.GRAY, MyColors.BLACK);
     }
 
-    public void addStrikeEffect(Combatant target, Model model, int damge, boolean critical) {
+    public synchronized void addStrikeEffect(Combatant target, Model model, int damge, boolean critical) {
         Point point = combatMatrix.getPositionFor(target);
         Point shiftpoint = target.getCursorShift();
         point.x = X_OFFSET + point.x*4 + shiftpoint.x;
