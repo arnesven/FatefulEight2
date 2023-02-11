@@ -37,7 +37,10 @@ public class HillsHex extends WorldHex {
                     new WizardsAbodeEvent(model),
                     new WatchtowerEvent(model),
                     new MineEvent(model),
-                    new CairnEvent(model)
+                    new CairnEvent(model),
+                    new StormEvent(model),
+                    new HalflingVillage(model)
+
             ));
         }
         return new NoEventState(model);
