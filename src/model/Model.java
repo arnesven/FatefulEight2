@@ -39,6 +39,7 @@ public class Model {
         public boolean mustStayInHex = false;
         public TimeOfDay timeOfDay = TimeOfDay.MORNING;
         public TutorialHandler tutorial = new TutorialHandler();
+        public boolean freePlay = false;
     }
 
     private GameData gameData = new GameData();
@@ -193,9 +194,16 @@ public class Model {
             GameState nextState = state.run(this);
             if (nextState != null) {
                 state = nextState;
+                if (endOfGameReached() && !gameData.freePlay) {
+                    transitionToDialog(new EndOfGameDialog(getView()));
+                }
             }
-            System.out.println("Main loop!");
         }
+    }
+
+    private boolean endOfGameReached() {
+        return gameData.day == 2;
+        //return getParty().getReputation() == 6 || gameData.day == 101;
     }
 
     public void playMainSong() {
