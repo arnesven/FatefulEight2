@@ -20,6 +20,7 @@ public class BanditEnemy extends Enemy {
         super(enemyGroup, name);
         this.race = MyRandom.randInt(2) == 1 ? Race.NORTHERN_HUMAN : Race.HALF_ORC;
         this.maxHp = maxHp;
+        setCurrentHp(maxHp);
     }
 
     public BanditEnemy(char enemyGroup) {

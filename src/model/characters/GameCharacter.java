@@ -209,7 +209,7 @@ public class GameCharacter extends Combatant {
             }
         } else {
             int d10 = MyRandom.rollD10();
-            combatEvent.print("Trying to escape from combat (D10 roll=" + d10);
+            combatEvent.print("Trying to escape from combat (D10 roll=" + d10 + ")");
             if (d10 >= 5) {
                 combatEvent.println(" >=5, SUCCESS.");
                 combatEvent.setPartyFled(true);
@@ -531,6 +531,9 @@ public class GameCharacter extends Combatant {
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
         int damage = enemy.getDamage();
+        while (damage > 0 && MyRandom.randInt(2) == 0) {
+            damage--;
+        }
         int reduction = Math.min(damage, Math.max(0, getAP() - MyRandom.rollD10() + 1));
         String reductionString = "";
         if (getAP() > 0) {
