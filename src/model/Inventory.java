@@ -11,9 +11,7 @@ import model.items.spells.Spell;
 import model.items.weapons.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Inventory implements Serializable {
     private List<Weapon> weapons = new ArrayList<>();
@@ -69,11 +67,9 @@ public class Inventory implements Serializable {
 
     public List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
-        items.addAll(weapons);
-        items.addAll(clothing);
-        items.addAll(accessories);
-        items.addAll(spells);
-        items.addAll(potions);
+        for (Collection<? extends Item> itemSet : getItemSets()) {
+            items.addAll(itemSet);
+        }
         return items;
     }
 
@@ -98,5 +94,23 @@ public class Inventory implements Serializable {
         List<Spell> sp = new ArrayList<>();
         sp.addAll(spells);
         return sp;
+    }
+
+    public void remove(Item it) {
+        for (Collection<? extends Item> itemSet : getItemSets()) {
+            if (itemSet.contains(it)) {
+                itemSet.remove(it);
+            }
+        }
+    }
+
+    private Set<Collection<? extends Item>> getItemSets() {
+        Set<Collection<? extends Item>> sets = new HashSet<>();
+        sets.add(weapons);
+        sets.add(clothing);
+        sets.add(accessories);
+        sets.add(spells);
+        sets.add(potions);
+        return sets;
     }
 }

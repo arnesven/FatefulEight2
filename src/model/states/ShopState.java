@@ -87,6 +87,7 @@ public class ShopState extends GameState {
                         sellItems.remove(it);
                         int money = it.getCost() / 2;
                         model.getParty().addToGold(money);
+                        model.getParty().getInventory().remove(it);
                         println("You sold " + it.getName() + " for " + money + " gold.");
                         SoundEffects.sellItem();
                     } else {
