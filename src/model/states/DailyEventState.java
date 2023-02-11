@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.races.Race;
@@ -27,6 +28,7 @@ public abstract class DailyEventState extends GameState {
         if (fledCombat) {
             return new RunAwayState(model);
         }
+        model.setTimeOfDay(TimeOfDay.EVENING);
         return model.getCurrentHex().getEveningState(model, isFreeLodging(), isFreeRations());
     }
 
