@@ -34,17 +34,17 @@ public class FieldsHex extends WorldHex {
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         if (MyRandom.rollD10() >= 5) {
             List<DailyEventState> events = new ArrayList<>();
-//            events.add(new HalflingEvent(model));     // 4%
-//            events.add(new PlowingFieldsEvent(model)); // 4%
-//            events.add(new GuestEvent(model));  // 16%
-//            events.add(new GuestEvent(model));  // 16%
-//            events.add(new GuestEvent(model));  // 16%
-//            events.add(new GuestEvent(model));  // 16%
-//            events.add(new ChoppingWoodEvent(model)); // 4%
-//            events.add(new FaeriesEvent(model));
-//            events.add(new OrchardEvent(model));
-//            events.add(new OrchardEvent(model));
-//            events.add(new FarmersChildEvent(model));
+            events.add(new HalflingEvent(model));     // 4%
+            events.add(new PlowingFieldsEvent(model)); // 4%
+            events.add(new GuestEvent(model));  // 16%
+            events.add(new GuestEvent(model));  // 16%
+            events.add(new GuestEvent(model));  // 16%
+            events.add(new GuestEvent(model));  // 16%
+            events.add(new ChoppingWoodEvent(model)); // 4%
+            events.add(new FaeriesEvent(model));
+            events.add(new OrchardEvent(model));
+            events.add(new OrchardEvent(model));
+            events.add(new FarmersChildEvent(model));
             events.add(new BanditRaidEvent(model));
             return MyRandom.sample(events);
         }
