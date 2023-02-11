@@ -53,7 +53,7 @@ public class MapSubView extends AvatarSubView {
                 MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, avatarEnabled);
     }
 
-    private Point getSelectedDestination(Model model) {
+    protected Point getSelectedDestination(Model model) {
         Point sel = new Point(matrix.getSelectedElement());
         Point p = new Point(model.getParty().getPosition().x + sel.x,
                 model.getParty().getPosition().y + sel.y);

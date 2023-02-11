@@ -89,7 +89,7 @@ public abstract class GameState {
         return internalInput(false);
     }
 
-    protected void setCurrentTerrainSubview(Model model) {
+    protected static void setCurrentTerrainSubview(Model model) {
         SubView nextSubView;
         if (!model.getCurrentHex().hasLodging() && model.getParty().isOnRoad()) {
             nextSubView = OnTheRoadSubView.instance;

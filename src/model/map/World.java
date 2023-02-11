@@ -19,6 +19,7 @@ public class World implements Serializable {
     //  x   y
     private WorldHex[][] hexes;
     private ViewPointMarker cursor = new HexCursorMarker();
+    private Sprite alternativeAvatar = null;
 
     public World() {
         hexes = WorldBuilder.buildWorld();
@@ -89,6 +90,9 @@ public class World implements Serializable {
                 if (x == partyPosition.x && y == partyPosition.y &&
                         model.getParty().getLeader() != null && avatarEnabled) {
                     Sprite avatar = model.getParty().getLeader().getAvatarSprite();
+                    if (alternativeAvatar != null) {
+                        avatar = alternativeAvatar;
+                    }
                     screenHandler.register(avatar.getName(), new Point(screenX, screenY), avatar, 1);
                 }
                 if ((cursorPos == null && (x == viewPoint.x && y == viewPoint.y)) ||
@@ -297,6 +301,10 @@ public class World implements Serializable {
             return getPositionForHex(otherHex);
         }
         return getPositionForHex(cheapest.getHex());
+    }
+
+    public void setAlternativeAvatar(Sprite sprite) {
+        alternativeAvatar = sprite;
     }
 
     private static class Interval {

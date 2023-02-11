@@ -48,6 +48,12 @@ public class TravelState extends GameState {
         mapSubView.waitForAnimation();
         CollapsingTransition.transition(model, new EmptySubView());
 
+        moveToHex(model, selectedDir, mapSubView);
+
+        return nextState(model);
+    }
+
+    private void moveToHex(Model model, Point selectedDir, MapSubView mapSubView) {
         model.getCurrentHex().travelFrom(model);
         model.getParty().move(selectedDir.x, selectedDir.y);
         if (partyNoLongerOnRoad(model, mapSubView)) {
@@ -55,7 +61,6 @@ public class TravelState extends GameState {
         }
         setCurrentTerrainSubview(model);
         model.getCurrentHex().travelTo(model);
-        return nextState(model);
     }
 
     protected boolean partyNoLongerOnRoad(Model model, MapSubView mapSubView) {
