@@ -40,7 +40,8 @@ public class HillsHex extends WorldHex {
                     new CairnEvent(model),
                     new StormEvent(model),
                     new HalflingVillage(model),
-                    new PegasusEvent(model)
+                    new PegasusEvent(model),
+                    new HalfOrcEvent(model)
             ));
         }
         return new NoEventState(model);
