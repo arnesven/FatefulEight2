@@ -11,13 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArtisanEvent extends DailyEventState {
-    public ArtisanEvent(Model model) {
+    private final boolean withIntro;
+
+    public ArtisanEvent(Model model, boolean withIntro) {
         super(model);
+        this.withIntro = withIntro;
+    }
+
+    public ArtisanEvent(Model model) {
+        this(model, true);
     }
 
     @Override
     protected void doEvent(Model model) {
-        print("The party encounters an artisan on the road. This particular artisan is a");
+        if (withIntro) {
+            print("The party encounters an artisan on the road. ");
+        }
+        print("This particular artisan is a");
         int roll = MyRandom.rollD10();
         List<Item> itemList = new ArrayList<>();
         if (roll <= 2) {
