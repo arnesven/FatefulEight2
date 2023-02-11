@@ -41,7 +41,6 @@ public class FieldsHex extends WorldHex {
             events.add(new GuestEvent(model));  // 16%
             events.add(new GuestEvent(model));  // 16%
             events.add(new ChoppingWoodEvent(model)); // 4%
-            events.add(new FaeriesEvent(model));
             events.add(new OrchardEvent(model));
             events.add(new OrchardEvent(model));
             events.add(new FarmersChildEvent(model));

@@ -41,6 +41,8 @@ public class WoodsHex extends WorldHex {
             events.add(new SorcerersTowerEvent(model));
             events.add(new WitchHutEvent(model));
             events.add(new VipersEvent(model));
+            events.add(new FaeriesEvent(model));
+            events.add(new HalflingEvent(model));
             return MyRandom.sample(events);
         }
         return new NoEventState(model);
