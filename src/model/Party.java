@@ -323,6 +323,7 @@ public class Party implements Serializable {
     }
 
     public void addDestination(UrbanLocation destination) {
+        // TODO: Give these some in-game meaning.
         this.destinations.add(destination.getPlaceName());
     }
 

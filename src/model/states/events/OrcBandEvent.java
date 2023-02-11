@@ -20,6 +20,7 @@ public class OrcBandEvent extends DailyEventState {
                 "when they hear footsteps approaching, many footsteps. " +
                 "It's a whole band of orcs! It may be possible for the party " +
                 "to hide behind some bushes and remain undetected.");
+        // TODO: add bonus if you have half orc(s)?
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
             println("You stay hidden as the throng passes by.");

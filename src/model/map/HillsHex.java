@@ -31,12 +31,13 @@ public class HillsHex extends WorldHex {
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
-                    // new OrcBandEvent(model),
-                    // new TrollEvent(model),
-                    // new BarbarianEvent(model),
-                    // new WizardsAbodeEvent(model),
-                    // new WatchtowerEvent(model),
-                    new MineEvent(model)
+                    new OrcBandEvent(model),
+                    new TrollEvent(model),
+                    new BarbarianEvent(model),
+                    new WizardsAbodeEvent(model),
+                    new WatchtowerEvent(model),
+                    new MineEvent(model),
+                    new CairnEvent(model)
             ));
         }
         return new NoEventState(model);

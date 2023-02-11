@@ -14,8 +14,8 @@ public class StandardCombatLoot extends CombatLoot {
     private int gold = 0;
     private List<Item> items = new ArrayList<>();
 
-    public StandardCombatLoot(Model model) {
-        int dieRoll = MyRandom.randInt(10);
+    public StandardCombatLoot(Model model, int bonus) {
+        int dieRoll = MyRandom.randInt(10) + bonus;
         if (dieRoll <= 7) {
             gold = dieRoll - 1;
         } else if (dieRoll <= 9) {
@@ -25,9 +25,13 @@ public class StandardCombatLoot extends CombatLoot {
         if (dieRoll == 7) {
             gold++;
         }
-        if (dieRoll == 10) {
+        if (dieRoll >= 10) {
             items.add(model.getItemDeck().getRandomItem());
         }
+    }
+
+    public StandardCombatLoot(Model model) {
+        this(model, 0);
     }
 
     @Override
