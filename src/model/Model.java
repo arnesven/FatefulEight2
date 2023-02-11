@@ -195,6 +195,7 @@ public class Model {
             if (nextState != null) {
                 state = nextState;
                 if (endOfGameReached() && !gameData.freePlay) {
+                    log.waitForAnimationToFinish();
                     transitionToDialog(new EndOfGameDialog(getView()));
                 }
             }
@@ -202,8 +203,8 @@ public class Model {
     }
 
     private boolean endOfGameReached() {
-        return gameData.day == 2;
-        //return getParty().getReputation() == 6 || gameData.day == 101;
+        return gameData.day > 1;
+        //return getParty().getReputation() >= 6 || gameData.day > 100;
     }
 
     public void playMainSong() {
@@ -298,5 +299,18 @@ public class Model {
 
     public TutorialHandler getTutorial() {
         return gameData.tutorial;
+    }
+
+    public void setFreePlay(boolean b) {
+        gameData.freePlay = b;
+    }
+
+    public void recordInHallOfFame() {
+        this.state = new WaitForStartOfGameState(this);
+        screenHandler.clearAll();
+        this.gameView = new IntroGameView();
+        //this.state = new HallOfFameState();
+        // TODO: Record score in hall of fame.
+        // TODO: Clear everything and reset for new game.
     }
 }

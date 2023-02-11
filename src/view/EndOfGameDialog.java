@@ -93,6 +93,7 @@ public class EndOfGameDialog extends SelectableListMenu {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setTimeToTransition(true);
+                        model.recordInHallOfFame();
                     }
 
                     @Override
@@ -103,6 +104,7 @@ public class EndOfGameDialog extends SelectableListMenu {
                 new SelectableListContent(40 - 4, yStart + getHeight() - 2, "CONTINUE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
+                        model.setFreePlay(true);
                         setTimeToTransition(true);
                     }
 
