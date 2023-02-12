@@ -22,7 +22,7 @@ public class DwarfEvent extends DailyEventState {
             new ArtisanEvent(model, false).run(model);
         } else if (dieRoll <= 9) {
             println(" a veteran.");
-            // TODO: veteran event
+            new VeteranEvent(model, false).run(model);
         } else {
             adventurerWhoMayJoin(model, Race.DWARF);
         }
