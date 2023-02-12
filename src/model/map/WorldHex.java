@@ -29,6 +29,7 @@ public abstract class WorldHex implements Serializable {
     public static final int SOUTH      = 0xA0;
     public static final int SOUTH_WEST = 0x40;
     public static final int ALL = 0xFF;
+    public static final int NONE = 0;
     private MyColors color;
 
     private HexSprite upperLeft;
@@ -316,8 +317,8 @@ public abstract class WorldHex implements Serializable {
                 new DeadBodyEvent(model),
                 new UndertowEvent(model),
                 new RapidsEvent(model),
-                new SaberfishEvent(model)
-//                new RaftEvent(model) // TODO: implement
+                new SaberfishEvent(model),
+                new RaftEvent(model)
         ));
     }
 
