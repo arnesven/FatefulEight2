@@ -3,9 +3,6 @@ package model;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
-import model.combat.ParalysisCondition;
-import model.items.potions.AntiParalysisPotion;
-import model.items.potions.RejuvenationPotion;
 import model.log.GameLog;
 import model.map.World;
 import model.map.WorldHex;
@@ -28,19 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
-
-    private static class GameData implements Serializable {
-        public Party party = new Party();
-        public ItemDeck itemDeck = new ItemDeck();
-        public QuestDeck questDeck = new QuestDeck();
-        public int day = 1;
-        public CharacterCollection allCharacters = new CharacterCollection();
-        public List<String> logContent;
-        public boolean mustStayInHex = false;
-        public TimeOfDay timeOfDay = TimeOfDay.MORNING;
-        public TutorialHandler tutorial = new TutorialHandler();
-        public boolean freePlay = false;
-    }
 
     private GameData gameData = new GameData();
 
@@ -72,10 +56,8 @@ public class Model {
     }
 
     public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
-        ObjectInputStream ois = null;
         try {
-            ois = new ObjectInputStream(new FileInputStream(filename));
-            gameData = (GameData) ois.readObject();
+            gameData = readGameData(filename);
             state = getCurrentHex().getDailyActionState(this);
             log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
@@ -87,6 +69,11 @@ public class Model {
             e.printStackTrace();
         }
         gameStarted = true;
+    }
+
+    public static GameData readGameData(String filename) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+        return (GameData) ois.readObject();
     }
 
     public void startGameNoLoad() {
