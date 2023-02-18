@@ -8,7 +8,7 @@ public class TutorialEquipmentDialog extends HelpDialog {
             "Weapons are used to deal damage in combat. Clothing normally gives your character armor but " +
             "sometimes give skill bonuses instead. Some heavy armor incur skill penalties. Accessories can modify " +
             "a characters stats in many different ways.\n\n" +
-            "You can equip characters from the Party Menu, or the Equipment Menu. Please note that items which " +
+            "You can equip characters from the Party Menu, or the Inventory Menu. Please note that items which " +
             "are currently equipped on other party members do not appear as available when equipping. You must " +
             "first unequip an item to equip it to somebody else.\n\n" +
             "Only characters who's class permit heavy armor can equip heavy armor.\n\n" +

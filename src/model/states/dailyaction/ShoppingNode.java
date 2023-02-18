@@ -22,7 +22,7 @@ public abstract class ShoppingNode extends DailyActionNode {
     private List<Item> shopInventory;
     public ShoppingNode(Model model, String name) {
         super(name);
-         shopInventory = makeInventory(model);
+        shopInventory = makeInventory(model);
     }
 
     protected abstract List<Item> makeInventory(Model model);

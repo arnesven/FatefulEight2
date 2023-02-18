@@ -16,11 +16,13 @@ public class ShopState extends GameState {
     private HashMap<Item, Integer> prices;
     private SteppingMatrix<Item> buyItems;
     private SteppingMatrix<Item> sellItems;
+    private List<Item> itemsForSale;
     private boolean showingBuyItems = true;
     private boolean sellingEnabled = true;
 
     public ShopState(Model model, String seller, List<Item> itemsForSale, int[] specialPrices) {
         super(model);
+        this.itemsForSale = itemsForSale;
         buyItems = new SteppingMatrix<>(8, 8);
         sellItems = new SteppingMatrix<>(8, 8);
         this.seller = seller;
@@ -67,6 +69,7 @@ public class ShopState extends GameState {
                         println("You cannot afford that.");
                     } else {
                         buyItems.remove(it);
+                        itemsForSale.remove(it);
                         model.getParty().getInventory().addItem(it);
                         model.getParty().addToGold(-1 * cost);
                         println("You bought " + it.getName() + " for " + cost + " gold.");
