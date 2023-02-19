@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import sound.SoundEffects;
+import view.SelectSaveSlotMenu;
 
 public class SaveGameState extends GameState {
     public SaveGameState(Model model) {
@@ -10,9 +11,8 @@ public class SaveGameState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        println("Saving game in slot 1...");
-        model.saveToFile("slot1");
-        SoundEffects.gameSaved();
+        model.transitionToDialog(new SelectSaveSlotMenu(model.getView(), false));
+        println("Saving game...");
         return new DailyActionState(model);
     }
 }

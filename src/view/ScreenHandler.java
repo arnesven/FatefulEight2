@@ -20,7 +20,7 @@ public class ScreenHandler {
         this.state = 0;
     }
 
-    public void drawBackground(Graphics g) {
+    public synchronized void drawBackground(Graphics g) {
         for (Point key : backgroundSprites.keySet()) {
             draw(g, key, backgroundSprites.get(key), 0, 0);
         }
@@ -42,11 +42,11 @@ public class ScreenHandler {
         }
     }
 
-    public void put(int col, int row, Sprite sprite) {
+    public synchronized void put(int col, int row, Sprite sprite) {
         backgroundSprites.put(new Point(col, row), sprite);
     }
 
-    public void clear(int x, int y) {
+    public synchronized void clear(int x, int y) {
         backgroundSprites.remove(new Point(x,y));
     }
 
@@ -63,7 +63,7 @@ public class ScreenHandler {
         foregroundSprites.add(new ForegroundObject(s, p, spr, 0, 0, 0));
     }
 
-    public void clearSpace(int xStart, int xEnd, int yStart, int yEnd) {
+    public synchronized void clearSpace(int xStart, int xEnd, int yStart, int yEnd) {
         for (int y = yStart; y < yEnd; ++y) {
             for (int x = xStart; x < xEnd; ++x) {
                 clear(x, y);
@@ -83,7 +83,7 @@ public class ScreenHandler {
     }
 
 
-    public void fillSpace(int xStart, int xEnd, int yStart, int yEnd, Sprite sprite) {
+    public synchronized void fillSpace(int xStart, int xEnd, int yStart, int yEnd, Sprite sprite) {
         for (int y = yStart; y < yEnd; ++y) {
             for (int x = xStart; x < xEnd; ++x) {
                 put(x, y, sprite);
@@ -91,7 +91,7 @@ public class ScreenHandler {
         }
     }
 
-    public void fillForeground(int xStart, int xEnd, int yStart, int yEnd, Sprite sprite, int prio) {
+    public synchronized void fillForeground(int xStart, int xEnd, int yStart, int yEnd, Sprite sprite, int prio) {
         for (int y = yStart; y < yEnd; ++y) {
             for (int x = xStart; x < xEnd; ++x) {
                 register(sprite.getName()+""+x+""+y, new Point(x, y), sprite, prio);

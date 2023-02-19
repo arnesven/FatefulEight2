@@ -61,19 +61,25 @@ public class Model {
             state = getCurrentHex().getDailyActionState(this);
             log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
+        } catch (FileNotFoundException | CorruptSaveFileException ex) {
+            throw ex;
+        }
+        gameStarted = true;
+    }
+
+    public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {
+        ObjectInputStream ois = null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream(filename));
+            return (GameData) ois.readObject();
         } catch (FileNotFoundException fnfe) {
             throw fnfe;
         } catch (IOException e) {
             throw new CorruptSaveFileException();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
         }
-        gameStarted = true;
-    }
-
-    public static GameData readGameData(String filename) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-        return (GameData) ois.readObject();
     }
 
     public void startGameNoLoad() {
