@@ -61,7 +61,7 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
         if (buildContent(model, xStart, yStart).size() == 1) {
             return List.of(new TextDecoration("No saves found!", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, true));
         }
-        return List.of(new TextDecoration("Which Slot?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, true));
+        return List.of(new TextDecoration((loading?"Load from":"Save to") + " which slot?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, true));
     }
 
     @Override

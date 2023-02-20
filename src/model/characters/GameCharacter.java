@@ -570,4 +570,13 @@ public class GameCharacter extends Combatant {
             conditions.remove(found);
         }
     }
+
+    public boolean canAssumeClass(int id) {
+        for (CharacterClass cc : classes) {
+            if (cc.id() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

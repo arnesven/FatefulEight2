@@ -262,7 +262,7 @@ public class Party implements Serializable {
     public List<GameCharacter> getMembersEligibleFor(CharacterClass charClass) {
         List<GameCharacter> result = new ArrayList<>();
         for (GameCharacter gc : partyMembers) {
-            if (gc.getCharClass().id() != charClass.id() && Arrays.asList(gc.getClasses()).contains(charClass)) {
+            if (gc.getCharClass().id() != charClass.id() && gc.canAssumeClass(charClass.id())) {
                 result.add(gc);
             }
         }
