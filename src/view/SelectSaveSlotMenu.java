@@ -85,8 +85,18 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                         mainGameView = new MainGameView();
                     } else { // saving
                         // TODO: Are you sure?
-                        model.saveToFile(slotName);
-                        SoundEffects.gameSaved();
+                        if (data != null) {
+                            model.transitionToDialog(new YesNoMessageView(SelectSaveSlotMenu.this, "Are you sure you want to overwrite this save?") {
+                                @Override
+                                protected void doAction(Model model) {
+                                    model.saveToFile(slotName);
+                                    SoundEffects.gameSaved();
+                                }
+                            });
+                        } else {
+                            model.saveToFile(slotName);
+                            SoundEffects.gameSaved();
+                        }
                     }
                     setTimeToTransition(true);
                 }
@@ -120,7 +130,7 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
             index++;
             row += 10;
         }
-        result.add(new SelectableListContent(40-3, row+2, "CANCEL") {
+        result.add(new SelectableListContent(40-3, row+2, loading?"CANCEL":"RETURN") {
             @Override
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);

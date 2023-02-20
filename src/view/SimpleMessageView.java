@@ -11,10 +11,16 @@ import java.util.List;
 public class SimpleMessageView extends SelectableListMenu {
     private static final int DIALOG_MAX_WIDTH = 32;
     private final String[] texts;
+    private final String buttonText;
 
-    public SimpleMessageView(GameView previous, String text) {
+    public SimpleMessageView(GameView previous, String text, String buttonText) {
         super(previous,  widthForText(text), heightForText(text));
         this.texts = MyStrings.partition(text, DIALOG_MAX_WIDTH-2);
+        this.buttonText = buttonText;
+    }
+
+    public SimpleMessageView(GameView previous, String text) {
+        this(previous, text, "OK");
     }
 
     private static int heightForText(String text) {
@@ -54,12 +60,14 @@ public class SimpleMessageView extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        return List.of(new SelectableListContent(xStart+getWidth()/2-1, yStart+getHeight()-2, "OK") {
+        List<ListContent> list = new ArrayList<>();
+        list.add(new SelectableListContent(xStart+getWidth()/2-1, yStart+getHeight()-2, buttonText) {
             @Override
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);
             }
         });
+        return list;
     }
 
     @Override
