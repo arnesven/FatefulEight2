@@ -56,7 +56,7 @@ public abstract class Quest implements Serializable {
     }
 
     public String getBeforehandInfo() {
-        return "Upon completion" + reward.getDescription() +
+        return "Upon completion " + reward.getDescription() +
                 " The party collectively appraises this quest to be " +
                 difficulty.toString().toLowerCase() + ".";
     }

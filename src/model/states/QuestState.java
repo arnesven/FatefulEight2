@@ -21,6 +21,7 @@ public class QuestState extends GameState {
     private SteppingMatrix<QuestNode> matrix;
     private QuestNode currentPosition;
     private boolean cursorEnabled;
+    private int counter = 0;
 
     public QuestState(Model model, Quest quest) {
         super(model);
@@ -88,5 +89,13 @@ public class QuestState extends GameState {
 
     public CombatTheme getCombatTheme() {
         return quest.getCombatTheme();
+    }
+
+    public void increaseQuestCounter() {
+        counter++;
+    }
+
+    public int getCounter() {
+        return counter;
     }
 }

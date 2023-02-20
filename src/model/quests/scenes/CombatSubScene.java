@@ -23,7 +23,7 @@ public abstract class CombatSubScene extends QuestSubScene {
 
     private static final Sprite32x32 SPRITE = new Sprite32x32("combatsubscene", "quest.png", 0x03,
             MyColors.BLACK, MyColors.WHITE, MyColors.GRAY, MyColors.BROWN);
-    private final List<Enemy> enemies;
+    private List<Enemy> enemies;
     private final boolean fleeingEnabled;
     private boolean defeated = false;
 
@@ -82,5 +82,9 @@ public abstract class CombatSubScene extends QuestSubScene {
     @Override
     protected MyColors getSuccessEdgeColor() {
         return MyColors.WHITE;
+    }
+
+    protected void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
     }
 }
