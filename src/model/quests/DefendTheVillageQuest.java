@@ -1,21 +1,34 @@
 package model.quests;
 
 import model.Model;
+import model.characters.DeniseBoyd;
+import model.characters.appearance.DefaultAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import model.states.QuestState;
+import util.MyRandom;
 import view.MyColors;
+import view.sprites.BanditSprite;
+import view.sprites.LoopingSprite;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DefendTheVillageQuest extends Quest {
+
     private static final String TEXT =
             "Some peasants are looking for capable warriors " +
             "to come and defend their village from a raiding " +
@@ -23,6 +36,7 @@ public class DefendTheVillageQuest extends Quest {
     private static final String END_TEXT =
             "The peasants thank you profusely and hope that " +
                     "you will return some day soon.";
+    private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public DefendTheVillageQuest() {
         super("Defend the Village", "some desperate peasants", QuestDifficulty.HARD,
@@ -32,6 +46,11 @@ public class DefendTheVillageQuest extends Quest {
     @Override
     public CombatTheme getCombatTheme() {
         return new GrassCombatTheme();
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
     }
 
     @Override
@@ -64,12 +83,15 @@ public class DefendTheVillageQuest extends Quest {
                 List.of(new QuestEdge(scenes.get(1).get(0), QuestEdge.VERTICAL),
                         new QuestEdge(scenes.get(1).get(1), QuestEdge.VERTICAL)),
                 "Can we improve the fortifications?");
-        CountingJunction cnt1 = new CountingJunction(5, 1, new QuestEdge(qd1));
+        CountingJunction cnt1 = new PeasantCountJunction(5, 1, new QuestEdge(qd1));
         SimpleJunction sj1 = new SimpleJunction(3, 4, new QuestEdge(scenes.get(2).get(0)));
-        CountingJunction cnt2 = new CountingJunction(4, 4, new QuestEdge(sj1));
+        CountingJunction cnt2 = new PeasantCountJunction(4, 4, new QuestEdge(sj1));
         SimpleJunction sj2 = new SimpleJunction(2, 6, new QuestEdge(scenes.get(3).get(0)));
-        CountingJunction cnt3 = new CountingJunction(1, 6, new QuestEdge(sj2));
-        return List.of(qss, cnt1, qd1, sj1, cnt2, sj2, cnt3);
+        CountingJunction cnt3 = new PeasantCountJunction(1, 6, new QuestEdge(sj2));
+        DecorativeJunction bandit1 = new SpriteDecorativeJunction(2, 8, new BanditSprite(Race.HALF_ORC.getColor()), "Bandit");
+        DecorativeJunction bandit2 = new SpriteDecorativeJunction(3, 8, new BanditSprite(Race.HALF_ORC.getColor()), "Bandit");
+        DecorativeJunction bandit3 = new SpriteDecorativeJunction(4, 8, new BanditSprite(Race.HALF_ORC.getColor()), "Bandit");
+        return List.of(qss, cnt1, qd1, sj1, cnt2, sj2, cnt3, bandit1, bandit2, bandit3);
     }
 
     @Override
@@ -88,6 +110,7 @@ public class DefendTheVillageQuest extends Quest {
         scenes.get(2).get(0).connectSuccess(junctions.get(6));
 
         scenes.get(3).get(0).connectSuccess(getSuccessEndingNode());
+        scenes.get(3).get(0).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
     }
 
     @Override
@@ -95,9 +118,9 @@ public class DefendTheVillageQuest extends Quest {
         return MyColors.GREEN;
     }
 
-    private static class VariableBanditCombatSubScene extends CombatSubScene {
+    private class VariableBanditCombatSubScene extends CombatSubScene {
         public VariableBanditCombatSubScene(int col, int row) {
-            super(col, row, List.of(new BanditEnemy('A', "Bandit", 5)));
+            super(col, row, List.of(new BanditEnemy('A', "Bandit", 5)), true);
         }
 
         @Override
@@ -113,7 +136,90 @@ public class DefendTheVillageQuest extends Quest {
                 enemies.add(new BanditEnemy('A', "Bandit", 5));
             }
             super.setEnemies(enemies);
+            QuestEdge toReturn = super.run(model, state);
+            getJunctions().remove(getJunctions().size()-1);
+            getJunctions().remove(getJunctions().size()-1);
+            getJunctions().remove(getJunctions().size()-1);
+            return toReturn;
+        }
+    }
+
+    private static List<QuestBackground> makeBackgroundSprites() {
+        List<QuestBackground> result = new ArrayList<>();
+        Random rand = new Random(1234);
+        for (int row = 1; row < 9; ++row) {
+            for (int col = 0; col < 8; ++col) {
+                if (row != 8) {
+                    result.add(new QuestBackground(new Point(col, row),
+                            GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)]));
+                }
+            }
+        }
+        final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
+                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+        final Sprite field = new Sprite32x32("field", "quest.png", 0x63,
+                MyColors.BLACK, MyColors.YELLOW, MyColors.DARK_GREEN, MyColors.GREEN);
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (j == 1 && i == 1) {
+                    result.add(new QuestBackground(new Point(1+i, 1+j), townSprite));
+                } else {
+                    result.add(new QuestBackground(new Point(1+i, 1+j), field));
+                }
+            }
+        }
+
+        final Sprite halfTown = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
+                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(0, 0), halfTown, true));
+        return result;
+    }
+
+    private static LoopingSprite makePeasantSprite(Race race, MyColors shirtColor) {
+        LoopingSprite spr = new LoopingSprite("peasantavatar", "enemies.png", 0x57, 32);
+        spr.setColor1(MyColors.BLACK);
+        spr.setColor2(shirtColor);
+        spr.setColor3(race.getColor());
+        spr.setColor4(MyColors.BROWN);
+        spr.setFrames(4);
+        return spr;
+    }
+
+    private static class PeasantCountJunction extends CountingJunction {
+        private boolean hasPassed = false;
+        private Race race = MyRandom.randInt(2)==0 ? Race.NORTHERN_HUMAN : Race.SOUTHERN_HUMAN;
+        private MyColors shirtColor = MyRandom.randInt(2)==0?MyColors.YELLOW:MyColors.ORC_GREEN;
+        public final LoopingSprite peasantAvatar = makePeasantSprite(race, shirtColor);
+        public final Sprite32x32 peasantStanding =
+                new Sprite32x32("peasantsitting", "enemies.png", 0x5B,
+                MyColors.BLACK, shirtColor, race.getColor(), MyColors.BROWN);
+
+        public PeasantCountJunction(int col, int row, QuestEdge questEdge) {
+            super(col, row, questEdge);
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            this.hasPassed = true;
             return super.run(model, state);
+        }
+
+        @Override
+        public String getDescription() {
+            if (hasPassed) {
+                return "Rallied Peasant";
+            }
+            return "Peasant";
+        }
+
+        @Override
+        public void drawYourself(Model model, int xPos, int yPos) {
+            super.drawYourself(model, xPos, yPos);
+            if (hasPassed) {
+                model.getScreenHandler().register(peasantAvatar.getName(), new Point(xPos, yPos), peasantAvatar, 1);
+            } else {
+                model.getScreenHandler().register(peasantStanding.getName(), new Point(xPos, yPos), peasantStanding, 1);
+            }
         }
     }
 }

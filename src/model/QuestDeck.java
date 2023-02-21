@@ -16,10 +16,10 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
     public Quest getRandomQuest() {
         return MyRandom.sample(List.of(
-//                 new DeepDungeonQuest(),
-//                 new MansionHeistQuest(),
-//                 new UnsuspectingLoversQuest(),
-//                new MissingBrotherQuest(),
+                 new DeepDungeonQuest(),
+                 new MansionHeistQuest(),
+                 new UnsuspectingLoversQuest(),
+                new MissingBrotherQuest(),
                 new DefendTheVillageQuest()
         ));
     }

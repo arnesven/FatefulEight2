@@ -377,7 +377,7 @@ public class GameCharacter extends Combatant {
     }
 
     public int getMaxSP() {
-        return 2;
+        return 2 + (equipment.getAccessory()!=null?equipment.getAccessory().getSPBonus():0);
     }
 
     public Equipment getEquipment() {
