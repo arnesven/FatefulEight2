@@ -35,7 +35,7 @@ public class PayGoldSubScene extends QuestSubScene {
         if (!leaderSpeak.equals("")) {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderSpeak);
         }
-        int amount = model.getParty().size() * gold;
+        int amount = Math.min(model.getParty().getGold(), model.getParty().size() * gold);
         state.print("Paying " + amount + " gold. Press enter to continue.");
         state.waitForReturn();
         model.getParty().addToGold(-amount);

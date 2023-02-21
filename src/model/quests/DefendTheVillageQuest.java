@@ -125,7 +125,7 @@ public class DefendTheVillageQuest extends Quest {
 
         @Override
         protected String getCombatDetails() {
-            return "bandits";
+            return "Bandits";
         }
 
         @Override
