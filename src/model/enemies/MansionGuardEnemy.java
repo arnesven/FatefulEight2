@@ -2,7 +2,7 @@ package model.enemies;
 
 public class MansionGuardEnemy extends BanditEnemy {
     public MansionGuardEnemy(char a) {
-        super(a);
+        super(a, "Guard", 4);
     }
 
     @Override
@@ -10,8 +10,4 @@ public class MansionGuardEnemy extends BanditEnemy {
         return "Guard";
     }
 
-    @Override
-    public int getMaxHP() {
-        return 4;
-    }
 }
