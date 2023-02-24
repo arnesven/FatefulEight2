@@ -101,4 +101,8 @@ public abstract class HexLocation implements Serializable {
     public void setFlag(int flag) {
         this.flag = flag;
     }
+
+    public Sprite getTownOrCastleSprite() {
+        return null;
+    }
 }

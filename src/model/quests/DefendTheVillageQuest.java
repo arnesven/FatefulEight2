@@ -118,6 +118,11 @@ public class DefendTheVillageQuest extends Quest {
         return MyColors.GREEN;
     }
 
+    @Override
+    public boolean drawTownOrCastleInBackground() {
+        return true;
+    }
+
     private class VariableBanditCombatSubScene extends CombatSubScene {
         public VariableBanditCombatSubScene(int col, int row) {
             super(col, row, List.of(new BanditEnemy('A', "Bandit", 5)), true);
@@ -169,9 +174,6 @@ public class DefendTheVillageQuest extends Quest {
             }
         }
 
-        final Sprite halfTown = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
-                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
-        result.add(new QuestBackground(new Point(0, 0), halfTown, true));
         return result;
     }
 

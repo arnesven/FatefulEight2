@@ -50,7 +50,6 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     private void refresh() {
-        System.out.println(" REFRESH START");
         grid = new PortraitSprite[7][7];
         this.grid[0][0] = FRAME_UL_CORNER;
         this.grid[1][0] = FRAME_TOP;

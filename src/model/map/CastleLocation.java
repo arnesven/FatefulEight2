@@ -11,6 +11,7 @@ import sound.ClientSoundManager;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.*;
 
 import java.awt.Point;
@@ -20,12 +21,15 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     private final String lordName;
     private MyColors castleColor;
     private final SubView subView;
+    private Sprite questSprite;
 
     public CastleLocation(String castleName, MyColors castleColor, String lordName) {
         super(castleName);
         this.castleColor = castleColor;
         this.lordName = lordName;
         subView = new ImageSubView("castle", "CASTLE", castleName, true);
+        questSprite = new Sprite32x32("halfcastleq", "quest.png", 0x64,
+                MyColors.BLACK, MyColors.LIGHT_GRAY, this.castleColor, MyColors.GREEN);
     }
 
     @Override
@@ -114,5 +118,10 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     public String getLordTitle() {
         return lordName.split(" ")[0].toLowerCase();
+    }
+
+    @Override
+    public Sprite getTownOrCastleSprite() {
+        return questSprite;
     }
 }

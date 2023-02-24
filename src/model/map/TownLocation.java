@@ -14,6 +14,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.DailyActionSubView;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
@@ -27,6 +28,8 @@ public class TownLocation extends HexLocation implements UrbanLocation {
     private final SubView subView;
     private final String lordName;
     private final boolean isCoastal;
+    private final Sprite QUEST_SPRITE = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
+            MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
 
     public TownLocation(String townName, String lordName, boolean isCoastal) {
         super("Town of " + townName);
@@ -133,5 +136,10 @@ public class TownLocation extends HexLocation implements UrbanLocation {
 
     public boolean noBoat() {
         return false;
+    }
+
+    @Override
+    public Sprite getTownOrCastleSprite() {
+        return QUEST_SPRITE;
     }
 }

@@ -351,7 +351,7 @@ public class World implements Serializable {
             World.move(current, direction.x, direction.y);
             Point target = getPositionForHex(wp.getHex());
             if (wp.getDirection() == opDir && current.x == target.x && current.y == target.y) {
-                System.out.println("Found opposing water path at " + x + "," + y);
+                //System.out.println("Found opposing water path at " + x + "," + y);
                 return wp;
             }
         }

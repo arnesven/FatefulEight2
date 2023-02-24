@@ -115,6 +115,11 @@ public class MissingBrotherQuest extends Quest {
     }
 
     @Override
+    public boolean drawTownOrCastleInBackground() {
+        return true;
+    }
+
+    @Override
     public List<QuestBackground> getBackgroundSprites() {
         return bgSprites;
     }
@@ -171,9 +176,6 @@ public class MissingBrotherQuest extends Quest {
         final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
                 MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
         result.add(new QuestBackground(new Point(7, 6), townSprite));
-        final Sprite halfTown = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
-                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
-        result.add(new QuestBackground(new Point(0, 0), halfTown, true));
         final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
                 MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
         result.add(new QuestBackground(new Point(6, 2), woods, true));

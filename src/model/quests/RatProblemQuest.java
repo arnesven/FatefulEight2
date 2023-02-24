@@ -7,9 +7,14 @@ import model.enemies.RatEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import view.MyColors;
+import view.sprites.Sprite32x32;
+import view.subviews.GrassCombatTheme;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RatProblemQuest extends Quest {
     private static final String TEXT =
@@ -23,6 +28,8 @@ public class RatProblemQuest extends Quest {
             "With the rat problem dealt with you head back " +
             "to town, lugging plenty of dead rats. The " +
             "merchant indeed pays handsomely for them.";
+
+    private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public RatProblemQuest() {
         super("Rat Problem", "granny Petronella", QuestDifficulty.MEDIUM, 1, 35, 0, TEXT, END_TEXT);
@@ -74,7 +81,50 @@ public class RatProblemQuest extends Quest {
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.GREEN;
+        return MyColors.GRAY_RED;
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
+    @Override
+    public boolean drawTownOrCastleInBackground() {
+        return true;
+    }
+
+    private static List<QuestBackground> makeBackgroundSprites() {
+        List<QuestBackground> result = new ArrayList<>();
+        Random rand = new Random(1234);
+        for (int row = 0; row < 9; ++row) {
+            for (int col = 0; col < 3; ++col) {
+                result.add(new QuestBackground(new Point(col, row),
+                        GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)]));
+                    if (row == 8) {
+                        result.add(new QuestBackground(new Point(col, row),
+                                GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)], false));
+                    }
+            }
+        }
+        Sprite32x32 ulCorner = new Sprite32x32("ulcorner", "quest.png", 0x36,
+                MyColors.GRAY_RED, MyColors.LIGHT_GRAY, MyColors.GREEN);
+        Sprite32x32 llCorner = new Sprite32x32("llcorner", "quest.png", 0x37,
+                MyColors.GRAY_RED, MyColors.LIGHT_GRAY, MyColors.GREEN, MyColors.BLACK);
+        Sprite32x32 wall = new Sprite32x32("wall", "quest.png", 0x35,
+                MyColors.GRAY_RED, MyColors.GREEN, MyColors.GRAY_RED);
+        result.add(new QuestBackground(new Point(3, 0), ulCorner));
+        for (int row = 1; row < 9; ++row) {
+            result.add(new QuestBackground(new Point(3, row), wall));
+        }
+        result.add(new QuestBackground(new Point(3, 8), llCorner, false));
+        Sprite32x32 hwall = new Sprite32x32("hwall", "quest.png", 0x27,
+                MyColors.GRAY_RED, MyColors.LIGHT_GRAY, MyColors.GRAY_RED, MyColors.BLACK);
+        for (int col = 4; col < 8; col++) {
+            result.add(new QuestBackground(new Point(col, 0), hwall));
+            result.add(new QuestBackground(new Point(col, 8), hwall, false));
+        }
+        return result;
     }
 
     private static class RatCombatSubScene extends CombatSubScene {

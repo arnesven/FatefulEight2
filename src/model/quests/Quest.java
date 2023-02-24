@@ -107,4 +107,8 @@ public abstract class Quest implements Serializable {
     public CombatTheme getCombatTheme() {
         return new DungeonTheme();
     }
+
+    public boolean drawTownOrCastleInBackground() {
+        return false;
+    }
 }
