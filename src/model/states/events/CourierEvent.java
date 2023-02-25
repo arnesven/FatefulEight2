@@ -20,10 +20,19 @@ public class CourierEvent extends DailyEventState {
         this(model, true);
     }
 
-                        @Override
+    @Override
     protected void doEvent(Model model) {
         List<UrbanLocation> list = model.getWorld().getLordLocations();
-        UrbanLocation destination = MyRandom.sample(list);
+        if (model.getParty().getSummons().size() == list.size()) {
+            new NoEventState(model).run(model);
+            return;
+        }
+
+        UrbanLocation destination;
+        do {
+            destination = MyRandom.sample(list);
+        } while (model.getParty().getSummons().containsKey(destination.getPlaceName()));
+
         if (withIntro) {
             println("A courier catches up to you and asks you to stop while he catches his breath.");
         }
@@ -34,6 +43,6 @@ public class CourierEvent extends DailyEventState {
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Do you know what this is about?");
         println("\"Sorry, I'm just a messenger.\" And he quickly takes off in the same direction from which he came.");
         println("You put the letter in your pocket and continue on your journey.");
-        model.getParty().addDestination(destination);
+        model.getParty().addSummon(destination);
     }
 }

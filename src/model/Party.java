@@ -23,8 +23,7 @@ import view.subviews.SubView;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 public class Party implements Serializable {
@@ -37,7 +36,7 @@ public class Party implements Serializable {
     private List<GameCharacter> frontRow = new ArrayList<>();
     private List<GameCharacter> backRow = new ArrayList<>();
     private List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
-    private List<String> destinations = new ArrayList<>();
+    private Map<String, Summon> summons = new HashMap<>();
     private Point position;
     private Point previousPosition;
     private int gold = 30;
@@ -48,8 +47,9 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
+        position = new Point(13, 7);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
+        summons.put("the Town of Lower Theln", new Summon());
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -322,9 +322,10 @@ public class Party implements Serializable {
         return size() * 20;
     }
 
-    public void addDestination(UrbanLocation destination) {
-        // TODO: Give these some in-game meaning.
-        this.destinations.add(destination.getPlaceName());
+    public void addSummon(UrbanLocation destination) {
+        if (!summons.containsKey(destination.getPlaceName())) {
+            this.summons.put(destination.getPlaceName(), new Summon());
+        }
     }
 
     public void giveXP(Model model, GameCharacter gc, int xp) {
@@ -527,5 +528,9 @@ public class Party implements Serializable {
             gc = getRandomPartyMember();
         }
         return gc;
+    }
+
+    public Map<String, Summon> getSummons() {
+        return summons;
     }
 }

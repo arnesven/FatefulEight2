@@ -189,6 +189,8 @@ public abstract class WorldHex implements Serializable {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
+        return new CourierEvent(model);
+        /*
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8 ) {
             List<DailyEventState> events = new ArrayList<>();
@@ -207,6 +209,8 @@ public abstract class WorldHex implements Serializable {
             return generateTerrainSpecificEvent(model);
         }
         return new NoEventState(model);
+
+         */
     }
 
     public void travelTo(Model model) {

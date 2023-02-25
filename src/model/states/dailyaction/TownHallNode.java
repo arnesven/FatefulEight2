@@ -2,8 +2,10 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.TimeOfDay;
+import model.map.UrbanLocation;
 import model.states.EveningState;
 import model.states.GameState;
+import model.states.events.SilentNoEventState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -24,7 +26,12 @@ public class TownHallNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new VisitTownHallEvent(model);
+        if (model.getParty().getSummons().containsKey(((UrbanLocation)model.getCurrentHex().getLocation()).getPlaceName())) {
+            state.println("You have been admitted to town hall!");
+            return new TownHallDailyActionState(model);
+        }
+        state.println("You are not admitted to the town hall today.");
+        return new SilentNoEventState(model);
     }
 
     @Override
@@ -58,18 +65,6 @@ public class TownHallNode extends DailyActionNode {
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
         if (state.isMorning()) {
             model.setTimeOfDay(TimeOfDay.MIDDAY);
-        }
-    }
-
-    private static class VisitTownHallEvent extends GameState {
-        public VisitTownHallEvent(Model model) {
-            super(model);
-        }
-
-        @Override
-        public GameState run(Model model) {
-            println("You are not admitted to the town hall today.");
-            return new EveningState(model);
         }
     }
 }
