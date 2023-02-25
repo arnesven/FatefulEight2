@@ -143,7 +143,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 6, 12, 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 7, 12, 0, SOUTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 8, 12, 0, SOUTH_WEST | SOUTH);
-        addTown(contents, 9, 12, new AckervilleTown(), 0, 0);
+        addTown(contents, 9, 12, new AckervilleTown(), 0, SOUTH);
         addRoadsAndRivers(contents, 12, 12, NORTH | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 23, 12, SOUTH_EAST | NORTH_WEST, 0);
         addRoadsAndRivers(contents, 24, 12, SOUTH | NORTH_WEST, 0);

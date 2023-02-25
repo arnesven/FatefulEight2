@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
+import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
@@ -41,6 +42,11 @@ public class LizardmanEnemy extends Enemy {
     private static class LizardmanSprite extends LoopingSprite {
         public LizardmanSprite() {
             super("lizardman", "enemies.png", 0x62, 32);
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.ORANGE);
+            setColor3(MyColors.DARK_RED);
+            setColor4(MyColors.LIGHT_GRAY);
+            setFrames(1);
         }
     }
 }

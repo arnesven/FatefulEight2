@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AckervilleTown extends TownLocation {
     public AckervilleTown() {
-        super("Ackerville", "Elder Treya", false);
+        super("Ackerville", "Elder Treya", true);
     }
 
     @Override
