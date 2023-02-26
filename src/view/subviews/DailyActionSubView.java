@@ -2,14 +2,17 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.characters.GameCharacter;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
 import sprites.CombatCursorSprite;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public abstract class DailyActionSubView extends AvatarSubView {
 
@@ -99,5 +102,22 @@ public abstract class DailyActionSubView extends AvatarSubView {
 
     public void setCursorEnabled(boolean b) {
         cursorEnabled = b;
+    }
+
+    protected void drawForeground(Model model, int x, int y, Sprite sprite) {
+        Point p = convertToScreen(new Point(x, y));
+        model.getScreenHandler().register(sprite.getName(), p, sprite);
+    }
+
+    protected void drawPartyArea(Model model, List<Point> points) {
+        int i = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (!gc.isLeader()) {
+                LoopingSprite spr = gc.getAvatarSprite();
+                spr.synch();
+                drawForeground(model, points.get(i).x, points.get(i).y, spr);
+                i++;
+            }
+        }
     }
 }

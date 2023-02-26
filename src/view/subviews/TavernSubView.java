@@ -93,23 +93,12 @@ public class TavernSubView extends DailyActionSubView {
 
         drawDecorations(model);
         drawRecruitArea(model);
-        drawPartyArea(model);
+        drawPartyArea(model, List.of(new Point(6, 6), new Point(6, 5),
+                new Point(5, 6), new Point(6, 4), new Point(4, 6),
+                new Point(5, 4), new Point(4, 5)));
     }
 
-    private void drawPartyArea(Model model) {
-        List<Point> points = List.of(new Point(6, 6), new Point(6, 5),
-                new Point(5, 6), new Point(6, 4), new Point(4, 6),
-                new Point(5, 4), new Point(4, 5));
-        int i = 0;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (!gc.isLeader()) {
-                LoopingSprite spr = gc.getAvatarSprite();
-                spr.synch();
-                drawForeground(model, points.get(i).x, points.get(i).y, spr);
-                i++;
-            }
-        }
-    }
+
 
     private void drawDecorations(Model model) {
         drawForeground(model, 3, 0, WINDOW);
@@ -135,11 +124,6 @@ public class TavernSubView extends DailyActionSubView {
         if (showColorGuys[2]) {
             drawForeground(model, 2, 6, colorGuys[2]);
         }
-    }
-
-    private void drawForeground(Model model, int x, int y, Sprite sprite) {
-        Point p = convertToScreen(new Point(x, y));
-        model.getScreenHandler().register(sprite.getName(), p, sprite);
     }
 
     @Override

@@ -11,6 +11,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Random;
 
 public class TownHallSubView extends DailyActionSubView {
@@ -56,11 +57,9 @@ public class TownHallSubView extends DailyActionSubView {
             }
         }
         drawDecorations(model);
-    }
-
-    private void drawForeground(Model model, int x, int y, Sprite sprite) {
-        Point p = convertToScreen(new Point(x, y));
-        model.getScreenHandler().register(sprite.getName(), p, sprite);
+        drawPartyArea(model, List.of(new Point(2, 5), new Point(4, 5),
+                new Point(2, 6), new Point(4, 6), new Point(5, 5),
+                new Point(5, 6), new Point(2, 4)));
     }
 
     private void drawDecorations(Model model) {
