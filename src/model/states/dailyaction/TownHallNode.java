@@ -19,6 +19,7 @@ public class TownHallNode extends DailyActionNode {
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SPRITE2 = new Sprite32x32("townhallright", "world_foreground.png", 0x63,
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+    private boolean admitted = false;
 
     public TownHallNode() {
         super("Town Hall");
@@ -26,12 +27,19 @@ public class TownHallNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        if (model.getParty().getSummons().containsKey(((UrbanLocation)model.getCurrentHex().getLocation()).getPlaceName())) {
+        UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
+        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             state.println("You have been admitted to town hall!");
-            return new TownHallDailyActionState(model);
+            admitted = true;
+            return new TownHallDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
         }
         state.println("You are not admitted to the town hall today.");
         return new SilentNoEventState(model);
+    }
+
+    @Override
+    public boolean returnNextState() {
+        return admitted;
     }
 
     @Override
@@ -62,9 +70,5 @@ public class TownHallNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
-        if (state.isMorning()) {
-            model.setTimeOfDay(TimeOfDay.MIDDAY);
-        }
-    }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 }
