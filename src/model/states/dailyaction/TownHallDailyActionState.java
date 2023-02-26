@@ -5,8 +5,10 @@ import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
 import model.map.UrbanLocation;
+import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
+import model.states.events.SummonTask;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownHallSubView;
@@ -102,7 +104,8 @@ public class TownHallDailyActionState extends AdvancedDailyActionState {
                 summon.increaseStep();
             }
             if (summon.getStep() != Summon.COMPLETE) {
-                summon.doTask(model, location); // TODO: If you fail in doing the task, you should be thrown out of town hall, and it should be evening...
+                SummonTask task = summon.getTask(model, location);
+                task.doTask(model);
             }
 
             if (summon.getStep() == Summon.COMPLETE) {

@@ -3,6 +3,7 @@ package model;
 import model.classes.Skill;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
+import model.states.events.SummonTask;
 
 import java.io.Serializable;
 
@@ -12,8 +13,9 @@ public class Summon implements Serializable {
     public static final int COMPLETE = 2;
     private int step = ACCEPTED;
 
-    public void doTask(Model model, UrbanLocation location) {
-        new MissingGlassesTask(model, location).doEvent(model);
+    public SummonTask getTask(Model model, UrbanLocation location) {
+        // TODO: Add a bunch more and keep track of which ones have been used.
+        return new MissingGlassesTask(model, location);
     }
 
     public int getStep() {
@@ -24,7 +26,7 @@ public class Summon implements Serializable {
         step++;
     }
 
-    private class MissingGlassesTask extends DailyEventState {
+    private class MissingGlassesTask extends SummonTask {
         private final UrbanLocation location;
 
         public MissingGlassesTask(Model model, UrbanLocation location) {
