@@ -31,6 +31,8 @@ public class TownHallSubView extends DailyActionSubView {
             MyColors.BLACK, MyColors.DARK_BLUE, Race.NORTHERN_HUMAN.getColor(), MyColors.PURPLE);
     private static final Sprite THRONE = new Sprite32x32("throne", "world_foreground.png", 0x66,
             MyColors.DARK_BROWN, MyColors.GOLD, MyColors.RED, MyColors.CYAN);
+    private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
+            MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
 
     public TownHallSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
         super(state, matrix);
@@ -63,8 +65,14 @@ public class TownHallSubView extends DailyActionSubView {
     }
 
     private void drawDecorations(Model model) {
-        drawForeground(model, 1, 1, PLANT);
-        drawForeground(model, 6, 1, PLANT);
+        drawForeground(model, 1, 0, WINDOW);
+        drawForeground(model, 3, 0, WINDOW);
+        drawForeground(model, 4, 0, WINDOW);
+        drawForeground(model, 6, 0, WINDOW);
+        drawForeground(model, 0, 1, PLANT);
+        drawForeground(model, 7, 1, PLANT);
+        drawForeground(model, 0, 6, PLANT);
+        drawForeground(model, 7, 6, PLANT);
         drawForeground(model, 4, 1, THRONE);
         drawForeground(model, 4, 2, LORD);
     }

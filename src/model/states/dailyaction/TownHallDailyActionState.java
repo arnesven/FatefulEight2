@@ -55,13 +55,20 @@ public class TownHallDailyActionState extends AdvancedDailyActionState {
 
         @Override
         public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-            return true;
+            if (state.isEvening() && summon.getStep() != Summon.COMPLETE) {
+                state.println(location.getLordName() + ": \"I'm sorry but it's too late in the day now. Please come back tomorrow.\"");
+            }
+            return !state.isEvening();
         }
 
         @Override
         public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
-            if (!spentNight && state.isMorning()) {
-                model.setTimeOfDay(TimeOfDay.MIDDAY);
+            if (!spentNight) {
+                if (state.isMorning()) {
+                    model.setTimeOfDay(TimeOfDay.MIDDAY);
+                } else if (!state.isEvening()) {
+                    model.setTimeOfDay(TimeOfDay.EVENING);
+                }
             }
         }
 
@@ -95,7 +102,7 @@ public class TownHallDailyActionState extends AdvancedDailyActionState {
                 summon.increaseStep();
             }
             if (summon.getStep() != Summon.COMPLETE) {
-                summon.doTask(model, location);
+                summon.doTask(model, location); // TODO: If you fail in doing the task, you should be thrown out of town hall, and it should be evening...
             }
 
             if (summon.getStep() == Summon.COMPLETE) {
