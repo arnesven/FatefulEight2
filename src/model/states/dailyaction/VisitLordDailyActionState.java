@@ -56,8 +56,9 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
         public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
             if (state.isEvening() && summon.getStep() != Summon.COMPLETE) {
                 state.println(location.getLordName() + ": \"I'm sorry but it's too late in the day now. Please come back tomorrow.\"");
+                return false;
             }
-            return !state.isEvening();
+            return true;
         }
 
         @Override

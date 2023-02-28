@@ -28,14 +28,19 @@ public class GoToCastleActionNode extends DailyActionNode {
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
         if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
-            state.println("Guard: \"Hey you! Stop right there! Where do you think you're going?\"");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
-            state.println("Guard: \"Do you have an invitation?\"");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Yes, it's right here...");
-            state.println("Guard: \"Very well, proceed inside.\"");
-            model.getLog().waitForAnimationToFinish();
+            Summon summon = model.getParty().getSummons().get(location.getPlaceName());
+            if (summon.getStep() == Summon.ACCEPTED) {
+                state.println("Guard: \"Hey you! Stop right there! Where do you think you're going?\"");
+                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
+                state.println("Guard: \"Do you have an invitation?\"");
+                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Yes, it's right here...");
+                state.println("Guard: \"Very well, proceed inside.\"");
+                model.getLog().waitForAnimationToFinish();
+            } else {
+                state.println("You were admitted to the keep.");
+            }
             admitted = true;
-            return new VisitCastleLordDailyActionNode(model, model.getParty().getSummons().get(location.getPlaceName()), location);
+            return new VisitCastleLordDailyActionNode(model, summon, location);
         }
         return new VisitCastleEvent(model);
     }

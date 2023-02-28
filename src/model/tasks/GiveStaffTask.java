@@ -38,7 +38,7 @@ public class GiveStaffTask extends SummonTask {
                 model.getParty().getInventory().remove(staff);
                 summon.increaseStep();
                 println(location.getLordName() + ": \"Heavens bless you! Now I can finally move around again. " +
-                        "Why don't we take that tour of the castle? There is so much to see!\"");
+                        "Why don't we take that tour of the castle now? There is so much to see and tell!\"");
                 println("Each party member gains 50 experience!");
                 model.getLog().waitForAnimationToFinish();
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
