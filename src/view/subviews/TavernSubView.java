@@ -32,8 +32,10 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.BLACK, MyColors.TAN, Race.NORTHERN_HUMAN.getColor(), MyColors.BEIGE);
     private static final Sprite BAR_LOWER = new Sprite32x32("barlower", "world_foreground.png", 0x25,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN);
-    private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
-            MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+    private static final Sprite FIREPLACE = new Sprite32x32("fireplace", "world_foreground.png", 0x68,
+            MyColors.DARK_GRAY, MyColors.YELLOW, MyColors.RED, MyColors.GRAY);
+    private static final Sprite CHIMNEY = new Sprite32x32("fireplace", "world_foreground.png", 0x69,
+            MyColors.DARK_GRAY, MyColors.YELLOW, MyColors.RED, MyColors.GRAY);
     private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private static final Sprite MERCHANT = new Sprite32x32("merchant", "world_foreground.png", 0x65,
@@ -103,7 +105,8 @@ public class TavernSubView extends DailyActionSubView {
 
 
     private void drawDecorations(Model model) {
-        drawForeground(model, 3, 0, WINDOW);
+        drawForeground(model, 3, 0, CHIMNEY);
+        drawForeground(model, 3, 1, FIREPLACE);
         drawForeground(model, 1, 1, PLANT);
         drawForeground(model, 1, 3, BAR_UPPER);
         drawForeground(model, 1, 4, BAR_LOWER);

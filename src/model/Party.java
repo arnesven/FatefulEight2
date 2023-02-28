@@ -50,10 +50,10 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(1, 3);  // Inn is at 12,9, castle at 1,3
+        position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
-        summons.put("the Town of Lower Theln", new Summon()); //TODO: Remove
-        summons.put("Bogdown Castle", new Summon());
+        //summons.put("the Town of Lower Theln", new Summon()); //TODO: Remove
+        //summons.put("Bogdown Castle", new Summon());
     }
 
     private LoopingSprite[] makeCursorSprites() {
