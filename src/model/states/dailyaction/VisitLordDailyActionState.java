@@ -7,7 +7,7 @@ import model.TimeOfDay;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
-import model.states.events.SummonTask;
+import model.tasks.SummonTask;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownHallSubView;

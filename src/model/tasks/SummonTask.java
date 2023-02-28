@@ -1,4 +1,4 @@
-package model.states.events;
+package model.tasks;
 
 import model.Model;
 import model.states.DailyEventState;

@@ -7,6 +7,9 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
+import model.items.weapons.LongStaff;
+import model.items.weapons.MagesStaff;
+import model.items.weapons.OldStaff;
 import model.map.UrbanLocation;
 import model.map.World;
 import model.states.GameState;
@@ -47,7 +50,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(13, 7);  // Inn is at 12,9, castle at 1,3
+        position = new Point(1, 3);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
         summons.put("the Town of Lower Theln", new Summon()); //TODO: Remove
         summons.put("Bogdown Castle", new Summon());
