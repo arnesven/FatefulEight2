@@ -65,6 +65,7 @@ public class Model {
             throw ex;
         }
         gameStarted = true;
+        playMainSong();
     }
 
     public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {
@@ -85,6 +86,7 @@ public class Model {
     public void startGameNoLoad() {
         state = new ChooseStartingCharacterState(this);
         gameStarted = true;
+        playMainSong();
     }
 
     public boolean gameStarted() {
@@ -182,7 +184,6 @@ public class Model {
     }
 
     public void runGameScript() {
-        playMainSong();
         while (!gameExited()) {
             GameState nextState = state.run(this);
             if (nextState != null) {

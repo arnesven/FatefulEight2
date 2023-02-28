@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import sound.SoundEffects;
 import view.sprites.Animation;
 import view.sprites.AnimationManager;
 import view.sprites.Sprite;
@@ -10,7 +11,11 @@ import java.awt.event.KeyEvent;
 
 public class IntroGameView extends GameView implements Animation {
 
-    private static final long ANIMATION_START_MS = 2000;
+    private static final long ANIMATION_START_MS = 12000;
+    private static final long THUNDER_START_MS = 3700;
+    private static final long FANFARE_START_MS = 3000;
+    private static final String START_SOUND = "Rise03";
+    private static final String JINGLE_SOUND = "Rise06";
     private static Sprite splashSprite = makeSprite();
     private static Sprite[] titleSprites = makeTitle();
     private int aniIndex = 0;
@@ -20,6 +25,11 @@ public class IntroGameView extends GameView implements Animation {
     private boolean fading = true;
     private double fadeLevel = 1.0;
     private long totalTime = 0;
+    private boolean thunder = false;
+    private boolean fanfare = false;
+    private boolean jingle = false;
+
+    private boolean aniDone = false;
 
     public IntroGameView() {
         super(true);
@@ -28,7 +38,10 @@ public class IntroGameView extends GameView implements Animation {
 
     @Override
     public void transitionedTo(Model model) {
-
+        SoundEffects.preload("thunder", true);
+        SoundEffects.preload("intro_fanfare", false);
+        SoundEffects.preload(JINGLE_SOUND, false);
+        SoundEffects.preload(START_SOUND, false);
     }
 
     @Override
@@ -43,7 +56,9 @@ public class IntroGameView extends GameView implements Animation {
         model.getScreenHandler().clearForeground();
         if (!fading) {
             model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex]);
-            BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 40, MyColors.WHITE);
+            if (aniDone) {
+                BorderFrame.drawCentered(model.getScreenHandler(), "- Press any key -", 40, MyColors.WHITE);
+            }
         }
         model.getScreenHandler().setFade(fadeLevel, MyColors.BLACK);
     }
@@ -56,6 +71,7 @@ public class IntroGameView extends GameView implements Animation {
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         super.setTimeToTransition(true);
+        SoundEffects.playSound(START_SOUND);
     }
 
 
@@ -71,6 +87,10 @@ public class IntroGameView extends GameView implements Animation {
         if (fading && totalTime > 1000) {
             double newFade = fadeLevel - (double) elapsedTimeMs / 3000.0;
             fadeLevel = newFade;
+            if (totalTime > THUNDER_START_MS && !thunder) {
+                SoundEffects.playSound("thunder");
+                thunder = true;
+            }
             if (fadeLevel <= 0) {
                 fadeLevel = 0.0;
                 fading = false;
@@ -79,8 +99,17 @@ public class IntroGameView extends GameView implements Animation {
             madeChanges();
         } else {
             animationTime += elapsedTimeMs;
+            if (animationTime > FANFARE_START_MS && !fanfare) {
+                SoundEffects.playSound("intro_fanfare");
+                fanfare = true;
+            }
+            
             if (animationTime > ANIMATION_START_MS) {
                 runAnimation = true;
+                if (!jingle) {
+                    SoundEffects.playSound(JINGLE_SOUND);
+                    jingle = true;
+                }
             }
 
             if (runAnimation) {
@@ -88,7 +117,8 @@ public class IntroGameView extends GameView implements Animation {
                 if (aniIndex >= titleSprites.length) {
                     aniIndex = 0;
                     runAnimation = false;
-                    animationTime = -3 * ANIMATION_START_MS;
+                    animationTime = 0;
+                    aniDone = true;
                 }
                 madeChanges();
             }

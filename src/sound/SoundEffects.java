@@ -45,4 +45,8 @@ public class SoundEffects {
     public static void gameSaved() {
         play("save");
     }
+
+    public static void preload(String key, boolean low) {
+        ClientSoundManager.loadSoundResource(key, low);
+    }
 }
