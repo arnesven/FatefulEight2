@@ -130,6 +130,16 @@ public class TownLocation extends HexLocation implements UrbanLocation {
         return new Point(AdvancedDailyActionState.TOWN_MATRIX_COLUMNS-1, AdvancedDailyActionState.TOWN_MATRIX_ROWS-2);
     }
 
+    @Override
+    public String getLocationType() {
+        return "town";
+    }
+
+    @Override
+    public String getLordDwelling() {
+        return "Town Hall";
+    }
+
     public String getTownName() {
         return townName;
     }
@@ -141,5 +151,10 @@ public class TownLocation extends HexLocation implements UrbanLocation {
     @Override
     public Sprite getTownOrCastleSprite() {
         return QUEST_SPRITE;
+    }
+
+    @Override
+    public String getLordTitle() {
+        return getLordName().split(" ")[0].toLowerCase();
     }
 }

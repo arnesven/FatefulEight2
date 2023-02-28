@@ -17,6 +17,8 @@ public interface UrbanLocation {
     boolean noBoat();
     List<GeneralShopNode> getShops(Model model);
     DailyActionSubView makeActionSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix);
-
     Point getTravelNodePosition();
+    String getLocationType();
+    String getLordDwelling();
+    String getLordTitle();
 }

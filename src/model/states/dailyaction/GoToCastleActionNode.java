@@ -1,9 +1,9 @@
 package model.states.dailyaction;
 
 import model.Model;
-import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.map.CastleLocation;
+import model.map.UrbanLocation;
 import model.states.EveningState;
 import model.states.GameState;
 import view.sprites.Sprite;
@@ -12,15 +12,32 @@ import java.awt.*;
 
 public class GoToCastleActionNode extends DailyActionNode {
     private final CastleLocation castle;
+    private boolean admitted = false;
 
     public GoToCastleActionNode(CastleLocation location) {
-        super("Visit Castle");
+        super("Visit Keep");
         this.castle = location;
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
+        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
+            state.println("Guard: \"Hey you! Stop right there! Where do you think you're going?\"");
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
+            state.println("Guard: \"Do you have an invitation?\"");
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Yes, it's right here...");
+            state.println("Guard: \"Very well, proceed inside.\"");
+            model.getLog().waitForAnimationToFinish();
+            admitted = true;
+            return new VisitLordDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
+        }
         return new VisitCastleEvent(model);
+    }
+
+    @Override
+    public boolean returnNextState() {
+        return admitted;
     }
 
     @Override
@@ -41,11 +58,7 @@ public class GoToCastleActionNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
-        if (state.isMorning()) {
-            model.setTimeOfDay(TimeOfDay.MIDDAY);
-        }
-    }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {     }
 
     private class VisitCastleEvent extends GameState {
         public VisitCastleEvent(Model model) {

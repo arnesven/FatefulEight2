@@ -124,4 +124,14 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public Sprite getTownOrCastleSprite() {
         return questSprite;
     }
+
+    @Override
+    public String getLocationType() {
+        return "castle";
+    }
+
+    @Override
+    public String getLordDwelling() {
+        return "Keep";
+    }
 }

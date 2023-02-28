@@ -1,9 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
-import model.TimeOfDay;
 import model.map.UrbanLocation;
-import model.states.EveningState;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
 import view.MyColors;
@@ -31,7 +29,7 @@ public class TownHallNode extends DailyActionNode {
         if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             state.println("You have been admitted to town hall!");
             admitted = true;
-            return new TownHallDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
+            return new VisitLordDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
         }
         state.println("You are not admitted to the town hall today.");
         return new SilentNoEventState(model);

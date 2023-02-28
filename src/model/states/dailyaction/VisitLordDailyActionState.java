@@ -5,7 +5,6 @@ import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
 import model.map.UrbanLocation;
-import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
 import model.states.events.SummonTask;
@@ -16,18 +15,18 @@ import view.subviews.TownHallSubView;
 import java.util.List;
 import java.awt.*;
 
-public class TownHallDailyActionState extends AdvancedDailyActionState {
+public class VisitLordDailyActionState extends AdvancedDailyActionState {
     private final Summon summon;
     private final UrbanLocation location;
     private boolean spentNight;
 
-    public TownHallDailyActionState(Model model, Summon summon, UrbanLocation location) {
+    public VisitLordDailyActionState(Model model, Summon summon, UrbanLocation location) {
         super(model);
         this.summon = summon;
         this.location = location;
         spentNight = false;
         addNode(4, 3, new TalkToLordNode());
-        addNode(3, 7, new ExitLocaleNode("Leave Town Hall"));
+        addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling()));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class TownHallDailyActionState extends AdvancedDailyActionState {
 
     private class TalkToLordNode extends DailyActionNode {
         public TalkToLordNode() {
-            super("Talk to Lord");
+            super("Talk to " + location.getLordTitle());
         }
 
         @Override
@@ -95,7 +94,7 @@ public class TownHallDailyActionState extends AdvancedDailyActionState {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Yes, that's me. Who are you?");
                 println(lord + ": \"I'm " + lord + ". I'm in charge here. First of all, " +
                         "let me formally welcome you to " + location.getPlaceName() +
-                        ", I hope you like our town.\"");
+                        ", I hope you like our " + location.getLocationType() + ".\"");
                 model.getParty().randomPartyMemberSay(model,
                         List.of("Enough with the formalities. What is it you want?",
                                 "Get on with it, I haven't got all day!", "It's pleasant enough I suppose.",
