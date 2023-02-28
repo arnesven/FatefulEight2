@@ -1,12 +1,17 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.SteppingMatrix;
+import model.Summon;
 import model.characters.GameCharacter;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.states.EveningState;
 import model.states.GameState;
 import view.sprites.Sprite;
+import view.subviews.DailyActionSubView;
+import view.subviews.KeepSubView;
+import view.subviews.TownHallSubView;
 
 import java.awt.*;
 
@@ -30,7 +35,7 @@ public class GoToCastleActionNode extends DailyActionNode {
             state.println("Guard: \"Very well, proceed inside.\"");
             model.getLog().waitForAnimationToFinish();
             admitted = true;
-            return new VisitLordDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
+            return new VisitCastleLordDailyActionNode(model, model.getParty().getSummons().get(location.getPlaceName()), location);
         }
         return new VisitCastleEvent(model);
     }
@@ -81,6 +86,17 @@ public class GoToCastleActionNode extends DailyActionNode {
                 model.getParty().partyMemberSay(model, other, "Come on, let's just go. This guy isn't going to let us in.");
             }
             return new EveningState(model);
+        }
+    }
+
+    private static class VisitCastleLordDailyActionNode extends VisitLordDailyActionState {
+        public VisitCastleLordDailyActionNode(Model model, Summon summon, UrbanLocation location) {
+            super(model, summon, location);
+        }
+
+        @Override
+        protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
+            return new KeepSubView(advancedDailyActionState, matrix);
         }
     }
 }

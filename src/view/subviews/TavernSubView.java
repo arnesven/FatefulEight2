@@ -15,6 +15,8 @@ import java.awt.Point;
 import java.util.List;
 import java.util.Random;
 
+import static view.subviews.TownHallSubView.DOOR;
+
 public class TavernSubView extends DailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.DARK_BROWN;
 
@@ -88,7 +90,7 @@ public class TavernSubView extends DailyActionSubView {
         }
         if (!inTown) {
             Point p = convertToScreen(TavernDailyActionState.getDoorPosition());
-            model.getScreenHandler().put(p.x, p.y, ExitTavernNode.DOOR);
+            model.getScreenHandler().put(p.x, p.y, DOOR);
         }
 
         drawDecorations(model);

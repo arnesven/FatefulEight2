@@ -15,7 +15,7 @@ import view.subviews.TownHallSubView;
 import java.util.List;
 import java.awt.*;
 
-public class VisitLordDailyActionState extends AdvancedDailyActionState {
+public abstract class VisitLordDailyActionState extends AdvancedDailyActionState {
     private final Summon summon;
     private final UrbanLocation location;
     private boolean spentNight;
@@ -26,7 +26,7 @@ public class VisitLordDailyActionState extends AdvancedDailyActionState {
         this.location = location;
         spentNight = false;
         addNode(4, 3, new TalkToLordNode());
-        addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling()));
+        addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling(), location.getExitSprite()));
     }
 
     @Override
@@ -35,9 +35,7 @@ public class VisitLordDailyActionState extends AdvancedDailyActionState {
     }
 
     @Override
-    protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return new TownHallSubView(advancedDailyActionState, matrix);
-    }
+    protected abstract DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix);
 
     private class TalkToLordNode extends DailyActionNode {
         public TalkToLordNode() {

@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.GeneralShopNode;
+import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 
 import java.awt.Point;
@@ -21,4 +22,5 @@ public interface UrbanLocation {
     String getLocationType();
     String getLordDwelling();
     String getLordTitle();
+    Sprite getExitSprite();
 }

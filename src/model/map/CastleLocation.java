@@ -134,4 +134,9 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public String getLordDwelling() {
         return "Keep";
     }
+
+    @Override
+    public Sprite getExitSprite() {
+        return KeepSubView.RUG;
+    }
 }

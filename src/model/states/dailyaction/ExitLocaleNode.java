@@ -7,11 +7,11 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 public class ExitLocaleNode extends DailyActionNode {
-    public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
-            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
+    private final Sprite bgSprite;
 
-    public ExitLocaleNode(String label) {
+    public ExitLocaleNode(String label, Sprite bgSprite) {
         super(label);
+        this.bgSprite = bgSprite;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class ExitLocaleNode extends DailyActionNode {
 
     @Override
     public Sprite getBackgroundSprite() {
-        return DOOR;
+        return bgSprite;
     }
 
     @Override

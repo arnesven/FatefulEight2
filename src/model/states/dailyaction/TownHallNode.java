@@ -1,12 +1,16 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.SteppingMatrix;
+import model.Summon;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.DailyActionSubView;
+import view.subviews.TownHallSubView;
 import view.subviews.TownSubView;
 
 import java.awt.*;
@@ -29,7 +33,7 @@ public class TownHallNode extends DailyActionNode {
         if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             state.println("You have been admitted to town hall!");
             admitted = true;
-            return new VisitLordDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
+            return new VisitMayorDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
         }
         state.println("You are not admitted to the town hall today.");
         return new SilentNoEventState(model);
@@ -69,4 +73,15 @@ public class TownHallNode extends DailyActionNode {
 
     @Override
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+
+    private static class VisitMayorDailyActionState extends VisitLordDailyActionState {
+        public VisitMayorDailyActionState(Model model, Summon summon, UrbanLocation location) {
+            super(model, summon, location);
+        }
+
+        @Override
+        protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
+            return new TownHallSubView(advancedDailyActionState, matrix);
+        }
+    }
 }

@@ -38,7 +38,7 @@ public class IntroGameView extends GameView implements Animation {
 
     @Override
     public void transitionedTo(Model model) {
-        SoundEffects.preload("thunder", true);
+        SoundEffects.preload("thunder", false);
         SoundEffects.preload("intro_fanfare", false);
         SoundEffects.preload(JINGLE_SOUND, false);
         SoundEffects.preload(START_SOUND, false);

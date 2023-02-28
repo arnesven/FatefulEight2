@@ -3,10 +3,7 @@ package model.map;
 import model.Model;
 import model.SteppingMatrix;
 import model.states.*;
-import model.states.dailyaction.AdvancedDailyActionState;
-import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.GeneralShopNode;
-import model.states.dailyaction.TownDailyActionState;
+import model.states.dailyaction.*;
 import model.states.events.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -15,10 +12,7 @@ import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.DailyActionSubView;
-import view.subviews.ImageSubView;
-import view.subviews.SubView;
-import view.subviews.TownSubView;
+import view.subviews.*;
 
 import java.awt.*;
 import java.util.List;
@@ -156,5 +150,10 @@ public class TownLocation extends HexLocation implements UrbanLocation {
     @Override
     public String getLordTitle() {
         return getLordName().split(" ")[0].toLowerCase();
+    }
+
+    @Override
+    public Sprite getExitSprite() {
+        return TownHallSubView.DOOR;
     }
 }
