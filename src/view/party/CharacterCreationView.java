@@ -68,7 +68,6 @@ public class CharacterCreationView extends SelectableListMenu {
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);
-        System.out.println("  Made app");
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
             app.applyFacialHair(raceSet[selectedRace]);

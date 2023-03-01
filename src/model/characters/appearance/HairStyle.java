@@ -18,7 +18,7 @@ public abstract class HairStyle implements Serializable {
             MyColors.DARK_BROWN, MyColors. BROWN, MyColors.TAN,
             MyColors.YELLOW, MyColors.LIGHT_YELLOW, MyColors.BEIGE,
             MyColors.LIGHT_GRAY, MyColors.WHITE,
-            MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.ORANGE,
+            MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.RED, MyColors.ORANGE,
             MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.PINK,
             MyColors.LIGHT_BLUE, MyColors.CYAN
     };
