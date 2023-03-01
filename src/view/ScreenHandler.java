@@ -27,9 +27,13 @@ public class ScreenHandler {
     }
 
     public synchronized void drawForeground(Graphics g, int xOffset, int yOffset) {
-        for (ForegroundObject obj : foregroundSprites) {
+        PriorityQueue<ForegroundObject> queue2 = new PriorityQueue<>();
+        while (!foregroundSprites.isEmpty()) {
+            ForegroundObject obj = foregroundSprites.poll();
             draw(g, obj.position, obj.sprite, xOffset + obj.xShift, yOffset + obj.yShift);
+            queue2.add(obj);
         }
+        foregroundSprites = queue2;
     }
 
     private static void draw(Graphics g, Point key, Sprite sprite, int xOffset, int yOffset) {

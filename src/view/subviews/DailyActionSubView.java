@@ -54,7 +54,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
             Point p = convertToScreen(matrix.getSelectedPoint());
             Point dx = matrix.getSelectedElement().getCursorShift();
             p.translate(dx.x, dx.y);
-            model.getScreenHandler().register("recruitcursor", p, cursor, 2);
+            model.getScreenHandler().register("recruitcursor", p, cursor, 3);
         }
     }
 
@@ -71,7 +71,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
 
     private void drawAvatar(Model model) {
         Point p = convertToScreen(state.getCurrentPosition());
-        model.getScreenHandler().register("townavatar", p, model.getParty().getLeader().getAvatarSprite());
+        model.getScreenHandler().register("townavatar", p, model.getParty().getLeader().getAvatarSprite(), 2);
     }
 
     @Override
