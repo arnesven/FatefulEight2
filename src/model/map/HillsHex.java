@@ -32,17 +32,21 @@ public class HillsHex extends WorldHex {
         if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
-                    new TrollEvent(model),
-                    new BarbarianEvent(model),
                     new WizardsAbodeEvent(model),
-                    new WatchtowerEvent(model),
                     new MineEvent(model),
-                    new CairnEvent(model),
+                    new HalfOrcEvent(model),
+                    new BarbarianEvent(model),
                     new StormEvent(model),
+                    new WatchtowerEvent(model),
+                    new DwarfEvent(model),
+                    new CairnEvent(model),
                     new HalflingVillage(model),
                     new PegasusEvent(model),
-                    new HalfOrcEvent(model),
-                    new DwarfEvent(model)
+                    new TrollEvent(model),
+                    new BanditEvent(model)
+                    // new CaveEvent();
+                    // new CaveEvent();
+                    // new CaveEvent();
             ));
         }
         return new NoEventState(model);

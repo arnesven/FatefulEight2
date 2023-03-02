@@ -100,7 +100,7 @@ public class QuestSubView extends AvatarSubView {
 
                     if (matrix.getSelectedElement() == matrix.getElementAt(col, row) && state.isCursorEnabled()) {
                         model.getScreenHandler().register("questcursor", new Point(xPos, yPos),
-                                questCursor);
+                                questCursor, 3);
                     }
                 }
             }

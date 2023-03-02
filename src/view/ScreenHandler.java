@@ -7,14 +7,16 @@ import view.sprites.Sprite;
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class ScreenHandler {
     private final int state;
-    private Map<Point, Sprite> backgroundSprites = new HashMap<>();
-    private PriorityQueue<ForegroundObject> foregroundSprites = new PriorityQueue<>();
+    private final Map<Point, Sprite> backgroundSprites = new HashMap<>();
+    private final List<ForegroundObject> foregroundSprites = new ArrayList<>();
     private boolean enableForeground = true;
     private double fadeLevel;
     private MyColors fadeColor;
+    private int oldNumberOfFgSprites = 0;
 
     public ScreenHandler() {
         this.state = 0;
@@ -27,13 +29,14 @@ public class ScreenHandler {
     }
 
     public synchronized void drawForeground(Graphics g, int xOffset, int yOffset) {
-        PriorityQueue<ForegroundObject> queue2 = new PriorityQueue<>();
-        while (!foregroundSprites.isEmpty()) {
-            ForegroundObject obj = foregroundSprites.poll();
-            draw(g, obj.position, obj.sprite, xOffset + obj.xShift, yOffset + obj.yShift);
-            queue2.add(obj);
+        if (foregroundSprites.size() != oldNumberOfFgSprites) {
+            System.out.println("Foreground objects " + foregroundSprites.size());
+            oldNumberOfFgSprites = foregroundSprites.size();
         }
-        foregroundSprites = queue2;
+        Collections.sort(foregroundSprites);
+        for (ForegroundObject obj : foregroundSprites) {
+            draw(g, obj.position, obj.sprite, xOffset + obj.xShift, yOffset + obj.yShift);
+        }
     }
 
     private static void draw(Graphics g, Point key, Sprite sprite, int xOffset, int yOffset) {

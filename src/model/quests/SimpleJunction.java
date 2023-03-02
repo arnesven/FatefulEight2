@@ -18,7 +18,7 @@ public class SimpleJunction extends QuestJunction {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
+        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
     }
 
     @Override

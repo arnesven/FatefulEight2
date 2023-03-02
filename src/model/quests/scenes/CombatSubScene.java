@@ -39,14 +39,14 @@ public abstract class CombatSubScene extends QuestSubScene {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
+        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
         if (!hasBeenDefeated()) {
             Sprite enemyAvatar = enemies.get(0).getAvatar();
             int xOff = 0;
             if (enemyAvatar.getWidth() > SPRITE.getWidth()) {
                 xOff = (SPRITE.getWidth() - enemyAvatar.getWidth()) / 8 / 2;
             }
-            model.getScreenHandler().register(enemyAvatar.getName(), new Point(xPos+xOff, yPos), enemyAvatar);
+            model.getScreenHandler().register(enemyAvatar.getName(), new Point(xPos+xOff, yPos), enemyAvatar, 1);
         }
     }
 

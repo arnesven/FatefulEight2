@@ -32,7 +32,7 @@ public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
+        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
     }
 
     @Override
