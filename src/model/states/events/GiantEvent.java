@@ -1,0 +1,31 @@
+package model.states.events;
+
+import model.Model;
+import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.states.DailyEventState;
+
+public class GiantEvent extends DailyEventState {
+    public GiantEvent(Model model) {
+        super(model);
+    }
+
+    @Override
+    protected void doEvent(Model model) {
+        println("What seemed to be a rocky outcropping was actually the " +
+                "closed fist of a stone giant. The humongous creature " +
+                "suddenly moves and the earth shakes. There is no " +
+                "fighting such a beast.");
+        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Everybody, get away!");
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, gc, Skill.Acrobatics, 6, 10, 0);
+            if (!result.isSuccessful()) {
+                println(gc.getName() + " takes 1 damage.");
+                gc.addToHP(-1);
+            }
+        }
+        model.getLog().waitForAnimationToFinish();
+        setFledCombat(true);
+    }
+}

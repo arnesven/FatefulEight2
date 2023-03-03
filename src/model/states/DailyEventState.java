@@ -71,6 +71,7 @@ public abstract class DailyEventState extends GameState {
     protected boolean haveFledCombat() {
         return fledCombat;
     }
+    protected void setFledCombat(boolean b) { fledCombat = b; }
 
     protected void removeKilledPartyMembers(Model model, boolean abandonEquipment) {
         List<GameCharacter> toRemove = new ArrayList<>();

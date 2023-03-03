@@ -35,13 +35,14 @@ public class MountainHex extends WorldHex {
                     new MinerEvent(model),
                     new MineEvent(model),
                     new StormEvent(model),
-                    // new DragonEvent(model)
                     new DragonEvent(model),
                     new DwarfEvent(model),
                     new HermitEvent(model),
                     new AltarEvent(model),
+                    new GiantEvent(model),
+                    new WoundedAdventurerEvent(model),
                     new MountainWolfEvent(model),
-                    new WoundedAdventurerEvent(model)
+                    new EaglesEvent(model)
                     // new CaveEvent(model)
                     // new CaveEvent(model)
                     // new CaveEvent(model)
