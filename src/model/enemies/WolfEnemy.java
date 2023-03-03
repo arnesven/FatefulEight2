@@ -10,14 +10,22 @@ import view.sprites.WolfSprite;
 
 public class WolfEnemy extends BigEnemy {
     private static Sprite sprite = new WolfSprite("wolf", "enemies.png", 0x30);
+    private final int health;
+    private final int damage;
+
+    public WolfEnemy(char a, int health, int damage) {
+        super(a, "Wolf");
+        this.health = health;
+        this.damage = damage;
+    }
 
     public WolfEnemy(char a) {
-        super(a, "Wolf");
+        this(a, 4, 3);
     }
 
     @Override
     public int getMaxHP() {
-        return 4;
+        return health;
     }
 
     @Override
@@ -32,7 +40,7 @@ public class WolfEnemy extends BigEnemy {
 
     @Override
     public int getDamage() {
-        return 3;
+        return damage;
     }
 
     @Override

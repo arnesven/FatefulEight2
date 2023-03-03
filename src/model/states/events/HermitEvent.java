@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.enemies.HermitEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.subviews.MountainCombatTheme;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class HermitEvent extends DailyEventState {
         int roll = MyRandom.rollD10();
         if (roll == 1) {
             println("The hermit is enraged and attacks you!");
-            runCombat(List.of(new HermitEnemy('A')));
+            runCombat(List.of(new HermitEnemy('A')), new MountainCombatTheme(), true);
         } else if (roll <= 3 || model.getParty().getFood() == 0) {
             println("The hermit seems annoyed by your attempts to converse with him. He just wanders off.");
             model.getParty().randomPartyMemberSay(model, List.of("Goodbye...?", "...", "Guess he didn't want to."));

@@ -9,6 +9,8 @@ import model.enemies.WolfEnemy;
 import model.log.GameLog;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
+import view.subviews.CombatTheme;
+import view.subviews.GrassCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +22,28 @@ public class WolfEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The sound of wolves howling is now unmistakable and the pack finally catches up with you come nightfall.");
+        println("The sound of wolves howling is now unmistakable and the pack finally catches up with you come nightfall." + getExtraText());
         if (!canSneak(model)) {
             model.getLog().waitForAnimationToFinish();
             List<Enemy> enemies = new ArrayList<>();
             int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (new WolfEnemy('A')).getThreat());
             for (int i = numberOfEnemies; i > 0; --i) {
-                enemies.add(new WolfEnemy('A'));
+                enemies.add(getWolf());
             }
-            runCombat(enemies);
+            runCombat(enemies, getCombatTheme(), true);
         }
+    }
+
+    public CombatTheme getCombatTheme() {
+        return new GrassCombatTheme();
+    }
+
+    protected Enemy getWolf() {
+        return new WolfEnemy('A');
+    }
+
+    protected String getExtraText() {
+        return "";
     }
 
     private boolean canSneak(Model model) {

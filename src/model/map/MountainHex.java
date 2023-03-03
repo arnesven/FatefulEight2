@@ -37,7 +37,8 @@ public class MountainHex extends WorldHex {
                     new StormEvent(model),
                     // new DragonEvent(model)
                     new DwarfEvent(model),
-                    new HermitEvent(model)
+                    new HermitEvent(model),
+                    new MountainWolfEvent(model)
                     // new CaveEvent(model)
                     // new CaveEvent(model)
                     // new CaveEvent(model)

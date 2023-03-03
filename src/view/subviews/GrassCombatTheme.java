@@ -15,15 +15,7 @@ public class GrassCombatTheme extends CombatTheme {
     private static Sprite grassLineSprite = new Sprite32x32("treelower", "combat.png", 0x12, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.GREEN);
     private static Sprite upperContour = new Sprite32x32("treecontourupper", "combat.png", 0x20, MyColors.BLACK, MyColors.DARK_GRAY, MyColors.WHITE);
     private static Sprite lowerContour = new Sprite32x32("treecontourlower", "combat.png", 0x21, MyColors.BLACK, MyColors.RED, MyColors.RED);
-    public static Sprite[] grassSprites = makeGrassSprites();
-
-    private static Sprite[] makeGrassSprites() {
-        Sprite[] result = new Sprite[3];
-        for (int i = 0; i < 3; ++i) {
-            result[i] = new Sprite32x32("grass"+i, "combat.png", 0x13+i, MyColors.GREEN, MyColors.LIGHT_GREEN, MyColors.BEIGE);
-        }
-        return result;
-    }
+    public static Sprite[] grassSprites = makeGroundSprites(MyColors.GREEN, MyColors.LIGHT_GREEN, GRASSY_ROW);
 
 
     @Override
