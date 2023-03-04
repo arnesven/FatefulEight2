@@ -39,7 +39,7 @@ public class TundraHex extends WorldHex {
                     new SnowyBeastEvent(model),
                     new BarbarianEvent(model),
                     new DeadBodyEvent(model),
-                    // new LostEvent(model),
+                    new LostEvent(model),
                     new GiantEvent(model),
                     new WoundedAdventurerEvent(model),
                     new HermitEvent(model),

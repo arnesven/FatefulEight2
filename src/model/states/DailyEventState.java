@@ -68,7 +68,7 @@ public abstract class DailyEventState extends GameState {
         runCombat(enemies, new GrassCombatTheme(), true);
     }
 
-    protected boolean haveFledCombat() {
+    public boolean haveFledCombat() {
         return fledCombat;
     }
     protected void setFledCombat(boolean b) { fledCombat = b; }
