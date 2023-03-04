@@ -2,10 +2,13 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
-import model.states.events.NoEventState;
+import model.states.events.*;
+import util.MyRandom;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
+
+import java.util.List;
 
 public class TundraHex extends WorldHex {
 
@@ -27,6 +30,29 @@ public class TundraHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
+        int roll = MyRandom.rollD10();
+        if (3 <= roll && roll <= 4 && getLocation() instanceof MountainLocation) {
+            return MountainHex.generateMountainEvent(model);
+        } else if (5 <= roll) {
+            return MyRandom.sample(List.of(
+                    new ChestEvent(model),
+                    new SnowyBeastEvent(model),
+                    new BarbarianEvent(model),
+                    new DeadBodyEvent(model),
+                    // new LostEvent(model),
+                    new GiantEvent(model),
+                    new WoundedAdventurerEvent(model),
+                    new HermitEvent(model),
+                    new StormEvent(model),
+                    new StormEvent(model),
+                    //new BearEvent(model),
+                    //new ColdEvent(model),
+                    //new ColdEvent(model),
+                    new MountainWolfEvent(model)
+                    //new OutpostEvent(model),
+
+            ));
+        }
         return new NoEventState(model);
     }
 }

@@ -23,6 +23,10 @@ public class MountainCombatTheme extends CombatTheme {
             model.getScreenHandler().put(xOffset + i*8, yOffset+4, mountLL);
             model.getScreenHandler().put(xOffset + i*8+4, yOffset+4, mountLR);
         }
+        drawGround(model, xOffset, yOffset);
+    }
+
+    protected void drawGround(Model model, int xOffset, int yOffset) {
         random = new Random(555);
         for (int i = 0; i < 8; ++i) {
             for (int y= 0; y < 7; y++) {

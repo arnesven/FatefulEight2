@@ -29,6 +29,10 @@ public class MountainHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
+        return generateMountainEvent(model);
+    }
+
+    public static DailyEventState generateMountainEvent(Model model) {
         if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
                     new BarbarianEvent(model),
