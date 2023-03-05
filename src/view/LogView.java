@@ -41,12 +41,21 @@ public class LogView extends GameView {
         int row = Math.min(totalRows, model.getLog().size()) - 1 + rowOffset;
         int count = 0;
         for (String s : model.getLog().getContents()) {
-            BorderFrame.drawString(model.getScreenHandler(), s, 0, row--, MyColors.LIGHT_GREEN);
+            BorderFrame.drawString(model.getScreenHandler(), s, 0, row--, getColorForLine(s));
             count++;
             if (count == totalRows) {
                 break;
             }
         }
+    }
+
+    private static MyColors getColorForLine(String s) {
+        if (s.contains("\"")) {
+            return MyColors.WHITE;
+        } else if (s.contains("DAY")) {
+            return MyColors.LIGHT_BLUE;
+        }
+        return MyColors.LIGHT_GREEN;
     }
 
     @Override
