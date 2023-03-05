@@ -29,6 +29,11 @@ public class HillsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
+        return generateHillsEvent(model);
+    }
+
+
+    public static DailyEventState generateHillsEvent(Model model) {
         if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
@@ -51,4 +56,5 @@ public class HillsHex extends WorldHex {
         }
         return new NoEventState(model);
     }
+
 }
