@@ -1,21 +1,15 @@
 package model.states.events;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.SwordsmanEnemy;
-import model.races.DarkElf;
 import model.races.Race;
-import model.states.CombatEvent;
 import model.states.DailyEventState;
-import model.states.RecruitState;
 import util.MyRandom;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class ElfEvent extends DailyEventState {

@@ -18,6 +18,6 @@ public class SnowyBeastEvent extends DailyEventState {
                 "horns and a terrible temper. It is coming straight for the " +
                 "party.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Everybody, get ready to fight!");
-        runCombat(List.of(new SnowyBeastEnemy('A')), new TundraCombatTheme(), true);
+        runCombat(List.of(new SnowyBeastEnemy('A')));
     }
 }

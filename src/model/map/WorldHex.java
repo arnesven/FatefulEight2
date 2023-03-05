@@ -5,12 +5,15 @@ import model.actions.DailyAction;
 import model.actions.GetOffRoadAction;
 import model.actions.GetOnRoadAction;
 import model.actions.StayInHexAction;
+import model.combat.TownCombatTheme;
 import model.states.events.SaberfishEvent;
 import model.states.*;
 import model.states.events.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyRandom;
+import view.subviews.CombatTheme;
+import view.subviews.GrassCombatTheme;
 import view.subviews.SubView;
 import view.MyColors;
 import view.ScreenHandler;
@@ -343,5 +346,14 @@ public abstract class WorldHex implements Serializable {
 
     public List<WaterPath> getWaterPaths() {
         return waterPaths;
+    }
+
+    public CombatTheme getCombatTheme() {
+        if (getLocation() != null) {
+            if (getLocation() instanceof TownLocation || getLocation() instanceof CastleLocation) {
+                return new TownCombatTheme();
+            }
+        }
+        return new GrassCombatTheme();
     }
 }

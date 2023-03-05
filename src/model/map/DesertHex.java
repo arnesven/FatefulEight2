@@ -4,6 +4,8 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyRandom;
+import view.subviews.CombatTheme;
+import view.subviews.DesertCombatTheme;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
@@ -45,7 +47,7 @@ public class DesertHex extends WorldHex {
                     new ChestEvent(model),
                     new ScorpionEvent(model),
                     new VulturesEvent(model),
-                    // new OasisEvent(model)
+                    new OasisEvent(model),
                     new DehydrationEvent(model),
                     new DehydrationEvent(model),
                     new DehydrationEvent(model),
@@ -56,5 +58,10 @@ public class DesertHex extends WorldHex {
             return HillsHex.generateHillsEvent(model);
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new DesertCombatTheme();
     }
 }

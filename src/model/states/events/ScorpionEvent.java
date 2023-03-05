@@ -17,6 +17,6 @@ public class ScorpionEvent extends DailyEventState {
         println("A giant scorpion suddenly crawls out from under a large " +
                 "rock.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Watch out, that tail has a poisoned stinger!");
-        runCombat(List.of(new ScorpionEnemy('A')), new DesertCombatTheme(), true);
+        runCombat(List.of(new ScorpionEnemy('A')));
     }
 }

@@ -4,6 +4,8 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyRandom;
+import view.subviews.CombatTheme;
+import view.subviews.MountainCombatTheme;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
@@ -54,5 +56,10 @@ public class MountainHex extends WorldHex {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new MountainCombatTheme();
     }
 }

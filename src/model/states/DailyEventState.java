@@ -26,7 +26,7 @@ public abstract class DailyEventState extends GameState {
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);
         }
-        if (fledCombat) {
+        if (haveFledCombat()) {
             return new RunAwayState(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
@@ -70,7 +70,7 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void runCombat(List<Enemy> enemies) {
-        runCombat(enemies, new GrassCombatTheme(), true);
+        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), true);
     }
 
     public boolean haveFledCombat() {

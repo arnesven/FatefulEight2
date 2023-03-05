@@ -21,9 +21,4 @@ public class MountainWolfEvent extends WolfEvent {
     protected Enemy getWolf() {
         return new WolfEnemy('A', 6, 4);
     }
-
-    @Override
-    public CombatTheme getCombatTheme() {
-        return new MountainCombatTheme();
-    }
 }

@@ -34,6 +34,6 @@ public class BearEvent extends DailyEventState {
                 }
             }
         }
-        runCombat(List.of(new BearEnemy('A')), new TundraCombatTheme(), true);
+        runCombat(List.of(new BearEnemy('A')));
     }
 }

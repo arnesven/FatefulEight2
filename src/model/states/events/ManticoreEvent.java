@@ -16,6 +16,6 @@ public class ManticoreEvent extends DailyEventState {
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Is that a lion? No, it has wings! And what's that tail?"));
         println("This horrific beast suddenly swoops down on the party members.");
-        runCombat(List.of(new ManticoreEnemy('A')), new DesertCombatTheme(), true);
+        runCombat(List.of(new ManticoreEnemy('A')));
     }
 }

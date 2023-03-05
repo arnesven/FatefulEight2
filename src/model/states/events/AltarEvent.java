@@ -36,6 +36,6 @@ public class AltarEvent extends DailyEventState {
             println("Daemon: \"Bwahahaha! Fire will consume you all.\"");
             enemies.add(new DaemonEnemy('A'));
         }
-        runCombat(enemies, new MountainCombatTheme(), true);
+        runCombat(enemies);
     }
 }

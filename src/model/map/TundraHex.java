@@ -4,9 +4,11 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyRandom;
+import view.subviews.CombatTheme;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
+import view.subviews.TundraCombatTheme;
 
 import java.util.List;
 
@@ -54,5 +56,10 @@ public class TundraHex extends WorldHex {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new TundraCombatTheme();
     }
 }

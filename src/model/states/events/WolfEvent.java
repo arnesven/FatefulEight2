@@ -30,12 +30,8 @@ public class WolfEvent extends DailyEventState {
             for (int i = numberOfEnemies; i > 0; --i) {
                 enemies.add(getWolf());
             }
-            runCombat(enemies, getCombatTheme(), true);
+            runCombat(enemies);
         }
-    }
-
-    public CombatTheme getCombatTheme() {
-        return new GrassCombatTheme();
     }
 
     protected Enemy getWolf() {

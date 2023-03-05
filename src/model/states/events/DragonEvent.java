@@ -17,7 +17,7 @@ public class DragonEvent extends DailyEventState {
         println("Suddenly a powerful gust of wind catches the party off " +
                 "guard. Then, the horror...");
         model.getParty().randomPartyMemberSay(model, List.of("DRAGON!!!"));
-        runCombat(List.of(new DragonEnemy('A')), new MountainCombatTheme(), true);
+        runCombat(List.of(new DragonEnemy('A')));
     }
 
 }
