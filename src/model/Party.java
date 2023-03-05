@@ -50,7 +50,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(1, 15);  // Inn is at 12,9, castle at 1,3
+        position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
     }
 
@@ -348,16 +348,20 @@ public class Party implements Serializable {
         gc.addToXP(xp);
     }
 
-    private GameCharacter findBestPerformer(Skill skill) {
+    private GameCharacter findBestPerformer(Skill skill, List<GameCharacter> performers) {
         int most = -1;
         GameCharacter best = null;
-        for (GameCharacter gc : partyMembers) {
+        for (GameCharacter gc : performers) {
             if (gc.getRankForSkill(skill) > most) {
                 best = gc;
                 most = gc.getRankForSkill(skill);
             }
         }
         return best;
+    }
+
+    private GameCharacter findBestPerformer(Skill skill) {
+        return findBestPerformer(skill, partyMembers);
     }
 
     public boolean doSoloSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
@@ -390,19 +394,21 @@ public class Party implements Serializable {
         return result.isSuccessful();
     }
 
-    public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
+    public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> performers) {
         GameCharacter performer;
         if (size() > 1) {
-            GameCharacter best = findBestPerformer(skill);
+            GameCharacter best = findBestPerformer(skill, performers);
             event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
             event.print(" (Recommended " + best.getName() + "): ");
             model.getTutorial().skillChecks(model);
-            performer = partyMemberInput(model, event, best);
+            do {
+                performer = partyMemberInput(model, event, best);
+            } while (!performers.contains(performer));
         } else {
-            performer = partyMembers.get(0);
+            performer = performers.get(0);
         }
         int bonus = 0;
-        for (GameCharacter gc : partyMembers) {
+        for (GameCharacter gc : performers) {
             if (gc != performer) {
                 SkillCheckResult assistResult = gc.testSkill(skill, 7);
                 if (assistResult.isSuccessful()) {
@@ -423,6 +429,17 @@ public class Party implements Serializable {
                     "Come on, we have to do better.", "Well, better luck next time.", "Damn, so close!"));
         }
         return result.isSuccessful();
+    }
+
+    public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
+        return doCollaborativeSkillCheck(model, event, skill, difficulty, partyMembers);
+    }
+
+    public boolean doCollaborativeSkillCheckExcluding(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> excluding) {
+        List<GameCharacter> remaining = new ArrayList<>();
+        remaining.addAll(partyMembers);
+        remaining.removeAll(excluding);
+        return doCollaborativeSkillCheck(model, event, skill, difficulty, remaining);
     }
 
     public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {

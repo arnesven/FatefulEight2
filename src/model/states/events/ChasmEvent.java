@@ -28,7 +28,7 @@ public class ChasmEvent extends DailyEventState {
                 println("The party manages to cross without incident.");
             } else {
                 for (GameCharacter gc : failers) {
-                    RiverEvent.characterDies(model, this, gc, "has fallen to " + hisOrHer(gc.getGender()) + " death!");
+                    DailyEventState.characterDies(model, this, gc, "has fallen to " + hisOrHer(gc.getGender()) + " death!");
                     model.getLog().waitForAnimationToFinish();
                 }
             }

@@ -119,7 +119,7 @@ public class TavernSubView extends DailyActionSubView {
         }
         for (int x = 2; x < 5; ++x) {
             Point p = convertToScreen(new Point(x, 7));
-            model.getScreenHandler().register(OVER_DOOR.getName(), p, OVER_DOOR, 5);
+            model.getScreenHandler().register(OVER_DOOR.getName(), p, OVER_DOOR, 4);
         }
     }
 

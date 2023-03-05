@@ -38,7 +38,7 @@ public class DesertHex extends WorldHex {
                     // new ManticoreEvent(model),
                     new WoundedAdventurerEvent(model),
                     new MirageEvent(model),
-                    // new QuicksandEvent(model),
+                    new QuicksandEvent(model),
                     new LostEvent(model),
                     new HermitEvent(model),
                     new DeadBodyEvent(model),

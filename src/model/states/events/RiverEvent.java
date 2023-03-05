@@ -41,22 +41,4 @@ public abstract class RiverEvent extends DailyEventState {
         }
     }
 
-    public static void characterDies(Model model, DailyEventState event, GameCharacter gc, String reason) {
-        boolean wasLeader = gc.isLeader();
-        event.println(gc.getName() + reason);
-        model.getParty().remove(gc, false, false, 0);
-        if (model.getParty().size() == 0) {
-            event.println("Your last party member has been eliminated. Press any key to continue.");
-            event.waitForReturn();
-            model.setGameOver(true);
-        } else {
-            model.getParty().randomPartyMemberSay(model, List.of(gc.getFirstName().toUpperCase() + "!!!"));
-            model.getParty().randomPartyMemberSay(model, List.of("..."));
-            model.getParty().randomPartyMemberSay(model, List.of("Gone! " + gc.getFirstName() + " is gone!"));
-            if (wasLeader) {
-                event.println(model.getParty().getLeader().getName() + " is now the new leader of the party.");
-            }
-        }
-    }
-
 }

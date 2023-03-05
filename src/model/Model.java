@@ -253,6 +253,7 @@ public class Model {
     public void incrementDay() {
         gameData.day++;
         gameData.timeOfDay = TimeOfDay.MORNING;
+        log.addAnimated("\n- DAY " + gameData.day + " -\n");
     }
 
     public void saveToFile(String filename) {

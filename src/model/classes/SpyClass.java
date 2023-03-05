@@ -26,8 +26,8 @@ public class SpyClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnTunic(characterAppearance, MyColors.BLUE);
-        Looks.putOnCap(characterAppearance, MyColors.BLUE);
+        Looks.putOnTunic(characterAppearance, MyColors.DARK_BLUE);
+        Looks.putOnCap(characterAppearance, MyColors.DARK_BLUE);
         putOnFakeMustache(characterAppearance);
     }
 
@@ -41,7 +41,7 @@ public class SpyClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x57, MyColors.BLUE, appearance.getBackHairOnly());
+        return new AvatarSprite(race, 0x57, MyColors.DARK_BLUE, appearance.getBackHairOnly());
     }
 
     @Override
