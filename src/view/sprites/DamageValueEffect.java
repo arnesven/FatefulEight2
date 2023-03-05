@@ -9,11 +9,11 @@ public class DamageValueEffect extends RunOnceAnimationSprite {
 
     public DamageValueEffect(int amount, boolean critical) {
         super("floatingdamage", "charset.png",
-                (0xF0+amount) % 16, 0xE0 / 16, 8, 8, 1, MyColors.LIGHT_YELLOW);
+                (0xF0+amount) % 16, 0xE0 / 16, 8, 8, 1, MyColors.BLACK);
         this.count = 0;
         this.shift = 0;
         if (critical) {
-            setColor1(MyColors.LIGHT_RED);
+            setColor1(MyColors.RED);
         }
     }
 

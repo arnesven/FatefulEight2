@@ -3,6 +3,7 @@ package model;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
+import model.items.potions.AntidotePotion;
 import model.log.GameLog;
 import model.map.World;
 import model.map.WorldHex;

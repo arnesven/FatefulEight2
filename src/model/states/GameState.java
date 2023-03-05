@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.combat.PoisonCondition;
 import model.items.spells.Spell;
 import util.MyPair;
 import view.subviews.CollapsingTransition;
@@ -99,5 +100,18 @@ public abstract class GameState {
         if (model.getSubView() != nextSubView) {
             CollapsingTransition.transition(model, nextSubView);
         }
+    }
+
+    protected void stepToNextDay(Model model) {
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc.hasCondition(PoisonCondition.class)) {
+                println(gc.getName() + " takes damage from the effects of the poison.");
+                gc.addToHP(-2);
+                if (gc.isDead()) {
+                    DailyEventState.characterDies(model, this, gc, " succumbed to the evil of the poison and died.");
+                }
+            }
+        }
+        model.incrementDay();
     }
 }

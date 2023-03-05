@@ -43,7 +43,7 @@ public class DesertHex extends WorldHex {
                     new HermitEvent(model),
                     new DeadBodyEvent(model),
                     new ChestEvent(model),
-                    // new ScorpionEvent(model)
+                    new ScorpionEvent(model),
                     new VulturesEvent(model),
                     // new OasisEvent(model)
                     new DehydrationEvent(model),
@@ -52,7 +52,9 @@ public class DesertHex extends WorldHex {
                     new DehydrationEvent(model)
 
             ));
+        } else if (getLocation() instanceof HillsLocation) {
+            return HillsHex.generateHillsEvent(model);
         }
-        return HillsHex.generateHillsEvent(model);
+        return new NoEventState(model);
     }
 }

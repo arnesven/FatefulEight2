@@ -72,8 +72,8 @@ public class TravelBySeaState extends GameState {
 
 
         model.getCurrentHex().travelFrom(model);
-        model.incrementDay();
-        model.incrementDay();
+        stepToNextDay(model);
+        stepToNextDay(model);
         model.getParty().setPosition(newPosition);
         model.getCurrentHex().travelTo(model);
     }

@@ -105,7 +105,7 @@ public class RecruitState extends GameState {
             if (recruitResult.second.equals("")) {
                 println("You spend some time asking around, but there aren't any adventurers to recruit.");
             } else {
-                println("There are some adventurers here, but they are unwilling to join because \"" + recruitResult.second + "\".");
+                println("There are some adventurers here, but they are unwilling to join because '" + recruitResult.second + "'.");
             }
         }
         return new EveningState(model);

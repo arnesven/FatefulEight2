@@ -22,7 +22,7 @@ public class NoLodgingState extends EveningState {
         } else {
             notLodging(model);
         }
-        model.incrementDay();
+        stepToNextDay(model);
         return nextState(model);
     }
 }

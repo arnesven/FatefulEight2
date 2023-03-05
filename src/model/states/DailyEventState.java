@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.combat.PoisonCondition;
 import model.enemies.Enemy;
 import model.races.Race;
 import view.subviews.CombatTheme;
@@ -101,7 +102,7 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    public static void characterDies(Model model, DailyEventState event, GameCharacter gc, String reason) {
+    public static void characterDies(Model model, GameState event, GameCharacter gc, String reason) {
         boolean wasLeader = gc.isLeader();
         event.println(gc.getName() + reason);
         model.getParty().remove(gc, false, false, 0);

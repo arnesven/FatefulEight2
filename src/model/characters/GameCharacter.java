@@ -547,10 +547,12 @@ public class GameCharacter extends Combatant {
     }
 
     public void addCondition(Condition cond) {
-        conditions.add(cond);
+        if (!hasCondition(cond.getClass())) {
+            conditions.add(cond);
+        }
     }
 
-    public boolean hasCondition(Class<ParalysisCondition> condition) {
+    public boolean hasCondition(Class<? extends Condition> condition) {
         for (Condition cond : conditions) {
             if (cond.getClass().equals(condition)) {
                 return true;
@@ -559,7 +561,7 @@ public class GameCharacter extends Combatant {
         return false;
     }
 
-    public void removeCondition(Class<ParalysisCondition> condition) {
+    public void removeCondition(Class<? extends Condition> condition) {
         Condition found = null;
         for (Condition cond : conditions) {
             if (cond.getClass().equals(condition)) {

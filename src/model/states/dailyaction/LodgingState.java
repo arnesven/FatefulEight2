@@ -1,6 +1,9 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.Party;
+import model.characters.GameCharacter;
+import model.combat.PoisonCondition;
 import model.states.EveningState;
 import model.states.GameState;
 
@@ -30,7 +33,17 @@ public class LodgingState extends EveningState {
                     "Nothing is like a good night's sleep.", "That was a delicious dinner.",
                     "Ahhh, I feel like a person again.", "Can I have a hot bath too?"));
         }
-        model.incrementDay();
+        removePoison(model.getParty());
+        stepToNextDay(model);
         return nextState(model);
+    }
+
+    private void removePoison(Party party) {
+        for (GameCharacter gc : party.getPartyMembers()) {
+            if (gc.hasCondition(PoisonCondition.class)) {
+                gc.removeCondition(PoisonCondition.class);
+                println(gc.getName() + " is no longer poisoned.");
+            }
+        }
     }
 }
