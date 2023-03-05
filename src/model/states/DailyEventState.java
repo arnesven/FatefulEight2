@@ -29,6 +29,10 @@ public abstract class DailyEventState extends GameState {
             return new RunAwayState(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
+        return getEveningState(model);
+    }
+
+    protected GameState getEveningState(Model model) {
         return model.getCurrentHex().getEveningState(model, isFreeLodging(), isFreeRations());
     }
 

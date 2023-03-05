@@ -21,7 +21,7 @@ public class LodgingState extends EveningState {
         model.getTutorial().evening(model);
         checkForQuest(model);
         if (freeLodging) {
-            println("The party receives food and lodging for free.");
+            println("The party receives food and lodging.");
             model.getParty().lodging(0);
         } else {
             println("The party feasts on what the house has to offer and sleep well in soft beds.");

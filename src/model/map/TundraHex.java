@@ -48,8 +48,8 @@ public class TundraHex extends WorldHex {
                     new BearEvent(model),
                     new ColdEvent(model),
                     new ColdEvent(model),
-                    new MountainWolfEvent(model)
-                    //new OutpostEvent(model),
+                    new MountainWolfEvent(model),
+                    new OutpostEvent(model)
 
             ));
         }
