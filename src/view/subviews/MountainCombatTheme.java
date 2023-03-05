@@ -9,11 +9,23 @@ import java.util.Random;
 
 public class MountainCombatTheme extends CombatTheme {
     private Random random;
-    private static Sprite mountUL = new Sprite32x32("mountul", "combat.png", 0x70, MyColors.GRAY, MyColors.TAN, MyColors.WHITE, MyColors.CYAN);
-    private static Sprite mountUR = new Sprite32x32("mountur", "combat.png", 0x71, MyColors.GRAY, MyColors.TAN, MyColors.WHITE, MyColors.CYAN);
-    private static Sprite mountLL = new Sprite32x32("mountll", "combat.png", 0x80, MyColors.GRAY, MyColors.TAN, MyColors.WHITE, MyColors.CYAN);
-    private static Sprite mountLR = new Sprite32x32("mountlr", "combat.png", 0x81, MyColors.GRAY, MyColors.TAN, MyColors.WHITE, MyColors.CYAN);
-    public static Sprite[] groundSprites = makeGroundSprites(MyColors.TAN, MyColors.GRAY, ROCKY_ROW);
+    private Sprite mountUL;
+    private Sprite mountUR;
+    private Sprite mountLL;
+    private Sprite mountLR;
+    public Sprite[] groundSprites;
+
+    public MountainCombatTheme(MyColors groundColor) {
+        mountUL = new Sprite32x32("mountul", "combat.png", 0x70, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
+        mountUR = new Sprite32x32("mountur", "combat.png", 0x71, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
+        mountLL = new Sprite32x32("mountll", "combat.png", 0x80, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
+        mountLR = new Sprite32x32("mountlr", "combat.png", 0x81, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
+        groundSprites = makeGroundSprites(groundColor, MyColors.GRAY, ROCKY_ROW);
+    }
+
+    public MountainCombatTheme() {
+        this(MyColors.TAN);
+    }
 
     @Override
     public void drawBackground(Model model, int xOffset, int yOffset) {

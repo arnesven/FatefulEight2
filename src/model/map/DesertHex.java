@@ -35,7 +35,7 @@ public class DesertHex extends WorldHex {
             return MountainHex.generateMountainEvent(model);
         } else if (5 <= roll) {
             return MyRandom.sample(List.of(
-                    // new ManticoreEvent(model),
+                    new ManticoreEvent(model),
                     new WoundedAdventurerEvent(model),
                     new MirageEvent(model),
                     new QuicksandEvent(model),

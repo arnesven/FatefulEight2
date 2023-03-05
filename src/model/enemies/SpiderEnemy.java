@@ -6,6 +6,7 @@ import model.combat.CombatLoot;
 import model.combat.ParalysisCondition;
 import model.combat.StandardCombatLoot;
 import model.states.CombatEvent;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -42,9 +43,10 @@ public class SpiderEnemy extends Enemy {
         int hpBefore = target.getHP();
         super.attack(model, target, combatEvent);
         if (hpBefore > target.getHP()) {
-            // TODO : Paralyze on 9-10.k
-            combatEvent.println(target.getName() + " has been paralyzed!");
-            target.addCondition(new ParalysisCondition());
+            if (MyRandom.rollD10() == 10) {
+                combatEvent.println(target.getName() + " has been paralyzed!");
+                target.addCondition(new ParalysisCondition());
+            }
         }
     }
 
