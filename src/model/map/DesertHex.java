@@ -37,19 +37,19 @@ public class DesertHex extends WorldHex {
             return MyRandom.sample(List.of(
                     // new ManticoreEvent(model),
                     new WoundedAdventurerEvent(model),
-                    // new MirageEvent(model),
+                    new MirageEvent(model),
                     // new QuicksandEvent(model),
                     new LostEvent(model),
                     new HermitEvent(model),
                     new DeadBodyEvent(model),
-                    new ChestEvent(model)
+                    new ChestEvent(model),
                     // new ScorpionEvent(model)
                     // new VulturesEvent(model)
                     // new OasisEvent(model)
-                    // new DehydrationEvent(model)
-                    // new DehydrationEvent(model)
-                    // new DehydrationEvent(model)
-                    // new DehydrationEvent(model)
+                    new DehydrationEvent(model),
+                    new DehydrationEvent(model),
+                    new DehydrationEvent(model),
+                    new DehydrationEvent(model)
 
             ));
         }

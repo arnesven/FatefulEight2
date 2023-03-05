@@ -17,7 +17,7 @@ public class LostEvent extends DailyEventState {
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("This place looks familiar..."));
         model.getParty().randomPartyMemberSay(model, List.of("It's because we've been here before."));
-        println("The party has lost it's way in the wilderness and has made no progress today.");
+        println("The party has lost its way in the wilderness and has made no progress today.");
         new EveningState(model, false, false).run(model);
         innerEvent = model.getCurrentHex().generateEvent(model);
         innerEvent.run(model);
