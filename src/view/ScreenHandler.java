@@ -29,9 +29,8 @@ public class ScreenHandler {
     }
 
     public synchronized void drawForeground(Graphics g, int xOffset, int yOffset) {
-        if (foregroundSprites.size() != oldNumberOfFgSprites) {
-            System.out.println("Foreground objects " + foregroundSprites.size());
-            oldNumberOfFgSprites = foregroundSprites.size();
+        if (foregroundSprites.size() > 10000) {
+            throw new IllegalStateException("Very many foreground objects! Size = " + foregroundSprites.size());
         }
         Collections.sort(foregroundSprites);
         for (ForegroundObject obj : foregroundSprites) {

@@ -120,12 +120,6 @@ public class BorderFrame {
         }
     }
 
-    public static void drawMenuFrame(ScreenHandler screenHandler) {
-        drawFrame(screenHandler, MenuView.X_START, MenuView.Y_START,
-                MenuView.MENU_WIDTH, MenuView.MENU_HEIGHT,
-                MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
-    }
-
     public static void drawFrameHorizontalLine(ScreenHandler screenHandler, int row) {
         for (int i = 0; i < WINDOW_COLUMNS; ++i) {
             screenHandler.put(i, row, CharSprite.make(HORIZONTAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
