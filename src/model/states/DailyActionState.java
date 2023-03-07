@@ -52,38 +52,5 @@ public class DailyActionState extends GameState {
         model.setSubView(menu);
         waitForReturn();
         return menu.getSelectedAction();
-
-//        DailyAction selectedAction = null;
-//        String dailyActionString = printDailyActions();
-//        do {
-//            print(dailyActionString);
-//            char input = lineInput().charAt(0);
-//            char lower = ("" + input).toUpperCase().charAt(0);
-//
-//            for (DailyAction da : getDailyActions()) {
-//                if (da.getShortKey() == input || da.getShortKey() == lower) {
-//                    selectedAction = da;
-//                }
-//            }
-//            if (selectedAction == null) {
-//                println("That is not a valid input.");
-//            } else {
-//                break;
-//            }
-//        } while (true);
-//        return selectedAction;
     }
-
-//    private String printDailyActions() {
-//        List<DailyAction> actions = getDailyActions();
-//        StringBuilder bldr = new StringBuilder();
-//        for (DailyAction da : actions) {
-//            bldr.append(da.getName());
-//            bldr.append(" (");
-//            bldr.append(da.getShortKey());
-//            bldr.append("), ");
-//        }
-//        bldr.append(": ");
-//        return bldr.substring(0, bldr.length()-2);
-//    }
 }
