@@ -37,7 +37,7 @@ public class SwampHex extends WorldHex {
                     new SpidersEvent(model),
                     new WitchHutEvent(model),
                     new VipersEvent(model),
-                    // new CrocodilesEvent(model),
+                    new CrocodilesEvent(model),
                     new LostEvent(model),
                     new LostEvent(model),
                     new LostEvent(model),

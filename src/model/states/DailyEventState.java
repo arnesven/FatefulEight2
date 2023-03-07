@@ -73,6 +73,10 @@ public abstract class DailyEventState extends GameState {
         runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), true);
     }
 
+    protected void runCombat(List<Enemy> enemies, boolean fleeingEnabled) {
+        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), fleeingEnabled);
+    }
+
     public boolean haveFledCombat() {
         return fledCombat;
     }
