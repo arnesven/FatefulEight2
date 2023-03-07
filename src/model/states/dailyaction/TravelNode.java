@@ -27,6 +27,7 @@ class TravelNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        model.getParty().setOnRoad(true);
         return new TravelState(model);
     }
 
