@@ -13,9 +13,9 @@ import java.awt.event.KeyEvent;
 
 public abstract class SubView {
     public static final int Y_OFFSET = 4;
-    protected static final int Y_MAX = Y_OFFSET+38;
-    protected static final int X_OFFSET = BorderFrame.CHARACTER_WINDOW_COLUMNS + 1;
-    protected static final int X_MAX = DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS - 1;
+    public static final int Y_MAX = Y_OFFSET+38;
+    public static final int X_OFFSET = BorderFrame.CHARACTER_WINDOW_COLUMNS + 1;
+    public static final int X_MAX = DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS - 1;
     protected static final Sprite blueBlock = new FilledBlockSprite(MyColors.BLUE);
 
     private TitleText topCenterText = new TitleText();

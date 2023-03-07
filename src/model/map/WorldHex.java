@@ -11,14 +11,17 @@ import model.states.*;
 import model.states.events.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyPair;
 import util.MyRandom;
 import view.subviews.CombatTheme;
+import view.subviews.DailyActionMenu;
 import view.subviews.GrassCombatTheme;
 import view.subviews.SubView;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.HexSprite;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -355,5 +358,9 @@ public abstract class WorldHex implements Serializable {
             }
         }
         return new GrassCombatTheme();
+    }
+
+    public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
+        return DailyActionMenu.UPPER_LEFT_CORNER;
     }
 }

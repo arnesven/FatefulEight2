@@ -26,13 +26,13 @@ public class PriestEvent extends DailyEventState {
         } else {
             print("The priest ");
         }
-        print("offers to bless the members of the party - for a small \"donation\". ");
+        print("offers to bless the members of the party - for a small 'donation'. ");
         while (true) {
             if (model.getParty().getGold() < 5) {
-                println("Unfortunately you cannot afford any more \"donations\" right now.");
+                println("Unfortunately you cannot afford any more 'donations' right now.");
                 break;
             }
-            print("Would you like to pay 5 gold to bless a party member(Y/N)? ");
+            print("Would you like to pay 5 gold to bless a party member? (Y/N) ");
             if (yesNoInput()) {
                 GameCharacter gc = model.getParty().partyMemberInput(model, this, null);
                 println("The priest blesses " + gc.getName() + ".");

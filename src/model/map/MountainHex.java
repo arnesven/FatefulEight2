@@ -3,13 +3,12 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
+import util.MyPair;
 import util.MyRandom;
-import view.subviews.CombatTheme;
-import view.subviews.MountainCombatTheme;
-import view.subviews.SubView;
-import view.subviews.ImageSubView;
+import view.subviews.*;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.List;
 
 public class MountainHex extends WorldHex {
@@ -61,5 +60,10 @@ public class MountainHex extends WorldHex {
     @Override
     public CombatTheme getCombatTheme() {
         return new MountainCombatTheme();
+    }
+
+    @Override
+    public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
+        return DailyActionMenu.LOWER_LEFT_CORNER;
     }
 }

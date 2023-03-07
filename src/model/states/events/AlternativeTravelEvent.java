@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.map.SeaHex;
 import model.map.World;
 import model.states.DailyEventState;
 import view.sprites.Sprite;
@@ -63,7 +64,8 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
             print(getTravelPrompt());
             waitForReturn();
             selectedDir = mapSubView.getCurrentPosition(model);
-            if (!isValidDestination(model, selectedDir)) {
+            boolean seaHex = model.getWorld().getHex(selectedDir) instanceof SeaHex;
+            if (!isValidDestination(model, selectedDir) || seaHex) {
                 println(" That is not a valid destination.");
             }
         } while (selectedDir.x == model.getParty().getPosition().x &&

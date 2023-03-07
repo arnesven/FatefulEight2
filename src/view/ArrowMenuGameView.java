@@ -7,7 +7,6 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class ArrowMenuGameView extends GameView {
@@ -19,6 +18,7 @@ public abstract class ArrowMenuGameView extends GameView {
     private final int height;
     private final List<String> labels;
     private int cursorPos;
+    private boolean quitSoundEnabled = true;
 
     public ArrowMenuGameView(boolean doesPauseGame, int xStart, int yStart, int width, int height, List<String> labels) {
         super(doesPauseGame);
@@ -66,7 +66,9 @@ public abstract class ArrowMenuGameView extends GameView {
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
-            SoundEffects.menuQuit();
+            if (quitSoundEnabled) {
+                SoundEffects.menuQuit();
+            }
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             cursorPos = cursorPos - 1;
             if (cursorPos == -1) {
@@ -84,4 +86,7 @@ public abstract class ArrowMenuGameView extends GameView {
         }
     }
 
+    public void setQuitSoundEnabled(boolean b) {
+        this.quitSoundEnabled = b;
+    }
 }

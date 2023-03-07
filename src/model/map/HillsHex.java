@@ -3,11 +3,14 @@ package model.map;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
+import util.MyPair;
 import util.MyRandom;
+import view.subviews.DailyActionMenu;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.List;
 
 public class HillsHex extends WorldHex {
@@ -57,4 +60,8 @@ public class HillsHex extends WorldHex {
         return new NoEventState(model);
     }
 
+    @Override
+    public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
+        return DailyActionMenu.LOWER_LEFT_CORNER;
+    }
 }

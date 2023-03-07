@@ -4,11 +4,14 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.NoEventState;
 import model.states.events.*;
+import util.MyPair;
 import util.MyRandom;
+import view.subviews.DailyActionMenu;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,5 +49,10 @@ public class WoodsHex extends WorldHex {
             return MyRandom.sample(events);
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
+        return DailyActionMenu.UPPER_RIGHT_CORNER;
     }
 }

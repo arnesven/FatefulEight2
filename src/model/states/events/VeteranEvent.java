@@ -38,7 +38,7 @@ public class VeteranEvent extends DailyEventState {
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.MAR);
             change.areYouInterested(model);
             println("Veteran: \"In the last war, I. was the most experienced soldier of my unit, " +
-                    "so I was promoted to captain.");
+                    "so I was promoted to captain.\"");
             print("The veteran is offering to train you in the ways of being a captain ");
             change = new ChangeClassEvent(model, Classes.CAP);
             change.areYouInterested(model);

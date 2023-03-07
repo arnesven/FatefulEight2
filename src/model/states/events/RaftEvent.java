@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Skill;
+import model.map.SeaHex;
 import model.map.WorldHex;
 import view.MyColors;
 import view.sprites.LoopingSprite;

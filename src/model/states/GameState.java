@@ -32,10 +32,6 @@ public abstract class GameState {
         model.getLog().addAnimated(s + "\n");
     }
 
-    protected List<DailyAction> getDailyActions() {
-        return model.getDailyActions();
-    }
-
     public char singleCharInput() {
         model.getLog().acceptSingleCharInput();
         return internalInput().charAt(0);
