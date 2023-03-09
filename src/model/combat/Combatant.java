@@ -8,6 +8,7 @@ import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.List;
 
 public abstract class Combatant implements Serializable {
     private int currentHp;
@@ -27,8 +28,6 @@ public abstract class Combatant implements Serializable {
     protected void setCurrentHp(int hp) {
         currentHp = hp;
     }
-
-    public abstract void takeCombatTurn(Model model, CombatEvent combatEvent);
 
     public abstract String getName();
 

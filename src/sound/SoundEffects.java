@@ -28,6 +28,8 @@ public class SoundEffects {
         play("matrix_select");
     }
 
+    public static void arrowMenu() { play("arrow_menu");}
+
     public static void playSound(String sound) {
         if (!sound.equals("")) {
             play(sound);

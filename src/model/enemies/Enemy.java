@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.combat.CombatAction;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.characters.GameCharacter;
@@ -55,7 +56,6 @@ public abstract class Enemy extends Combatant {
         return getSprite();
     }
 
-    @Override
     public void takeCombatTurn(Model model, CombatEvent combatEvent) {
         List<GameCharacter> candidates = new ArrayList<>();
         candidates.addAll(model.getParty().getFrontRow());

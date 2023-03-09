@@ -28,6 +28,7 @@ public abstract class ArrowMenuGameView extends GameView {
         this.height = height;
         this.labels = labels;
         this.cursorPos = 0;
+        SoundEffects.arrowMenu();
     }
 
     protected abstract void enterPressed(Model model, int cursorPos);
@@ -56,7 +57,7 @@ public abstract class ArrowMenuGameView extends GameView {
             row += 2;
         }
 
-        model.getScreenHandler().fillSpace(xStart+1, xStart+2, yStart + 2, row, FILLED_BLOCK);
+        model.getScreenHandler().fillSpace(xStart+1, xStart+2, yStart + 2, row-1, FILLED_BLOCK);
         Sprite arrow = ArrowSprites.RIGHT;
         arrow.setColor3(MyColors.BLUE);
         model.getScreenHandler().put(xStart+1, yStart + 2 + cursorPos*2, arrow);

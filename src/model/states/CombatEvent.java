@@ -28,6 +28,7 @@ public class CombatEvent extends DailyEventState {
     private List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
     private boolean fleeingEnabled;
+    private boolean blockCombat = false;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled) {
         super(model);
@@ -66,6 +67,7 @@ public class CombatEvent extends DailyEventState {
                 checkForOpportunityAttacks(model);
             }
         }
+        model.getLog().waitForAnimationToFinish();
 
         List<CombatLoot> combatLoot = null;
         if (model.getParty().isWipedOut()) {
@@ -143,7 +145,27 @@ public class CombatEvent extends DailyEventState {
             } else {
                 currentCombatant = turnTaker;
                 combatMatrix.moveSelectedToEnemy();
-                getCurrentCombatant().takeCombatTurn(model, this);
+                GameCharacter character = (GameCharacter) turnTaker;
+                if (!character.getsCombatTurn()) {
+                    if (!character.isDead()) {
+                        println(character.getName() + " turn was skipped.");
+                    }
+                } else {
+                    print(character.getFirstName() + "'s turn. ");
+                    model.getTutorial().combatActions(model);
+                    waitToProceed();
+                }
+            }
+        }
+    }
+
+    private void waitToProceed() {
+        blockCombat = true;
+        while (blockCombat) {
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -287,5 +309,9 @@ public class CombatEvent extends DailyEventState {
 
     public boolean fled() {
         return partyFled;
+    }
+
+    public void unblock() {
+        blockCombat = false;
     }
 }

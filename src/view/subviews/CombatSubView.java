@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.*;
 import model.characters.GameCharacter;
+import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
@@ -142,28 +143,52 @@ public class CombatSubView extends SubView {
     }
 
     public synchronized void addStrikeEffect(Combatant target, Model model, int damge, boolean critical) {
-        Point point = combatMatrix.getPositionFor(target);
-        Point shiftpoint = target.getCursorShift();
-        point.x = X_OFFSET + point.x*4 + shiftpoint.x;
-        point.y = Y_OFFSET + (point.y+2)*4 + shiftpoint.y;
+        Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
         ongoingEffects.add(new MyPair<>(point, new StrikeEffectSprite()));
         ongoingEffects.add(new MyPair<>(point, new DamageValueEffect(damge, critical)));
     }
 
+    private static Point convertToScreen(Point point, Combatant target) {
+        Point shiftpoint = target.getCursorShift();
+        point.x = X_OFFSET + point.x*4 + shiftpoint.x;
+        point.y = Y_OFFSET + (point.y+2)*4 + shiftpoint.y;
+        return point;
+    }
+
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (combatMatrix.handleKeyEvent(keyEvent)) {
-            return true;
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && combat.isSelectingFormation()) {
-            Combatant combatant = combatMatrix.getSelectedElement();
-            if (combatant instanceof Enemy) {
-                combat.println("Cannot change the formation of an enemy.");
-            } else {
-                combat.toggleFormationFor(model, (GameCharacter)combatant);
+        Combatant combatant = combatMatrix.getSelectedElement();
+        if (combat.isSelectingFormation()) {
+            if (combatMatrix.handleKeyEvent(keyEvent)) {
+                return true;
             }
+            if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (combatant instanceof Enemy) {
+                    combat.println("Cannot change the formation of an enemy.");
+                } else {
+                    combat.toggleFormationFor(model, (GameCharacter) combatant);
+                }
+                return true;
+            }
+        }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER && combat.getCurrentCombatant() instanceof GameCharacter) {
+            Point point = convertToScreen(combatMatrix.getPositionFor(combatant), combatant);
+            List<CombatAction> combatActions = ((GameCharacter) combat.getCurrentCombatant()).getCombatActions(model, combatant, combat);
+            CombatActionMenu menu = new CombatActionMenu(model.getSubView(), combatActions, toStringList(combatActions),
+                    point.x+3, point.y, DailyActionMenu.NORTH_WEST, combat, combatant);
+            model.setSubView(menu);
             return true;
         }
-        return false;
+        return combatMatrix.handleKeyEvent(keyEvent);
+    }
+
+    private static List<String> toStringList(List<CombatAction> combatActions) {
+        List<String> result = new ArrayList<>();
+        for (CombatAction ca : combatActions) {
+            result.add(ca.getName());
+        }
+        return result;
     }
 
 }

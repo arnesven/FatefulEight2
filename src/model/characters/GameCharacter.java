@@ -1,14 +1,12 @@
 package model.characters;
 
-import model.combat.Combatant;
+import model.combat.*;
 import model.Model;
 import model.Party;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.Condition;
-import model.combat.ParalysisCondition;
 import model.enemies.Enemy;
 import model.items.*;
 import model.items.accessories.Accessory;
@@ -124,64 +122,8 @@ public class GameCharacter extends Combatant {
         super.addToHP(i);
     }
 
-    @Override
-    public void takeCombatTurn(Model model, CombatEvent combatEvent) {
-        if (!getsCombatTurn()) {
-            if (!isDead()) {
-                combatEvent.println(getName() + " turn was skipped.");
-            }
-            return;
-        }
-        combatEvent.print(getFirstName() + "'s turn. ");
-        char selectedAction;
-        while (true) {
-            combatEvent.print("Select combat action; " + getCombatActions(combatEvent) + ": ");
-            model.getTutorial().combatActions(model);
-            selectedAction = combatEvent.lineInput().toUpperCase().charAt(0);
-            if (selectedAction == 'A') {
-                Combatant target = combatEvent.getSelectedEnemy();
-                if (target instanceof GameCharacter) {
-                    combatEvent.println("You cannot attack a party member.");
-                } else if (!canAttackInCombat()) {
-                    combatEvent.println(getFirstName() + " can't attack from back row!");
-                } else {
-                    performAttack(model, combatEvent, target);
-                    break;
-                }
-            } else if (isLeader() && selectedAction == 'F' && combatEvent.fleeingEnabled()) {
-                performFleeFromBattle(model, combatEvent);
-                break;
-            } else if (selectedAction == 'I') {
-                Set<UsableItem> usableItems = new HashSet<>();
-                usableItems.addAll(model.getParty().getInventory().getPotions());
-                if (usableItems.size() > 0) {
-                    boolean used = performUseItem(model, combatEvent, usableItems);
-                    if (used) {
-                        break;
-                    }
-                } else {
-                    combatEvent.println("You have no usable items.");
-                }
-            } else if (selectedAction == 'P') {
-                break;
-            }
-        }
-
-    }
-
     private boolean canAttackInCombat() {
         return !party.getBackRow().contains(this) || mayAttackFromBackRow();
-    }
-
-    private String getCombatActions(CombatEvent combatEvent) {
-        String options = "Item (I), Spell (S), Pass (P)";
-        if (canAttackInCombat()) {
-            options = "Attack (A), " + options;
-        }
-        if (isLeader() && combatEvent.fleeingEnabled()) {
-            options += ", Flee (F)";
-        }
-        return options;
     }
 
     private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
@@ -251,7 +193,7 @@ public class GameCharacter extends Combatant {
         return equipment.getWeapon().isRangedAttack();
     }
 
-    private boolean getsCombatTurn() {
+    public boolean getsCombatTurn() {
         return !isDead() && !Condition.disablesCombatTurn(conditions);
     }
 
@@ -350,6 +292,50 @@ public class GameCharacter extends Combatant {
     @Override
     public int getWidth() {
         return 1;
+    }
+
+    public List<CombatAction> getCombatActions(Model model, Combatant target, CombatEvent combatEvent) {
+        List<CombatAction> result = new ArrayList<>();
+        if (!(target instanceof GameCharacter) && canAttackInCombat()) {
+            result.add(new CombatAction("Attack") {
+                @Override
+                public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                    performer.performAttack(model, combat, target);
+                }
+            });
+        }
+        if (isLeader() && combatEvent.fleeingEnabled()) {
+            result.add(new CombatAction("Flee") {
+                @Override
+                public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                    performFleeFromBattle(model, combat);
+                }
+            });
+        }
+
+        Set<UsableItem> usableItems = new HashSet<>();
+        usableItems.addAll(model.getParty().getInventory().getPotions());
+        if (usableItems.size() > 0) {
+            result.add(new CombatAction("Item") {
+                @Override
+                public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                    //performUseItem(model, combat, usableItems); TODO
+                }
+            });
+        }
+
+        result.add(new CombatAction("Spell") {
+            @Override
+            public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                // TODO:
+            }
+        });
+
+        result.add(new CombatAction("Pass") {
+            @Override
+            public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) { }
+        });
+        return result;
     }
 
     public AvatarSprite getAvatarSprite() {
