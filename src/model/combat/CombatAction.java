@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.states.CombatEvent;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class CombatAction implements Serializable {
     private final String name;
@@ -16,5 +18,13 @@ public abstract class CombatAction implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public boolean hasInnerMenu() {
+        return false;
+    }
+
+    public List<CombatAction> getInnerActions(Model model) {
+        return new ArrayList<>();
     }
 }

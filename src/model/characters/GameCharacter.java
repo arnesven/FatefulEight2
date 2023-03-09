@@ -321,6 +321,29 @@ public class GameCharacter extends Combatant {
                 public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     //performUseItem(model, combat, usableItems); TODO
                 }
+
+                @Override
+                public boolean hasInnerMenu() {
+                    return true;
+                }
+
+                @Override
+                public List<CombatAction> getInnerActions(Model model) {
+                    List<CombatAction> res = new ArrayList<>();
+                    for (UsableItem item : usableItems) {
+                        if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
+                            res.add(new CombatAction(item.getName()) {
+                                @Override
+                                public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                                    String message = item.useYourself(model, (GameCharacter) target);
+                                    combat.println(message);
+                                    model.getParty().getInventory().remove(item);
+                                }
+                            });
+                        }
+                    }
+                    return res;
+                }
             });
         }
 

@@ -175,20 +175,12 @@ public class CombatSubView extends SubView {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER && combat.getCurrentCombatant() instanceof GameCharacter) {
             Point point = convertToScreen(combatMatrix.getPositionFor(combatant), combatant);
             List<CombatAction> combatActions = ((GameCharacter) combat.getCurrentCombatant()).getCombatActions(model, combatant, combat);
-            CombatActionMenu menu = new CombatActionMenu(model.getSubView(), combatActions, toStringList(combatActions),
-                    point.x+3, point.y, DailyActionMenu.NORTH_WEST, combat, combatant);
+            CombatActionMenu menu = new CombatActionMenu(model.getSubView(), combatActions, CombatActionMenu.toStringList(combatActions),
+                    point.x+3, point.y, DailyActionMenu.NORTH_WEST, combat, combatant, this);
             model.setSubView(menu);
             return true;
         }
         return combatMatrix.handleKeyEvent(keyEvent);
-    }
-
-    private static List<String> toStringList(List<CombatAction> combatActions) {
-        List<String> result = new ArrayList<>();
-        for (CombatAction ca : combatActions) {
-            result.add(ca.getName());
-        }
-        return result;
     }
 
 }
