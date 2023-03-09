@@ -9,7 +9,7 @@ public class Pickaxe extends AxeWeapon {
     private static final Sprite SPRITE = new ItemSprite(2, 5);
 
     public Pickaxe() {
-        super("Pickaxe", 14, new int[]{5, 8, 9}, false);
+        super("Pickaxe", 16, new int[]{5, 8, 9}, false);
     }
 
     @Override

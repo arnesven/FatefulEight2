@@ -195,7 +195,6 @@ public abstract class WorldHex implements Serializable {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
-
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8 ) {
             List<DailyEventState> events = new ArrayList<>();
