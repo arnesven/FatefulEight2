@@ -1,0 +1,50 @@
+package model.states.events;
+
+import model.Model;
+import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.items.Item;
+import model.states.DailyEventState;
+import util.MyRandom;
+import view.GameView;
+
+import java.util.List;
+
+public class DollyEvent extends DailyEventState {
+    public DollyEvent(Model model) {
+        super(model);
+    }
+
+    @Override
+    protected void doEvent(Model model) {
+        boolean childGender = MyRandom.randInt(2) == 0;
+        println("You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
+                "The child seems to be in some kind of distress. Apparently " + heOrShe(childGender) +
+                " has lost " + hisOrHer(childGender) + " dolly.");
+        model.getParty().randomPartyMemberSay(model, List.of("This really isn't any of our business.",
+                "Aw, poor child. Can we help?", "Typical kids...", "Hey kid, wanna see a magic trick?"));
+        print("Do you offer to look for the dolly? (Y/N) ");
+        if (yesNoInput()) {
+            boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 10);
+            if (result) {
+                println("After spending some time searching, you finally find the Dolly under a bush, not far from " +
+                        "where you first encountered the mother and child. You hand the dolly over to the child, who grabs " +
+                        "it and runs off in glee. The mother turns to you with a smile.");
+                println("Mother: \"Thank you so much. We would have had a rough night if you hadn't saved the day. " +
+                        "I was saving this heirloom for " + hisOrHer(childGender) + ", but seeing as " +
+                        heOrShe(childGender) + " can never keep track of things, I might as well give it to you as thanks.\"");
+                Item heirloom = model.getItemDeck().getRandomJewelry();
+                println("You received " + heirloom.getName() + "!");
+                model.getParty().getInventory().addItem(heirloom);
+            } else {
+                println("You spend hours looking for the toy. Finally you give up, frustrated and tired.");
+                println("Each party member exhausts 1 SP.");
+                for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                    gc.addToSP(-1);
+                }
+            }
+
+        }
+
+    }
+}
