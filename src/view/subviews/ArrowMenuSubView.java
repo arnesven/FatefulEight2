@@ -86,4 +86,8 @@ public abstract class ArrowMenuSubView extends SubView {
         }
         return result;
     }
+
+    protected SubView getPrevious() {
+        return previous;
+    }
 }

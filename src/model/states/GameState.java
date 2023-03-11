@@ -72,14 +72,18 @@ public abstract class GameState {
                 MyPair<Spell, GameCharacter> pair = model.getSpellHandler().getCastSpell();
                 throw new SpellCastException(pair.first, pair.second);
             }
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            sleep();
         }
         System.exit(0);
         throw new IllegalStateException("Program failed to exit");
+    }
+
+    protected void sleep() {
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private String internalInput() {

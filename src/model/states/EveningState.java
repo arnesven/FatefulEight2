@@ -1,8 +1,13 @@
 package model.states;
 
 import model.Model;
+import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.quests.Quest;
+import view.subviews.ArrowMenuSubView;
+import view.subviews.DailyActionMenu;
+
+import java.util.List;
 
 public class EveningState extends GameState {
     private final boolean freeRations;
@@ -73,28 +78,40 @@ public class EveningState extends GameState {
             state.println("But you can't afford any.");
             return;
         }
-        while (model.getParty().getInventory().getFood() < model.getParty().rationsLimit()) {
+        if (model.getParty().getFood() == model.getParty().rationsLimit()) {
+            state.println("You cannot carry anymore rations.");
+            return;
+        }
+
+        final boolean[] done = {false};
+        while (model.getParty().getInventory().getFood() < model.getParty().rationsLimit() && !done[0]) {
             int maxBuy = model.getParty().rationsLimit() - model.getParty().getInventory().getFood();
             String sitch = "Your party can carry an additional ";
-            int cost = (int)Math.ceil(maxBuy / 5.0);
+            int cost = (int) Math.ceil(maxBuy / 5.0);
             if (cost > model.getParty().getGold()) {
                 sitch = "You can afford to buy ";
                 maxBuy = model.getParty().getGold() * 5;
                 cost = model.getParty().getGold();
             }
+            final int finalCost = cost;
             state.print(sitch + maxBuy + " rations.");
-            state.print(" Do you want to Buy Max (M), Buy 5 (B) or are you done (Q)? ");
-            char choice = state.lineInput().toUpperCase().charAt(0);
-            if (choice == 'M') {
-                model.getParty().addToGold(-cost);
-                model.getParty().addToFood(cost*5);
-                break;
-            } else if (choice == 'Q') {
-                break;
-            } else if (choice == 'B') {
-                model.getParty().addToGold(-1);
-                model.getParty().addToFood(5);
-            }
+            model.setSubView(new ArrowMenuSubView(model.getSubView(),
+                    List.of("Buy 5", "Buy Max", "Done"), 32, 18, ArrowMenuSubView.NORTH_WEST) {
+                @Override
+                protected void enterPressed(Model model, int cursorPos) {
+                    if (cursorPos == 0) {
+                        model.getParty().addToGold(-1);
+                        model.getParty().addToFood(5);
+                    } else if (cursorPos == 1) {
+                        model.getParty().addToGold(-finalCost);
+                        model.getParty().addToFood(finalCost * 5);
+                    } else {
+                        done[0] = true;
+                    }
+                    model.setSubView(getPrevious());
+                }
+            });
+            state.waitForReturn();
         }
     }
 

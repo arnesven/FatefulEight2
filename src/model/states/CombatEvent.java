@@ -162,11 +162,7 @@ public class CombatEvent extends DailyEventState {
     private void waitToProceed() {
         blockCombat = true;
         while (blockCombat) {
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            sleep();
         }
     }
 
