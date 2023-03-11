@@ -51,6 +51,11 @@ public abstract class GameState {
         waitForReturn(false);
     }
 
+    public void waitForReturnSilently() {
+        model.getLog().waitForReturnSilently();
+        internalInput();
+    }
+
     public boolean yesNoInput() {
         while (true) {
             model.getLog().acceptLineInput();

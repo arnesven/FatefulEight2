@@ -4,7 +4,6 @@ import model.Model;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -113,25 +112,41 @@ public class GameLog {
         this.inputMode = new WaitForReturnMode();
     }
 
+
+    public void waitForReturnSilently() {
+        this.inputMode = new WaitForReturnMode(){
+            @Override
+            public boolean echoInput() {
+                return false;
+            }
+        };
+    }
+
     public boolean inputReady() {
         return inputMode.inputReady(this);
     }
 
     public synchronized String getInput() {
         while (!animationBuffer.isEmpty()) {
-            addToCurrentLine(animationBuffer.get(0));
+            if (inputMode.echoInput()) {
+                addToCurrentLine(animationBuffer.get(0));
+            }
             animationBuffer.remove(0);
             if (!animationBuffer.isEmpty() && animationBuffer.get(0) == ' ' && nextWordWontFit()) {
                 animationBuffer.remove(0);
-                addToCurrentLine('\n');
+                if (inputMode.echoInput()) {
+                    addToCurrentLine('\n');
+                }
             }
         }
 
         String toReturn = inputMode.getBufferAsString();
         String toPrint = toReturn + "\n";
         inputMode.clear();
-        for (int i = 0; i < toPrint.length(); ++i) {
-            addToCurrentLine(toPrint.charAt(i));
+        if (inputMode.echoInput()) {
+            for (int i = 0; i < toPrint.length(); ++i) {
+                addToCurrentLine(toPrint.charAt(i));
+            }
         }
         return toReturn;
     }

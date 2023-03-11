@@ -4,8 +4,10 @@ import model.Model;
 import model.SteppingMatrix;
 import model.items.*;
 import sound.SoundEffects;
+import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.ShopSubView;
+import view.subviews.SubView;
 
 import java.util.*;
 
@@ -49,17 +51,43 @@ public class ShopState extends GameState {
     public GameState run(Model model) {
         CollapsingTransition.transition(model, subView);
         while (true) {
-            if (sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
-                print("Do you want to Buy (B), Sell (S) or are you Done (Q)? ");
-            } else {
-                print("Do you want to Buy (B) or are you Done (Q)? ");
+            List<String> buySellActions = new ArrayList<>();
+            buySellActions.add("Buy");
+            if (maySell(model)) {
+                buySellActions.add("Sell");
             }
+            buySellActions.add("Back");
+            buySellActions.add("Done");
+            
             model.getTutorial().shopping(model);
-            char selectedAction = lineInput().toUpperCase().charAt(0);
-            if (selectedAction == 'Q') {
+            waitForReturnSilently();
+
+            SteppingMatrix<Item> matrixToUse = sellItems;
+            if (showingBuyItems) {
+                matrixToUse = buyItems;
+            }
+
+            int xPos = matrixToUse.getSelectedPoint().x*4 + SubView.X_OFFSET;
+            int yPos = matrixToUse.getSelectedPoint().y*4 + 10;
+            final char[] selectedAction = new char[]{'x'};
+            model.setSubView(new ArrowMenuSubView(model.getSubView(), buySellActions, xPos, yPos, ArrowMenuSubView.NORTH_WEST) {
+                @Override
+                protected void enterPressed(Model model, int cursorPos) {
+                    if (buySellActions.get(cursorPos).equals("Buy")) {
+                        selectedAction[0] = 'B';
+                    } else if (buySellActions.get(cursorPos).equals("Sell")) {
+                        selectedAction[0] = 'S';
+                    } else if (buySellActions.get(cursorPos).equals("Done")) {
+                        selectedAction[0] = 'Q';
+                    }
+                    model.setSubView(getPrevious());
+                }
+            });
+            waitForReturnSilently();
+            if (selectedAction[0] == 'Q') {
                 break;
             }
-            if (selectedAction == 'B') {
+            if (selectedAction[0] == 'B') {
                 if (!showingBuyItems) {
                     toggleBuySell();
                 } else {
@@ -76,12 +104,16 @@ public class ShopState extends GameState {
                         SoundEffects.playSound(it.getSound());
                         model.getTutorial().equipment(model);
                         sellItems.addElementLast(it);
-                        if (buyItems.getElementList().isEmpty() && (!sellingEnabled || sellItems.getElementList().isEmpty())) {
-                            break;
+                        if (buyItems.getElementList().isEmpty()) {
+                            if (!sellingEnabled || sellItems.getElementList().isEmpty()) {
+                                break;
+                            } else {
+                                toggleBuySell();
+                            }
                         }
                     }
                 }
-            } else if (selectedAction == 'S' && sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
+            } else if (selectedAction[0] == 'S' && sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
                 if (showingBuyItems) {
                     toggleBuySell();
                 } else {
@@ -93,6 +125,13 @@ public class ShopState extends GameState {
                         model.getParty().getInventory().remove(it);
                         println("You sold " + it.getName() + " for " + money + " gold.");
                         SoundEffects.sellItem();
+                        if (sellItems.getElementList().isEmpty()) {
+                            if (buyItems.getElementList().isEmpty()) {
+                                break;
+                            } else {
+                                toggleBuySell();
+                            }
+                        }
                     } else {
                         println("You cannot sell an item that is currently equipped.");
                     }
@@ -100,6 +139,10 @@ public class ShopState extends GameState {
             }
         }
         return new EveningState(model);
+    }
+
+    private boolean maySell(Model model) {
+        return sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0;
     }
 
     private boolean isCurrentlyEquipped(Model model, Item it) {

@@ -24,4 +24,8 @@ public abstract class LogInputMode {
     public void clear() {
         input = new StringBuilder();
     }
+
+    public boolean echoInput() {
+        return true;
+    }
 }
