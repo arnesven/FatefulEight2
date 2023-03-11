@@ -20,8 +20,9 @@ public class HalflingEvent extends DailyEventState {
         print("The party encounters a halfling. This particular halfling is a");
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 2) {
-            println(" thief.");
-            // TODO: implement thief event.
+            println(" stranger asking for directions.");
+            ThiefEvent thief = new ThiefEvent(model, false);
+            thief.doEvent(model);
         } else if (dieRoll <= 6) {
             println(" farmer who completely ignores the party.");
         } else if (dieRoll <= 7) {

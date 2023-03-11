@@ -90,7 +90,8 @@ public class TownLocation extends HexLocation implements UrbanLocation {
                     new AssassinEvent(model),
                     new MarketEvent(model),
                     new CourierEvent(model),
-                    new BorrowedMoneyEvent(model)
+                    new BorrowedMoneyEvent(model),
+                    new ThiefEvent(model)
             ));
         }
         return new NoEventState(model);
