@@ -41,12 +41,12 @@ public class SwampHex extends WorldHex {
                     new LostEvent(model),
                     new LostEvent(model),
                     new LostEvent(model),
-                    // new MosquitoesEvent(model),
+                    new MosquitoesEvent(model),
                     new WoundedAdventurerEvent(model),
-                    // new MushroomsEvent(model),
+                    new MushroomsEvent(model),
                     new HermitEvent(model),
                     // new SwampRaftEvent(model),
-                    // new AmazonEvent(model),
+                    new AmazonEvent(model),
                     new ChestEvent(model)
                     // new OctopusEvent(model)
             ));
