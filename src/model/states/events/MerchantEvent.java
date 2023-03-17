@@ -24,8 +24,8 @@ public class MerchantEvent extends DailyEventState {
     protected void doEvent(Model model) {
         if (withIntro) {
             println("A large wagon with tons of wares stacked upon it, and beside it stands a plump character in fancy clothing.");
-            println("\"Please, I have lots of merchandise and I just know you adventurer types are always in need of something.");
-            println("Won't you please have a look?\"");
+            println("Merchant: \"Please, I have lots of merchandise and I just know you adventurer types are always in " +
+                    "need of something. Won't you please have a look?\"");
             waitForReturn();
         }
         List<Item> items = new ArrayList<>();

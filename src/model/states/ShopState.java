@@ -58,7 +58,7 @@ public class ShopState extends GameState {
             }
             buySellActions.add("Back");
             buySellActions.add("Done");
-            
+
             model.getTutorial().shopping(model);
             waitForReturnSilently();
 
