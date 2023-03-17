@@ -43,7 +43,7 @@ public class DollyEvent extends DailyEventState {
                     gc.addToSP(-1);
                 }
             }
-
+            model.getParty().randomPartyMemberSay(model, List.of("I'm all sweaty!", "Kids..."));
         }
 
     }

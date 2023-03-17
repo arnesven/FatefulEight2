@@ -11,9 +11,13 @@ public class SoldierEnemy extends Enemy {
     private static final Sprite SPRITE = new SoldierSprite(MyColors.GRAY_RED);
 
     public SoldierEnemy(char a) {
-        super(a, "Soldier");
-
+        this(a, "Soldier");
     }
+
+    public SoldierEnemy(char a, String name) {
+        super(a, name);
+    }
+
     @Override
     public int getMaxHP() {
         return 7;
