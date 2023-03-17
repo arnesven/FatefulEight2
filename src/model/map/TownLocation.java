@@ -84,7 +84,6 @@ public class TownLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new ConstableEvent(model); /*
         if (MyRandom.rollD10() >= 1) {
             return MyRandom.sample(List.of(
                     new MuggingEvent(model),
@@ -93,7 +92,7 @@ public class TownLocation extends HexLocation implements UrbanLocation {
                     new LoveLetterEvent(model),
                     new DollyEvent(model),
                     new AssassinEvent(model),
-                    // new ThievesGuildEvent(model),
+                    new ThievesGuildEvent(model),
                     // new MayorEvent(model),
                     new ConstableEvent(model),
                     new ThiefEvent(model),
@@ -109,7 +108,7 @@ public class TownLocation extends HexLocation implements UrbanLocation {
                     // new SmithEvent(model)
             ));
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     @Override
