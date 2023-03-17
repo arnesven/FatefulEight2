@@ -84,7 +84,7 @@ public class TownLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        if (MyRandom.rollD10() >= 3) {
+        if (MyRandom.rollD10() >= 1) {
             return MyRandom.sample(List.of(
                     new MuggingEvent(model),
                     new AssassinEvent(model),

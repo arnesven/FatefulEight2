@@ -15,7 +15,7 @@ public class PlayEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("There's apparently a play running in town. Everybody is talking about it. It is apparently pretty good.");
+        println("There's apparently a play running in town. Everybody is talking about it. It is supposed to be pretty good.");
         model.getParty().randomPartyMemberSay(model, List.of("Sounds fun, we should go!",
                 "Oh please spare me...", "Could be interesting.", "We rarely do something like this for ourselves, we should take this opportunity.",
                 "This sounds like a genuine waste of time."));

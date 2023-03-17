@@ -47,8 +47,8 @@ public class LoveLetterEvent extends DailyEventState {
             if (result) {
                 println("You finally find a nobleman's daughter named Maggie. She isn't expecting a letter but " +
                         "after reading it she turns bright pink and admits to being the intended recipient.");
-                println("Maggie: \"Please let me reward you. If not for you, I would have never received this and my pour " +
-                        " paramour would believe that I snubbed him.\"");
+                println("Maggie: \"Please let me reward you. If not for you, I would have never received this and my poor " +
+                        "paramour would believe that I snubbed him.\"");
                 int reward = 10;
                 println("The party gains " + reward + " gold.");
                 model.getParty().addToGold(reward);

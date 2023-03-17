@@ -28,7 +28,7 @@ public class ThiefEvent extends DailyEventState {
         if (spotThief(model)) {
             model.getParty().randomPartyMemberSay(model, List.of("Did you think you could pull a fast one on us?"));
             println("Thief: \"Come on guys, I just need enough for food, and maybe a beer.\"");
-            println("Do you treat the thief to some rations and a drink? (Y/N)");
+            print("Do you treat the thief to some rations and a drink? (Y/N)");
             if (yesNoInput()) {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "Well, why didn't you say so. You're welcome to " +
