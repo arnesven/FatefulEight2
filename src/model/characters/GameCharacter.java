@@ -137,7 +137,7 @@ public class GameCharacter extends Combatant {
             }
             extraInfo += ")";
             combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
-            combatEvent.addStrikeEffect(target, model, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
+            combatEvent.addStrikeEffect(target, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
             combatEvent.doDamageToEnemy(target, damage, this);
         }
     }
@@ -476,7 +476,7 @@ public class GameCharacter extends Combatant {
         damage = damage - reduction;
         addToHP(-1 * damage);
         combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getName() + reductionString + ".");
-        combatEvent.addStrikeEffect(this, model, damage, false);
+        combatEvent.addStrikeEffect(this, damage, false);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }
 

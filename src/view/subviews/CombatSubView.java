@@ -38,7 +38,13 @@ public class CombatSubView extends SubView {
     @Override
     protected String getUnderText(Model model) {
         Combatant selected = combatMatrix.getSelectedElement();
-        return selected.getName() + String.format(" %d/%d HP", selected.getHP(), selected.getMaxHP()) ;
+        String status = selected.getStatus();
+        if (status.equals("OK")) {
+            status = "";
+        } else {
+            status = ", " + status;
+        }
+        return selected.getName() + String.format(" %d/%d HP", selected.getHP(), selected.getMaxHP()) + status;
     }
 
     @Override
@@ -142,10 +148,15 @@ public class CombatSubView extends SubView {
         return CharSprite.make((char) 0x04 + offset, MyColors.WHITE, MyColors.GRAY, MyColors.BLACK);
     }
 
-    public synchronized void addStrikeEffect(Combatant target, Model model, int damge, boolean critical) {
+    public synchronized void addStrikeEffect(Combatant target, int damge, boolean critical) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
         ongoingEffects.add(new MyPair<>(point, new StrikeEffectSprite()));
         ongoingEffects.add(new MyPair<>(point, new DamageValueEffect(damge, critical)));
+    }
+
+    public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
+        Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
+        ongoingEffects.add(new MyPair<>(point, sprite));
     }
 
     private static Point convertToScreen(Point point, Combatant target) {

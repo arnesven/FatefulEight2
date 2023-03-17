@@ -11,6 +11,7 @@ import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.sprites.AnimationManager;
+import view.sprites.RunOnceAnimationSprite;
 import view.subviews.*;
 
 import java.util.*;
@@ -196,7 +197,7 @@ public class CombatEvent extends DailyEventState {
                 } else {
                     println(backMover.getFirstName() + " took 1 damage from opportunity attack while moving to back row (Acrobatics " + result.asString() + ").");
                     backMover.addToHP(-1);
-                    addStrikeEffect(backMover, model, 1, false);
+                    addStrikeEffect(backMover, 1, false);
                 }
             }
         }
@@ -249,8 +250,12 @@ public class CombatEvent extends DailyEventState {
         return combatMatrix.getSelectedElement();
     }
 
-    public void addStrikeEffect(Combatant target, Model model, int damage, boolean critical) {
-        subView.addStrikeEffect(target, model, damage, critical);
+    public void addStrikeEffect(Combatant target, int damage, boolean critical) {
+        subView.addStrikeEffect(target, damage, critical);
+    }
+
+    public void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
+        subView.addSpecialEffect(target, sprite);
     }
 
     public void destroyEnemy(Model model, Enemy enemy, GameCharacter killer) {

@@ -43,7 +43,7 @@ public class MagmaBlastSpell extends CombatSpell {
             int damage = MyRandom.randInt(7) + 1;
             combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
             e.addToHP(-damage);
-            combat.addStrikeEffect(e, model, damage, true);
+            combat.addStrikeEffect(e, damage, true);
         }
 
     }
