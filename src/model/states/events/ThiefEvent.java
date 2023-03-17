@@ -35,7 +35,7 @@ public class ThiefEvent extends DailyEventState {
                                 "spend the evening with us, we've got plenty of food and drink.");
                 model.getParty().addToFood(-1);
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.THF);
-                println("The thief is surprised by your sudden generosity and gladly joins you for the evening. " +
+                print("The thief is surprised by your sudden generosity and gladly joins you for the evening. " +
                         "The thief is willing to show you some tricks, ");
                 change.areYouInterested(model);
             } else {

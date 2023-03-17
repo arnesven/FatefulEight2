@@ -17,7 +17,7 @@ public class TopText {
         model.getScreenHandler().put(16, 0, FOOD_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getFood()), 13, 0, MyColors.PEACH);
         model.getScreenHandler().put(20, 0, REP_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%d", model.getParty().getReputation()), 19, 0, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", model.getParty().getReputation()), 18, 0, MyColors.WHITE);
         drawKeyTexts(model);
     }
 

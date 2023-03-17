@@ -35,17 +35,15 @@ public class UnsuspectingLoversQuest extends Quest {
             "perfect date will seal their love forever!";
 
     private static final String endText = "Jason and Tamara both thank you for bringing them together. What a happy ending!";
-    private final TownCombatTheme theme;
     private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public UnsuspectingLoversQuest() {
         super("Unsuspecting Lovers", "Jason and Tamara's parents", QuestDifficulty.EASY, 0, 25, 50, text, endText);
-        this.theme = new TownCombatTheme();
     }
 
     @Override
     public CombatTheme getCombatTheme() {
-        return theme;
+        return new TownCombatTheme();
     }
 
     @Override
@@ -167,7 +165,7 @@ public class UnsuspectingLoversQuest extends Quest {
             QuestEdge qe = super.run(model, state);
             if (qe == getSuccessEdge()) {
                 model.getParty().addToReputation(-1);
-                state.print("The party loses 1 reputation!");
+                state.println("The party loses 1 reputation!");
             }
             return qe;
         }
