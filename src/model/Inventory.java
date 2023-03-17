@@ -6,6 +6,7 @@ import model.items.clothing.Clothing;
 import model.items.clothing.DragonArmor;
 import model.items.clothing.WarmCape;
 import model.items.potions.Potion;
+import model.items.spells.CombatSpell;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
@@ -112,5 +113,15 @@ public class Inventory implements Serializable {
         sets.add(spells);
         sets.add(potions);
         return sets;
+    }
+
+    public List<CombatSpell> getCombatSpells() {
+        List<CombatSpell> result = new ArrayList<>();
+        for (Spell sp : spells) {
+            if (sp instanceof CombatSpell) {
+                result.add((CombatSpell) sp);
+            }
+        }
+        return result;
     }
 }

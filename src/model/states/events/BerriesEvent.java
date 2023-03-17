@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.PoisonCondition;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -45,7 +46,12 @@ public class BerriesEvent extends DailyEventState {
                 model.getParty().randomPartyMemberSay(model, List.of("Uh... I don't feel so good."));
                 println("Each party takes damage from eating poisonous berries.");
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    gc.addToHP(-1);
+                    if (MyRandom.rollD10() < 3) {
+                        gc.addCondition(new PoisonCondition());
+                        println(gc.getName() + " has been poisoned by the bad berries.");
+                    } else {
+                        gc.addToHP(-2);
+                    }
                 }
                 removeKilledPartyMembers(model, false);
             }

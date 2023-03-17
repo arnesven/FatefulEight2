@@ -4,10 +4,7 @@ import model.items.*;
 import model.items.accessories.*;
 import model.items.clothing.*;
 import model.items.potions.*;
-import model.items.spells.HarmonizeSpell;
-import model.items.spells.LevitateSpell;
-import model.items.spells.Spell;
-import model.items.spells.TurnUndeadSpell;
+import model.items.spells.*;
 import model.items.weapons.SkullWand;
 import model.items.weapons.*;
 import util.MyRandom;
@@ -133,7 +130,14 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<Spell> allSpells() {
-        return List.of(new HarmonizeSpell(), new LevitateSpell(), new TurnUndeadSpell());
+        return List.of(
+                // new DispellSpell(),
+                new LevitateSpell(),
+                // new MindControlSpell(),
+                new ConjurePhantasmSpell(),
+                // new CreatureComfortsSpell(),
+                new HarmonizeSpell(),
+                new TurnUndeadSpell());
     }
 
     public static List<Weapon> allWeapons() {

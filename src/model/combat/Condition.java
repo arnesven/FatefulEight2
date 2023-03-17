@@ -1,5 +1,7 @@
 package model.combat;
 
+import view.sprites.Sprite;
+
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -7,6 +9,8 @@ import java.util.Set;
 public abstract class Condition implements Serializable {
     private String name;
     private String shortName;
+    private int duration = -1;
+
     public Condition(String name, String shortName) {
         this.name = name;
         this.shortName = shortName;
@@ -35,4 +39,26 @@ public abstract class Condition implements Serializable {
     }
 
     protected abstract boolean noCombatTurn();
+
+    protected boolean hasDuration() {
+        return duration != -1;
+    }
+
+    public void addToDuration(int i) {
+        duration += i;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public abstract Sprite getSymbol();
 }

@@ -44,8 +44,7 @@ public class CombatActionMenu extends ArrowMenuSubView {
                 model.setSubView(new CombatActionMenu(this, innerActions, toStringList(innerActions), x+2, y+cursorPos*2,
                         NORTH_WEST, combatEvent, target, combatSubView));
             } else {
-                selectedAction.doAction(model, combatEvent, (GameCharacter) combatEvent.getCurrentCombatant(), target);
-                combatEvent.unblock();
+                combatEvent.unblock(selectedAction, target);
                 model.setSubView(combatSubView);
             }
         } else {

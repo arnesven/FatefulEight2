@@ -1,8 +1,6 @@
 package model.enemies;
 
-import model.combat.CombatAction;
-import model.combat.CombatLoot;
-import model.combat.Combatant;
+import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
 import model.states.CombatEvent;
@@ -35,6 +33,7 @@ public abstract class Enemy extends Combatant {
         int offsetY = getHeight()*4-1;
         screenHandler.register(spr.getName() + enemyGroup, new Point(xpos+offsetX, ypos+offsetY),
                 CharSprite.make((char)(enemyGroup - 0x40 + 0x06), MyColors.BLACK, MyColors.WHITE, MyColors.CYAN));
+        drawConditions(screenHandler, xpos, ypos+offsetY);
     }
 
     public int getWidth() {
@@ -57,17 +56,22 @@ public abstract class Enemy extends Combatant {
     }
 
     public void takeCombatTurn(Model model, CombatEvent combatEvent) {
-        List<GameCharacter> candidates = new ArrayList<>();
-        candidates.addAll(model.getParty().getFrontRow());
-        candidates.removeIf((GameCharacter gc) -> gc.isDead());
-        if (candidates.isEmpty()) {
-            candidates.addAll(model.getParty().getBackRow());
+        if (!getsCombatTurn()) {
+            combatEvent.println(getName() + "'s turn is skipped.");
+        } else {
+            List<GameCharacter> candidates = new ArrayList<>();
+            candidates.addAll(model.getParty().getFrontRow());
+            candidates.removeIf((GameCharacter gc) -> gc.isDead());
+            if (candidates.isEmpty()) {
+                candidates.addAll(model.getParty().getBackRow());
+            }
+            Collections.shuffle(candidates);
+            if (!candidates.isEmpty()) {
+                GameCharacter randomCharFromFrontRow = candidates.get(0);
+                attack(model, randomCharFromFrontRow, combatEvent);
+            }
         }
-        Collections.shuffle(candidates);
-        if (!candidates.isEmpty()) {
-            GameCharacter randomCharFromFrontRow = candidates.get(0);
-            attack(model, randomCharFromFrontRow, combatEvent);
-        }
+        decreaseTimedConditions(model, combatEvent);
     }
 
     public char getEnemyGroup() {

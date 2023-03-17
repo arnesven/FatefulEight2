@@ -7,6 +7,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
+import model.items.spells.ConjurePhantasmSpell;
 import model.map.UrbanLocation;
 import model.map.World;
 import model.states.GameState;
@@ -49,6 +50,7 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
+        getInventory().add(new ConjurePhantasmSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {

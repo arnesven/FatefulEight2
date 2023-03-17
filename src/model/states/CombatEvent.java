@@ -1,5 +1,6 @@
 package model.states;
 
+import model.combat.CombatAction;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -29,6 +30,8 @@ public class CombatEvent extends DailyEventState {
     private boolean partyFled = false;
     private boolean fleeingEnabled;
     private boolean blockCombat = false;
+    private CombatAction selectedCombatAction = null;
+    private Combatant selectedTarget;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled) {
         super(model);
@@ -154,7 +157,11 @@ public class CombatEvent extends DailyEventState {
                     print(character.getFirstName() + "'s turn. ");
                     model.getTutorial().combatActions(model);
                     waitToProceed();
+                    selectedCombatAction.doAction(model, this, character, selectedTarget);
+                    selectedCombatAction = null;
+                    selectedTarget = null;
                 }
+                character.decreaseTimedConditions(model, this);
             }
         }
     }
@@ -307,7 +314,17 @@ public class CombatEvent extends DailyEventState {
         return partyFled;
     }
 
-    public void unblock() {
+    public void unblock(CombatAction selectedAction, Combatant target) {
         blockCombat = false;
+        this.selectedCombatAction = selectedAction;
+        this.selectedTarget = target;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public boolean playerHasSelectedAction() {
+        return selectedCombatAction != null;
     }
 }

@@ -12,6 +12,7 @@ import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
+import model.items.spells.CombatSpell;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
@@ -44,7 +45,6 @@ public class GameCharacter extends Combatant {
     private int currentSp = 1;
     private int currentXp = 0;
     private Party party;
-    private Set<Condition> conditions = new HashSet<>();
 
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
@@ -162,39 +162,8 @@ public class GameCharacter extends Combatant {
     }
 
 
-    private boolean performUseItem(Model model, CombatEvent combatEvent, Set<UsableItem> usableItems) {
-        List<UsableItem> items = new ArrayList<>(usableItems);
-        combatEvent.print("Which item would you like to use? ");
-        for (int i = 0; i < items.size(); ++i) {
-            combatEvent.print(items.get(i).getName() + " (" + (i+1) + "), ");
-        }
-        combatEvent.print("or cancel (Q)? ");
-        try {
-            int selected = Integer.parseInt(combatEvent.lineInput());
-            if (0 < selected && selected <= items.size()) {
-                UsableItem item = items.get(selected-1);
-                combatEvent.print("On whom do you wish to use the " + item.getName() + "?");
-                GameCharacter target = model.getParty().partyMemberInput(model, combatEvent, this);
-                if (item.canBeUsedOn(model, target)) {
-                    String message = item.useYourself(model, target);
-                    combatEvent.println(message);
-                    return true;
-                } else {
-                    combatEvent.println(item.getName() + " cannot be used on " + target.getFirstName() + ".");
-                }
-            }
-        } catch (NumberFormatException nfe) {
-
-        }
-        return false;
-    }
-
     private boolean mayAttackFromBackRow() {
         return equipment.getWeapon().isRangedAttack();
-    }
-
-    public boolean getsCombatTurn() {
-        return !isDead() && !Condition.disablesCombatTurn(conditions);
     }
 
     public int getRankForSkill(Skill skill) {
@@ -214,16 +183,6 @@ public class GameCharacter extends Combatant {
     @Override
     public String getName() {
         return getFullName();
-    }
-
-    public String getStatus() {
-        if (isDead()) {
-            return "DEAD";
-        }
-        if (conditions.isEmpty()) {
-            return "OK";
-        }
-        return Condition.getCharacterStatus(conditions);
     }
 
     public int getSP() {
@@ -316,43 +275,13 @@ public class GameCharacter extends Combatant {
         Set<UsableItem> usableItems = new HashSet<>();
         usableItems.addAll(model.getParty().getInventory().getPotions());
         if (usableItems.size() > 0) {
-            result.add(new CombatAction("Item") {
-                @Override
-                public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    //performUseItem(model, combat, usableItems); TODO
-                }
-
-                @Override
-                public boolean hasInnerMenu() {
-                    return true;
-                }
-
-                @Override
-                public List<CombatAction> getInnerActions(Model model) {
-                    List<CombatAction> res = new ArrayList<>();
-                    for (UsableItem item : usableItems) {
-                        if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
-                            res.add(new CombatAction(item.getName()) {
-                                @Override
-                                public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                                    String message = item.useYourself(model, (GameCharacter) target);
-                                    combat.println(message);
-                                    model.getParty().getInventory().remove(item);
-                                }
-                            });
-                        }
-                    }
-                    return res;
-                }
-            });
+            result.add(new ItemCombatAction(usableItems, target));
         }
 
-        result.add(new CombatAction("Spell") {
-            @Override
-            public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                // TODO:
-            }
-        });
+        List<CombatSpell> combatSpells = model.getParty().getInventory().getCombatSpells();
+        if (!combatSpells.isEmpty()) {
+            result.add(new SpellCombatAction(combatSpells, target));
+        }
 
         result.add(new CombatAction("Pass") {
             @Override
@@ -363,10 +292,6 @@ public class GameCharacter extends Combatant {
 
     public AvatarSprite getAvatarSprite() {
         return avatarSprite;
-    }
-
-    public boolean isDead() {
-        return getHP() <= 0;
     }
 
     public CharacterClass getCharClass() {
@@ -555,33 +480,6 @@ public class GameCharacter extends Combatant {
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }
 
-    public void addCondition(Condition cond) {
-        if (!hasCondition(cond.getClass())) {
-            conditions.add(cond);
-        }
-    }
-
-    public boolean hasCondition(Class<? extends Condition> condition) {
-        for (Condition cond : conditions) {
-            if (cond.getClass().equals(condition)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void removeCondition(Class<? extends Condition> condition) {
-        Condition found = null;
-        for (Condition cond : conditions) {
-            if (cond.getClass().equals(condition)) {
-                found = cond;
-            }
-        }
-        if (found != null) {
-            conditions.remove(found);
-        }
-    }
-
     public boolean canAssumeClass(int id) {
         for (CharacterClass cc : classes) {
             if (cc.id() == id) {
@@ -590,4 +488,5 @@ public class GameCharacter extends Combatant {
         }
         return false;
     }
+
 }
