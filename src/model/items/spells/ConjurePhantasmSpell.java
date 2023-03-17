@@ -11,6 +11,7 @@ import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class ConjurePhantasmSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "Terrifies enemies and prevents them from attacking for 2 rounds.";
+        return "Terrifies enemies and prevents their attacking for 2 rounds.";
     }
 
     @Override
@@ -49,6 +50,26 @@ public class ConjurePhantasmSpell extends CombatSpell {
         for (Enemy e : targets) {
             combat.println(e.getName() + " has been paralyzed with fear!");
             e.addCondition(new TimedParalysisCondition());
+            combat.addSpecialEffect(e, new PhantasmEffect());
+        }
+    }
+
+    private static class PhantasmEffect extends RunOnceAnimationSprite {
+        private int shift = 0;
+
+        public PhantasmEffect() {
+            super("phantasmeffect", "combat.png", 2, 8, 32, 32, 6, MyColors.WHITE);
+        }
+
+        @Override
+        public void stepAnimation(long elapsedTimeMs, Model model) {
+            super.stepAnimation(elapsedTimeMs, model);
+            shift += 1;
+        }
+
+        @Override
+        public int getYShift() {
+            return shift;
         }
     }
 }

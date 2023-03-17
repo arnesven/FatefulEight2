@@ -10,6 +10,7 @@ import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public class MagmaBlastSpell extends CombatSpell {
             combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
             e.addToHP(-damage);
             combat.addStrikeEffect(e, damage, true);
+            combat.addSpecialEffect(e, new MagmaBlastEffectSprite());
         }
 
     }
@@ -51,5 +53,24 @@ public class MagmaBlastSpell extends CombatSpell {
     @Override
     public String getDescription() {
         return "Hurls a fiery ball against your enemies which explodes upon contact.";
+    }
+
+    private static class MagmaBlastEffectSprite extends RunOnceAnimationSprite {
+        private int shift = 48;
+        public MagmaBlastEffectSprite() {
+            super("magmablasteffect", "combat.png", 0, 11, 32, 32, 8, MyColors.RED);
+            setColor2(MyColors.ORANGE);
+        }
+
+        @Override
+        public int getYShift() {
+            return shift;
+        }
+
+        @Override
+        public void stepAnimation(long elapsedTimeMs, Model model) {
+            super.stepAnimation(elapsedTimeMs, model);
+            shift -= 2;
+        }
     }
 }

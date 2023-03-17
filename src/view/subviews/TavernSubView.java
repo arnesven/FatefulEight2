@@ -146,8 +146,12 @@ public class TavernSubView extends DailyActionSubView {
 
     public void animateMovement(Model model, Point from, Point to) {
         if (insideToOutside(from, to) || insideToOutside(to, from)) {
-            super.animateMovement(model, from, TavernDailyActionState.getDoorPosition());
-            super.animateMovement(model, TavernDailyActionState.getDoorPosition(), to);
+            Point doorPos = TavernDailyActionState.getDoorPosition();
+            super.animateMovement(model, from, doorPos);
+            Point below = new Point(doorPos);
+            below.y++;
+            super.animateMovement(model, doorPos, below);
+            super.animateMovement(model, below, to);
         } else {
             super.animateMovement(model, from, to);
         }
