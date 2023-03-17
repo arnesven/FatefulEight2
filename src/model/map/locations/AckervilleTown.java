@@ -23,4 +23,9 @@ public class AckervilleTown extends TownLocation {
         return List.of(new WeaponShopNode(model, 1, 3),
                 new GeneralShopNode(model, 5, 4));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

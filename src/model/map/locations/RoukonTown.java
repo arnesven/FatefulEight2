@@ -22,4 +22,9 @@ public class RoukonTown extends TownLocation {
     public List<GeneralShopNode> getShops(Model model) {
         return List.of(new WeaponShopNode(model, 1, 4), new GeneralShopNode(model, 3, 6));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

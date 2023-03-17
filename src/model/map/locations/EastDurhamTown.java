@@ -25,4 +25,9 @@ public class EastDurhamTown extends TownLocation {
     public List<GeneralShopNode> getShops(Model model) {
         return List.of(new GeneralShopNode(model, 1, 3), new ArmorShopNode(model, 5, 3));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

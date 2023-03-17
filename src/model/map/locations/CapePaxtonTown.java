@@ -23,4 +23,9 @@ public class CapePaxtonTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 1, 4),
                 new WeaponShopNode(model, 4, 2));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

@@ -23,4 +23,9 @@ public class SheffieldTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 5, 5),
                 new MagicShopNode(model, 1, 4));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

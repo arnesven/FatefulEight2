@@ -23,4 +23,9 @@ public class EbonshireTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 4, 5),
                 new AccessoryShopNode(model, 1, 3));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

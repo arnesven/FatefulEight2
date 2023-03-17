@@ -23,4 +23,9 @@ public class LittleErindeTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 1, 6),
                 new ArmorShopNode(model, 5, 1));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

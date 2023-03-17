@@ -17,7 +17,7 @@ import view.subviews.*;
 import java.awt.*;
 import java.util.List;
 
-public class TownLocation extends HexLocation implements UrbanLocation {
+public abstract class TownLocation extends HexLocation implements UrbanLocation {
     private final String townName;
     private final SubView subView;
     private final String lordName;
@@ -93,7 +93,7 @@ public class TownLocation extends HexLocation implements UrbanLocation {
                     new DollyEvent(model),
                     new AssassinEvent(model),
                     new ThievesGuildEvent(model),
-                    // new MayorEvent(model),
+                    new MayorEvent(model),
                     new ConstableEvent(model),
                     new ThiefEvent(model),
                     new CourierEvent(model),

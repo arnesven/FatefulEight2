@@ -24,4 +24,9 @@ public class ArdhCastle extends CastleLocation {
     public List<GeneralShopNode> getShops(Model model) {
         return List.of(new RoyalArmory(model, 1, 3), new MagicSuperShop(model, 5, 2));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

@@ -26,4 +26,9 @@ public class AshtonshireTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 1, 2),
                 new MagicShopNode(model, 1, 4));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

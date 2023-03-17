@@ -20,6 +20,11 @@ public class SaintQuellinTown extends TownLocation {
     }
 
     @Override
+    public boolean getLordGender() {
+        return false;
+    }
+
+    @Override
     public Point getTavernPosition() {
         return new Point(5, 5);
     }

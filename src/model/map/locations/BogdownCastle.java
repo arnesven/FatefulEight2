@@ -24,4 +24,9 @@ public class BogdownCastle extends CastleLocation {
     public java.util.List<GeneralShopNode> getShops(Model model) {
         return List.of(new RoyalArmory(model, 1, 5), new MagicSuperShop(model, 5, 1));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

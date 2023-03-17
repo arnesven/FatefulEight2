@@ -213,10 +213,6 @@ public class WorldBuilder {
         contents.put(new Point(x, y), new HexContents(new InnLocation(innName), roads, rivers));
     }
 
-    private static void addTown(Map<Point, HexContents> contents, int x, int y, String townName, String lordName, int roads, int rivers) {
-        contents.put(new Point(x, y), new HexContents(new TownLocation(townName, lordName, rivers != 0), roads, rivers));
-    }
-
     private static void addTown(Map<Point, HexContents> contents, int x, int y, TownLocation town, int roads, int rivers) {
         contents.put(new Point(x, y), new HexContents(town, roads, rivers));
     }

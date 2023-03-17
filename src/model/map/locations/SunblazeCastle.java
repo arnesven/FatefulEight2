@@ -18,4 +18,9 @@ public class SunblazeCastle extends CastleLocation {
     public List<GeneralShopNode> getShops(Model model) {
         return List.of(new GrandEmporium(model, 1, 3), new RoyalArmory(model, 5, 2));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

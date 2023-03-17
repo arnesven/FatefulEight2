@@ -23,4 +23,9 @@ public class UrnTownTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 5, 5),
                 new AccessoryShopNode(model, 2, 5));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

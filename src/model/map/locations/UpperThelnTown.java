@@ -20,6 +20,11 @@ public class UpperThelnTown extends TownLocation {
     }
 
     @Override
+    public boolean getLordGender() {
+        return true;
+    }
+
+    @Override
     public Point getTavernPosition() {
         Point p = super.getTavernPosition();
         p.y--;

@@ -26,4 +26,9 @@ public class ArkvaleCastle extends CastleLocation {
     public java.util.List<GeneralShopNode> getShops(Model model) {
         return List.of(new RoyalArmory(model, 6, 1), new GrandEmporium(model, 2, 4));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return true;
+    }
 }

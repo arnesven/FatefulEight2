@@ -19,6 +19,11 @@ public class SouthMeadhomeTown extends TownLocation {
     }
 
     @Override
+    public boolean getLordGender() {
+        return true;
+    }
+
+    @Override
     public Point getTavernPosition() {
         return new Point(2, 1);
     }

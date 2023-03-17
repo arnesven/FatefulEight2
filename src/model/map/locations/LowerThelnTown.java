@@ -17,4 +17,9 @@ public class LowerThelnTown extends TownLocation {
         return List.of(new GeneralShopNode(model, 1, 1),
                 new ArmorShopNode(model, 5, 5));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }

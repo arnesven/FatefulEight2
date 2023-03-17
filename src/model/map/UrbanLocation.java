@@ -22,5 +22,6 @@ public interface UrbanLocation {
     String getLocationType();
     String getLordDwelling();
     String getLordTitle();
+    boolean getLordGender();
     Sprite getExitSprite();
 }

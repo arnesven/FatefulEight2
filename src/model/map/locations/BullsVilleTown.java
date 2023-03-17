@@ -23,4 +23,9 @@ public class BullsVilleTown extends TownLocation {
         return List.of(new ArmorShopNode(model, 3, 7),
                 new GeneralShopNode(model, 1, 2));
     }
+
+    @Override
+    public boolean getLordGender() {
+        return false;
+    }
 }
