@@ -3,7 +3,6 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.ParalysisCondition;
 import model.combat.TimedParalysisCondition;
 import model.enemies.Enemy;
 import model.items.Item;
@@ -13,14 +12,13 @@ import view.MyColors;
 import view.sprites.CombatSpellSprite;
 import view.sprites.Sprite;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ConjurePhantasmSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(15, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+public class MagmaBlastSpell extends CombatSpell {
+    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
-    public ConjurePhantasmSpell() {
-        super("Conjure Phantasm", 24, MyColors.BLUE, 10, 2);
+    public MagmaBlastSpell() {
+        super("Magma Blast", 36, MyColors.RED, 11, 4);
     }
 
     @Override
@@ -30,12 +28,7 @@ public class ConjurePhantasmSpell extends CombatSpell {
 
     @Override
     public Item copy() {
-        return new ConjurePhantasmSpell();
-    }
-
-    @Override
-    public String getDescription() {
-        return "Terrifies enemies and prevents them from attacking for 2 rounds.";
+        return new MagmaBlastSpell();
     }
 
     @Override
@@ -45,10 +38,18 @@ public class ConjurePhantasmSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        List<Enemy> targets = getTargets(combat, target, 3);
+        List<Enemy> targets = getTargets(combat, target, MyRandom.randInt(1, 3));
         for (Enemy e : targets) {
-            combat.println(e.getName() + " has been paralyzed with fear!");
-            e.addCondition(new TimedParalysisCondition());
+            int damage = MyRandom.randInt(7) + 1;
+            combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
+            e.addToHP(-damage);
+            combat.addStrikeEffect(e, model, damage, true);
         }
+
+    }
+
+    @Override
+    public String getDescription() {
+        return "Hurls a fiery ball against your enemies which explodes upon contact.";
     }
 }

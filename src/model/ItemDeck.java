@@ -136,8 +136,14 @@ public class ItemDeck extends ArrayList<Item> {
                 // new MindControlSpell(),
                 new ConjurePhantasmSpell(),
                 // new CreatureComfortsSpell(),
-                new HarmonizeSpell(),
-                new TurnUndeadSpell());
+                new TurnUndeadSpell(),
+                // new ShiningOrbSpell(),
+                // new HealingWordSpell(),
+                // new SouthernCrossSpell(),
+                // new AuraOfAllureSpell(),
+                // new FireworksSpell(),
+                new MagmaBlastSpell(),
+                new HarmonizeSpell());
     }
 
     public static List<Weapon> allWeapons() {
