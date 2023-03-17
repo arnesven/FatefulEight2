@@ -361,7 +361,7 @@ public class Party implements Serializable {
         return findBestPerformer(skill, partyMembers);
     }
 
-    public boolean doSoloSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
+    public MyPair<Boolean, GameCharacter> doSoloSkillCheckWithPerformer(Model model, GameState event, Skill skill, int difficulty) {
         GameCharacter performer;
         if (size() > 1) {
             GameCharacter best = findBestPerformer(skill);
@@ -388,7 +388,11 @@ public class Party implements Serializable {
                         "Well, I tried.", "What, I failed?", "Darn it!"));
             }
         }
-        return result.isSuccessful();
+        return new MyPair<>(result.isSuccessful(), performer);
+    }
+
+    public boolean doSoloSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
+        return doSoloSkillCheckWithPerformer(model, event, skill, difficulty).first;
     }
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> performers) {

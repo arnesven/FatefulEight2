@@ -87,15 +87,25 @@ public class TownLocation extends HexLocation implements UrbanLocation {
         if (MyRandom.rollD10() >= 1) {
             return MyRandom.sample(List.of(
                     new MuggingEvent(model),
-                    new AssassinEvent(model),
-                    new MarketEvent(model),
-                    new CourierEvent(model),
                     new BorrowedMoneyEvent(model),
-                    new ThiefEvent(model),
-                    new PlayEvent(model),
-                    new DollyEvent(model),
+                    new CatInATreeEvent(model),
                     new LoveLetterEvent(model),
+                    new DollyEvent(model),
+                    new AssassinEvent(model),
+                    // new ThievesGuildEvent(model),
+                    // new MayorEvent(model),
+                    // new ConstableEvent(model),
+                    new ThiefEvent(model),
+                    new CourierEvent(model),
+                    // new ArcheryRangeEvent(model),
+                    // new MilitiaEvent(model),
+                    // new CharlatanEvent(model),
+                    new PlayEvent(model),
+                    new MarketEvent(model),
+                    //new ProtectionSchemeEvent(model),
                     new AlchemistEvent(model)
+                    // new GamlberEvent(model),
+                    // new SmithEvent(model)
             ));
         }
         return new NoEventState(model);
