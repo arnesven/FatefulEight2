@@ -52,9 +52,6 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
-        getInventory().add(new ConjurePhantasmSpell());
-        getInventory().add(new MagmaBlastSpell());
-        getInventory().add(new EntropicBoltSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {
