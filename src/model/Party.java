@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.items.spells.ConjurePhantasmSpell;
+import model.items.spells.EntropicBoltSpell;
 import model.items.spells.MagmaBlastSpell;
 import model.map.UrbanLocation;
 import model.map.World;
@@ -53,6 +54,7 @@ public class Party implements Serializable {
         cursorSprites = makeCursorSprites();
         getInventory().add(new ConjurePhantasmSpell());
         getInventory().add(new MagmaBlastSpell());
+        getInventory().add(new EntropicBoltSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {
