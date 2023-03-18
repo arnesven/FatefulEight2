@@ -79,7 +79,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<Potion> allPotions() {
         return List.of(new HealthPotion(), new StaminaPotion(), new RejuvenationPotion(), new AntiParalysisPotion(),
-                new AntidotePotion());
+                new AntidotePotion(), new UnstablePotion());
     }
 
     public static List<HeadGearItem> allHeadGear() {

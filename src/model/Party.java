@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.items.potions.HealthPotion;
+import model.items.potions.UnstablePotion;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.World;
@@ -51,6 +52,7 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
+        inventory.add(new UnstablePotion());
     }
 
     private LoopingSprite[] makeCursorSprites() {

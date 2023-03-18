@@ -2,7 +2,9 @@ package model.combat;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.enemies.Enemy;
 import model.items.UsableItem;
+import model.items.potions.ThrowablePotion;
 import model.states.CombatEvent;
 
 import java.util.ArrayList;
@@ -39,6 +41,15 @@ public class ItemCombatAction extends CombatAction {
                     public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         String message = item.useYourself(model, (GameCharacter) target);
                         combat.println(message);
+                        model.getParty().getInventory().remove(item);
+                    }
+                });
+            } else if (target instanceof Enemy && item instanceof ThrowablePotion) {
+                res.add(new CombatAction(item.getName()) {
+                    @Override
+                    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                        ThrowablePotion tp = (ThrowablePotion)item;
+                        tp.throwYourself(model, combat, performer, target);
                         model.getParty().getInventory().remove(item);
                     }
                 });
