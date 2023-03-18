@@ -15,7 +15,7 @@ public class SkillCheckResult {
         this.difficulty = difficulty;
         this.extraBonus = extraBonus;
         roll = MyRandom.rollD10();
-        modifiedRoll = roll + rank;
+        modifiedRoll = roll + rank + extraBonus;
     }
 
     public SkillCheckResult(int rank, int difficulty) {
