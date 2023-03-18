@@ -33,6 +33,7 @@ public class HelpView extends SelectableListMenu {
             new TutorialRecruitDialog(null),
             new TutorialShoppingDialog(null),
             new TutorialSkillChecksDialog(null),
+            new TutorialSpells(null),
             new TutorialTravelDialog(null),
         };
         index = 0;

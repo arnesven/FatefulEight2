@@ -311,7 +311,8 @@ public class CombatEvent extends DailyEventState {
                                 "That one won't be bothering us any more.",
                                 "One less to worry about.", "Huzzah!",
                                 "Another one bites the dust.", "Go back whence you come!",
-                                "I'm on a roll!"));
+                                "I'm on a roll!", "Bye bye!", "Don't come back!",
+                                "Slain."));
             }
         }
     }

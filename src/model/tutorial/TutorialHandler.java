@@ -130,6 +130,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void spells(Model model) {
+        runOnce("spells", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialSpells(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

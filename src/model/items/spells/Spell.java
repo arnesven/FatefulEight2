@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.items.Item;
 import model.map.CastleLocation;
 import model.states.GameState;
+import model.tutorial.TutorialHandler;
 import view.MyColors;
 
 public abstract class Spell extends Item {
@@ -40,6 +41,7 @@ public abstract class Spell extends Item {
 
     public boolean castYourself(Model model, GameState state, GameCharacter caster) {
         state.println(caster.getName() + " tries to cast " + getName() + "...");
+        model.getTutorial().spells(model);
         caster.addToHP(-hpCost);
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
