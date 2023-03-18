@@ -84,7 +84,6 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                         }
                         mainGameView = new MainGameView();
                     } else { // saving
-                        // TODO: Are you sure?
                         if (data != null) {
                             model.transitionToDialog(new YesNoMessageView(SelectSaveSlotMenu.this, "Are you sure you want to overwrite this save?") {
                                 @Override

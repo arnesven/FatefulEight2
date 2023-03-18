@@ -91,9 +91,7 @@ public class QuestDecisionPoint extends QuestJunction {
     }
 
     private boolean leadershipTestFailed(Model model, QuestState state) {
-        // TODO: Use stamina to re-roll
-        SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Leadership, 6);
-        state.println("Party leader " + model.getParty().getLeader().getFirstName() + " tests Leadership " + result.asString());
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, model.getParty().getLeader(), Skill.Leadership, 6, 0, 0);
         model.getLog().waitForAnimationToFinish();
         return !result.isSuccessful();
     }
