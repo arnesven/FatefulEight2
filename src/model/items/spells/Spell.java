@@ -49,7 +49,7 @@ public abstract class Spell extends Item {
             return false;
         }
         int castingBonus = caster.getRankForSkill(Skill.SpellCasting);
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster, getSkillForColor(color), difficulty, 10, castingBonus);
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster, getSkillForColor(color), difficulty, 5, castingBonus);
         if (result.isSuccessful()) {
             state.println(getName() + " was successfully cast.");
         } else {
