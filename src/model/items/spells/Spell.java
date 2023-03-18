@@ -79,4 +79,12 @@ public abstract class Spell extends Item {
     public String getSound() {
         return "book";
     }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public int getHPCost() {
+        return hpCost;
+    }
 }
