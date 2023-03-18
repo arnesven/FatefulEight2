@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.QuestState;
@@ -9,9 +10,8 @@ import view.MyColors;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class QuestDecisionPoint extends QuestJunction {
 
@@ -99,8 +99,26 @@ public class QuestDecisionPoint extends QuestJunction {
     }
 
     private void acceptAllSpells(Model model) {
+        boolean atLeastOneSpell = false;
         for (String spellName : spellCallbacks.keySet()) {
             model.getSpellHandler().acceptSpell(spellName);
+            atLeastOneSpell = true;
+        }
+
+        List<GameCharacter> partyMembers = new ArrayList<>(model.getParty().getPartyMembers());
+        Collections.shuffle(partyMembers);
+        if (atLeastOneSpell) {
+            for (GameCharacter gc : partyMembers) {
+                if (gc.getRankForSkill(Skill.MagicAny) > 0) {
+                    model.getParty().partyMemberSay(model, gc,
+                            List.of("Don't we have a spell for this?",
+                            "If only some magic could help us here...",
+                            "I know just the magic trick for this!",
+                            "I'm getting a tingling sensation...",
+                            "Wait... can we cast a spell here?"));
+                    break;
+                }
+            }
         }
     }
 

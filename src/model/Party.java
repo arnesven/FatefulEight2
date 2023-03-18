@@ -9,6 +9,7 @@ import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.items.spells.ConjurePhantasmSpell;
 import model.items.spells.EntropicBoltSpell;
+import model.items.spells.LevitateSpell;
 import model.items.spells.MagmaBlastSpell;
 import model.map.UrbanLocation;
 import model.map.World;
@@ -52,6 +53,7 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
+        inventory.add(new LevitateSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {
