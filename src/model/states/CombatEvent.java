@@ -10,6 +10,7 @@ import model.classes.SkillCheckResult;
 import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyRandom;
 import view.sprites.AnimationManager;
 import view.sprites.RunOnceAnimationSprite;
 import view.subviews.*;
@@ -304,6 +305,14 @@ public class CombatEvent extends DailyEventState {
         target.addToHP(-damage);
         if (target.getHP() <= 0) {
             destroyEnemy(getModel(), (Enemy)target, damager);
+            if (MyRandom.rollD10() > 5) {
+                getModel().getParty().partyMemberSay(getModel(), damager,
+                        List.of("Vanquished!", "Destroyed!", "Don't mess with me.",
+                                "That one won't be bothering us any more.",
+                                "One less to worry about.", "Huzzah!",
+                                "Another one bites the dust.", "Go back whence you come!",
+                                "I'm on a roll!"));
+            }
         }
     }
 
