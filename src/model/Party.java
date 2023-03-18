@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.items.potions.HealthPotion;
+import model.items.potions.RevivingElixir;
 import model.items.potions.UnstablePotion;
 import model.items.spells.*;
 import model.map.UrbanLocation;
