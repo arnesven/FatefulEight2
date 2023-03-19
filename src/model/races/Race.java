@@ -62,7 +62,7 @@ public abstract class Race implements Serializable {
 
     public int getBonusForSkill(Skill skill) {
         for (Skill s : skillBonuses) {
-            if (s == skill) {
+            if (s.areEqual(skill)) {
                 return 1;
             }
         }

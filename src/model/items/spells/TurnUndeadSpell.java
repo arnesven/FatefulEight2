@@ -5,7 +5,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class TurnUndeadSpell extends Spell {
+public class TurnUndeadSpell extends QuestSpell {
     private static final Sprite SPRITE = new ItemSprite(4, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
 
     public TurnUndeadSpell() {

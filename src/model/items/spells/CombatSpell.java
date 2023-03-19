@@ -29,4 +29,14 @@ public abstract class CombatSpell extends Spell {
         targets.add((Enemy)target);
         return targets;
     }
+
+    @Override
+    protected int getExperience() {
+        return 5;
+    }
+
+    @Override
+    public String castFromMenu(Model model, GameCharacter gc) {
+        return getName() + " can only be cast in combat.";
+    }
 }

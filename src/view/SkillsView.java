@@ -49,7 +49,7 @@ public class SkillsView extends SelectableListMenu {
         List<ListContent> result = new ArrayList<>();
         int row = 14;
         for (Skill skill : Skill.values()) {
-            if (skill == Skill.UnarmedCombat || skill == Skill.MagicAny) {
+            if (skill.areEqual(Skill.UnarmedCombat) || skill.areEqual(Skill.MagicAny)) {
                 continue;
             }
             StringBuilder bldr = new StringBuilder();

@@ -14,6 +14,7 @@ import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.World;
 import model.states.GameState;
+import model.states.SpellCastException;
 import sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyRandom;
@@ -53,6 +54,7 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3
         cursorSprites = makeCursorSprites();
+        inventory.add(new CallOfTheWildSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -366,16 +368,26 @@ public class Party implements Serializable {
     }
 
     public MyPair<Boolean, GameCharacter> doSoloSkillCheckWithPerformer(Model model, GameState event, Skill skill, int difficulty) {
-        GameCharacter performer;
-        if (size() > 1) {
-            GameCharacter best = findBestPerformer(skill);
-            event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
-            event.print(" (Recommended " + best.getName() + "): ");
-            model.getTutorial().skillChecks(model);
-            performer = partyMemberInput(model, event, best);
-        } else {
-            performer = partyMembers.get(0);
+        GameCharacter performer = null;
+        while (true) {
+            model.getSpellHandler().acceptSkillBoostingSpells(skill);
+            try {
+                if (size() > 1) {
+                    GameCharacter best = findBestPerformer(skill);
+                    event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
+                    event.print(" (Recommended " + best.getName() + "): ");
+                    model.getTutorial().skillChecks(model);
+                    performer = partyMemberInput(model, event, best);
+                } else {
+                    performer = partyMembers.get(0);
+                }
+                break;
+            } catch (SpellCastException spe) {
+                spe.getSpell().castYourself(model, event, spe.getCaster());
+            }
         }
+        model.getSpellHandler().unacceptSkillBoostingSpells(skill);
+
         boolean before = MyRandom.randInt(2) == 0;
         if (before && size() > 1) {
             partyMemberSay(model, performer, List.of("Leave it to me!", "Shouldn't be too hard.", "I think I can do it.",
@@ -400,18 +412,28 @@ public class Party implements Serializable {
     }
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> performers) {
-        GameCharacter performer;
-        if (size() > 1) {
-            GameCharacter best = findBestPerformer(skill, performers);
-            event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
-            event.print(" (Recommended " + best.getName() + "): ");
-            model.getTutorial().skillChecks(model);
-            do {
-                performer = partyMemberInput(model, event, best);
-            } while (!performers.contains(performer));
-        } else {
-            performer = performers.get(0);
+        GameCharacter performer = null;
+        while (true) {
+            model.getSpellHandler().acceptSkillBoostingSpells(skill);
+            try {
+                if (size() > 1) {
+                    GameCharacter best = findBestPerformer(skill, performers);
+                    event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
+                    event.print(" (Recommended " + best.getName() + "): ");
+                    model.getTutorial().skillChecks(model);
+                    do {
+                        performer = partyMemberInput(model, event, best);
+                    } while (!performers.contains(performer));
+                } else {
+                    performer = performers.get(0);
+                }
+                break;
+            } catch (SpellCastException spe) {
+                spe.getSpell().castYourself(model, event, spe.getCaster());
+            }
         }
+        model.getSpellHandler().unacceptSkillBoostingSpells(skill);
+
         int bonus = 0;
         for (GameCharacter gc : performers) {
             if (gc != performer) {
@@ -450,7 +472,16 @@ public class Party implements Serializable {
     public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {
         event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
         model.getTutorial().skillChecks(model);
-        event.waitForReturn();
+        while (true) {
+            model.getSpellHandler().acceptSkillBoostingSpells(skill);
+            try {
+                event.waitForReturn(true);
+                break;
+            } catch (SpellCastException spe) {
+                spe.getSpell().castYourself(model, event, spe.getCaster());
+            }
+        }
+        model.getSpellHandler().unacceptSkillBoostingSpells(skill);
         List<GameCharacter> failers = new ArrayList<>();
         for (GameCharacter gc : partyMembers) {
             SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
@@ -496,8 +527,13 @@ public class Party implements Serializable {
         SubView previous = model.getSubView();
         SelectPartyMemberSubView subView = new SelectPartyMemberSubView(model, preselected);
         model.setSubView(subView);
-        event.waitForReturn();
-        model.setSubView(previous);
+        try {
+            event.waitForReturn(true);
+            model.setSubView(previous);
+        } catch (SpellCastException spe) {
+            model.setSubView(previous);
+            throw spe;
+        }
         return subView.getSelectedCharacter();
     }
 

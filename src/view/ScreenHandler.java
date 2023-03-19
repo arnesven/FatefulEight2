@@ -140,6 +140,10 @@ public class ScreenHandler {
         return fadeColor;
     }
 
+    public void unregister(String key) {
+        foregroundSprites.removeIf((ForegroundObject fo) -> fo.key.equals(key));
+    }
+
     private class ForegroundObject implements Comparable<ForegroundObject> {
         private final int xShift;
         private final int yShift;

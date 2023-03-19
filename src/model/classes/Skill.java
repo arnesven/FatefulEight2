@@ -57,4 +57,8 @@ public enum Skill implements Comparable<Skill> {
     public boolean isMagic() {
         return name.contains("Magic");
     }
+
+    public boolean areEqual(Skill other) {
+        return getName().equals(other.getName());
+    }
 }

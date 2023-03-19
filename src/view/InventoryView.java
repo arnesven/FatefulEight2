@@ -200,13 +200,8 @@ public class InventoryView extends SelectableListMenu {
                                 setInnerMenu(new SimpleMessageView(EquipItemMenu.this, errorMessage), model);
                             }
                         } else if (itemToEquip instanceof Spell) {
-                            if (!model.getSpellHandler().tryCast((Spell) itemToEquip, gc)) {
-                                setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
-                                        "You cannot cast " + itemToEquip.getName() + " right now."), model);
-                            } else {
-                                InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
-                                        gc.getFirstName() + " is casting " + itemToEquip.getName() + "..."), model);
-                            }
+                            setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
+                                    ((Spell) itemToEquip).castFromMenu(model, gc)), model);
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);

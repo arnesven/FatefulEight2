@@ -1,15 +1,20 @@
 package model;
 
 import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.items.spells.SkillBoostingSpell;
 import model.items.spells.Spell;
 import util.MyPair;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
     private Set<String> acceptedSpells = new HashSet<>();
+    private static Map<Spell, Skill> skillBoostingSpells = new HashMap<>();
+
+    public static void registerSkillBoostingSpell(SkillBoostingSpell skillBoostingSpell, Skill skill) {
+        skillBoostingSpells.put(skillBoostingSpell, skill);
+    }
 
     public boolean tryCast(Spell spell, GameCharacter gc) {
         if (acceptedSpells.contains(spell.getName())) {
@@ -36,5 +41,21 @@ public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
 
     public void unacceptSpell(String spellName) {
         acceptedSpells.remove(spellName);
+    }
+
+    public void acceptSkillBoostingSpells(Skill skill) {
+        for (Map.Entry<Spell, Skill> entry : skillBoostingSpells.entrySet()) {
+            if (entry.getValue().areEqual(skill)) {
+                acceptSpell(entry.getKey().getName());
+            }
+        }
+    }
+
+    public void unacceptSkillBoostingSpells(Skill skill) {
+        for (Map.Entry<Spell, Skill> entry : skillBoostingSpells.entrySet()) {
+            if (entry.getValue().areEqual(skill) && acceptedSpells.contains(entry.getKey().getName())) {
+                unacceptSpell(entry.getKey().getName());
+            }
+        }
     }
 }

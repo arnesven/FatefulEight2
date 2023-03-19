@@ -2,8 +2,6 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.items.EquipableItem;
-import model.items.Equipment;
 import model.items.Item;
 import model.items.spells.Spell;
 import util.Arithmetics;
@@ -209,13 +207,7 @@ public class SpellsView extends SelectableListMenu {
                 content.add(new SelectableListContent(xStart + 1, yStart + i, gc.getFirstName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
-                        if (!model.getSpellHandler().tryCast(spell, gc)) {
-                            setInnerMenu(new SimpleMessageView(CastByWhomMenu.this,
-                                    "You cannot cast " + spell.getName() + " right now."), model);
-                        } else {
-                            SpellsView.this.setInnerMenu(new SimpleMessageView(CastByWhomMenu.this,
-                                    gc.getFirstName() + " is casting " + spell.getName() + "..."), model);
-                        }
+                        setInnerMenu(new SimpleMessageView(CastByWhomMenu.this, spell.castFromMenu(model, gc)), model);
                     }
                 });
                 i++;

@@ -41,6 +41,7 @@ public class GameCharacter extends Combatant {
     private final CharacterAppearance appearance;
     private int level;
     private Equipment equipment;
+    private Map<Skill, Integer> temporarySkillBonuses = new HashMap<>();
 
     private int currentSp = 1;
     private int currentXp = 0;
@@ -167,7 +168,7 @@ public class GameCharacter extends Combatant {
     }
 
     public int getRankForSkill(Skill skill) {
-        if (skill == Skill.MagicAny) {
+        if (skill.areEqual(Skill.MagicAny)) {
             int best = 0;
             for (Skill s : Skill.values()) {
                 if (s.isMagic() && charClass.getWeightForSkill(s) > best) {
@@ -176,8 +177,12 @@ public class GameCharacter extends Combatant {
                 }
             }
         }
+        int tempBonus = 0;
+        if (temporarySkillBonuses.containsKey(skill)) {
+            tempBonus = temporarySkillBonuses.get(skill);
+        }
         return Skill.getRankForSkill(charClass.getWeightForSkill(skill), getLevel())
-                + race.getBonusForSkill(skill) + equipment.getBonusForSkill(skill);
+                + race.getBonusForSkill(skill) + equipment.getBonusForSkill(skill) + tempBonus;
     }
 
     @Override
@@ -298,16 +303,22 @@ public class GameCharacter extends Combatant {
         return charClass;
     }
 
+    private int getRankAndRemoveTempBonus(Skill skill) {
+        int total = getRankForSkill(skill);
+        temporarySkillBonuses.remove(skill);
+        return total;
+    }
+
     public SkillCheckResult testSkill(Skill skill, int difficulty, int bonus) {
-        return new SkillCheckResult(getRankForSkill(skill), difficulty, bonus);
+        return new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty, bonus);
     }
 
     public SkillCheckResult testSkill(Skill skill, int difficulty) {
-        return new SkillCheckResult(getRankForSkill(skill), difficulty);
+        return new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty);
     }
 
     public SkillCheckResult testSkill(Skill skill) {
-        return new SkillCheckResult(getRankForSkill(skill));
+        return new SkillCheckResult(getRankAndRemoveTempBonus(skill));
     }
 
     public int getMaxSP() {
@@ -486,4 +497,7 @@ public class GameCharacter extends Combatant {
         return false;
     }
 
+    public void addTemporaryBonus(Skill skill, int bonus) {
+        temporarySkillBonuses.put(skill, bonus);
+    }
 }

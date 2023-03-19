@@ -4,6 +4,7 @@ import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
 import model.items.potions.AntidotePotion;
+import model.items.spells.Spell;
 import model.log.GameLog;
 import model.map.World;
 import model.map.WorldHex;
@@ -13,6 +14,7 @@ import model.tutorial.TutorialHandler;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
+import util.MyPair;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
 import view.subviews.SubView;
@@ -187,6 +189,7 @@ public class Model {
     public void runGameScript() {
         while (!gameExited()) {
             GameState nextState = state.run(this);
+            handleCastSpells();
             if (nextState != null) {
                 state = nextState;
                 if (endOfGameReached() && !gameData.freePlay) {
@@ -194,6 +197,13 @@ public class Model {
                     transitionToDialog(new EndOfGameDialog(getView()));
                 }
             }
+        }
+    }
+
+    private void handleCastSpells() {
+        while (!spellHandler.isEmpty()) {
+            MyPair<Spell, GameCharacter> spellAndChar = spellHandler.getCastSpell();
+            spellAndChar.first.castYourself(this, state, spellAndChar.second);
         }
     }
 

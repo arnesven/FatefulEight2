@@ -147,7 +147,7 @@ public class Equipment implements Serializable {
         }
         int result = 0;
         for (MyPair<Skill, Integer> pair : bonuses) {
-            if (pair.first == skill) {
+            if (pair.first.areEqual(skill)) {
                 result += pair.second;
             }
         }

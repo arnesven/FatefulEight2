@@ -55,7 +55,7 @@ public abstract class CharacterClass implements Serializable {
 
     public int getWeightForSkill(Skill skill) {
         for (WeightedSkill ws : skillBonuses) {
-            if (ws.skill == skill) {
+            if (ws.skill.areEqual(skill)) {
                 return ws.weight;
             }
         }

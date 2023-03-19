@@ -10,6 +10,8 @@ import model.map.CastleLocation;
 import model.states.GameState;
 import model.tutorial.TutorialHandler;
 import view.MyColors;
+import view.SimpleMessageView;
+import view.SpellsView;
 
 public abstract class Spell extends Item {
     public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK};
@@ -49,7 +51,8 @@ public abstract class Spell extends Item {
             return false;
         }
         int castingBonus = caster.getRankForSkill(Skill.SpellCasting);
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster, getSkillForColor(color), difficulty, 5, castingBonus);
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster,
+                getSkillForColor(color), difficulty, getExperience(), castingBonus);
         if (result.isSuccessful()) {
             state.println(getName() + " was successfully cast.");
         } else {
@@ -57,6 +60,8 @@ public abstract class Spell extends Item {
         }
         return result.isSuccessful();
     }
+
+    protected abstract int getExperience();
 
     private static Skill getSkillForColor(MyColors color) {
         switch (color) {
@@ -75,6 +80,10 @@ public abstract class Spell extends Item {
         }
     }
 
+    public Skill getSkill() {
+        return getSkillForColor(color);
+    }
+
     @Override
     public String getSound() {
         return "book";
@@ -86,5 +95,12 @@ public abstract class Spell extends Item {
 
     public int getHPCost() {
         return hpCost;
+    }
+
+    public String castFromMenu(Model model, GameCharacter gc) {
+        if (!model.getSpellHandler().tryCast(this, gc)) {
+            return "You cannot cast " + getName() + " right now.";
+        }
+        return gc.getFirstName() + " is casting " + getName() + "...";
     }
 }

@@ -5,7 +5,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class HarmonizeSpell extends Spell {
+public class HarmonizeSpell extends QuestSpell {
     private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BEIGE, MyColors.GREEN);
 
     public HarmonizeSpell() {

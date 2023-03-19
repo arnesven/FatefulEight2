@@ -1,9 +1,6 @@
 package model.quests;
 
-import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.MansionGuardEnemy;
 import model.items.spells.LevitateSpell;
