@@ -17,6 +17,7 @@ public abstract class AuxiliarySpell extends Spell {
 
     @Override
     public final boolean castYourself(Model model, GameState state, GameCharacter caster) {
+        state.println("");
         preCast(model, state, caster);
         boolean success = super.castYourself(model, state, caster);
         if (success) {
