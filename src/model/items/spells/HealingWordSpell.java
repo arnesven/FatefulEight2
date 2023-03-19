@@ -7,6 +7,7 @@ import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class HealingWordSpell extends CombatSpell {
         target.addToHP(6);
         int totalRecovered = target.getHP() - hpBefore;
         combat.println(target.getName() + " recovers " + totalRecovered + " HP!");
+        combat.addSpecialEffect(target, new ShinyRingEffect());
         if (target != performer) {
             model.getParty().partyMemberSay(model, (GameCharacter) target,
                     List.of("Thank you so much!3", "Much obliged!3",
@@ -49,5 +51,12 @@ public class HealingWordSpell extends CombatSpell {
     @Override
     public String getDescription() {
         return "A soothing incantation which restores HP of a character.";
+    }
+
+    private static class ShinyRingEffect extends RunOnceAnimationSprite {
+        public ShinyRingEffect() {
+            super("shinyring", "combat.png", 0, 13, 32, 32, 8, MyColors.LIGHT_BLUE);
+            setColor2(MyColors.WHITE);
+        }
     }
 }

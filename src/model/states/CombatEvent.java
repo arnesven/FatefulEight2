@@ -180,6 +180,7 @@ public class CombatEvent extends DailyEventState {
         back.addAll(model.getParty().getBackRow());
         if (!back.isEmpty() && frontRowIsOverrun(model)) {
             println("Party overrun by enemies! All characters in back row are moved to front.");
+            model.getLog().waitForAnimationToFinish();
             for (GameCharacter gc : back) {
                 toggleFormationFor(model, gc);
             }
