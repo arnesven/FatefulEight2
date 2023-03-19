@@ -10,6 +10,7 @@ import java.io.IOException;
 public class RunOnceAnimationSprite extends Sprite implements Animation {
     private int count = 0;
     private int currentFrame = 0;
+    private int animationSpeed = 3;
 
     public RunOnceAnimationSprite(String name, String map, int col, int row, int width, int height, int frames, MyColors color) {
         super(name, map, col, row, width, height);
@@ -21,9 +22,13 @@ public class RunOnceAnimationSprite extends Sprite implements Animation {
     @Override
     public void stepAnimation(long elapsedTimeMs, Model model) {
         count++;
-        if (count % 3 == 0) {
+        if (count % animationSpeed == 0) {
             currentFrame++;
         }
+    }
+
+    public void setAnimationDelay(int animationSpeed) {
+        this.animationSpeed = animationSpeed;
     }
 
     @Override

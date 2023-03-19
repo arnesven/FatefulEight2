@@ -101,4 +101,15 @@ public abstract class Enemy extends Combatant {
     }
 
     public abstract CombatLoot getLoot(Model model);
+
+    public int calculateBaseDamage() {
+        int damage = getDamage();
+        if (hasCondition(WeakenCondition.class)) {
+            damage = Math.max(1, damage - 2);
+        }
+        while (damage > 0 && MyRandom.randInt(2) == 0) {
+            damage--;
+        }
+        return damage;
+    }
 }
