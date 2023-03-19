@@ -3,6 +3,7 @@ package model.items.potions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -40,5 +41,10 @@ public class RejuvenationPotion extends Potion {
     @Override
     public boolean canBeUsedOn(Model model, GameCharacter target) {
         return target.getHP() < target.getMaxHP() || target.getSP() < target.getMaxSP();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.common;
     }
 }
