@@ -134,7 +134,7 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(
                 // new DispellSpell(),
                 new LevitateSpell(),
-                // new MindControlSpell(),
+                new MindControlSpell(),
                 new ConjurePhantasmSpell(),
                 // new CreatureComfortsSpell(),
                 new TurnUndeadSpell(),

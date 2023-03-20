@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConjurePhantasmSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(15, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new CombatSpellSprite(4, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public ConjurePhantasmSpell() {
         super("Conjure Phantasm", 24, MyColors.BLUE, 10, 2);
