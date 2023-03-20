@@ -21,6 +21,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
         super.addNode(3, 3, new TownHallNode());
         super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, TownSubView.GROUND_COLOR));
+        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(TownSubView.GROUND_COLOR));
         super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode(TownSubView.GROUND_COLOR));
         addNode(7, 2, new SaveGameNode());
         if (isCoastal && !urbanLocation.noBoat()) {

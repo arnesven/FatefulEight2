@@ -56,7 +56,7 @@ public class AlchemySpell extends ImmediateSpell {
         state.println("What potion would you like to attempt to make with Alchemy?");
         List<String> options = new ArrayList<>(setOfPotions);
         final String[] selected = {null};
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 26, 24 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 24 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selected[0] = options.get(cursorPos);

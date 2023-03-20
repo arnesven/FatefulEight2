@@ -33,7 +33,7 @@ public class MageEvent extends DailyEventState {
                 println("Mage: \"Yes of course, that's a fascinating spell!\"");
                 model.getParty().partyMemberSay(model, result.second,
                         List.of("But alas, I have not had the opportunity to learn it..."));
-                println("Mage: \"You know... I happen to have a copy of the spell book here. Please, take it!");
+                println("Mage: \"You know... I happen to have a copy of the spell book here. Please, take it!\"");
                 model.getParty().partyMemberSay(model, result.second,
                         List.of("Oh, I couldn't!", "Do you really mean it?", "Are you sure?"));
                 println("Mage: \"I insist! Anything to help a fellow scholar!\"");
