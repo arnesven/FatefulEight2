@@ -55,8 +55,8 @@ public class QuestDecisionPoint extends QuestJunction {
         } while (true);
     }
 
-    public void addSpellCallback(String s, SpellCallback callback) {
-        spellCallbacks.put(s, callback);
+    public void addSpellCallback(String nameOfSpell, SpellCallback callback) {
+        spellCallbacks.put(nameOfSpell, callback);
     }
 
     @Override

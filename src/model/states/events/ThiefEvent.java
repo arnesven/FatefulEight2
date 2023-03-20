@@ -28,7 +28,7 @@ public class ThiefEvent extends DailyEventState {
         if (spotThief(model)) {
             model.getParty().randomPartyMemberSay(model, List.of("Did you think you could pull a fast one on us?"));
             println("Thief: \"Come on guys, I just need enough for food, and maybe a beer.\"");
-            print("Do you treat the thief to some rations and a drink? (Y/N)");
+            print("Do you treat the thief to some rations and a drink? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "Well, why didn't you say so. You're welcome to " +
@@ -58,7 +58,7 @@ public class ThiefEvent extends DailyEventState {
     private boolean spotThief(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.testSkill(Skill.Perception, 8).isSuccessful()) {
-                println(gc.getName() + " spots the stranger trying to snatch your purse.");
+                println(gc.getName() + " spots the stranger trying to snatch your purse."); // TODO: print skill check result
                 model.getParty().partyMemberSay(model, gc, "Hey, there! THIEF!");
                 return true;
             }

@@ -27,7 +27,7 @@ public class UnstablePotion extends ThrowablePotion {
 
     @Override
     public String getShoppingDetails() {
-        return ", Will explode on impact when thrown at an enemy.";
+        return ", Explodes on impact when thrown at an enemy.";
     }
 
     @Override

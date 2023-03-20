@@ -34,6 +34,6 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
 
     @Override
     public String getDescription() {
-        return "Temporarily raises a character's rank in the skill " + getBoostingSkill().getName() + ".";
+        return "Temporarily raises a character's rank in " + getBoostingSkill().getName() + ".";
     }
 }

@@ -423,6 +423,9 @@ public class GameCharacter extends Combatant {
                 unequipAccessory();
             }
         }
+        if (getHP() > getMaxHP()) {
+            addToHP(getMaxHP() - getHP());
+        }
     }
 
     public GameCharacter copy() {

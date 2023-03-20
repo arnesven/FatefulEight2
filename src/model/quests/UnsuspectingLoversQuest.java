@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.characters.DeniseBoyd;
+import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -9,6 +10,8 @@ import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
 import model.combat.TownCombatTheme;
 import model.enemies.Enemy;
+import model.items.spells.FireworksSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
@@ -80,6 +83,13 @@ public class UnsuspectingLoversQuest extends Quest {
                 List.of(new QuestEdge(scenes.get(3).get(0)),
                         new QuestEdge(scenes.get(3).get(1))),
                         "To set the mood, some proper entertainment is required.");
+        qd3.addSpellCallback(new FireworksSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println(caster.getFirstName() + " conjures up a magical fireworks display!");
+                return new QuestEdge(getSuccessEndingNode());
+            }
+        });
 
         DecorativeJunction jason = new SpriteDecorativeJunction(7, 0,
                 Classes.None.getAvatar(Race.SOUTHERN_HUMAN, new DefaultAppearance()), "Jason");
