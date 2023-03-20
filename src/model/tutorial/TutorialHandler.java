@@ -144,6 +144,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void crafting(Model model) {
+        runOnce("crafting", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCrafting(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

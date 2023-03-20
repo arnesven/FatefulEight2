@@ -26,6 +26,7 @@ public class CraftItemState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        model.getTutorial().crafting(model);
         List<Item> allItems = getAllItems(model);
         if (allItems.isEmpty()) {
             println("You cannot craft since you do not have any items!");

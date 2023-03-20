@@ -26,6 +26,7 @@ public class HelpView extends SelectableListMenu {
             new TutorialCombatActionsDialog(null),
             new TutorialCombatDamageDialog(null),
             new TutorialCombatFormationDialog(null),
+            new TutorialCrafting(null),
             new TutorialDailyActions(null),
             new TutorialEveningDialog(null),
             new TutorialEquipmentDialog(null),
