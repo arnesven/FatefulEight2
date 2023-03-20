@@ -18,7 +18,10 @@ public abstract class AuxiliarySpell extends Spell {
     @Override
     public final boolean castYourself(Model model, GameState state, GameCharacter caster) {
         state.println("");
-        preCast(model, state, caster);
+        boolean preconditionsMet = preCast(model, state, caster);
+        if (!preconditionsMet) {
+            return false;
+        }
         boolean success = super.castYourself(model, state, caster);
         if (success) {
             applyAuxiliaryEffect(model, state, caster);
@@ -26,7 +29,7 @@ public abstract class AuxiliarySpell extends Spell {
         return success;
     }
 
-    protected abstract void preCast(Model model, GameState state, GameCharacter caster);
+    protected abstract boolean preCast(Model model, GameState state, GameCharacter caster);
 
     protected abstract void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster);
 

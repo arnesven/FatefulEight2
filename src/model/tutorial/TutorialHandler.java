@@ -137,6 +137,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void alchemy(Model model) {
+        runOnce("alchemy", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialAlchemy(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

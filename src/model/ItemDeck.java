@@ -16,8 +16,6 @@ import java.util.List;
 
 public class ItemDeck extends ArrayList<Item> {
 
-    private List<ItemDeck> discard;
-
     public ItemDeck() {
         this.addAll(allItems());
         Collections.shuffle(this);
@@ -148,7 +146,7 @@ public class ItemDeck extends ArrayList<Item> {
                 // new BindDaemonSpell(),
                 // new BurningWeaponSpell(),
                 // new TransfigurationSpell(),
-                // new AlchemySpell(),
+                new AlchemySpell(),
                 new HarmonizeSpell(),
                 new CallOfTheWildSpell(),
                 // new GiantGrowthSpell(),

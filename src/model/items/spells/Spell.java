@@ -56,7 +56,7 @@ public abstract class Spell extends Item {
         if (result.isSuccessful()) {
             state.println(getName() + " was successfully cast.");
         } else {
-            state.println(getName() + " failed");
+            state.println(getName() + " failed.");
         }
         return result.isSuccessful();
     }

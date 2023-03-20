@@ -19,9 +19,10 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
     protected abstract Skill getBoostingSkill();
 
     @Override
-    protected void preCast(Model model, GameState state, GameCharacter caster) {
+    protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         state.print("Who do you want to target with " + getName() + "? ");
         this.target = model.getParty().partyMemberInput(model, state, caster);
+        return true;
     }
 
     @Override
