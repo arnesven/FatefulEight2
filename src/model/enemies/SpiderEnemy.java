@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.CombatLoot;
+import model.combat.MonsterCombatLoot;
 import model.combat.ParalysisCondition;
 import model.combat.StandardCombatLoot;
 import model.states.CombatEvent;
@@ -52,7 +53,7 @@ public class SpiderEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new MonsterCombatLoot(model);
     }
 
     private static class SpiderSprite extends LoopingSprite {

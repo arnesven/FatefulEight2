@@ -21,6 +21,8 @@ public class Inventory implements Serializable {
     private List<Spell> spells = new ArrayList<>();
     private List<Potion> potions = new ArrayList<>();
     private int food = 10;
+    private int ingredients = 0;
+    private int materials = 0;
 
     public Inventory() { }
 
@@ -123,5 +125,21 @@ public class Inventory implements Serializable {
             }
         }
         return result;
+    }
+
+    public int getIngredients() {
+        return ingredients;
+    }
+
+    public int getMaterials() {
+        return materials;
+    }
+
+    public void addToMaterials(int materials) {
+        this.materials += materials;
+    }
+
+    public void addToIngredients(int ingredients) {
+        this.ingredients += ingredients;
     }
 }

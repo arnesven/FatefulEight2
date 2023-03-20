@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.combat.CombatLoot;
+import model.combat.MonsterCombatLoot;
 import model.combat.StandardCombatLoot;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -37,6 +38,6 @@ public class GiantRatEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new MonsterCombatLoot(model);
     }
 }

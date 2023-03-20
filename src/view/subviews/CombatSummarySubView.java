@@ -44,6 +44,8 @@ public class CombatSummarySubView extends SubView {
                 X_OFFSET+3, row++, MyColors.WHITE, MyColors.BLUE);
         int gold = 0;
         int rations = 0;
+        int ingredients = 0;
+        int materials = 0;
         for (CombatLoot l : loot) {
             if (!l.getText().equals("")) {
                 BorderFrame.drawString(model.getScreenHandler(), l.getText(), X_OFFSET+3, row++,
@@ -51,6 +53,8 @@ public class CombatSummarySubView extends SubView {
             }
             gold += l.getGold();
             rations += l.getRations();
+            ingredients += l.getIngredients();
+            materials += l.getMaterials();
         }
 
         if (gold > 0) {
@@ -60,6 +64,16 @@ public class CombatSummarySubView extends SubView {
 
         if (rations > 0) {
             BorderFrame.drawString(model.getScreenHandler(), rations + " Rations", X_OFFSET+3, row++,
+                    MyColors.WHITE, MyColors.BLUE);
+        }
+
+        if (ingredients > 0) {
+            BorderFrame.drawString(model.getScreenHandler(), ingredients + " Ingredients", X_OFFSET+3, row++,
+                    MyColors.WHITE, MyColors.BLUE);
+        }
+
+        if (materials > 0) {
+            BorderFrame.drawString(model.getScreenHandler(), materials + " Materials", X_OFFSET+3, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
 

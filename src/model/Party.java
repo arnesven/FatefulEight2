@@ -593,4 +593,5 @@ public class Party implements Serializable {
     public Map<String, Summon> getSummons() {
         return summons;
     }
+
 }

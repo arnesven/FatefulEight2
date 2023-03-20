@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.combat.CombatLoot;
+import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 import view.MyColors;
 import view.sprites.SoldierSprite;
@@ -40,6 +41,6 @@ public class SoldierEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new PersonCombatLoot(model);
     }
 }

@@ -2,10 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
-import model.combat.ParalysisCondition;
-import model.combat.PoisonCondition;
-import model.combat.StandardCombatLoot;
+import model.combat.*;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -51,6 +48,6 @@ public class ScorpionEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new MonsterCombatLoot(model);
     }
 }

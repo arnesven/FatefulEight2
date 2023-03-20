@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class DeadBodyEvent extends RiverEvent {
         StringBuilder bldr = new StringBuilder("5 rations");
         int gold = 0;
         for (int i = 0; i < 3; ++i) {
-            StandardCombatLoot loot = new StandardCombatLoot(model);
+            StandardCombatLoot loot = new PersonCombatLoot(model);
             if (!loot.getText().equals("")) {
                 bldr.append(", " + loot.getText());
             }

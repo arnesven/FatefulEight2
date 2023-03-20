@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.classes.Classes;
 import model.combat.CombatLoot;
+import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 import util.MyRandom;
 import view.sprites.AvatarSprite;
@@ -38,6 +39,6 @@ public class AssassinEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new PersonCombatLoot(model);
     }
 }

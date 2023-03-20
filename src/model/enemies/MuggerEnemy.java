@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.combat.CombatLoot;
+import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 import model.races.NorthernHuman;
 import model.races.Race;
@@ -46,7 +47,7 @@ public class MuggerEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new PersonCombatLoot(model);
     }
 
     private static class MuggerSprite extends LoopingSprite {

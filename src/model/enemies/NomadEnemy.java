@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.classes.Classes;
 import model.combat.CombatLoot;
+import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 import model.races.Race;
 import view.sprites.Sprite;
@@ -40,6 +41,6 @@ public class NomadEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new PersonCombatLoot(model);
     }
 }

@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.combat.CombatLoot;
+import model.combat.MonsterCombatLoot;
 import model.combat.RandomMoneyCombatLoot;
 import model.combat.RationsCombatLoot;
 import view.sprites.Sprite;
@@ -45,7 +46,7 @@ public class WolfEnemy extends BigEnemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new RationsCombatLoot(1);
+        return new MonsterCombatLoot(model);
     }
 
     @Override

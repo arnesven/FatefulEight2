@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.combat.CombatLoot;
+import model.combat.MonsterCombatLoot;
 import model.combat.StandardCombatLoot;
 import util.MyRandom;
 import view.MyColors;
@@ -38,6 +39,6 @@ public class ManticoreEnemy extends Enemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model);
+        return new MonsterCombatLoot(model);
     }
 }

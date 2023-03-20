@@ -1,6 +1,5 @@
 package model.combat;
 
-import model.ItemDeck;
 import model.Model;
 import model.Party;
 import model.items.Item;
@@ -21,7 +20,6 @@ public class StandardCombatLoot extends CombatLoot {
         } else if (dieRoll <= 9) {
             items.add(model.getItemDeck().getRandomItem());
         }
-
         if (dieRoll == 7) {
             gold++;
         }
@@ -40,8 +38,8 @@ public class StandardCombatLoot extends CombatLoot {
         if (items.size() > 0) {
             bldr.append(items.get(0).getName());
         }
-        if (items.size() > 1) {
-            bldr.append("\n" + items.get(1).getName());
+        for (int i = 1; i < items.size(); ++i) {
+            bldr.append("\n" + items.get(i).getName());
         }
         return bldr.toString();
     }
