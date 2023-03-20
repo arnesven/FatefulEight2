@@ -48,6 +48,7 @@ public class DesertHex extends WorldHex {
                     new ScorpionEvent(model),
                     new VulturesEvent(model),
                     new OasisEvent(model),
+                    new AbandonedShackEvent(model),
                     new DehydrationEvent(model),
                     new DehydrationEvent(model),
                     new DehydrationEvent(model),

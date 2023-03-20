@@ -40,7 +40,8 @@ public class PlainsHex extends WorldHex {
                     new StoneCircleEvent(model),
                     new BerriesEvent(model),
                     new NomadCampEvent(model),
-                    new HalflingVillage(model)
+                    new HalflingVillage(model),
+                    new BrokenWagonEvent(model)
             ));
         }
         return new NoEventState(model);

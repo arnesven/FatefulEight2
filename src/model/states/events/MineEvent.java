@@ -65,6 +65,11 @@ public class MineEvent extends DailyEventState {
                 break;
             case 5:
             case 6:
+                print("The mine is currently in use. There are some miners here but they seem to completely ignore you.");
+                model.getParty().randomPartyMemberSay(model, List.of("Nobody will mind if we just help ourselves to some " +
+                        "of these materials.", "We might as well pick up some stuff while we're here."));
+                println("The party gains 5 materials.");
+                model.getParty().getInventory().addToMaterials(5);
             case 7:
                 print("The mine is currently in use. ");
                 new MinerEvent(model).doEvent(model);

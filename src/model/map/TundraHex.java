@@ -51,7 +51,8 @@ public class TundraHex extends WorldHex {
                     new ColdEvent(model),
                     new ColdEvent(model),
                     new MountainWolfEvent(model),
-                    new OutpostEvent(model)
+                    new OutpostEvent(model),
+                    new AbandonedShackEvent(model)
 
             ));
         }

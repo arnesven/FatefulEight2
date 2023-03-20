@@ -209,6 +209,7 @@ public abstract class WorldHex implements Serializable {
             events.add(new NoblemanEvent(model));
             events.add(new FriendEvent(model));
             events.add(new MageEvent(model));
+            events.add(new BrokenWagonEvent(model));
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);

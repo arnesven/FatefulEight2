@@ -33,7 +33,13 @@ public class ChestEvent extends DailyEventState {
         println(performer.getName() + " spots something! (Perception " + result.asString() + ")");
         if (model.getParty().size() > 1) {
             model.getParty().partyMemberSay(model, performer, "It's a chest. Help me dig it up!");
+        } else {
+            model.getParty().randomPartyMemberSay(model, List.of("It's a chest!"));
         }
+        findAChest(model);
+    }
+
+    public void findAChest(Model model) {
         println("The chest appears to be locked.");
         boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Security, 7);
         if (success) {
@@ -55,6 +61,5 @@ public class ChestEvent extends DailyEventState {
             model.getParty().randomPartyMemberSay(model, List.of("Well, we're not getting into that thing. We had better just forget about it."));
             model.getParty().randomPartyMemberSay(model, List.of("What a shame!", "But I really wanted to know what was inside!"));
         }
-
     }
 }

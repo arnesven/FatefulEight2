@@ -51,7 +51,8 @@ public class HillsHex extends WorldHex {
                     new HalflingVillage(model),
                     new PegasusEvent(model),
                     new TrollEvent(model),
-                    new BanditEvent(model)
+                    new BanditEvent(model),
+                    new AbandonedShackEvent(model)
                     // new CaveEvent();
                     // new CaveEvent();
                     // new CaveEvent();
