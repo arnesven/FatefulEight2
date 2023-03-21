@@ -1,6 +1,8 @@
 package view.sprites;
 
 import model.Model;
+import util.MyPixel;
+import view.MyColors;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

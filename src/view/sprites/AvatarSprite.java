@@ -1,6 +1,5 @@
 package view.sprites;
 
-import model.characters.appearance.CharacterAppearance;
 import model.races.Race;
 import view.MyColors;
 

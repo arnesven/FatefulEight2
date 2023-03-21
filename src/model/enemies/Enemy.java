@@ -5,12 +5,16 @@ import model.characters.GameCharacter;
 import model.Model;
 import model.states.CombatEvent;
 import sprites.CombatCursorSprite;
+import util.MyPixel;
 import util.MyRandom;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.CharSprite;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -112,4 +116,66 @@ public abstract class Enemy extends Combatant {
         }
         return damage;
     }
+
+    public RunOnceAnimationSprite getKillAnimation() {
+        try {
+            return new KillAnimation(makeWhite(getSprite().getImage()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalStateException("Could not make kill animation for sprite " + getName());
+    }
+
+    private static BufferedImage makeWhite(BufferedImage img) {
+        BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        for (int y = 0; y < img.getHeight(); ++y) {
+            for (int x = 0; x < img.getWidth(); ++x) {
+                MyPixel pix = new MyPixel(img.getRGB(x, y));
+                if (pix.getAlpha() == 0xFF) {
+                    result.setRGB(x, y, 0xFFFFFFFF);
+                }
+            }
+        }
+        return result;
+    }
+
+    private static BufferedImage makeLessWhite(BufferedImage img, int i, int max) {
+        BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        for (int y = 0; y < img.getHeight(); ++y) {
+            for (int x = 0; x < img.getWidth(); ++x) {
+                if (img.getRGB(x, y) == 0xFFFFFFFF) {
+                    MyPixel pix = new MyPixel(img.getRGB(x, y));
+                    pix.setAlpha(0xFF - (i * 0xFF) / max);
+                    result.setRGB(x, y, pix.toInt());
+                }
+            }
+        }
+        return result;
+    }
+
+    private static class KillAnimation extends RunOnceAnimationSprite {
+        private static final int ANIMATION_STEPS = 10;
+        private final BufferedImage[] images = new BufferedImage[ANIMATION_STEPS];
+
+        public KillAnimation(BufferedImage img) {
+            super("killAnimation", "combat.png", 0, 0, img.getWidth(), img.getHeight(), ANIMATION_STEPS, MyColors.BLUE);
+            this.images[0] = img;
+            for (int i = 1; i < images.length; ++i) {
+                this.images[i] = makeLessWhite(img, i, ANIMATION_STEPS);
+            }
+            setAnimationDelay(6);
+        }
+
+        @Override
+        public BufferedImage getImage() throws IOException {
+            if (images == null) {
+                return null;
+            }
+            if (getCurrentFrame() >= ANIMATION_STEPS) {
+                return images[ANIMATION_STEPS - 1];
+            }
+            return images[getCurrentFrame()];
+        }
+    }
+
 }

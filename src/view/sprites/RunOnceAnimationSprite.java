@@ -58,4 +58,7 @@ public class RunOnceAnimationSprite extends Sprite implements Animation {
     public int getXShift() { return 0; }
     public int getYShift() { return 0; }
 
+    public int getCurrentFrame() {
+        return currentFrame;
+    }
 }

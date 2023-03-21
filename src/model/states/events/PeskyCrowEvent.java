@@ -29,7 +29,7 @@ public class PeskyCrowEvent extends DailyEventState {
         runCombat(List.of(new CrowEnemy('A')));
     }
 
-    private class CrowEnemy extends Enemy {
+    private static class CrowEnemy extends Enemy {
         private final Sprite SPRITE = new CrowSprite();
 
         public CrowEnemy(char a) {
@@ -62,7 +62,7 @@ public class PeskyCrowEvent extends DailyEventState {
         }
     }
 
-    private class CrowSprite extends LoopingSprite {
+    private static class CrowSprite extends LoopingSprite {
         public CrowSprite() {
             super("peskycrow", "enemies.png", 0x44, 32, 32);
             setColor1(MyColors.BLACK);

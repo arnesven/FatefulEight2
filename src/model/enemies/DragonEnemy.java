@@ -1,7 +1,6 @@
 package model.enemies;
 
 import model.Model;
-import model.Party;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
 import util.MyRandom;
@@ -10,7 +9,6 @@ import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DragonEnemy extends Enemy {
     private static final Sprite SPRITE = new DragonSprite();

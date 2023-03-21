@@ -304,6 +304,10 @@ public class CombatEvent extends DailyEventState {
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
         target.addToHP(-damage);
         if (target.getHP() <= 0) {
+            RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();
+            if (killAnimation != null) {
+                subView.addSpecialEffect(target, killAnimation);
+            }
             destroyEnemy(getModel(), (Enemy)target, damager);
             if (MyRandom.rollD10() > 5) {
                 getModel().getParty().partyMemberSay(getModel(), damager,

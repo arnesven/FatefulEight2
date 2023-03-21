@@ -4,7 +4,6 @@ import model.Model;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
 import util.MyRandom;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
