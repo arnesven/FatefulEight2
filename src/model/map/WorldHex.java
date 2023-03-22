@@ -1,10 +1,7 @@
 package model.map;
 
 import model.Model;
-import model.actions.DailyAction;
-import model.actions.GetOffRoadAction;
-import model.actions.GetOnRoadAction;
-import model.actions.StayInHexAction;
+import model.actions.*;
 import model.combat.TownCombatTheme;
 import model.states.events.SaberfishEvent;
 import model.states.*;
@@ -28,13 +25,25 @@ import java.util.List;
 
 public abstract class WorldHex implements Serializable {
 
-    public static final int NORTH_WEST = 0x01;
-    public static final int NORTH      = 0x0A;
-    public static final int NORTH_EAST = 0x04;
-    public static final int SOUTH_EAST = 0x10;
-    public static final int SOUTH      = 0xA0;
-    public static final int SOUTH_WEST = 0x40;
-    public static final int ALL = 0xFF;
+    //         B     D
+    //       ----- -----
+    //      /           \
+    //   A /             \ C
+    //    /               \
+    //    \               /
+    //   G \             / E
+    //      \           /
+    //       ----- -----
+    //         H     F
+
+                                               // HGFE DCBA
+    public static final int NORTH_WEST = 0x01; // 0000 0001
+    public static final int NORTH      = 0x0A; // 0000 1010
+    public static final int NORTH_EAST = 0x04; // 0000 0100
+    public static final int SOUTH_EAST = 0x10; // 0001 0000
+    public static final int SOUTH      = 0xA0; // 1010 0000
+    public static final int SOUTH_WEST = 0x40; // 0100 0000
+    public static final int ALL        = 0xFF; // 1111 1111
     public static final int NONE = 0;
     private MyColors color;
 
@@ -151,6 +160,15 @@ public abstract class WorldHex implements Serializable {
         this.setHexSprites();
     }
 
+    public int getRoads() {
+        return roads;
+    }
+
+    public void setRoads(int i) {
+        this.roads = i;
+        this.setHexSprites();
+    }
+
     public List<DailyAction> getDailyActions(Model model) {
         List<DailyAction> actions;
         actions = new ArrayList<>();
@@ -163,6 +181,8 @@ public abstract class WorldHex implements Serializable {
             actions.add(new GetOffRoadAction(model));
         } else if (hasRoad()) {
             actions.add(new GetOnRoadAction(model));
+        } else {
+            actions.add(new EnterCavesAction(model));
         }
         return actions;
     }

@@ -21,11 +21,10 @@ public class World implements Serializable {
     private ViewPointMarker cursor = new HexCursorMarker();
     private Sprite alternativeAvatar = null;
 
-    public World() {
-        hexes = WorldBuilder.buildWorld();
+    public World(WorldHex[][] hexes) {
+        this.hexes = hexes;
         waterWays = makeWaterWays();
     }
-
 
     public static Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
         Interval xVals = calcXValues(viewPoint.x, mapXRange);
@@ -77,15 +76,7 @@ public class World implements Serializable {
                 int y_extra = 2 * (1 - (x % 2));
                 int screenY = yOffset - 2 + 4 * row + y_extra;
 
-                if (hexes[x][y] != null) {
-                    if (screenY == yOffset - 2) {
-                        hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
-                    } else if (screenY == yOffset - 2 + 4 * (mapYRange-1) + 2) {
-                        hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY);
-                    } else {
-                        hexes[x][y].drawYourself(screenHandler, screenX, screenY);
-                    }
-                }
+                drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset);
 
                 if (x == partyPosition.x && y == partyPosition.y &&
                         model.getParty().getLeader() != null && avatarEnabled) {
@@ -102,6 +93,19 @@ public class World implements Serializable {
                 col++;
             }
             row++;
+        }
+    }
+
+    protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
+                           Point partyPosition, int mapYRange, int yOffset) {
+        if (hexes[x][y] != null) {
+            if (screenY == yOffset - 2) {
+                hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
+            } else if (screenY == yOffset - 2 + 4 * (mapYRange-1) + 2) {
+                hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY);
+            } else {
+                hexes[x][y].drawYourself(screenHandler, screenX, screenY);
+            }
         }
     }
 

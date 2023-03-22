@@ -3,10 +3,11 @@ package model;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
-import model.items.potions.AntidotePotion;
 import model.items.spells.Spell;
 import model.log.GameLog;
+import model.map.CaveSystem;
 import model.map.World;
+import model.map.WorldBuilder;
 import model.map.WorldHex;
 import model.races.Race;
 import model.states.*;
@@ -31,7 +32,8 @@ public class Model {
 
     private GameData gameData = new GameData();
 
-    private World world = new World();
+    private World world = new World(WorldBuilder.buildWorld());
+    private CaveSystem caveSystem = new CaveSystem(world);
     private GameView gameView;
     private SubView subView;
     private ScreenHandler screenHandler;
@@ -146,6 +148,9 @@ public class Model {
     }
 
     public WorldHex getCurrentHex() {
+        if (gameData.inUnderworld) {
+            return caveSystem.getHex(getParty().getPosition());
+        }
         return getWorld().getHex(getParty().getPosition());
     }
 
@@ -317,5 +322,22 @@ public class Model {
         //this.state = new HallOfFameState();
         // TODO: Record score in hall of fame.
         // TODO: Clear everything and reset for new game.
+    }
+
+    public void enterCaveSystem() {
+        gameData.inUnderworld = true;
+        caveSystem = new CaveSystem(world);
+    }
+
+    public void exitCaveSystem() {
+        gameData.inUnderworld = false;
+    }
+
+    public CaveSystem getCaveSystem() {
+        return caveSystem;
+    }
+
+    public boolean isInCaveSystem() {
+        return gameData.inUnderworld;
     }
 }

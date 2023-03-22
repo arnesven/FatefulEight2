@@ -16,4 +16,5 @@ public class GameData implements Serializable {
     public TimeOfDay timeOfDay = TimeOfDay.MORNING;
     public TutorialHandler tutorial = new TutorialHandler();
     public boolean freePlay = false;
+    public boolean inUnderworld = false;
 }

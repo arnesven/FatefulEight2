@@ -131,7 +131,7 @@ public class Party implements Serializable {
     }
 
     public List<DailyAction> getDailyAction(Model model) {
-        return model.getWorld().getHex(position).getDailyActions(model);
+        return model.getCurrentHex().getDailyActions(model);
     }
 
     public int size() {

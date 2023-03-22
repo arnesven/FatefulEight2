@@ -40,6 +40,11 @@ public class MapSubView extends AvatarSubView {
     }
 
     private boolean canMoveToHex(Model model, Point point) {
+        if (model.isInCaveSystem()) {
+            if (!model.getCurrentHex().getRoadInDirection(getNameForDirection(point))) {
+                return false;
+            }
+        }
         Point p = new Point(model.getParty().getPosition());
         p.x = p.x + point.x;
         p.y = p.y + point.y;
@@ -49,8 +54,12 @@ public class MapSubView extends AvatarSubView {
     @Override
     public void specificDrawArea(Model model) {
         Point cursorPos = getSelectedDestination(model);
-        model.getWorld().drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
-                MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, avatarEnabled);
+        World worldToDraw = model.getWorld();
+        if (model.isInCaveSystem()) {
+            worldToDraw = model.getCaveSystem();
+        }
+        worldToDraw.drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
+                    MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, avatarEnabled);
     }
 
     protected Point getSelectedDestination(Model model) {
@@ -62,6 +71,13 @@ public class MapSubView extends AvatarSubView {
 
     @Override
     protected String getUnderText(Model model) {
+        if (model.isInCaveSystem()) {
+            if (directions.contains(getSelectedDirection(model))) {
+                String name = getNameForDirection(getSelectedDirection(model));
+                return "Head " + name + " through the caves.";
+            }
+            return "You are in the caves.";
+        }
         return model.getHexInfo(getSelectedDestination(model));
     }
 
