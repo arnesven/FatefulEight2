@@ -4,22 +4,32 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.enemies.Enemy;
 import model.items.weapons.RustyPickaxe;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.subviews.DungeonTheme;
 
 import java.util.List;
 
 public class MineEvent extends DailyEventState {
+    private DailyEventState innerEvent = null;
+
     public MineEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
-        model.getParty().randomPartyMemberSay(model,
-                List.of("That looks like an old mine over there in the hillside."));
+        boolean enteredFromSurface = true;
+        if (model.isInCaveSystem()) {
+            enteredFromSurface = false;
+            model.getParty().randomPartyMemberSay(model, List.of("Looks like this cave is connected to a mine."));
+        } else {
+            model.getParty().randomPartyMemberSay(model,
+                    List.of("That looks like an old mine over there in the hillside."));
+        }
         int bonus = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getCharClass().id() == Classes.MIN.id() || gc.getRace() == Race.DWARF) {
@@ -36,16 +46,24 @@ public class MineEvent extends DailyEventState {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Let's just continue on our journey.");
             return;
         }
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Bring out your torches, we're going down there.");
-
+        if (!model.isInCaveSystem()) {
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Bring out your torches, we're going down there.");
+        }
         int roll = MyRandom.rollD10() + bonus;
         int gold = 35;
         int difficulty = 10;
+        int materials = 5;
         switch (roll) {
             case 1 :
-                // TODO: Goblins
+                println("This mine is infested with goblins!");
+                List<Enemy> enemies = GoblinsEvent.randomGoblins();
+                runCombat(enemies, new DungeonTheme(), true); // TODO: make cave theme
+                break;
             case 2:
-                // TODO: Spiders
+                SpidersEvent spidersEvent = new SpidersEvent(model);
+                spidersEvent.doEvent(model);
+                innerEvent = spidersEvent;
+                break;
             case 3:
                 println("The mine seems to be abandoned.");
                 DeadBodyEvent dbe = new DeadBodyEvent(model);
@@ -53,7 +71,7 @@ public class MineEvent extends DailyEventState {
                 break;
             case 4:
                 println("The mine seems to be abandoned.");
-                model.getParty().randomPartyMemberSay(model, List.of("What's that terrible smell! GAS!"));
+                model.getParty().randomPartyMemberSay(model, List.of("What's that terrible smell? GAS!"));
                 println("Each party member suffers 2 damage.");
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
                     gc.addToHP(-2);
@@ -64,12 +82,13 @@ public class MineEvent extends DailyEventState {
                 }
                 break;
             case 5:
+                materials += 5;
             case 6:
                 print("The mine is currently in use. There are some miners here but they seem to completely ignore you.");
                 model.getParty().randomPartyMemberSay(model, List.of("Nobody will mind if we just help ourselves to some " +
                         "of these materials.", "We might as well pick up some stuff while we're here."));
-                println("The party gains 5 materials.");
-                model.getParty().getInventory().addToMaterials(5);
+                println("The party gains " + materials + " materials.");
+                model.getParty().getInventory().addToMaterials(materials);
             case 7:
                 print("The mine is currently in use. ");
                 new MinerEvent(model).doEvent(model);
@@ -92,11 +111,30 @@ public class MineEvent extends DailyEventState {
                 }
                 break;
             default: // 10
-                new CaveEvent(model).doEvent(model);
+                if (enteredFromSurface) {
+                    new CaveEvent(model).doEvent(model);
+                } else {
+                    println("The mine is just abandoned and contains nothing of interest.");
+                }
         }
         model.setGameOver(model.getParty().isWipedOut());
         if (!model.isInCaveSystem()) {
             println("The party exits the mine.");
+        } else if (!enteredFromSurface) {
+            print("Do you want to exit to the surface? (Y/N) ");
+            if (yesNoInput()) {
+                model.exitCaveSystem();
+            } else {
+                println("The party returns to the caves.");
+            }
         }
+    }
+
+    @Override
+    public boolean haveFledCombat() {
+        if (innerEvent != null) {
+            return innerEvent.haveFledCombat();
+        }
+        return super.haveFledCombat();
     }
 }

@@ -16,7 +16,7 @@ public abstract class GoblinEnemy extends Enemy {
 
     @Override
     public int getSpeed() {
-        return 4;
+        return 2;
     }
 
     @Override

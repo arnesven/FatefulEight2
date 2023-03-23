@@ -15,6 +15,11 @@ public class GoblinsEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        List<Enemy> enemies = randomGoblins();
+        runCombat(enemies);
+    }
+
+    public static List<Enemy> randomGoblins() {
         List<Enemy> enemies = new ArrayList<>();
         for (int i = 0; i < MyRandom.randInt(1, 5); ++i) {
             enemies.add(new GoblinSwordsman('A'));
@@ -25,6 +30,6 @@ public class GoblinsEvent extends DailyEventState {
         for (int i = 0; i < MyRandom.randInt(1, 5); ++i) {
             enemies.add(new GoblinAxeWielder('C'));
         }
-        runCombat(enemies);
+        return enemies;
     }
 }
