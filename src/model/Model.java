@@ -33,7 +33,7 @@ public class Model {
     private GameData gameData = new GameData();
 
     private World world = new World(WorldBuilder.buildWorld());
-    private CaveSystem caveSystem = new CaveSystem(world);
+    private CaveSystem caveSystem;
     private GameView gameView;
     private SubView subView;
     private ScreenHandler screenHandler;
@@ -63,6 +63,7 @@ public class Model {
     public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
         try {
             gameData = readGameData(filename);
+            caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
             state = getCurrentHex().getDailyActionState(this);
             log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
@@ -90,6 +91,7 @@ public class Model {
 
     public void startGameNoLoad() {
         state = new ChooseStartingCharacterState(this);
+        caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
         playMainSong();
     }
@@ -326,7 +328,6 @@ public class Model {
 
     public void enterCaveSystem() {
         gameData.inUnderworld = true;
-        caveSystem = new CaveSystem(world);
     }
 
     public void exitCaveSystem() {

@@ -1,6 +1,7 @@
 package model;
 
 import model.tutorial.TutorialHandler;
+import util.MyRandom;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,4 +18,5 @@ public class GameData implements Serializable {
     public TutorialHandler tutorial = new TutorialHandler();
     public boolean freePlay = false;
     public boolean inUnderworld = false;
+    public int caveSystemSeed = MyRandom.randInt(Integer.MAX_VALUE);
 }

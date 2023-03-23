@@ -77,7 +77,7 @@ public class TravelState extends GameState {
     }
 
     protected boolean checkRiverCrossing(Model model, MapSubView mapSubView) {
-        return model.getWorld().crossesRiver(model.getParty().getPosition(),
+        return !model.isInCaveSystem() && model.getWorld().crossesRiver(model.getParty().getPosition(),
                 Direction.getDirectionForDxDy(model.getParty().getPosition(), mapSubView.getSelectedDirection()));
     }
 
