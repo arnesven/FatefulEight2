@@ -90,10 +90,13 @@ public class MineEvent extends DailyEventState {
                     println("The party gains " + gold + " gold!");
                     model.getParty().addToGold(gold);
                 }
+                break;
             default: // 10
-                // TODO: Connects to cave.
+                new CaveEvent(model).doEvent(model);
         }
         model.setGameOver(model.getParty().isWipedOut());
-        println("The party exits the mine.");
+        if (!model.isInCaveSystem()) {
+            println("The party exits the mine.");
+        }
     }
 }

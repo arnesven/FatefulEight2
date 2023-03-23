@@ -49,10 +49,10 @@ public class MountainHex extends WorldHex {
                     new MountainWolfEvent(model),
                     new EaglesEvent(model),
                     new ChasmEvent(model),
-                    new AbandonedShackEvent(model)
-                    // new CaveEvent(model)
-                    // new CaveEvent(model)
-                    // new CaveEvent(model)
+                    new AbandonedShackEvent(model),
+                    new CaveEvent(model),
+                    new CaveEvent(model),
+                    new CaveEvent(model)
             ));
         }
         return new NoEventState(model);

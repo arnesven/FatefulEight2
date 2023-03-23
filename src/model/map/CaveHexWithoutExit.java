@@ -1,11 +1,8 @@
 package model.map;
 
-import view.MyColors;
-
-
 public class CaveHexWithoutExit extends CaveHex {
     public CaveHexWithoutExit(int tunnels) {
-        super(tunnels, MyColors.GRAY);
+        super(tunnels);
     }
 
     @Override

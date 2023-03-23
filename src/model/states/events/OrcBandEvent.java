@@ -20,17 +20,21 @@ public class OrcBandEvent extends DailyEventState {
                 "when they hear footsteps approaching, many footsteps. " +
                 "It's a whole band of orcs! It may be possible for the party " +
                 "to hide behind some bushes and remain undetected.");
-        // TODO: add bonus if you have half orc(s)?
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
             println("You stay hidden as the throng passes by.");
             // TODO: Follow them ? to -> Orc Stronghold / Campsite / Ambush?
         } else {
-            List<Enemy> enemies = new ArrayList<>();
-            for (int i = 0; i < 6; ++i) {
-                enemies.add(new OrcWarrior('A'));
+            println("The orcs discover you and are very annoyed by your presence.");
+            if (new OrcsEvent(model).interactWithOrcs(model)) {
+                println("The orcs let you continue on your journey.");
+            } else {
+                List<Enemy> enemies = new ArrayList<>();
+                for (int i = 0; i < 6; ++i) {
+                    enemies.add(new OrcWarrior('A'));
+                }
+                runCombat(enemies);
             }
-            runCombat(enemies);
         }
     }
 }

@@ -10,9 +10,7 @@ import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.HexSprite;
-import view.subviews.DailyActionMenu;
-import view.subviews.ImageSubView;
-import view.subviews.SubView;
+import view.subviews.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -53,24 +51,30 @@ public class CaveHex extends WorldHex {
     }
 
     @Override
+    public CombatTheme getCombatTheme() {
+        return new DungeonTheme(); // TODO: make cave theme...
+    }
+
+    @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return MyRandom.sample(List.of(
+        List<DailyEventState> events = new ArrayList<>(List.of(
                 // new BatsEvent(model),
                 // new UndergroundLakeEvent(model),
                 // new PitfallEvent(model),
                 // new MineEvent(model),
-                // new ExitCaveEvent(model),
-                // new ExitCaveEvent(model),
-                // new ExitCaveEvent(model),
                 // new HideoutEvent(model),
                 // new DwarvenCityEvent(model),
                 new DeadBodyEvent(model),
-                // new GoblinsEvent(model),
-                // new OrcsEvent(model),
+                new GoblinsEvent(model),
+                new OrcsEvent(model),
                 new WoundedAdventurerEvent(model),
                 new MushroomsEvent(model),
                 new ChestEvent(model)
         ));
+        if (canHaveExit()) {
+            events.addAll(List.of(new ExitCaveEvent(model), new ExitCaveEvent(model), new ExitCaveEvent(model)));
+        }
+        return MyRandom.sample(events);
     }
 
     public java.util.List<DailyAction> getDailyActions(Model model) {
