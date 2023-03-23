@@ -15,7 +15,7 @@ public class MushroomsEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("A large patch of mushrooms cover the clearing ahead. " +
+        println("A large patch of mushrooms cover the ground ahead. " +
                 "The party is hungry and they do look delicious, but are " +
                 "they edible?");
         print("Do you pick the mushrooms? (Y/N) ");

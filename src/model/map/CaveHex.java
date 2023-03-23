@@ -5,8 +5,9 @@ import model.actions.*;
 import model.map.locations.Stalagmites;
 import model.states.DailyEventState;
 import model.states.TravelState;
-import model.states.events.NoEventState;
+import model.states.events.*;
 import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.HexSprite;
 import view.subviews.DailyActionMenu;
@@ -27,7 +28,7 @@ public class CaveHex extends WorldHex {
     }
 
     private static HexLocation randomLocation() {
-        if (random.nextInt(2) == 0) {
+        if (random.nextInt(3) == 0) {
             return new Stalagmites();
         }
         return null;
@@ -53,7 +54,23 @@ public class CaveHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return new NoEventState(model);
+        return MyRandom.sample(List.of(
+                // new BatsEvent(model),
+                // new UndergroundLakeEvent(model),
+                // new PitfallEvent(model),
+                // new MineEvent(model),
+                // new ExitCaveEvent(model),
+                // new ExitCaveEvent(model),
+                // new ExitCaveEvent(model),
+                // new HideoutEvent(model),
+                // new DwarvenCityEvent(model),
+                new DeadBodyEvent(model),
+                // new GoblinsEvent(model),
+                // new OrcsEvent(model),
+                new WoundedAdventurerEvent(model),
+                new MushroomsEvent(model),
+                new ChestEvent(model)
+        ));
     }
 
     public java.util.List<DailyAction> getDailyActions(Model model) {
