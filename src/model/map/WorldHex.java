@@ -25,28 +25,7 @@ import java.util.List;
 
 public abstract class WorldHex implements Serializable {
 
-    //         B     D
-    //       ----- -----
-    //      /           \
-    //   A /             \ C
-    //    /               \
-    //    \               /
-    //   G \             / E
-    //      \           /
-    //       ----- -----
-    //         H     F
-
-                                               // HGFE DCBA
-    public static final int NORTH_WEST = 0x01; // 0000 0001
-    public static final int NORTH      = 0x0A; // 0000 1010
-    public static final int NORTH_EAST = 0x04; // 0000 0100
-    public static final int SOUTH_EAST = 0x10; // 0001 0000
-    public static final int SOUTH      = 0xA0; // 1010 0000
-    public static final int SOUTH_WEST = 0x40; // 0100 0000
-    public static final int ALL        = 0xFF; // 1111 1111
-    public static final int NONE = 0;
     private MyColors color;
-
     private HexSprite upperLeft;
     private HexSprite upperRight;
     private HexSprite lowerLeft;
@@ -279,56 +258,16 @@ public abstract class WorldHex implements Serializable {
         return hexLocation != null && hexLocation.givesQuests();
     }
 
-    private boolean getRoadOrRiverInDirection(String directionName, int roadOrRiver) {
-        return (roadOrRiver & directionForName(directionName)) != 0;
+    private boolean getRoadOrRiverInDirection(int direction, int roadOrRiver) {
+        return (roadOrRiver & direction) != 0;
     }
 
-    public static String nameForDirection(int dir) {
-        switch (dir) {
-            case NORTH:
-                return "N";
-            case NORTH_EAST:
-                return "NE";
-            case SOUTH_EAST:
-                return "SE";
-            case SOUTH:
-                return "S";
-            case SOUTH_WEST:
-                return "SW";
-            case NORTH_WEST:
-                return "NW";
-        }
-        throw new IllegalStateException("Illegal direction " + dir + ".");
+    public boolean getRiversInDirection(int direction) {
+        return getRoadOrRiverInDirection(direction, rivers);
     }
 
-    public static int directionForName(String directionName) {
-        if (directionName.equals("SE")) {
-            return SOUTH_EAST;
-        }
-        if (directionName.equals("S")) {
-            return SOUTH;
-        }
-        if (directionName.equals("SW")) {
-            return SOUTH_WEST;
-        }
-        if (directionName.equals("NE")) {
-            return NORTH_EAST;
-        }
-        if (directionName.equals("N")) {
-            return NORTH;
-        }
-        if (directionName.equals("NW")) {
-            return NORTH_WEST;
-        }
-        throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
-    }
-
-    public boolean getRiversInDirection(String directionName) {
-        return getRoadOrRiverInDirection(directionName, rivers);
-    }
-
-    public boolean getRoadInDirection(String directionName) {
-        return getRoadOrRiverInDirection(directionName, roads);
+    public boolean getRoadInDirection(int direction) {
+        return getRoadOrRiverInDirection(direction, roads);
     }
 
     public RiverEvent generateRiverEvent(Model model) {

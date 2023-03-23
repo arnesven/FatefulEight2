@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Skill;
+import model.map.Direction;
 import model.map.SeaHex;
 import model.map.WorldHex;
 import view.MyColors;
@@ -90,7 +91,7 @@ public class RaftEvent extends RiverEvent {
 
         @Override
         protected boolean isValidDestination(Model model, Point selectedPos) {
-            return model.getWorld().getHex(selectedPos).getRivers() != WorldHex.NONE;
+            return model.getWorld().getHex(selectedPos).getRivers() != Direction.NONE;
         }
     }
 

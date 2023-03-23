@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.map.Direction;
 import util.MyRandom;
 import view.subviews.MapSubView;
 
@@ -17,7 +18,8 @@ public class RunAwayState extends TravelState {
     protected Point selectDirection(Model model, MapSubView mapSubView) {
         List<Point> result = new ArrayList<>();
         for (Point dir : mapSubView.getDirections(model)) {
-            if (!model.getWorld().crossesRiver(model.getParty().getPosition(), mapSubView.getNameForDirection(dir))) {
+            if (!model.getWorld().crossesRiver(model.getParty().getPosition(),
+                    Direction.getDirectionForDxDy(model.getParty().getPosition(), dir))) {
                 result.add(dir);
             }
         }

@@ -9,8 +9,8 @@ import java.util.List;
 
 public class CaveSystem extends World {
     private static List<Integer> tunnels =
-            List.of(WorldHex.NORTH_WEST, WorldHex.NORTH, WorldHex.NORTH_EAST,
-                    WorldHex.SOUTH_EAST, WorldHex.SOUTH, WorldHex.SOUTH_WEST);
+            List.of(Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
+                    Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST);
 
     public CaveSystem(World overWorld) {
         super(makeHexes(overWorld));
@@ -23,7 +23,7 @@ public class CaveSystem extends World {
                 if (overWorld.getHex(new Point(x, y)) instanceof SeaHex) {
                     hexes[x][y] = new SolidRockHex();
                 } else {
-                    hexes[x][y] = new CaveHex(WorldHex.NONE);
+                    hexes[x][y] = new CaveHex(Direction.NONE);
                 }
             }
         }
@@ -35,18 +35,15 @@ public class CaveSystem extends World {
         for (int y = 0; y < WorldBuilder.WORLD_HEIGHT; ++y) {
             for (int x = 0; x < WorldBuilder.WORLD_WIDTH; ++x) {
                 if (!(hexes[x][y] instanceof SolidRockHex)) {
+                    List<Point> dirs = new ArrayList<>(Direction.getDxDyDirections(new Point(x, y)));
                     for (int i = 0; i < MyRandom.randInt(2, 3); ++i) {
-                        List<Point> dirs = new ArrayList<>(getDirectionsForPosition(new Point(x, y)));
                         Point randDir = dirs.remove(MyRandom.randInt(dirs.size()));
                         int otherX = x + randDir.x;
                         int otherY = y + randDir.y;
                         if (coordinatesOK(otherX, otherY) && !(hexes[otherX][otherY] instanceof SolidRockHex)) {
-                            List<Point> directions = getDirectionsForPosition(new Point(x, y));
-                            java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
-                            int tunnel = WorldHex.directionForName(shorts.get(directions.indexOf(randDir)));
+                            int tunnel = Direction.getDirectionForDxDy(new Point(x, y), randDir);
                             hexes[x][y].setRoads(tunnel | hexes[x][y].getRoads());
-                            java.util.List<String> opShorts = List.of("NW", "N", "NE", "SE", "S", "SW");
-                            int opTunnel = WorldHex.directionForName(opShorts.get(directions.indexOf(randDir)));
+                            int opTunnel = Direction.opposite(Direction.getDirectionForDxDy(new Point(x, y), randDir));
                             hexes[otherX][otherY].setRoads(opTunnel | hexes[otherX][otherY].getRoads());
                         }
                     }
@@ -63,7 +60,7 @@ public class CaveSystem extends World {
     @Override
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
                            Point partyPosition, int mapYRange, int yOffset) {
-        List<Point> list = getDirectionsForPosition(partyPosition);
+        List<Point> list = Direction.getDxDyDirections(partyPosition);
         Point diff = new Point(x - partyPosition.x, y - partyPosition.y);
         boolean ok = (x == partyPosition.x && y == partyPosition.y);
         for (Point p : list) {

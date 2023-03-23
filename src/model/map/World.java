@@ -45,16 +45,9 @@ public class World implements Serializable {
         return new Point(screenX, screenY);
     }
 
-    public static List<Point> getDirectionsForPosition(Point position) {
-        if (position.x % 2 == 0) {
-            return java.util.List.of(new Point(1, 1), new Point(0, 1), new Point(-1, 1), new Point(-1, 0), new Point(0, -1), new Point(1, 0));
-        }
-        return java.util.List.of(new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(-1, -1), new Point(0, -1), new Point(1, -1));
-    }
-
-    public boolean crossesRiver(Point position, String directionName) {
+    public boolean crossesRiver(Point position, int direction) {
         WorldHex hex = getHex(position);
-        return hex.getRiversInDirection(directionName);
+        return hex.getRiversInDirection(direction);
     }
 
 
@@ -185,31 +178,9 @@ public class World implements Serializable {
         return getHex(p).canTravelTo(model);
     }
 
-    public boolean travelingAlongRoad(Point position, Point previousPosition, String direction) {
+    public boolean travelingAlongRoad(Point position, Point previousPosition, int direction) {
         return getHex(previousPosition).getRoadInDirection(direction) &&
-                getHex(position).getRoadInDirection(opposite(direction));
-    }
-
-    private String opposite(String directionName) {
-        if (directionName.equals("SE")) {
-            return "NW";
-        }
-        if (directionName.equals("S")) {
-            return "N";
-        }
-        if (directionName.equals("SW")) {
-            return "NE";
-        }
-        if (directionName.equals("NE")) {
-            return "SW";
-        }
-        if (directionName.equals("N")) {
-            return "S";
-        }
-        if (directionName.equals("NW")) {
-            return "SE";
-        }
-        throw new IllegalStateException("Illegal direction \"" + directionName + "\"");
+                getHex(position).getRoadInDirection(Direction.opposite(direction));
     }
 
     public TownLocation getTownByName(String townName) {
@@ -322,8 +293,8 @@ public class World implements Serializable {
     }
 
     private Set<WaterPath> makeWaterWays() {
-        int[] directions = new int[]{WorldHex.NORTH, WorldHex.NORTH_EAST, WorldHex.SOUTH_EAST,
-                WorldHex.SOUTH, WorldHex.SOUTH_WEST, WorldHex.NORTH_WEST};
+        int[] directions = new int[]{Direction.NORTH, Direction.NORTH_EAST, Direction.SOUTH_EAST,
+                Direction.SOUTH, Direction.SOUTH_WEST, Direction.NORTH_WEST};
         Set<WaterPath> paths = new HashSet<>();
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {
@@ -345,10 +316,10 @@ public class World implements Serializable {
     }
 
     private WaterPath getOppositeWaterPath(Set<WaterPath> paths, int x, int y, int dir) {
-        int opDir = WorldHex.directionForName(opposite(WorldHex.nameForDirection(dir)));
-        List<Point> directions = getDirectionsForPosition(new Point(x, y));
+        int opDir = Direction.directionForName(Direction.opposite(Direction.nameForDirection(dir)));
+        List<Point> directions = Direction.getDxDyDirections(new Point(x, y));
         java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
-        Point direction = directions.get(shorts.indexOf(WorldHex.nameForDirection(dir)));
+        Point direction = directions.get(shorts.indexOf(Direction.nameForDirection(dir)));
 
         for (WaterPath wp : paths) {
             Point current = new Point(x, y);

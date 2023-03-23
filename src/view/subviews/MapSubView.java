@@ -2,13 +2,11 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.map.Direction;
 import model.map.World;
-import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapSubView extends AvatarSubView {
@@ -21,7 +19,7 @@ public class MapSubView extends AvatarSubView {
 
     public MapSubView(Model model) {
         matrix = new SteppingMatrix<>(3, 3);
-        directions = World.getDirectionsForPosition(model.getParty().getPosition());
+        directions = Direction.getDxDyDirections(model.getParty().getPosition());
         matrix.addElement(1, 1, new Point(0, 0));
 
         addIfOkToMoveTo(model,2, 2, directions.get(0));
@@ -33,21 +31,21 @@ public class MapSubView extends AvatarSubView {
 
     }
 
-    private void addIfOkToMoveTo(Model model, int col, int row, Point p) {
-        if (canMoveToHex(model, p)) {
-            matrix.addElement(col, row, p);
+    private void addIfOkToMoveTo(Model model, int col, int row, Point dxdy) {
+        if (canMoveToHex(model, dxdy)) {
+            matrix.addElement(col, row, dxdy);
         }
     }
 
-    private boolean canMoveToHex(Model model, Point point) {
+    private boolean canMoveToHex(Model model, Point dxdy) {
         if (model.isInCaveSystem()) {
-            if (!model.getCurrentHex().getRoadInDirection(getNameForDirection(point))) {
+            if (!model.getCurrentHex().getRoadInDirection(Direction.getDirectionForDxDy(model.getParty().getPosition(), dxdy))) {
                 return false;
             }
         }
         Point p = new Point(model.getParty().getPosition());
-        p.x = p.x + point.x;
-        p.y = p.y + point.y;
+        p.x = p.x + dxdy.x;
+        p.y = p.y + dxdy.y;
         return model.getWorld().canTravelTo(model, p);
     }
 
@@ -72,8 +70,8 @@ public class MapSubView extends AvatarSubView {
     @Override
     protected String getUnderText(Model model) {
         if (model.isInCaveSystem()) {
-            if (directions.contains(getSelectedDirection(model))) {
-                String name = getNameForDirection(getSelectedDirection(model));
+            if (directions.contains(getSelectedDirection())) {
+                String name = Direction.getShortNameForDxDy(model.getParty().getPosition(), getSelectedDirection());
                 return "Head " + name + " through the caves.";
             }
             return "You are in the caves.";
@@ -91,21 +89,12 @@ public class MapSubView extends AvatarSubView {
         return matrix.handleKeyEvent(keyEvent);
     }
 
-    public Point getSelectedDirection(Model model) {
+    public Point getSelectedDirection() {
         return matrix.getSelectedElement();
     }
 
     public void drawAvatarEnabled(boolean b) {
         this.avatarEnabled = b;
-    }
-
-    public String getNameForDirection(Point direction) {
-        java.util.List<String> shorts = List.of("SE", "S", "SW", "NW", "N", "NE");
-        return shorts.get(directions.indexOf(direction));
-    }
-
-    public String getSelectedDirectionName() {
-        return getNameForDirection(matrix.getSelectedElement());
     }
 
     public List<Point> getDirections(Model model) {

@@ -1,20 +1,17 @@
 package model.map;
 
 import model.map.locations.*;
-import view.MyColors;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static model.map.WorldHex.NORTH;
-import static model.map.WorldHex.SOUTH;
-import static model.map.WorldHex.SOUTH_EAST;
-import static model.map.WorldHex.SOUTH_WEST;
-import static model.map.WorldHex.NORTH_WEST;
-import static model.map.WorldHex.NORTH_EAST;
-
-
+import static model.map.Direction.NORTH;
+import static model.map.Direction.SOUTH;
+import static model.map.Direction.SOUTH_EAST;
+import static model.map.Direction.SOUTH_WEST;
+import static model.map.Direction.NORTH_WEST;
+import static model.map.Direction.NORTH_EAST;
 
 public class WorldBuilder {
 

@@ -10,7 +10,7 @@ import view.sprites.SeaHexSprite;
 
 public class SeaHex extends WorldHex {
     public SeaHex() {
-        super(MyColors.LIGHT_BLUE, 0, ALL, null);
+        super(MyColors.LIGHT_BLUE, 0, Direction.ALL, null);
     }
 
     @Override

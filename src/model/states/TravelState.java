@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.map.Direction;
 import model.map.World;
 import model.states.events.RiverEvent;
 import view.subviews.EmptySubView;
@@ -67,7 +68,8 @@ public class TravelState extends GameState {
         return model.getParty().isOnRoad() &&
                 !model.getWorld().travelingAlongRoad(model.getParty().getPosition(),
                         model.getParty().getPreviousPosition(),
-                        mapSubView.getSelectedDirectionName());
+                        Direction.getDirectionForDxDy(model.getParty().getPreviousPosition(),
+                                mapSubView.getSelectedDirection()));
     }
 
     protected GameState nextState(Model model) {
@@ -75,7 +77,8 @@ public class TravelState extends GameState {
     }
 
     protected boolean checkRiverCrossing(Model model, MapSubView mapSubView) {
-        return model.getWorld().crossesRiver(model.getParty().getPosition(), mapSubView.getSelectedDirectionName());
+        return model.getWorld().crossesRiver(model.getParty().getPosition(),
+                Direction.getDirectionForDxDy(model.getParty().getPosition(), mapSubView.getSelectedDirection()));
     }
 
     protected Point selectDirection(Model model, MapSubView mapSubView) {
@@ -83,7 +86,7 @@ public class TravelState extends GameState {
         do {
             print("Please select an adjacent hex to travel to: ");
             waitForReturn();
-            selectedDir = mapSubView.getSelectedDirection(model);
+            selectedDir = mapSubView.getSelectedDirection();
         } while (selectedDir.x == 0 && selectedDir.y == 0);
         return selectedDir;
     }
