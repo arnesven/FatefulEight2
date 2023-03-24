@@ -37,7 +37,7 @@ public class HermitEvent extends DailyEventState {
             model.getParty().addToFood(-1);
             println("After consuming one of your rations, the Hermit tells you a fantastic story. Each character gains 15 experience.");
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                gc.addToXP(15);
+                model.getParty().giveXP(model, gc, 15);
             }
         }
     }

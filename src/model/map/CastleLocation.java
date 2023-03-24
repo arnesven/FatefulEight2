@@ -5,9 +5,10 @@ import model.SteppingMatrix;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.*;
-import model.states.events.NoEventState;
+import model.states.events.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
@@ -19,9 +20,9 @@ import java.util.List;
 
 public abstract class CastleLocation extends HexLocation implements UrbanLocation {
     private final String lordName;
-    private MyColors castleColor;
+    private final MyColors castleColor;
     private final SubView subView;
-    private Sprite questSprite;
+    private final Sprite questSprite;
 
     public CastleLocation(String castleName, MyColors castleColor, String lordName) {
         super(castleName);
@@ -98,6 +99,21 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll >= 3) {
+            return MyRandom.sample(List.of(
+                    new CaptainEvent(model),
+                    new SmithEvent(model),
+                    new ArcherEvent(model),
+                    new NoblemanEvent(model),
+                    new NoblemanEvent(model),
+                    new PriestEvent(model),
+//                    new CourtWizardEvent(model),
+//                    new ArmoryEvent(model),
+//                    new ArmoryEvent(model),
+                    new JesterEvent(model)
+            ));
+        }
         return new NoEventState(model);
     }
 
