@@ -46,6 +46,7 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected abstract void doEvent(Model model);
+    public void doTheEvent(Model model) { doEvent(model); }
 
     protected void adventurerWhoMayJoin(Model model, Race race) {
         List<GameCharacter> list = model.getAvailableCharactersOfRace(race);

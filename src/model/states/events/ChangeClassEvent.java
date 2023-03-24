@@ -6,8 +6,10 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.states.DailyEventState;
+import view.subviews.ArrowMenuSubView;
 import view.subviews.ChangeClassSubView;
 
+import java.awt.*;
 import java.util.List;
 
 public class ChangeClassEvent extends DailyEventState {
@@ -30,10 +32,27 @@ public class ChangeClassEvent extends DailyEventState {
         ChangeClassSubView subView = new ChangeClassSubView(matrix, targetClasss);
         model.setSubView(subView);
         do {
-            print("Do you want the selected character to change class (C) or are you done (Q)? ");
+            print("Do you want to change the class of any of the characters? ");
             model.getTutorial().classes(model);
-            char selectedAction = lineInput().toUpperCase().charAt(0);
-            if (selectedAction == 'C') {
+            waitForReturn();
+
+            char[] selectedAction = new char[1];
+            Point cursorPos = subView.getCursorPosition();
+            model.setSubView(new ArrowMenuSubView(model.getSubView(),
+                    List.of("Change", "Back", "Done"), cursorPos.x+2, cursorPos.y+5, ArrowMenuSubView.NORTH_WEST) {
+                @Override
+                protected void enterPressed(Model model, int cursorPos) {
+                    if (cursorPos == 0) {
+                        selectedAction[0] = 'C';
+                    } else if (cursorPos == 2) {
+                        selectedAction[0] = 'Q';
+                    }
+                    model.setSubView(getPrevious());
+                }
+            });
+            waitForReturn();
+
+            if (selectedAction[0] == 'C') {
                 subView.toggleDetails();
                 GameCharacter gc = matrix.getSelectedElement();
                 print("Are you sure you want to make " + gc.getName() + " a " + targetClasss.getFullName() + "? (Y/N) ");
@@ -50,7 +69,7 @@ public class ChangeClassEvent extends DailyEventState {
                     }
                 }
                 subView.toggleDetails();
-            } else if (selectedAction == 'Q') {
+            } else if (selectedAction[0] == 'Q') {
                 break;
             }
         } while (true);

@@ -21,6 +21,7 @@ public class ChangeClassSubView extends SubView {
     private final HashMap<GameCharacter, GameCharacter> charMap;
     private final CharacterClass targetClass;
     private boolean details = false;
+    private Point cursorPos = new Point(1,1);
 
     public ChangeClassSubView(SteppingMatrix<GameCharacter> matrix, CharacterClass targetClass) {
         this.matrix = matrix;
@@ -83,6 +84,7 @@ public class ChangeClassSubView extends SubView {
         p.x = X_OFFSET + p.x*10 + 4;
         p.y = Y_OFFSET + p.y*11 + 1;
         model.getScreenHandler().register("changeclasscursor", p, cursor, 2);
+        this.cursorPos = p;
     }
 
     private void drawCandidates(Model model) {
@@ -130,5 +132,9 @@ public class ChangeClassSubView extends SubView {
 
     public void toggleDetails() {
         this.details = !details;
+    }
+
+    public Point getCursorPosition() {
+        return cursorPos;
     }
 }

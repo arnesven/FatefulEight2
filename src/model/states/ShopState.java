@@ -21,6 +21,7 @@ public class ShopState extends GameState {
     private List<Item> itemsForSale;
     private boolean showingBuyItems = true;
     private boolean sellingEnabled = true;
+    private boolean mayOnlyBuyOne = false;
 
     public ShopState(Model model, String seller, List<Item> itemsForSale, int[] specialPrices) {
         super(model);
@@ -100,7 +101,11 @@ public class ShopState extends GameState {
                         itemsForSale.remove(it);
                         model.getParty().getInventory().addItem(it);
                         model.getParty().addToGold(-1 * cost);
-                        println("You bought " + it.getName() + " for " + cost + " gold.");
+                        if (cost > 0) {
+                            println("You bought " + it.getName() + " for " + cost + " gold.");
+                        } else {
+                            println("You received " + it.getName() + ".");
+                        }
                         SoundEffects.playSound(it.getSound());
                         model.getTutorial().equipment(model);
                         sellItems.addElementLast(it);
@@ -110,6 +115,9 @@ public class ShopState extends GameState {
                             } else {
                                 toggleBuySell();
                             }
+                        }
+                        if (mayOnlyBuyOne) {
+                            break;
                         }
                     }
                 }
@@ -172,5 +180,9 @@ public class ShopState extends GameState {
         shopInventory.addAll(model.getItemDeck().draw(rares, Prevalence.rare));
         Collections.sort(shopInventory);
         return shopInventory;
+    }
+
+    public void setMayOnlyBuyOne(boolean b) {
+        this.mayOnlyBuyOne = b;
     }
 }

@@ -97,7 +97,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new ConstableEvent(model),
                     new ThiefEvent(model),
                     new CourierEvent(model),
-                    // new ArcheryRangeEvent(model),
+                    new ArcheryRangeEvent(model),
                     // new MilitiaEvent(model),
                     // new CharlatanEvent(model),
                     new PlayEvent(model),
@@ -105,7 +105,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     //new ProtectionSchemeEvent(model),
                     new AlchemistEvent(model),
                     // new GamlberEvent(model),
-                    // new SmithEvent(model)
+                    new SmithEvent(model),
                     new MageEvent(model)
             ));
         }

@@ -21,7 +21,7 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 2, new GoToCastleActionNode(location));
         super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, CastleSubView.GROUND_COLOR));
         super.addNode(location.getTravelNodePosition().x, location.getTravelNodePosition().y, new TravelNode(CastleSubView.GROUND_COLOR));
-        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(CastleSubView.GROUND_COLOR));
+        super.addNode(6, 6, new WorkBenchNode(CastleSubView.GROUND_COLOR));
         addNode(4, 6, new SaveGameNode());
         for (GeneralShopNode shop : location.getShops(model)) {
             addNode(shop.getColumn(), shop.getRow(), shop);
