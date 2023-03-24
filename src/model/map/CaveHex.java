@@ -59,9 +59,8 @@ public class CaveHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return new GoblinsEvent(model); /*
         List<DailyEventState> events = new ArrayList<>(List.of(
-                // new BatsEvent(model),
+                new BatsEvent(model),
                 // new UndergroundLakeEvent(model),
                 // new PitfallEvent(model),
                 new MineEvent(model),
@@ -77,7 +76,7 @@ public class CaveHex extends WorldHex {
         if (canHaveExit()) {
             events.addAll(List.of(new ExitCaveEvent(model), new ExitCaveEvent(model), new ExitCaveEvent(model)));
         }
-        return MyRandom.sample(events); */
+        return MyRandom.sample(events);
     }
 
     public java.util.List<DailyAction> getDailyActions(Model model) {

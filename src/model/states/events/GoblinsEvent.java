@@ -9,14 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GoblinsEvent extends DailyEventState {
+    private boolean fled = false;
+
     public GoblinsEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
-        List<Enemy> enemies = randomGoblins();
-        runCombat(enemies);
+        print("A horde of goblins are coming straight for you! Do you turn and run? (Y/N) ");
+        if (yesNoInput()) {
+            this.fled = true;
+        } else {
+            List<Enemy> enemies = randomGoblins();
+            runCombat(enemies);
+        }
+    }
+
+    @Override
+    public boolean haveFledCombat() {
+        return fled || super.haveFledCombat();
     }
 
     public static List<Enemy> randomGoblins() {

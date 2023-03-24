@@ -10,12 +10,10 @@ import model.items.weapons.RustyPickaxe;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
-import view.subviews.DungeonTheme;
 
 import java.util.List;
 
 public class MineEvent extends DailyEventState {
-    private DailyEventState innerEvent = null;
 
     public MineEvent(Model model) {
         super(model);
@@ -128,13 +126,5 @@ public class MineEvent extends DailyEventState {
                 println("The party returns to the caves.");
             }
         }
-    }
-
-    @Override
-    public boolean haveFledCombat() {
-        if (innerEvent != null) {
-            return innerEvent.haveFledCombat();
-        }
-        return super.haveFledCombat();
     }
 }
