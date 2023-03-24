@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.enemies.Enemy;
 import model.enemies.SpiderEnemy;
 import model.states.DailyEventState;
 
@@ -17,6 +18,10 @@ public class SpidersEvent extends DailyEventState {
                 "members. Giant spiders are surrounding them. These " +
                 "devil-spawn have poisonous attacks that paralyze their " +
                 "victims.");
-        runCombat(List.of(new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A')));
+        runCombat(makeSpiders());
+    }
+
+    public static List<Enemy> makeSpiders() {
+        return List.of(new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A'));
     }
 }

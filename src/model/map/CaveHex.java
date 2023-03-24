@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.actions.*;
+import model.combat.CaveTheme;
 import model.map.locations.Stalagmites;
 import model.states.DailyEventState;
 import model.states.TravelState;
@@ -18,8 +19,9 @@ import java.util.List;
 import java.util.Random;
 
 public class CaveHex extends WorldHex {
-    private static SubView subView = new ImageSubView("thecaves", "CAVES", "You are exploring a system of caves...", true);;
+    private static final SubView subView = new ImageSubView("thecaves", "CAVES", "You are exploring a system of caves...", true);;
     private static Random random;
+    public static final MyColors GROUND_COLOR = MyColors.GRAY_RED;
 
     public CaveHex(int roads, MyColors color) {
         super(color, roads, 0x0, randomLocation());
@@ -33,7 +35,7 @@ public class CaveHex extends WorldHex {
     }
 
     public CaveHex(int roads) {
-        this(roads, MyColors.GRAY_RED);
+        this(roads, GROUND_COLOR);
     }
 
     public static void setRandom(Random rnd) {
@@ -52,11 +54,12 @@ public class CaveHex extends WorldHex {
 
     @Override
     public CombatTheme getCombatTheme() {
-        return new DungeonTheme(); // TODO: make cave theme...
+        return new CaveTheme();
     }
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
+        return new GoblinsEvent(model); /*
         List<DailyEventState> events = new ArrayList<>(List.of(
                 // new BatsEvent(model),
                 // new UndergroundLakeEvent(model),
@@ -74,7 +77,7 @@ public class CaveHex extends WorldHex {
         if (canHaveExit()) {
             events.addAll(List.of(new ExitCaveEvent(model), new ExitCaveEvent(model), new ExitCaveEvent(model)));
         }
-        return MyRandom.sample(events);
+        return MyRandom.sample(events); */
     }
 
     public java.util.List<DailyAction> getDailyActions(Model model) {

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.combat.CaveTheme;
 import model.enemies.Enemy;
 import model.items.weapons.RustyPickaxe;
 import model.races.Race;
@@ -57,12 +58,11 @@ public class MineEvent extends DailyEventState {
             case 1 :
                 println("This mine is infested with goblins!");
                 List<Enemy> enemies = GoblinsEvent.randomGoblins();
-                runCombat(enemies, new DungeonTheme(), true); // TODO: make cave theme
+                runCombat(enemies, new CaveTheme(), true);
                 break;
             case 2:
-                SpidersEvent spidersEvent = new SpidersEvent(model);
-                spidersEvent.doEvent(model);
-                innerEvent = spidersEvent;
+                println("This mine is infested with spiders!");
+                runCombat(SpidersEvent.makeSpiders(), new CaveTheme(), true);
                 break;
             case 3:
                 println("The mine seems to be abandoned.");
