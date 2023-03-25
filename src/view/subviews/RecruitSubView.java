@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 
 public class RecruitSubView extends SubView {
     private final SteppingMatrix<GameCharacter> matrix;
+    private Point cursorPosition;
 
     public RecruitSubView(SteppingMatrix<GameCharacter> recruitMatrix) {
         this.matrix = recruitMatrix;
@@ -33,6 +34,7 @@ public class RecruitSubView extends SubView {
         p.x = X_OFFSET + p.x*14 + 6;
         p.y = Y_OFFSET + p.y*12 - 2;
         model.getScreenHandler().register("recruitcursor", p, cursor, 2);
+        this.cursorPosition = p;
     }
 
     private void drawRecruitables(Model model) {
@@ -74,5 +76,9 @@ public class RecruitSubView extends SubView {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    public Point getCursorPosition() {
+        return cursorPosition;
     }
 }

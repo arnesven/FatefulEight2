@@ -29,7 +29,7 @@ public abstract class HexLocation implements Serializable {
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private final String name;
     private WorldHex hex;
-    private int flag = FLAG_NONE;
+    private int flag = FLAG_NONE; // TODO: store this in the party or it won't get saved
 
     public HexLocation(String name) {
         this.name = name;

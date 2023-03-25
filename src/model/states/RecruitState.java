@@ -10,8 +10,11 @@ import model.races.HalfOrc;
 import model.tutorial.TutorialHandler;
 import util.MyPair;
 import util.MyRandom;
+import view.subviews.ArrowMenuSubView;
 import view.subviews.RecruitSubView;
+import view.subviews.SubView;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,9 +38,21 @@ public class RecruitState extends GameState {
             recruitables.remove(0);
         }
         setRandomClasses(recruitables);
-        // TODO: Set levels on recruitables
+        setLevels(recruitables);
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
+    }
+
+    private void setLevels(List<GameCharacter> recruitables) {
+        double partyLevel = 0.0;
+        for (GameCharacter gc : getModel().getParty().getPartyMembers()) {
+            partyLevel += gc.getLevel();
+        }
+        partyLevel /= getModel().getParty().size();
+        partyLevel = Math.ceil(partyLevel);
+        for (GameCharacter gc : recruitables) {
+            gc.setLevel(MyRandom.randInt(1, (int)partyLevel));
+        }
     }
 
     public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
@@ -52,18 +67,36 @@ public class RecruitState extends GameState {
         model.getTutorial().recruit(model);
 
         if (recruitables.size() > 0) {
-            model.setSubView(new RecruitSubView(recruitMatrix));
-            String dismiss = "Dismiss (D) ";
-            if (model.getParty().size() == 1) {
-                dismiss = "";
-            }
-            print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
-                    " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
-                    recruitableNames() + ". " +
-                    "Do you want to recruit (R), " + dismiss + "or are you done (Q)? ");
+            RecruitSubView subView = new RecruitSubView(recruitMatrix);
+            model.setSubView(subView);
+
             do {
-                char selectedAction = lineInput().toUpperCase().charAt(0);
-                if (selectedAction == 'R') {
+                List<String> optionList = new ArrayList<>(List.of("Recruit", "Back", "Done"));
+                if (model.getParty().size() > 1) {
+                    optionList.add(2, "Dismiss");
+                }
+                print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
+                        " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
+                        recruitableNames() + ".");
+                waitForReturn();
+
+                char[] selectedAction = new char[1];
+                Point cursorPos = subView.getCursorPosition();
+                model.setSubView(new ArrowMenuSubView(model.getSubView(),
+                        optionList, cursorPos.x+2, cursorPos.y+5, ArrowMenuSubView.NORTH_WEST) {
+                    @Override
+                    protected void enterPressed(Model model, int cursorPos) {
+                        if (optionList.get(cursorPos).equals("Done")) {
+                            selectedAction[0] = 'Q';
+                        } else {
+                            selectedAction[0] = optionList.get(cursorPos).charAt(0);
+                        }
+                        model.setSubView(getPrevious());
+                    }
+                });
+                waitForReturn();
+
+                if (selectedAction[0] == 'R') {
                     if (model.getParty().isFull()) {
                         println("Your party is currently full. You must dismiss party members to recruit new ones.");
                     } else {
@@ -83,7 +116,7 @@ public class RecruitState extends GameState {
                             break;
                         }
                     }
-                } else if (selectedAction == 'D' && model.getParty().size() > 1) {
+                } else if (selectedAction[0] == 'D' && model.getParty().size() > 1) {
                     print("Which party member do you wish to dismiss? ");
                     GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
                     int goldLost = Math.min(model.getParty().getGold(),
@@ -94,12 +127,9 @@ public class RecruitState extends GameState {
                         model.getParty().remove(toDismiss, true, true, goldLost);
                         println(toDismiss.getFullName() + " left the party.");
                     }
-                } else if (selectedAction == 'Q') {
+                } else if (selectedAction[0] == 'Q') {
                     break;
                 }
-                print("There " + (recruitables.size() == 1 ? "is " : "are ") + "still " + noOfRecruitables() +
-                        " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party. " +
-                        "Do you want to recruit (R), dismiss (D) or are you done (Q)? ");
             } while (true);
         } else {
             if (recruitResult.second.equals("")) {
