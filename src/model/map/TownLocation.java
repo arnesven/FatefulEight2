@@ -104,7 +104,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new MarketEvent(model),
                     //new ProtectionSchemeEvent(model),
                     new AlchemistEvent(model),
-                    // new GamlberEvent(model),
+                    // new GamblerEvent(model),
                     new SmithEvent(model),
                     new MageEvent(model)
             ));

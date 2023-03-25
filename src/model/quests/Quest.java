@@ -30,10 +30,10 @@ public abstract class Quest implements Serializable {
         this.difficulty = difficulty;
         this.reward = new Reward(partyRep, gold, exp);
         this.text = text;
-        scenes = buildScenes();
-        junctions = buildJunctions(scenes);
         successEnding = new QuestSuccessfulNode(reward, endText);
         failEnding = new QuestFailNode();
+        scenes = buildScenes();
+        junctions = buildJunctions(scenes);
         connectScenesToJunctions(scenes, junctions);
     }
 

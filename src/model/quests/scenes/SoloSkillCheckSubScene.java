@@ -1,10 +1,12 @@
 package model.quests.scenes;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.states.QuestState;
+import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 
@@ -13,9 +15,10 @@ import java.awt.*;
 public class SoloSkillCheckSubScene extends SkillQuestSubScene {
     private final Skill skill;
     private final int difficulty;
-    private static final Sprite32x32 SPRITE = new Sprite32x32("soloskillscene", "quest.png", 0x10,
+    public static final Sprite32x32 SPRITE = new Sprite32x32("soloskillscene", "quest.png", 0x10,
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private final String leaderTalk;
+    private GameCharacter performer;
 
     public SoloSkillCheckSubScene(int col, int row, Skill skill, int difficulty, String leaderTalk) {
         super(col, row);
@@ -40,11 +43,16 @@ public class SoloSkillCheckSubScene extends SkillQuestSubScene {
         if (model.getParty().size() > 1) {
             leaderSay(model, leaderTalk);
         }
-        boolean success = model.getParty().doSoloSkillCheck(model, state, skill, difficulty);
+        MyPair<Boolean, GameCharacter> success = model.getParty().doSoloSkillCheckWithPerformer(model, state, skill, difficulty);
+        this.performer = success.second;
         state.setCursorEnabled(true);
-        if (success) {
+        if (success.first) {
             return getSuccessEdge();
         }
         return getFailEdge();
+    }
+
+    protected GameCharacter getPerformer() {
+        return performer;
     }
 }
