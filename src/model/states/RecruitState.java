@@ -122,7 +122,7 @@ public class RecruitState extends GameState {
                     int goldLost = Math.min(model.getParty().getGold(),
                             toDismiss.getCharClass().getStartingGold() + toDismiss.getLevel()*5);
                     print(toDismiss.getFullName() + " will return all equipment and claim " + goldLost + " from the party's purse." +
-                            " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)?");
+                            " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
                     if (yesNoInput()) {
                         model.getParty().remove(toDismiss, true, true, goldLost);
                         println(toDismiss.getFullName() + " left the party.");

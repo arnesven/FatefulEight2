@@ -63,7 +63,7 @@ public class UnsuspectingLoversQuest extends Quest {
                                 "I'm sure we can whip something up ourselves."),
                                 new PayGoldSubScene(4, 4, 5,
                                         "We should probably cater."))),
-                new QuestScene("Date Entertainment",
+                new QuestScene("Date Entertainment", // TODO: add a spell callback on the actual subscene as well
                         List.of(new CollaborativeSkillCheckSubScene(2, 7, Skill.Entertain, 10,
                                 "How about a love song?"),
                                 new PayGoldSubScene(3, 7, 5, "Can we hire a troubadour?"))));

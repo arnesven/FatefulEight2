@@ -249,6 +249,11 @@ public class Party implements Serializable {
     }
 
     public void consumeRations(boolean forFree) {
+        for (GameCharacter gc : partyMembers) {
+            if (gc.getHP() == gc.getMaxHP()) {
+                gc.addToSP(1);
+            }
+        }
         allRecoverHp(1);
         if (!forFree) {
             addToFood(-size());

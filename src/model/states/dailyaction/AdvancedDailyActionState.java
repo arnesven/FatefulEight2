@@ -30,6 +30,9 @@ public abstract class AdvancedDailyActionState extends GameState {
                                            SteppingMatrix<DailyActionNode> matrix);
 
     protected void addNode(int col, int row, DailyActionNode node) {
+        if (matrix.getElementAt(col, row) != null) {
+            System.err.println("WARNING, overwriting stepping matrix cell with " + node.getName());
+        }
         matrix.addElement(col, row, node);
     }
 

@@ -17,7 +17,7 @@ public class ArdhCastle extends CastleLocation {
 
     @Override
     public Point getTavernPosition() {
-        return new Point(6, 6);
+        return new Point(6, 5);
     }
 
     @Override
