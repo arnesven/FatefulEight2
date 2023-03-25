@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.states.DailyEventState;
 
 import java.util.List;
@@ -57,8 +58,9 @@ public class ThiefEvent extends DailyEventState {
 
     private boolean spotThief(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.testSkill(Skill.Perception, 8).isSuccessful()) {
-                println(gc.getName() + " spots the stranger trying to snatch your purse."); // TODO: print skill check result
+            SkillCheckResult result = gc.testSkill(Skill.Perception, 8);
+            if (result.isSuccessful()) {
+                println(gc.getName() + " spots the stranger trying to snatch your purse. (Perception roll of " + result.asString() + ")");
                 model.getParty().partyMemberSay(model, gc, "Hey, there! THIEF!");
                 return true;
             }
