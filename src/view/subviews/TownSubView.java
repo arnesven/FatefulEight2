@@ -25,7 +25,7 @@ public class TownSubView extends DailyActionSubView {
     private static final Sprite WATER = makeWaterSprite();
     private static final Sprite DOCK = new Sprite32x32("towndock", "world_foreground.png", 0x42,
             MyColors.LIGHT_BLUE, MyColors.DARK_BLUE, MyColors.BROWN, MyColors.DARK_GRAY);
-    private static final Sprite[] TOWN_HOUSES = new Sprite[]{
+    public static final Sprite[] TOWN_HOUSES = new Sprite[]{
             new Sprite32x32("townhouse", "world_foreground.png", 0x43,
                     MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.CYAN),
             new Sprite32x32("townhouse2", "world_foreground.png", 0x53,

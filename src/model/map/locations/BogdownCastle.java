@@ -22,7 +22,7 @@ public class BogdownCastle extends CastleLocation {
 
     @Override
     public java.util.List<GeneralShopNode> getShops(Model model) {
-        return List.of(new RoyalArmory(model, 1, 5), new MagicSuperShop(model, 5, 1));
+        return List.of(new RoyalArmory(model, 1, 5), new MagicSuperShop(model, 6, 1));
     }
 
     @Override

@@ -10,8 +10,8 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class CastleSubView extends DailyActionSubView {
 
@@ -40,14 +40,18 @@ public class CastleSubView extends DailyActionSubView {
             MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, GROUND_COLOR);
     private static final Sprite gate = new Sprite32x32("castleGate", "world_foreground.png", 0x49,
             MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, GROUND_COLOR);
-
-
+    private static final Sprite over_gate = new Sprite32x32("castleGate", "world_foreground.png", 0x79,
+            MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, GROUND_COLOR);
+    private static final Sprite over_wall = new Sprite32x32("castleGate", "world_foreground.png", 0x78,
+            MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, GROUND_COLOR);
+    private static List<Point> townPoints;
     private Sprite[][] rows;
 
     private static Map<String, Sprite> castleSprites = new HashMap<>();
 
     private final String placeName;
     private final MyColors color;
+    private double TOWN_DENSITY = 0.5;
 
     public CastleSubView(AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix, String placeName, MyColors color) {
         super(advancedDailyActionState, matrix);
@@ -66,6 +70,14 @@ public class CastleSubView extends DailyActionSubView {
                 new Sprite[]{towerLL, horiWall, horiWall, gate, horiWall, horiWall, horiWall, towerLR},
                 new Sprite[]{ground, ground, ground, ground, ground, ground, ground, ground},
         };
+        townPoints = new ArrayList<>();
+        for (int x = 1; x < 7; ++x) {
+            for (int y = 1; y < 7; ++y) {
+                if (!( 1 < x && x < 5 && y < 3) && x != 3) {
+                    townPoints.add(new Point(x, y));
+                }
+            }
+        }
     }
 
     private Sprite makeSprite(int i, MyColors color) {
@@ -90,6 +102,22 @@ public class CastleSubView extends DailyActionSubView {
                 model.getScreenHandler().put(p.x, p.y, rows[row][i]);
             }
         }
+        Point p = convertToScreen(new Point(2, 7));
+        model.getScreenHandler().register(over_wall.getName(), p, over_wall, 4);
+        p = convertToScreen(new Point(3, 7));
+        model.getScreenHandler().register(over_gate.getName(), p, over_gate, 4);
+        p = convertToScreen(new Point(4, 7));
+        model.getScreenHandler().register(over_wall.getName(), p, over_wall, 4);
+
+        Random rnd = new Random(placeName.hashCode());
+        for (Point townPoint : townPoints) {
+            if (getMatrix().getElementAt(townPoint.x, townPoint.y) == null &&
+                    rnd.nextDouble() > (1.0-TOWN_DENSITY)) {
+                p = convertToScreen(townPoint);
+                Sprite townHouse = TownSubView.TOWN_HOUSES[rnd.nextInt(3)];
+                model.getScreenHandler().register(townHouse.getName(), p, townHouse);
+            }
+        }
     }
 
     @Override
@@ -97,12 +125,14 @@ public class CastleSubView extends DailyActionSubView {
         return "CASTLE";
     }
 
-    @Override
     public void animateMovement(Model model, Point from, Point to) {
-        Point gatePosition = new Point(3, 7);
         if (insideToOutside(from, to) || insideToOutside(to, from)) {
-            super.animateMovement(model, from, gatePosition);
-            super.animateMovement(model, gatePosition, to);
+            Point doorPos = TavernDailyActionState.getDoorPosition();
+            super.animateMovement(model, from, doorPos);
+            Point below = new Point(doorPos);
+            below.y++;
+            super.animateMovement(model, doorPos, below);
+            super.animateMovement(model, below, to);
         } else {
             super.animateMovement(model, from, to);
         }
