@@ -38,18 +38,8 @@ public class GuideEvent extends DailyEventState {
                 new CourtWizardEvent(model),
                 new ArmoryEvent(model),
                 new JesterEvent(model));
-        final DailyEventState[] selectedEvent = {null};
-        model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                List.of("Master-at-arms", "Smith", "Archer", "Some Nobles", "Priest", "Court Wizard", "Armory", "Jester"),
-                28, 12, ArrowMenuSubView.NORTH_WEST) {
-            @Override
-            protected void enterPressed(Model model, int cursorPos) {
-                selectedEvent[0] = events.get(cursorPos);
-                model.setSubView(getPrevious());
-            }
-        });
-        waitForReturn();
-        selectedEvent[0].doTheEvent(model);
+        int result = multipleOptionArrowMenu(model, 28, 12, List.of("Master-at-arms", "Smith", "Archer", "Some Nobles", "Priest", "Court Wizard", "Armory", "Jester"));
+        events.get(result).doTheEvent(model);
 
     }
 

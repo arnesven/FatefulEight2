@@ -29,17 +29,8 @@ public class UndergroundLakeEvent extends DailyEventState {
                     "Get lots of water",
                     "Throw a rock in the lake",
                     "Do not disturb the lake");
-            int[] selectedAction = new int[1];
-            model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                    optionList, 24, 14, ArrowMenuSubView.NORTH_WEST) {
-                @Override
-                protected void enterPressed(Model model, int cursorPos) {
-                    selectedAction[0] = cursorPos;
-                    model.setSubView(getPrevious());
-                }
-            });
-            waitForReturn();
-            switch (selectedAction[0]) {
+            int result = multipleOptionArrowMenu(model, 24, 14, optionList);
+            switch (result) {
                 case 0:
                     getRations(model, 1);
                     break;
