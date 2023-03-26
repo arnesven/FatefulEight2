@@ -270,6 +270,7 @@ public class CombatEvent extends DailyEventState {
             }
             destroyedEnemies.get(killer).add(enemy);
         }
+        enemy.doUponDeath(model, this, killer);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (!gc.isDead()) {
                 model.getParty().giveXP(model, gc, 5);

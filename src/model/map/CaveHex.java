@@ -61,7 +61,7 @@ public class CaveHex extends WorldHex {
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         List<DailyEventState> events = new ArrayList<>(List.of(
                 new BatsEvent(model),
-                // new UndergroundLakeEvent(model),
+                new UndergroundLakeEvent(model),
                 // new PitfallEvent(model),
                 new MineEvent(model),
                 // new HideoutEvent(model),

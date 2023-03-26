@@ -25,6 +25,7 @@ import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.*;
 
 public class GameCharacter extends Combatant {

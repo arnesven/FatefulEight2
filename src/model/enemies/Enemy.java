@@ -78,6 +78,8 @@ public abstract class Enemy extends Combatant {
         decreaseTimedConditions(model, combatEvent);
     }
 
+
+
     public char getEnemyGroup() {
         return enemyGroup;
     }
@@ -152,6 +154,8 @@ public abstract class Enemy extends Combatant {
         }
         return result;
     }
+
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) { }
 
     private static class KillAnimation extends RunOnceAnimationSprite {
         private static final int ANIMATION_STEPS = 10;

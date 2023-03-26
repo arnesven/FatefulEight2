@@ -38,6 +38,16 @@ public class DragonEnemy extends Enemy {
     }
 
     @Override
+    public int getWidth() {
+        return 2;
+    }
+
+    @Override
+    protected int getHeight() {
+        return 2;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new DragonLoot(model);
     }
