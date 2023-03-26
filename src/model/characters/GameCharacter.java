@@ -466,6 +466,7 @@ public class GameCharacter extends Combatant {
         if (i > 0) {
             this.currentXp = XP_LEVELS[i - 1];
         }
+        this.setCurrentHp(getMaxHP());
     }
 
     public void setRandomStartingClass() {
