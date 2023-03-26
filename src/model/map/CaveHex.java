@@ -5,6 +5,7 @@ import model.actions.*;
 import model.combat.CaveTheme;
 import model.map.locations.Stalagmites;
 import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.TravelState;
 import model.states.events.*;
 import util.MyPair;
@@ -62,10 +63,10 @@ public class CaveHex extends WorldHex {
         List<DailyEventState> events = new ArrayList<>(List.of(
                 new BatsEvent(model),
                 new UndergroundLakeEvent(model),
-                // new PitfallEvent(model),
+                new ChasmEvent(model),
                 new MineEvent(model),
                 // new HideoutEvent(model),
-                // new DwarvenCityEvent(model),
+                new DwarvenCityEvent(model),
                 new DeadBodyEvent(model),
                 new GoblinsEvent(model),
                 new OrcsEvent(model),
