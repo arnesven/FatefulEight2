@@ -77,8 +77,10 @@ public class TravelState extends GameState {
     }
 
     protected boolean checkRiverCrossing(Model model, MapSubView mapSubView) {
-        return !model.isInCaveSystem() && model.getWorld().crossesRiver(model.getParty().getPosition(),
-                Direction.getDirectionForDxDy(model.getParty().getPosition(), mapSubView.getSelectedDirection()));
+        return !model.isInCaveSystem() &&
+                !model.getCurrentHex().getRoadInDirection(Direction.getDirectionForDxDy(model.getParty().getPosition(), mapSubView.getSelectedDirection())) &&
+                model.getWorld().crossesRiver(model.getParty().getPosition(),
+                    Direction.getDirectionForDxDy(model.getParty().getPosition(), mapSubView.getSelectedDirection()));
     }
 
     protected Point selectDirection(Model model, MapSubView mapSubView) {

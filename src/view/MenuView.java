@@ -24,10 +24,16 @@ public class MenuView extends ArrowMenuGameView {
 
     @Override
     protected void enterPressed(Model model, int cursorPos) {
-        GameView nextView = options.get(cursorPos);
-        if (nextView instanceof DummyView) {
-            model.setExitGame(true);
+        if (options.get(cursorPos) instanceof DummyView) {
+            model.transitionToDialog(new YesNoMessageView(this, "Are you sure you want to quit the game? Any unsaved progress will be lost.") {
+                @Override
+                protected void doAction(Model model) {
+                    model.setExitGame(true);
+                }
+            });
+            madeChanges();
         } else {
+            GameView nextView = options.get(cursorPos);
             if (nextView.isValid(model)){
                 this.nextView = nextView;
                 setTimeToTransition(true);
