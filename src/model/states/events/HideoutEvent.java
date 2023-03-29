@@ -4,8 +4,14 @@ import model.Model;
 import model.enemies.BanditEnemy;
 import model.items.Item;
 import model.items.Prevalence;
+import model.map.TownLocation;
+import model.map.World;
 import model.states.DailyEventState;
+import model.states.TravelBySeaState;
+import view.subviews.CollapsingTransition;
+import view.subviews.MapSubView;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +75,7 @@ public class HideoutEvent extends DailyEventState {
     private List<Item> generateLoot(Model model, int cost) {
         List<Item> result = new ArrayList<>();
         int sum = 0;
-        while (sum < cost*2) {
+        while (sum < cost*3) {
             Item it = model.getItemDeck().draw(1, Prevalence.rare).get(0);
             result.add(it);
             sum += it.getCost();
@@ -91,7 +97,30 @@ public class HideoutEvent extends DailyEventState {
     private void secretPassage(Model model) {
         print("Do you take the secret passage? (Y/N) ");
         if (yesNoInput()) {
-            // TODO: find nearest town. move there.
+            model.getWorld().dijkstrasByLand(model.getParty().getPosition());
+            List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle();
+            MapSubView mapSubView = new MapSubView(model);
+            mapSubView.drawAvatarEnabled(false);
+            CollapsingTransition.transition(model, mapSubView);
+            Point currentPos = model.getParty().getPosition();
+            for (int i = 1; i < path.size(); ++i) {
+                Point destination = path.get(i);
+                if (i == path.size()-1) {
+                    model.exitCaveSystem();
+                }
+                mapSubView.addMovementAnimation(
+                        model.getParty().getLeader().getAvatarSprite(),
+                        World.translateToScreen(currentPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                        World.translateToScreen(destination, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                mapSubView.waitForAnimation();
+                mapSubView.removeMovementAnimation();
+                model.getParty().setPosition(destination);
+                currentPos = destination;
+            }
+            model.getCurrentHex().travelFrom(model);
+            model.getParty().setPosition(currentPos);
+            model.getCurrentHex().travelTo(model);
+            println("The secret passage took you to " + model.getCurrentHex().getPlaceName() + "!");
         }
     }
 }

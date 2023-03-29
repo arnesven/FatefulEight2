@@ -7,15 +7,13 @@ import view.sprites.Sprite;
 import view.subviews.SubView;
 
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.io.Serializable;
-import java.util.Set;
 
 public class World implements Serializable {
 
     private final Set<WaterPath> waterWays;
+    private Map<WorldHex, Integer> landNodes;
     //  x   y
     private WorldHex[][] hexes;
     private ViewPointMarker cursor = new HexCursorMarker();
@@ -280,6 +278,64 @@ public class World implements Serializable {
 
     public void setAlternativeAvatar(Sprite sprite) {
         alternativeAvatar = sprite;
+    }
+
+    public void dijkstrasByLand(Point position) {
+        landNodes = new HashMap<>();
+        Set<Point> currentSet = new HashSet<>();
+        Set<Point> nextSet = new HashSet<>();
+        int distance = 0;
+        currentSet.add(position);
+        while (!currentSet.isEmpty()) {
+            for (Point p : currentSet) {
+                landNodes.put(getHex(p), distance);
+            }
+            for (Point p : currentSet) {
+                for (Point dxdys : Direction.getDxDyDirections(p)) {
+                    Point neighbor = new Point(p);
+                    move(neighbor, dxdys.x, dxdys.y);
+                    if (!p.equals(neighbor) && !landNodes.containsKey(getHex(neighbor)) && !nextSet.contains(neighbor)) {
+                        nextSet.add(neighbor);
+                    }
+                }
+            }
+            currentSet.clear();
+            currentSet.addAll(nextSet);
+            nextSet.clear();
+            distance++;
+        }
+    }
+
+    public List<Point> shortestPathToNearestTownOrCastle() {
+        List<Point> path = new ArrayList<>();
+        int shortest = Integer.MAX_VALUE;
+        for (WorldHex hex : landNodes.keySet()) {
+            if (hex.getLocation() != null && hex.getLocation() instanceof UrbanLocation) {
+                Point p = getPositionForHex(hex);
+                if (landNodes.get(hex) < shortest) {
+                    shortest = landNodes.get(hex);
+                    path = new ArrayList<>();
+                    path.add(p);
+                }
+            }
+        }
+        if (path.isEmpty()) {
+            throw new IllegalStateException("Can't find town or castle!");
+        }
+        Point current = path.get(0);
+        while (landNodes.get(getHex(current)) > 0) {
+            int distToCurrent = landNodes.get(getHex(current));
+            for (Point dxdy : Direction.getDxDyDirections(current)) {
+                Point neighbor = new Point(current);
+                move(neighbor, dxdy.x, dxdy.y);
+                if (landNodes.get(getHex(neighbor)) < distToCurrent) {
+                    path.add(0, neighbor);
+                    current = neighbor;
+                    break;
+                }
+            }
+        }
+        return path;
     }
 
     private static class Interval {
