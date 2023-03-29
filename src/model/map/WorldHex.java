@@ -160,8 +160,6 @@ public abstract class WorldHex implements Serializable {
             actions.add(new GetOffRoadAction(model));
         } else if (hasRoad()) {
             actions.add(new GetOnRoadAction(model));
-        } else {
-            actions.add(new EnterCavesAction(model));
         }
         return actions;
     }

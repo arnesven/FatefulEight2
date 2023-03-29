@@ -85,9 +85,6 @@ public class CaveHex extends WorldHex {
         actions = new ArrayList<>();
         actions.add(new DailyAction("Travel", new TravelState(model)));
         actions.add(new StayInHexAction(model));
-        if (canHaveExit()) {
-            actions.add(new ExitCavesAction(model));
-        }
         return actions;
     }
 

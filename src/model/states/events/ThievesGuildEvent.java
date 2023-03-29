@@ -24,7 +24,7 @@ public class ThievesGuildEvent extends DailyEventState {
         println("The Guild Master looks the party over, as to appraise your skillfulness...");
         int modifier = ConstableEvent.getPartyAlignment(model, this);
         if (modifier >= 0) {
-            println("Guild Master: \"Hmm, but you fellows don't quite look like your the type. " +
+            println("Guild Master: \"Hmm, but you fellows don't quite look like you're the type. " +
                     "Better sit on the sidelines for this one.\"");
             model.getParty().randomPartyMemberSay(model, List.of("What prejudice is this?",
                     "You don't even know us!", "This isn't a good idea anyway."));
