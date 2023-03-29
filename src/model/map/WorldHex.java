@@ -319,6 +319,9 @@ public abstract class WorldHex implements Serializable {
     }
 
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
+        if (hexLocation != null && hexLocation.getDailyActionMenuAnchor() != null) {
+            return hexLocation.getDailyActionMenuAnchor();
+        }
         return DailyActionMenu.UPPER_LEFT_CORNER;
     }
 }

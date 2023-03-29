@@ -1,7 +1,5 @@
 package model;
 
-import model.characters.GameCharacter;
-import model.enemies.Enemy;
 import sound.SoundEffects;
 
 import java.awt.*;
@@ -12,13 +10,18 @@ import java.util.List;
 public class SteppingMatrix<T> {
     private final int columns;
     private final int rows;
-    private final List<List<T>> grid;
-    private final List<T> list = new ArrayList<T>();
+    private List<List<T>> grid;
+    private List<T> list;
     private Point selected;
 
     public SteppingMatrix(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
+        clear();
+    }
+
+    public void clear() {
+        list = new ArrayList<>();
         grid = new ArrayList<>();
         for (int i = 0; i < columns; ++i) {
             ArrayList<T> innerList = new ArrayList<T>();
@@ -27,6 +30,7 @@ public class SteppingMatrix<T> {
             }
             grid.add(innerList);
         }
+        selected = null;
     }
 
     public List<T> getElementList() {
@@ -206,4 +210,5 @@ public class SteppingMatrix<T> {
         Point p = getPositionFor(null);
         addElement(p.x, p.y, it);
     }
+
 }

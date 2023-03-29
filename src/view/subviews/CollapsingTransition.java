@@ -43,11 +43,11 @@ public class CollapsingTransition extends TransitionView {
     }
 
 
-    public static void transition(Model model, SubView mapSubView) {
-        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), mapSubView, mapSubView.getTitleText(model), STEPS_START);
+    public static void transition(Model model, SubView nextSubView) {
+        CollapsingTransition spiral = new CollapsingTransition(model.getSubView(), nextSubView, nextSubView.getTitleText(model), STEPS_START);
         model.setSubView(spiral);
         spiral.waitToBeOver();
-        model.setSubView(mapSubView);
+        model.setSubView(nextSubView);
     }
 
 }

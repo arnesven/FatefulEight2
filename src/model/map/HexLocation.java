@@ -8,6 +8,7 @@ import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
 import model.states.events.NoEventState;
+import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite16x16;
 import view.subviews.SubView;
@@ -105,4 +106,6 @@ public abstract class HexLocation implements Serializable {
     public Sprite getTownOrCastleSprite() {
         return null;
     }
+
+    public MyPair<Point, Integer> getDailyActionMenuAnchor() { return null; }
 }
