@@ -6,7 +6,6 @@ import model.states.ExploreRuinsState;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Random;
 
 public class BossMonsterObject extends DungeonMonster {
     public BossMonsterObject() {

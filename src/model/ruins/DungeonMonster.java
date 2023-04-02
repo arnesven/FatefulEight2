@@ -1,9 +1,7 @@
 package model.ruins;
 
 import model.Model;
-import model.enemies.Enemy;
-import model.enemies.HermitEnemy;
-import model.enemies.SkeletonEnemy;
+import model.enemies.*;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
 import view.sprites.Sprite;
@@ -22,7 +20,35 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     public static DungeonObject makeRandomEnemies(Random random) {
-        return new DungeonMonster(List.of(new SkeletonEnemy('A'), new SkeletonEnemy('A'), new SkeletonEnemy('A')));
+        int dieRoll = random.nextInt(11);
+        switch (dieRoll) {
+            case 0:
+                return new DungeonMonster(List.of(new SnowyBeastEnemy('A'), new SnowyBeastEnemy('A')));
+            case 1:
+                return new DungeonMonster(List.of(new GoblinAxeWielder('A'), new GoblinAxeWielder('A'),
+                        new GoblinSpearman('B'), new GoblinSpearman('B'), new GoblinSwordsman('C'),
+                        new GoblinSwordsman('C')));
+            case 2:
+                return new DungeonMonster(List.of(new BatEnemy('A'), new BatEnemy('A'), new BatEnemy('A'),
+                        new BatEnemy('A'), new BatEnemy('A'), new BatEnemy('A'), new BatEnemy('A')));
+            case 3:
+                return new DungeonMonster(List.of(new TrollEnemy('A'), new OrcWarrior('B'), new OrcWarrior('B')));
+            case 4:
+                return new DungeonMonster(List.of(new FiendEnemy('A'), new SuccubusEnemy('B'), new SuccubusEnemy('B')));
+            case 5:
+                return new DungeonMonster(List.of(new ManticoreEnemy('A'), new ManticoreEnemy('A')));
+            case 6:
+                return new DungeonMonster(List.of(new DaemonEnemy('A'), new ImpEnemy('A'), new ImpEnemy('A')));
+            case 7:
+                return new DungeonMonster(List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new CrocodileEnemy('B'), new CrocodileEnemy('B')));
+            case 8:
+                return new DungeonMonster(List.of(new SpiderEnemy('A'), new SpiderEnemy('A'), new SpiderEnemy('A'), new ScorpionEnemy('B')));
+            case 9:
+                return new DungeonMonster(List.of(new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'), new RatEnemy('A'),
+                        new GiantRatEnemy('B'), new GiantRatEnemy('B'), new GiantRatEnemy('B')));
+            default:
+                return new DungeonMonster(List.of(new SkeletonEnemy('A'), new SkeletonEnemy('A'), new SkeletonEnemy('A')));
+        }
     }
 
     @Override
