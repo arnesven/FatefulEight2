@@ -46,7 +46,7 @@ public class MageEvent extends DailyEventState {
             }
         } else {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "Uhm... " + model.getParty().getInventory().getSpells().get(0) + "?");
+                    "Uhm... " + model.getParty().getInventory().getSpells().get(0).getName() + "?");
             println("Mage: \"Yes, that's an excellent one!\"");
         }
         println("Mage: \"Say, I happen to have a few spell books here that " +

@@ -86,11 +86,13 @@ public class DungeonMonster extends CenterDungeonObject {
                 }
                 exploreRuinsState.println("The " + enemies.get(0).getName() + " has spotted you!");
             }
+            isSleeping = false;
         } else if (canSleep()) {
             useSleepingPotion(model, exploreRuinsState);
+        }
+        if (isSleeping) {
             return;
         }
-        isSleeping = false;
         doCombatWithMonster(model, exploreRuinsState);
     }
 

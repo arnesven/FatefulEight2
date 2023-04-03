@@ -174,10 +174,10 @@ public class DungeonRoom implements Serializable {
             case 1:
                 return 0xC3 + firstConnection;
             case 2:
-                if (connections[(firstConnection + 2) % 4] != null) {
+                if (!connectionBlocked((firstConnection + 2) % 4)) { // TODO : or cracked wall
                     return 0xD7 + firstConnection;
                 } else {
-                    if (connections[(firstConnection + 1)] != null) {
+                    if (!connectionBlocked(firstConnection + 1)) { // TODO: or cracked wall
                         return 0xD3 + firstConnection;
                     } else {
                         return 0xD6;
@@ -192,11 +192,15 @@ public class DungeonRoom implements Serializable {
 
     private int firstMissingConnection(boolean negate) {
         for (int i = 0; i < connections.length; ++i) {
-            if ((connections[i] == null || connections[i] instanceof CrackedWall) == !negate) {
+            if (connectionBlocked(i) == !negate) {
                 return i;
             }
         }
         return -1;
+    }
+
+    private boolean connectionBlocked(int i) {
+        return connections[i] == null || connections[i] instanceof CrackedWall;
     }
 
     public int getMapExtraIconSpriteNumber() {

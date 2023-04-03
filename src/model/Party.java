@@ -342,7 +342,7 @@ public class Party implements Serializable {
         }
         System.out.println(gc.getName() + " got " + xp + " XP.");
         if (gc.getXpToNextLevel() <= xp) {
-            model.getLog().addAnimated(gc.getName() + " has advanced to level " + (gc.getLevel() + 1) + "!");
+            model.getLog().addAnimated(gc.getName() + " has advanced to level " + (gc.getLevel() + 1) + "!\n");
             partyMemberSay(model, gc, List.of("I am learning every day.^",
                     "Experience is its own reward.^",
                     "Faster, better, stronger, harder.^",

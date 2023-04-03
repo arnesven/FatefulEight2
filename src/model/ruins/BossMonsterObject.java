@@ -1,26 +1,19 @@
 package model.ruins;
 
-import model.Model;
 import model.enemies.VampireEnemy;
-import model.states.ExploreRuinsState;
+import model.enemies.VampireLordEnemy;
 
 import java.awt.*;
 import java.util.List;
 
 public class BossMonsterObject extends DungeonMonster {
     public BossMonsterObject() {
-        super(List.of(new VampireEnemy('A')));
+        super(List.of(new VampireLordEnemy('A')));
         setInternalPosition(new Point(3, 5));
     }
 
     @Override
     protected boolean canSleep() {
         return false;
-    }
-
-    @Override
-    public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
-        exploreRuinsState.waitForReturn();
-        super.entryTrigger(model, exploreRuinsState);
     }
 }
