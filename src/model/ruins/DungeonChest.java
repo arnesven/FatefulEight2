@@ -7,6 +7,7 @@ import model.combat.CombinedLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.PersonCombatLoot;
 import model.states.ExploreRuinsState;
+import sound.SoundEffects;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -94,6 +95,7 @@ public class DungeonChest extends CenterDungeonObject {
             }
             combinedLoot.giveYourself(model.getParty());
             state.println("The chest opens... You found " + combinedLoot.getText() + ".");
+            SoundEffects.playSound("chestopen");
         } else {
             state.println("You've already opened the chest.");
         }
