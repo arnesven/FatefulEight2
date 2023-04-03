@@ -1,9 +1,13 @@
 package model.ruins;
 
 import model.Model;
+import model.classes.Skill;
 import model.enemies.*;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
+import view.MyColors;
+import view.sprites.Animation;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.subviews.DungeonTheme;
 import view.subviews.StripedTransition;
@@ -13,14 +17,28 @@ import java.util.List;
 import java.util.Random;
 
 public class DungeonMonster extends CenterDungeonObject {
+    private static final double SLEEP_CHANCE = 0.999; //0.6667;
+    private static final Sprite SLEEP_ANIMATION = new SleepAnimationSprite();
     private final List<Enemy> enemies;
-    private boolean isSleeping = true;
+    private boolean isSleeping = false;
 
     public DungeonMonster(List<Enemy> enemies) {
         this.enemies = enemies;
     }
 
     public static DungeonObject makeRandomEnemies(Random random) {
+        DungeonMonster monster = monsterFactory(random);
+        if (random.nextDouble() < SLEEP_CHANCE) {
+            monster.setSleeping(true);
+        }
+        return monster;
+    }
+
+    private void setSleeping(boolean b) {
+        isSleeping = b;
+    }
+
+    private static DungeonMonster monsterFactory(Random random) {
         int dieRoll = random.nextInt(11);
         switch (dieRoll) {
             case 0:
@@ -55,9 +73,16 @@ public class DungeonMonster extends CenterDungeonObject {
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
         if (isSleeping) {
-            exploreRuinsState.println("The " + enemies.get(0).getName() + " hasn't notice you.");
-            return;
+            exploreRuinsState.print("The " + enemies.get(0).getName() + " hasn't notice you. Do you want to attempt to sneak past it? (Y/N) ");
+            if (exploreRuinsState.yesNoInput()) {
+                boolean result = model.getParty().doCollectiveSkillCheck(model, exploreRuinsState, Skill.Sneak, 4);
+                if (result) {
+                    return;
+                }
+                exploreRuinsState.println("The " + enemies.get(0).getName() + " has spotted you!");
+            }
         }
+        isSleeping = false;
         doCombatWithMonster(model, exploreRuinsState);
     }
 
@@ -83,6 +108,12 @@ public class DungeonMonster extends CenterDungeonObject {
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
         model.getScreenHandler().register(getSprite().getName(), new Point(xPos, yPos), getSprite());
+        if (isSleeping) {
+            if (getSprite() instanceof Animation) {
+                ((Animation) getSprite()).synch();
+            }
+            model.getScreenHandler().register(SLEEP_ANIMATION.getName(), new Point(xPos, yPos), SLEEP_ANIMATION);
+        }
     }
 
     @Override
@@ -92,6 +123,20 @@ public class DungeonMonster extends CenterDungeonObject {
 
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
+        if (isSleeping) {
+            state.println("The " + enemies.get(0).getName() + " has spotted you!");
+            isSleeping = false;
+        }
         doCombatWithMonster(model, state);
+    }
+
+    private static class SleepAnimationSprite extends LoopingSprite {
+        public SleepAnimationSprite() {
+            super("sleepanimation", "dungeon.png", 0x46, 32);
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.PINK);
+            setFrames(2);
+            setDelay(32);
+        }
     }
 }
