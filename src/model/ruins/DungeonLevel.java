@@ -13,7 +13,7 @@ public class DungeonLevel {
             new Point(0, -1), new Point(1, 0), new Point(0, 1), new Point(-1, 0));
     private static final double CHEST_PREVALENCE = 0.4;
     private static final double LEVER_PREVALENCE = 0.3;
-    private static final double CORPSE_PREVALENCE = 0.99;
+    private static final double CORPSE_PREVALENCE = 0.3;
     private static final double MONSTER_PREVALENCE = 0.1;
     private static final double LOCKED_DOOR_PREVALENCE = 0.05;
     private static final double TRAP_PREVALENCE = 0.1;

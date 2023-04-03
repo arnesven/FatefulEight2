@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DungeonMonster extends CenterDungeonObject {
-    private static final double SLEEP_CHANCE = 0.999; //0.6667;
+    private static final double SLEEP_CHANCE = 0.6667;
     private static final Sprite SLEEP_ANIMATION = new SleepAnimationSprite();
     private final List<Enemy> enemies;
     private boolean isSleeping = false;
