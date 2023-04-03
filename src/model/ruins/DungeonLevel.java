@@ -12,8 +12,9 @@ public class DungeonLevel {
     private static final List<Point> directions = List.of(
             new Point(0, -1), new Point(1, 0), new Point(0, 1), new Point(-1, 0));
     private static final double CHEST_PREVALENCE = 0.4;
+    private static final double LEVER_PREVALENCE = 0.3;
+    private static final double CORPSE_PREVALENCE = 0.99;
     private static final double MONSTER_PREVALENCE = 0.1;
-    private static final double LEVER_PREVALENCE = 0.4;
     private static final double LOCKED_DOOR_PREVALENCE = 0.05;
     private static final double TRAP_PREVALENCE = 0.1;
 
@@ -111,6 +112,8 @@ public class DungeonLevel {
                     LeverObject lever = new LeverObject(random);
                     room.addObject(lever);
                     getRoom(descentPoint).connectLeverToDoor(lever);
+                } else if (roll < CHEST_PREVALENCE + LEVER_PREVALENCE + CORPSE_PREVALENCE) {
+                    room.addObject(new CorpseObject());
                 }
             }
 
@@ -225,5 +228,18 @@ public class DungeonLevel {
 
     protected void setStartingPoint(Point startingPoint) {
         this.startingPoint = startingPoint;
+    }
+
+
+    public List<DungeonRoom> getRoomList() {
+        List<DungeonRoom> roomList = new ArrayList<>();
+        for (int y = 0; y < rooms[0].length; ++y) {
+            for (int x = 0; x < rooms.length; ++x) {
+                if (rooms[x][y] != null) {
+                    roomList.add(rooms[x][y]);
+                }
+            }
+        }
+        return roomList;
     }
 }
