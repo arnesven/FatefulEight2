@@ -52,8 +52,10 @@ public class DungeonLevel {
         }
         addChestAndLevers(visitedRooms);
         addMonstersAndTraps(visitedRooms);
+        addCrackedWalls();
         return true;
     }
+
 
     public DungeonRoom getRoom(Point position) {
         return rooms[position.x][position.y];
@@ -163,6 +165,33 @@ public class DungeonLevel {
             }
         }
         rooms[currentPoint.x][currentPoint.y].setCardinality(cardinalityCount+1);
+    }
+
+
+    private void addCrackedWalls() {
+        int numberToAdd = (levelSize * levelSize) / 8;
+        for (int i = 0; i < numberToAdd; ++i) {
+            boolean added = false;
+            for (int tries = 0; tries < 100 && !added; ++tries) {
+                int x = random.nextInt(levelSize);
+                int y = random.nextInt(levelSize);
+                if (rooms[x][y] != null) {
+                    List<Point> dirs = new ArrayList<>(directions);
+                    Collections.shuffle(dirs);
+                    for (Point dir : dirs) {
+                        Point newPoint = new Point(x + dir.x, y + dir.y);
+                        if (positionOk(newPoint) && rooms[newPoint.x][newPoint.y] != null) {
+                            if (rooms[x][y].getConnection(directions.indexOf(dir)) == null) {
+                                connectDoor(x, y, directionsNames.get(directions.indexOf(dir)), DungeonRoomConnection.CRACKED);
+                                added = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                System.out.println("  Added a cracked wall at " + x + "," + y);
+            }
+        }
     }
 
     private boolean positionOk(Point p) {

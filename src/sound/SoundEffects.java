@@ -51,4 +51,12 @@ public class SoundEffects {
     public static void preload(String key, boolean low) {
         ClientSoundManager.loadSoundResource(key, low);
     }
+
+    public static void playBoom() {
+        play("boom");
+    }
+
+    public static void playUnlock() {
+        play("unlock");
+    }
 }

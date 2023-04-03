@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.items.potions.UnstablePotion;
 import model.ruins.*;
 import util.MyPair;
 import view.subviews.CollapsingTransition;
@@ -32,6 +33,7 @@ public class ExploreRuinsState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        model.getParty().getInventory().add(new UnstablePotion());
         doStuff(model);
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);

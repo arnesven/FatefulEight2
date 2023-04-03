@@ -192,7 +192,7 @@ public class DungeonRoom implements Serializable {
 
     private int firstMissingConnection(boolean negate) {
         for (int i = 0; i < connections.length; ++i) {
-            if ((connections[i] == null) == !negate) {
+            if ((connections[i] == null || connections[i] instanceof CrackedWall) == !negate) {
                 return i;
             }
         }
@@ -225,5 +225,9 @@ public class DungeonRoom implements Serializable {
 
     public void setRevealedOnMap(boolean b) {
         revealedOnMap = b;
+    }
+
+    public DungeonDoor getConnection(int index) {
+        return connections[index];
     }
 }

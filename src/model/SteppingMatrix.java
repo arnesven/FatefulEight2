@@ -20,7 +20,7 @@ public class SteppingMatrix<T> {
         clear();
     }
 
-    public void clear() {
+    public synchronized void clear() {
         list = new ArrayList<>();
         grid = new ArrayList<>();
         for (int i = 0; i < columns; ++i) {
@@ -44,7 +44,7 @@ public class SteppingMatrix<T> {
         return columns;
     }
 
-    public void addElement(int col, int row, T comb) {
+    public synchronized void addElement(int col, int row, T comb) {
         if (comb == null) {
             throw new IllegalStateException("Cannot add null to a stepping matrix");
         }
@@ -55,7 +55,7 @@ public class SteppingMatrix<T> {
         list.add(comb);
     }
 
-    public void addElements(List<T> stuff) {
+    public synchronized void addElements(List<T> stuff) {
         int col = 0;
         int row = 0;
         for (T t : stuff) {
@@ -67,11 +67,11 @@ public class SteppingMatrix<T> {
         }
     }
 
-    public T getSelectedElement() {
+    public synchronized T getSelectedElement() {
         return getElementAt(selected.x, selected.y);
     }
 
-    public T getElementAt(int col, int row) {
+    public synchronized T getElementAt(int col, int row) {
         return grid.get(col).get(row);
     }
 
@@ -79,12 +79,12 @@ public class SteppingMatrix<T> {
         return selected; // invariant: should always point to a combatant
     }
 
-    public void setSelectedPoint(T elem) {
+    public synchronized void setSelectedPoint(T elem) {
         Point p = getPositionFor(elem);
         selected = p;
     }
 
-    public Point getPositionFor(T elem) {
+    public synchronized Point getPositionFor(T elem) {
         for (int row = 0; row < getRows(); ++row) {
             for (int col = 0; col < getColumns(); ++col) {
                 if (elem == getElementAt(col, row)) {
@@ -95,7 +95,7 @@ public class SteppingMatrix<T> {
         throw new NoSuchElementException();
     }
 
-    public void remove(T elem) {
+    public synchronized void remove(T elem) {
         list.remove(elem);
         Point p = getPositionFor(elem);
         grid.get(p.x).set(p.y, null);
@@ -106,7 +106,7 @@ public class SteppingMatrix<T> {
         }
     }
 
-    public void step(int dx, int dy, boolean firstTime) {
+    public synchronized void step(int dx, int dy, boolean firstTime) {
         if (list.size() < 2) {
             return;
         }
@@ -126,7 +126,7 @@ public class SteppingMatrix<T> {
         }
     }
 
-    public void step(int dx, int dy) {
+    public synchronized void step(int dx, int dy) {
         step(dx, dy, true);
     }
 
@@ -189,7 +189,7 @@ public class SteppingMatrix<T> {
         });
     }
 
-    public boolean handleKeyEvent(KeyEvent keyEvent) {
+    public synchronized boolean handleKeyEvent(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             step(0, -1);
             return true;
@@ -206,7 +206,7 @@ public class SteppingMatrix<T> {
         return false;
     }
 
-    public void addElementLast(T it) {
+    public synchronized void addElementLast(T it) {
         Point p = getPositionFor(null);
         addElement(p.x, p.y, it);
     }

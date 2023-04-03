@@ -124,8 +124,10 @@ public class DungeonMonster extends CenterDungeonObject {
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
         if (isSleeping) {
-            state.println("The " + enemies.get(0).getName() + " has spotted you!");
-            isSleeping = false;
+            state.print("The " + enemies.get(0).getName() + " hasn't noticed you. Do you want to provoke it? (Y/N) ");
+            if (state.yesNoInput()) {
+                isSleeping = false;
+            }
         }
         doCombatWithMonster(model, state);
     }

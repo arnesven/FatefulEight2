@@ -77,6 +77,7 @@ public class DungeonChest extends CenterDungeonObject {
                 boolean didUnlock = model.getParty().doSoloSkillCheck(model, state, Skill.Security, MyRandom.randInt(5, 7));
                 if (didUnlock) {
                     isLocked = false;
+                    SoundEffects.playUnlock();
                 }
             }
         }

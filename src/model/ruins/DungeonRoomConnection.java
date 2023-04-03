@@ -7,7 +7,8 @@ public enum DungeonRoomConnection {
     OPEN,
     LOCKED,
     STAIRS_UP,
-    STAIRS_DOWN;
+    STAIRS_DOWN,
+    CRACKED;
 
     public static DungeonDoor makeObject(DungeonRoomConnection door, Point point, boolean isHorizontal, String direction) {
         switch (door) {
@@ -19,6 +20,8 @@ public enum DungeonRoomConnection {
                 return new StairsUp(point);
             case STAIRS_DOWN:
                 return new StairsDown(point);
+            case CRACKED:
+                return new CrackedWall(point, isHorizontal, direction);
         }
         throw new IllegalStateException("Cannot make object for door type " + door);
     }

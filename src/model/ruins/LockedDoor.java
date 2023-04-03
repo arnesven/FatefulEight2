@@ -7,6 +7,7 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.BowWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.ExploreRuinsState;
+import sound.SoundEffects;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -25,7 +26,6 @@ public class LockedDoor extends DungeonDoor {
     private final Sprite32x32 sprite;
     private final String direction;
     private boolean securityTried = false;
-    private boolean unlocked = false;
     private int hp = 10;
     private boolean firstBreakDown = true;
 
@@ -62,6 +62,7 @@ public class LockedDoor extends DungeonDoor {
                 state.println("The door is unlocked!");
                 model.getLog().waitForAnimationToFinish();
                 state.unlockDoor(model, direction);
+                SoundEffects.playUnlock();
             } else {
                 state.println("The door remains locked");
             }
