@@ -162,4 +162,8 @@ public class RuinsDungeon implements Serializable {
     public DungeonMap getMap() {
         return map;
     }
+
+    public int getNumberOfLevels() {
+        return levels.size();
+    }
 }

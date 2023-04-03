@@ -27,6 +27,7 @@ public class ExploreRuinsState extends GameState {
         dungeon = new RuinsDungeon();
         currentLevel = 0;
         partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
+        dungeon.getLevel(currentLevel).getRoom(partyPosition).setRevealedOnMap(true);
     }
 
     @Override
@@ -57,8 +58,10 @@ public class ExploreRuinsState extends GameState {
         for (MyPair<DungeonObject, Point> pair : objects) {
             matrix.addElement(pair.second.x, pair.second.y, pair.first);
         }
-        matrix.addElement(3, 7, new ExitDungeonIcon());
-        matrix.addElement(2, 7, new DungeonMapIcon());
+        if (currentLevel < dungeon.getNumberOfLevels() - 1) {
+            matrix.addElement(3, 7, new ExitDungeonIcon());
+            matrix.addElement(2, 7, new DungeonMapIcon());
+        }
     }
 
     public RuinsDungeon getDungeon() {

@@ -19,7 +19,6 @@ public class DungeonMap {
     private static final Sprite[][] MAP_BORDERS = makeBorderSprites();
     private static final Sprite NO_ROOM_SPRITE = MAP_BORDERS[1][1];
     private static final Map<Integer, Sprite> roomIconCache = new HashMap<>();
-    private static final Sprite CORNER = makeMapSprite(0xD3);
 
     private static final int FIXED_Y_OFFSET = 4;
     private static final Sprite PARTY_ICON = new PartyIconSprite();
@@ -55,14 +54,11 @@ public class DungeonMap {
         for (int y = 0; y < rooms[0].length; ++y) {
             drawSpriteAt(model, xOff-1, yOff+y, MAP_BORDERS[0][1]);
             for (int x = 0; x < rooms.length; ++x) {
-                Sprite spriteToDraw = null;
-                if (rooms[x][y] == null) {
-                    spriteToDraw = NO_ROOM_SPRITE;
+                if (rooms[x][y] == null || !rooms[x][y].isRevealedOnMap()) {
+                    drawSpriteAt(model, xOff+x, yOff+y, NO_ROOM_SPRITE);
                 } else {
-                    spriteToDraw = getRoomIconSprite(rooms[x][y].getMapRoomSpriteNumber());
-                }
-                drawSpriteAt(model, xOff+x, yOff+y, spriteToDraw);
-                if (rooms[x][y] != null) {
+                    Sprite spriteToDraw = getRoomIconSprite(rooms[x][y].getMapRoomSpriteNumber());
+                    drawSpriteAt(model, xOff+x, yOff+y, spriteToDraw);
                     int extraIcon = rooms[x][y].getMapExtraIconSpriteNumber();
                     if (extraIcon != 0) {
                         Sprite sp2 = getRoomIconSprite(extraIcon);

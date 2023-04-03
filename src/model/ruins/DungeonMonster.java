@@ -14,6 +14,7 @@ import java.util.Random;
 
 public class DungeonMonster extends CenterDungeonObject {
     private final List<Enemy> enemies;
+    private boolean isSleeping = true;
 
     public DungeonMonster(List<Enemy> enemies) {
         this.enemies = enemies;
@@ -53,6 +54,14 @@ public class DungeonMonster extends CenterDungeonObject {
 
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
+        if (isSleeping) {
+            exploreRuinsState.println("The " + enemies.get(0).getName() + " hasn't notice you.");
+            return;
+        }
+        doCombatWithMonster(model, exploreRuinsState);
+    }
+
+    private void doCombatWithMonster(Model model, ExploreRuinsState exploreRuinsState) {
         exploreRuinsState.print(enemies.get(0).getName() + "s attack you! Press enter to continue.");
         exploreRuinsState.waitForReturn();
         CombatEvent combat = new CombatEvent(model, enemies, new DungeonTheme(), true);
@@ -79,5 +88,10 @@ public class DungeonMonster extends CenterDungeonObject {
     @Override
     public String getDescription() {
         return enemies.get(0).getName();
+    }
+
+    @Override
+    public void doAction(Model model, ExploreRuinsState state) {
+        doCombatWithMonster(model, state);
     }
 }

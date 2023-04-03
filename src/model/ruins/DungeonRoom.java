@@ -1,7 +1,6 @@
 package model.ruins;
 
 import model.Model;
-import model.quests.scenes.TrapSubScene;
 import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -51,6 +50,7 @@ public class DungeonRoom implements Serializable {
     private final int width;
     private final int height;
     private int cardinality;
+    private boolean revealedOnMap = false;
 
     public DungeonRoom(int width, int height) {
         this.otherObjects = new ArrayList<>();
@@ -135,6 +135,7 @@ public class DungeonRoom implements Serializable {
     }
 
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
+        revealedOnMap = true;
         List<DungeonObject> objs = new ArrayList<>();
         objs.addAll(otherObjects);
         for (DungeonObject obj : objs) {
@@ -216,5 +217,13 @@ public class DungeonRoom implements Serializable {
         }
 
         return 0;
+    }
+
+    public boolean isRevealedOnMap() {
+        return revealedOnMap;
+    }
+
+    public void setRevealedOnMap(boolean b) {
+        revealedOnMap = b;
     }
 }
