@@ -3,11 +3,15 @@ package model.ruins;
 import model.Model;
 import model.classes.Skill;
 import model.enemies.*;
+import model.items.potions.Potion;
+import model.items.potions.SleepingPotion;
+import model.items.potions.UnstablePotion;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.Animation;
 import view.sprites.LoopingSprite;
+import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
 import view.subviews.DungeonTheme;
 import view.subviews.StripedTransition;
@@ -21,6 +25,7 @@ public class DungeonMonster extends CenterDungeonObject {
     private static final Sprite SLEEP_ANIMATION = new SleepAnimationSprite();
     private final List<Enemy> enemies;
     private boolean isSleeping = false;
+    private SmokeBallAnimation smoke;
 
     public DungeonMonster(List<Enemy> enemies) {
         this.enemies = enemies;
@@ -81,9 +86,16 @@ public class DungeonMonster extends CenterDungeonObject {
                 }
                 exploreRuinsState.println("The " + enemies.get(0).getName() + " has spotted you!");
             }
+        } else if (canSleep()) {
+            useSleepingPotion(model, exploreRuinsState);
+            return;
         }
         isSleeping = false;
         doCombatWithMonster(model, exploreRuinsState);
+    }
+
+    protected boolean canSleep() {
+        return true;
     }
 
     private void doCombatWithMonster(Model model, ExploreRuinsState exploreRuinsState) {
@@ -114,6 +126,9 @@ public class DungeonMonster extends CenterDungeonObject {
             }
             model.getScreenHandler().register(SLEEP_ANIMATION.getName(), new Point(xPos, yPos), SLEEP_ANIMATION);
         }
+        if (smoke != null && !smoke.isDone()) {
+            model.getScreenHandler().register(smoke.getName(), new Point(xPos, yPos), smoke);
+        }
     }
 
     @Override
@@ -130,6 +145,24 @@ public class DungeonMonster extends CenterDungeonObject {
             }
         }
         doCombatWithMonster(model, state);
+    }
+
+    private void useSleepingPotion(Model model, ExploreRuinsState state) {
+        Potion pot = null;
+        for (Potion p : model.getParty().getInventory().getPotions()) {
+            if (p instanceof SleepingPotion) {
+                pot = p;
+            }
+        }
+        if (pot != null) {
+            state.print("Do you want to throw your sleeping potion to distract the " + enemies.get(0).getName() + "? (Y/N) ");
+            if (state.yesNoInput()) {
+                model.getParty().getInventory().remove(pot);
+                state.println("The " + enemies.get(0).getName() + " has fallen asleep!");
+                isSleeping = true;
+                this.smoke = new SmokeBallAnimation();
+            }
+        }
     }
 
     private static class SleepAnimationSprite extends LoopingSprite {

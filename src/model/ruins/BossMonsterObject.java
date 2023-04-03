@@ -14,8 +14,12 @@ public class BossMonsterObject extends DungeonMonster {
     }
 
     @Override
+    protected boolean canSleep() {
+        return false;
+    }
+
+    @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
-        exploreRuinsState.println("There is a boss here...");
         exploreRuinsState.waitForReturn();
         super.entryTrigger(model, exploreRuinsState);
     }

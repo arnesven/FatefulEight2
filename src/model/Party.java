@@ -11,6 +11,7 @@ import model.items.accessories.GreatHelm;
 import model.items.accessories.HeadGearItem;
 import model.items.potions.HealthPotion;
 import model.items.potions.RevivingElixir;
+import model.items.potions.SleepingPotion;
 import model.items.potions.UnstablePotion;
 import model.items.spells.*;
 import model.map.UrbanLocation;
@@ -54,7 +55,8 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
 
     public Party() {
-        position = new Point(24, 9);  // Inn is at 12,9, castle at 1,3, ruins at 24,9
+        position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3, ruins at 24,9
+        getInventory().addItem(new SleepingPotion());
         cursorSprites = makeCursorSprites();
     }
 

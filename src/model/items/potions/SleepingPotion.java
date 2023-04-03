@@ -3,22 +3,20 @@ package model.items.potions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.enemies.Enemy;
+import model.combat.TimedParalysisCondition;
 import model.items.Item;
 import model.states.CombatEvent;
-import sound.SoundEffects;
 import view.MyColors;
 import view.sprites.ItemSprite;
+import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
 
-public class UnstablePotion extends ThrowablePotion {
+public class SleepingPotion extends ThrowablePotion {
 
-    private static final Sprite SPRITE = new ItemSprite(15, 7, MyColors.WHITE, MyColors.ORANGE);
-    private final int damage;
+    private static final Sprite SPRITE = new ItemSprite(15, 7, MyColors.WHITE, MyColors.LIGHT_RED);
 
-    public UnstablePotion() {
-        super("Unstable Potion", 16);
-        damage = 3;
+    public SleepingPotion() {
+        super("Sleeping Potion", 16);
     }
 
     @Override
@@ -28,12 +26,12 @@ public class UnstablePotion extends ThrowablePotion {
 
     @Override
     public String getShoppingDetails() {
-        return ", Explodes on impact when thrown at an enemy.";
+        return ", a draft that makes you sleepy.";
     }
 
     @Override
     public Item copy() {
-        return new UnstablePotion();
+        return new SleepingPotion();
     }
 
     @Override
@@ -48,9 +46,9 @@ public class UnstablePotion extends ThrowablePotion {
 
     @Override
     public void throwYourself(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        combat.println(target.getName() + " was hit by the " + getName() + ", took " + damage + " damage.");
-        combat.addStrikeEffect(target, damage, true);
-        combat.doDamageToEnemy(target, damage, performer);
-        SoundEffects.playBoom();
+        combat.println(target.getName() + " fell asleep!");
+        target.addCondition(new TimedParalysisCondition());
+        combat.addSpecialEffect(target, new SmokeBallAnimation());
     }
+
 }
