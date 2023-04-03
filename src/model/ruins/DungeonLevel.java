@@ -28,18 +28,30 @@ public class DungeonLevel {
     public DungeonLevel(Random random, boolean firstLevel, int levelSize) {
         this.random = random;
         this.levelSize = levelSize;
-        rooms = new DungeonRoom[levelSize][levelSize];
-        buildRandomLevel(firstLevel);
+        while (true) {
+            rooms = new DungeonRoom[levelSize][levelSize];
+            if (buildRandomLevel(firstLevel)) {
+                break;
+            } else {
+                System.err.println("Unsuccessfully built dungeon level");
+            }
+        }
     }
 
-    protected void buildRandomLevel(boolean firstLevel) {
+    protected boolean buildRandomLevel(boolean firstLevel) {
         makeBasicLevelLayout();
         putInEntryAndExit(firstLevel);
         Set<DungeonRoom> visitedRooms = new HashSet<>();
         visitedRooms.add(rooms[startingPoint.x][startingPoint.y]);
-        depthFirst(startingPoint, descentPoint, visitedRooms);
+        boolean[] foundPath = new boolean[]{false};
+        depthFirst(startingPoint, descentPoint, visitedRooms, foundPath);
+        if (!foundPath[0]) {
+            System.err.println("No path fround from entry to exit!");
+            return false;
+        }
         addChestAndLevers(visitedRooms);
         addMonstersAndTraps(visitedRooms);
+        return true;
     }
 
     public DungeonRoom getRoom(Point position) {
@@ -122,9 +134,10 @@ public class DungeonLevel {
         rooms[descentPoint.x][descentPoint.y].setConnection(0, new StairsDown(new Point(1, 0)));
     }
 
-    private void depthFirst(Point currentPoint, Point descentPoint, Set<DungeonRoom> visitedRooms) {
+    private void depthFirst(Point currentPoint, Point descentPoint, Set<DungeonRoom> visitedRooms, boolean[] foundPath) {
         if (currentPoint.equals(descentPoint)) {
             getRoom(currentPoint).setCardinality(2);
+            foundPath[0] = true;
             return;
         }
         List<Point> dirs = new ArrayList<>(directions);
@@ -142,7 +155,7 @@ public class DungeonLevel {
                     cardinalityCount++;
                     connectDoor(currentPoint.x, currentPoint.y, directionsNames.get(directions.indexOf(dir)), doorType);
                     visitedRooms.add(newRoom);
-                    depthFirst(newPoint, descentPoint, visitedRooms);
+                    depthFirst(newPoint, descentPoint, visitedRooms, foundPath);
                 }
             }
         }

@@ -18,6 +18,7 @@ public class RuinsDungeon implements Serializable {
 
     // x y
     private static final LoopingSprite cursor = new QuestCursorSprite();
+    private final DungeonMap map;
     private boolean drawAvatar = true;
     private boolean drawCursor = true;
 
@@ -30,7 +31,7 @@ public class RuinsDungeon implements Serializable {
         for (; roomsTarget >= 16 ; ++i) {
             int levelSize;
             do {
-                levelSize = 4 + random.nextInt(4);
+                levelSize = 4 + random.nextInt(5);
             } while (roomsTarget < levelSize*levelSize);
             roomsTarget -= levelSize*levelSize;
             levels.add(new DungeonLevel(random, i == 0, levelSize));
@@ -38,6 +39,7 @@ public class RuinsDungeon implements Serializable {
         }
         System.out.println(" Level " + i + " is the final level");
         levels.add(new FinalDungeonLevel(random));
+        this.map = new DungeonMap(this);
     }
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
@@ -155,5 +157,9 @@ public class RuinsDungeon implements Serializable {
 
     public DungeonLevel getLevel(int index) {
         return levels.get(index);
+    }
+
+    public DungeonMap getMap() {
+        return map;
     }
 }

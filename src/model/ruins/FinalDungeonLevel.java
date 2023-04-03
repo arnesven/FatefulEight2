@@ -12,5 +12,5 @@ public class FinalDungeonLevel extends DungeonLevel {
     }
 
     @Override
-    protected void buildRandomLevel(boolean firstLevel) { }
+    protected boolean buildRandomLevel(boolean firstLevel) { return true; }
 }

@@ -81,7 +81,7 @@ public class LockedDoor extends DungeonDoor {
         if (firstBreakDown) {
             firstBreakDown = false;
             state.print("You may try to break down the door. It will consume a character's stamina and there is " +
-                    "a chance your weapon will break. Do wish to try to break down the door? (Y/N)");
+                    "a chance your weapon will break. Do wish to try to break down the door? (Y/N) ");
         } else {
             state.print("Do wish to try to break down the door? (Y/N)");
         }

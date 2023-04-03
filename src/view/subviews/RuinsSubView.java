@@ -24,6 +24,9 @@ public class RuinsSubView extends AvatarSubView {
                 "Level " + (state.getCurrentLevel()+1) + ", Room " + (state.getPartyPosition().x+1) + "-" + (state.getPartyPosition().y+1),
                 X_OFFSET + 2, Y_OFFSET + 2, MyColors.WHITE);
         state.getDungeon().drawYourself(model, state.getPartyPosition(), state.getCurrentLevel(), matrix);
+        if (state.isMapView()) {
+            state.getDungeon().getMap().drawYourself(model, state.getPartyPosition(), state.getCurrentLevel());
+        }
     }
 
     @Override
@@ -41,6 +44,10 @@ public class RuinsSubView extends AvatarSubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-       return matrix.handleKeyEvent(keyEvent);
+        if (state.isMapView()) {
+            state.setMapView(false);
+            return true;
+        }
+        return matrix.handleKeyEvent(keyEvent);
     }
 }

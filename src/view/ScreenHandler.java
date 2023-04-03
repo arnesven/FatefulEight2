@@ -23,17 +23,11 @@ public class ScreenHandler {
     }
 
     public synchronized void drawBackground(Graphics g) {
-        Map<Point, Sprite> toDrawLater = new HashMap<>();
-        for (Point key : backgroundSprites.keySet()) {
-            Sprite sprite = backgroundSprites.get(key);
-            if (sprite.getWidth() == 8) {
-                toDrawLater.put(key, sprite);
-            }
-            draw(g, key,sprite, 0, 0);
-        }
-        for (Point key : toDrawLater.keySet()) {
-            Sprite sprite = toDrawLater.get(key);
-            draw(g, key,sprite, 0, 0);
+        List<Map.Entry<Point, Sprite>> toDraw = new ArrayList<>();
+        toDraw.addAll(backgroundSprites.entrySet());
+        Collections.sort(toDraw, (e1, e2) -> e2.getValue().getWidth() - e1.getValue().getWidth());
+        for (Map.Entry<Point, Sprite> entry : toDraw) {
+            draw(g, entry.getKey(), entry.getValue(), 0, 0);
         }
     }
 

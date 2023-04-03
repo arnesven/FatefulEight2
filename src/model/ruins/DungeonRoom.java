@@ -1,6 +1,7 @@
 package model.ruins;
 
 import model.Model;
+import model.quests.scenes.TrapSubScene;
 import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -161,5 +162,59 @@ public class DungeonRoom implements Serializable {
 
     public void removeObject(DungeonObject dungeonMonster) {
         otherObjects.remove(dungeonMonster);
+    }
+
+    public int getMapRoomSpriteNumber() {
+        int firstConnection = firstMissingConnection(true);
+        int firstMissing = firstMissingConnection(false);
+        switch (cardinality) {
+            case 0:
+                return 0xF0;
+            case 1:
+                return 0xC3 + firstConnection;
+            case 2:
+                if (connections[(firstConnection + 2) % 4] != null) {
+                    return 0xD7 + firstConnection;
+                } else {
+                    if (connections[(firstConnection + 1)] != null) {
+                        return 0xD3 + firstConnection;
+                    } else {
+                        return 0xD6;
+                    }
+                }
+            case 3:
+                return 0xE3 + firstMissing;
+        }
+        // cardinality == 4
+        return 0xE7;
+    }
+
+    private int firstMissingConnection(boolean negate) {
+        for (int i = 0; i < connections.length; ++i) {
+            if ((connections[i] == null) == !negate) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getMapExtraIconSpriteNumber() {
+        if (connections[0] instanceof StairsUp) {
+            return 0xF3;
+        }
+        if (connections[0] instanceof StairsDown) {
+            return 0xF4;
+        }
+        for (DungeonObject objs : otherObjects) {
+            if (objs instanceof LeverObject) {
+                return 0xF5;
+            } else if (objs instanceof DungeonTrap) {
+                return 0xF6;
+            } else if (objs instanceof DungeonMonster) {
+                return 0xF7;
+            }
+        }
+
+        return 0;
     }
 }

@@ -20,6 +20,7 @@ public class ExploreRuinsState extends GameState {
     private SteppingMatrix<DungeonObject> matrix = new SteppingMatrix<>(8, 8);
     private RuinsSubView subView;
     private boolean dungeonExited = false;
+    private boolean mapView = false;
 
     public ExploreRuinsState(Model model) {
         super(model);
@@ -57,6 +58,7 @@ public class ExploreRuinsState extends GameState {
             matrix.addElement(pair.second.x, pair.second.y, pair.first);
         }
         matrix.addElement(3, 7, new ExitDungeonIcon());
+        matrix.addElement(2, 7, new DungeonMapIcon());
     }
 
     public RuinsDungeon getDungeon() {
@@ -177,5 +179,15 @@ public class ExploreRuinsState extends GameState {
 
     public boolean isDungeonExited() {
         return dungeonExited;
+    }
+
+    public void setMapView(boolean b) {
+        dungeon.setAvatarEnabled(!b);
+        dungeon.setCursorEnabled(!b);
+        this.mapView = b;
+    }
+
+    public boolean isMapView() {
+        return this.mapView;
     }
 }
