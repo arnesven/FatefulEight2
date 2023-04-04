@@ -23,6 +23,7 @@ public class ThiefEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showSilhouettePortrait(model, "Stranger");
         if (withIntro) {
             println("A stranger comes up to you and asks for directions.");
         }

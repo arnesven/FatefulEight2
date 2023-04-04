@@ -11,10 +11,13 @@ import view.BorderFrame;
 import view.MyColors;
 import view.party.CharacterCreationView;
 import view.sprites.CalloutSprite;
+import view.sprites.Sprite;
 
 import java.awt.*;
 
 public class PortraitSubView extends SubView {
+    public static final int SILHOUETTE = 0;
+    private static final Sprite SILHOUETTE_SPRITE = new SilhouetteSprite();
     private final SubView previous;
     private final AdvancedAppearance appearance;
     private final String portraitName;
@@ -42,6 +45,12 @@ public class PortraitSubView extends SubView {
         appearance.setClass(cls);
     }
 
+    public PortraitSubView(SubView subView, int silhouette, String portraitName) {
+        this.previous = subView;
+        appearance = null;
+        this.portraitName = portraitName;
+    }
+
     private boolean isBeardyMouth(int mouthIndex) {
         return mouthIndex == 4 || mouthIndex == 5;
     }
@@ -51,7 +60,11 @@ public class PortraitSubView extends SubView {
         previous.drawArea(model);
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET+7, Y_OFFSET+7,
                 16, 12, MyColors.BLACK, MyColors.WHITE, MyColors.BLACK, true);
-        appearance.drawYourself(model.getScreenHandler(), X_OFFSET+12, Y_OFFSET+9);
+        if (appearance != null) {
+            appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
+        } else {
+            model.getScreenHandler().put(X_OFFSET + 12, Y_OFFSET + 9, SILHOUETTE_SPRITE);
+        }
         BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET+17, MyColors.WHITE, MyColors.BLACK);
         if (callout != null) {
             model.getScreenHandler().register(callout.getName()+"portrait", new Point(40, 12), callout);
@@ -80,5 +93,18 @@ public class PortraitSubView extends SubView {
         state.println(portraitName + ": \"" + line + "\"");
         int num = CalloutSprite.getSpriteNumForText(line);
         callout = new CalloutSprite(num);
+    }
+
+    public boolean getPortraitGender() {
+        return appearance.isFemale();
+    }
+
+    private static class SilhouetteSprite extends Sprite {
+        public SilhouetteSprite() {
+            super("silhouette", "silhouette.png", 0, 0, 56, 56);
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.GRAY);
+            setColor3(MyColors.GRAY);
+        }
     }
 }

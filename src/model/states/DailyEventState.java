@@ -192,6 +192,11 @@ public abstract class DailyEventState extends GameState {
         model.setSubView(portraitSubView);
     }
 
+    protected void showSilhouettePortrait(Model model, String name) {
+        portraitSubView = new PortraitSubView(model.getSubView(), PortraitSubView.SILHOUETTE, name);
+        model.setSubView(portraitSubView);
+    }
+
     protected void removePortraitSubView(Model model) {
         model.setSubView(portraitSubView.getPreviousSubView());
         portraitSubView = null;
@@ -199,5 +204,9 @@ public abstract class DailyEventState extends GameState {
 
     protected void portraitSay(Model model, String line) {
         portraitSubView.portraitSay(model, this, line);
+    }
+
+    protected boolean getPortraitGender() {
+        return portraitSubView.getPortraitGender();
     }
 }

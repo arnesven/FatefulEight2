@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.SoldierEnemy;
@@ -20,6 +21,7 @@ public class CompanyEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.CAP, "Company of Soldiers");
         println("The party encounters a large company of soldiers. They " +
                 "seem friendly and so you decide to share your " +
                 "evening with them. The company has an abundance of " +

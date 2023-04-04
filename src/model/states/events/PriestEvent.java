@@ -21,6 +21,7 @@ public class PriestEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.PRI, "Priest");
         if (withIntro) {
             print("The party meets a priest who ");
         } else {

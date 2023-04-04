@@ -30,22 +30,29 @@ public class ArtisanEvent extends DailyEventState {
         print("This particular artisan is a");
         int roll = MyRandom.rollD10();
         List<Item> itemList = new ArrayList<>();
+        String subType = "";
         if (roll <= 2) {
+            subType = "Tailor";
             println(" tailor and offers to sell you some apparel at a discount.");
             itemList.add(model.getItemDeck().getRandomApparel());
         } else if (roll <= 4) {
+            subType = "Smith";
             println(" smith and offers to sell you a weapon at a discount.");
             itemList.add(model.getItemDeck().getRandomWeapon());
         } else if (roll <= 6) {
+            subType = "Jeweller";
             println(" a jeweller and offers to sell you an accessory at a discount.");
             itemList.add(model.getItemDeck().getRandomJewelry());
         } else if (roll <= 8) {
+            subType = "Cobbler";
             println(" a cobbler and offers to sell you a pair of shoes at a discount.");
             itemList.add(model.getItemDeck().getRandomShoes());
         } else if (roll <= 10) {
+            subType = "Enchanter";
             println(" an enchanter and offers to sell you a wand at a discount.");
             itemList.add(model.getItemDeck().getRandomWand());
         }
+        showRandomPortrait(model, Classes.ART, subType);
         ShopState shop = new ShopState(model, "artisan", itemList,
                 new int[]{itemList.get(0).getCost()/2});
         shop.setSellingEnabled(false);

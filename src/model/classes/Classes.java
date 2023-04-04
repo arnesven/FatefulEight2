@@ -30,4 +30,5 @@ public interface Classes {
     CharacterClass MAGE = new MageNPCClass();
     CharacterClass FARMER = new FarmerNPCClass();
     CharacterClass MERCHANT = new MerchantNPCClass();
+    CharacterClass BANDIT = new BanditNPCClass();
 }
