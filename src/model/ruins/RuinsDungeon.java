@@ -21,6 +21,7 @@ public class RuinsDungeon implements Serializable {
     private final DungeonMap map;
     private boolean drawAvatar = true;
     private boolean drawCursor = true;
+    private boolean completed = false;
 
     private Random random = new Random();
 
@@ -165,5 +166,13 @@ public class RuinsDungeon implements Serializable {
 
     public int getNumberOfLevels() {
         return levels.size();
+    }
+
+    public void setCompleted(boolean b) {
+        completed = b;
+    }
+
+    public boolean isCompleted() {
+        return completed;
     }
 }

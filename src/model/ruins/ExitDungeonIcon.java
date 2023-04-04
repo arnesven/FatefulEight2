@@ -22,7 +22,7 @@ public class ExitDungeonIcon extends DungeonObject {
 
     @Override
     public String getDescription() {
-        return "Backtrack and exit ruins.";
+        return "Backtrack and exit dungeon.";
     }
 
     @Override

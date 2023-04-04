@@ -12,7 +12,7 @@ public class DungeonExit extends StairsUp {
 
     @Override
     public String getDescription() {
-        return "Exit ruins";
+        return "Exit dungeon";
     }
 
     @Override

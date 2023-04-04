@@ -16,6 +16,7 @@ import java.util.List;
 
 public class ExploreRuinsState extends GameState {
 
+    private final String dungeonType;
     private RuinsDungeon dungeon;
     private int currentLevel = 0;
     private Point partyPosition;
@@ -24,12 +25,13 @@ public class ExploreRuinsState extends GameState {
     private boolean dungeonExited = false;
     private boolean mapView = false;
 
-    public ExploreRuinsState(Model model, String ruinsName) {
+    public ExploreRuinsState(Model model, String ruinsName, String dungeonType) {
         super(model);
         dungeon = model.getDungeon(ruinsName);
         currentLevel = 0;
         partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
         dungeon.getLevel(currentLevel).getRoom(partyPosition).setRevealedOnMap(true);
+        this.dungeonType = dungeonType;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class ExploreRuinsState extends GameState {
 
     private void doStuff(Model model) {
         populateMatrix();
-        subView = new RuinsSubView(this, matrix);
+        subView = new RuinsSubView(this, matrix, dungeonType);
         CollapsingTransition.transition(model, subView);
 
         do {

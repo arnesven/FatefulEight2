@@ -34,6 +34,7 @@ public class BossRoom extends DungeonRoom {
             exploreRuinsState.println("Congratulations! You have vanquished the boss of this ruin. The party gains 1 reputation.");
             model.getParty().addToReputation(1);
             exploreRuinsState.setDungeonExited(true);
+            exploreRuinsState.getDungeon().setCompleted(true);
         }
     }
 

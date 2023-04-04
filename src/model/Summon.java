@@ -1,6 +1,8 @@
 package model;
 
+import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.tasks.CastleDungeonTask;
 import model.tasks.GiveStaffTask;
 import model.tasks.MissingGlassesTask;
 import model.tasks.SummonTask;
@@ -30,6 +32,10 @@ public class Summon implements Serializable {
 
 
     public SummonTask getTask(Model model, UrbanLocation location) {
+        if (location instanceof CastleLocation) {
+            return new CastleDungeonTask(this, model, location);
+        }
+
         List<SummonTask> allTasks = makeAllTasks(this, model, location);
         if (usedTasks.size() == allTasks.size()) {
             throw new IllegalStateException("All tasks used up!");

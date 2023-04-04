@@ -12,10 +12,12 @@ import java.awt.event.KeyEvent;
 public class RuinsSubView extends AvatarSubView {
     private final ExploreRuinsState state;
     private final SteppingMatrix<DungeonObject> matrix;
+    private final String dungeonType;
 
-    public RuinsSubView(ExploreRuinsState exploreRuinsState, SteppingMatrix<DungeonObject> matrix) {
+    public RuinsSubView(ExploreRuinsState exploreRuinsState, SteppingMatrix<DungeonObject> matrix, String dungeonType) {
         this.state = exploreRuinsState;
         this.matrix = matrix;
+        this.dungeonType = dungeonType;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class RuinsSubView extends AvatarSubView {
 
     @Override
     protected String getTitleText(Model model) {
-        return "RUINS";
+        return dungeonType.toUpperCase();
     }
 
     @Override
