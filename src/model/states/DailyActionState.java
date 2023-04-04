@@ -22,7 +22,7 @@ public class DailyActionState extends GameState {
     }
 
     public GameState run(Model model) {
-        if (!model.getCurrentHex().hasLodging() && model.getParty().isOnRoad()) {
+        if (!model.getCurrentHex().hasLodging() && model.getParty().isOnRoad() && !model.getCurrentHex().inhibitOnRoadSubview()) {
             model.setSubView(OnTheRoadSubView.instance);
             menuPos = new Point(SubView.X_OFFSET, SubView.Y_OFFSET);
             menuAnchor = DailyActionMenu.NORTH_WEST;

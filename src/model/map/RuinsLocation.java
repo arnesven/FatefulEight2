@@ -70,4 +70,9 @@ public class RuinsLocation extends HexLocation {
     public List<DailyAction> getDailyActions(Model model) {
         return List.of(new ExploreRuinsDailyAction(model));
     }
+
+    @Override
+    public boolean inhibitOnRoadSubview() {
+        return true;
+    }
 }

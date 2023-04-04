@@ -324,4 +324,11 @@ public abstract class WorldHex implements Serializable {
         }
         return DailyActionMenu.UPPER_LEFT_CORNER;
     }
+
+    public boolean inhibitOnRoadSubview() {
+        if (hexLocation != null) {
+            return hexLocation.inhibitOnRoadSubview();
+        }
+        return false;
+    }
 }

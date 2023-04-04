@@ -108,4 +108,8 @@ public abstract class HexLocation implements Serializable {
     }
 
     public MyPair<Point, Integer> getDailyActionMenuAnchor() { return null; }
+
+    public boolean inhibitOnRoadSubview() {
+        return false;
+    }
 }
