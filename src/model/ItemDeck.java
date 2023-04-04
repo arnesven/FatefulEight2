@@ -130,7 +130,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<Spell> allSpells() {
         return List.of(
-                // new DispellSpell(),
+                new DispellSpell(),
                 new LevitateSpell(),
                 new MindControlSpell(),
                 new ConjurePhantasmSpell(),

@@ -1,14 +1,20 @@
 package model.quests;
 
+import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.AutomatonEnemy;
 import model.enemies.OrcWarrior;
 import model.enemies.RedMageEnemy;
 import model.enemies.WarlockEnemy;
+import model.items.spells.DispellSpell;
+import model.items.spells.LevitateSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -83,6 +89,13 @@ public class WizardsTowerQuest extends Quest {
                 new QuestEdge(scenes.get(1).get(0)),
                 new QuestEdge(scenes.get(1).get(1))),
                 "What's that? Some kind of metal beast?");
+        start.addSpellCallback(new LevitateSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println(caster.getFirstName() + " levitates the party through the tower window!");
+                return new QuestEdge(qd1);
+            }
+        });
         QuestDecisionPoint qd2 = new QuestDecisionPoint(4, 4, List.of(
                 new QuestEdge(scenes.get(2).get(0)),
                 new QuestEdge(scenes.get(2).get(1))),
@@ -92,6 +105,13 @@ public class WizardsTowerQuest extends Quest {
                 new QuestEdge(scenes.get(3).get(1), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(3).get(2))),
                 "Okay Rostomel. Time to pay up.");
+        qd2.addSpellCallback(new DispellSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println(caster.getFirstName() + " dispells the illusion!");
+                return new QuestEdge(qd3);
+            }
+        });
         SimpleJunction sj = new SimpleJunction(7, 2, new QuestEdge(getSuccessEndingNode(), QuestEdge.VERTICAL));
         return List.of(start, qd1, qd2, qd3, sj);
     }

@@ -1,14 +1,18 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.BanditEnemy;
 import model.enemies.BearEnemy;
 import model.enemies.Enemy;
+import model.items.spells.HarmonizeSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -82,6 +86,15 @@ public class MissingBrotherQuest extends Quest {
                         new QuestEdge(scenes.get(3).get(1)),
                         new QuestEdge(scenes.get(3).get(2))),
                 "Ghania's brother is being held in the bandit camp!");
+
+        qd1.addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println(caster.getName() + " pacifies the beast with the Harmonize spell.");
+                return new QuestEdge(scenes.get(2).get(0));
+            }
+        });
+
 
         return List.of(start, qd1, sj, qd3);
     }
