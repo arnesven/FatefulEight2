@@ -31,10 +31,6 @@ public class CreatureComfortsSpell extends ImmediateSpell {
             state.println("You have already cast " + getName() + " today.");
             return false;
         }
-        if (caster.getHP() <= getHPCost()) {
-            state.println(caster.getName() + " is too exhausted to cast " + getName() + "!");
-            return false;
-        }
         return true;
     }
 

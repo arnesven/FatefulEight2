@@ -50,7 +50,7 @@ public class HealingWordSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "A soothing incantation which restores HP of a character.";
+        return "A soothing incantation which restores 4 HP of a character.";
     }
 
     private static class ShinyRingEffect extends RunOnceAnimationSprite {
