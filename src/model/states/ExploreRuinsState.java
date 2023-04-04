@@ -36,7 +36,7 @@ public class ExploreRuinsState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        model.getParty().getInventory().add(new SleepingPotion());
+        model.getTutorial().dungeons(model);
         doStuff(model);
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);

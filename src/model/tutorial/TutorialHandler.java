@@ -151,6 +151,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void dungeons(Model model) {
+        runOnce("dungeons", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialDungeons(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

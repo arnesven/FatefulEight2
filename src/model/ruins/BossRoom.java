@@ -20,6 +20,10 @@ public class BossRoom extends DungeonRoom {
 
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
+        if (exploreRuinsState.getDungeon().isCompleted()) {
+            model.getParty().randomPartyMemberSay(model, List.of("Why did we come back here?"));
+            return;
+        }
         this.relPos = new Point(2, 1);
         exploreRuinsState.moveCharacterToCenterAnimation(model, relPos);
         model.getParty().partyMemberSay(model, model.getParty().getLeader(),
