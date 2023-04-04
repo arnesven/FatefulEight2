@@ -22,6 +22,7 @@ public class SmithEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
+        showRandomPortrait(model, Classes.ART, "Smith");
         println("The smith stands in the heat from the furnace. " + heOrSheCap(gender) + " is banging with a mallet on an " +
                 "anvil. She offers you a unique item.");
         waitForReturn();

@@ -12,6 +12,7 @@ public class ArcherEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.MAR, "Archer");
         println("Out on the grounds, a skilled archer puts arrow after " +
                 "arrow right in the bullseye. He gladly gives all who will " +
                 "listen a free lesson in marksmanship.");

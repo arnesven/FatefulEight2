@@ -18,6 +18,7 @@ public class MinerEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.MIN, "Miner");
         if (withIntro) {
             print("The party encounters a miner. ");
         }

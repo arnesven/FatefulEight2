@@ -26,6 +26,7 @@ public class WoundedAdventurerEvent extends DailyEventState {
         list.get(0).setRandomStartingClass();
         list.get(0).setEquipment(new Equipment(model.getItemDeck().getRandomWeapon(), model.getItemDeck().getRandomApparel(), null));
 
+        showSilhouettePortrait(model, "Wounded Adventurer");
         println("The party finds an adventurer sitting on the ground. " +
                 "With one hand on " + hisOrHer(gender) + " abdomen and the other clutching " +
                 "a weapon, it is clear that something gruesome transpired " +

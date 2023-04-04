@@ -11,6 +11,7 @@ public class StoneCircleEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.DRU, "Druid");
         print("In a wide field, the party encounters a ring of standing " +
                 "stones. In the middle lay one large slab which seems to be " +
                 "intended as an altar. A druid is there with a gathering of " +

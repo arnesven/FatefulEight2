@@ -15,6 +15,7 @@ public class WitchHutEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.WIT, "Witch");
         println("A small hut in a dank grove. Light emanates from " +
                 "the window. Inside a witch is stirring a cauldron and " +
                 "mumbling strange rhymes.");

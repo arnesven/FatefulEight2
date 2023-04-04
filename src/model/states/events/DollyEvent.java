@@ -18,6 +18,7 @@ public class DollyEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         boolean childGender = MyRandom.randInt(2) == 0;
+        showSilhouettePortrait(model, "Crying Child");
         println("You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
                 "The child seems to be in some kind of distress. Apparently " + heOrShe(childGender) +
                 " has lost " + hisOrHer(childGender) + " dolly.");

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.states.DailyEventState;
 
@@ -16,6 +17,7 @@ public class PlowingFieldsEvent extends FieldsLaborEvent {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.FARMER, "Farmer");
         println("A farmer needs some help plowing his fields. Any help is much appreciated.");
         boolean succ = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 6);
         if (succ) {

@@ -16,6 +16,7 @@ public class SorcerersTowerEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.SOR, "Sorcerer");
         println("A tall stone structure stands silently in front of the party. " +
                 "Within is a sorcerer who only accepts persons who are " +
                 "acquainted with magic.");

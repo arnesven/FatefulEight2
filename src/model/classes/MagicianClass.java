@@ -28,17 +28,17 @@ public class MagicianClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_PURPLE, MyColors.DARK_RED);
-        putOnTopHat(characterAppearance);
+        putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_PURPLE);
     }
 
-    private static void putOnTopHat(CharacterAppearance characterAppearance) {
+    public static void putOnTopHat(CharacterAppearance characterAppearance, MyColors color1, MyColors color2) {
         for (int y = 0; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
-                characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x62 + 0x10 * y + x, MyColors.DARK_GRAY, MyColors.DARK_PURPLE  ));
+                characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x62 + 0x10 * y + x, color1, color2  ));
             }
         }
-        characterAppearance.setSprite(1, 2, new ClothesSpriteWithBack(0x83, MyColors.DARK_GRAY, MyColors.DARK_PURPLE  ));
-        characterAppearance.setSprite(5, 2, new ClothesSpriteWithBack(0x87, MyColors.DARK_GRAY, MyColors.DARK_PURPLE  ));
+        characterAppearance.setSprite(1, 2, new ClothesSpriteWithBack(0x83, color1, color2  ));
+        characterAppearance.setSprite(5, 2, new ClothesSpriteWithBack(0x87, color1, color2  ));
     }
 
     @Override

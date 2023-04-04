@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.states.DailyEventState;
 
@@ -27,8 +28,9 @@ public class LoveLetterEvent extends DailyEventState {
         if (yesNoInput()) {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 10 - rollBonus);
             if (result) {
+                showRandomPortrait(model, Classes.ART, "Doug");
                 println("You finally find a carpenter named Doug who admits to writing the letter.");
-                println("Doug: \"I must have dropped it while returning from the market this morning!\"");
+                portraitSay(model, "I must have dropped it while returning from the market this morning!");
                 int reward = 15 - rollBonus * 4;
                 if (rollBonus != 0) {
                     println("Doug is visibly annoyed that you have opened the letter and read " +
@@ -45,10 +47,11 @@ public class LoveLetterEvent extends DailyEventState {
         } else {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 8);
             if (result) {
+                showRandomPortrait(model, Classes.NOB, "Maggie");
                 println("You finally find a nobleman's daughter named Maggie. She isn't expecting a letter but " +
                         "after reading it she turns bright pink and admits to being the intended recipient.");
-                println("Maggie: \"Please let me reward you. If not for you, I would have never received this and my poor " +
-                        "paramour would believe that I snubbed him.\"");
+                portraitSay(model, "Please let me reward you. If not for you, I would have never received this and my poor " +
+                        "paramour would believe that I snubbed him.");
                 int reward = 10;
                 println("The party gains " + reward + " gold.");
                 model.getParty().addToGold(reward);

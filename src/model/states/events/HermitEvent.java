@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.enemies.HermitEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -16,6 +17,7 @@ public class HermitEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.None, "Hermit");
         println("The party encounters an old man. He has a long beard, and his clothes are nothing " +
                 "but shreds. He must have lived out here in the wilderness " +
                 "for a long, long time. He seems tight lipped about his life " +

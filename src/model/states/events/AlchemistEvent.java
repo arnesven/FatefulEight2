@@ -1,9 +1,11 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Item;
 import model.items.potions.Potion;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyPair;
@@ -18,26 +20,27 @@ public class AlchemistEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.ALCHEMIST, Race.HALF_ORC, "Durok");
         println("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Opening up a new shop?");
-        println("Durok: \"Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.\"");
+       portraitSay(model, "Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.\"");
         model.getParty().randomPartyMemberSay(model, List.of("Can we see your wares?"));
-        println("Durok: \"Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
-                "chore that needs doing. Would you spread the word about my new shop?\"");
-        print("Will you Help Durok? (Y/N) ");
+       portraitSay(model, "Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
+                "chore that needs doing. Would you spread the word about my new shop?");
+        print("Will you help Durok? (Y/N) ");
         if (yesNoInput()) {
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Entertain, 8);
             if (success) {
                 println("You go to the town square and start chanting about Durok's new business. You even manage to " +
                         "make up a little song. Before long, a few townsfolk gather around, amused and intrigued. " +
                         "You keep it up for a few hours. Afterwards, you return to Durok's shop.");
-                println("Durok: \"There you are! I've had many customers since you left. Whatever you did, it worked. " +
-                        "Please permit me to reward you!\"");
+               portraitSay(model, "There you are! I've had many customers since you left. Whatever you did, it worked. " +
+                        "Please permit me to reward you!");
                 Potion potion = model.getItemDeck().getRandomPotion();
                 println("The party gains a " + potion.getName() + ".");
                 model.getParty().getInventory().add(potion);
-                println("Durok: \"I have lots of other potions, if you're interested. I'll give you a discount!\"");
+               portraitSay(model, "I have lots of other potions, if you're interested. I'll give you a discount!");
                 waitForReturn();
                 alchemistShop(model, true);
             } else {
@@ -49,10 +52,10 @@ public class AlchemistEvent extends DailyEventState {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "I'm sure Durok's business will take off once people get to know him.");
                 println("You return to Durok's shop, which is quite.");
-                println("Durok \"Oh, hello. Nice to see somebody in here. I wonder if people don't understand what" +
-                        "an apothecary is?\"");
+                portraitSay(model, "Oh, hello. Nice to see somebody in here. I wonder if people don't understand what" +
+                        "an apothecary is?");
                 model.getParty().randomPartyMemberSay(model, List.of("They're probably just shy..."));
-                println("Durok: \"Well, I have lots of potions for sale. Are you interested?\"");
+                portraitSay(model, "Well, I have lots of potions for sale. Are you interested?");
                 waitForReturn();
                 alchemistShop(model, false);
             }

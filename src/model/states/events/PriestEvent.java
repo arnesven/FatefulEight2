@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
+import model.races.Race;
 import model.states.DailyEventState;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class PriestEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.PRI, "Priest");
         if (withIntro) {
+            showRandomPortrait(model, Classes.PRI, Race.ALL, "Priest");
             print("The party meets a priest who ");
         } else {
             print("The priest ");

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.combat.TownCombatTheme;
 import model.enemies.MuggerEnemy;
 import model.states.DailyEventState;
@@ -15,6 +16,7 @@ public class MuggingEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.BANDIT, "Muggers");
         println("Two scruffy men approach the party as you cut through" +
                 " an alley.");
         println("Thug: \"Okay kid, hand it over!\"");

@@ -12,6 +12,7 @@ public class CaptainEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.CAP, "Master-at-arms");
         println("The party meets the master-at-arms of the castle. He seems to be in a good mood and happily shows " +
                 "you a few tricks with sword, spear and axe.");
         println("Each party member gains 10 experience.");

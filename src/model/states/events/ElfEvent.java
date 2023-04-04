@@ -6,6 +6,7 @@ import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.SwordsmanEnemy;
 import model.races.Race;
+import model.races.WoodElf;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -34,8 +35,10 @@ public class ElfEvent extends DailyEventState {
         print("dark elf. This particular elf is a");
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
+            showRandomPortrait(model, Classes.SPY, Race.DARK_ELF, "Agent");
             changeClass(model, Classes.SPY, "n agent of a powerful organization. He offers to train you in the ways of spycraft, ");
         } else if (dieRoll <= 6) {
+            showRandomPortrait(model, Classes.CAP, Race.DARK_ELF, "Swordsman");
             print(" swordsman who brags about his exploits and the gold he has made. Do you wish to challenge the swordsman? ");
             if (yesNoInput()) {
                 List<Enemy> list = new ArrayList<>();
@@ -43,10 +46,12 @@ public class ElfEvent extends DailyEventState {
                 runCombat(list);
             }
         } else if (dieRoll <= 9) {
+            showRandomPortrait(model, Classes.MAGE, Race.DARK_ELF, "Mage");
             print(" mage who offers to sell you a spell for 15 gold. Do you accept? ");
             if (yesNoInput()) {
                 // TODO: Buy a spell
                 println("You buy a spell from the dark elf mage.");
+                new MageEvent(model, false).doEvent(model);
             }
         } else {
             adventurerWhoMayJoin(model, Race.DARK_ELF);
@@ -57,16 +62,19 @@ public class ElfEvent extends DailyEventState {
         print("wood elf. This particular elf is a");
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
+            showRandomPortrait(model, Classes.MAR, Race.WOOD_ELF, "Archer");
             changeClass(model, Classes.MAR,
                     " skilled archer who shows the party a few tri with her a bow. He offers to train you in the ways of marksmanship, ");
         } else if (dieRoll <= 6) {
+            showRandomPortrait(model, Classes.MERCHANT, Race.WOOD_ELF, "Merchant");
             print(" merchant. Do you wish to trade with her? ");
             if (yesNoInput()) {
                 MerchantEvent me = new MerchantEvent(model, false);
                 me.doEvent(model);
             }
         } else if (dieRoll <= 9) {
-            println(" thief."); // TODO: Implement Thief event.
+            println(" stranger, asking for directions.");
+            new ThiefEvent(model).doEvent(model);
         } else {
             adventurerWhoMayJoin(model, Race.WOOD_ELF);
         }
@@ -77,12 +85,15 @@ public class ElfEvent extends DailyEventState {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
             println(" priest.");
+            showRandomPortrait(model, Classes.PRI, "Priest");
             new PriestEvent(model, false).doEvent(model);
         } else if (dieRoll <= 6) {
             println(" courier.");
-            new CourierEvent(model, false).doEvent(model);
+            CourierEvent courier = new CourierEvent(model, false);
+            courier.setRace(Race.HIGH_ELF);
+            courier.doEvent(model);
         } else if (dieRoll <= 9) {
-            println(" a paladin."); // TODO: Implement Palading event.
+            println(" a paladin."); // TODO: Implement Paladin event.
         } else {
             adventurerWhoMayJoin(model, Race.HIGH_ELF);
         }

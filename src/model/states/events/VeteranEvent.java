@@ -18,6 +18,7 @@ public class VeteranEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.None, "Veteran");
         if (withIntro) {
             print("The party passes an old tattered hut. Inside sits a venerable figure, who claims to be a veteran of the wars of old. ");
         }

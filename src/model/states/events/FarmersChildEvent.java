@@ -19,6 +19,7 @@ public class FarmersChildEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.FARMER, "Farmer");
         boolean gender = MyRandom.randInt(2) == 0;
         print("You encounter a farmer who's begging you to take his teenage " +
                 (gender?"daughter":"son") + " as an apprentice adventurer. The kid seems" +

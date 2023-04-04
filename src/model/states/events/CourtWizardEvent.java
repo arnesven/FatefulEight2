@@ -17,9 +17,10 @@ public class CourtWizardEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.WIZ, "Court Wizard");
         println("The court wizard has a few spells for sale.");
-        println("Court Wizard: \"I'm sorry if my prices aren't competitive. I don't have time to " +
-                "check the market value of spell books.\"");
+        portraitSay(model, "I'm sorry if my prices aren't competitive. I don't have time to " +
+                "check the market value of spell books.");
         List<Item> items = new ArrayList<>();
         items.add(model.getItemDeck().getRandomWand());
         items.add(model.getItemDeck().getRandomPotion());

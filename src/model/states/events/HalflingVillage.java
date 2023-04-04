@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
@@ -31,7 +32,8 @@ public class HalflingVillage extends DailyEventState {
         }
         print("The party stumbles upon a little miniature village. ");
         println("The halflings quickly race for their dwellings and promptly shut their doors and windows.");
-        println("Halfling Woman: \"Go away, we don't want any big-people trouble here!\"");
+        showRandomPortrait(model, Classes.None, Race.HALFLING, "Halfling Woman");
+        portraitSay(model, "Go away, we don't want any big-people trouble here!");
         model.getParty().randomPartyMemberSay(model, List.of("How rude."));
     }
 

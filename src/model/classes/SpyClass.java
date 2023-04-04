@@ -31,7 +31,7 @@ public class SpyClass extends CharacterClass {
         putOnFakeMustache(characterAppearance);
     }
 
-    private void putOnFakeMustache(CharacterAppearance characterAppearance) {
+    public static void putOnFakeMustache(CharacterAppearance characterAppearance) {
         for (int i = 0; i < 3; ++i) {
             Sprite8x8 mush = new Sprite8x8("mush" + i, "face.png", 0xDD+i);
             mush.setColor1(MyColors.BLACK);

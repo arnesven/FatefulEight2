@@ -22,19 +22,20 @@ public class BlackKnightEvent extends RiverEvent {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.BKN, "Black Knight");
         println("A narrow bridge spans the width of the river. Upon it, " +
                 "a knight in black armor stands guard.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Um, excuse us. Can we cross the bridge?"));
-        println("Black knight: \"None shall pass.\"");
+        portraitSay(model, "None shall pass.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Come again?"));
-        println("Black knight: \"None shall pass!\"");
+        portraitSay(model, "None shall pass!");
         model.getParty().randomPartyMemberSay(model, List.of("I think we're going to have to fight him if we want to cross here."));
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
             runCombat(List.of(new BlackKnightEnemy('A')));
             CollapsingTransition.transition(model, RiverEvent.subView);
             if (!super.haveFledCombat()) {
-                println("Black knight: \"You have proven a worthy adversary.\"");
+                portraitSay(model, "You have proven a worthy adversary.");
                 println("The black knight offers to instruct you in his martial ways, ");
                 ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.BKN);
                 changeClassEvent.areYouInterested(model);

@@ -5,6 +5,7 @@ import model.classes.Classes;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.ViperEnemy;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 
@@ -12,14 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BanditEvent extends DailyEventState {
+    private Race race;
+
     public BanditEvent(Model model) {
         super(model);
+        this.race = Race.ALL;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 
     @Override
     protected void doEvent(Model model) {
         println("You encounter a few ruffians at the side of the road. They rudely block your path.");
-        showRandomPortrait(model, Classes.BANDIT, "Bandit");
+        showRandomPortrait(model, Classes.BANDIT, race,"Bandit");
         portraitSay(model, "There's a toll here. 20 gold. It's uh... a traveller's fee. Bring out your purse now, be a good chap!");
         if (model.getParty().getGold() < 20) {
             portraitSay(model, "What, you don't have 20 gold? Well pay us what you have and you can pay us the rest next time you pass.");

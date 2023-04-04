@@ -2,11 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.ElfEnemy;
 import model.enemies.Enemy;
 import model.enemies.WolfEnemy;
 import model.races.ElvenRace;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -28,6 +31,9 @@ public class ElvenCampEvent extends DailyEventState {
                 "campfire is burning and delicious meat is roasting on " +
                 "a spit. Around the fire, elven faces are peering at the " +
                 "newcomers.");
+        CharacterClass cls = MyRandom.sample(List.of(Classes.AMZ, Classes.MAR, Classes.PAL, Classes.CAP));
+        Race race = MyRandom.sample(List.of(Race.HIGH_ELF, Race.WOOD_ELF, Race.DARK_ELF));
+        showRandomPortrait(model, cls, race, "Elves");
         int elves = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getRace() instanceof ElvenRace) {

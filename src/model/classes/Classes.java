@@ -31,4 +31,7 @@ public interface Classes {
     CharacterClass FARMER = new FarmerNPCClass();
     CharacterClass MERCHANT = new MerchantNPCClass();
     CharacterClass BANDIT = new BanditNPCClass();
+    CharacterClass ALCHEMIST = new AlchemistNPCClass();
+    CharacterClass CHARLATAN = new CharlatanNPCClass();
+    CharacterClass CONSTABLE = new ConstableNPCClass();
 }

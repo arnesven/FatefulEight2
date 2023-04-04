@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -36,6 +37,8 @@ public class NomadCampEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        CharacterClass cls = MyRandom.sample(List.of(Classes.AMZ, Classes.BBN));
+        showRandomPortrait(model, cls, "Nomads");
         println("The party comes to a little community of tents and wagons. " +
                 "These nomads travel around the countryside, following game or herds.");
         int bonus = 0;

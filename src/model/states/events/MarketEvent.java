@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.items.Item;
 import model.states.DailyEventState;
 import model.states.ShopState;
@@ -14,8 +15,9 @@ public class MarketEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.MERCHANT, "Pushy Merchant");
         println("Today is market day. The party casually browses the stands and booths.");
-        println("Pushy merchant: \"Hey you! You gotta 'ave a look at my stuff. Premium quality and damn fine prices!\"");
+        portraitSay(model, "Hey you! You gotta 'ave a look at my stuff. Premium quality and damn fine prices!");
         model.getParty().randomPartyMemberSay(model, List.of("Doesn't hurt to look.",
                 "I'm sure it's the same junk as usual, but let's look.",
                 "He looks very honest... why don't we see what he has for sale?"));

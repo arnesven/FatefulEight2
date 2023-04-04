@@ -25,6 +25,7 @@ public class AssassinEvent extends DailyEventState {
                 List.of("If we ask around a bit maybe we can intercept the assassin."));
         boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 7);
         if (result) {
+            showRandomPortrait(model, Classes.ASN, "Assassin");
             println("You track down the assassin and follow her back to a seedy club. It doesn't take long before you " +
                     "realize that this is the hideout of an assassins' guild. Surprisingly these fellows are quite" +
                     " friendly and offer to show you a few tricks, ");

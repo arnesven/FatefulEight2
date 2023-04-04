@@ -12,6 +12,7 @@ public class JesterEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.BRD, "Court Jester");
         println("The court jester is not only a funny fellow, but has the " +
                 "voice of an angel. He sings a lovely ballad of a long " +
                 "forgotten kingdom and the romance between an elf prince " +

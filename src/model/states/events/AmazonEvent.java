@@ -11,6 +11,7 @@ public class AmazonEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.AMZ, "Amazon");
         println("A large, handsome and scantily clad person stands " +
                 "before the party. From the way that they are talking you " +
                 "understand that this is a native warrior of great skill.");

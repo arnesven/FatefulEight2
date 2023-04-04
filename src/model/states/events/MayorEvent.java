@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 
@@ -28,21 +29,22 @@ public class MayorEvent extends DailyEventState {
             boolean gender = town.getLordGender();
             println("The noble picks " + himOrHer(gender) +
                     "self off the ground and dusts off " + hisOrHer(gender) + " robes.");
-            println("Noble: \"That would have been the end of me. If not for you. Thank you.\"");
+            showRandomPortrait(model, Classes.NOB, "Noble");
+            portraitSay(model, "That would have been the end of me. If not for you. Thank you.");
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Damn wine sellers!",
                     "Be more careful in the future", "My pleasure.", "Don't worry about it."));
-            println("Noble: \"You must be rewarded, uhm, won't you take this gold?\"");
+            portraitSay(model, "You must be rewarded, uhm, won't you take this gold?");
             print("Accept the gold? (Y/N) ");
             if (yesNoInput()) {
                 println("The party gains 10 gold.");
                 model.getParty().addToGold(10);
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Thank you.");
-                println("Noble: \"Safe journeys friend.\"");
+                portraitSay(model, "Safe journeys friend.");
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "Don't even think about it. Hopefully one day somebody will do the same for me.");
-                println("Noble: \"What an honourable sentiment! I wish more people were like you in this town. " +
-                        "Please come visit me later. Here take this.\"");
+                portraitSay(model, "What an honourable sentiment! I wish more people were like you in this town. " +
+                        "Please come visit me later. Here take this.");
                 println("The noble hands you a slip of paper, then excuses himself.");
                 model.getParty().addSummon(town);
                 if (model.getParty().size() > 1) {

@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.DailyEventState;
@@ -36,6 +37,7 @@ public class BorrowedMoneyEvent extends DailyEventState {
             if (genderWord.equals("he")) {
                 name = "Johnny";
             }
+            showRandomPortrait(model, Classes.None, name);
             model.getParty().partyMemberSay(model, main, "Hey " + name + ", long time no see!");
             println(name + ": \"Oh, hi... it's you.\"");
             model.getParty().partyMemberSay(model, main, "Remember that gold you borrowed a little while back?");

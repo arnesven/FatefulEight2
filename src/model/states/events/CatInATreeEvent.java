@@ -16,11 +16,12 @@ public class CatInATreeEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showSilhouettePortrait(model, "Old Woman");
         println("As you cut through a small park you spot an old woman standing under a tree.");
-        println("Old Woman: \"Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?\"");
+        portraitSay(model, "Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "What's the problem then?");
-        println("Old Woman: \"My cat, Quincy. He won't come down. I think he chased a squirrel up there, " +
-                "and now he can't get down.\"");
+        portraitSay(model, "My cat, Quincy. He won't come down. I think he chased a squirrel up there, " +
+                "and now he can't get down.");
         model.getParty().randomPartyMemberSay(model, List.of("Oh bother...", "You gotto be kitten me!",
                 "What a CATastrophe!"));
         do {
@@ -35,8 +36,8 @@ public class CatInATreeEvent extends DailyEventState {
                         model.getParty().addToGold(15);
                         println("The party gains 10 gold.");
                     }
-                    println("Old Woman: \"Oh thank you so much for getting my beloved Quincy for me! Here, " +
-                            "please take this, It's all I have on me.\"");
+                    portraitSay(model, "Oh thank you so much for getting my beloved Quincy for me! Here, " +
+                            "please take this, It's all I have on me.");
                     model.getParty().addToGold(5);
                     println("The party gains 5 gold.");
                     break;

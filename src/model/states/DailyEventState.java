@@ -184,12 +184,16 @@ public abstract class DailyEventState extends GameState {
         model.getCurrentHex().travelTo(model);
     }
 
-    protected void showRandomPortrait(Model model, CharacterClass cls, String portraitName) {
+    protected void showRandomPortrait(Model model, CharacterClass cls, Race race, String portraitName) {
         if (portraitSubView != null) {
             removePortraitSubView(model);
         }
-        portraitSubView = new PortraitSubView(model.getSubView(), cls, Race.ALL, portraitName);
+        portraitSubView = new PortraitSubView(model.getSubView(), cls, race, portraitName);
         model.setSubView(portraitSubView);
+    }
+
+    protected void showRandomPortrait(Model model, CharacterClass cls, String portraitName) {
+        showRandomPortrait(model, cls, Race.ALL, portraitName);
     }
 
     protected void showSilhouettePortrait(Model model, String name) {
@@ -198,7 +202,9 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void removePortraitSubView(Model model) {
-        model.setSubView(portraitSubView.getPreviousSubView());
+        if (portraitSubView != null) {
+            model.setSubView(portraitSubView.getPreviousSubView());
+        }
         portraitSubView = null;
     }
 

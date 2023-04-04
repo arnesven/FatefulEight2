@@ -3,6 +3,8 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.map.UrbanLocation;
+import model.races.AllRaces;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -11,14 +13,20 @@ import java.util.List;
 
 public class CourierEvent extends DailyEventState {
     private final boolean withIntro;
+    private Race race;
 
     public CourierEvent(Model model, boolean withIntro) {
         super(model);
         this.withIntro = withIntro;
+        this.race = Race.ALL;
     }
 
     public CourierEvent(Model model) {
         this(model, true);
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 
     @Override
@@ -35,7 +43,7 @@ public class CourierEvent extends DailyEventState {
         } while (model.getParty().getSummons().containsKey(destination.getPlaceName()));
 
 
-        showRandomPortrait(model, Classes.None, "Courier");
+        showRandomPortrait(model, Classes.None, this.race, "Courier");
         if (withIntro) {
             println("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
                     " catches " + hisOrHer(getPortraitGender()) + " breath.");

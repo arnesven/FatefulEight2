@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.states.DailyEventState;
 import view.subviews.ArrowMenuSubView;
 
@@ -13,6 +14,7 @@ public class GuideEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.None, "Guide");
         model.getParty().randomPartyMemberSay(model, List.of("This place is pretty big. I wonder where..."));
         println("Guide: \"Where the tavern is? Where the general store is? The smith?\"");
         model.getParty().randomPartyMemberSay(model, List.of("Uhm... can we help you?"));

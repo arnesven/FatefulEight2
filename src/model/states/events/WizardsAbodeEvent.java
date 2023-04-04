@@ -17,6 +17,7 @@ public class WizardsAbodeEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        showRandomPortrait(model, Classes.WIZ, "Wizard");
         println("A white stone structure pokes out from the surrounding " +
                 "hills. A wizard lives here and gladly accepts some " +
                 "company. He seems a jovial fellow and presents the party " +
