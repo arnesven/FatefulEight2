@@ -10,6 +10,7 @@ import model.map.World;
 import model.map.WorldBuilder;
 import model.map.WorldHex;
 import model.races.Race;
+import model.ruins.RuinsDungeon;
 import model.states.*;
 import model.tutorial.TutorialHandler;
 import sound.BackgroundMusic;
@@ -340,5 +341,12 @@ public class Model {
 
     public boolean isInCaveSystem() {
         return gameData.inUnderworld;
+    }
+
+    public RuinsDungeon getDungeon(String ruinsName) {
+        if (!gameData.dungeons.containsKey(ruinsName)) {
+            gameData.dungeons.put(ruinsName, new RuinsDungeon());
+        }
+        return gameData.dungeons.get(ruinsName);
     }
 }

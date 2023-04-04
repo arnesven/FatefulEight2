@@ -24,9 +24,9 @@ public class ExploreRuinsState extends GameState {
     private boolean dungeonExited = false;
     private boolean mapView = false;
 
-    public ExploreRuinsState(Model model) {
+    public ExploreRuinsState(Model model, String ruinsName) {
         super(model);
-        dungeon = new RuinsDungeon();
+        dungeon = model.getDungeon(ruinsName);
         currentLevel = 0;
         partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
         dungeon.getLevel(currentLevel).getRoom(partyPosition).setRevealedOnMap(true);

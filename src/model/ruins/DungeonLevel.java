@@ -1,10 +1,11 @@
 package model.ruins;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
-public class DungeonLevel {
+public class DungeonLevel implements Serializable {
     private static final List<Point> doorPositions = List.of(
             new Point(1, 0), new Point(3, 1), new Point(1, 3), new Point(0, 1));
     private static final List<String> directionsNames = List.of(
@@ -189,7 +190,6 @@ public class DungeonLevel {
                         }
                     }
                 }
-                System.out.println("  Added a cracked wall at " + x + "," + y);
             }
         }
     }

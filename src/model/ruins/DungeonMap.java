@@ -8,11 +8,11 @@ import view.sprites.Sprite16x16;
 import view.subviews.SubView;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class DungeonMap {
+public class DungeonMap implements Serializable {
     private static final MyColors MAP_BACKGROUND = MyColors.BEIGE;
     private static final MyColors MAP_FOREGROUND = MyColors.BROWN;
 

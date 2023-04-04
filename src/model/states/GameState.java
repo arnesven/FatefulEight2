@@ -97,7 +97,7 @@ public abstract class GameState {
 
     protected static void setCurrentTerrainSubview(Model model) {
         SubView nextSubView;
-        if (!model.getCurrentHex().hasLodging() && model.getParty().isOnRoad()) {
+        if (showOnRoad(model)) {
             nextSubView = OnTheRoadSubView.instance;
         } else {
             nextSubView = model.getCurrentHex().getImageSubView();
@@ -118,5 +118,11 @@ public abstract class GameState {
             }
         }
         model.incrementDay();
+    }
+
+    protected static boolean showOnRoad(Model model) {
+        return !model.getCurrentHex().hasLodging() &&
+                model.getParty().isOnRoad() &&
+                !model.getCurrentHex().inhibitOnRoadSubview();
     }
 }

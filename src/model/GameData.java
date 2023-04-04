@@ -1,10 +1,13 @@
 package model;
 
+import model.ruins.RuinsDungeon;
 import model.tutorial.TutorialHandler;
 import util.MyRandom;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameData implements Serializable {
     public Party party = new Party();
@@ -19,4 +22,5 @@ public class GameData implements Serializable {
     public boolean freePlay = false;
     public boolean inUnderworld = false;
     public int caveSystemSeed = MyRandom.randInt(Integer.MAX_VALUE);
+    public Map<String, RuinsDungeon> dungeons = new HashMap<>();
 }

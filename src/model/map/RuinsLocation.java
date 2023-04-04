@@ -68,7 +68,7 @@ public class RuinsLocation extends HexLocation {
 
     @Override
     public List<DailyAction> getDailyActions(Model model) {
-        return List.of(new ExploreRuinsDailyAction(model));
+        return List.of(new ExploreRuinsDailyAction(model, getName()));
     }
 
     @Override

@@ -5,8 +5,9 @@ import model.states.ExploreRuinsState;
 import view.sprites.Sprite;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class DungeonObject {
+public abstract class DungeonObject implements Serializable {
 
     private Point internalPosition;
 
