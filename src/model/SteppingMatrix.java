@@ -33,7 +33,7 @@ public class SteppingMatrix<T> {
         selected = null;
     }
 
-    public List<T> getElementList() {
+    public synchronized List<T> getElementList() {
         return list;
     }
 
@@ -68,6 +68,9 @@ public class SteppingMatrix<T> {
     }
 
     public synchronized T getSelectedElement() {
+        if (selected == null) {
+            return null;
+        }
         return getElementAt(selected.x, selected.y);
     }
 

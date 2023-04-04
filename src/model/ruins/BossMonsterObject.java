@@ -16,6 +16,7 @@ public class BossMonsterObject extends DungeonMonster {
     }
 
     private static Enemy makeRandomBoss() {
+        return new WarlockEnemy('A'); /*
         int dieRoll = MyRandom.rollD10();
         switch (dieRoll) {
             case 1:
@@ -28,7 +29,7 @@ public class BossMonsterObject extends DungeonMonster {
                 return new WarlockEnemy('A');
             default:
                 return new VampireLordEnemy('A');
-        }
+        }*/
 
     }
 
