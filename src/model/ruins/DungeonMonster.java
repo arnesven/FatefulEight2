@@ -167,6 +167,10 @@ public class DungeonMonster extends CenterDungeonObject {
         }
     }
 
+    public String getName() {
+        return enemies.get(0).getName();
+    }
+
     private static class SleepAnimationSprite extends LoopingSprite {
         public SleepAnimationSprite() {
             super("sleepanimation", "dungeon.png", 0x46, 32);

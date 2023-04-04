@@ -12,6 +12,6 @@ public class VampireLordEnemy extends VampireEnemy {
 
     @Override
     public int getMaxHP() {
-        return 28;
+        return 22;
     }
 }

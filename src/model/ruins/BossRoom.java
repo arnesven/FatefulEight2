@@ -2,16 +2,19 @@ package model.ruins;
 
 import model.Model;
 import model.states.ExploreRuinsState;
+import util.MyRandom;
 
 import java.awt.*;
 import java.util.List;
 
 public class BossRoom extends DungeonRoom {
+    private final BossMonsterObject boss;
     private Point relPos;
 
     public BossRoom() {
         super(5, 5);
-        addObject(new BossMonsterObject());
+        this.boss = new BossMonsterObject();
+        addObject(boss);
         this.relPos = new Point(0, 0);
     }
 
@@ -22,6 +25,9 @@ public class BossRoom extends DungeonRoom {
         model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                 List.of("Okay people. Get ready for a boss fight.",
                 "This has to be the last enemy...", "Everybody ready?"));
+        String line = MyRandom.sample(List.of("Wahahaha! Come meet your doom!", "Who dares disturb me?",
+                "Now you shall all meet your end.", "Fools! Die for my happiness!"));
+        exploreRuinsState.println(boss.getName() + ": \"" + line + "\"");
         exploreRuinsState.waitForReturn();
         super.entryTrigger(model, exploreRuinsState);
         if (!exploreRuinsState.isDungeonExited()) {
