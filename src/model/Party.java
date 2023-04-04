@@ -291,21 +291,7 @@ public class Party implements Serializable {
 
     public void partyMemberSay(Model model, GameCharacter gc, String text) {
         model.getLog().waitForAnimationToFinish();
-        int spriteNum = 2;
-        if (text.charAt(text.length()-1) == '!') {
-            spriteNum = 0;
-        } else if (text.charAt(text.length()-1) == '?') {
-            spriteNum = 1;
-        } else if (text.charAt(text.length()-1) == '^') {
-            spriteNum = 0x10;
-            text = text.substring(0, text.length()-1);
-        } else if (text.charAt(text.length()-1) == '3') {
-            spriteNum = 0x11;
-            text = text.substring(0, text.length()-1);
-        } else if (text.charAt(text.length()-1) == '#') {
-            spriteNum = 0x12;
-            text = text.substring(0, text.length()-1);
-        }
+        int spriteNum = CalloutSprite.getSpriteNumForText(text);
 
         model.getLog().addAnimated(gc.getName() + ": \"" + text + "\"\n");
         int index = partyMembers.indexOf(gc);

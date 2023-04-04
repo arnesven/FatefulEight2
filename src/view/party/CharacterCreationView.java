@@ -30,8 +30,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private boolean gender = true;
     private static final Race[] raceSet = Race.allRaces;
     private static final CharacterEyes[] eyeSet = CharacterEyes.allEyes;
-    private static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC};
-    private static final Integer[] mouthSet = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC};
+    public static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC};
+    public static final Integer[] mouthSet = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC};
     private static final Beard[] beardSet = Beard.allBeards;
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;

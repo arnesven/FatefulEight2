@@ -3,10 +3,12 @@ package model.states;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.classes.CharacterClass;
 import model.combat.PoisonCondition;
 import model.enemies.Enemy;
 import model.map.World;
 import model.races.Race;
+import view.sprites.CalloutSprite;
 import view.subviews.*;
 
 import java.awt.*;
@@ -16,6 +18,7 @@ import java.util.List;
 
 public abstract class DailyEventState extends GameState {
     private boolean fledCombat = false;
+    private PortraitSubView portraitSubView;
 
     public DailyEventState(Model model) {
         super(model);
@@ -24,6 +27,7 @@ public abstract class DailyEventState extends GameState {
     @Override
     public final GameState run(Model model) {
         doEvent(model);
+        removePortraitSubView(model);
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);
         }
@@ -178,5 +182,22 @@ public abstract class DailyEventState extends GameState {
         model.getCurrentHex().travelFrom(model);
         model.getParty().setPosition(currentPos);
         model.getCurrentHex().travelTo(model);
+    }
+
+    protected void showRandomPortrait(Model model, CharacterClass cls, String portraitName) {
+        if (portraitSubView != null) {
+            removePortraitSubView(model);
+        }
+        portraitSubView = new PortraitSubView(model.getSubView(), cls, Race.ALL, portraitName);
+        model.setSubView(portraitSubView);
+    }
+
+    protected void removePortraitSubView(Model model) {
+        model.setSubView(portraitSubView.getPreviousSubView());
+        portraitSubView = null;
+    }
+
+    protected void portraitSay(Model model, String line) {
+        portraitSubView.portraitSay(model, this, line);
     }
 }
