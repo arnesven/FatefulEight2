@@ -134,7 +134,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new LevitateSpell(),
                 new MindControlSpell(),
                 new ConjurePhantasmSpell(),
-                // new CreatureComfortsSpell(),
+                new CreatureComfortsSpell(),
                 new TurnUndeadSpell(),
                 new ShiningOrbSpell(),
                 new HealingWordSpell(),

@@ -18,13 +18,9 @@ public class LodgingState extends EveningState {
     }
 
     @Override
-    public GameState run(Model model) {
-        setCurrentTerrainSubview(model);
-        print("Evening has come. ");
-        model.getTutorial().evening(model);
-        checkForQuest(model);
+    protected void locationSpecificEvening(Model model) {
         if (freeLodging) {
-            println("The party receives food and lodging.");
+            println("The party has received food and lodging.");
             model.getParty().lodging(0);
         } else {
             println("The party feasts on what the house has to offer and sleep well in soft beds.");
@@ -34,8 +30,6 @@ public class LodgingState extends EveningState {
                     "Ahhh, I feel like a person again.", "Can I have a hot bath too?"));
         }
         removePoison(model.getParty());
-        stepToNextDay(model);
-        return nextState(model);
     }
 
     private void removePoison(Party party) {

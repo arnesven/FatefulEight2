@@ -25,11 +25,18 @@ public class EveningState extends GameState {
     }
 
     @Override
-    public GameState run(Model model) {
+    public final GameState run(Model model) {
         setCurrentTerrainSubview(model);
         print("Evening has come. ");
+        model.getTutorial().evening(model);
         checkForQuest(model);
-        if (freeLodging) {
+        locationSpecificEvening(model);
+        super.stepToNextDay(model);
+        return nextState(model);
+    }
+
+    protected void locationSpecificEvening(Model model) {
+        if (freeLodging || model.getSpellHandler().creatureComfortsCastToday(model)) {
             println("The party receives food and lodging for free.");
             model.getParty().lodging(0);
         } else if (freeRations) {
@@ -41,9 +48,6 @@ public class EveningState extends GameState {
         } else {
             notLodging(model);
         }
-        model.getTutorial().evening(model);
-        super.stepToNextDay(model);
-        return nextState(model);
     }
 
     protected GameState nextState(Model model) {
@@ -131,7 +135,6 @@ public class EveningState extends GameState {
     }
 
     public static boolean partyCanAffordLodging(Model model) {
-        // TODO: Different ration cost in different locations (Village/Inn = 2, Castle = 3, Temple = 0)
         int cost = lodgingCost(model);
         return cost <= model.getParty().getGold();
     }
@@ -145,7 +148,7 @@ public class EveningState extends GameState {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
         } else {
-            println("There are not enough rations for everybody. Everybody starves and sleeps outside.");
+            println("There are not enough rations for everybody. Everybody starves.");
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc.getSP() > 0) {
                     gc.addToSP(-1);

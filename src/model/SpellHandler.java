@@ -11,6 +11,7 @@ import java.util.*;
 public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
     private Set<String> acceptedSpells = new HashSet<>();
     private static Map<Spell, Skill> skillBoostingSpells = new HashMap<>();
+    private int creatureComfortsCastOn = 0;
 
     public static void registerSkillBoostingSpell(SkillBoostingSpell skillBoostingSpell, Skill skill) {
         skillBoostingSpells.put(skillBoostingSpell, skill);
@@ -57,5 +58,13 @@ public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
                 unacceptSpell(entry.getKey().getName());
             }
         }
+    }
+
+    public boolean creatureComfortsCastToday(Model model) {
+        return creatureComfortsCastOn == model.getDay();
+    }
+
+    public void setCreatureComfortsCastOnDay(int day) {
+        creatureComfortsCastOn = day;
     }
 }
