@@ -99,27 +99,7 @@ public class HideoutEvent extends DailyEventState {
         if (yesNoInput()) {
             model.getWorld().dijkstrasByLand(model.getParty().getPosition());
             List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle();
-            MapSubView mapSubView = new MapSubView(model);
-            mapSubView.drawAvatarEnabled(false);
-            CollapsingTransition.transition(model, mapSubView);
-            Point currentPos = model.getParty().getPosition();
-            for (int i = 1; i < path.size(); ++i) {
-                Point destination = path.get(i);
-                if (i == path.size()-1) {
-                    model.exitCaveSystem();
-                }
-                mapSubView.addMovementAnimation(
-                        model.getParty().getLeader().getAvatarSprite(),
-                        World.translateToScreen(currentPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                        World.translateToScreen(destination, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
-                mapSubView.waitForAnimation();
-                mapSubView.removeMovementAnimation();
-                model.getParty().setPosition(destination);
-                currentPos = destination;
-            }
-            model.getCurrentHex().travelFrom(model);
-            model.getParty().setPosition(currentPos);
-            model.getCurrentHex().travelTo(model);
+            forcedMovement(model, path);
             println("The secret passage took you to " + model.getCurrentHex().getPlaceName() + "!");
         }
     }

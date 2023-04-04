@@ -5,11 +5,11 @@ import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.combat.PoisonCondition;
 import model.enemies.Enemy;
+import model.map.World;
 import model.races.Race;
-import view.subviews.ArrowMenuSubView;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.subviews.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -154,5 +154,29 @@ public abstract class DailyEventState extends GameState {
         });
         waitForReturn();
         return selectedAction[0];
+    }
+
+    protected void forcedMovement(Model model, List<Point> path) {
+        MapSubView mapSubView = new MapSubView(model);
+        mapSubView.drawAvatarEnabled(false);
+        CollapsingTransition.transition(model, mapSubView);
+        Point currentPos = model.getParty().getPosition();
+        for (int i = 1; i < path.size(); ++i) {
+            Point destination = path.get(i);
+            if (i == path.size()-1) {
+                model.exitCaveSystem();
+            }
+            mapSubView.addMovementAnimation(
+                    model.getParty().getLeader().getAvatarSprite(),
+                    World.translateToScreen(currentPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                    World.translateToScreen(destination, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+            mapSubView.waitForAnimation();
+            mapSubView.removeMovementAnimation();
+            model.getParty().setPosition(destination);
+            currentPos = destination;
+        }
+        model.getCurrentHex().travelFrom(model);
+        model.getParty().setPosition(currentPos);
+        model.getCurrentHex().travelTo(model);
     }
 }

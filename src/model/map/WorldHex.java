@@ -195,6 +195,8 @@ public abstract class WorldHex implements Serializable {
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8 ) {
             List<DailyEventState> events = new ArrayList<>();
+            events.add(new WagonTravelEvent(model));
+            events.add(new WagonTravelEvent(model));
             events.add(new MerchantEvent(model));
             events.add(new BanditEvent(model));
             events.add(new MagicianEvent(model));

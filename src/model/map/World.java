@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import util.MyPair;
 import view.DrawingArea;
 import view.ScreenHandler;
 import view.sprites.Sprite;
@@ -281,6 +282,10 @@ public class World implements Serializable {
     }
 
     public void dijkstrasByLand(Point position) {
+        dijkstrasByLand(position, true);
+    }
+
+    public void dijkstrasByLand(Point position, boolean allowSeaHexes) {
         landNodes = new HashMap<>();
         Set<Point> currentSet = new HashSet<>();
         Set<Point> nextSet = new HashSet<>();
@@ -295,7 +300,9 @@ public class World implements Serializable {
                     Point neighbor = new Point(p);
                     move(neighbor, dxdys.x, dxdys.y);
                     if (!p.equals(neighbor) && !landNodes.containsKey(getHex(neighbor)) && !nextSet.contains(neighbor)) {
-                        nextSet.add(neighbor);
+                        if (!(getHex(neighbor) instanceof SeaHex) || allowSeaHexes) {
+                            nextSet.add(neighbor);
+                        }
                     }
                 }
             }
@@ -307,18 +314,19 @@ public class World implements Serializable {
     }
 
     public List<Point> shortestPathToNearestTownOrCastle() {
-        List<Point> path = new ArrayList<>();
-        int shortest = Integer.MAX_VALUE;
+        return shortestPathToNearestTownOrCastle(0);
+    }
+
+    public List<Point> shortestPathToNearestTownOrCastle(int rank) {
+        List<MyPair<Integer, Point>> candidates = new ArrayList<>();
         for (WorldHex hex : landNodes.keySet()) {
             if (hex.getLocation() != null && hex.getLocation() instanceof UrbanLocation) {
-                Point p = getPositionForHex(hex);
-                if (landNodes.get(hex) < shortest) {
-                    shortest = landNodes.get(hex);
-                    path = new ArrayList<>();
-                    path.add(p);
-                }
+                candidates.add(new MyPair<>(landNodes.get(hex), getPositionForHex(hex)));
             }
         }
+        Collections.sort(candidates, (p1, p2) -> p1.first - p2.first);
+        List<Point> path = new ArrayList<>();
+        path.add(candidates.get(rank).second);
         if (path.isEmpty()) {
             throw new IllegalStateException("Can't find town or castle!");
         }
