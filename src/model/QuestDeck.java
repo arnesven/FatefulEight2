@@ -23,7 +23,8 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
                 new DefendTheVillageQuest(),
                 new RatProblemQuest(),
                 new TreasureHuntQuest(),
-                new SurveillanceQuest()
+                new SurveillanceQuest(),
+                new WizardsTowerQuest()
         ));
     }
 
