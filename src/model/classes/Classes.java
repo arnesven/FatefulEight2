@@ -25,4 +25,9 @@ public interface Classes {
     CharacterClass[] allClasses = new CharacterClass[]{None,
             AMZ, ART, ASN, BBN, BRD, BKN, CAP, FOR, DRU, MAG,
             MAR, MIN, NOB, PAL, PRI, SOR, SPY, THF, WIZ, WIT};
+
+    // NPC Classes:
+    CharacterClass MAGE = new MageNPCClass();
+    CharacterClass FARMER = new FarmerNPCClass();
+    CharacterClass MERCHANT = new MerchantNPCClass();
 }

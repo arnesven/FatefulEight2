@@ -17,6 +17,7 @@ public class NoblemanEvent extends DailyEventState {
         println("You share the evening with a nobleman and their " +
                 "entourage. After telling the great story of the party's " +
                 "exploits, the nobleman gladly gives you a small stipend.");
+        showRandomPortrait(model, Classes.NOB, "Noble");
         int amount = 10 * model.getParty().size();
         model.getParty().addToGold(amount);
         println("The party receives " + amount + " gold from the nobleman.");

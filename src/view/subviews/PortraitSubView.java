@@ -54,7 +54,7 @@ public class PortraitSubView extends SubView {
         appearance.drawYourself(model.getScreenHandler(), X_OFFSET+12, Y_OFFSET+9);
         BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET+17, MyColors.WHITE, MyColors.BLACK);
         if (callout != null) {
-            model.getScreenHandler().register(callout.getName()+"portrait", new Point(40, 13), callout);
+            model.getScreenHandler().register(callout.getName()+"portrait", new Point(40, 12), callout);
             if (callout.isDone()) {
                 callout = null;
             }

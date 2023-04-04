@@ -155,4 +155,16 @@ public abstract class Looks {
         characterAppearance.setSprite(5, 5, new ClothesSprite(0x95, armorColor, shirtColor));
         characterAppearance.setSprite(5, 6, new ClothesSprite(0xA5, armorColor, shirtColor));
     }
+
+    protected static void putOnFarmersHat(CharacterAppearance characterAppearance, MyColors hatColor) {
+        for (int x = 0; x < 7; ++x) {
+            characterAppearance.setSprite(x, 1, new ClothesSprite(0xD0 + x, hatColor));
+            characterAppearance.setSprite(x, 2, new ClothesSprite(0xE0 + x, hatColor));
+        }
+    }
+
+    public static void putOnMerchantHat(CharacterAppearance characterAppearance, MyColors hatColor, MyColors detailColor) {
+        putOnPointyHat(characterAppearance, hatColor);
+        characterAppearance.setSprite(2, 1, new ClothesSprite(0xF0, hatColor, detailColor));
+    }
 }

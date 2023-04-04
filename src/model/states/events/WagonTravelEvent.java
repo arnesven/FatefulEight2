@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.classes.Classes;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -16,6 +17,7 @@ public class WagonTravelEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("A horse and wagon catches up to you on the road. A farmer sits in the saddle.");
+        showRandomPortrait(model, Classes.FARMER, "Farmer");
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), false);
         int distance = 0;
         if (MyRandom.rollD10() > 7) {
@@ -25,26 +27,26 @@ public class WagonTravelEvent extends DailyEventState {
         List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle(distance);
         UrbanLocation townOrCastle = (UrbanLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
         if (model.getParty().size() < 3) {
-            println("Farmer: \"Howdy. If you folks are heading to " + townOrCastle.getPlaceName() + ", why don't you hop on?\"");
+            portraitSay(model, "Howdy. If you folks are heading to " + townOrCastle.getPlaceName() + ", why don't you hop on?");
             print("Do you accept the ride? (Y/N) ");
             if (yesNoInput()) {
                 rideAndThanks(model, path);
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Thanks, but our path leads somewhere else.");
-                println("Farmer: \"Safe travels friend.\"");
+                portraitSay(model, "Safe travels friend.");
             }
         } else {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Where are you heading friend?");
-            println("Farmer: \"I'm selling my greens at the market in " + townOrCastle.getPlaceName() + ".\"");
+            portraitSay(model, "I'm selling my greens at the market in " + townOrCastle.getPlaceName() + ".");
             print("Do you ask for a ride? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Can you give us a ride?");
                 if (model.getParty().size() > 6) {
-                    println("Farmer: \"I'm sorry. I don't think my old horse here can pull all that extra weight.\"");
+                    portraitSay(model, "I'm sorry. I don't think my old horse here can pull all that extra weight.");
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Safe travels friend.");
                 } else {
-                    println("Farmer: \"Hmm, There's quite a few of you, it will tire my old horse out... " +
-                            "But if you could give me some coins I can afford to give him some extra food tonight.\"");
+                    portraitSay(model, "Hmm, There's quite a few of you, it will tire my old horse out... " +
+                            "But if you could give me some coins I can afford to give him some extra food tonight.");
                     int cost = 5*(distance+1);
                     if (model.getParty().getGold() >= cost) {
                         print("Offer " + cost + " gold? (Y/N) ");
@@ -56,7 +58,7 @@ public class WagonTravelEvent extends DailyEventState {
                         }
                     } else {
                         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "If only we had some coin...");
-                        println("Farmer: \"I know what it's like to be without. Okay, hop on anyway I guess.\"");
+                        portraitSay(model, "I know what it's like to be without. Okay, hop on anyway I guess.");
                         rideAndThanks(model, path);
                     }
                 }
