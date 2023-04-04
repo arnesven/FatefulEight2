@@ -53,12 +53,12 @@ public class AutomatonEnemy extends Enemy {
     private static class AutomatonLoot extends CombatLoot {
         @Override
         public String getText() {
-            return "15 materials";
+            return "10 materials";
         }
 
         @Override
         public int getMaterials() {
-            return 15;
+            return 10;
         }
 
         @Override

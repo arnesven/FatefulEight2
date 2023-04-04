@@ -1,9 +1,6 @@
 package model.ruins;
 
-import model.enemies.ArchDaemonEnemy;
-import model.enemies.Enemy;
-import model.enemies.VampireLordEnemy;
-import model.enemies.WarlockEnemy;
+import model.enemies.*;
 import util.MyRandom;
 
 import java.awt.*;
@@ -16,20 +13,23 @@ public class BossMonsterObject extends DungeonMonster {
     }
 
     private static Enemy makeRandomBoss() {
-        return new WarlockEnemy('A'); /*
         int dieRoll = MyRandom.rollD10();
         switch (dieRoll) {
             case 1:
             case 2:
-            case 3:
                 return new ArchDaemonEnemy('A');
+            case 3:
             case 4:
+                return new WarlockEnemy('A');
             case 5: // TODO: make more bosses.
             case 6:
-                return new WarlockEnemy('A');
+                return new DoomMageEnemy('A');
+            case 7:
+            case 8:
+                return new DragonEnemy('A');
             default:
                 return new VampireLordEnemy('A');
-        }*/
+        }
 
     }
 
