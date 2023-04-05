@@ -59,6 +59,9 @@ public class CombatEvent extends DailyEventState {
     protected void doEvent(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
         StripedTransition.transition(model, subView);
+        if (allies.size() > 0) {
+            model.getTutorial().allies(model);
+        }
         setInitiativeOrder(model);
         AnimationManager.synchAnimations();
         model.setInCombat(true);

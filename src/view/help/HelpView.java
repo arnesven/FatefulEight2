@@ -22,6 +22,7 @@ public class HelpView extends SelectableListMenu {
         chapters = new HelpDialog[]{
             new TutorialStartDialog(null),
             new TutorialAlchemy(null),
+            new TutorialAllies(null),
             new TutorialClassesDialog(null),
             new TutorialCombatActionsDialog(null),
             new TutorialCombatDamageDialog(null),
