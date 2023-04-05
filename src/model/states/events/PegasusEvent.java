@@ -20,7 +20,7 @@ public class PegasusEvent extends AlternativeTravelEvent {
         println("A winged horse lands in front of the party. It seems to be " +
                 "willing to give them a ride.");
         if (model.getParty().size() > 3) {
-            model.getParty().randomPartyMemberSay(model, List.of("But there's too many of us to fit on it's back."));
+            model.getParty().randomPartyMemberSay(model, List.of("But there's too many of us to fit on its back."));
             println("The pegasus shakes its head like it can understand you, then it flies away.");
             model.getParty().randomPartyMemberSay(model, List.of("What a shame..."));
             return false;
