@@ -59,13 +59,14 @@ public class PortraitSubView extends SubView {
     protected void drawArea(Model model) {
         previous.drawArea(model);
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET+7, Y_OFFSET+7,
-                16, 12, MyColors.BLACK, MyColors.WHITE, MyColors.BLACK, true);
+                16, 12, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         } else {
+            model.getScreenHandler().clearSpace(X_OFFSET + 12, X_OFFSET + 19, Y_OFFSET + 9, Y_OFFSET + 16);
             model.getScreenHandler().put(X_OFFSET + 12, Y_OFFSET + 9, SILHOUETTE_SPRITE);
         }
-        BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET+17, MyColors.WHITE, MyColors.BLACK);
+        BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET+17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         if (callout != null) {
             model.getScreenHandler().register(callout.getName()+"portrait", new Point(40, 12), callout);
             if (callout.isDone()) {
@@ -90,8 +91,8 @@ public class PortraitSubView extends SubView {
 
     public void portraitSay(Model model, GameState state, String line) {
         model.getLog().waitForAnimationToFinish();
-        state.println(portraitName + ": \"" + line + "\"");
         int num = CalloutSprite.getSpriteNumForText(line);
+        state.println(portraitName + ": \"" + line + "\"");
         callout = new CalloutSprite(num);
     }
 

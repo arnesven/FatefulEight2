@@ -91,7 +91,8 @@ public class GameCharacter extends Combatant {
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), col+18, row+2, getStaminaColor());
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP(), this.getAP()), col+8, row+3, getHealthColor());
         BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getAP(), this.getMaxHP(), this.getAP()), col+17, row+3, DEFAULT_TEXT_COLOR);
-        BorderFrame.drawString(screenHandler, String.format("SPEED %2d %s", this.getSpeed(), isLeader() ? "LEADER" : ""), col+8, row+4, DEFAULT_TEXT_COLOR);
+        BorderFrame.drawString(screenHandler, String.format("SPEED %2d", this.getSpeed()), col+8, row+4, DEFAULT_TEXT_COLOR);
+        BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? "LEADER" : ""), col+17, row+4, MyColors.GOLD);
         BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
 
         equipment.drawYourself(screenHandler, col, row);
