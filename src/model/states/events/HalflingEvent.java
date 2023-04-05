@@ -31,7 +31,9 @@ public class HalflingEvent extends DailyEventState {
             noblemanEvent.doEvent(model);
         } else if (dieRoll <= 9) {
             println(" bard.");
-            // TODO: implement bard event.
+            JesterEvent jester = new JesterEvent(model, "Bard", "bard");
+            jester.setRace(Race.HALFLING);
+            jester.doEvent(model);
         } else if (dieRoll <= 10) {
             adventurerWhoMayJoin(model, Race.HALFLING);
         }
