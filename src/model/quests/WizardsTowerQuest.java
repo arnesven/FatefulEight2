@@ -32,7 +32,7 @@ public class WizardsTowerQuest extends Quest {
             "tower and refuses to come out.";
 
     private static final String END_TEXT = "You return to the bookie with the owed money. " +
-            "The bookie tells you that it's not really about the money, but the principle. If" +
+            "The bookie tells you that it's not really about the money, but the principle. If " +
             "he would let Rastomel off, lots of other rascals would ignore their debts. He rewards " +
             "you handsomely for your effort.";
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();

@@ -105,7 +105,7 @@ public class PortraitSubView extends SubView {
         public SilhouetteSprite() {
             super("silhouette", "silhouette.png", 0, 0, 56, 56);
             setColor1(MyColors.BLACK);
-            setColor2(MyColors.GRAY);
+            setColor2(MyColors.LIGHT_GRAY);
             setColor3(MyColors.GRAY);
         }
     }
