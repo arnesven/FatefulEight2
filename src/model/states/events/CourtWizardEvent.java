@@ -8,6 +8,7 @@ import model.states.ShopState;
 import util.MyRandom;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CourtWizardEvent extends DailyEventState {
@@ -29,9 +30,16 @@ public class CourtWizardEvent extends DailyEventState {
         for (int i = 0; i < noOfSpells; ++i) {
             items.add(model.getItemDeck().getRandomSpell());
         }
+        Collections.shuffle(items);
         int[] costs = new int[items.size()];
         for (int i = 0; i < items.size() - 3; ++i) {
             costs[i] = items.get(i).getCost() + MyRandom.randInt(-6, 6);
+            if (costs[i] < 0) {
+                costs[i] = items.get(i).getCost() - 1;
+            }
+        }
+        for (int i = items.size() - 3; i < items.size(); ++i) {
+            costs[i] = items.get(i).getCost();
         }
         ShopState shop = new ShopState(model, "Court Wizard", items, costs);
         shop.run(model);

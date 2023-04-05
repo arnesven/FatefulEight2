@@ -19,6 +19,7 @@ public class StoneCircleEvent extends DailyEventState {
                 "ritual so you wait until the ceremony has concluded. " +
                 "Afterwards she offers teachings of druidism but asks for " +
                 "some small compensation. ");
+        model.getLog().waitForAnimationToFinish();
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);
         if (model.getParty().getGold() > 0 && change.noOfCandidates() > 0) {
             int amount = Math.min(model.getParty().getGold(), 10);

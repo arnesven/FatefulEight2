@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.spells.Spell;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import view.MyColors;
@@ -100,7 +101,11 @@ public class QuestDecisionPoint extends QuestJunction {
         boolean atLeastOneSpell = false;
         for (String spellName : spellCallbacks.keySet()) {
             model.getSpellHandler().acceptSpell(spellName);
-            atLeastOneSpell = true;
+            for (Spell sp : model.getParty().getInventory().getSpells()) {
+                if (sp.getName().equals(spellName)) {
+                    atLeastOneSpell = true;
+                }
+            }
         }
 
         List<GameCharacter> partyMembers = new ArrayList<>(model.getParty().getPartyMembers());

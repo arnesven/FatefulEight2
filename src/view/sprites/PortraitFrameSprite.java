@@ -13,6 +13,7 @@ public class PortraitFrameSprite extends PortraitSprite {
     public PortraitFrameSprite(int i) {
         super("portraitframe" + i, "clothes.png", i);
         setColor2(MyColors.LIGHT_GRAY);
+        setColor3(MyColors.GRAY);
     }
 
     @Override

@@ -37,6 +37,7 @@ public abstract class RiverEvent extends DailyEventState {
             model.getParty().partyMemberSay(model, gc, List.of("I'm okay!", "Gaah, that was tough!#", "Brrr, it was cold!",
                     "I just felt like having a dip."));
         } else {
+            model.getLog().waitForAnimationToFinish();
             characterDies(model, this, gc," has been swept away by the current and drowns!");
         }
     }

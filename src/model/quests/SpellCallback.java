@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.items.spells.Spell;
 import model.states.QuestState;
 
-public interface SpellCallback {
+import java.io.Serializable;
+
+public interface SpellCallback extends Serializable {
     QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster);
 }
