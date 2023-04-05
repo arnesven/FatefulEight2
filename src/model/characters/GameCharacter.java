@@ -135,6 +135,9 @@ public class GameCharacter extends Combatant {
     }
 
     private boolean canAttackInCombat() {
+        if (party == null) {
+            return true;
+        }
         return !party.getBackRow().contains(this) || mayAttackFromBackRow();
     }
 

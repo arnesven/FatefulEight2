@@ -1,5 +1,6 @@
 package model.states;
 
+import model.Inventory;
 import model.combat.CombatAction;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
@@ -34,6 +35,7 @@ public class CombatEvent extends DailyEventState {
     private boolean blockCombat = false;
     private CombatAction selectedCombatAction = null;
     private Combatant selectedTarget;
+    private List<GameCharacter> allies = new ArrayList<>();
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled) {
         super(model);
@@ -57,6 +59,7 @@ public class CombatEvent extends DailyEventState {
     protected void doEvent(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
         StripedTransition.transition(model, subView);
+        setInitiativeOrder(model);
         AnimationManager.synchAnimations();
         model.setInCombat(true);
         setFormation(model);
@@ -132,7 +135,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private boolean frontRowIsOverrun(Model model) {
-        return enemies.size() > 2 * model.getParty().livingCharactersInFrontRow();
+        return enemies.size() > (2 * (model.getParty().livingCharactersInFrontRow() + livingAllies()));
     }
 
     private void doCombatRound(Model model) {
@@ -208,6 +211,7 @@ public class CombatEvent extends DailyEventState {
         currentInit = 0;
         initiativeOrder = new ArrayList<>();
         initiativeOrder.addAll(model.getParty().getPartyMembers());
+        initiativeOrder.addAll(allies);
         Map<Character, Enemy> groupMap = new HashMap<>();
         for (Enemy e : enemies) {
             if (!groupMap.containsKey(e.getEnemyGroup())) {
@@ -346,5 +350,25 @@ public class CombatEvent extends DailyEventState {
 
     public boolean playerHasSelectedAction() {
         return selectedCombatAction != null;
+    }
+
+
+    public void addAlly(GameCharacter gc) {
+        this.allies.add(gc);
+        combatMatrix.addAllies(List.of(gc));
+    }
+
+    public Collection<? extends GameCharacter> getAllies() {
+        return allies;
+    }
+
+    private int livingAllies() {
+        int sum = 0;
+        for (GameCharacter gc : allies) {
+            if (!gc.isDead()) {
+                sum++;
+            }
+        }
+        return sum;
     }
 }

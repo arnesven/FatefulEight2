@@ -68,7 +68,9 @@ public class CombatSubView extends SubView {
         Combatant combatant = combat.getCurrentCombatant();
         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
         if (combatant != null) {
-            cursor = combatant.getCombatCursor(model);
+            if (model.getParty().getPartyMembers().contains(combatant)) {
+                cursor = combatant.getCombatCursor(model);
+            }
         }
         Point p = new Point(combatMatrix.getSelectedPoint());
         Point p2 = combatMatrix.getSelectedElement().getCursorShift();
@@ -141,6 +143,9 @@ public class CombatSubView extends SubView {
         if (model.getParty().getPartyMembers().contains(combatant)) {
             return model.getParty().getInitiativeSymbol(combatant);
         }
+        if (combatant instanceof GameCharacter) { // Ally
+            return CharSprite.make((char)0x00, MyColors.WHITE, MyColors.GRAY, MyColors.BLACK);
+        }
         int offset = 0;
         if (combatant instanceof Enemy) {
             offset = ((Enemy) combatant).getEnemyGroup() - 'A';
@@ -176,8 +181,10 @@ public class CombatSubView extends SubView {
             if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
                 if (combatant instanceof Enemy) {
                     combat.println("Cannot change the formation of an enemy.");
-                } else {
+                } else if (model.getParty().getPartyMembers().contains(combatant)) {
                     combat.toggleFormationFor(model, (GameCharacter) combatant);
+                } else {
+                    combat.println("Cannot change the formation of an ally.");
                 }
                 return true;
             }

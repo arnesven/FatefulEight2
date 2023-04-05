@@ -65,6 +65,7 @@ public abstract class Enemy extends Combatant {
         } else {
             List<GameCharacter> candidates = new ArrayList<>();
             candidates.addAll(model.getParty().getFrontRow());
+            candidates.addAll(combatEvent.getAllies());
             candidates.removeIf((GameCharacter gc) -> gc.isDead());
             if (candidates.isEmpty()) {
                 candidates.addAll(model.getParty().getBackRow());
@@ -89,8 +90,10 @@ public abstract class Enemy extends Combatant {
         model.getTutorial().combatDamage(model);
         if (target.isDead()) {
             combatEvent.println(target.getName() + " has been slain in combat!");
-            if (target.isLeader() && model.getParty().appointNewLeader()) {
-                combatEvent.println(model.getParty().getLeader().getFullName() + " is now the new leader of the party.");
+            if (model.getParty().getPartyMembers().contains(target)) {
+                if (target.isLeader() && model.getParty().appointNewLeader()) {
+                    combatEvent.println(model.getParty().getLeader().getFullName() + " is now the new leader of the party.");
+                }
             }
         }
     }

@@ -93,7 +93,9 @@ public class ElfEvent extends DailyEventState {
             courier.setRace(Race.HIGH_ELF);
             courier.doEvent(model);
         } else if (dieRoll <= 9) {
-            println(" a paladin."); // TODO: Implement Paladin event.
+            showRandomPortrait(model, Classes.PAL, Race.HIGH_ELF, "Paladin");
+            println(" a paladin.");
+            new PaladinEvent(model).changeClass(model);
         } else {
             adventurerWhoMayJoin(model, Race.HIGH_ELF);
         }

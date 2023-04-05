@@ -53,6 +53,10 @@ public class CombatMatrix extends SteppingMatrix<Combatant> {
         addCentered(FRONT_ROW_Y, party.getFrontRow(), party.getFrontRow().size());
     }
 
+    public void addAllies(List<GameCharacter> allies) {
+        addCentered(FRONT_ROW_Y + 1, allies, allies.size());
+    }
+
     public Combatant getCombatant(int col, int row) {
         return getElementAt(col, row);
     }
