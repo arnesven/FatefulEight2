@@ -291,15 +291,15 @@ public class Party implements Serializable {
 
     public void partyMemberSay(Model model, GameCharacter gc, String text) {
         model.getLog().waitForAnimationToFinish();
-        int spriteNum = CalloutSprite.getSpriteNumForText(text);
+        MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(text);
 
-        model.getLog().addAnimated(gc.getName() + ": \"" + text + "\"\n");
+        model.getLog().addAnimated(gc.getName() + ": \"" + pair.second + "\"\n");
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
         p.x += 3;
         p.y += 2;
-        CalloutSprite spr = new CalloutSprite(spriteNum);
-        callouts.removeIf((MyPair<Point, TimedAnimationSprite> pair) -> pair.first.x == p.x && pair.first.y == p.y);
+        CalloutSprite spr = new CalloutSprite(pair.first);
+        callouts.removeIf((MyPair<Point, TimedAnimationSprite> pa) -> pa.first.x == p.x && pa.first.y == p.y);
         callouts.add(new MyPair<>(p, spr));
     }
 

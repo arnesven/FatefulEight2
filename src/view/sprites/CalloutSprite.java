@@ -1,5 +1,6 @@
 package view.sprites;
 
+import util.MyPair;
 import view.MyColors;
 
 public class CalloutSprite extends TimedAnimationSprite {
@@ -8,7 +9,7 @@ public class CalloutSprite extends TimedAnimationSprite {
         super("callout"+num, "callouts.png", num, 300, MyColors.BLACK, MyColors.WHITE, MyColors.RED);
     }
 
-    public static int getSpriteNumForText(String text) {
+    public static MyPair<Integer, String> getSpriteNumForText(String text) {
         int spriteNum = 2;
         if (text.charAt(text.length()-1) == '!') {
             spriteNum = 0;
@@ -24,6 +25,6 @@ public class CalloutSprite extends TimedAnimationSprite {
             spriteNum = 0x12;
             text = text.substring(0, text.length()-1);
         }
-        return spriteNum;
+        return new MyPair<>(spriteNum, text);
     }
 }

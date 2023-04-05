@@ -4,12 +4,7 @@ import model.Model;
 import model.enemies.BanditEnemy;
 import model.items.Item;
 import model.items.Prevalence;
-import model.map.TownLocation;
-import model.map.World;
 import model.states.DailyEventState;
-import model.states.TravelBySeaState;
-import view.subviews.CollapsingTransition;
-import view.subviews.MapSubView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -39,7 +34,7 @@ public class HideoutEvent extends DailyEventState {
     private void approachBandits(Model model) {
         println("The bandits are alarmed that you've stumbled into their hideout. But they don't attack you outright. " +
                 "Instead, they call for their leader. The bandit leader approaches you and takes a hard look at you.");
-        int alignment = ConstableEvent.getPartyAlignment(model, this);
+        int alignment = DailyEventState.getPartyAlignment(model, this);
         if (alignment >= 0) {
             println("Bandit Leader: \"Kill them all!\"");
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Bring it on!");

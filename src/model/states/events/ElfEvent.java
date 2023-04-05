@@ -49,7 +49,6 @@ public class ElfEvent extends DailyEventState {
             showRandomPortrait(model, Classes.MAGE, Race.DARK_ELF, "Mage");
             print(" mage who offers to sell you a spell for 15 gold. Do you accept? ");
             if (yesNoInput()) {
-                // TODO: Buy a spell
                 println("You buy a spell from the dark elf mage.");
                 new MageEvent(model, false).doEvent(model);
             }

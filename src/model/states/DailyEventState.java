@@ -4,19 +4,22 @@ import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.combat.PoisonCondition;
 import model.enemies.Enemy;
 import model.map.World;
 import model.races.Race;
+import model.states.events.ConstableEvent;
+import util.MyStrings;
 import view.sprites.CalloutSprite;
 import view.subviews.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 public abstract class DailyEventState extends GameState {
+    private static final Map<Integer, Integer> alignmentMap = makePartyAlignmentMap();;
     private boolean fledCombat = false;
     private PortraitSubView portraitSubView;
 
@@ -214,5 +217,36 @@ public abstract class DailyEventState extends GameState {
 
     protected boolean getPortraitGender() {
         return portraitSubView.getPortraitGender();
+    }
+
+    protected static int getPartyAlignment(Model model, DailyEventState event) {
+        int sum = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            int modifier = 0;
+            if (alignmentMap.containsKey(gc.getCharClass().id())) {
+                modifier = alignmentMap.get(gc.getCharClass().id());
+            }
+            event.println("... " + gc.getFirstName() + " is a " + gc.getCharClass().getFullName() + ": " + MyStrings.withPlus(modifier));
+            sum += modifier;
+        }
+        event.println("... Bonus for reputation: " + MyStrings.withPlus(model.getParty().getReputation()));
+        event.println("... Total party alignment: " + MyStrings.withPlus(sum));
+        return sum;
+    }
+
+    private static Map<Integer, Integer> makePartyAlignmentMap() {
+        Map<Integer, Integer> classMap = new HashMap<>();
+        classMap.put(Classes.ASN.id(), -2);
+        classMap.put(Classes.BKN.id(), -2);
+        classMap.put(Classes.THF.id(), -1);
+        classMap.put(Classes.SOR.id(), -1);
+        classMap.put(Classes.WIT.id(), -1);
+        classMap.put(Classes.BBN.id(), -1);
+        classMap.put(Classes.SPY.id(), -1);
+
+        classMap.put(Classes.PRI.id(), +1);
+        classMap.put(Classes.PAL.id(), +1);
+        classMap.put(Classes.NOB.id(), +1);
+        return classMap;
     }
 }

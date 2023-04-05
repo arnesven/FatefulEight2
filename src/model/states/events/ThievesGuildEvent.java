@@ -24,7 +24,7 @@ public class ThievesGuildEvent extends DailyEventState {
         showRandomPortrait(model, Classes.THF, "Guild Master");
         portraitSay(model, "In fact, we could use a few extra hands on the heist...");
         println("The Guild Master looks the party over, as to appraise your skillfulness...");
-        int modifier = ConstableEvent.getPartyAlignment(model, this);
+        int modifier = DailyEventState.getPartyAlignment(model, this);
         if (modifier >= 0) {
             portraitSay(model, "Hmm, but you fellows don't quite look like you're the type. " +
                     "Better sit on the sidelines for this one.");

@@ -6,6 +6,7 @@ import model.classes.CharacterClass;
 import model.races.AllRaces;
 import model.races.Race;
 import model.states.GameState;
+import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
@@ -91,9 +92,9 @@ public class PortraitSubView extends SubView {
 
     public void portraitSay(Model model, GameState state, String line) {
         model.getLog().waitForAnimationToFinish();
-        int num = CalloutSprite.getSpriteNumForText(line);
-        state.println(portraitName + ": \"" + line + "\"");
-        callout = new CalloutSprite(num);
+        MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
+        state.println(portraitName + ": \"" + pair.second + "\"");
+        callout = new CalloutSprite(pair.first);
     }
 
     public boolean getPortraitGender() {
