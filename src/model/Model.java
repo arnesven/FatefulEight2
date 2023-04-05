@@ -55,11 +55,9 @@ public class Model {
         log = new GameLog();
         subView = new EmptySubView();
         gameView = new IntroGameView();
-//        gameView = new MainGameView();
 
         gameView.transitionedTo(this);
         state = new WaitForStartOfGameState(this);
-//        state = getCurrentHex().getDailyActionState(this);//new QuestState(this, gameData.questDeck.getRandomQuest());
     }
 
     public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
@@ -348,8 +346,11 @@ public class Model {
         showHallOfFame();
         gameStarted = false;
         this.state = new WaitForStartOfGameState(this);
-        // TODO: Record score in hall of fame.
         // TODO: Clear everything and reset for new game.
+//        this.gameData = new GameData();
+//        this.caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
+//        this.spellHandler = new SpellHandler();
+//        this.subView = new EmptySubView();
     }
 
     public HallOfFameData loadHallOfFameData() {

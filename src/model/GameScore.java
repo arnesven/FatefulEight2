@@ -2,18 +2,32 @@ package model;
 
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.spells.Spell;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class GameScore extends HashMap<String, Integer> {
 
     public static GameScore calculate(Model model) {
         GameScore gs = new GameScore();
         gs.put("Reputation", model.getParty().getReputation() * 1000);
+        gs.put("Days Remaining", (101 - model.getDay()) * 10);
         gs.put("Party Members", model.getParty().partyStrength());
         int totalGold = totalEquipmentValue(model);
         gs.put("Wealth", totalGold);
+        gs.put("Spells Collected", spellsCollected(model) * 50);
         return gs;
+    }
+
+    private static Integer spellsCollected(Model model) {
+        Set<String> spells = new HashSet<>();
+        for (Spell sp : model.getParty().getInventory().getSpells()) {
+            spells.add(sp.getName());
+        }
+        return spells.size();
     }
 
     private static int totalEquipmentValue(Model model) {
