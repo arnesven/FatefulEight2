@@ -168,7 +168,7 @@ public class Party implements Serializable {
         return true;
     }
 
-    public List<? extends GameCharacter> getPartyMembers() {
+    public List<GameCharacter> getPartyMembers() {
         return partyMembers;
     }
 

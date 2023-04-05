@@ -19,7 +19,7 @@ public class BerriesEvent extends DailyEventState {
     protected void doEvent(Model model) {
         println("The party encounters a large thicket, rich with bright red berries.");
         model.getParty().randomPartyMemberSay(model, List.of("Those look yummy!"));
-        print("Do you wish to pick the berries? (Y/N)");
+        print("Do you wish to pick the berries? (Y/N) ");
         if (!yesNoInput()) {
             return;
         }

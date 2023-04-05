@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
+    private static final String HALL_OF_FAME_PATH = "hall_of_fame.ff8";
 
     private GameData gameData = new GameData();
 
@@ -321,10 +322,47 @@ public class Model {
     public void recordInHallOfFame() {
         this.state = new WaitForStartOfGameState(this);
         screenHandler.clearAll();
-        this.gameView = new IntroGameView();
-        //this.state = new HallOfFameState();
+        HallOfFameData hfData = null;
+        if (new File(HALL_OF_FAME_PATH).exists()) {
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(HALL_OF_FAME_PATH));
+                hfData = (HallOfFameData) ois.readObject();
+                ois.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            hfData = new HallOfFameData();
+        }
+        hfData.append(getParty(), GameScore.calculate(this));
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(HALL_OF_FAME_PATH));
+            oos.writeObject(hfData);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        showHallOfFame();
+        gameStarted = false;
+        this.state = new WaitForStartOfGameState(this);
         // TODO: Record score in hall of fame.
         // TODO: Clear everything and reset for new game.
+    }
+
+    public HallOfFameData loadHallOfFameData() {
+        if (new File(HALL_OF_FAME_PATH).exists()) {
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(HALL_OF_FAME_PATH));
+                HallOfFameData hfData = (HallOfFameData) ois.readObject();
+                return hfData;
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public void enterCaveSystem() {
@@ -348,5 +386,9 @@ public class Model {
             gameData.dungeons.put(ruinsName, new RuinsDungeon());
         }
         return gameData.dungeons.get(ruinsName);
+    }
+
+    public void showHallOfFame() {
+        gameView = new HallOfFameView(this);
     }
 }
