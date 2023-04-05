@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Item;
 import model.races.ElvenRace;
@@ -42,7 +43,8 @@ public class DwarvenCityEvent extends DailyEventState {
         println("At the end of a tunnel, two large stone doors block the way forward. As the party approaches them, " +
                 "a little hatch in one of the doors open. You can see the bearded face of a dwarf peering out at you.");
         if (partyContainsElves(model)) {
-            println("Dwarf: \"Go away strangers, we don't let pointy-ears into our city!\"");
+            showRandomPortrait(model, Classes.CONSTABLE, Race.DWARF, "Dwarf");
+            portraitSay(model, "Go away strangers, we don't let pointy-ears into our city!");
             model.getParty().randomPartyMemberSay(model, List.of("What a racist..."));
             GameCharacter dwarf = getDwarfInParty(model);
             if (dwarf != null) {
@@ -52,7 +54,7 @@ public class DwarvenCityEvent extends DailyEventState {
                 notAdmitted(model);
             }
         } else {
-            println("Dwarf: \"Who are you folks, who come unannounced to our hidden city?\"");
+            portraitSay(model, "Who are you folks, who come unannounced to our hidden city?");
             GameCharacter dwarf = getDwarfInParty(model);
             if (dwarf != null) {
                 model.getParty().partyMemberSay(model, dwarf, List.of("We are travellers. Don't worry we're good people. Let us in."));
@@ -60,7 +62,7 @@ public class DwarvenCityEvent extends DailyEventState {
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "We are travellers, seeking shelter. Will you let us in?");
-                println("Dwarf: \"Strangers must pay an entrance fee of 10 gold.\"");
+                portraitSay(model, "Strangers must pay an entrance fee of 10 gold.");
                 if (model.getParty().getGold() >= 10) {
                     print("Do you pay (Y) or do you try to persuade the dwarf (N)? ");
                     if (yesNoInput()) {
@@ -121,14 +123,14 @@ public class DwarvenCityEvent extends DailyEventState {
     }
 
     private void admitted(Model model) {
-        println("Dwarf: \"Alright then, but we're keeping an eye on you lot. Don't try any funny business!\"");
+        portraitSay(model, "Alright then, but we're keeping an eye on you lot. Don't try any funny business!");
         println("The stone doors swing open and reveal a large cavern inside. The dwarf was not lying. It is indeed a city within, " +
                 "carved entirely out of stone. Dwarf men and women give you a surprised look as they hustle by, going about their " +
                 "daily business. You can see shops, a market, dwellings, even a park illuminated by a beam of " +
                 "daylight coming in through a shaft to the surface.");
         model.getParty().randomPartyMemberSay(model, List.of("This is spectacular!", "Breathtaking", "I never knew...",
                 "It's a whole community.", "Typical Dwarves...", "Well, I'm impressed."));
-        println("Dwarf: \"Well, where do you want to go?\"");
+        portraitSay(model, "Well, where do you want to go?");
         do {
             setCurrentTerrainSubview(model);
             int result = multipleOptionArrowMenu(model, 32, 15,

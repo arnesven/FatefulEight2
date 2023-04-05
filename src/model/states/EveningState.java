@@ -4,6 +4,8 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.quests.Quest;
+import view.help.HalfTimeDialog;
+import view.help.TutorialShoppingDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.DailyActionMenu;
 
@@ -31,6 +33,9 @@ public class EveningState extends GameState {
         model.getTutorial().evening(model);
         checkForQuest(model);
         locationSpecificEvening(model);
+        if (model.getDay() == 50) {
+            model.transitionToDialog(new HalfTimeDialog(model.getView()));
+        }
         super.stepToNextDay(model);
         return nextState(model);
     }
