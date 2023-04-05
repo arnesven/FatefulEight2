@@ -1,13 +1,21 @@
 package model.map;
 
+import util.MyPair;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
+import view.subviews.DailyActionMenu;
+import view.subviews.ImageSubView;
+import view.subviews.SubView;
+
+import java.awt.*;
 
 public class TempleLocation extends HexLocation {
-    // TODO: Add imagesubview
+    private final ImageSubView subView;
+
     public TempleLocation(String templeName) {
         super("Temple of " + templeName);
+        subView = new ImageSubView("temple", "TEMPLE", "Temple of " + templeName, true);
     }
 
     @Override
@@ -21,6 +29,11 @@ public class TempleLocation extends HexLocation {
     }
 
     @Override
+    public SubView getImageSubView() {
+        return subView;
+    }
+
+    @Override
     public boolean isDecoration() {
         return false;
     }
@@ -28,5 +41,10 @@ public class TempleLocation extends HexLocation {
     @Override
     public boolean hasLodging() {
         return true;
+    }
+
+    @Override
+    public MyPair<Point, Integer> getDailyActionMenuAnchor() {
+        return DailyActionMenu.LOWER_LEFT_CORNER;
     }
 }
