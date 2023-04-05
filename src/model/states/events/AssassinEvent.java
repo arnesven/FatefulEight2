@@ -29,6 +29,7 @@ public class AssassinEvent extends DailyEventState {
             println("You track down the assassin and follow her back to a seedy club. It doesn't take long before you " +
                     "realize that this is the hideout of an assassins' guild. Surprisingly these fellows are quite" +
                     " friendly and offer to show you a few tricks, ");
+            model.getLog().waitForAnimationToFinish();
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.ASN);
             change.areYouInterested(model);
         } else {

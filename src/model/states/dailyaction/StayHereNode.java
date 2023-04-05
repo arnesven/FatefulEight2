@@ -41,4 +41,8 @@ class StayHereNode extends DailyActionNode {
         model.setTimeOfDay(TimeOfDay.EVENING);
     }
 
+    @Override
+    public boolean returnNextState() {
+        return true;
+    }
 }
