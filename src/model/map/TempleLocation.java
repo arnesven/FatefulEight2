@@ -91,6 +91,7 @@ public class TempleLocation extends HexLocation {
 
     @Override
     public List<DailyAction> getDailyActions(Model model) {
-        return List.of(new DailyAction("Buy Rations", new BuyRationsState(model)));
+        return List.of(new DailyAction("Buy Rations", new BuyRationsState(model)),
+                new DailyAction("Training", new TrainingState(model)));
     }
 }
