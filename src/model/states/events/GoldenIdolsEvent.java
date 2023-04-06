@@ -24,7 +24,7 @@ public class GoldenIdolsEvent extends DailyEventState {
                 "the walls.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "These must be worth a fortune!");
         println("What do you do?");
-        int res = multipleOptionArrowMenu(model, 28, 12, List.of("Continue the tour", "Quickly snatch some idols", "Return later and ransack"));
+        int res = multipleOptionArrowMenu(model, 24, 12, List.of("Continue the tour", "Quickly snatch some idols", "Return later and ransack"));
         if (res == 0) {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Better not do anything stupid.");
         } else if (res == 1) {

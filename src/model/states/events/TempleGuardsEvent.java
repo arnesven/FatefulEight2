@@ -9,6 +9,7 @@ import java.util.List;
 
 public class TempleGuardsEvent extends DailyEventState {
     private final boolean withIntro;
+    private boolean gotBounced;
 
     public TempleGuardsEvent(Model model, boolean withIntro) {
         super(model);
@@ -24,6 +25,10 @@ public class TempleGuardsEvent extends DailyEventState {
             int align = getPartyAlignment(model, this);
             if (align < -1) {
                 bounce(model);
+            } else {
+                portraitSay(model, "Please enjoy your stay at our temple!");
+                model.getParty().randomPartyMemberSay(model, List.of("Everybody is so polite here."));
+
             }
         } else {
             bounce(model);
@@ -31,6 +36,7 @@ public class TempleGuardsEvent extends DailyEventState {
     }
 
     private void bounce(Model model) {
+        gotBounced = true;
         portraitSay(model, "You scruffy fellows don't belong here. Kindly get out.");
         print("Do you obey the guards and leave the temple? (Y/N) ");
         if (!yesNoInput()) {
@@ -46,6 +52,6 @@ public class TempleGuardsEvent extends DailyEventState {
 
     @Override
     public boolean haveFledCombat() {
-        return true;
+        return gotBounced;
     }
 }

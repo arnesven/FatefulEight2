@@ -1,7 +1,6 @@
 package model.states.dailyaction;
 
 import model.Model;
-import model.states.EveningState;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -40,15 +39,4 @@ public class BuyRationsNode extends DailyActionNode {
     @Override
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 
-    private class BuyRationsState extends GameState {
-        public BuyRationsState(Model model) {
-            super(model);
-        }
-
-        @Override
-        public GameState run(Model model) {
-            EveningState.buyRations(model, this);
-            return null;
-        }
-    }
 }

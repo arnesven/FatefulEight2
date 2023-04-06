@@ -149,20 +149,6 @@ public abstract class DailyEventState extends GameState {
         return gender ? "her" : "his";
     }
 
-    protected int multipleOptionArrowMenu(Model model, int x, int y, List<String> optionList) {
-        int[] selectedAction = new int[1];
-        model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                optionList, x, y, ArrowMenuSubView.NORTH_WEST) {
-            @Override
-            protected void enterPressed(Model model, int cursorPos) {
-                selectedAction[0] = cursorPos;
-                model.setSubView(getPrevious());
-            }
-        });
-        waitForReturn();
-        return selectedAction[0];
-    }
-
     protected void forcedMovement(Model model, List<Point> path) {
         MapSubView mapSubView = new MapSubView(model);
         mapSubView.drawAvatarEnabled(false);

@@ -1,7 +1,10 @@
 package model.map;
 
 import model.Model;
-import model.states.DailyEventState;
+import model.actions.DailyAction;
+import model.states.*;
+import model.states.dailyaction.BuyRationsNode;
+import model.states.dailyaction.BuyRationsState;
 import model.states.events.*;
 import util.MyPair;
 import util.MyRandom;
@@ -74,5 +77,20 @@ public class TempleLocation extends HexLocation {
     @Override
     public MyPair<Point, Integer> getDailyActionMenuAnchor() {
         return DailyActionMenu.LOWER_LEFT_CORNER;
+    }
+
+    @Override
+    public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        return new TempleEveningState(model);
+    }
+
+    @Override
+    public boolean hasDailyActions() {
+        return true;
+    }
+
+    @Override
+    public List<DailyAction> getDailyActions(Model model) {
+        return List.of(new DailyAction("Buy Rations", new BuyRationsState(model)));
     }
 }

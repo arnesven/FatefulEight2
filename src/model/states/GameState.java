@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.combat.PoisonCondition;
 import model.items.spells.Spell;
 import util.MyPair;
+import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.OnTheRoadSubView;
 import view.subviews.SubView;
@@ -124,5 +125,19 @@ public abstract class GameState {
         return !model.getCurrentHex().hasLodging() &&
                 model.getParty().isOnRoad() &&
                 !model.getCurrentHex().inhibitOnRoadSubview();
+    }
+
+    protected int multipleOptionArrowMenu(Model model, int x, int y, List<String> optionList) {
+        int[] selectedAction = new int[1];
+        model.setSubView(new ArrowMenuSubView(model.getSubView(),
+                optionList, x, y, ArrowMenuSubView.NORTH_WEST) {
+            @Override
+            protected void enterPressed(Model model, int cursorPos) {
+                selectedAction[0] = cursorPos;
+                model.setSubView(getPrevious());
+            }
+        });
+        waitForReturn();
+        return selectedAction[0];
     }
 }
