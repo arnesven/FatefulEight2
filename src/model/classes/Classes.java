@@ -34,4 +34,5 @@ public interface Classes {
     CharacterClass ALCHEMIST = new AlchemistNPCClass();
     CharacterClass CHARLATAN = new CharlatanNPCClass();
     CharacterClass CONSTABLE = new ConstableNPCClass();
+    CharacterClass TEMPLE_GUARD = new TempleGuardNPCClass();
 }

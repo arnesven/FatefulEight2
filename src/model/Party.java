@@ -45,6 +45,7 @@ public class Party implements Serializable {
     private List<GameCharacter> backRow = new ArrayList<>();
     private List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
     private Map<String, Summon> summons = new HashMap<>();
+    private Set<String> templeBannings = new HashSet<>();
     private Point position;
     private Point previousPosition;
     private int gold = 30;
@@ -583,4 +584,11 @@ public class Party implements Serializable {
         return summons;
     }
 
+    public boolean isBannedFromTemple(String name) {
+        return templeBannings.contains(name);
+    }
+
+    public void banFromTemple(String name) {
+        templeBannings.add(name);
+    }
 }

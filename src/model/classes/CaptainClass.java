@@ -35,7 +35,7 @@ public class CaptainClass extends CharacterClass {
         putOnHalfHelm(characterAppearance);
     }
 
-    private static void putOnHalfHelm(CharacterAppearance characterAppearance) {
+    public static void putOnHalfHelm(CharacterAppearance characterAppearance) {
         for (int y = 0; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
                 characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x10 * y + x + 5, ARMOR_COLOR, MyColors.DARK_GRAY));
