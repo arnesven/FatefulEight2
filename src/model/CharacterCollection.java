@@ -40,7 +40,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new DeniseBoyd(), new CharacterClass[]{ART, BKN, CAP, NOB}));
         add(new GameCharacter("Gorga", "Bonecrag", HALF_ORC, AMZ,
                 new GorgaBonecrag(), new CharacterClass[]{AMZ, BKN, SPY, WIZ}));
-        add(new GameCharacter("Leaodor", "Sunshadow", DARK_ELF, NOB,
+        add(new GameCharacter("Leodor", "Sunshadow", DARK_ELF, NOB,
                 new LeodorSunshadow(), new CharacterClass[]{NOB, BKN, BRD, WIZ}));
         add(new GameCharacter("Mord", "Kroft", HALF_ORC, PAL,
                 new MordKroft(), new CharacterClass[]{PAL, BBN, CAP, MAR}));
