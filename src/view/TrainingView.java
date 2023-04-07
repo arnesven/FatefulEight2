@@ -11,6 +11,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.SubView;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class TrainingView extends SubView {
@@ -80,22 +81,28 @@ public class TrainingView extends SubView {
         List<Skill> lessons = state.getLessons();
         String[] levels = new String[]{"Expert", "Advanced", "Novice"};
         for (int i = 0; i < 3; ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), levels[i], X_OFFSET + 1, Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.CYAN);
-            BorderFrame.drawString(model.getScreenHandler(), lessons.get(i).getName(), X_OFFSET + 1, Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.CYAN);
+            String[] parts = lessons.get(i).getName().split("\\(");
+            String name = parts[1].replace(")", "") + " " + parts[0];
+            BorderFrame.drawString(model.getScreenHandler(), levels[i] + " ->", X_OFFSET + 1, Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.CYAN);
+            BorderFrame.drawString(model.getScreenHandler(), name, X_OFFSET + 1, Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.CYAN);
         }
         for (int i = 3; i < 6; ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), levels[i-3], X_OFFSET + 18, 4 + Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.GREEN);
-            BorderFrame.drawString(model.getScreenHandler(), lessons.get(i).getName(), X_OFFSET + 18, 4 + Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.GREEN);
+            BorderFrame.drawString(model.getScreenHandler(), "<- " + levels[i-3], X_OFFSET + 17, 4 + Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.GREEN);
+            BorderFrame.drawString(model.getScreenHandler(), lessons.get(i).getName(), X_OFFSET + 17, 4 + Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.GREEN);
         }
+        BorderFrame.drawCentered(model.getScreenHandler(), "Temple chores => 1 gold each", Y_MAX - 1, MyColors.WHITE, MyColors.BLACK);
     }
 
     private void drawMatrix(Model model) {
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 if (matrix.getElementAt(x, y) != null) {
-                    Point p = convertToScreen(x, y);
+                    Point p = matrixPosToScreen(x, y);
                     GameCharacter ch = matrix.getElementAt(x, y);
                     model.getScreenHandler().register(ch.getAvatarSprite().getName(), p, ch.getAvatarSprite());
+                    if (matrix.getSelectedElement() != ch) {
+                        ch.getAvatarSprite().synch();
+                    }
                 }
             }
         }
@@ -104,13 +111,17 @@ public class TrainingView extends SubView {
     private void drawCursor(Model model) {
         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
         Point p = new Point(matrix.getSelectedPoint());
-        p = convertToScreen(p.x, p.y);
+        p = matrixPosToScreen(p.x, p.y);
         p.y -= 4;
         model.getScreenHandler().register("trainingcursor", p, cursor, 2);
     }
 
     private Point convertToScreen(int x, int y) {
         return new Point(X_OFFSET + x*4, Y_OFFSET + y*4);
+    }
+
+    private Point matrixPosToScreen(int x, int y) {
+        return convertToScreen(x, y < 3 ? y + 1 : y + 2);
     }
 
     @Override
@@ -121,5 +132,13 @@ public class TrainingView extends SubView {
     @Override
     protected String getTitleText(Model model) {
         return "TEMPLE - TRAINING";
+    }
+
+    @Override
+    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            state.shiftCharacter(model);
+        }
+        return matrix.handleKeyEvent(keyEvent);
     }
 }

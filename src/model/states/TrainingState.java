@@ -17,7 +17,7 @@ public class TrainingState extends GameState {
 
     private static final int TUITION_FEA = 5;
     private static final int TRAINING_ROWS = 7;
-    private static final int TRAINING_COLUMNS = 4;
+    private static final int TRAINING_COLUMNS = 8;
     private static final List<Skill> allMartialSkills = List.of(Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Bows, Skill.Polearms);
     private static final List<Skill> allArcaneSkills = List.of(Skill.MagicBlue, Skill.MagicWhite, Skill.MagicBlack, Skill.MagicRed, Skill.MagicGreen);
     private final List<Skill> lessons = new ArrayList<>();
@@ -56,16 +56,48 @@ public class TrainingState extends GameState {
     }
 
     private void addPartyRandomlyToMatrix(Model model) {
+        int i = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            Point p;
-            do {
-                p = new Point(MyRandom.randInt(TRAINING_COLUMNS), MyRandom.randInt(TRAINING_ROWS));
-            } while (matrix.getElementAt(p.x, p.y) != null);
-            matrix.addElement(p.x, p.y, gc);
+            matrix.addElement(i++, TRAINING_ROWS-1, gc);
         }
     }
 
     public List<Skill> getLessons() {
         return lessons;
+    }
+
+    public void shiftCharacter(Model model) {
+        Point p = matrix.getSelectedPoint();
+        GameCharacter gc = matrix.getSelectedElement();
+        matrix.remove(gc);
+        do {
+            p.y = (p.y + 1) % matrix.getRows();
+        } while (p.y != matrix.getRows()-1 && emptySlotInRow(p.y) == -1);
+        int x = emptySlotInRow(p.y);
+        matrix.addElement(x, p.y, gc);
+        matrix.setSelectedPoint(matrix.getElementAt(x, p.y));
+    }
+
+    private int emptySlotInRow(int y) {
+        if (y < 3) {
+            for (int x = matrix.getColumns()-2; x >= 4; --x) {
+                if (matrix.getElementAt(x, y) == null) {
+                    return x;
+                }
+            }
+        } else if (y == matrix.getRows()-1) {
+            for (int x = 0; x < matrix.getColumns(); ++x) {
+                if (matrix.getElementAt(x, y) == null) {
+                    return x;
+                }
+            }
+        } else {
+            for (int x = 0; x < 3; ++x) {
+                if (matrix.getElementAt(x, y) == null) {
+                    return x;
+                }
+            }
+        }
+        return -1;
     }
 }

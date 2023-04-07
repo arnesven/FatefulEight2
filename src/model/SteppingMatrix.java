@@ -106,6 +106,8 @@ public class SteppingMatrix<T> {
             T newSelected = list.get(0);
             Point p2 = getPositionFor(newSelected);
             selected = p2;
+        } else {
+            selected = null;
         }
     }
 
