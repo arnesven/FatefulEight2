@@ -47,7 +47,7 @@ public class ElvenCampEvent extends DailyEventState {
                     " and their feast with the party.");
             freeRations = true;
         } else if (roll >= 6) {
-            println("The elves are simply traveling between dwellings and and do not mind the company.");
+            println("The elves are simply traveling between dwellings and do not mind the company.");
         } else if (roll >= 3) {
             println("The elves are on a mission and suspect the party of being agents of an enemy.");
             boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 8);

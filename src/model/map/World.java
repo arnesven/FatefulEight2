@@ -336,7 +336,8 @@ public class World implements Serializable {
             for (Point dxdy : Direction.getDxDyDirections(current)) {
                 Point neighbor = new Point(current);
                 move(neighbor, dxdy.x, dxdy.y);
-                if (landNodes.get(getHex(neighbor)) < distToCurrent) {
+                if (landNodes.containsKey(getHex(neighbor)) &&
+                        landNodes.get(getHex(neighbor)) < distToCurrent) {
                     path.add(0, neighbor);
                     current = neighbor;
                     break;

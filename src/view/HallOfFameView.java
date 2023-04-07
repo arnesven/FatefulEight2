@@ -45,6 +45,7 @@ public class HallOfFameView extends GameView {
                 }
                 BorderFrame.drawString(model.getScreenHandler(), line,
                         xStart, 5 + 5*rank, color);
+                BorderFrame.drawString(model.getScreenHandler(), entry.getWhen(), xStart+41, 7 + 5*rank, color);
                 int x = xStart + 3;
                 for (AvatarSprite gc : entry.getCharacters()) {
                     model.getScreenHandler().register(gc.getName(), new Point(x, 6 + 5*rank), gc);

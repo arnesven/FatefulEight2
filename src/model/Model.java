@@ -215,7 +215,7 @@ public class Model {
     }
 
     private boolean endOfGameReached() {
-        return getParty().getReputation() >= 6 || gameData.day > 3;
+        return getParty().getReputation() >= 6 || gameData.day > 100;
     }
 
     public void playMainSong() {
