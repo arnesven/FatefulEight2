@@ -10,7 +10,8 @@ public class CharlatanNPCClass extends NPCClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        MagicianClass.putOnTopHat(characterAppearance, MyColors.TAN, MyColors.TAN);
+        MagicianClass.putOnTopHat(characterAppearance, MyColors.BEIGE, MyColors.BLACK);
         SpyClass.putOnFakeMustache(characterAppearance);
+        Looks.putOnFancyRobe(characterAppearance, MyColors.TAN, MyColors.BLUE);
     }
 }

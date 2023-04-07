@@ -91,7 +91,9 @@ public class DefendTheVillageQuest extends Quest {
         DecorativeJunction bandit1 = new SpriteDecorativeJunction(2, 8, new BanditSprite(Race.HALF_ORC.getColor()), "Bandit");
         DecorativeJunction bandit2 = new SpriteDecorativeJunction(3, 8, new BanditSprite(Race.HALF_ORC.getColor()), "Bandit");
         DecorativeJunction bandit3 = new SpriteDecorativeJunction(4, 8, new BanditSprite(Race.HALF_ORC.getColor()), "Bandit");
-        return List.of(qss, cnt1, qd1, sj1, cnt2, sj2, cnt3, bandit1, bandit2, bandit3);
+        List<QuestJunction> juncs = new ArrayList<>();
+        juncs.addAll(List.of(qss, cnt1, qd1, sj1, cnt2, sj2, cnt3, bandit1, bandit2, bandit3));
+        return juncs;
     }
 
     @Override
@@ -142,8 +144,8 @@ public class DefendTheVillageQuest extends Quest {
             }
             super.setEnemies(enemies);
             QuestEdge toReturn = super.run(model, state);
-            getJunctions().remove(getJunctions().size()-1);
-            getJunctions().remove(getJunctions().size()-1);
+            getJunctions().remove(getJunctions().size()-1); // TODO: This has no effect (still visibile in quest view)
+            getJunctions().remove(getJunctions().size()-1); // fix...
             getJunctions().remove(getJunctions().size()-1);
             return toReturn;
         }
