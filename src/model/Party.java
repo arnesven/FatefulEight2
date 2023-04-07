@@ -548,6 +548,12 @@ public class Party implements Serializable {
                 leader = partyMembers.get(0);
             }
         }
+        if (frontRow.contains(gc)) {
+            frontRow.remove(gc);
+        }
+        if (backRow.contains(gc)) {
+            backRow.remove(gc);
+        }
         return amount;
     }
 

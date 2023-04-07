@@ -25,7 +25,7 @@ public class CatInATreeEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("Oh bother...", "You gotto be kitten me!",
                 "What a CATastrophe!"));
         do {
-            print("Climb the tree? (Y/N)");
+            print("Climb the tree? (Y/N) ");
             if (yesNoInput()) {
                 MyPair<Boolean, GameCharacter> result = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.Acrobatics, 6);
                 if (result.first) {

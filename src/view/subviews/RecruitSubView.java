@@ -30,11 +30,13 @@ public class RecruitSubView extends SubView {
 
     private void drawCursor(Model model) {
         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
-        Point p = new Point(matrix.getSelectedPoint());
-        p.x = X_OFFSET + p.x*14 + 6;
-        p.y = Y_OFFSET + p.y*12 - 2;
-        model.getScreenHandler().register("recruitcursor", p, cursor, 2);
-        this.cursorPosition = p;
+        if (matrix.getSelectedElement() != null) {
+            Point p = new Point(matrix.getSelectedPoint());
+            p.x = X_OFFSET + p.x * 14 + 6;
+            p.y = Y_OFFSET + p.y * 12 - 2;
+            model.getScreenHandler().register("recruitcursor", p, cursor, 2);
+            this.cursorPosition = p;
+        }
     }
 
     private void drawRecruitables(Model model) {
