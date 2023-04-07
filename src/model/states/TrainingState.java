@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import util.MyRandom;
 import view.TrainingView;
 import view.subviews.StripedTransition;
@@ -22,6 +23,10 @@ public class TrainingState extends GameState {
     private static final List<Skill> allArcaneSkills = List.of(Skill.MagicBlue, Skill.MagicWhite, Skill.MagicBlack, Skill.MagicRed, Skill.MagicGreen);
     private final List<Skill> lessons = new ArrayList<>();
     private SteppingMatrix<GameCharacter> matrix;
+    public static final String[] LEVELS = new String[]{"Expert", "Advanced", "Novice"};
+    public static final int[] DIFFICULTY = new int[]{10, 8, 6};
+    public static final int[] EXPERIENCE = new int[]{50, 40, 30};
+    private boolean inResolution = false;
 
     public TrainingState(Model model) {
         super(model);
@@ -50,9 +55,43 @@ public class TrainingState extends GameState {
         addPartyRandomlyToMatrix(model);
         SubView trainingView = new TrainingView(this, matrix);
         StripedTransition.transition(model, trainingView);
+        print("Please assign the party members to training sessions. Use SPACE to shift a character's position. Press enter when you are done.");
         waitForReturn();
-
+        inResolution = true;
+        for (GameCharacter gc : matrix.getElementList()) {
+            Point p = matrix.getPositionFor(gc);
+            matrix.setSelectedPoint(gc);
+            if (p.y == matrix.getRows()-1) {
+                doTempleChores(model, gc);
+            } else {
+                doSkillTraining(model, gc,p.y, p.y > 2 ? p.y - 3 : p.y);
+            }
+        }
+        model.getLog().waitForAnimationToFinish();
         return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    private void doSkillTraining(Model model, GameCharacter performer, int index, int level) {
+        String maybeN = level < 2 ? "n" : "";
+        println(performer.getName() + " attends a" + maybeN + " " + LEVELS[level].toLowerCase() +
+                " level training session in " + getLessonName(index) + ".");
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, performer,
+                lessons.get(index), DIFFICULTY[level], EXPERIENCE[level], 0);
+        if (result.isSuccessful()) {
+            model.getParty().partyMemberSay(model, performer,
+                    List.of("Yes!", "Eureka!", "Wonderful!", "I'm learning."));
+            println(performer.getName() + " gains " + EXPERIENCE[level] + " experience.");
+        } else {
+            model.getParty().partyMemberSay(model, performer,
+                    List.of("Aaw!#", "Oh no!#", "Shoot#!", "Phooey!#", "Darn it!#"));
+        }
+    }
+
+    private void doTempleChores(Model model, GameCharacter gc) {
+        String job = MyRandom.sample(List.of("cleaning floors", "cooking meals", "brewing ale", "peeling potatoes", "doing laundry"));
+        println(gc.getName() + " helps the priests by " + job + ", gets paid 1 gold.");
+        model.getParty().addToGold(1);
+        model.getLog().waitForAnimationToFinish();
     }
 
     private void addPartyRandomlyToMatrix(Model model) {
@@ -60,10 +99,6 @@ public class TrainingState extends GameState {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             matrix.addElement(i++, TRAINING_ROWS-1, gc);
         }
-    }
-
-    public List<Skill> getLessons() {
-        return lessons;
     }
 
     public void shiftCharacter(Model model) {
@@ -99,5 +134,17 @@ public class TrainingState extends GameState {
             }
         }
         return -1;
+    }
+
+    public String getLessonName(int i) {
+        if (lessons.get(i).getName().contains("(")) {
+            String[] parts = lessons.get(i).getName().split("\\(");
+            return parts[1].replace(")", "") + " " + parts[0];
+        }
+        return lessons.get(i).getName();
+    }
+
+    public boolean isInResolution() {
+        return inResolution;
     }
 }

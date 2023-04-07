@@ -4,6 +4,7 @@ import model.HallOfFameData;
 import model.HallOfFameEntry;
 import model.Model;
 import model.characters.GameCharacter;
+import view.sprites.AvatarSprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -37,7 +38,7 @@ public class HallOfFameView extends GameView {
         int xStart = 12;
         if (hallOfFameData != null) {
             for (HallOfFameEntry entry : hallOfFameData) {
-                String line = String.format("%2d. %-40s %6d", rank, entry.getCharacters().get(0).getName() + "'s Company", entry.getScore());
+                String line = String.format("%2d. %-40s %6d", rank, entry.getName() + "'s Company", entry.getScore());
                 MyColors color = MyColors.WHITE;
                 if (rank <= colors.length) {
                     color = colors[rank-1];
@@ -45,8 +46,8 @@ public class HallOfFameView extends GameView {
                 BorderFrame.drawString(model.getScreenHandler(), line,
                         xStart, 5 + 5*rank, color);
                 int x = xStart + 3;
-                for (GameCharacter gc : entry.getCharacters()) {
-                    gc.drawAvatar(model.getScreenHandler(), x, 6 + 5*rank);
+                for (AvatarSprite gc : entry.getCharacters()) {
+                    model.getScreenHandler().register(gc.getName(), new Point(x, 6 + 5*rank), gc);
                     x += 4;
                 }
                 rank++;

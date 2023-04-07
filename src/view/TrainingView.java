@@ -35,7 +35,6 @@ public class TrainingView extends SubView {
     private static final Sprite WALL = new Sprite32x32("wall", "world_foreground.png", 0xA3, MyColors.GREEN, MyColors.BLACK, MyColors.RED);
     private static final Sprite WALL_TOP = new Sprite32x32("walltop", "world_foreground.png", 0x93, MyColors.GREEN, MyColors.BLACK, MyColors.RED);
 
-
     private static Sprite makeTempleSprite(int i) {
         return new Sprite32x32("templesprite" + i, "world_foreground.png", i, MyColors.CYAN, MyColors.BLACK, MyColors.RED, MyColors.LIGHT_YELLOW);
     }
@@ -78,17 +77,13 @@ public class TrainingView extends SubView {
     }
 
     private void drawLessons(Model model) {
-        List<Skill> lessons = state.getLessons();
-        String[] levels = new String[]{"Expert", "Advanced", "Novice"};
         for (int i = 0; i < 3; ++i) {
-            String[] parts = lessons.get(i).getName().split("\\(");
-            String name = parts[1].replace(")", "") + " " + parts[0];
-            BorderFrame.drawString(model.getScreenHandler(), levels[i] + " ->", X_OFFSET + 1, Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.CYAN);
-            BorderFrame.drawString(model.getScreenHandler(), name, X_OFFSET + 1, Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.CYAN);
+            BorderFrame.drawString(model.getScreenHandler(), TrainingState.LEVELS[i] + " ->", X_OFFSET + 1, Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.CYAN);
+            BorderFrame.drawString(model.getScreenHandler(), state.getLessonName(i), X_OFFSET + 1, Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.CYAN);
         }
         for (int i = 3; i < 6; ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), "<- " + levels[i-3], X_OFFSET + 17, 4 + Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.GREEN);
-            BorderFrame.drawString(model.getScreenHandler(), lessons.get(i).getName(), X_OFFSET + 17, 4 + Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.GREEN);
+            BorderFrame.drawString(model.getScreenHandler(), "<- " + TrainingState.LEVELS[i-3], X_OFFSET + 17, 4 + Y_OFFSET + (i+1)*4+1, MyColors.BLACK, MyColors.GREEN);
+            BorderFrame.drawString(model.getScreenHandler(), state.getLessonName(i), X_OFFSET + 17, 4 + Y_OFFSET + (i+1)*4+2, MyColors.BLACK, MyColors.GREEN);
         }
         BorderFrame.drawCentered(model.getScreenHandler(), "Temple chores => 1 gold each", Y_MAX - 1, MyColors.WHITE, MyColors.BLACK);
     }
@@ -136,6 +131,9 @@ public class TrainingView extends SubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (state.isInResolution()) {
+            return false;
+        }
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
             state.shiftCharacter(model);
         }
