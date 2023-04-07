@@ -1,13 +1,17 @@
 package model.quests;
 
+import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.MansionGuardEnemy;
 import model.items.spells.LevitateSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
@@ -160,9 +164,12 @@ public class MansionHeistQuest extends Quest {
         public MansionHeistStartingPoint(List<QuestEdge> questEdges, String text) {
             super(questEdges, text);
             this.setRow(3);
-            addSpellCallback(new LevitateSpell().getName(), (model, state, spell, caster) -> {
-                state.println(caster.getFirstName() + " levitates the party to the second floor!");
-                return new QuestEdge(getJunctions().get(1));
+            addSpellCallback(new LevitateSpell().getName(), new SpellCallback() { // DON'T REPLACE WITH LAMBDA, NOT SERIALIZABLE
+                @Override
+                public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                    state.println(caster.getFirstName() + " levitates the party to the second floor!");
+                    return new QuestEdge(getJunctions().get(1));
+                }
             });
         }
     }
