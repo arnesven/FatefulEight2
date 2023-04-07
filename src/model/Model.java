@@ -32,7 +32,7 @@ import java.util.List;
 public class Model {
     private static final String HALL_OF_FAME_PATH = "hall_of_fame.ff8";
 
-    private GameData gameData = new GameData();
+    private GameData gameData;
 
     private World world = new World(WorldBuilder.buildWorld());
     private CaveSystem caveSystem;
@@ -90,6 +90,7 @@ public class Model {
     }
 
     public void startGameNoLoad() {
+        gameData = new GameData();
         state = new ChooseStartingCharacterState(this);
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
