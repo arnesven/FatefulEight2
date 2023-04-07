@@ -1,6 +1,7 @@
 package view.help;
 
 import model.Model;
+import model.tutorial.TutorialTraining;
 import view.BorderFrame;
 import view.GameView;
 import view.MyColors;
@@ -38,6 +39,7 @@ public class HelpView extends SelectableListMenu {
             new TutorialShoppingDialog(null),
             new TutorialSkillChecksDialog(null),
             new TutorialSpells(null),
+            new TutorialTraining(null),
             new TutorialTravelDialog(null),
         };
         index = 0;

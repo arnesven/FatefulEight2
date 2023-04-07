@@ -56,6 +56,7 @@ public class TrainingState extends GameState {
         SubView trainingView = new TrainingView(this, matrix);
         StripedTransition.transition(model, trainingView);
         print("Please assign the party members to training sessions. Use SPACE to shift a character's position. Press enter when you are done.");
+        model.getTutorial().training(model);
         waitForReturn();
         inResolution = true;
         for (GameCharacter gc : matrix.getElementList()) {
