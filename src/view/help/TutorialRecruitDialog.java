@@ -13,7 +13,8 @@ public class TutorialRecruitDialog extends HelpDialog {
             "experienced.\n\n" +
             "New characters never bring more than a basic weapon with them but they usually " +
             "contribute a little bit of gold to the party's communal purse.\n\n" +
-            "Think carefully about what characters you draft to your party!";
+            "Think carefully about what characters you draft to your party. For instance, " +
+            "take into account a newcomer's skill set and how it will affect the party's alignment.";
 
     public TutorialRecruitDialog(GameView previous) {
         super(previous, "Recruiting", text);

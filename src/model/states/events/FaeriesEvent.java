@@ -22,7 +22,7 @@ public class FaeriesEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("There are voices, as if children are laughing and singing."));
         model.getParty().randomPartyMemberSay(model, List.of("Faeries!3"));
         println("The faeries are keeping their distance and assessing the party...");
-        int partyAlign = getPartyAlignment(model, this);
+        int partyAlign = calculatePartyAlignment(model, this);
         if (partyAlign > 1) {
             println("The faeries swoop in and seem elated and cheerful.");
             println("Each party member regains 3 health and 1 stamina.");

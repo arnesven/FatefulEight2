@@ -8,9 +8,7 @@ import model.enemies.ConstableEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ConstableEvent extends DailyEventState {
     private final String perp;
@@ -55,7 +53,7 @@ public class ConstableEvent extends DailyEventState {
                 "I don't know what you're talking about.", "I don't remember..."));
         portraitSay(model, "You're not from around here are you?");
         println("The constable squints and carefully looks at the party members...");
-        int sum = getPartyAlignment(model, this);
+        int sum = calculatePartyAlignment(model, this);
         sum += model.getParty().getReputation();
         String wordToDescribe = null;
         if (sum <= -5) {

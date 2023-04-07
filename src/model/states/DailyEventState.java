@@ -205,7 +205,8 @@ public abstract class DailyEventState extends GameState {
         return portraitSubView.getPortraitGender();
     }
 
-    protected static int getPartyAlignment(Model model, DailyEventState event) {
+    protected static int calculatePartyAlignment(Model model, DailyEventState event) {
+        model.getTutorial().alignment(model);
         int sum = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             int modifier = 0;
@@ -215,8 +216,19 @@ public abstract class DailyEventState extends GameState {
             event.println("... " + gc.getFirstName() + " is a " + gc.getCharClass().getFullName() + ": " + MyStrings.withPlus(modifier));
             sum += modifier;
         }
-        event.println("... Bonus for reputation: " + MyStrings.withPlus(model.getParty().getReputation()));
         event.println("... Total party alignment: " + MyStrings.withPlus(sum));
+        return sum;
+    }
+
+    public static int getPartyAlignment(Model model) {
+        int sum = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            int modifier = 0;
+            if (alignmentMap.containsKey(gc.getCharClass().id())) {
+                modifier = alignmentMap.get(gc.getCharClass().id());
+            }
+            sum += modifier;
+        }
         return sum;
     }
 

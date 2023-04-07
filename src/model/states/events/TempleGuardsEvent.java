@@ -22,7 +22,7 @@ public class TempleGuardsEvent extends DailyEventState {
             println("A few temple guards - armed monks approach you.");
             showRandomPortrait(model, Classes.TEMPLE_GUARD, "Temple Guards");
             println("The guards appraise you.");
-            int align = getPartyAlignment(model, this);
+            int align = calculatePartyAlignment(model, this);
             if (align < -1) {
                 bounce(model);
             } else {

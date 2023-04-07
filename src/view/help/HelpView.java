@@ -1,6 +1,7 @@
 package view.help;
 
 import model.Model;
+import model.tutorial.TutorialAlignment;
 import model.tutorial.TutorialTraining;
 import view.BorderFrame;
 import view.GameView;
@@ -24,6 +25,7 @@ public class HelpView extends SelectableListMenu {
             new TutorialStartDialog(null),
             new TutorialAlchemy(null),
             new TutorialAllies(null),
+            new TutorialAlignment(null),
             new TutorialClassesDialog(null),
             new TutorialCombatActionsDialog(null),
             new TutorialCombatDamageDialog(null),

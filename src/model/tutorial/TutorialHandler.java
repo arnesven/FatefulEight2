@@ -172,6 +172,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void alignment(Model model) {
+        runOnce("alignment", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialAlignment(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
