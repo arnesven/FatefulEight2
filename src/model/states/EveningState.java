@@ -9,6 +9,7 @@ import view.help.TutorialShoppingDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.DailyActionMenu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EveningState extends GameState {
@@ -56,6 +57,9 @@ public class EveningState extends GameState {
     }
 
     protected GameState nextState(Model model) {
+        if (model.getParty().isWipedOut()) {
+            return new GameOverState(model);
+        }
         if (this.goOnQuest == null) {
             model.saveToFile("auto");
             return model.getCurrentHex().getDailyActionState(model);
@@ -154,12 +158,22 @@ public class EveningState extends GameState {
             model.getParty().consumeRations();
         } else {
             println("There are not enough rations for everybody. Everybody starves.");
+            List<GameCharacter> toRemove = new ArrayList<>();
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc.getSP() > 0) {
                     gc.addToSP(-1);
-                } else if (gc.getHP() > 2) {
+                } else {
                     gc.addToHP(-1);
+                    if (gc.isDead()) {
+                        toRemove.add(gc);
+                    }
                 }
+            }
+
+            for (GameCharacter gc : toRemove) {
+                println(gc.getName() + " has starved to death! Press enter to continue.");
+                waitForReturn();
+                model.getParty().remove(gc, true, false, 0);
             }
         }
     }

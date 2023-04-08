@@ -26,11 +26,14 @@ public class GameOverView extends GameView {
 
     @Override
     public GameView getNextView(Model model) {
-        return null;
+        return new StartGameMenu();
     }
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
-
+        if (model.getLog().isAcceptingInput()) {
+            model.getLog().keyTyped(keyEvent, model);
+        }
+        setTimeToTransition(true);
     }
 }

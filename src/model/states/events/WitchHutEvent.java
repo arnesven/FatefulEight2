@@ -6,6 +6,7 @@ import model.items.Item;
 import model.states.DailyEventState;
 import model.states.ShopState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WitchHutEvent extends DailyEventState {
@@ -22,7 +23,8 @@ public class WitchHutEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("Is that an incantation or she just insane?"));
         println("She beckons you inside and offers to sell you a bottle of the draft.");
 
-        List<Item> itemList = List.of(model.getItemDeck().getRandomPotion());
+        List<Item> itemList = new ArrayList<>();
+        itemList.add(model.getItemDeck().getRandomPotion());
         ShopState shop = new ShopState(model, "witch", itemList,
                 new int[]{5});
         shop.setSellingEnabled(false);

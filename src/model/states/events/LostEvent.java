@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.EveningState;
+import model.states.GameOverState;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class LostEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("It's because we've been here before."));
         println("The party has lost its way in the wilderness and has made no progress today.");
         new EveningState(model, false, false).run(model);
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         innerEvent = model.getCurrentHex().generateEvent(model);
         innerEvent.run(model);
     }

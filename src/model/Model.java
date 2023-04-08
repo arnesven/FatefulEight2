@@ -44,24 +44,34 @@ public class Model {
     private GameLog log;
     private GameState state;
     private SpellHandler spellHandler = new SpellHandler();
-    private boolean gameExited = false;
-    private boolean gameOver = false;
-    private boolean gameStarted = false;
-    private boolean inCombat = false;
+    private boolean gameExited;
+    private boolean gameOver;
+    private boolean gameStarted;
+    private boolean inCombat;
 
     public Model(ScreenHandler screenHandler) {
-        changes = true;
         this.screenHandler = screenHandler;
+        initialize();
         log = new GameLog();
         subView = new EmptySubView();
         gameView = new IntroGameView();
-
         gameView.transitionedTo(this);
         state = new WaitForStartOfGameState(this);
     }
 
+    public void initialize() {
+        changes = true;
+        spellHandler = new SpellHandler();
+        gameExited = false;
+        gameOver = false;
+        gameStarted = false;
+        inCombat = false;
+    }
+
     public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
         try {
+            initialize();
+            subView = new EmptySubView();
             gameData = readGameData(filename);
             caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
             state = getCurrentHex().getDailyActionState(this);
@@ -90,6 +100,9 @@ public class Model {
     }
 
     public void startGameNoLoad() {
+        initialize();
+        subView = new EmptySubView();
+        log = new GameLog();
         gameData = new GameData();
         state = new ChooseStartingCharacterState(this);
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
@@ -392,5 +405,9 @@ public class Model {
 
     public void showHallOfFame() {
         gameView = new HallOfFameView(this);
+    }
+
+    public void setGameStarted(boolean b) {
+        gameStarted = b;
     }
 }

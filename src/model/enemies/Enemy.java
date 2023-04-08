@@ -66,10 +66,10 @@ public abstract class Enemy extends Combatant {
             List<GameCharacter> candidates = new ArrayList<>();
             candidates.addAll(model.getParty().getFrontRow());
             candidates.addAll(combatEvent.getAllies());
-            candidates.removeIf((GameCharacter gc) -> gc.isDead());
             if (candidates.isEmpty()) {
                 candidates.addAll(model.getParty().getBackRow());
             }
+            candidates.removeIf((GameCharacter gc) -> gc.isDead());
             Collections.shuffle(candidates);
             if (!candidates.isEmpty()) {
                 GameCharacter randomCharFromFrontRow = candidates.get(0);

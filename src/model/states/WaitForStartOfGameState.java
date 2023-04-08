@@ -11,7 +11,8 @@ public class WaitForStartOfGameState extends GameState {
     public GameState run(Model model) {
         while (!model.gameStarted()) {
             try {
-                Thread.sleep(100);
+                System.out.println("Waiting for game to start...");
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

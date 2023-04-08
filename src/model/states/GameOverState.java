@@ -9,7 +9,8 @@ public class GameOverState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        waitForReturn();
-        return this;
+        model.setGameOver(true);
+        model.setGameStarted(false);
+        return new WaitForStartOfGameState(model);
     }
 }

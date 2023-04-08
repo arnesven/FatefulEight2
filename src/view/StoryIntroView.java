@@ -111,6 +111,7 @@ public class StoryIntroView extends GameView implements Animation {
             fadeOut = false;
             nextPage();
         }
+
     }
 
     @Override
