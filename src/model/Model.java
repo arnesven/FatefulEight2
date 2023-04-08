@@ -332,7 +332,6 @@ public class Model {
     }
 
     public void recordInHallOfFame() {
-        this.state = new WaitForStartOfGameState(this);
         screenHandler.clearAll();
         HallOfFameData hfData = null;
         if (new File(HALL_OF_FAME_PATH).exists()) {
@@ -356,15 +355,9 @@ public class Model {
             e.printStackTrace();
         }
 
-
         showHallOfFame();
         gameStarted = false;
         this.state = new WaitForStartOfGameState(this);
-        // TODO: Clear everything and reset for new game.
-//        this.gameData = new GameData();
-//        this.caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
-//        this.spellHandler = new SpellHandler();
-//        this.subView = new EmptySubView();
     }
 
     public HallOfFameData loadHallOfFameData() {
