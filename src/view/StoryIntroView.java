@@ -6,6 +6,7 @@ import util.MyStrings;
 import view.sprites.Animation;
 import view.sprites.AnimationManager;
 import view.subviews.ImageSubView;
+import view.subviews.SubView;
 
 import java.awt.event.KeyEvent;
 import java.security.Key;
@@ -15,6 +16,7 @@ public class StoryIntroView extends GameView implements Animation {
 
     private static final int TEXT_WIDTH = 45;
     private static final int TEXT_START_ROW = 10;
+    private static SubView alternativeSubView = new ImageSubView("theinnalt","xxyyzz", "");
 
     private static final String[] pages = new String[]{
             "You are eager to get out of the rain as you push open the heavy door to the Crossroad's Inn. " +
@@ -97,7 +99,11 @@ public class StoryIntroView extends GameView implements Animation {
     protected void internalUpdate(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), "ESC = SKIP", 8, DrawingArea.WINDOW_ROWS-4, MyColors.GRAY, MyColors.BLACK);
 
-        ((ImageSubView)InnLocation.getSubView()).drawArea(model, 2, 5);
+        if (pageIndex < 2) {
+            ((ImageSubView) InnLocation.getSubView()).drawArea(model, 2, 5);
+        } else {
+            ((ImageSubView) alternativeSubView).drawArea(model, 2, 5);
+        }
         for (int i = 0; i < textParts.length; ++i) {
             MyColors textColor;
             if (!fadeOut) {
@@ -105,7 +111,11 @@ public class StoryIntroView extends GameView implements Animation {
             } else {
                 textColor = textColors[Math.max(0, textColors.length - colorIndex - 1)];
             }
-            BorderFrame.drawString(model.getScreenHandler(), textParts[i], 35, TEXT_START_ROW + i, textColor, MyColors.BLACK);
+            int x = 35;
+            if (pageIndex < 2) {
+                x = 35;
+            }
+            BorderFrame.drawString(model.getScreenHandler(), textParts[i], x, TEXT_START_ROW + i, textColor, MyColors.BLACK);
         }
         if (fadeOut && colorIndex > textColors.length) {
             fadeOut = false;

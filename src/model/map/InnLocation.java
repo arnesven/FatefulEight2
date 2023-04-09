@@ -20,7 +20,6 @@ import java.util.*;
 public class InnLocation extends HexLocation {
 
     private static SubView subView = new ImageSubView("theinn", "THE INN", "A cozy inn at the side of the road.");
-    private HashMap<Integer, List<Item>> inventoryMap = new HashMap<>();
 
     public InnLocation(String name) {
         super(name);
