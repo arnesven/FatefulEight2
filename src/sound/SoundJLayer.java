@@ -70,7 +70,9 @@ public class SoundJLayer extends PlaybackListener implements Runnable
     public void stop() {
         if (isPlaying) {
             doesRepeat = false;
-            this.player.stop();
+            if (this.player != null) {
+                this.player.stop();
+            }
             try {
                 playerThread.join();
             } catch (InterruptedException e) {

@@ -39,7 +39,7 @@ public class PriestEvent extends DailyEventState {
                 GameCharacter gc = model.getParty().partyMemberInput(model, this, null);
                 println("The priest blesses " + gc.getName() + ".");
                 gc.addToHP(1000);
-                gc.addToSP(1);
+                gc.addToSP(1000);
                 model.getParty().addToGold(-5);
                 model.getParty().partyMemberSay(model, gc, List.of("I feel refreshed!",
                         "I feel like a new person!", "What a cleansing feeling!",

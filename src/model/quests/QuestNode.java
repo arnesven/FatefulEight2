@@ -6,7 +6,7 @@ import model.states.QuestState;
 import java.awt.*;
 import java.io.Serializable;
 
-public abstract class QuestNode implements Serializable {
+public abstract class QuestNode {
     public abstract int getColumn();
     public abstract int getRow();
     public abstract void drawYourself(Model model, int xPos, int yPos);

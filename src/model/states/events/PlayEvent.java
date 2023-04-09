@@ -34,7 +34,7 @@ public class PlayEvent extends DailyEventState {
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
                     gc.addToSP(1);
                 }
-                println("You were very impressed by the lead actor. After the play, you get the chance to talk to " + himOrHer(bardGender) +
+                print("You were very impressed by the lead actor. After the play, you get the chance to talk to " + himOrHer(bardGender) +
                         ". It turns out " + heOrShe(bardGender) + " is a famous travelling minstrel. " + heOrShe(bardGender) + " offers to " +
                         "teach you in the ways of being a bard, ");
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.BRD);

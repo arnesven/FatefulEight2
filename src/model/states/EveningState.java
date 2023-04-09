@@ -1,13 +1,10 @@
 package model.states;
 
 import model.Model;
-import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.quests.Quest;
 import view.help.HalfTimeDialog;
-import view.help.TutorialShoppingDialog;
 import view.subviews.ArrowMenuSubView;
-import view.subviews.DailyActionMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +67,10 @@ public class EveningState extends GameState {
     protected void checkForQuest(Model model) {
         if (model.getCurrentHex().givesQuests() &&
                 !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-            Quest q = model.getQuestDeck().getRandomQuest();
+            Quest q;
+            do {
+                q = model.getQuestDeck().getRandomQuest();
+            } while (model.getQuestDeck().alreadyDone(q));
             println("The party is offered a quest by " + q.getProviderName() + ".");
             print(q.getBeforehandInfo());
             print(" Will you go tomorrow (Y/N)? ");
@@ -157,25 +157,45 @@ public class EveningState extends GameState {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
         } else {
-            println("There are not enough rations for everybody. Everybody starves.");
-            List<GameCharacter> toRemove = new ArrayList<>();
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                if (gc.getSP() > 0) {
-                    gc.addToSP(-1);
+            print("There are not enough rations for everybody. ");
+            List<GameCharacter> remaining = new ArrayList<>();
+            remaining.addAll(model.getParty().getPartyMembers());
+            while (model.getParty().getFood() > 0) {
+                print("Please select who gets to eat: ");
+                GameCharacter gc = model.getParty().partyMemberInput(model, this, remaining.get(0));
+                if (remaining.contains(gc)) {
+                    println(gc.getFirstName() + " consumes rations.");
+                    model.getParty().addToFood(-1);
+                    gc.addToHP(1);
+                    remaining.remove(gc);
                 } else {
-                    gc.addToHP(-1);
-                    if (gc.isDead()) {
-                        toRemove.add(gc);
-                    }
+                    println("That party member has already consumed rations this evening.");
                 }
             }
-
-            for (GameCharacter gc : toRemove) {
-                println(gc.getName() + " has starved to death! Press enter to continue.");
-                waitForReturn();
-                model.getParty().remove(gc, true, false, 0);
-            }
+            starveAndKill(model, remaining);
         }
+    }
+
+    private void starveAndKill(Model model, List<GameCharacter> partyMembers) {
+        List<GameCharacter> toRemove = new ArrayList<>();
+        for (GameCharacter gc : partyMembers) {
+            if (gc.getSP() > 0) {
+                gc.addToSP(-1);
+            } else {
+                gc.addToHP(-1);
+                if (gc.isDead()) {
+                    toRemove.add(gc);
+                }
+            }
+            println(gc.getFirstName() + " starves.");
+        }
+
+        for (GameCharacter gc : toRemove) {
+            println(gc.getName() + " has starved to death! Press enter to continue.");
+            waitForReturn();
+            model.getParty().remove(gc, true, false, 0);
+        }
+
     }
 
     private boolean hasEnoughFood(Model model) {

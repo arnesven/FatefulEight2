@@ -5,14 +5,12 @@ import model.quests.*;
 import util.MyRandom;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
-    private final Map<Quest, Integer> acceptedQuests = new HashMap<>();
+    private final Set<String> acceptedQuests = new HashSet<>();
+    private final Set<String> questLocations = new HashSet<>();
 
     public Quest getRandomQuest() {
         return MyRandom.sample(List.of(
@@ -29,10 +27,15 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
     }
 
     public void accept(Quest quest, HexLocation location) {
-        acceptedQuests.put(quest, location.hashCode());
+        questLocations.add(location.getName());
+        acceptedQuests.add(quest.getName());
     }
 
     public boolean alreadyDone(HexLocation location) {
-        return acceptedQuests.containsValue(location.hashCode());
+        return questLocations.contains(location.getName());
+    }
+
+    public boolean alreadyDone(Quest quest) {
+        return acceptedQuests.contains(quest.getName());
     }
 }

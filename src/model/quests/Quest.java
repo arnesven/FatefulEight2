@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Quest implements Serializable {
+public abstract class Quest {
     private final String name;
     private final Reward reward;
     private final String text;

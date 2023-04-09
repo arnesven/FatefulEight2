@@ -15,7 +15,7 @@ public abstract class FieldsLaborEvent extends DailyEventState {
 
     protected void failure(Model model, String sitch) {
         println("The party just made a mess of things " + sitch + ". The farmer is appalled by " +
-                "the party's inability to do even a simple job and angrily asks you to be" +
+                "the party's inability to do even a simple job and angrily asks you to be " +
                 "on your way.");
         model.getParty().randomPartyMemberSay(model,
                 List.of("I'm not one for manual labor anyway.",

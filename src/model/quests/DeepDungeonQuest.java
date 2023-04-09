@@ -168,9 +168,12 @@ public class DeepDungeonQuest extends Quest {
                             new QuestEdge(scenes.get(2).get(0))),
                     "Watch out, that looks like a booby trap right there.");
 
-            this.addSpellCallback(new LevitateSpell().getName(), (model, state, spell, caster) -> {
-                state.println(caster.getFirstName() + " levitates the party over the booby trap!");
-                return new QuestEdge(getJunctions().get(2));
+            this.addSpellCallback(new LevitateSpell().getName(), new SpellCallback() { // DON'T CONVERT TO LAMBDA, not serializable
+                @Override
+                public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                    state.println(caster.getFirstName() + " levitates the party over the booby trap!");
+                    return new QuestEdge(getJunctions().get(2));
+                }
             });
         }
     }
