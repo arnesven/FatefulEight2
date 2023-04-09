@@ -1,7 +1,13 @@
 package model.tutorial;
 
+import model.Model;
 import view.GameView;
+import view.MyColors;
 import view.help.HelpDialog;
+import view.sprites.CharSprite;
+import view.widget.TopText;
+
+import java.util.List;
 
 public class TutorialAlignment extends HelpDialog {
     private static final String TEXT =
@@ -19,9 +25,22 @@ public class TutorialAlignment extends HelpDialog {
             "Paladin             +1\n" +
             "Noble               +1\n\n" +
             "Characters who's class is not listed in the table above do not contribute " +
-            "to the party's alignment.";
+            "to the party's alignment. You can see your current alignment in the top " +
+            "bar at any time. The alignment icon looks like this:\n\n\n";
 
     public TutorialAlignment(GameView view) {
         super(view, "Alignment", TEXT);
+    }
+
+    @Override
+    protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+        List<DrawableObject> textContent = super.buildDecorations(model, xStart, yStart);
+        textContent.add(new DrawableObject(xStart+16, yStart+29) {
+            @Override
+            public void drawYourself(Model model, int x, int y) {
+                model.getScreenHandler().put(x+1, y, TopText.ALIGNMENT_ICON_SPRITE);
+            }
+        });
+        return textContent;
     }
 }

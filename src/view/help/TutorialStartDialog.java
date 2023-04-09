@@ -1,14 +1,11 @@
 package view.help;
 
 import model.Model;
-import util.MyStrings;
 import view.GameView;
 import view.MyColors;
-import view.party.SelectableListMenu;
 import view.sprites.CharSprite;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 

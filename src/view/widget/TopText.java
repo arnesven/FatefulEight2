@@ -13,7 +13,7 @@ public class TopText {
     private static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLACK);
     private static final CharSprite INGREDIENTS_ICON_SPRITE = CharSprite.make(0x12, MyColors.WHITE, MyColors.LIGHT_GREEN, MyColors.BLACK);
     private static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
-    private static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
+    public static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
 
     public void drawYourself(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), String.format("DAY %d", model.getDay()), 0, 0, MyColors.CYAN);

@@ -15,10 +15,10 @@ public class GameScore extends HashMap<String, Integer> {
         GameScore gs = new GameScore();
         gs.put("Reputation", model.getParty().getReputation() * 1000);
         gs.put("Days Remaining", (101 - model.getDay()) * 10);
-        gs.put("Party Members", model.getParty().partyStrength());
+        gs.put("Party Members", model.getParty().partyStrength() * 2);
         int totalGold = totalEquipmentValue(model);
         gs.put("Wealth", totalGold);
-        gs.put("Spells Collected", spellsCollected(model) * 50);
+        gs.put("Spells Collected", spellsCollected(model) * 25);
         return gs;
     }
 
