@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.DailyEventState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StormEvent extends DailyEventState {
@@ -32,15 +33,27 @@ public class StormEvent extends DailyEventState {
                 model.mustStayInHex(true);
             }
         } else {
+            List<GameCharacter> toRemove = new ArrayList<>();
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc.getSP() == 0) {
                     if (gc.getHP() > 0) {
                         println(gc.getName() + " suffers 1 damage from the storm.");
+                        gc.addToHP(-1);
+                        if (gc.isDead()) {
+                            toRemove.add(gc);
+                        }
                     }
                 } else {
                     println(gc.getName() + " loses 1 stamina from the storm.");
+                    gc.addToSP(-1);
                 }
             }
+            for (GameCharacter gc : toRemove) {
+                println(gc.getName() + " has died from the exertion. Press enter to continue.");
+                waitForReturn();
+                model.getParty().remove(gc, true, false, 0);
+            }
+
         }
     }
 }

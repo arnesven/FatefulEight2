@@ -62,7 +62,7 @@ public class DungeonMonster extends CenterDungeonObject {
             case 5:
                 return new DungeonMonster(List.of(new ManticoreEnemy('A'), new ManticoreEnemy('A')));
             case 6:
-                return new DungeonMonster(List.of(new DaemonEnemy('A'), new ImpEnemy('A'), new ImpEnemy('A')));
+                return new DungeonMonster(List.of(new DaemonEnemy('A'), new ImpEnemy('B'), new ImpEnemy('B')));
             case 7:
                 return new DungeonMonster(List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'), new CrocodileEnemy('B'), new CrocodileEnemy('B')));
             case 8:

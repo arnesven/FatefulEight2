@@ -3,6 +3,7 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import model.states.RecruitState;
 import sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
@@ -15,9 +16,11 @@ import java.awt.event.KeyEvent;
 
 public class RecruitSubView extends SubView {
     private final SteppingMatrix<GameCharacter> matrix;
+    private final RecruitState state;
     private Point cursorPosition;
 
-    public RecruitSubView(SteppingMatrix<GameCharacter> recruitMatrix) {
+    public RecruitSubView(RecruitState state, SteppingMatrix<GameCharacter> recruitMatrix) {
+        this.state = state;
         this.matrix = recruitMatrix;
     }
 
@@ -63,8 +66,12 @@ public class RecruitSubView extends SubView {
     protected String getUnderText(Model model) {
         if (matrix.getSelectedElement() != null) {
             GameCharacter gc = matrix.getSelectedElement();
+            int startingGold = gc.getCharClass().getStartingGold();
+            if (state.isStartingGoldEnabled()) {
+                startingGold = 0;
+            }
             String text = String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),
-                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), gc.getCharClass().getStartingGold());
+                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGold);
             return text;
         }
         return "";

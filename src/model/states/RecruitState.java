@@ -67,7 +67,7 @@ public class RecruitState extends GameState {
         model.getTutorial().recruit(model);
 
         if (recruitables.size() > 0) {
-            RecruitSubView subView = new RecruitSubView(recruitMatrix);
+            RecruitSubView subView = new RecruitSubView(this, recruitMatrix);
             model.setSubView(subView);
 
             do {
@@ -244,5 +244,9 @@ public class RecruitState extends GameState {
 
     public void setStartingGoldEnabled(boolean b) {
         this.startingGold = b;
+    }
+
+    public boolean isStartingGoldEnabled() {
+        return this.startingGold;
     }
 }

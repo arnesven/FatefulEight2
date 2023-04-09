@@ -12,9 +12,9 @@ import java.io.Serializable;
 public class QuestEdge implements Serializable {
     public static final boolean HORIZONTAL = true;
     public static final boolean VERTICAL = false;
-    private final Sprite horizontalSprite = new Sprite16x16("horipath", "quest.png", 0x41);
-    private final Sprite verticalSprite = new Sprite16x16("vertipath", "quest.png", 0x40);
-    private final Sprite[] specialSprites = new Sprite[] {
+    private static final Sprite horizontalSprite = new Sprite16x16("horipath", "quest.png", 0x41);
+    private static final Sprite verticalSprite = new Sprite16x16("vertipath", "quest.png", 0x40);
+    private static final Sprite[] specialSprites = new Sprite[] {
             new Sprite16x16("ulcorner", "quest.png", 0x42),
             new Sprite16x16("urcorner", "quest.png", 0x43),
             new Sprite16x16("llcorner", "quest.png", 0x44),

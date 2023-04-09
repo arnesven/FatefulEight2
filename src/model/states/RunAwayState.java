@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.map.Direction;
+import model.map.World;
 import util.MyRandom;
 import view.subviews.MapSubView;
 
@@ -24,12 +25,19 @@ public class RunAwayState extends TravelState {
                 }
             } else {
                 if (!model.getWorld().crossesRiver(model.getParty().getPosition(),
-                        Direction.getDirectionForDxDy(model.getParty().getPosition(), dir))) {
+                        Direction.getDirectionForDxDy(model.getParty().getPosition(), dir))
+                        && !movesOutsideMap(model.getParty().getPosition(), dir)) {
                     result.add(dir);
                 }
             }
         }
         return MyRandom.sample(result);
+    }
+
+    private boolean movesOutsideMap(Point position, Point dir) {
+        Point p2 = new Point(position);
+        World.move(p2, dir.x, dir.y);
+        return (p2.x == position.x && p2.y == position.y);
     }
 
     @Override

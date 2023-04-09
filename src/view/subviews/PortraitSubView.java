@@ -31,8 +31,12 @@ public class PortraitSubView extends SubView {
         if (race.id() == Race.ALL.id()) {
             raceToUse = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
         }
+        boolean gender = MyRandom.randInt(2)==0;
         MyColors hairColor = HairStyle.allHairColors[MyRandom.randInt(HairStyle.allHairColors.length)];
-        int mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
+        int mouthIndex;
+        do {
+            mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
+        } while (gender && isBeardyMouth(mouthIndex));
         int mouth = CharacterCreationView.mouthSet[mouthIndex];
         int nose = CharacterCreationView.noseSet[MyRandom.randInt(CharacterCreationView.noseSet.length)];
         CharacterEyes eyes = CharacterEyes.allEyes[MyRandom.randInt(CharacterEyes.allEyes.length)];
@@ -41,7 +45,7 @@ public class PortraitSubView extends SubView {
         do {
             beard = Beard.allBeards[MyRandom.randInt(Beard.allBeards.length)];
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
-        appearance = new AdvancedAppearance(raceToUse, MyRandom.randInt(2)==0,
+        appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
         appearance.setClass(cls);
     }

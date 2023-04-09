@@ -49,7 +49,7 @@ public class CourierEvent extends DailyEventState {
                     " catches " + hisOrHer(getPortraitGender()) + " breath.");
         }
         portraitSay(model, "'" + model.getParty().getLeader().getFullName() + "'s Company' - that's you right? I have a letter for you.");
-        println("He hands you a letter which reads: 'You have been summoned by the honorable " + destination.getLordName() + " to " +
+        println(heOrSheCap(getPortraitGender()) + " hands you a letter which reads: 'You have been summoned by the honorable " + destination.getLordName() + " to " +
                 destination.getPlaceName() + ".'");
         println("That's all the letter says. You stare blankly at it and then look at the messenger.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Do you know what this is about?");
