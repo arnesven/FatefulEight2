@@ -67,7 +67,7 @@ public class RecruitSubView extends SubView {
         if (matrix.getSelectedElement() != null) {
             GameCharacter gc = matrix.getSelectedElement();
             int startingGold = gc.getCharClass().getStartingGold();
-            if (state.isStartingGoldEnabled()) {
+            if (!state.isStartingGoldEnabled()) {
                 startingGold = 0;
             }
             String text = String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),

@@ -224,6 +224,9 @@ public class RecruitState extends GameState {
             sum -= 2;
             texts.add("");
         }
+        if (texts.isEmpty()) {
+            texts.add("");
+        }
         return new MyPair<>(sum, MyRandom.sample(texts));
     }
 
