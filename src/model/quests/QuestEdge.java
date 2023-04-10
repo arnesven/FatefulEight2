@@ -12,29 +12,41 @@ import java.io.Serializable;
 public class QuestEdge implements Serializable {
     public static final boolean HORIZONTAL = true;
     public static final boolean VERTICAL = false;
-    private static final Sprite horizontalSprite = new Sprite16x16("horipath", "quest.png", 0x41);
-    private static final Sprite verticalSprite = new Sprite16x16("vertipath", "quest.png", 0x40);
-    private static final Sprite[] specialSprites = new Sprite[] {
-            new Sprite16x16("ulcorner", "quest.png", 0x42),
-            new Sprite16x16("urcorner", "quest.png", 0x43),
-            new Sprite16x16("llcorner", "quest.png", 0x44),
-            new Sprite16x16("lrcorner", "quest.png", 0x45),
-            new Sprite16x16("uparrow", "quest.png", 0x46),
-            new Sprite16x16("rightarrow", "quest.png", 0x47),
-            new Sprite16x16("leftarrow", "quest.png", 0x48),
-            new Sprite16x16("downarrow", "quest.png", 0x49),
-    };
+    private final Sprite horizontalSprite;
+    private final Sprite verticalSprite;
+    private static final Sprite[] specialSpritesWhite = makeSpecialSprites(MyColors.WHITE);
+    private static final Sprite[] specialSpritesRed = makeSpecialSprites(MyColors.LIGHT_RED);
+    private static final Sprite[] specialSpritesGreen = makeSpecialSprites(MyColors.LIGHT_GREEN);
+    private final Sprite[] specialSprites;
+
+    private static Sprite[] makeSpecialSprites(MyColors color2) {
+        Sprite[] result = new Sprite[10];
+        for (int i = 0; i < 8; ++i) {
+            result[i] = new Sprite16x16("specialedge"+i, "quest.png", 0x42 + i,
+                    MyColors.BLACK, color2, MyColors.PINK, MyColors.BEIGE);
+        }
+        result[8] = new Sprite16x16("specialedge8", "quest.png", 0x40,
+                MyColors.BLACK, color2, MyColors.PINK, MyColors.BEIGE);
+        result[9] = new Sprite16x16("specialedge9", "quest.png", 0x41,
+                MyColors.BLACK, color2, MyColors.PINK, MyColors.BEIGE);
+        return result;
+    }
+
     private QuestNode node;
     private boolean alignment;
 
     public QuestEdge(QuestNode node, boolean align, MyColors lineColor) {
         this.node = node;
         this.alignment = align;
-        horizontalSprite.setColor2(lineColor);
-        verticalSprite.setColor2(lineColor);
-        for (Sprite sp : specialSprites) {
-            sp.setColor2(lineColor);
+        if (lineColor == MyColors.LIGHT_RED) {
+            specialSprites = specialSpritesRed;
+        } else if (lineColor == MyColors.LIGHT_GREEN) {
+            specialSprites = specialSpritesGreen;
+        } else {
+            specialSprites = specialSpritesWhite;
         }
+        horizontalSprite = specialSprites[9];
+        verticalSprite = specialSprites[8];
     }
 
     public QuestEdge(QuestNode node, boolean align) {
