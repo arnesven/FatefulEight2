@@ -82,6 +82,10 @@ public class DungeonChest extends CenterDungeonObject {
             }
         }
 
+        if (isLocked) {
+            return;
+        }
+
         if (!opened) {
             opened = true;
             CombinedLoot combinedLoot = new CombinedLoot();

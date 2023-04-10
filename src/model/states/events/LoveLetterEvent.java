@@ -16,7 +16,7 @@ public class LoveLetterEvent extends DailyEventState {
                 "you take it for just a piece of trash, but then you realize it's something else. You pick it up.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Hmm, a letter. Looks quite fancy. " +
                 "It's addressed to 'Maggie', but who could have sent it?");
-        println("Do you open the letter? (Y/N) ");
+        print("Do you open the letter? (Y/N) ");
         int rollBonus = 0;
         if (yesNoInput()) {
             rollBonus += 3;
