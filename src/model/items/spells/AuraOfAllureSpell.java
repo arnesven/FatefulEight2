@@ -7,7 +7,7 @@ import view.sprites.CombatSpellSprite;
 import view.sprites.Sprite;
 
 public class AuraOfAllureSpell extends SkillBoostingSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(2, 8, MyColors.BROWN, MyColors.BEIGE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new CombatSpellSprite(2, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public AuraOfAllureSpell() {
         super("Aura of Allure", 16, MyColors.WHITE, 8, 1);

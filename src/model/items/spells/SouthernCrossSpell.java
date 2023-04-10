@@ -11,7 +11,7 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class SouthernCrossSpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(5, 8, MyColors.BROWN, MyColors.BEIGE, MyColors.DARK_GRAY);;
+    private static final Sprite SPRITE = new CombatSpellSprite(5, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);;
 
     public SouthernCrossSpell() {
         super("Southern Cross", 26, MyColors.WHITE, 11, 3);

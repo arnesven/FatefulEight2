@@ -13,7 +13,7 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class HealingWordSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BROWN, MyColors.BEIGE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public HealingWordSpell() {
         super("Healing Word", 16, MyColors.WHITE, 8, 2);
