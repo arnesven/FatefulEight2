@@ -16,7 +16,7 @@ public class WolfEnemy extends BigEnemy {
 
     public WolfEnemy(char a, int health, int damage) {
         super(a, "Wolf");
-        this.health = health;
+        this.health = health; // TODO: This wolf gets 0 health for some reason
         this.damage = damage;
     }
 

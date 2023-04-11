@@ -25,7 +25,7 @@ public class HalflingVillage extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.getRace() == Race.HALFLING) {
+            if (gc.getRace().id() == Race.HALFLING.id()) {
                 foundVillage(model, gc);
                 return;
             }

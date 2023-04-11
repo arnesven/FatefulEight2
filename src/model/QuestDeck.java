@@ -23,6 +23,17 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
                 new TreasureHuntQuest(),
                 new SurveillanceQuest(),
                 new WizardsTowerQuest()
+                // new HauntedMansionQuest(), // Hard
+                // new ArenaQuest(), // medium
+                // new TownFairQuest(), // easy
+                // new AbandonedMineQuest(), // Hard
+                // new MasqueradeQuest(), // medium
+                // new WarlocksDungeonQuest(), // Easy
+                // new MurderMysteryQuest(), // Hard
+                // new CultistDenQuest(), // medium
+                // new ForestTrollQuest(), // medium
+                // new GoblinTunnelsQuest(), // medium
+                // new ElvenHighCouncilQuest(), // hard
         ));
     }
 
