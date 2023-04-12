@@ -1,7 +1,5 @@
 package model.enemies;
 
-import view.sprites.Sprite;
-
 import java.awt.*;
 
 public abstract class BigEnemy extends Enemy {

@@ -123,7 +123,7 @@ public class GameLog {
     }
 
     public boolean inputReady() {
-        return inputMode.inputReady(this);
+        return inputMode.inputReady(this); // TODO: Got a nullptr execption here...
     }
 
     public synchronized String getInput() {
