@@ -50,6 +50,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
     private boolean canceled = false;
+    private boolean glasses = false;
 
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-8);
@@ -68,6 +69,7 @@ public class CharacterCreationView extends SelectableListMenu {
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);
+        app.setHasGlasses(glasses);
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
             app.applyFacialHair(raceSet[selectedRace]);
@@ -120,7 +122,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         lastCharacter.getAvatarSprite());
                 y++;
                 String[] labels = new String[]{"First Name", "Last Name", "", "Gender", "Race", "", "Eyes", "Nose",
-                        "Mouth", "Beard", "Hair Color", "Hair", "", "Class", "", "Other Class 1",
+                        "Mouth", "Beard", "Hair Color", "Hair", "Detail", "", "Class", "Other Class 1",
                         "Other Class 2", "Other Class 3"};
                 for (int i = 0; i < labels.length; ++i) {
                     BorderFrame.drawString(model.getScreenHandler(), labels[i], x, y++, MyColors.WHITE, MyColors.BLUE);
@@ -263,7 +265,13 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedHairStyle = Arithmetics.incrementWithWrap(selectedHairStyle, hairStyleSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 29,
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 27, glasses ? "Glasses" : "None") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
+                    }
+                },
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 31,
                         classSet[selectedClass] == Classes.None ? "Not Set" : classSet[selectedClass].getFullName()) {
                     @Override
                     public void turnLeft(Model model) {
@@ -380,6 +388,43 @@ public class CharacterCreationView extends SelectableListMenu {
         public InputFieldContent(int x, int y, int index) {
             super(x, y, buffers.get(index).first.toString());
         }
+    }
+
+    private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
+
+        public SelectAccessoryMenu(GameView partyView, int x, int y) {
+            super(partyView, 10, 3, x, y);
+        }
+
+        @Override
+        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
+            List<ListContent> result = new ArrayList<>();
+            result.add(new SelectableListContent(xStart + 1, yStart + 1, "None") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    glasses = false;
+                    setTimeToTransition(true);
+                    rebuildAppearance();
+                }
+            });
+            result.add(new SelectableListContent(xStart + 1, yStart + 2, "Glasses") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    glasses = true;
+                    setTimeToTransition(true);
+                    rebuildAppearance();
+                }
+            });
+            return result;
+        }
+
+        @Override
+        protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
     }
 
     private class SelectedGenderMenu extends FixedPositionSelectableListMenu {

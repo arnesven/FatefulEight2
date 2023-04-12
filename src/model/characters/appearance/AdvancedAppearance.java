@@ -4,6 +4,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.sprites.Sprite8x8;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
     private Sprite avatarFacial;
+    private boolean hasGlasses = false;
 
     public AdvancedAppearance(Race race, boolean femaleGender, MyColors hairColor,
                               int mouth, int nose, CharacterEyes eyes, HairStyle hair,
@@ -177,6 +179,13 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (beard != null) {
             beard.apply(this, race);
         }
+        if (hasGlasses) {
+            for (int i = 0; i < 3; ++i) {
+                Sprite8x8 left = new Sprite8x8("glasses", "clothes.png", 0x3A + i);
+                left.setColor1(MyColors.GRAY);
+                addSpriteOnTop(2 + i, 3, left);
+            }
+        }
     }
 
     @Override
@@ -206,5 +215,9 @@ public class AdvancedAppearance extends CharacterAppearance {
     @Override
     public Sprite getFacialOnly() {
         return avatarFacial;
+    }
+
+    public void setHasGlasses(boolean b) {
+        hasGlasses = b;
     }
 }

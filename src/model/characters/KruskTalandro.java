@@ -9,6 +9,7 @@ public class KruskTalandro extends AdvancedAppearance {
     public KruskTalandro() {
         super(Race.HALF_ORC, false, MyColors.DARK_GRAY, 7, 2,
                 new CharacterEyes(1), new BaldHairStyle(), new Beard(0x09, 0x00));
+        setHasGlasses(true);
     }
 
     @Override
@@ -20,11 +21,6 @@ public class KruskTalandro extends AdvancedAppearance {
     @Override
     public void applyFacialHair(Race race) {
         super.applyFacialHair(race);
-        for (int i = 0; i < 3; ++i) {
-            Sprite8x8 left = new Sprite8x8("glasses", "clothes.png", 0x3A+i);
-            left.setColor1(MyColors.GRAY);
-            addSpriteOnTop(2+i, 3, left);
-        }
     }
 
     @Override
