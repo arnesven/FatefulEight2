@@ -26,6 +26,7 @@ public class DoILookFatTask extends SummonTask {
         int choice = multipleOptionArrowMenu(model, 30, 20, List.of("Of course not!", "No, but wear something else.", "Uhm, yes..."));
         if (choice < 2) {
             println(location.getLordName() + ": \"Liar! You're just like everybody else. You just say what I want to hear.\"");
+            model.getParty().randomPartyMemberSay(model, List.of("What a vain person..."));
         } else {
             println(location.getLordName() + ": \"Hmm... Well at least you're honest. Maybe something in another color.\"");
             model.getParty().randomPartyMemberSay(model, List.of("It's not the garment... it's your body shape."));
@@ -34,8 +35,15 @@ public class DoILookFatTask extends SummonTask {
             println(location.getLordName() + ": \"Oh. Okay...\"");
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Endurance, 10);
             if (success) {
-                // TODO
                 summon.increaseStep();
+                println(location.getLordName() + ": \"Thanks for the workout session! But what about the dinner party?\"");
+                model.getParty().randomPartyMemberSay(model, List.of("You'll be fine. Just tell your guests about your new workout " +
+                        "routine and they'll be impressed by your self awareness and forget about everything else."));
+                println(location.getLordName() + ": \"You really think so?\"");
+                model.getParty().randomPartyMemberSay(model, List.of("Of course."));
+                println(location.getLordName() + ": \"Well thanks again. Please allow me to compensate you for your trouble.\"");
+                println("The party receives 25 gold.");
+                model.getParty().addToGold(25);
             } else {
                 println(location.getLordName() + ": \"This is exhausting... I'm never going to be able to do this. I give up.\"");
                 model.getParty().randomPartyMemberSay(model, List.of("Come on people " + heOrShe(location.getLordGender()) + "'s hopeless..."));
