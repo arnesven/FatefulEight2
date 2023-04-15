@@ -2,10 +2,7 @@ package model;
 
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
-import model.tasks.CastleDungeonTask;
-import model.tasks.GiveStaffTask;
-import model.tasks.MissingGlassesTask;
-import model.tasks.SummonTask;
+import model.tasks.*;
 import util.MyRandom;
 
 import java.io.Serializable;
@@ -19,14 +16,16 @@ public class Summon implements Serializable {
     public static final int MET_LORD = 1;
     public static final int COMPLETE = 2;
     private int step = ACCEPTED;
-    private SummonTask task = null; // TODO: SummonTask is not Serializable...
+    private int summonTask = -1;
     private static Set<String> usedTasks = new HashSet<>();
 
     private static List<SummonTask> makeAllTasks(Summon summon, Model model, UrbanLocation location) {
         List<SummonTask> tasks = new ArrayList<>();
         tasks.add(new MissingGlassesTask(summon, model, location));
         tasks.add(new GiveStaffTask(summon, model, location));
-        // TODO: add more
+        tasks.add(new GiveMaterialsTask(summon, model, location));
+        tasks.add(new GiveIngredientsTask(summon, model, location));
+        tasks.add(new GiveFoodTask(summon, model, location));
         return tasks;
     }
 
@@ -35,16 +34,20 @@ public class Summon implements Serializable {
         if (location instanceof CastleLocation) {
             return new CastleDungeonTask(this, model, location);
         }
-
         List<SummonTask> allTasks = makeAllTasks(this, model, location);
         if (usedTasks.size() == allTasks.size()) {
             throw new IllegalStateException("All tasks used up!");
         }
+        if (summonTask != -1) {
+            return allTasks.get(summonTask);
+        }
+        SummonTask task;
         do {
-            this.task = MyRandom.sample(allTasks);
-        } while (isUsed(this.task));
-        use(this.task);
-        return this.task;
+            task = MyRandom.sample(allTasks);
+        } while (isUsed(task));
+        use(task);
+        summonTask = allTasks.indexOf(task);
+        return task;
     }
 
     private static void use(SummonTask task) {

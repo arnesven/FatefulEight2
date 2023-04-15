@@ -28,8 +28,8 @@ public class MissingGlassesTask extends SummonTask {
             if (success) {
                 summon.increaseStep();
                 println(location.getLordName() + ": \"There they are, thank goodness. Here, let me pay you for your trouble.\"");
-                println("The party receives 50 gold.");
-                model.getParty().addToGold(50);
+                println("The party receives 25 gold.");
+                model.getParty().addToGold(25);
             }
         } else {
             println(location.getLordName() + ": \"Uh, okay. But come back if you change your mind! " +
