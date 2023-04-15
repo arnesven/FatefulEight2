@@ -26,6 +26,9 @@ public class Summon implements Serializable {
         tasks.add(new GiveMaterialsTask(summon, model, location));
         tasks.add(new GiveIngredientsTask(summon, model, location));
         tasks.add(new GiveFoodTask(summon, model, location));
+        tasks.add(new MagicOrbTask(summon, model, location));
+        tasks.add(new FencingTask(summon, model, location));
+        tasks.add(new DoILookFatTask(summon, model, location));
         return tasks;
     }
 

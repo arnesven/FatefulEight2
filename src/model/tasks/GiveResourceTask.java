@@ -31,7 +31,7 @@ public abstract class GiveResourceTask extends SummonTask {
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "How much do you need?");
         println(location.getLordName() + ": \"I think about " + amount + " " + resourceType + " would be enough.\"");
         if (getResource(model) <= amount) {
-            print("Give " + amount + " " + resourceType + " to " + location.getPlaceName() + "?");
+            print("Give " + amount + " " + resourceType + " to " + location.getPlaceName() + "? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Naturally, we will help you.");
                 summon.increaseStep();
