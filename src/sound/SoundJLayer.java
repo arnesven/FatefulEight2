@@ -1,5 +1,6 @@
 package sound;
 
+import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.JavaSoundAudioDevice;
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -97,8 +98,8 @@ public class SoundJLayer extends PlaybackListener implements Runnable
                 this.player.setPlayBackListener(this);
                 adjustVolume();
                 this.player.play();
-            } catch (javazoom.jl.decoder.JavaLayerException ex) {
-                ex.printStackTrace();
+            } catch (JavaLayerException | NullPointerException ex) {
+                System.err.println("SoundJLayer got an exception: " + ex);
             }
 
             moreToPlay = hasAdditionalSoundsToPlay();

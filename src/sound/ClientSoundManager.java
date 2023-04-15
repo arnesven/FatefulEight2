@@ -50,6 +50,8 @@ public class ClientSoundManager extends SoundManager {
 
     private static synchronized void playBackgroundSound(String ambientSound) {
         if (!backgroundSound.equals(ambientSound)) {
+            System.out.println("Old bg song is " + backgroundSound + ", new is " + ambientSound);
+            backgroundSound = ambientSound;
             if (bgSoundLayer != null) {
                 bgSoundLayer.stop();
             }
@@ -57,7 +59,6 @@ public class ClientSoundManager extends SoundManager {
                 bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound, true), true);
                 bgSoundLayer.play();
             }
-            backgroundSound = ambientSound;
         }
     }
 
@@ -69,7 +70,7 @@ public class ClientSoundManager extends SoundManager {
     }
 
     public synchronized static void playBackgroundMusic(BackgroundMusic song) {
-        stopPlayingBackgroundSound();
+        //stopPlayingBackgroundSound();
         playBackgroundSound(song.getFileName());
     }
 }

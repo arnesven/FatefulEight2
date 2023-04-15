@@ -47,7 +47,9 @@ public class PortraitSubView extends SubView {
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
-        appearance.setHasGlasses(MyRandom.randInt(10) == 0);
+        boolean glasses = MyRandom.rollD10() == 10;
+        System.out.println("Portrait glasses: " + glasses);
+        appearance.setHasGlasses(glasses);
         appearance.setClass(cls);
     }
 

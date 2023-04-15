@@ -19,7 +19,7 @@ public class Summon implements Serializable {
     public static final int MET_LORD = 1;
     public static final int COMPLETE = 2;
     private int step = ACCEPTED;
-    private SummonTask task = null;
+    private SummonTask task = null; // TODO: SummonTask is not Serializable...
     private static Set<String> usedTasks = new HashSet<>();
 
     private static List<SummonTask> makeAllTasks(Summon summon, Model model, UrbanLocation location) {
