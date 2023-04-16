@@ -79,6 +79,7 @@ public class DungeonMonster extends CenterDungeonObject {
 
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
+        boolean ambush = false;
         if (isSleeping) {
             exploreRuinsState.print("The " + enemies.get(0).getName() + " hasn't notice you. Do you want to attempt to sneak past it? (Y/N) ");
             if (exploreRuinsState.yesNoInput()) {
@@ -87,6 +88,8 @@ public class DungeonMonster extends CenterDungeonObject {
                     return;
                 }
                 exploreRuinsState.println("The " + enemies.get(0).getName() + " has spotted you!");
+            } else {
+                ambush = true;
             }
             isSleeping = false;
         } else if (canSleep()) {
@@ -95,17 +98,17 @@ public class DungeonMonster extends CenterDungeonObject {
         if (isSleeping) {
             return;
         }
-        doCombatWithMonster(model, exploreRuinsState);
+        doCombatWithMonster(model, exploreRuinsState, ambush);
     }
 
     protected boolean canSleep() {
         return true;
     }
 
-    private void doCombatWithMonster(Model model, ExploreRuinsState exploreRuinsState) {
+    private void doCombatWithMonster(Model model, ExploreRuinsState exploreRuinsState, boolean ambush) {
         exploreRuinsState.print(enemies.get(0).getName() + "s attack you! Press enter to continue.");
         exploreRuinsState.waitForReturn();
-        CombatEvent combat = new CombatEvent(model, enemies, new DungeonTheme(), true);
+        CombatEvent combat = new CombatEvent(model, enemies, new DungeonTheme(), true, ambush);
         combat.run(model);
         StripedTransition.transition(model, exploreRuinsState.getSubView());
         if (combat.fled()) {
@@ -142,13 +145,18 @@ public class DungeonMonster extends CenterDungeonObject {
 
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
+        boolean ambush = false;
         if (isSleeping) {
             state.print("The " + enemies.get(0).getName() + " hasn't noticed you. Do you want to provoke it? (Y/N) ");
             if (state.yesNoInput()) {
                 isSleeping = false;
+                ambush = true;
             }
         }
-        doCombatWithMonster(model, state);
+
+        if (!isSleeping) {
+            doCombatWithMonster(model, state, ambush);
+        }
     }
 
     private void useSleepingPotion(Model model, ExploreRuinsState state) {

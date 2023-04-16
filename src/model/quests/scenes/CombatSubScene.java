@@ -68,7 +68,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     public QuestEdge run(Model model, QuestState state) {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
-        CombatEvent combat = new CombatEvent(model, enemies, state.getCombatTheme(), fleeingEnabled);
+        CombatEvent combat = new CombatEvent(model, enemies, state.getCombatTheme(), fleeingEnabled, false);
         combat.run(model);
         state.transitionToQuestView(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);

@@ -5,6 +5,7 @@ import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +23,48 @@ public class OrcBandEvent extends DailyEventState {
                 "to hide behind some bushes and remain undetected.");
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
-            println("You stay hidden as the throng passes by.");
-            // TODO: Follow them ? to -> Orc Stronghold / Campsite / Ambush?
-        } else {
-            println("The orcs discover you and are very annoyed by your presence.");
-            if (new OrcsEvent(model).interactWithOrcs(model)) {
-                println("The orcs let you continue on your journey.");
-            } else {
-                List<Enemy> enemies = new ArrayList<>();
-                for (int i = 0; i < 6; ++i) {
-                    enemies.add(new OrcWarrior('A'));
+            print("You stay hidden as the throng passes by. Do you wish to follow them? ");
+            if (yesNoInput()) {
+                println("You follow the orcs for a bit.");
+                int dieRoll = MyRandom.rollD10();
+                if (dieRoll < 3) {
+                    new OrcishStrongholdEvent(model).doEvent(model);
+                } else if (dieRoll < 5) {
+                    interact(model);
+                } else {
+                    println("After a while the band approaches a gorge.");
+                    model.getParty().randomPartyMemberSay(model, List.of("If we hurry a little we could ambush the orcs in the gorge."));
+                    print("Do you wish to ambush the orcs? (Y/N) ");
+                    if (yesNoInput()) {
+                        doCombat(model, true);
+                    } else {
+                        new OrcishStrongholdEvent(model).doEvent(model);
+                    }
                 }
-                runCombat(enemies);
             }
+        } else {
+            interact(model);
+        }
+    }
+
+    private void interact(Model model) {
+        println("The orcs discover you and are very annoyed by your presence.");
+        if (new OrcsEvent(model).interactWithOrcs(model)) {
+            println("The orcs let you continue on your journey.");
+        } else {
+            doCombat(model, false);
+        }
+    }
+
+    private void doCombat(Model model, boolean ambush) {
+        List<Enemy> enemies = new ArrayList<>();
+        for (int i = 0; i < 6; ++i) {
+            enemies.add(new OrcWarrior('A'));
+        }
+        if (ambush) {
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+        } else {
+            runCombat(enemies);
         }
     }
 }

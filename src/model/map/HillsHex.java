@@ -53,7 +53,6 @@ public class HillsHex extends WorldHex {
                     new TrollEvent(model),
                     new BanditEvent(model),
                     new AbandonedShackEvent(model),
-                    // new OrcishStronghold(model) // TODO
                     new CaveEvent(model),
                     new CaveEvent(model),
                     new CaveEvent(model)

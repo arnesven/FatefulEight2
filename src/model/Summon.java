@@ -28,7 +28,7 @@ public class Summon implements Serializable {
         tasks.add(new GiveFoodTask(summon, model, location));
         tasks.add(new MagicOrbTask(summon, model, location));
         tasks.add(new FencingTask(summon, model, location));
-        tasks.add(new DoILookFatTask(summon, model, location));
+        tasks.add(new DoILookFatTask(summon, model, location)); // TODO: Need 6 more (Total of 14 towns)
         return tasks;
     }
 

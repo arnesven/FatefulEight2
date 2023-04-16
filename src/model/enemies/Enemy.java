@@ -22,7 +22,7 @@ import java.awt.Point;
 
 public abstract class Enemy extends Combatant {
     private final char enemyGroup;
-    private final String name;
+    private String name;
 
     public Enemy(char enemyGroup, String name) {
         this.enemyGroup = enemyGroup;
@@ -51,6 +51,10 @@ public abstract class Enemy extends Combatant {
     @Override
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     protected abstract Sprite getSprite();

@@ -72,18 +72,26 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
-        CombatEvent combat = new CombatEvent(getModel(), enemies, theme, fleeingEnabled);
+    protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
+        CombatEvent combat = new CombatEvent(getModel(), enemies, theme, fleeingEnabled, isAmbush);
         combat.run(getModel());
         fledCombat = combat.fled();
     }
 
     protected void runCombat(List<Enemy> enemies) {
-        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), true);
+        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), true, false);
     }
 
     protected void runCombat(List<Enemy> enemies, boolean fleeingEnabled) {
-        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), fleeingEnabled);
+        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), fleeingEnabled, false);
+    }
+
+    protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
+        runCombat(enemies, theme, fleeingEnabled, false);
+    }
+
+    protected void runAmbushCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
+        runCombat(enemies, theme, fleeingEnabled, true);
     }
 
     public boolean haveFledCombat() {

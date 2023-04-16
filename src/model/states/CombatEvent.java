@@ -36,8 +36,9 @@ public class CombatEvent extends DailyEventState {
     private CombatAction selectedCombatAction = null;
     private Combatant selectedTarget;
     private List<GameCharacter> allies = new ArrayList<>();
+    private boolean isAmbush;
 
-    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled) {
+    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
         selectingFormation = true;
         combatMatrix = new CombatMatrix();
@@ -49,10 +50,11 @@ public class CombatEvent extends DailyEventState {
         destroyedEnemies = new HashMap<>();
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.fleeingEnabled = fleeingEnabled;
+        this.isAmbush = isAmbush;
     }
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {
-        this(model, startingEnemies, new GrassCombatTheme(), true);
+        this(model, startingEnemies, new GrassCombatTheme(), true, false);
     }
 
     @Override
@@ -145,12 +147,14 @@ public class CombatEvent extends DailyEventState {
         for ( ; currentInit < initiativeOrder.size() && !combatDone(model) ; currentInit++) {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {
-                List<Enemy> enms = new ArrayList<>(enemies);
-                for (Enemy e : enms) {
-                    if (e.getEnemyGroup() == ((Enemy) turnTaker).getEnemyGroup()) {
-                        currentCombatant = e;
-                        model.getLog().waitForAnimationToFinish();
-                        e.takeCombatTurn(model, this);
+                if (!isAmbush) {
+                    List<Enemy> enms = new ArrayList<>(enemies);
+                    for (Enemy e : enms) {
+                        if (e.getEnemyGroup() == ((Enemy) turnTaker).getEnemyGroup()) {
+                            currentCombatant = e;
+                            model.getLog().waitForAnimationToFinish();
+                            e.takeCombatTurn(model, this);
+                        }
                     }
                 }
             } else {
@@ -172,6 +176,7 @@ public class CombatEvent extends DailyEventState {
                 character.decreaseTimedConditions(model, this);
             }
         }
+        isAmbush = false;
     }
 
     private void waitToProceed() {
@@ -373,5 +378,9 @@ public class CombatEvent extends DailyEventState {
             }
         }
         return sum;
+    }
+
+    public boolean isAmbush() {
+        return isAmbush;
     }
 }

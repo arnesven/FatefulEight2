@@ -49,6 +49,9 @@ public class CombatSubView extends SubView {
 
     @Override
     protected String getTitleText(Model model) {
+        if (combat.isAmbush()) {
+            return TITLE_TEXT + " - AMBUSH";
+        }
         return TITLE_TEXT;
     }
 

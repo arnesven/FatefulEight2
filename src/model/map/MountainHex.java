@@ -50,6 +50,7 @@ public class MountainHex extends WorldHex {
                     new EaglesEvent(model),
                     new ChasmEvent(model),
                     new AbandonedShackEvent(model),
+                    new OrcishStrongholdEvent(model),
                     new CaveEvent(model),
                     new CaveEvent(model),
                     new CaveEvent(model)

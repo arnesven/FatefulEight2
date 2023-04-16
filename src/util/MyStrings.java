@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyStrings {
+    private static final List<String> NUM_WORDS = List.of(
+            "zero", "one", "two", "three", "four", "five", "six",
+            "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+            "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty");
+
     public static String[] partition(String text, int maxWidth) {
         if (text.length() >= maxWidth) {
             List<String> strs = new ArrayList<>();
@@ -44,5 +49,9 @@ public class MyStrings {
             return "+" + x;
         }
         return "" + x;
+    }
+
+    public static String numberWord(int num) {
+        return NUM_WORDS.get(num);
     }
 }
