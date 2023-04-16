@@ -3,7 +3,6 @@ package view.subviews;
 import model.Model;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
-import model.races.AllRaces;
 import model.races.Race;
 import model.states.GameState;
 import util.MyPair;
@@ -32,7 +31,7 @@ public class PortraitSubView extends SubView {
             raceToUse = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
         }
         boolean gender = MyRandom.randInt(2)==0;
-        MyColors hairColor = HairStyle.allHairColors[MyRandom.randInt(HairStyle.allHairColors.length)];
+        MyColors hairColor = HairStyle.randomHairColor();
         int mouthIndex;
         do {
             mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
@@ -40,7 +39,7 @@ public class PortraitSubView extends SubView {
         int mouth = CharacterCreationView.mouthSet[mouthIndex];
         int nose = CharacterCreationView.noseSet[MyRandom.randInt(CharacterCreationView.noseSet.length)];
         CharacterEyes eyes = CharacterEyes.allEyes[MyRandom.randInt(CharacterEyes.allEyes.length)];
-        HairStyle hair = HairStyle.allHairStyles[MyRandom.randInt(HairStyle.allHairColors.length)];
+        HairStyle hair = HairStyle.randomHairStyle();
         Beard beard;
         do {
             beard = Beard.allBeards[MyRandom.randInt(Beard.allBeards.length)];

@@ -108,7 +108,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
 
             if (summon.getStep() == Summon.COMPLETE) {
                 println(lord + ": \"Thanks again for helping me with my problem. " +
-                        "Please, stay for supper and spend the night, there's room for everyone.");
+                        "Please, stay for supper and spend the night, there's room for everyone.\"");
                 print("Do you wish to spend the night here? (Y/N): ");
                 if (yesNoInput()) {
                     spentNight = true;

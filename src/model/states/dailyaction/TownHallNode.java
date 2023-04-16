@@ -64,6 +64,12 @@ public class TownHallNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
+        UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
+        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
+            if (model.getParty().getSummons().get(location.getPlaceName()).getStep() == Summon.COMPLETE) {
+                return true;
+            }
+        }
         if (townDailyActionState.isEvening()) {
             townDailyActionState.println("It's too late in the day for that.");
             return false;

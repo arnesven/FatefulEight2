@@ -4,6 +4,7 @@ import model.characters.FemaleLongHairStyle;
 import model.characters.MordKroftHairStyle;
 import model.characters.TorhildHairstyle;
 import model.characters.VzaniHairStyle;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.FilledBlockSprite;
@@ -108,4 +109,12 @@ public abstract class HairStyle implements Serializable {
     public abstract int getNormalHair();
 
     public abstract int getBackHairOnly();
+
+    public static MyColors randomHairColor() {
+        return HairStyle.allHairColors[MyRandom.randInt(HairStyle.allHairColors.length)];
+    }
+
+    public static HairStyle randomHairStyle() {
+        return HairStyle.allHairStyles[MyRandom.randInt(HairStyle.allHairColors.length)];
+    }
 }
