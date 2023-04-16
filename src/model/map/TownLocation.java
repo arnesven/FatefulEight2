@@ -84,6 +84,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        return new OrcRaidEvent(model); /*
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
                     new MuggingEvent(model),
@@ -98,7 +99,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new ThiefEvent(model),
                     new CourierEvent(model),
                     new ArcheryRangeEvent(model),
-                    // new OrcRaidMilitiaEvent(model), // TODO:
+                    new OrcRaidEvent(model),
                     new CharlatanEvent(model),
                     new PlayEvent(model),
                     new MarketEvent(model),
@@ -109,7 +110,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new MageEvent(model)
             ));
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     @Override

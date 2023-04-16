@@ -51,7 +51,7 @@ public class PaladinEvent extends DailyEventState {
                             new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
                             new Equipment(new Warhammer(), new ScaleArmor(), new SkullCap()));
                 paladin.setLevel(3);
-                combat.addAlly(paladin);
+                combat.addAllies(List.of(paladin));
                 combat.run(model);
                 this.fled = combat.fled();
                 if (fled) {

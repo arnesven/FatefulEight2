@@ -361,9 +361,9 @@ public class CombatEvent extends DailyEventState {
     }
 
 
-    public void addAlly(GameCharacter gc) {
-        this.allies.add(gc);
-        combatMatrix.addAllies(List.of(gc));
+    public void addAllies(List<GameCharacter> gcs) {
+        this.allies.addAll(gcs);
+        combatMatrix.addAllies(gcs);
     }
 
     public Collection<? extends GameCharacter> getAllies() {
