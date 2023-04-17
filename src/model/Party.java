@@ -43,6 +43,7 @@ public class Party implements Serializable {
     private List<GameCharacter> partyMembers = new ArrayList<>();
     private List<GameCharacter> frontRow = new ArrayList<>();
     private List<GameCharacter> backRow = new ArrayList<>();
+    private List<GameCharacter> bench = new ArrayList<>();
     private List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
     private Map<String, Summon> summons = new HashMap<>();
     private Set<String> templeBannings = new HashSet<>();
@@ -596,5 +597,17 @@ public class Party implements Serializable {
 
     public void banFromTemple(String name) {
         templeBannings.add(name);
+    }
+
+    public void benchPartyMembers(List<GameCharacter> benchers) {
+        for (GameCharacter gc : benchers) {
+            backRow.remove(gc);
+            frontRow.remove(gc);
+            bench.add(gc);
+        }
+    }
+
+    public void unbenchAll() {
+        frontRow.addAll(bench);
     }
 }

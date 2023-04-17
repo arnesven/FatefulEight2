@@ -21,6 +21,7 @@ import java.util.*;
 public class CombatEvent extends DailyEventState {
 
     private final List<Enemy> startingEnemies;
+    private List<GameCharacter> participants;
     private List<Enemy> enemies = new ArrayList<>();
     private List<Combatant> initiativeOrder;
     private int currentInit = 0;
@@ -46,6 +47,9 @@ public class CombatEvent extends DailyEventState {
         enemies.addAll(startingEnemies);
         combatMatrix.addEnemies(enemies);
         combatMatrix.addParty(model.getParty());
+        this.participants = new ArrayList<>();
+        this.participants.addAll(model.getParty().getFrontRow());
+        this.participants.addAll(model.getParty().getBackRow());
         setInitiativeOrder(model);
         destroyedEnemies = new HashMap<>();
         this.subView = new CombatSubView(this, combatMatrix, theme);
@@ -83,7 +87,7 @@ public class CombatEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
 
         List<CombatLoot> combatLoot = null;
-        if (model.getParty().isWipedOut()) {
+        if (isWipedOut()) {
             print("You have been wiped out! ");
         } else if (partyFled) {
             print("You have have fled battle. "); // TODO: Possible party members leave party
@@ -218,7 +222,7 @@ public class CombatEvent extends DailyEventState {
     private void setInitiativeOrder(Model model) {
         currentInit = 0;
         initiativeOrder = new ArrayList<>();
-        initiativeOrder.addAll(model.getParty().getPartyMembers());
+        initiativeOrder.addAll(participants);
         initiativeOrder.addAll(allies);
         Map<Character, Enemy> groupMap = new HashMap<>();
         for (Enemy e : enemies) {
@@ -239,7 +243,16 @@ public class CombatEvent extends DailyEventState {
     }
 
     private boolean combatDone(Model model) {
-        return allEnemiesDead() || model.getParty().isWipedOut() || partyFled;
+        return allEnemiesDead() || isWipedOut() || partyFled;
+    }
+
+    private boolean isWipedOut() {
+        for (GameCharacter chara : participants) {
+            if (chara.getHP() > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean allEnemiesDead() {
@@ -283,7 +296,7 @@ public class CombatEvent extends DailyEventState {
             destroyedEnemies.get(killer).add(enemy);
         }
         enemy.doUponDeath(model, this, killer);
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+        for (GameCharacter gc : participants) {
             if (!gc.isDead()) {
                 model.getParty().giveXP(model, gc, 5);
                 if (gc == killer) {
