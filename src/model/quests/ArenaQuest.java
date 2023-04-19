@@ -8,10 +8,18 @@ import model.states.CombatEvent;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyRandom;
 import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.subviews.GrassCombatTheme;
+import view.subviews.TavernSubView;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ArenaQuest extends Quest {
     private static final String INTRO =
@@ -36,23 +44,31 @@ public class ArenaQuest extends Quest {
             "Freya finally met her match! Well you had a good haul newcomers, but I am afraid this is the end. Nobody, and I repeat, " +
             "nobody has every defeated our grandmaster Gorn. Gorn is tough. Gorn is sharp. Gorn is the meanest dwarf who's ever been born!" +
             "He'll smack you down so fast you won't know what hit you! Don't tell me I didn't warn you!");
+    private static final Sprite STAIRS = new Sprite32x32("stairs", "world_foreground.png", 0x54,
+            MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
+    private static final List<QuestBackground> BG_SPRITES = makeBgSprites();
 
     public ArenaQuest() {
         super("The Arena", "Arena Promoter", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, ENDING);
     }
 
     @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BG_SPRITES;
+    }
+
+    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Orcish Brawler",
-                        List.of(new SingleCharacterCombatSubScene(5, 2, new OrcishBrawlerEnemy('A')))),
+                        List.of(new SingleCharacterCombatSubScene(4, 2, new OrcishBrawlerEnemy('A')))),
                        new QuestScene("Elven Gladiator",
-                               List.of(new SingleCharacterCombatSubScene(2, 3, new ElvenGladiatorEnemy('A')))),
+                               List.of(new SingleCharacterCombatSubScene(3, 3, new ElvenGladiatorEnemy('A')))),
                        new QuestScene("Halfling Martial Artist",
-                               List.of(new SingleCharacterCombatSubScene(5, 4, new HalflingMartialArtist('A')))),
+                               List.of(new SingleCharacterCombatSubScene(4, 4, new HalflingMartialArtist('A')))),
                        new QuestScene("Human Veteran",
-                               List.of(new SingleCharacterCombatSubScene(2, 5, new HumanVeteranEnemy('A')))),
+                               List.of(new SingleCharacterCombatSubScene(3, 5, new HumanVeteranEnemy('A')))),
                        new QuestScene("Dwarven Grandmaster",
-                               List.of(new SingleCharacterCombatSubScene(5, 6, new DwarvenGrandMasterEnemy('A')))));
+                               List.of(new SingleCharacterCombatSubScene(4, 6, new DwarvenGrandMasterEnemy('A')))));
     }
 
     @Override
@@ -73,6 +89,27 @@ public class ArenaQuest extends Quest {
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.BLACK;
+    }
+
+
+    private static List<QuestBackground> makeBgSprites() {
+        List<QuestBackground> result = new ArrayList<>();
+        for (int row = 0; row < 9; ++row) {
+            for (int col = 0; col < 8; ++col) {
+                if (row == 0) {
+                    if (col == 0) {
+                        result.add(new QuestBackground(new Point(col, row), STAIRS, true));
+                    } else {
+                        result.add(new QuestBackground(new Point(col, row), TavernSubView.WALL, true));
+                    }
+                } else if (row == 8) {
+                    result.add(new QuestBackground(new Point(col, row), TavernSubView.SIDE_WALL, true));
+                } else {
+                    result.add(new QuestBackground(new Point(col, row), TavernSubView.FLOOR, true));
+                }
+            }
+        }
+        return result;
     }
 
     private class SingleCharacterCombatSubScene extends CombatSubScene {

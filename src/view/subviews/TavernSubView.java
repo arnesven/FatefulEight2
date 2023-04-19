@@ -20,9 +20,9 @@ import static view.subviews.TownHallSubView.DOOR;
 public class TavernSubView extends DailyActionSubView {
     public static final MyColors FLOOR_COLOR = MyColors.DARK_BROWN;
 
-    private static final Sprite WALL = new Sprite32x32("tavernfarwall", "world_foreground.png", 0x44,
+    public static final Sprite WALL = new Sprite32x32("tavernfarwall", "world_foreground.png", 0x44,
             MyColors.DARK_GRAY, MyColors.BROWN, MyColors.TAN);
-    private static final Sprite SIDE_WALL = new Sprite32x32("sidewall", "world_foreground.png", 0x14,
+    public static final Sprite SIDE_WALL = new Sprite32x32("sidewall", "world_foreground.png", 0x14,
             MyColors.DARK_GRAY, MyColors.BROWN, MyColors.BROWN);
     public static final Sprite FLOOR = new Sprite32x32("tavernfloor", "combat.png", 0x53,
             MyColors.BROWN, FLOOR_COLOR, MyColors.TAN);
@@ -45,7 +45,6 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.BLACK);
 
     private final boolean inTown;
-    private final MyRandom random;
     private final Sprite[] colorGuys;
     private boolean[] showColorGuys;
 
@@ -53,17 +52,16 @@ public class TavernSubView extends DailyActionSubView {
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
         super(state, matrix);
         this.inTown = inTown;
-        random = new MyRandom();
         colorGuys = new Sprite32x32[]{
                 new Sprite32x32("colorguy1", "avatars.png", 0x87,
-                        MyColors.BLACK, random.nextColor(), random.nextRace().getColor()),
+                        MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor()),
                 new Sprite32x32("colorguy2", "avatars.png", 0x87,
-                        MyColors.BLACK, random.nextColor(), random.nextRace().getColor()),
+                        MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor()),
                 new Sprite32x32("colorguy3", "avatars.png", 0x87,
-                        MyColors.BLACK, random.nextColor(), random.nextRace().getColor())
+                        MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor())
         };
         do {
-            showColorGuys = new boolean[]{random.flipCoin(), random.flipCoin(), random.flipCoin()};
+            showColorGuys = new boolean[]{MyRandom.flipCoin(), MyRandom.flipCoin(), MyRandom.flipCoin()};
         } while (!showColorGuys[0] && !showColorGuys[1] && !showColorGuys[2]);
     }
 

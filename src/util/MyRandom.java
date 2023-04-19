@@ -36,15 +36,15 @@ public class MyRandom {
         return "she";
     }
 
-    public MyColors nextColor() {
+    public static MyColors nextColor() {
         return sample(Arrays.asList(MyColors.values()));
     }
 
-    public boolean flipCoin() {
+    public static boolean flipCoin() {
         return random.nextBoolean();
     }
 
-    public Race nextRace() {
+    public static Race nextRace() {
         return sample(Arrays.asList(Race.allRaces));
     }
 }
