@@ -4,15 +4,15 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
-import util.MyRandom;
 import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.GrassCombatTheme;
 import view.subviews.TavernSubView;
 import view.widget.QuestBackground;
 
@@ -47,6 +47,9 @@ public class ArenaQuest extends Quest {
     private static final Sprite STAIRS = new Sprite32x32("stairs", "world_foreground.png", 0x54,
             MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
     private static final List<QuestBackground> BG_SPRITES = makeBgSprites();
+    private static final Sprite[] SPECTATORS = makeSpectators();
+
+    private static final List<QuestBackground> DECORATIONS = makeDecorations();
 
     public ArenaQuest() {
         super("The Arena", "Arena Promoter", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, ENDING);
@@ -55,6 +58,11 @@ public class ArenaQuest extends Quest {
     @Override
     public List<QuestBackground> getBackgroundSprites() {
         return BG_SPRITES;
+    }
+
+    @Override
+    public List<QuestBackground> getDecorations() {
+        return DECORATIONS;
     }
 
     @Override
@@ -83,7 +91,7 @@ public class ArenaQuest extends Quest {
         scenes.get(1).get(0).connectSuccess(scenes.get(2).get(0));
         scenes.get(2).get(0).connectSuccess(scenes.get(3).get(0));
         scenes.get(3).get(0).connectSuccess(scenes.get(4).get(0));
-        scenes.get(4).get(0).connectSuccess(getSuccessEndingNode());
+        scenes.get(4).get(0).connectSuccess(getSuccessEndingNode(), QuestEdge.VERTICAL);
     }
 
     @Override
@@ -106,6 +114,41 @@ public class ArenaQuest extends Quest {
                     result.add(new QuestBackground(new Point(col, row), TavernSubView.SIDE_WALL, true));
                 } else {
                     result.add(new QuestBackground(new Point(col, row), TavernSubView.FLOOR, true));
+                }
+            }
+        }
+        return result;
+    }
+
+    private static Sprite[] makeSpectators() {
+        return new Sprite[]{
+                new SpectatorSprite(Race.NORTHERN_HUMAN, MyColors.BLUE),
+                new SpectatorSprite(Race.SOUTHERN_HUMAN, MyColors.RED),
+                new SpectatorSprite(Race.WOOD_ELF, MyColors.GREEN),
+                new SpectatorSprite(Race.HIGH_ELF, MyColors.DARK_GRAY),
+                new SpectatorSprite(Race.DARK_ELF, MyColors.LIGHT_GRAY),
+                new SpectatorSprite(Race.HALF_ORC, MyColors.TAN),
+                new SpectatorSprite(Race.HALFLING, MyColors.GOLD),
+                new SpectatorSprite(Race.DWARF, MyColors.BROWN)};
+    }
+
+    private static List<QuestBackground> makeDecorations() {
+        Random random = new Random(431);
+        List<QuestBackground> result = new ArrayList<>();
+        String[] placement = new String[]{
+          "        ",
+          " xxx xxx",
+          "xx    xx",
+          "xx    xx",
+          "xx    xx",
+          "xx    xx",
+          "xx    xx",
+          "xxxx xxx",
+          "        "};
+        for (int y = 0; y < placement.length; ++y) {
+            for (int x = 0; x < placement[0].length(); ++x) {
+                if (placement[y].charAt(x) == 'x') {
+                    result.add(new QuestBackground(new Point(x, y), SPECTATORS[random.nextInt(SPECTATORS.length)]));
                 }
             }
         }
@@ -151,5 +194,19 @@ public class ArenaQuest extends Quest {
             return getSuccessEdge();
         }
 
+    }
+
+    private static class SpectatorSprite extends LoopingSprite {
+        public SpectatorSprite(Race race, MyColors shirtColor) {
+            super("arenaspectator", "quest.png", 0x83 + (race.isShort()?2:0), 32);
+            setFrames(2);
+            setDelay(32);
+            setColor1(MyColors.BLACK);
+            setColor2(shirtColor);
+            setColor3(race.getColor());
+            if (shirtColor.hashCode() % 2 == 0) {
+                setCurrentFrame(1);
+            }
+        }
     }
 }

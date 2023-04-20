@@ -82,6 +82,14 @@ public class QuestSubView extends AvatarSubView {
                     converted.y, converted.y+4);
             model.getScreenHandler().put(converted.x, converted.y, model.getCurrentHex().getLocation().getTownOrCastleSprite());
         }
+
+        for (QuestBackground qb : quest.getDecorations()) {
+            Point converted = convertToScreen(qb.position);
+            if (qb.shifted) {
+                converted.y -= 2;
+            }
+            model.getScreenHandler().register(qb.sprite.getName(), converted, qb.sprite);
+        }
     }
 
     private void drawSubScenes(Model model, SteppingMatrix<QuestNode> matrix) {

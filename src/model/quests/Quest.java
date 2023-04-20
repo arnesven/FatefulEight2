@@ -111,4 +111,8 @@ public abstract class Quest {
     public boolean drawTownOrCastleInBackground() {
         return false;
     }
+
+    public List<QuestBackground> getDecorations() {
+        return new ArrayList<>();
+    }
 }

@@ -71,5 +71,9 @@ public class LoopingSprite extends Sprite implements Animation {
         in.defaultReadObject();
         AnimationManager.register(this);
     }
+
+    protected void setCurrentFrame(int currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 }
 
