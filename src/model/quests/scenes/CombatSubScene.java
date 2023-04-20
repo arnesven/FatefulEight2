@@ -50,7 +50,7 @@ public abstract class CombatSubScene extends QuestSubScene {
         }
     }
 
-    private boolean hasBeenDefeated() {
+    protected boolean hasBeenDefeated() {
         return defeated;
     }
     public void setDefeated(boolean d) {
@@ -68,7 +68,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     public QuestEdge run(Model model, QuestState state) {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
-        CombatEvent combat = new CombatEvent(model, enemies, state.getCombatTheme(), fleeingEnabled, false);
+        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, false);
         combat.run(model);
         state.transitionToQuestView(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
@@ -86,5 +86,9 @@ public abstract class CombatSubScene extends QuestSubScene {
 
     protected void setEnemies(List<Enemy> enemies) {
         this.enemies = enemies;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 }
