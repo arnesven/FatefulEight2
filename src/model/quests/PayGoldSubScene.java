@@ -48,6 +48,11 @@ public class PayGoldSubScene extends QuestSubScene {
     }
 
     @Override
+    public String getDetailedDescription() {
+        return "Expenses";
+    }
+
+    @Override
     protected boolean isEligibleForSelection(Model model, QuestState state) {
         int amount = model.getParty().size() * gold;
         if (amount > model.getParty().getGold()) {

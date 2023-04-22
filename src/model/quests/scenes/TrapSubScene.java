@@ -55,4 +55,9 @@ public class TrapSubScene extends QuestSubScene {
         model.setGameOver(model.getParty().isWipedOut());
         return getSuccessEdge();
     }
+
+    @Override
+    public String getDetailedDescription() {
+        return "Trap";
+    }
 }

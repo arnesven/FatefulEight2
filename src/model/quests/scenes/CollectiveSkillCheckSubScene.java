@@ -52,4 +52,14 @@ public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
         return getFailEdge();
     }
 
+    @Override
+    public String getDetailedDescription() {
+        String diffStr = "E";
+        if (difficulty > 4) {
+            diffStr = "H";
+        } else if (difficulty > 2) {
+            diffStr = "M";
+        }
+        return skill.getName() + " " + diffStr;
+    }
 }

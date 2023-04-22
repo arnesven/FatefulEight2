@@ -91,4 +91,19 @@ public abstract class CombatSubScene extends QuestSubScene {
     public List<Enemy> getEnemies() {
         return enemies;
     }
+
+    @Override
+    public String getDetailedDescription() {
+        int threatSum = 0;
+        for (Enemy e : getEnemies()) {
+            threatSum += e.getThreat();
+        }
+        String diffStr = "E";
+        if (threatSum > 50) {
+            diffStr = "H";
+        } else if (threatSum > 25) {
+            diffStr = "M";
+        }
+        return "Combat " + diffStr;
+    }
 }

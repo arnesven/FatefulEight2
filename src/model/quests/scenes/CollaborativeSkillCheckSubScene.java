@@ -48,4 +48,15 @@ public class CollaborativeSkillCheckSubScene extends SkillQuestSubScene {
         }
         return getFailEdge();
     }
+
+    @Override
+    public String getDetailedDescription() {
+        String diffStr = "E";
+        if (difficulty > 11) {
+            diffStr = "H";
+        } else if (difficulty > 8) {
+            diffStr = "M";
+        }
+        return skill.getName() + " " + diffStr;
+    }
 }

@@ -149,6 +149,11 @@ public class DefendTheVillageQuest extends Quest {
             getJunctions().remove(getJunctions().size()-1);
             return toReturn;
         }
+
+        @Override
+        public String getDetailedDescription() {
+            return "Combat *";
+        }
     }
 
     private static List<QuestBackground> makeBackgroundSprites() {

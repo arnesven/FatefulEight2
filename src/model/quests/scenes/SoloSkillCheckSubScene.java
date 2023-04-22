@@ -55,4 +55,15 @@ public class SoloSkillCheckSubScene extends SkillQuestSubScene {
     protected GameCharacter getPerformer() {
         return performer;
     }
+
+    @Override
+    public String getDetailedDescription() {
+        String diffStr = "E";
+        if (difficulty > 9) {
+            diffStr = "H";
+        } else if (difficulty > 6) {
+            diffStr = "M";
+        }
+        return skill.getName() + " " + diffStr;
+    }
 }

@@ -52,4 +52,6 @@ public abstract class QuestSubScene extends QuestNode implements Serializable {
     public QuestEdge getFailEdge() {
         return failConnection;
     }
+
+    public abstract String getDetailedDescription();
 }

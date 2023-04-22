@@ -1,6 +1,8 @@
 package model.quests;
 
 import model.Party;
+import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.SilhouetteAppearance;
 import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Quest {
+    private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();;
     private final String name;
     private final Reward reward;
     private final String text;
@@ -114,5 +117,31 @@ public abstract class Quest {
 
     public List<QuestBackground> getDecorations() {
         return new ArrayList<>();
+    }
+
+    public Reward getReward() {
+        return reward;
+    }
+
+    public CharacterAppearance getPortrait() {
+        return SIL_APPEARANCE;
+    }
+
+    public String getProvider() {
+        return provider;
+    }
+
+    public QuestDifficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public List<String> getDetails() {
+        List<String> result = new ArrayList<>();
+        for (QuestScene sc : getScenes()) {
+            for (QuestSubScene qss : sc) {
+                result.add(qss.getDetailedDescription());
+            }
+        }
+        return result;
     }
 }

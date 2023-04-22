@@ -237,5 +237,10 @@ public class SurveillanceQuest extends Quest {
             }
             return getFailEdge();
         }
+
+        @Override
+        public String getDetailedDescription() {
+            return "Sneak *";
+        }
     }
 }

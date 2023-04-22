@@ -25,6 +25,10 @@ public class Reward implements Serializable {
         return gold;
     }
 
+    public int getExp() {
+        return exp;
+    }
+
     public void giveYourself(Model model, int numberOfPartyMembers) {
         Party party = model.getParty();
         party.addToGold(gold * numberOfPartyMembers);

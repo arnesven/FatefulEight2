@@ -194,6 +194,10 @@ public class ArenaQuest extends Quest {
             return getSuccessEdge();
         }
 
+        @Override
+        public String getDetailedDescription() {
+            return "Combat *";
+        }
     }
 
     private static class SpectatorSprite extends LoopingSprite {

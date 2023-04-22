@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class PortraitSubView extends SubView {
     public static final int SILHOUETTE = 0;
-    private static final Sprite SILHOUETTE_SPRITE = new SilhouetteSprite();
+    private static final CharacterAppearance silhouetteAppearance = new SilhouetteAppearance();
     private final SubView previous;
     private final AdvancedAppearance appearance;
     private final String portraitName;
@@ -70,8 +70,7 @@ public class PortraitSubView extends SubView {
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         } else {
-            model.getScreenHandler().clearSpace(X_OFFSET + 12, X_OFFSET + 19, Y_OFFSET + 9, Y_OFFSET + 16);
-            model.getScreenHandler().put(X_OFFSET + 12, Y_OFFSET + 9, SILHOUETTE_SPRITE);
+            silhouetteAppearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         }
         BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET+17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         if (callout != null) {
@@ -107,12 +106,4 @@ public class PortraitSubView extends SubView {
         return appearance.isFemale();
     }
 
-    private static class SilhouetteSprite extends Sprite {
-        public SilhouetteSprite() {
-            super("silhouette", "silhouette.png", 0, 0, 56, 56);
-            setColor1(MyColors.BLACK);
-            setColor2(MyColors.LIGHT_GRAY);
-            setColor3(MyColors.GRAY);
-        }
-    }
 }

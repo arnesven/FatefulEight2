@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.quests.Quest;
 import view.help.HalfTimeDialog;
 import view.subviews.ArrowMenuSubView;
+import view.subviews.SelectQuestSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,10 +72,15 @@ public class EveningState extends GameState {
             do {
                 q = model.getQuestDeck().getRandomQuest();
             } while (model.getQuestDeck().alreadyDone(q));
+
+
             println("The party is offered a quest by " + q.getProviderName() + ".");
-            print(q.getBeforehandInfo());
-            print(" Will you go tomorrow (Y/N)? ");
-            if (yesNoInput()) {
+            print(" Will you go tomorrow?");
+            //print(q.getBeforehandInfo());
+            SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), q);
+            model.setSubView(subView);
+            waitForReturn();
+            if (subView.didAcceptQuest()) {
                 this.goOnQuest = q;
                 println("You accepted the quest.");
                 model.getQuestDeck().accept(q, model.getCurrentHex().getLocation());
