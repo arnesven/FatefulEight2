@@ -13,7 +13,6 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
     private final Set<String> questLocations = new HashSet<>();
 
     public Quest getRandomQuest() {
-        return new HauntedMansionQuest();/*
         return MyRandom.sample(List.of(
                 new DeepDungeonQuest(),
                 new MansionHeistQuest(),
@@ -35,7 +34,7 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
                 // new ForestTrollQuest(), // medium
                 // new GoblinTunnelsQuest(), // medium
                 // new ElvenHighCouncilQuest(), // hard
-        ));*/
+        ));
     }
 
     public void accept(Quest quest, HexLocation location) {
