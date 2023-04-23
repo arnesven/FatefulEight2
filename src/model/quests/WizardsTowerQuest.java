@@ -2,6 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.AutomatonEnemy;
 import model.enemies.OrcWarrior;
@@ -14,10 +16,12 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -35,12 +39,17 @@ public class WizardsTowerQuest extends Quest {
             "The bookie tells you that it's not really about the money, but the principle. If " +
             "he would let Rastomel off, lots of other rascals would ignore their debts. He rewards " +
             "you handsomely for your effort.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.BANDIT, Race.ALL);
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public WizardsTowerQuest() {
-        super("Wizard's Tower", "a local bookie", QuestDifficulty.HARD, 1, 50, 0, INTRO_TEXT, END_TEXT);
+        super("Wizard's Tower", "Local Bookie", QuestDifficulty.HARD, 1, 50, 0, INTRO_TEXT, END_TEXT);
     }
 
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
+    }
 
     public boolean drawTownOrCastleInBackground() {
         return true;

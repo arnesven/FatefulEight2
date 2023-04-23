@@ -1,14 +1,18 @@
 package model.quests;
 
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.GiantRatEnemy;
 import model.enemies.RatEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
+import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.GrassCombatTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -28,11 +32,17 @@ public class RatProblemQuest extends Quest {
             "With the rat problem dealt with you head back " +
             "to town, lugging plenty of dead rats. The " +
             "merchant indeed pays handsomely for them.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL);
 
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public RatProblemQuest() {
         super("Rat Problem", "granny Petronella", QuestDifficulty.MEDIUM, 1, 35, 0, TEXT, END_TEXT);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

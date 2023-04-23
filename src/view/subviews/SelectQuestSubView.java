@@ -9,7 +9,6 @@ import view.MyColors;
 import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
-import java.security.Key;
 import java.util.List;
 
 public class SelectQuestSubView extends SubView {
@@ -54,7 +53,7 @@ public class SelectQuestSubView extends SubView {
     private void drawRejectButton(Model model, int yStart) {
         MyColors fgColor = MyColors.YELLOW;
         MyColors bgColor = MyColors.BLACK;
-        if (index == 1) {
+        if (index == quests.size()) {
             fgColor = MyColors.BLACK;
             bgColor = MyColors.WHITE;
 
@@ -146,7 +145,7 @@ public class SelectQuestSubView extends SubView {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            index = (index + 1) % 2;
+            index = (index + 1) % (quests.size()+1);
             return true;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             index = index - 1;

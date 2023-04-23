@@ -2,17 +2,21 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.*;
+import model.races.Race;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.subviews.QuestSubView;
 import view.widget.QuestBackground;
 
@@ -29,10 +33,16 @@ public class DeepDungeonQuest extends Quest {
             "back an ancient magical artifact.";
     private static final String endText = "With the vampire dealt with, you are free to collect the " +
             "artifact. The party returns to the antiques dealer and collects the reward.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.ALL);
     private static List<QuestBackground> bgSprites = makeBackground();
 
     public DeepDungeonQuest() {
-        super("Deep Dungeon", "an antiques dealer", QuestDifficulty.HARD, 1, 50, text, endText);
+        super("Deep Dungeon", "Antiques Dealer", QuestDifficulty.HARD, 1, 50, text, endText);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

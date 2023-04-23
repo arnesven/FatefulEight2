@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.characters.DeniseBoyd;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -20,6 +21,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -36,11 +38,17 @@ public class DefendTheVillageQuest extends Quest {
     private static final String END_TEXT =
             "The peasants thank you profusely and hope that " +
                     "you will return some day soon.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.FARMER, Race.ALL);
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public DefendTheVillageQuest() {
-        super("Defend the Village", "some desperate peasants", QuestDifficulty.HARD,
+        super("Defend the Village", "Desperate Peasants", QuestDifficulty.HARD,
                 1, 50, 0, TEXT, END_TEXT);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

@@ -2,6 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.BanditEnemy;
 import model.enemies.BearEnemy;
@@ -12,6 +14,7 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
@@ -20,6 +23,7 @@ import view.sprites.Sprite32x16;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -36,10 +40,16 @@ public class MissingBrotherQuest extends Quest {
 
     private static final String endText = "You accompany Ghania's brother back to town " +
             "and she rewards you for returning him safely.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL);
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public MissingBrotherQuest() {
         super("Missing Brother", "Ghania", QuestDifficulty.MEDIUM, 1, 35, 0, text, endText);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

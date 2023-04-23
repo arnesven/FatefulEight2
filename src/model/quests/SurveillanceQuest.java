@@ -2,11 +2,14 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
 import model.quests.scenes.*;
+import model.races.Race;
 import model.states.QuestState;
 import util.MyPair;
 import view.MyColors;
@@ -14,6 +17,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -27,12 +31,18 @@ public class SurveillanceQuest extends Quest {
                     "military camp. You must gather as much intel as possible, without getting caught.";
     private static final String END_TEXT =
             "You return to the general with your report. The general seems pleased and compensates you for " +
-            "your service.";
+                    "your service.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.PAL, Race.ALL);
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
     private GameCharacter wallClimber;
 
     public SurveillanceQuest() {
-        super("Surveillance", "a general", QuestDifficulty.MEDIUM, 1, 35, START_TEXT, END_TEXT);
+        super("Surveillance", "General", QuestDifficulty.MEDIUM, 1, 35, START_TEXT, END_TEXT);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

@@ -1,14 +1,18 @@
 package model.quests;
 
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -22,9 +26,15 @@ public class HauntedMansionQuest extends Quest {
             "and rewards you for your service,";
     private static final Sprite32x32 outdoors = new Sprite32x32("outdoors", "combat.png", 0x13,
             MyColors.DARK_GREEN, MyColors.GREEN, MyColors.CYAN, MyColors.CYAN);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL);
 
     public HauntedMansionQuest() {
         super("Haunted Mansion", "a nobleman", QuestDifficulty.HARD, 1, 50, 0, INTRO, ENDING);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

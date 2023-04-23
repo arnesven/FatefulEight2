@@ -2,6 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.MansionGuardEnemy;
@@ -11,11 +13,13 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.MansionTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -41,12 +45,18 @@ public class MansionHeistQuest extends Quest {
             MyColors.DARK_GREEN, MyColors.GREEN, MyColors.CYAN, MyColors.CYAN);
     private static final Sprite32x32 outdoorWall = new Sprite32x32("outdoorWall", "quest.png", 0x35,
             MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.DARK_BROWN, MyColors.CYAN);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.THF, Race.ALL);
     private static List<QuestBackground> bgSprites = makeBackground();
 
     private static final String endText = "You return to your contact and deliver the contents of Lady Golbrads safe.";
 
     public MansionHeistQuest() {
-        super("Mansion Heist", "a shady contact", QuestDifficulty.MEDIUM, -1, 35, text, endText);
+        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM, -1, 35, text, endText);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

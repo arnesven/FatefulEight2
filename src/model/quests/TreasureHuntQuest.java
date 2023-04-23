@@ -1,15 +1,19 @@
 package model.quests;
 
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.LizardmanEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
+import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -30,10 +34,16 @@ public class TreasureHuntQuest extends Quest {
             "Your journey back to town is less adventurous. " +
                     "You return happy, well rested and much " +
                     "wealthier than before.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.ALL);
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public TreasureHuntQuest() {
-        super("Treasure Hunt", "a junk seller", QuestDifficulty.HARD, 1, 50, 0, TEXT, END_TEXT);
+        super("Treasure Hunt", "Junk Seller", QuestDifficulty.HARD, 1, 50, 0, TEXT, END_TEXT);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

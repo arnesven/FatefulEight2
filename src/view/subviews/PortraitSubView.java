@@ -26,6 +26,11 @@ public class PortraitSubView extends SubView {
     public PortraitSubView(SubView subView, CharacterClass cls, Race race, String portraitName) {
         this.previous = subView;
         this.portraitName = portraitName;
+        appearance = makeRandomPortrait(cls, race);
+    }
+
+    public static AdvancedAppearance makeRandomPortrait(CharacterClass cls, Race race) {
+        AdvancedAppearance appearance;
         Race raceToUse = race;
         if (race.id() == Race.ALL.id()) {
             raceToUse = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
@@ -50,6 +55,7 @@ public class PortraitSubView extends SubView {
         System.out.println("Portrait glasses: " + glasses);
         appearance.setHasGlasses(glasses);
         appearance.setClass(cls);
+        return appearance;
     }
 
     public PortraitSubView(SubView subView, int silhouette, String portraitName) {
@@ -58,7 +64,7 @@ public class PortraitSubView extends SubView {
         this.portraitName = portraitName;
     }
 
-    private boolean isBeardyMouth(int mouthIndex) {
+    private static boolean isBeardyMouth(int mouthIndex) {
         return mouthIndex == 4 || mouthIndex == 5;
     }
 

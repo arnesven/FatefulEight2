@@ -2,6 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
@@ -13,6 +15,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.subviews.TavernSubView;
 import view.widget.QuestBackground;
 
@@ -50,9 +53,15 @@ public class ArenaQuest extends Quest {
     private static final Sprite[] SPECTATORS = makeSpectators();
 
     private static final List<QuestBackground> DECORATIONS = makeDecorations();
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.CHARLATAN, Race.ALL);
 
     public ArenaQuest() {
         super("The Arena", "Arena Promoter", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, ENDING);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override
