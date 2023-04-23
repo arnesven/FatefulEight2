@@ -16,11 +16,12 @@ public class SelectQuestSubView extends SubView {
     private final List<Quest> quests;
     private static final int WIDTH = 33;
     private static final int HEIGHT = 14;
-    private int index = 0;
+    private int index;
 
     public SelectQuestSubView(SubView previous, List<Quest> quests) {
         this.previous = previous;
         this.quests = quests;
+        this.index = quests.size();
     }
 
     @Override

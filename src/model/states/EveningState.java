@@ -101,7 +101,7 @@ public class EveningState extends GameState {
                 model.getQuestDeck().accept(q, model.getCurrentHex().getLocation());
                 q.accept(model.getParty());
             } else {
-                println("You declined the quest.");
+                println("You rejected the quest" + (quests.size() > 1?"s":"") + ".");
             }
         }
     }

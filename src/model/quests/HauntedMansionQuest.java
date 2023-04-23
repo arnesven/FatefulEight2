@@ -29,7 +29,7 @@ public class HauntedMansionQuest extends Quest {
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL);
 
     public HauntedMansionQuest() {
-        super("Haunted Mansion", "a nobleman", QuestDifficulty.HARD, 1, 50, 0, INTRO, ENDING);
+        super("Haunted Mansion", "Nobleman", QuestDifficulty.HARD, 1, 50, 0, INTRO, ENDING);
     }
 
     @Override
