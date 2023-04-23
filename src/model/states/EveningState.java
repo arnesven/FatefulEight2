@@ -3,6 +3,8 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import model.quests.Quest;
+import util.MyRandom;
+import util.MyStrings;
 import view.help.HalfTimeDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.SelectQuestSubView;
@@ -68,19 +70,32 @@ public class EveningState extends GameState {
     protected void checkForQuest(Model model) {
         if (model.getCurrentHex().givesQuests() &&
                 !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-            Quest q;
-            do {
-                q = model.getQuestDeck().getRandomQuest();
-            } while (model.getQuestDeck().alreadyDone(q));
+            int numQuests = 2;
+            int dieRoll = MyRandom.rollD10();
+            if (dieRoll == 1) {
+                println("The party has not been offered any quests.");
+                return;
+            } else if (dieRoll < 6) {
+                numQuests = 1;
+            }
+
+            List<Quest> quests = new ArrayList<>();
+            while (quests.size() < numQuests) {
+                Quest q;
+                do {
+                    q = model.getQuestDeck().getRandomQuest();
+                } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
+                quests.add(q);
+            }
 
 
-            println("The party is offered a quest by " + q.getProviderName() + ".");
-            print(" Will you go tomorrow?");
-            //print(q.getBeforehandInfo());
-            SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), q);
+            println("The party has been offered " + MyStrings.numberWord(quests.size()) + " quest" + (quests.size() > 1?"s":"") + ".");
+            print("Will you go tomorrow? ");
+            SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
             model.setSubView(subView);
             waitForReturn();
             if (subView.didAcceptQuest()) {
+                Quest q = subView.getSelectedQuest();
                 this.goOnQuest = q;
                 println("You accepted the quest.");
                 model.getQuestDeck().accept(q, model.getCurrentHex().getLocation());

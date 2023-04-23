@@ -9,11 +9,18 @@ import java.util.*;
 
 public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
+    private static final List<Quest> QUESTS = makeAllQuests();
+
     private final Set<String> acceptedQuests = new HashSet<>();
     private final Set<String> questLocations = new HashSet<>();
 
     public Quest getRandomQuest() {
-        return MyRandom.sample(List.of(
+        return MyRandom.sample(QUESTS);
+    }
+
+
+    private static List<Quest> makeAllQuests() {
+        return List.of(
                 new DeepDungeonQuest(),
                 new MansionHeistQuest(),
                 new UnsuspectingLoversQuest(),
@@ -23,8 +30,9 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
                 new TreasureHuntQuest(),
                 new SurveillanceQuest(),
                 new WizardsTowerQuest(),
-                new HauntedMansionQuest(), // Hard
-                new ArenaQuest() // medium
+                new HauntedMansionQuest(),
+                new ArenaQuest()
+
                 // new TownFairQuest(), // easy
                 // new AbandonedMineQuest(), // Hard
                 // new MasqueradeQuest(), // medium
@@ -34,7 +42,9 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
                 // new ForestTrollQuest(), // medium
                 // new GoblinTunnelsQuest(), // medium
                 // new ElvenHighCouncilQuest(), // hard
-        ));
+
+
+        );
     }
 
     public void accept(Quest quest, HexLocation location) {

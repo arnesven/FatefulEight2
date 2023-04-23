@@ -44,7 +44,7 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     private static DungeonMonster monsterFactory(Random random) {
-        int dieRoll = random.nextInt(12);
+        int dieRoll = random.nextInt(13);
         switch (dieRoll) {
             case 0:
                 return new DungeonMonster(List.of(new SnowyBeastEnemy('A'), new SnowyBeastEnemy('A')));
@@ -72,6 +72,8 @@ public class DungeonMonster extends CenterDungeonObject {
                         new GiantRatEnemy('B'), new GiantRatEnemy('B'), new GiantRatEnemy('B')));
             case 10:
                 return new DungeonMonster(List.of(new AutomatonEnemy('A'), new AutomatonEnemy('A')));
+            case 11:
+                return new DungeonMonster(List.of(new GhostEnemy('A'), new GhostEnemy('A'), new GhostEnemy('A')));
             default:
                 return new DungeonMonster(List.of(new SkeletonEnemy('A'), new SkeletonEnemy('A'), new SkeletonEnemy('A')));
         }
