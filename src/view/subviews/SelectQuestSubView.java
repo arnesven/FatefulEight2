@@ -8,11 +8,15 @@ import view.BorderFrame;
 import view.MyColors;
 import view.widget.TopText;
 
+import java.awt.event.KeyEvent;
+import java.security.Key;
+
 public class SelectQuestSubView extends SubView {
     private final SubView previous;
     private final Quest quest;
-    private static final int WIDTH = 34;
+    private static final int WIDTH = 33;
     private static final int HEIGHT = 14;
+    private int index = 0;
 
     public SelectQuestSubView(SubView previous, Quest quest) {
         this.previous = previous;
@@ -22,7 +26,7 @@ public class SelectQuestSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
-        int xStart = X_OFFSET + (X_MAX - X_OFFSET - WIDTH) / 2;
+        int xStart = X_OFFSET + (X_MAX - X_OFFSET - WIDTH) / 2 - 1;
         int yStart = 11;
         BorderFrame.drawFrame(model.getScreenHandler(),
                 xStart, 10, WIDTH, HEIGHT,
@@ -33,6 +37,37 @@ public class SelectQuestSubView extends SubView {
         drawDifficulty(model, quest.getName().length() + xStart+2, yStart);
         drawRewards(model, xStart, yStart);
         drawDetails(model, xStart, yStart);
+        drawAcceptButton(model, xStart, yStart);
+
+        drawRejectButton(model);
+    }
+
+    private void drawRejectButton(Model model) {
+        MyColors fgColor = MyColors.YELLOW;
+        MyColors bgColor = MyColors.BLACK;
+        if (index == 1) {
+            fgColor = MyColors.BLACK;
+            bgColor = MyColors.WHITE;
+
+        }
+        int x = X_OFFSET+8;
+        int y = 30;
+        BorderFrame.drawFrame(model.getScreenHandler(), x, y, 13, 4,
+                MyColors.BLACK, MyColors.WHITE, MyColors.BLACK, true);
+        BorderFrame.drawString(model.getScreenHandler(), "REJECT ALL", x+2, y+2, fgColor, bgColor);
+
+    }
+
+    private void drawAcceptButton(Model model, int xStart, int yStart) {
+        MyColors fgColor = MyColors.YELLOW;
+        MyColors bgColor = MyColors.BLACK;
+        if (index == 0) {
+            fgColor = MyColors.BLACK;
+            bgColor = MyColors.WHITE;
+
+        }
+        BorderFrame.drawString(model.getScreenHandler(), "ACCEPT", xStart + 10,
+                yStart + 7, fgColor, bgColor);
     }
 
     private void drawDetails(Model model, int xStart, int yStart) {
@@ -96,6 +131,20 @@ public class SelectQuestSubView extends SubView {
     }
 
     public boolean didAcceptQuest() {
+        return index == 0;
+    }
+
+    @Override
+    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            index = (index + 1) % 2;
+            return true;
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            index = index - 1;
+            if (index < 0) {
+                index = 1; // number of quests.
+            }
+        }
         return false;
     }
 }
