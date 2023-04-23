@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.Model;
 import model.Party;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
@@ -144,4 +145,6 @@ public abstract class Quest {
         }
         return result;
     }
+
+    public void drawSpecialReward(Model model, int x, int y) { }
 }

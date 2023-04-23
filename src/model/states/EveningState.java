@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import model.quests.Quest;
+import model.quests.TownFairQuest;
 import util.MyRandom;
 import util.MyStrings;
 import view.help.HalfTimeDialog;

@@ -50,7 +50,7 @@ public class ArenaQuest extends Quest {
     private static final Sprite STAIRS = new Sprite32x32("stairs", "world_foreground.png", 0x54,
             MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
     private static final List<QuestBackground> BG_SPRITES = makeBgSprites();
-    private static final Sprite[] SPECTATORS = makeSpectators();
+    public static final Sprite[] SPECTATORS = makeSpectators();
 
     private static final List<QuestBackground> DECORATIONS = makeDecorations();
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.CHARLATAN, Race.ALL);

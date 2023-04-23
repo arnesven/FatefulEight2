@@ -106,6 +106,7 @@ public class SelectQuestSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(), "XP " + quest.getReward().getExp(),
                     xStart + 10, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
         }
+        quest.drawSpecialReward(model, xStart + 10, yStart + (row++));
     }
 
     private void drawDifficulty(Model model, int xStart, int yStart, Quest quest) {

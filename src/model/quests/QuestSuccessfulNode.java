@@ -44,7 +44,12 @@ public class QuestSuccessfulNode extends QuestNode {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         state.println(text);
-        state.print("Quest completed! You receive " + (reward.getGold() * numberOfPartyMembers) + " gold");
+        int gold = (reward.getGold() * numberOfPartyMembers);
+        String goldPart = " You receive " + gold + " gold";
+        if (gold == 0) {
+            goldPart = "";
+        }
+        state.print("Quest completed!" + goldPart);
         if (reward.getReputation() > 0) {
             state.println(" and your reputation increases!");
         } else if (reward.getReputation() < 0) {
