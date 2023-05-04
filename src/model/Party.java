@@ -291,7 +291,7 @@ public class Party implements Serializable {
         return best != null;
     }
 
-    public void partyMemberSay(Model model, GameCharacter gc, String text) {
+    public synchronized void partyMemberSay(Model model, GameCharacter gc, String text) {
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(text);
 

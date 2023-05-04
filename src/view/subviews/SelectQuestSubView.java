@@ -125,7 +125,7 @@ public class SelectQuestSubView extends SubView {
         String provider = quest.getProvider();
         String[] providerParts = MyStrings.partition(provider, 12);
         for (int i = 0; i < providerParts.length; ++i) {
-            int x = xStart + 1 + 4 - providerParts[i].length() / 2;
+            int x = xStart + 1 + 5 - providerParts[i].length() / 2;
             BorderFrame.drawString(model.getScreenHandler(), providerParts[i], x, yStart+9+i, MyColors.WHITE, MyColors.BLACK);
         }
     }

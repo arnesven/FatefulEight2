@@ -26,7 +26,7 @@ public class WatchtowerEvent extends DailyEventState {
                 "A peacful place."));
         println("Each party member gains 25 XP!");
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            model.getParty().giveXP(model, gc, 15);
+            model.getParty().giveXP(model, gc, 25);
         }
     }
 }

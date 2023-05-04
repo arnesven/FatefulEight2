@@ -151,7 +151,7 @@ public class TownFairQuest extends Quest {
                 model.getParty().addSummon(loc);
                 state.println("You have been introduced to " + loc.getLordName() + ". You should visit later!");
             }
-            return super.run(model, state);
+            return getConnection(0);
         }
     }
 

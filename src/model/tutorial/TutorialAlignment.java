@@ -35,7 +35,7 @@ public class TutorialAlignment extends HelpDialog {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = super.buildDecorations(model, xStart, yStart);
-        textContent.add(new DrawableObject(xStart+16, yStart+29) {
+        textContent.add(new DrawableObject(xStart+16, yStart+28) {
             @Override
             public void drawYourself(Model model, int x, int y) {
                 model.getScreenHandler().put(x+1, y, TopText.ALIGNMENT_ICON_SPRITE);
