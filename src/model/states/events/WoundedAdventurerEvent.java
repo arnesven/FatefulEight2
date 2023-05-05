@@ -57,6 +57,7 @@ public class WoundedAdventurerEvent extends DailyEventState {
                 if (MyRandom.randInt(2) == 0) {
                     println("The wounded adventurer recovered!");
                     println("Wounded Adventurer: \"Thank you for helping me. I'll gladly offer my services!\"");
+                    model.getLog().waitForAnimationToFinish();
                     RecruitState recruitState = new RecruitState(model, list);
                     recruitState.run(model);
                     break;

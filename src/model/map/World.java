@@ -187,7 +187,7 @@ public class World implements Serializable {
         if (p.y < 0 || p.y >= WorldBuilder.WORLD_HEIGHT) {
             return false;
         }
-        return getHex(p).canTravelTo(model);
+        return getHex(p).canTravelTo(model) || model.isInCaveSystem();
     }
 
     public boolean travelingAlongRoad(Point position, Point previousPosition, int direction) {

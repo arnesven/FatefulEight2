@@ -42,8 +42,8 @@ public class DwarvenCityEvent extends DailyEventState {
     protected void doEvent(Model model) {
         println("At the end of a tunnel, two large stone doors block the way forward. As the party approaches them, " +
                 "a little hatch in one of the doors open. You can see the bearded face of a dwarf peering out at you.");
+        showRandomPortrait(model, Classes.CONSTABLE, Race.DWARF, "Dwarf");
         if (partyContainsElves(model)) {
-            showRandomPortrait(model, Classes.CONSTABLE, Race.DWARF, "Dwarf");
             portraitSay(model, "Go away strangers, we don't let pointy-ears into our city!");
             model.getParty().randomPartyMemberSay(model, List.of("What a racist..."));
             GameCharacter dwarf = getDwarfInParty(model);

@@ -38,14 +38,15 @@ public class MapSubView extends AvatarSubView {
     }
 
     private boolean canMoveToHex(Model model, Point dxdy) {
+        Point p = new Point(model.getParty().getPosition());
+        p.x = p.x + dxdy.x;
+        p.y = p.y + dxdy.y;
         if (model.isInCaveSystem()) {
             if (!model.getCurrentHex().getRoadInDirection(Direction.getDirectionForDxDy(model.getParty().getPosition(), dxdy))) {
                 return false;
             }
+
         }
-        Point p = new Point(model.getParty().getPosition());
-        p.x = p.x + dxdy.x;
-        p.y = p.y + dxdy.y;
         return model.getWorld().canTravelTo(model, p);
     }
 
