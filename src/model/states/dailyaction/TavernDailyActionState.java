@@ -24,7 +24,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(doorPos.x, doorPos.y, new ExitTavernNode());
         } else {
             addNode(7, 8, new TravelFromInnNode());
-            addNode(1, 8, new CampOutsideOfTownNode(false, TownSubView.GROUND_COLOR));
+            addNode(1, 8, new CampOutsideOfTownNode(false, TownSubView.GROUND_COLOR, "Make camp outside."));
             addNode(4, 2, new InnShoppingNode(model));
             addNode(2, 1, new SaveGameNode());
         }

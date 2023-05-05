@@ -17,8 +17,8 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     private final boolean freeRations;
     private final Sprite sprite;
 
-    public CampOutsideOfTownNode(boolean freeRations, MyColors color) {
-        super("Make camp on the outskirts of town");
+    public CampOutsideOfTownNode(boolean freeRations, MyColors color, String text) {
+        super(text);
         this.freeRations = freeRations;
         if (color == TownSubView.GROUND_COLOR) {
             sprite = SPRITE1;
