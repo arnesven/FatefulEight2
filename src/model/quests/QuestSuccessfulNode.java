@@ -57,7 +57,7 @@ public class QuestSuccessfulNode extends QuestNode {
         } else {
             state.println(".");
         }
-        model.getCurrentHex().getLocation().setFlag(HexLocation.FLAG_SUCCESS);
+        model.getQuestDeck().setSuccessfulIn(model.getCurrentHex().getLocation());
         reward.giveYourself(model, numberOfPartyMembers);
         return new QuestEdge(this);
     }

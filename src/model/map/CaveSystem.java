@@ -72,7 +72,7 @@ public class CaveSystem extends World {
 
     @Override
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
-                           Point partyPosition, int mapYRange, int yOffset) {
+                           Point partyPosition, int mapYRange, int yOffset, int flag) {
         boolean isPartyPos = (x == partyPosition.x && y == partyPosition.y);
         List<Point> list = Direction.getDxDyDirections(partyPosition);
         Point diff = new Point(x - partyPosition.x, y - partyPosition.y);
@@ -85,6 +85,6 @@ public class CaveSystem extends World {
         } else if (!isPartyPos) {
             return;
         }
-        super.drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset);
+        super.drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, HexLocation.FLAG_NONE);
     }
 }

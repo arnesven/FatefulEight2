@@ -47,6 +47,7 @@ public class CompanyEvent extends DailyEventState {
                 gc.addToSP(-1);
             }
             println("You grudgingly hand over your packs of food.");
+            println("Each party member exhausts 1 SP.");
         } else {
             List<Enemy> enemies = new ArrayList<>();
             for (int i = 0; i < soldiers - 2; i++){

@@ -13,6 +13,7 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
     private final Set<String> acceptedQuests = new HashSet<>();
     private final Set<String> questLocations = new HashSet<>();
+    private final Map<String, Boolean> flagLocations = new HashMap<>();
 
     public Quest getRandomQuest() {
         return MyRandom.sample(QUESTS);
@@ -57,5 +58,17 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
     public boolean alreadyDone(Quest quest) {
         return acceptedQuests.contains(quest.getName());
+    }
+
+    public boolean wasSuccessfulIn(HexLocation location) {
+        return flagLocations.get(location.getName());
+    }
+
+    public void setSuccessfulIn(HexLocation location) {
+        flagLocations.put(location.getName(), true);
+    }
+
+    public void setFailureIn(HexLocation location) {
+        flagLocations.put(location.getName(), false);
     }
 }

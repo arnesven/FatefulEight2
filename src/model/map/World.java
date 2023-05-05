@@ -68,7 +68,7 @@ public class World implements Serializable {
                 int y_extra = 2 * (1 - (x % 2));
                 int screenY = yOffset - 2 + 4 * row + y_extra;
 
-                drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset);
+                drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, getFlagFor(model, hexes[x][y]));
 
                 if (x == partyPosition.x && y == partyPosition.y &&
                         model.getParty().getLeader() != null && avatarEnabled) {
@@ -88,15 +88,28 @@ public class World implements Serializable {
         }
     }
 
+    private int getFlagFor(Model model, WorldHex hex) {
+        if (hex.getLocation() == null || !(hex.getLocation() instanceof UrbanLocation)) {
+            return HexLocation.FLAG_NONE;
+        }
+        if (model.getQuestDeck().alreadyDone(hex.getLocation())) {
+            if (model.getQuestDeck().wasSuccessfulIn(hex.getLocation())) {
+                return HexLocation.FLAG_SUCCESS;
+            }
+            return HexLocation.FLAG_FAILURE;
+        }
+        return HexLocation.FLAG_NONE;
+    }
+
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
-                           Point partyPosition, int mapYRange, int yOffset) {
+                           Point partyPosition, int mapYRange, int yOffset, int flag) {
         if (hexes[x][y] != null) {
             if (screenY == yOffset - 2) {
                 hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
             } else if (screenY == yOffset - 2 + 4 * (mapYRange-1) + 2) {
-                hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY);
+                hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY, flag);
             } else {
-                hexes[x][y].drawYourself(screenHandler, screenX, screenY);
+                hexes[x][y].drawYourself(screenHandler, screenX, screenY, flag);
             }
         }
     }

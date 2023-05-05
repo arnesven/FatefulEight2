@@ -94,16 +94,16 @@ public abstract class WorldHex implements Serializable {
         this(color, 0, 0, null);
     }
 
-    public void drawYourself(ScreenHandler screenHandler, int x, int y) {
-        drawUpperHalf(screenHandler, x, y);
+    public void drawYourself(ScreenHandler screenHandler, int x, int y, int flag) {
+        drawUpperHalf(screenHandler, x, y, flag);
         drawLowerHalf(screenHandler, x, y);
     }
 
-    public void drawUpperHalf(ScreenHandler screenHandler, int x, int y) {
+    public void drawUpperHalf(ScreenHandler screenHandler, int x, int y, int flag) {
         screenHandler.put(x, y, upperLeft);
         screenHandler.put(x+2, y, upperRight);
         if (hexLocation != null) {
-            hexLocation.drawUpperHalf(screenHandler, x, y);
+            hexLocation.drawUpperHalf(screenHandler, x, y, flag);
         }
     }
 

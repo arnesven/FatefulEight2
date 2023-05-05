@@ -30,7 +30,6 @@ public abstract class HexLocation implements Serializable {
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private final String name;
     private WorldHex hex;
-    private int flag = FLAG_NONE; // TODO: store this in the party or it won't get saved
 
     public HexLocation(String name) {
         this.name = name;
@@ -40,7 +39,7 @@ public abstract class HexLocation implements Serializable {
         return name;
     }
 
-    public void drawUpperHalf(ScreenHandler screenHandler, int x, int y) {
+    public void drawUpperHalf(ScreenHandler screenHandler, int x, int y, int flag) {
         screenHandler.register(name + "uppersprite"+x+""+y, new Point(x, y), getUpperSprite());
         if (flag == FLAG_SUCCESS) {
             screenHandler.register("flagsuccess"+x+""+y, new Point(x+2, y), SUCCESS_FLAG, 1);
@@ -97,10 +96,6 @@ public abstract class HexLocation implements Serializable {
 
     public WorldHex getHex() {
         return hex;
-    }
-
-    public void setFlag(int flag) {
-        this.flag = flag;
     }
 
     public Sprite getTownOrCastleSprite() {

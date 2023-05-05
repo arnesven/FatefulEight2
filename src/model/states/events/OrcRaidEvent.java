@@ -47,7 +47,7 @@ public class OrcRaidEvent extends DailyEventState {
         print("Do you help to defend the town? (Y/N) ");
         if (yesNoInput()) {
             List<Enemy> enemies = new ArrayList<>();
-            int numberOfOrcs = 1; //MyRandom.randInt(7, 9);
+            int numberOfOrcs = MyRandom.randInt(6, 9);
             for (int i = 0; i < numberOfOrcs; ++i) {
                 enemies.add(new OrcWarrior('A'));
             }
