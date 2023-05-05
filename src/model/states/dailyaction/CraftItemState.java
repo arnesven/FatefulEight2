@@ -46,10 +46,14 @@ public class CraftItemState extends GameState {
         }
         Item selectedItem = getSelectedItem(model, optionNames, allItems);
 
+        if (selectedItem == null){
+            return null;
+        }
+
         GameCharacter crafter = null;
         if (model.getParty().size() > 1) {
             println("Which party member should attempt to craft the " + selectedItem.getName() + "?");
-            crafter = model.getParty().partyMemberInput(model, this, model.getAllCharacters().get(0));
+            crafter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         } else {
             crafter = model.getAllCharacters().get(0);
             print(crafter.getName() + " is preparing to craft an item. Press enter to continue.");
@@ -80,6 +84,7 @@ public class CraftItemState extends GameState {
 
     private Item getSelectedItem(Model model, Set<String> optionNames, List<Item> allItems) {
         List<String> options = new ArrayList<>(optionNames);
+        options.add("Return");
         println("What item would you like to craft?");
         final String[] selected = {null};
         model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 24 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
@@ -95,7 +100,7 @@ public class CraftItemState extends GameState {
                 return it;
             }
         }
-        throw new IllegalStateException("Could not find selected item!");
+        return null; // Cancel chosen
     }
 
     private List<Item> getAllItems(Model model) {
