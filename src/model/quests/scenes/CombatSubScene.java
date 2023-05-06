@@ -1,6 +1,7 @@
 package model.quests.scenes;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.quests.QuestEdge;
@@ -17,6 +18,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.DungeonTheme;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CombatSubScene extends QuestSubScene {
@@ -69,6 +71,10 @@ public abstract class CombatSubScene extends QuestSubScene {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
         CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, false);
+        List<GameCharacter> allies = getAllies();
+        if (!allies.isEmpty()) {
+            combat.addAllies(allies);
+        }
         combat.run(model);
         state.transitionToQuestView(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
@@ -77,6 +83,10 @@ public abstract class CombatSubScene extends QuestSubScene {
         }
         defeated = true;
         return getSuccessEdge();
+    }
+
+    protected List<GameCharacter> getAllies() {
+        return new ArrayList<>();
     }
 
     @Override
