@@ -6,10 +6,8 @@ import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
 import model.combat.TownCombatTheme;
-import model.enemies.Enemy;
+import model.enemies.InterloperEnemy;
 import model.items.spells.FireworksSpell;
 import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -178,39 +176,6 @@ public class UnsuspectingLoversQuest extends Quest {
                 state.println("The party loses 1 reputation!");
             }
             return qe;
-        }
-    }
-
-    private static class InterloperEnemy extends Enemy {
-        private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, new DefaultAppearance());
-
-        public InterloperEnemy(char a) {
-            super(a, "Interloper");
-        }
-
-        @Override
-        public int getMaxHP() {
-            return 4;
-        }
-
-        @Override
-        public int getSpeed() {
-            return 3;
-        }
-
-        @Override
-        protected Sprite getSprite() {
-            return avatar;
-        }
-
-        @Override
-        public int getDamage() {
-            return 2;
-        }
-
-        @Override
-        public CombatLoot getLoot(Model model) {
-            return new NoCombatLoot();
         }
     }
 
