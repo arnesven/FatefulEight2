@@ -69,7 +69,7 @@ public class MageEvent extends DailyEventState {
         }
         int[] prices = new int[spellsbooks.size()];
         for (int i = 0; i < prices.length; ++i) {
-            prices[i] = spellsbooks.get(i).getCost() + MyRandom.randInt(-6, 6);
+            prices[i] = Math.max(1, spellsbooks.get(i).getCost() + MyRandom.randInt(-6, 6));
         }
         ShopState shop = new ShopState(model, "Mage", spellsbooks, prices);
         shop.run(model);

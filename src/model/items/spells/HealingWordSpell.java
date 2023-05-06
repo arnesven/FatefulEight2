@@ -31,7 +31,7 @@ public class HealingWordSpell extends CombatSpell {
 
     @Override
     public boolean canBeCastOn(Model model, Combatant target) {
-        return target instanceof GameCharacter && target.getHP() < target.getMaxHP();
+        return target instanceof GameCharacter && target.getHP() < target.getMaxHP() && !target.isDead();
     }
 
     @Override

@@ -84,7 +84,7 @@ public class CraftItemState extends GameState {
 
     private Item getSelectedItem(Model model, Set<String> optionNames, List<Item> allItems) {
         List<String> options = new ArrayList<>(optionNames);
-        options.add("Return");
+        options.add("Cancel");
         println("What item would you like to craft?");
         final String[] selected = {null};
         model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 24 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
