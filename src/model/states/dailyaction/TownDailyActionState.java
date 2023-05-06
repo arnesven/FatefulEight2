@@ -24,6 +24,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(TownSubView.GROUND_COLOR));
         super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode(TownSubView.GROUND_COLOR));
         addNode(7, 2, new SaveGameNode());
+        addNode(7, 1, new FlagPoleNode());
         if (isCoastal && !urbanLocation.noBoat()) {
             addNode(2, 0, new GoTheDocksNode(model));
         }
