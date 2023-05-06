@@ -205,6 +205,7 @@ public class InventoryView extends SelectableListMenu {
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);
+                                model.getParty().getInventory().remove(itemToEquip);
                                 if (!message.equals("")) {
                                     InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this, message), model);
                                 }

@@ -34,14 +34,14 @@ public class ArenaQuest extends Quest {
 
     private static final List<String> ANNOUNCER = List.of(
             "Ladies and gentlemen, please take your seats! You are in for a treat! Tonight a fresh new team of " +
-            "challengers is taking on the house team. Ahh the excitement! As always we will give them a rough start!" +
+            "challengers is taking on the house team. Ahh the excitement! As always we will give them a rough start! " +
             "Our brawler Groff, far off from mount Moff. Can these newcomers handle this brute and his furious mettle?",
             "Groff has been defeated! But don't worry, don't fret. The next fighter is deadly. She's the fastest bowman " +
             "you've seen! Our elven maid Gaelwyn, from the forests of Ophlia. Can these newcomers handle this devilish dead-eye?",
             "Gaelwyn has been defeated! My dear folks, may I say it. These new challengers have some spunk to them! But now, here " +
             "comes a fighter few have been able to handle. His flips, feints and ferocious techniques make him one of a kind! Give " +
             "it up for Helbo the halfling martial artist! He may be small, but remember, death sometimes come in small packages!",
-            "I don't believe it! Helbo is down! What will stop this fighting team? Well, most of you know, that the best is yet to come!" +
+            "I don't believe it! Helbo is down! What will stop this fighting team? Well, most of you know, that the best is yet to come! " +
             "Up next, we have a seasoned warrior, a woman of skill, a master-at-arms. She boasts of the experience of many wars and " +
             "she wields many types of weapons. Freya the veteran is ready to put these newcomers in their place!",
             "Freya finally met her match! Well you had a good haul newcomers, but I am afraid this is the end. Nobody, and I repeat, " +

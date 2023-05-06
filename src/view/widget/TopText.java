@@ -18,17 +18,17 @@ public class TopText {
     public void drawYourself(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), String.format("DAY %d", model.getDay()), 0, 0, MyColors.CYAN);
         model.getScreenHandler().put(11, 0, GOLD_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getGold()), 7, 0, MyColors.LIGHT_YELLOW);
-        model.getScreenHandler().put(16, 0, FOOD_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getFood()), 13, 0, MyColors.PEACH);
-        model.getScreenHandler().put(21, 0, INGREDIENTS_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getInventory().getIngredients()), 18, 0, MyColors.LIGHT_GREEN);
-        model.getScreenHandler().put(26, 0, MATERIALS_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getInventory().getMaterials()), 23, 0, MyColors.LIGHT_GRAY);
-        model.getScreenHandler().put(31, 0, ALIGNMENT_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", DailyEventState.getPartyAlignment(model)), 29, 0, MyColors.WHITE);
-        model.getScreenHandler().put(36, 0, REP_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 34, 0, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getGold()), 8, 0, MyColors.LIGHT_YELLOW);
+        model.getScreenHandler().put(17, 0, FOOD_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getFood()), 14, 0, MyColors.PEACH);
+        model.getScreenHandler().put(22, 0, INGREDIENTS_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getInventory().getIngredients()), 19, 0, MyColors.LIGHT_GREEN);
+        model.getScreenHandler().put(27, 0, MATERIALS_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getInventory().getMaterials()), 24, 0, MyColors.LIGHT_GRAY);
+        model.getScreenHandler().put(32, 0, ALIGNMENT_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", DailyEventState.getPartyAlignment(model)), 30, 0, MyColors.WHITE);
+        model.getScreenHandler().put(37, 0, REP_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 35, 0, MyColors.WHITE);
 
         drawKeyTexts(model);
     }

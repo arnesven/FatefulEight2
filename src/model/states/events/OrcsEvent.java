@@ -46,7 +46,7 @@ public class OrcsEvent extends DailyEventState {
             println("The orcs seem aggressive but can perhaps be persuaded to not attack you.");
             boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 11 - noOfHalfOrcs);
             if (result) {
-                println("The orcs have calmed down. Do you wish to attack them? (Y/N) ");
+                print("The orcs have calmed down. Do you wish to attack them? (Y/N) ");
                 return !yesNoInput();
             }
         }
