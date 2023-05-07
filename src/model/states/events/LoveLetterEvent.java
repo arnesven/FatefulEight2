@@ -24,7 +24,7 @@ public class LoveLetterEvent extends DailyEventState {
                     "the author directly, it is quite lengthy and contains a number of clues which should make tracking him or her down " +
                     "somewhat easier.");
         }
-        println("Do you try to return the letter to the sender (Y) or do you attempt to deliver it to Maggie (N)? ");
+        print("Do you try to return the letter to the sender (Y) or do you attempt to deliver it to Maggie (N)? ");
         if (yesNoInput()) {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 10 - rollBonus);
             if (result) {

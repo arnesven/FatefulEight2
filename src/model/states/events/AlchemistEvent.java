@@ -51,7 +51,7 @@ public class AlchemistEvent extends DailyEventState {
                         "attention. Frustrated and ashamed you decide to abandon the effort and go on with your day.");
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                         "I'm sure Durok's business will take off once people get to know him.");
-                println("You return to Durok's shop, which is quite.");
+                println("You return to Durok's shop, which is quiet.");
                 portraitSay(model, "Oh, hello. Nice to see somebody in here. I wonder if people don't understand what" +
                         "an apothecary is?");
                 model.getParty().randomPartyMemberSay(model, List.of("They're probably just shy..."));

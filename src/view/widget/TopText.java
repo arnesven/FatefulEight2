@@ -17,7 +17,7 @@ public class TopText {
 
     public void drawYourself(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), String.format("DAY %d", model.getDay()), 0, 0, MyColors.CYAN);
-        model.getScreenHandler().put(11, 0, GOLD_ICON_SPRITE);
+        model.getScreenHandler().put(12, 0, GOLD_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getGold()), 8, 0, MyColors.LIGHT_YELLOW);
         model.getScreenHandler().put(17, 0, FOOD_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getFood()), 14, 0, MyColors.PEACH);
