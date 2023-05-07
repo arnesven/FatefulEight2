@@ -8,10 +8,19 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.Race;
 import view.MyColors;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.subviews.CombatTheme;
+import view.subviews.GrassCombatTheme;
+import view.subviews.MansionTheme;
+import view.widget.QuestBackground;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MasqueradeQuest extends Quest {
 
@@ -21,6 +30,25 @@ public class MasqueradeQuest extends Quest {
             "masquerade, under the protection of the host and her hired muscle.";
     private static final String OUTRO =
             "You deliver the wanted person to the local law enforcement and collect the bounty from the bounty office.";
+    public static final MyColors FLOOR_COLOR = MyColors.LIGHT_GRAY;
+    public static final Sprite DOOR = new Sprite32x32("door", "world_foreground.png", 0x34,
+            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.DARK_RED);
+    private static final Sprite WALL = new Sprite32x32("tavernfarwall", "world_foreground.png", 0x44,
+            MyColors.DARK_GRAY, MyColors.BROWN, MyColors.TAN);
+    public static final Sprite FLOOR = new Sprite32x32("townhallfloor", "world_foreground.png", 0x56,
+            MyColors.GRAY, FLOOR_COLOR, MyColors.TAN);
+    private static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
+            MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN);
+    public static final Sprite RUG = new Sprite32x32("townhallrug", "world_foreground.png", 0x72,
+            MyColors.DARK_RED, FLOOR_COLOR, MyColors.TAN);
+    private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
+            MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
+    private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
+            MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+    private static final List<QuestBackground> BG_SPRITES = makeBackground();
+    public static final Sprite[] SPECTATORS = makeSpectators();
+
+    private static final List<QuestBackground> DECORATIONS = makeDecorations();
 
     public MasqueradeQuest() {
         super("Masquerade", "Bounty Office", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, OUTRO);
@@ -30,35 +58,35 @@ public class MasqueradeQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Mingle",
-                List.of(new CollectiveSkillCheckSubScene(4, 2, Skill.Entertain, 3,
+                List.of(new CollectiveSkillCheckSubScene(4, 1, Skill.Entertain, 3,
                         "Okay gang, let's mingle and see if we can spot him."))),
                 new QuestScene("Spot Target Inside",
-                List.of(new SoloSkillCheckSubScene(5, 3, Skill.Perception, 10, "Anybody see our target?"))),
+                List.of(new SoloSkillCheckSubScene(5, 2, Skill.Perception, 10, "Anybody see our target?"))),
                 new QuestScene("Investigate",
-                List.of(new CollaborativeSkillCheckSubScene(2, 4, Skill.SeekInfo, 8,
+                List.of(new CollaborativeSkillCheckSubScene(2, 3, Skill.SeekInfo, 8,
                         "Somebody around here must know where he is. Spread out and gather clues."))),
                 new QuestScene("Spot Target Oustide",
                 List.of(new SoloSkillCheckSubScene(2, 6, Skill.Perception, 9,
                         "Maybe he's out in the garden?"))),
                 new QuestScene("Diversion",
-                List.of(new SoloSkillCheckSubScene(4, 5, Skill.Entertain, 10,
+                List.of(new SoloSkillCheckSubScene(4, 3, Skill.Entertain, 10,
                         "Quick, somebody cause a scene as a diversion!"),
-                        new SoloSkillCheckSubScene(4, 6, Skill.Labor, 9,
+                        new SoloSkillCheckSubScene(4, 4, Skill.Labor, 9,
                                 "Quick, let's knock over this statue as a diversion!"))),
                 new QuestScene("Detain Target",
-                List.of(new TargetCombatSubScene(4, 8),
-                        new BodyGuardCombatSubScene(3, 7))));
+                List.of(new TargetCombatSubScene(4, 7),
+                        new BodyGuardCombatSubScene(3, 4))));
     }
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
         QuestJunction start = new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(0).get(0)),
                 "Our target is hiding somewhere at this party. Let's find him.");
-        QuestDecisionPoint qd = new QuestDecisionPoint(5, 4, List.of(
+        QuestDecisionPoint qd = new QuestDecisionPoint(5, 3, List.of(
                 new QuestEdge(scenes.get(4).get(0), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(4).get(1), QuestEdge.VERTICAL)),
                 "There he is!");
-        SimpleJunction extra = new SimpleJunction(6, 7, new QuestEdge(qd, QuestEdge.VERTICAL));
+        SimpleJunction extra = new SimpleJunction(6, 6, new QuestEdge(qd, QuestEdge.VERTICAL));
         return List.of(start, qd, extra);
     }
 
@@ -88,6 +116,89 @@ public class MasqueradeQuest extends Quest {
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.BLACK;
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BG_SPRITES;
+    }
+
+    private static List<QuestBackground> makeBackground() {
+        Random random = new Random(9847);
+        List<QuestBackground> list = new ArrayList<>();
+        for (int row = 0; row < 9; ++row) {
+            for (int col = 0; col < 8; ++col) {
+                Point p = new Point(col, row);
+                if (0 < row && row < 6 && 1 < col && col < 6) {
+                    list.add(new QuestBackground(p, RUG));
+                } else if (0 < row && row < 6) {
+                    list.add(new QuestBackground(p, FLOOR));
+                } else if (row == 0) {
+                    list.add(new QuestBackground(p, WALL));
+                } else if (row == 6) {
+                    list.add(new QuestBackground(p, LOWER_WALL));
+                } else {
+                    list.add(new QuestBackground(p,
+                            GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]));
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<QuestBackground> getDecorations() {
+        return DECORATIONS;
+    }
+
+    private static Sprite[] makeSpectators() {
+        return new Sprite[]{
+            new Sprite32x32("masq1", "world_foreground.png", 0x67,
+                MyColors.BLACK, MyColors.DARK_BLUE, Race.NORTHERN_HUMAN.getColor(), MyColors.PURPLE),
+                new Sprite32x32("masq1", "world_foreground.png", 0x67,
+                        MyColors.BLACK, MyColors.DARK_RED, Race.SOUTHERN_HUMAN.getColor(), MyColors.GOLD),
+                new Sprite32x32("masq1", "world_foreground.png", 0x67,
+                        MyColors.BLACK, MyColors.LIGHT_GRAY, Race.HIGH_ELF.getColor(), MyColors.LIGHT_BLUE),
+                new Sprite32x32("masq1", "world_foreground.png", 0x67,
+                        MyColors.BLACK, MyColors.DARK_GREEN, Race.DARK_ELF.getColor(), MyColors.GREEN),
+        };
+    }
+
+    private static List<QuestBackground> makeDecorations() {
+        Random random = new Random(9847);
+        List<QuestBackground> list = new ArrayList<>();
+        list.add(new QuestBackground(new Point( 1, 0), WINDOW));
+        list.add(new QuestBackground(new Point( 3, 0), WINDOW));
+        list.add(new QuestBackground(new Point( 4, 0), WINDOW));
+        list.add(new QuestBackground(new Point( 6, 0), WINDOW));
+        list.add(new QuestBackground(new Point( 7, 1), PLANT));
+        list.add(new QuestBackground(new Point( 0, 5), PLANT));
+        list.add(new QuestBackground(new Point( 7, 5), PLANT));
+        list.add(new QuestBackground(new Point( 3, 6), DOOR));
+        list.add(new QuestBackground(new Point( 4, 6), DOOR));
+        String[] placement = new String[]{
+                "        ",
+                " xxx xx ",
+                "x xx  xx",
+                " x x  x ",
+                "xx    xx",
+                " x   xx ",
+                "        ",
+                "x  x xxx",
+                "  x  x  "};
+        for (int y = 0; y < placement.length; ++y) {
+            for (int x = 0; x < placement[0].length(); ++x) {
+                if (placement[y].charAt(x) == 'x') {
+                    list.add(new QuestBackground(new Point(x, y), SPECTATORS[random.nextInt(SPECTATORS.length)]));
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new MansionTheme();
     }
 
     private static class TargetCombatSubScene extends CombatSubScene {

@@ -22,18 +22,18 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
 
     private static List<Quest> makeAllQuests() {
         return List.of(
-                new DeepDungeonQuest(),
-                new MansionHeistQuest(),
-                new UnsuspectingLoversQuest(),
-                new MissingBrotherQuest(),
-                new DefendTheVillageQuest(),
-                new RatProblemQuest(),
-                new TreasureHuntQuest(),
-                new SurveillanceQuest(),
-                new WizardsTowerQuest(),
-                new HauntedMansionQuest(),
-                new ArenaQuest(),
-                new TownFairQuest(),
+//                new DeepDungeonQuest(),
+//                new MansionHeistQuest(),
+//                new UnsuspectingLoversQuest(),
+//                new MissingBrotherQuest(),
+//                new DefendTheVillageQuest(),
+//                new RatProblemQuest(),
+//                new TreasureHuntQuest(),
+//                new SurveillanceQuest(),
+//                new WizardsTowerQuest(),
+//                new HauntedMansionQuest(),
+//                new ArenaQuest(),
+//                new TownFairQuest(),
                 new AbandonedMineQuest(), // Hard
                 new MasqueradeQuest() // medium
                 // new WarlocksDungeonQuest(), // Easy
