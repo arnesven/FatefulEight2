@@ -4,8 +4,6 @@ import model.Model;
 import model.SteppingMatrix;
 import model.quests.*;
 import model.states.QuestState;
-import util.MyPair;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
 import view.sprites.LoopingSprite;
@@ -24,6 +22,8 @@ public class QuestSubView extends AvatarSubView {
     private final SteppingMatrix<QuestNode> matrix;
     private static final LoopingSprite questCursor = new QuestCursorSprite();
     private boolean avatarEnabled;
+    private boolean edgesEnabled = true;
+    private boolean subScenesEnabled = true;
 
     public QuestSubView(QuestState state, Quest quest, SteppingMatrix<QuestNode> matrix) {
         this.state = state;
@@ -38,8 +38,12 @@ public class QuestSubView extends AvatarSubView {
     protected void specificDrawArea(Model model) {
         model.getScreenHandler().clearSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
         drawBackground(model);
-        drawEdges(model);
-        drawSubScenes(model, matrix);
+        if (edgesEnabled) {
+            drawEdges(model);
+        }
+        if (subScenesEnabled) {
+            drawSubScenes(model, matrix);
+        }
     }
 
     private void drawEdges(Model model) {
@@ -163,5 +167,13 @@ public class QuestSubView extends AvatarSubView {
 
     public static Point convertToScreen(Point p) {
         return new Point(X_OFFSET + p.x*4, Y_OFFSET + p.y*4 + 2);
+    }
+
+    public void setEdgesEnabled(boolean edgesEnabled) {
+        this.edgesEnabled = edgesEnabled;
+    }
+
+    public void setSubScenesEnabled(boolean subScenesEnabled) {
+        this.subScenesEnabled = subScenesEnabled;
     }
 }

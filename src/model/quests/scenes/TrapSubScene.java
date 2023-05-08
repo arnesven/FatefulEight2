@@ -16,10 +16,15 @@ import java.util.List;
 public class TrapSubScene extends QuestSubScene {
     private static final Sprite32x32 SPRITE = new Sprite32x32("trapsubscene", "quest.png", 0x07,
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+    private final int damage;
 
+    public TrapSubScene(int col, int row, int trapStrength) {
+        super(col, row);
+        this.damage = trapStrength;
+    }
 
     public TrapSubScene(int col, int row) {
-        super(col, row);
+        this(col, row, 4);
     }
 
     @Override
@@ -34,16 +39,16 @@ public class TrapSubScene extends QuestSubScene {
 
     @Override
     public String getDescription() {
-        return "Trap of 1D10-4 damage.";
+        return "Trap of 1D10-" + damage + " damage.";
     }
 
     @Override
     public QuestEdge run(Model model, QuestState state) {
-        state.print("Each party member takes 1D10-4 damage. Press enter to continue.");
+        state.print("Each party member takes 1D10-" + damage + " damage. Press enter to continue.");
         state.waitForReturn();
         List<GameCharacter> victims = new ArrayList<>(model.getParty().getPartyMembers());
         for (GameCharacter gc : victims) {
-            int result = Math.max(0, MyRandom.rollD10()-4);
+            int result = Math.max(0, MyRandom.rollD10()-damage);
             gc.addToHP(-result);
             if (gc.isDead()) {
                 model.getParty().remove(gc, true, false, 0);

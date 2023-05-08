@@ -18,7 +18,7 @@ public class QuestState extends GameState {
     public static final int QUEST_MATRIX_COLUMNS = 8;
     private final Quest quest;
     private final QuestSubView questSubView;
-    private SteppingMatrix<QuestNode> matrix;
+    private final SteppingMatrix<QuestNode> matrix;
     private QuestNode currentPosition;
     private boolean cursorEnabled;
     private int counter = 0;
@@ -46,7 +46,6 @@ public class QuestState extends GameState {
         model.getTutorial().quests(model);
         waitForReturn();
 
-
         while (currentPosition != quest.getSuccessEndingNode() && currentPosition != quest.getFailEndingNode()) {
             QuestEdge edgeToFollow = currentPosition.run(model, this);
             if (model.getParty().isWipedOut()) {
@@ -65,6 +64,12 @@ public class QuestState extends GameState {
 
     public QuestNode getCurrentPosition() {
         return currentPosition;
+    }
+
+    public void setCurrentPosition(QuestNode newPos) { currentPosition = newPos; }
+
+    public QuestSubView getSubView() {
+        return questSubView;
     }
 
     public QuestNode getSelectedElement() {
