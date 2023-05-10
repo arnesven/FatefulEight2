@@ -22,6 +22,7 @@ public class QuestState extends GameState {
     private QuestNode currentPosition;
     private boolean cursorEnabled;
     private int counter = 0;
+    private long timeStarted = -1;
 
     public QuestState(Model model, Quest quest) {
         super(model);
@@ -45,6 +46,7 @@ public class QuestState extends GameState {
         print("Press enter to start quest.");
         model.getTutorial().quests(model);
         waitForReturn();
+        timeStarted = System.currentTimeMillis();
 
         while (currentPosition != quest.getSuccessEndingNode() && currentPosition != quest.getFailEndingNode()) {
             QuestEdge edgeToFollow = currentPosition.run(model, this);
@@ -54,6 +56,13 @@ public class QuestState extends GameState {
             questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
                     edgeToFollow);
             currentPosition = edgeToFollow.getNode();
+            if (getClockTime() == 0) {
+                println("The time limit of the quest has been reached.");
+                questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
+                        new QuestEdge(quest.getFailEndingNode()));
+                currentPosition = quest.getFailEndingNode();
+                break;
+            }
         }
         currentPosition.run(model, this); // Success or fail node run.
         print("Press enter to continue.");
@@ -102,5 +111,17 @@ public class QuestState extends GameState {
 
     public int getCounter() {
         return counter;
+    }
+
+    public int getClockTime() {
+        int limit = quest.getTimeLimitSeconds()*100;
+        if (timeStarted == -1) {
+            return limit;
+        }
+        int left = limit - (int)((System.currentTimeMillis() - timeStarted) / 10);
+        if (left < 0) {
+            return 0;
+        }
+        return left;
     }
 }

@@ -1,13 +1,17 @@
 package model.quests;
 
 import model.Model;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.TrapSubScene;
+import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -18,10 +22,12 @@ import java.util.List;
 public class WarlocksDungeonQuest extends Quest {
     private static final String INTRO =
             "Caught in an evil warlock's vast dungeon, you must use all your wits " +
-            "to escape a labyrinth of dark halls, dangerous chambers and confusing clues.";
+            "to escape a labyrinth of dark halls, dangerous chambers and confusing clues.\n" +
+            "!! This is a timed quest. You have 10 minutes to escape the dungeon.";
     private static final String OUTRO =
             "You finally escape the dungeon and vow to one day return and deliver " +
             "vengeance upon the evil warlock.";
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.WARLOCK, Race.ALL);
     private boolean flipped = false;
     private static final Sprite32x32 ROOM = new Sprite32x32("warlocksdungeonroom", "quest.png", 0x2B, MyColors.BLACK, MyColors.DARK_GRAY, MyColors.GRAY_RED);
     private static final List<QuestBackground> BACKGROUND = makeBackground();
@@ -33,10 +39,25 @@ public class WarlocksDungeonQuest extends Quest {
     }
 
     @Override
+    public boolean clockEnabled() {
+        return true;
+    }
+
+    @Override
+    public int getTimeLimitSeconds() {
+        return 10*60; // TODO: 10 minutes;
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
+    }
+
+    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Just TURN Left", List.of(
-                    new CollaborativeSkillCheckSubScene(3, 0, Skill.Perception, 1, ""),
+                    new CollaborativeSkillCheckSubScene(3, 0, Skill.Perception, 10, ""),
                     new CollaborativeSkillCheckSubScene(3, 1, Skill.Perception, 10, ""),
                     new CollaborativeSkillCheckSubScene(3, 2, Skill.Perception, 10, ""))),
                 new QuestScene("And IT Will", List.of(
@@ -44,7 +65,7 @@ public class WarlocksDungeonQuest extends Quest {
                     new TrapSubScene(4, 5, 7),
                     new TrapSubScene(1, 5, 7))),
                 new QuestScene("Be OVER Sooon", List.of(
-                    new CollaborativeSkillCheckSubScene(3, 5, Skill.Logic, 1, ""),
+                    new CollaborativeSkillCheckSubScene(3, 5, Skill.Logic, 11, ""),
                     new CollaborativeSkillCheckSubScene(4, 7, Skill.Logic, 11, ""),
                     new CollaborativeSkillCheckSubScene(5, 8, Skill.Logic, 11, "")
                 )));

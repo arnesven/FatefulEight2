@@ -147,4 +147,12 @@ public abstract class Quest {
     }
 
     public void drawSpecialReward(Model model, int x, int y) { }
+
+    public boolean clockEnabled() {
+        return false;
+    }
+
+    public int getTimeLimitSeconds() {
+        return Integer.MAX_VALUE;
+    }
 }

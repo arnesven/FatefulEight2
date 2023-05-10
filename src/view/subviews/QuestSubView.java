@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.quests.*;
 import model.states.QuestState;
+import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
 import view.sprites.LoopingSprite;
@@ -44,6 +45,20 @@ public class QuestSubView extends AvatarSubView {
         if (subScenesEnabled) {
             drawSubScenes(model, matrix);
         }
+        if (quest.clockEnabled()) {
+            drawClock(model);
+        }
+    }
+
+    private void drawClock(Model model) {
+        int time = state.getClockTime();
+        int min = time / (60*100);
+        int sec = (time - min*60*100) / 100;
+        int hund = time - min*60*100 - sec*100;
+        if (time == 0 && ((System.currentTimeMillis() / 500) % 2) == 0) {
+            return;
+        }
+        BorderFrame.drawString(model.getScreenHandler(), String.format("Time: %02d:%02d:%02d", min, sec, hund), X_OFFSET+8, Y_OFFSET, MyColors.WHITE, MyColors.BLACK);
     }
 
     private void drawEdges(Model model) {

@@ -50,10 +50,12 @@ public class LogView extends GameView {
     }
 
     private static MyColors getColorForLine(String s) {
-        if (s.contains("\"")) {
-            return MyColors.YELLOW;
+        if (s.startsWith("!!")) {
+            return MyColors.LIGHT_RED;
         } else if (s.contains("DAY")) {
             return MyColors.CYAN;
+        } else if (s.contains("\"")) {
+            return MyColors.YELLOW;
         }
         return MyColors.LIGHT_GREEN;
     }

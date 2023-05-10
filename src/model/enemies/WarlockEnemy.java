@@ -44,7 +44,7 @@ public class WarlockEnemy extends Enemy {
         public WarlockEnemySprite() {
             super("warlock", "enemies.png", 0x94, 32, 32);
             setColor1(MyColors.BLACK);
-            setColor2(MyColors.DARK_GRAY);
+            setColor2(MyColors.DARK_PURPLE);
             setColor3(Race.NORTHERN_HUMAN.getColor());
             setColor4(MyColors.GREEN);
             setFrames(4);

@@ -167,4 +167,13 @@ public abstract class Looks {
         putOnPointyHat(characterAppearance, hatColor);
         characterAppearance.setSprite(2, 1, new ClothesSprite(0xF0, hatColor, detailColor));
     }
+
+    public static void putOnMask(CharacterAppearance characterAppearance, MyColors clothingColor) {
+        characterAppearance.getSprite(2, 2).setColor3(clothingColor);
+        characterAppearance.getSprite(4, 2).setColor3(clothingColor);
+        characterAppearance.setSprite(2, 4, new FaceAndClothesSpriteWithBack(0x31, clothingColor, MyColors.DARK_GRAY));
+        characterAppearance.setSprite(3, 4, new ClothesSprite(0x70, clothingColor));
+        characterAppearance.setSprite(4, 4, new FaceAndClothesSpriteWithBack(0x41, clothingColor, MyColors.DARK_GRAY));
+        characterAppearance.setSprite(3, 5, new FaceAndClothesSprite(0x91, clothingColor));
+    }
 }

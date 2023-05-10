@@ -32,16 +32,7 @@ public class AssassinClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, CLOTHING_COLOR);
         Looks.putOnHood(characterAppearance, CLOTHING_COLOR);
-        putOnMask(characterAppearance);
-    }
-
-    private void putOnMask(CharacterAppearance characterAppearance) {
-        characterAppearance.getSprite(2, 2).setColor3(CLOTHING_COLOR);
-        characterAppearance.getSprite(4, 2).setColor3(CLOTHING_COLOR);
-        characterAppearance.setSprite(2, 4, new FaceAndClothesSpriteWithBack(0x31, CLOTHING_COLOR, MyColors.DARK_GRAY));
-        characterAppearance.setSprite(3, 4, new ClothesSprite(0x70, CLOTHING_COLOR));
-        characterAppearance.setSprite(4, 4, new FaceAndClothesSpriteWithBack(0x41, CLOTHING_COLOR, MyColors.DARK_GRAY));
-        characterAppearance.setSprite(3, 5, new FaceAndClothesSprite(0x91, CLOTHING_COLOR));
+        Looks.putOnMask(characterAppearance, CLOTHING_COLOR);
     }
 
     @Override
