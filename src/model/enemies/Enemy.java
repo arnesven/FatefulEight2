@@ -93,7 +93,7 @@ public abstract class Enemy extends Combatant {
         target.getAttackedBy(this, model, combatEvent);
         model.getTutorial().combatDamage(model);
         if (target.isDead()) {
-            combatEvent.println(target.getName() + " has been slain in combat!");
+            combatEvent.println("!" + target.getName() + " has been slain in combat!");
             if (model.getParty().getPartyMembers().contains(target)) {
                 if (target.isLeader() && model.getParty().appointNewLeader()) {
                     combatEvent.println(model.getParty().getLeader().getFullName() + " is now the new leader of the party.");

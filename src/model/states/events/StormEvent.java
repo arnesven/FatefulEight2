@@ -49,7 +49,7 @@ public class StormEvent extends DailyEventState {
                 }
             }
             for (GameCharacter gc : toRemove) {
-                println(gc.getName() + " has died from the exertion. Press enter to continue.");
+                println("!" + gc.getName() + " has died from the exertion. Press enter to continue.");
                 waitForReturn();
                 model.getParty().remove(gc, true, false, 0);
             }

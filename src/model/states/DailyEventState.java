@@ -115,7 +115,7 @@ public abstract class DailyEventState extends GameState {
         for (GameCharacter gc : toRemove) {
             model.getParty().remove(gc, !abandonEquipment, false, 0);
         }
-        print(buf.toString().substring(0, buf.length()-2) + " has died.");
+        print("!" + buf.toString().substring(0, buf.length()-2) + " has died.");
         if (!abandonEquipment && model.getParty().size() > 0) {
             println(" you bury them and collect the equipment.");
         } else {
