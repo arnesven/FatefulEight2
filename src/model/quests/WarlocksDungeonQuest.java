@@ -1,7 +1,6 @@
 package model.quests;
 
 import model.Model;
-import model.SteppingMatrix;
 import model.classes.Skill;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.TrapSubScene;
@@ -24,6 +23,10 @@ public class WarlocksDungeonQuest extends Quest {
             "You finally escape the dungeon and vow to one day return and deliver " +
             "vengeance upon the evil warlock.";
     private boolean flipped = false;
+    private static final Sprite32x32 ROOM = new Sprite32x32("warlocksdungeonroom", "quest.png", 0x2B, MyColors.BLACK, MyColors.DARK_GRAY, MyColors.GRAY_RED);
+    private static final List<QuestBackground> BACKGROUND = makeBackground();
+    private static final Sprite BACK_PATH = new BackPathSprite();
+    private static final List<QuestBackground> BACK_SIDE = makeBackSide();
 
     public WarlocksDungeonQuest() {
         super("Warlock's Dungeon", "Warlock", QuestDifficulty.EASY, 1, 0, 100, INTRO, OUTRO);
@@ -33,7 +36,7 @@ public class WarlocksDungeonQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Just TURN Left", List.of(
-                    new CollaborativeSkillCheckSubScene(3, 0, Skill.Perception, 10, ""),
+                    new CollaborativeSkillCheckSubScene(3, 0, Skill.Perception, 1, ""),
                     new CollaborativeSkillCheckSubScene(3, 1, Skill.Perception, 10, ""),
                     new CollaborativeSkillCheckSubScene(3, 2, Skill.Perception, 10, ""))),
                 new QuestScene("And IT Will", List.of(
@@ -41,7 +44,7 @@ public class WarlocksDungeonQuest extends Quest {
                     new TrapSubScene(4, 5, 7),
                     new TrapSubScene(1, 5, 7))),
                 new QuestScene("Be OVER Sooon", List.of(
-                    new CollaborativeSkillCheckSubScene(3, 5, Skill.Logic, 11, ""),
+                    new CollaborativeSkillCheckSubScene(3, 5, Skill.Logic, 1, ""),
                     new CollaborativeSkillCheckSubScene(4, 7, Skill.Logic, 11, ""),
                     new CollaborativeSkillCheckSubScene(5, 8, Skill.Logic, 11, "")
                 )));
@@ -128,10 +131,34 @@ public class WarlocksDungeonQuest extends Quest {
 
     @Override
     public List<QuestBackground> getBackgroundSprites() {
-        // TODO: Make a fake white double-arrow from (0, 4) to (5, 7)
-        // TODO: Make a fake wrapper arrow from (7, 7) to (5, 7)
-        return super.getBackgroundSprites();
+        return BACKGROUND;
     }
+
+    @Override
+    public List<QuestBackground> getDecorations() {
+        if (flipped) {
+            return BACK_SIDE;
+        }
+        return super.getDecorations();
+    }
+
+    private static List<QuestBackground> makeBackSide() {
+        List<QuestBackground> result = new ArrayList<>();
+        result.add(new QuestBackground(new Point(0, 0), BACK_PATH, false));
+        return result;
+    }
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> result = new ArrayList<>();
+        for (int y = 0; y < 9; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                result.add(new QuestBackground(new Point(x, y), ROOM, false));
+            }
+        }
+        return result;
+    }
+
+
 
     private static final Sprite32x32[] WRAP_RIGHT = new Sprite32x32[]{
             new Sprite32x32("wraprightwhite", "quest.png", 0x16, MyColors.BLACK, MyColors.WHITE, MyColors.WHITE),
@@ -176,6 +203,7 @@ public class WarlocksDungeonQuest extends Quest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
+            flipped = true;
             state.getSubView().setEdgesEnabled(false);
             state.getSubView().setSubScenesEnabled(false);
             state.getSubView().animateMovement(model, new Point(state.getCurrentPosition().getColumn(), state.getCurrentPosition().getRow()),
@@ -183,6 +211,7 @@ public class WarlocksDungeonQuest extends Quest {
             state.setCurrentPosition(connection);
             state.getSubView().setEdgesEnabled(true);
             state.getSubView().setSubScenesEnabled(true);
+            flipped = false;
             return connection.getConnection(0);
         }
     }
@@ -210,6 +239,16 @@ public class WarlocksDungeonQuest extends Quest {
         @Override
         public void drawYourself(Model model, int xPos, int yPos) {
             model.getScreenHandler().register(sprite.getName(), new Point(xPos, yPos), sprite, 1);
+        }
+    }
+
+    private static class BackPathSprite extends Sprite {
+        public BackPathSprite() {
+            super("backpathsprite", "warlocksdungeon.png", 0, 0, 256, 288, new ArrayList<>());
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.WHITE);
+            setColor3(MyColors.LIGHT_RED);
+            setColor4(MyColors.LIGHT_GREEN);
         }
     }
 }

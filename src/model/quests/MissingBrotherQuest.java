@@ -41,6 +41,24 @@ public class MissingBrotherQuest extends Quest {
     private static final String endText = "You accompany Ghania's brother back to town " +
             "and she rewards you for returning him safely.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL);
+    private static final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
+            MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+    private static final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
+            MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+    private static final Sprite woodsCorr = new Sprite32x32("woodscorrqmb", "quest.png", 0x55,
+            MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+    private static final Sprite camp = new Sprite32x32("campqmb", "quest.png", 0x56,
+            MyColors.BLACK, MyColors.BROWN, MyColors.TAN, MyColors.GREEN);
+    private static final Sprite horseCart = new Sprite32x32("horsecart", "quest.png", 0x57,
+            MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+    private static final Sprite roadTop = new Sprite32x32("roadtop", "quest.png", 0x60,
+            MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+    private static final Sprite roadRight = new Sprite32x32("roadRight", "quest.png", 0x61,
+            MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+    private static final Sprite roadCorner = new Sprite32x32("roadCorner", "quest.png", 0x62,
+            MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
+    private static final Sprite woodsHalf = new Sprite32x32("woodshalfqmb", "quest.png", 0x54,
+            MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public MissingBrotherQuest() {
@@ -196,15 +214,9 @@ public class MissingBrotherQuest extends Quest {
                 }
             }
         }
-        final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
-                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
         result.add(new QuestBackground(new Point(7, 6), townSprite));
-        final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
-                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
         result.add(new QuestBackground(new Point(6, 2), woods, true));
         result.add(new QuestBackground(new Point(6, 3), woods, true));
-        final Sprite woodsHalf = new Sprite32x32("woodshalfqmb", "quest.png", 0x54,
-                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
         for (int i = 1; i < 6; ++i) {
             result.add(new QuestBackground(new Point(i, 1), woodsHalf, true));
             if (i != 5) {
@@ -214,24 +226,12 @@ public class MissingBrotherQuest extends Quest {
         }
         result.add(new QuestBackground(new Point(6, 1), woodsHalf, true));
         result.add(new QuestBackground(new Point(6, 4), woods, true));
-        final Sprite woodsCorr = new Sprite32x32("woodscorrqmb", "quest.png", 0x55,
-                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
         for (int i = 2; i < 9; ++i) {
             result.add(new QuestBackground(new Point(0, i), woodsCorr, true));
         }
-        final Sprite camp = new Sprite32x32("campqmb", "quest.png", 0x56,
-                MyColors.BLACK, MyColors.BROWN, MyColors.TAN, MyColors.GREEN);
         result.add(new QuestBackground(new Point(5,7), camp, false));
-        final Sprite horseCart = new Sprite32x32("horsecart", "quest.png", 0x57,
-                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
         result.add(new QuestBackground(new Point(1,0), horseCart, true));
 
-        final Sprite roadTop = new Sprite32x32("roadtop", "quest.png", 0x60,
-                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
-        final Sprite roadRight = new Sprite32x32("roadRight", "quest.png", 0x61,
-                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
-        final Sprite roadCorner = new Sprite32x32("roadCorner", "quest.png", 0x62,
-                MyColors.BROWN, MyColors.GRAY, MyColors.TAN, MyColors.GREEN);
 
         for (int i = 2; i < 7; ++i) {
             result.add(new QuestBackground(new Point(i,0), roadTop, true));
