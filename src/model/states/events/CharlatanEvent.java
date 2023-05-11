@@ -60,7 +60,7 @@ public class CharlatanEvent extends DailyEventState {
 
     private void charlatanFoundOut(Model model, GameCharacter gc, SkillCheckResult result) {
         println(gc.getName() + " realizes the the potion is not brewed through alchemical means. " +
-                "(Magic (Green) roll of" + result.asString() + ")");
+                "(Magic (Green) roll of " + result.asString() + ")");
         model.getParty().partyMemberSay(model, gc, "Hey, this is just berry juice!");
         println("The crowd starts murmuring. Some of the doctor's customers are opening their flask " +
                 "to taste the contents.");

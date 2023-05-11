@@ -4,6 +4,8 @@ import model.Model;
 import model.Summon;
 import model.map.UrbanLocation;
 import model.states.ExploreRuinsState;
+import view.subviews.CollapsingTransition;
+import view.subviews.SubView;
 
 public class CastleDungeonTask extends SummonTask {
     private final Summon summon;
@@ -22,9 +24,11 @@ public class CastleDungeonTask extends SummonTask {
                 "I've been looking for some strong, brave adventuring types to root it out. Can you help me?\"");
         print("Do you wish to descend into the dungeon now? (Y/N) ");
         if (yesNoInput()) {
+            SubView sub = model.getSubView();
             ExploreRuinsState explore = new ExploreRuinsState(model, location.getPlaceName(), "Dungeon");
             explore.run(model);
             if (explore.getDungeon().isCompleted()) {
+                CollapsingTransition.transition(model, sub);
                 summon.increaseStep();
                 println(location.getLordName() + ": \"There you are, I was beginning to think you found the same fate as my relative. " +
                         "Thank you for dealing with my little 'problem'.");

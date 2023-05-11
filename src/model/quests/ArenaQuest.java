@@ -56,7 +56,7 @@ public class ArenaQuest extends Quest {
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.CHARLATAN, Race.ALL);
 
     public ArenaQuest() {
-        super("The Arena", "Arena Promoter", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, ENDING);
+        super("The Arena", "Arena Promoter", QuestDifficulty.HARD, 1, 35, 0, INTRO, ENDING);
     }
 
     @Override
