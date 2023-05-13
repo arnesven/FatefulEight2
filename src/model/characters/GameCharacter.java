@@ -209,7 +209,11 @@ public class GameCharacter extends Combatant {
     }
 
     public int getAP() {
-        return equipment.getTotalAP();
+        int bonus = 0;
+        if (hasCondition(ShiningAegisCondition.class)) {
+            bonus += ((ShiningAegisCondition)getCondition(ShiningAegisCondition.class)).getArmorBonus();
+        }
+        return equipment.getTotalAP() + bonus;
     }
 
     public int getXP() {

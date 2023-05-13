@@ -8,8 +8,8 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.sprites.DownArrowAnimation;
 import view.sprites.ItemSprite;
-import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
 import java.util.List;
@@ -51,11 +51,4 @@ public class WeakenSpell extends CombatSpell {
         return "Weakens up to 4 enemies, reducing their damage for 4 turns.";
     }
 
-    private static class DownArrowAnimation extends RunOnceAnimationSprite {
-        public DownArrowAnimation() {
-            super("weakenarrow", "combat.png", 4, 12, 32, 32, 4, MyColors.LIGHT_PINK);
-            setColor2(MyColors.LIGHT_RED);
-            setAnimationDelay(6);
-        }
-    }
 }
