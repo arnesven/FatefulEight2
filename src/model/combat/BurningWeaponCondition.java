@@ -7,7 +7,7 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class BurningWeaponCondition extends Condition {
-    public static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD2), MyColors.LIGHT_BLUE, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD0), MyColors.BLACK, MyColors.RED, MyColors.CYAN);
 
     public BurningWeaponCondition() {
         super("Burning Weapon", "BrW");

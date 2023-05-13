@@ -18,6 +18,7 @@ import model.items.weapons.Longsword;
 import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.sprites.CharSprite;
 import view.sprites.ItemSprite;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
@@ -68,6 +69,8 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
     }
 
     private static class SummonCondition extends Condition {
+        private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD3), MyColors.PURPLE, MyColors.BLACK, MyColors.CYAN);
+
         public SummonCondition() {
             super("Summon", "SMN");
         }
@@ -84,7 +87,7 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
 
         @Override
         public Sprite getSymbol() {
-            return BurningWeaponCondition.CONDITION_SPRITE;
+            return CONDITION_SPRITE;
         }
     }
 }

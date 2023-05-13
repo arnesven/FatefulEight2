@@ -1,13 +1,16 @@
 package model.items.spells;
 
 import model.Model;
-import model.combat.BurningWeaponCondition;
 import model.combat.Combatant;
 import model.combat.Condition;
 import model.states.GameState;
+import view.MyColors;
+import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 class BlackPactCondition extends Condition {
+    private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD2), MyColors.BLACK, MyColors.RED, MyColors.CYAN);
+
     public BlackPactCondition() {
         super("Black Pact", "BLP");
     }
@@ -19,7 +22,7 @@ class BlackPactCondition extends Condition {
 
     @Override
     public Sprite getSymbol() {
-        return BurningWeaponCondition.CONDITION_SPRITE;
+        return CONDITION_SPRITE;
     }
 
     @Override
