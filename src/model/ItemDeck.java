@@ -144,7 +144,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new EntropicBoltSpell(),
                 // new BindDaemonSpell(),
                 new BurningWeaponSpell(),
-                // new TransfigurationSpell(),
+                new TransfigurationSpell(),
                 new AlchemySpell(),
                 new HarmonizeSpell(),
                 new CallOfTheWildSpell(),

@@ -3,6 +3,7 @@ package model.enemies;
 import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
+import model.items.spells.TransfigurationSpell;
 import model.states.CombatEvent;
 import sprites.CombatCursorSprite;
 import util.MyPixel;
@@ -32,7 +33,11 @@ public abstract class Enemy extends Combatant {
 
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
         Sprite spr = getSprite();
-        screenHandler.register(spr.getName(), new Point(xpos, ypos), spr);
+        if (hasCondition(TransfiguredCondition.class)) {
+            ((TransfiguredCondition)getCondition(TransfiguredCondition.class)).drawYourself(screenHandler, xpos, ypos);
+        } else {
+            screenHandler.register(spr.getName(), new Point(xpos, ypos), spr);
+        }
         int offsetX = getWidth()*4-1;
         int offsetY = getHeight()*4-1;
         screenHandler.register(spr.getName() + enemyGroup, new Point(xpos+offsetX, ypos+offsetY),

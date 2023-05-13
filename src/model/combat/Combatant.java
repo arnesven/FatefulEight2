@@ -62,12 +62,16 @@ public abstract class Combatant implements Serializable {
     }
 
     public boolean hasCondition(Class<? extends Condition> condition) {
+        return getCondition(condition) != null;
+    }
+
+    public Condition getCondition(Class<? extends Condition> condition) {
         for (Condition cond : conditions) {
             if (cond.getClass().equals(condition)) {
-                return true;
+                return cond;
             }
         }
-        return false;
+        return null;
     }
 
     public void removeCondition(Class<? extends Condition> condition) {

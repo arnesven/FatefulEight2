@@ -8,7 +8,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 public class RatEnemy extends Enemy {
-    private static final Sprite SPRITE = new Sprite32x32("rat", "enemies.png", 0x4D,
+    public static final Sprite SPRITE = new Sprite32x32("rat", "enemies.png", 0x4D,
             MyColors.BLACK, MyColors.BROWN, MyColors.LIGHT_PINK, MyColors.BEIGE);
 
     public RatEnemy(char a) {
