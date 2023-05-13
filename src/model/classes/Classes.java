@@ -1,5 +1,7 @@
 package model.classes;
 
+import model.races.Race;
+
 public interface Classes {
     CharacterClass AMZ = new AmazonClass();
     CharacterClass ART = new ArtisanClass();
@@ -36,4 +38,7 @@ public interface Classes {
     CharacterClass CONSTABLE = new ConstableNPCClass();
     CharacterClass TEMPLE_GUARD = new TempleGuardNPCClass();
     CharacterClass WARLOCK = new WarlockNPCClass();
+
+    // Special Classes:
+    CharacterClass BONE_WALKER = new BoneWalkerClass();
 }

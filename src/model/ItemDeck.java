@@ -151,7 +151,7 @@ public class ItemDeck extends ArrayList<Item> {
                 // new GiantGrowthSpell(),
                 new GazeOfDeathSpell(),
                 // new BlackPactSpell(),
-                // new RaiseBoneWalkerSpell(),
+                new RaiseBoneWalkerSpell(),
                 new WeakenSpell(),
                 new DarkShroudSpell()
                 );
