@@ -10,7 +10,6 @@ public class WeakenCondition extends Condition {
     public WeakenCondition() {
         super("Weakened", "WKN");
         setDuration(4);
-
     }
 
     @Override

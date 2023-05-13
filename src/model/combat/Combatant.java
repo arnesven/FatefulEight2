@@ -80,6 +80,7 @@ public abstract class Combatant implements Serializable {
         if (found != null) {
             conditions.remove(found);
         }
+        found.wasRemoved(this);
     }
 
     public String getStatus() {
@@ -114,6 +115,18 @@ public abstract class Combatant implements Serializable {
         for (Condition cond : conditions) {
             Sprite spr = cond.getSymbol();
             screenHandler.register(spr.getName(), new Point(xpos, ypos - count), spr);
+        }
+    }
+
+    public void removeCombatConditions() {
+        List<Condition> toBeRemoved = new ArrayList<>();
+        for (Condition cond : conditions) {
+            if (cond.removeAtEndOfCombat()) {
+                toBeRemoved.add(cond);
+            }
+        }
+        for (Condition cond : toBeRemoved) {
+            removeCondition(cond.getClass());
         }
     }
 }

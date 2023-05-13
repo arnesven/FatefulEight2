@@ -9,10 +9,13 @@ import model.items.Item;
 import util.MyPair;
 import util.MyStrings;
 
+import java.util.Arrays;
+
 public abstract class Weapon extends EquipableItem {
 
     private final Skill skill;
     private final int[] damageTable;
+    private boolean isBurning;
 
     public Weapon(String name, int cost, Skill skill, int[] damageTable) {
         super(name, cost);
@@ -22,8 +25,9 @@ public abstract class Weapon extends EquipableItem {
 
     public int getDamage(int modifiedRoll, GameCharacter damager) {
         int dmg = 0;
-        for (int i = 0; i < damageTable.length; ++i) {
-            if (modifiedRoll < damageTable[i]) {
+        int[] tableToUse = getDamageTable();
+        for (int i = 0; i < tableToUse.length; ++i) {
+            if (modifiedRoll < tableToUse[i]) {
                 break;
             }
             dmg++;
@@ -37,11 +41,24 @@ public abstract class Weapon extends EquipableItem {
 
     public String getDamageTableAsString() {
         StringBuilder bldr = new StringBuilder();
-        for (int i = 0; i < damageTable.length; ++i) {
-            bldr.append(damageTable[i]+"");
+        int[] tableToUse = getDamageTable();
+        for (int i = 0; i < tableToUse.length; ++i) {
+            bldr.append(tableToUse[i]+"");
             bldr.append("/");
         }
         return bldr.substring(0, bldr.length()-1);
+    }
+
+    private int[] getDamageTable() {
+        if (!isBurning) {
+            return damageTable;
+        }
+        int[] burningTable = new int[damageTable.length+1];
+        burningTable[0] = damageTable[0];
+        for (int i = 0; i < damageTable.length; ++i) {
+            burningTable[i+1] = damageTable[i];
+        }
+        return burningTable;
     }
 
     public boolean isRangedAttack() {
@@ -89,5 +106,9 @@ public abstract class Weapon extends EquipableItem {
     @Override
     public void equipYourself(GameCharacter gc) {
         gc.equipWeaponFromInventory(this);
+    }
+
+    public void setBurning(boolean b) {
+        isBurning = b;
     }
 }

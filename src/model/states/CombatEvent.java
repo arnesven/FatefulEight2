@@ -104,10 +104,17 @@ public class CombatEvent extends DailyEventState {
         }
 
         removeKilledPartyMembers(model, partyFled);
+        removeCombatConditions(model);
 
         model.setGameOver(model.getParty().isWipedOut());
         model.playMainSong(); // TODO: Song is dependent on location...
         model.setInCombat(false);
+    }
+
+    private void removeCombatConditions(Model model) {
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            gc.removeCombatConditions();
+        }
     }
 
     private List<CombatLoot> generateCombatLoot(Model model, Map<GameCharacter, List<Enemy>> destroyedEnemies) {

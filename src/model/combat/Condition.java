@@ -61,4 +61,12 @@ public abstract class Condition implements Serializable {
     }
 
     public abstract Sprite getSymbol();
+
+    public void wasRemoved(Combatant combatant) {
+
+    }
+
+    public boolean removeAtEndOfCombat() {
+        return false;
+    }
 }
