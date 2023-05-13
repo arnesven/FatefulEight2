@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.combat.Condition;
 import model.combat.PoisonCondition;
 import model.items.spells.Spell;
 import util.MyPair;
@@ -110,13 +111,7 @@ public abstract class GameState {
 
     protected void stepToNextDay(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.hasCondition(PoisonCondition.class)) {
-                println(gc.getName() + " takes damage from the effects of the poison.");
-                gc.addToHP(-2);
-                if (gc.isDead()) {
-                    DailyEventState.characterDies(model, this, gc, " succumbed to the evil of the poison and died.");
-                }
-            }
+            gc.conditionsEndOfDayTrigger(model, this);
         }
         model.incrementDay();
     }

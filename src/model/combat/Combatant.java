@@ -2,6 +2,8 @@ package model.combat;
 
 import model.Model;
 import model.states.CombatEvent;
+import model.states.DailyEventState;
+import model.states.GameState;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.CharSprite;
@@ -131,6 +133,13 @@ public abstract class Combatant implements Serializable {
         }
         for (Condition cond : toBeRemoved) {
             removeCondition(cond.getClass());
+        }
+    }
+
+    public void conditionsEndOfDayTrigger(Model model, GameState state) {
+        List<Condition> conditionsToTraverse = new ArrayList<>(conditions);
+        for (Condition cond : conditionsToTraverse) {
+            cond.endOfDayTrigger(model, state, this);
         }
     }
 }

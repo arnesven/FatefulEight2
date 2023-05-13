@@ -1,5 +1,7 @@
 package model.combat;
 
+import model.Model;
+import model.states.GameState;
 import view.sprites.Sprite;
 
 import java.io.Serializable;
@@ -68,5 +70,9 @@ public abstract class Condition implements Serializable {
 
     public boolean removeAtEndOfCombat() {
         return false;
+    }
+
+    public void endOfDayTrigger(Model model, GameState state, Combatant comb) {
+
     }
 }

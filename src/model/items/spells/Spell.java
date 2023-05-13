@@ -44,7 +44,14 @@ public abstract class Spell extends Item {
     public boolean castYourself(Model model, GameState state, GameCharacter caster) {
         state.println(caster.getName() + " tries to cast " + getName() + "...");
         model.getTutorial().spells(model);
-        caster.addToHP(-hpCost);
+        int health = hpCost;
+        if (caster.getEquipment().getAccessory() != null) {
+            health = Math.max(0, hpCost - caster.getEquipment().getAccessory().getSpellDiscount(this));
+        }
+        if (caster.hasCondition(BlackPactCondition.class)) {
+            health = Math.max(0, health - 2);
+        }
+        caster.addToHP(-health);
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
             model.getParty().remove(caster, true, false, 0);
