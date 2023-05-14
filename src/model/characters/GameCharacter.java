@@ -31,6 +31,7 @@ public class GameCharacter extends Combatant {
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
     private static final int MAX_SP = 2;
     private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1000};
+    private static final int NO_DIFFICULTY = Integer.MAX_VALUE;
 
     private final String firstName;
     private final String lastName;
@@ -41,7 +42,7 @@ public class GameCharacter extends Combatant {
     private final CharacterAppearance appearance;
     private int level;
     private Equipment equipment;
-    private Map<Skill, Integer> temporarySkillBonuses = new HashMap<>();
+    private final Map<Skill, Integer> temporarySkillBonuses = new HashMap<>();
 
     private int currentSp = 1;
     private int currentXp = 0;
@@ -143,7 +144,8 @@ public class GameCharacter extends Combatant {
 
     private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
         for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
-            SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this));
+            int bonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
+            SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
             int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
             String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
             if (result.isCritical() && equipment.getWeapon().allowsCriticalHits()) {
@@ -221,7 +223,8 @@ public class GameCharacter extends Combatant {
     }
 
     public int getMaxHP() {
-        return charClass.getHP() + race.getHPModifier() + equipment.getHealthBonus() + level;
+        int spellBonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
+        return charClass.getHP() + race.getHPModifier() + equipment.getHealthBonus() + level + spellBonus;
     }
 
     public int getLevel() {
