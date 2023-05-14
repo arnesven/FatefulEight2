@@ -52,7 +52,7 @@ public class ThiefEvent extends DailyEventState {
                 lost = model.getParty().getGold();
             }
             println("The party loses " + lost + " gold.");
-            model.getParty().addToGold(-10);
+            model.getParty().addToGold(-lost);
         }
 
     }
