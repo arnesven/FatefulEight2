@@ -29,7 +29,11 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new ShopState(model, getName(), shopInventory, null);
+        return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory));
+    }
+
+    protected int[] getSpecialPrices(List<Item> inventory) {
+        return null;
     }
 
     @Override
