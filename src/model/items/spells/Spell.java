@@ -6,12 +6,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
-import model.map.CastleLocation;
 import model.states.GameState;
-import model.tutorial.TutorialHandler;
 import view.MyColors;
-import view.SimpleMessageView;
-import view.SpellsView;
 
 public abstract class Spell extends Item {
     public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK};

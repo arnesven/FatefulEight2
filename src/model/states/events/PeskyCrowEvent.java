@@ -3,8 +3,6 @@ package model.states.events;
 import model.Model;
 import model.enemies.CrowEnemy;
 import model.states.DailyEventState;
-import view.MyColors;
-import view.sprites.LoopingSprite;
 
 import java.util.List;
 

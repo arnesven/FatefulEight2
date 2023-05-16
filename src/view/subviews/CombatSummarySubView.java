@@ -29,7 +29,7 @@ public class CombatSummarySubView extends SubView {
 
         BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + enemies,
                 X_OFFSET+3, Y_OFFSET+3, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Fled: " + fledEnemies,
+        BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + fledEnemies,
                 X_OFFSET+3, Y_OFFSET+4, MyColors.WHITE, MyColors.BLUE);
         int row = Y_OFFSET+6;
 

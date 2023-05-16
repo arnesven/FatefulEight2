@@ -38,6 +38,7 @@ public class CombatEvent extends DailyEventState {
     private Combatant selectedTarget;
     private List<GameCharacter> allies = new ArrayList<>();
     private boolean isAmbush;
+    private int fledEnemies = 0;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -94,7 +95,7 @@ public class CombatEvent extends DailyEventState {
         } else {
             println("You are victorious in battle!");
             combatLoot = generateCombatLoot(model, destroyedEnemies);
-            StripedTransition.transition(model, new CombatSummarySubView(model, sumUp(destroyedEnemies), 0, combatLoot));
+            StripedTransition.transition(model, new CombatSummarySubView(model, sumUp(destroyedEnemies), fledEnemies, combatLoot));
         }
 
         println("Press enter to continue.");
@@ -402,5 +403,11 @@ public class CombatEvent extends DailyEventState {
 
     public boolean isAmbush() {
         return isAmbush;
+    }
+
+    public void retreatEnemy(Combatant target) {
+        enemies.remove(target);
+        combatMatrix.remove(target);
+        fledEnemies++;
     }
 }
