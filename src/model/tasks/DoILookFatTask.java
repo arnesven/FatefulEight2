@@ -22,8 +22,9 @@ public class DoILookFatTask extends SummonTask {
         println(location.getLordName() + ": \"I have a very important dinner party coming up and I need an outsiders opinion on this.\"");
         println(location.getLordName() + " slowly turns around, as to show off " + hisOrHer(location.getLordGender()) + " clothes.");
         println(location.getLordName() + ": \"Do I look fat in this?\"");
+        model.getLog().waitForAnimationToFinish();
 
-        int choice = multipleOptionArrowMenu(model, 26, 20, List.of("Of course not!", "No, but wear something else.", "Uhm, yes..."));
+        int choice = multipleOptionArrowMenu(model, 24, 20, List.of("Of course not!", "No, but wear something else.", "Uhm, yes..."));
         if (choice < 2) {
             println(location.getLordName() + ": \"Liar! You're just like everybody else. You just say what I want to hear.\"");
             model.getParty().randomPartyMemberSay(model, List.of("What a vain person..."));

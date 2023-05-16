@@ -301,12 +301,12 @@ public class GameCharacter extends Combatant {
 
         Set<UsableItem> usableItems = new HashSet<>();
         usableItems.addAll(model.getParty().getInventory().getPotions());
-        if (usableItems.size() > 0) {
+        if (usableItems.size() > 0 && model.getParty().getPartyMembers().contains(this)) {
             result.add(new ItemCombatAction(usableItems, target));
         }
 
         List<CombatSpell> combatSpells = model.getParty().getInventory().getCombatSpells();
-        if (!combatSpells.isEmpty()) {
+        if (!combatSpells.isEmpty() && model.getParty().getPartyMembers().contains(this)) {
             result.add(new SpellCombatAction(combatSpells, target));
         }
 
