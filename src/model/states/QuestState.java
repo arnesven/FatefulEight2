@@ -56,7 +56,7 @@ public class QuestState extends GameState {
             questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
                     edgeToFollow);
             currentPosition = edgeToFollow.getNode();
-            if (quest.clockEnabled() && getClockTime() == 0) {
+            if (quest.clockEnabled() && getClockTime() == 0 && quest.clockTimeOutFailsQuest()) {
                 println("The time limit of the quest has been reached.");
                 questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
                         new QuestEdge(quest.getFailEndingNode()));

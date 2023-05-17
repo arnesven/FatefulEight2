@@ -155,4 +155,8 @@ public abstract class Quest {
     public int getTimeLimitSeconds() {
         return Integer.MAX_VALUE;
     }
+
+    public boolean clockTimeOutFailsQuest() {
+        return clockEnabled();
+    }
 }
