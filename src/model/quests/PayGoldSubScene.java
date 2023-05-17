@@ -49,6 +49,12 @@ public class PayGoldSubScene extends QuestSubScene {
 
     @Override
     public String getDetailedDescription() {
+        if (gold < 5) {
+            return "Small Expenses";
+        }
+        if (gold > 9) {
+            return "Large Expenses";
+        }
         return "Expenses";
     }
 

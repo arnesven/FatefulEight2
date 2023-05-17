@@ -1,6 +1,5 @@
 package model.quests;
 
-import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

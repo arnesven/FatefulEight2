@@ -17,9 +17,9 @@ public class TownCombatTheme extends CombatTheme {
     private static final Sprite32x32 topWhite = new TownSprite("topWhite", 0x62, MyColors.WHITE);
     private static final Sprite32x32 bottomWhite = new TownSprite("bottomWhite", 0x63, MyColors.WHITE);
 
-    private static final Sprite32x32[] topRow = new Sprite32x32[] {
+    public static final Sprite32x32[] topRow = new Sprite32x32[] {
             topYellow, topPink, topWhite, topPink, topYellow, topYellow, topPink, topWhite};
-    private static final Sprite32x32[] bottomRow = new Sprite32x32[] {
+    public static final Sprite32x32[] bottomRow = new Sprite32x32[] {
             bottomYellow, bottomPink, bottomWhite, bottomPink,
             bottomYellow, bottomYellow, bottomPink, bottomWhite};
     static final Sprite32x32 ground = new Sprite32x32("ground", "combat.png", 0x64,
