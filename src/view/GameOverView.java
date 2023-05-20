@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class GameOverView extends GameView {
     public GameOverView() {
-        super(true);
+        super(false);
     }
 
     @Override

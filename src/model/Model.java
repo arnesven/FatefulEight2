@@ -75,6 +75,7 @@ public class Model {
             gameData = readGameData(filename);
             caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
             state = getCurrentHex().getDailyActionState(this);
+            System.out.println("Loading from file, setting state to " + state);
             log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
         } catch (FileNotFoundException | CorruptSaveFileException ex) {
@@ -212,6 +213,7 @@ public class Model {
             GameState nextState = state.run(this);
             handleCastSpells();
             if (nextState != null) {
+                System.out.println("GameScript: next state is " + nextState);
                 state = nextState;
                 if (endOfGameReached() && !gameData.freePlay) {
                     log.waitForAnimationToFinish();

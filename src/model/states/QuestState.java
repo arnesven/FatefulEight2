@@ -51,6 +51,7 @@ public class QuestState extends GameState {
         while (currentPosition != quest.getSuccessEndingNode() && currentPosition != quest.getFailEndingNode()) {
             QuestEdge edgeToFollow = currentPosition.run(model, this);
             if (model.getParty().isWipedOut()) {
+                System.out.println("Party wiped out during quest.");
                 return new GameOverState(model);
             }
             questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
