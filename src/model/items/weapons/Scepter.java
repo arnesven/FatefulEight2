@@ -8,7 +8,7 @@ public class Scepter extends BluntWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 1);
 
     public Scepter() {
-        super("Scepter", 14, new int[]{5, 9, 13}, false, -1);
+        super("Scepter", 12, new int[]{5, 9, 13}, false, -1);
     }
 
     @Override

@@ -8,7 +8,7 @@ public class MorningStar extends BluntWeapon {
     private static final Sprite SPRITE = new ItemSprite(5,1);
 
     public MorningStar() {
-        super("Morning Star", 14, new int[]{5, 7, 10}, false, -1);
+        super("Morning Star", 16, new int[]{5, 7, 10}, false, -1);
     }
 
     @Override
