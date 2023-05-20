@@ -168,28 +168,9 @@ public class MurderMysteryQuest extends Quest {
         }
     }
 
-
-    private static final Sprite32x32 SPRITE = new Sprite32x32("conditionsubscene", "quest.png", 0x25,
-            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
-
-    private class CountCheckSubScene extends QuestSubScene {
+    private class CountCheckSubScene extends ConditionSubScene {
         public CountCheckSubScene(int col, int row) {
             super(col, row);
-        }
-
-        @Override
-        protected MyColors getSuccessEdgeColor() {
-            return MyColors.LIGHT_GREEN;
-        }
-
-        @Override
-        public String getDetailedDescription() {
-           return "???";
-        }
-
-        @Override
-        public void drawYourself(Model model, int xPos, int yPos) {
-            model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
         }
 
         @Override

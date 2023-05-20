@@ -6,15 +6,21 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.PersonCombatLoot;
 import model.enemies.CultistEnemy;
+import model.enemies.CultistLeaderEnemy;
+import model.enemies.ElderDaemonEnemy;
 import model.enemies.Enemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.AllRaces;
+import model.states.DailyEventState;
 import model.states.QuestState;
+import sprites.DungeonWallSprite;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.PortraitSubView;
+import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,6 +33,7 @@ public class CultistDenQuest extends Quest {
             "!! This is a timed quest. You have " + TIME_MINUTES + " minutes until the ritual is complete.";;
     private static final String ENDING = "You have cleared out the cultist den. The cleric thanks you for dealing with the cultist threat.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.TEMPLE_GUARD, AllRaces.ALL);
+
 
     public CultistDenQuest() {
         super("Cultist Den", "Cleric", QuestDifficulty.MEDIUM, 1, 15, 0, INTRO, ENDING);
@@ -55,25 +62,27 @@ public class CultistDenQuest extends Quest {
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(
-                new QuestScene("Trapped Locked Door", List.of( // TODO: Diff 11
-                    new SoloSkillCheckSubScene(1, 1, Skill.Security, 1, "Can somebody disable the trap mechanism?"),
-                    new CollaborativeSkillCheckSubScene(3, 1, Skill.Security, 1, "Can we jimmie the lock?"))),
+                new QuestScene("Trapped Locked Door", List.of(
+                    new SoloSkillCheckSubScene(2, 1, Skill.Security, 11, "Can somebody disable the trap mechanism?"),
+                    new CollaborativeSkillCheckSubScene(3, 1, Skill.Security, 11, "Can we jimmie the lock?"))),
                 new QuestScene("Cultists", List.of(
-                        new CultistCombatSubScene(3, 2, 4)
+                        new CultistCombatSubScene(2, 3, 4)
                 )),
                 new QuestScene("More Cultists", List.of(
-                        new CultistCombatSubScene(3, 3, 5))),
+                        new CultistCombatSubScene(2, 5, 5))),
                 new QuestScene("Room With Loot", List.of(
-                        new LootRomSubScene(4, 4)
+                        new LootRomSubScene(4, 5))),
+                new QuestScene("Ritual Chamber", List.of(
+                        new CheckTimeSubScene(4, 7),
+                        new CultistLeaderCombatSubScene(3, 7),
+                        new ElderDaemonSubScene(5, 7)
                 )));
     }
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        QuestStartPoint qsp = new QuestStartPoint(List.of(
-                new QuestEdge(scenes.get(0).get(0)),
-                new QuestEdge(scenes.get(1).get(0))),
-                "Hmm. Maybe we don't have to rush into this?");
+        QuestStartPointWithoutDecision qsp = new QuestStartPointWithoutDecision(
+                new QuestEdge(scenes.get(0).get(0)), "Maybe we don't have to rush into this");
         return List.of(qsp);
     }
 
@@ -81,7 +90,7 @@ public class CultistDenQuest extends Quest {
     protected void connectScenesToJunctions(List<QuestScene> scenes, List<QuestJunction> junctions) {
         scenes.get(0).get(0).connectFail(scenes.get(1).get(0));
         scenes.get(0).get(0).connectSuccess(scenes.get(0).get(1));
-        scenes.get(0).get(1).connectFail(scenes.get(1).get(0));
+        scenes.get(0).get(1).connectFail(scenes.get(1).get(0), QuestEdge.VERTICAL);
         scenes.get(0).get(1).connectSuccess(scenes.get(3).get(0));
 
         scenes.get(1).get(0).connectSuccess(scenes.get(2).get(0));
@@ -90,12 +99,84 @@ public class CultistDenQuest extends Quest {
         scenes.get(2).get(0).connectSuccess(scenes.get(3).get(0));
         scenes.get(2).get(0).connectFail(getFailEndingNode());
 
-        scenes.get(3).get(0).connectSuccess(getSuccessEndingNode());
+        scenes.get(3).get(0).connectSuccess(scenes.get(4).get(0));
+
+        scenes.get(4).get(0).connectSuccess(scenes.get(4).get(1));
+        scenes.get(4).get(0).connectFail(scenes.get(4).get(2));
+
+        scenes.get(4).get(1).connectSuccess(getSuccessEndingNode(), QuestEdge.VERTICAL);
+        scenes.get(4).get(2).connectSuccess(getSuccessEndingNode());
     }
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.BLACK;
+        return MyColors.GRAY_RED;
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
+    private static DungeonWallSprite door = new DungeonWallSprite(0x31);
+    private static DungeonWallSprite upperWall = new DungeonWallSprite(0x30);
+    private static DungeonWallSprite fullWall = new DungeonWallSprite(0x32);
+    private static DungeonWallSprite upperT = new DungeonWallSprite(0x33);
+    private static DungeonWallSprite vertiWall = new DungeonWallSprite(0x34);
+
+    private static List<QuestBackground> bgSprites = makeBackground();
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> result = new ArrayList<>();
+        result.add(new QuestBackground(new Point(0, 0), door));
+        result.add(new QuestBackground(new Point(1, 0), upperWall));
+        for (int i = 6; i < 8; ++i) {
+            result.add(new QuestBackground(new Point(i, 0), fullWall));
+        }
+
+        for (int row = 1; row < 3; ++row) {
+            for (int col = 6; col < 8; ++col) {
+                result.add(new QuestBackground(new Point(col, row), fullWall));
+            }
+        }
+
+        for (int row = 2; row < 9; ++row) {
+            result.add(new QuestBackground(new Point(0, row), fullWall, false));
+            result.add(new QuestBackground(new Point(7, row), fullWall, false));
+            if (row < 6) {
+                result.add(new QuestBackground(new Point(6, row), fullWall, false));
+            }
+        }
+
+        result.add(new QuestBackground(new Point(1, 2), door, false));
+
+
+        result.add(new QuestBackground(new Point(2, 2), upperWall, false));
+        result.add(new QuestBackground(new Point(3, 2), upperT, false));
+        result.add(new QuestBackground(new Point(4, 2), door, false));
+        result.add(new QuestBackground(new Point(5, 2), upperWall, false));
+
+        result.add(new QuestBackground(new Point(3, 3), vertiWall, false));
+
+        result.add(new QuestBackground(new Point(1, 4), door, false));
+        result.add(new QuestBackground(new Point(2, 4), upperWall, false));
+        result.add(new QuestBackground(new Point(3, 4), upperT, false));
+        result.add(new QuestBackground(new Point(4, 4), door, false));
+        result.add(new QuestBackground(new Point(5, 4), upperWall, false));
+
+        result.add(new QuestBackground(new Point(3, 5), vertiWall, false));
+
+        result.add(new QuestBackground(new Point(1, 6), door, false));
+        result.add(new QuestBackground(new Point(2, 6), fullWall, false));
+        result.add(new QuestBackground(new Point(3, 6), upperWall, false));
+        result.add(new QuestBackground(new Point(4, 6), door, false));
+        result.add(new QuestBackground(new Point(5, 6), upperWall, false));
+        result.add(new QuestBackground(new Point(6, 6), upperWall, false));
+
+        result.add(new QuestBackground(new Point(2, 7), fullWall, false));
+
+        result.add(new QuestBackground(new Point(2, 8), fullWall, false));
+        return result;
     }
 
 
@@ -174,6 +255,57 @@ public class CultistDenQuest extends Quest {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Come on team, we need to press on.");
             }
             return getSuccessEdge();
+        }
+    }
+
+    private static class CheckTimeSubScene extends ConditionSubScene {
+        public CheckTimeSubScene(int col, int row) {
+            super(col, row);
+        }
+
+        @Override
+        public String getDescription() {
+            return "Less than " + TIME_MINUTES + " minutes passed?";
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            long time = state.getClockTime();
+            if (time == 0) {
+                model.getParty().partyMemberSay(model, model.getParty().getLeader(),
+                        "Oh no, the ritual is already complete! They've summoned a daemon!");
+                return getFailEdge();
+            }
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
+                    "Hey there! Stop performing that ritual!");
+            state.println("Cultist Leader: \"Just try and stop me!\"");
+            boolean gender = MyRandom.flipCoin();
+            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
+                    "Get " + DailyEventState.himOrHer(gender) + "!");
+
+            return getSuccessEdge();
+        }
+    }
+
+    private static class CultistLeaderCombatSubScene extends CombatSubScene {
+        public CultistLeaderCombatSubScene(int col, int row) {
+            super(col, row, List.of(new CultistLeaderEnemy('A')));
+        }
+
+        @Override
+        protected String getCombatDetails() {
+            return "Cult Leader";
+        }
+    }
+
+    private static class ElderDaemonSubScene extends CombatSubScene{
+        public ElderDaemonSubScene(int col, int row) {
+            super(col, row, List.of(new ElderDaemonEnemy('A')), false);
+        }
+
+        @Override
+        protected String getCombatDetails() {
+            return "Elder Daemon";
         }
     }
 }

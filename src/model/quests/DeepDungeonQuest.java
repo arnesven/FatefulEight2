@@ -11,13 +11,9 @@ import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
-import model.states.SpellCastException;
-import util.MyPair;
+import sprites.DungeonWallSprite;
 import view.MyColors;
-import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 import view.subviews.PortraitSubView;
-import view.subviews.QuestSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -118,56 +114,50 @@ public class DeepDungeonQuest extends Quest {
 
     private static List<QuestBackground> makeBackground() {
         List<QuestBackground> result = new ArrayList<>();
-        result.add(new QuestBackground(new Point(0, 0), new WallSprite(0x31)));
+        result.add(new QuestBackground(new Point(0, 0), new DungeonWallSprite(0x31)));
         for (int col = 1; col < 8; ++col) {
             if (col < 5) {
-                result.add(new QuestBackground(new Point(col, 0), new WallSprite(0x30)));
+                result.add(new QuestBackground(new Point(col, 0), new DungeonWallSprite(0x30)));
             } else {
-                result.add(new QuestBackground(new Point(col, 0), new WallSprite(0x32)));
+                result.add(new QuestBackground(new Point(col, 0), new DungeonWallSprite(0x32)));
             }
         }
 
         for (int row = 1; row < 3; ++row) {
             for (int col = 5; col < 8; ++col) {
-                result.add(new QuestBackground(new Point(col, row), new WallSprite(0x32)));
+                result.add(new QuestBackground(new Point(col, row), new DungeonWallSprite(0x32)));
             }
         }
 
-        result.add(new QuestBackground(new Point(1, 2), new WallSprite(0x30), false));
-        result.add(new QuestBackground(new Point(2, 3), new WallSprite(0x34), false));
-        result.add(new QuestBackground(new Point(2, 4), new WallSprite(0x32), false));
-        result.add(new QuestBackground(new Point(3, 5), new WallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(1, 2), new DungeonWallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(2, 3), new DungeonWallSprite(0x34), false));
+        result.add(new QuestBackground(new Point(2, 4), new DungeonWallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(3, 5), new DungeonWallSprite(0x30), false));
         for (int row = 2; row < 9; ++row) {
-            result.add(new QuestBackground(new Point(0, row), new WallSprite(0x32), false));
-            result.add(new QuestBackground(new Point(7, row), new WallSprite(0x32), false));
+            result.add(new QuestBackground(new Point(0, row), new DungeonWallSprite(0x32), false));
+            result.add(new QuestBackground(new Point(7, row), new DungeonWallSprite(0x32), false));
             if (row < 6) {
-                result.add(new QuestBackground(new Point(6, row), new WallSprite(0x32), false));
+                result.add(new QuestBackground(new Point(6, row), new DungeonWallSprite(0x32), false));
             }
         }
 
-        result.add(new QuestBackground(new Point(2, 2), new WallSprite(0x33), false));
-        result.add(new QuestBackground(new Point(3, 2), new WallSprite(0x30), false));
-        result.add(new QuestBackground(new Point(5, 2), new WallSprite(0x30), true));
+        result.add(new QuestBackground(new Point(2, 2), new DungeonWallSprite(0x33), false));
+        result.add(new QuestBackground(new Point(3, 2), new DungeonWallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(5, 2), new DungeonWallSprite(0x30), true));
 
-        result.add(new QuestBackground(new Point(2, 5), new WallSprite(0x33), false));
-        result.add(new QuestBackground(new Point(4, 5), new WallSprite(0x31), false));
-        result.add(new QuestBackground(new Point(5, 5), new WallSprite(0x30), false));
-        result.add(new QuestBackground(new Point(6, 6), new WallSprite(0x30), false));
-        result.add(new QuestBackground(new Point(2, 6), new WallSprite(0x34), false));
+        result.add(new QuestBackground(new Point(2, 5), new DungeonWallSprite(0x33), false));
+        result.add(new QuestBackground(new Point(4, 5), new DungeonWallSprite(0x31), false));
+        result.add(new QuestBackground(new Point(5, 5), new DungeonWallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(6, 6), new DungeonWallSprite(0x30), false));
+        result.add(new QuestBackground(new Point(2, 6), new DungeonWallSprite(0x34), false));
 
-        result.add(new QuestBackground(new Point(2, 7), new WallSprite(0x32), false));
-        result.add(new QuestBackground(new Point(3, 7), new WallSprite(0x32), false));
-        result.add(new QuestBackground(new Point(2, 8), new WallSprite(0x32), false));
-        result.add(new QuestBackground(new Point(3, 8), new WallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(2, 7), new DungeonWallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(3, 7), new DungeonWallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(2, 8), new DungeonWallSprite(0x32), false));
+        result.add(new QuestBackground(new Point(3, 8), new DungeonWallSprite(0x32), false));
         return result;
     }
 
-
-    private static class WallSprite extends Sprite32x32 {
-        public WallSprite(int num) {
-            super("wall", "quest.png", num, MyColors.GRAY_RED, MyColors.DARK_RED, MyColors.TAN, MyColors.YELLOW);
-        }
-    }
 
     private class BoobyTrapJunction extends QuestDecisionPoint {
         public BoobyTrapJunction(List<QuestScene> scenes) {

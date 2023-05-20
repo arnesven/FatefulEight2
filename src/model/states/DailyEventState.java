@@ -141,19 +141,19 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    protected String heOrSheCap(boolean gender) {
+    public static String heOrSheCap(boolean gender) {
         return gender ? "She" : "He";
     }
 
-    protected String heOrShe(boolean gender) {
+    public static String heOrShe(boolean gender) {
         return gender ? "she" : "he";
     }
 
-    protected String himOrHer(boolean gender) {
+    public static String himOrHer(boolean gender) {
         return gender ? "her" : "him";
     }
 
-    protected String hisOrHer(boolean gender) {
+    public static String hisOrHer(boolean gender) {
         return gender ? "her" : "his";
     }
 
