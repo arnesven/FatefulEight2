@@ -15,7 +15,7 @@ public class ChoppingWoodEvent extends FieldsLaborEvent {
     protected void doEvent(Model model) {
         println("A farmer needs help chopping wood. Any help is much appreciated.");
         boolean succ = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Axes, 7);
-        succ &= model.getParty().doCollaborativeSkillCheck(model, this, Skill.Endurance, 6);
+        succ = succ && model.getParty().doCollaborativeSkillCheck(model, this, Skill.Endurance, 6);
         if (succ) {
             super.success(model);
         } else {

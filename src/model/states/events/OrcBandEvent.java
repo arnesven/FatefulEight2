@@ -23,7 +23,7 @@ public class OrcBandEvent extends DailyEventState {
                 "to hide behind some bushes and remain undetected.");
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
-            print("You stay hidden as the throng passes by. Do you wish to follow them? ");
+            print("You stay hidden as the throng passes by. Do you wish to follow them? (Y/N) ");
             if (yesNoInput()) {
                 println("You follow the orcs for a bit.");
                 int dieRoll = MyRandom.rollD10();

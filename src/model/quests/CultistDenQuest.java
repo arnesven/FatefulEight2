@@ -5,6 +5,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.PersonCombatLoot;
+import model.combat.StandardCombatLoot;
 import model.enemies.CultistEnemy;
 import model.enemies.CultistLeaderEnemy;
 import model.enemies.ElderDaemonEnemy;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CultistDenQuest extends Quest {
-    private static final int TIME_MINUTES = 15;
+    private static final int TIME_MINUTES = 10;
     private static final String INTRO = "A group of cultists are reportedly performing some dark ritual to resurrect " +
             "an other-wordly demigod. Stop them.\n" +
             "!! This is a timed quest. You have " + TIME_MINUTES + " minutes until the ritual is complete.";;
@@ -241,8 +242,12 @@ public class CultistDenQuest extends Quest {
                 for (int i = 0; i < maxTimes; ++i) {
                     boolean result = model.getParty().doCollaborativeSkillCheck(model, state, Skill.Search, 12);
                     if (result) {
-                        PersonCombatLoot loot = new PersonCombatLoot(model);
-                        state.println("You have found something valuable, " + loot.getText() + ".");
+                        StandardCombatLoot loot = new StandardCombatLoot(model);
+                        if (loot.getText().equals("")) {
+                            state.println("You have found something valuable, " + loot.getText() + ".");
+                        } else {
+                            state.println("You have found " + loot.getGold() + " gold.");
+                        }
                         loot.giveYourself(model.getParty());
                     }
                     state.print("There may still be something of value here. Do you wish to search? (Y/N) ");
