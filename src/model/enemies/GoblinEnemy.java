@@ -28,4 +28,6 @@ public abstract class GoblinEnemy extends Enemy {
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
     }
+
+    public abstract GoblinEnemy copy();
 }

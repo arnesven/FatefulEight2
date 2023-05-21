@@ -55,16 +55,6 @@ public abstract class Quest {
         return name;
     }
 
-    public String getProviderName() {
-        return provider;
-    }
-
-    public String getBeforehandInfo() {
-        return "Upon completion " + reward.getDescription() +
-                " The party collectively appraises this quest to be " +
-                difficulty.toString().toLowerCase() + ".";
-    }
-
     public String getText() {
         return text;
     }

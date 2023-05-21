@@ -38,14 +38,14 @@ public class AbandonedMineQuest extends Quest {
     private static final String OUTRO =
             "Murak has retrieved his missing equipment and is a little embarrassed about the " +
                     "fire daemon. Fortunately he compensates you well for your trouble.";
-    private static final Sprite ENTRANCE = new Sprite32x32("mineentrance", "quest.png", 0x46, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.BROWN, MyColors.BLACK);
-    private static final Sprite UR_CORNER = new Sprite32x32("mineURcorner", "quest.png", 0x4B, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
-    private static final Sprite LR_CORNER = new Sprite32x32("mineLRcorner", "quest.png", 0x4C, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
-    private static final Sprite UL_CORNER = new Sprite32x32("mineLRcorner", "quest.png", 0x4A, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
-    private static final Sprite LL_CORNER = new Sprite32x32("mineLLcorner", "quest.png", 0x49, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
-    private static final Sprite VERTICAL = new Sprite32x32("minevertical", "quest.png", 0x47, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
-    private static final Sprite HORIZONTAL = new Sprite32x32("minehorizontal", "quest.png", 0x48, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
-    private static final Sprite WATER = new Sprite32x32("watertunnel", "quest.png", 0x48, MyColors.BLACK, MyColors.BLUE, MyColors.BROWN);
+    public static final Sprite ENTRANCE = new Sprite32x32("mineentrance", "quest.png", 0x46, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.BROWN, MyColors.BLACK);
+    public static final Sprite UR_CORNER = new Sprite32x32("mineURcorner", "quest.png", 0x4B, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+    public static final Sprite LR_CORNER = new Sprite32x32("mineLRcorner", "quest.png", 0x4C, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+    public static final Sprite UL_CORNER = new Sprite32x32("mineLRcorner", "quest.png", 0x4A, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+    public static final Sprite LL_CORNER = new Sprite32x32("mineLLcorner", "quest.png", 0x49, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+    public static final Sprite VERTICAL = new Sprite32x32("minevertical", "quest.png", 0x47, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+    public static final Sprite HORIZONTAL = new Sprite32x32("minehorizontal", "quest.png", 0x48, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+    public static final Sprite WATER = new Sprite32x32("watertunnel", "quest.png", 0x48, MyColors.BLACK, MyColors.BLUE, MyColors.BROWN);
 
     private static final List<QuestBackground> BG_SPRITES = makeBackground();
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MIN, Race.DWARF);

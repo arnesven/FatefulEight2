@@ -16,6 +16,11 @@ public class GoblinAxeWielder extends GoblinEnemy {
     }
 
     @Override
+    public GoblinEnemy copy() {
+        return new GoblinAxeWielder(getEnemyGroup());
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

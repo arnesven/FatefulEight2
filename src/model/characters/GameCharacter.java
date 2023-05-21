@@ -85,7 +85,11 @@ public class GameCharacter extends Combatant {
         String raceAndClassString = this.getRace().getName() + " " + this.getGameClass() + " Lvl " + this.getLevel();
         BorderFrame.drawString(screenHandler, raceAndClassString, col, row+1, DEFAULT_TEXT_COLOR);
 
-        drawAppearance(screenHandler, col, row+3);
+        if (party != null && party.getBench().contains(this)) {
+            BorderFrame.drawString(screenHandler, "ABSENT", col+1, row+5, DEFAULT_TEXT_COLOR);
+        } else {
+            drawAppearance(screenHandler, col, row + 3);
+        }
 
         BorderFrame.drawString(screenHandler, String.format("%5d XP", this.getXP()), col+8, row+2, DEFAULT_TEXT_COLOR);
         BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getAP()), col+17, row+2, DEFAULT_TEXT_COLOR);

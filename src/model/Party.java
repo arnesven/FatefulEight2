@@ -614,4 +614,8 @@ public class Party implements Serializable {
         frontRow.addAll(bench);
         bench.clear();
     }
+
+    public List<GameCharacter> getBench() {
+        return bench;
+    }
 }

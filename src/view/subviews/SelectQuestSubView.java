@@ -75,8 +75,8 @@ public class SelectQuestSubView extends SubView {
             bgColor = MyColors.WHITE;
 
         }
-        BorderFrame.drawString(model.getScreenHandler(), "ACCEPT", xStart + 10,
-                yStart + 7, fgColor, bgColor);
+        BorderFrame.drawString(model.getScreenHandler(), "ACCEPT", xStart + 11,
+                yStart + 9, fgColor, bgColor);
     }
 
     private void drawDetails(Model model, int xStart, int yStart, Quest quest) {
