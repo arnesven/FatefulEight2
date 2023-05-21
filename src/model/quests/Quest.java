@@ -4,6 +4,8 @@ import model.Model;
 import model.Party;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
+import model.states.GameState;
+import model.states.QuestState;
 import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -148,5 +150,12 @@ public abstract class Quest {
 
     public boolean clockTimeOutFailsQuest() {
         return clockEnabled();
+    }
+
+    public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        state.print("Press enter to continue.");
+        state.waitForReturn();
+        QuestState.setCurrentTerrainSubview(model);
+        return model.getCurrentHex().getEveningState(model, false, false);
     }
 }

@@ -97,7 +97,7 @@ public abstract class GameState {
         return internalInput(false);
     }
 
-    protected static void setCurrentTerrainSubview(Model model) {
+    public static void setCurrentTerrainSubview(Model model) {
         SubView nextSubView;
         if (showOnRoad(model)) {
             nextSubView = OnTheRoadSubView.instance;

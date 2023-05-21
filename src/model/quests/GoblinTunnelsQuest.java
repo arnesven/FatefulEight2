@@ -10,6 +10,7 @@ import model.combat.CaveTheme;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
 import model.races.AllRaces;
+import model.states.GameState;
 import model.states.QuestState;
 import view.BorderFrame;
 import view.MyColors;
@@ -33,7 +34,7 @@ public class GoblinTunnelsQuest extends Quest {
             " to the Goblin King's throne room. Do you escape the goblin tunnels or do you enter into the throne room to clear out" +
             " this pestilence, once and for all?";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.ART, AllRaces.ALL);
-    private static final Point RIDDLE_JUNCTION_POINT = new Point(0, 3);
+    private static final Point RIDDLE_JUNCTION_POINT = new Point(0, 2);
     private static final Sprite SLIMY_CREATURE_SPRITE = new Sprite32x32("slimycreature", "quest.png", 0x5B,
             MyColors.BLACK, MyColors.GRAY, MyColors.BEIGE, MyColors.DARK_BLUE);
     private static final List<QuestBackground> BACKGROUND = makeBackground();
@@ -61,16 +62,16 @@ public class GoblinTunnelsQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Goblin Spearmen", List.of(
-                        new GoblinCombatSubScene(6, 1, 7, new GoblinSpearman('A')))),
+                        new GoblinCombatSubScene(6, 1, 1, new GoblinSpearman('A')))),
                 new QuestScene("Riddles", List.of(
                         new RiddlesSubScene(2, 2, 6, true),
                         new RiddlesSubScene(2, 4, 7, false),
                         new RiddlesSubScene(2, 6, 8, false),
                         new RiddleDecorativeSubScene(RIDDLE_JUNCTION_POINT.x, RIDDLE_JUNCTION_POINT.y))),
                 new QuestScene("Goblin Club Wielders", List.of(
-                        new GoblinCombatSubScene(7, 3, 8, new GoblinClubWielder('A')))),
+                        new GoblinCombatSubScene(7, 3, 1, new GoblinClubWielder('A')))),
                 new QuestScene("Goblin Bowmen", List.of(
-                        new GoblinCombatSubScene(5, 5, 9, new GoblinBowman('A'))))
+                        new GoblinCombatSubScene(5, 5, 1, new GoblinBowman('A'))))
         );
     }
 
@@ -102,8 +103,17 @@ public class GoblinTunnelsQuest extends Quest {
 
         scenes.get(2).get(0).connectSuccess(scenes.get(1).get(1));
         scenes.get(3).get(0).connectSuccess(scenes.get(1).get(2));
+    }
 
-
+    @Override
+    public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        if (questWasSuccess) {
+            state.print("Do you wish to immediately continue to the Goblin King Quest? (Y/N) ");
+            if (state.yesNoInput()) {
+                return new QuestState(model, new AbandonedMineQuest());
+            }
+        }
+        return super.endOfQuest(model, state, questWasSuccess);
     }
 
     @Override

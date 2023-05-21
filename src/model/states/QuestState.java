@@ -66,10 +66,7 @@ public class QuestState extends GameState {
             }
         }
         currentPosition.run(model, this); // Success or fail node run.
-        print("Press enter to continue.");
-        waitForReturn();
-        setCurrentTerrainSubview(model);
-        return model.getCurrentHex().getEveningState(model, false, false);
+        return quest.endOfQuest(model, this, currentPosition == quest.getSuccessEndingNode());
     }
 
     public QuestNode getCurrentPosition() {
