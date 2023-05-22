@@ -53,7 +53,7 @@ public class QuestSuccessfulNode extends QuestNode {
         if (reward.getReputation() > 0) {
             state.println(" and your reputation increases!");
         } else if (reward.getReputation() < 0) {
-            state.println(" but your reputation as decreased!");
+            state.println(" but your reputation has decreased!");
         } else {
             state.println(".");
         }
