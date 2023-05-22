@@ -7,6 +7,7 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CaveTheme;
+import model.combat.StandardCombatLoot;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
 import model.races.AllRaces;
@@ -38,6 +39,7 @@ public class GoblinTunnelsQuest extends Quest {
     private static final Sprite SLIMY_CREATURE_SPRITE = new Sprite32x32("slimycreature", "quest.png", 0x5B,
             MyColors.BLACK, MyColors.GRAY, MyColors.BEIGE, MyColors.DARK_BLUE);
     private static final List<QuestBackground> BACKGROUND = makeBackground();
+    private static final int LOOT_REWARDS = 4;
     private GameCharacter riddleGuy = null;
 
     public GoblinTunnelsQuest() {
@@ -107,10 +109,20 @@ public class GoblinTunnelsQuest extends Quest {
 
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        for (int i = 0; i < LOOT_REWARDS; ++i) {
+            StandardCombatLoot loot = new StandardCombatLoot(model);
+            if (loot.getText().equals("")) {
+                state.println("You have found something valuable, " + loot.getText() + ".");
+            } else {
+                state.println("You have found " + loot.getGold() + " gold.");
+            }
+            loot.giveYourself(model.getParty());
+        }
+        
         if (questWasSuccess) {
             state.print("Do you wish to immediately continue to the Goblin King Quest? (Y/N) ");
             if (state.yesNoInput()) {
-                return new QuestState(model, new AbandonedMineQuest());
+                return new QuestState(model, new GoblinKingQuest());
             }
         }
         return super.endOfQuest(model, state, questWasSuccess);
@@ -344,7 +356,7 @@ public class GoblinTunnelsQuest extends Quest {
     private static List<QuestBackground> makeBackground() {
         List<QuestBackground> list = new ArrayList<>();
         list.add(new QuestBackground(new Point(1, 1), SLIMY_CREATURE_SPRITE, false));
-        list.add(new QuestBackground(new Point(0, 0), AbandonedMineQuest.LL_CORNER, false));
+        list.add(new QuestBackground(new Point(0, 0), AbandonedMineQuest.ENTRANCE, false));
         for (int i = 1; i < 6; ++i) {
             list.add(new QuestBackground(new Point(i, 0), AbandonedMineQuest.HORIZONTAL, false));
         }

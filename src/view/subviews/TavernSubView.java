@@ -2,12 +2,11 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.dailyaction.*;
 import util.MyRandom;
 import view.MyColors;
-import view.sprites.LoopingSprite;
+import view.sprites.FirePlaceSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
@@ -160,14 +159,4 @@ public class TavernSubView extends DailyActionSubView {
                 from.y == AdvancedDailyActionState.TOWN_MATRIX_ROWS-1;
     }
 
-    private static class FirePlaceSprite extends LoopingSprite {
-        public FirePlaceSprite() {
-            super("fireplace", "world_foreground.png", 0x69, 32);
-            setColor1(MyColors.DARK_GRAY);
-            setColor2(MyColors.YELLOW);
-            setColor3(MyColors.RED);
-            setColor4(MyColors.GRAY);
-            setFrames(3);
-        }
-    }
 }

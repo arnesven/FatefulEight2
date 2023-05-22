@@ -39,15 +39,15 @@ public class BorrowedMoneyEvent extends DailyEventState {
             }
             showRandomPortrait(model, Classes.None, name);
             model.getParty().partyMemberSay(model, main, "Hey " + name + ", long time no see!");
-            println(name + ": \"Oh, hi... it's you.\"");
+            portraitSay(model, "Oh, hi... it's you.");
             model.getParty().partyMemberSay(model, main, "Remember that gold you borrowed a little while back?");
             SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, main,  Skill.Persuade,5, 10, 0);
             if (result.isSuccessful()) {
-                println(name + ": \"Okay okay, here, take it. I was only gonna spend it on dice anyway.\"");
+                portraitSay(model, "Okay okay, here, take it. I was only gonna spend it on dice anyway.");
                 println("The party receives 15 gold!");
                 model.getParty().addToGold(15);
             } else {
-                println(name + ": \"I don't know what you're talking about. Now please excuse me, I have somewhere to be.\"");
+                portraitSay(model, "I don't know what you're talking about. Now please excuse me, I have somewhere I have to be.");
                 if (model.getParty().size() > 1) {
                     GameCharacter other = model.getParty().getRandomPartyMember(main);
                     model.getParty().partyMemberSay(model, other, "No, " + genderWord + " wasn't very nice.");

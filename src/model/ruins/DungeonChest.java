@@ -24,7 +24,7 @@ public class DungeonChest extends CenterDungeonObject {
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);
     private static final Sprite32x32 BIG_CHEST_OPEN = new Sprite32x32("bigchestopen", "dungeon.png", 0x52,
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);
-    private static final Sprite32x32 BIG_CHEST_CLOSED = new Sprite32x32("bigchestclosed", "dungeon.png", 0x51,
+    public static final Sprite32x32 BIG_CHEST_CLOSED = new Sprite32x32("bigchestclosed", "dungeon.png", 0x51,
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);
     private static final int BIG_CHEST_LOOTS = 7;
     private static final int SMALL_CHEST_LOOTS = 3;

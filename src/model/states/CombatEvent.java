@@ -39,6 +39,8 @@ public class CombatEvent extends DailyEventState {
     private List<GameCharacter> allies = new ArrayList<>();
     private boolean isAmbush;
     private int fledEnemies = 0;
+    private int timeLimit = Integer.MAX_VALUE;
+    private int roundCounter = 1;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -74,7 +76,9 @@ public class CombatEvent extends DailyEventState {
         model.setInCombat(true);
         setFormation(model);
         while (true) {
+            System.out.println("Combat Round " + roundCounter);
             doCombatRound(model);
+            roundCounter++;
             currentCombatant = null;
             if (combatDone(model)) {
                 break;
@@ -92,6 +96,8 @@ public class CombatEvent extends DailyEventState {
             print("You have been wiped out! ");
         } else if (partyFled) {
             print("You have have fled battle. "); // TODO: Possible party members leave party
+        } else if (roundCounter > timeLimit) {
+            print("Combat has been interrupted. ");
         } else {
             println("You are victorious in battle!");
             combatLoot = generateCombatLoot(model, destroyedEnemies);
@@ -251,7 +257,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private boolean combatDone(Model model) {
-        return allEnemiesDead() || isWipedOut() || partyFled;
+        return allEnemiesDead() || isWipedOut() || partyFled || roundCounter > timeLimit;
     }
 
     private boolean isWipedOut() {
@@ -409,5 +415,13 @@ public class CombatEvent extends DailyEventState {
         enemies.remove(target);
         combatMatrix.remove(target);
         fledEnemies++;
+    }
+
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
+    }
+
+    public boolean didTimeOut() {
+        return timeLimit > roundCounter;
     }
 }

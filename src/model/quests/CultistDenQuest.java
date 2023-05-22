@@ -119,64 +119,60 @@ public class CultistDenQuest extends Quest {
         return bgSprites;
     }
 
-    private static DungeonWallSprite door = new DungeonWallSprite(0x31);
-    private static DungeonWallSprite upperWall = new DungeonWallSprite(0x30);
-    private static DungeonWallSprite fullWall = new DungeonWallSprite(0x32);
-    private static DungeonWallSprite upperT = new DungeonWallSprite(0x33);
-    private static DungeonWallSprite vertiWall = new DungeonWallSprite(0x34);
+
 
     private static List<QuestBackground> bgSprites = makeBackground();
 
     private static List<QuestBackground> makeBackground() {
         List<QuestBackground> result = new ArrayList<>();
-        result.add(new QuestBackground(new Point(0, 0), door));
-        result.add(new QuestBackground(new Point(1, 0), upperWall));
+        result.add(new QuestBackground(new Point(0, 0), DungeonWallSprite.DOOR));
+        result.add(new QuestBackground(new Point(1, 0), DungeonWallSprite.UPPER_WALL));
         for (int i = 6; i < 8; ++i) {
-            result.add(new QuestBackground(new Point(i, 0), fullWall));
+            result.add(new QuestBackground(new Point(i, 0), DungeonWallSprite.FULL_WALL));
         }
 
         for (int row = 1; row < 3; ++row) {
             for (int col = 6; col < 8; ++col) {
-                result.add(new QuestBackground(new Point(col, row), fullWall));
+                result.add(new QuestBackground(new Point(col, row), DungeonWallSprite.FULL_WALL));
             }
         }
 
         for (int row = 2; row < 9; ++row) {
-            result.add(new QuestBackground(new Point(0, row), fullWall, false));
-            result.add(new QuestBackground(new Point(7, row), fullWall, false));
+            result.add(new QuestBackground(new Point(0, row), DungeonWallSprite.FULL_WALL, false));
+            result.add(new QuestBackground(new Point(7, row), DungeonWallSprite.FULL_WALL, false));
             if (row < 6) {
-                result.add(new QuestBackground(new Point(6, row), fullWall, false));
+                result.add(new QuestBackground(new Point(6, row), DungeonWallSprite.FULL_WALL, false));
             }
         }
 
-        result.add(new QuestBackground(new Point(1, 2), door, false));
+        result.add(new QuestBackground(new Point(1, 2), DungeonWallSprite.DOOR, false));
 
 
-        result.add(new QuestBackground(new Point(2, 2), upperWall, false));
-        result.add(new QuestBackground(new Point(3, 2), upperT, false));
-        result.add(new QuestBackground(new Point(4, 2), door, false));
-        result.add(new QuestBackground(new Point(5, 2), upperWall, false));
+        result.add(new QuestBackground(new Point(2, 2), DungeonWallSprite.UPPER_WALL, false));
+        result.add(new QuestBackground(new Point(3, 2), DungeonWallSprite.UPPER_T, false));
+        result.add(new QuestBackground(new Point(4, 2), DungeonWallSprite.DOOR, false));
+        result.add(new QuestBackground(new Point(5, 2), DungeonWallSprite.UPPER_WALL, false));
 
-        result.add(new QuestBackground(new Point(3, 3), vertiWall, false));
+        result.add(new QuestBackground(new Point(3, 3), DungeonWallSprite.VERTI_WALL, false));
 
-        result.add(new QuestBackground(new Point(1, 4), door, false));
-        result.add(new QuestBackground(new Point(2, 4), upperWall, false));
-        result.add(new QuestBackground(new Point(3, 4), upperT, false));
-        result.add(new QuestBackground(new Point(4, 4), door, false));
-        result.add(new QuestBackground(new Point(5, 4), upperWall, false));
+        result.add(new QuestBackground(new Point(1, 4), DungeonWallSprite.DOOR, false));
+        result.add(new QuestBackground(new Point(2, 4), DungeonWallSprite.UPPER_WALL, false));
+        result.add(new QuestBackground(new Point(3, 4), DungeonWallSprite.UPPER_T, false));
+        result.add(new QuestBackground(new Point(4, 4), DungeonWallSprite.DOOR, false));
+        result.add(new QuestBackground(new Point(5, 4), DungeonWallSprite.UPPER_WALL, false));
 
-        result.add(new QuestBackground(new Point(3, 5), vertiWall, false));
+        result.add(new QuestBackground(new Point(3, 5), DungeonWallSprite.VERTI_WALL, false));
 
-        result.add(new QuestBackground(new Point(1, 6), door, false));
-        result.add(new QuestBackground(new Point(2, 6), fullWall, false));
-        result.add(new QuestBackground(new Point(3, 6), upperWall, false));
-        result.add(new QuestBackground(new Point(4, 6), door, false));
-        result.add(new QuestBackground(new Point(5, 6), upperWall, false));
-        result.add(new QuestBackground(new Point(6, 6), upperWall, false));
+        result.add(new QuestBackground(new Point(1, 6), DungeonWallSprite.DOOR, false));
+        result.add(new QuestBackground(new Point(2, 6), DungeonWallSprite.FULL_WALL, false));
+        result.add(new QuestBackground(new Point(3, 6), DungeonWallSprite.UPPER_WALL, false));
+        result.add(new QuestBackground(new Point(4, 6), DungeonWallSprite.DOOR, false));
+        result.add(new QuestBackground(new Point(5, 6), DungeonWallSprite.UPPER_WALL, false));
+        result.add(new QuestBackground(new Point(6, 6), DungeonWallSprite.UPPER_WALL, false));
 
-        result.add(new QuestBackground(new Point(2, 7), fullWall, false));
+        result.add(new QuestBackground(new Point(2, 7), DungeonWallSprite.FULL_WALL, false));
 
-        result.add(new QuestBackground(new Point(2, 8), fullWall, false));
+        result.add(new QuestBackground(new Point(2, 8), DungeonWallSprite.FULL_WALL, false));
         return result;
     }
 

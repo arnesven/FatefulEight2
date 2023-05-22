@@ -28,6 +28,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     private List<Enemy> enemies;
     private final boolean fleeingEnabled;
     private boolean defeated = false;
+    private int timeLimit = 0;
 
     public CombatSubScene(int col, int row, List<Enemy> enemies, boolean fleeingEnabled) {
         super(col, row);
@@ -75,15 +76,26 @@ public abstract class CombatSubScene extends QuestSubScene {
         if (!allies.isEmpty()) {
             combat.addAllies(allies);
         }
+        if (timeLimit > 0) {
+            combat.setTimeLimit(timeLimit);
+        }
         combat.run(model);
         state.transitionToQuestView(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         if (combat.fled()) {
             return getFailEdge();
         }
-        defeated = true;
+        if (!combat.didTimeOut()) {
+            defeated = true;
+        }
         return getSuccessEdge();
     }
+
+    public void setTimeLimit(int limit) {
+        this.timeLimit = limit;
+    }
+
+
 
     protected List<GameCharacter> getAllies() {
         return new ArrayList<>();

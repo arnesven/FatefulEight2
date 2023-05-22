@@ -31,9 +31,9 @@ public class MagicOrbTask extends SummonTask {
     @Override
     protected void doEvent(Model model) {
         println(location.getLordName() + ": \"You see, some of the townsfolk recently found this magical orb in a nearby swamp. " +
-                "I've let my most learned scholars look at it but nobody can tell me what it is. I'm tempted to just check it " +
+                "I've let my most learned scholars look at it but nobody can tell me what it is. I'm tempted to just chuck it " +
                 "back into the swamp, but then again, what if it has some useful power? Would you examine it for me?\"");
-        print("Do you wish to examine the magical orb now glasses now? (Y/N) ");
+        print("Do you wish to examine the magical orb now? (Y/N) ");
         if (yesNoInput()) {
             MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.SpellCasting, 8);
             if (pair.first) {
