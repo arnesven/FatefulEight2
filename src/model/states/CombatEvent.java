@@ -342,7 +342,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
-        target.addToHP(-damage);
+        target.takeCombatDamage(this, damage);
         if (target.getHP() <= 0) {
             RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();
             if (killAnimation != null) {

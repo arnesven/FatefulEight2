@@ -115,7 +115,7 @@ public abstract class Enemy extends Combatant {
     }
 
     public int getThreat() {
-        return 5 + getMaxHP() + getDamage() + getSpeed() / 3;
+        return 5 + getMaxHP() + getDamage() + getSpeed() / 3 + getDamageReduction() * 3;
     }
 
     public abstract CombatLoot getLoot(Model model);
@@ -194,4 +194,18 @@ public abstract class Enemy extends Combatant {
         }
     }
 
+    @Override
+    public void takeCombatDamage(CombatEvent combatEvent, int damage) {
+        if (damage > 0 && getDamageReduction() > 0) {
+            int hpBefore = getHP();
+            super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()));
+            combatEvent.println("Damage was reduced by " + (damage - (hpBefore - getHP())) + ".");
+        } else {
+            super.takeCombatDamage(combatEvent, damage);
+        }
+    }
+
+    public int getDamageReduction() {
+        return 0;
+    }
 }

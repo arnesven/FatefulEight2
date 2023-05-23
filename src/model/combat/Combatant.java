@@ -142,4 +142,8 @@ public abstract class Combatant implements Serializable {
             cond.endOfDayTrigger(model, state, this);
         }
     }
+
+    public void takeCombatDamage(CombatEvent combatEvent, int damage) {
+        addToHP(-damage);
+    }
 }
