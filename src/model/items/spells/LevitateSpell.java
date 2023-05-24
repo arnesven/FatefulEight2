@@ -9,7 +9,7 @@ public class LevitateSpell extends QuestSpell {
     private static final Sprite SPRITE = new ItemSprite(15, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public LevitateSpell() {
-        super("Levitate", 12, MyColors.BLUE, 9, 1);
+        super("Levitate", 24, MyColors.BLUE, 10, 2);
     }
 
     @Override

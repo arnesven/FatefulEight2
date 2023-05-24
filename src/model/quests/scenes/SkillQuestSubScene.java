@@ -37,15 +37,15 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
     @Override
     public final QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
+        if (model.getParty().size() > 1) {
+            if (!text.equals("")) {
+                model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+            }
+        }
         acceptAllSpells(model);
         boolean skillSuccess = false;
         do {
             try {
-                if (model.getParty().size() > 1) {
-                    if (!text.equals("")) {
-                        model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
-                    }
-                }
                 skillSuccess = performSkillCheck(model, state, skill, difficulty);
                 break;
             } catch (SpellCastException sce) {

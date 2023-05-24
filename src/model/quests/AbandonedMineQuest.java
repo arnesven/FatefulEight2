@@ -1,5 +1,6 @@
 package model.quests;
 
+import model.Model;
 import model.characters.GameCharacter;
 import model.characters.JordynStrong;
 import model.characters.MiklosAutumntoft;
@@ -13,6 +14,8 @@ import model.items.accessories.FullHelm;
 import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
 import model.items.clothing.ScaleArmor;
+import model.items.spells.LevitateSpell;
+import model.items.spells.Spell;
 import model.items.weapons.Pickaxe;
 import model.items.weapons.Warhammer;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -20,6 +23,7 @@ import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
+import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -52,6 +56,13 @@ public class AbandonedMineQuest extends Quest {
 
     public AbandonedMineQuest() {
         super("Abandoned Mine", "Murak", QuestDifficulty.HARD, 1, 50, 0, INTRO, OUTRO);
+        getScenes().get(1).get(0).addSpellCallback(new LevitateSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println(caster.getFirstName() + " levitates the party across the chasm!");
+                return new QuestEdge(getScenes().get(2).get(0));
+            }
+        });
     }
 
     @Override

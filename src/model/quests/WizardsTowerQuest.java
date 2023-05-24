@@ -102,7 +102,7 @@ public class WizardsTowerQuest extends Quest {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
                 state.println(caster.getFirstName() + " levitates the party through the tower window!");
-                return new QuestEdge(qd1);
+                return new QuestEdge(qd1, QuestEdge.VERTICAL);
             }
         });
         QuestDecisionPoint qd2 = new QuestDecisionPoint(4, 4, List.of(
