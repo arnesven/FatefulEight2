@@ -9,6 +9,7 @@ import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
 import model.items.spells.DispellSpell;
 import model.items.spells.Spell;
+import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;

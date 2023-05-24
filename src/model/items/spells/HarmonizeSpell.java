@@ -8,6 +8,7 @@ import view.sprites.Sprite;
 public class HarmonizeSpell extends QuestSpell {
     private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BEIGE, MyColors.GREEN);
 
+    // TODO: Make into a combat spell which can passify beast enemies.
     public HarmonizeSpell() {
         super("Harmonize", 20, MyColors.GREEN, 10, 2);
     }

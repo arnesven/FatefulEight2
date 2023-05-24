@@ -15,8 +15,9 @@ import view.sprites.Sprite;
 public class BindDaemonSpell extends CombatSpell {
     private static final Sprite SPRITE = new CombatSpellSprite(8, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
+    // TODO: Add to some quests
     public BindDaemonSpell() {
-        super("Bind Daemon", 14, MyColors.RED, 13, 3);
+        super("Bind Daemon", 14, MyColors.RED, 13, 3, true);
     }
 
     @Override

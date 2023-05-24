@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.*;
+import model.items.spells.TurnUndeadSpell;
 import sound.SoundEffects;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;

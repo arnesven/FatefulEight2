@@ -8,7 +8,7 @@ import view.sprites.LoopingSprite;
 import view.sprites.SkeletonEnemySprite;
 import view.sprites.Sprite;
 
-public class SkeletonEnemy extends Enemy {
+public class SkeletonEnemy extends UndeadEnemy {
     private static final LoopingSprite skeletonSprite = new SkeletonEnemySprite();
 
     public SkeletonEnemy(char a) {

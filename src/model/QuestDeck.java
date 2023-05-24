@@ -34,7 +34,7 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
                 new HauntedMansionQuest(),
                 new ArenaQuest(),
                 new TownFairQuest(),
-                new AbandonedMineQuest()
+                new AbandonedMineQuest(),
                 new MasqueradeQuest(),
                 new WarlocksDungeonQuest(),
                 new MurderMysteryQuest(),

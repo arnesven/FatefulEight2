@@ -8,7 +8,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class VampireEnemy extends Enemy {
+public class VampireEnemy extends UndeadEnemy {
     private static final LoopingSprite SPRITE = new VampireEnemySprite();
 
     public VampireEnemy(char a) {

@@ -7,7 +7,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class GhostEnemy extends Enemy {
+public class GhostEnemy extends UndeadEnemy {
     private static final Sprite SPRITE = new GhostSprite();
 
     public GhostEnemy(char a) {

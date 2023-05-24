@@ -12,8 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CombatSpell extends Spell {
-    public CombatSpell(String name, int cost, MyColors color, int difficulty, int hpCost) {
+    private final boolean quest;
+
+    public CombatSpell(String name, int cost, MyColors color, int difficulty, int hpCost, boolean canBeUsedInQuest) {
         super(name, cost, color, difficulty, hpCost);
+        this.quest = canBeUsedInQuest;
+    }
+
+    public CombatSpell(String name, int cost, MyColors color, int difficulty, int hpCost) {
+        this(name, cost, color, difficulty, hpCost, false);
     }
 
     public abstract boolean canBeCastOn(Model model, Combatant target);
@@ -37,6 +44,9 @@ public abstract class CombatSpell extends Spell {
 
     @Override
     public String castFromMenu(Model model, GameCharacter gc) {
+        if (quest) {
+            return super.castFromMenu(model, gc);
+        }
         return getName() + " can only be cast in combat.";
     }
 }

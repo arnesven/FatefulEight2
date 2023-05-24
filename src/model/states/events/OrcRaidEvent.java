@@ -70,7 +70,7 @@ public class OrcRaidEvent extends DailyEventState {
                 do {
                     it = model.getItemDeck().getRandomItem();
                 } while (it instanceof Spell || it instanceof WandWeapon || it instanceof Potion);
-                println("The party receives " + it.getName());
+                println("The party receives " + it.getName() + ".");
                 model.getParty().getInventory().addItem(it);
             }
             if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
