@@ -14,15 +14,17 @@ import view.sprites.Sprite8x8;
 import java.io.Serializable;
 
 public abstract class HairStyle implements Serializable {
-    public static MyColors[] allHairColors = new MyColors[]{
+    public static MyColors[] allHairColors = MyColors.values();
+
+    public static MyColors[] npcHairColors = new MyColors[]{
             MyColors.DARK_GRAY, MyColors.GRAY,
-            MyColors.DARK_BROWN, MyColors. BROWN, MyColors.TAN,
+            MyColors.DARK_BROWN, MyColors.BROWN, MyColors.TAN,
             MyColors.YELLOW, MyColors.LIGHT_YELLOW, MyColors.BEIGE,
             MyColors.LIGHT_GRAY, MyColors.WHITE,
-            MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.RED, MyColors.ORANGE,
-            MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.PINK,
-            MyColors.LIGHT_BLUE, MyColors.CYAN
+            MyColors.DARK_RED, MyColors.GRAY_RED, MyColors.RED,
+            MyColors.ORANGE, MyColors.PEACH
     };
+
     public static HairStyle[] allHairStyles = new HairStyle[]{
             new BaldHairStyle(), new FemaleLongHairStyle(), new FemaleLongHairStyle(0x9, 0x03),
             new FemaleLongHairStyle(0x5D, 0x04), new FemaleLongHairStyle(0xA7, 0x05), new ShortFemaleHair(),
@@ -111,10 +113,10 @@ public abstract class HairStyle implements Serializable {
     public abstract int getBackHairOnly();
 
     public static MyColors randomHairColor() {
-        return HairStyle.allHairColors[MyRandom.randInt(HairStyle.allHairColors.length)];
+        return HairStyle.npcHairColors[MyRandom.randInt(HairStyle.npcHairColors.length)];
     }
 
     public static HairStyle randomHairStyle() {
-        return HairStyle.allHairStyles[MyRandom.randInt(HairStyle.allHairColors.length)];
+        return HairStyle.allHairStyles[MyRandom.randInt(HairStyle.allHairStyles.length)];
     }
 }

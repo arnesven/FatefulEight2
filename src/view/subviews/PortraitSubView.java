@@ -36,7 +36,11 @@ public class PortraitSubView extends SubView {
             raceToUse = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
         }
         boolean gender = MyRandom.randInt(2)==0;
-        MyColors hairColor = HairStyle.randomHairColor();
+        MyColors hairColor;
+        do {
+            hairColor = HairStyle.randomHairColor();
+        } while (hairColor == raceToUse.getColor());
+
         int mouthIndex;
         do {
             mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
