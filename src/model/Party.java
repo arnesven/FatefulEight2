@@ -7,12 +7,6 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
-import model.items.accessories.GreatHelm;
-import model.items.accessories.HeadGearItem;
-import model.items.potions.HealthPotion;
-import model.items.potions.RevivingElixir;
-import model.items.potions.SleepingPotion;
-import model.items.potions.UnstablePotion;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.World;
@@ -59,6 +53,7 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3, ruins at 24,9, temple at 1,1
         cursorSprites = makeCursorSprites();
+        inventory.add(new DispellSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -377,7 +372,11 @@ public class Party implements Serializable {
                 }
                 break;
             } catch (SpellCastException spe) {
-                spe.getSpell().castYourself(model, event, spe.getCaster());
+                if (spe.getSpell() instanceof SkillBoostingSpell) {
+                    spe.getSpell().castYourself(model, event, spe.getCaster());
+                } else {
+                    throw spe;
+                }
             }
         }
         model.getSpellHandler().unacceptSkillBoostingSpells(skill);
@@ -423,7 +422,11 @@ public class Party implements Serializable {
                 }
                 break;
             } catch (SpellCastException spe) {
-                spe.getSpell().castYourself(model, event, spe.getCaster());
+                if (spe.getSpell() instanceof SkillBoostingSpell) {
+                    spe.getSpell().castYourself(model, event, spe.getCaster());
+                } else {
+                    throw spe;
+                }
             }
         }
         model.getSpellHandler().unacceptSkillBoostingSpells(skill);
@@ -472,7 +475,11 @@ public class Party implements Serializable {
                 event.waitForReturn(true);
                 break;
             } catch (SpellCastException spe) {
-                spe.getSpell().castYourself(model, event, spe.getCaster());
+                if (spe.getSpell() instanceof SkillBoostingSpell) {
+                    spe.getSpell().castYourself(model, event, spe.getCaster());
+                } else {
+                    throw spe;
+                }
             }
         }
         model.getSpellHandler().unacceptSkillBoostingSpells(skill);
