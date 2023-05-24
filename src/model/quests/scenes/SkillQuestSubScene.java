@@ -6,6 +6,7 @@ import model.quests.QuestEdge;
 import model.quests.QuestSubScene;
 import model.states.GameState;
 import model.states.QuestState;
+import model.states.SpellCastException;
 import view.MyColors;
 
 public abstract class SkillQuestSubScene extends QuestSubScene {
@@ -36,14 +37,31 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
     @Override
     public final QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
-        if (model.getParty().size() > 1) {
-            if (!text.equals("")) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+        acceptAllSpells(model);
+        boolean skillSuccess = false;
+        do {
+            try {
+                if (model.getParty().size() > 1) {
+                    if (!text.equals("")) {
+                        model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+                    }
+                }
+                skillSuccess = performSkillCheck(model, state, skill, difficulty);
+                break;
+            } catch (SpellCastException sce) {
+                state.println("");
+                boolean spellSuccess = sce.getSpell().castYourself(model, state, sce.getCaster());
+                model.getLog().waitForAnimationToFinish();
+                if (spellSuccess) {
+                    unacceptAllSpells(model);
+                    return getSpellCallback(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+                }
             }
-        }
-        boolean success = performSkillCheck(model, state, skill, difficulty);
+        } while (true);
+
         state.setCursorEnabled(true);
-        return getEdgeToReturn(success);
+        unacceptAllSpells(model);
+        return getEdgeToReturn(skillSuccess);
     }
 
     protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {

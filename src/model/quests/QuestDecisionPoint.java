@@ -17,7 +17,6 @@ import java.util.List;
 public class QuestDecisionPoint extends QuestJunction {
 
     private final String leaderTalk;
-    private final Map<String, SpellCallback> spellCallbacks = new HashMap<>();
 
     public QuestDecisionPoint(int column, int row, List<QuestEdge> connections, String leaderTalk) {
         super(column, row);
@@ -56,10 +55,6 @@ public class QuestDecisionPoint extends QuestJunction {
         } while (true);
     }
 
-    public void addSpellCallback(String nameOfSpell, SpellCallback callback) {
-        spellCallbacks.put(nameOfSpell, callback);
-    }
-
     @Override
     public QuestEdge run(Model model, QuestState state) {
         if (!leaderTalk.equals("")) {
@@ -85,8 +80,8 @@ public class QuestDecisionPoint extends QuestJunction {
                 boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
                 model.getLog().waitForAnimationToFinish();
                 if (success) {
-                    finalEdge = spellCallbacks.get(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
-                    break;
+                    unacceptAllSpells(model);
+                    return getSpellCallback(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
                 }
             }
         } while (true);
@@ -101,38 +96,5 @@ public class QuestDecisionPoint extends QuestJunction {
         return !result.isSuccessful();
     }
 
-    private void acceptAllSpells(Model model) {
-        boolean atLeastOneSpell = false;
-        for (String spellName : spellCallbacks.keySet()) {
-            model.getSpellHandler().acceptSpell(spellName);
-            for (Spell sp : model.getParty().getInventory().getSpells()) {
-                if (sp.getName().equals(spellName)) {
-                    atLeastOneSpell = true;
-                }
-            }
-        }
 
-        List<GameCharacter> partyMembers = new ArrayList<>(model.getParty().getPartyMembers());
-        Collections.shuffle(partyMembers);
-        if (atLeastOneSpell) {
-            for (GameCharacter gc : partyMembers) {
-                if (gc.getRankForSkill(Skill.MagicAny) > 0) {
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("Don't we have a spell for this?",
-                            "If only some magic could help us here...",
-                            "I know just the magic trick for this!",
-                            "I'm getting a tingling sensation...",
-                            "Wait... can we cast a spell here?"));
-                    break;
-                }
-            }
-        }
-    }
-
-
-    private void unacceptAllSpells(Model model) {
-        for (String spellName : spellCallbacks.keySet()) {
-            model.getSpellHandler().unacceptSpell(spellName);
-        }
-    }
 }
