@@ -208,8 +208,8 @@ public class SurveillanceQuest extends Quest {
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            QuestEdge toReturn = super.run(model, state);
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
+            boolean toReturn = super.performSkillCheck(model, state, skill, difficulty);
             wallClimber = getPerformer();
             return toReturn;
         }
@@ -217,8 +217,7 @@ public class SurveillanceQuest extends Quest {
 
     private class SneakAroundTheCampSubScene extends SkillQuestSubScene {
         public SneakAroundTheCampSubScene(int col, int row) {
-            super(col, row);
-            //, Skill.Sneak, 10, "Just don't get caught!"
+            super(col, row, "Just don't get caught!", Skill.Sneak, 10);
         }
 
 
@@ -234,18 +233,15 @@ public class SurveillanceQuest extends Quest {
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            state.setCursorEnabled(false);
-            if (model.getParty().size() > 1) {
-                leaderSay(model, "Just don't get caught!");
-            }
+        protected String getDescriptionType() {
+            return "Solo";
+        }
+
+        @Override
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
             SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state,
                     wallClimber, Skill.Sneak, 10, 20, 0);
-            state.setCursorEnabled(true);
-            if (result.isSuccessful()) {
-                return getSuccessEdge();
-            }
-            return getFailEdge();
+            return result.isSuccessful();
         }
 
         @Override

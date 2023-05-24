@@ -9,6 +9,7 @@ import model.classes.SkillCheckResult;
 import model.enemies.ElvenGuardEnemy;
 import model.quests.scenes.*;
 import model.races.Race;
+import model.states.GameState;
 import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
@@ -154,7 +155,7 @@ public class ElvenHighCouncilQuest extends Quest {
 
     private class PersuadeHighKingSubScene extends SkillQuestSubScene {
         public PersuadeHighKingSubScene(int col, int row) {
-            super(col, row);
+            super(col, row, "We did it, we're in. The elven council...", Skill.Persuade, PERSUADE_DIFFICULTY);
         }
 
         @Override
@@ -164,15 +165,13 @@ public class ElvenHighCouncilQuest extends Quest {
         }
 
         @Override
-        public String getDescription() {
-            return "Solo Skill Check Persuade 18*";
+        protected String getDescriptionType() {
+            return "Solo";
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "We did it, we're in. The elven council...");
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
             int diff = PERSUADE_DIFFICULTY;
-
             if (foughtGuards) {
                 model.getParty().randomPartyMemberSay(model, List.of("They don't seem too happy."));
                 model.getParty().randomPartyMemberSay(model, List.of("Maybe it's because we beat up those guards back there..."));
@@ -188,7 +187,6 @@ public class ElvenHighCouncilQuest extends Quest {
                     "We're only going to get one shot at this. Let's choose our words well.");
             model.getParty().randomPartyMemberSay(model, List.of("The elves may be more willing to listen if somebody of their kin handled the talking."));
             state.print("Which party member should perform the Solo Persuade " + diff + " check?");
-            state.setCursorEnabled(false);
             model.getSpellHandler().acceptSkillBoostingSpells(Skill.Persuade);
             GameCharacter talker = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
             int bonus = 0;
@@ -203,11 +201,7 @@ public class ElvenHighCouncilQuest extends Quest {
             }
             SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, talker, Skill.Persuade, diff, 20, bonus);
             model.getSpellHandler().unacceptSkillBoostingSpells(Skill.Persuade);
-            state.setCursorEnabled(true);
-            if (result.isSuccessful()) {
-                return getSuccessEdge();
-            }
-            return getFailEdge();
+            return result.isSuccessful();
         }
 
         @Override
@@ -222,11 +216,16 @@ public class ElvenHighCouncilQuest extends Quest {
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            QuestEdge inner = super.run(model, state);
-            if (inner == getSuccessEdge()) {
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
+            boolean inner = super.performSkillCheck(model, state, skill, difficulty);
+            if (inner) {
                 state.increaseQuestCounter();
             }
+            return inner;
+        }
+
+        @Override
+        protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {
             return getSuccessEdge();
         }
 
@@ -242,11 +241,16 @@ public class ElvenHighCouncilQuest extends Quest {
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            QuestEdge inner = super.run(model, state);
-            if (inner == getSuccessEdge()) {
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
+            boolean inner = super.performSkillCheck(model, state, skill, difficulty);
+            if (inner) {
                 state.increaseQuestCounter();
             }
+            return inner;
+        }
+
+        @Override
+        protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {
             return getSuccessEdge();
         }
 

@@ -106,14 +106,14 @@ public class TownFairQuest extends Quest {
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            QuestEdge toReturn = super.run(model, state);
-            if (toReturn == getSuccessEdge()) {
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
+            boolean toReturn = super.performSkillCheck(model, state, skill, difficulty);
+            if (toReturn) {
                 int gold = 50;
                 state.println("You received " + gold + " gold!");
                 model.getParty().addToGold(gold);
             }
-            return getSuccessEdge();
+            return toReturn;
         }
     }
 
@@ -128,14 +128,14 @@ public class TownFairQuest extends Quest {
         }
 
         @Override
-        public QuestEdge run(Model model, QuestState state) {
-            QuestEdge toReturn = super.run(model, state);
-            if (toReturn == getSuccessEdge()) {
+        public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
+            boolean toReturn = super.performSkillCheck(model, state, skill, difficulty);
+            if (toReturn) {
                 int gold = model.getParty().size() * 10;
                 state.println("You received " + gold + " gold!");
                 model.getParty().addToGold(gold);
             }
-            return getSuccessEdge();
+            return toReturn;
         }
     }
 

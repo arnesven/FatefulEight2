@@ -3,8 +3,7 @@ package model.quests.scenes;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.quests.QuestEdge;
-import model.quests.QuestNode;
+import model.states.GameState;
 import model.states.QuestState;
 import util.MyPair;
 import view.MyColors;
@@ -13,18 +12,12 @@ import view.sprites.Sprite32x32;
 import java.awt.*;
 
 public class SoloSkillCheckSubScene extends SkillQuestSubScene {
-    private final Skill skill;
-    private final int difficulty;
     public static final Sprite32x32 SPRITE = new Sprite32x32("soloskillscene", "quest.png", 0x10,
             MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
-    private final String leaderTalk;
     private GameCharacter performer;
 
     public SoloSkillCheckSubScene(int col, int row, Skill skill, int difficulty, String leaderTalk) {
-        super(col, row);
-        this.skill = skill;
-        this.difficulty = difficulty;
-        this.leaderTalk = leaderTalk;
+        super(col, row, leaderTalk, skill, difficulty);
     }
 
     @Override
@@ -33,23 +26,15 @@ public class SoloSkillCheckSubScene extends SkillQuestSubScene {
     }
 
     @Override
-    public String getDescription() {
-        return "Solo Skill Check " + skill.getName() + " " + difficulty;
+    protected String getDescriptionType() {
+        return "Solo";
     }
 
     @Override
-    public QuestEdge run(Model model, QuestState state) {
-        state.setCursorEnabled(false);
-        if (model.getParty().size() > 1) {
-            leaderSay(model, leaderTalk);
-        }
+    public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
         MyPair<Boolean, GameCharacter> success = model.getParty().doSoloSkillCheckWithPerformer(model, state, skill, difficulty);
         this.performer = success.second;
-        state.setCursorEnabled(true);
-        if (success.first) {
-            return getSuccessEdge();
-        }
-        return getFailEdge();
+        return success.first;
     }
 
     protected GameCharacter getPerformer() {
@@ -59,11 +44,11 @@ public class SoloSkillCheckSubScene extends SkillQuestSubScene {
     @Override
     public String getDetailedDescription() {
         String diffStr = "E";
-        if (difficulty > 9) {
+        if (getDifficulty() > 9) {
             diffStr = "H";
-        } else if (difficulty > 6) {
+        } else if (getDifficulty() > 6) {
             diffStr = "M";
         }
-        return skill.getName() + " " + diffStr;
+        return getSkill().getName() + " " + diffStr;
     }
 }

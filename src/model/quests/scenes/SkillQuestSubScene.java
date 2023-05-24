@@ -1,13 +1,24 @@
 package model.quests.scenes;
 
 import model.Model;
+import model.classes.Skill;
+import model.quests.QuestEdge;
 import model.quests.QuestSubScene;
+import model.states.GameState;
+import model.states.QuestState;
 import view.MyColors;
 
 public abstract class SkillQuestSubScene extends QuestSubScene {
 
-    public SkillQuestSubScene(int col, int row) {
+    private final String text;
+    private final Skill skill;
+    private final int difficulty;
+
+    public SkillQuestSubScene(int col, int row, String leaderTalk, Skill skill, int difficulty) {
         super(col, row);
+        this.text = leaderTalk;
+        this.skill = skill;
+        this.difficulty = difficulty;
     }
 
     @Override
@@ -15,9 +26,40 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
         return MyColors.LIGHT_GREEN;
     }
 
-    protected void leaderSay(Model model, String text) {
-        if (!text.equals("")) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+    @Override
+    public String getDescription() {
+        return getDescriptionType() + " Skill Check " + skill.getName() + " " + difficulty;
+    }
+
+    protected abstract String getDescriptionType();
+
+    @Override
+    public final QuestEdge run(Model model, QuestState state) {
+        state.setCursorEnabled(false);
+        if (model.getParty().size() > 1) {
+            if (!text.equals("")) {
+                model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+            }
         }
+        boolean success = performSkillCheck(model, state, skill, difficulty);
+        state.setCursorEnabled(true);
+        return getEdgeToReturn(success);
+    }
+
+    protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {
+        if (skillCheckWasSuccessful) {
+            return getSuccessEdge();
+        }
+        return getFailEdge();
+    }
+
+    protected abstract boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty);
+
+    protected int getDifficulty() {
+        return difficulty;
+    }
+
+    protected Skill getSkill() {
+        return skill;
     }
 }
