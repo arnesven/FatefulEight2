@@ -14,7 +14,7 @@ public class TutorialSpells extends HelpDialog {
             "spells revolve around death, darkness and decay. Blue spells are usually focused " +
             "on illusion, altering reality or meta-magic.\n\n" +
             "Spells come in two varieties, combat spells and non-combat spells:\n" +
-            "Combat spells can only be cast in combat and are either straight-out attacks " +
+            "Combat spells can be cast in combat and are either straight-out attacks " +
             "or have some other negative or positive effect on the target.\n\n" +
             "Non-combat spells can be cast in different situations, like during events, quests " +
             "or other game phases. Non-combat spells are cast from the Inventory or Spell Menu.";
