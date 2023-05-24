@@ -15,6 +15,7 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.GrassCombatTheme;
+import view.subviews.KeepSubView;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
@@ -43,11 +44,16 @@ public class ElvenHighCouncilQuest extends Quest {
             MyColors.BLACK, MyColors.GRAY_RED, MyColors.GREEN, MyColors.GRAY);
     private static final Sprite LEFT_WALL = new Sprite32x32("leftwall", "quest.png", 0x3C,
             MyColors.BLACK, MyColors.GREEN, MyColors.WHITE, MyColors.GRAY);
+    private static final Sprite LEFT_WALL_DOOR = new Sprite32x32("leftwall", "quest.png", 0x3D,
+            MyColors.BLACK, MyColors.GRAY_RED, MyColors.WHITE, MyColors.GREEN);
     private static final Sprite LEFT_WALL_RUG = new Sprite32x32("leftwallrug", "quest.png", 0x3C,
             MyColors.BLACK, MyColors.GREEN, MyColors.DARK_RED, MyColors.GRAY);
     private static final Sprite WALL_CORNER = new Sprite32x32("leftwall", "quest.png", 0x3B,
             MyColors.BLACK, MyColors.BEIGE, MyColors.GREEN, MyColors.GRAY);
+    private static final Sprite[] ELF_NOBLES = makeSpectators();
     private static final List<QuestBackground> BACKGROUND = makeBackground();
+    private static final List<QuestBackground> FOREGROUND = makeForeground();
+
     private boolean foughtGuards = false;
 
     public ElvenHighCouncilQuest() {
@@ -122,6 +128,11 @@ public class ElvenHighCouncilQuest extends Quest {
     @Override
     public List<QuestBackground> getBackgroundSprites() {
         return BACKGROUND;
+    }
+
+    @Override
+    public List<QuestBackground> getDecorations() {
+        return FOREGROUND;
     }
 
     private class ElvenGuardsCombatSubScene extends CombatSubScene {
@@ -253,7 +264,11 @@ public class ElvenHighCouncilQuest extends Quest {
             list.add(new QuestBackground(new Point(i, 0), WALL));
         }
         for (int y = 1; y < 4; ++y) {
-            list.add(new QuestBackground(new Point(2, y), LEFT_WALL));
+            if (y == 2) {
+                list.add(new QuestBackground(new Point(2, y), LEFT_WALL_DOOR));
+            } else {
+                list.add(new QuestBackground(new Point(2, y), LEFT_WALL));
+            }
             for (int i = 3; i < 8; ++i) {
                 list.add(new QuestBackground(new Point(i, y), FLOOR));
             }
@@ -284,6 +299,36 @@ public class ElvenHighCouncilQuest extends Quest {
                         GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]));
             }
         }
+        return list;
+    }
+
+    private static Sprite[] makeSpectators() {
+        return new Sprite[]{
+                new Sprite32x32("elfnob1", "quest.png", 0x87,
+                        MyColors.BLACK, MyColors.BEIGE, Race.HIGH_ELF.getColor(), MyColors.BLUE),
+                new Sprite32x32("elfnob2", "quest.png", 0x87,
+                        MyColors.BLACK, MyColors.LIGHT_RED, Race.HIGH_ELF.getColor(), MyColors.GRAY),
+                new Sprite32x32("elfnob3", "quest.png", 0x87,
+                        MyColors.BLACK, MyColors.CYAN, Race.HIGH_ELF.getColor(), MyColors.GOLD),
+                new Sprite32x32("elfnob4", "quest.png", 0x87,
+                        MyColors.BLACK, MyColors.BROWN, Race.HIGH_ELF.getColor(), MyColors.ORANGE),
+
+        };
+    }
+
+
+    private static List<QuestBackground> makeForeground() {
+        List<QuestBackground> list = new ArrayList<>();
+        list.add(new QuestBackground(new Point(3, 5), ELF_NOBLES[0], true));
+        list.add(new QuestBackground(new Point(4, 4), ELF_NOBLES[1], false));
+        list.add(new QuestBackground(new Point(5, 4), ELF_NOBLES[2], false));
+        list.add(new QuestBackground(new Point(3, 6), ELF_NOBLES[3], true));
+        list.add(new QuestBackground(new Point(7, 5), ELF_NOBLES[0], true));
+        list.add(new QuestBackground(new Point(7, 6), ELF_NOBLES[1], true));
+        list.add(new QuestBackground(new Point(3, 0), KeepSubView.COLUMN, false));
+        list.add(new QuestBackground(new Point(5, 1), KeepSubView.PLANT, true));
+        list.add(new QuestBackground(new Point(7, 0), KeepSubView.COLUMN, false));
+
         return list;
     }
 }

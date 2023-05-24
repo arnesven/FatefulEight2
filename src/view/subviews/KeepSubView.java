@@ -25,13 +25,13 @@ public class KeepSubView extends DailyActionSubView {
             MyColors.GRAY, FLOOR_COLOR, MyColors.TAN);
     public static final Sprite RUG = new Sprite32x32("townhallrug", "world_foreground.png", 0x72,
             MyColors.DARK_RED, FLOOR_COLOR, MyColors.TAN);
-    private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
+    public static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private static final Sprite LORD = new Sprite32x32("lord", "world_foreground.png", 0x67,
             MyColors.BLACK, MyColors.DARK_BLUE, Race.NORTHERN_HUMAN.getColor(), MyColors.PURPLE);
-    private static final Sprite THRONE = new Sprite32x32("throne", "world_foreground.png", 0x66,
+    public static final Sprite THRONE = new Sprite32x32("throne", "world_foreground.png", 0x66,
             MyColors.DARK_BROWN, MyColors.GOLD, MyColors.RED, MyColors.CYAN);
-    private static final Sprite COLUMN = new Sprite32x32("window", "world_foreground.png", 0x59,
+    public static final Sprite COLUMN = new Sprite32x32("window", "world_foreground.png", 0x59,
             MyColors.BLACK, MyColors.WHITE, MyColors.BEIGE, MyColors.CYAN);
 
     public KeepSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
