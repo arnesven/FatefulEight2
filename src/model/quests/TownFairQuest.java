@@ -1,10 +1,13 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.RolfFryt;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.items.spells.FireworksSpell;
+import model.items.spells.Spell;
 import model.map.UrbanLocation;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
@@ -34,6 +37,15 @@ public class TownFairQuest extends Quest {
 
     public TownFairQuest() {
         super("Town Fair", "Townsfolk", QuestDifficulty.EASY, 0, 0, 0, INTRO, ENDING);
+        getScenes().get(2).get(0).addSpellCallback(new FireworksSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println("The people are overjoyed by the stunning display of pyrotechnics! " +
+                        "The entertainment for this year has been a stunning success.");
+                payOutFromSoloSkillCheckSubScene(model, state);
+                return new QuestEdge(getScenes().get(3).get(0));
+            }
+        });
     }
 
     @Override
@@ -95,6 +107,12 @@ public class TownFairQuest extends Quest {
         return MyColors.GREEN;
     }
 
+    private static void payOutFromSoloSkillCheckSubScene(Model model, QuestState state) {
+        int gold = 50;
+        state.println("You received " + gold + " gold!");
+        model.getParty().addToGold(gold);
+    }
+
     private static class PayOutSoloSkillCheckSubScene extends SoloSkillCheckSubScene {
         public PayOutSoloSkillCheckSubScene(int col, int row, Skill skill, int diff, String talk) {
             super(col, row, skill, diff, talk);
@@ -109,9 +127,7 @@ public class TownFairQuest extends Quest {
         public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
             boolean toReturn = super.performSkillCheck(model, state, skill, difficulty);
             if (toReturn) {
-                int gold = 50;
-                state.println("You received " + gold + " gold!");
-                model.getParty().addToGold(gold);
+                payOutFromSoloSkillCheckSubScene(model, state);
             }
             return toReturn;
         }

@@ -1,14 +1,18 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.CombatLoot;
 import model.enemies.*;
+import model.items.spells.FireworksSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
+import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -65,14 +69,14 @@ public class MasqueradeQuest extends Quest {
                 new QuestScene("Investigate",
                 List.of(new CollaborativeSkillCheckSubScene(2, 3, Skill.SeekInfo, 8,
                         "Somebody around here must know where he is. Spread out and gather clues."))),
-                new QuestScene("Spot Target Oustide",
+                new QuestScene("Spot Target Outside",
                 List.of(new SoloSkillCheckSubScene(2, 6, Skill.Perception, 9,
                         "Maybe he's out in the garden?"))),
                 new QuestScene("Diversion",
                 List.of(new SoloSkillCheckSubScene(4, 3, Skill.Entertain, 10,
-                        "Quick, somebody cause a scene as a diversion!"),
+                        "Quick, somebody cause a scene."),
                         new SoloSkillCheckSubScene(4, 4, Skill.Labor, 9,
-                                "Quick, let's knock over this statue as a diversion!"))),
+                                "Quick, let's knock over this statue."))),
                 new QuestScene("Detain Target",
                 List.of(new TargetCombatSubScene(4, 7),
                         new BodyGuardCombatSubScene(3, 4))));
@@ -85,7 +89,15 @@ public class MasqueradeQuest extends Quest {
         QuestDecisionPoint qd = new QuestDecisionPoint(5, 3, List.of(
                 new QuestEdge(scenes.get(4).get(0), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(4).get(1), QuestEdge.VERTICAL)),
-                "There he is!");
+                "There he is! Let's make a diversion!");
+        qd.addSpellCallback(new FireworksSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println("All eyes are drawn to the stunning fireworks display, " +
+                        "just the kind of diversion you need to get to the target.");
+                return new QuestEdge(scenes.get(5).get(0), QuestEdge.VERTICAL);
+            }
+        });
         SimpleJunction extra = new SimpleJunction(6, 6, new QuestEdge(qd, QuestEdge.VERTICAL));
         return List.of(start, qd, extra);
     }

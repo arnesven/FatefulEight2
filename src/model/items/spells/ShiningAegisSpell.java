@@ -14,9 +14,8 @@ import view.sprites.UpArrowAnimation;
 
 public class ShiningAegisSpell extends CombatSpell {
     private static final Sprite SPRITE = new ItemSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
-    // TODO: add this spell to some quests.
     public ShiningAegisSpell() {
-        super("Shining Aegis", 12, MyColors.WHITE, 9, 1, true);
+        super("Shining Aegis", 12, MyColors.WHITE, 9, 1);
     }
 
     @Override

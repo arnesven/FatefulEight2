@@ -13,8 +13,8 @@ public class LoveLetterEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("You are pacing through town when suddenly something on the ground catches your eye. At first, " +
-                "you take it for just a piece of trash, but then you realize it's something else. You pick it up.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Hmm, a letter. Looks quite fancy. " +
+                "you take it for just a piece of trash, but then you realize it's a letter. You pick it up.");
+        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Hmm, looks quite fancy. " +
                 "It's addressed to 'Maggie', but who could have sent it?");
         print("Do you open the letter? (Y/N) ");
         int rollBonus = 0;

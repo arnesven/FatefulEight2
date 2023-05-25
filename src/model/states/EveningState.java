@@ -9,6 +9,7 @@ import util.MyStrings;
 import view.help.HalfTimeDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.SelectQuestSubView;
+import view.subviews.SubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,18 +93,20 @@ public class EveningState extends GameState {
 
             println("The party has been offered " + MyStrings.numberWord(quests.size()) + " quest" + (quests.size() > 1?"s":"") + ".");
             print("Will you go tomorrow? ");
+            SubView previous = model.getSubView();
             SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
             model.setSubView(subView);
             waitForReturn();
             if (subView.didAcceptQuest()) {
                 Quest q = subView.getSelectedQuest();
                 this.goOnQuest = q;
-                println("You accepted the quest.");
+                println("You have accepted quest '" + q.getName() + "'!");
                 model.getQuestDeck().accept(q, model.getCurrentHex().getLocation());
                 q.accept(model.getParty());
             } else {
                 println("You rejected the quest" + (quests.size() > 1?"s":"") + ".");
             }
+            model.setSubView(previous);
         }
     }
 
