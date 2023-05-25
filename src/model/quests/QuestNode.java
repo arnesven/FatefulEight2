@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.items.spells.Spell;
 import model.states.QuestState;
 import model.states.SpellCastException;
+import sound.SoundEffects;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 

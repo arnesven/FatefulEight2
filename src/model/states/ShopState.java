@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.*;
+import model.items.spells.BindDaemonSpell;
 import model.items.spells.TurnUndeadSpell;
 import sound.SoundEffects;
 import view.subviews.ArrowMenuSubView;
@@ -179,6 +180,7 @@ public class ShopState extends GameState {
         shopInventory.addAll(model.getItemDeck().draw(commons, Prevalence.common));
         shopInventory.addAll(model.getItemDeck().draw(uncommons, Prevalence.uncommon));
         shopInventory.addAll(model.getItemDeck().draw(rares, Prevalence.rare));
+        shopInventory.add(new BindDaemonSpell());
         Collections.sort(shopInventory);
         return shopInventory;
     }

@@ -59,4 +59,8 @@ public class SoundEffects {
     public static void playUnlock() {
         play("unlock");
     }
+
+    public static void playSpellSuccess() { play("spell_suc"); }
+
+    public static void playSpellFail() { play("spell_fail"); }
 }

@@ -14,6 +14,7 @@ import model.items.accessories.FullHelm;
 import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
 import model.items.clothing.ScaleArmor;
+import model.items.spells.BindDaemonSpell;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.items.weapons.Pickaxe;
@@ -104,6 +105,15 @@ public class AbandonedMineQuest extends Quest {
                 new QuestEdge(scenes.get(4).get(1)),
                 new QuestEdge(scenes.get(4).get(2))),
                 "Is that a... fire daemon? Murak, you haven't been completely honest with us!");
+        qd.addSpellCallback(new BindDaemonSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println("The fire daemon has been bound by the effects of the spell. " +
+                        caster.getName() + " compels it to return to the demonic realm.");
+                return new QuestEdge(getSuccessEndingNode());
+            }
+        });
+
         SimpleJunction extraFail = new SimpleJunction(0, 8, new QuestEdge(getFailEndingNode()));
 
         SimpleJunction long4 = new SimpleJunction(3, 7, new QuestEdge(scenes.get(3).get(0)));

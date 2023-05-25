@@ -7,6 +7,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
 import model.states.GameState;
+import sound.SoundEffects;
 import view.MyColors;
 
 public abstract class Spell extends Item {
@@ -58,8 +59,10 @@ public abstract class Spell extends Item {
                 getSkillForColor(color), difficulty, getExperience(), castingBonus);
         if (result.isSuccessful()) {
             state.println(getName() + " was successfully cast.");
+            SoundEffects.playSpellSuccess();
         } else {
             state.println(getName() + " failed.");
+            SoundEffects.playSpellFail();
         }
         return result.isSuccessful();
     }
