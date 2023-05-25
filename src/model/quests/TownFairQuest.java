@@ -72,7 +72,7 @@ public class TownFairQuest extends Quest {
                                 "Now for some fine entertainment for the townspeople."))),
                 new QuestScene("Sprint Race",
                         List.of(new PayOutSoloSkillCheckSubScene(5, 5, Skill.Endurance, 12,
-                                "I sprint race? I'm sure one of us is up for the challenge."))),
+                                "A sprint race? I'm sure one of us is up for the challenge."))),
                 new QuestScene("Eating Contest",
                         List.of(new PayOutSoloSkillCheckSubScene(1, 6, Skill.Endurance, 10,
                                 "Next, an eating contest. Any volunteers?"))),
@@ -131,6 +131,11 @@ public class TownFairQuest extends Quest {
             }
             return toReturn;
         }
+
+        @Override
+        protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {
+            return getSuccessEdge();
+        }
     }
 
     private static class PayOutCollaborativeSkillCheckSubScene extends CollaborativeSkillCheckSubScene {
@@ -152,6 +157,11 @@ public class TownFairQuest extends Quest {
                 model.getParty().addToGold(gold);
             }
             return toReturn;
+        }
+
+        @Override
+        protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {
+            return getSuccessEdge();
         }
     }
 

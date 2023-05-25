@@ -5,6 +5,9 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.spells.Spell;
 import model.states.QuestState;
+import model.states.SpellCastException;
+import view.sprites.CastingEffectSprite;
+import view.sprites.MiscastEffectSprite;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -71,5 +74,22 @@ public abstract class QuestNode {
 
     protected SpellCallback getSpellCallback(String spellName) {
         return spellCallbacks.get(spellName);
+    }
+
+    protected QuestEdge tryCastSpell(Model model, QuestState state, SpellCastException sce) {
+        state.println("");
+        boolean spellSuccess = sce.getSpell().castYourself(model, state, sce.getCaster());
+        Point position = new Point(state.getCurrentPosition().getColumn(), state.getCurrentPosition().getRow());
+        if (spellSuccess) {
+            state.getSubView().addSpecialEffect(position, new CastingEffectSprite());
+        } else {
+            state.getSubView().addSpecialEffect(position, new MiscastEffectSprite());
+        }
+        model.getLog().waitForAnimationToFinish();
+        if (spellSuccess) {
+            unacceptAllSpells(model);
+            return getSpellCallback(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+        }
+        return null;
     }
 }

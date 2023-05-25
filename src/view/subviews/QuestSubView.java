@@ -2,14 +2,14 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.combat.Combatant;
+import model.enemies.Enemy;
 import model.quests.*;
 import model.states.QuestState;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.FilledBlockSprite;
-import view.sprites.LoopingSprite;
-import view.sprites.QuestCursorSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -190,5 +190,9 @@ public class QuestSubView extends AvatarSubView {
 
     public void setSubScenesEnabled(boolean subScenesEnabled) {
         this.subScenesEnabled = subScenesEnabled;
+    }
+
+    public synchronized void addSpecialEffect(Point position, RunOnceAnimationSprite sprite) {
+        addOngoingEffect(new MyPair<>(convertToScreen(position), sprite));
     }
 }

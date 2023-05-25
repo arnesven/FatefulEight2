@@ -25,11 +25,9 @@ public class CombatSubView extends SubView {
     private final CombatMatrix combatMatrix;
     private final CombatTheme theme;
     private Sprite initiativeMarker = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
-    private Set<MyPair<Point, RunOnceAnimationSprite>> ongoingEffects;
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
-        ongoingEffects = new HashSet<>();
         this.combatMatrix = combatMatrix;
         this.theme = theme;
     }
@@ -62,7 +60,6 @@ public class CombatSubView extends SubView {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
 
         drawCombatants(model);
-        drawEffects(model);
         drawInitiativeOrder(model);
         drawCursor(model);
     }
@@ -80,19 +77,6 @@ public class CombatSubView extends SubView {
         p.y = Y_OFFSET + p2.y + (p.y + 1) * 4 + shiftForCurrent(combatMatrix.getCombatant(p.x, p.y));
         p.x = X_OFFSET + p2.x + p.x * 4;
         model.getScreenHandler().register("combatcursor", p, cursor, 2);
-    }
-
-    private synchronized void drawEffects(Model model) {
-        List<MyPair<Point, RunOnceAnimationSprite>> toRemove = new ArrayList<>();
-        for (MyPair<Point, RunOnceAnimationSprite> p : ongoingEffects) {
-            if (!p.second.isDone()) {
-                model.getScreenHandler().register(p.second.getName(), p.first, p.second, 2,
-                        p.second.getXShift(), -p.second.getYShift());
-            } else {
-                toRemove.add(p);
-            }
-        }
-        ongoingEffects.remove(toRemove);
     }
 
     private void drawCombatants(Model model) {
@@ -158,8 +142,8 @@ public class CombatSubView extends SubView {
 
     public synchronized void addStrikeEffect(Combatant target, int damge, boolean critical) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        ongoingEffects.add(new MyPair<>(point, new StrikeEffectSprite()));
-        ongoingEffects.add(new MyPair<>(point, new DamageValueEffect(damge, critical)));
+        addOngoingEffect(new MyPair<>(point, new StrikeEffectSprite()));
+        addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, critical)));
     }
 
     public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
@@ -167,7 +151,7 @@ public class CombatSubView extends SubView {
         if (target instanceof Enemy) {
             point.x -= (target.getWidth() / 2) * 4;
         }
-        ongoingEffects.add(new MyPair<>(point, sprite));
+        addOngoingEffect(new MyPair<>(point, sprite));
     }
 
     private static Point convertToScreen(Point point, Combatant target) {

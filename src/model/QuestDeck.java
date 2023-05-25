@@ -24,7 +24,7 @@ public class QuestDeck extends ArrayList<Quest> implements Serializable {
         return List.of(
 //                new DeepDungeonQuest(),
 //                new MansionHeistQuest(),
-                new UnsuspectingLoversQuest(),
+//                new UnsuspectingLoversQuest(),
 //                new MissingBrotherQuest(),
 //                new DefendTheVillageQuest(),
 //                new RatProblemQuest(),

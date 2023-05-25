@@ -65,6 +65,11 @@ public class PartyView extends SelectableListMenu {
                 public void performAction(Model model, int x, int y) {
                     PartyView.super.setInnerMenu(new SetLeaderMenu(PartyView.this, gc, x, y), model);
                 }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return !model.isInQuest() && !model.isInCombat() && !model.isInDungeon();
+                }
             });
         }
 

@@ -76,12 +76,9 @@ public class QuestDecisionPoint extends QuestJunction {
                 finalEdge = questNodeInput(model, state);
                 break;
             } catch (SpellCastException sce) {
-                state.println("");
-                boolean success = sce.getSpell().castYourself(model, state, sce.getCaster());
-                model.getLog().waitForAnimationToFinish();
-                if (success) {
-                    unacceptAllSpells(model);
-                    return getSpellCallback(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+                QuestEdge edge = tryCastSpell(model, state, sce);
+                if (edge != null) {
+                    return edge;
                 }
             }
         } while (true);

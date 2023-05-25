@@ -405,4 +405,12 @@ public class Model {
     public void setGameStarted(boolean b) {
         gameStarted = b;
     }
+
+    public boolean isInQuest() {
+        return state instanceof QuestState;
+    }
+
+    public boolean isInDungeon() {
+        return state instanceof ExploreRuinsState;
+    }
 }

@@ -4,7 +4,6 @@ import model.Model;
 import model.classes.Skill;
 import model.quests.QuestEdge;
 import model.quests.QuestSubScene;
-import model.states.GameState;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import view.MyColors;
@@ -49,12 +48,9 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
                 skillSuccess = performSkillCheck(model, state, skill, difficulty);
                 break;
             } catch (SpellCastException sce) {
-                state.println("");
-                boolean spellSuccess = sce.getSpell().castYourself(model, state, sce.getCaster());
-                model.getLog().waitForAnimationToFinish();
-                if (spellSuccess) {
-                    unacceptAllSpells(model);
-                    return getSpellCallback(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+                QuestEdge edge = tryCastSpell(model, state, sce);
+                if (edge != null) {
+                    return edge;
                 }
             }
         } while (true);

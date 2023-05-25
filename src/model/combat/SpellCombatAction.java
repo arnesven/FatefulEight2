@@ -2,12 +2,10 @@ package model.combat;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.items.UsableItem;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
-import view.MyColors;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.StrikeEffectSprite;
+import view.sprites.CastingEffectSprite;
+import view.sprites.MiscastEffectSprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,23 +52,4 @@ public class SpellCombatAction extends CombatAction {
         return res;
     }
 
-    private static class CastingEffectSprite extends RunOnceAnimationSprite {
-        public CastingEffectSprite() {
-            super("castingeffect", "combat.png", 0, 9, 32, 32, 8, MyColors.WHITE);
-            setColor1(MyColors.WHITE);
-            setColor2(MyColors.LIGHT_YELLOW);
-            setColor3(MyColors.LIGHT_PINK);
-            setColor4(MyColors.CYAN);
-        }
-    }
-
-    private static class MiscastEffectSprite extends RunOnceAnimationSprite {
-        public MiscastEffectSprite() {
-            super("miscasteffect", "combat.png", 0, 10, 32, 32, 8, MyColors.WHITE);
-            setColor1(MyColors.GRAY);
-            setColor2(MyColors.LIGHT_GRAY);
-            setColor3(MyColors.WHITE);
-            setColor4(MyColors.TAN);
-        }
-    }
 }
