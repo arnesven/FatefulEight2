@@ -8,19 +8,19 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class ScorpionEnemy extends Enemy {
+public class ScorpionEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new Sprite32x32("scorpion", "enemies.png", 0x6A,
             MyColors.BLACK, MyColors.GOLD, MyColors.BROWN, MyColors.RED);
 
     public ScorpionEnemy(char a) {
-        super(a, "Scorpion");
+        super(a, "Scorpion", NORMAL);
     }
 
     @Override
     public void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
         int hpBefore = target.getHP();
         super.attack(model, target, combatEvent);
-        if (hpBefore > target.getHP()) {
+        if (hpBefore > target.getHP() && !target.isDead()) {
             combatEvent.println(target.getName() + " has been poisoned!");
             target.addCondition(new PoisonCondition());
         }

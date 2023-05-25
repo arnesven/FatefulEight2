@@ -189,6 +189,10 @@ public abstract class DailyEventState extends GameState {
         model.setSubView(portraitSubView);
     }
 
+    public void setPortraitSubView(DailyEventState event) {
+        portraitSubView = event.portraitSubView;
+    }
+
     protected void showRandomPortrait(Model model, CharacterClass cls, String portraitName) {
         showRandomPortrait(model, cls, Race.ALL, portraitName);
     }

@@ -1,16 +1,21 @@
 package model.quests;
 
+import model.Model;
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.OlegTrollEnemy;
 import model.enemies.PetSpiderEnemy;
 import model.enemies.SpiderEnemy;
+import model.items.spells.HarmonizeSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
+import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -36,6 +41,13 @@ public class ForestTrollQuest extends Quest {
 
     public ForestTrollQuest() {
         super("Forest Troll", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, ENDING);
+        getScenes().get(2).get(0).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println(caster.getName() + " pacifies the beast with the Harmonize spell.");
+                return new QuestEdge(getJunctions().get(1));
+            }
+        });
     }
 
     @Override

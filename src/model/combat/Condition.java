@@ -72,7 +72,7 @@ public abstract class Condition implements Serializable {
         return false;
     }
 
-    public void endOfDayTrigger(Model model, GameState state, Combatant comb) {
+    public void endOfDayTrigger(Model model, GameState state, Combatant comb) { }
 
-    }
+    public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) { }
 }

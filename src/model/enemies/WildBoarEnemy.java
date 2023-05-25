@@ -9,11 +9,11 @@ import view.sprites.WildBoarSprite;
 
 import java.awt.*;
 
-public class WildBoarEnemy extends BigEnemy {
+public class WildBoarEnemy extends BigBeastEnemy {
     private static Sprite sprite = new WildBoarSprite("wildboar", "enemies.png", 0x20);
 
     public WildBoarEnemy(char a) {
-        super(a, "Wild Boar");
+        super(a, "Wild Boar", NORMAL);
     }
 
     @Override

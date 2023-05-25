@@ -7,11 +7,11 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class BatEnemy extends Enemy {
+public class BatEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new BatSprite();
 
     public BatEnemy(char enemyGroup) {
-        super(enemyGroup, "Bat");
+        super(enemyGroup, "Bat", NORMAL);
     }
 
     @Override

@@ -8,13 +8,12 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 
-public class BearEnemy extends BigEnemy {
+public class BearEnemy extends BigBeastEnemy {
 
     private static Sprite sprite = new BearSprite("bear", "enemies.png", 0x10);
 
-
     public BearEnemy(char group) {
-        super(group, "Bear");
+        super(group, "Bear", NORMAL);
     }
 
     @Override
@@ -41,4 +40,5 @@ public class BearEnemy extends BigEnemy {
     public CombatLoot getLoot(Model model) {
         return new RationsCombatLoot(10);
     }
+
 }

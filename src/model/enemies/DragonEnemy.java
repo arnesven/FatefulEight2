@@ -10,11 +10,11 @@ import view.sprites.Sprite;
 
 import java.util.ArrayList;
 
-public class DragonEnemy extends Enemy {
+public class DragonEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new DragonSprite();
 
     public DragonEnemy(char a) {
-        super(a, "Dragon");
+        super(a, "Dragon", RAMPAGING);
     }
 
     @Override

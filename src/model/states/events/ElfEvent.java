@@ -39,7 +39,7 @@ public class ElfEvent extends DailyEventState {
             changeClass(model, Classes.SPY, "n agent of a powerful organization. He offers to train you in the ways of spycraft, ");
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.CAP, Race.DARK_ELF, "Swordsman");
-            print(" swordsman who brags about his exploits and the gold he has made. Do you wish to challenge the swordsman? ");
+            print(" swordsman who brags about his exploits and the gold he has made. Do you wish to c§lenge the swordsman? ");
             if (yesNoInput()) {
                 List<Enemy> list = new ArrayList<>();
                 list.add(new SwordsmanEnemy('A', Race.DARK_ELF));
@@ -47,10 +47,11 @@ public class ElfEvent extends DailyEventState {
             }
         } else if (dieRoll <= 9) {
             showRandomPortrait(model, Classes.MAGE, Race.DARK_ELF, "Mage");
-            print(" mage who offers to sell you a spell for 15 gold. Do you accept? ");
+            print(" mage who offers to sell you a spells. Do you accept? (Y/N)");
             if (yesNoInput()) {
-                println("You buy a spell from the dark elf mage.");
-                new MageEvent(model, false).doEvent(model);
+                MageEvent event = new MageEvent(model, false);
+                event.setPortraitSubView(this);
+                event.doEvent(model);
             }
         } else {
             adventurerWhoMayJoin(model, Race.DARK_ELF);
@@ -69,6 +70,7 @@ public class ElfEvent extends DailyEventState {
             print(" merchant. Do you wish to trade with her? ");
             if (yesNoInput()) {
                 MerchantEvent me = new MerchantEvent(model, false);
+                me.setPortraitSubView(this);
                 me.doEvent(model);
             }
         } else if (dieRoll <= 9) {
@@ -85,7 +87,9 @@ public class ElfEvent extends DailyEventState {
         if (dieRoll <= 3) {
             println(" priest.");
             showRandomPortrait(model, Classes.PRI, "Priest");
-            new PriestEvent(model, false).doEvent(model);
+            PriestEvent pri = new PriestEvent(model, false);
+            pri.setPortraitSubView(this);
+            pri.doEvent(model);
         } else if (dieRoll <= 6) {
             println(" courier.");
             CourierEvent courier = new CourierEvent(model, false);

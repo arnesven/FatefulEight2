@@ -146,4 +146,11 @@ public abstract class Combatant implements Serializable {
     public void takeCombatDamage(CombatEvent combatEvent, int damage) {
         addToHP(-damage);
     }
+
+    public void conditionsEndOfCombatRoundTrigger(Model model, GameState state) {
+        List<Condition> conditionsToTraverse = new ArrayList<>(conditions);
+        for (Condition cond : conditionsToTraverse) {
+            cond.endOfCombatRoundTrigger(model, state, this);
+        }
+    }
 }

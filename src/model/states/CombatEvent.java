@@ -8,6 +8,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.Condition;
 import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -88,6 +89,7 @@ public class CombatEvent extends DailyEventState {
                 setFormation(model);
                 checkForOpportunityAttacks(model);
             }
+            triggerConditions(model);
         }
         model.getLog().waitForAnimationToFinish();
 
@@ -423,5 +425,13 @@ public class CombatEvent extends DailyEventState {
 
     public boolean didTimeOut() {
         return timeLimit > roundCounter;
+    }
+
+    private void triggerConditions(Model model) {
+        List<Combatant> combs = new ArrayList<>();
+        combs.addAll(combatMatrix.getElementList());
+        for (Combatant comb : combs) {
+            comb.conditionsEndOfCombatRoundTrigger(model, this);
+        }
     }
 }

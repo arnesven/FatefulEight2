@@ -9,12 +9,12 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class ManticoreEnemy extends Enemy {
+public class ManticoreEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new Sprite32x32("manticore", "enemies.png", 0x6B,
             MyColors.BLACK, MyColors.GOLD, MyColors.DARK_RED, MyColors.DARK_BROWN);
 
     public ManticoreEnemy(char a) {
-        super(a, "Manticore");
+        super(a, "Manticore", HOSTILE);
     }
 
     @Override

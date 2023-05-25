@@ -6,11 +6,11 @@ import model.combat.RationsCombatLoot;
 import view.sprites.Sprite;
 import view.sprites.ViperSprite;
 
-public class ViperEnemy extends Enemy {
+public class ViperEnemy extends BeastEnemy {
     private static Sprite sprite = new ViperSprite("viper", "enemies.png", 0x00);
 
     public ViperEnemy(char enemyGroup) {
-        super(enemyGroup, "Viper");
+        super(enemyGroup, "Viper", HOSTILE);
     }
 
     @Override

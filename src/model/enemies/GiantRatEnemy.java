@@ -8,12 +8,12 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class GiantRatEnemy extends Enemy {
+public class GiantRatEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new Sprite32x32("giantrat", "enemies.png", 0x4E,
             MyColors.BLACK, MyColors.BROWN, MyColors.LIGHT_PINK, MyColors.BEIGE);
 
     public GiantRatEnemy(char a) {
-        super(a, "Giant Rat");
+        super(a, "Giant Rat", NORMAL);
     }
 
     @Override

@@ -9,11 +9,11 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class CrowEnemy extends Enemy {
+public class CrowEnemy extends BeastEnemy {
     public static final Sprite SPRITE = new CrowSprite();
 
     public CrowEnemy(char a) {
-        super(a, "Pesky Crow");
+        super(a, "Pesky Crow", NORMAL);
     }
 
     @Override

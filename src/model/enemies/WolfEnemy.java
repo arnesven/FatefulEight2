@@ -9,13 +9,13 @@ import view.sprites.Sprite;
 import view.sprites.WildBoarSprite;
 import view.sprites.WolfSprite;
 
-public class WolfEnemy extends BigEnemy {
+public class WolfEnemy extends BigBeastEnemy {
     private static Sprite sprite = new WolfSprite("wolf", "enemies.png", 0x30);
     private final int health;
     private final int damage;
 
     public WolfEnemy(char a, int health, int damage) {
-        super(a, "Wolf");
+        super(a, "Wolf", HOSTILE);
         this.health = health;
         this.damage = damage;
         this.setCurrentHp(getMaxHP());

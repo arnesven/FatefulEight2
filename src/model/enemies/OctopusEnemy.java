@@ -11,13 +11,12 @@ import view.sprites.Sprite;
 
 import java.util.ArrayList;
 
-public class OctopusEnemy extends Enemy {
-
+public class OctopusEnemy extends BeastEnemy {
 
     private static final Sprite SPRITE = new OctopusSprite();
 
     public OctopusEnemy(char enemyGroup) {
-        super(enemyGroup, "Octopus");
+        super(enemyGroup, "Octopus", RAMPAGING);
     }
 
     @Override

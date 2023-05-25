@@ -37,6 +37,7 @@ public class HalfOrcEvent extends DailyEventState {
             BanditEvent be = new BanditEvent(model);
             be.setRace(Race.HALF_ORC);
             be.doEvent(model);
+            be.doEvent(model);
             this.didFlee = be.haveFledCombat();
         } else {
             adventurerWhoMayJoin(model, Race.HALF_ORC);

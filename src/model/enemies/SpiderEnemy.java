@@ -12,11 +12,11 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class SpiderEnemy extends Enemy {
+public class SpiderEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new SpiderSprite();
 
     public SpiderEnemy(char a) {
-        super(a, "Spider");
+        super(a, "Spider", NORMAL);
     }
 
     @Override
