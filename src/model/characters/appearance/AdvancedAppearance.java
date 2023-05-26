@@ -2,9 +2,7 @@ package model.characters.appearance;
 
 import model.races.Race;
 import view.MyColors;
-import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
-import view.sprites.Sprite8x8;
+import view.sprites.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -219,5 +217,13 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     public void setHasGlasses(boolean b) {
         hasGlasses = b;
+    }
+
+    @Override
+    protected PortraitSprite getOuterFrameSprite(int i) {
+        if (hairStyle.getOuterFrame() != null) {
+            return new HairSpriteWithFrame(hairStyle.getOuterFrame()[i-1], getHairColor());
+        }
+        return super.getOuterFrameSprite(i);
     }
 }

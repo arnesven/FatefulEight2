@@ -32,6 +32,7 @@ public class MagicianClass extends CharacterClass {
     }
 
     public static void putOnTopHat(CharacterAppearance characterAppearance, MyColors color1, MyColors color2) {
+        characterAppearance.removeOuterHair();
         for (int y = 0; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
                 characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x62 + 0x10 * y + x, color1, color2  ));

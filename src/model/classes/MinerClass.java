@@ -30,6 +30,7 @@ public class MinerClass extends CharacterClass {
     }
 
     public static void putOnLampHelmet(CharacterAppearance characterAppearance) {
+        characterAppearance.removeOuterHair();
         for (int y = 0; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
                 characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x30 + 0x10 * y + x + 5, MyColors.GRAY, MyColors.DARK_GRAY));

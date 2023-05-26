@@ -54,6 +54,7 @@ public abstract class Looks {
     }
 
     protected static void putOnHood(CharacterAppearance characterAppearance, MyColors color) {
+        characterAppearance.removeOuterHair();
         characterAppearance.setRow(1, new PortraitSprite[]{
                 new PortraitFrameSprite(PortraitFrameSprite.LEFT), new FilledBlockSprite(MyColors.BLACK),
                 new HoodLeftTop(color, characterAppearance), new HoodTop(color, characterAppearance),
@@ -98,6 +99,7 @@ public abstract class Looks {
     }
 
     protected static void putOnPointyHat(CharacterAppearance characterAppearance, MyColors hatColor) {
+        characterAppearance.removeOuterHair();
         characterAppearance.setSprite(2, 0, new ClothesSprite(0x90, hatColor));
         characterAppearance.setSprite(3, 0, new ClothesSprite(0x91, hatColor));
         characterAppearance.setSprite(4, 0, new ClothesSprite(0x92, hatColor));
@@ -114,6 +116,7 @@ public abstract class Looks {
     }
 
     protected static void putOnCap(CharacterAppearance appearance, MyColors color) {
+        appearance.removeOuterHair();
         appearance.setSprite(2, 1, new FaceAndClothesSpriteWithBack(0xE4, appearance.getHairColor(), color, MyColors.BEIGE));
         appearance.setSprite(3, 1, new FaceAndClothesSpriteWithBack(0xE5, appearance.getHairColor(), color, MyColors.BEIGE));
         appearance.setSprite(4, 1, new FaceAndClothesSpriteWithBack(0xE6, appearance.getHairColor(), color, MyColors.BEIGE));
@@ -157,6 +160,7 @@ public abstract class Looks {
     }
 
     protected static void putOnFarmersHat(CharacterAppearance characterAppearance, MyColors hatColor) {
+        characterAppearance.removeOuterHair();
         for (int x = 0; x < 7; ++x) {
             characterAppearance.setSprite(x, 1, new ClothesSprite(0xD0 + x, hatColor));
             characterAppearance.setSprite(x, 2, new ClothesSprite(0xE0 + x, hatColor));

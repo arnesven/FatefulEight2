@@ -6,10 +6,7 @@ import model.characters.TorhildHairstyle;
 import model.characters.VzaniHairStyle;
 import util.MyRandom;
 import view.MyColors;
-import view.sprites.FaceSpriteWithHair;
-import view.sprites.FilledBlockSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite8x8;
+import view.sprites.*;
 
 import java.io.Serializable;
 
@@ -48,7 +45,10 @@ public abstract class HairStyle implements Serializable {
             new TorhildHairstyle(),
             new PigTailHairStyle(0x9, true, 0x26),
             new PigTailHairStyle(0xC, true, 0x37),
-            new VzaniHairStyle()
+            new VzaniHairStyle(),
+            new AfroHairStyle(),
+            new SpikesHairStyle(),
+            new BunsHairStyle()
     };
     private final boolean onTop;
     private final boolean inForehead;
@@ -118,5 +118,9 @@ public abstract class HairStyle implements Serializable {
 
     public static HairStyle randomHairStyle() {
         return HairStyle.allHairStyles[MyRandom.randInt(HairStyle.allHairStyles.length)];
+    }
+
+    public int[] getOuterFrame() {
+        return null;
     }
 }

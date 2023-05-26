@@ -46,6 +46,7 @@ public class BlackKnightClass extends CharacterClass {
     }
 
     private static void putOnKnightsHelm(CharacterAppearance characterAppearance) {
+        characterAppearance.removeOuterHair();
         for (int y = 1; y <= 4; ++y) {
             characterAppearance.setSprite(1, y, new FilledBlockSprite(MyColors.BLACK));
             characterAppearance.setSprite(5, y, new FilledBlockSprite(MyColors.BLACK));

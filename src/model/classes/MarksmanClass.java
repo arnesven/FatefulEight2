@@ -33,6 +33,7 @@ public class MarksmanClass extends CharacterClass {
     }
 
     private void putOnLeatherCap(CharacterAppearance characterAppearance, MyColors color) {
+        characterAppearance.removeOuterHair();
         for (int y = 1; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
                 characterAppearance.setSprite(x, y, new FaceAndClothesSpriteWithBack(0xAB + 0x10 * y + x, characterAppearance.getHairColor(), color));

@@ -52,27 +52,27 @@ public abstract class CharacterAppearance implements Serializable {
     private void refresh() {
         grid = new PortraitSprite[7][7];
         this.grid[0][0] = FRAME_UL_CORNER;
-        this.grid[1][0] = FRAME_TOP;
-        this.grid[2][0] = FRAME_TOP;
-        this.grid[3][0] = FRAME_TOP;
-        this.grid[4][0] = FRAME_TOP;
-        this.grid[5][0] = FRAME_TOP;
+        this.grid[1][0] = getOuterFrameSprite(3);
+        this.grid[2][0] = getOuterFrameSprite(4);
+        this.grid[3][0] = getOuterFrameSprite(5);
+        this.grid[4][0] = getOuterFrameSprite(6);
+        this.grid[5][0] = getOuterFrameSprite(7);
         this.grid[6][0] = FRAME_UR_CORNER;
 
         this.grid[0][1] = FRAME_LEFT;
-        this.grid[1][1] = blackBlock;
+        this.grid[1][1] = getOuterFrameSprite(2);
         this.grid[2][1] = new FaceSpriteWithHair(getHeadTopLeft(), hairColor);
         this.grid[3][1] = new FaceSpriteWithHair(getHeadTop(), hairColor);
         this.grid[4][1] = new FaceSpriteWithHair(getHeadTopRight(), hairColor);
-        this.grid[5][1] = blackBlock;
+        this.grid[5][1] = getOuterFrameSprite(8);
         this.grid[6][1] = FRAME_RIGHT;
 
         this.grid[0][2] = FRAME_LEFT;
-        this.grid[1][2] = blackBlock;
+        this.grid[1][2] = getOuterFrameSprite(1);
         this.grid[2][2] = new FaceSpriteWithHair(getForeheadLeft(), hairColor);
         this.grid[3][2] = new FaceSpriteWithHair(getForeheadCenter(), hairColor);
         this.grid[4][2] = new FaceSpriteWithHair(getForeheadRight(), hairColor);
-        this.grid[5][2] = blackBlock;
+        this.grid[5][2] = getOuterFrameSprite(9);
         this.grid[6][2] = FRAME_RIGHT;
 
         this.grid[0][3] = FRAME_LEFT;
@@ -109,6 +109,17 @@ public abstract class CharacterAppearance implements Serializable {
 
         specialization();
         setRaceSkinColor(race);
+    }
+
+    protected PortraitSprite getOuterFrameSprite(int i) {
+        switch (i) {
+            case 1:
+            case 2:
+            case 8:
+            case 9:
+                return blackBlock;
+        }
+        return FRAME_TOP;
     }
 
     protected void specialization() { }
@@ -302,5 +313,15 @@ public abstract class CharacterAppearance implements Serializable {
 
     public Sprite getFacialOnly() {
         return getNormalHair();
+    }
+
+    public void removeOuterHair() {
+        for (int i = 1; i < 6; ++i) {
+            this.grid[i][0] = FRAME_TOP;
+        }
+        this.grid[1][1] = blackBlock;
+        this.grid[1][2] = blackBlock;
+        this.grid[5][1] = blackBlock;
+        this.grid[5][2] = blackBlock;
     }
 }

@@ -31,6 +31,7 @@ public class SorcererClass extends CharacterClass {
     }
 
     private static void putOnHelm(CharacterAppearance characterAppearance) {
+        characterAppearance.removeOuterHair();
         for (int y = 0; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
                 characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x10 * y + x + 8, MyColors.DARK_GRAY, MyColors.BLACK));
