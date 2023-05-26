@@ -60,9 +60,12 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new HazelVanDevries(), new CharacterClass[]{NOB, ASN, MAG, THF}));
         add(new GameCharacter("Megar", "Evermead", DWARF, ART,
                 new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN}));
-
         add(new GameCharacter("Lonnie", "Liebgott", NORTHERN_HUMAN, MIN,
                 new LonnieLiebgott(), new CharacterClass[]{NOB, MIN, MAG, THF}));
+        add(new GameCharacter("Ribox", "Anari", WOOD_ELF, MIN,
+                new RiboxAnari(), new CharacterClass[]{MIN, BBN, PRI, NOB}));
+        add(new GameCharacter("Liana", "Clearwater", WOOD_ELF, PAL,
+                new LianaClearwater(), new CharacterClass[]{PAL, CAP, WIZ, SPY}));
 
         System.out.println(size() + " characters loaded!");
     }
