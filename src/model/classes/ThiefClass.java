@@ -53,4 +53,9 @@ public class ThiefClass extends CharacterClass {
             appearance.getFacialOnly().shiftUpPx(-2);
         }
     }
+
+    @Override
+    public boolean coversEars() {
+        return true;
+    }
 }

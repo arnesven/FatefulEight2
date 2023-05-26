@@ -19,11 +19,6 @@ public class KruskTalandro extends AdvancedAppearance {
     }
 
     @Override
-    public void applyFacialHair(Race race) {
-        super.applyFacialHair(race);
-    }
-
-    @Override
     public CharacterAppearance copy() {
         return new KruskTalandro();
     }

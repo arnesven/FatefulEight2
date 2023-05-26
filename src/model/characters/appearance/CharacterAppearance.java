@@ -218,7 +218,7 @@ public abstract class CharacterAppearance implements Serializable {
         charClass.manipulateAvatar(this, race);
         charClass.finalizeLook(this);
         if (charClass.showFacialHair()) {
-            applyFacialHair(race);
+            applyFacialHair(race, charClass.coversEars());
         }
         addHairInBack();
     }
@@ -227,7 +227,7 @@ public abstract class CharacterAppearance implements Serializable {
 
     }
 
-    protected void applyFacialHair(Race race) {
+    protected void applyFacialHair(Race race, boolean coversEars) {
 
     }
 

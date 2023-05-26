@@ -100,6 +100,10 @@ public abstract class CharacterClass implements Serializable {
 
     }
 
+    public boolean coversEars() {
+        return false;
+    }
+
     protected static class WeightedSkill implements Serializable {
         public Skill skill;
         public int weight;

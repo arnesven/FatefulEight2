@@ -63,4 +63,9 @@ public class AssassinClass extends CharacterClass {
             appearance.getSprite(4, 4).setColor1(appearance.getHairColor());
         }
     }
+
+    @Override
+    public boolean coversEars() {
+        return true;
+    }
 }

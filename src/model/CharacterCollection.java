@@ -86,6 +86,10 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new EmilyFourhorn(), new CharacterClass[]{AMZ, BRD, SOR, MAR}));
         add(new GameCharacter("Ivan", "McIntosh", NORTHERN_HUMAN, PRI,
                 new IvanMcIntosh(), new CharacterClass[]{PRI, BKN, FOR, MIN}));
+        add(new GameCharacter("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
+                new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU}));
+        add(new GameCharacter("Jenna", "Wildflower", SOUTHERN_HUMAN, THF,
+                new JennaWildflower(), new CharacterClass[]{THF, WIZ, SPY, ART}));
 
         System.out.println(size() + " characters loaded!");
     }

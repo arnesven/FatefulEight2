@@ -175,7 +175,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     @Override
-    public void applyFacialHair(Race race) {
+    public void applyFacialHair(Race race, boolean coversEars) {
         if (beard != null) {
             beard.apply(this, race);
         }
@@ -186,7 +186,7 @@ public class AdvancedAppearance extends CharacterAppearance {
                 addSpriteOnTop(2 + i, 3, left);
             }
         }
-        if (hasEarrings) {
+        if (hasEarrings && !coversEars) {
             Sprite8x8 left = new Sprite8x8("earringleft", "clothes.png", 0x4A);
             left.setColor1(detailColor);
             addSpriteOnTop(1, 3, left);
