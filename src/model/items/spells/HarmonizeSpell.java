@@ -77,8 +77,12 @@ public class HarmonizeSpell extends CombatSpell {
         @Override
         public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
             if (state instanceof CombatEvent) {
-                state.println(comb.getName() + " has retreated from combat.");
-                ((CombatEvent) state).retreatEnemy(comb);
+                if (comb instanceof BeastEnemy) {
+                    if (((BeastEnemy) comb).getAggressiveness() == BeastEnemy.DOCILE) {
+                        state.println(comb.getName() + " has retreated from combat.");
+                        ((CombatEvent) state).retreatEnemy(comb);
+                    }
+                }
             }
         }
     }

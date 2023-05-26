@@ -134,26 +134,31 @@ public class ItemDeck extends ArrayList<Item> {
                 new MindControlSpell(),
                 new ConjurePhantasmSpell(),
                 new CreatureComfortsSpell(),
+                // new MindControlSpell() // Take over enemy for two rounds...
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
                 new HealingWordSpell(),
                 new SouthernCrossSpell(),
                 new AuraOfAllureSpell(),
+                // new TransmuteSpell()
                 new FireworksSpell(),
                 new MagmaBlastSpell(),
                 new EntropicBoltSpell(),
                 new BindDaemonSpell(),
                 new BurningWeaponSpell(),
+                // new DetonateSpell()
                 new TransfigurationSpell(),
                 new AlchemySpell(),
                 new HarmonizeSpell(),
                 new CallOfTheWildSpell(),
                 new GiantGrowthSpell(),
+                // new SummonFamiliarSpell()
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),
                 new RaiseBoneWalkerSpell(),
                 new WeakenSpell(),
                 new DarkShroudSpell()
+                // new PoisonGasSpell()
                 );
     }
 

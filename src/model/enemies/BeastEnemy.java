@@ -14,6 +14,10 @@ public abstract class BeastEnemy extends Enemy {
         this.aggro = aggressiveness;
     }
 
+    public int getAggressiveness() {
+        return aggro;
+    }
+
     @Override
     public void takeCombatDamage(CombatEvent combatEvent, int damage) {
         super.takeCombatDamage(combatEvent, damage);
