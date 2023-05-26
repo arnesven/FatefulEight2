@@ -3,10 +3,11 @@ package model.characters.appearance;
 import model.races.Race;
 import view.MyColors;
 import view.ScreenHandler;
+import view.sprites.FullPortraitSprite;
 import view.sprites.Sprite;
 
 public class SilhouetteAppearance extends CharacterAppearance {
-    private static final Sprite SILHOUETTE_SPRITE = new SilhouetteSprite();
+    private static final Sprite SILHOUETTE_SPRITE = new FullPortraitSprite(0);
     public SilhouetteAppearance() {
         super(Race.ALL, true, MyColors.BLACK);
     }
@@ -45,15 +46,6 @@ public class SilhouetteAppearance extends CharacterAppearance {
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
         screenHandler.clearSpace(col, col+7, row, row+7);
         screenHandler.put(col, row, SILHOUETTE_SPRITE);
-    }
-
-    private static class SilhouetteSprite extends Sprite {
-        public SilhouetteSprite() {
-            super("silhouette", "silhouette.png", 0, 0, 56, 56);
-            setColor1(MyColors.BLACK);
-            setColor2(MyColors.LIGHT_GRAY);
-            setColor3(MyColors.GRAY);
-        }
     }
 
 }

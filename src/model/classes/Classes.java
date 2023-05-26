@@ -1,7 +1,5 @@
 package model.classes;
 
-import model.races.Race;
-
 public interface Classes {
     CharacterClass AMZ = new AmazonClass();
     CharacterClass ART = new ArtisanClass();
@@ -41,4 +39,5 @@ public interface Classes {
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
+    CharacterClass GOBLIN = new GoblinClass();
 }

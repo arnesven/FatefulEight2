@@ -49,6 +49,7 @@ public class Party implements Serializable {
     private LoopingSprite[] cursorSprites;
     private GameCharacter leader;
     private int lastSuccessfulRecruitDay = -500;
+    private Set<String> specialCharactersRecruited = new HashSet<>();
 
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3, ruins at 24,9, temple at 1,1
@@ -623,5 +624,13 @@ public class Party implements Serializable {
 
     public List<GameCharacter> getBench() {
         return bench;
+    }
+
+    public void markSpecialCharacter(GameCharacter chara) {
+        specialCharactersRecruited.add(chara.getName());
+    }
+
+    public boolean isSpecialCharacterMarked(String name) {
+        return specialCharactersRecruited.contains(name);
     }
 }

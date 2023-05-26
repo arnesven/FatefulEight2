@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.PoisonCondition;
@@ -199,6 +200,11 @@ public abstract class DailyEventState extends GameState {
 
     protected void showSilhouettePortrait(Model model, String name) {
         portraitSubView = new PortraitSubView(model.getSubView(), PortraitSubView.SILHOUETTE, name);
+        model.setSubView(portraitSubView);
+    }
+
+    protected void showExplicitPortrait(Model model, CharacterAppearance appearance, String name) {
+        portraitSubView = new PortraitSubView(model.getSubView(), appearance, name);
         model.setSubView(portraitSubView);
     }
 

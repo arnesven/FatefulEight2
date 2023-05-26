@@ -19,7 +19,7 @@ public class PortraitSubView extends SubView {
     public static final int SILHOUETTE = 0;
     private static final CharacterAppearance silhouetteAppearance = new SilhouetteAppearance();
     private final SubView previous;
-    private final AdvancedAppearance appearance;
+    private final CharacterAppearance appearance;
     private final String portraitName;
     private CalloutSprite callout = null;
 
@@ -72,6 +72,12 @@ public class PortraitSubView extends SubView {
     public PortraitSubView(SubView subView, int silhouette, String portraitName) {
         this.previous = subView;
         appearance = null;
+        this.portraitName = portraitName;
+    }
+
+    public PortraitSubView(SubView subView, CharacterAppearance app, String portraitName) {
+        this.previous = subView;
+        appearance = app;
         this.portraitName = portraitName;
     }
 

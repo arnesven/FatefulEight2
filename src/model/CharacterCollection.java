@@ -94,7 +94,6 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new AlewynSolethal(), new CharacterClass[]{ART, WIT, AMZ, MAG}));
         add(new GameCharacter("Melethain", "Gauth", HIGH_ELF, BBN,
                 new MelethainGauth(), new CharacterClass[]{BBN, THF, ASN, MAR}));
-
         System.out.println(size() + " characters loaded!");
     }
 }

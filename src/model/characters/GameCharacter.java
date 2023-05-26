@@ -399,7 +399,7 @@ public class GameCharacter extends Combatant {
     }
 
     public void unequipAccessory() {
-        if (equipment.getAccessory() != null) {
+        if (equipment.getAccessory() != null && party != null) {
             party.getInventory().add(equipment.getAccessory());
         }
         equipment.setAccessory(null);
@@ -529,5 +529,9 @@ public class GameCharacter extends Combatant {
 
     public void addTemporaryBonus(Skill skill, int bonus) {
         temporarySkillBonuses.put(skill, bonus);
+    }
+
+    public CharacterAppearance getAppearance() {
+        return appearance;
     }
 }
