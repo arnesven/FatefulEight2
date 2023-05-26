@@ -49,7 +49,8 @@ public abstract class HairStyle implements Serializable {
             new BunsWithLongHairStyle(new FemaleLongHairStyle(), true),
             new BunsWithLongHairStyle(new ShortFemaleHair(), false),
             new BunsWithLongHairStyle(new PuyetHairStyle(), true),
-            new MessyHairStyle()
+            new MessyHairStyle(),
+            new WavyHairStyle(),
     };
     private final boolean onTop;
     private final boolean inForehead;
