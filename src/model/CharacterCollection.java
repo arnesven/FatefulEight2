@@ -74,6 +74,10 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new FattyGoldenrod(), new CharacterClass[]{MIN, BBN, WIT, SOR}));
         add(new GameCharacter("Stella", "Compton", HALFLING, BKN,
                 new StellaCompton(), new CharacterClass[]{BKN, BRD, ASN, SPY}));
+        add(new GameCharacter("Ethelthane", "Veldt", DWARF, DRU,
+                new EthelthaneVeldt(), new CharacterClass[]{DRU, NOB, BRD, WIZ}));
+        add(new GameCharacter("Hurin", "Hammerfall", DWARF, ART,
+                new HurinHammerfall(), new CharacterClass[]{ART, PAL, THF, CAP}));
 
         System.out.println(size() + " characters loaded!");
     }
