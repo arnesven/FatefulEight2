@@ -56,8 +56,9 @@ public class PortraitSubView extends SubView {
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
         boolean glasses = MyRandom.rollD10() == 10;
-        System.out.println("Portrait glasses: " + glasses);
+        boolean earrings = MyRandom.rollD10() == 10;
         appearance.setHasGlasses(glasses);
+        appearance.setHasEarrings(earrings);
         appearance.setClass(cls);
         return appearance;
     }

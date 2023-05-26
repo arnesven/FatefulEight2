@@ -143,7 +143,7 @@ public abstract class SelectableListMenu extends GameView {
             }
             return;
         }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE && escapeDisposesMenu()) {
             setTimeToTransition(true);
             SoundEffects.menuQuit();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -162,6 +162,10 @@ public abstract class SelectableListMenu extends GameView {
             }
         }
         specificHandleEvent(keyEvent, model);
+    }
+
+    protected boolean escapeDisposesMenu() {
+        return true;
     }
 
     private void handleKeyUp(Model model) {

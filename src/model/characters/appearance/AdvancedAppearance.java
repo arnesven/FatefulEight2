@@ -17,6 +17,8 @@ public class AdvancedAppearance extends CharacterAppearance {
     private Sprite32x32 avatarBackHair;
     private Sprite avatarFacial;
     private boolean hasGlasses = false;
+    private boolean hasEarrings = false;
+    private MyColors detailColor = MyColors.GRAY;
 
     public AdvancedAppearance(Race race, boolean femaleGender, MyColors hairColor,
                               int mouth, int nose, CharacterEyes eyes, HairStyle hair,
@@ -180,9 +182,17 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (hasGlasses) {
             for (int i = 0; i < 3; ++i) {
                 Sprite8x8 left = new Sprite8x8("glasses", "clothes.png", 0x3A + i);
-                left.setColor1(MyColors.GRAY);
+                left.setColor1(detailColor);
                 addSpriteOnTop(2 + i, 3, left);
             }
+        }
+        if (hasEarrings) {
+            Sprite8x8 left = new Sprite8x8("earringleft", "clothes.png", 0x4A);
+            left.setColor1(detailColor);
+            addSpriteOnTop(1, 3, left);
+            Sprite8x8 right = new Sprite8x8("earringright", "clothes.png", 0x4B);
+            right.setColor1(detailColor);
+            addSpriteOnTop(5, 3, right);
         }
     }
 
@@ -219,11 +229,19 @@ public class AdvancedAppearance extends CharacterAppearance {
         hasGlasses = b;
     }
 
+    public void setHasEarrings(boolean b) {
+        hasEarrings = b;
+    }
+
     @Override
     protected PortraitSprite getOuterFrameSprite(int i) {
         if (hairStyle.getOuterFrame() != null) {
             return new HairSpriteWithFrame(hairStyle.getOuterFrame()[i-1], getHairColor());
         }
         return super.getOuterFrameSprite(i);
+    }
+
+    public void setDetailColor(MyColors color) {
+        detailColor = color;
     }
 }

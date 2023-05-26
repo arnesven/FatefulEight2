@@ -35,6 +35,9 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final Beard[] beardSet = Beard.allBeards;
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
+    private static final MyColors[] detailColorSet = new MyColors[]{
+            MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE,
+            MyColors.ORANGE, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
     private static final CharacterClass classSet[] = Classes.allClasses;
     private int selectedRace = 0;
     private int selectedMouth = 0;
@@ -50,15 +53,21 @@ public class CharacterCreationView extends SelectableListMenu {
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
     private boolean canceled = false;
-    private boolean glasses = false;
+    private int accessory = 0;
+    private int selectedDetailColor = 0;
 
     public CharacterCreationView(GameView previous) {
-        super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-8);
+        super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
         for (int i = 0; i < 2; ++i) {
             buffers.add(new MyPair<>(new StringBuffer(START_STRING), 0));
         }
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
+    }
+
+    @Override
+    protected boolean escapeDisposesMenu() {
+        return false;
     }
 
     @Override
@@ -69,7 +78,9 @@ public class CharacterCreationView extends SelectableListMenu {
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);
-        app.setHasGlasses(glasses);
+        app.setHasGlasses(accessory % 2 == 1);
+        app.setHasEarrings(accessory >= 2);
+        app.setDetailColor(detailColorSet[selectedDetailColor]);
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
             app.applyFacialHair(raceSet[selectedRace]);
@@ -122,7 +133,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         lastCharacter.getAvatarSprite());
                 y++;
                 String[] labels = new String[]{"First Name", "Last Name", "", "Gender", "Race", "", "Eyes", "Nose",
-                        "Mouth", "Beard", "Hair Color", "Hair", "Detail", "", "Class", "Other Class 1",
+                        "Mouth", "Beard", "Hair", "  Color", "Detail", "  Color", "", "Class", "Other Class 1",
                         "Other Class 2", "Other Class 3"};
                 for (int i = 0; i < labels.length; ++i) {
                     BorderFrame.drawString(model.getScreenHandler(), labels[i], x, y++, MyColors.WHITE, MyColors.BLUE);
@@ -243,18 +254,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedBeard = Arithmetics.incrementWithWrap(selectedBeard, beardSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 23, hairColorSet[selectedHairColor].toString().replace("_", " ")) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedHairColor = Arithmetics.decrementWithWrap(selectedHairColor, hairColorSet.length);
-                    }
-
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 25, "Hair #" + (selectedHairStyle + 1)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 23, "Hair #" + (selectedHairStyle + 1)) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedHairStyle = Arithmetics.decrementWithWrap(selectedHairStyle, hairStyleSet.length);
@@ -265,13 +265,35 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedHairStyle = Arithmetics.incrementWithWrap(selectedHairStyle, hairStyleSet.length);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 27, glasses ? "Glasses" : "None") {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 25, hairColorSet[selectedHairColor].toString().replace("_", " ")) {
+                    @Override
+                    public void turnLeft(Model model) {
+                        selectedHairColor = Arithmetics.decrementWithWrap(selectedHairColor, hairColorSet.length);
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
+                    }
+                },
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 27, getAccessoryString(accessory)) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 31,
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 29, detailColorSet[selectedDetailColor].toString().replace("_", " ")) {
+                    @Override
+                    public void turnLeft(Model model) {
+                        selectedDetailColor = Arithmetics.decrementWithWrap(selectedDetailColor, detailColorSet.length);
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        selectedDetailColor = Arithmetics.incrementWithWrap(selectedDetailColor, detailColorSet.length);
+                    }
+                },
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 33,
                         classSet[selectedClass] == Classes.None ? "Not Set" : classSet[selectedClass].getFullName()) {
                     @Override
                     public void turnLeft(Model model) {
@@ -283,7 +305,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedClass = Arithmetics.incrementWithWrap(selectedClass, classSet.length);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 33, classSet[other1].getShortName()) {
+                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 35, classSet[other1].getShortName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectOtherClassMenu(CharacterCreationView.this, x, y, classSet) {
@@ -294,7 +316,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         }, model);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 35, classSet[other2].getShortName()) {
+                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 37, classSet[other2].getShortName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectOtherClassMenu(CharacterCreationView.this, x, y, classSet) {
@@ -305,7 +327,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         }, model);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 37, classSet[other3].getShortName()) {
+                new SelectableListContent(xStart + COLUMN_SKIP + 4, yStart + 39, classSet[other3].getShortName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectOtherClassMenu(CharacterCreationView.this, x, y, classSet) {
@@ -316,7 +338,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         }, model);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 11, yStart + 39, "DONE") {
+                new SelectableListContent(xStart + COLUMN_SKIP + 11, yStart + 41, "DONE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setTimeToTransition(true);
@@ -330,7 +352,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 10, yStart + 40, "CANCEL") {
+                new SelectableListContent(xStart + COLUMN_SKIP + 10, yStart + 42, "CANCEL") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         CharacterCreationView.this.canceled = true;
@@ -338,6 +360,18 @@ public class CharacterCreationView extends SelectableListMenu {
                     }
                 }
         );
+    }
+
+    private static String getAccessoryString(int accessory) {
+        switch (accessory) {
+            case 1:
+                return "Glasses";
+            case 2:
+                return "Earrings";
+            case 3:
+                return "Both";
+        }
+        return "None";
     }
 
     private void setOther1(int index) {
@@ -392,8 +426,10 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
 
+        private static final int NO_OF_ACCESSORIES = 4;
+
         public SelectAccessoryMenu(GameView partyView, int x, int y) {
-            super(partyView, 10, 3, x, y);
+            super(partyView, 10, NO_OF_ACCESSORIES+1, x, y);
         }
 
         @Override
@@ -404,22 +440,17 @@ public class CharacterCreationView extends SelectableListMenu {
         @Override
         protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
             List<ListContent> result = new ArrayList<>();
-            result.add(new SelectableListContent(xStart + 1, yStart + 1, "None") {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    glasses = false;
-                    setTimeToTransition(true);
-                    rebuildAppearance();
-                }
-            });
-            result.add(new SelectableListContent(xStart + 1, yStart + 2, "Glasses") {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    glasses = true;
-                    setTimeToTransition(true);
-                    rebuildAppearance();
-                }
-            });
+            for (int accessory = 0; accessory < NO_OF_ACCESSORIES; ++accessory) {
+                int finalAccessory = accessory;
+                result.add(new SelectableListContent(xStart + 1, yStart + 1 + finalAccessory, getAccessoryString(finalAccessory)) {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        CharacterCreationView.this.accessory = finalAccessory;
+                        setTimeToTransition(true);
+                        rebuildAppearance();
+                    }
+                });
+            }
             return result;
         }
 
