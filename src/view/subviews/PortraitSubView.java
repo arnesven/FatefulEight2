@@ -55,10 +55,16 @@ public class PortraitSubView extends SubView {
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
-        boolean glasses = MyRandom.rollD10() == 10;
-        boolean earrings = MyRandom.rollD10() == 10;
-        appearance.setHasGlasses(glasses);
-        appearance.setHasEarrings(earrings);
+        appearance.setHasGlasses(MyRandom.rollD10() == 10);
+        appearance.setHasEarrings(MyRandom.rollD10() == 10);
+        boolean patch = MyRandom.rollD10() == 10;
+        appearance.setHasEyePatch(patch);
+        int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
+        if (!patch) {
+            appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
+        } else {
+            appearance.setDetailColor(MyColors.BLACK);
+        }
         appearance.setClass(cls);
         return appearance;
     }

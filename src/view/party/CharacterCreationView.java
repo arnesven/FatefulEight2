@@ -35,7 +35,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final Beard[] beardSet = Beard.allBeards;
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
-    private static final MyColors[] detailColorSet = new MyColors[]{
+    public static final MyColors[] detailColorSet = new MyColors[]{
             MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE,
             MyColors.ORANGE, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
     private static final CharacterClass classSet[] = Classes.allClasses;
@@ -78,8 +78,9 @@ public class CharacterCreationView extends SelectableListMenu {
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);
-        app.setHasGlasses(accessory % 2 == 1);
-        app.setHasEarrings(accessory >= 2);
+        app.setHasGlasses(accessory == 1 || accessory == 3);
+        app.setHasEarrings(accessory == 2 || accessory == 3);
+        app.setHasEyePatch(accessory == 4);
         app.setDetailColor(detailColorSet[selectedDetailColor]);
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
@@ -370,6 +371,8 @@ public class CharacterCreationView extends SelectableListMenu {
                 return "Earrings";
             case 3:
                 return "Both";
+            case 4:
+                return "Patch";
         }
         return "None";
     }
@@ -426,7 +429,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
 
-        private static final int NO_OF_ACCESSORIES = 4;
+        private static final int NO_OF_ACCESSORIES = 5;
 
         public SelectAccessoryMenu(GameView partyView, int x, int y) {
             super(partyView, 10, NO_OF_ACCESSORIES+1, x, y);
