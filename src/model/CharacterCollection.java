@@ -78,6 +78,10 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new EthelthaneVeldt(), new CharacterClass[]{DRU, NOB, BRD, WIZ}));
         add(new GameCharacter("Hurin", "Hammerfall", DWARF, ART,
                 new HurinHammerfall(), new CharacterClass[]{ART, PAL, THF, CAP}));
+        add(new GameCharacter("Baz", "Ur-Ghan", HALF_ORC, AMZ,
+                new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR}));
+        add(new GameCharacter("Vendela", "Gawains", HALF_ORC, ASN,
+                new VendelaGawains(), new CharacterClass[]{ASN, NOB, WIT, MAG}));
 
         System.out.println(size() + " characters loaded!");
     }

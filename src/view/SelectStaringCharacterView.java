@@ -23,6 +23,11 @@ public class SelectStaringCharacterView extends SelectableListMenu {
         currentSet = model.getAllCharacters().toArray(new GameCharacter[0]);
     }
 
+    @Override
+    protected boolean escapeDisposesMenu() {
+        return false;
+    }
+
     private GameCharacter getSelectedCharacter() {
         if (currentSet.length == 0) {
             return null;
