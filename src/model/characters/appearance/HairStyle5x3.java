@@ -3,8 +3,8 @@ package model.characters.appearance;
 public class HairStyle5x3 extends HairStyle3x2 {
     private final int num;
 
-    public HairStyle5x3(int num, int avatarNormal, int avatarBack) {
-        super(num + 0x11, true, true, false, false, avatarNormal, avatarBack);
+    public HairStyle5x3(int num, boolean inBack, boolean longInBack, int avatarNormal, int avatarBack) {
+        super(num + 0x11, true, true, inBack, longInBack, avatarNormal, avatarBack);
         this.num = num;
     }
 

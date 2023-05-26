@@ -1,9 +1,6 @@
 package model.characters.appearance;
 
-import model.characters.FemaleLongHairStyle;
-import model.characters.MordKroftHairStyle;
-import model.characters.TorhildHairstyle;
-import model.characters.VzaniHairStyle;
+import model.characters.*;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.*;
@@ -27,7 +24,7 @@ public abstract class HairStyle implements Serializable {
             new FemaleLongHairStyle(0x5D, 0x04), new FemaleLongHairStyle(0xA7, 0x05), new ShortFemaleHair(),
             new ShortFemaleHair(0x5D, 0x13), new ShortFemaleHair(0xA7, 0x15),
             new HairStyle3x2(0x9, true, 0x10),
-            new HairStyle3x2(0x9, true, true, true, true, 0x06, 0x07),
+            new PuyetHairStyle(),
             new HairStyle3x2(0x3D, true, true, false, false, 0x08, 0x00),
             new HairStyle3x2(0x5D, true, true, true, true, 0x09, 0x07),
             new HairStyle3x2(0x5D, true, true, true, false, 0x19, 0x00),
@@ -49,6 +46,9 @@ public abstract class HairStyle implements Serializable {
             new AfroHairStyle(),
             new SpikesHairStyle(),
             new BunsHairStyle(),
+            new BunsWithLongHairStyle(new FemaleLongHairStyle(), true),
+            new BunsWithLongHairStyle(new ShortFemaleHair(), false),
+            new BunsWithLongHairStyle(new PuyetHairStyle(), true),
             new MessyHairStyle()
     };
     private final boolean onTop;
