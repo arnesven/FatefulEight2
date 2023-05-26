@@ -70,6 +70,10 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new ZephyreFirefist(), new CharacterClass[]{FOR, AMZ, DRU, MAG}));
         add(new GameCharacter("Muldan", "Ebonclaw", DARK_ELF, PRI,
                 new MuldanEbonclaw(), new CharacterClass[]{PRI, NOB, BBN, SOR}));
+        add(new GameCharacter("Fatty", "Goldenrod", HALFLING, MIN,
+                new FattyGoldenrod(), new CharacterClass[]{MIN, BBN, WIT, SOR}));
+        add(new GameCharacter("Stella", "Compton", HALFLING, BKN,
+                new StellaCompton(), new CharacterClass[]{BKN, BRD, ASN, SPY}));
 
         System.out.println(size() + " characters loaded!");
     }
