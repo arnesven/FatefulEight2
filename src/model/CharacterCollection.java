@@ -66,6 +66,10 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new RiboxAnari(), new CharacterClass[]{MIN, BBN, PRI, NOB}));
         add(new GameCharacter("Liana", "Clearwater", WOOD_ELF, PAL,
                 new LianaClearwater(), new CharacterClass[]{PAL, CAP, WIZ, SPY}));
+        add(new GameCharacter("Zephyra", "Firefist", DARK_ELF, FOR,
+                new ZephyreFirefist(), new CharacterClass[]{FOR, AMZ, DRU, MAG}));
+        add(new GameCharacter("Muldan", "Ebonclaw", DARK_ELF, PRI,
+                new MuldanEbonclaw(), new CharacterClass[]{PRI, NOB, BBN, SOR}));
 
         System.out.println(size() + " characters loaded!");
     }
