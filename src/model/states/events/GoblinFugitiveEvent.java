@@ -40,6 +40,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
             didFlee = true;
             return;
         }
+        model.getParty().markSpecialCharacter(goblinChar);
         model.getParty().randomPartyMemberSay(model, List.of("It looks like their chasing the one in the front..."));
         showExplicitPortrait(model, goblinChar.getAppearance(), goblinChar.getName());
         portraitSay(model, "Help, help, they're going to kill me!");
@@ -67,10 +68,13 @@ public class GoblinFugitiveEvent extends DailyEventState {
                     return;
                 }
                 if (goblinChar.isDead()) {
-                    println("The goblin fugitive is beaten up badly, but you manage to keep him alive for now.");
-                    goblinChar.addToHP(1);
+                    println("The goblin have been slaughtered. Unfortunately so has the goblin fugitive.");
+                    model.getParty().randomPartyMemberSay(model,
+                            List.of("Well, he's dead.", "Poor bugger.", "I wonder why the were after him...",
+                            "Comon folks, let's move on.", "Don't have much sympathy for goblins."));
+                } else {
+                    recruit(model);
                 }
-                recruit(model);
             }
         }
 
@@ -88,7 +92,6 @@ public class GoblinFugitiveEvent extends DailyEventState {
         RecruitState recruitState = new RecruitState(model, List.of(goblinChar));
         recruitState.run(model);
         if (model.getParty().getPartyMembers().contains(goblinChar)) {
-            model.getParty().markSpecialCharacter(goblinChar);
             portraitSay(model, "Wheeee! I promise I can be useful!");
         }
     }
