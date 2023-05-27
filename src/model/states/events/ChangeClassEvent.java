@@ -4,10 +4,10 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
-import model.classes.Classes;
 import model.states.DailyEventState;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.ChangeClassSubView;
+import view.subviews.ChangeClassTransitionSubView;
 
 import java.awt.*;
 import java.util.List;
@@ -57,7 +57,8 @@ public class ChangeClassEvent extends DailyEventState {
                 GameCharacter gc = matrix.getSelectedElement();
                 print("Are you sure you want to make " + gc.getName() + " a " + targetClasss.getFullName() + "? (Y/N) ");
                 if (yesNoInput()) {
-                    gc.setClass(targetClasss); // TODO: Potentially unequip heavy armor.
+                    ChangeClassTransitionSubView.transition(model, subView, gc, subView.getWouldBe(gc));
+                    gc.setClass(targetClasss);
                     if (gc.getLevel() == 0) {
                         gc.setLevel(1);
                     }

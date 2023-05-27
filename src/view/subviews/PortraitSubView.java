@@ -57,7 +57,7 @@ public class PortraitSubView extends SubView {
                 hairColor, mouth, nose, eyes, hair, beard);
         appearance.setHasGlasses(MyRandom.rollD10() == 10);
         appearance.setHasEarrings(MyRandom.rollD10() == 10);
-        boolean patch = MyRandom.rollD10() == 10;
+        boolean patch = MyRandom.randInt(50) == 0;
         appearance.setHasEyePatch(patch);
         int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
         if (!patch) {

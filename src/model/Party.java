@@ -12,6 +12,7 @@ import model.map.UrbanLocation;
 import model.map.World;
 import model.states.GameState;
 import model.states.SpellCastException;
+import sound.SoundEffects;
 import sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyRandom;
@@ -96,7 +97,7 @@ public class Party implements Serializable {
         callouts.removeAll(toRemove);
     }
 
-    private Point getLocationForPartyMember(int count) {
+    public Point getLocationForPartyMember(int count) {
         int x = count < 4 ? 0 : DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS;
         int y = count < 4 ? 2 + count*11 : 2 + (count-4)*11;
         return new Point(x, y);
@@ -327,6 +328,7 @@ public class Party implements Serializable {
         }
         System.out.println(gc.getName() + " got " + xp + " XP.");
         if (gc.getXpToNextLevel() <= xp) {
+            SoundEffects.playSound("levelup");
             model.getLog().addAnimated(gc.getName() + " has advanced to level " + (gc.getLevel() + 1) + "!\n");
             partyMemberSay(model, gc, List.of("I am learning every day.^",
                     "Experience is its own reward.^",

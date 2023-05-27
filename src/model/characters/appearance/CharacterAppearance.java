@@ -196,17 +196,21 @@ public abstract class CharacterAppearance implements Serializable {
         }
     }
 
-    public void drawYourself(ScreenHandler screenHandler, int col, int row) {
+    public void drawYourself(ScreenHandler screenHandler, int col, int row, int fromRow, int toRow) {
         if (grid == null) {
             refresh();
         }
-        for (int y = 0; y < grid[0].length; ++y) {
+        for (int y = fromRow; y <= toRow; ++y) {
             for (int x = 0; x < grid.length; ++x) {
                 if (grid[x][y] != null) {
                     screenHandler.put(col + x, row + y, grid[x][y]);
                 }
             }
         }
+    }
+
+    public void drawYourself(ScreenHandler screenHandler, int col, int row) {
+        drawYourself(screenHandler, col, row, 0, grid[0].length-1);
     }
 
     public void setClass(CharacterClass charClass) {

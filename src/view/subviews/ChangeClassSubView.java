@@ -137,4 +137,8 @@ public class ChangeClassSubView extends SubView {
     public Point getCursorPosition() {
         return cursorPos;
     }
+
+    public GameCharacter getWouldBe(GameCharacter gc) {
+        return charMap.get(gc);
+    }
 }
