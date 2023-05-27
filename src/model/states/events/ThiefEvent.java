@@ -61,7 +61,7 @@ public class ThiefEvent extends DailyEventState {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             SkillCheckResult result = gc.testSkill(Skill.Perception, 8);
             if (result.isSuccessful()) {
-                println(gc.getName() + " spots the stranger trying to snatch your purse. (Perception roll of " + result.asString() + ")");
+                println(gc.getName() + " spots the stranger trying to snatch your purse. (Perception " + result.asString() + ")");
                 model.getParty().partyMemberSay(model, gc, "Hey, there! THIEF!");
                 return true;
             }
