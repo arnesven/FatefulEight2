@@ -18,7 +18,8 @@ public abstract class Race implements Serializable {
     public static final Race HALFLING = new Halfling();
     public static final Race DWARF = new Dwarf();
     public static final Race ALL = new AllRaces();
-    public static final Race OTHER = new GoblinRace();
+    public static final Race GOBLIN = new GoblinRace();
+    public static final Race WITCH_KING = new WitchKingRace();
     public static final Race[] allRaces = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC};
     private static int nextRaceId = 0;
     private final int id;

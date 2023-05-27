@@ -34,6 +34,15 @@ public class ExploreRuinsState extends GameState {
         this.dungeonType = dungeonType;
     }
 
+    public ExploreRuinsState(Model model, RuinsDungeon dungeon, String dungeonType) {
+        super(model);
+        this.dungeon = dungeon;
+        currentLevel = 0;
+        partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
+        dungeon.getLevel(currentLevel).getRoom(partyPosition).setRevealedOnMap(true);
+        this.dungeonType = dungeonType;
+    }
+
     @Override
     public GameState run(Model model) {
         model.getTutorial().dungeons(model);

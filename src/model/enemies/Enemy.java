@@ -199,7 +199,7 @@ public abstract class Enemy extends Combatant {
         if (damage > 0 && getDamageReduction() > 0) {
             int hpBefore = getHP();
             super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()));
-            combatEvent.println("Damage was reduced by " + (damage - (hpBefore - getHP())) + ".");
+            combatEvent.println("!Damage was reduced by " + (damage - (hpBefore - getHP())) + "!");
         } else {
             super.takeCombatDamage(combatEvent, damage);
         }

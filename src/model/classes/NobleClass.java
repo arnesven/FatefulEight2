@@ -35,7 +35,7 @@ public class NobleClass extends CharacterClass {
         putOnCrown(characterAppearance);
     }
 
-    private static void putOnCrown(CharacterAppearance characterAppearance) {
+    public static void putOnCrown(CharacterAppearance characterAppearance) {
         characterAppearance.removeOuterHair();
         int spriteOffset =  0xC8;
         if (characterAppearance.hairOnTop()) {

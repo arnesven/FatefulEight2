@@ -251,7 +251,7 @@ public class DungeonLevel implements Serializable {
         return rooms;
     }
 
-    protected void setRoom(int x, int y, DungeonRoom room) {
+    public void setRoom(int x, int y, DungeonRoom room) {
         rooms[x][y] = room;
     }
 

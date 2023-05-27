@@ -40,4 +40,5 @@ public interface Classes {
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
     CharacterClass GOBLIN = new GoblinClass();
+    CharacterClass WITCH_KING = new WitchKingClass();
 }

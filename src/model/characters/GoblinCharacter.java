@@ -11,7 +11,7 @@ public class GoblinCharacter extends CharacterAppearance {
     private static final Sprite SPRITE = new GoblinPortraitSprite();
 
     public GoblinCharacter() {
-        super(Race.OTHER, false, MyColors.PEACH);
+        super(Race.GOBLIN, false, MyColors.PEACH);
     }
 
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {

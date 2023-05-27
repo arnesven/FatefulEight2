@@ -3,6 +3,7 @@ package model.ruins;
 import model.Model;
 import model.SteppingMatrix;
 import util.MyPair;
+import util.MyRandom;
 import view.sprites.LoopingSprite;
 import view.sprites.QuestCursorSprite;
 import view.subviews.SubView;
@@ -25,14 +26,13 @@ public class RuinsDungeon implements Serializable {
 
     private Random random = new Random();
 
-    public RuinsDungeon() {
-        int roomsTarget = 120;
+    public RuinsDungeon(int roomsTarget, int levelMinSize, int levelMaxSize) {
         System.out.println("Creating a dungeon...");
         int i = 0;
-        for (; roomsTarget >= 16 ; ++i) {
+        for (; roomsTarget >= levelMinSize*levelMinSize ; ++i) {
             int levelSize;
             do {
-                levelSize = 4 + random.nextInt(5);
+                levelSize = MyRandom.randInt(levelMinSize, levelMaxSize);
             } while (roomsTarget < levelSize*levelSize);
             roomsTarget -= levelSize*levelSize;
             levels.add(new DungeonLevel(random, i == 0, levelSize));
@@ -41,6 +41,10 @@ public class RuinsDungeon implements Serializable {
         System.out.println(" Level " + i + " is the final level");
         levels.add(new FinalDungeonLevel(random));
         this.map = new DungeonMap(this);
+    }
+
+    public RuinsDungeon() {
+        this(120, 4, 8);
     }
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {

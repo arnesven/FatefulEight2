@@ -4,8 +4,10 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.GoblinCharacter;
 import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.*;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.RecruitState;
@@ -14,9 +16,7 @@ import util.MyPair;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.classes.Classes.GOBLIN;
 import static model.classes.Classes.None;
-import static model.races.Race.OTHER;
 
 public class GoblinFugitiveEvent extends DailyEventState {
     private final GameCharacter goblinChar;
@@ -24,8 +24,8 @@ public class GoblinFugitiveEvent extends DailyEventState {
 
     public GoblinFugitiveEvent(Model model) {
         super(model);
-        goblinChar = new GameCharacter("Goblin", "", OTHER, GOBLIN,
-                new GoblinCharacter(), new CharacterClass[]{GOBLIN, None, None, None});
+        goblinChar = new GameCharacter("Goblin", "", Race.GOBLIN, Classes.GOBLIN,
+                new GoblinCharacter(), new CharacterClass[]{Classes.GOBLIN, None, None, None});
 
     }
 

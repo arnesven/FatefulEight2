@@ -39,7 +39,11 @@ public class DungeonMonster extends CenterDungeonObject {
         return monster;
     }
 
-    private void setSleeping(boolean b) {
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setSleeping(boolean b) {
         isSleeping = b;
     }
 
@@ -111,6 +115,9 @@ public class DungeonMonster extends CenterDungeonObject {
         exploreRuinsState.print(enemies.get(0).getName() + "s attack you! Press enter to continue.");
         exploreRuinsState.waitForReturn();
         CombatEvent combat = new CombatEvent(model, enemies, new DungeonTheme(), true, ambush);
+        if (getTimeLimit() != -1) {
+            combat.setTimeLimit(getTimeLimit());
+        }
         combat.run(model);
         StripedTransition.transition(model, exploreRuinsState.getSubView());
         if (combat.fled()) {
@@ -119,6 +126,10 @@ public class DungeonMonster extends CenterDungeonObject {
         } else {
             exploreRuinsState.getCurrentRoom().removeObject(this);
         }
+    }
+
+    protected int getTimeLimit() {
+        return -1;
     }
 
     @Override

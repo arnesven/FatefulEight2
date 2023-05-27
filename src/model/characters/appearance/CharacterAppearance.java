@@ -77,9 +77,9 @@ public abstract class CharacterAppearance implements Serializable {
 
         this.grid[0][3] = FRAME_LEFT;
         this.grid[1][3] = classSpecificEars() ? race.getLeftEar(hairColor) : getLeftEar(hairColor);
-        this.grid[2][3] = new EyeSprite(symmetricalEyes() ? getEye() : getLeftEye(), hairColor);
+        this.grid[2][3] = new EyeSprite(symmetricalEyes() ? getEye() : getLeftEye(), hairColor, getEyeballColor());
         this.grid[3][3] = new FaceSprite(getNose());
-        this.grid[4][3] = new EyeSprite(symmetricalEyes() ? getEye() : getRightEye(), hairColor);
+        this.grid[4][3] = new EyeSprite(symmetricalEyes() ? getEye() : getRightEye(), hairColor, getEyeballColor());
         this.grid[5][3] = classSpecificEars() ? race.getRightEar(hairColor) : getRightEar(hairColor);
         this.grid[6][3] = FRAME_RIGHT;
 
@@ -327,5 +327,9 @@ public abstract class CharacterAppearance implements Serializable {
         this.grid[1][2] = blackBlock;
         this.grid[5][1] = blackBlock;
         this.grid[5][2] = blackBlock;
+    }
+
+    protected MyColors getEyeballColor() {
+        return MyColors.WHITE;
     }
 }

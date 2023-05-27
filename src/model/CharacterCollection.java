@@ -2,6 +2,8 @@ package model;
 
 import model.characters.*;
 import model.classes.CharacterClass;
+import model.classes.Classes;
+import model.races.Race;
 
 import java.util.ArrayList;
 
