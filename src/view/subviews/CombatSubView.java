@@ -15,7 +15,6 @@ import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.*;
 import java.util.List;
 
 public class CombatSubView extends SubView {
@@ -42,7 +41,7 @@ public class CombatSubView extends SubView {
         } else {
             status = ", " + status;
         }
-        if (selected instanceof Enemy && ((Enemy) selected).isRanged()) {
+        if (selected instanceof Enemy && ((Enemy) selected).canTargetBackRow()) {
             status += " RANGED";
         }
         return selected.getName() + String.format(" %d/%d HP", selected.getHP(), selected.getMaxHP()) + status;

@@ -30,7 +30,7 @@ public class ImpEnemy extends AltarEnemy {
     }
 
     @Override
-    public boolean isRanged() {
-        return true;
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_RANGED;
     }
 }

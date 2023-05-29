@@ -35,6 +35,11 @@ public class GhostEnemy extends UndeadEnemy {
     }
 
     @Override
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_MIXED;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
     }

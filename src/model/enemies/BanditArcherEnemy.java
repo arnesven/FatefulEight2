@@ -15,8 +15,8 @@ public class BanditArcherEnemy extends BanditEnemy {
     }
 
     @Override
-    public boolean isRanged() {
-        return true;
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_RANGED;
     }
 
     @Override

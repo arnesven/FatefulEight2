@@ -52,6 +52,11 @@ public class DragonEnemy extends BeastEnemy {
         return new DragonLoot(model);
     }
 
+    @Override
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_MIXED;
+    }
+
     private static class DragonLoot extends StandardCombatLoot {
         public DragonLoot(Model model) {
             super(model, MyRandom.randInt(15, 25));

@@ -49,4 +49,9 @@ public class RedMageEnemy extends Enemy {
             setColor3(Race.DARK_ELF.getColor());
         }
     }
+    
+    @Override
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_MIXED;
+    }
 }

@@ -27,6 +27,11 @@ public class OctopusEnemy extends BeastEnemy {
     }
 
     @Override
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_MIXED;
+    }
+
+    @Override
     public int getMaxHP() {
         return 26;
     }

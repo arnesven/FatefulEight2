@@ -1,6 +1,5 @@
 package model.states;
 
-import model.Inventory;
 import model.combat.CombatAction;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
@@ -8,7 +7,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.Condition;
 import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -433,14 +431,5 @@ public class CombatEvent extends DailyEventState {
         for (Combatant comb : combs) {
             comb.conditionsEndOfCombatRoundTrigger(model, this);
         }
-    }
-
-    private static boolean hasRangedEnemy(List<Enemy> enemies) {
-        for (Enemy e : enemies) {
-            if (e.isRanged()) {
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -3,7 +3,6 @@ package model.enemies;
 import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
-import model.items.spells.TransfigurationSpell;
 import model.states.CombatEvent;
 import sprites.CombatCursorSprite;
 import util.MyPixel;
@@ -22,6 +21,10 @@ import java.util.Collections;
 import java.awt.Point;
 
 public abstract class Enemy extends Combatant {
+
+    protected static final int FIGHTING_STYLE_MELEE = 0;
+    protected static final int FIGHTING_STYLE_RANGED = 1;
+    protected static final int FIGHTING_STYLE_MIXED = 2;
     private final char enemyGroup;
     private String name;
 
@@ -73,7 +76,7 @@ public abstract class Enemy extends Combatant {
             combatEvent.println(getName() + "'s turn is skipped.");
         } else {
             List<GameCharacter> candidates = new ArrayList<>();
-            if (isRanged()) {
+            if (canTargetBackRow()) {
                 candidates.addAll(model.getParty().getBackRow());
             }
             candidates.addAll(model.getParty().getFrontRow());
@@ -84,15 +87,19 @@ public abstract class Enemy extends Combatant {
             candidates.removeIf((GameCharacter gc) -> gc.isDead());
             Collections.shuffle(candidates);
             if (!candidates.isEmpty()) {
-                GameCharacter randomCharFromFrontRow = candidates.get(0);
-                attack(model, randomCharFromFrontRow, combatEvent);
+                GameCharacter randomTarget = candidates.get(0);
+                attack(model, randomTarget, combatEvent);
             }
         }
         decreaseTimedConditions(model, combatEvent);
     }
 
-    public boolean isRanged() {
-        return false;
+    public boolean canTargetBackRow() {
+        return getFightingStyle() != FIGHTING_STYLE_MELEE;
+    }
+
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_MELEE;
     }
 
 
@@ -101,6 +108,9 @@ public abstract class Enemy extends Combatant {
     }
 
     public void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
+        if (model.getParty().getBackRow().contains(target)) {
+            combatEvent.print(getName() + " performs a ranged attack! ");
+        }
         target.getAttackedBy(this, model, combatEvent);
         model.getTutorial().combatDamage(model);
         if (target.isDead()) {
@@ -126,8 +136,11 @@ public abstract class Enemy extends Combatant {
 
     public abstract CombatLoot getLoot(Model model);
 
-    public int calculateBaseDamage() {
+    public int calculateBaseDamage(boolean isRanged) {
         int damage = getDamage();
+        if (isRanged && getFightingStyle() == FIGHTING_STYLE_MIXED) {
+            damage = (int)(Math.ceil(((double)damage) / 2.0));
+        }
         if (hasCondition(WeakenCondition.class)) {
             damage = Math.max(1, damage - 2);
         }

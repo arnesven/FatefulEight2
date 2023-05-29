@@ -36,8 +36,8 @@ public class FaeryEnemy extends Enemy {
     }
 
     @Override
-    public boolean isRanged() {
-        return true;
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_RANGED;
     }
 
     @Override

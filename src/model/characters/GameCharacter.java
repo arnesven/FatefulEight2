@@ -505,7 +505,7 @@ public class GameCharacter extends Combatant {
     }
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
-        int damage = enemy.calculateBaseDamage();
+        int damage = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
         int reduction = Math.min(damage, Math.max(0, getAP() - MyRandom.rollD10() + 1));
         String reductionString = "";
         if (getAP() > 0) {
