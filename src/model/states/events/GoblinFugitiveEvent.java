@@ -89,6 +89,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
         portraitSay("Oh, uhm... You know, I could really do with some permanent protection. " +
                 "In case my gang comes back. Do you mind if I team up with you?");
         waitForReturn();
+        goblinChar.setLevel((int)Math.max(1, Math.floor(RecruitState.calculateAverageLevel(model))));
         RecruitState recruitState = new RecruitState(model, List.of(goblinChar));
         recruitState.run(model);
         if (model.getParty().getPartyMembers().contains(goblinChar)) {

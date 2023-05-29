@@ -72,6 +72,7 @@ public class WitchKingEvent extends DailyEventState {
             model.getParty().partyMemberSay(model, gc, "Adventuring, killing monsters, traveling... anything that we happen to fancy.");
             portraitSay("Would it be to presumptuous of me to ask to join you in your travels?");
             waitForReturn();
+            witchKingChar.setLevel((int)Math.max(1, Math.floor(RecruitState.calculateAverageLevel(model))));
             RecruitState recruitState = new RecruitState(model, List.of(witchKingChar));
             recruitState.run(model);
             if (model.getParty().getPartyMembers().contains(witchKingChar)) {
