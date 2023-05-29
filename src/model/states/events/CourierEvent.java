@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.map.UrbanLocation;
-import model.races.AllRaces;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -48,12 +47,12 @@ public class CourierEvent extends DailyEventState {
             println("A courier catches up to you and asks you to stop while " + heOrShe(getPortraitGender()) +
                     " catches " + hisOrHer(getPortraitGender()) + " breath.");
         }
-        portraitSay(model, "'" + model.getParty().getLeader().getFullName() + "'s Company' - that's you right? I have a letter for you.");
+        portraitSay("'" + model.getParty().getLeader().getFullName() + "'s Company' - that's you right? I have a letter for you.");
         println(heOrSheCap(getPortraitGender()) + " hands you a letter which reads: 'You have been summoned by the honorable " + destination.getLordName() + " to " +
                 destination.getPlaceName() + ".'");
         println("That's all the letter says. You stare blankly at it and then look at the messenger.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Do you know what this is about?");
-        portraitSay(model, "Sorry, I'm just a messenger.");
+        leaderSay("Do you know what this is about?");
+        portraitSay("Sorry, I'm just a messenger.");
         println(heOrSheCap(getPortraitGender()) + " quickly takes off in the same direction from which " + heOrShe(getPortraitGender()) + " came. " +
                 "You put the letter in your pocket and continue on your journey.");
         model.getParty().addSummon(destination);

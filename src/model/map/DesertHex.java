@@ -37,22 +37,23 @@ public class DesertHex extends WorldHex {
             return MountainHex.generateMountainEvent(model);
         } else if (5 <= roll) {
             return MyRandom.sample(List.of(
-//                    new ManticoreEvent(model),
-//                    new WoundedAdventurerEvent(model),
-//                    new MirageEvent(model),
-//                    new QuicksandEvent(model),
-//                    new LostEvent(model),
-//                    new HermitEvent(model),
-//                    new DeadBodyEvent(model),
-//                    new ChestEvent(model),
-                    new ScorpionEvent(model)
-//                    new VulturesEvent(model),
-//                    new OasisEvent(model),
-//                    new AbandonedShackEvent(model),
-//                    new DehydrationEvent(model),
-//                    new DehydrationEvent(model),
-//                    new DehydrationEvent(model),
-//                    new DehydrationEvent(model)
+                    new ManticoreEvent(model),
+                    new WoundedAdventurerEvent(model),
+                    new MirageEvent(model),
+                    new QuicksandEvent(model),
+                    new LostEvent(model),
+                    new HermitEvent(model),
+                    new DeadBodyEvent(model),
+                    new ChestEvent(model),
+                    new ScorpionEvent(model),
+                    new VulturesEvent(model),
+                    new OasisEvent(model),
+                    new AbandonedShackEvent(model),
+                    new DehydrationEvent(model),
+                    new DehydrationEvent(model),
+                    new RedKnightEvent(model),
+                    new DehydrationEvent(model),
+                    new DehydrationEvent(model)
             ));
         } else if (getLocation() instanceof HillsLocation) {
             return HillsHex.generateHillsEvent(model);

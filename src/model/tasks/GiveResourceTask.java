@@ -28,12 +28,12 @@ public abstract class GiveResourceTask extends SummonTask {
     protected void doEvent(Model model) {
         println(location.getLordName() + ": \"" + firstPart +
                 "but unfortunately we don't have the resources to do so.\"");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "How much do you need?");
+        leaderSay("How much do you need?");
         println(location.getLordName() + ": \"I think about " + amount + " " + resourceType + " would be enough.\"");
         if (getResource(model) >= amount) {
             print("Give " + amount + " " + resourceType + " to " + location.getPlaceName() + "? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Naturally, we will help you.");
+                leaderSay("Naturally, we will help you.");
                 summon.increaseStep();
                 reduceResource(model, amount);
                 println(location.getLordName() + ": \"Thank you so much. Please allow me to compensate you.\"");
@@ -48,7 +48,7 @@ public abstract class GiveResourceTask extends SummonTask {
     }
 
     private void decline(Model model) {
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Hmm... well we'll keep our eyes open and get back to you.");
+        leaderSay("Hmm... well we'll keep our eyes open and get back to you.");
         println(location.getLordName() + ": \"Please do! We are eager to get the work started.\"");
     }
 }

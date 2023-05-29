@@ -179,12 +179,11 @@ public class ElvenHighCouncilQuest extends Quest {
             }
 
             if (state.getCounter() > 0) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Uhm, please accept this humble gift!");
+                state.leaderSay("Uhm, please accept this humble gift!");
                 state.println("The elven nobles raise their eyebrows and seem pleased, but remain silent, waiting for you to speak.");
                 diff -= 4;
             }
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "We're only going to get one shot at this. Let's choose our words well.");
+            state.leaderSay("We're only going to get one shot at this. Let's choose our words well.");
             model.getParty().randomPartyMemberSay(model, List.of("The elves may be more willing to listen if somebody of their kin handled the talking."));
             state.print("Which party member should perform the Solo Persuade " + diff + " check?");
             model.getSpellHandler().acceptSkillBoostingSpells(Skill.Persuade);

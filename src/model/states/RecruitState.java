@@ -210,11 +210,7 @@ public class RecruitState extends GameState {
             texts.add("party already too big");
         }
 
-        double averageLevel = 0.0;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            averageLevel += gc.getLevel();
-        }
-        averageLevel /= model.getParty().size();
+        double averageLevel = calculateAverageLevel(model);
         if (averageLevel < 2.0) {
             sum -= 1;
             texts.add("party too inexperienced");
@@ -228,6 +224,15 @@ public class RecruitState extends GameState {
             texts.add("");
         }
         return new MyPair<>(sum, MyRandom.sample(texts));
+    }
+
+    public static double calculateAverageLevel(Model model) {
+        double averageLevel = 0.0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            averageLevel += gc.getLevel();
+        }
+        averageLevel /= model.getParty().size();
+        return averageLevel;
     }
 
     private String recruitableNames() {

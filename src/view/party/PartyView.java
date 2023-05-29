@@ -103,6 +103,11 @@ public class PartyView extends SelectableListMenu {
             protected SelectableListMenu getSubMenu(Model model, int x, int y, GameCharacter gc) {
                 return new SetClothingMenu(PartyView.this, gc, x, y);
             }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return gc.canChangeClothing();
+            }
         });
         addListContent(content, x, y++, getArmorString(gc.getEquipment().getClothing(), true));
         addListContent(content, x, y++, getBonusesAsString(gc.getEquipment().getClothing()));
@@ -277,13 +282,21 @@ public class PartyView extends SelectableListMenu {
     }
 
     private class OpenAccessoryMenuListContent extends OpenEquipMenuListContent {
+        private final GameCharacter character;
+
         public OpenAccessoryMenuListContent(int x, int y, GameCharacter gc, String text) {
             super(x, y, gc, text);
+            this.character = gc;
         }
 
         @Override
         protected SelectableListMenu getSubMenu(Model model, int x, int y, GameCharacter gc) {
             return new SetAccessoryMenu(PartyView.this, gc, x, y);
+        }
+
+        @Override
+        public boolean isEnabled(Model model) {
+            return character.canChangeAccessory();
         }
     }
 

@@ -42,11 +42,11 @@ public class MineEvent extends DailyEventState {
         }
         print("Do you go inside the mine? (Y/N) ");
         if (!yesNoInput()) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Let's just continue on our journey.");
+            leaderSay("Let's just continue on our journey.");
             return;
         }
         if (!model.isInCaveSystem()) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Bring out your torches, we're going down there.");
+            leaderSay("Bring out your torches, we're going down there.");
         }
         int roll = MyRandom.rollD10() + bonus;
         int gold = 35;

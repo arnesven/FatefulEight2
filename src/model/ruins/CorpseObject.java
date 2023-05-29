@@ -58,8 +58,7 @@ public class CorpseObject extends CenterDungeonObject {
                         room.setRevealedOnMap(true);
                     }
                 }
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "" +
-                        "It's not complete, but I bet it will come in handy!");
+                state.leaderSay("It's not complete, but I bet it will come in handy!");
             }
         }
     }

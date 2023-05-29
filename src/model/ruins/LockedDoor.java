@@ -48,8 +48,7 @@ public class LockedDoor extends DungeonDoor {
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
         if (securityTried) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "We're not getting anywhere with that lock.");
+            state.leaderSay("We're not getting anywhere with that lock.");
             if (eligibleDamagesExist(model)) {
                 breakDownDoor(model, state);
             } else {

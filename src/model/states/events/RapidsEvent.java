@@ -26,7 +26,8 @@ public class RapidsEvent extends RiverEvent {
         println("The party wades out into the shallows but are soon swept " +
                 "away by an undertow. The river takes them to some " +
                 "rapids which bang them up nicely.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Hang on gang!", "This might get rough!", "Waaaah!#"));
+        model.getParty().partyMemberSay(model, model.getParty().getLeader(),
+                List.of("Hang on gang!", "This might get rough!", "Waaaah!#"));
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             gc.addToHP(-2);
         }

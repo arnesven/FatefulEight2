@@ -534,4 +534,12 @@ public class GameCharacter extends Combatant {
     public CharacterAppearance getAppearance() {
         return appearance;
     }
+
+    public boolean canChangeClothing() {
+        return true;
+    }
+
+    public boolean canChangeAccessory() {
+        return true;
+    }
 }

@@ -23,7 +23,7 @@ public class HermitEvent extends DailyEventState {
                 "for a long, long time. He seems tight lipped about his life " +
                 "but you just know that he must have some good stories.");
 
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Hello there friend. Care to share our camp for the evening?");
+        leaderSay("Hello there friend. Care to share our camp for the evening?");
         println("You sit down at your campfire and ask the hermit a few gentle questions.");
         int roll = MyRandom.rollD10();
         if (roll == 1) {

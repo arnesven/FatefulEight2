@@ -17,7 +17,7 @@ public class GiantEvent extends DailyEventState {
                 "closed fist of a stone giant. The humongous creature " +
                 "suddenly moves and the earth shakes. There is no " +
                 "fighting such a beast.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Everybody, get away!");
+        leaderSay("Everybody, get away!");
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, gc, Skill.Acrobatics, 6, 10, 0);
             if (!result.isSuccessful()) {

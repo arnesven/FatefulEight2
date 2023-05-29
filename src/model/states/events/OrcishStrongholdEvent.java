@@ -34,7 +34,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
         print("Investigate the orcish stronghold? (Y/N) ");
         if (yesNoInput()) {
             println("The party creeps up to a ridge overlooking the orcish stronghold.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Can we see how many warriors they have?");
+            leaderSay("Can we see how many warriors they have?");
             int warriors = MyRandom.randInt(2,12);
             boolean troll = MyRandom.randInt(2) == 0;
             assessStrongholdStrength(model, warriors, troll);

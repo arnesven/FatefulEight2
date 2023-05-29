@@ -33,7 +33,7 @@ public class PayGoldSubScene extends QuestSubScene {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         if (!leaderSpeak.equals("")) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderSpeak);
+            state.leaderSay(leaderSpeak);
         }
         int amount = Math.min(model.getParty().getGold(), model.getParty().size() * gold);
         state.print("Paying " + amount + " gold. Press enter to continue.");

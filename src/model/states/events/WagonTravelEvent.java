@@ -27,25 +27,25 @@ public class WagonTravelEvent extends DailyEventState {
         List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle(distance);
         UrbanLocation townOrCastle = (UrbanLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
         if (model.getParty().size() < 3) {
-            portraitSay(model, "Howdy. If you folks are heading to " + townOrCastle.getPlaceName() + ", why don't you hop on?");
+            portraitSay("Howdy. If you folks are heading to " + townOrCastle.getPlaceName() + ", why don't you hop on?");
             print("Do you accept the ride? (Y/N) ");
             if (yesNoInput()) {
                 rideAndThanks(model, path);
             } else {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Thanks, but our path leads somewhere else.");
-                portraitSay(model, "Safe travels friend.");
+                leaderSay("Thanks, but our path leads somewhere else.");
+                portraitSay("Safe travels friend.");
             }
         } else {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Where are you heading friend?");
-            portraitSay(model, "I'm selling my greens at the market in " + townOrCastle.getPlaceName() + ".");
+            leaderSay("Where are you heading friend?");
+            portraitSay("I'm selling my greens at the market in " + townOrCastle.getPlaceName() + ".");
             print("Do you ask for a ride? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Can you give us a ride?");
+                leaderSay("Can you give us a ride?");
                 if (model.getParty().size() > 6) {
-                    portraitSay(model, "I'm sorry. I don't think my old horse here can pull all that extra weight.");
-                    model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Safe travels friend.");
+                    portraitSay("I'm sorry. I don't think my old horse here can pull all that extra weight.");
+                    leaderSay("Safe travels friend.");
                 } else {
-                    portraitSay(model, "Hmm, There's quite a few of you, it will tire my old horse out... " +
+                    portraitSay("Hmm, There's quite a few of you, it will tire my old horse out... " +
                             "But if you could give me some coins I can afford to give him some extra food tonight.");
                     int cost = 5*(distance+1);
                     if (model.getParty().getGold() >= cost) {
@@ -54,16 +54,16 @@ public class WagonTravelEvent extends DailyEventState {
                             model.getParty().addToGold(-cost);
                             rideAndThanks(model, path);
                         } else {
-                            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "I think we'll walk then.");
+                            leaderSay("I think we'll walk then.");
                         }
                     } else {
-                        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "If only we had some coin...");
-                        portraitSay(model, "I know what it's like to be without. Okay, hop on anyway I guess.");
+                        leaderSay("If only we had some coin...");
+                        portraitSay("I know what it's like to be without. Okay, hop on anyway I guess.");
                         rideAndThanks(model, path);
                     }
                 }
             } else {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Safe travels friend.");
+                leaderSay("Safe travels friend.");
             }
             println("You part ways with the farmer.");
         }

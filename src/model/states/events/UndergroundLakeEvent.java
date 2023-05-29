@@ -19,8 +19,7 @@ public class UndergroundLakeEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("The party discovers an underground lake.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                "This might be a good place to rest, and to fill up our water skins.");
+        leaderSay("This might be a good place to rest, and to fill up our water skins.");
         model.getParty().randomPartyMemberSay(model, List.of("I don't know though... that lake gives me the creeps."));
 
         do {
@@ -66,7 +65,7 @@ public class UndergroundLakeEvent extends DailyEventState {
             model.getParty().randomPartyMemberSay(model, List.of("Wha... wha... what's that!?"));
             println("A large hulk of slimy tentacles heaves itself out of the black water.");
             model.getParty().randomPartyMemberSay(model, List.of("Didn't I say the lake was a bad idea?"));
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "It's coming right for us. Get ready to fight!");
+            leaderSay("It's coming right for us. Get ready to fight!");
             List<Enemy> enemies = List.of(new TentacleEnemy('A'),
                     new TentacleEnemy('A'), new OctopusEnemy('B'),
                     new TentacleEnemy('A'), new TentacleEnemy('A'));

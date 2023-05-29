@@ -25,35 +25,35 @@ public class GamblerEvent extends DailyEventState {
                 "meander over and look what the commotion is about.");
         model.getParty().randomPartyMemberSay(model, List.of("Dice... I should've guessed"));
         showRandomPortrait(model, Classes.THF, Race.ALL, "Gambler");
-        portraitSay(model, "Hey newcomer, it's two gold to roll the dice. Want in?");
+        portraitSay("Hey newcomer, it's two gold to roll the dice. Want in?");
         if (model.getParty().getGold() < 2) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "We don't have the coin, or the time for this.");
+            leaderSay("We don't have the coin, or the time for this.");
         } else {
             print("Do you want to play dice? (Y/N) ");
             if (yesNoInput()) {
                 println("You hand the gambler 2 gold.");
                 model.getParty().addToGold(-2);
-                portraitSay(model, "It's simple. You roll two dice and add them together. On eight or more, you get your money back. " +
+                portraitSay("It's simple. You roll two dice and add them together. On eight or more, you get your money back. " +
                         "Otherwise your money goes into the pot. On double sixes, you win the pot.");
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "How big is the pot?");
-                portraitSay(model, "Looks like we're up to " + potSize + " gold now. Who knows, maybe you'll get lucky?");
+                leaderSay("How big is the pot?");
+                portraitSay("Looks like we're up to " + potSize + " gold now. Who knows, maybe you'll get lucky?");
                 while (true) {
                     println("The gambler hands you the dice.");
                     int die1 = MyRandom.randInt(1, 6);
                     int die2 = MyRandom.randInt(1, 6);
                     println("You roll a " + die1 + " and a " + die2 + ", for a total of " + (die1 + die2) + ".");
                     if (die1 == 6 && die2 == 6) {
-                        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Jackpot!");
-                        portraitSay(model, "You lucky bastard...#");
+                        leaderSay("Jackpot!");
+                        portraitSay("You lucky bastard...#");
                     } else if (die1 + die2 < 8) {
                         potSize += 2;
-                        portraitSay(model, "Bad luck newcomer. But hey, now the pot is even bigger. " + potSize + " gold!");
+                        portraitSay("Bad luck newcomer. But hey, now the pot is even bigger. " + potSize + " gold!");
                     } else {
-                        portraitSay(model, "Good roll! Here's your money back newcomer.");
+                        portraitSay("Good roll! Here's your money back newcomer.");
                         println("The party receives 2 gold.");
                         model.getParty().addToGold(2);
                     }
-                    portraitSay(model, "Wanna go again?");
+                    portraitSay("Wanna go again?");
                     if (model.getParty().getGold() < 2) {
                         println("Unfortunately you cannot afford to continue the game. So you excuse yourself.");
                         break;

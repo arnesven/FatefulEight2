@@ -6,13 +6,10 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.combat.PoisonCondition;
 import model.enemies.Enemy;
 import model.map.World;
 import model.races.Race;
-import model.states.events.ConstableEvent;
 import util.MyStrings;
-import view.sprites.CalloutSprite;
 import view.subviews.*;
 
 import java.awt.*;
@@ -215,8 +212,8 @@ public abstract class DailyEventState extends GameState {
         portraitSubView = null;
     }
 
-    protected void portraitSay(Model model, String line) {
-        portraitSubView.portraitSay(model, this, line);
+    protected void portraitSay(String line) {
+        portraitSubView.portraitSay(getModel(), this, line);
     }
 
     protected boolean getPortraitGender() {

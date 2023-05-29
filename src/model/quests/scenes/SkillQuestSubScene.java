@@ -38,7 +38,7 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
         state.setCursorEnabled(false);
         if (model.getParty().size() > 1) {
             if (!text.equals("")) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), text);
+                state.leaderSay(text);
             }
         }
         acceptAllSpells(model);

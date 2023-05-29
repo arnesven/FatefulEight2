@@ -21,8 +21,7 @@ public class AssassinEvent extends DailyEventState {
             return;
         }
         println("You hear a rumor that someone has put a bounty on one of the party members.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                List.of("If we ask around a bit maybe we can intercept the assassin."));
+        leaderSay("If we ask around a bit maybe we can intercept the assassin.");
         boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 7);
         if (result) {
             showRandomPortrait(model, Classes.ASN, "Assassin");

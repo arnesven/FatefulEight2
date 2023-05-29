@@ -632,7 +632,7 @@ public class Party implements Serializable {
         specialCharactersRecruited.add(chara.getName());
     }
 
-    public boolean isSpecialCharacterMarked(String name) {
-        return specialCharactersRecruited.contains(name);
+    public boolean isSpecialCharacterMarked(GameCharacter chara) {
+        return specialCharactersRecruited.contains(chara.getName());
     }
 }

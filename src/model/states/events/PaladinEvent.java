@@ -10,7 +10,6 @@ import model.items.Equipment;
 import model.items.accessories.SkullCap;
 import model.items.clothing.ScaleArmor;
 import model.items.weapons.Warhammer;
-import model.races.HighElf;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
@@ -62,7 +61,7 @@ public class PaladinEvent extends DailyEventState {
                     showRandomPortrait(model, Classes.PAL, race, "Paladin");
                     println("The paladin helps the " + (gender?"girl":"boy") + " up and dusts " + himOrHer(gender) +
                             " off. Then he faces you.");
-                    portraitSay(model, "Good teamwork friend! We who can must protect those in need.");
+                    portraitSay("Good teamwork friend! We who can must protect those in need.");
                     changeClass(model);
                 }
             } else {
@@ -72,7 +71,7 @@ public class PaladinEvent extends DailyEventState {
                                 heOrSheCap(gender) + " probably had it coming..."));
             }
         } else {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Probably just the wind...");
+            leaderSay("Probably just the wind...");
         }
     }
 

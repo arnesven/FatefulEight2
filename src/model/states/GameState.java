@@ -135,4 +135,8 @@ public abstract class GameState {
         waitForReturn();
         return selectedAction[0];
     }
+
+    public void leaderSay(String line) {
+        getModel().getParty().partyMemberSay(getModel(), getModel().getParty().getLeader(), line);
+    }
 }

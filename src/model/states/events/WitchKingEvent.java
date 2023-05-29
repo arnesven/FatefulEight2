@@ -2,15 +2,11 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.WitchKingAppearance;
 import model.characters.WitchKingCharacter;
-import model.classes.CharacterClass;
-import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.WitchKingEnemy;
 import model.items.spells.DispellSpell;
-import model.races.Race;
 import model.ruins.DungeonMonster;
 import model.ruins.DungeonRoom;
 import model.ruins.FinalDungeonLevel;
@@ -24,8 +20,6 @@ import util.MyPair;
 import java.awt.*;
 import java.util.List;
 
-import static model.classes.Classes.None;
-
 public class WitchKingEvent extends DailyEventState {
     private GameCharacter witchKingChar = new WitchKingCharacter();
 
@@ -35,7 +29,7 @@ public class WitchKingEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        if (model.getParty().isSpecialCharacterMarked(witchKingChar.getName())) {
+        if (model.getParty().isSpecialCharacterMarked(witchKingChar)) {
             new NoEventState(model).doEvent(model);
             return;
         }
@@ -54,34 +48,34 @@ public class WitchKingEvent extends DailyEventState {
         setCurrentTerrainSubview(model);
         if (witchKingRoom.spellBroken) {
             showExplicitPortrait(model, witchKingChar.getAppearance(), "Witch King");
-            portraitSay(model, "Thanks again for removing that awful spell. You have no idea how long I've been trapped in there.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Would you mind explaining who you are?");
-            portraitSay(model, "I am... you know, I've quite forgotten my name.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "I'm sorry...");
-            portraitSay(model, "But you can call me the Witch King. I distinctly remember being both a witch and a king.");
-            portraitSay(model, "Or at least, I was a king, before my brother trapped me in that stronghold back there.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Why did he do that?");
-            portraitSay(model, "Oh, you know, the normal rivalry among heirs to the Witch Throne.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "... and what is the Witch Throne?");
-            portraitSay(model, "The throne of the Witch realm of course!");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "... which is...?");
-            portraitSay(model, "My dear chap, all this. All you see around you, is the Witch Realm.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "...");
-            portraitSay(model, "Or at least, it was. I gather a few things may change while one is imprisoned for a few thousand years.");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "I'm afraid you'll find that nobody around here has every heard about the Witch Realm.");
-            portraitSay(model, "It didn't even make it into the history books?");
+            portraitSay("Thanks again for removing that awful spell. You have no idea how long I've been trapped in there.");
+            leaderSay("Would you mind explaining who you are?");
+            portraitSay("I am... you know, I've quite forgotten my name.");
+            leaderSay("I'm sorry...");
+            portraitSay("But you can call me the Witch King. I distinctly remember being both a witch and a king.");
+            portraitSay("Or at least, I was a king, before my brother trapped me in that stronghold back there.");
+            leaderSay("Why did he do that?");
+            portraitSay("Oh, you know, the normal rivalry among heirs to the Witch Throne.");
+            leaderSay("... and what is the Witch Throne?");
+            portraitSay("The throne of the Witch realm of course!");
+            leaderSay("... which is...?");
+            portraitSay("My dear chap, all this. All you see around you, is the Witch Realm.");
+            leaderSay("...");
+            portraitSay("Or at least, it was. I gather a few things may change while one is imprisoned for a few thousand years.");
+            leaderSay("I'm afraid you'll find that nobody around here has every heard about the Witch Realm.");
+            portraitSay("It didn't even make it into the history books?");
             GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             model.getParty().partyMemberSay(model, gc, "Who has time for books?");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Well, Witch King, you're free now. Free to do whatever you want.");
-            portraitSay(model, "Yes, I suppose...");
-            portraitSay(model, "What are you fellows up to?");
+            leaderSay("Well, Witch King, you're free now. Free to do whatever you want.");
+            portraitSay("Yes, I suppose...");
+            portraitSay("What are you fellows up to?");
             model.getParty().partyMemberSay(model, gc, "Adventuring, killing monsters, traveling... anything that we happen to fancy.");
-            portraitSay(model, "Would it be to presumptuous of me to ask to join you in your travels?");
+            portraitSay("Would it be to presumptuous of me to ask to join you in your travels?");
             waitForReturn();
             RecruitState recruitState = new RecruitState(model, List.of(witchKingChar));
             recruitState.run(model);
             if (model.getParty().getPartyMembers().contains(witchKingChar)) {
-                portraitSay(model, "Another adventure awaits...");
+                portraitSay("Another adventure awaits...");
             }
         }
     }
@@ -124,8 +118,7 @@ public class WitchKingEvent extends DailyEventState {
             model.getParty().markSpecialCharacter(WitchKingEvent.this.witchKingChar);
             this.relPos = new Point(2, 1);
             exploreRuinsState.moveCharacterToCenterAnimation(model, relPos);
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    List.of("Okay people. Get ready for a boss fight."));
+            exploreRuinsState.leaderSay("Okay people. Get ready for a boss fight.");
             model.getParty().randomPartyMemberSay(model, List.of("Wait a minute, is this guy asleep?"));
             model.getParty().randomPartyMemberSay(model, List.of("Looks like he's in some kind of a trance..."));
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
@@ -133,7 +126,7 @@ public class WitchKingEvent extends DailyEventState {
                 if (result.isSuccessful()) {
                     exploreRuinsState.println(gc.getName() + " detects a powerful enchantment. (Spellcasting " + result.asString() + ")");
                     model.getParty().partyMemberSay(model, gc, "He's under the effects of an enchantment. A binding spell of black magic.");
-                    model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Can we break the spell?");
+                    leaderSay("Can we break the spell?");
                     GameCharacter gc2 = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                     model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
                     exploreRuinsState.println("Witch King: \"Please.... Help.... Me....\"");
@@ -148,11 +141,11 @@ public class WitchKingEvent extends DailyEventState {
                 addObject(witchKing);
                 witchKing.setSleeping(true);
                 if (witchKing.isDead()) {
-                    model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Well, now he will rest in peace.");
+                    leaderSay("Well, now he will rest in peace.");
                     break;
                 } else {
                     exploreRuinsState.println("Witch King: \"Free me.... from the.... spell....\"");
-                    model.getParty().partyMemberSay(model, model.getParty().getLeader(), "He looks like he's trying to hold back. " +
+                    leaderSay("He looks like he's trying to hold back. " +
                             "But he's struggling with himself, like an unseen force was controlling his limbs.");
                     GameCharacter gc2 = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                     model.getParty().partyMemberSay(model, gc2, "Maybe we can nullify the spell somehow?");

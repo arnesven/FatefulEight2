@@ -19,7 +19,7 @@ public class QuestStartPointWithoutDecision extends SimpleJunction {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         if (!leaderTalk.equals("")) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
+            state.leaderSay(leaderTalk);
         }
         return super.run(model, state);
     }

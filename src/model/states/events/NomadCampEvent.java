@@ -66,7 +66,7 @@ public class NomadCampEvent extends DailyEventState {
 
         boolean isWarriorClan = (roll < 3 || roll == 5 || roll == 8);
         if (attitude == Attitude.Hostile) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("They seem pretty aggressive. Maybe we can find some common ground."));
+            leaderSay("They seem pretty aggressive. Maybe we can find some common ground.");
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Persuade, 7);
             if (!success) {
                 didCombat = true;

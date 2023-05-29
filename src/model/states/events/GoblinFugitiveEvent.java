@@ -31,7 +31,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        if (model.getParty().isSpecialCharacterMarked(goblinChar.getName())) {
+        if (model.getParty().isSpecialCharacterMarked(goblinChar)) {
             new NoEventState(model).doEvent(model);
             return;
         }
@@ -43,14 +43,14 @@ public class GoblinFugitiveEvent extends DailyEventState {
         model.getParty().markSpecialCharacter(goblinChar);
         model.getParty().randomPartyMemberSay(model, List.of("It looks like their chasing the one in the front..."));
         showExplicitPortrait(model, goblinChar.getAppearance(), goblinChar.getName());
-        portraitSay(model, "Help, help, they're going to kill me!");
+        portraitSay("Help, help, they're going to kill me!");
         println("The screaming goblin rushes past you and hides behind the ranks of the party. " +
                 "The other goblins stop running and approach more carefully.");
         println("Goblin Leader: \"Hand him over. This is none of your business " + model.getParty().getLeader().getRace().getName().toLowerCase() + ".\"");
         print("Hand over the goblin fugitive? (Y/N) ");
         if (yesNoInput()) {
             println("Goblin Leader: \"Smart move. Now come here you!\"");
-            portraitSay(model, "No, no, noooooo!");
+            portraitSay("No, no, noooooo!");
             println("The goblins drag the fugitive away.");
             model.getParty().randomPartyMemberSay(model, List.of("As he said, it was none of our business."));
         } else {
@@ -82,17 +82,17 @@ public class GoblinFugitiveEvent extends DailyEventState {
     }
 
     private void recruit(Model model) {
-        portraitSay(model, "Thanks for helping me. Those guys really had it in for me.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Why were they chasing you?");
-        portraitSay(model, "Oh... I drank the last of the booze. We were saving it for the moon festival tomorrow, but uh, I got thirsty.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Fair enough. Well, so long Goblin.");
-        portraitSay(model, "Oh, uhm... You know, I could really do with some permanent protection. " +
+        portraitSay("Thanks for helping me. Those guys really had it in for me.");
+        leaderSay("Why were they chasing you?");
+        portraitSay("Oh... I drank the last of the booze. We were saving it for the moon festival tomorrow, but uh, I got thirsty.");
+        leaderSay("Fair enough. Well, so long Goblin.");
+        portraitSay("Oh, uhm... You know, I could really do with some permanent protection. " +
                 "In case my gang comes back. Do you mind if I team up with you?");
         waitForReturn();
         RecruitState recruitState = new RecruitState(model, List.of(goblinChar));
         recruitState.run(model);
         if (model.getParty().getPartyMembers().contains(goblinChar)) {
-            portraitSay(model, "Wheeee! I promise I can be useful!");
+            portraitSay("Wheeee! I promise I can be useful!");
         }
     }
 

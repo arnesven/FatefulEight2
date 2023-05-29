@@ -14,7 +14,7 @@ public class MosquitoesEvent extends DailyEventState {
     protected void doEvent(Model model) {
         println("As large as a fists, and with an unquenchable thirst for blood. Such are the damned insects in this wretched " +
         "place.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "How does any traveller deal with this pestilence?");
+        leaderSay("How does any traveller deal with this pestilence?");
         boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Survival, 7);
         if (result) {
             println("Fortunately one experienced party member has just " +

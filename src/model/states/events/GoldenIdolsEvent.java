@@ -22,11 +22,11 @@ public class GoldenIdolsEvent extends DailyEventState {
                 "other party members about some ancient spirit, you sneak " +
                 "into the room and find many large gold-plated idols lining " +
                 "the walls.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "These must be worth a fortune!");
+        leaderSay("These must be worth a fortune!");
         println("What do you do?");
         int res = multipleOptionArrowMenu(model, 24, 12, List.of("Continue the tour", "Quickly snatch some idols", "Return later and ransack"));
         if (res == 0) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Better not do anything stupid.");
+            leaderSay("Better not do anything stupid.");
         } else if (res == 1) {
             println("The party gains 35 gold.");
             model.getParty().addToGold(35);
@@ -36,7 +36,7 @@ public class GoldenIdolsEvent extends DailyEventState {
             showRandomPortrait(model, Classes.TEMPLE_GUARD, "Temple Guards");
             println("The party gains 135 gold!");
             model.getParty().addToGold(135);
-            portraitSay(model, "Hey you. What do you think your doing?");
+            portraitSay("Hey you. What do you think your doing?");
             model.getParty().randomPartyMemberSay(model, List.of("Uh-oh. Busted..."));
             List<Enemy> guards = new ArrayList<>();
             for (int i = 0; i < 9; ++i) {

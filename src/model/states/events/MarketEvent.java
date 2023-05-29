@@ -17,7 +17,7 @@ public class MarketEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.MERCHANT, "Pushy Merchant");
         println("Today is market day. The party casually browses the stands and booths.");
-        portraitSay(model, "Hey you! You gotta 'ave a look at my stuff. Premium quality and damn fine prices!");
+        portraitSay("Hey you! You gotta 'ave a look at my stuff. Premium quality and damn fine prices!");
         model.getParty().randomPartyMemberSay(model, List.of("Doesn't hurt to look.",
                 "I'm sure it's the same junk as usual, but let's look.",
                 "He looks very honest... why don't we see what he has for sale?"));

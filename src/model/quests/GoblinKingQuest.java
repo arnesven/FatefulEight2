@@ -127,12 +127,10 @@ public class GoblinKingQuest extends Quest {
             if (waves.get(0).get(0).isDead()) {
                 state.println("The goblins suddenly throw down their weapons and flee like mad.");
                 model.getParty().randomPartyMemberSay(model, List.of("Hey! Come back! Cowards!"));
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                        "Not so eager to fight when their king is dead.");
+                state.leaderSay( "Not so eager to fight when their king is dead.");
                 model.getParty().randomPartyMemberSay(model, List.of("And neither am I. Let's get out of here, " +
                         "I've had enough of these stinking tunnels"));
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                        "Sure. Let's just help ourselves to this treasure hoard first!");
+                state.leaderSay("Sure. Let's just help ourselves to this treasure hoard first!");
                 model.getLog().waitForAnimationToFinish();
                 return getSuccessEdge();
             }

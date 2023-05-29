@@ -23,10 +23,10 @@ public class AlchemistEvent extends DailyEventState {
         showRandomPortrait(model, Classes.ALCHEMIST, Race.HALF_ORC, "Durok");
         println("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Opening up a new shop?");
-       portraitSay(model, "Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.\"");
+        leaderSay("Opening up a new shop?");
+       portraitSay("Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.\"");
         model.getParty().randomPartyMemberSay(model, List.of("Can we see your wares?"));
-       portraitSay(model, "Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
+       portraitSay("Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
                 "chore that needs doing. Would you spread the word about my new shop?");
         print("Will you help Durok? (Y/N) ");
         if (yesNoInput()) {
@@ -35,12 +35,12 @@ public class AlchemistEvent extends DailyEventState {
                 println("You go to the town square and start chanting about Durok's new business. You even manage to " +
                         "make up a little song. Before long, a few townsfolk gather around, amused and intrigued. " +
                         "You keep it up for a few hours. Afterwards, you return to Durok's shop.");
-               portraitSay(model, "There you are! I've had many customers since you left. Whatever you did, it worked. " +
+               portraitSay("There you are! I've had many customers since you left. Whatever you did, it worked. " +
                         "Please permit me to reward you!");
                 Potion potion = model.getItemDeck().getRandomPotion();
                 println("The party gains a " + potion.getName() + ".");
                 model.getParty().getInventory().add(potion);
-               portraitSay(model, "I have lots of other potions, if you're interested. I'll give you a discount!");
+               portraitSay("I have lots of other potions, if you're interested. I'll give you a discount!");
                 waitForReturn();
                 alchemistShop(model, true);
             } else {
@@ -49,19 +49,17 @@ public class AlchemistEvent extends DailyEventState {
                         "We're just scaring people away..."));
                 println("You keep trying for some time, but ultimately you realize you're not getting anybody's " +
                         "attention. Frustrated and ashamed you decide to abandon the effort and go on with your day.");
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                        "I'm sure Durok's business will take off once people get to know him.");
+                leaderSay("I'm sure Durok's business will take off once people get to know him.");
                 println("You return to Durok's shop, which is quiet.");
-                portraitSay(model, "Oh, hello. Nice to see somebody in here. I wonder if people don't understand what " +
+                portraitSay("Oh, hello. Nice to see somebody in here. I wonder if people don't understand what " +
                         "an apothecary is?");
                 model.getParty().randomPartyMemberSay(model, List.of("They're probably just shy..."));
-                portraitSay(model, "Well, I have lots of potions for sale. Are you interested?");
+                portraitSay("Well, I have lots of potions for sale. Are you interested?");
                 waitForReturn();
                 alchemistShop(model, false);
             }
         } else {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "Sorry, but we need to get on with our own business.");
+            leaderSay("Sorry, but we need to get on with our own business.");
         }
     }
 

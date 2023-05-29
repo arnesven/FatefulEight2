@@ -14,7 +14,7 @@ public class MagicianEvent extends DailyEventState {
         super.showRandomPortrait(model, Classes.MAG, "Magician");
         println("A traveling magician has set up his stage next to the road " +
                 "and you can hear him calling to the small crowd that has gathered here.");
-        portraitSay(model, "Ladies and gentlemen, step right up! Come into my tent " +
+        portraitSay("Ladies and gentlemen, step right up! Come into my tent " +
                     "to see astounding thaumaturgy. Right before your very " +
                     "eyes, I will...");
         int cost = model.getParty().size();

@@ -229,8 +229,7 @@ public class CultistDenQuest extends Quest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "Wow, these cultists sure have collected some loot!");
+            state.leaderSay("Wow, these cultists sure have collected some loot!");
             model.getParty().randomPartyMemberSay(model, List.of("Yeah, but I see a lot of worthless junk too..."));
             state.print("There may be valuables in this room. Do you wish to attempt to search for loot? (Y/N) ");
             if (state.yesNoInput()) {
@@ -248,12 +247,12 @@ public class CultistDenQuest extends Quest {
                     }
                     state.print("There may still be something of value here. Do you wish to search? (Y/N) ");
                     if (!state.yesNoInput()) {
-                        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Come on team, we can't spend more time here.");
+                        state.leaderSay("Come on team, we can't spend more time here.");
                         break;
                     }
                 }
             } else {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Come on team, we need to press on.");
+                state.leaderSay("Come on team, we need to press on.");
             }
             return getSuccessEdge();
         }
@@ -273,16 +272,13 @@ public class CultistDenQuest extends Quest {
         public QuestEdge run(Model model, QuestState state) {
             long time = state.getClockTime();
             if (time == 0) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                        "Oh no, the ritual is already complete! They've summoned a daemon!");
+                state.leaderSay("Oh no, the ritual is already complete! They've summoned a daemon!");
                 return getFailEdge();
             }
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "Hey there! Stop performing that ritual!");
+            state.leaderSay("Hey there! Stop performing that ritual!");
             state.println("Cultist Leader: \"Just try and stop me!\"");
             boolean gender = MyRandom.flipCoin();
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    "Get " + DailyEventState.himOrHer(gender) + "!");
+            state.leaderSay("Get " + DailyEventState.himOrHer(gender) + "!");
 
             return getSuccessEdge();
         }

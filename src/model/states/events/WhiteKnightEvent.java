@@ -17,7 +17,7 @@ public class WhiteKnightEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.PAL, "Paladin");
         println("You meet a white knight, a paladin.");
-        portraitSay(model, "We are the Paladins, the protectors of our sacred " +
+        portraitSay("We are the Paladins, the protectors of our sacred " +
                 "temple!");
         println("The paladin seems almost comically serious as he " +
                 "says this with a solemn face. The party members dare not " +

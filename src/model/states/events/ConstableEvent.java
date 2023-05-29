@@ -47,11 +47,11 @@ public class ConstableEvent extends DailyEventState {
                 return;
             }
         }
-        portraitSay(model, "We're looking for a " + perp + " in this area. You lot " +
+        portraitSay("We're looking for a " + perp + " in this area. You lot " +
                 "seen anything suspicious?");
         model.getParty().randomPartyMemberSay(model, List.of("Nope, not a thing.", "No sir.",
                 "I don't know what you're talking about.", "I don't remember..."));
-        portraitSay(model, "You're not from around here are you?");
+        portraitSay("You're not from around here are you?");
         println("The constable squints and carefully looks at the party members...");
         int sum = calculatePartyAlignment(model, this);
         sum += model.getParty().getReputation();
@@ -68,10 +68,10 @@ public class ConstableEvent extends DailyEventState {
             wordToDescribe = "a bit odd.";
         }
         if (sum >= 3) {
-            portraitSay(model, "Hmm, you fellows look " + wordToDescribe + " You can go about your business.");
+            portraitSay("Hmm, you fellows look " + wordToDescribe + " You can go about your business.");
             return;
         } else {
-            portraitSay(model, "Hmm, you fellows look " + wordToDescribe + " You should come with me for questioning.");
+            portraitSay("Hmm, you fellows look " + wordToDescribe + " You should come with me for questioning.");
         }
         model.getParty().randomPartyMemberSay(model, List.of("Hang on a second!",
                 "I think there's been some kind of misunderstanding.", "Wait just a minute.",
@@ -79,7 +79,7 @@ public class ConstableEvent extends DailyEventState {
         boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 6-sum);
         if (result) {
             println("You manage to convince the constable you are completely innocent.");
-            portraitSay(model, "Hmm, well... Stay out of trouble!");
+            portraitSay("Hmm, well... Stay out of trouble!");
             model.getParty().randomPartyMemberSay(model, List.of("Phew... close one."));
         } else {
             print("The constable is unconvinced and is attempting to arrest you. You could fight the " +
@@ -102,7 +102,7 @@ public class ConstableEvent extends DailyEventState {
 
     private void goToJail(Model model) {
         println("You come along to the courthouse where a council promptly charges you and convicts you of being a " + perp + ".");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "But I'm innocent!");
+        leaderSay("But I'm innocent!");
         println("Clerk: \"You can either pay a fine of " + getFine() + " gold or spend " + getJailTime() +
                 " days in the town jail.\"");
         if (sentence*5 > model.getParty().getGold()) {
@@ -115,7 +115,7 @@ public class ConstableEvent extends DailyEventState {
                 spendTimeInJail(model);
             }
         }
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Coming here was a mistake.");
+        leaderSay("Coming here was a mistake.");
     }
 
     private void spendTimeInJail(Model model) {

@@ -1,15 +1,12 @@
 package model.states.events;
 
 import model.Model;
-import model.characters.BungoDarkwood;
 import model.characters.GameCharacter;
-import model.characters.MiklosAutumntoft;
 import model.characters.appearance.RandomAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
-import model.enemies.SoldierEnemy;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.accessories.HeavyRing;
@@ -43,7 +40,7 @@ public class OrcRaidEvent extends DailyEventState {
         println("Suddenly you hear a bell clamoring. You hear shouting and people start " +
                 "running into their houses, shutting doors and windows.");
         showRandomPortrait(model, Classes.CONSTABLE, "Militia");
-        portraitSay(model, "Orc Raid! Everybody, take up arms to defend our town!");
+        portraitSay("Orc Raid! Everybody, take up arms to defend our town!");
         print("Do you help to defend the town? (Y/N) ");
         if (yesNoInput()) {
             List<Enemy> enemies = new ArrayList<>();
@@ -62,7 +59,7 @@ public class OrcRaidEvent extends DailyEventState {
             println("You have fended off the orcish marauders. There is much confusion " +
                     "in the aftermath but there doesn't seem to be many injured or any damage to the town.");
             showRandomPortrait(model, Classes.CONSTABLE, "Militia");
-            portraitSay(model, "Thank you for defending our town from those horrible beasts. " +
+            portraitSay("Thank you for defending our town from those horrible beasts. " +
                     "Please accept this equipment as a small token of our gratitude.");
             int numberOfItems = MyRandom.randInt(3, 5);
             for (int i = 0; i < numberOfItems; ++i) {
@@ -75,7 +72,7 @@ public class OrcRaidEvent extends DailyEventState {
             }
             if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
                 UrbanLocation loc = (UrbanLocation) model.getCurrentHex().getLocation();
-                portraitSay(model, "Oh, and I was supposed to tell you. " + loc.getLordName() + " has requested your presence. " +
+                portraitSay("Oh, and I was supposed to tell you. " + loc.getLordName() + " has requested your presence. " +
                         "You should visit Town Hall while you're in town.");
                 model.getParty().addSummon(loc);
             }

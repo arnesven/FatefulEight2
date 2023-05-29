@@ -44,12 +44,22 @@ public class Equipment implements Serializable {
     }
 
     public static String canEquip(Model model, Item item, GameCharacter person) {
+        if (item instanceof Clothing && !person.canChangeClothing()) {
+            return person.getFirstName() + " cannot unequip clothing.";
+        }
+
+        if (item instanceof Accessory && !person.canChangeAccessory()) {
+            return person.getFirstName() + " cannot unequip accessory.";
+        }
+
         if (item instanceof ArmorItem && !person.getCharClass().canUseHeavyArmor() && ((ArmorItem)item).isHeavy()) {
             return person.getFirstName() + " cannot wear Heavy Armor.";
-        } else if (item instanceof Weapon && ((Weapon) item).isTwoHanded()
+        }
+        if (item instanceof Weapon && ((Weapon) item).isTwoHanded()
                 && person.getEquipment().getAccessory() instanceof ShieldItem) {
             return "Cannot equip a two-handed weapon while a shield is equipped.";
-        } else if (item instanceof ShieldItem && person.getEquipment().getWeapon().isTwoHanded()) {
+        }
+        if (item instanceof ShieldItem && person.getEquipment().getWeapon().isTwoHanded()) {
             return "Cannot equip a shield while a two-handed weapon is equipped.";
         }
         return "";

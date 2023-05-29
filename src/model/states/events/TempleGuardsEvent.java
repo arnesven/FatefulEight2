@@ -26,7 +26,7 @@ public class TempleGuardsEvent extends DailyEventState {
             if (align < -1) {
                 bounce(model);
             } else {
-                portraitSay(model, "Please enjoy your stay at our temple!");
+                portraitSay("Please enjoy your stay at our temple!");
                 model.getParty().randomPartyMemberSay(model, List.of("Everybody is so polite here."));
 
             }
@@ -37,7 +37,7 @@ public class TempleGuardsEvent extends DailyEventState {
 
     private void bounce(Model model) {
         gotBounced = true;
-        portraitSay(model, "You scruffy fellows don't belong here. Kindly get out.");
+        portraitSay("You scruffy fellows don't belong here. Kindly get out.");
         print("Do you obey the guards and leave the temple? (Y/N) ");
         if (!yesNoInput()) {
             runCombat(List.of(new TempleGuardEnemy('A'), new TempleGuardEnemy('A'), new TempleGuardEnemy('A')));

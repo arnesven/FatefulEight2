@@ -26,7 +26,7 @@ public class BlackKnightClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnArmor(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GREEN);
-        putOnKnightsHelm(characterAppearance);
+        putOnKnightsHelm(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GREEN);
     }
 
 
@@ -45,7 +45,7 @@ public class BlackKnightClass extends CharacterClass {
         return false;
     }
 
-    private static void putOnKnightsHelm(CharacterAppearance characterAppearance) {
+    public static void putOnKnightsHelm(CharacterAppearance characterAppearance, MyColors areaColor, MyColors lineColor) {
         characterAppearance.removeOuterHair();
         for (int y = 1; y <= 4; ++y) {
             characterAppearance.setSprite(1, y, new FilledBlockSprite(MyColors.BLACK));
@@ -54,9 +54,9 @@ public class BlackKnightClass extends CharacterClass {
         for (int y = 0; y <= 5; ++y) {
             for (int x = 2; x <= 4; ++x) {
                 if (y == 4) {
-                    characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x20 + x + 2, MyColors.DARK_GRAY, MyColors.DARK_GREEN));
+                    characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x20 + x + 2, areaColor, lineColor));
                 } else {
-                    characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x10 * y + x + 2, MyColors.DARK_GRAY, MyColors.DARK_GREEN));
+                    characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x10 * y + x + 2, areaColor, lineColor));
                 }
             }
         }

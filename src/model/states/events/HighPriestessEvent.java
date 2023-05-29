@@ -27,17 +27,16 @@ public class HighPriestessEvent extends DailyEventState {
                 himOrHer(gc.getGender()) + " to a special tea " +
                 "ceremony.");
         model.getParty().partyMemberSay(model, gc, List.of("Uhm, should I play along with this?"));
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                "This must be handled delicately to not hurt anyone's feelings...");
+        leaderSay("This must be handled delicately to not hurt anyone's feelings...");
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, gc, Skill.Entertain, 5, 20, 0);
         if (!result.isSuccessful()) {
             offended = true;
-            portraitSay(model, "I am offend! My guards will now have you escorted from my temple. " +
+            portraitSay("I am offend! My guards will now have you escorted from my temple. " +
                     "Don't even think about returning here.#");
             model.getParty().banFromTemple(model.getCurrentHex().getLocation().getName());
             new TempleGuardsEvent(model, false).doEvent(model);
         } else {
-            portraitSay(model, "I am pleased by your conduct.3");
+            portraitSay("I am pleased by your conduct.3");
             println("The High Priestess offers to show you around the temple. What would you like to do?");
             List<DailyEventState> events = List.of(
                     new PriestEvent(model),

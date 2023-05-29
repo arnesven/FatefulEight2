@@ -19,8 +19,7 @@ public class BearEvent extends DailyEventState {
         println("A large bear grunts at the party. It seems hungry.");
         print("Do you want to try and avoid fighting the bear? (Y/N) ");
         if (yesNoInput()) {
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                    List.of("Hey, what are you supposed to do? Climb a tree, or play dead?"));
+            leaderSay("Hey, what are you supposed to do? Climb a tree, or play dead?");
             boolean passed = model.getParty().doCollectiveSkillCheck(model, this, Skill.Survival, 4);
             if (passed) {
                 println("The bear seems dissuaded and goes away.");

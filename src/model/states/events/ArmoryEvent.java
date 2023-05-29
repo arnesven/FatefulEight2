@@ -17,7 +17,7 @@ public class ArmoryEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showSilhouettePortrait(model, "Servant");
         println("One of the Lord's servants approaches you and leads you to the castle armory.");
-        portraitSay(model, "I have been instructed to offer you a gift. You may take one of these " +
+        portraitSay("I have been instructed to offer you a gift. You may take one of these " +
                 "items that fits your fancy.");
 
         List<Item> items = new ArrayList<>();

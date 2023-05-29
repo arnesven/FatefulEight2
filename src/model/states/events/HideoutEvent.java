@@ -37,15 +37,15 @@ public class HideoutEvent extends DailyEventState {
         int alignment = DailyEventState.calculatePartyAlignment(model, this);
         if (alignment >= 0) {
             println("Bandit Leader: \"Kill them all!\"");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Bring it on!");
+            leaderSay("Bring it on!");
             attackBandits(model);
         } else {
             println("Bandit Leader: \"You look like the right kind of rascals, maybe we can help each other out.\"");
-            model.getParty().partyMemberSay(model, model.getParty().getLeader(), "What do you have in mind?");
+            leaderSay("What do you have in mind?");
             println("Bandit Leader: \"Well, you see, we've got this rare loot that we've boosted, but we're having trouble " +
                     "fencing it. You buy it from us, dirt cheap, then you can sell it!\"");
             if (model.getParty().getGold() < 10) {
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "We're a bit short on cash...");
+                leaderSay("We're a bit short on cash...");
                 reject();
             } else {
                 int cost = (model.getParty().getGold() / 10) * 10;

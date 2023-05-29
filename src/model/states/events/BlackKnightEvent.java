@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.enemies.BlackKnightEnemy;
-import model.states.CombatEvent;
 import view.subviews.CollapsingTransition;
 
 import java.util.List;
@@ -25,17 +24,17 @@ public class BlackKnightEvent extends RiverEvent {
         showRandomPortrait(model, Classes.BKN, "Black Knight");
         println("A narrow bridge spans the width of the river. Upon it, " +
                 "a knight in black armor stands guard.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Um, excuse us. Can we cross the bridge?"));
-        portraitSay(model, "None shall pass.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Come again?"));
-        portraitSay(model, "None shall pass!");
+        leaderSay("Um, excuse us. Can we cross the bridge?");
+        portraitSay("None shall pass.");
+        leaderSay("Come again?");
+        portraitSay("None shall pass!");
         model.getParty().randomPartyMemberSay(model, List.of("I think we're going to have to fight him if we want to cross here."));
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
             runCombat(List.of(new BlackKnightEnemy('A')));
             CollapsingTransition.transition(model, RiverEvent.subView);
             if (!super.haveFledCombat()) {
-                portraitSay(model, "You have proven a worthy adversary.");
+                portraitSay("You have proven a worthy adversary.");
                 println("The black knight offers to instruct you in his martial ways, ");
                 ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.BKN);
                 changeClassEvent.areYouInterested(model);

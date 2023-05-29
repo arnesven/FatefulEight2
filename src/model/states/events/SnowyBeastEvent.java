@@ -17,7 +17,7 @@ public class SnowyBeastEvent extends DailyEventState {
         println("This beast is covered in white fur. It has tusks, " +
                 "horns and a terrible temper. It is coming straight for the " +
                 "party.");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Everybody, get ready to fight!");
+        leaderSay("Everybody, get ready to fight!");
         runCombat(List.of(new SnowyBeastEnemy('A')));
     }
 }

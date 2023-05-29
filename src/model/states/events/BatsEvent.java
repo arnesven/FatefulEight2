@@ -16,7 +16,7 @@ public class BatsEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(), "What's that fluttering sound?");
+        leaderSay("What's that fluttering sound?");
         model.getParty().randomPartyMemberSay(model, List.of("Bats!"));
         List<Enemy> enemies = new ArrayList<>();
         int numberOfBats = MyRandom.randInt(6, 12);

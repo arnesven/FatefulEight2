@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.states.DailyEventState;
-import view.subviews.ArrowMenuSubView;
 
 import java.util.List;
 
@@ -16,9 +15,9 @@ public class GuideEvent extends DailyEventState {
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.None, "Guide");
         model.getParty().randomPartyMemberSay(model, List.of("This place is pretty big. I wonder where..."));
-        portraitSay(model, "Where the tavern is? Where the general store is? The smith?");
+        portraitSay("Where the tavern is? Where the general store is? The smith?");
         model.getParty().randomPartyMemberSay(model, List.of("Uhm... can we help you?"));
-        portraitSay(model, "No, hehe, but for a few coins I'll gladly show you around. How 'bout it?");
+        portraitSay("No, hehe, but for a few coins I'll gladly show you around. How 'bout it?");
         if (model.getParty().getGold() < 2) {
             decline(model);
             return;
@@ -30,7 +29,7 @@ public class GuideEvent extends DailyEventState {
         }
 
         model.getParty().addToGold(-2);
-        portraitSay(model, "Thank you! Now where would you like to go?");
+        portraitSay("Thank you! Now where would you like to go?");
         List<DailyEventState> events = List.of(
                 new CaptainEvent(model),
                 new SmithEvent(model),
@@ -47,6 +46,6 @@ public class GuideEvent extends DailyEventState {
 
     private void decline(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("I'm sure we'll find it ourselves."));
-        portraitSay(model, "Of course. You lot look like you're on top of things.");
+        portraitSay("Of course. You lot look like you're on top of things.");
     }
 }

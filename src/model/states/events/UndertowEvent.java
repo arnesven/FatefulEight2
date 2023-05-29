@@ -24,8 +24,7 @@ public class UndertowEvent extends RiverEvent {
         println("The party comes to a narrower part of the river and " +
                 "decides on trying to swim. A few feet into the water a " +
                 "strong current starts tugging at the party members' legs. ");
-        model.getParty().partyMemberSay(model, model.getParty().getLeader(),
-                List.of("Do we turn back, or press on?"));
+        leaderSay("Do we turn back, or press on?");
         print("Do you turn back? (Y/N) ");
         if (yesNoInput()) {
             turnedBack = true;

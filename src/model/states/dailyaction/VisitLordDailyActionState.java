@@ -90,7 +90,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             if (summon.getStep() == Summon.ACCEPTED) {
                 String leaderName = model.getParty().getLeader().getName();
                 println(lord + ": \"Hello there. " + leaderName + ", I presume? I've been expecting you.\"");
-                model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Yes, that's me. Who are you?");
+                leaderSay("Yes, that's me. Who are you?");
                 println(lord + ": \"I'm " + lord + ". I'm in charge here. First of all, " +
                         "let me formally welcome you to " + location.getPlaceName() +
                         ", I hope you like our " + location.getLocationType() + ".\"");
