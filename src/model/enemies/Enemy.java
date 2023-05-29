@@ -73,6 +73,9 @@ public abstract class Enemy extends Combatant {
             combatEvent.println(getName() + "'s turn is skipped.");
         } else {
             List<GameCharacter> candidates = new ArrayList<>();
+            if (isRanged()) {
+                candidates.addAll(model.getParty().getBackRow());
+            }
             candidates.addAll(model.getParty().getFrontRow());
             candidates.addAll(combatEvent.getAllies());
             if (candidates.isEmpty()) {
@@ -88,6 +91,9 @@ public abstract class Enemy extends Combatant {
         decreaseTimedConditions(model, combatEvent);
     }
 
+    public boolean isRanged() {
+        return false;
+    }
 
 
     public char getEnemyGroup() {

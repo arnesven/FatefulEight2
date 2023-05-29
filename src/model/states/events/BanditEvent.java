@@ -2,12 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
+import model.enemies.BanditArcherEnemy;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.ViperEnemy;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +49,11 @@ public class BanditEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>();
         int numberOfEnemies = Math.max(2, model.getParty().partyStrength() / (new BanditEnemy('A')).getThreat());
         for (int i = numberOfEnemies; i > 0; --i) {
-            enemies.add(new BanditEnemy('A'));
+            if (MyRandom.randInt(3) == 0) {
+                enemies.add(new BanditArcherEnemy('A'));
+            } else {
+                enemies.add(new BanditEnemy('A'));
+            }
         }
         return enemies;
     }

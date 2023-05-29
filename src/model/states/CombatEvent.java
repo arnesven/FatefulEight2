@@ -434,4 +434,13 @@ public class CombatEvent extends DailyEventState {
             comb.conditionsEndOfCombatRoundTrigger(model, this);
         }
     }
+
+    private static boolean hasRangedEnemy(List<Enemy> enemies) {
+        for (Enemy e : enemies) {
+            if (e.isRanged()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

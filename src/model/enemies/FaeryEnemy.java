@@ -36,6 +36,11 @@ public class FaeryEnemy extends Enemy {
     }
 
     @Override
+    public boolean isRanged() {
+        return true;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
     }

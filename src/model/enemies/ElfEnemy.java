@@ -37,6 +37,11 @@ public class ElfEnemy extends Enemy {
     }
 
     @Override
+    public boolean isRanged() {
+        return true;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
     }

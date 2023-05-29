@@ -26,9 +26,11 @@ public class ImpEnemy extends AltarEnemy {
 
     @Override
     public int getDamage() {
-        return 6;
+        return 5;
     }
 
-
-
+    @Override
+    public boolean isRanged() {
+        return true;
+    }
 }

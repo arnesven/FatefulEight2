@@ -24,7 +24,7 @@ public class CombatSubView extends SubView {
     private final CombatEvent combat;
     private final CombatMatrix combatMatrix;
     private final CombatTheme theme;
-    private Sprite initiativeMarker = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
+    private final Sprite initiativeMarker = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
@@ -41,6 +41,9 @@ public class CombatSubView extends SubView {
             status = "";
         } else {
             status = ", " + status;
+        }
+        if (selected instanceof Enemy && ((Enemy) selected).isRanged()) {
+            status += " RANGED";
         }
         return selected.getName() + String.format(" %d/%d HP", selected.getHP(), selected.getMaxHP()) + status;
     }

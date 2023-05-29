@@ -17,6 +17,11 @@ public class GoblinBowman extends GoblinEnemy{
     }
 
     @Override
+    public boolean isRanged() {
+        return true;
+    }
+
+    @Override
     public GoblinEnemy copy() {
         return new GoblinBowman(getEnemyGroup());
     }

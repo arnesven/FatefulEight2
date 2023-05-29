@@ -40,11 +40,15 @@ public class BanditEnemy extends Enemy {
 
     @Override
     protected Sprite getSprite() {
-        if (this.race == Race.NORTHERN_HUMAN) {
+        if (getRace() == Race.NORTHERN_HUMAN) {
             return humanSprite;
         } else {
             return halfOrcSprite;
         }
+    }
+
+    protected Race getRace() {
+        return race;
     }
 
     @Override
