@@ -77,7 +77,7 @@ public class RedKnightEvent extends DailyEventState {
         leaderSay("Hang on... so if we defeat you in combat, you can come with us?");
         portraitSay("Hmm... yes, I assume so. But I must warn you, I am a fierce fighter, defeating me would not be easy.");
         leaderSay("Couldn't you just, you know... pull your punches a bit?");
-        portraitSay("No, I am afraid not. I may never fight one wit below my abilities because...");
+        portraitSay("No, I am afraid not. I may never fight one whit below my abilities because...");
         otherPersonSay("Let me guess, you've taken a solemn vow?");
         leaderSay("Alright, I get it. Hmm, now let me think.");
         print("Do you wish to fight the Red Knight? (Y/N) ");
