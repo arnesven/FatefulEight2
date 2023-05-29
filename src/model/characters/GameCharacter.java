@@ -506,7 +506,7 @@ public class GameCharacter extends Combatant {
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
         int damage = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
-        int reduction = Math.min(damage, Math.max(0, getAP() - MyRandom.rollD10() + 1));
+        int reduction = Math.min(damage, calculateDamageReduction());
         String reductionString = "";
         if (getAP() > 0) {
             reductionString = " (reduced by " + reduction + ")";
@@ -516,6 +516,21 @@ public class GameCharacter extends Combatant {
         combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getName() + reductionString + ".");
         combatEvent.addStrikeEffect(this, damage, false);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
+    }
+
+    private int calculateDamageReduction() {
+        //                       1  2  3  4  5  6  7   8   9  10
+        int[] levels = new int[]{4, 4, 5, 6, 7, 8, 9, 10, 10, 10,
+                10, 10, 10, 10, 10, 10, 10, 10, 10, 10}; // assuming 20 AP is absolute maximum.
+        int ap = getAP();
+        while (ap > 0) {
+            int roll = MyRandom.rollD10();
+            if (roll >= levels[ap-1]) {
+                return ap;
+            }
+            ap--;
+        }
+        return 0;
     }
 
     public boolean canAssumeClass(int id) {

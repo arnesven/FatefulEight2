@@ -51,7 +51,7 @@ public class MageEvent extends DailyEventState {
                 } else {
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                             List.of("Uhm... 'Abracadabra'?", "Uhm... 'Hocus Pocus'?", "Uhm... 'Wingardium Leviosa'?"));
-                    portraitSay("Hmph. Well we can't be all magical prodigies after all...");
+                    portraitSay("Hmph. Well we can't all be magical prodigies I suppose...");
                 }
             } else {
                 leaderSay("Uhm... " + model.getParty().getInventory().getSpells().get(0).getName() + "?");
