@@ -31,11 +31,6 @@ public class WitchKingEnemy extends Enemy {
     }
 
     @Override
-    public int getDamageReduction() {
-        return 2;
-    }
-
-    @Override
     public int getDamage() {
         return 4;
     }

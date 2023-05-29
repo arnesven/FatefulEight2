@@ -128,7 +128,6 @@ public class WitchKingEvent extends DailyEventState {
                     List.of("Okay people. Get ready for a boss fight."));
             model.getParty().randomPartyMemberSay(model, List.of("Wait a minute, is this guy asleep?"));
             model.getParty().randomPartyMemberSay(model, List.of("Looks like he's in some kind of a trance..."));
-            int bonus = 0;
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 SkillCheckResult result = gc.testSkill(Skill.SpellCasting, 10);
                 if (result.isSuccessful()) {
@@ -138,15 +137,16 @@ public class WitchKingEvent extends DailyEventState {
                     GameCharacter gc2 = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                     model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
                     exploreRuinsState.println("Witch King: \"Please.... Help.... Me....\"");
+                    tryBreakSpell(model, exploreRuinsState);
                     model.getParty().partyMemberSay(model, gc, "He appears to be waking up.");
-                    bonus = 2;
                 }
             }
             exploreRuinsState.println("The Witch King suddenly opens his eyes. In a wild fury he lunges at you!");
-            witchKing.setSleeping(false);
             do {
+                witchKing.setSleeping(false);
                 super.entryTrigger(model, exploreRuinsState);
                 addObject(witchKing);
+                witchKing.setSleeping(true);
                 if (witchKing.isDead()) {
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Well, now he will rest in peace.");
                     break;
@@ -158,15 +158,9 @@ public class WitchKingEvent extends DailyEventState {
                     model.getParty().partyMemberSay(model, gc2, "Maybe we can nullify the spell somehow?");
                     model.getSpellHandler().acceptSpell(new DispellSpell().getName());
                     try {
-                        MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, exploreRuinsState, Skill.MagicBlue, 10 - bonus);
-                        if (pair.first) {
-                            breakSpell(exploreRuinsState);
-                            break;
-                        } else {
-                            model.getParty().partyMemberSay(model, pair.second, "That's one tough spell to break. " +
-                                    "But if you keep him calm, maybe I can try again.");
-                            GameCharacter gc3 = model.getParty().getRandomPartyMember(pair.second);
-                            model.getParty().partyMemberSay(model, gc3, "Too late, here he comes again!");
+                        boolean result = tryBreakSpell(model, exploreRuinsState);
+                        if (result) {
+                            return;
                         }
                     } catch (SpellCastException sce) {
                         if (sce.getSpell().getName().equals(new DispellSpell().getName())) {
@@ -180,6 +174,19 @@ public class WitchKingEvent extends DailyEventState {
             } while (true);
             model.getSpellHandler().unacceptSpell(new DispellSpell().getName());
             exploreRuinsState.setDungeonExited(true);
+        }
+
+        private boolean tryBreakSpell(Model model, ExploreRuinsState exploreRuinsState) {
+            MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, exploreRuinsState, Skill.MagicBlue, 10);
+            if (pair.first) {
+                breakSpell(exploreRuinsState);
+                return true;
+            }
+            model.getParty().partyMemberSay(model, pair.second, "That's one tough spell to break. " +
+                    "But if you keep him calm, maybe I can try again.");
+            GameCharacter gc3 = model.getParty().getRandomPartyMember(pair.second);
+            model.getParty().partyMemberSay(model, gc3, "Too late, here he comes again!");
+            return false;
         }
 
         public void breakSpell(ExploreRuinsState state) {

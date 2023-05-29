@@ -11,9 +11,4 @@ public class WitchKingCharacter extends GameCharacter {
         super("Witch King", "", Race.WITCH_KING, Classes.WITCH_KING,
                 new WitchKingAppearance(), new CharacterClass[]{Classes.WITCH_KING, None, None, None});
     }
-
-    @Override
-    public int getAP() {
-        return super.getAP() + 3;
-    }
 }

@@ -14,6 +14,9 @@ public class MyStrings {
             List<String> strs = new ArrayList<>();
             do {
                 String[] splits = text.split(" ");
+                if (splits.length == 1) {
+                    return splits;
+                }
                 StringBuilder bldr = new StringBuilder();
                 int i = 0;
                 do {

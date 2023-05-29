@@ -14,4 +14,9 @@ public class WarlockNPCClass extends NPCClass {
         Looks.putOnHood(characterAppearance, MyColors.DARK_PURPLE);
         Looks.putOnMask(characterAppearance, MyColors.DARK_PURPLE);
     }
+
+    @Override
+    public boolean coversEars() {
+        return true;
+    }
 }
