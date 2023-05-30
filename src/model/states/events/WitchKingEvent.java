@@ -133,6 +133,7 @@ public class WitchKingEvent extends DailyEventState {
                     exploreRuinsState.println("Witch King: \"Please.... Help.... Me....\"");
                     tryBreakSpell(model, exploreRuinsState);
                     model.getParty().partyMemberSay(model, gc, "He appears to be waking up.");
+                    break;
                 }
             }
             exploreRuinsState.println("The Witch King suddenly opens his eyes. In a wild fury he lunges at you!");

@@ -149,6 +149,15 @@ public abstract class Looks {
         characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0xD9, clothingColor));
     }
 
+    public static void putOnFancyDress(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {
+        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x160, baseColor, detailColor));
+        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x170, baseColor, detailColor));
+        characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0x171, baseColor, detailColor));
+        characterAppearance.setSprite(5, 5, new FaceAndClothesSprite(0x163, baseColor, detailColor));
+        characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0x173, baseColor, detailColor));
+        characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0x172, baseColor, detailColor));
+    }
+
     public static void putOnLightArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors shirtColor) {
         characterAppearance.setSprite(1, 5, new ClothesSprite(0x95, armorColor, shirtColor));
         characterAppearance.setSprite(1, 6, new ClothesSprite(0xA5, armorColor, shirtColor));

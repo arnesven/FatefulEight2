@@ -204,13 +204,15 @@ public class SpellsView extends SelectableListMenu {
             List<ListContent> content = new ArrayList<>();
             int i = 2;
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                content.add(new SelectableListContent(xStart + 1, yStart + i, gc.getFirstName()) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new SimpleMessageView(CastByWhomMenu.this, spell.castFromMenu(model, gc)), model);
-                    }
-                });
-                i++;
+                if (!model.getParty().getBench().contains(gc)) {
+                    content.add(new SelectableListContent(xStart + 1, yStart + i, gc.getFirstName()) {
+                        @Override
+                        public void performAction(Model model, int x, int y) {
+                            setInnerMenu(new SimpleMessageView(CastByWhomMenu.this, spell.castFromMenu(model, gc)), model);
+                        }
+                    });
+                    i++;
+                }
             }
             return content;
         }

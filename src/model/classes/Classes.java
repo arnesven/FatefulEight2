@@ -42,4 +42,6 @@ public interface Classes {
     CharacterClass GOBLIN = new GoblinClass();
     CharacterClass WITCH_KING = new WitchKingClass();
     CharacterClass RED_KNIGHT = new RedKnightClass();
+    CharacterClass ENCHANTRESS = new EnchantressClass();
+
 }
