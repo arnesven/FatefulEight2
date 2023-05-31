@@ -37,7 +37,7 @@ public class EnchantressClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0xA7, MyColors.GOLD, MyColors.GREEN, appearance.getBackHairOnly());
+        return new AvatarSprite(race, 0xA7, MyColors.GOLD, MyColors.GREEN, appearance.getNormalHair());
     }
 
     @Override

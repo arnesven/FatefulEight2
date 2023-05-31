@@ -42,6 +42,9 @@ public class PlainsHex extends WorldHex {
                     new NomadCampEvent(model),
                     new HalflingVillage(model),
                     new BrokenWagonEvent(model),
+                    new ElfEvent(model),
+                    new CairnEvent(model),
+                    new WatchtowerEvent(model),
                     new EnchantressEvent(model)
             ));
         }

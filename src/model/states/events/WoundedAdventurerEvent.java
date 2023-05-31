@@ -52,7 +52,7 @@ public class WoundedAdventurerEvent extends DailyEventState {
                 } else {
                     println("You tend to the adventurer's wounds.");
                 }
-                new EveningState(model, false, false).run(model);
+                new EveningState(model, false, false, false).run(model);
                 println("You spend the day trying to help the wounded adventurer recover.");
                 if (MyRandom.randInt(2) == 0) {
                     println("The wounded adventurer recovered!");

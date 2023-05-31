@@ -23,7 +23,7 @@ public class LostEvent extends DailyEventState {
         } else {
             println("You have lost your way in the wilderness and have made no progress today.");
         }
-        new EveningState(model, false, false).run(model);
+        new EveningState(model, false, false, false).run(model);
         if (model.getParty().isWipedOut()) {
             return;
         }

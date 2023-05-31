@@ -6,7 +6,7 @@ import java.util.List;
 
 public class TempleEveningState extends EveningState {
     public TempleEveningState(Model model) {
-        super(model, false, false);
+        super(model, false, false, true);
     }
 
     @Override

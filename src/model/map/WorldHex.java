@@ -192,29 +192,28 @@ public abstract class WorldHex implements Serializable {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
-        return new EnchantressEvent(model);
-//        int dieRoll = MyRandom.rollD10();
-//        if (5 <= dieRoll && dieRoll <= 8) {
-//            List<DailyEventState> events = new ArrayList<>();
-//            events.add(new WagonTravelEvent(model));
-//            events.add(new WagonTravelEvent(model));
-//            events.add(new MerchantEvent(model));
-//            events.add(new BanditEvent(model));
-//            events.add(new MagicianEvent(model));
-//            events.add(new ArtisanEvent(model));
-//            events.add(new PriestEvent(model));
-//            events.add(new CourierEvent(model));
-//            events.add(new MonumentEvent(model));
-//            events.add(new CompanyEvent(model));
-//            events.add(new NoblemanEvent(model));
-//            events.add(new FriendEvent(model));
-//            events.add(new MageEvent(model));
-//            events.add(new BrokenWagonEvent(model));
-//            return MyRandom.sample(events);
-//        } else if (dieRoll >= 9) {
-//            return generateTerrainSpecificEvent(model);
-//        }
-//        return new NoEventState(model);
+        int dieRoll = MyRandom.rollD10();
+        if (5 <= dieRoll && dieRoll <= 8) {
+            List<DailyEventState> events = new ArrayList<>();
+            events.add(new WagonTravelEvent(model));
+            events.add(new WagonTravelEvent(model));
+            events.add(new MerchantEvent(model));
+            events.add(new BanditEvent(model));
+            events.add(new MagicianEvent(model));
+            events.add(new ArtisanEvent(model));
+            events.add(new PriestEvent(model));
+            events.add(new CourierEvent(model));
+            events.add(new MonumentEvent(model));
+            events.add(new CompanyEvent(model));
+            events.add(new NoblemanEvent(model));
+            events.add(new FriendEvent(model));
+            events.add(new MageEvent(model));
+            events.add(new BrokenWagonEvent(model));
+            return MyRandom.sample(events);
+        } else if (dieRoll >= 9) {
+            return generateTerrainSpecificEvent(model);
+        }
+        return new NoEventState(model);
     }
 
     public void travelTo(Model model) {
@@ -301,7 +300,7 @@ public abstract class WorldHex implements Serializable {
         if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.getEveningState(model, freeLodging, freeRations);
         }
-        return new EveningState(model, freeLodging, freeRations);
+        return new EveningState(model, freeLodging, freeRations, true);
     }
 
     public void addWaterPath(WaterPath p) {

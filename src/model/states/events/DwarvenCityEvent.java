@@ -158,7 +158,7 @@ public class DwarvenCityEvent extends DailyEventState {
                     break;
                 case 5:
                     parkVisited = false;
-                    new EveningState(model, false, false).run(model);
+                    new EveningState(model, false, false, false).run(model);
                     break;
                 default :
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Okay gang, it's time to leave.");
@@ -221,7 +221,7 @@ public class DwarvenCityEvent extends DailyEventState {
             print("Pay " + cost + " to stay at the tavern tonight? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().addToGold(-cost);
-                EveningState eveningState = new EveningState(model, false, true);
+                EveningState eveningState = new EveningState(model, false, true, false);
                 eveningState.run(model);
                 parkVisited = false;
             }

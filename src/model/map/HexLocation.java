@@ -87,7 +87,7 @@ public abstract class HexLocation implements Serializable {
     }
 
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
-        return new EveningState(model, freeLodge, freeRations);
+        return new EveningState(model, freeLodge, freeRations, true);
     }
 
     public void setHex(WorldHex hex) {

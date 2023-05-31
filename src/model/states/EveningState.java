@@ -18,15 +18,17 @@ public class EveningState extends GameState {
     private final boolean freeRations;
     private boolean freeLodging;
     private Quest goOnQuest;
+    boolean doAutoSave;
 
-    public EveningState(Model model, boolean freeLodging, boolean freeRations) {
+    public EveningState(Model model, boolean freeLodging, boolean freeRations, boolean autoSave) {
         super(model);
         this.freeLodging = freeLodging;
         this.freeRations = freeRations;
+        this.doAutoSave = autoSave;
     }
 
     public EveningState(Model model) {
-        this(model, false, false);
+        this(model, false, false, true);
     }
 
     @Override
@@ -63,7 +65,9 @@ public class EveningState extends GameState {
             return new GameOverState(model);
         }
         if (this.goOnQuest == null) {
-            model.saveToFile("auto");
+            if (doAutoSave) {
+                model.saveToFile("auto");
+            }
             return model.getCurrentHex().getDailyActionState(model);
         }
         return new QuestState(model, goOnQuest);

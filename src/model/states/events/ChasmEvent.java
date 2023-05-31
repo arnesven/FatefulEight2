@@ -34,7 +34,7 @@ public class ChasmEvent extends DailyEventState {
             }
         } else {
             println("You turn away from the chasm, but it is already late in the day.");
-            new EveningState(model).run(model);
+            new EveningState(model, false, false, false).run(model);
             println("You travel away away from the chasm and finally find a new route to take.");
         }
     }

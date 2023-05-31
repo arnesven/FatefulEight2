@@ -11,7 +11,7 @@ public class MindControlSpell extends SkillBoostingSpell {
     private static final Sprite SPRITE = new ItemSprite(6, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public MindControlSpell() {
-        super("Mind Control", 16, MyColors.BLUE, 10, 2);
+        super("Mind Control", 16, MyColors.BLUE, 8, 2);
     }
 
     @Override
