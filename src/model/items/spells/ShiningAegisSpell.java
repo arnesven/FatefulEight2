@@ -7,13 +7,11 @@ import model.combat.ShiningAegisCondition;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.DownArrowAnimation;
-import view.sprites.ItemSprite;
-import view.sprites.Sprite;
-import view.sprites.UpArrowAnimation;
+import view.sprites.*;
 
 public class ShiningAegisSpell extends CombatSpell {
-    private static final Sprite SPRITE = new ItemSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
+    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
+
     public ShiningAegisSpell() {
         super("Shining Aegis", 12, MyColors.WHITE, 9, 1);
     }

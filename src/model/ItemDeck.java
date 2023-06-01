@@ -140,7 +140,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new HealingWordSpell(),
                 new SouthernCrossSpell(),
                 new AuraOfAllureSpell(),
-                // new TransmuteSpell()
+                new TransmuteSpell(),
                 new FireworksSpell(),
                 new MagmaBlastSpell(),
                 new EntropicBoltSpell(),
