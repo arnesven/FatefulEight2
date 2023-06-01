@@ -122,4 +122,8 @@ public class QuestState extends GameState {
         }
         return left;
     }
+
+    public Quest getQuest() {
+        return quest;
+    }
 }

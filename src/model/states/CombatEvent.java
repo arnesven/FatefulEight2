@@ -422,7 +422,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     public boolean didTimeOut() {
-        return timeLimit > roundCounter;
+        return roundCounter > timeLimit;
     }
 
     private void triggerConditions(Model model) {
@@ -431,5 +431,9 @@ public class CombatEvent extends DailyEventState {
         for (Combatant comb : combs) {
             comb.conditionsEndOfCombatRoundTrigger(model, this);
         }
+    }
+
+    public int getCurrentRound() {
+        return roundCounter;
     }
 }

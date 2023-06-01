@@ -85,7 +85,11 @@ public abstract class CombatSubScene extends QuestSubScene {
         if (combat.fled()) {
             return getFailEdge();
         }
-        if (!combat.didTimeOut()) {
+        if (combat.didTimeOut()) {
+            if (timeLimit == 0) { // Quest timed out from other reason => Escape spell
+                return new QuestEdge(state.getQuest().getFailEndingNode());
+            }
+        } else {
             defeated = true;
         }
         return getSuccessEdge();
