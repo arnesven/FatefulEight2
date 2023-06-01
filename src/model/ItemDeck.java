@@ -152,7 +152,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new HarmonizeSpell(),
                 new CallOfTheWildSpell(),
                 new GiantGrowthSpell(),
-                // new SummonFamiliarSpell()
+                new SummonFamiliarSpell(),
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),
                 new RaiseBoneWalkerSpell(),

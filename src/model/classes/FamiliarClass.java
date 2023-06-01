@@ -6,10 +6,10 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class BoneWalkerClass extends CharacterClass {
-    protected BoneWalkerClass() {
-        super("BoneWalker", "BoneWalker", 7, 3, true, 0, new WeightedSkill[]{
-                new WeightedSkill(Skill.Blades, 6)
+public class FamiliarClass extends CharacterClass {
+    protected FamiliarClass() {
+        super("Familiar", "Familiar", 4, 8, false, 0, new WeightedSkill[]{
+                new WeightedSkill(Skill.Blades, 5)
         });
     }
 
@@ -20,7 +20,7 @@ public class BoneWalkerClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x90, MyColors.PINK, appearance.getNormalHair());
+        return new AvatarSprite(race, 0xB0, MyColors.BROWN, MyColors.DARK_BROWN, appearance.getNormalHair());
     }
 
     @Override

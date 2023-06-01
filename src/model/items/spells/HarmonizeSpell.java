@@ -11,11 +11,12 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.CharSprite;
+import view.sprites.CombatSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class HarmonizeSpell extends CombatSpell {
-    private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BEIGE, MyColors.GREEN);
+    private static final Sprite SPRITE = new CombatSpellSprite(0, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
 
     public HarmonizeSpell() {
         super("Harmonize", 20, MyColors.GREEN, 9, 2, true);

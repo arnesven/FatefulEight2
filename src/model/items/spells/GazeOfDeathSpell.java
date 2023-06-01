@@ -9,11 +9,12 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.sprites.CombatSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class GazeOfDeathSpell extends CombatSpell {
-    private static final Sprite SPRITE = new ItemSprite(3, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public GazeOfDeathSpell() {
         super("Gaze of Death", 26, MyColors.BLACK, 8, 0);

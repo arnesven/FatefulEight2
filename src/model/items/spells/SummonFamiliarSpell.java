@@ -3,27 +3,28 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.LonnieLiebgott;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.Combatant;
 import model.combat.SummonCondition;
 import model.items.Equipment;
 import model.items.Item;
-import model.items.accessories.SkullCap;
-import model.items.clothing.OutlawArmor;
-import model.items.weapons.Longsword;
+import model.items.weapons.ShortSword;
 import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.*;
+import view.sprites.CombatSpellSprite;
+import view.sprites.SmokeBallAnimation;
+import view.sprites.Sprite;
 
 import java.util.List;
 
-public class RaiseBoneWalkerSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(9, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+public class SummonFamiliarSpell extends CombatSpell {
+    private static final Sprite SPRITE = new CombatSpellSprite(11, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
 
-    public RaiseBoneWalkerSpell() {
-        super("Raise Bone Walker", 34, MyColors.BLACK, 10, 3);
+    public SummonFamiliarSpell() {
+        super("Summon Familiar", 14, MyColors.GREEN, 7, 1, false);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
 
     @Override
     public Item copy() {
-        return new RaiseBoneWalkerSpell();
+        return new SummonFamiliarSpell();
     }
 
     @Override
@@ -48,23 +49,23 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
             GameCharacter gc = sumCond.getSummon();
             combat.removeAlly(gc);
             performer.removeCondition(SummonCondition.class);
+            combat.println("Your summon has been replaced.");
         }
-        GameCharacter boneWalker = new BoneWalkerAlly();
-        combat.addAllies(List.of(boneWalker));
-        performer.addCondition(new SummonCondition(boneWalker));
-        combat.addSpecialEffect(boneWalker, new SmokeBallAnimation());
+        GameCharacter familiar = new FamiliarAlly();
+        combat.addAllies(List.of(familiar));
+        performer.addCondition(new SummonCondition(familiar));
+        combat.addSpecialEffect(familiar, new SmokeBallAnimation());
     }
 
     @Override
     public String getDescription() {
-        return "Summons a bone walker to fight for the caster in combat.";
+        return "Summons a familiar to fight for the caster in combat.";
     }
 
-    private static class BoneWalkerAlly extends GameCharacter {
-        public BoneWalkerAlly() {
-            super("Bone Walker", "", Race.DARK_ELF, Classes.BONE_WALKER,
-                    new LonnieLiebgott(), new CharacterClass[0], new Equipment(new Longsword(), new OutlawArmor(), new SkullCap()));
+    private static class FamiliarAlly extends GameCharacter {
+        public FamiliarAlly() {
+            super("Familiar", "", Race.SOUTHERN_HUMAN, Classes.FAMILIAR,
+                    new LonnieLiebgott(), new CharacterClass[0], new Equipment(new ShortSword()));
         }
     }
-
 }

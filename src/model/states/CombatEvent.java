@@ -389,8 +389,16 @@ public class CombatEvent extends DailyEventState {
 
 
     public void addAllies(List<GameCharacter> gcs) {
+        for (GameCharacter gc : allies) {
+            combatMatrix.remove(gc);
+        }
         this.allies.addAll(gcs);
-        combatMatrix.addAllies(gcs);
+        combatMatrix.addAllies(allies);
+    }
+
+    public void removeAlly(GameCharacter gc) {
+        this.allies.remove(gc);
+        combatMatrix.remove(gc);
     }
 
     public Collection<? extends GameCharacter> getAllies() {
