@@ -20,6 +20,8 @@ public class AdvancedAppearance extends CharacterAppearance {
     private boolean hasEarrings = false;
     private MyColors detailColor = MyColors.GRAY;
     private boolean hasEyePatch = false;
+    private boolean raceSpecificEars = true;
+    private int[] ears;
 
     public AdvancedAppearance(Race race, boolean femaleGender, MyColors hairColor,
                               int mouth, int nose, CharacterEyes eyes, HairStyle hair,
@@ -257,4 +259,30 @@ public class AdvancedAppearance extends CharacterAppearance {
         detailColor = color;
     }
 
+    @Override
+    protected boolean classSpecificEars() {
+        return raceSpecificEars;
+    }
+
+    public void setRaceSpecificEars(boolean raceSpecificEars) {
+        this.raceSpecificEars = raceSpecificEars;
+    }
+    
+    public void setEars(Ears ears) {
+        ears.setYourself(this);
+    }
+
+    public void setEars(int[] ears) {
+        this.ears = ears;
+    }
+
+    @Override
+    protected PortraitSprite getLeftEar(MyColors hairColor) {
+        return new FaceSpriteWithHair(ears[0], hairColor);
+    }
+
+    @Override
+    protected PortraitSprite getRightEar(MyColors hairColor) {
+        return new FaceSpriteWithHair(ears[1], hairColor);
+    }
 }
