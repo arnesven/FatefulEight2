@@ -21,7 +21,7 @@ public abstract class BeastEnemy extends Enemy {
     @Override
     public void takeCombatDamage(CombatEvent combatEvent, int damage) {
         super.takeCombatDamage(combatEvent, damage);
-        if (aggro < HOSTILE) {
+        if (aggro < HOSTILE && !isDead()) {
             aggro++;
             combatEvent.println(getName() + " got angrier.");
         }
