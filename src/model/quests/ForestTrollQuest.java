@@ -8,6 +8,7 @@ import model.classes.Skill;
 import model.enemies.OlegTrollEnemy;
 import model.enemies.PetSpiderEnemy;
 import model.enemies.SpiderEnemy;
+import model.items.spells.ErodeSpell;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -46,6 +47,13 @@ public class ForestTrollQuest extends Quest {
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
                 state.println(caster.getName() + " pacifies the beast with the Harmonize spell.");
                 return new QuestEdge(getJunctions().get(1));
+            }
+        });
+        getScenes().get(3).get(0).addSpellCallback(new ErodeSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println("The cage erodes to dust before your eyes!");
+                return new QuestEdge(getSuccessEndingNode());
             }
         });
     }

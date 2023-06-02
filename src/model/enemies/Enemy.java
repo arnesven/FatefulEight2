@@ -215,7 +215,7 @@ public abstract class Enemy extends Combatant {
 
     @Override
     public void takeCombatDamage(CombatEvent combatEvent, int damage) {
-        if (damage > 0 && getDamageReduction() > 0) {
+        if (damage > 0 && getDamageReduction() > 0 && !hasCondition(ErodeCondition.class)) {
             int hpBefore = getHP();
             super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()));
             combatEvent.println("!Damage was reduced by " + (damage - (hpBefore - getHP())) + "!");

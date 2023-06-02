@@ -1,0 +1,50 @@
+package model.items.spells;
+
+import model.Model;
+import model.characters.GameCharacter;
+import model.combat.Combatant;
+import model.combat.ErodeCondition;
+import model.enemies.Enemy;
+import model.items.Item;
+import model.states.CombatEvent;
+import view.MyColors;
+import view.sprites.CombatSpellSprite;
+import view.sprites.Sprite;
+
+public class ErodeSpell extends CombatSpell {
+    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+
+    public ErodeSpell() {
+        super("Erode", 12, MyColors.RED, 7, 1, true);
+    }
+
+    @Override
+    protected Sprite getSprite() {
+        return SPRITE;
+    }
+
+    @Override
+    public Item copy() {
+        return new ErodeSpell();
+    }
+
+    @Override
+    public boolean canBeCastOn(Model model, Combatant target) {
+        return target instanceof Enemy;
+    }
+
+    @Override
+    public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+        if (((Enemy)target).getDamageReduction() == 0) {
+            combat.println(getName() + " has no effect on " + target.getName() + ".");
+        } else {
+            combat.println(target.getName() + "'s armor has been nullified!");
+            target.addCondition(new ErodeCondition());
+        }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Wares down a physical object until it crumbles to dust.";
+    }
+}

@@ -1,16 +1,22 @@
 package model.ruins;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.items.potions.Potion;
 import model.items.potions.UnstablePotion;
+import model.items.spells.ErodeSpell;
+import model.items.spells.Spell;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
 import view.MyColors;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.ArrowMenuSubView;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static model.ruins.DungeonRoom.BRICK_COLOR;
 import static model.ruins.DungeonRoom.FLOOR_COLOR;
@@ -57,24 +63,64 @@ public class CrackedWall extends DungeonDoor {
                 pot = p;
             }
         }
-        if (pot == null) {
+        ErodeSpell erodeSpell = null;
+        for (Spell sp : model.getParty().getInventory().getSpells()) {
+            if (sp instanceof ErodeSpell) {
+                erodeSpell = (ErodeSpell) sp;
+            }
+        }
+
+        List<String> options = new ArrayList<>();
+        if (pot != null) {
+            options.add("Use " + pot.getName());
+        }
+        if (erodeSpell != null) {
+            options.add("Cast " + erodeSpell.getName());
+        }
+
+        if (options.isEmpty()) {
             state.println("This wall is cracked and could probably be breached if you had some kind of explosives.");
-        } else {
-            state.print("Use " + pot.getName() + " on Cracked Wall? (Y/N) ");
-            if (state.yesNoInput()) {
-                model.getParty().getInventory().remove(pot);
-                explo = new ExplosionAnimation();
-                SoundEffects.playBoom();
-                while (!explo.isDone()) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                state.println("The " + pot.getName() + " explodes on contact with the wall. " +
-                        "The wall crumbles and opens a passage into the next room.");
+            return;
+        }
+        state.println("What do you want to use on the cracked wall?");
+
+        options.add("Cancel");
+        final String[] selected = {null};
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 28 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
+            @Override
+            protected void enterPressed(Model model, int cursorPos) {
+                selected[0] = options.get(cursorPos);
+                model.setSubView(getPrevious());
+            }
+        });
+        state.waitForReturnSilently();
+        if (selected[0].contains("Use")) {
+            model.getParty().getInventory().remove(pot);
+            explodeAndSound();
+            state.print("The " + pot.getName() + " explodes on contact with the wall. " +
+                    "The wall crumbles and opens a passage into the next room.");
+            state.unlockDoor(model, direction);
+        } else if (selected[0].contains("Cast")) {
+            state.println("Select who will cast " + erodeSpell.getName());
+            GameCharacter caster = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
+            boolean success = erodeSpell.castYourself(model, state, caster);
+            if (success) {
+                explodeAndSound();
+                state.println("The wall crumbles to dust before your eyes.");
                 state.unlockDoor(model, direction);
+            }
+        }
+
+    }
+
+    private void explodeAndSound() {
+        explo = new ExplosionAnimation();
+        SoundEffects.playBoom();
+        while (!explo.isDone()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }

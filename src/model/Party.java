@@ -7,6 +7,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
+import model.items.potions.UnstablePotion;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.World;

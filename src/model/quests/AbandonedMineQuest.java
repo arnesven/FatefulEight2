@@ -15,6 +15,7 @@ import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
 import model.items.clothing.ScaleArmor;
 import model.items.spells.BindDaemonSpell;
+import model.items.spells.ErodeSpell;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.items.weapons.Pickaxe;
@@ -62,6 +63,13 @@ public class AbandonedMineQuest extends Quest {
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
                 state.println(caster.getFirstName() + " levitates the party across the chasm!");
                 return new QuestEdge(getScenes().get(2).get(0));
+            }
+        });
+        getScenes().get(0).get(0).addSpellCallback(new ErodeSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println("The rubble erodes to dust!");
+                return new QuestEdge(getScenes().get(1).get(0));
             }
         });
     }
