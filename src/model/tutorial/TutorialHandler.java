@@ -1,6 +1,7 @@
 package model.tutorial;
 
 import model.Model;
+import model.SettingsManager;
 import model.states.DailyEventState;
 import model.states.events.PeskyCrowEvent;
 import view.help.*;
@@ -12,10 +13,9 @@ import java.util.Set;
 public class TutorialHandler implements Serializable {
 
     private Set<String> keys = new HashSet<>();
-    private boolean tutorialEnabled = true;
 
     private void runOnce(String key, TutorialStep step) {
-        if (!keys.contains(key) && tutorialEnabled) {
+        if (!keys.contains(key) && SettingsManager.tutorialEnabled()) {
             step.doStep();
             keys.add(key);
         }
@@ -29,13 +29,13 @@ public class TutorialHandler implements Serializable {
     }
 
     public void setTutorialEnabled(boolean b) {
-        tutorialEnabled = b;
+        SettingsManager.setTutorialEnabled(b);
     }
 
     public void theInn(Model model) {
         runOnce("theInn", () -> {
             model.getLog().waitForAnimationToFinish();
-            if (tutorialEnabled) {
+            if (SettingsManager.tutorialEnabled()) {
                 model.transitionToDialog(new TutorialDailyActions(model.getView()));
             }
         });
@@ -67,7 +67,7 @@ public class TutorialHandler implements Serializable {
     }
 
     public DailyEventState getTutorialEvent(Model model) {
-        if (!tutorialEnabled || keys.contains("event")) {
+        if (!SettingsManager.tutorialEnabled() || keys.contains("event")) {
             return null;
         }
         keys.add("event");

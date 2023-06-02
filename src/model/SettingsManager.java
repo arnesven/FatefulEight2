@@ -8,6 +8,7 @@ public class SettingsManager {
 
     private static boolean autosave = true;
     private static LogSpeed logSpeed = LogSpeed.FAST;
+    private static boolean tutorial = true;
 
     public static void toggleAutosave() {
         autosave = !autosave;
@@ -40,5 +41,17 @@ public class SettingsManager {
         } else {
             logSpeed = LogSpeed.SLOW;
         }
+    }
+
+    public static boolean tutorialEnabled() {
+        return tutorial;
+    }
+
+    public static void setTutorialEnabled(boolean b) {
+        tutorial = b;
+    }
+
+    public static void toggleTutorial() {
+        tutorial = !tutorial;
     }
 }
