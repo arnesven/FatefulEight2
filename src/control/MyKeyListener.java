@@ -23,7 +23,7 @@ public class MyKeyListener implements KeyListener {
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER && keyEvent.isAltDown()) {
             fatefulEight.toggleFullScreen();
-        } else {
+        } else if (keyEvent.getKeyCode() != KeyEvent.VK_ALT) {
             fatefulEight.enqueueKeyEvent(keyEvent);
         }
     }
