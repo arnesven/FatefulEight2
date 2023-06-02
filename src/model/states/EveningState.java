@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.SettingsManager;
 import model.characters.GameCharacter;
 import model.quests.Quest;
 import model.quests.TownFairQuest;
@@ -65,7 +66,7 @@ public class EveningState extends GameState {
             return new GameOverState(model);
         }
         if (this.goOnQuest == null) {
-            if (doAutoSave) {
+            if (doAutoSave && SettingsManager.autosaveEnabled()) {
                 model.saveToFile("auto");
             }
             return model.getCurrentHex().getDailyActionState(model);

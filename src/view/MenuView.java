@@ -7,9 +7,9 @@ import java.util.List;
 
 public class MenuView extends ArrowMenuGameView {
 
-    private static List<String> labels = List.of("Party", "Map", "Inventory", "Skills", "Spells", "Exit Game");
+    private static List<String> labels = List.of("Party", "Map", "Inventory", "Skills", "Spells", "Setting", "Exit Game");
     public static final int MENU_WIDTH = 15;
-    public static final int MENU_HEIGHT = 14;
+    public static final int MENU_HEIGHT = 16;
     public static final int Y_START = 14;
     public static final int X_START = (DrawingArea.WINDOW_COLUMNS - MENU_WIDTH) / 2;
     private GameView nextView;
@@ -19,7 +19,7 @@ public class MenuView extends ArrowMenuGameView {
         super(true, X_START, Y_START, MENU_WIDTH, MENU_HEIGHT, labels);
         this.nextView = previous;
         options = List.of(new PartyView(previous), new FullMapView(previous), new InventoryView(previous),
-                new SkillsView(previous), new SpellsView(previous), new DummyView());
+                new SkillsView(previous), new SpellsView(previous), new SettingsView(previous), new DummyView());
     }
 
     @Override

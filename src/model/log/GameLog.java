@@ -1,6 +1,7 @@
 package model.log;
 
 import model.Model;
+import model.SettingsManager;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -51,13 +52,13 @@ public class GameLog {
     public synchronized void update(long timeSinceLast, Model model) {
         if (!isAnimationDone()) {
             this.elapsedTime += timeSinceLast;
-            if (this.elapsedTime > PRINT_DELAY_MS) {
-                this.elapsedTime = 0;
-                addToCurrentLine(animationBuffer.get(0));
-                animationBuffer.remove(0);
-                model.madeChanges();
-                checkForAutoWrapping();
+            if (this.elapsedTime > 2*getDelay()) {
+                takeOne(model);
+                takeOne(model);
+            } else if (this.elapsedTime > getDelay()) {
+                takeOne(model);
             }
+
         } else if (inputMode != null) {
             if (this.caretBlinkCount % 8 == 0) {
                 if (caret == FILLED_BLOCK) {
@@ -68,6 +69,25 @@ public class GameLog {
             }
             this.caretBlinkCount++;
             model.madeChanges();
+        }
+    }
+
+    private void takeOne(Model model) {
+        this.elapsedTime = 0;
+        addToCurrentLine(animationBuffer.get(0));
+        animationBuffer.remove(0);
+        model.madeChanges();
+        checkForAutoWrapping();
+    }
+
+    private long getDelay() {
+        switch (SettingsManager.getLogSpeed()) {
+            case FAST:
+                return 20;
+            case FASTER:
+                return 10;
+            default:
+                return 40;
         }
     }
 
