@@ -349,7 +349,7 @@ public class CombatEvent extends DailyEventState {
                 subView.addSpecialEffect(target, killAnimation);
             }
             destroyEnemy(getModel(), (Enemy)target, damager);
-            if (MyRandom.rollD10() > 5) {
+            if (MyRandom.rollD10() > 5 && getModel().getParty().getPartyMembers().contains(damager)) {
                 getModel().getParty().partyMemberSay(getModel(), damager,
                         List.of("Vanquished!", "Destroyed!", "Don't mess with me.",
                                 "That one won't be bothering us any more.",

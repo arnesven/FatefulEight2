@@ -45,6 +45,6 @@ public class ErodeSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "Wares down a physical object until it crumbles to dust.";
+        return "Wears down a physical object until it crumbles to dust.";
     }
 }

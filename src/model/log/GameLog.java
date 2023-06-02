@@ -73,11 +73,13 @@ public class GameLog {
     }
 
     private void takeOne(Model model) {
-        this.elapsedTime = 0;
-        addToCurrentLine(animationBuffer.get(0));
-        animationBuffer.remove(0);
-        model.madeChanges();
-        checkForAutoWrapping();
+        if (!animationBuffer.isEmpty()) {
+            this.elapsedTime = 0;
+            addToCurrentLine(animationBuffer.get(0));
+            animationBuffer.remove(0);
+            model.madeChanges();
+            checkForAutoWrapping();
+        }
     }
 
     private long getDelay() {

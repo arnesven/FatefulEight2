@@ -36,7 +36,8 @@ public class CombatSummarySubView extends SubView {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.isDead()) {
                 BorderFrame.drawString(model.getScreenHandler(), gc.getFullName() + " was slain",
-                        X_OFFSET+3, Y_OFFSET+4, MyColors.RED, MyColors.BLUE);
+                        X_OFFSET+3, row-2, MyColors.RED, MyColors.BLUE);
+                row++;
             }
         }
         row++;
