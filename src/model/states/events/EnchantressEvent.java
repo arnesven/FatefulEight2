@@ -247,19 +247,7 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     private void goHunting(Model model) {
-        println("You travel into a nearby copse of trees. Pretty soon you find a pig's trail and follow it.");
-        List<Enemy> enemies = new ArrayList<>();
-        if (MyRandom.randInt(4) == 0) {
-            leaderSay("That's not a boar... that's a... BEAR!");
-            enemies.add(new BearEnemy('A'));
-        } else {
-            leaderSay("Shhh... there... wild boar!");
-            int noOfBoar = MyRandom.randInt(1, 3);
-            for (int i = 0; i < noOfBoar; ++i) {
-                enemies.add(new WildBoarEnemy('A'));
-            }
-        }
-        runCombat(enemies, new GrassCombatTheme(), true);
+        new HuntingEvent(model).doHunting(model);
         setCurrentTerrainSubview(model);
     }
 

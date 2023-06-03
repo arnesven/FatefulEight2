@@ -26,7 +26,7 @@ public class SettingsView extends SelectableListMenu {
         return List.of(new DrawableObject(xStart, yStart+1) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                print(model.getScreenHandler(), x+5, y, "- Settings -");
+                print(model.getScreenHandler(), x+6, y, "- Settings -");
             }
         });
     }

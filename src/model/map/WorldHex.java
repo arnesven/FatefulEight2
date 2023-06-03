@@ -56,13 +56,18 @@ public abstract class WorldHex implements Serializable {
         if (tutorialEvent != null) {
             return tutorialEvent;
         }
+        DailyEventState eventToReturn;
         if (hexLocation != null && !hexLocation.isDecoration()) {
-            return hexLocation.generateEvent(model);
+            eventToReturn = hexLocation.generateEvent(model);
+        } else if (model.getParty().isOnRoad()) {
+            eventToReturn = generateOnRoadEvent(model);
+        } else {
+            eventToReturn = generateTerrainSpecificEvent(model);
         }
-        if (model.getParty().isOnRoad()) {
-            return generateOnRoadEvent(model);
+        if (eventToReturn instanceof NoEventState && MyRandom.randInt(10) == 0) {
+            eventToReturn = generatePartyEvent(model);
         }
-        return generateTerrainSpecificEvent(model);
+        return eventToReturn;
     }
 
     protected abstract DailyEventState generateTerrainSpecificEvent(Model model);
@@ -332,5 +337,12 @@ public abstract class WorldHex implements Serializable {
             return hexLocation.inhibitOnRoadSubview();
         }
         return false;
+    }
+
+
+    private DailyEventState generatePartyEvent(Model model) {
+        return MyRandom.sample(List.of(
+                new RationsGoneBadEvent(model)
+        ));
     }
 }
