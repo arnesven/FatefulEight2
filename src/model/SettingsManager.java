@@ -8,7 +8,6 @@ public class SettingsManager {
 
     private static boolean autosave = true;
     private static LogSpeed logSpeed = LogSpeed.FAST;
-    private static boolean tutorial = true;
 
     public static void toggleAutosave() {
         autosave = !autosave;
@@ -43,15 +42,11 @@ public class SettingsManager {
         }
     }
 
-    public static boolean tutorialEnabled() {
-        return tutorial;
+    public static boolean tutorialEnabled(Model model) {
+        return model.getTutorial().isTutorialEnabled();
     }
 
-    public static void setTutorialEnabled(boolean b) {
-        tutorial = b;
-    }
-
-    public static void toggleTutorial() {
-        tutorial = !tutorial;
+    public static void toggleTutorial(Model model) {
+        model.getTutorial().setTutorialEnabled(!model.getTutorial().isTutorialEnabled());
     }
 }

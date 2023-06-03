@@ -46,10 +46,10 @@ public class SettingsView extends SelectableListMenu {
                     SettingsManager.toggleLogSpeed();
                 }
             },
-            new ListContent(xStart+2, yStart+7, "Tutorial " + (SettingsManager.tutorialEnabled()?"ON":"OFF")) {
+            new ListContent(xStart+2, yStart+7, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    SettingsManager.toggleTutorial();
+                    SettingsManager.toggleTutorial(model);
                 }
             }
             );
