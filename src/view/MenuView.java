@@ -30,6 +30,8 @@ public class MenuView extends ArrowMenuGameView {
                 protected void doAction(Model model) {
                     model.setExitGame(true);
                 }
+
+
             });
             madeChanges();
         } else {

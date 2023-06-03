@@ -18,6 +18,11 @@ public abstract class YesNoMessageView extends SimpleMessageView {
                 setTimeToTransition(true);
                 doAction(model);
             }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return true;
+            }
         });
         return list;
     }
