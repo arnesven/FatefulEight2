@@ -3,6 +3,7 @@ package model;
 import model.items.*;
 import model.items.accessories.*;
 import model.items.clothing.*;
+import model.items.designs.CraftingDesign;
 import model.items.potions.*;
 import model.items.spells.*;
 import model.items.weapons.SkullWand;
@@ -59,6 +60,8 @@ public class ItemDeck extends ArrayList<Item> {
         return (Potion)MyRandom.sample(allPotions()).copy();
     }
 
+    public CraftingDesign getRandomDesign() {return (CraftingDesign) MyRandom.sample(allCraftingDesigns()).copy(); }
+
     public Item getRandomItem() { return draw(1).get(0); }
 
     private static Collection<? extends Item> allItems() {
@@ -72,7 +75,30 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allShields());
         allItems.addAll(allSpells());
         allItems.addAll(allPotions());
+        allItems.addAll(allCraftingDesigns());
         return allItems;
+    }
+
+    private static List<CraftingDesign> allCraftingDesigns() {
+        return List.of(
+                new CraftingDesign(new GreatHelm()),
+                new CraftingDesign(new SpikedShield()),
+                new CraftingDesign(new DragonArmor()),
+                new CraftingDesign(new FullPlateArmor()),
+                new CraftingDesign(new BastardSword()),
+                new CraftingDesign(new Claymore()),
+                new CraftingDesign(new Flail()),
+                new CraftingDesign(new GrandMaul()),
+                new CraftingDesign(new GreatAxe()),
+                new CraftingDesign(new Pike()),
+                new CraftingDesign(new RepeatingCrossbow()),
+                new CraftingDesign(new RitualDagger()),
+                new CraftingDesign(new SkullWand()),
+                new CraftingDesign(new Katana()),
+                new CraftingDesign(new Crown()),
+                new CraftingDesign(new Diadem()),
+                new CraftingDesign(new LuckyTalisman())
+                );
     }
 
     public static List<Potion> allPotions() {
@@ -205,4 +231,5 @@ public class ItemDeck extends ArrayList<Item> {
                 new Broadsword(), new Longsword(), new Katana(), new TwoHandedSword(),
                 new Claymore(), new BastardSword());
     }
+
 }

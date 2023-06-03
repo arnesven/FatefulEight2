@@ -102,7 +102,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new CharlatanEvent(model),
                     new PlayEvent(model),
                     new MarketEvent(model),
-                    //new ProtectionSchemeEvent(model), // TODO:
+                    new WorkshopEvent(model),
                     new AlchemistEvent(model),
                     new GamblerEvent(model),
                     new SmithEvent(model),

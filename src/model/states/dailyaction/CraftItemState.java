@@ -6,10 +6,12 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
 import model.items.clothing.JustClothes;
+import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
 import model.items.spells.Spell;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.GameState;
+import util.MyPair;
 import util.MyRandom;
 import view.subviews.ArrowMenuSubView;
 
@@ -35,17 +37,25 @@ public class CraftItemState extends GameState {
 
         Set<String> optionNames = new HashSet<>();
         for (Item it : allItems) {
-            int cost = it.getCost() / 2;
-            if (model.getParty().getInventory().getMaterials() > cost) {
-                optionNames.add(it.getName() + " (" + cost + ")");
+            if (it instanceof CraftingDesign) {
+                int cost = ((CraftingDesign) it).getCraftable().getCost() / 3;
+                if (model.getParty().getInventory().getMaterials() > cost) {
+                    optionNames.add(((CraftingDesign)it).getCraftableName() + " (" + cost + ")");
+                }
+            } else {
+                int cost = it.getCost() / 2;
+                if (model.getParty().getInventory().getMaterials() > cost) {
+                    optionNames.add(it.getName() + " (" + cost + ")");
+                }
             }
         }
         if (optionNames.isEmpty()) {
             println("You do not have enough materials to craft anything.");
             return null;
         }
-        Item selectedItem = getSelectedItem(model, optionNames, allItems);
+         MyPair<Item, Integer> pair = getSelectedItem(model, optionNames, allItems);
 
+        Item selectedItem = pair.first;
         if (selectedItem == null){
             return null;
         }
@@ -55,7 +65,7 @@ public class CraftItemState extends GameState {
             println("Which party member should attempt to craft the " + selectedItem.getName() + "?");
             crafter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         } else {
-            crafter = model.getAllCharacters().get(0);
+            crafter = model.getParty().getPartyMembers().get(0);
             print(crafter.getName() + " is preparing to craft an item. Press enter to continue.");
             waitForReturn();
         }
@@ -70,7 +80,7 @@ public class CraftItemState extends GameState {
                 break;
             }
         }
-        int materialCost = selectedItem.getCost() / 2;
+        int materialCost = pair.second;
         model.getParty().getInventory().addToMaterials(-materialCost);
         if (failure) {
             println(crafter.getName() + " has failed to craft " + selectedItem.getName() + " and wasted " + materialCost + " materials while doing so.");
@@ -82,7 +92,7 @@ public class CraftItemState extends GameState {
         return null;
     }
 
-    private Item getSelectedItem(Model model, Set<String> optionNames, List<Item> allItems) {
+    private MyPair<Item, Integer> getSelectedItem(Model model, Set<String> optionNames, List<Item> allItems) {
         List<String> options = new ArrayList<>(optionNames);
         options.add("Cancel");
         println("What item would you like to craft?");
@@ -96,8 +106,15 @@ public class CraftItemState extends GameState {
         });
         waitForReturnSilently();
         for (Item it : allItems) {
-            if (selected[0].contains(it.getName())) {
-                return it;
+            if (it instanceof CraftingDesign) {
+                if (selected[0].contains(((CraftingDesign) it).getCraftableName())) {
+                    Item it2 = ((CraftingDesign) it).getCraftable();
+                    return new MyPair<>(it2, it2.getCost()/3);
+                }
+            } else {
+                if (selected[0].contains(it.getName())) {
+                    return new MyPair<>(it, it.getCost()/2);
+                }
             }
         }
         return null; // Cancel chosen
