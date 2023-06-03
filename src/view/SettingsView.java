@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 12;
+    private static final int HEIGHT = 14;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -34,19 +34,25 @@ public class SettingsView extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(
-            new ListContent(xStart+2, yStart+3, "Autosave " + (SettingsManager.autosaveEnabled()?"ON":"OFF")) {
+            new ListContent(xStart+2, yStart+3, "Autosave " + (model.getSettings().autosaveEnabled()?"ON":"OFF")) {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    SettingsManager.toggleAutosave();
+                    model.getSettings().toggleAutosave();
                 }
             },
-            new ListContent(xStart+2, yStart+5, "Log Speed " + SettingsManager.logSpeedAsText()) {
+            new ListContent(xStart+2, yStart+5, "Log Speed " + SettingsManager.logSpeedAsText(model.getSettings().getLogSpeed())) {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    SettingsManager.toggleLogSpeed();
+                    model.getSettings().toggleLogSpeed();
                 }
             },
-            new ListContent(xStart+2, yStart+7, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
+            new ListContent(xStart+2, yStart+6, "Combat Speed " + SettingsManager.logSpeedAsText(model.getSettings().getCombatLogSpeed())) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    model.getSettings().toggleCombatLogSpeed();
+                }
+            },
+            new ListContent(xStart+2, yStart+8, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     SettingsManager.toggleTutorial(model);

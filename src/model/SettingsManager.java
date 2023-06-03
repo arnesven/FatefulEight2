@@ -1,27 +1,32 @@
 package model;
 
-public class SettingsManager {
+import java.io.Serializable;
+
+public class SettingsManager implements Serializable {
 
     public enum LogSpeed {
         SLOW, FAST, FASTER
     }
 
-    private static boolean autosave = true;
-    private static LogSpeed logSpeed = LogSpeed.FAST;
+    private boolean autosave = true;
+    private LogSpeed logSpeed = LogSpeed.FAST;
+    private LogSpeed combatLogSpeed = LogSpeed.FAST;
 
-    public static void toggleAutosave() {
+    public void toggleAutosave() {
         autosave = !autosave;
     }
 
-    public static boolean autosaveEnabled() {
+    public boolean autosaveEnabled() {
         return autosave;
     }
 
-    public static LogSpeed getLogSpeed() {
+    public LogSpeed getLogSpeed() {
         return logSpeed;
     }
 
-    public static String logSpeedAsText() {
+    public LogSpeed getCombatLogSpeed() { return combatLogSpeed; }
+
+    public static String logSpeedAsText(LogSpeed logSpeed) {
         switch (logSpeed) {
             case FAST:
                 return "FAST";
@@ -32,14 +37,22 @@ public class SettingsManager {
         }
     }
 
-    public static void toggleLogSpeed() {
+    public void toggleLogSpeed() {
+        logSpeed = cycleSpeed(logSpeed);
+    }
+
+    public void toggleCombatLogSpeed() {
+        combatLogSpeed = cycleSpeed(combatLogSpeed);
+    }
+
+    private LogSpeed cycleSpeed(LogSpeed logSpeed) {
         if (logSpeed == LogSpeed.FAST) {
-            logSpeed = LogSpeed.FASTER;
-        } else if (logSpeed == LogSpeed.SLOW) {
-            logSpeed = LogSpeed.FAST;
-        } else {
-            logSpeed = LogSpeed.SLOW;
+            return LogSpeed.FASTER;
         }
+        if (logSpeed == LogSpeed.SLOW) {
+            return LogSpeed.FAST;
+        }
+        return LogSpeed.SLOW;
     }
 
     public static boolean tutorialEnabled(Model model) {

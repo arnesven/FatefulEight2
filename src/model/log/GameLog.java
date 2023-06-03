@@ -52,10 +52,10 @@ public class GameLog {
     public synchronized void update(long timeSinceLast, Model model) {
         if (!isAnimationDone()) {
             this.elapsedTime += timeSinceLast;
-            if (this.elapsedTime > 2*getDelay()) {
+            if (this.elapsedTime > 2*getDelay(model)) {
                 takeOne(model);
                 takeOne(model);
-            } else if (this.elapsedTime > getDelay()) {
+            } else if (this.elapsedTime > getDelay(model)) {
                 takeOne(model);
             }
 
@@ -82,8 +82,12 @@ public class GameLog {
         }
     }
 
-    private long getDelay() {
-        switch (SettingsManager.getLogSpeed()) {
+    private long getDelay(Model model) {
+        SettingsManager.LogSpeed speedToUse = model.getSettings().getLogSpeed();
+        if (model.isInCombat()) {
+            speedToUse = model.getSettings().getCombatLogSpeed();
+        }
+        switch (speedToUse) {
             case FAST:
                 return 20;
             case FASTER:

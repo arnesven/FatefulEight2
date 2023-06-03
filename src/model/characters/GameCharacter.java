@@ -316,7 +316,9 @@ public class GameCharacter extends Combatant {
 
         result.add(new CombatAction("Pass") {
             @Override
-            public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) { }
+            public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                combat.println("");
+            }
         });
         return result;
     }

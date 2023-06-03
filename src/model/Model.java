@@ -413,4 +413,8 @@ public class Model {
     public boolean isInDungeon() {
         return state instanceof ExploreRuinsState;
     }
+
+    public SettingsManager getSettings() {
+        return gameData.settings;
+    }
 }
