@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.states.DailyEventState;
+import model.states.RecruitState;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.ChangeClassSubView;
 import view.subviews.ChangeClassTransitionSubView;
@@ -60,7 +61,8 @@ public class ChangeClassEvent extends DailyEventState {
                     ChangeClassTransitionSubView.transition(model, subView, gc, subView.getWouldBe(gc));
                     gc.setClass(targetClasss);
                     if (gc.getLevel() == 0) {
-                        gc.setLevel(1);
+                        gc.setLevel((int)RecruitState.calculateAverageLevel(model));
+                        println("From the experience of being in the party, " + gc.getName() + " advances to level " + gc.getLevel() + "!");
                     }
                     println(gc.getName() + " is now a " + targetClasss.getFullName() + "!");
                     candidates.remove(gc);
