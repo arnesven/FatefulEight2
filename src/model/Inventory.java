@@ -22,6 +22,7 @@ public class Inventory implements Serializable {
     private List<Spell> spells = new ArrayList<>();
     private List<Potion> potions = new ArrayList<>();
     private List<CraftingDesign> designs = new ArrayList<>();
+    private List<PotionRecipe> recipes = new ArrayList<>();
     private int food = 10;
     private int ingredients = 0;
     private int materials = 0;
@@ -46,6 +47,8 @@ public class Inventory implements Serializable {
 
     public void add(CraftingDesign design) { designs.add(design); }
 
+    public void add(PotionRecipe recipe) { recipes.add(recipe); }
+
     public List<Weapon> getWeapons() {
         return weapons;
     }
@@ -55,6 +58,10 @@ public class Inventory implements Serializable {
     }
 
     public List<Potion> getPotions() { return potions; }
+
+    public List<PotionRecipe> getRecipes() { return recipes; }
+
+    public List<CraftingDesign> getCraftingDesigns() { return designs; }
 
     public void remove(Weapon weapon) {
         this.weapons.remove(weapon);
@@ -119,6 +126,7 @@ public class Inventory implements Serializable {
         sets.add(spells);
         sets.add(potions);
         sets.add(designs);
+        sets.add(recipes);
         return sets;
     }
 

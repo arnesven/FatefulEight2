@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.PotionRecipe;
 import model.items.potions.Potion;
 import model.states.GameState;
 import view.MyColors;
@@ -18,6 +19,7 @@ import java.util.Set;
 public class AlchemySpell extends ImmediateSpell {
     private static final Sprite SPRITE = new ItemSprite(10, 8, MyColors.BEIGE, MyColors.GREEN);
     private Potion selectedPotion;
+    private int ingredientCost = 0;
 
     public AlchemySpell() {
         super("Alchemy", 5, MyColors.GREEN, 6, 0);
@@ -36,8 +38,8 @@ public class AlchemySpell extends ImmediateSpell {
     @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         model.getTutorial().alchemy(model);
-        if (model.getParty().getInventory().getPotions().isEmpty()) {
-            state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have any potions.");
+        if (model.getParty().getInventory().getPotions().isEmpty() && model.getParty().getInventory().getRecipes().isEmpty()) {
+            state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have any potions or recipes.");
             return false;
         }
 
@@ -47,6 +49,9 @@ public class AlchemySpell extends ImmediateSpell {
             if (cost <= model.getParty().getInventory().getIngredients()) {
                 setOfPotions.add(p.getName() + " (" + p.getCost() / 2 + ")");
             }
+        }
+        for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
+            setOfPotions.add(recipe.getBrewable().getName() + " (" + recipe.getBrewable().getCost() / 3 + ")");
         }
         if (setOfPotions.isEmpty()) {
             state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have enough ingredients.");
@@ -68,6 +73,14 @@ public class AlchemySpell extends ImmediateSpell {
         for (Potion p : model.getParty().getInventory().getPotions()) {
             if (selected[0].contains(p.getName())) {
                 this.selectedPotion = p;
+                this.ingredientCost = p.getCost() / 2;
+                break;
+            }
+        }
+        for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
+            if (selected[0].contains(recipe.getBrewable().getName())) {
+                this.selectedPotion = recipe.getBrewable();
+                this.ingredientCost = recipe.getBrewable().getCost() / 3;
                 break;
             }
         }
@@ -79,7 +92,7 @@ public class AlchemySpell extends ImmediateSpell {
 
     @Override
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
-        int cost = selectedPotion.getCost()/2;
+        int cost = ingredientCost;
         state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
         model.getParty().getInventory().addToIngredients(-cost);
         model.getParty().getInventory().addItem(selectedPotion.copy());

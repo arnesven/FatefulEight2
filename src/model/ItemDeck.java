@@ -76,6 +76,7 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allSpells());
         allItems.addAll(allPotions());
         allItems.addAll(allCraftingDesigns());
+        allItems.addAll(allPotionRecipes());
         return allItems;
     }
 
@@ -105,6 +106,15 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(new HealthPotion(), new StaminaPotion(), new RejuvenationPotion(), new AntiParalysisPotion(),
                 new AntidotePotion(), new UnstablePotion(), new RevivingElixir(), new SleepingPotion(),
                 new StrengthPotion(), new DexterityPotion(), new WitsPotion(), new CharismaPotion());
+    }
+
+    public static List<PotionRecipe> allPotionRecipes() {
+        return List.of(new PotionRecipe(new HealthPotion()), new PotionRecipe(new StaminaPotion()),
+                new PotionRecipe(new RejuvenationPotion()), new PotionRecipe(new AntiParalysisPotion()),
+                new PotionRecipe(new AntidotePotion()), new PotionRecipe(new UnstablePotion()),
+                new PotionRecipe(new SleepingPotion()), new PotionRecipe(new StrengthPotion()),
+                new PotionRecipe(new DexterityPotion()), new PotionRecipe(new WitsPotion()),
+                new PotionRecipe(new CharismaPotion()), new PotionRecipe(new RevivingElixir()));
     }
 
     public static List<HeadGearItem> allHeadGear() {
