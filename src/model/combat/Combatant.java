@@ -120,7 +120,8 @@ public abstract class Combatant implements Serializable {
         int count = 0;
         for (Condition cond : conditions) {
             Sprite spr = cond.getSymbol();
-            screenHandler.register(spr.getName(), new Point(xpos, ypos - count), spr);
+            screenHandler.register(spr.getName(), new Point(xpos+count, ypos), spr);
+            count++;
         }
     }
 

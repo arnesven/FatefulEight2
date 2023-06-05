@@ -2,10 +2,7 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.items.EquipableItem;
-import model.items.Equipment;
-import model.items.Item;
-import model.items.UsableItem;
+import model.items.*;
 import model.items.potions.Potion;
 import model.items.spells.Spell;
 import model.items.weapons.Weapon;
@@ -154,6 +151,7 @@ public class InventoryView extends SelectableListMenu {
                         result.addAll(model.getParty().getInventory().getPotions());
                         result.addAll(model.getParty().getInventory().getRecipes());
                         result.addAll(model.getParty().getInventory().getCraftingDesigns());
+                        result.addAll(model.getParty().getInventory().getScrolls());
                         return result;
                     }
                 }};
@@ -207,6 +205,9 @@ public class InventoryView extends SelectableListMenu {
                         } else if (itemToEquip instanceof Spell) {
                             setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
                                     ((Spell) itemToEquip).castFromMenu(model, gc)), model);
+                        } else if (itemToEquip instanceof Scroll) {
+                            setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
+                                    ((Scroll) itemToEquip).castFromMenu(model, gc)), model);
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);

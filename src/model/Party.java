@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.items.PotionRecipe;
+import model.items.Scroll;
 import model.items.clothing.DragonArmor;
 import model.items.designs.CraftingDesign;
 import model.items.potions.*;

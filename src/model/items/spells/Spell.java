@@ -15,6 +15,7 @@ public abstract class Spell extends Item {
     private final MyColors color;
     private final int difficulty;
     private final int hpCost;
+    private boolean isCastFromScroll = false;
 
     public Spell(String name, int cost, MyColors color, int difficulty, int hpCost) {
         super(name, cost);
@@ -48,7 +49,9 @@ public abstract class Spell extends Item {
         if (caster.hasCondition(BlackPactCondition.class)) {
             health = Math.max(0, health - 2);
         }
-        caster.addToHP(-health);
+        if (!isCastFromScroll) {
+            caster.addToHP(-health);
+        }
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
             model.getParty().remove(caster, true, false, 0);
@@ -108,5 +111,9 @@ public abstract class Spell extends Item {
             return "You cannot cast " + getName() + " right now.";
         }
         return gc.getFirstName() + " is casting " + getName() + "...";
+    }
+
+    public void setCastFromScroll(boolean b) {
+        isCastFromScroll = b;
     }
 }

@@ -10,7 +10,7 @@ public class BurningWeaponCondition extends Condition {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD0), MyColors.BLACK, MyColors.RED, MyColors.CYAN);
 
     public BurningWeaponCondition() {
-        super("Burning Weapon", "BrW");
+        super("Burning Weapon", "BRW");
     }
 
     @Override

@@ -35,18 +35,7 @@ public class SpellCombatAction extends CombatAction {
         List<CombatAction> res = new ArrayList<>();
         for (CombatSpell spell : combatSpells) {
             if (spell.canBeCastOn(model, target)) {
-                res.add(new CombatAction(spell.getName()) {
-                    @Override
-                    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                        boolean success = spell.castYourself(model, combat, performer);
-                        if (success) {
-                            combat.addSpecialEffect(performer, new CastingEffectSprite());
-                            spell.applyCombatEffect(model, combat, performer, target);
-                        } else {
-                            combat.addSpecialEffect(performer, new MiscastEffectSprite());
-                        }
-                    }
-                });
+                res.add(new SpellFinalCombatAction(spell));
             }
         }
         return res;

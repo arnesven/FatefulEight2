@@ -314,6 +314,7 @@ public class GameCharacter extends Combatant {
 
         Set<UsableItem> usableItems = new HashSet<>();
         usableItems.addAll(model.getParty().getInventory().getPotions());
+        usableItems.addAll(model.getParty().getInventory().getCombatScrolls());
         if (usableItems.size() > 0 && model.getParty().getPartyMembers().contains(this)) {
             result.add(new ItemCombatAction(usableItems, target));
         }

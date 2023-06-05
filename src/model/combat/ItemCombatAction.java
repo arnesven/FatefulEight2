@@ -3,8 +3,10 @@ package model.combat;
 import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
+import model.items.Scroll;
 import model.items.UsableItem;
 import model.items.potions.ThrowablePotion;
+import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
 
 import java.util.ArrayList;
@@ -35,7 +37,14 @@ public class ItemCombatAction extends CombatAction {
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> res = new ArrayList<>();
         for (UsableItem item : usableItems) {
-            if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
+            if (item instanceof Scroll) {
+                if (((Scroll) item).getSpell() instanceof CombatSpell) {
+                    CombatSpell spell = ((CombatSpell) ((Scroll) item).getSpell());
+                    if (spell.canBeCastOn(model, target)) {
+                        res.add(new ScrollCombatAction((Scroll)item));
+                    }
+                }
+            } else if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
                 res.add(new CombatAction(item.getName()) {
                     @Override
                     public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {

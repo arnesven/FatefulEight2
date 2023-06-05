@@ -23,6 +23,7 @@ public class Inventory implements Serializable {
     private List<Potion> potions = new ArrayList<>();
     private List<CraftingDesign> designs = new ArrayList<>();
     private List<PotionRecipe> recipes = new ArrayList<>();
+    private List<Scroll> scrolls = new ArrayList<>();
     private int food = 10;
     private int ingredients = 0;
     private int materials = 0;
@@ -49,6 +50,8 @@ public class Inventory implements Serializable {
 
     public void add(PotionRecipe recipe) { recipes.add(recipe); }
 
+    public void add(Scroll scroll) { scrolls.add(scroll); }
+
     public List<Weapon> getWeapons() {
         return weapons;
     }
@@ -62,6 +65,8 @@ public class Inventory implements Serializable {
     public List<PotionRecipe> getRecipes() { return recipes; }
 
     public List<CraftingDesign> getCraftingDesigns() { return designs; }
+
+    public List<Scroll> getScrolls() { return scrolls; }
 
     public void remove(Weapon weapon) {
         this.weapons.remove(weapon);
@@ -127,6 +132,7 @@ public class Inventory implements Serializable {
         sets.add(potions);
         sets.add(designs);
         sets.add(recipes);
+        sets.add(scrolls);
         return sets;
     }
 
@@ -154,5 +160,15 @@ public class Inventory implements Serializable {
 
     public void addToIngredients(int ingredients) {
         this.ingredients += ingredients;
+    }
+
+    public List<Scroll> getCombatScrolls() {
+        List<Scroll> result = new ArrayList<>();
+        for (Scroll scroll : scrolls) {
+            if (scroll.getSpell() instanceof CombatSpell) {
+                result.add(scroll);
+            }
+        }
+        return result;
     }
 }

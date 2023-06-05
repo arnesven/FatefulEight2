@@ -77,6 +77,7 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allPotions());
         allItems.addAll(allCraftingDesigns());
         allItems.addAll(allPotionRecipes());
+        allItems.addAll(allScrolls());
         return allItems;
     }
 
@@ -197,6 +198,14 @@ public class ItemDeck extends ArrayList<Item> {
                 new DarkShroudSpell(),
                 new PoisonGasSpell()
                 );
+    }
+
+    public static List<Scroll> allScrolls() {
+        List<Scroll> result = new ArrayList<>();
+        for (Spell sp : allSpells()) {
+            result.add(new Scroll(sp));
+        }
+        return result;
     }
 
     public static List<Weapon> allWeapons() {
