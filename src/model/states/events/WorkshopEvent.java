@@ -60,6 +60,7 @@ public class WorkshopEvent extends DailyEventState {
             for (int i = 0; i < levels.length; ++i) {
                 if (levels[i] > model.getParty().getGold()) {
                     cost = levels[i];
+                    break;
                 }
             }
             portraitSay("The order will cost " + cost + " gold.");

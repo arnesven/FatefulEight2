@@ -10,6 +10,7 @@ import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
 import model.items.spells.Spell;
 import model.items.weapons.UnarmedCombatWeapon;
+import model.states.DailyActionState;
 import model.states.GameState;
 import util.MyPair;
 import util.MyRandom;
@@ -32,7 +33,7 @@ public class CraftItemState extends GameState {
         List<Item> allItems = getAllItems(model);
         if (allItems.isEmpty()) {
             println("You cannot craft since you do not have any items!");
-            return null;
+            return new DailyActionState(model);
         }
 
         Set<String> optionNames = new HashSet<>();
@@ -51,13 +52,13 @@ public class CraftItemState extends GameState {
         }
         if (optionNames.isEmpty()) {
             println("You do not have enough materials to craft anything.");
-            return null;
+            return new DailyActionState(model);
         }
          MyPair<Item, Integer> pair = getSelectedItem(model, optionNames, allItems);
 
         Item selectedItem = pair.first;
         if (selectedItem == null){
-            return null;
+            return new DailyActionState(model);
         }
 
         GameCharacter crafter = null;
@@ -89,7 +90,7 @@ public class CraftItemState extends GameState {
             model.getParty().getInventory().addItem(selectedItem.copy());
         }
 
-        return null;
+        return new DailyActionState(model);
     }
 
     private MyPair<Item, Integer> getSelectedItem(Model model, Set<String> optionNames, List<Item> allItems) {

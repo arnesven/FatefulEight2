@@ -290,6 +290,7 @@ public abstract class WorldHex implements Serializable {
                 new UndertowEvent(model),
                 new RapidsEvent(model),
                 new SaberfishEvent(model),
+                // TODO: Boats event which splits up a big party.
                 new RaftEvent(model)
         ));
     }

@@ -43,7 +43,7 @@ public class Scroll extends UsableItem {
 
     @Override
     public String getShoppingDetails() {
-        return ", a scroll of '" + spell.getName() + "'";
+        return ", a scroll of '" + spell.getName() + "'.";
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Scroll extends UsableItem {
 
     private static Map<MyColors, Sprite> makeSpriteMap() {
         Map<MyColors, Sprite> map = new HashMap<>();
-        map.put(MyColors.WHITE,  new ItemSprite(10, 5, MyColors.WHITE, MyColors.BEIGE));
+        map.put(MyColors.WHITE,  new ItemSprite(10, 5, MyColors.GRAY, MyColors.BEIGE));
         map.put(MyColors.GREEN,  new ItemSprite(11, 5, MyColors.GREEN, MyColors.BEIGE));
         map.put(MyColors.BLUE,  new ItemSprite(12, 5, MyColors.BLUE, MyColors.BEIGE));
         map.put(MyColors.RED,  new ItemSprite(13, 5, MyColors.RED, MyColors.BEIGE));
