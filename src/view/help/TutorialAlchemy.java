@@ -10,7 +10,10 @@ public class TutorialAlchemy extends HelpDialog {
             "value.\n\n" +
             "Ingredients can be found in many locations in the world and can often be " +
             "collected from defeated monsters. There is no limit to how many ingredients " +
-            "you may carry.";
+            "you may carry.\n\n" +
+            "Keep a lookout for Potion Recipes. With recipes, you don't need a draft of " +
+            "the potion you want to brew, and using a recipe consumes less ingredients " +
+            "then you would normally (on third).";
 
     public TutorialAlchemy(GameView view) {
         super(view, "Alchemy", TEXT);
