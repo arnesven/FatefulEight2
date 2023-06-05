@@ -9,7 +9,7 @@ import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.items.clothing.DragonArmor;
 import model.items.designs.CraftingDesign;
-import model.items.potions.UnstablePotion;
+import model.items.potions.*;
 import model.items.spells.*;
 import model.items.weapons.Dirk;
 import model.map.UrbanLocation;

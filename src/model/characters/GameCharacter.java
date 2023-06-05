@@ -42,7 +42,7 @@ public class GameCharacter extends Combatant {
     private final CharacterAppearance appearance;
     private int level;
     private Equipment equipment;
-    private final Map<Skill, Integer> temporarySkillBonuses = new HashMap<>();
+    private final Map<Skill, SkillBonus> temporarySkillBonuses = new HashMap<>();
 
     private int currentSp = 1;
     private int currentXp = 0;
@@ -98,7 +98,16 @@ public class GameCharacter extends Combatant {
         BorderFrame.drawString(screenHandler, String.format("SPEED %2d", this.getSpeed()), col+8, row+4, DEFAULT_TEXT_COLOR);
         String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
         BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), col+18, row+4, MyColors.WHITE);
-        BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
+
+        String status = this.getStatus();
+        if (status.length() <= 7) {
+            BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
+        } else if (status.length() <= 15) {
+            BorderFrame.drawString(screenHandler, String.format("%s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
+        } else {
+            status = status.substring(0, 3) + "...";
+            BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
+        }
 
         equipment.drawYourself(screenHandler, col, row);
     }
@@ -199,7 +208,7 @@ public class GameCharacter extends Combatant {
         }
         int tempBonus = 0;
         if (temporarySkillBonuses.containsKey(skill)) {
-            tempBonus = temporarySkillBonuses.get(skill);
+            tempBonus = temporarySkillBonuses.get(skill).getBonus();
         }
         return Skill.getRankForSkill(charClass.getWeightForSkill(skill), getLevel())
                 + race.getBonusForSkill(skill) + equipment.getBonusForSkill(skill) + tempBonus;
@@ -333,7 +342,9 @@ public class GameCharacter extends Combatant {
 
     private int getRankAndRemoveTempBonus(Skill skill) {
         int total = getRankForSkill(skill);
-        temporarySkillBonuses.remove(skill);
+        if (temporarySkillBonuses.containsKey(skill) && temporarySkillBonuses.get(skill).isPersistent()) {
+            temporarySkillBonuses.remove(skill);
+        }
         return total;
     }
 
@@ -544,8 +555,12 @@ public class GameCharacter extends Combatant {
         return false;
     }
 
-    public void addTemporaryBonus(Skill skill, int bonus) {
-        temporarySkillBonuses.put(skill, bonus);
+    public void addTemporaryBonus(Skill skill, int bonus, boolean persistent) {
+        temporarySkillBonuses.put(skill, new SkillBonus(bonus, persistent));
+    }
+
+    public void removeTemporaryBonus(Skill skill) {
+        temporarySkillBonuses.remove(skill);
     }
 
     public CharacterAppearance getAppearance() {

@@ -82,7 +82,12 @@ public class PartyView extends SelectableListMenu {
         addListContent(content, x, y++, String.format("Stamina %8s", gc.getSP() + "/" + gc.getMaxSP()));
         addListContent(content, x, y++, String.format("Armor %10d", gc.getAP()));
         addListContent(content, x, y++, String.format("Speed %10d", gc.getSpeed()));
-        addListContent(content, x, y++, String.format("Status %-9s", gc.getStatus()));
+        String status = gc.getStatus();
+        if (status.length() < 15) {
+            addListContent(content, x, y++, String.format("Status %-9s", status));
+        } else {
+            addListContent(content, x, y++,String.format("Status %-9s", status.substring(0, 7) + " ..."));
+        }
 
         y+=1;
         Weapon w = gc.getEquipment().getWeapon();

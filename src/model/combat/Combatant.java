@@ -19,7 +19,7 @@ import java.util.Set;
 
 public abstract class Combatant implements Serializable {
     private int currentHp;
-    private Set<Condition> conditions = new HashSet<>();
+    private List<Condition> conditions = new ArrayList<>();
 
     public abstract int getMaxHP();
 

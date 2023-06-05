@@ -28,7 +28,7 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
     @Override
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
         state.println(target.getName() + " " + getBoostingSkill().getName() + " temporarily raised.");
-        target.addTemporaryBonus(getBoostingSkill(), getBoostAmount());
+        target.addTemporaryBonus(getBoostingSkill(), getBoostAmount(), false);
     }
 
     protected abstract int getBoostAmount();

@@ -5,6 +5,8 @@ import model.states.GameState;
 import view.sprites.Sprite;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +24,7 @@ public abstract class Condition implements Serializable {
         return shortName;
     }
 
-    public static boolean disablesCombatTurn(Set<Condition> conditions) {
+    public static boolean disablesCombatTurn(Collection<Condition> conditions) {
         for (Condition c : conditions) {
             if (c.noCombatTurn()) {
                 return true;
@@ -31,13 +33,12 @@ public abstract class Condition implements Serializable {
         return false;
     }
 
-    public static String getCharacterStatus(Set<Condition> conditions) {
+    public static String getCharacterStatus(Collection<Condition> conditions) {
         StringBuilder bldr = new StringBuilder();
         for (Condition c : conditions) {
-            bldr.append(c.getShortName() + ", ");
+            bldr.append(c.getShortName() + " ");
         }
-        bldr.replace(bldr.length()-2, bldr.length(), "");
-        return bldr.toString();
+        return bldr.substring(0, bldr.length()-1);
     }
 
     protected abstract boolean noCombatTurn();
