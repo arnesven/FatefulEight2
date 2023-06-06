@@ -34,7 +34,7 @@ public class TalkToPartyNode extends DailyActionNode {
 
     }
 
-    private class TalkToPartyState extends GameState {
+    private static class TalkToPartyState extends GameState {
         public TalkToPartyState(Model model) {
             super(model);
         }
@@ -48,10 +48,7 @@ public class TalkToPartyNode extends DailyActionNode {
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("You guys doing alright?",
                         "Ready to head out?", "How's it going?", "Everything OK over here?", "Enjoying the establishment?"));
-                GameCharacter gc;
-                do {
-                    gc = MyRandom.sample(model.getParty().getPartyMembers());
-                } while (gc == model.getParty().getLeader());
+                GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                 model.getParty().partyMemberSay(model, gc, List.of("Just having a brew...", "I'm loving it.3",
                         "Ready for action!", "Whenever you're ready boss.", "Ready to roll."));
             }
