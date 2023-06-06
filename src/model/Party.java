@@ -1,6 +1,7 @@
 package model;
 
 import model.actions.DailyAction;
+import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
@@ -41,22 +42,23 @@ public class Party implements Serializable {
                 MyColors.LIGHT_YELLOW, MyColors.PURPLE, MyColors.PEACH,
                 MyColors.RED, MyColors.CYAN};
     private final Inventory inventory = new Inventory();
-    private List<GameCharacter> partyMembers = new ArrayList<>();
-    private List<GameCharacter> frontRow = new ArrayList<>();
-    private List<GameCharacter> backRow = new ArrayList<>();
-    private List<GameCharacter> bench = new ArrayList<>();
-    private List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
-    private Map<String, Summon> summons = new HashMap<>();
-    private Set<String> templeBannings = new HashSet<>();
+    private final List<GameCharacter> partyMembers = new ArrayList<>();
+    private final List<GameCharacter> frontRow = new ArrayList<>();
+    private final List<GameCharacter> backRow = new ArrayList<>();
+    private final List<GameCharacter> bench = new ArrayList<>();
+    private final List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
+    private final Map<String, Summon> summons = new HashMap<>();
+    private final Set<String> templeBannings = new HashSet<>();
     private Point position;
     private Point previousPosition;
     private int gold = 30;
     private int reputation = 0;
     private boolean onRoad = true;
-    private LoopingSprite[] cursorSprites;
+    private final LoopingSprite[] cursorSprites;
     private GameCharacter leader;
     private int lastSuccessfulRecruitDay = -500;
-    private Set<String> specialCharactersRecruited = new HashSet<>();
+    private final Set<String> specialCharactersRecruited = new HashSet<>();
+    private Loan currentLoan = null;
 
     public Party() {
         position = new Point(12, 9);  // Inn is at 12,9, castle at 1,3, ruins at 24,9, temple at 1,1
@@ -640,5 +642,13 @@ public class Party implements Serializable {
 
     public boolean isSpecialCharacterMarked(GameCharacter chara) {
         return specialCharactersRecruited.contains(chara.getName());
+    }
+
+    public void setLoan(Loan loan) {
+        this.currentLoan = loan;
+    }
+
+    public Loan getLoan() {
+        return currentLoan;
     }
 }

@@ -2,7 +2,6 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.states.GameState;
 import view.subviews.DailyActionSubView;
 import view.subviews.TavernSubView;
 import view.subviews.TownSubView;
@@ -22,6 +21,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         if (inTown) {
             Point doorPos = getDoorPosition();
             addNode(doorPos.x, doorPos.y, new ExitTavernNode());
+            addNode(4, 2, new TakeLoanNode());
         } else {
             addNode(7, 8, new TravelFromInnNode());
             addNode(1, 8, new CampOutsideOfTownNode(false, TownSubView.GROUND_COLOR, "Make camp outside."));

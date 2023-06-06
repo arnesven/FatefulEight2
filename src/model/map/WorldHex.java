@@ -57,6 +57,11 @@ public abstract class WorldHex implements Serializable {
             return tutorialEvent;
         }
         DailyEventState eventToReturn;
+        eventToReturn = Loan.generateEvent(model, this);
+        if (eventToReturn != null) {
+            return eventToReturn;
+        }
+
         if (hexLocation != null && !hexLocation.isDecoration()) {
             eventToReturn = hexLocation.generateEvent(model);
         } else if (model.getParty().isOnRoad()) {
