@@ -2,6 +2,7 @@ package view.help;
 
 import model.Model;
 import model.tutorial.TutorialAlignment;
+import model.tutorial.TutorialLoans;
 import model.tutorial.TutorialTraining;
 import view.BorderFrame;
 import view.GameView;
@@ -37,6 +38,7 @@ public class HelpView extends SelectableListMenu {
             new TutorialEveningDialog(null),
             new TutorialEquipmentDialog(null),
             new TutorialLeaderDialog(null),
+            new TutorialLoans(null),
             new TutorialQuests(null),
             new TutorialRecruitDialog(null),
             new TutorialScoringDialog(null),

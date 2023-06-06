@@ -179,6 +179,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void loans(Model model) {
+        runOnce("loans", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialLoans(model.getView()));
+        });
+    }
+
     public boolean isTutorialEnabled() {
         return tutorialOn;
     }
