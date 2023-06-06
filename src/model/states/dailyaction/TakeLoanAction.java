@@ -16,7 +16,7 @@ public class TakeLoanAction extends GameState {
     @Override
     public GameState run(Model model) {
         if (model.getParty().getLoan() == null) {
-            println("Loan Shark: \"Low on cash? The brotherhood will help you out.\"");
+            println("Brotherhood Agent: \"Low on cash? The brotherhood will help you out.\"");
             model.getTutorial().loans(model);
             print("Do you wish to take a loan?");
             int choice = multipleOptionArrowMenu(model, 28, 20, List.of("Small Loan (50)", "Large Loan (100)", "No thank you!"));
@@ -28,10 +28,15 @@ public class TakeLoanAction extends GameState {
                 model.getParty().addToGold(100);
             }
             if (choice < 2) {
-                println("Loan Shark: \"Spend it wisely brother.\"");
+                println("Brotherhood Agent: \"Spend it wisely brother. We expect you to pay us back " +
+                        model.getParty().getLoan().repayCost() + " gold within " + Loan.REPAY_WITHIN_DAYS + " days.\"");
+                println("Brotherhood Agent: \"Don't make us come after you!\"");
+                model.getParty().randomPartyMemberSay(model, List.of("Relax. You'll get your money.",
+                        "Don't worry. You can trust us!", "We won't!", "Ooh, scary!",
+                        "Yeah yeah. That's what you always say."));
             }
         } else {
-            println("Loan Shark: \"You still owe us money brother.\"");
+            println("Brotherhood Agent: \"You still owe us money brother.\"");
             int cost = model.getParty().getLoan().repayCost();
             if (cost > model.getParty().getGold()) {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Don't worry, I'll get the money.");

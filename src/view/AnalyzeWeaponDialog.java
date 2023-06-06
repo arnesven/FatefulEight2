@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AnalyzeWeaponDialog extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 25;
-    private static final int DIALOG_HEIGHT_BASE = 14;
+    private static final int DIALOG_HEIGHT_BASE = 13;
     private final ArrayList<BeforeAndAfterLine<Double>> content;
     private final Weapon weapon;
 
