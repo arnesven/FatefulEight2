@@ -23,10 +23,7 @@ import sound.SoundEffects;
 import sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyRandom;
-import view.BorderFrame;
-import view.MyColors;
-import view.DrawingArea;
-import view.ScreenHandler;
+import view.*;
 import view.sprites.*;
 import view.subviews.SelectPartyMemberSubView;
 import view.subviews.SubView;
@@ -337,7 +334,6 @@ public class Party implements Serializable {
         System.out.println(gc.getName() + " got " + xp + " XP.");
         if (gc.getXpToNextLevel() <= xp) {
             SoundEffects.playSound("levelup");
-            model.getLog().addAnimated(gc.getName() + " has advanced to level " + (gc.getLevel() + 1) + "!\n");
             partyMemberSay(model, gc, List.of("I am learning every day.^",
                     "Experience is its own reward.^",
                     "Faster, better, stronger, harder.^",
@@ -346,6 +342,12 @@ public class Party implements Serializable {
                     "Advancement!^",
                     "I think I'm getting the hang of this.^",
                     "I'm good, there's just no denying it.^"));
+            if (model.getSettings().levelUpSummaryEnabled()) {
+                model.transitionToDialog(new LevelUpSummaryView(model, gc));
+            } else {
+                model.getLog().addAnimated(gc.getName() + " has advanced to level " + (gc.getLevel() + 1) + "!\n");
+            }
+
         }
         gc.addToXP(xp);
     }

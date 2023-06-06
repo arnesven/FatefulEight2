@@ -11,6 +11,7 @@ public class SettingsManager implements Serializable {
     private boolean autosave = true;
     private LogSpeed logSpeed = LogSpeed.FAST;
     private LogSpeed combatLogSpeed = LogSpeed.FAST;
+    private boolean levelUpSummary = true;
 
     public void toggleAutosave() {
         autosave = !autosave;
@@ -61,5 +62,13 @@ public class SettingsManager implements Serializable {
 
     public static void toggleTutorial(Model model) {
         model.getTutorial().setTutorialEnabled(!model.getTutorial().isTutorialEnabled());
+    }
+
+    public boolean levelUpSummaryEnabled() {
+        return levelUpSummary;
+    }
+
+    public void toggleLevelUpSummary() {
+        levelUpSummary = !levelUpSummary;
     }
 }

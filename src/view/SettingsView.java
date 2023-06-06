@@ -9,7 +9,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 14;
+    private static final int HEIGHT = 16;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -56,6 +56,12 @@ public class SettingsView extends SelectableListMenu {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     SettingsManager.toggleTutorial(model);
+                }
+            },
+            new ListContent(xStart+2, yStart+10, "Level Up Summary " + (model.getSettings().levelUpSummaryEnabled()?"ON":"OFF")) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    model.getSettings().toggleLevelUpSummary();
                 }
             }
             );
