@@ -6,7 +6,9 @@ import model.items.*;
 import model.items.spells.BindDaemonSpell;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.TurnUndeadSpell;
+import model.items.weapons.Weapon;
 import sound.SoundEffects;
+import view.AnalyzeWeaponDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.ShopSubView;
@@ -55,10 +57,18 @@ public class ShopState extends GameState {
     public GameState run(Model model) {
         CollapsingTransition.transition(model, subView);
         while (true) {
+            SteppingMatrix<Item> matrixToUse = sellItems;
+            if (showingBuyItems) {
+                matrixToUse = buyItems;
+            }
+
             List<String> buySellActions = new ArrayList<>();
             buySellActions.add("Buy");
             if (maySell(model)) {
                 buySellActions.add("Sell");
+            }
+            if (matrixToUse.getSelectedElement() instanceof Weapon) {
+                buySellActions.add("Analyze");
             }
             buySellActions.add("Back");
             buySellActions.add("Done");
@@ -66,10 +76,7 @@ public class ShopState extends GameState {
             model.getTutorial().shopping(model);
             waitForReturnSilently();
 
-            SteppingMatrix<Item> matrixToUse = sellItems;
-            if (showingBuyItems) {
-                matrixToUse = buyItems;
-            }
+
 
             int xPos = matrixToUse.getSelectedPoint().x*4 + SubView.X_OFFSET;
             int yPos = matrixToUse.getSelectedPoint().y*4 + 10;
@@ -83,6 +90,8 @@ public class ShopState extends GameState {
                         selectedAction[0] = 'S';
                     } else if (buySellActions.get(cursorPos).equals("Done")) {
                         selectedAction[0] = 'Q';
+                    } else if (buySellActions.get(cursorPos).equals("Analyze")) {
+                        selectedAction[0] = 'A';
                     }
                     model.setSubView(getPrevious());
                 }
@@ -147,6 +156,8 @@ public class ShopState extends GameState {
                         println("You cannot sell an item that is currently equipped.");
                     }
                 }
+            } else if (selectedAction[0] == 'A') {
+                model.transitionToDialog(new AnalyzeWeaponDialog(model, (Weapon)matrixToUse.getSelectedElement()));
             }
         }
         return new EveningState(model);
