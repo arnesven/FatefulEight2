@@ -34,7 +34,11 @@ public class ShopSubView extends SubView {
     protected void drawArea(Model model) {
         BorderFrame.drawCentered(model.getScreenHandler(), title, 4,
                 title.equals("BUYING") ? MyColors.YELLOW: MyColors.LIGHT_BLUE);
-        List<Item> inventory = model.getParty().getInventory().getAllItems();
+
+        if (title.equals("SELLING")) {
+            checkSellIntegrity(model);
+        }
+
         for (int row = 0; row < matrix.getRows(); row++) {
             for (int col = 0; col < matrix.getColumns(); col++) {
                 Item it = matrix.getElementAt(col, row);
@@ -42,8 +46,7 @@ public class ShopSubView extends SubView {
                 int yPos = Y_OFFSET + row * 4 + 2;
                 if (it != null) {
                     it.drawYourself(model.getScreenHandler(), xPos, yPos);
-                    if ((title.equals("BUYING") && priceMap.get(it) > model.getParty().getGold()) ||
-                            (title.equals("SELLING") && !inventory.contains(it))) {
+                    if ((title.equals("BUYING") && priceMap.get(it) > model.getParty().getGold())) {
                         model.getScreenHandler().register("crossedout", new Point(xPos, yPos), crossSprite);
                     }
                 } else {
@@ -53,6 +56,27 @@ public class ShopSubView extends SubView {
         }
 
         drawCursor(model);
+    }
+
+    private void checkSellIntegrity(Model model) {
+        boolean integrityOk = true;
+        List<Item> sellableItems = model.getParty().getInventory().getAllItems();
+        for (Item it : sellableItems) {
+            if (!matrix.getElementList().contains(it)) {
+                integrityOk = false;
+            }
+        }
+        if (integrityOk) {
+            for (Item it : matrix.getElementList()) {
+                if (!sellableItems.contains(it)) {
+                    integrityOk = false;
+                }
+            }
+        }
+        if (!integrityOk) {
+            matrix = new SteppingMatrix<>(8, 8);
+            matrix.addElements(sellableItems);
+        }
     }
 
 
