@@ -21,13 +21,13 @@ public abstract class HairStyle implements Serializable {
 
     public static HairStyle[] allHairStyles = new HairStyle[]{
             new BaldHairStyle(), new FemaleLongHairStyle(), new FemaleLongHairStyle(0x9, 0x03),
-            new FemaleLongHairStyle(0x5D, 0x04), new FemaleLongHairStyle(0xA7, 0x05), new ShortFemaleHair(),
-            new ShortFemaleHair(0x5D, 0x13), new ShortFemaleHair(0xA7, 0x15),
+            new FemaleLongHairStyle(0x164, 0x04), new FemaleLongHairStyle(0xA7, 0x05), new ShortFemaleHair(),
+            new ShortFemaleHair(0x164, 0x13), new ShortFemaleHair(0xA7, 0x15),
             new HairStyle3x2(0x9, true, 0x10),
             new PuyetHairStyle(),
-            new HairStyle3x2(0x3D, true, true, false, false, 0x08, 0x00),
-            new HairStyle3x2(0x5D, true, true, true, true, 0x09, 0x07),
-            new HairStyle3x2(0x5D, true, true, true, false, 0x19, 0x00),
+            new HairStyle3x2(0x167, true, true, false, false, 0x08, 0x00),
+            new HairStyle3x2(0x164, true, true, true, true, 0x09, 0x07),
+            new HairStyle3x2(0x164, true, true, true, false, 0x19, 0x00),
             new HairStyle3x2(0x9D, false, 0x18),
             new HairStyle3x2(0xC, false, 0x17),
             new HairStyle3x2(0xC, false, true, true, true, 0x27, 0x07),

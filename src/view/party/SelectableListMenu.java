@@ -295,7 +295,7 @@ public abstract class SelectableListMenu extends GameView {
         }
     }
 
-    protected abstract class CarouselListContent extends ListContent {
+    protected static abstract class CarouselListContent extends ListContent {
         private final int length;
 
         public CarouselListContent(int x, int y, String label) {

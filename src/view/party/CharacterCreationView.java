@@ -10,6 +10,7 @@ import model.items.weapons.Weapon;
 import model.races.Race;
 import util.Arithmetics;
 import util.MyPair;
+import util.MyRandom;
 import view.BorderFrame;
 import view.DrawingArea;
 import view.GameView;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class CharacterCreationView extends SelectableListMenu {
 
+    private static final int NO_OF_ACCESSORIES = 5;
     private static final Integer INPUT_MAX_LENGTH = 13;
     private static final String START_STRING = "þþþþþþþþþþþþ";
     private static final int COLUMN_SKIP = 12;
@@ -30,8 +32,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private boolean gender = true;
     private static final Race[] raceSet = Race.allRaces;
     private static final CharacterEyes[] eyeSet = CharacterEyes.allEyes;
-    public static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC};
-    public static final Integer[] mouthSet = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC};
+    public static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC, 0xD, 0xE, 0xF};
+    public static final Integer[] mouthSet = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
     private static final Beard[] beardSet = Beard.allBeards;
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
@@ -216,6 +218,12 @@ public class CharacterCreationView extends SelectableListMenu {
                     @Override
                     public void turnRight(Model model) {
                         selectedRace = Arithmetics.incrementWithWrap(selectedRace, raceSet.length);
+                    }
+                },
+                new SelectableListContent(xStart + 3, yStart + 13, "Random Appearance") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        randomizeAppearance();
                     }
                 },
                 new CarouselListContent(xStart + COLUMN_SKIP, yStart + 15, "Eyes #" + (selectedEyes + 1)) {
@@ -446,9 +454,6 @@ public class CharacterCreationView extends SelectableListMenu {
     }
 
     private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
-
-        private static final int NO_OF_ACCESSORIES = 5;
-
         public SelectAccessoryMenu(GameView partyView, int x, int y) {
             super(partyView, 10, NO_OF_ACCESSORIES+1, x, y);
         }
@@ -554,5 +559,18 @@ public class CharacterCreationView extends SelectableListMenu {
 
         @Override
         protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
+    }
+
+    private void randomizeAppearance() {
+        selectedHairColor = MyRandom.randInt(hairColorSet.length);
+        selectedDetailColor = MyRandom.randInt(detailColorSet.length);
+        selectedMouth = MyRandom.randInt(mouthSet.length);
+        selectedNose = MyRandom.randInt(noseSet.length);
+        selectedEyes = MyRandom.randInt(eyeSet.length);
+        selectedHairStyle = MyRandom.randInt(hairStyleSet.length);
+        selectedBeard = MyRandom.randInt(beardSet.length);
+        accessory = MyRandom.randInt(NO_OF_ACCESSORIES);
+        selectedDetailColor = MyRandom.randInt(detailColorSet.length);
+        rebuildAppearance();
     }
 }
