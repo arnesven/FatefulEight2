@@ -1,31 +1,31 @@
 package model.classes;
 
 public enum Skill implements Comparable<Skill> {
-    Acrobatics("Acrobatics"),       // 20
-    Axes("Axes"),                   // 8
-    Blades("Blades"),               // 15
-    BluntWeapons("Blunt Weapons"),  // 14
-    Bows("Bows"),                   // 10
-    Endurance("Endurance"),         // 20
-    Entertain("Entertain"),         // 18
-    Labor("Labor"),                 // 16
-    Leadership("Leadership"),       // 18
-    Logic("Logic"),                 // 17
-    MagicBlack("Magic (Black)"),    // 9
-    MagicBlue("Magic (Blue)"),      // 8
-    MagicGreen("Magic (Green)"),    // 10
-    MagicRed("Magic (Red)"),        // 7
-    MagicWhite("Magic (White)"),    // 9
-    MagicAny("Magic (Any)"),        // 6
-    Perception("Perception"),       // 27
-    Persuade("Persuade"),           // 26
-    Polearms("Polearms"),           // 8
-    Search("Search"),               // 20
-    Security("Security"),           // 16
-    SeekInfo("Seek Info"),          // 20
-    Sneak("Sneak"),                 // 25
-    SpellCasting("Spell Casting"),  // 10
-    Survival("Survival"),           // 31
+    Acrobatics("Acrobatics"),       // 12
+    Axes("Axes"),                   // 1
+    Blades("Blades"),               // 3
+    BluntWeapons("Blunt Weapons"),  // 0
+    Bows("Bows"),                   // 4
+    Endurance("Endurance"),         // 12
+    Entertain("Entertain"),         // 8
+    Labor("Labor"),                 // 9
+    Leadership("Leadership"),       // 4
+    Logic("Logic"),                 // 13
+    MagicBlack("Magic (Black)"),    // 1
+    MagicBlue("Magic (Blue)"),      // 2
+    MagicGreen("Magic (Green)"),    // 1
+    MagicRed("Magic (Red)"),        // 0
+    MagicWhite("Magic (White)"),    // 1
+    MagicAny("Magic (Any)"),        // 3
+    Perception("Perception"),       // 16
+    Persuade("Persuade"),           // 22
+    Polearms("Polearms"),           // 1
+    Search("Search"),               // 14
+    Security("Security"),           // 12
+    SeekInfo("Seek Info"),          // 13
+    Sneak("Sneak"),                 // 13
+    SpellCasting("Spell Casting"),  // 3
+    Survival("Survival"),           // 16
 
     UnarmedCombat("Unarmed Combat");
 
