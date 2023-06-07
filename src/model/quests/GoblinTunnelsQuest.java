@@ -64,16 +64,16 @@ public class GoblinTunnelsQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Goblin Spearmen", List.of(
-                        new GoblinCombatSubScene(6, 1, 1, new GoblinSpearman('A')))),
+                        new GoblinCombatSubScene(6, 1, 7, new GoblinSpearman('A')))),
                 new QuestScene("Riddles", List.of(
                         new RiddlesSubScene(2, 2, 6, true),
                         new RiddlesSubScene(2, 4, 7, false),
                         new RiddlesSubScene(2, 6, 8, false),
                         new RiddleDecorativeSubScene(RIDDLE_JUNCTION_POINT.x, RIDDLE_JUNCTION_POINT.y))),
                 new QuestScene("Goblin Club Wielders", List.of(
-                        new GoblinCombatSubScene(7, 3, 1, new GoblinClubWielder('A')))),
+                        new GoblinCombatSubScene(7, 3, 8, new GoblinClubWielder('A')))),
                 new QuestScene("Goblin Bowmen", List.of(
-                        new GoblinCombatSubScene(5, 5, 1, new GoblinBowman('A'))))
+                        new GoblinCombatSubScene(5, 5, 9, new GoblinBowman('A'))))
         );
     }
 

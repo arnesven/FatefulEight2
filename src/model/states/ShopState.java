@@ -62,6 +62,9 @@ public class ShopState extends GameState {
                 matrixToUse = buyItems;
             }
 
+            model.getTutorial().shopping(model);
+            waitForReturnSilently();
+
             List<String> buySellActions = new ArrayList<>();
             buySellActions.add("Buy");
             if (maySell(model)) {
@@ -72,11 +75,6 @@ public class ShopState extends GameState {
             }
             buySellActions.add("Back");
             buySellActions.add("Done");
-
-            model.getTutorial().shopping(model);
-            waitForReturnSilently();
-
-
 
             int xPos = matrixToUse.getSelectedPoint().x*4 + SubView.X_OFFSET;
             int yPos = matrixToUse.getSelectedPoint().y*4 + 10;
