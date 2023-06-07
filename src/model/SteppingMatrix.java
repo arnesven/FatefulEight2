@@ -216,4 +216,9 @@ public class SteppingMatrix<T> {
         addElement(p.x, p.y, it);
     }
 
+    public void removeAll() {
+        while (!list.isEmpty()) {
+            remove(list.get(0));
+        }
+    }
 }
