@@ -8,6 +8,7 @@ import model.items.spells.Spell;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.Arithmetics;
+import util.BeforeAndAfterLine;
 import util.MyStrings;
 import view.party.FixedPositionSelectableListMenu;
 import view.party.SelectableListMenu;
@@ -79,6 +80,18 @@ public class InventoryView extends SelectableListMenu {
                     print(model.getScreenHandler(), rightTabX + 1, row++, s2);
                 }
             }
+            row++;
+            if (it instanceof Weapon) {
+                print(model.getScreenHandler(), rightTabX+1, row++, "Damage Analysis:");
+                drawAnalyzePart(model, (Weapon)it, rightTabX, row);
+            }
+        }
+    }
+
+    private void drawAnalyzePart(Model model, Weapon it, int col, int row) {
+        List<DrawableObject> objs = AnalyzeWeaponDialog.makeDrawableObjects(AnalyzeWeaponDialog.analyzeWeapon(model, it), col, row);
+        for (DrawableObject obj : objs) {
+            obj.drawYourself(model, obj.position.x, obj.position.y);
         }
     }
 
