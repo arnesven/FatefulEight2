@@ -11,6 +11,7 @@ import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
@@ -74,7 +75,11 @@ public class ShopSubView extends SubView {
             }
         }
         if (!integrityOk) {
-            matrix = new SteppingMatrix<>(8, 8);
+            List<Item> items = new ArrayList<>();
+            items.addAll(matrix.getElementList());
+            for (Item it : items) {
+                matrix.remove(it);
+            }
             matrix.addElements(sellableItems);
         }
     }
