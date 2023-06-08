@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.DailyEventState;
+import view.subviews.CollapsingTransition;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
@@ -42,4 +43,7 @@ public abstract class RiverEvent extends DailyEventState {
         }
     }
 
+    protected void showRiverSubView(Model model) {
+        CollapsingTransition.transition(model, RiverEvent.subView);
+    }
 }

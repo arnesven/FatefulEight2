@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import util.MyRandom;
 import view.TrainingView;
 import view.subviews.BoatPlacementSubView;
 import view.subviews.CollapsingTransition;
@@ -23,6 +24,8 @@ public class BoatsEvent extends RiverEvent {
     private int[] boatLengths;
     private List<GameCharacter> shore;
     private ArrayList<Boat> boats;
+    private boolean riverCrossed = false;
+    private BoatPlacementSubView boatsView;
 
     public BoatsEvent(Model model) {
         super(model);
@@ -30,31 +33,86 @@ public class BoatsEvent extends RiverEvent {
 
     @Override
     public boolean eventPreventsCrossing(Model model) {
-        return false;
+        return !riverCrossed;
     }
 
     @Override
     protected void doEvent(Model model) {
+        if (model.getParty().size() < 3) {
+            new ShallowsEvent(model).doEvent(model);
+            riverCrossed = true;
+            return;
+        }
+
         println("There are boats here. They don't look sturdy enough to " +
                 "go for a longer ride in, but surely they will hold for just crossing the river.");
         println("The boats are rather small however and the party must split into smaller groups.");
-//        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, model.getParty().getLeader(), Skill.Leadership, 7, 10, 0);
-//        if (!result.isSuccessful()) {
-//            // automatic placement
-//        } else {
-            boats = new ArrayList<>();
-            boats.addAll(List.of(new Boat(1, 2), new Boat(3, 4), new Boat(5, 3)));
-            shore = new ArrayList<>();
-            shore.addAll(model.getParty().getPartyMembers());
-            this.matrix = new SteppingMatrix<>(MATRIX_COLUMNS, MATRIX_ROWS);
-            addCharactersToMatrix();
+        boats = new ArrayList<>();
+        boats.addAll(List.of(new Boat(1, 2), new Boat(3, 4), new Boat(5, 3)));
+        shore = new ArrayList<>();
+        shore.addAll(model.getParty().getPartyMembers());
+        this.matrix = new SteppingMatrix<>(MATRIX_COLUMNS, MATRIX_ROWS);
+        addCharactersToMatrix();
+        boatsView = new BoatPlacementSubView(this, matrix, boats);
+        CollapsingTransition.transition(model, boatsView);
 
-            SubView boatsView = new BoatPlacementSubView(this, matrix, boats);
-            CollapsingTransition.transition(model, boatsView);
-            print("Please assign the party members to the boats. Use SPACE to shift a character's position. Press enter when you are done.");
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this,
+                model.getParty().getLeader(), Skill.Leadership, 7, 10, 0);
+        if (!result.isSuccessful()) {
+            automaticPlacement(model);
+        } else {
+            manualAssignment(model);
+        }
+
+        if (!shore.isEmpty()) {
+            return;
+        }
+
+        super.showRiverSubView(model);
+        leaderSay("Okay, see you on the other side. Be safe!");
+        println("You cross the river in the boats.");
+        riverCrossed = true;
+        leaderSay("That went well!");
+    }
+
+    private void automaticPlacement(Model model) {
+        boatsView.setCursorEnabled(false);
+        leaderSay("Okay, let's take a moment...");
+        {
+            GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+            model.getParty().partyMemberSay(model, gc, List.of("Shotgun!", "Yay, boats!", "Jippie!",
+                    "Too slow!", "I want to go in that one!", "I don't want to sit with..."));
+        }
+        while (!shore.isEmpty()) {
+            GameCharacter guy = shore.get(0);
+            matrix.setSelectedPoint(guy);
+            int times = MyRandom.randInt(99);
+            for (int i = 0; i < times; ++i) {
+                shiftCharacter(model);
+            }
+            if (!shore.contains(guy)) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        print("The party members have assigned themselves to the boats. Press return to cross the river.");
+        waitForReturn();
+    }
+
+    private void manualAssignment(Model model) {
+        leaderSay("Okay, let's take a moment to figure out who goes with whom.");
+        print("Please assign the party members to the boats. Use SPACE to shift a character's position. Press enter when you are done.");
+        do {
             waitForReturn();
-
-//        }
+            if (shore.isEmpty()) {
+                print("Are you ready to cross the river? (Y/N) ");
+            } else {
+                print("There are still unassigned party members. Do you want to abandon your attempt to cross the river today? (Y/N) ");
+            }
+        } while (!yesNoInput());
     }
 
     public void shiftCharacter(Model model) {
