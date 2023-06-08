@@ -8,14 +8,16 @@ import model.quests.TownFairQuest;
 import util.MyRandom;
 import util.MyStrings;
 import view.help.HalfTimeDialog;
-import view.subviews.ArrowMenuSubView;
-import view.subviews.SelectQuestSubView;
-import view.subviews.SubView;
+import view.subviews.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EveningState extends GameState {
+
+    public static SubView subViewTent = new ImageSubView("thetent", "EVENING", "You make camp.");
+    private static SubView subViewTevern = new ImageSubView("theinn", "EVENING", "You spend the night at the tavern.");
+
     private final boolean freeRations;
     private boolean freeLodging;
     private Quest goOnQuest;
@@ -34,7 +36,7 @@ public class EveningState extends GameState {
 
     @Override
     public final GameState run(Model model) {
-        setCurrentTerrainSubview(model);
+        setSubView(model);
         print("Evening has come. ");
         model.getTutorial().evening(model);
         checkForQuest(model);
@@ -44,6 +46,18 @@ public class EveningState extends GameState {
         }
         super.stepToNextDay(model);
         return nextState(model);
+    }
+
+    public void setSubView(Model model) {
+        if (showTentSubView()) {
+            CollapsingTransition.transition(model, subViewTent);
+        } else {
+            CollapsingTransition.transition(model, subViewTevern);
+        }
+    }
+
+    protected boolean showTentSubView() {
+        return true;
     }
 
     protected void locationSpecificEvening(Model model) {
@@ -186,6 +200,19 @@ public class EveningState extends GameState {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
+            model.getParty().randomPartyMemberSay(model, List.of(
+                    "I think I'm lying on a root.#",
+                    "This tent is nice, but a bit small.",
+                    "Can somebody feed that fire, it's dying.",
+                    "Anybody know a ghost story?",
+                    "I need some rest.",
+                    "Let's hit the sack people.",
+                    "Who's been using my sleeping bag?",
+                    "Tomorrow's another day.",
+                    "I'm about to fall asleep.",
+                    "These rations are a bit stale.",
+                    "I wish we would stay at a tavern.",
+                    "Yaaawn!", "Good night everybody."));
         } else {
             print("There are not enough rations for everybody. ");
             List<GameCharacter> remaining = new ArrayList<>();

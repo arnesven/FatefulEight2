@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.DailyAction;
 import util.MyPair;
 import view.DrawingArea;
+import view.subviews.CollapsingTransition;
 import view.subviews.DailyActionMenu;
 import view.subviews.OnTheRoadSubView;
 import view.subviews.SubView;
@@ -23,11 +24,11 @@ public class DailyActionState extends GameState {
 
     public GameState run(Model model) {
         if (showOnRoad(model)) {
-            model.setSubView(OnTheRoadSubView.instance);
+            CollapsingTransition.transition(model, OnTheRoadSubView.instance);
             menuPos = new Point(SubView.X_OFFSET, SubView.Y_OFFSET);
             menuAnchor = DailyActionMenu.NORTH_WEST;
         } else {
-            model.setSubView(model.getCurrentHex().getImageSubView());
+            CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView());
             MyPair<Point, Integer> pointAndAnchor = model.getCurrentHex().getDailyActionMenuPositionAndAnchor();
             menuPos = pointAndAnchor.first;
             menuAnchor = pointAndAnchor.second;

@@ -18,6 +18,11 @@ public class LodgingState extends EveningState {
     }
 
     @Override
+    protected boolean showTentSubView() {
+        return false;
+    }
+
+    @Override
     protected void locationSpecificEvening(Model model) {
         if (freeLodging) {
             println("The party has received food and lodging.");
