@@ -173,6 +173,7 @@ public class EnchantressEvent extends DailyEventState {
                 return;
             }
             new EveningState(model, false, false, false).run(model);
+            setCurrentTerrainSubview(model);
             print("You are in the enchanted hamlet. ");
         } while (true);
     }

@@ -27,6 +27,7 @@ public class LostEvent extends DailyEventState {
         if (model.getParty().isWipedOut()) {
             return;
         }
+        setCurrentTerrainSubview(model);
         innerEvent = model.getCurrentHex().generateEvent(model);
         innerEvent.run(model);
     }

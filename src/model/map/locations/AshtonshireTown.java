@@ -17,7 +17,7 @@ public class AshtonshireTown extends TownLocation {
     public Point getTavernPosition() {
         Point p = super.getTavernPosition();
         p.x++;
-        p.y--;
+        p.y -= 2;
         return p;
     }
 

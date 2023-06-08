@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.StandardCombatLoot;
 import model.states.DailyEventState;
+import sound.SoundEffects;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class ChestEvent extends DailyEventState {
         boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Security, 7);
         if (success) {
             model.getParty().randomPartyMemberSay(model, List.of("It's opening!"));
+            SoundEffects.playUnlock();
             int gold = 0;
             for (int i = 0; i < 5; ++i) {
                 StandardCombatLoot loot = new StandardCombatLoot(model);

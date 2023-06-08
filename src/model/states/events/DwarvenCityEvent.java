@@ -159,6 +159,7 @@ public class DwarvenCityEvent extends DailyEventState {
                 case 5:
                     parkVisited = false;
                     new EveningState(model, false, false, false).run(model);
+                    setCurrentTerrainSubview(model);
                     break;
                 default :
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Okay gang, it's time to leave.");
@@ -223,6 +224,7 @@ public class DwarvenCityEvent extends DailyEventState {
                 model.getParty().addToGold(-cost);
                 EveningState eveningState = new EveningState(model, false, true, false);
                 eveningState.run(model);
+                setCurrentTerrainSubview(model);
                 parkVisited = false;
             }
         } else {

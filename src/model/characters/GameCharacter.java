@@ -343,7 +343,7 @@ public class GameCharacter extends Combatant {
 
     private int getRankAndRemoveTempBonus(Skill skill) {
         int total = getRankForSkill(skill);
-        if (temporarySkillBonuses.containsKey(skill) && temporarySkillBonuses.get(skill).isPersistent()) {
+        if (temporarySkillBonuses.containsKey(skill) && !temporarySkillBonuses.get(skill).isPersistent()) {
             temporarySkillBonuses.remove(skill);
         }
         return total;

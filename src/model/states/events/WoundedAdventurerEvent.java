@@ -53,6 +53,7 @@ public class WoundedAdventurerEvent extends DailyEventState {
                     println("You tend to the adventurer's wounds.");
                 }
                 new EveningState(model, false, false, false).run(model);
+                setCurrentTerrainSubview(model);
                 println("You spend the day trying to help the wounded adventurer recover.");
                 if (MyRandom.randInt(2) == 0) {
                     println("The wounded adventurer recovered!");

@@ -2,7 +2,9 @@ package model.states;
 
 import model.Model;
 import model.map.Direction;
+import model.map.UrbanLocation;
 import model.map.World;
+import model.map.WorldHex;
 import model.states.events.RiverEvent;
 import view.subviews.EmptySubView;
 import view.subviews.MapSubView;
@@ -57,7 +59,10 @@ public class TravelState extends GameState {
     private void moveToHex(Model model, Point selectedDir, MapSubView mapSubView) {
         model.getCurrentHex().travelFrom(model);
         model.getParty().move(selectedDir.x, selectedDir.y);
-        if (partyNoLongerOnRoad(model, mapSubView)) {
+        if (model.getParty().getPreviousPosition().getLocation() instanceof UrbanLocation &&
+                model.getCurrentHex().hasRoad()) {
+            model.getParty().setOnRoad(true);
+        } else if (partyNoLongerOnRoad(model, mapSubView)) {
             model.getParty().setOnRoad(false);
         }
         setCurrentTerrainSubview(model);
