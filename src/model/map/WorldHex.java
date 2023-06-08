@@ -281,24 +281,25 @@ public abstract class WorldHex implements Serializable {
     }
 
     public RiverEvent generateRiverEvent(Model model) {
-        return new BoatsEvent(model);
-//        int d10Roll = MyRandom.rollD10();
-//        if (d10Roll <= 4) {
-//            return new ShallowsEvent(model);
-//        } else if (d10Roll >= 9) {
-//            return new NoRiverCrossingEvent(model);
-//        }
-//        return MyRandom.sample(List.of(
-//                new FerryEvent(model),
-//                new BlackKnightEvent(model),
-//                new RopeBridgeEvent(model),
-//                new DeadBodyEvent(model),
-//                new UndertowEvent(model),
-//                new RapidsEvent(model),
-//                new SaberfishEvent(model),
-//                new BoatsEvent(model),
-//                new RaftEvent(model)
-//        ));
+        return MyRandom.sample(List.of(
+                new ShallowsEvent(model),
+                new ShallowsEvent(model),
+                new ShallowsEvent(model),
+                new ShallowsEvent(model),
+                new FerryEvent(model),
+                new BlackKnightEvent(model),
+                new RopeBridgeEvent(model),
+                new DeadBodyEvent(model),
+                new UndertowEvent(model),
+                new RapidsEvent(model),
+                new SaberfishEvent(model),
+                new BoatsEvent(model),
+                new BoatsEvent(model),
+                new BoatsEvent(model),
+                new RaftEvent(model),
+                new NoRiverCrossingEvent(model),
+                new NoRiverCrossingEvent(model)
+        ));
     }
 
     public GameState getDailyActionState(Model model) {
