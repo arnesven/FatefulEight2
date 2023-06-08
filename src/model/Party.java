@@ -384,6 +384,7 @@ public class Party implements Serializable {
                 }
                 break;
             } catch (SpellCastException spe) {
+                System.out.println("Solo skill check interrupted by spell " + spe.getSpell().getName());
                 if (spe.getSpell() instanceof SkillBoostingSpell) {
                     spe.getSpell().castYourself(model, event, spe.getCaster());
                 } else {

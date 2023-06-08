@@ -25,4 +25,9 @@ public class ShiningAegisCondition extends Condition {
     public int getArmorBonus() {
         return 3;
     }
+
+    @Override
+    public boolean removeAtEndOfCombat() {
+        return true;
+    }
 }

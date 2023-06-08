@@ -12,7 +12,7 @@ import java.util.List;
 
 public class LevelUpSummaryView extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 27;
-    private static final int DIALOG_HEIGHT = 26;
+    private static final int DIALOG_HEIGHT = 28;
     private final GameCharacter levler;
     private final GameCharacter willBe;
     private final ArrayList<BeforeAndAfterLine<Integer>> content;

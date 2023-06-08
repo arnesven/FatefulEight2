@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
+import model.items.PotionRecipe;
 import model.items.clothing.JustClothes;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
@@ -55,11 +56,10 @@ public class CraftItemState extends GameState {
             return new DailyActionState(model);
         }
          MyPair<Item, Integer> pair = getSelectedItem(model, optionNames, allItems);
-
-        Item selectedItem = pair.first;
-        if (selectedItem == null){
+        if (pair == null) {
             return new DailyActionState(model);
         }
+        Item selectedItem = pair.first;
 
         GameCharacter crafter = null;
         if (model.getParty().size() > 1) {
@@ -97,8 +97,8 @@ public class CraftItemState extends GameState {
         List<String> options = new ArrayList<>(optionNames);
         options.add("Cancel");
         println("What item would you like to craft?");
-        final String[] selected = {null};
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 24 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
+        final String[] selected = {null}; // TODO, what to do when options are many?
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 34 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selected[0] = options.get(cursorPos);
@@ -124,7 +124,7 @@ public class CraftItemState extends GameState {
     private List<Item> getAllItems(Model model) {
         List<Item> allItems = new ArrayList<>();
         allItems.addAll(model.getParty().getInventory().getAllItems());
-        allItems.removeIf((Item it ) -> it instanceof Spell || it instanceof Potion);
+        allItems.removeIf((Item it ) -> it instanceof Spell || it instanceof Potion || it instanceof PotionRecipe || it instanceof CraftingDesign);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (!(gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon)) {
                 allItems.add(gc.getEquipment().getWeapon());

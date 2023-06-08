@@ -89,7 +89,11 @@ public abstract class QuestNode {
         model.getLog().waitForAnimationToFinish();
         if (spellSuccess) {
             unacceptAllSpells(model);
-            return getSpellCallback(sce.getSpell().getName()).run(model, state, sce.getSpell(), sce.getCaster());
+            SpellCallback callback = getSpellCallback(sce.getSpell().getName());
+            if (callback == null) {
+                throw new IllegalStateException("No spell callback for cast spell " + sce.getSpell().getName());
+            }
+            return callback.run(model, state, sce.getSpell(), sce.getCaster());
         }
         return null;
     }

@@ -46,7 +46,7 @@ public class ThievesGuildEvent extends DailyEventState {
                 }
                 result = result && model.getParty().doSoloSkillCheck(model, this, Skill.Search, 7);
                 if (result) {
-                    println("The heist has been successful and the Guild Master is pleased. He gladly pays you your share of the bounty.");
+                    println("The heist has been successful and the Guild Master is pleased. He gladly pays you your share of the booty.");
                     model.getParty().addToGold(25);
                     println("The party gains 25 gold.");
                     leaderSay("We're so bad!");
