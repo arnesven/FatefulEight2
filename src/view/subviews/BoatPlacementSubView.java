@@ -124,7 +124,7 @@ public class BoatPlacementSubView extends SubView {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            state.shiftCharacter(model);
+            state.shiftCharacter();
         }
         return matrix.handleKeyEvent(keyEvent);
     }

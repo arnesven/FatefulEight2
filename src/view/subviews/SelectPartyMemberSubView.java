@@ -21,9 +21,10 @@ public class SelectPartyMemberSubView extends SubView {
         int row = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (model.getParty().getBench().contains(gc)) {
-                continue;
+                row++;
+            } else {
+                matrix.addElement(col, row++, gc);
             }
-            matrix.addElement(col, row++, gc);
             if (row == matrix.getRows()) {
                 row = 0;
                 col++;
