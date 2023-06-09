@@ -99,16 +99,14 @@ public class SteppingMatrix<T> {
     }
 
     public synchronized void remove(T elem) {
-        list.remove(elem);
-        Point p = getPositionFor(elem);
-        grid.get(p.x).set(p.y, null);
         if (list.size() > 0) {
-            T newSelected = list.get(0);
-            Point p2 = getPositionFor(newSelected);
-            selected = p2;
+            step(1, 0);
         } else {
             selected = null;
         }
+        list.remove(elem);
+        Point p = getPositionFor(elem);
+        grid.get(p.x).set(p.y, null);
     }
 
     public synchronized void step(int dx, int dy, boolean firstTime) {

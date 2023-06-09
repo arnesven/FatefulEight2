@@ -106,7 +106,7 @@ public class Inventory implements Serializable {
     }
 
     public int noOfsellableItems() {
-        return weapons.size() + clothing.size() + accessories.size() + potions.size();
+        return getAllItems().size();
     }
 
     public List<Spell> getSpells() {

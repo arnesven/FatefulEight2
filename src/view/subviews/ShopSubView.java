@@ -62,6 +62,9 @@ public class ShopSubView extends SubView {
     private void checkSellIntegrity(Model model) {
         boolean integrityOk = true;
         List<Item> sellableItems = model.getParty().getInventory().getAllItems();
+        if (sellableItems.size() > matrix.getColumns()*matrix.getRows()) {
+            sellableItems = sellableItems.subList(0, matrix.getColumns()*matrix.getRows());
+        }
         for (Item it : sellableItems) {
             if (!matrix.getElementList().contains(it)) {
                 integrityOk = false;

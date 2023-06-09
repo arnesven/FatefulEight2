@@ -35,7 +35,12 @@ public class ShopState extends GameState {
         sellItems = new SteppingMatrix<>(8, 8);
         this.seller = seller;
         buyItems.addElements(itemsForSale);
-        sellItems.addElements(model.getParty().getInventory().getAllItems());
+        List<Item> itemsToSell = new ArrayList<>();
+        itemsToSell.addAll(model.getParty().getInventory().getAllItems());
+        if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
+            itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
+        }
+        sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
         this.subView = new ShopSubView(buyItems, "BUYING", seller, prices);
     }
@@ -68,7 +73,11 @@ public class ShopState extends GameState {
             List<String> buySellActions = new ArrayList<>();
             buySellActions.add("Buy");
             if (maySell(model)) {
-                buySellActions.add("Sell");
+                if (matrixToUse == sellItems) {
+                    buySellActions.add(0, "Sell");
+                } else {
+                    buySellActions.add("Sell");
+                }
             }
             if (matrixToUse.getSelectedElement() instanceof Weapon) {
                 buySellActions.add("Analyze");
@@ -143,7 +152,7 @@ public class ShopState extends GameState {
                         model.getParty().getInventory().remove(it);
                         println("You sold " + it.getName() + " for " + money + " gold.");
                         SoundEffects.sellItem();
-                        if (sellItems.getElementList().isEmpty()) {
+                        if (model.getParty().getInventory().noOfsellableItems() == 0) {
                             if (buyItems.getElementList().isEmpty()) {
                                 break;
                             } else {

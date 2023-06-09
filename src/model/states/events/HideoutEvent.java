@@ -5,6 +5,7 @@ import model.enemies.BanditEnemy;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class HideoutEvent extends DailyEventState {
                 leaderSay("We're a bit short on cash...");
                 reject();
             } else {
-                int cost = (model.getParty().getGold() / 10) * 10;
+                int cost = Math.min((model.getParty().getGold() / 10) * 10, 150);
                 print("Buy the loot for " + cost + " gold? (Y/N) ");
                 if (yesNoInput()) {
                     List<Item> items = generateLoot(model, cost);
@@ -71,7 +72,12 @@ public class HideoutEvent extends DailyEventState {
         List<Item> result = new ArrayList<>();
         int sum = 0;
         while (sum < cost*3) {
-            Item it = model.getItemDeck().draw(1, Prevalence.rare).get(0);
+            Item it;
+            if (MyRandom.rollD10() > 7) {
+                it = model.getItemDeck().draw(1, Prevalence.rare).get(0);
+            } else {
+                it = model.getItemDeck().draw(1, Prevalence.uncommon).get(0);
+            }
             result.add(it);
             sum += it.getCost();
         }
