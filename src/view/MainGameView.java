@@ -39,9 +39,9 @@ public class MainGameView extends GameView {
             ScreenHandler screenHandler = model.getScreenHandler();
             screenHandler.clearForeground();
             model.getParty().drawYourself(screenHandler);
-            model.getSubView().drawYourself(model);
             topText.drawYourself(model);
             miniLog.drawYourself(model);
+            model.getSubView().drawYourself(model);
         }
     }
 

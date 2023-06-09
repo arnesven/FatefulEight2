@@ -38,9 +38,9 @@ public abstract class SubView {
     }
 
     public void drawYourself(Model model) {
+        drawOverText(model);
         drawArea(model);
         drawEffects(model);
-        drawOverText(model);
     }
 
     private synchronized void drawEffects(Model model) {
