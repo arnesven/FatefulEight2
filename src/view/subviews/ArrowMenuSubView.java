@@ -17,6 +17,7 @@ public abstract class ArrowMenuSubView extends SubView {
     private final SubView previous;
 
     public ArrowMenuSubView(SubView previous, List<String> labels, int xPos, int yPos, int anchor) {
+        super(previous.getCenterTextHeight());
         this.previous = previous;
 
         int xStart = xPos;
