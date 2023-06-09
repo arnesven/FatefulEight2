@@ -9,6 +9,7 @@ import model.items.spells.TurnUndeadSpell;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import view.AnalyzeWeaponDialog;
+import view.SimpleMessageView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.ShopSubView;
@@ -20,6 +21,7 @@ public class ShopState extends GameState {
 
     private final ShopSubView subView;
     private final String seller;
+    private boolean warnAboutManyItems = false;
     private HashMap<Item, Integer> prices;
     private SteppingMatrix<Item> buyItems;
     private SteppingMatrix<Item> sellItems;
@@ -39,6 +41,7 @@ public class ShopState extends GameState {
         itemsToSell.addAll(model.getParty().getInventory().getAllItems());
         if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
             itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
+            warnAboutManyItems = true;
         }
         sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
@@ -143,6 +146,11 @@ public class ShopState extends GameState {
             } else if (selectedAction[0] == 'S' && sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
                 if (showingBuyItems) {
                     toggleBuySell();
+                    if (warnAboutManyItems) {
+                        model.transitionToDialog(new SimpleMessageView(model.getView(),
+                                "Please note that you currently have more items than can be displayed in this view."));
+                        warnAboutManyItems = false;
+                    }
                 } else {
                     Item it = sellItems.getSelectedElement();
                     if (!isCurrentlyEquipped(model, it)) {
