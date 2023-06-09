@@ -116,15 +116,18 @@ public class SteppingMatrix<T> {
         SoundEffects.matrixSelect();
         T nextSelected = findExactMatch(dx, dy, firstTime);
         if (nextSelected != null) {
+            System.out.println("Matrix found exact match");
             selected = getPositionFor(nextSelected);
             return;
         }
         nextSelected = findApproxMatch(dx, dy, firstTime);
         if (nextSelected != null) {
+            System.out.println("Matrix found APPROX match");
             selected = getPositionFor(nextSelected);
             return;
         }
         if (firstTime) {
+            System.out.println("Strange wrap");
             step(-dx, -dy, false);
         }
     }
@@ -176,10 +179,7 @@ public class SteppingMatrix<T> {
             return null;
         }
         sortByDistance(candidates, origin);
-        if (searchForward) {
-            return candidates.get(0);
-        }
-        return candidates.get(candidates.size()-1);
+        return candidates.get(0);
     }
 
     private void sortByDistance(List<T> candidates, Point origin) {
