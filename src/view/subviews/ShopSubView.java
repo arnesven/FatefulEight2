@@ -21,6 +21,7 @@ public class ShopSubView extends SubView {
     private SteppingMatrix<Item> matrix;
     private String title;
     private Sprite crossSprite = new Sprite32x32("crosssprite", "combat.png", 0x00, MyColors.BLACK, MyColors.CYAN, MyColors.RED);
+    private boolean overflow = false;
 
     public ShopSubView(SteppingMatrix<Item> items, String title, String seller,
                        Map<Item, Integer> prices) {
@@ -56,14 +57,23 @@ public class ShopSubView extends SubView {
             }
         }
 
+        if (overflow) {
+            int xPos = X_MAX - 19;
+            int yPos = Y_OFFSET + (matrix.getRows()) * 4 + 3;
+            BorderFrame.drawString(model.getScreenHandler(),"All items not shown",  xPos, yPos,
+                    MyColors.RED, MyColors.BLACK);
+        }
+
         drawCursor(model);
     }
 
     private void checkSellIntegrity(Model model) {
         boolean integrityOk = true;
+        overflow = false;
         List<Item> sellableItems = model.getParty().getInventory().getAllItems();
         if (sellableItems.size() > matrix.getColumns()*matrix.getRows()) {
             sellableItems = sellableItems.subList(0, matrix.getColumns()*matrix.getRows());
+            overflow = true;
         }
         for (Item it : sellableItems) {
             if (!matrix.getElementList().contains(it)) {
@@ -129,5 +139,9 @@ public class ShopSubView extends SubView {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    public void setOverflowWarning(boolean b) {
+        this.overflow = b;
     }
 }

@@ -116,18 +116,15 @@ public class SteppingMatrix<T> {
         SoundEffects.matrixSelect();
         T nextSelected = findExactMatch(dx, dy, firstTime);
         if (nextSelected != null) {
-            System.out.println("Matrix found exact match");
             selected = getPositionFor(nextSelected);
             return;
         }
         nextSelected = findApproxMatch(dx, dy, firstTime);
         if (nextSelected != null) {
-            System.out.println("Matrix found APPROX match");
             selected = getPositionFor(nextSelected);
             return;
         }
         if (firstTime) {
-            System.out.println("Strange wrap");
             step(-dx, -dy, false);
         }
     }

@@ -150,6 +150,7 @@ public class ShopState extends GameState {
                         model.transitionToDialog(new SimpleMessageView(model.getView(),
                                 "Please note that you currently have more items than can be displayed in this view."));
                         warnAboutManyItems = false;
+                        subView.setOverflowWarning(true);
                     }
                 } else {
                     Item it = sellItems.getSelectedElement();
@@ -195,6 +196,7 @@ public class ShopState extends GameState {
             subView.setContent(sellItems);
             subView.setText("SELLING");
         }
+        subView.setOverflowWarning(false);
     }
 
     public void setSellingEnabled(boolean b) {
