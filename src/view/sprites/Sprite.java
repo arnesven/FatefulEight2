@@ -56,10 +56,6 @@ public class Sprite implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (++called > 50000) {
-            throw new RuntimeException("Created more than 50000 sprites, really OK?");
-        }
-        //System.out.println(called + " " + this.toString());
 
     }
 

@@ -99,14 +99,23 @@ public class SteppingMatrix<T> {
     }
 
     public synchronized void remove(T elem) {
-        if (list.size() > 0) {
-            step(1, 0);
-        } else {
-            selected = null;
+        Point nextSelected = selected;
+        if (elem == getSelectedElement()) {
+            if (list.size() > 1) {
+                step(1, 0);
+                if (elem == getSelectedElement()) {
+                    step(0, 1);
+                }
+                nextSelected = selected;
+            } else {
+                selected = null;
+            }
         }
         list.remove(elem);
         Point p = getPositionFor(elem);
         grid.get(p.x).set(p.y, null);
+        selected = nextSelected;
+        System.out.println("Object remove from stepping matrix, new Selected: " + getSelectedElement());
     }
 
     public synchronized void step(int dx, int dy, boolean firstTime) {

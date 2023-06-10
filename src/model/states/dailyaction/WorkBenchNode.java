@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -40,5 +41,9 @@ public class WorkBenchNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (state.isMorning()) {
+            model.setTimeOfDay(TimeOfDay.MIDDAY);
+        }
+    }
 }

@@ -14,7 +14,7 @@ public class TutorialQuests extends HelpDialog {
             "one of the options is chosen for the party instead.\n\n" +
             "Quest can either be successful or failed. A quest is successful if the party can " +
             "successfully perform all the task required to reach the green star node. A quest " +
-            "is failed if the party reaches the red X node, or is defeated in combat.\n\n" +
+            "is failed if the party reaches the red X node\n\n" +
             "Normally, you cannot flee from combat during quests, so be very careful.\n\n" +
             "When a quest is successfully completed rewards usually include increased " +
             "party reputation and gold per party member.";

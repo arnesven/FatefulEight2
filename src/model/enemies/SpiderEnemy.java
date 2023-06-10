@@ -59,10 +59,11 @@ public class SpiderEnemy extends BeastEnemy {
     private static class SpiderSprite extends LoopingSprite {
         public SpiderSprite() {
             super("spiderenemy", "enemies.png", 0x47, 32);
-            setColor1(MyColors.DARK_GRAY);
+            setColor1(MyColors.BLACK);
             setColor2(MyColors.DARK_RED);
             setColor3(MyColors.RED);
-            setFrames(6);
+            setColor4(MyColors.DARK_GRAY);
+            setFrames(4);
         }
     }
 }

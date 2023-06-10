@@ -46,6 +46,7 @@ public class TakeLoanAction extends GameState {
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                             "Fine, take it. Now go tell your cronies to back off.");
                     model.getParty().addToGold(-cost);
+                    model.getParty().setLoan(null);
                 } else {
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Not right now...");
                 }
