@@ -526,7 +526,7 @@ public class Party implements Serializable {
             } else if (performer.getSP() == 0) {
                 break;
             } else {
-                event.print("Use 1 Stamina Point to re-roll? ");
+                event.print("Use 1 Stamina Point to re-roll? (Y/N) ");
                 if (event.yesNoInput()) {
                     performer.addToSP(-1);
                 } else {

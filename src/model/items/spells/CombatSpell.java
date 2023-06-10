@@ -39,7 +39,7 @@ public abstract class CombatSpell extends Spell {
 
     @Override
     protected int getExperience() {
-        return 5;
+        return 10;
     }
 
     @Override

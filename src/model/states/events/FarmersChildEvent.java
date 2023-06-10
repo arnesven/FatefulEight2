@@ -24,7 +24,7 @@ public class FarmersChildEvent extends DailyEventState {
         print("You encounter a farmer who's begging you to take his teenage " +
                 (gender?"daughter":"son") + " as an apprentice adventurer. The kid seems" +
                 " ready to take on the world, but an apprentice may turn out to be a" +
-                "liability. Are you interested? ");
+                "liability. Are you interested? (Y/N) ");
         if (yesNoInput()) {
             List<GameCharacter> list = new ArrayList<>();
             list.add(MyRandom.sample(model.getAvailableCharactersByGender(gender)));
