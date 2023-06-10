@@ -9,6 +9,7 @@ import model.items.Item;
 import model.states.GameState;
 import sound.SoundEffects;
 import view.MyColors;
+import view.YesNoMessageView;
 
 public abstract class Spell extends Item {
     public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK};
@@ -50,6 +51,17 @@ public abstract class Spell extends Item {
             health = Math.max(0, health - 2);
         }
         if (!isCastFromScroll) {
+            final boolean[] abort = {false};
+            YesNoMessageView confirmDialog = new YesNoMessageView(model.getView(),
+                    "WARNING: Casting " + getName() + " will kill " + caster.getFirstName() + "! Abort casting?") {
+                @Override
+                protected void doAction(Model model) {
+                    abort[0] = true;
+                }
+            };
+            if (abort[0]) {
+                return false;
+            }
             caster.addToHP(-health);
         }
         if (caster.isDead()) {

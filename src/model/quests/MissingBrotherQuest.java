@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.enemies.BanditArcherEnemy;
 import model.enemies.BanditEnemy;
 import model.enemies.BearEnemy;
 import model.enemies.Enemy;
@@ -197,7 +198,11 @@ public class MissingBrotherQuest extends Quest {
         private static List<Enemy> makeBandits() {
             List<Enemy> list = new ArrayList<>();
             for (int i = 0; i < 7; ++i) {
-                list.add(new BanditEnemy('A', "Bandit", 4));
+                if (MyRandom.randInt(3) == 0) {
+                    list.add(new BanditArcherEnemy('A'));
+                } else {
+                    list.add(new BanditEnemy('A', "Bandit", 4));
+                }
             }
             return list;
         }

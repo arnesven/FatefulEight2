@@ -144,7 +144,7 @@ public abstract class Enemy extends Combatant {
         if (hasCondition(WeakenCondition.class)) {
             damage = Math.max(1, damage - 2);
         }
-        while (damage > 0 && MyRandom.randInt(2) == 0) {
+        while (damage > 0 && MyRandom.randInt(3) == 0) {
             damage--;
         }
         return damage;
