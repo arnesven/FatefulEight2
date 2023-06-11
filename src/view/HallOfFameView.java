@@ -4,6 +4,7 @@ import model.HallOfFameData;
 import model.HallOfFameEntry;
 import model.Model;
 import model.characters.GameCharacter;
+import view.sprites.AnimationManager;
 import view.sprites.AvatarSprite;
 
 import java.awt.*;
@@ -21,8 +22,6 @@ public class HallOfFameView extends GameView {
 
     @Override
     public void transitionedTo(Model model) {
-
-
     }
 
     @Override

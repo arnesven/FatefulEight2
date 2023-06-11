@@ -335,18 +335,7 @@ public class Model {
 
     public void recordInHallOfFame() {
         screenHandler.clearAll();
-        HallOfFameData hfData = null;
-        if (new File(HALL_OF_FAME_PATH).exists()) {
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(HALL_OF_FAME_PATH));
-                hfData = (HallOfFameData) ois.readObject();
-                ois.close();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            hfData = new HallOfFameData();
-        }
+        HallOfFameData hfData = loadHallOfFameData();
         hfData.append(getParty(), GameScore.calculate(this));
 
         try {
@@ -369,10 +358,10 @@ public class Model {
                 HallOfFameData hfData = (HallOfFameData) ois.readObject();
                 return hfData;
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                System.err.println("Hall of Fame data corrupt or bad version!");
             }
         }
-        return null;
+        return new HallOfFameData();
     }
 
     public void enterCaveSystem() {
