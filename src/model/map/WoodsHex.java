@@ -35,25 +35,27 @@ public class WoodsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        if (MyRandom.rollD10() >= 5) {
-            List<DailyEventState> events = new ArrayList<>();
-            events.add(new LumberMillEvent(model));
-            events.add(new WolfEvent(model));
-            events.add(new ElvenCampEvent(model));
-            events.add(new ElfEvent(model));
-            events.add(new SorcerersTowerEvent(model));
-            events.add(new WitchHutEvent(model));
-            events.add(new VipersEvent(model));
-            events.add(new FaeriesEvent(model));
-            events.add(new HalflingEvent(model));
-            events.add(new AbandonedShackEvent(model));
-            events.add(new LovelyClearingEvent(model));
-            events.add(new CaveEvent(model));
-            events.add(new PaladinEvent(model));
-            events.add(new HuntingEvent(model));
-            return MyRandom.sample(events);
-        }
-        return new NoEventState(model);
+        return new FrogmenScoutsEvent(model);
+//        if (MyRandom.rollD10() >= 5) {
+//            List<DailyEventState> events = new ArrayList<>();
+//            events.add(new LumberMillEvent(model));
+//            events.add(new WolfEvent(model));
+//            events.add(new ElvenCampEvent(model));
+//            events.add(new ElfEvent(model));
+//            events.add(new SorcerersTowerEvent(model));
+//            events.add(new WitchHutEvent(model));
+//            events.add(new VipersEvent(model));
+//            events.add(new FaeriesEvent(model));
+//            events.add(new HalflingEvent(model));
+//            events.add(new AbandonedShackEvent(model));
+//            events.add(new LovelyClearingEvent(model));
+//            events.add(new CaveEvent(model));
+//            events.add(new PaladinEvent(model));
+//            events.add(new HuntingEvent(model));
+//            events.add(new FrogmenScoutsEvent(model));
+//            return MyRandom.sample(events);
+//        }
+//        return new NoEventState(model);
     }
 
     @Override

@@ -49,7 +49,6 @@ public class SwampHex extends WorldHex {
                     new AmazonEvent(model),
                     new ChestEvent(model),
                     new AbandonedShackEvent(model)
-                    // new OctopusEvent(model)
             ));
         }
         return new NoEventState(model);
