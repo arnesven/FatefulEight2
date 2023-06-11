@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.Model;
 import model.states.CombatEvent;
 import sprites.CombatCursorSprite;
+import util.MyPair;
 import util.MyPixel;
 import util.MyRandom;
 import view.MyColors;
@@ -136,7 +137,7 @@ public abstract class Enemy extends Combatant {
 
     public abstract CombatLoot getLoot(Model model);
 
-    public int calculateBaseDamage(boolean isRanged) {
+    public MyPair<Integer, Boolean> calculateBaseDamage(boolean isRanged) {
         int damage = getDamage();
         if (isRanged && getFightingStyle() == FIGHTING_STYLE_MIXED) {
             damage = (int)(Math.ceil(((double)damage) / 2.0));
@@ -144,10 +145,14 @@ public abstract class Enemy extends Combatant {
         if (hasCondition(WeakenCondition.class)) {
             damage = Math.max(1, damage - 2);
         }
+        if (MyRandom.rollD10() == 10) {
+            damage = damage * 2;
+            return new MyPair<>(damage, true);
+        }
         while (damage > 0 && MyRandom.randInt(3) == 0) {
             damage--;
         }
-        return damage;
+        return new MyPair<>(damage, false);
     }
 
     public RunOnceAnimationSprite getKillAnimation() {

@@ -17,6 +17,7 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
 import model.states.CombatEvent;
+import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
@@ -519,7 +520,8 @@ public class GameCharacter extends Combatant {
     }
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
-        int damage = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
+        MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
+        int damage = pair.first;
         int reduction = Math.min(damage, calculateDamageReduction());
         String reductionString = "";
         if (getAP() > 0) {
@@ -527,8 +529,11 @@ public class GameCharacter extends Combatant {
         }
         damage = damage - reduction;
         addToHP(-1 * damage);
-        combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getName() + reductionString + ".");
-        combatEvent.addStrikeEffect(this, damage, false);
+        if (pair.second) {
+            reductionString = ", Critical Hit" + reductionString;
+        }
+        combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
+        combatEvent.addStrikeEffect(this, damage, pair.second);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }
 
