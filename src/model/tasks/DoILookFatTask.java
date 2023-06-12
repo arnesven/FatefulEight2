@@ -55,4 +55,9 @@ public class DoILookFatTask extends SummonTask {
 
 
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs some advice, about fashion or perhaps something else.";
+    }
 }

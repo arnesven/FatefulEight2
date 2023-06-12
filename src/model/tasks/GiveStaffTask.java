@@ -70,4 +70,9 @@ public class GiveStaffTask extends SummonTask {
         });
         return candidates.get(0);
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs a staff.";
+    }
 }

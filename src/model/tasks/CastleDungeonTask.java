@@ -38,4 +38,10 @@ public class CastleDungeonTask extends SummonTask {
                     "Something is eating the staff, and good help is so hard to find.\"");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs help clearing " +
+                hisOrHer(location.getLordGender()) + " dungeon from an evil presence.";
+    }
 }

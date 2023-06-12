@@ -92,7 +92,7 @@ public class World implements Serializable {
         if (hex.getLocation() == null || !(hex.getLocation() instanceof UrbanLocation)) {
             return HexLocation.FLAG_NONE;
         }
-        if (model.getQuestDeck().alreadyDone(hex.getLocation())) {
+        if (model.getQuestDeck().hasFlagIn(hex.getLocation())) {
             if (model.getQuestDeck().wasSuccessfulIn(hex.getLocation())) {
                 return HexLocation.FLAG_SUCCESS;
             }
@@ -206,6 +206,20 @@ public class World implements Serializable {
             }
         }
         throw new IllegalArgumentException("No town found for \"" + townName + "\"");
+    }
+
+    public UrbanLocation getUrbanLocationByPlaceName(String placeName) {
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() instanceof UrbanLocation) {
+                    UrbanLocation urb = (UrbanLocation) (hexes[x][y].getLocation());
+                    if (urb.getPlaceName().contains(placeName)) {
+                        return urb;
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("No town found for \"" + placeName + "\"");
     }
 
     public Point getPositionForHex(WorldHex hex) {

@@ -60,4 +60,10 @@ public class InspireMeForAdventureTask extends SummonTask {
             println(location.getLordName() + ": \"Uh, okay. But come back if you change your mind!\"");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs some moral support to continue being the " +
+                location.getLordTitle() + " of " + location;
+    }
 }

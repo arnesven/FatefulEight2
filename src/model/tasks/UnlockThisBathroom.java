@@ -47,4 +47,9 @@ public class UnlockThisBathroom extends SummonTask {
             leaderSay("Maybe stop drinking so much...");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return "A jammed lock on a bathroom door is causing some trouble.";
+    }
 }

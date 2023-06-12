@@ -51,4 +51,9 @@ public abstract class GiveResourceTask extends SummonTask {
         leaderSay("Hmm... well we'll keep our eyes open and get back to you.");
         println(location.getLordName() + ": \"Please do! We are eager to get the work started.\"");
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs " + amount + " " + resourceType + ".";
+    }
 }

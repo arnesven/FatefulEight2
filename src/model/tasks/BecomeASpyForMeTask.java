@@ -65,4 +65,10 @@ public class BecomeASpyForMeTask extends SummonTask {
         }
         return false;
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " wants us to become a spies for " +
+                himOrHer(location.getLordGender()) + ".";
+    }
 }

@@ -17,6 +17,7 @@ public class Summon implements Serializable {
     public static final int COMPLETE = 2;
     private int step = ACCEPTED;
     private int summonTask = -1;
+    private int completedOnDay = 0;
     private static Set<String> usedTasks = new HashSet<>();
 
     private static List<SummonTask> makeAllTasks(Summon summon, Model model, UrbanLocation location) {
@@ -73,4 +74,11 @@ public class Summon implements Serializable {
         step++;
     }
 
+    public void setCompletedOnDay(int day) {
+        this.completedOnDay = day;
+    }
+
+    public int getCompletedOnDay() {
+        return completedOnDay;
+    }
 }

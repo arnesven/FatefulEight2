@@ -33,4 +33,9 @@ public class FencingTask extends SummonTask {
             println(location.getLordName() + ": \"Uh, okay. But come back if you change your mind!");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs a fencing lesson.";
+    }
 }

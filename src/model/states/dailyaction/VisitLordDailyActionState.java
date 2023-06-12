@@ -104,6 +104,9 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             if (summon.getStep() != Summon.COMPLETE) {
                 SummonTask task = summon.getTask(model, location);
                 task.doTask(model);
+                if (summon.getStep() == Summon.COMPLETE) {
+                    summon.setCompletedOnDay(model.getDay());
+                }
             }
 
             if (summon.getStep() == Summon.COMPLETE) {

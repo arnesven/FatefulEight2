@@ -11,4 +11,6 @@ public abstract class SummonTask extends DailyEventState {
     public void doTask(Model model) {
         doEvent(model);
     }
+
+    public abstract String getJournalDescription();
 }

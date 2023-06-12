@@ -158,6 +158,12 @@ public class MurderMysteryQuest extends Quest {
         }
 
         @Override
+        public void connectSuccess(QuestNode questNode, boolean align) {
+            super.connectSuccess(questNode, align);
+            inner.connectSuccess(questNode, align);
+        }
+
+        @Override
         protected MyColors getSuccessEdgeColor() {
             return MyColors.WHITE;
         }

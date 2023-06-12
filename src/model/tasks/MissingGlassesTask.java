@@ -36,4 +36,9 @@ public class MissingGlassesTask extends SummonTask {
                     "They must be around here somewhere...\"");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs help finding " + hisOrHer(location.getLordGender()) + " glasses.";
+    }
 }

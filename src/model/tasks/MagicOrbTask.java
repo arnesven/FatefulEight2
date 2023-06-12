@@ -48,4 +48,9 @@ public class MagicOrbTask extends SummonTask {
                     "What is this thing...\"");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " wants a magic orb identified.";
+    }
 }

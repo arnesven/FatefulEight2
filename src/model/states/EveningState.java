@@ -120,7 +120,7 @@ public class EveningState extends GameState {
                 Quest q = subView.getSelectedQuest();
                 this.goOnQuest = q;
                 println("You have accepted quest '" + q.getName() + "'!");
-                model.getQuestDeck().accept(q, model.getCurrentHex().getLocation());
+                model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
                 q.accept(model.getParty());
             } else {
                 println("You rejected the quest" + (quests.size() > 1?"s":"") + ".");

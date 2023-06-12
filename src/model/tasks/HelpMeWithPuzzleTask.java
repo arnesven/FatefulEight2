@@ -37,4 +37,9 @@ public class HelpMeWithPuzzleTask extends SummonTask {
                     "Hmm, am I missing a piece?\"");
         }
     }
+
+    @Override
+    public String getJournalDescription() {
+        return heOrSheCap(location.getLordGender()) + " needs help with a puzzle.";
+    }
 }
