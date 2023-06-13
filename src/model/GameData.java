@@ -24,4 +24,5 @@ public class GameData implements Serializable {
     public int caveSystemSeed = MyRandom.randInt(Integer.MAX_VALUE);
     public Map<String, RuinsDungeon> dungeons = new HashMap<>();
     public SettingsManager settings = new SettingsManager();
+    public MainStory mainStory = new MainStory();
 }

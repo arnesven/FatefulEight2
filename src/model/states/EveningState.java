@@ -200,19 +200,21 @@ public class EveningState extends GameState {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");
             model.getParty().consumeRations();
-            model.getParty().randomPartyMemberSay(model, List.of(
-                    "I think I'm lying on a root.#",
-                    "This tent is nice, but a bit small.",
-                    "Can somebody feed that fire, it's dying.",
-                    "Anybody know a ghost story?",
-                    "I need some rest.",
-                    "Let's hit the sack people.",
-                    "Who's been using my sleeping bag?",
-                    "Tomorrow's another day.",
-                    "I'm about to fall asleep.",
-                    "These rations are a bit stale.",
-                    "I wish we would stay at a tavern.",
-                    "Yaaawn!", "Good night everybody."));
+            if (model.getParty().size() > 1) {
+                model.getParty().randomPartyMemberSay(model, List.of(
+                        "I think I'm lying on a root.#",
+                        "This tent is nice, but a bit small.",
+                        "Can somebody feed that fire, it's dying.",
+                        "Anybody know a ghost story?",
+                        "I need some rest.",
+                        "Let's hit the sack people.",
+                        "Who's been using my sleeping bag?",
+                        "Tomorrow's another day.",
+                        "I'm about to fall asleep.",
+                        "These rations are a bit stale.",
+                        "I wish we would stay at a tavern.",
+                        "Yaaawn!", "Good night everybody."));
+            }
         } else {
             print("There are not enough rations for everybody. ");
             List<GameCharacter> remaining = new ArrayList<>();

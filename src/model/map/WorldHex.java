@@ -310,6 +310,10 @@ public abstract class WorldHex implements Serializable {
     }
 
     public GameState getEveningState(Model model, boolean freeLodging, boolean freeRations) {
+        EveningState initialLeadsEveningState = model.getMainStory().generateInitialLeadsEveningState(model);
+        if (initialLeadsEveningState != null) {
+            return initialLeadsEveningState;
+        }
         if (hexLocation != null && !hexLocation.isDecoration()) {
             return hexLocation.getEveningState(model, freeLodging, freeRations);
         }

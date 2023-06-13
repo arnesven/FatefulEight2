@@ -123,6 +123,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        model.getMainStory().setVisitedTown(true);
         return new TownDailyActionState(model, isCoastal, this, freeLodge, freeRations);
     }
 

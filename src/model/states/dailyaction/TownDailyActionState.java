@@ -32,7 +32,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
             addNode(shop.getColumn(), shop.getRow(), shop);
         }
         this.isCoastal = isCoastal;
-
+        model.getMainStory().setVisitedTown(true);
     }
 
     public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation) {

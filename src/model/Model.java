@@ -381,10 +381,14 @@ public class Model {
     }
 
     public RuinsDungeon getDungeon(String ruinsName) {
-        if (!gameData.dungeons.containsKey(ruinsName)) {
+        if (!hasVisitedDungeon(ruinsName)) {
             gameData.dungeons.put(ruinsName, new RuinsDungeon());
         }
         return gameData.dungeons.get(ruinsName);
+    }
+
+    public boolean hasVisitedDungeon(String ruinsName) {
+        return gameData.dungeons.containsKey(ruinsName);
     }
 
     public void showHallOfFame() {
@@ -405,5 +409,9 @@ public class Model {
 
     public SettingsManager getSettings() {
         return gameData.settings;
+    }
+
+    public MainStory getMainStory() {
+        return gameData.mainStory;
     }
 }

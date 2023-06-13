@@ -374,6 +374,18 @@ public class World implements Serializable {
         return path;
     }
 
+    public List<RuinsLocation> getRuinsLocations() {
+        List<RuinsLocation> result = new ArrayList<>();
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() instanceof RuinsLocation) {
+                    result.add((RuinsLocation)(hexes[x][y].getLocation()));
+                }
+            }
+        }
+        return result;
+    }
+
     private static class Interval {
         public int from;
         public int to;

@@ -126,6 +126,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
+        model.getMainStory().setVisitedCastle(true);
         return new CastleDailyActionState(model, this, freeLodge, freeRations);
     }
 
