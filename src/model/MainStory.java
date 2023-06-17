@@ -6,7 +6,10 @@ import model.classes.Classes;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
+import model.map.locations.AshtonshireTown;
+import model.map.locations.EbonshireTown;
 import model.map.locations.LowerThelnTown;
+import model.map.locations.SouthMeadhomeTown;
 import model.quests.FrogmenProblemQuest;
 import model.quests.Quest;
 import model.states.EveningState;
@@ -73,10 +76,9 @@ public class MainStory implements Serializable {
     public TownLocation getStartingLocation(Model model, GameCharacter whosUncle) {
         if (startLocation == null) {
             List<String> towns = List.of(
-                new LowerThelnTown().getName()
-                    //        new AshtonshireTown().getName(),
-            //        new SouthMeadhomeTown().getName(),
-            //        new EbonshireTown().getName()
+                            new AshtonshireTown().getName(),
+                            new SouthMeadhomeTown().getName(),
+                            new EbonshireTown().getName()
             );
             startLocation = MyRandom.sample(towns);
             this.whosUncle = whosUncle;

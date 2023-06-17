@@ -74,14 +74,22 @@ public class VisitUncleNode extends DailyActionNode {
                 model.getMainStory().increaseStep();
                 println("You enter the hut where " + whos.getFirstName() + "'s uncle lives. The man greets you cheerfully.");
                 showExplicitPortrait(model, unclePortrait, "Uncle");
-                portraitSay(whos.getFirstName() + "! It's good to see you!");
-                partyMemberSay(whos, "Uncle, it's been too long. How have you been?");
-                portraitSay("Oh, fairly well, I suppose. I see you've brought some friends.");
-                leaderSay(model.getParty().getLeader().getName() + ", and company, at your service.");
-                partyMemberSay(whos, "You had some trouble that needed to be sorted?");
-                portraitSay("Indeed. These damnable frogmen. They've always been a bit of a nuisance, raiding " +
-                        "our stores, clogging our canals with their fishing nets.");
-                partyMemberSay(whos, "Yes I remember them from when I grew up here...");
+                if (model.getParty().getPartyMembers().contains(whos)) {
+                    portraitSay(whos.getFirstName() + "! It's good to see you!");
+                    partyMemberSay(whos, "Uncle, it's been too long. How have you been?");
+                    portraitSay("Oh, fairly well, I suppose. I see you've brought some friends.");
+                    leaderSay(model.getParty().getLeader().getName() + ", and company, at your service.");
+                    partyMemberSay(whos, "You had some trouble that needed to be sorted?");
+                    portraitSay("Indeed. These damnable frogmen. They've always been a bit of a nuisance, raiding " +
+                            "our stores, clogging our canals with their fishing nets.");
+                    partyMemberSay(whos, "Yes I remember them from when I grew up here...");
+                } else {
+                    portraitSay("Hello there. Can I help you?");
+                    leaderSay(model.getParty().getLeader().getName() + ", and company, at your service. We're friends of " + whos.getName() + ".");
+                    leaderSay("You had some trouble that needed to be sorted?");
+                    portraitSay("Indeed. These damnable frogmen. They've always been a bit of a nuisance, raiding " +
+                            "our stores, clogging our canals with their fishing nets.");
+                }
                 portraitSay("But now they're worse than ever. It's like they've gone mad or something.");
                 leaderSay("Seems odd. Frogmen are usually quite peaceful. Tell me more.");
                 portraitSay("Well it started a few months ago. We were a few townspeople up at the mill. " +

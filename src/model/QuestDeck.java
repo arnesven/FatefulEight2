@@ -79,7 +79,9 @@ public class QuestDeck implements Serializable {
 
     public void unsetFailureIn(HexLocation location) {
         flagLocations.remove(location.getName());
-        flagLocations.remove(location.getName());
+        acceptedQuests.remove(location.getName());
+        questLocations.remove(location.getName());
+        locationsAndQuests.removeIf((LocationAndQuest loc) -> loc.getLocation().equals(location.getName()));
     }
 
     public Set<LocationAndQuest> getLocationsAndQuests() {
