@@ -56,5 +56,6 @@ public class CourierEvent extends DailyEventState {
         println(heOrSheCap(getPortraitGender()) + " quickly takes off in the same direction from which " + heOrShe(getPortraitGender()) + " came. " +
                 "You put the letter in your pocket and continue on your journey.");
         model.getParty().addSummon(destination);
+        println("!Your journal has been updated!");
     }
 }

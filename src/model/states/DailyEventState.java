@@ -214,6 +214,7 @@ public abstract class DailyEventState extends GameState {
 
     protected void portraitSay(String line) {
         portraitSubView.portraitSay(getModel(), this, line);
+        getModel().getLog().waitForAnimationToFinish();
     }
 
     protected boolean getPortraitGender() {

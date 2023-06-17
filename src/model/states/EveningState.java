@@ -89,26 +89,18 @@ public class EveningState extends GameState {
     }
 
     protected void checkForQuest(Model model) {
-        if (model.getCurrentHex().givesQuests() &&
+        if (model.getCurrentHex().givesQuests()) {
+            List<Quest> quests = new ArrayList<>();
+
+            model.getMainStory().addQuests(model, quests);
+            if (quests.size() == 0 &&
                 !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-            int numQuests = 2;
-            int dieRoll = MyRandom.rollD10();
-            if (dieRoll == 1) {
+                randomQuests(model, quests);
+            }
+            if (quests.size() == 0) {
                 println("The party has not been offered any quests.");
                 return;
-            } else if (dieRoll < 6) {
-                numQuests = 1;
             }
-
-            List<Quest> quests = new ArrayList<>();
-            while (quests.size() < numQuests) {
-                Quest q;
-                do {
-                    q = model.getQuestDeck().getRandomQuest();
-                } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
-                quests.add(q);
-            }
-
 
             println("The party has been offered " + MyStrings.numberWord(quests.size()) + " quest" + (quests.size() > 1?"s":"") + ".");
             print("Will you go tomorrow? ");
@@ -126,6 +118,23 @@ public class EveningState extends GameState {
                 println("You rejected the quest" + (quests.size() > 1?"s":"") + ".");
             }
             model.setSubView(previous);
+        }
+    }
+
+    private void randomQuests(Model model, List<Quest> quests) {
+        int numQuests = 2;
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll == 1) {
+            return;
+        } else if (dieRoll < 6) {
+            numQuests = 1;
+        }
+        while (quests.size() < numQuests) {
+            Quest q;
+            do {
+                q = model.getQuestDeck().getRandomQuest();
+            } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
+            quests.add(q);
         }
     }
 

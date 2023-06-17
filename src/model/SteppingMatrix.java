@@ -225,4 +225,8 @@ public class SteppingMatrix<T> {
             remove(list.get(0));
         }
     }
+
+    public boolean isFull() {
+        return list.size() == columns * rows;
+    }
 }

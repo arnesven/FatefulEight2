@@ -1,5 +1,6 @@
 package model.journal;
 
+import model.MainStory;
 import model.Model;
 import model.QuestDeck;
 import model.map.HexLocation;
@@ -21,6 +22,11 @@ public class QuestEntry implements JournalEntry {
             }
         }
         for (Quest q : QuestDeck.getAllQuests()) {
+            if (q.getName().equals(quest)) {
+                this.quest = q;
+            }
+        }
+        for (Quest q : MainStory.getQuests()) {
             if (q.getName().equals(quest)) {
                 this.quest = q;
             }

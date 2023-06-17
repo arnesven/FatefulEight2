@@ -2,6 +2,8 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.map.HexLocation;
+import model.map.TownLocation;
 import model.map.UrbanLocation;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownSubView;
@@ -32,7 +34,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
             addNode(shop.getColumn(), shop.getRow(), shop);
         }
         this.isCoastal = isCoastal;
-        model.getMainStory().setVisitedTown(true);
+        model.getMainStory().handleTownSetup(this);
     }
 
     public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
@@ -47,5 +49,9 @@ public class TownDailyActionState extends AdvancedDailyActionState {
     @Override
     protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
         return urbanLocation.makeActionSubView(model, advancedDailyActionState, matrix);
+    }
+
+    public TownLocation getTown() {
+        return (TownLocation) urbanLocation;
     }
 }

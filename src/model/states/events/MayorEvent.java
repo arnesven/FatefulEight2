@@ -51,6 +51,7 @@ public class MayorEvent extends DailyEventState {
                     model.getParty().partyMemberSay(model, other, "Who was that?");
                     println("You look at the piece of paper.");
                     leaderSay("Well, friends, we just saved the " + town.getLordTitle().toLowerCase() + ".");
+                    println("!Your journal has been updated!");
                 }
             }
         } else {

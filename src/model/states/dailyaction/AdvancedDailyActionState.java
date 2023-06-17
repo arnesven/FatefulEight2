@@ -5,10 +5,12 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.states.GameState;
 import model.tutorial.TutorialHandler;
+import util.MyRandom;
 import view.help.TutorialStartDialog;
 import view.subviews.*;
 
 import java.awt.*;
+import java.util.Random;
 
 public abstract class AdvancedDailyActionState extends GameState {
 
@@ -34,6 +36,22 @@ public abstract class AdvancedDailyActionState extends GameState {
             System.err.println("WARNING, overwriting stepping matrix cell with " + node.getName());
         }
         matrix.addElement(col, row, node);
+    }
+
+    public void addNodeInFreeSlot(DailyActionNode node, int seed) {
+        if (!matrix.isFull()) {
+            for (int i = 0; i < 1000; i++) {
+                Random random = new Random(seed);
+                int col = random.nextInt(matrix.getColumns());
+                int row = random.nextInt(matrix.getRows());
+                if (matrix.getElementAt(col, row) == null) {
+                    matrix.addElement(col, row, node);
+                    return;
+                }
+            }
+            throw new IllegalStateException("Could not add node in free slot after 1000 iterations!");
+        }
+        throw new IllegalStateException("Cannot add another node to advanced daily action state, matrix is full!");
     }
 
     @Override

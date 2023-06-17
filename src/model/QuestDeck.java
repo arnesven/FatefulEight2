@@ -77,6 +77,11 @@ public class QuestDeck implements Serializable {
         flagLocations.put(location.getName(), false);
     }
 
+    public void unsetFailureIn(HexLocation location) {
+        flagLocations.remove(location.getName());
+        flagLocations.remove(location.getName());
+    }
+
     public Set<LocationAndQuest> getLocationsAndQuests() {
         return locationsAndQuests;
     }

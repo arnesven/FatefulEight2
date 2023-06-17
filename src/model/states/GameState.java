@@ -139,4 +139,8 @@ public abstract class GameState {
     public void leaderSay(String line) {
         getModel().getParty().partyMemberSay(getModel(), getModel().getParty().getLeader(), line);
     }
+
+    public void partyMemberSay(GameCharacter gc, String line) {
+        getModel().getParty().partyMemberSay(getModel(), gc, line);
+    }
 }
