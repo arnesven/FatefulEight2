@@ -18,15 +18,17 @@ public class WorkshopEvent extends DailyEventState {
         println("You enter what you think is a shop.");
         leaderSay("Hey... this isn't a shop, it's a workshop! There are tools and materials everywhere.");
         if (MyRandom.rollD10() < 5) {
-            println("The tinkerer doesn't seem to be here right now. Do you 'borrow' some of " + hisOrHer(MyRandom.flipCoin()) + " stuff?");
+            println("The tinkerer doesn't seem to be here right now. Do you 'borrow' some of " +
+                    hisOrHer(MyRandom.flipCoin()) + " stuff? (Y/N) ");
             if (!yesNoInput()) {
                 return;
             }
             int materials = MyRandom.randInt(5, 10);
             println("You found " + materials + " materials.");
+            model.getParty().getInventory().addToMaterials(materials);
             if (materials < 7) {
                 CraftingDesign design = model.getItemDeck().getRandomDesign();
-                println("You found " + design + "!");
+                println("You found " + design.getName() + "!");
             }
         } else {
             showRandomPortrait(model, Classes.ART, "Tinkerer");

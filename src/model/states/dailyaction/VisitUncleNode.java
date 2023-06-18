@@ -59,12 +59,14 @@ public class VisitUncleNode extends DailyActionNode {
         private final GameCharacter whos;
         private final TownLocation town;
         private final AdvancedAppearance unclePortrait;
+        private final AdvancedAppearance everix;
 
         public VisitUncleEvent(Model model, TownLocation town, GameCharacter whos, AdvancedAppearance unclePortrait) {
             super(model);
             this.town = town;
             this.whos = whos;
             this.unclePortrait = unclePortrait;
+            everix = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL);
         }
 
         @Override
@@ -73,7 +75,7 @@ public class VisitUncleNode extends DailyActionNode {
             if (model.getMainStory().getStep() == 0) {
                 model.getMainStory().increaseStep();
                 println("You enter the hut where " + whos.getFirstName() + "'s uncle lives. The man greets you cheerfully.");
-                showExplicitPortrait(model, unclePortrait, "Uncle");
+                showUnclePortrait(model);
                 if (model.getParty().getPartyMembers().contains(whos)) {
                     portraitSay(whos.getFirstName() + "! It's good to see you!");
                     partyMemberSay(whos, "Uncle, it's been too long. How have you been?");
@@ -104,35 +106,50 @@ public class VisitUncleNode extends DailyActionNode {
                         heOrSheCap(town.getLordGender()) + " has put me in charge of resolving the issue. I say we need to " +
                         "wipe out the settlement of Frogmen.");
                 println("Suddenly, a druid enters the hut.");
-                CharacterAppearance everix = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL);
-                showExplicitPortrait(model, everix, "Everix");
+                showEverixPortrait(model);
                 portraitSay("Don't even think about it!");
                 portraitSay("The frogman population is an integral part of the ecosystem. You can't just wipe them out!");
-                showExplicitPortrait(model, unclePortrait, "Uncle");
+                showUnclePortrait(model);
                 portraitSay("Hello Everix, don't you knock before entering someone's home? This is Everix, the town's druid. " +
                         "She's been trying to convince me that there's a 'peaceful solution' to our problem.");
                 leaderSay("Maybe there is.");
                 portraitSay("I doubt it. These creatures are dimwitted and a travesty to nature.");
-                showExplicitPortrait(model, everix, "Everix");
+                showEverixPortrait(model);
                 portraitSay("And you are an old fool. Ignorant and naive.");
-                showExplicitPortrait(model, unclePortrait, "Uncle");
+                showUnclePortrait(model);
                 portraitSay("Nevertheless, they need to be dealt with. If you lot could look into this we would sure " +
                         "greatly appreciate it. Even you Everix, have been attacked by them.");
-                showExplicitPortrait(model, everix, "Everix");
+                showEverixPortrait(model);
                 portraitSay("Yes, but... they're just not acting normally...");
                 portraitSay("I implore you. Try to find out more about this. We've managed to coexist in peace for centuries. " +
                         "Sure there's been the occasional spat. But normally the townsfolk and the frogmen just ignore each other and go on " +
                         "with their lives. What's changed?");
                 leaderSay("We'll look into it.");
-                showExplicitPortrait(model, unclePortrait, "Uncle");
+                showUnclePortrait(model);
                 portraitSay("We'll compensate you of course, the " + town.getLordTitle() + " has assured me there's gold put aside " +
                         "as a reward for whoever helps us.");
+            } else if (model.getMainStory().getStep() == 1) {
+                showUnclePortrait(model);
+                portraitSay("Please take care of the Frogmen as soon as you can!");
+                leaderSay("Don't worry, we will");
+                showEverixPortrait(model);
+                portraitSay("And no violence!");
+                showUnclePortrait(model);
+                portraitSay("Everix, get out of my house.");
             } else {
-                showExplicitPortrait(model, unclePortrait, "Uncle");
+                showUnclePortrait(model);
                 portraitSay("Oh, there you are! Thanks again for handling the frogmen problem for us!");
                 leaderSay("No trouble at all... Say, could you help us with something...");
                 portraitSay("What do you need?");
             }
+        }
+
+        private void showEverixPortrait(Model model) {
+            showExplicitPortrait(model, everix, "Everix");
+        }
+
+        private void showUnclePortrait(Model model) {
+            showExplicitPortrait(model, unclePortrait, whos.getFirstName() + "'s Uncle");
         }
     }
 }

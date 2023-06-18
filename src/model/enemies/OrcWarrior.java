@@ -34,7 +34,7 @@ public class OrcWarrior extends Enemy {
 
     @Override
     public int getDamage() {
-        return 3;
+        return 4;
     }
 
     @Override

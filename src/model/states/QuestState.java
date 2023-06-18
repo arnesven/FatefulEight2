@@ -94,7 +94,6 @@ public class QuestState extends GameState {
 
     public void transitionToQuestView(Model model) {
         SnakeTransition.transition(model, questSubView);
-        //CollapsingTransition.transition(model, questSubView);
     }
 
     public void setSelectedElement(QuestNode node) {

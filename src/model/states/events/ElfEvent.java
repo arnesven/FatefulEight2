@@ -67,7 +67,7 @@ public class ElfEvent extends DailyEventState {
                     " skilled archer who shows the party a few tri with her a bow. He offers to train you in the ways of marksmanship, ");
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.MERCHANT, Race.WOOD_ELF, "Merchant");
-            print(" merchant. Do you wish to trade with her? ");
+            print(" merchant. Do you wish to trade with her? (Y/N) ");
             if (yesNoInput()) {
                 MerchantEvent me = new MerchantEvent(model, false);
                 me.setPortraitSubView(this);
