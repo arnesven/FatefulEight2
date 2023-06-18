@@ -10,6 +10,7 @@ import sound.ClientSoundManager;
 import view.subviews.CollapsingTransition;
 import view.subviews.CombatTheme;
 import view.subviews.QuestSubView;
+import view.subviews.SnakeTransition;
 
 import java.awt.*;
 
@@ -92,7 +93,8 @@ public class QuestState extends GameState {
     }
 
     public void transitionToQuestView(Model model) {
-        CollapsingTransition.transition(model, questSubView);
+        SnakeTransition.transition(model, questSubView);
+        //CollapsingTransition.transition(model, questSubView);
     }
 
     public void setSelectedElement(QuestNode node) {
