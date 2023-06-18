@@ -64,7 +64,7 @@ public class WitchKingEvent extends DailyEventState {
             portraitSay("Or at least, it was. I gather a few things may change while one is imprisoned for a few thousand years.");
             leaderSay("I'm afraid you'll find that nobody around here has every heard about the Witch Realm.");
             portraitSay("It didn't even make it into the history books?");
-            GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+            GameCharacter gc = model.getParty().getRandomPartyMember();
             model.getParty().partyMemberSay(model, gc, "Who has time for books?");
             leaderSay("Well, Witch King, you're free now. Free to do whatever you want.");
             portraitSay("Yes, I suppose...");
@@ -128,7 +128,7 @@ public class WitchKingEvent extends DailyEventState {
                     exploreRuinsState.println(gc.getName() + " detects a powerful enchantment. (Spellcasting " + result.asString() + ")");
                     model.getParty().partyMemberSay(model, gc, "He's under the effects of an enchantment. A binding spell of black magic.");
                     leaderSay("Can we break the spell?");
-                    GameCharacter gc2 = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                    GameCharacter gc2 = model.getParty().getRandomPartyMember();
                     model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
                     exploreRuinsState.println("Witch King: \"Please.... Help.... Me....\"");
                     tryBreakSpell(model, exploreRuinsState);
@@ -149,7 +149,7 @@ public class WitchKingEvent extends DailyEventState {
                     exploreRuinsState.println("Witch King: \"Free me.... from the.... spell....\"");
                     leaderSay("He looks like he's trying to hold back. " +
                             "But he's struggling with himself, like an unseen force was controlling his limbs.");
-                    GameCharacter gc2 = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                    GameCharacter gc2 = model.getParty().getRandomPartyMember();
                     model.getParty().partyMemberSay(model, gc2, "Maybe we can nullify the spell somehow?");
                     model.getSpellHandler().acceptSpell(new DispellSpell().getName());
                     try {
@@ -179,7 +179,7 @@ public class WitchKingEvent extends DailyEventState {
             }
             model.getParty().partyMemberSay(model, pair.second, "That's one tough spell to break. " +
                     "But if you keep him calm, maybe I can try again.");
-            GameCharacter gc3 = model.getParty().getRandomPartyMember(pair.second);
+            GameCharacter gc3 = model.getParty().getRandomPartyMember();
             model.getParty().partyMemberSay(model, gc3, "Too late, here he comes again!");
             return false;
         }

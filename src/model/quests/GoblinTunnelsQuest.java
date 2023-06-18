@@ -184,7 +184,7 @@ public class GoblinTunnelsQuest extends Quest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             QuestEdge toReturn = super.run(model, state);
-            if (model.getParty().size() > 0) {
+            if (model.getParty().size() > 1) {
                 state.print("Choose a party member to be separated from the party.");
                 GameCharacter gc;
                 do {

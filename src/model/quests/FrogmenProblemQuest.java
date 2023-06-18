@@ -28,6 +28,11 @@ public class FrogmenProblemQuest extends Quest {
     }
 
     @Override
+    public boolean drawTownOrCastleInBackground() {
+        return true;
+    }
+
+    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Gather Clues",
                 List.of(new CollaborativeSkillCheckSubScene(1, 1, Skill.SeekInfo, 8,
@@ -49,7 +54,7 @@ public class FrogmenProblemQuest extends Quest {
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.BLACK;
+        return MyColors.GREEN;
     }
 
     public void setPortrait(AdvancedAppearance unclePortrait) {
