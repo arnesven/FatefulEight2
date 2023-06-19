@@ -40,8 +40,8 @@ public abstract class AdvancedDailyActionState extends GameState {
 
     public void addNodeInFreeSlot(DailyActionNode node, int seed) {
         if (!matrix.isFull()) {
+            Random random = new Random(seed);
             for (int i = 0; i < 1000; i++) {
-                Random random = new Random(seed);
                 int col = random.nextInt(matrix.getColumns());
                 int row = random.nextInt(matrix.getRows());
                 if (matrix.getElementAt(col, row) == null) {

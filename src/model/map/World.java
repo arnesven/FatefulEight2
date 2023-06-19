@@ -386,6 +386,19 @@ public class World implements Serializable {
         return result;
     }
 
+    public CastleLocation getCastleByName(String castleName) {
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() != null) {
+                    if (hexes[x][y].getLocation().getName().contains(castleName)) {
+                        return (CastleLocation) hexes[x][y].getLocation();
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("No castle found for argument " + castleName);
+    }
+
     private static class Interval {
         public int from;
         public int to;

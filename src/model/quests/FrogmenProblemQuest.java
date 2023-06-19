@@ -19,6 +19,7 @@ import view.MyColors;
 import java.util.List;
 
 public class FrogmenProblemQuest extends Quest {
+    public static final String QUEST_NAME = "Frogmen Problem";
     private static final String TEXT = "You've been contracted by a town to take care of a rampart population of " +
             "frogmen. The frogmen have their settlement nearby. You could just wipe them all out, but is there " +
             "something more to this job than meets the eye?";
@@ -26,7 +27,7 @@ public class FrogmenProblemQuest extends Quest {
     private AdvancedAppearance portrait;
 
     public FrogmenProblemQuest() {
-        super("Frogmen Problem", "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
+        super(QUEST_NAME, "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
     }
 
     @Override
@@ -94,7 +95,7 @@ public class FrogmenProblemQuest extends Quest {
                     state.partyMemberSay(gc, "Disgusting!");
                 }
                 state.leaderSay("Wait a moment. What's that on the floor?");
-                state.leaderSay("What's this? A pearl? Why would a frogman have it in his belly. Did he eat it by mistake?");
+                state.leaderSay("What's this? A red pearl? Why would a frogman have it in his belly. Did he eat it by mistake?");
                 state.println("You clean the pearl a bit and put it into your pocket.");
                 state.leaderSay("Perhaps it is valuable?");
             }
@@ -141,7 +142,7 @@ public class FrogmenProblemQuest extends Quest {
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         if (questWasSuccess) {
-            model.getMainStory().increaseStep();
+            model.getMainStory().increaseStep(model);
         } else {
             state.println("However, this quest can be accepted again.");
             model.getQuestDeck().unsetFailureIn(model.getCurrentHex().getLocation());

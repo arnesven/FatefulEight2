@@ -21,7 +21,9 @@ import view.subviews.PortraitSubView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainStory implements Serializable {
 
@@ -81,16 +83,14 @@ public class MainStory implements Serializable {
     //   faraway, and dangerous land, traverse it, and find the Quad's lair and defeat them.
 
 
+    public static final Map<String, Quest> QUESTS = makeMainStoryQuests();
 
-    private static final FrogmenProblemQuest FROGMEN_QUEST = new FrogmenProblemQuest();
     private boolean initialLeadsEventGiven = false;
     private boolean townVisited = false;
     private boolean castleVisited = false;
     private boolean templeVisited = false;
-    private String startLocation = null;
-    private GameCharacter whosUncle;
-    private int storyStep = 0; // replace with state machine
-    private AdvancedAppearance unclePortrait;
+    private StoryPart currentStoryPart = null;
+    private InitialStoryPart firstStoryPart;
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
         if (initialLeadsEventGiven || model.getCurrentHex().getLocation() instanceof UrbanLocation || model.getParty().size() < 2) {
@@ -102,8 +102,8 @@ public class MainStory implements Serializable {
     public List<JournalEntry> getMainStoryTasks(Model model) {
         if (initialLeadsEventGiven) {
             List<JournalEntry> result = new ArrayList<>();
-            if (startLocation != null) {
-                result.add(new FirstMainStoryTask(startLocation, whosUncle, storyStep));
+            if (currentStoryPart != null) {
+                result.addAll(currentStoryPart.getJournalEntries());
             }
             result.add(new VisitTask("Town", townVisited));
             result.add(new VisitTask("Castle", castleVisited));
@@ -130,49 +130,43 @@ public class MainStory implements Serializable {
         initialLeadsEventGiven = b;
     }
 
-    public TownLocation getStartingLocation(Model model, GameCharacter whosUncle) {
-        if (startLocation == null) {
-            List<String> towns = List.of(
-                            new AshtonshireTown().getName(),
-                            new SouthMeadhomeTown().getName(),
-                            new EbonshireTown().getName()
-            );
-            startLocation = MyRandom.sample(towns);
-            this.whosUncle = whosUncle;
-            this.unclePortrait = PortraitSubView.makeRandomPortrait(Classes.None, whosUncle.getRace());
-        }
-        return model.getWorld().getTownByName(startLocation);
+    public void setupStory(Model model, GameCharacter whosUncle) {
+        this.firstStoryPart = new InitialStoryPart(whosUncle);
+        currentStoryPart = firstStoryPart;
+    }
+
+    public TownLocation getStartingLocation(Model model) {
+        return model.getWorld().getTownByName(firstStoryPart.getStartingLocationName());
     }
 
     public void handleTownSetup(TownDailyActionState townDailyActionState) {
         townVisited = true;
-        if (townDailyActionState.getTown().getName().equals(startLocation)) {
-            int randomSeed = townDailyActionState.getTown().getName().hashCode();
-            townDailyActionState.addNodeInFreeSlot(new VisitUncleNode(townDailyActionState.getTown(), whosUncle, unclePortrait), randomSeed);
-        }
+        currentStoryPart.handleTownSetup(townDailyActionState);
     }
 
-    public void increaseStep() {
-        this.storyStep++;
+    public void increaseStep(Model model) { currentStoryPart.progress(model); }
+
+
+    public void transitionStep(Model model) {
+        currentStoryPart = currentStoryPart.transition(model);
     }
 
     public void addQuests(Model model, List<Quest> quests) {
-        if (storyStep == 1) {
-            if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
-                TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
-                if (loc.getName().equals(startLocation)) {
-                    FROGMEN_QUEST.setPortrait(unclePortrait);
-                    quests.add(FROGMEN_QUEST);
-                }
-            }
-        }
+        currentStoryPart.addQuests(model, quests);
     }
 
     public static List<Quest> getQuests() {
-        return List.of(FROGMEN_QUEST);
+        return new ArrayList<>(QUESTS.values());
     }
 
-    public int getStep() {
-        return storyStep;
+    private static Map<String, Quest> makeMainStoryQuests() {
+        Map<String, Quest> map = new HashMap<>();
+        FrogmenProblemQuest frogmen = new FrogmenProblemQuest();
+        map.put(frogmen.getName(), frogmen);
+        return map;
+    }
+
+    public static Object getQuest(String key) {
+        return QUESTS.get(key);
     }
 }

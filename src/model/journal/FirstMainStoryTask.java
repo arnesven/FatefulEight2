@@ -9,7 +9,7 @@ public class FirstMainStoryTask extends MainStoryTask {
 
 
     public FirstMainStoryTask(String startLocation, GameCharacter whosUncle, int storyStep) {
-        super(whosUncle.getFirstName() + "'s Uncle");
+        super(whosUncle.getFirstName() + "'s Uncle"); // TODO: Take InitialStoryStep as parameter instead.
         this.town = startLocation;
         this.whosUncle = whosUncle;
         this.step = storyStep;
@@ -25,12 +25,14 @@ public class FirstMainStoryTask extends MainStoryTask {
                 return "Complete the 'Frogmen Problem' Quest.";
             case 2:
                 return "Return to " + whosUncle.getFirstName() + "'s uncle to claim your reward.";
+            case 3:
+                return "Ask Everix about the crimson orb.";
         }
         return "Completed";
     }
 
     @Override
     public boolean isComplete() {
-        return step > 2;
-    }
+        return step > 3;
+    } // TODO: Call initialstorysteps complete instead.
 }

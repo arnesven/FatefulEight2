@@ -5,6 +5,9 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.journal.InitialStoryPart;
+import model.journal.StoryPart;
+import model.map.CastleLocation;
 import model.map.TownLocation;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -20,20 +23,18 @@ import java.awt.*;
 public class VisitUncleNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("uncleshouse", "world_foreground.png", 0x22,
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.BEIGE);
-    private final GameCharacter whos;
     private final TownLocation town;
-    private final AdvancedAppearance unclePortrait;
+    private final InitialStoryPart storyPart;
 
-    public VisitUncleNode(TownLocation town, GameCharacter whos, AdvancedAppearance unclePortrait) {
-        super("Visit " + whos.getFirstName() + "'s Uncle");
+    public VisitUncleNode(TownLocation town, InitialStoryPart storyPart) {
+        super("Visit " + storyPart.getWhosUncle().getFirstName() + "'s Uncle");
         this.town = town;
-        this.whos = whos;
-        this.unclePortrait = unclePortrait;
+        this.storyPart = storyPart;
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new VisitUncleEvent(model, town, whos, unclePortrait);
+        return new VisitUncleEvent(model, town, storyPart);
     }
 
     public void drawYourself(Model model, Point p) {
@@ -56,24 +57,23 @@ public class VisitUncleNode extends DailyActionNode {
     }
 
     private static class VisitUncleEvent extends DailyEventState {
-        private final GameCharacter whos;
         private final TownLocation town;
-        private final AdvancedAppearance unclePortrait;
-        private final AdvancedAppearance everix;
+        private final CastleLocation castle;
+        private final InitialStoryPart storyPart;
 
-        public VisitUncleEvent(Model model, TownLocation town, GameCharacter whos, AdvancedAppearance unclePortrait) {
+        public VisitUncleEvent(Model model, TownLocation town, InitialStoryPart storyPart) {
             super(model);
             this.town = town;
-            this.whos = whos;
-            this.unclePortrait = unclePortrait;
-            everix = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL);
+            this.storyPart = storyPart;
+            this.castle = model.getWorld().getCastleByName(storyPart.getCastleName());
         }
 
         @Override
         protected void doEvent(Model model) {
             setCurrentTerrainSubview(model);
-            if (model.getMainStory().getStep() == 0) {
-                model.getMainStory().increaseStep();
+            GameCharacter whos = storyPart.getWhosUncle();
+            if (storyPart.getStep() == 0) {
+                model.getMainStory().increaseStep(model);
                 println("You enter the hut where " + whos.getFirstName() + "'s uncle lives. The man greets you cheerfully.");
                 showUnclePortrait(model);
                 if (model.getParty().getPartyMembers().contains(whos)) {
@@ -128,7 +128,7 @@ public class VisitUncleNode extends DailyActionNode {
                 showUnclePortrait(model);
                 portraitSay("We'll compensate you of course, the " + town.getLordTitle() + " has assured me there's gold put aside " +
                         "as a reward for whoever helps us.");
-            } else if (model.getMainStory().getStep() == 1) {
+            } else if (storyPart.getStep() == 1) {
                 showUnclePortrait(model);
                 portraitSay("Please take care of the Frogmen as soon as you can!");
                 leaderSay("Don't worry, we will");
@@ -136,20 +136,52 @@ public class VisitUncleNode extends DailyActionNode {
                 portraitSay("And no violence!");
                 showUnclePortrait(model);
                 portraitSay("Everix, get out of my house.");
-            } else {
+            } else if (storyPart.getStep() == 2) {
                 showUnclePortrait(model);
                 portraitSay("Oh, there you are! Thanks again for handling the frogmen problem for us!");
-                leaderSay("No trouble at all... Say, could you help us with something...");
-                portraitSay("What do you need?");
+                leaderSay("No trouble at all. Didn't you say there was a monetary reward for dealing with the frogmen?");
+                portraitSay("Yes... about that.");
+                if (model.getParty().size() > 1) {
+                    partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "Typical...");
+                }
+                portraitSay("I asked the " + town.getLordTitle() + " about this matter and " + heOrShe(town.getLordGender()) +
+                                 " has informed med that...");
+                leaderSay("Yes?");
+                portraitSay("Well, there's no nice way of putting it. The money has all been spent.");
+                leaderSay("So there is no reward?");
+                portraitSay("Well, actually, there could be.");
+                leaderSay("But there's a catch?");
+                portraitSay("You would have to collect it yourself from the " + castle.getLordTitle() + " of " + castle.getName() + ".");
+                portraitSay("The " + castle.getLordTitle() + " owes our town 120 gold. Originally we had set the reward for " +
+                        "handling the frogmen problem at 100 gold. But you can collect the full 120 and we'll call it even.");
+                leaderSay("I guess you leave me no choice.");
+                portraitSay("Sorry again.");
+                leaderSay("By the way. I found this crimson orb. The frogman chieftain had it in his stomach. " +
+                        "It looks odd. Could be magical. Do you know anything about it?");
+                portraitSay("No, I'm sorry. Maybe you can ask Everix about that? She's in charge of magical issues in this town.");
+                leaderSay("Okay. Thanks.");
+                if (model.getParty().getPartyMembers().contains(storyPart.getWhosUncle())) {
+                    partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!");
+                    portraitSay("Good bye " + storyPart.getWhosUncle().getFirstName() + ". Have fun on your adventures, and stay safe.");
+                }
+                model.getMainStory().increaseStep(model);
+                model.getMainStory().transitionStep(model);
+            } else {
+                showUnclePortrait(model);
+                portraitSay("Thanks again for helping us. Safe travels!");
+                if (model.getParty().getPartyMembers().contains(storyPart.getWhosUncle())) {
+                    partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!");
+                    portraitSay("Good bye " + storyPart.getWhosUncle().getFirstName() + ". Have fun on your adventures, and stay safe.");
+                }
             }
         }
 
         private void showEverixPortrait(Model model) {
-            showExplicitPortrait(model, everix, "Everix");
+            showExplicitPortrait(model, storyPart.getEverixPortrait(), "Everix");
         }
 
         private void showUnclePortrait(Model model) {
-            showExplicitPortrait(model, unclePortrait, whos.getFirstName() + "'s Uncle");
+            showExplicitPortrait(model, storyPart.getUnclePortrait(), storyPart.getWhosUncle().getFirstName() + "'s Uncle");
         }
     }
 }
