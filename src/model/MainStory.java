@@ -56,7 +56,7 @@ public class MainStory implements Serializable {
     // 2 (b) Rescue Mission
     //   The party gains the reward for (1) from the castle's lord. The lord is impressed
     //   by the party's work and would like to hire them for a rescue mission. His master-at-arms
-    //   and loyal advisor, Cade is missing and the party must navigate the darker districts to find him. Once
+    //   and loyal advisor, Caid is missing and the party must navigate the darker districts to find him. Once
     //   they find him, they realized he hasn't been kidnapped, he's actually just had enough of
     //   being in the lords employ.
 
@@ -68,14 +68,14 @@ public class MainStory implements Serializable {
 
     // 4 (a) Willis's Quest (Possibility to recruit Willis)
 
-    // 4 (b) Cade's Quest (Possibility to recruit Cade)
+    // 4 (b) Caid's Quest (Possibility to recruit Caid)
 
     // 5 Invasion
     //   Returning to the lord with a detailed account of the Cordial Quad, but
     //   a host of evil humans are descending upon the land. The party must help the kingdom defend itself.
     //   Afterward, more crimson pearls are found in the corpses of the slain marauders.
 
-    // 6 Distant Lands (Willis or Cade in the party, or leader at lvl 6)
+    // 6 Distant Lands (Willis or Caid in the party, or leader at lvl 6)
     //   The party is tasked with finding the
     //   stronghold of the Cordial Quad. It is located in a distant region, and the party must travel to this
     //   faraway, and dangerous land, traverse it, and find the Quad's lair and defeat them.

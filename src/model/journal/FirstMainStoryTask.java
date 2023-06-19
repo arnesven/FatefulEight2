@@ -13,8 +13,6 @@ public class FirstMainStoryTask extends MainStoryTask {
         this.town = startLocation;
         this.whosUncle = whosUncle;
         this.step = storyStep;
-
-
     }
 
     @Override
@@ -26,7 +24,7 @@ public class FirstMainStoryTask extends MainStoryTask {
             case 1:
                 return "Complete the 'Frogmen Problem' Quest.";
             case 2:
-                return "Return to " + whosUncle.getFirstName() + "'s uncle.";
+                return "Return to " + whosUncle.getFirstName() + "'s uncle to claim your reward.";
         }
         return "Completed";
     }

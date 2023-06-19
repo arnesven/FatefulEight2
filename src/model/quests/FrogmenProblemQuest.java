@@ -26,7 +26,7 @@ public class FrogmenProblemQuest extends Quest {
     private AdvancedAppearance portrait;
 
     public FrogmenProblemQuest() {
-        super("Frogmen Problem", "Uncle", QuestDifficulty.EASY, 0, 25, 25, TEXT, END_TEXT);
+        super("Frogmen Problem", "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
     }
 
     @Override
