@@ -152,7 +152,6 @@ public class MainStory implements Serializable {
 
     public void transitionStep(Model model) {
         currentStoryPart = currentStoryPart.transition(model);
-        JournalEntry.printJournalUpdateMessage(model);
     }
 
     public void addQuests(Model model, List<Quest> quests) {

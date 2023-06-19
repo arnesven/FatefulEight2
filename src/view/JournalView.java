@@ -8,6 +8,8 @@ import model.map.UrbanLocation;
 import util.MyStrings;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 public class JournalView extends TwoPaneSelectableListMenu {
@@ -36,7 +38,17 @@ public class JournalView extends TwoPaneSelectableListMenu {
             questsAndTasks.add(new QuestEntry(model, locationAndQuest.getLocation(),
                     locationAndQuest.getQuest(), locationAndQuest.getDay()));
         }
-
+        Collections.sort(questsAndTasks, new Comparator<JournalEntry>() {
+            @Override
+            public int compare(JournalEntry j1, JournalEntry j2) {
+                if (j1.isComplete() == j2.isComplete()) {
+                    return j1.getName().compareTo(j2.getName());
+                }
+                int i1 = j1.isComplete() ? 1 : 0;
+                int i2 = j2.isComplete() ? 1 : 0;
+                return i1 - i2;
+            }
+        });
     }
 
     @Override

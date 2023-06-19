@@ -21,7 +21,7 @@ public class PartTwoStoryPart extends StoryPart {
         entries.addAll(initialStoryPart.getJournalEntries());
         entries.add(new GoToCastleTask(initialStoryPart.getCastleName()));
         if (internalStep > 0) {
-            entries.add(new VisitWitchTask());
+            entries.add(new FindTheWitch());
         }
         return entries;
     }
