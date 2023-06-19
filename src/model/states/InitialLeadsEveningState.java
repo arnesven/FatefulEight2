@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.journal.JournalEntry;
 import model.map.TownLocation;
 
 public class InitialLeadsEveningState extends EveningState {
@@ -48,7 +49,7 @@ public class InitialLeadsEveningState extends EveningState {
                 model.getParty().partyMemberSay(model, gc, "Good night.");
             }
         }
-        println("!Your journal has been updated!");
+        JournalEntry.printJournalUpdateMessage(model);
     }
 
     private GameCharacter notTheLeader(Model model) {

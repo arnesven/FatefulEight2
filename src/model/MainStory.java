@@ -144,11 +144,15 @@ public class MainStory implements Serializable {
         currentStoryPart.handleTownSetup(townDailyActionState);
     }
 
-    public void increaseStep(Model model) { currentStoryPart.progress(model); }
+    public void increaseStep(Model model) {
+        currentStoryPart.progress(model);
+        JournalEntry.printJournalUpdateMessage(model);
+    }
 
 
     public void transitionStep(Model model) {
         currentStoryPart = currentStoryPart.transition(model);
+        JournalEntry.printJournalUpdateMessage(model);
     }
 
     public void addQuests(Model model, List<Quest> quests) {

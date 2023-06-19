@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
+import model.journal.JournalEntry;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 
@@ -51,7 +52,7 @@ public class MayorEvent extends DailyEventState {
                     model.getParty().partyMemberSay(model, other, "Who was that?");
                     println("You look at the piece of paper.");
                     leaderSay("Well, friends, we just saved the " + town.getLordTitle().toLowerCase() + ".");
-                    println("!Your journal has been updated!");
+                    JournalEntry.printJournalUpdateMessage(model);
                 }
             }
         } else {

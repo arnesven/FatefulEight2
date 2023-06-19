@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
+import model.journal.JournalEntry;
 import model.map.UrbanLocation;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -56,6 +57,6 @@ public class CourierEvent extends DailyEventState {
         println(heOrSheCap(getPortraitGender()) + " quickly takes off in the same direction from which " + heOrShe(getPortraitGender()) + " came. " +
                 "You put the letter in your pocket and continue on your journey.");
         model.getParty().addSummon(destination);
-        println("!Your journal has been updated!");
+        JournalEntry.printJournalUpdateMessage(model);
     }
 }
