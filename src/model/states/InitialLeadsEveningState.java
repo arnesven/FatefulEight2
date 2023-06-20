@@ -36,7 +36,7 @@ public class InitialLeadsEveningState extends EveningState {
         }
         {
             GameCharacter gc = notTheLeader(model);
-            model.getMainStory().setupStory(model, gc);
+            model.getMainStory().setupStory(gc);
             TownLocation loc = model.getMainStory().getStartingLocation(model);
             model.getParty().partyMemberSay(model, gc, "Oh, and I have an uncle in " + loc.getTownName() +
                     " who's been asking me to bring in a group of fighters to deal with a problem.");

@@ -18,21 +18,15 @@ import view.MyColors;
 
 import java.util.List;
 
-public class FrogmenProblemQuest extends Quest {
+public class FrogmenProblemQuest extends MainQuest {
     public static final String QUEST_NAME = "Frogmen Problem";
     private static final String TEXT = "You've been contracted by a town to take care of a rampart population of " +
             "frogmen. The frogmen have their settlement nearby. You could just wipe them all out, but is there " +
             "something more to this job than meets the eye?";
     private static final String END_TEXT = "You return to town to report your success. You are rewarded for your service.";
-    private AdvancedAppearance portrait;
 
     public FrogmenProblemQuest() {
         super(QUEST_NAME, "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
-    }
-
-    @Override
-    public CharacterAppearance getPortrait() {
-        return portrait;
     }
 
     @Override
@@ -133,10 +127,6 @@ public class FrogmenProblemQuest extends Quest {
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.GREEN;
-    }
-
-    public void setPortrait(AdvancedAppearance unclePortrait) {
-        this.portrait = unclePortrait;
     }
 
     @Override

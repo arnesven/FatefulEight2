@@ -1,5 +1,6 @@
 package model;
 
+import model.characters.appearance.CharacterAppearance;
 import model.ruins.RuinsDungeon;
 import model.tutorial.TutorialHandler;
 import util.MyRandom;
@@ -25,4 +26,5 @@ public class GameData implements Serializable {
     public Map<String, RuinsDungeon> dungeons = new HashMap<>();
     public SettingsManager settings = new SettingsManager();
     public MainStory mainStory = new MainStory();
+    public Map<String, CharacterAppearance> lordPortraits = new HashMap<>();
 }

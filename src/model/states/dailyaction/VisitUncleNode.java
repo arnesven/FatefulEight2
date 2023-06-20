@@ -152,8 +152,8 @@ public class VisitUncleNode extends DailyActionNode {
                 portraitSay("Well, actually, there could be.");
                 leaderSay("But there's a catch?");
                 portraitSay("You would have to collect it yourself from the " + castle.getLordTitle() + " of " + castle.getName() + ".");
-                portraitSay("The " + castle.getLordTitle() + " owes our town 120 gold. Originally we had set the reward for " +
-                        "handling the frogmen problem at 100 gold. But you can collect the full 120 and we'll call it even.");
+                portraitSay("The " + castle.getLordTitle() + " owes our town " + InitialStoryPart.REWARD_GOLD + " gold. Originally we had set the reward for " +
+                        "handling the frogmen problem at 100 gold. But you can collect the full " + InitialStoryPart.REWARD_GOLD + " and we'll call it even.");
                 leaderSay("I guess you leave me no choice.");
                 portraitSay("Sorry again.");
                 leaderSay("By the way. I found this crimson orb. The frogman chieftain had it in his stomach. " +

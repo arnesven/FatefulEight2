@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.WitchClass;
 import model.journal.InitialStoryPart;
+import model.journal.StoryPart;
 import model.map.TownLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -89,7 +90,7 @@ public class VisitEverixNode extends DailyActionNode {
                         "questions.");
                 leaderSay("Naturally. Why be helpful?");
                 portraitSay("Oh, she'll be helpful. She's just... well let's just call it self preservation.");
-                model.getMainStory().increaseStep(model);
+                model.getMainStory().increaseStep(model, StoryPart.TRACK_B);
             } else if (storyPart.getStep() < 3) {
                 println("Everix is not at home right now.");
             } else {

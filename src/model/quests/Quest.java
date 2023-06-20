@@ -23,7 +23,7 @@ public abstract class Quest {
     private final String name;
     private final Reward reward;
     private final String text;
-    private final String provider;
+    private String provider;
     private final QuestDifficulty difficulty;
     private final List<QuestScene> scenes;
     private final List<QuestJunction> junctions;
@@ -123,6 +123,8 @@ public abstract class Quest {
     public String getProvider() {
         return provider;
     }
+
+    public void setProvider(String provider) { this.provider = provider; }
 
     public QuestDifficulty getDifficulty() {
         return difficulty;

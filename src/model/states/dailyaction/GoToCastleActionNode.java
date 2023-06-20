@@ -6,6 +6,7 @@ import model.Summon;
 import model.characters.GameCharacter;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
 import view.sprites.Sprite;
@@ -27,7 +28,11 @@ public class GoToCastleActionNode extends DailyActionNode {
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
-        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
+
+        DailyEventState mainStoryEvent = model.getMainStory().getVisitLordEvent(model, location);
+        if (mainStoryEvent != null) {
+            return  mainStoryEvent;
+        } else if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             Summon summon = model.getParty().getSummons().get(location.getPlaceName());
             if (summon.getStep() == Summon.ACCEPTED) {
                 state.println("Guard: \"Hey you! Stop right there! Where do you think you're going?\"");

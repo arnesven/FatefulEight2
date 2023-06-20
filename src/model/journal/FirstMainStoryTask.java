@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.characters.GameCharacter;
+import model.quests.FrogmenProblemQuest;
 
 public class FirstMainStoryTask extends MainStoryTask {
     private final GameCharacter whosUncle;
@@ -22,7 +23,7 @@ public class FirstMainStoryTask extends MainStoryTask {
                 return "Visit " + whosUncle.getFirstName() + "'s uncle in the " + town +
                     ". He needs a capable group of adventurers to take care of a 'Frogmen Problem'.";
             case 1:
-                return "Complete the 'Frogmen Problem' Quest.";
+                return "Complete the '" + FrogmenProblemQuest.QUEST_NAME + "' Quest.";
             case 2:
                 return "Return to " + whosUncle.getFirstName() + "'s uncle to claim your reward.";
             case 3:

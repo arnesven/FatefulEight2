@@ -1,29 +1,28 @@
 package model;
 
 import model.characters.GameCharacter;
-import model.characters.appearance.AdvancedAppearance;
-import model.classes.Classes;
+import model.characters.KruskTalandro;
+import model.classes.CharacterClass;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
-import model.map.locations.AshtonshireTown;
-import model.map.locations.EbonshireTown;
-import model.map.locations.LowerThelnTown;
-import model.map.locations.SouthMeadhomeTown;
 import model.quests.FrogmenProblemQuest;
 import model.quests.Quest;
+import model.quests.RescueMissionQuest;
+import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
-import model.states.dailyaction.VisitUncleNode;
-import util.MyRandom;
-import view.subviews.PortraitSubView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static model.classes.Classes.*;
+import static model.classes.Classes.SOR;
+import static model.races.Race.HALF_ORC;
 
 public class MainStory implements Serializable {
 
@@ -44,7 +43,14 @@ public class MainStory implements Serializable {
     //   out that their promised reward has been squandered, and they must travel to
     //   the nearest castle to claim the money.
 
-    // 2 (a) Deliver a Package
+    // 2 (a) Rescue Mission
+    //   The party gains the reward for (1) from the castle's lord. The lord is impressed
+    //   by the party's work and would like to hire them for a rescue mission. His master-at-arms
+    //   and loyal advisor, Caid is missing and the party must navigate the darker districts to find him. Once
+    //   they find him, they realized he hasn't been kidnapped, he's actually just had enough of
+    //   being in the lords employ.
+
+    // 2 (b) Deliver a Package
     //   The party seeks out a local witch who knows more about the Crimson Pearl.
     //   The witch promises to tell all she knows about the pearl, if the party delivers
     //   a package for her. Seems easy enough, but there are others who are interested in
@@ -54,13 +60,6 @@ public class MainStory implements Serializable {
     //   Pearls like these haven't been made for centuries, and only by a secluded cult of
     //   sorcerer's known as the Cordial Quad. It is the general belief that they were all wiped out centuries ago.
     //   The party should inform the proper authorities about this.
-
-    // 2 (b) Rescue Mission
-    //   The party gains the reward for (1) from the castle's lord. The lord is impressed
-    //   by the party's work and would like to hire them for a rescue mission. His master-at-arms
-    //   and loyal advisor, Caid is missing and the party must navigate the darker districts to find him. Once
-    //   they find him, they realized he hasn't been kidnapped, he's actually just had enough of
-    //   being in the lords employ.
 
     // 3 Research the Cordial Quad (Requires both 2a and 2b completed)
     //   With the help of the lords court mage, the party is tasked with researching the cordial quad. What happened
@@ -91,6 +90,20 @@ public class MainStory implements Serializable {
     private boolean templeVisited = false;
     private StoryPart currentStoryPart = null;
     private InitialStoryPart firstStoryPart;
+
+    public MainStory() {
+        // TODO: This is just test stuff
+        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", HALF_ORC, WIT,
+                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
+        firstStoryPart = new InitialStoryPart(dummy);
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        initialLeadsEventGiven = true;
+        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
+        currentStoryPart.progress(StoryPart.TRACK_B);
+    }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
         if (initialLeadsEventGiven || model.getCurrentHex().getLocation() instanceof UrbanLocation || model.getParty().size() < 2) {
@@ -130,7 +143,7 @@ public class MainStory implements Serializable {
         initialLeadsEventGiven = b;
     }
 
-    public void setupStory(Model model, GameCharacter whosUncle) {
+    public void setupStory(GameCharacter whosUncle) {
         this.firstStoryPart = new InitialStoryPart(whosUncle);
         currentStoryPart = firstStoryPart;
     }
@@ -144,11 +157,14 @@ public class MainStory implements Serializable {
         currentStoryPart.handleTownSetup(townDailyActionState);
     }
 
-    public void increaseStep(Model model) {
-        currentStoryPart.progress(model);
+    public void increaseStep(Model model, int track) {
+        currentStoryPart.progress(track);
         JournalEntry.printJournalUpdateMessage(model);
     }
 
+    public void increaseStep(Model model) {
+        increaseStep(model, StoryPart.TRACK_A);
+    }
 
     public void transitionStep(Model model) {
         currentStoryPart = currentStoryPart.transition(model);
@@ -166,10 +182,16 @@ public class MainStory implements Serializable {
         Map<String, Quest> map = new HashMap<>();
         FrogmenProblemQuest frogmen = new FrogmenProblemQuest();
         map.put(frogmen.getName(), frogmen);
+        RescueMissionQuest rescue = new RescueMissionQuest();
+        map.put(rescue.getName(), rescue);
         return map;
     }
 
     public static Object getQuest(String key) {
         return QUESTS.get(key);
+    }
+
+    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
+        return currentStoryPart.getVisitLordEvent(model, location);
     }
 }

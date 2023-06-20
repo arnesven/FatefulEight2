@@ -3,12 +3,11 @@ package model;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.items.spells.Spell;
 import model.log.GameLog;
-import model.map.CaveSystem;
-import model.map.World;
-import model.map.WorldBuilder;
-import model.map.WorldHex;
+import model.map.*;
 import model.races.Race;
 import model.ruins.RuinsDungeon;
 import model.states.*;
@@ -19,6 +18,7 @@ import sound.SoundEffects;
 import util.MyPair;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
+import view.subviews.PortraitSubView;
 import view.subviews.SubView;
 import view.GameView;
 import view.*;
@@ -413,5 +413,13 @@ public class Model {
 
     public MainStory getMainStory() {
         return gameData.mainStory;
+    }
+
+    public CharacterAppearance getLordPortrait(UrbanLocation location) {
+        if (!gameData.lordPortraits.containsKey(location.getLordName())) {
+            CharacterAppearance lordAppearance = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL, location.getLordGender());
+            gameData.lordPortraits.put(location.getLordName(), lordAppearance);
+        }
+        return gameData.lordPortraits.get(location.getLordName());
     }
 }

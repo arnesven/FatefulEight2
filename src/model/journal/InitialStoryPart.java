@@ -22,6 +22,7 @@ import java.util.List;
 
 public class InitialStoryPart extends StoryPart {
     private static final int NO_OF_STEPS = 4;
+    public static int REWARD_GOLD = 120;
     private final String startLocation;
     private final String castleLocation;
     private final GameCharacter whosUncle;
@@ -60,7 +61,7 @@ public class InitialStoryPart extends StoryPart {
     }
 
     @Override
-    public void progress(Model model) {
+    public void progress(int track) {
         internalStep++;
     }
 
