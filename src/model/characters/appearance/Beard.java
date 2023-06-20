@@ -2,6 +2,8 @@ package model.characters.appearance;
 
 import model.races.Race;
 import view.MyColors;
+import view.sprites.FaceAndClothesSprite;
+import view.sprites.FaceSprite;
 
 import java.io.Serializable;
 
@@ -28,7 +30,10 @@ public class Beard implements Serializable {
             new LongBeard(MyColors.BLACK),
             new Beard(0xD, 0x00, false),
             new Beard(0xE, 0x00, false),
-            new Beard(0xF, 0x00, false)};
+            new Beard(0xF, 0x00, false),
+            new NarrowBeard(MyColors.BLACK),
+            new ScruffyBeard(MyColors.BLACK)
+    };
 
     private final boolean isTrueBeard;
     private int left = -1;
@@ -77,5 +82,11 @@ public class Beard implements Serializable {
 
     public boolean isTrueBeard() {
         return isTrueBeard;
+    }
+
+    protected static void setSpriteOnTop(AdvancedAppearance appearance, int num, int x, int y, MyColors lineColor) {
+        FaceSprite spr = new FaceAndClothesSprite(num, appearance.getFacialHairColor());
+        spr.setColor1(lineColor);
+        appearance.addSpriteOnTop(x, y, spr);
     }
 }

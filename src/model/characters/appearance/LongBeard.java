@@ -28,6 +28,5 @@ public class LongBeard extends Beard {
             }
         }
         appearance.setSprite(3, 6, new FaceAndClothesSprite(0xFA, appearance.getFacialHairColor()));
-
     }
 }
