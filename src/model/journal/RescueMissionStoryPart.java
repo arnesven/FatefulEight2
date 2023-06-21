@@ -6,7 +6,6 @@ import model.characters.GameCharacter;
 import model.map.CastleLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
-import model.quests.FrogmenProblemQuest;
 import model.quests.Quest;
 import model.quests.RescueMissionQuest;
 import model.states.DailyEventState;

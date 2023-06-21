@@ -1,10 +1,13 @@
 package model.journal;
 
 import model.Model;
+import model.actions.DailyAction;
 import model.map.UrbanLocation;
+import model.map.WorldHex;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import view.ScreenHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ public class PartTwoStoryPart extends StoryPart {
     public PartTwoStoryPart(InitialStoryPart storyPart) {
         this.initialStoryPart = storyPart;
         rescueMissionPart = new RescueMissionStoryPart(initialStoryPart.getCastleName());
-        deliverPackagePart = new DeliverPackageStoryPart();
+        deliverPackagePart = new DeliverPackageStoryPart(initialStoryPart.getWitchPosition());
     }
 
     @Override
@@ -65,5 +68,19 @@ public class PartTwoStoryPart extends StoryPart {
     @Override
     public StoryPart transition(Model model) {
         return null;
+    }
+
+    @Override
+    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
+        rescueMissionPart.drawMapObjects(model, x, y, screenX, screenY);
+        deliverPackagePart.drawMapObjects(model, x, y, screenX, screenY);
+    }
+
+    @Override
+    public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) {
+        List<DailyAction> result = new ArrayList<>();
+        result.addAll(rescueMissionPart.getDailyActions(model, worldHex));
+        result.addAll(deliverPackagePart.getDailyActions(model, worldHex));
+        return result;
     }
 }

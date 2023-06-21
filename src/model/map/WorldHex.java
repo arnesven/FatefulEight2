@@ -166,6 +166,7 @@ public abstract class WorldHex implements Serializable {
         if (hexLocation != null && hexLocation.hasDailyActions()) {
             actions.addAll(hexLocation.getDailyActions(model));
         }
+        actions.addAll(model.getMainStory().getDailyActionsForHex(model, this));
         if (model.getParty().isOnRoad()) {
             actions.add(new GetOffRoadAction(model));
         } else if (hasRoad()) {

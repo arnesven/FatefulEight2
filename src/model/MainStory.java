@@ -1,11 +1,13 @@
 package model;
 
+import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.KruskTalandro;
 import model.classes.CharacterClass;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
+import model.map.WorldHex;
 import model.quests.FrogmenProblemQuest;
 import model.quests.Quest;
 import model.quests.RescueMissionQuest;
@@ -13,6 +15,7 @@ import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
+import view.ScreenHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -193,5 +196,13 @@ public class MainStory implements Serializable {
 
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
         return currentStoryPart.getVisitLordEvent(model, location);
+    }
+
+    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
+        currentStoryPart.drawMapObjects(model, x, y, screenX, screenY);
+    }
+
+    public List<DailyAction> getDailyActionsForHex(Model model, WorldHex worldHex) {
+        return currentStoryPart.getDailyActions(model, worldHex);
     }
 }

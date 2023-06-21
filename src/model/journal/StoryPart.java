@@ -1,12 +1,16 @@
 package model.journal;
 
 import model.Model;
+import model.actions.DailyAction;
 import model.map.UrbanLocation;
+import model.map.WorldHex;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import view.ScreenHandler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class StoryPart implements Serializable {
@@ -32,4 +36,8 @@ public abstract class StoryPart implements Serializable {
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
         return null;
     }
+
+    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) { }
+
+    public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) { return new ArrayList<>(); }
 }

@@ -82,6 +82,7 @@ public class World implements Serializable {
                     (cursorPos != null && (x == cursorPos.x && y == cursorPos.y))) {
                         cursor.updateYourself(screenHandler, screenX, screenY);
                 }
+                model.getMainStory().drawMapObjects(model, x, y, screenX, screenY);
                 col++;
             }
             row++;
