@@ -1,9 +1,12 @@
 package model.journal;
 
+import model.MainStory;
 import model.Model;
 import model.actions.DailyAction;
+import model.characters.appearance.CharacterAppearance;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
@@ -30,6 +33,13 @@ public abstract class StoryPart implements Serializable {
     }
 
     public abstract void addQuests(Model model, List<Quest> quests);
+
+    protected MainQuest getQuestAndSetPortrait(String questName, CharacterAppearance appearance, String portraitName) {
+        MainQuest quest = MainStory.getQuest(questName);
+        quest.setPortrait(appearance);
+        quest.setProvider(portraitName);
+        return quest;
+    }
 
     public abstract StoryPart transition(Model model);
 

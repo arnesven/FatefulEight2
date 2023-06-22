@@ -2,6 +2,7 @@ package model.quests;
 
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
+import model.journal.StoryPart;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import view.MyColors;
 
@@ -14,6 +15,11 @@ public class RescueMissionQuest extends MainQuest {
 
     public RescueMissionQuest() {
         super(QUEST_NAME, "", QuestDifficulty.MEDIUM, 1, 35, 0, TEXT, ENDING);
+    }
+
+    @Override
+    protected int getStoryTrack() {
+        return StoryPart.TRACK_A;
     }
 
     @Override

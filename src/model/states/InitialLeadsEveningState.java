@@ -13,7 +13,6 @@ public class InitialLeadsEveningState extends EveningState {
     @Override
     protected void locationSpecificEvening(Model model) {
         super.locationSpecificEvening(model);
-        model.getMainStory().setInitialLeadsGiven(true);
         leaderSay("Anybody have any leads? I mean, like jobs or quests?");
         {
             GameCharacter gc = notTheLeader(model);

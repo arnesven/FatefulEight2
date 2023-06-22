@@ -7,7 +7,6 @@ import model.map.WorldHex;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
-import view.ScreenHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class PartTwoStoryPart extends StoryPart {
     public PartTwoStoryPart(InitialStoryPart storyPart) {
         this.initialStoryPart = storyPart;
         rescueMissionPart = new RescueMissionStoryPart(initialStoryPart.getCastleName());
-        deliverPackagePart = new DeliverPackageStoryPart(initialStoryPart.getWitchPosition());
+        deliverPackagePart = new WitchStoryPart(initialStoryPart.getWitchPosition());
     }
 
     @Override

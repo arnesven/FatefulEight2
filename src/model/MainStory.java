@@ -2,30 +2,21 @@ package model;
 
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
-import model.characters.KruskTalandro;
-import model.classes.CharacterClass;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
-import model.quests.FrogmenProblemQuest;
-import model.quests.Quest;
-import model.quests.RescueMissionQuest;
+import model.quests.*;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
-import view.ScreenHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static model.classes.Classes.*;
-import static model.classes.Classes.SOR;
-import static model.races.Race.HALF_ORC;
 
 public class MainStory implements Serializable {
 
@@ -85,9 +76,8 @@ public class MainStory implements Serializable {
     //   faraway, and dangerous land, traverse it, and find the Quad's lair and defeat them.
 
 
-    public static final Map<String, Quest> QUESTS = makeMainStoryQuests();
+    public static final Map<String, MainQuest> QUESTS = makeMainStoryQuests();
 
-    private boolean initialLeadsEventGiven = false;
     private boolean townVisited = false;
     private boolean castleVisited = false;
     private boolean templeVisited = false;
@@ -96,27 +86,27 @@ public class MainStory implements Serializable {
 
     public MainStory() {
         // TODO: This is just test stuff
-        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", HALF_ORC, WIT,
-                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
-        firstStoryPart = new InitialStoryPart(dummy);
-        firstStoryPart.progress();
-        firstStoryPart.progress();
-        firstStoryPart.progress();
-        firstStoryPart.progress();
-        initialLeadsEventGiven = true;
-        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
-        currentStoryPart.progress(StoryPart.TRACK_B);
+//        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", HALF_ORC, WIT,
+//                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
+//        firstStoryPart = new InitialStoryPart(dummy);
+//        firstStoryPart.progress();
+//        firstStoryPart.progress();
+//        firstStoryPart.progress();
+//        firstStoryPart.progress();
+//        initialLeadsEventGiven = true;
+//        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
+//        currentStoryPart.progress(StoryPart.TRACK_B);
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
-        if (initialLeadsEventGiven || model.getCurrentHex().getLocation() instanceof UrbanLocation || model.getParty().size() < 2) {
+        if (isStarted() || model.getCurrentHex().getLocation() instanceof UrbanLocation || model.getParty().size() < 2) {
             return null;
         }
         return new InitialLeadsEveningState(model, freeLodging, freeRations);
     }
 
     public List<JournalEntry> getMainStoryTasks(Model model) {
-        if (initialLeadsEventGiven) {
+        if (isStarted()) {
             List<JournalEntry> result = new ArrayList<>();
             if (currentStoryPart != null) {
                 result.addAll(currentStoryPart.getJournalEntries());
@@ -142,10 +132,6 @@ public class MainStory implements Serializable {
         templeVisited = b;
     }
 
-    public void setInitialLeadsGiven(boolean b) {
-        initialLeadsEventGiven = b;
-    }
-
     public void setupStory(GameCharacter whosUncle) {
         this.firstStoryPart = new InitialStoryPart(whosUncle);
         currentStoryPart = firstStoryPart;
@@ -157,12 +143,20 @@ public class MainStory implements Serializable {
 
     public void handleTownSetup(TownDailyActionState townDailyActionState) {
         townVisited = true;
-        currentStoryPart.handleTownSetup(townDailyActionState);
+        if (isStarted()) {
+            currentStoryPart.handleTownSetup(townDailyActionState);
+        }
+    }
+
+    public boolean isStarted() {
+        return currentStoryPart != null;
     }
 
     public void increaseStep(Model model, int track) {
-        currentStoryPart.progress(track);
-        JournalEntry.printJournalUpdateMessage(model);
+        if (isStarted()) {
+            currentStoryPart.progress(track);
+            JournalEntry.printJournalUpdateMessage(model);
+        }
     }
 
     public void increaseStep(Model model) {
@@ -170,27 +164,33 @@ public class MainStory implements Serializable {
     }
 
     public void transitionStep(Model model) {
-        currentStoryPart = currentStoryPart.transition(model);
+        if (isStarted()) {
+            currentStoryPart = currentStoryPart.transition(model);
+        }
     }
 
     public void addQuests(Model model, List<Quest> quests) {
-        currentStoryPart.addQuests(model, quests);
+        if (isStarted()) {
+            currentStoryPart.addQuests(model, quests);
+        }
     }
 
     public static List<Quest> getQuests() {
         return new ArrayList<>(QUESTS.values());
     }
 
-    private static Map<String, Quest> makeMainStoryQuests() {
-        Map<String, Quest> map = new HashMap<>();
+    private static Map<String, MainQuest> makeMainStoryQuests() {
+        Map<String, MainQuest> map = new HashMap<>();
         FrogmenProblemQuest frogmen = new FrogmenProblemQuest();
         map.put(frogmen.getName(), frogmen);
         RescueMissionQuest rescue = new RescueMissionQuest();
         map.put(rescue.getName(), rescue);
+        SpecialDeliveryQuest delivery = new SpecialDeliveryQuest();
+        map.put(delivery.getName(), delivery);
         return map;
     }
 
-    public static Object getQuest(String key) {
+    public static MainQuest getQuest(String key) {
         return QUESTS.get(key);
     }
 
@@ -199,7 +199,9 @@ public class MainStory implements Serializable {
     }
 
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
-        currentStoryPart.drawMapObjects(model, x, y, screenX, screenY);
+        if (isStarted()) {
+            currentStoryPart.drawMapObjects(model, x, y, screenX, screenY);
+        }
     }
 
     public List<DailyAction> getDailyActionsForHex(Model model, WorldHex worldHex) {

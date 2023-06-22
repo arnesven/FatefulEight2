@@ -89,36 +89,37 @@ public class EveningState extends GameState {
     }
 
     protected void checkForQuest(Model model) {
+        List<Quest> quests = new ArrayList<>();
+        model.getMainStory().addQuests(model, quests);
         if (model.getCurrentHex().givesQuests()) {
-            List<Quest> quests = new ArrayList<>();
-
-            model.getMainStory().addQuests(model, quests);
             if (quests.size() == 0 &&
-                !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
+                    !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
                 randomQuests(model, quests);
             }
             if (quests.size() == 0) {
                 println("The party has not been offered any quests.");
-                return;
             }
-
-            println("The party has been offered " + MyStrings.numberWord(quests.size()) + " quest" + (quests.size() > 1?"s":"") + ".");
-            print("Will you go tomorrow? ");
-            SubView previous = model.getSubView();
-            SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
-            model.setSubView(subView);
-            waitForReturn();
-            if (subView.didAcceptQuest()) {
-                Quest q = subView.getSelectedQuest();
-                this.goOnQuest = q;
-                println("You have accepted quest '" + q.getName() + "'!");
-                model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
-                q.accept(model.getParty());
-            } else {
-                println("You rejected the quest" + (quests.size() > 1?"s":"") + ".");
-            }
-            model.setSubView(previous);
         }
+        if (quests.size() == 0) {
+            return;
+        }
+
+        println("The party has been offered " + MyStrings.numberWord(quests.size()) + " quest" + (quests.size() > 1?"s":"") + ".");
+        print("Will you go tomorrow? ");
+        SubView previous = model.getSubView();
+        SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
+        model.setSubView(subView);
+        waitForReturn();
+        if (subView.didAcceptQuest()) {
+            Quest q = subView.getSelectedQuest();
+            this.goOnQuest = q;
+            println("You have accepted quest '" + q.getName() + "'!");
+            model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
+            q.accept(model.getParty());
+        } else {
+            println("You rejected the quest" + (quests.size() > 1?"s":"") + ".");
+        }
+        model.setSubView(previous);
     }
 
     private void randomQuests(Model model, List<Quest> quests) {

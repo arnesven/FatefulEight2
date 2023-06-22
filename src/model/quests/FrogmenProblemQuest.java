@@ -9,6 +9,7 @@ import model.enemies.FrogmanChiefEnemy;
 import model.enemies.FrogmanLeaderEnemy;
 import model.enemies.FrogmanScoutEnemy;
 import model.enemies.FrogmanShamanEnemy;
+import model.journal.StoryPart;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
@@ -27,6 +28,11 @@ public class FrogmenProblemQuest extends MainQuest {
 
     public FrogmenProblemQuest() {
         super(QUEST_NAME, "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
+    }
+
+    @Override
+    protected int getStoryTrack() {
+        return StoryPart.TRACK_A;
     }
 
     @Override
@@ -127,17 +133,6 @@ public class FrogmenProblemQuest extends MainQuest {
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.GREEN;
-    }
-
-    @Override
-    public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
-        if (questWasSuccess) {
-            model.getMainStory().increaseStep(model);
-        } else {
-            state.println("However, this quest can be accepted again.");
-            model.getQuestDeck().unsetFailureIn(model.getCurrentHex().getLocation());
-        }
-        return super.endOfQuest(model, state, questWasSuccess);
     }
 
     private static class FrogmanGuardsCombat extends CombatSubScene {

@@ -143,4 +143,35 @@ public abstract class GameState {
     public void partyMemberSay(GameCharacter gc, String line) {
         getModel().getParty().partyMemberSay(getModel(), gc, line);
     }
+
+    public void notLeaderSay(String line) {
+        if (model.getParty().size() > 1) {
+            GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+            partyMemberSay(gc, line);
+        }
+    }
+
+    public static String heOrSheCap(boolean gender) {
+        return gender ? "She" : "He";
+    }
+
+    public static String heOrShe(boolean gender) {
+        return gender ? "she" : "he";
+    }
+
+    public static String himOrHer(boolean gender) {
+        return gender ? "her" : "him";
+    }
+
+    public static String hisOrHer(boolean gender) {
+        return gender ? "her" : "his";
+    }
+
+    protected String meOrUs() { return model.getParty().size() == 1 ? "me":"us"; }
+
+    protected String iOrWe() { return model.getParty().size() == 1 ? "I":"we"; }
+
+    protected String iOrWeCap() { return model.getParty().size() == 1 ? "I":"We"; }
+
+    protected String iveOrWeve() { return model.getParty().size() == 1 ? "I've":"we've"; }
 }

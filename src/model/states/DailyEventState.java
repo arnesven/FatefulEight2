@@ -139,22 +139,6 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    public static String heOrSheCap(boolean gender) {
-        return gender ? "She" : "He";
-    }
-
-    public static String heOrShe(boolean gender) {
-        return gender ? "she" : "he";
-    }
-
-    public static String himOrHer(boolean gender) {
-        return gender ? "her" : "him";
-    }
-
-    public static String hisOrHer(boolean gender) {
-        return gender ? "her" : "his";
-    }
-
     protected void forcedMovement(Model model, List<Point> path) {
         MapSubView mapSubView = new MapSubView(model);
         mapSubView.drawAvatarEnabled(false);

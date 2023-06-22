@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.items.Item;
+import model.items.potions.Potion;
 import model.states.DailyEventState;
 import model.states.ShopState;
 
@@ -17,16 +18,17 @@ public class WitchHutEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.WIT, "Witch");
-        println("A small hut in a dank grove. Light emanates from " +
+        println("You find a small hut in a dank grove. Light emanates from " +
                 "the window. Inside a witch is stirring a cauldron and " +
                 "mumbling strange rhymes.");
         model.getParty().randomPartyMemberSay(model, List.of("Is that an incantation or she just insane?"));
-        println("She beckons you inside and offers to sell you a bottle of the draft.");
+        println("She beckons you inside and offers to sell you a couple of bottles of the draft.");
 
         List<Item> itemList = new ArrayList<>();
-        itemList.add(model.getItemDeck().getRandomPotion());
+        Potion pot = model.getItemDeck().getRandomPotion();
+        itemList.addAll(List.of(pot.copy(), pot.copy(), pot.copy()));
         ShopState shop = new ShopState(model, "witch", itemList,
-                new int[]{5});
+                new int[]{pot.getCost()/2, pot.getCost()/2, pot.getCost()/2});
         shop.setSellingEnabled(false);
         waitForReturn();
         shop.run(model);

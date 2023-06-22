@@ -30,6 +30,7 @@ public class MayorEvent extends DailyEventState {
             boolean gender = town.getLordGender();
             println("The noble picks " + himOrHer(gender) +
                     "self off the ground and dusts off " + hisOrHer(gender) + " robes.");
+            showExplicitPortrait(model, model.getLordPortrait(town), "Noble");
             showRandomPortrait(model, Classes.NOB, "Noble");
             portraitSay("That would have been the end of me. If not for you. Thank you.");
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Damn wine sellers!",

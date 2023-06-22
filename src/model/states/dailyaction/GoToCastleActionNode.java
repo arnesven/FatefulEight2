@@ -12,7 +12,6 @@ import model.states.GameState;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.KeepSubView;
-import view.subviews.TownHallSubView;
 
 import java.awt.*;
 
@@ -28,8 +27,10 @@ public class GoToCastleActionNode extends DailyActionNode {
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
-
-        DailyEventState mainStoryEvent = model.getMainStory().getVisitLordEvent(model, location);
+        DailyEventState mainStoryEvent = null;
+        if (model.getMainStory().isStarted()) {
+            mainStoryEvent = model.getMainStory().getVisitLordEvent(model, location);
+        }
         if (mainStoryEvent != null) {
             return  mainStoryEvent;
         } else if (model.getParty().getSummons().containsKey(location.getPlaceName())) {

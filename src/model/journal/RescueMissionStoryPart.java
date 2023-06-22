@@ -14,8 +14,10 @@ import model.states.dailyaction.TownDailyActionState;
 import java.util.List;
 
 public class RescueMissionStoryPart extends StoryPart {
-    private final String castleName;
+    private static final int VISIT_CASTLE_STEP = 0;
+    private static final int DO_QUEST_STEP = 1;
     private int internalStep = 0;
+    private final String castleName;
 
     public RescueMissionStoryPart(String castleName) {
         this.castleName = castleName;
@@ -38,14 +40,12 @@ public class RescueMissionStoryPart extends StoryPart {
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
-        if (internalStep == 1) {
+        if (internalStep == DO_QUEST_STEP) {
             if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof CastleLocation) {
                 if (model.getCurrentHex().getLocation().getName().equals(castleName)) {
                     CastleLocation castle = model.getWorld().getCastleByName(castleName);
-                    RescueMissionQuest rescue = ((RescueMissionQuest) MainStory.getQuest(RescueMissionQuest.QUEST_NAME));
-                    rescue.setPortrait(model.getLordPortrait(castle));
-                    rescue.setProvider(castle.getLordName());
-                    quests.add(rescue);
+                    quests.add(getQuestAndSetPortrait(RescueMissionQuest.QUEST_NAME, model.getLordPortrait(castle),
+                            castle.getLordName()));
                 }
             }
         }
@@ -75,9 +75,9 @@ public class RescueMissionStoryPart extends StoryPart {
 
         @Override
         protected void doEvent(Model model) {
-            if (internalStep == 0) {
-                setCurrentTerrainSubview(model);
-                showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+            setCurrentTerrainSubview(model);
+            showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+            if (internalStep == VISIT_CASTLE_STEP) {
                 portraitSay("Welcome traveller, what can I do for you.");
                 TownLocation town = model.getMainStory().getStartingLocation(model);
                 leaderSay("We've come from the town of " + town.getName() + ", " +
@@ -115,11 +115,12 @@ public class RescueMissionStoryPart extends StoryPart {
                         "He can handle himself. Will you look for him? I'll pay you. I'll pay you handsomely.");
                 leaderSay("Perhaps we'll look into it.");
                 model.getMainStory().increaseStep(model, StoryPart.TRACK_A);
-            } else {
-                setCurrentTerrainSubview(model);
-                showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+            } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Have you found Caid yet?");
                 leaderSay("Not yet.");
+            } else {
+                portraitSay("Welcome back.");
+                leaderSay("Good to be back. About Caid...");
             }
         }
     }
@@ -134,16 +135,18 @@ public class RescueMissionStoryPart extends StoryPart {
 
         @Override
         public String getText() {
-            if (internalStep == 0) {
+            if (internalStep == VISIT_CASTLE_STEP) {
                 return "Travel to " + castleName + " to claim " + InitialStoryPart.REWARD_GOLD +
                         " gold, your reward for dealing with the frogmen problem. ";
+            } else if (internalStep == DO_QUEST_STEP) {
+                return "Complete the '" + RescueMissionQuest.QUEST_NAME + "' Quest.";
             }
-            return "Complete the '" + RescueMissionQuest.QUEST_NAME + "' Quest";
+            return "You found Caid.\n\nCompleted.";
         }
 
         @Override
         public boolean isComplete() {
-            return internalStep > 1;
+            return internalStep > DO_QUEST_STEP;
         }
     }
 }

@@ -1,6 +1,5 @@
 package model.journal;
 
-import model.MainStory;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
@@ -14,30 +13,34 @@ import model.races.Race;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.dailyaction.VisitEverixNode;
 import model.states.dailyaction.VisitUncleNode;
-import util.MyPair;
 import util.MyRandom;
-import view.ScreenHandler;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.util.List;
 
 public class InitialStoryPart extends StoryPart {
-    private static final int NO_OF_STEPS = 4;
+
+    private static final int INITIAL_STEP = 0;
+    private static final int DO_QUEST_STEP = 1;
+    private static final int QUEST_COMPLETED_STEP = 2;
+    private static final int ASK_EVERIX_STEP = 3;
+
+    private int internalStep = 0;
     public static int REWARD_GOLD = 120;
     private final MainStorySpawnLocation spawnData;
     private final GameCharacter whosUncle;
     private final AdvancedAppearance unclePortrait;
     private final AdvancedAppearance everixPortrait;
 
-    private int internalStep = 0;
+
 
     public InitialStoryPart(GameCharacter whosUncle) {
         List<MainStorySpawnLocation> townsAndCastles = List.of(
-                new MainStorySpawnLocation(new AshtonshireTown().getName(), new ArkvaleCastle().getName(), new Point(12, 8)),
-                new MainStorySpawnLocation(new SouthMeadhomeTown().getName(), new ArdhCastle().getName(), new Point(12, 8)),
-                new MainStorySpawnLocation(new EbonshireTown().getName(), new BogdownCastle().getName(), new Point(12, 8)),
-                new MainStorySpawnLocation(new LittleErindeTown().getName(), new SunblazeCastle().getName(), new Point(12, 8))
+                new MainStorySpawnLocation(new AshtonshireTown().getName(), new ArkvaleCastle().getName(), new Point(24, 1)),
+                new MainStorySpawnLocation(new SouthMeadhomeTown().getName(), new ArdhCastle().getName(), new Point(13, 11)),
+                new MainStorySpawnLocation(new EbonshireTown().getName(), new BogdownCastle().getName(), new Point(5, 8)),
+                new MainStorySpawnLocation(new LittleErindeTown().getName(), new SunblazeCastle().getName(), new Point(8, 11))
         );
         spawnData = MyRandom.sample(townsAndCastles);
         this.whosUncle = whosUncle;
@@ -47,7 +50,7 @@ public class InitialStoryPart extends StoryPart {
 
     @Override
     public List<JournalEntry> getJournalEntries() {
-        return List.of(new FirstMainStoryTask(spawnData.getTown(), whosUncle, internalStep));
+        return List.of(new FirstMainStoryTask(spawnData.getTown(), whosUncle));
     }
 
     @Override
@@ -66,13 +69,12 @@ public class InitialStoryPart extends StoryPart {
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
-        if (internalStep == 1) {
+        if (internalStep == DO_QUEST_STEP) {
             if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
                 TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
                 if (loc.getName().equals(spawnData.getTown())) {
-                    FrogmenProblemQuest frogmen = ((FrogmenProblemQuest)MainStory.getQuest(FrogmenProblemQuest.QUEST_NAME));
-                    frogmen.setPortrait(unclePortrait);
-                    quests.add(frogmen);
+                    quests.add(getQuestAndSetPortrait(FrogmenProblemQuest.QUEST_NAME, unclePortrait,
+                            whosUncle.getFirstName() + "'s Uncle"));
                 }
             }
         }
@@ -108,10 +110,45 @@ public class InitialStoryPart extends StoryPart {
     }
 
     public boolean completed() {
-        return internalStep == NO_OF_STEPS;
+        return internalStep > ASK_EVERIX_STEP;
     }
 
     public Point getWitchPosition() {
         return spawnData.getWitch();
+    }
+
+    public class FirstMainStoryTask extends MainStoryTask {
+        private final GameCharacter whosUncle;
+        private final String town;
+
+
+        public FirstMainStoryTask(String startLocation, GameCharacter whosUncle) {
+            super(whosUncle.getFirstName() + "'s Uncle");
+            this.town = startLocation;
+            this.whosUncle = whosUncle;
+        }
+
+        @Override
+        public String getText() {
+            switch (internalStep) {
+                case INITIAL_STEP:
+                    return "Visit " + whosUncle.getFirstName() + "'s uncle in the " + town +
+                        ". He needs a capable group of adventurers to take care of a 'Frogmen Problem'.";
+                case DO_QUEST_STEP:
+                    return "Complete the '" + FrogmenProblemQuest.QUEST_NAME + "' Quest.";
+                case QUEST_COMPLETED_STEP:
+                    return "Return to " + whosUncle.getFirstName() + "'s uncle to claim your reward.";
+                case ASK_EVERIX_STEP:
+                    return "Ask Everix about the crimson orb.";
+            }
+
+            return "You helped " + whosUncle.getFirstName() + "'s uncle and the " +
+                    town + " deal with the Frogmen.\n\nCompleted.";
+        }
+
+        @Override
+        public boolean isComplete() {
+            return internalStep > ASK_EVERIX_STEP;
+        }
     }
 }

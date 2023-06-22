@@ -18,7 +18,7 @@ public class WorkshopEvent extends DailyEventState {
         println("You enter what you think is a shop.");
         leaderSay("Hey... this isn't a shop, it's a workshop! There are tools and materials everywhere.");
         if (MyRandom.rollD10() < 5) {
-            println("The tinkerer doesn't seem to be here right now. Do you 'borrow' some of " +
+            print("The tinkerer doesn't seem to be here right now. Do you 'borrow' some of " +
                     hisOrHer(MyRandom.flipCoin()) + " stuff? (Y/N) ");
             if (!yesNoInput()) {
                 return;

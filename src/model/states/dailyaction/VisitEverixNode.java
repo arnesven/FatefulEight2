@@ -2,12 +2,14 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.classes.WitchClass;
 import model.journal.InitialStoryPart;
 import model.journal.StoryPart;
 import model.map.TownLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.events.ChangeClassEvent;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -96,6 +98,11 @@ public class VisitEverixNode extends DailyActionNode {
             } else {
                 setCurrentTerrainSubview(model);
                 showEverixPortrait(model);
+                portraitSay("Oh you're back. I'm sorry I can't answer any more of your questions. Unless you're " +
+                        "interested in taking up druidism that is. Are you?");
+                ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);
+                println("Everix is offering to train you in the ways of being a druid, ");
+                change.areYouInterested(model);
                 portraitSay("Good luck with that crimson orb!");
             }
         }
