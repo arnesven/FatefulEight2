@@ -134,7 +134,13 @@ public class RescueMissionStoryPart extends StoryPart {
                 model.getMainStory().increaseStep(model, StoryPart.TRACK_A);
             } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Have you found Caid yet?");
-                leaderSay("Not yet.");
+                if (witchPartCompleted()) {
+                    leaderSay("Actually, there was another matter which I want to bring to your attention.");
+                    portraitSay("I'm sorry, but I just can't focus on anything other than Caid's disappearance right now. Please help me find him first.");
+                    leaderSay("Fine...");
+                } else {
+                    leaderSay("Not yet.");
+                }
             } else {
                 portraitSay("Welcome back.");
                 leaderSay("Good to be back. About Caid...");

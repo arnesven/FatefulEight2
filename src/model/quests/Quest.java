@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.Party;
+import model.TimeOfDay;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
@@ -158,6 +159,7 @@ public abstract class Quest {
         state.print("Press enter to continue.");
         state.waitForReturn();
         QuestState.setCurrentTerrainSubview(model);
+        model.setTimeOfDay(TimeOfDay.EVENING);
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 }

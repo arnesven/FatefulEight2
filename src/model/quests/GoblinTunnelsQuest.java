@@ -120,7 +120,8 @@ public class GoblinTunnelsQuest extends Quest {
         }
         
         if (questWasSuccess) {
-            state.print("Do you wish to immediately continue to the Goblin King Quest? (Y/N) ");
+            state.print("Do you wish to immediately continue to the Goblin King Quest " +
+                    "(you will not be able to come back and do this later)? (Y/N) ");
             if (state.yesNoInput()) {
                 return new QuestState(model, new GoblinKingQuest());
             }
