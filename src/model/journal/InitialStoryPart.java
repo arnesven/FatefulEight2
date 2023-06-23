@@ -109,7 +109,8 @@ public class InitialStoryPart extends StoryPart {
         return spawnData.getCastle();
     }
 
-    public boolean completed() {
+    @Override
+    public boolean isCompleted() {
         return internalStep > ASK_EVERIX_STEP;
     }
 

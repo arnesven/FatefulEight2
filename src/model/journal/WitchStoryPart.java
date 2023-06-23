@@ -10,6 +10,7 @@ import model.quests.SpecialDeliveryQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import model.states.events.ChangeClassEvent;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 import view.subviews.PortraitSubView;
@@ -24,6 +25,8 @@ public class WitchStoryPart extends StoryPart {
     private static final int INITIAL_STATE = 0;
     private static final int FIND_WITCH = 1;
     private static final int DO_QUEST = 2;
+    private static final int QUEST_DONE = 3;
+    private static final int COMPLETE = 4;
     private final Point witchPoint;
     private int internalStep = INITIAL_STATE;
     private static AdvancedAppearance witchAppearance = PortraitSubView.makeRandomPortrait(Classes.WIT, Race.ALL, true);
@@ -85,6 +88,12 @@ public class WitchStoryPart extends StoryPart {
     }
 
     @Override
+    protected boolean isCompleted() {
+        return internalStep >= COMPLETE;
+
+    }
+
+    @Override
     public StoryPart transition(Model model) {
         return null;
     }
@@ -101,7 +110,7 @@ public class WitchStoryPart extends StoryPart {
             } else if (internalStep == DO_QUEST) {
                 return "Complete the '" + SpecialDeliveryQuest.QUEST_NAME + "' quest.";
             }
-            return "Completed";
+            return "You helped the witch in the wood deliver a special potion to her client.\n\nCompleted";
         }
 
         @Override
@@ -175,8 +184,16 @@ public class WitchStoryPart extends StoryPart {
             } else if (internalStep == DO_QUEST) {
                 portraitSay("You better deliver that potion soon. My Client is waiting!");
                 leaderSay(iOrWeCap() + " are getting around to it.");
-            } else {
+
+            } else if (internalStep == QUEST_DONE) {
                 portraitSay("Now sit down, and I'll tell you the story about the crimson pearls.");
+                model.getMainStory().increaseStep(model, StoryPart.TRACK_B);
+            } else {
+                portraitSay("I'm afraid I have no more information for you, unless you want to learn about witchcraft. Do you?");
+                ChangeClassEvent change = new ChangeClassEvent(model, Classes.WIT);
+                print("The witch offering to instruct you in the ways of witchcraft, ");
+                change.areYouInterested(model);
+                portraitSay("Good luck taking on those sorcerers. Farewell!");
             }
         }
     }

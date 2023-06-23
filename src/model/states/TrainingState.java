@@ -42,7 +42,7 @@ public class TrainingState extends GameState {
     public GameState run(Model model) {
         boolean cantAfford = model.getParty().getGold() < TUITION_FEA;
         if (cantAfford) {
-            print("You cannot afford the tuition fea, which is 5 gold.");
+            println("You cannot afford the tuition fea, which is 5 gold.");
         } else {
             print("The tuition fea for training at the temple is " + TUITION_FEA + " gold. Do you pay? (Y/N) ");
         }

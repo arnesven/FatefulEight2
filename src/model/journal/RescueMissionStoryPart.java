@@ -18,8 +18,10 @@ public class RescueMissionStoryPart extends StoryPart {
     private static final int DO_QUEST_STEP = 1;
     private int internalStep = 0;
     private final String castleName;
+    private PartTwoStoryPart storyPartTwo;
 
-    public RescueMissionStoryPart(String castleName) {
+    public RescueMissionStoryPart(PartTwoStoryPart partTwo, String castleName) {
+        this.storyPartTwo = partTwo;
         this.castleName = castleName;
     }
 
@@ -40,9 +42,9 @@ public class RescueMissionStoryPart extends StoryPart {
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
-        if (internalStep == DO_QUEST_STEP) {
-            if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof CastleLocation) {
-                if (model.getCurrentHex().getLocation().getName().equals(castleName)) {
+        if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof CastleLocation) {
+            if (model.getCurrentHex().getLocation().getName().equals(castleName)) {
+                if (internalStep == DO_QUEST_STEP) {
                     CastleLocation castle = model.getWorld().getCastleByName(castleName);
                     quests.add(getQuestAndSetPortrait(RescueMissionQuest.QUEST_NAME, model.getLordPortrait(castle),
                             castle.getLordName()));
@@ -63,6 +65,11 @@ public class RescueMissionStoryPart extends StoryPart {
             return new RescueMissionLordEvent(model, model.getWorld().getCastleByName(castleName));
         }
         return super.getVisitLordEvent(model, location);
+    }
+
+    @Override
+    protected boolean isCompleted() {
+        return false;
     }
 
     private class RescueMissionLordEvent extends DailyEventState {
@@ -93,9 +100,19 @@ public class RescueMissionStoryPart extends StoryPart {
                 portraitSay("Hmm, that seems plausible. Let me just get my purse.");
                 println("The party receives " + InitialStoryPart.REWARD_GOLD + " gold!");
                 model.getParty().addToGold(InitialStoryPart.REWARD_GOLD);
-                leaderSay("Thank you. Now we'll just be on our way...");
-                portraitSay("Just a moment please.");
-                leaderSay("Yes?");
+
+                if (witchPartCompleted()) {
+                    leaderSay("There's an important issue which " + iOrWe() + " must urgently discuss with you.");
+                    portraitSay("I understand, but I'm afraid I'm completely occupied in another matter.");
+                    leaderSay("But this is important.");
+                    portraitSay("One thing at a time. And perhaps you could help me with my problem. Then we can deal with your important issue.");
+                    leaderSay("Fine... what seems to be the problem?");
+                } else {
+                    leaderSay("Thank you. Now we'll just be on our way...");
+                    portraitSay("Just a moment please.");
+                    leaderSay("Yes?");
+                }
+
                 portraitSay("For a while now I've been looking for a capable team of adventurers like yourselves. " +
                         "I have a task that needs doing.");
                 leaderSay("I'm listening.");
@@ -123,6 +140,10 @@ public class RescueMissionStoryPart extends StoryPart {
                 leaderSay("Good to be back. About Caid...");
             }
         }
+    }
+
+    private boolean witchPartCompleted() {
+        return storyPartTwo.witchPartCompleted();
     }
 
     public class GoToCastleTask extends MainStoryTask {

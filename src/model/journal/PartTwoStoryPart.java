@@ -18,7 +18,7 @@ public class PartTwoStoryPart extends StoryPart {
 
     public PartTwoStoryPart(InitialStoryPart storyPart) {
         this.initialStoryPart = storyPart;
-        rescueMissionPart = new RescueMissionStoryPart(initialStoryPart.getCastleName());
+        rescueMissionPart = new RescueMissionStoryPart(this, initialStoryPart.getCastleName());
         deliverPackagePart = new WitchStoryPart(initialStoryPart.getWitchPosition());
     }
 
@@ -43,7 +43,7 @@ public class PartTwoStoryPart extends StoryPart {
         } else { // track B
             deliverPackagePart.progress();
         }
-        if (!initialStoryPart.completed()) {
+        if (!initialStoryPart.isCompleted()) {
             initialStoryPart.progress(track);
         }
     }
@@ -81,5 +81,14 @@ public class PartTwoStoryPart extends StoryPart {
         result.addAll(rescueMissionPart.getDailyActions(model, worldHex));
         result.addAll(deliverPackagePart.getDailyActions(model, worldHex));
         return result;
+    }
+
+    @Override
+    protected boolean isCompleted() {
+        return rescueMissionPart.isCompleted() && deliverPackagePart.isCompleted();
+    }
+
+    public boolean witchPartCompleted() {
+        return deliverPackagePart.isCompleted();
     }
 }

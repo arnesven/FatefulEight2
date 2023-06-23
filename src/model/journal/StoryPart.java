@@ -50,4 +50,6 @@ public abstract class StoryPart implements Serializable {
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) { }
 
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) { return new ArrayList<>(); }
+
+    protected abstract boolean isCompleted();
 }
