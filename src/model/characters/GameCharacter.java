@@ -95,10 +95,12 @@ public class GameCharacter extends Combatant {
             drawAppearance(screenHandler, col, row + 3);
         }
         MyColors xpColor = DEFAULT_TEXT_COLOR;
+        String xPString = String.format("%5d XP", this.getXP());
         if (xpGivenCounter > 0) {
             xpColor = xpColors[--xpGivenCounter];
+            xPString = String.format("%5d*XP", this.getXP());
         }
-        BorderFrame.drawString(screenHandler, String.format("%5d XP", this.getXP()), col+8, row+2, xpColor);
+        BorderFrame.drawString(screenHandler, xPString, col+8, row+2, xpColor);
         BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getAP()), col+17, row+2, DEFAULT_TEXT_COLOR);
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, getHealthColor());
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), col+18, row+3, getStaminaColor());
