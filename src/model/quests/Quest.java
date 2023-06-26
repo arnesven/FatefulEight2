@@ -162,4 +162,12 @@ public abstract class Quest {
         model.setTimeOfDay(TimeOfDay.EVENING);
         return model.getCurrentHex().getEveningState(model, false, false);
     }
+
+    public boolean arePrerequisitesMet(Model model) {
+        return getPrerequisites(model) == null;
+    }
+
+    public String getPrerequisites(Model model) {
+        return null;
+    }
 }
