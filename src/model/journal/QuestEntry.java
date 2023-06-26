@@ -5,6 +5,7 @@ import model.Model;
 import model.QuestDeck;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
+import model.quests.MainQuest;
 import model.quests.Quest;
 
 public class QuestEntry implements JournalEntry {
@@ -19,6 +20,7 @@ public class QuestEntry implements JournalEntry {
         for (UrbanLocation urb : model.getWorld().getLordLocations()) {
             if (((HexLocation) urb).getName().equals(location)) {
                 this.hexLocation = (HexLocation) urb;
+                break;
             }
         }
         for (Quest q : QuestDeck.getAllQuests()) {
@@ -31,9 +33,14 @@ public class QuestEntry implements JournalEntry {
                 this.quest = q;
             }
         }
-        this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
-        if (completed) {
-            this.success = model.getQuestDeck().wasSuccessfulIn(hexLocation);
+        if (hexLocation != null) {
+            this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
+            if (completed) {
+                this.success = model.getQuestDeck().wasSuccessfulIn(hexLocation);
+            }
+        } else {
+            this.completed = ((MainQuest)this.quest).isCompleted();
+            this.success = true;
         }
     }
 
@@ -50,7 +57,11 @@ public class QuestEntry implements JournalEntry {
     @Override
     public String getText() {
         StringBuilder bldr = new StringBuilder();
-        bldr.append("You accepted this quest in " + hexLocation.getName() + " on day " + day + ".\n\n");
+        if (hexLocation != null) {
+            bldr.append("You accepted this quest in " + hexLocation.getName() + " on day " + day + ".\n\n");
+        } else {
+            bldr.append("You accepted this quest on day " + day + ".\n\n");
+        }
         bldr.append(quest.getText());
         bldr.append("\n\n");
         if (completed) {

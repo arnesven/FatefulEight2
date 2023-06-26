@@ -47,12 +47,10 @@ public class ElfEvent extends DailyEventState {
             }
         } else if (dieRoll <= 9) {
             showRandomPortrait(model, Classes.MAGE, Race.DARK_ELF, "Mage");
-            print(" mage who offers to sell you a spells. Do you accept? (Y/N)");
-            if (yesNoInput()) {
-                MageEvent event = new MageEvent(model, false);
-                event.setPortraitSubView(this);
-                event.doEvent(model);
-            }
+            print(" mage who offers to sell you a spells.");
+            MageEvent event = new MageEvent(model, false);
+            event.setPortraitSubView(this);
+            event.doEvent(model);
         } else {
             adventurerWhoMayJoin(model, Race.DARK_ELF);
         }
@@ -74,7 +72,7 @@ public class ElfEvent extends DailyEventState {
                 me.doEvent(model);
             }
         } else if (dieRoll <= 9) {
-            println(" stranger, asking for directions.");
+            println(" stranger.");
             new ThiefEvent(model).doEvent(model);
         } else {
             adventurerWhoMayJoin(model, Race.WOOD_ELF);

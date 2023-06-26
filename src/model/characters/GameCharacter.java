@@ -29,6 +29,8 @@ import java.awt.Point;
 import java.util.*;
 
 public class GameCharacter extends Combatant {
+    private static MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
+                                                        MyColors.LIGHT_BLUE, MyColors.BEIGE, MyColors.WHITE, MyColors.LIGHT_PINK, MyColors.LIGHT_YELLOW};
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
     private static final int MAX_SP = 2;
     private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1000};
@@ -48,6 +50,7 @@ public class GameCharacter extends Combatant {
     private int currentSp = 1;
     private int currentXp = 0;
     private Party party;
+    private int xpGivenCounter = 0;
 
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
@@ -91,8 +94,11 @@ public class GameCharacter extends Combatant {
         } else {
             drawAppearance(screenHandler, col, row + 3);
         }
-
-        BorderFrame.drawString(screenHandler, String.format("%5d XP", this.getXP()), col+8, row+2, DEFAULT_TEXT_COLOR);
+        MyColors xpColor = DEFAULT_TEXT_COLOR;
+        if (xpGivenCounter > 0) {
+            xpColor = xpColors[--xpGivenCounter];
+        }
+        BorderFrame.drawString(screenHandler, String.format("%5d XP", this.getXP()), col+8, row+2, xpColor);
         BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getAP()), col+17, row+2, DEFAULT_TEXT_COLOR);
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, getHealthColor());
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), col+18, row+3, getStaminaColor());
@@ -478,6 +484,7 @@ public class GameCharacter extends Combatant {
             return;
         }
         currentXp += toAdd;
+        xpGivenCounter = xpColors.length;
         for (int i = 0; i < XP_LEVELS.length; ++i) {
             if (currentXp < XP_LEVELS[i]) {
                 break;

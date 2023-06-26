@@ -83,7 +83,7 @@ public class VisitEverixNode extends DailyActionNode {
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
                     if (gc.getCharClass() instanceof WitchClass) {
                         partyMemberSay(gc, "There's nothing wrong with that!");
-                        return;
+                        break;
                     }
                 }
                 leaderSay("I don't mind witches. Where can I find her?");

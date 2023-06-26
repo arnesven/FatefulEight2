@@ -2,11 +2,15 @@ package model;
 
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.KruskTalandro;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.*;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
@@ -86,16 +90,15 @@ public class MainStory implements Serializable {
 
     public MainStory() {
         // TODO: This is just test stuff
-//        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", HALF_ORC, WIT,
-//                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
-//        firstStoryPart = new InitialStoryPart(dummy);
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        initialLeadsEventGiven = true;
-//        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
-//        currentStoryPart.progress(StoryPart.TRACK_B);
+        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
+                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
+        firstStoryPart = new InitialStoryPart(dummy);
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
+        currentStoryPart.progress(StoryPart.TRACK_B);
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {

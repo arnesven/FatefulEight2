@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.Quest;
 import model.quests.SpecialDeliveryQuest;
@@ -28,11 +29,13 @@ public class WitchStoryPart extends StoryPart {
     private static final int QUEST_DONE = 3;
     private static final int COMPLETE = 4;
     private final Point witchPoint;
+    private final String castleName;
     private int internalStep = INITIAL_STATE;
-    private static AdvancedAppearance witchAppearance = PortraitSubView.makeRandomPortrait(Classes.WIT, Race.ALL, true);
+    private AdvancedAppearance witchAppearance = PortraitSubView.makeRandomPortrait(Classes.WIT, Race.ALL, true);
 
-    public WitchStoryPart(Point witchPosition) {
+    public WitchStoryPart(Point witchPosition, String castleName) {
         this.witchPoint = witchPosition;
+        this.castleName = castleName;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class WitchStoryPart extends StoryPart {
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
         if (internalStep > INITIAL_STATE) {
             if (witchPoint.x == x && witchPoint.y == y) {
-                model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 2);
+                model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
             }
         }
     }
@@ -109,13 +112,15 @@ public class WitchStoryPart extends StoryPart {
                 return "Find Everix's acquaintance, the witch, to ask about the crimson pearl.";
             } else if (internalStep == DO_QUEST) {
                 return "Complete the '" + SpecialDeliveryQuest.QUEST_NAME + "' quest.";
+            } else if (internalStep == QUEST_DONE) {
+                return "Return to the witch to get information about the Crimson Pearl.";
             }
             return "You helped the witch in the wood deliver a special potion to her client.\n\nCompleted";
         }
 
         @Override
         public boolean isComplete() {
-            return false;
+            return WitchStoryPart.this.isCompleted();
         }
     }
 
@@ -186,8 +191,42 @@ public class WitchStoryPart extends StoryPart {
                 leaderSay(iOrWeCap() + " are getting around to it.");
 
             } else if (internalStep == QUEST_DONE) {
-                portraitSay("Now sit down, and I'll tell you the story about the crimson pearls.");
+                leaderSay("We've done your little task, at some great personal expense. Now please tell us about this pearl");
+                portraitSay("Then sit down, and I'll tell you the story.");
+                portraitSay("A long time ago there was an evil king who ruled over all this land. He was hated by all his subjects, " +
+                        "except for his vassals which were loyal to him");
+                portraitSay("The people were in despair. How to overthrow the despot? One group of powerful sorcerers banded together. " +
+                        "In service of the people and the greater good, they vowed to make changes.");
+                portraitSay("Persuaded by their show of courage, many other mages shared their most guarded secrets with this group of sorcerers " +
+                        "who started to call themselves 'the Quad'. There were four of them, you see. And they all became very powerful.");
+                portraitSay("They came up with a plan to overthrow the evil king. They had discover how to control a mind from afar. All " +
+                        "that was needed was for the victim to swallow a pearl.");
+                leaderSay("A crimson one?");
+                portraitSay("A crimson one. Now the king himself had many tasters, and it would be impossible to get him to ingest anything " +
+                        "without noticing an object, such as a pearl, in his food. But his vassals were less careful.");
+                portraitSay("The sorcerers manage to take control of several of the vassals, and then, using their new puppets and staged a coup.");
+                portraitSay("Afterward, the Quad stepped forward as the liberators of the land. But when it was time for them to give up their power...");
+                leaderSay("They didn't. Big shocker there.");
+                portraitSay("Well, they didn't without a fight. There was much internal turmoil in the land. But finally the Quad were chased off and they " +
+                        "retreated to a faraway land, never to be seen again.");
+                leaderSay("So this pearl... could it be a remnant of that time?");
+                portraitSay("Perhaps. But I find it unlikely. The history books say all the crimson pearls were accounted for and properly disposed of.");
+                leaderSay("Could it be that the Quad has returned then?");
+                portraitSay("Also unlikely, they existed many hundred years ago. And I surely hope not, for they were some of the most powerful magic users " +
+                        "to ever exist in this world. But anything is plausible I guess.");
+                portraitSay("It's more likely somebody else learned how to make such pearls. But why it found itself into " +
+                        "the stomach of a frogman, I can't say. Either way, this is a threat to the kingdom.");
+                leaderSay("What do we do now?");
+                UrbanLocation castle = model.getWorld().getCastleByName(castleName);
+                portraitSay("You should talk to the " + castle.getLordTitle() + " of " + castle.getPlaceName() +
+                                 ". The proper authorities must be warned of this. " +
+                                 "The court mage will know more about the issue, I'm sure. And the " + castle.getLordTitle() + " will know what to do.");
+                if (getPartyAlignment(model) < 0) {
+                    leaderSay("No chance we can just sell the pearl to you? Then you can do whatever you like with it, no questions asked...");
+                    portraitSay("Thanks for the offer, but I think this time I'll put the greater good ahead of my own interests.");
+                }
                 model.getMainStory().increaseStep(model, StoryPart.TRACK_B);
+                model.getMainStory().transitionStep(model);
             } else {
                 portraitSay("I'm afraid I have no more information for you, unless you want to learn about witchcraft. Do you?");
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.WIT);
