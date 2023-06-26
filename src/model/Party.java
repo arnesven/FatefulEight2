@@ -446,14 +446,16 @@ public class Party implements Serializable {
 
         int bonus = 0;
         for (GameCharacter gc : performers) {
-            if (gc != performer) {
-                SkillCheckResult assistResult = gc.testSkill(skill, 7);
-                if (assistResult.isSuccessful()) {
-                    giveXP(model, gc, 5);
-                    event.println(gc.getName() + " helps out (" + assistResult.asString() + ").");
-                    bonus++;
-                } else {
-                    event.println(gc.getName() + " fumbles (" + assistResult.asString() + ").");
+            if (!bench.contains(gc)) {
+                if (gc != performer) {
+                    SkillCheckResult assistResult = gc.testSkill(skill, 7);
+                    if (assistResult.isSuccessful()) {
+                        giveXP(model, gc, 5);
+                        event.println(gc.getName() + " helps out (" + assistResult.asString() + ").");
+                        bonus++;
+                    } else {
+                        event.println(gc.getName() + " fumbles (" + assistResult.asString() + ").");
+                    }
                 }
             }
         }
@@ -498,9 +500,11 @@ public class Party implements Serializable {
         model.getSpellHandler().unacceptSkillBoostingSpells(skill);
         List<GameCharacter> failers = new ArrayList<>();
         for (GameCharacter gc : partyMembers) {
-            SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
-            if (!individualResult.isSuccessful()) {
-                failers.add(gc);
+            if (!bench.contains(gc)) {
+                SkillCheckResult individualResult = doSkillCheckWithReRoll(model, event, gc, skill, difficulty, 10, 0);
+                if (!individualResult.isSuccessful()) {
+                    failers.add(gc);
+                }
             }
         }
         if (failers.isEmpty()) {
@@ -572,12 +576,9 @@ public class Party implements Serializable {
                 leader = partyMembers.get(0);
             }
         }
-        if (frontRow.contains(gc)) {
-            frontRow.remove(gc);
-        }
-        if (backRow.contains(gc)) {
-            backRow.remove(gc);
-        }
+        frontRow.remove(gc);
+        backRow.remove(gc);
+        bench.remove(gc);
         return amount;
     }
 

@@ -121,7 +121,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 leaderSay("Kidnapped? By whom?");
                 portraitSay("I'm not sure. They haven't made themselves known.");
                 leaderSay("Then how do you know he's been kidnapped?");
-                portraitSay("He hasn't left my side for years, now he's been missing for a week. " +
+                portraitSay("He hasn't left my side for years, now he's been missing for a month. " +
                         "Last time I saw him he was going to the dodgy end of town to investigate some shady dealings.");
                 leaderSay("Maybe he's just taken a vacation?");
                 if (model.getParty().size() > 1) {

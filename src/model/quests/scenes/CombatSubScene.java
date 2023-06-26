@@ -8,6 +8,7 @@ import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.quests.QuestSubScene;
 import model.states.CombatEvent;
+import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -79,7 +80,9 @@ public abstract class CombatSubScene extends QuestSubScene {
         if (timeLimit > 0) {
             combat.setTimeLimit(timeLimit);
         }
+        GameCharacter gc = setTemporaryLeader(model, state);
         combat.run(model);
+        model.getParty().setLeader(gc);
         state.transitionToQuestView(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         if (combat.fled()) {
@@ -93,6 +96,20 @@ public abstract class CombatSubScene extends QuestSubScene {
             defeated = true;
         }
         return getSuccessEdge();
+    }
+
+    private GameCharacter setTemporaryLeader(Model model, GameState state) {
+        GameCharacter leader = model.getParty().getLeader();
+        if (model.getParty().getBench().contains(leader)) {
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (!model.getParty().getBench().contains(gc)){
+                    state.println(gc.getName() + " is the temporary leader of the party.");
+                    model.getParty().setLeader(gc);
+                    break;
+                }
+            }
+        }
+        return leader;
     }
 
     public void setTimeLimit(int limit) {

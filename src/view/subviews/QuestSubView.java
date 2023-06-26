@@ -153,16 +153,14 @@ public class QuestSubView extends AvatarSubView {
         avatarEnabled = b;
     }
 
-    public void animateMovement(Model model, Point from, QuestEdge edge) {
-        setDrawAvatarEnabled(false);
+    public static void animateAvatarAlongEdge(QuestState state, Point from, QuestEdge edge, Sprite avatarSprite) {
         Point to = edge.getNode().getPosition();
         int dx = to.x - from.x;
         int dy = to.y - from.y;
-        Sprite avatarSprite = model.getParty().getLeader().getAvatarSprite();
         if (dx == 0 || dy == 0) {
-            addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(to));
-            waitForAnimation();
-            removeMovementAnimation();
+            state.getSubView().addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(to));
+            state.getSubView().waitForAnimation();
+            state.getSubView().removeMovementAnimation();
         } else {
             Point mid;
             if (edge.getAlignment()) {
@@ -170,13 +168,18 @@ public class QuestSubView extends AvatarSubView {
             } else {
                 mid = new Point(from.x, to.y);
             }
-            addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(mid));
-            waitForAnimation();
-            removeMovementAnimation();
-            addMovementAnimation(avatarSprite, convertToScreen(mid), convertToScreen(to));
-            waitForAnimation();
-            removeMovementAnimation();
+            state.getSubView().addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(mid));
+            state.getSubView().waitForAnimation();
+            state.getSubView().removeMovementAnimation();
+            state.getSubView().addMovementAnimation(avatarSprite, convertToScreen(mid), convertToScreen(to));
+            state.getSubView().waitForAnimation();
+            state.getSubView().removeMovementAnimation();
         }
+    }
+
+    public void animateMovement(Model model, Point from, QuestEdge edge) {
+        setDrawAvatarEnabled(false);
+        animateAvatarAlongEdge(state, from, edge, model.getParty().getLeader().getAvatarSprite());
         setDrawAvatarEnabled(true);
     }
 

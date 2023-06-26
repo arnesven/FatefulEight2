@@ -55,6 +55,9 @@ public class QuestState extends GameState {
                 System.out.println("Party wiped out during quest.");
                 return new GameOverState(model);
             }
+            if (edgeToFollow == null) {
+                System.out.println("Edge is null");
+            }
             questSubView.animateMovement(model, new Point(currentPosition.getColumn(), currentPosition.getRow()),
                     edgeToFollow);
             currentPosition = edgeToFollow.getNode();
