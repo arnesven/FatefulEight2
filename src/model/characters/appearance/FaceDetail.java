@@ -9,7 +9,7 @@ public abstract class FaceDetail implements Serializable {
     public static final FaceDetail NO_FACE_DETAIL = new NoFaceDetail();
     public static final FaceDetail[] ALL_DETAILS = new FaceDetail[]{
             NO_FACE_DETAIL, new GlassesDetail(), new EarringsDetail(), new GlassesAndEarringsDetail(),
-            new EyePatchDetail()};
+            new EyePatchDetail(), new HeadBandDetail()};
 
     public MyColors color = MyColors.WHITE;
     public String name;

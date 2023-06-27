@@ -24,7 +24,6 @@ import java.util.List;
 
 public class CharacterCreationView extends SelectableListMenu {
 
-    private static final int NO_OF_ACCESSORIES = 5;
     private static final Integer INPUT_MAX_LENGTH = 13;
     private static final String START_STRING = "þþþþþþþþþþþþ";
     private static final int COLUMN_SKIP = 12;
@@ -38,8 +37,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
     public static final MyColors[] detailColorSet = new MyColors[]{
-            MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE,
-            MyColors.ORANGE, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
+            MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE, MyColors.DARK_BLUE,
+            MyColors.ORANGE, MyColors.RED, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
     private static final CharacterClass[] classSet = Classes.allClasses;
     private static final Ears[] earSet = Ears.allEars;
     private static final FaceDetail[] accessorySet = FaceDetail.ALL_DETAILS;
@@ -440,7 +439,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
         public SelectAccessoryMenu(GameView partyView, int x, int y) {
-            super(partyView, 10, NO_OF_ACCESSORIES+1, x, y);
+            super(partyView, 10, accessorySet.length+1, x, y);
         }
 
         @Override
@@ -451,7 +450,7 @@ public class CharacterCreationView extends SelectableListMenu {
         @Override
         protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
             List<ListContent> result = new ArrayList<>();
-            for (int accessory = 0; accessory < NO_OF_ACCESSORIES; ++accessory) {
+            for (int accessory = 0; accessory < accessorySet.length; ++accessory) {
                 int finalAccessory = accessory;
                 result.add(new SelectableListContent(xStart + 1, yStart + 1 + finalAccessory, accessorySet[finalAccessory].getName()) {
                     @Override
@@ -554,7 +553,7 @@ public class CharacterCreationView extends SelectableListMenu {
         selectedEyes = MyRandom.randInt(eyeSet.length);
         selectedHairStyle = MyRandom.randInt(hairStyleSet.length);
         selectedBeard = MyRandom.randInt(beardSet.length);
-        accessory = MyRandom.randInt(NO_OF_ACCESSORIES);
+        accessory = MyRandom.randInt(accessorySet.length);
         selectedDetailColor = MyRandom.randInt(detailColorSet.length);
         rebuildAppearance();
     }
