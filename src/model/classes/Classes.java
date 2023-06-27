@@ -44,4 +44,5 @@ public interface Classes {
     CharacterClass RED_KNIGHT = new RedKnightClass();
     CharacterClass ENCHANTRESS = new EnchantressClass();
     CharacterClass FAMILIAR = new FamiliarClass();
+    CharacterClass SWORD_MASTER = new SwordMasterClass();
 }

@@ -384,7 +384,7 @@ public class RescueMissionQuest extends MainQuest {
 
         @Override
         protected void doEvent(Model model) {
-            showExplicitPortrait(model, caidAppearance, "Caid");
+            showExplicitPortrait(model, model.getMainStory().getCaidCharacter().getAppearance(), "Caid");
             portraitSay("Thanks for getting me out of there. Who are you by the way?");
             leaderSay("We've were hired by your lord to find you.");
             portraitSay("I'm glad somebody noticed I was missing. Even if it was just my employer.");

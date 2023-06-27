@@ -16,10 +16,6 @@ public class AdvancedAppearance extends CharacterAppearance {
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
     private Sprite avatarFacial;
-//    private boolean hasGlasses = false;
-//    private boolean hasEarrings = false;
-//    private MyColors detailColor = MyColors.GRAY;
-//    private boolean hasEyePatch = false;
     private FaceDetail detail = FaceDetail.NO_FACE_DETAIL;
     private boolean raceSpecificEars = true;
     private int[] ears;
