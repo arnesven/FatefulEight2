@@ -16,6 +16,7 @@ import java.util.List;
 public class RescueMissionStoryPart extends StoryPart {
     private static final int VISIT_CASTLE_STEP = 0;
     private static final int DO_QUEST_STEP = 1;
+    private static final int QUEST_DONE_STEP = 2;
     private int internalStep = 0;
     private final String castleName;
     private PartTwoStoryPart storyPartTwo;
@@ -104,7 +105,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 if (witchPartCompleted()) {
                     leaderSay("There's an important issue which " + iOrWe() + " must urgently discuss with you.");
                     portraitSay("I understand, but I'm afraid I'm completely occupied in another matter.");
-                    leaderSay("But this is important.");
+                    leaderSay("But this is important!");
                     portraitSay("One thing at a time. And perhaps you could help me with my problem. Then we can deal with your important issue.");
                     leaderSay("Fine... what seems to be the problem?");
                 } else {
@@ -116,13 +117,13 @@ public class RescueMissionStoryPart extends StoryPart {
                 portraitSay("For a while now I've been looking for a capable team of adventurers like yourselves. " +
                         "I have a task that needs doing.");
                 leaderSay("I'm listening.");
-                portraitSay("Well. It's my most trusted advisor and top agent, Caid, he's been kidnapped. " +
-                        "I need somebody to rescue him");
+                portraitSay("Well. It's my most trusted advisor and top agent, Caid. He's been kidnapped. " +
+                        "I need somebody to rescue him.");
                 leaderSay("Kidnapped? By whom?");
                 portraitSay("I'm not sure. They haven't made themselves known.");
                 leaderSay("Then how do you know he's been kidnapped?");
                 portraitSay("He hasn't left my side for years, now he's been missing for a month. " +
-                        "Last time I saw him he was going to the dodgy end of town to investigate some shady dealings.");
+                        "Last time we spoke he was about to start an investigation into a personal matter of mine.");
                 leaderSay("Maybe he's just taken a vacation?");
                 if (model.getParty().size() > 1) {
                     GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
@@ -130,13 +131,17 @@ public class RescueMissionStoryPart extends StoryPart {
                 }
                 portraitSay("Not likely, he's also my master-at-arms and my personal fencing instructor. " +
                         "He can handle himself. Will you look for him? I'll pay you. I'll pay you handsomely.");
-                leaderSay("Perhaps we'll look into it.");
+                leaderSay("Perhaps we'll look into it. What does he look like?");
+                portraitSay("He's tall, pretty good-looking. He always wears a headband, and he carries his sword " +
+                        "on his back rather than by his side.");
+                leaderSay("Alright. We'll keep our eyes open.");
                 model.getMainStory().increaseStep(model, StoryPart.TRACK_A);
             } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Have you found Caid yet?");
                 if (witchPartCompleted()) {
                     leaderSay("Actually, there was another matter which I want to bring to your attention.");
-                    portraitSay("I'm sorry, but I just can't focus on anything other than Caid's disappearance right now. Please help me find him first.");
+                    portraitSay("I'm sorry, but I just can't focus on anything other than Caid's disappearance " +
+                            "right now. Please help me find him first.");
                     leaderSay("Fine...");
                 } else {
                     leaderSay("Not yet.");
@@ -167,13 +172,15 @@ public class RescueMissionStoryPart extends StoryPart {
                         " gold, your reward for dealing with the frogmen problem. ";
             } else if (internalStep == DO_QUEST_STEP) {
                 return "Complete the '" + RescueMissionQuest.QUEST_NAME + "' Quest.";
+            } else if (internalStep == QUEST_DONE_STEP) {
+                return "Report back to " + castleName + ".";
             }
             return "You found Caid.\n\nCompleted.";
         }
 
         @Override
         public boolean isComplete() {
-            return internalStep > DO_QUEST_STEP;
+            return internalStep > QUEST_DONE_STEP;
         }
     }
 }

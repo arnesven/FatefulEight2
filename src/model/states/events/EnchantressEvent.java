@@ -230,6 +230,7 @@ public class EnchantressEvent extends DailyEventState {
 
     private void enchantedPartyMemberReturnsToParty(Model model, GameCharacter other) {
         showExplicitPortrait(model, other.getAppearance(), other.getFirstName());
+        other.removeCondition(EnchantedCondition.class);
         portraitSay(model.getParty().getLeader().getFirstName() + "... where am I?");
         leaderSay("Still in the hamlet. That woman put a spell on you.");
         portraitSay("Feels like I've been asleep for a month.");

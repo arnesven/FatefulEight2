@@ -96,4 +96,21 @@ public class SplitPartyJunction extends QuestJunction {
     public void setAvatarEnabled(boolean b) {
         enableAvatar = b;
     }
+
+    public boolean groupADead() {
+        return groupDead(groupA);
+    }
+
+    public boolean groupBDead() {
+        return groupDead(groupB);
+    }
+
+    private static boolean groupDead(List<GameCharacter> group) {
+        for (GameCharacter gc : group) {
+            if (!gc.isDead()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

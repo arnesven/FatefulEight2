@@ -91,6 +91,8 @@ public class PortraitSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
+        model.getScreenHandler().clearForeground(X_OFFSET+5, X_OFFSET+17+16,
+                Y_OFFSET+5, Y_OFFSET+7+12);
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET+7, Y_OFFSET+7,
                 16, 12, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
