@@ -18,7 +18,7 @@ public class EnchantressCharacter extends GameCharacter {
             super(Race.WOOD_ELF, true, MyColors.PEACH, CharacterCreationView.mouthSet[1],
                     CharacterCreationView.noseSet[1], CharacterEyes.allEyes[8],
                     HairStyle.allHairStyles[1], Beard.allBeards[10]);
-            setHasEarrings(true);
+            setFaceDetail(new EarringsDetail());
             setDetailColor(MyColors.LIGHT_GREEN);
         }
     }

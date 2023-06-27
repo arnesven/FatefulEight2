@@ -16,10 +16,11 @@ public class AdvancedAppearance extends CharacterAppearance {
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
     private Sprite avatarFacial;
-    private boolean hasGlasses = false;
-    private boolean hasEarrings = false;
-    private MyColors detailColor = MyColors.GRAY;
-    private boolean hasEyePatch = false;
+//    private boolean hasGlasses = false;
+//    private boolean hasEarrings = false;
+//    private MyColors detailColor = MyColors.GRAY;
+//    private boolean hasEyePatch = false;
+    private FaceDetail detail = FaceDetail.NO_FACE_DETAIL;
     private boolean raceSpecificEars = true;
     private int[] ears;
 
@@ -182,28 +183,29 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (beard != null) {
             beard.apply(this, race);
         }
-        if (hasEyePatch) {
-            for (int i = 0; i < 3; ++i) {
-                Sprite8x8 left = new Sprite8x8("eyepatch", "clothes.png", 0x5A + i);
-                left.setColor1(detailColor);
-                addSpriteOnTop(2 + i, 3, left);
-            }
-        }
-        if (hasGlasses) {
-            for (int i = 0; i < 3; ++i) {
-                Sprite8x8 left = new Sprite8x8("glasses", "clothes.png", 0x3A + i);
-                left.setColor1(detailColor);
-                addSpriteOnTop(2 + i, 3, left);
-            }
-        }
-        if (hasEarrings && !coversEars) {
-            Sprite8x8 left = new Sprite8x8("earringleft", "clothes.png", 0x4A);
-            left.setColor1(detailColor);
-            addSpriteOnTop(1, 3, left);
-            Sprite8x8 right = new Sprite8x8("earringright", "clothes.png", 0x4B);
-            right.setColor1(detailColor);
-            addSpriteOnTop(5, 3, right);
-        }
+        detail.applyYourself(this, race, coversEars);
+//        if (hasEyePatch) {
+//            for (int i = 0; i < 3; ++i) {
+//                Sprite8x8 left = new Sprite8x8("eyepatch", "clothes.png", 0x5A + i);
+//                left.setColor1(detailColor);
+//                addSpriteOnTop(2 + i, 3, left);
+//            }
+//        }
+//        if (hasGlasses) {
+//            for (int i = 0; i < 3; ++i) {
+//                Sprite8x8 left = new Sprite8x8("glasses", "clothes.png", 0x3A + i);
+//                left.setColor1(detailColor);
+//                addSpriteOnTop(2 + i, 3, left);
+//            }
+//        }
+//        if (hasEarrings && !coversEars) {
+//            Sprite8x8 left = new Sprite8x8("earringleft", "clothes.png", 0x4A);
+//            left.setColor1(detailColor);
+//            addSpriteOnTop(1, 3, left);
+//            Sprite8x8 right = new Sprite8x8("earringright", "clothes.png", 0x4B);
+//            right.setColor1(detailColor);
+//            addSpriteOnTop(5, 3, right);
+//        }
     }
 
     @Override
@@ -235,18 +237,6 @@ public class AdvancedAppearance extends CharacterAppearance {
         return avatarFacial;
     }
 
-    public void setHasGlasses(boolean b) {
-        hasGlasses = b;
-    }
-
-    public void setHasEarrings(boolean b) {
-        hasEarrings = b;
-    }
-
-    public void setHasEyePatch(boolean b) {
-        hasEyePatch = b;
-    }
-
     @Override
     protected PortraitSprite getOuterFrameSprite(int i) {
         if (hairStyle.getOuterFrame() != null) {
@@ -255,8 +245,12 @@ public class AdvancedAppearance extends CharacterAppearance {
         return super.getOuterFrameSprite(i);
     }
 
+    public void setFaceDetail(FaceDetail detail) {
+        this.detail = detail;
+    }
+
     public void setDetailColor(MyColors color) {
-        detailColor = color;
+        detail.setColor(color);
     }
 
     @Override

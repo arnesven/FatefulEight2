@@ -54,18 +54,28 @@ public class PortraitSubView extends SubView {
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
-        appearance.setHasGlasses(MyRandom.rollD10() == 10);
-        appearance.setHasEarrings(MyRandom.rollD10() == 10);
-        boolean patch = MyRandom.randInt(50) == 0;
-        appearance.setHasEyePatch(patch);
-        int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
-        if (!patch) {
-            appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
-        } else {
-            appearance.setDetailColor(MyColors.BLACK);
-        }
+        setDetail(appearance);
         appearance.setClass(cls);
         return appearance;
+    }
+
+    private static void setDetail(AdvancedAppearance appearance) {
+        if (MyRandom.randInt(50) == 0) {
+            appearance.setFaceDetail(new EyePatchDetail());
+            appearance.setDetailColor(MyColors.BLACK);
+        } else {
+            boolean glasses = MyRandom.rollD10() == 10;
+            boolean earrings = MyRandom.rollD10() == 10;
+            if (glasses && earrings) {
+                appearance.setFaceDetail(new GlassesAndEarringsDetail());
+            } else if (glasses) {
+                appearance.setFaceDetail(new GlassesDetail());
+            } else if (earrings) {
+                appearance.setFaceDetail(new EarringsDetail());
+            }
+            int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
+            appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
+        }
     }
 
     public static AdvancedAppearance makeRandomPortrait(CharacterClass cls, Race race) {

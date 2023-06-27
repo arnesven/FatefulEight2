@@ -42,6 +42,7 @@ public class CharacterCreationView extends SelectableListMenu {
             MyColors.ORANGE, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
     private static final CharacterClass[] classSet = Classes.allClasses;
     private static final Ears[] earSet = Ears.allEars;
+    private static final FaceDetail[] accessorySet = FaceDetail.ALL_DETAILS;
     private int selectedRace = 0;
     private int selectedMouth = 0;
     private int selectedNose = 0;
@@ -84,9 +85,7 @@ public class CharacterCreationView extends SelectableListMenu {
                 beardSet[selectedBeard]);
         app.setRaceSpecificEars(selectedEars == 0);
         app.setEars(earSet[selectedEars]);
-        app.setHasGlasses(accessory == 1 || accessory == 3);
-        app.setHasEarrings(accessory == 2 || accessory == 3);
-        app.setHasEyePatch(accessory == 4);
+        app.setFaceDetail(accessorySet[accessory]);
         app.setDetailColor(detailColorSet[selectedDetailColor]);
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
@@ -303,7 +302,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 26, getAccessoryString(accessory)) {
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 26, accessorySet[accessory].getName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
@@ -389,20 +388,6 @@ public class CharacterCreationView extends SelectableListMenu {
         );
     }
 
-    private static String getAccessoryString(int accessory) {
-        switch (accessory) {
-            case 1:
-                return "Glasses";
-            case 2:
-                return "Earrings";
-            case 3:
-                return "Both";
-            case 4:
-                return "Patch";
-        }
-        return "None";
-    }
-
     private void setOther1(int index) {
         this.other1 = index;
     }
@@ -468,7 +453,7 @@ public class CharacterCreationView extends SelectableListMenu {
             List<ListContent> result = new ArrayList<>();
             for (int accessory = 0; accessory < NO_OF_ACCESSORIES; ++accessory) {
                 int finalAccessory = accessory;
-                result.add(new SelectableListContent(xStart + 1, yStart + 1 + finalAccessory, getAccessoryString(finalAccessory)) {
+                result.add(new SelectableListContent(xStart + 1, yStart + 1 + finalAccessory, accessorySet[finalAccessory].getName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         CharacterCreationView.this.accessory = finalAccessory;
