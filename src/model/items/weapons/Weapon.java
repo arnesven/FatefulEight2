@@ -3,13 +3,11 @@ package model.items.weapons;
 import model.Inventory;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.classes.SkillCheckResult;
 import model.items.EquipableItem;
-import model.items.Item;
-import util.MyPair;
 import util.MyStrings;
-
-import java.util.Arrays;
+import view.MyColors;
+import view.sprites.LoopingSprite;
+import view.sprites.WeaponAvatarSprite;
 
 public abstract class Weapon extends EquipableItem {
 
@@ -110,5 +108,20 @@ public abstract class Weapon extends EquipableItem {
 
     public void setBurning(boolean b) {
         isBurning = b;
+    }
+
+    public LoopingSprite getOnAvatarSprite(GameCharacter gameCharacter) {
+        return getOnAvatarSprite(gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1);
+    }
+
+    protected abstract WeaponAvatarSprite getOnAvatarSprite(int index);
+
+    protected static WeaponAvatarSprite[] makeShiftedSpriteSet(WeaponAvatarSprite template) {
+        WeaponAvatarSprite[] sprites = new WeaponAvatarSprite[4];
+        for (int i = 0; i < sprites.length; ++i) {
+            sprites[i] = template.copy();
+            sprites[i].shiftUpPx(i - 1);
+        }
+        return sprites;
     }
 }

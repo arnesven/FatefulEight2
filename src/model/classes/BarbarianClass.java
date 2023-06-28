@@ -1,5 +1,6 @@
 package model.classes;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.items.weapons.Hatchet;
@@ -51,5 +52,12 @@ public class BarbarianClass extends CharacterClass {
             appearance.getNormalHair().shiftUpPx(appearance.getNormalHair().getUpShift() + 2);
             appearance.getBackHairOnly().shiftUpPx(appearance.getBackHairOnly().getUpShift() + 2);
         }
+    }
+
+    public int getWeaponShift(GameCharacter gameCharacter) {
+        if (gameCharacter.getRace().isShort()) {
+            return 0;
+        }
+        return 2;
     }
 }

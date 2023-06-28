@@ -1,8 +1,13 @@
 package model.items.weapons;
 
 import model.classes.Skill;
+import view.MyColors;
+import view.sprites.WeaponAvatarSprite;
 
 public abstract class PolearmWeapon extends Weapon {
+
+    private static final WeaponAvatarSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
+            new WeaponAvatarSprite(0x24, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
 
     public PolearmWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Polearms, damageTable);
@@ -16,5 +21,10 @@ public abstract class PolearmWeapon extends Weapon {
     @Override
     public String getSound() {
         return "wood-small";
+    }
+
+    @Override
+    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+        return POLEARM_SPRITES[index];
     }
 }

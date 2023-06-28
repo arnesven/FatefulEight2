@@ -1,8 +1,10 @@
 package model.items.weapons;
 
 import model.items.Item;
+import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
+import view.sprites.WeaponAvatarSprite;
 
 public class HuntersBow extends BowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(4, 7);

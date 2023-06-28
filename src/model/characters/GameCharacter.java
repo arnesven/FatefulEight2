@@ -282,6 +282,9 @@ public class GameCharacter extends Combatant {
             screenHandler.register("avatarfor" + getFullName() + "dead", new Point(xpos, ypos), avatarSprite.getDead());
         } else {
             screenHandler.register("avatarfor" + getFullName(), new Point(xpos, ypos), avatarSprite);
+            if (!(equipment.getWeapon() instanceof UnarmedCombatWeapon)) {
+                screenHandler.register("avatarweapon" + getFullName(), new Point(xpos, ypos), equipment.getWeapon().getOnAvatarSprite(this));
+            }
         }
     }
 

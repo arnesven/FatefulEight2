@@ -1,9 +1,13 @@
 package model.items.weapons;
 
 import model.classes.Skill;
+import view.MyColors;
+import view.sprites.WeaponAvatarSprite;
 
 public abstract class BluntWeapon extends Weapon {
 
+    private static final WeaponAvatarSprite[] BLUNT_SPRITES = makeShiftedSpriteSet(
+            new WeaponAvatarSprite(0x20, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
     private final boolean twoHander;
     private final int speedModifier;
 
@@ -26,5 +30,10 @@ public abstract class BluntWeapon extends Weapon {
     @Override
     public String getSound() {
         return "wood";
+    }
+
+    @Override
+    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+        return BLUNT_SPRITES[index];
     }
 }

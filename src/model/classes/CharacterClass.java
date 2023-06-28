@@ -1,5 +1,6 @@
 package model.classes;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.races.Race;
@@ -102,6 +103,13 @@ public abstract class CharacterClass implements Serializable {
 
     public boolean coversEars() {
         return false;
+    }
+
+    public int getWeaponShift(GameCharacter gameCharacter) {
+        if (gameCharacter.getRace().isShort()) {
+            return - 1;
+        }
+        return 0;
     }
 
     protected static class WeightedSkill implements Serializable {

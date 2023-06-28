@@ -5,6 +5,7 @@ import model.classes.Skill;
 import model.items.Item;
 import model.items.weapons.Weapon;
 import view.sprites.Sprite;
+import view.sprites.WeaponAvatarSprite;
 
 public class UnarmedCombatWeapon extends Weapon {
     public UnarmedCombatWeapon() {
@@ -41,6 +42,11 @@ public class UnarmedCombatWeapon extends Weapon {
     @Override
     public boolean allowsCriticalHits() {
         return false;
+    }
+
+    @Override
+    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+        return null;
     }
 
     @Override
