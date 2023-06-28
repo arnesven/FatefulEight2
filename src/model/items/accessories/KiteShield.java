@@ -8,7 +8,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class KiteShield extends ShieldItem {
+public class KiteShield extends PointedShield {
 
     private final ItemSprite sprite;
 

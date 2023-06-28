@@ -2,12 +2,12 @@ package model.items.weapons;
 
 import model.classes.Skill;
 import view.MyColors;
-import view.sprites.WeaponAvatarSprite;
+import view.sprites.AvatarItemSprite;
 
 public abstract class PolearmWeapon extends Weapon {
 
-    private static final WeaponAvatarSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
-            new WeaponAvatarSprite(0x24, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
+    private static final AvatarItemSprite[] POLEARM_SPRITES = makeShiftedSpriteSet(
+            new AvatarItemSprite(0x24, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
 
     public PolearmWeapon(String name, int cost, int[] damageTable) {
         super(name, cost, Skill.Polearms, damageTable);
@@ -24,7 +24,7 @@ public abstract class PolearmWeapon extends Weapon {
     }
 
     @Override
-    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+    protected AvatarItemSprite getOnAvatarSprite(int index) {
         return POLEARM_SPRITES[index];
     }
 }

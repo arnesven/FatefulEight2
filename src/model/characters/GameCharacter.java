@@ -10,6 +10,7 @@ import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
 import model.items.*;
 import model.items.accessories.Accessory;
+import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
 import model.items.spells.CombatSpell;
@@ -284,6 +285,9 @@ public class GameCharacter extends Combatant {
             screenHandler.register("avatarfor" + getFullName(), new Point(xpos, ypos), avatarSprite);
             if (!(equipment.getWeapon() instanceof UnarmedCombatWeapon)) {
                 screenHandler.register("avatarweapon" + getFullName(), new Point(xpos, ypos), equipment.getWeapon().getOnAvatarSprite(this));
+            }
+            if (equipment.getAccessory() instanceof ShieldItem) {
+                screenHandler.register("avatarshield" + getFullName(), new Point(xpos, ypos), ((ShieldItem)equipment.getAccessory()).getOnAvatarSprite(this));
             }
         }
     }

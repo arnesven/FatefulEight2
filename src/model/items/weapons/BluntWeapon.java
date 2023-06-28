@@ -2,12 +2,12 @@ package model.items.weapons;
 
 import model.classes.Skill;
 import view.MyColors;
-import view.sprites.WeaponAvatarSprite;
+import view.sprites.AvatarItemSprite;
 
 public abstract class BluntWeapon extends Weapon {
 
-    private static final WeaponAvatarSprite[] BLUNT_SPRITES = makeShiftedSpriteSet(
-            new WeaponAvatarSprite(0x20, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
+    private static final AvatarItemSprite[] BLUNT_SPRITES = makeShiftedSpriteSet(
+            new AvatarItemSprite(0x20, MyColors.BROWN, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE));
     private final boolean twoHander;
     private final int speedModifier;
 
@@ -33,7 +33,7 @@ public abstract class BluntWeapon extends Weapon {
     }
 
     @Override
-    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+    protected AvatarItemSprite getOnAvatarSprite(int index) {
         return BLUNT_SPRITES[index];
     }
 }

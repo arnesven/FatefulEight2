@@ -4,6 +4,7 @@ import model.Model;
 import model.Summon;
 import model.characters.GameCharacter;
 import model.items.weapons.BluntWeapon;
+import model.items.weapons.StaffWeapon;
 import model.items.weapons.Weapon;
 import model.map.UrbanLocation;
 
@@ -54,7 +55,7 @@ public class GiveStaffTask extends SummonTask {
         List<Weapon> candidates = new ArrayList<>();
 
         for (Weapon w : model.getParty().getInventory().getWeapons()) {
-            if (w.getName().contains("Staff")) {
+            if (w instanceof StaffWeapon) {
                 candidates.add(w);
             }
         }

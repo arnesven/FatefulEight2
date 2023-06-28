@@ -8,11 +8,11 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class OldStaff extends BluntWeapon {
+public class OldStaff extends StaffWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(2, 1);
 
     public OldStaff() {
-        super("Old Staff", 16, new int[]{6, 11}, true, 0);
+        super("Old Staff", 16, new int[]{6, 11});
     }
 
     @Override

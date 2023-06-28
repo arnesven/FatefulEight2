@@ -3,10 +3,10 @@ package model.items.weapons;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import view.MyColors;
-import view.sprites.WeaponAvatarSprite;
+import view.sprites.AvatarItemSprite;
 
 public abstract class WandWeapon extends Weapon {
-    private static final WeaponAvatarSprite WAND_SPRITES[] = makeShiftedSpriteSet(new WeaponAvatarSprite(0x10,
+    private static final AvatarItemSprite WAND_SPRITES[] = makeShiftedSpriteSet(new AvatarItemSprite(0x10,
             MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK));
 
     public WandWeapon(String name, int cost, Skill skill, int[] damageTable) {
@@ -32,7 +32,7 @@ public abstract class WandWeapon extends Weapon {
     }
 
     @Override
-    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+    protected AvatarItemSprite getOnAvatarSprite(int index) {
         return WAND_SPRITES[index];
     }
 }

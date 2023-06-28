@@ -5,9 +5,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
 import util.MyStrings;
-import view.MyColors;
 import view.sprites.LoopingSprite;
-import view.sprites.WeaponAvatarSprite;
+import view.sprites.AvatarItemSprite;
 
 public abstract class Weapon extends EquipableItem {
 
@@ -114,14 +113,5 @@ public abstract class Weapon extends EquipableItem {
         return getOnAvatarSprite(gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1);
     }
 
-    protected abstract WeaponAvatarSprite getOnAvatarSprite(int index);
-
-    protected static WeaponAvatarSprite[] makeShiftedSpriteSet(WeaponAvatarSprite template) {
-        WeaponAvatarSprite[] sprites = new WeaponAvatarSprite[4];
-        for (int i = 0; i < sprites.length; ++i) {
-            sprites[i] = template.copy();
-            sprites[i].shiftUpPx(i - 1);
-        }
-        return sprites;
-    }
+    protected abstract AvatarItemSprite getOnAvatarSprite(int index);
 }

@@ -9,7 +9,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class HeraldicShield extends ShieldItem {
+public class HeraldicShield extends PointedShield {
     private final ItemSprite sprite;
 
     public HeraldicShield() {

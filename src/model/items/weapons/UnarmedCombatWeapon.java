@@ -3,9 +3,8 @@ package model.items.weapons;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
-import model.items.weapons.Weapon;
 import view.sprites.Sprite;
-import view.sprites.WeaponAvatarSprite;
+import view.sprites.AvatarItemSprite;
 
 public class UnarmedCombatWeapon extends Weapon {
     public UnarmedCombatWeapon() {
@@ -45,7 +44,7 @@ public class UnarmedCombatWeapon extends Weapon {
     }
 
     @Override
-    protected WeaponAvatarSprite getOnAvatarSprite(int index) {
+    protected AvatarItemSprite getOnAvatarSprite(int index) {
         return null;
     }
 

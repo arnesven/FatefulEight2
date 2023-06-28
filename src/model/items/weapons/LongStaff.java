@@ -5,11 +5,11 @@ import model.items.Prevalence;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class LongStaff extends BluntWeapon {
+public class LongStaff extends StaffWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 1);
 
     public LongStaff() {
-        super("Long Staff", 10, new int[]{5, 10}, true, 0);
+        super("Long Staff", 10, new int[]{5, 10});
     }
 
     @Override

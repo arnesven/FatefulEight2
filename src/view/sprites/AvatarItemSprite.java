@@ -2,11 +2,11 @@ package view.sprites;
 
 import view.MyColors;
 
-public class WeaponAvatarSprite extends LoopingSprite {
+public class AvatarItemSprite extends LoopingSprite {
     private final int num;
     private final MyColors[] colors;
 
-    public WeaponAvatarSprite(int num, MyColors color1, MyColors color2, MyColors color3, MyColors color4, int shiftUp) {
+    public AvatarItemSprite(int num, MyColors color1, MyColors color2, MyColors color3, MyColors color4, int shiftUp) {
         super("swordanimation", "weapons.png", num, 32, 32);
         this.num = num;
         this.colors = new MyColors[]{color1, color2, color3, color4};
@@ -18,11 +18,11 @@ public class WeaponAvatarSprite extends LoopingSprite {
         setFrames(4);
     }
 
-    public WeaponAvatarSprite(int num, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
+    public AvatarItemSprite(int num, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
         this(num, color1, color2, color3, color4, 0);
     }
 
-    public WeaponAvatarSprite copy() {
-        return new WeaponAvatarSprite(num, colors[0], colors[1], colors[2], colors[3]);
+    public AvatarItemSprite copy() {
+        return new AvatarItemSprite(num, colors[0], colors[1], colors[2], colors[3]);
     }
 }
