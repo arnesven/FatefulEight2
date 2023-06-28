@@ -7,6 +7,7 @@ import model.classes.Skill;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
+import view.GameView;
 import view.ScreenHandler;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -78,4 +79,12 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     public abstract String getSound();
+
+    public boolean isAnalyzable() {
+        return false;
+    }
+
+    public GameView getAnalysisDialog(Model model) {
+        return null;
+    }
 }

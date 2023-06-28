@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class AnalyzeWeaponDialog extends SelectableListMenu {
-    private static final int DIALOG_WIDTH = 25;
+public class AnalyzeWeaponDialog extends AnalyzeDialog {
+
     private static final int DIALOG_HEIGHT_BASE = 13;
     private final List<BeforeAndAfterLine<Double>> content;
     private final Weapon weapon;
 
     public AnalyzeWeaponDialog(Model model, Weapon weapon) {
-        super(model.getView(), DIALOG_WIDTH, DIALOG_HEIGHT_BASE + model.getParty().size());
+        super(model, DIALOG_HEIGHT_BASE);
         this.weapon = weapon;
         this.content = analyzeWeapon(model, weapon);
     }
@@ -38,11 +38,6 @@ public class AnalyzeWeaponDialog extends SelectableListMenu {
     }
 
     @Override
-    public void transitionedFrom(Model model) {
-
-    }
-
-    @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
         objs.add(new TextDecoration("Damage Analysis for", xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
@@ -50,14 +45,13 @@ public class AnalyzeWeaponDialog extends SelectableListMenu {
         objs.add(new DrawableObject(xStart, yStart++) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                weapon.drawYourself(model.getScreenHandler(), 37, y);
+                weapon.drawYourself(model.getScreenHandler(), 38, y);
             }
         });
         yStart+=2;
         objs.add(new TextDecoration(weapon.getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
         yStart += 2;
         objs.addAll(makeDrawableObjects(content, xStart, yStart));
-
         return objs;
     }
 
@@ -78,22 +72,5 @@ public class AnalyzeWeaponDialog extends SelectableListMenu {
             yStart++;
         }
         return objs;
-    }
-
-    @Override
-    protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        List<ListContent> list = new ArrayList<>();
-        list.add(new SelectableListContent(xStart+getWidth()/2-1, yStart+getHeight()-2, "OK") {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                setTimeToTransition(true);
-            }
-        });
-        return list;
-    }
-
-    @Override
-    protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-
     }
 }

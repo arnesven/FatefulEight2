@@ -84,12 +84,22 @@ public class InventoryView extends SelectableListMenu {
             if (it instanceof Weapon) {
                 print(model.getScreenHandler(), rightTabX+1, row++, "Damage Analysis:");
                 drawAnalyzePart(model, (Weapon)it, rightTabX, row);
+            } else if (it instanceof Spell) {
+                print(model.getScreenHandler(), rightTabX+1, row++, "Cast Chance for:");
+                drawAnalyzePart(model, (Spell)it, rightTabX, row);
             }
         }
     }
 
     private void drawAnalyzePart(Model model, Weapon it, int col, int row) {
         List<DrawableObject> objs = AnalyzeWeaponDialog.makeDrawableObjects(AnalyzeWeaponDialog.analyzeWeapon(model, it), col, row);
+        for (DrawableObject obj : objs) {
+            obj.drawYourself(model, obj.position.x, obj.position.y);
+        }
+    }
+
+    private void drawAnalyzePart(Model model, Spell it, int col, int row) {
+        List<DrawableObject> objs = AnalyzeSpellDialog.makeDrawableObjects(AnalyzeSpellDialog.analyzeCastChance(model, it), col, row);
         for (DrawableObject obj : objs) {
             obj.drawYourself(model, obj.position.x, obj.position.y);
         }

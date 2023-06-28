@@ -8,6 +8,8 @@ import model.classes.SkillCheckResult;
 import model.items.Item;
 import model.states.GameState;
 import sound.SoundEffects;
+import view.AnalyzeSpellDialog;
+import view.GameView;
 import view.MyColors;
 import view.YesNoMessageView;
 
@@ -127,5 +129,15 @@ public abstract class Spell extends Item {
 
     public void setCastFromScroll(boolean b) {
         isCastFromScroll = b;
+    }
+
+    @Override
+    public boolean isAnalyzable() {
+        return true;
+    }
+
+    @Override
+    public GameView getAnalysisDialog(Model model) {
+        return new AnalyzeSpellDialog(model, this);
     }
 }

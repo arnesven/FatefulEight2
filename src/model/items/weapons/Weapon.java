@@ -1,10 +1,13 @@
 package model.items.weapons;
 
 import model.Inventory;
+import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
 import util.MyStrings;
+import view.AnalyzeWeaponDialog;
+import view.GameView;
 import view.sprites.LoopingSprite;
 import view.sprites.AvatarItemSprite;
 
@@ -114,4 +117,14 @@ public abstract class Weapon extends EquipableItem {
     }
 
     protected abstract AvatarItemSprite getOnAvatarSprite(int index);
+
+    @Override
+    public boolean isAnalyzable() {
+        return true;
+    }
+
+    @Override
+    public GameView getAnalysisDialog(Model model) {
+        return new AnalyzeWeaponDialog(model, this);
+    }
 }

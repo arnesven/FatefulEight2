@@ -82,7 +82,7 @@ public class ShopState extends GameState {
                     buySellActions.add("Sell");
                 }
             }
-            if (matrixToUse.getSelectedElement() instanceof Weapon) {
+            if (matrixToUse.getSelectedElement().isAnalyzable()) {
                 buySellActions.add("Analyze");
             }
             buySellActions.add("Back");
@@ -173,7 +173,7 @@ public class ShopState extends GameState {
                     }
                 }
             } else if (selectedAction[0] == 'A') {
-                model.transitionToDialog(new AnalyzeWeaponDialog(model, (Weapon)matrixToUse.getSelectedElement()));
+                model.transitionToDialog(matrixToUse.getSelectedElement().getAnalysisDialog(model));
             }
         }
         return new EveningState(model);
