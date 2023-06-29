@@ -1,7 +1,9 @@
 package model.journal;
 
 import model.Model;
+import model.map.UrbanLocation;
 import model.quests.Quest;
+import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 
 import java.util.ArrayList;
@@ -9,9 +11,19 @@ import java.util.List;
 
 public class PartThreeStoryPart extends StoryPart {
     private final StoryPart previousStoryPart;
+    private static final int INITIAL_STEP = 0;
+    private static final int DO_QUEST_STEP = 1;
+    private static final int QUEST_COMPLETED_STEP = 2;
+    private static final int ASK_EVERIX_STEP = 3;
+    private final String castleName;
+    private final String libraryTown;
 
-    public PartThreeStoryPart(StoryPart previous) {
+    private int internalStep = INITIAL_STEP;
+
+    public PartThreeStoryPart(StoryPart previous, String castleName, String libraryTown) {
         this.previousStoryPart = previous;
+        this.castleName = castleName;
+        this.libraryTown = libraryTown;
     }
 
     @Override
@@ -29,7 +41,19 @@ public class PartThreeStoryPart extends StoryPart {
 
     @Override
     public void progress(int track) {
-        previousStoryPart.progress(track);
+        if (!previousStoryPart.isCompleted()) {
+            previousStoryPart.progress(track);
+        } else {
+            internalStep++;
+        }
+    }
+
+    @Override
+    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
+        if (!previousStoryPart.isCompleted()) {
+            return previousStoryPart.getVisitLordEvent(model, location);
+        }
+        return super.getVisitLordEvent(model, location);
     }
 
     @Override
@@ -47,14 +71,17 @@ public class PartThreeStoryPart extends StoryPart {
         return false;
     }
 
-    private static class LibraryTask extends MainStoryTask {
+    private class LibraryTask extends MainStoryTask {
         public LibraryTask() {
-            super("Go to Library");
+            super("Go to the Library");
         }
 
         @Override
         public String getText() {
-            return "Go to the library in...";
+            if (internalStep == INITIAL_STEP) {
+                return "Inform the lord of " + castleName + " about the Crimson Pearl.";
+            }
+            return "Go to the library in " + libraryTown + ".";
         }
 
         @Override

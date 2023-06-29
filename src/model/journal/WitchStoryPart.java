@@ -199,7 +199,7 @@ public class WitchStoryPart extends StoryPart {
                         "In service of the people and the greater good, they vowed to make changes.");
                 portraitSay("Persuaded by their show of courage, many other mages shared their most guarded secrets with this group of sorcerers " +
                         "who started to call themselves 'the Quad'. There were four of them, you see. And they all became very powerful.");
-                portraitSay("They came up with a plan to overthrow the evil king. They had discover how to control a mind from afar. All " +
+                portraitSay("They came up with a plan to overthrow the evil king. They had discovered how to control a mind from afar. All " +
                         "that was needed was for the victim to swallow a pearl.");
                 leaderSay("A crimson one?");
                 portraitSay("A crimson one. Now the king himself had many tasters, and it would be impossible to get him to ingest anything " +

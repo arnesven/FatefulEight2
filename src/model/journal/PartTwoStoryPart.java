@@ -18,7 +18,7 @@ public class PartTwoStoryPart extends StoryPart {
 
     public PartTwoStoryPart(InitialStoryPart storyPart) {
         this.initialStoryPart = storyPart;
-        rescueMissionPart = new RescueMissionStoryPart(this, initialStoryPart.getCastleName());
+        rescueMissionPart = new RescueMissionStoryPart(this, initialStoryPart.getCastleName(), initialStoryPart.getLibraryTownName());
         deliverPackagePart = new WitchStoryPart(initialStoryPart.getWitchPosition(), initialStoryPart.getCastleName());
     }
 
@@ -66,7 +66,7 @@ public class PartTwoStoryPart extends StoryPart {
 
     @Override
     public StoryPart transition(Model model) {
-        return new PartThreeStoryPart(this);
+        return new PartThreeStoryPart(this, initialStoryPart.getCastleName(), initialStoryPart.getLibraryTownName());
     }
 
     @Override

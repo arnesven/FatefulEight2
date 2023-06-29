@@ -93,13 +93,20 @@ public class MainStory implements Serializable {
         // TODO: This is just test stuff
         GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
                 new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
-//        firstStoryPart = new InitialStoryPart(dummy);
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
-//        currentStoryPart.progress(StoryPart.TRACK_B);
+        firstStoryPart = new InitialStoryPart(dummy);
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        firstStoryPart.progress();
+        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
+        currentStoryPart.progress(StoryPart.TRACK_B);
+        currentStoryPart.progress(StoryPart.TRACK_B);
+        currentStoryPart.progress(StoryPart.TRACK_B);
+        currentStoryPart.progress(StoryPart.TRACK_B);
+        currentStoryPart = new PartThreeStoryPart(currentStoryPart, firstStoryPart.getCastleName(), firstStoryPart.getLibraryTownName());
+        currentStoryPart.progress(StoryPart.TRACK_A);
+        currentStoryPart.progress(StoryPart.TRACK_A);
+
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {

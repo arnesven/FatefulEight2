@@ -1,15 +1,18 @@
 package model.journal;
 
-import model.MainStory;
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
+import model.classes.Classes;
 import model.map.CastleLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.quests.RescueMissionQuest;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import view.subviews.PortraitSubView;
 
 import java.util.List;
 
@@ -17,13 +20,16 @@ public class RescueMissionStoryPart extends StoryPart {
     private static final int VISIT_CASTLE_STEP = 0;
     private static final int DO_QUEST_STEP = 1;
     private static final int QUEST_DONE_STEP = 2;
+    private final String libraryTown;
     private int internalStep = 0;
     private final String castleName;
     private PartTwoStoryPart storyPartTwo;
+    private AdvancedAppearance courtMage = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.ALL);
 
-    public RescueMissionStoryPart(PartTwoStoryPart partTwo, String castleName) {
+    public RescueMissionStoryPart(PartTwoStoryPart partTwo, String castleName, String libraryTown) {
         this.storyPartTwo = partTwo;
         this.castleName = castleName;
+        this.libraryTown = libraryTown;
     }
 
     @Override
@@ -63,28 +69,30 @@ public class RescueMissionStoryPart extends StoryPart {
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
         if (location instanceof CastleLocation &&
                 ((CastleLocation) location).getName().equals(castleName)) {
-            return new RescueMissionLordEvent(model, model.getWorld().getCastleByName(castleName));
+            return new RescueMissionLordEvent(model, model.getWorld().getCastleByName(castleName), model.getWorld().getTownByName(libraryTown));
         }
         return super.getVisitLordEvent(model, location);
     }
 
     @Override
     protected boolean isCompleted() {
-        return false;
+        return internalStep > QUEST_DONE_STEP;
     }
 
     private class RescueMissionLordEvent extends DailyEventState {
         private final CastleLocation castle;
+        private final TownLocation libraryTown;
 
-        public RescueMissionLordEvent(Model model, CastleLocation castle) {
+        public RescueMissionLordEvent(Model model, CastleLocation castle, TownLocation libraryTown) {
             super(model);
             this.castle = castle;
+            this.libraryTown = libraryTown;
         }
 
         @Override
         protected void doEvent(Model model) {
             setCurrentTerrainSubview(model);
-            showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+            showLord(model);
             if (internalStep == VISIT_CASTLE_STEP) {
                 portraitSay("Welcome traveller, what can I do for you.");
                 TownLocation town = model.getMainStory().getStartingLocation(model);
@@ -147,9 +155,87 @@ public class RescueMissionStoryPart extends StoryPart {
                     leaderSay("Not yet.");
                 }
             } else {
-                portraitSay("Welcome back.");
-                leaderSay("Good to be back. About Caid...");
+                portraitSay("Welcome back. Have you found Caid?");
+                leaderSay("Yes. We have.");
+                portraitSay("Was it kidnappers? Or something worse?");
+                leaderSay("Rivalling gangs. Caid got caught in the middle, but we got him out.");
+                portraitSay("Splendid. Where is he now?");
+                leaderSay("Still on the mission you gave him. He wanted you to know that.");
+                portraitSay("Thank you so much for your help.");
+                model.getMainStory().increaseStep(model, TRACK_A);
+                if (witchPartCompleted()) {
+                    leaderSay("Now, we really need to discuss an urgent matter.");
+                    portraitSay("And that is?");
+                    println("You bring out the crimson orb and hand it to the " + castle.getLordTitle() +
+                            ". He holds it up and inspects it carefully.");
+                    portraitSay("Very beautiful... What is it?");
+                    leaderSay("A magical pearl which has the power to dominate a person's mind.");
+                    println("The " + castle.getLordTitle() + " quickly hands the pearl back to you.");
+                    leaderSay("Don't worry, you have to consume it for it to have any effect.");
+                    portraitSay("How do you know?");
+                    leaderSay("We found it in the stomach of a frogman, who seemed quite deranged from the effects " +
+                            "of it. It seems pearls like these were once used by spell casters to impose their will upon others?");
+                    portraitSay("What spell casters are you talking about?");
+                    leaderSay("Have you ever heard of 'the Quad?'");
+                    showCourtMage(model);
+                    portraitSay("I have. Every scholar who's studied our lands history have heard about them.");
+                    showLord(model);
+                    portraitSay("Ah yes, 'the Quad'. Of course I've heard about them. Uhm, would you refresh my memory?");
+                    showCourtMage(model);
+                    portraitSay("They were a group of powerful sorcerers who lived hundreds of years ago. " +
+                            "It is said they overthrew an evil tyrant, but then became even worse oppressors themselves.");
+                    showLord(model);
+                    portraitSay("But what does this pearl have to do with the Quad? Do you think this pearl was made by the Quad?");
+                    leaderSay("It's possible. Or somebody else made it.");
+                    showCourtMage(model);
+                    portraitSay("This is the stuff of legends. I have never encountered any modern magic user who's " +
+                            "used this kind of magic. Needless to say, in the wrong hands, it could be very dangerous.");
+                    leaderSay("The frogmen problem was a direct consequence of this pearl. Other incidents could follow.");
+                    showLord(model);
+                    portraitSay("Hmm...");
+                    println("The " + castle.getLordTitle() + " scratches " + castle.getLordGender() + " chin.");
+                    if (DailyEventState.getPartyAlignment(model) < -1) {
+                        leaderSay("So... any chance you want to buy the pearl? Would make a wonderful conversation piece.");
+                    } else {
+                        leaderSay("We have to stop whoever is making these pearls!");
+                    }
+                    portraitSay("What we really need is to gather more information. I mean, we just don't have enough facts.");
+                    showCourtMage(model);
+                    portraitSay("I agree. What happened to the Quad? Where did they go? If they aren't around anymore, " +
+                            "who did they pass on their knowledge to?");
+
+                    if (DailyEventState.getPartyAlignment(model) < -1) {
+                        leaderSay("All fascinating questions... do you want to buy the pearl or not?");
+                    } else {
+                        leaderSay("Perhaps you should take the pearl?");
+                    }
+                    showLord(model);
+                    portraitSay("No, you should keep it. You will need it.");
+                    leaderSay("Need it? For what?");
+                    portraitSay("I sending you on a mission, if you are willing to aid me in this. I need " +
+                            "somebody to investigate this matter further. I need someone capable, and who knows the " +
+                            "details of the case. And most of all, I need somebody I can trust.");
+                    leaderSay("What about Caid?");
+                    portraitSay("Yes, that would be a good choice. I would have preferred that he go with you, but he " +
+                            "is engaged in another task at the moment.");
+                    leaderSay("If I would accept this mission, what would I need to do?");
+                    portraitSay("I'm sending you to " + libraryTown.getName() + ". There's a library there and the " +
+                            "finest historian in the realm, Willis Johanssen. There is nobody more likely than Willis to know " +
+                            "what there is to know about the Quad and the pearl. Or if she doesn't she'll find out from the books in the library.");
+                    model.getMainStory().increaseStep(model);
+                } else {
+                    leaderSay("We'll be on our way now.");
+                    portraitSay("Fortune be with you in your travels.");
+                }
             }
+        }
+
+        private void showLord(Model model) {
+            showExplicitPortrait(model, model.getLordPortrait(castle), castle.getLordName());
+        }
+
+        private void showCourtMage(Model model) {
+            showExplicitPortrait(model, courtMage, "Court Mage");
         }
     }
 
@@ -180,7 +266,7 @@ public class RescueMissionStoryPart extends StoryPart {
 
         @Override
         public boolean isComplete() {
-            return internalStep > QUEST_DONE_STEP;
+            return RescueMissionStoryPart.this.isCompleted();
         }
     }
 }
