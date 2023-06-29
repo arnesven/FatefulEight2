@@ -1,6 +1,7 @@
 package model.items.accessories;
 
 import model.Inventory;
+import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.ArmorItem;
@@ -9,6 +10,8 @@ import model.items.Item;
 import model.items.spells.Spell;
 import util.MyPair;
 import util.MyStrings;
+import view.AnalyzeArmorDialog;
+import view.AnalyzeDialog;
 
 public abstract class Accessory extends EquipableItem implements ArmorItem {
     public Accessory(String name, int cost) {
@@ -62,5 +65,20 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     @Override
     public void equipYourself(GameCharacter gc) {
         gc.equipAccessoryFromInventory(this);
+    }
+
+    @Override
+    public boolean isAnalyzable() {
+        return true;
+    }
+
+    @Override
+    public AnalyzeDialog getAnalysisDialog(Model model) {
+        return new AnalyzeArmorDialog(model, this);
+    }
+
+    @Override
+    public String getAnalysisType() {
+        return "Armor Analysis";
     }
 }

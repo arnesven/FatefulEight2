@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AnalyzeSpellDialog extends AnalyzeDialog {
 
-    private static final int DIALOG_HEIGHT_BASE = 18;
+    private static final int DIALOG_HEIGHT_BASE = 16;
     private final Spell spell;
     private final List<BeforeAndAfterLine<Double>> content;
 
@@ -42,17 +42,8 @@ public class AnalyzeSpellDialog extends AnalyzeDialog {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
-        objs.add(new TextDecoration("Cast Chance for", xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
-        yStart+=2;
-        objs.add(new DrawableObject(xStart, yStart++) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                spell.drawYourself(model.getScreenHandler(), 38, y);
-            }
-        });
-        yStart+=2;
-        objs.add(new TextDecoration(spell.getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
-        yStart += 1;
+        objs.addAll(makeHeader(spell, xStart, yStart));
+        yStart += 8;
         objs.add(new TextDecoration(spell.getSkill().getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
         objs.add(new TextDecoration("Difficulty " + spell.getDifficulty(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
         objs.add(new TextDecoration("HP Cost " + spell.getHPCost(), xStart, ++yStart, MyColors.WHITE, MyColors.BLUE, true));

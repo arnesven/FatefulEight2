@@ -1,12 +1,15 @@
 package model.items.clothing;
 
 import model.Inventory;
+import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.ArmorItem;
 import model.items.EquipableItem;
 import model.items.Item;
 import util.MyPair;
+import view.AnalyzeArmorDialog;
+import view.AnalyzeDialog;
 
 public abstract class Clothing extends EquipableItem implements ArmorItem {
 
@@ -47,5 +50,20 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     @Override
     public String getSound() {
         return "chainmail1";
+    }
+
+    @Override
+    public boolean isAnalyzable() {
+        return true;
+    }
+
+    @Override
+    public AnalyzeDialog getAnalysisDialog(Model model) {
+        return new AnalyzeArmorDialog(model, this);
+    }
+
+    @Override
+    public String getAnalysisType() {
+        return "Armor Analysis";
     }
 }

@@ -22,15 +22,8 @@ public class AnalyzeScrollDialog extends AnalyzeSpellDialog {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
-        objs.add(new TextDecoration("Cast Chance for", xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
-        yStart+=2;
-        objs.add(new DrawableObject(xStart, yStart++) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                scroll.drawYourself(model.getScreenHandler(), 38, y);
-            }
-        });
-        yStart+=2;
+        objs.addAll(makeHeader(scroll, xStart, yStart));
+        yStart += 7;
         objs.add(new TextDecoration(scroll.getSpell().getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
         yStart += 1;
         objs.add(new TextDecoration(scroll.getSpell().getSkill().getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));

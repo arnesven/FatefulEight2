@@ -41,17 +41,8 @@ public class AnalyzeWeaponDialog extends AnalyzeDialog {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
-        objs.add(new TextDecoration("Damage Analysis for", xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
-        yStart+=2;
-        objs.add(new DrawableObject(xStart, yStart++) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                weapon.drawYourself(model.getScreenHandler(), 38, y);
-            }
-        });
-        yStart+=2;
-        objs.add(new TextDecoration(weapon.getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
-        yStart += 2;
+        objs.addAll(super.makeHeader(weapon, xStart, yStart));
+        yStart += 9;
         objs.addAll(makeDrawableObjects(content, xStart, yStart));
         return objs;
     }
