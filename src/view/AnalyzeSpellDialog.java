@@ -3,6 +3,7 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.items.Item;
 import model.items.spells.Spell;
 import util.BeforeAndAfterLine;
 
@@ -54,13 +55,13 @@ public class AnalyzeSpellDialog extends AnalyzeDialog {
         yStart += 1;
         objs.add(new TextDecoration(spell.getSkill().getName(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
         objs.add(new TextDecoration("Difficulty " + spell.getDifficulty(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
-        objs.add(new TextDecoration("HP Cost " + spell.getHPCost(), xStart, ++yStart,  MyColors.WHITE, MyColors.BLUE, true));
+        objs.add(new TextDecoration("HP Cost " + spell.getHPCost(), xStart, ++yStart, MyColors.WHITE, MyColors.BLUE, true));
         yStart += 2;
         objs.addAll(makeDrawableObjects(content, xStart, yStart));
         return objs;
     }
 
-    public static List<DrawableObject> makeDrawableObjects(List<BeforeAndAfterLine<Double>> content, int xStart, int yStart) {
+    protected List<DrawableObject> makeDrawableObjects(List<BeforeAndAfterLine<Double>> content, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
         for (BeforeAndAfterLine<Double> line : content) {
             String text =  String.format("%-11s %2.0f", line.getLabel(), line.getBefore());
@@ -69,5 +70,10 @@ public class AnalyzeSpellDialog extends AnalyzeDialog {
             yStart++;
         }
         return objs;
+    }
+
+    @Override
+    public List<DrawableObject> getAnalysisDrawableObjects(Model model, Item it, int xStart, int yStart) {
+        return makeDrawableObjects(analyzeCastChance(model, (Spell)it), xStart, yStart);
     }
 }

@@ -7,6 +7,7 @@ import model.classes.Skill;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
+import view.AnalyzeDialog;
 import view.GameView;
 import view.ScreenHandler;
 import view.sprites.ItemSprite;
@@ -84,7 +85,11 @@ public abstract class Item implements Serializable, Comparable<Item> {
         return false;
     }
 
-    public GameView getAnalysisDialog(Model model) {
+    public AnalyzeDialog getAnalysisDialog(Model model) {
         return null;
+    }
+
+    public String getAnalysisType() {
+        return "";
     }
 }

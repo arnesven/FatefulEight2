@@ -1,6 +1,8 @@
 package view;
 
 import model.Model;
+import model.items.Item;
+import util.BeforeAndAfterLine;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
@@ -14,6 +16,8 @@ public abstract class AnalyzeDialog extends SelectableListMenu {
     public AnalyzeDialog(Model model, int baseHeight) {
         super(model.getView(), DIALOG_WIDTH, baseHeight + model.getParty().size());
     }
+
+    public abstract List<DrawableObject> getAnalysisDrawableObjects(Model model, Item it, int xStart, int yStart);
 
     @Override
     public void transitionedFrom(Model model) { }

@@ -3,6 +3,7 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Equipment;
+import model.items.Item;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
@@ -55,7 +56,7 @@ public class AnalyzeWeaponDialog extends AnalyzeDialog {
         return objs;
     }
 
-    public static List<DrawableObject> makeDrawableObjects(List<BeforeAndAfterLine<Double>> content, int xStart, int yStart) {
+    private static List<DrawableObject> makeDrawableObjects(List<BeforeAndAfterLine<Double>> content, int xStart, int yStart) {
         List<DrawableObject> objs = new ArrayList<>();
         for (BeforeAndAfterLine<Double> line : content) {
             String text =  String.format("%-11s %2.1f  " + ((char) 0xB0), line.getLabel(), line.getBefore());
@@ -72,5 +73,10 @@ public class AnalyzeWeaponDialog extends AnalyzeDialog {
             yStart++;
         }
         return objs;
+    }
+
+    @Override
+    public List<DrawableObject> getAnalysisDrawableObjects(Model model, Item it, int xStart, int yStart) {
+        return makeDrawableObjects(analyzeWeapon(model, (Weapon)it), xStart, yStart);
     }
 }

@@ -8,10 +8,7 @@ import model.classes.SkillCheckResult;
 import model.items.Item;
 import model.states.GameState;
 import sound.SoundEffects;
-import view.AnalyzeSpellDialog;
-import view.GameView;
-import view.MyColors;
-import view.YesNoMessageView;
+import view.*;
 
 public abstract class Spell extends Item {
     public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK};
@@ -137,7 +134,12 @@ public abstract class Spell extends Item {
     }
 
     @Override
-    public GameView getAnalysisDialog(Model model) {
+    public AnalyzeDialog getAnalysisDialog(Model model) {
         return new AnalyzeSpellDialog(model, this);
+    }
+
+    @Override
+    public String getAnalysisType() {
+        return "Cast Chance for";
     }
 }

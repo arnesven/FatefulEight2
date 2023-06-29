@@ -6,7 +6,7 @@ import model.characters.GameCharacter;
 import model.items.spells.AlchemySpell;
 import model.items.spells.Spell;
 import model.items.weapons.Weapon;
-import view.MyColors;
+import view.*;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
@@ -91,5 +91,20 @@ public class Scroll extends UsableItem {
     @Override
     public boolean canBeUsedOn(Model model, GameCharacter target) {
         return false;
+    }
+
+    @Override
+    public boolean isAnalyzable() {
+        return true;
+    }
+
+    @Override
+    public AnalyzeDialog getAnalysisDialog(Model model) {
+        return new AnalyzeScrollDialog(model, this);
+    }
+
+    @Override
+    public String getAnalysisType() {
+        return "Cast Chance for";
     }
 }

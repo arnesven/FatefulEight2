@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
 import util.MyStrings;
+import view.AnalyzeDialog;
 import view.AnalyzeWeaponDialog;
 import view.GameView;
 import view.sprites.LoopingSprite;
@@ -124,7 +125,12 @@ public abstract class Weapon extends EquipableItem {
     }
 
     @Override
-    public GameView getAnalysisDialog(Model model) {
+    public AnalyzeDialog getAnalysisDialog(Model model) {
         return new AnalyzeWeaponDialog(model, this);
+    }
+
+    @Override
+    public String getAnalysisType() {
+        return "Damage Analysis";
     }
 }
