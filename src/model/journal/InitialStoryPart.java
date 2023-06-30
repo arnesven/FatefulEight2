@@ -37,10 +37,26 @@ public class InitialStoryPart extends StoryPart {
 
     public InitialStoryPart(GameCharacter whosUncle) {
         List<MainStorySpawnLocation> townsAndCastles = List.of(
-                new MainStorySpawnLocation(new AshtonshireTown().getName(), new ArkvaleCastle().getName(), new Point(24, 1), new AshtonshireTown().getName()),
-                new MainStorySpawnLocation(new SouthMeadhomeTown().getName(), new ArdhCastle().getName(), new Point(13, 11), new AshtonshireTown().getName()),
-                new MainStorySpawnLocation(new EbonshireTown().getName(), new BogdownCastle().getName(), new Point(5, 8), new AshtonshireTown().getName()),
-                new MainStorySpawnLocation(new LittleErindeTown().getName(), new SunblazeCastle().getName(), new Point(8, 11), new AshtonshireTown().getName())
+                new MainStorySpawnLocation(
+                        new AshtonshireTown().getName(),
+                        new ArkvaleCastle().getName(),
+                        new Point(24, 1),
+                        new UrnTownTown().getName()),
+                new MainStorySpawnLocation(
+                        new SouthMeadhomeTown().getName(),
+                        new ArdhCastle().getName(),
+                        new Point(13, 11),
+                        new BullsVilleTown().getName()),
+                new MainStorySpawnLocation(
+                        new EbonshireTown().getName(),
+                        new BogdownCastle().getName(),
+                        new Point(5, 8),
+                        new EastDurhamTown().getName()),
+                new MainStorySpawnLocation(
+                        new LittleErindeTown().getName(),
+                        new SunblazeCastle().getName(),
+                        new Point(8, 11),
+                        new AckervilleTown().getName())
         );
         spawnData = MyRandom.sample(townsAndCastles);
         this.whosUncle = whosUncle;

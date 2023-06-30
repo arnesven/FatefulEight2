@@ -39,12 +39,12 @@ public class QuestDecisionPoint extends QuestJunction {
         return "Leader decision point: Solo Leadership 6";
     }
 
-    public QuestEdge questNodeInput(Model model, QuestState state) {
-        state.setSelectedElement(getConnections().get(0).getNode());
+    public static QuestEdge questNodeInput(Model model, QuestState state, List<QuestEdge> connections) {
+        state.setSelectedElement(connections.get(0).getNode());
         do {
             state.print("Please select which location to advance to.");
             state.waitForReturn(true);
-            for (QuestEdge edge : getConnections()) {
+            for (QuestEdge edge : connections) {
                 if (edge.getNode() == state.getSelectedElement()) {
                     if (edge.getNode().isEligibleForSelection(model, state)) {
                         return edge;
@@ -73,7 +73,7 @@ public class QuestDecisionPoint extends QuestJunction {
         QuestEdge finalEdge;
         do {
             try {
-                finalEdge = questNodeInput(model, state);
+                finalEdge = questNodeInput(model, state, getConnections());
                 break;
             } catch (SpellCastException sce) {
                 QuestEdge edge = tryCastSpell(model, state, sce);

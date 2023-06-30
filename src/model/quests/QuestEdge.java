@@ -97,18 +97,30 @@ public class QuestEdge implements Serializable {
         }
     }
 
+    protected boolean drawArrow() {
+        return true;
+    }
+
     private void goRightWithArrow(ScreenHandler screenHandler, Point from, Point to, int xOffset, int yOffset, int dx) {
         Point conv = QuestSubView.convertToScreen(to);
         if (dx < 0) {
             goStraight(screenHandler, to, from, xOffset, yOffset, true);
             screenHandler.clearForeground(conv.x + 2, conv.x + 3,
                     conv.y+1, conv.y+1);
-            screenHandler.register("arrow", new Point(conv.x + 3, conv.y+1), specialSprites[6]);
+            if (drawArrow()) {
+                screenHandler.register("arrow", new Point(conv.x + 3, conv.y + 1), specialSprites[6]);
+            } else {
+                screenHandler.register("horipath1", new Point(conv.x + 3, conv.y + 1), horizontalSprite);
+            }
         } else {
             goStraight(screenHandler, from, to, xOffset, yOffset, true);
             screenHandler.clearForeground(conv.x - 1, conv.x,
                     conv.y+1, conv.y+1);
-            screenHandler.register("arrow", new Point(conv.x - 1, conv.y+1), specialSprites[5]);
+            if (drawArrow()) {
+                screenHandler.register("arrow", new Point(conv.x - 1, conv.y + 1), specialSprites[5]);
+            } else {
+                screenHandler.register("horipath1", new Point(conv.x - 1, conv.y + 1), horizontalSprite);
+            }
         }
     }
 
@@ -127,12 +139,20 @@ public class QuestEdge implements Serializable {
             goStraight(screenHandler, to, from, xOffset, yOffset, false);
             screenHandler.clearForeground(conv.x + 1,conv.x + 1,
                     conv.y+2, conv.y+3);
-            screenHandler.register("arrow", new Point(conv.x + 1, conv.y+3), specialSprites[4]);
+            if (drawArrow()) {
+                screenHandler.register("arrow", new Point(conv.x + 1, conv.y + 3), specialSprites[4]);
+            } else {
+                screenHandler.register("vertipath1", new Point(conv.x + 1, conv.y + 3), verticalSprite);
+            }
         } else {
             goStraight(screenHandler, from, to, xOffset, yOffset, false);
             screenHandler.clearForeground(conv.x + 1,conv.x + 1,
                     conv.y-1, conv.y);
-            screenHandler.register("arrow", new Point(conv.x + 1, conv.y-1), specialSprites[7]);
+            if (drawArrow()) {
+                screenHandler.register("arrow", new Point(conv.x + 1, conv.y - 1), specialSprites[7]);
+            } else {
+                screenHandler.register("vertipath1", new Point(conv.x + 1, conv.y - 1), verticalSprite);
+            }
         }
     }
 

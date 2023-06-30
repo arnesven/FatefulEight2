@@ -3,6 +3,7 @@ package model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.KruskTalandro;
+import model.characters.WillisCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.journal.*;
@@ -88,6 +89,7 @@ public class MainStory implements Serializable {
     private StoryPart currentStoryPart = null;
     private InitialStoryPart firstStoryPart;
     private GameCharacter caidCharacter = new CaidCharacter();
+    private GameCharacter willisCharacter = new WillisCharacter();
 
     public MainStory() {
         // TODO: This is just test stuff
@@ -104,6 +106,7 @@ public class MainStory implements Serializable {
         currentStoryPart.progress(StoryPart.TRACK_B);
         currentStoryPart.progress(StoryPart.TRACK_B);
         currentStoryPart = new PartThreeStoryPart(currentStoryPart, firstStoryPart.getCastleName(), firstStoryPart.getLibraryTownName());
+        currentStoryPart.progress(StoryPart.TRACK_A);
         currentStoryPart.progress(StoryPart.TRACK_A);
         currentStoryPart.progress(StoryPart.TRACK_A);
 
@@ -198,6 +201,8 @@ public class MainStory implements Serializable {
         map.put(rescue.getName(), rescue);
         SpecialDeliveryQuest delivery = new SpecialDeliveryQuest();
         map.put(delivery.getName(), delivery);
+        TroubleInTheLibraryQuest libraryQuest = new TroubleInTheLibraryQuest();
+        map.put(libraryQuest.getName(), libraryQuest);
         return map;
     }
 
@@ -221,5 +226,9 @@ public class MainStory implements Serializable {
 
     public GameCharacter getCaidCharacter() {
         return caidCharacter;
+    }
+
+    public GameCharacter getWillisCharacter() {
+        return willisCharacter;
     }
 }
