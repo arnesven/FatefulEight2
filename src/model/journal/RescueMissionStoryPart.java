@@ -193,7 +193,7 @@ public class RescueMissionStoryPart extends StoryPart {
                     leaderSay("The frogmen problem was a direct consequence of this pearl. Other incidents could follow.");
                     showLord(model);
                     portraitSay("Hmm...");
-                    println("The " + castle.getLordTitle() + " scratches " + castle.getLordGender() + " chin.");
+                    println("The " + castle.getLordTitle() + " scratches " + hisOrHer(castle.getLordGender()) + " chin.");
                     if (DailyEventState.getPartyAlignment(model) < -1) {
                         leaderSay("So... any chance you want to buy the pearl? Would make a wonderful conversation piece.");
                     } else {
@@ -222,7 +222,6 @@ public class RescueMissionStoryPart extends StoryPart {
                     portraitSay("I'm sending you to " + libraryTown.getName() + ". There's a library there and the " +
                             "finest historian in the realm, Willis Johanssen. There is nobody more likely than Willis to know " +
                             "what there is to know about the Quad and the pearl. Or if she doesn't she'll find out from the books in the library.");
-                    model.getMainStory().increaseStep(model);
                 } else {
                     leaderSay("We'll be on our way now.");
                     portraitSay("Fortune be with you in your travels.");
@@ -259,7 +258,7 @@ public class RescueMissionStoryPart extends StoryPart {
             } else if (internalStep == DO_QUEST_STEP) {
                 return "Complete the '" + RescueMissionQuest.QUEST_NAME + "' Quest.";
             } else if (internalStep == QUEST_DONE_STEP) {
-                return "Report back to " + castleName + ".";
+                return "Report back to " + castleName + " to explain where Caid is.";
             }
             return "You found Caid.\n\nCompleted.";
         }

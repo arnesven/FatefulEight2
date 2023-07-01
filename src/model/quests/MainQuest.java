@@ -7,7 +7,7 @@ import model.states.QuestState;
 
 public abstract class MainQuest extends Quest {
     private CharacterAppearance portrait;
-    private boolean completed = false;
+    private boolean completed = false; // TODO: This is not persistent in save... causes some quests to be labled as "in progress".
 
     public MainQuest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, int exp, String text, String endText) {
         super(name, provider, difficulty, partyRep, gold, exp, text, endText);

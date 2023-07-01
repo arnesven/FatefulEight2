@@ -264,6 +264,10 @@ public class PartThreeStoryPart extends StoryPart {
                         "Warning. It is recommended that your party members " +
                                 "are at least level 3 before doing the quest " +
                                 "'Trouble in the Library'."));
+            } else {
+                portraitSay("Oh good, you're here. Seems like you managed to get every last automaton shut down. " +
+                        "Thank you so much. Now let's see what we can find out about the Quad.");
+                println("You accompany Willis into the library.");
             }
         }
 

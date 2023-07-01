@@ -167,6 +167,9 @@ public class GameCharacter extends Combatant {
 
     private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
         for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
+            if (target.isDead()) {
+                return;
+            }
             int bonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
             SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
             int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);

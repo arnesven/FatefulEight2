@@ -171,7 +171,9 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     @Override
     public CharacterAppearance copy() {
-        return new AdvancedAppearance(super.getRace(), super.isFemale(), getHairColor(), mouth, nose, eyes, hairStyle, beard);
+        AdvancedAppearance app = new AdvancedAppearance(super.getRace(), super.isFemale(), getHairColor(), mouth, nose, eyes, hairStyle, beard);
+        app.setFaceDetail(detail);
+        return app;
     }
 
     @Override
@@ -180,28 +182,6 @@ public class AdvancedAppearance extends CharacterAppearance {
             beard.apply(this, race);
         }
         detail.applyYourself(this, race, coversEars);
-//        if (hasEyePatch) {
-//            for (int i = 0; i < 3; ++i) {
-//                Sprite8x8 left = new Sprite8x8("eyepatch", "clothes.png", 0x5A + i);
-//                left.setColor1(detailColor);
-//                addSpriteOnTop(2 + i, 3, left);
-//            }
-//        }
-//        if (hasGlasses) {
-//            for (int i = 0; i < 3; ++i) {
-//                Sprite8x8 left = new Sprite8x8("glasses", "clothes.png", 0x3A + i);
-//                left.setColor1(detailColor);
-//                addSpriteOnTop(2 + i, 3, left);
-//            }
-//        }
-//        if (hasEarrings && !coversEars) {
-//            Sprite8x8 left = new Sprite8x8("earringleft", "clothes.png", 0x4A);
-//            left.setColor1(detailColor);
-//            addSpriteOnTop(1, 3, left);
-//            Sprite8x8 right = new Sprite8x8("earringright", "clothes.png", 0x4B);
-//            right.setColor1(detailColor);
-//            addSpriteOnTop(5, 3, right);
-//        }
     }
 
     @Override

@@ -16,6 +16,8 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.GameState;
 import model.states.QuestState;
 import view.MyColors;
+import view.subviews.CombatTheme;
+import view.subviews.GrassCombatTheme;
 
 import java.util.List;
 
@@ -28,6 +30,11 @@ public class FrogmenProblemQuest extends MainQuest {
 
     public FrogmenProblemQuest() {
         super(QUEST_NAME, "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new GrassCombatTheme();
     }
 
     @Override

@@ -46,7 +46,7 @@ public class GoblinCharacter extends CharacterAppearance {
 
     @Override
     public CharacterAppearance copy() {
-        throw new IllegalStateException("Should never happen!");
+        return new GoblinCharacter();
     }
 
     private static class GoblinPortraitSprite extends FullPortraitSprite {
