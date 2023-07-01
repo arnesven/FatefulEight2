@@ -3,16 +3,22 @@ package model.enemies;
 import model.Model;
 import model.Party;
 import model.combat.CombatLoot;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 
 public class AutomatonEnemy extends Enemy {
-    private static final Sprite SPRITE = new AutomatonSprite();
+    private Sprite sprite;
+
+    public AutomatonEnemy(char a, MyColors color) {
+        super(a, "Automaton");
+        sprite = new AutomatonSprite(color);
+    }
 
     public AutomatonEnemy(char a) {
-        super(a, "Automaton");
+        this(a, MyColors.GOLD);
     }
 
     @Override
@@ -27,7 +33,7 @@ public class AutomatonEnemy extends Enemy {
 
     @Override
     protected Sprite getSprite() {
-        return SPRITE;
+        return sprite;
     }
 
     @Override
@@ -41,10 +47,10 @@ public class AutomatonEnemy extends Enemy {
     }
 
     private static class AutomatonSprite extends LoopingSprite {
-        public AutomatonSprite() {
+        public AutomatonSprite(MyColors color) {
             super("automaton", "enemies.png", 0x98, 32);
             setColor1(MyColors.BLACK);
-            setColor2(MyColors.GOLD);
+            setColor2(color);
             setColor3(MyColors.YELLOW);
             setFrames(4);
         }
@@ -54,7 +60,7 @@ public class AutomatonEnemy extends Enemy {
 
         @Override
         public int getMaterials() {
-            return 10;
+            return MyRandom.rollD10() + 2;
         }
 
         @Override
