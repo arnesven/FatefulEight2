@@ -57,10 +57,11 @@ public class AutomatonEnemy extends Enemy {
     }
 
     private static class AutomatonLoot extends CombatLoot {
+        private int materials = MyRandom.rollD10() + 2;
 
         @Override
         public int getMaterials() {
-            return MyRandom.rollD10() + 2;
+            return materials;
         }
 
         @Override

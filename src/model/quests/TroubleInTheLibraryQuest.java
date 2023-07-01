@@ -1,13 +1,12 @@
 package model.quests;
 
-import model.MainStory;
 import model.Model;
 import model.classes.Skill;
 import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
+import model.enemies.LibraryAutomatonEnemy;
 import model.journal.StoryPart;
 import model.quests.scenes.ArrowlessEdge;
-import model.quests.scenes.ChooseNode;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.QuestState;
 import view.MyColors;
@@ -51,7 +50,7 @@ public class TroubleInTheLibraryQuest extends MainQuest {
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Discern Automaton Behavior", List.of(
-                new SoloSkillCheckSubScene(4, 4, Skill.Logic, 1, // 8
+                new SoloSkillCheckSubScene(4, 4, Skill.Logic, 8,
                         "Wait a minute. It feels like there's a pattern to these machines' behavior."))),
                 new QuestScene("Check Dead Automatons", List.of(
                         new ConditionSubScene(7, 8) {
@@ -62,8 +61,15 @@ public class TroubleInTheLibraryQuest extends MainQuest {
 
                             @Override
                             public QuestEdge run(Model model, QuestState state) {
-                                state.println("There are still automatons roaming in the library!");
-                                return getFailEdge();
+                                for (MovingEnemyGroup group : enemies) {
+                                    for (Enemy e : group.getEnemies()) {
+                                        if (!e.isDead()) {
+                                            state.println("There are still automatons roaming in the library!");
+                                            return getFailEdge();
+                                        }
+                                    }
+                                }
+                                return getSuccessEdge();
                             }
                         }
                 )),
@@ -104,6 +110,24 @@ public class TroubleInTheLibraryQuest extends MainQuest {
                         state.leaderSay("They always move along those paths huh?");
                 }
                 logicStep++;
+            }
+        };
+        nodeGrid[5][8] = new StoryJunction(5, 8, new QuestEdge(getSuccessEndingNode())) {
+            @Override
+            protected void doAction(Model model, QuestState state) {
+                state.println("The magical machine shuts down, and so does all the automatons in the library. " +
+                        "It is eerily quiet now.");
+                for (int y = 0; y < nodeGrid[0].length; y++) {
+                    for (int x = 0; x < nodeGrid.length; x++) {
+                        if (nodeGrid[x][y] instanceof ChooseNode) {
+                            ChooseNode node = (ChooseNode) nodeGrid[x][y];
+                            if (node.hasEnemies()) {
+                                node.clearEnemyGroups();
+                                node.addPoof();
+                            }
+                        }
+                    }
+                }
             }
         };
         nodeGrid[0][0] = new QuestStartPointWithoutDecision(new QuestEdge(nodeGrid[1][0]), "In we go...");
@@ -160,6 +184,8 @@ public class TroubleInTheLibraryQuest extends MainQuest {
         conditionScene.connectFail(nodeGrid[7][7]);
 
         ((QuestJunction)nodeGrid[machineScene.getColumn()][machineScene.getRow()-1]).connectTo(new QuestEdge(machineScene));
+
+        ((QuestJunction)nodeGrid[0][7]).connectTo(new QuestEdge(getFailEndingNode(), QuestEdge.VERTICAL));
 
         for (int y = 0; y < nodeGrid[0].length; y++) {
             for (int x = 0; x < nodeGrid.length; x++) {
@@ -223,9 +249,10 @@ public class TroubleInTheLibraryQuest extends MainQuest {
             if (j == 0) {
                 enemies.add(new MovingEnemyGroup(makeAutomatons(6, colors.get(j)), enemyPaths.get(j)));
             } else {
-                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), 1+j));
-                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), 9+j));
-                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), 19+j));
+                enemies.add(new MovingEnemyGroup(makeAutomatons(2, colors.get(j)), enemyPaths.get(j), j));
+                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), j+7));
+                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), j+15));
+                enemies.add(new MovingEnemyGroup(makeAutomatons(2, colors.get(j)), enemyPaths.get(j), j+23));
             }
         }
     }
@@ -233,7 +260,7 @@ public class TroubleInTheLibraryQuest extends MainQuest {
     private List<Enemy> makeAutomatons(int num, MyColors color) {
         List<Enemy> automatons = new ArrayList<>();
         for (int i = 0; i < num; ++i) {
-            automatons.add(new AutomatonEnemy('A', color));
+            automatons.add(new LibraryAutomatonEnemy('A', color));
         }
         return automatons;
 
@@ -242,20 +269,37 @@ public class TroubleInTheLibraryQuest extends MainQuest {
     private void addChooseNode(QuestNode[][] nodeGrid, int x, int y, List<QuestEdge> questEdges) {
         nodeGrid[x][y] = new ChooseNode(x, y, questEdges) {
             @Override
-            protected void preRunHook(Model model, QuestState state) {
-                for (MovingEnemyGroup group : enemies) {
-                    ChooseNode node = group.getNode();
-                    QuestEdge edge = group.getEdgeToMoveTo(model, state, nodeGrid);
-                    if (edge != null && edge.getNode() instanceof ChooseNode) {
-                        ChooseNode destination = ((ChooseNode) edge.getNode());
-                        node.setEnemyGroup(null);
-                        QuestSubView.animateAvatarAlongEdge(state, node.getPosition(), edge, group.getSprite());
-                        destination.setEnemyGroup(group);
-                        group.setNode(destination);
+            protected boolean preRunHook(Model model, QuestState state) {
+                if (hasEnemies()) {
+                    if (runCombat(model, state)) {
+                        return true;
                     }
                 }
+                moveAllAutomatons(model, state);
+                if (hasEnemies()) {
+                    if (runCombat(model, state)) {
+                        return true;
+                    }
+                }
+                return false;
             }
         };
+    }
+
+    private void moveAllAutomatons(Model model, QuestState state) {
+        state.setCursorEnabled(false);
+        for (MovingEnemyGroup group : enemies) {
+            ChooseNode node = group.getNode();
+            QuestEdge edge = group.getEdgeToMoveTo(model, state, nodeGrid);
+            if (edge != null && edge.getNode() instanceof ChooseNode) {
+                ChooseNode destination = ((ChooseNode) edge.getNode());
+                node.removeEnemyGroup(group);
+                QuestSubView.animateAvatarAlongEdge(state, node.getPosition(), edge, group.getSprite());
+                destination.addEnemyGroup(group);
+                group.setNode(destination);
+            }
+        }
+        state.setCursorEnabled(true);
     }
 
     @Override
@@ -267,15 +311,16 @@ public class TroubleInTheLibraryQuest extends MainQuest {
                 } else if (junc.getColumn() == 3) {
                     scenes.get(0).get(0).connectSuccess(junc);
                 }
-            }
-
-            if (junc.getRow() == 7) {
+            } else if (junc.getRow() == 7) {
                 if (junc.getColumn() == 2) {
                     scenes.get(2).get(0).connectFail(junc);
                 }
+            } else if (junc.getRow() == 8) {
+                if (junc.getColumn() == 5) {
+                    scenes.get(2).get(0).connectSuccess(junc);
+                }
             }
         }
-        scenes.get(2).get(0).connectSuccess(getSuccessEndingNode());
     }
 
     @Override

@@ -2,11 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.enemies.Enemy;
-import model.quests.scenes.ChooseNode;
 import model.states.QuestState;
-import util.MyRandom;
 import view.ScreenHandler;
-import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
@@ -17,6 +14,7 @@ public class MovingEnemyGroup {
     private final List<Point> path;
     private int pathIndex;
     private ChooseNode node;
+    private boolean defeated = false;
 
     public MovingEnemyGroup(List<Enemy> enemies, List<Point> path, int pathIndex) {
         this.enemies = enemies;
@@ -46,6 +44,9 @@ public class MovingEnemyGroup {
     }
 
     public QuestEdge getEdgeToMoveTo(Model model, QuestState state, QuestNode[][] nodeGrid) {
+        if (defeated) {
+            return null;
+        }
         pathIndex = (pathIndex + 1) % path.size();
         QuestNode destination = nodeGrid[path.get(pathIndex).x][path.get(pathIndex).y];
         for (QuestEdge edge : getNode().getConnections()) {
@@ -59,7 +60,19 @@ public class MovingEnemyGroup {
     public void setOnPath(QuestNode[][] nodeGrid) {
         int x = path.get(pathIndex).x;
         int y = path.get(pathIndex).y;
-        ((ChooseNode)nodeGrid[x][y]).setEnemyGroup(this);
+        ((ChooseNode)nodeGrid[x][y]).addEnemyGroup(this);
         setNode((ChooseNode)nodeGrid[x][y]);
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setDefeated(boolean allDead) {
+        this.defeated = allDead;
+    }
+
+    public boolean isDefeated() {
+        return defeated;
     }
 }

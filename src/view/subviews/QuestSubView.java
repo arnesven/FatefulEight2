@@ -146,7 +146,10 @@ public class QuestSubView extends AvatarSubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        return matrix.handleKeyEvent(keyEvent);
+        if (state.isCursorEnabled()) {
+            return matrix.handleKeyEvent(keyEvent);
+        }
+        return false;
     }
 
     public void setDrawAvatarEnabled(boolean b) {
