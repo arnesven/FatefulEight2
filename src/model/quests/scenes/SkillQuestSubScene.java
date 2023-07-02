@@ -46,6 +46,7 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
         do {
             try {
                 skillSuccess = performSkillCheck(model, state, skill, difficulty);
+                model.getLog().waitForAnimationToFinish();
                 break;
             } catch (SpellCastException sce) {
                 QuestEdge edge = tryCastSpell(model, state, sce);

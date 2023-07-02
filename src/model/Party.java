@@ -525,7 +525,9 @@ public class Party implements Serializable {
             result = performer.testSkill(skill, difficulty, bonus);
             event.println(performer.getName() + " performs " + skill.getName() + " " + result.asString());
             if (result.isSuccessful()) {
-                giveXP(model, performer, exp);
+                if (exp > 0) {
+                    giveXP(model, performer, exp);
+                }
                 break;
             } else if (performer.getSP() == 0) {
                 break;
