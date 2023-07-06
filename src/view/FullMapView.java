@@ -89,6 +89,9 @@ public class FullMapView extends GameView {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F4) {
             model.getParty().setPosition(cursorPos);
             model.transitionToDialog(new SimpleMessageView(model.getView(), "You have teleported to " + cursorPos.x + ", " + cursorPos.y + "!"));
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_F5) {
+            model.cycleWorldState();
+            madeChanges();
         }
 
         return false;

@@ -108,7 +108,9 @@ public class World implements Serializable {
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
                            Point partyPosition, int mapYRange, int yOffset, int flag) {
         if (hexes[x][y] != null) {
-            if (hexes[x][y].getState() == 0 || (hexes[x][y].getState() & currentState) > 0) {
+            int mask = 0x0000000F - currentState;
+
+            if ((hexes[x][y].getState() & mask) == 0 ) {
                 if (screenY == yOffset - 2) {
                     hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
                 } else if (screenY == yOffset - 2 + 4 * (mapYRange - 1) + 2) {
@@ -404,6 +406,14 @@ public class World implements Serializable {
             }
         }
         throw new IllegalArgumentException("No castle found for argument " + castleName);
+    }
+
+    public int getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(int currState) {
+        this.currentState = currState;
     }
 
     private static class Interval {

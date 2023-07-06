@@ -422,4 +422,14 @@ public class Model {
         }
         return gameData.lordPortraits.get(location.getLordName());
     }
+
+    public void cycleWorldState() {
+        int currState = this.world.getCurrentState();
+        if (currState == 0xF) {
+            currState = 0;
+        } else {
+            currState++;
+        }
+        this.world.setCurrentState(currState);
+    }
 }
