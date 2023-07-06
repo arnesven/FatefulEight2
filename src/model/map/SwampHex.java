@@ -14,8 +14,8 @@ import java.util.List;
 public class SwampHex extends WorldHex {
     private static SubView subView = new ImageSubView("theswamp", "THE SWAMP", "A nasty bog...", true);;
 
-    public SwampHex(int roads, int rivers) {
-        super(MyColors.GREEN, roads, rivers, new SwampLocation());
+    public SwampHex(int roads, int rivers, int state) {
+        super(MyColors.GREEN, roads, rivers, new SwampLocation(), state);
         super.setMusic(BackgroundMusic.mysticSong);
     }
 

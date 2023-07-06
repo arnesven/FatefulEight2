@@ -3,8 +3,8 @@ package model.map;
 import view.MyColors;
 
 public class TundraMountain extends TundraHex {
-    public TundraMountain(int roads, int rivers) {
-        super(roads, rivers, new MountainLocation());
+    public TundraMountain(int roads, int rivers, int state) {
+        super(roads, rivers, new MountainLocation(), state);
     }
 
     @Override

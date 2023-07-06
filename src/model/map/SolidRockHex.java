@@ -7,8 +7,8 @@ import view.sprites.HexSprite;
 import view.subviews.SubView;
 
 public class SolidRockHex extends WorldHex {
-    public SolidRockHex() {
-        super(MyColors.BLACK, 0, 0, null);
+    public SolidRockHex(int state) {
+        super(MyColors.BLACK, 0, 0, null, state);
     }
     @Override
     protected HexSprite getUpperLeftSprite(MyColors color, int roads, int rivers) {

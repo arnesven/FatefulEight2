@@ -40,22 +40,22 @@ public class InitialStoryPart extends StoryPart {
                 new MainStorySpawnLocation(
                         new AshtonshireTown().getName(),
                         new ArkvaleCastle().getName(),
-                        new Point(24, 1),
+                        new Point(38, 11),
                         new UrnTownTown().getName()),
                 new MainStorySpawnLocation(
                         new SouthMeadhomeTown().getName(),
                         new ArdhCastle().getName(),
-                        new Point(13, 11),
+                        new Point(27, 21),
                         new BullsVilleTown().getName()),
                 new MainStorySpawnLocation(
                         new EbonshireTown().getName(),
                         new BogdownCastle().getName(),
-                        new Point(5, 8),
+                        new Point(19, 18),
                         new EastDurhamTown().getName()),
                 new MainStorySpawnLocation(
                         new LittleErindeTown().getName(),
                         new SunblazeCastle().getName(),
-                        new Point(8, 11),
+                        new Point(22, 21),
                         new AckervilleTown().getName())
         );
         spawnData = MyRandom.sample(townsAndCastles);

@@ -1,8 +1,8 @@
 package model.map;
 
 public class CaveHexWithoutExit extends CaveHex {
-    public CaveHexWithoutExit(int tunnels) {
-        super(tunnels);
+    public CaveHexWithoutExit(int tunnels, int state) {
+        super(tunnels, state);
     }
 
     @Override

@@ -16,8 +16,8 @@ import java.util.List;
 public class HillsHex extends WorldHex {
     private static final ImageSubView subview = new ImageSubView("hills", "THE HILLS", "You are traveling in the hills.", true);
 
-    public HillsHex(int roads, int rivers) {
-        super(MyColors.GREEN, roads, rivers, new HillsLocation());
+    public HillsHex(int roads, int rivers, int state) {
+        super(MyColors.GREEN, roads, rivers, new HillsLocation(), state);
     }
 
     @Override

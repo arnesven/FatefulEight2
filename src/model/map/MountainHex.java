@@ -14,8 +14,8 @@ import java.util.List;
 public class MountainHex extends WorldHex {
     private static SubView subView = new ImageSubView("themountains", "THE MOUNTAINS", "You are traveling in the mountains.", true);
 
-    public MountainHex(int roads, int rivers) {
-        super(MyColors.GREEN, roads, rivers, new MountainLocation());
+    public MountainHex(int roads, int rivers, int state) {
+        super(MyColors.GREEN, roads, rivers, new MountainLocation(), state);
     }
 
     @Override

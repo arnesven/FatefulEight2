@@ -16,8 +16,8 @@ public class DesertHex extends WorldHex {
 
     private static SubView subView = new ImageSubView("thedesert", "THE DESERT", "You are in an arid wasteland.", true);
 
-    public DesertHex(int roads, int rivers, HexLocation location) {
-        super(MyColors.YELLOW, roads, rivers, location);
+    public DesertHex(int roads, int rivers, HexLocation location, int state) {
+        super(MyColors.YELLOW, roads, rivers, location, state);
     }
 
     @Override

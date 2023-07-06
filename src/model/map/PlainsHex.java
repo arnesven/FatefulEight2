@@ -16,8 +16,8 @@ import java.util.List;
 public class PlainsHex extends WorldHex {
     private static SubView subView = new ImageSubView("theplains", "THE PLAINS", "You are on the plains.", true);
 
-    public PlainsHex(int roads, int rivers, HexLocation location) {
-        super(MyColors.GREEN, roads, rivers, location);
+    public PlainsHex(int roads, int rivers, HexLocation location, int state) {
+        super(MyColors.GREEN, roads, rivers, location, state);
     }
 
     @Override

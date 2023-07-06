@@ -23,10 +23,11 @@ public class CaveSystem extends World {
         WorldHex[][] hexes = new WorldHex[WorldBuilder.WORLD_WIDTH][WorldBuilder.WORLD_HEIGHT];
         for (int y = 0; y < WorldBuilder.WORLD_HEIGHT; ++y) {
             for (int x = 0; x < WorldBuilder.WORLD_WIDTH; ++x) {
+                int state = WorldBuilder.getStateForXY(x, y);
                 if (noExit(overWorld.getHex(new Point(x, y)))) {
-                    hexes[x][y] = new CaveHexWithoutExit(Direction.NONE);
+                    hexes[x][y] = new CaveHexWithoutExit(Direction.NONE, state);
                 } else {
-                    hexes[x][y] = new CaveHex(Direction.NONE);
+                    hexes[x][y] = new CaveHex(Direction.NONE, state);
                 }
             }
         }

@@ -15,176 +15,203 @@ import static model.map.Direction.NORTH_EAST;
 
 public class WorldBuilder {
 
-    public static final int WORLD_WIDTH = 25;
-    public static final int WORLD_HEIGHT = 18;
+    public static final int WORLD_WIDTH = 53;
+    public static final int WORLD_HEIGHT = 38;
+    private static final int EXTRA_WIDTH = 14;
+    private static final int EXTRA_HEIGHT = 10;
+    public static final int ORIGINAL = 0;
+    public static final int EXPAND_EAST = 1;
+    public static final int EXPAND_SOUTH = 2;
+    public static final int EXPAND_WEST = 4;
+    public static final int EXPAND_NORTH = 8;
 
     private static String[] worldTemplate = new String[]{
-            "TuTuttttsssttttTtTuTTTTTt",
-            "TtwthTfpssspfttththuMTptw",
-            "bwbwhhpfpssswwwwwfpMMwffw",
-            "spbbhpspsssppwbwhfpMhwbfs",
-            "ssspppsssssssphwhpMMhhbss",
-            "psssssssssssshhhphhMhwwwh",
-            "hhhsssssssppfspwwpphpwwwM",
-            "hhhppfhpwwwfwppMMwMffwwhp",
-            "phpfwwwwwhwwwfpppMffMwMMM",
-            "pphpfwwhpppwpphpppMMdwddd",
-            "pphffwwwwpwwphhhfhfdddddd",
-            "MhffffwwwpwwwwwffpffDDpDf",
-            "hhhppsphfpbbpwwfwfMfhfffp",
-            "dDmDdmmppswwwppppwMMMMhpp",
-            "ddddddmMpwwMwwwspppMMhfpf",
-            "DdddDmMpwwdwpbbbffphMpffp",
-            "DDpdpDddsdsddddddffhhpwff",
-            "phfsspsssssssssssdfMMMwww"
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttTuTuttttsssttttTtTuTTTTTttttttttttttttt",
+            "ttttttttttttttTtwthTfpssspfttththuMTptwtttttttttttttt",
+            "ttttttttttttttbwbwhhpfpssswwwwwfpMMwffwtttttttttttttt",
+            "ttttttttttttttspbbhpspsssppwbwhfpMhwbfstttttttttttttt",
+            "ttttttttttttttssspppsssssssphwhpMMhhbsstttttttttttttt",
+            "ttttttttttttttpsssssssssssshhhphhMhwwwhtttttttttttttt",
+            "tttttttttttttthhhsssssssppfspwwpphpwwwMtttttttttttttt",
+            "tttttttttttttthhhppfhpwwwfwppMMwMffwwhptttttttttttttt",
+            "ttttttttttttttphpfwwwwwhwwwfpppMffMwMMMtttttttttttttt",
+            "ttttttttttttttpphpfwwhpppwpphpppMMdwdddtttttttttttttt",
+            "ttttttttttttttpphffwwwwpwwphhhfhfddddddtttttttttttttt",
+            "ttttttttttttttMhffffwwwpwwwwwffpffDDpDftttttttttttttt",
+            "tttttttttttttthhhppsphfpbbpwwfwfMfhfffptttttttttttttt",
+            "ttttttttttttttdDmDdmmppswwwppppwMMMMhpptttttttttttttt",
+            "ttttttttttttttddddddmMpwwMwwwspppMMhfpftttttttttttttt",
+            "ttttttttttttttDdddDmMpwwdwpbbbffphMpffptttttttttttttt",
+            "ttttttttttttttDDpdpDddsdsddddddffhhpwfftttttttttttttt",
+            "ttttttttttttttphfsspsssssssssssdfMMMwwwtttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt"
     };
 
     private static Map<Point, HexContents> makeHexContents() {
         Map<Point, HexContents> contents = new HashMap<>();
-        addRoadsAndRivers(contents,12, 0, SOUTH_WEST | SOUTH_EAST, 0);
-        addRuins(contents, 14, 0, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents,16, 0, SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);
+        addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,30, 10, SOUTH_WEST | SOUTH_EAST, 0);
 
-        addTemple(contents, 1, 1, "Crystal");
-        addTown(contents, 7, 1, new EastDurhamTown(), 0, SOUTH_EAST);
-        addTown(contents, 11, 1, new CapePaxtonTown(), NORTH, SOUTH_WEST);
-        addRoadsAndRivers(contents, 13, 1, NORTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 15, 1, NORTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents,17, 1, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents,18, 1, NORTH_WEST | SOUTH, 0);
-        addCastle(contents, 22, 1, new ArkvaleCastle(), SOUTH, 0);
+        addTemple(contents, 15, 11, "Crystal");
+        addTown(contents, 21, 11, new EastDurhamTown(), 0, SOUTH_EAST);
+        addTown(contents, 25, 11, new CapePaxtonTown(), NORTH, SOUTH_WEST);
+        addRoadsAndRivers(contents, 27, 11, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 29, 11, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents,31, 11, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,32, 11, NORTH_WEST | SOUTH, 0);
+        addCastle(contents, 36, 11, new ArkvaleCastle(), SOUTH, 0);
 
-        addTown(contents, 18, 2, new UrnTownTown(), NORTH | SOUTH, 0);
-        addRoadsAndRivers(contents,22, 2, SOUTH_WEST | NORTH, 0);
+        addTown(contents, 32, 12, new UrnTownTown(), NORTH | SOUTH, 0);
+        addRoadsAndRivers(contents,36, 12, SOUTH_WEST | NORTH, 0);
 
-        addCastle(contents, 1, 3, new BogdownCastle(), 0, 0);
-        addRuins(contents, 5, 3, "Urh", 0, 0);
-        addInn(contents, 12, 3, "Waterfront Inn", SOUTH_EAST, 0);
-        addRoadsAndRivers(contents,18, 3, NORTH | NORTH_EAST, 0);
-        addRoadsAndRivers(contents,19, 3, SOUTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents,20, 3, NORTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents,21, 3, SOUTH_WEST | NORTH_EAST, 0);
+        addCastle(contents, 15, 13, new BogdownCastle(), 0, 0);
+        addRuins(contents, 19, 13, "Urh", 0, 0);
+        addInn(contents, 26, 13, "Waterfront Inn", SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,32, 13, NORTH | NORTH_EAST, 0);
+        addRoadsAndRivers(contents,33, 13, SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,34, 13, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents,35, 13, SOUTH_WEST | NORTH_EAST, 0);
 
-        addRoadsAndRivers(contents,13, 4, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents,14, 4, NORTH_WEST | SOUTH, 0);
+        addRoadsAndRivers(contents,27, 14, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,28, 14, NORTH_WEST | SOUTH, 0);
 
 
-        addTown(contents, 0, 5, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents,14, 5, SOUTH | NORTH, 0);
+        addTown(contents, 14, 15, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents,28, 15, SOUTH | NORTH, 0);
 
-        addRoadsAndRivers(contents, 1, 6, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 2, 6, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 14, 6, SOUTH | NORTH, SOUTH_WEST | SOUTH | NORTH_WEST);
-        addTown(contents, 20, 6, new AshtonshireTown(), 0, 0);
+        addRoadsAndRivers(contents, 15, 16, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 16, 16, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 28, 16, SOUTH | NORTH, SOUTH_WEST | SOUTH | NORTH_WEST);
+        addTown(contents, 34, 16, new AshtonshireTown(), 0, 0);
 
-        addRoadsAndRivers(contents, 0, 7, 0, SOUTH | SOUTH_EAST);
-        addRoadsAndRivers(contents, 1, 7, 0, SOUTH);
-        addRoadsAndRivers(contents, 2, 7, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
-        addRoadsAndRivers(contents, 3, 7, NORTH_WEST | SOUTH_EAST, SOUTH | SOUTH_EAST);
-        addTown(contents, 4, 7, new EbonshireTown(), NORTH_WEST, NORTH_WEST);
-        addTown(contents, 13, 7, new LowerThelnTown(), 0, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 14, 7, NORTH_WEST | NORTH | SOUTH, NORTH | NORTH_EAST | SOUTH_EAST);
-        addRoadsAndRivers(contents, 15, 7, 0, SOUTH_WEST);
-        addRoadsAndRivers(contents, 16, 7, 0, SOUTH);
-        addTemple(contents, 24, 7, "the Peaks");
+        addRoadsAndRivers(contents, 14, 17, 0, SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 15, 17, 0, SOUTH);
+        addRoadsAndRivers(contents, 16, 17, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 17, 17, NORTH_WEST | SOUTH_EAST, SOUTH | SOUTH_EAST);
+        addTown(contents, 18, 17, new EbonshireTown(), NORTH_WEST, NORTH_WEST);
+        addTown(contents, 27, 17, new LowerThelnTown(), 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 28, 17, NORTH_WEST | NORTH | SOUTH, NORTH | NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 29, 17, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 30, 17, 0, SOUTH);
+        addTemple(contents, 38, 17, "the Peaks");
 
-        addRoadsAndRivers(contents, 0, 8, 0, NORTH_WEST | NORTH);
-        addRoadsAndRivers(contents, 1, 8, 0, NORTH_WEST | NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 2, 8, 0, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 3, 8, 0, NORTH_WEST | NORTH | SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 4, 8, 0, SOUTH_WEST);
-        addRoadsAndRivers(contents, 14, 8, NORTH | SOUTH_WEST, NORTH_EAST);
-        addRoadsAndRivers(contents, 15, 8, 0, SOUTH_WEST | SOUTH | SOUTH_EAST | NORTH_WEST);
-        addRoadsAndRivers(contents, 16, 8, 0, NORTH_WEST | NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 17, 8, 0, SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 18, 8, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 14, 18, 0, NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 15, 18, 0, NORTH_WEST | NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 16, 18, 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 17, 18, 0, NORTH_WEST | NORTH | SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 18, 18, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 28, 18, NORTH | SOUTH_WEST, NORTH_EAST);
+        addRoadsAndRivers(contents, 29, 18, 0, SOUTH_WEST | SOUTH | SOUTH_EAST | NORTH_WEST);
+        addRoadsAndRivers(contents, 30, 18, 0, NORTH_WEST | NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 31, 18, 0, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 32, 18, 0, SOUTH_WEST);
 
-        addTemple(contents, 0, 9, "the Plains");
-        addRoadsAndRivers(contents, 3, 9, 0, NORTH | NORTH_EAST | SOUTH_EAST);
-        addRoadsAndRivers(contents, 4, 9, 0, NORTH_WEST | SOUTH_WEST);
-        addRoadsAndRivers(contents, 8, 9, SOUTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 9, 9, SOUTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 10, 9, NORTH_WEST | SOUTH_EAST, 0);
-        addInn(contents,12,9, "Crossroads Inn", NORTH_EAST | SOUTH_EAST | SOUTH | SOUTH_WEST, 0);
-        addRoadsAndRivers(contents, 13, 9, SOUTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 15, 9, 0, NORTH);
-        addRoadsAndRivers(contents, 17, 9, 0, NORTH | SOUTH_EAST | NORTH_EAST);
-        addRoadsAndRivers(contents, 18, 9, 0, SOUTH_WEST | NORTH_WEST);
-        addRuins(contents, 24, 9, "Ronk", 0, 0);
+        addTemple(contents, 14, 19, "the Plains");
+        addRoadsAndRivers(contents, 17, 19, 0, NORTH | NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 18, 19, 0, NORTH_WEST | SOUTH_WEST);
+        addRoadsAndRivers(contents, 22, 19, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 23, 19, SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 24, 19, NORTH_WEST | SOUTH_EAST, 0);
+        addInn(contents,26,19, "Crossroads Inn", NORTH_EAST | SOUTH_EAST | SOUTH | SOUTH_WEST, 0);
+        addRoadsAndRivers(contents, 27, 19, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 29, 19, 0, NORTH);
+        addRoadsAndRivers(contents, 31, 19, 0, NORTH | SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 32, 19, 0, SOUTH_WEST | NORTH_WEST);
+        addRuins(contents, 38, 19, "Ronk", 0, 0);
 
-        addRoadsAndRivers(contents, 3, 10, 0, NORTH_EAST | SOUTH_EAST);
-        addRoadsAndRivers(contents, 4, 10, 0, NORTH_WEST | SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 6, 10, SOUTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 7, 10, SOUTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 12, 10, NORTH | SOUTH, 0);
-        addRoadsAndRivers(contents, 11, 10, NORTH_EAST | NORTH_WEST, 0);
-        addRoadsAndRivers(contents, 13, 10, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 14, 10, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 17, 10, 0, SOUTH_EAST | NORTH_EAST);
-        addRoadsAndRivers(contents, 18, 10, 0, SOUTH_WEST | NORTH_WEST);
+        addRoadsAndRivers(contents, 17, 20, 0, NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 18, 20, 0, NORTH_WEST | SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 20, 20, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 21, 20, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 25, 20, NORTH_EAST | NORTH_WEST, 0);
+        addRoadsAndRivers(contents, 26, 20, NORTH | SOUTH, 0);
+        addRoadsAndRivers(contents, 27, 20, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 28, 20, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 31, 20, 0, SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 32, 20, 0, SOUTH_WEST | NORTH_WEST);
 
-        addRoadsAndRivers(contents, 2, 11, 0, SOUTH_EAST);
-        addRoadsAndRivers(contents, 3, 11, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
-        addRoadsAndRivers(contents, 4, 11, SOUTH_WEST | NORTH_EAST, NORTH_WEST | NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 5, 11, SOUTH_WEST | NORTH_EAST, SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 6, 11, 0, SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 12, 11, NORTH | SOUTH, 0);
-        addRoadsAndRivers(contents, 15, 11, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 16, 11, NORTH_WEST | NORTH_EAST, 0);
-        addTown(contents, 17, 11, new UpperThelnTown(), SOUTH_WEST, NORTH_EAST);
-        addTown(contents, 22, 11, new SaintQuellinTown(), SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 16, 21, 0, SOUTH_EAST);
+        addRoadsAndRivers(contents, 17, 21, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 18, 21, SOUTH_WEST | NORTH_EAST, NORTH_WEST | NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 19, 21, SOUTH_WEST | NORTH_EAST, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 20, 21, 0, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 26, 21, NORTH | SOUTH, 0);
+        addRoadsAndRivers(contents, 29, 21, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 30, 21, NORTH_WEST | NORTH_EAST, 0);
+        addTown(contents, 31, 21, new UpperThelnTown(), SOUTH_WEST, NORTH_EAST);
+        addTown(contents, 36, 21, new SaintQuellinTown(), SOUTH_EAST, 0);
 
-        addRoadsAndRivers(contents, 2, 12, 0, NORTH_EAST | SOUTH_EAST);
-        addTown(contents, 3, 12, new LittleErindeTown(), NORTH_EAST | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);
-        addRoadsAndRivers(contents, 4, 12, NORTH_WEST | SOUTH, 0);
-        addRoadsAndRivers(contents, 6, 12, 0, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 7, 12, 0, SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 8, 12, 0, SOUTH_WEST | SOUTH);
-        addTown(contents, 9, 12, new AckervilleTown(), 0, SOUTH);
-        addRoadsAndRivers(contents, 12, 12, NORTH | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 23, 12, SOUTH_EAST | NORTH_WEST, 0);
-        addRoadsAndRivers(contents, 24, 12, SOUTH | NORTH_WEST, 0);
+        addRoadsAndRivers(contents, 16, 22, 0, NORTH_EAST | SOUTH_EAST);
+        addTown(contents, 17, 22, new LittleErindeTown(), NORTH_EAST | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 18, 22, NORTH_WEST | SOUTH, 0);
+        addRoadsAndRivers(contents, 20, 22, 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 21, 22, 0, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 22, 22, 0, SOUTH_WEST | SOUTH);
+        addTown(contents, 23, 22, new AckervilleTown(), 0, SOUTH);
+        addRoadsAndRivers(contents, 26, 22, NORTH | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 37, 22, SOUTH_EAST | NORTH_WEST, 0);
+        addRoadsAndRivers(contents, 38, 22, SOUTH | NORTH_WEST, 0);
 
-        addRoadsAndRivers(contents, 3, 13, 0, NORTH_WEST);
-        addRoadsAndRivers(contents, 4, 13, NORTH | SOUTH_WEST, 0);
-        addRoadsAndRivers(contents, 7, 13, 0, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 8, 13, 0, NORTH);
-        addRoadsAndRivers(contents, 13, 13, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 14, 13, NORTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 15, 13, SOUTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 16, 13, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 24, 13, SOUTH_WEST | NORTH, 0);
+        addRoadsAndRivers(contents, 17, 23, 0, NORTH_WEST);
+        addRoadsAndRivers(contents, 18, 23, NORTH | SOUTH_WEST, 0);
+        addRoadsAndRivers(contents, 21, 23, 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 22, 23, 0, NORTH);
+        addRoadsAndRivers(contents, 27, 23, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 28, 23, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 29, 23, SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 30, 23, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 38, 23, SOUTH_WEST | NORTH, 0);
 
-        addRuins(contents, 0, 14, "Zand", 0, 0);
-        addRoadsAndRivers(contents, 12, 14, 0, SOUTH);
-        addRoadsAndRivers(contents, 16, 14, 0, SOUTH_WEST);
-        addRoadsAndRivers(contents, 17, 14, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 18, 14, NORTH_WEST | SOUTH, 0);
-        addRoadsAndRivers(contents, 22, 14, SOUTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 23, 14, SOUTH_WEST | NORTH_EAST, 0);
+        addRuins(contents, 14, 24, "Zand", 0, 0);
+        addRoadsAndRivers(contents, 26, 24, 0, SOUTH);
+        addRoadsAndRivers(contents, 30, 24, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 31, 24, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 32, 24, NORTH_WEST | SOUTH, 0);
+        addRoadsAndRivers(contents, 36, 24, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 37, 24, SOUTH_WEST | NORTH_EAST, 0);
 
-        addRoadsAndRivers(contents, 4, 15, SOUTH_WEST | SOUTH_EAST, 0);
-        addInn(contents, 7, 15, "Hunter's Inn", SOUTH, 0);
-        addTemple(contents, 10, 15, "the Surf");
-        addTown(contents, 12, 15, new SouthMeadhomeTown(), 0, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 13, 15, 0, SOUTH_WEST | SOUTH);
-        addRoadsAndRivers(contents, 14, 15, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
-        addRoadsAndRivers(contents, 15, 15, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
-        addRoadsAndRivers(contents, 16, 15, 0, NORTH_WEST);
-        addTown(contents, 18, 15, new SheffieldTown(), NORTH, 0);
-        addCastle(contents, 21, 15, new ArdhCastle(), NORTH_EAST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 22, 15, NORTH_WEST | SOUTH_EAST, 0);
-        addTown(contents, 24, 15, new BullsVilleTown(), SOUTH_WEST, 0);
+        addRoadsAndRivers(contents, 18, 25, SOUTH_WEST | SOUTH_EAST, 0);
+        addInn(contents, 21, 25, "Hunter's Inn", SOUTH, 0);
+        addTemple(contents, 24, 25, "the Surf");
+        addTown(contents, 26, 25, new SouthMeadhomeTown(), 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 27, 25, 0, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 28, 25, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 29, 25, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 30, 25, 0, NORTH_WEST);
+        addTown(contents, 32, 25, new SheffieldTown(), NORTH, 0);
+        addCastle(contents, 35, 25, new ArdhCastle(), NORTH_EAST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 36, 25, NORTH_WEST | SOUTH_EAST, 0);
+        addTown(contents, 38, 25, new BullsVilleTown(), SOUTH_WEST, 0);
 
-        addCastle(contents, 2, 16, new SunblazeCastle(), NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 3, 16, SOUTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 5, 16, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 6, 16, NORTH_WEST | NORTH_EAST, 0);
-        addRoadsAndRivers(contents, 7, 16, SOUTH_WEST | NORTH, 0);
-        addRoadsAndRivers(contents, 13, 16, 0, NORTH | NORTH_EAST | SOUTH_EAST);
-        addRoadsAndRivers(contents, 14, 16, 0, NORTH_WEST | NORTH);
-        addRoadsAndRivers(contents, 15, 16, 0, NORTH_WEST | NORTH);
-        addRoadsAndRivers(contents, 23, 16, NORTH_WEST | NORTH_EAST, 0);
+        addCastle(contents, 16, 26, new SunblazeCastle(), NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 17, 26, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 19, 26, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 20, 26, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 21, 26, SOUTH_WEST | NORTH, 0);
+        addRoadsAndRivers(contents, 27, 26, 0, NORTH | NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 28, 26, 0, NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 29, 26, 0, NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
 
 
         return contents;
@@ -220,8 +247,9 @@ public class WorldBuilder {
         Map<Point, HexContents> hexContents = makeHexContents();
         for (int y = 0; y < worldTemplate.length; ++y) {
             for (int x = 0; x < WORLD_WIDTH; ++x) {
+                int state = getStateForXY(x, y);
                 HexContents contents = hexContents.get(new Point(x, y));
-                hexes[x][y] = makeHex(worldTemplate[y].charAt(x), contents);
+                hexes[x][y] = makeHex(worldTemplate[y].charAt(x), contents, state);
                 if (contents != null && contents.location != null) {
                     contents.location.setHex(hexes[x][y]);
                 }
@@ -231,6 +259,21 @@ public class WorldBuilder {
         makeSeaBorders(hexes);
 
         return hexes;
+    }
+
+    public static int getStateForXY(int x, int y) {
+        int state = ORIGINAL;
+        if (x < EXTRA_WIDTH) {
+            state |= EXPAND_WEST;
+        } else if (x >= WORLD_WIDTH - EXTRA_WIDTH) {
+            state |= EXPAND_EAST;
+        }
+        if (y < EXTRA_HEIGHT) {
+            state |= EXPAND_NORTH;
+        } else if (y >= WORLD_HEIGHT - EXTRA_HEIGHT) {
+            state |= EXPAND_SOUTH;
+        }
+        return state;
     }
 
     private static void makeSeaBorders(WorldHex[][] hexes) {
@@ -263,7 +306,7 @@ public class WorldBuilder {
         }
     }
 
-    private static WorldHex makeHex(char c, HexContents contents) {
+    private static WorldHex makeHex(char c, HexContents contents, int state) {
         int roads = 0;
         int rivers = 0;
         HexLocation location = null;
@@ -273,31 +316,31 @@ public class WorldBuilder {
             location = contents.location;
         }
         if (c == 't') {
-            return new TundraHex(roads, rivers, location);
+            return new TundraHex(roads, rivers, location, state);
         } else if (c == 'T') {
-            return new TundraMountain(roads, rivers);
+            return new TundraMountain(roads, rivers, state);
         } else if (c == 'u') {
-            return new TundraHills(roads, rivers);
+            return new TundraHills(roads, rivers, state);
         } else if (c == 's') {
-            return new SeaHex();
+            return new SeaHex(state);
         } else if (c == 'w') {
-            return new WoodsHex(roads, rivers);
+            return new WoodsHex(roads, rivers, state);
         } else if (c == 'p') {
-            return new PlainsHex(roads, rivers, location);
+            return new PlainsHex(roads, rivers, location, state);
         } else if (c == 'b') {
-            return new SwampHex(roads, rivers);
+            return new SwampHex(roads, rivers, state);
         } else if (c == 'M') {
-            return new MountainHex(roads, rivers);
+            return new MountainHex(roads, rivers, state);
         } else if (c == 'm') {
-            return new DesertMountain(roads, rivers);
+            return new DesertMountain(roads, rivers, state);
         } else if (c == 'h') {
-            return new HillsHex(roads, rivers);
+            return new HillsHex(roads, rivers, state);
         } else if (c == 'f') {
-            return new FieldsHex(roads, rivers);
+            return new FieldsHex(roads, rivers, state);
         } else if (c == 'd') {
-            return new DesertHex(roads, rivers, location);
+            return new DesertHex(roads, rivers, location, state);
         } else if (c == 'D') {
-            return new DesertHills(roads, rivers);
+            return new DesertHills(roads, rivers, state);
         }
         throw new IllegalStateException("No hex can be created for token '" + c + "'");
     }

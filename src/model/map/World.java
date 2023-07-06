@@ -19,10 +19,12 @@ public class World implements Serializable {
     private WorldHex[][] hexes;
     private ViewPointMarker cursor = new HexCursorMarker();
     private Sprite alternativeAvatar = null;
+    private int currentState;
 
     public World(WorldHex[][] hexes) {
         this.hexes = hexes;
         waterWays = makeWaterWays();
+        currentState = WorldBuilder.ORIGINAL;
     }
 
     public static Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
@@ -105,12 +107,14 @@ public class World implements Serializable {
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
                            Point partyPosition, int mapYRange, int yOffset, int flag) {
         if (hexes[x][y] != null) {
-            if (screenY == yOffset - 2) {
-                hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
-            } else if (screenY == yOffset - 2 + 4 * (mapYRange-1) + 2) {
-                hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY, flag);
-            } else {
-                hexes[x][y].drawYourself(screenHandler, screenX, screenY, flag);
+            if (currentState == 0 || (hexes[x][y].getState() & currentState) > 0) {
+                if (screenY == yOffset - 2) {
+                    hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
+                } else if (screenY == yOffset - 2 + 4 * (mapYRange - 1) + 2) {
+                    hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY, flag);
+                } else {
+                    hexes[x][y].drawYourself(screenHandler, screenX, screenY, flag);
+                }
             }
         }
     }

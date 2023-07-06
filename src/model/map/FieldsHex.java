@@ -16,8 +16,8 @@ public class FieldsHex extends WorldHex {
 
     private static SubView subView =  new ImageSubView("thefields", "THE FIELDS", "You are traveling in the farmlands.", true);
 
-    public FieldsHex(int roads, int rivers) {
-        super(MyColors.LIGHT_YELLOW, roads, rivers, new FieldsLocation());
+    public FieldsHex(int roads, int rivers, int state) {
+        super(MyColors.LIGHT_YELLOW, roads, rivers, new FieldsLocation(), state);
     }
 
     @Override

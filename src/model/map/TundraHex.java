@@ -16,8 +16,8 @@ public class TundraHex extends WorldHex {
 
     private static SubView subView = new ImageSubView("thetundra", "THE TUNDRA", "You are surrounded by a frozen landscape.", true);
 
-    public TundraHex(int roads, int rivers, HexLocation location) {
-        super(MyColors.WHITE, roads, rivers, location);
+    public TundraHex(int roads, int rivers, HexLocation location, int worldState) {
+        super(MyColors.WHITE, roads, rivers, location, worldState);
     }
 
     @Override

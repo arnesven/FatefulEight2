@@ -24,8 +24,8 @@ public class CaveHex extends WorldHex {
     private static Random random;
     public static final MyColors GROUND_COLOR = MyColors.GRAY_RED;
 
-    public CaveHex(int roads, MyColors color) {
-        super(color, roads, 0x0, randomLocation());
+    public CaveHex(int roads, MyColors color, int state) {
+        super(color, roads, 0x0, randomLocation(), state);
     }
 
     private static HexLocation randomLocation() {
@@ -35,8 +35,8 @@ public class CaveHex extends WorldHex {
         return null;
     }
 
-    public CaveHex(int roads) {
-        this(roads, GROUND_COLOR);
+    public CaveHex(int roads, int state) {
+        this(roads, GROUND_COLOR, state);
     }
 
     public static void setRandom(Random rnd) {

@@ -23,8 +23,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class WorldHex implements Serializable {
+public abstract class WorldHex {
 
+    private final int state;
     private MyColors color;
     private HexSprite upperLeft;
     private HexSprite upperRight;
@@ -37,12 +38,13 @@ public abstract class WorldHex implements Serializable {
     private List<WaterPath> waterPaths = new ArrayList<>();
 
 
-    public WorldHex(MyColors color, int roads, int rivers, HexLocation location) {
+    public WorldHex(MyColors color, int roads, int rivers, HexLocation location, int worldState) {
         this.color = color;
         this.roads = roads;
         this.rivers = rivers;
         setHexSprites();
         this.hexLocation = location;
+        this.state = worldState;
     }
 
     public void setColor(MyColors col) {
@@ -98,10 +100,6 @@ public abstract class WorldHex implements Serializable {
 
     protected HexSprite getLowerRightSprite(MyColors color, int roads, int rivers) {
         return  new HexSprite(getTerrainName()+"lr", 0x30 + ((roads / 16) % 4) * 4 + (rivers / 16) % 4, color);
-    }
-
-    public WorldHex(MyColors color) {
-        this(color, 0, 0, null);
     }
 
     public void drawYourself(ScreenHandler screenHandler, int x, int y, int flag) {
@@ -359,5 +357,9 @@ public abstract class WorldHex implements Serializable {
         return MyRandom.sample(List.of(
                 new RationsGoneBadEvent(model)
         ));
+    }
+
+    public int getState() {
+        return state;
     }
 }
