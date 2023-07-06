@@ -27,7 +27,7 @@ public class TravelState extends GameState {
 
         Point selectedDir = selectDirection(model, mapSubView);
         Point newPosition = new Point(model.getParty().getPosition());
-        World.move(newPosition, selectedDir.x, selectedDir.y);
+        model.getWorld().move(newPosition, selectedDir.x, selectedDir.y);
 
         if (checkRiverCrossing(model, mapSubView)) {
             println("The party comes to a river.");
@@ -58,7 +58,7 @@ public class TravelState extends GameState {
 
     private void moveToHex(Model model, Point selectedDir, MapSubView mapSubView) {
         model.getCurrentHex().travelFrom(model);
-        model.getParty().move(selectedDir.x, selectedDir.y);
+        model.getParty().move(model, selectedDir.x, selectedDir.y);
         if (model.getParty().getPreviousPosition().getLocation() instanceof UrbanLocation &&
                 model.getCurrentHex().hasRoad()) {
             model.getParty().setOnRoad(true);

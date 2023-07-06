@@ -128,7 +128,7 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
 
         private void moveCursor(int dx, int dy) {
             if (AlternativeTravelEvent.this.isSelectableDestination(startPoint, cursorPos, dx, dy)) {
-                World.move(cursorPos, dx, dy);
+                getModel().getWorld().move(cursorPos, dx, dy);
             }
         }
 

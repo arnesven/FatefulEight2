@@ -48,7 +48,7 @@ public class RapidsEvent extends RiverEvent {
             List<Point> result = new ArrayList<>();
             for (Point dir : mapSubView.getDirections(model)) {
                 Point p = new Point(model.getParty().getPosition());
-                World.move(p, dir.x, dir.y);
+                model.getWorld().move(p, dir.x, dir.y);
                 if (model.getWorld().getHex(p).getRivers() != 0) {
                     result.add(dir);
                 }

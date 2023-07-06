@@ -345,8 +345,24 @@ public class WorldBuilder {
         throw new IllegalStateException("No hex can be created for token '" + c + "'");
     }
 
-
-
+    public static Rectangle getWorldBounds(int currentState) {
+        Rectangle bounds = new Rectangle(EXTRA_WIDTH, EXTRA_HEIGHT, WORLD_WIDTH - 2*EXTRA_WIDTH, WORLD_HEIGHT - 2*EXTRA_HEIGHT);
+        if ((currentState & EXPAND_WEST) > 0) {
+            bounds.x -= EXTRA_WIDTH;
+            bounds.width += EXTRA_WIDTH;
+        }
+        if ((currentState & EXPAND_EAST) > 0) {
+            bounds.width += EXTRA_WIDTH;
+        }
+        if ((currentState & EXPAND_NORTH) > 0) {
+            bounds.y -= EXTRA_HEIGHT;
+            bounds.height += EXTRA_HEIGHT;
+        }
+        if ((currentState & EXPAND_SOUTH) > 0) {
+            bounds.height += EXTRA_HEIGHT;
+        }
+        return bounds;
+    }
 
 
     private static class HexContents {

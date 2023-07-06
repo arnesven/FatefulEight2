@@ -36,7 +36,7 @@ public class RunAwayState extends TravelState {
 
     private boolean movesOutsideMap(Point position, Point dir) {
         Point p2 = new Point(position);
-        World.move(p2, dir.x, dir.y);
+        getModel().getWorld().move(p2, dir.x, dir.y);
         return (p2.x == position.x && p2.y == position.y);
     }
 

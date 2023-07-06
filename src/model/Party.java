@@ -112,9 +112,9 @@ public class Party implements Serializable {
         return position;
     }
 
-    public void move(int dx, int dy) {
+    public void move(Model model, int dx, int dy) {
         this.previousPosition = new Point(position);
-        World.move(position, dx, dy);
+        model.getWorld().move(position, dx, dy);
     }
 
     public void setPosition(Point newPosition) {

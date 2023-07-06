@@ -68,19 +68,19 @@ public class FullMapView extends GameView {
 
     public boolean handleMapMovement(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            moveCursor(0, 1);
+            model.getWorld().move(cursorPos, 0, 1);
             madeChanges();
             return true;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            moveCursor(1, 0);
+            model.getWorld().move(cursorPos,1, 0);
             madeChanges();
             return true;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            moveCursor(-1, 0);
+            model.getWorld().move(cursorPos,-1, 0);
             madeChanges();
             return true;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            moveCursor(0, -1);
+            model.getWorld().move(cursorPos,0, -1);
             madeChanges();
             return true;
         }
@@ -92,9 +92,5 @@ public class FullMapView extends GameView {
         }
 
         return false;
-    }
-
-    private void moveCursor(int dx, int dy) {
-        World.move(cursorPos, dx, dy);
     }
 }

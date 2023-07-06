@@ -7,9 +7,10 @@ import view.ScreenHandler;
 import view.sprites.Sprite;
 import view.subviews.SubView;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.*;
 import java.io.Serializable;
+import java.util.List;
 
 public class World implements Serializable {
 
@@ -107,7 +108,7 @@ public class World implements Serializable {
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
                            Point partyPosition, int mapYRange, int yOffset, int flag) {
         if (hexes[x][y] != null) {
-            if (currentState == 0 || (hexes[x][y].getState() & currentState) > 0) {
+            if (hexes[x][y].getState() == 0 || (hexes[x][y].getState() & currentState) > 0) {
                 if (screenY == yOffset - 2) {
                     hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
                 } else if (screenY == yOffset - 2 + 4 * (mapYRange - 1) + 2) {
@@ -150,17 +151,18 @@ public class World implements Serializable {
     }
 
 
-    public static void move(Point position, int dx, int dy) {
-        if (position.x == 0 && dx < 0) {
+    public void move(Point position, int dx, int dy) {
+        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
+        if (position.x == bounds.x && dx < 0) {
             dx = 0;
         }
-        if (position.x == WorldBuilder.WORLD_WIDTH - 1 && dx > 0) {
+        if (position.x == bounds.x + bounds.width - 1 && dx > 0) {
             dx = 0;
         }
-        if (position.y == 0 && dy < 0) {
+        if (position.y == bounds.y && dy < 0) {
             dy = 0;
         }
-        if (position.y == WorldBuilder.WORLD_HEIGHT - 1 && dy > 0) {
+        if (position.y == bounds.y + bounds.height - 1 && dy > 0) {
             dy = 0;
         }
         position.x += dx;
@@ -445,7 +447,7 @@ public class World implements Serializable {
 
         for (WaterPath wp : paths) {
             Point current = new Point(x, y);
-            World.move(current, direction.x, direction.y);
+            move(current, direction.x, direction.y);
             Point target = getPositionForHex(wp.getHex());
             if (wp.getDirection() == opDir && current.x == target.x && current.y == target.y) {
                 //System.out.println("Found opposing water path at " + x + "," + y);
