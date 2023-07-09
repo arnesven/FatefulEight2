@@ -66,6 +66,11 @@ public class SimpleMessageView extends SelectableListMenu {
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);
             }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return true;
+            }
         });
         return list;
     }
