@@ -120,6 +120,10 @@ public class InitialStoryPart extends StoryPart {
         return spawnData.getLibraryTown();
     }
 
+    public int getExpandDirection() {
+        return spawnData.getExpandDirection();
+    }
+
     public class FirstMainStoryTask extends MainStoryTask {
         private final GameCharacter whosUncle;
         private final String town;

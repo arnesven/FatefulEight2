@@ -14,4 +14,8 @@ public interface JournalEntry {
     static void printJournalUpdateMessage(Model model) {
         model.getLog().addAnimated("!Your journal has been updated!\n");
     }
+
+    static void printMapExpandedMessage(Model model) {
+        model.getLog().addAnimated("!Your map has been expanded! You should check the map view.\n");
+    }
 }

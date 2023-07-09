@@ -73,6 +73,7 @@ public class Model {
             initialize();
             subView = new EmptySubView();
             gameData = readGameData(filename);
+            setWorldState(gameData.worldState);
             caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
             state = getCurrentHex().getDailyActionState(this);
             System.out.println("Loading from file, setting state to " + state);
@@ -431,5 +432,10 @@ public class Model {
             currState++;
         }
         this.world.setCurrentState(currState);
+    }
+
+    public void setWorldState(int worldState) {
+        gameData.worldState = worldState;
+        this.world.setCurrentState(gameData.worldState);
     }
 }

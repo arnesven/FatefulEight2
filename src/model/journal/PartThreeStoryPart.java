@@ -2,10 +2,12 @@ package model.journal;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.map.CastleLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.quests.FrogmenProblemQuest;
+import model.quests.HelpWillisQuest;
 import model.quests.Quest;
 import model.quests.TroubleInTheLibraryQuest;
 import model.states.DailyEventState;
@@ -32,10 +34,12 @@ public class PartThreeStoryPart extends StoryPart {
     private static final int TALK_TO_WILLIS_STEP = 1;
     private static final int DO_QUEST_STEP = 2;
     private static final int QUEST_COMPLETED_STEP = 3;
+    private static final int LIBRARY_CLEANED = 4;
     private final String castleName;
     private final String libraryTown;
 
     private int internalStep = INITIAL_STEP;
+    private boolean helpOffered = false;
 
     public PartThreeStoryPart(StoryPart previous, String castleName, String libraryTown) {
         this.previousStoryPart = previous;
@@ -88,12 +92,15 @@ public class PartThreeStoryPart extends StoryPart {
         if (!previousStoryPart.isCompleted()) {
             previousStoryPart.addQuests(model, quests);
         } else {
-            if (internalStep == DO_QUEST_STEP) {
-                if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
-                    TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
-                    if (loc.getName().equals(libraryTown)) {
-                        GameCharacter willis =  model.getMainStory().getWillisCharacter();
+            if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
+                TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
+                if (loc.getName().equals(libraryTown)) {
+                    GameCharacter willis =  model.getMainStory().getWillisCharacter();
+                    if (internalStep == DO_QUEST_STEP) {
                         quests.add(getQuestAndSetPortrait(TroubleInTheLibraryQuest.QUEST_NAME, willis.getAppearance(),
+                                willis.getFirstName()));
+                    } else if (internalStep == LIBRARY_CLEANED && helpOffered) {
+                        quests.add(getQuestAndSetPortrait(HelpWillisQuest.QUEST_NAME, willis.getAppearance(),
                                 willis.getFirstName()));
                     }
                 }
@@ -105,12 +112,12 @@ public class PartThreeStoryPart extends StoryPart {
 
     @Override
     public StoryPart transition(Model model) {
-        return null;
+        return new PartFourStoryPart(this, castleName);
     }
 
     @Override
     protected boolean isCompleted() {
-        return internalStep > QUEST_COMPLETED_STEP;
+        return internalStep >= LIBRARY_CLEANED;
     }
 
     private class LibraryTask extends MainStoryTask {
@@ -128,7 +135,7 @@ public class PartThreeStoryPart extends StoryPart {
                 case DO_QUEST_STEP:
                     return "Complete the quest 'Trouble in the Library'.";
                 case QUEST_COMPLETED_STEP:
-                    return "Talk to Willis again.";
+                    return "Talk to Willis again (in the " + libraryTown + ").";
                 default:
                     return "You helped Willis shut down the automatons in the library.\n\nCompleted.";
             }
@@ -264,10 +271,70 @@ public class PartThreeStoryPart extends StoryPart {
                         "Warning. It is recommended that your party members " +
                                 "are at least level 3 before doing the quest " +
                                 "'Trouble in the Library'."));
-            } else {
+            } else if (internalStep == DO_QUEST_STEP) {
+                portraitSay("Find me again when you've taken care of the automatons in the library.");
+                leaderSay("Okay!");
+            } else if (internalStep == QUEST_COMPLETED_STEP) {
                 portraitSay("Oh good, you're here. Seems like you managed to get every last automaton shut down. " +
                         "Thank you so much. Now let's see what we can find out about the Quad.");
                 println("You accompany Willis into the library.");
+                portraitSay("What a mess...");
+                println("The library is in complete disarray. There are fallen bookcases and books scattered everywhere.");
+                portraitSay("We're not going to find anything in this chaos, I'm afraid.");
+                print("Do you offer to help Willis clean up the library? (Y/N) ");
+                if (!yesNoInput()) {
+                    leaderSay("We'll let you tidy up a bit then. See you later.");
+                    portraitSay("Oh, okay... bye.");
+                } else {
+                    leaderSay("It will go quickly if we all help out.");
+                    do {
+                        boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 1); // TODO: 14
+                        if (success) {
+                            break;
+                        }
+                        portraitSay("Thanks for helping out. It looks like there's still much more work to be done though.");
+                        print("Continue cleaning? (Y/N) ");
+                        if (!yesNoInput()) {
+                            leaderSay("We've got better things to do. See you later Willis.");
+                            portraitSay("Oh, okay... bye.");
+                            return;
+                        }
+                    } while (true);
+                    portraitSay("Wow, I think this place is cleaner now than it ever was! And I also located those books I was telling you about earlier.");
+                    println("Willis pulls out several dusty old tomes and opens one.");
+                    portraitSay("Ahh yes, here it is. In the year 2424, the Quad had taken over the reign of this kingdom " +
+                            "and ruled supreme and unchallenged.");
+                    portraitSay("But, as they say, 'power corrupts', and the Quad was no exception to this rule. There " +
+                            "was soon widespread rebellion in the land. At first, it seemed the Quad would manage to beat it down, but finally " +
+                            "they were driven out of the capital, banished to a remote land.");
+                    portraitSay("However, the Quad swore to return one day, even more powerful, and it was prophesied that " +
+                            "their spirits would live on and come back to seek revenge after two-hundred years.");
+                    leaderSay("Wait a minute... the year 2424... plus two-hundred... that's this year!");
+                    portraitSay("It would seem so. There's also a map here. It shows the location of the last known " +
+                            "stronghold of the Quad. Here, you take it.");
+                    leaderSay("Wow, this map shows a part of the world I've never seen before. And there's the stronghold. " +
+                            "Do you really think the Quad could have returned?");
+                    portraitSay("It's possible. You should inform the proper authorities about it.");
+                    leaderSay("Yes. I'm heading back to " + castleName + " to tell the " + castle.getLordTitle() + " about this.");
+                    model.getMainStory().increaseStep(model);
+                    model.getMainStory().transitionStep(model);
+                    JournalEntry.printMapExpandedMessage(model);
+                    model.setWorldState(model.getMainStory().getExpandDirection());
+                    portraitSay("Good idea. I'm going to try to get my machine working properly.");
+                    leaderSay("Do you really think that is such a good idea? What if those automatons go nuts again?");
+                    portraitSay("I have to. Don't you see how much help I need around here to keep everything in order?");
+                    print("Offer to help Willis with her problem? (Y/N) ");
+                    if (yesNoInput()) {
+                        leaderSay("Maybe we can help you somehow?");
+                        portraitSay("Oh I don't know. You're all caught up in that Quad business.");
+                        leaderSay("I'm sure we can spare a little time.");
+                        helpOffered = true;
+                        portraitSay("That's very generous of you. With your help, maybe we can find some good workers.");
+                    } else {
+                        leaderSay("You're right. Good luck with those crazy machines.");
+                        portraitSay("Uh, thanks. I guess.");
+                    }
+                }
             }
         }
 

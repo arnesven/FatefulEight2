@@ -31,4 +31,8 @@ public class MainStorySpawnLocation implements Serializable {
     }
 
     public String getLibraryTown() { return libraryTown; }
+
+    public int getExpandDirection() {
+        return mapExpand;
+    }
 }
