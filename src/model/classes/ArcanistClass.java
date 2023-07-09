@@ -31,7 +31,7 @@ public class ArcanistClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return null;
+        return new AvatarSprite(race, 0x27, MyColors.LIGHT_PINK, appearance.getNormalHair());
     }
 
     @Override
