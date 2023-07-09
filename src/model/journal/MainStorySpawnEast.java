@@ -1,5 +1,6 @@
 package model.journal;
 
+import model.map.WorldBuilder;
 import model.map.locations.ArkvaleCastle;
 import model.map.locations.AshtonshireTown;
 import model.map.locations.UrnTownTown;
@@ -11,6 +12,7 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
         super(new AshtonshireTown().getName(),
               new ArkvaleCastle().getName(),
               new Point(38, 11),
-              new UrnTownTown().getName());
+              new UrnTownTown().getName(),
+                WorldBuilder.EXPAND_EAST);
     }
 }

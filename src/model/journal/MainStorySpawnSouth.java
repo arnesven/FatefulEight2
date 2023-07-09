@@ -1,5 +1,6 @@
 package model.journal;
 
+import model.map.WorldBuilder;
 import model.map.locations.ArdhCastle;
 import model.map.locations.BullsVilleTown;
 import model.map.locations.SouthMeadhomeTown;
@@ -11,6 +12,7 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
         super(new SouthMeadhomeTown().getName(),
               new ArdhCastle().getName(),
               new Point(27, 21),
-              new BullsVilleTown().getName());
+              new BullsVilleTown().getName(),
+                WorldBuilder.EXPAND_SOUTH);
     }
 }

@@ -4,16 +4,18 @@ import java.awt.*;
 import java.io.Serializable;
 
 public class MainStorySpawnLocation implements Serializable {
+    private final int mapExpand;
     private String town;
     private String castle;
     private Point witch;
     private String libraryTown;
 
-    public MainStorySpawnLocation(String town, String castle, Point witchLocation, String libraryTown) {
+    public MainStorySpawnLocation(String town, String castle, Point witchLocation, String libraryTown, int expandedMapState) {
         this.town = town;
         this.castle = castle;
         this.witch = witchLocation;
         this.libraryTown = libraryTown;
+        this.mapExpand = expandedMapState;
     }
 
     public String getTown() {
