@@ -30,8 +30,8 @@ public class World implements Serializable {
 
     public Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
         Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
-        Interval xVals = calcXValues(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
-        Interval yVals = calcYValues(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
+        Interval xVals = calcInterval(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
+        Interval yVals = calcInterval(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
         int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
 
         int x = logicPosition.x;
@@ -58,8 +58,8 @@ public class World implements Serializable {
                              boolean avatarEnabled) {
         ScreenHandler screenHandler = model.getScreenHandler();
         Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
-        Interval xVals = calcXValues(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
-        Interval yVals = calcYValues(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
+        Interval xVals = calcInterval(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
+        Interval yVals = calcInterval(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
         int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
         screenHandler.clearSpace(startX, (DrawingArea.WINDOW_COLUMNS - startX),
                 yOffset, yOffset + mapYRange*4 - 2);
@@ -123,30 +123,17 @@ public class World implements Serializable {
         }
     }
 
-    private static Interval calcXValues(int x, int mapXRange, int min, int max) {
-        int xMin = x - mapXRange/2;
-        int xMax = x + mapXRange/2 - 1;
-        if (xMin < min) {
-            xMin = min;
-            xMax = min + mapXRange - 1;
-        } else if (xMax >= max) {
-            xMax = max - 1;
-            xMin = max - mapXRange;
+    private static Interval calcInterval(int t, int mapRange, int min, int max) {
+        int tMin = t - mapRange/2;
+        int tMax = t + mapRange/2 - 1;
+        if (tMin < min) {
+            tMin = min;
+            tMax = min + mapRange - 1;
+        } else if (tMax >= max) {
+            tMax = max - 1;
+            tMin = max - mapRange;
         }
-        return new Interval(xMin, xMax);
-    }
-
-    private static Interval calcYValues(int y, int mapYRange, int min, int max) {
-        int yMin = y - mapYRange/2;
-        int yMax = y + mapYRange/2 - 1;
-        if (yMin < min) {
-            yMin = min;
-            yMax = min + mapYRange - 1;
-        } else if (yMax >= max) {
-            yMax = max - 1;
-            yMin = max - mapYRange;
-        }
-        return new Interval(yMin, yMax);
+        return new Interval(tMin, tMax);
     }
 
     public WorldHex getHex(Point position) {
