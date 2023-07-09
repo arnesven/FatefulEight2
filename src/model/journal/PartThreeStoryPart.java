@@ -81,7 +81,7 @@ public class PartThreeStoryPart extends StoryPart {
 
     @Override
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
-        if (!previousStoryPart.isCompleted()) {
+        if (internalStep == INITIAL_STEP) {
             return previousStoryPart.getVisitLordEvent(model, location);
         }
         return super.getVisitLordEvent(model, location);

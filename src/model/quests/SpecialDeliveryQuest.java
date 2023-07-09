@@ -191,7 +191,7 @@ public class SpecialDeliveryQuest extends MainQuest {
                 state.println("Brotherhood Boss: \"Aaaarghgh. Glllgll.\"");
                 state.println("He falls down, froth coming from his mouth.");
                 state.println("Brotherhood Agent: \"Boss! Boss! Hey, you awake?\"");
-                state.leaderSay("I think he's done fore.");
+                state.leaderSay("I think he's done for.");
                 state.println("Brotherhood Agent: \"Well, I'm out of here. Don't wanna be here when the constable shows up asking questions about this dead body.\"");
                 state.println("The gang of thugs promptly disbands. Puzzled you stay for a while, looking around.");
                 model.getLog().waitForAnimationToFinish();

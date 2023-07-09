@@ -213,7 +213,7 @@ public class WitchStoryPart extends StoryPart {
                 portraitSay("Perhaps. But I find it unlikely. The history books say all the crimson pearls were accounted for and properly disposed of.");
                 leaderSay("Could it be that the Quad has returned then?");
                 portraitSay("Also unlikely, they existed many hundred years ago. And I surely hope not, for they were some of the most powerful magic users " +
-                        "to ever exist in this world. But anything is plausible I guess.");
+                        "to ever exist in this world. But anything is possible I guess.");
                 portraitSay("It's more likely somebody else learned how to make such pearls. But why it found itself into " +
                         "the stomach of a frogman, I can't say. Either way, this is a threat to the kingdom.");
                 leaderSay("What do we do now?");
