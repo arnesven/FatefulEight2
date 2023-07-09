@@ -178,7 +178,7 @@ public class World implements Serializable {
     }
 
     public boolean canTravelTo(Model model, Point p) {
-        if (p.x < 0 || p.x >= WorldBuilder.WORLD_WIDTH) {
+        if (p.x < 0 || p.x >= WorldBuilder.WORLD_WIDTH) { // TODO: use world bounds
             return false;
         }
         if (p.y < 0 || p.y >= WorldBuilder.WORLD_HEIGHT) {

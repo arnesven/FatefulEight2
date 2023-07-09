@@ -288,7 +288,7 @@ public class PartThreeStoryPart extends StoryPart {
                 } else {
                     leaderSay("It will go quickly if we all help out.");
                     do {
-                        boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 1); // TODO: 14
+                        boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 14);
                         if (success) {
                             break;
                         }
