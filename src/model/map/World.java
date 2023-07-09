@@ -28,9 +28,10 @@ public class World implements Serializable {
         currentState = WorldBuilder.ORIGINAL;
     }
 
-    public static Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
-        Interval xVals = calcXValues(viewPoint.x, mapXRange);
-        Interval yVals = calcYValues(viewPoint.y, mapYRange);
+    public Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
+        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
+        Interval xVals = calcXValues(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
+        Interval yVals = calcYValues(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
         int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
 
         int x = logicPosition.x;
@@ -52,13 +53,13 @@ public class World implements Serializable {
         return hex.getRiversInDirection(direction);
     }
 
-
     public void drawYourself(Model model, Point viewPoint, Point partyPosition,
                              int mapXRange, int mapYRange, int yOffset, Point cursorPos,
                              boolean avatarEnabled) {
         ScreenHandler screenHandler = model.getScreenHandler();
-        Interval xVals = calcXValues(viewPoint.x, mapXRange);
-        Interval yVals = calcYValues(viewPoint.y, mapYRange);
+        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
+        Interval xVals = calcXValues(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
+        Interval yVals = calcYValues(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
         int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
         screenHandler.clearSpace(startX, (DrawingArea.WINDOW_COLUMNS - startX),
                 yOffset, yOffset + mapYRange*4 - 2);
@@ -122,28 +123,28 @@ public class World implements Serializable {
         }
     }
 
-    private static Interval calcXValues(int x, int mapXRange) {
+    private static Interval calcXValues(int x, int mapXRange, int min, int max) {
         int xMin = x - mapXRange/2;
         int xMax = x + mapXRange/2 - 1;
-        if (xMin < 0) {
-            xMin = 0;
-            xMax = mapXRange - 1;
-        } else if (xMax >= WorldBuilder.WORLD_WIDTH) {
-            xMax = WorldBuilder.WORLD_WIDTH - 1;
-            xMin = WorldBuilder.WORLD_WIDTH - mapXRange;
+        if (xMin < min) {
+            xMin = min;
+            xMax = min + mapXRange - 1;
+        } else if (xMax >= max) {
+            xMax = max - 1;
+            xMin = max - mapXRange;
         }
         return new Interval(xMin, xMax);
     }
 
-    private static Interval calcYValues(int y, int mapYRange) {
+    private static Interval calcYValues(int y, int mapYRange, int min, int max) {
         int yMin = y - mapYRange/2;
         int yMax = y + mapYRange/2 - 1;
-        if (yMin < 0) {
-            yMin = 0;
-            yMax = mapYRange - 1;
-        } else if (yMax >= WorldBuilder.WORLD_HEIGHT) {
-            yMax = WorldBuilder.WORLD_HEIGHT - 1;
-            yMin = WorldBuilder.WORLD_HEIGHT - mapYRange;
+        if (yMin < min) {
+            yMin = min;
+            yMax = min + mapYRange - 1;
+        } else if (yMax >= max) {
+            yMax = max - 1;
+            yMin = max - mapYRange;
         }
         return new Interval(yMin, yMax);
     }

@@ -151,8 +151,8 @@ public abstract class DailyEventState extends GameState {
             }
             mapSubView.addMovementAnimation(
                     model.getParty().getLeader().getAvatarSprite(),
-                    World.translateToScreen(currentPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                    World.translateToScreen(destination, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                    model.getWorld().translateToScreen(currentPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                    model.getWorld().translateToScreen(destination, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
             mapSubView.waitForAnimation();
             mapSubView.removeMovementAnimation();
             model.getParty().setPosition(destination);

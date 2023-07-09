@@ -62,8 +62,8 @@ public class TravelBySeaState extends GameState {
             }
             mapSubView.addMovementAnimation(
                     shipAvatar,
-                    World.translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                    World.translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                    model.getWorld().translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                    model.getWorld().translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
             mapSubView.waitForAnimation();
             mapSubView.removeMovementAnimation();
             model.getParty().setPosition(closest);

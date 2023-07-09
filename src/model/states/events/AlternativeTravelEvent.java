@@ -41,8 +41,8 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
         mapSubView.setAvatarEnabled(false);
         mapSubView.addMovementAnimation(
                 sprite,
-                World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                World.translateToScreen(selectedPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                model.getWorld().translateToScreen(selectedPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
         mapSubView.waitForAnimation();
         CollapsingTransition.transition(model, new EmptySubView());
         model.getCurrentHex().travelFrom(model);

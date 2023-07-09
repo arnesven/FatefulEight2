@@ -46,8 +46,8 @@ public class TravelState extends GameState {
         mapSubView.drawAvatarEnabled(false);
         mapSubView.addMovementAnimation(
                 model.getParty().getLeader().getAvatarSprite(),
-                World.translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                World.translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+                model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                model.getWorld().translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
         mapSubView.waitForAnimation();
         CollapsingTransition.transition(model, new EmptySubView());
 
