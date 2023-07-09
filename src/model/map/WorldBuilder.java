@@ -26,45 +26,90 @@ public class WorldBuilder {
     public static final int EXPAND_NORTH = 8;
 
     private static String[] worldTemplate = new String[]{
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttTuTuttttsssttttTtTuTTTTTttttttttttttttt",
-            "ttttttttttttttTtwthTfpssspfttththuMTptwtttttttttttttt",
-            "ttttttttttttttbwbwhhpfpssswwwwwfpMMwffwtttttttttttttt",
-            "ttttttttttttttspbbhpspsssppwbwhfpMhwbfstttttttttttttt",
-            "ttttttttttttttssspppsssssssphwhpMMhhbsstttttttttttttt",
-            "ttttttttttttttpsssssssssssshhhphhMhwwwhtttttttttttttt",
-            "tttttttttttttthhhsssssssppfspwwpphpwwwMtttttttttttttt",
-            "tttttttttttttthhhppfhpwwwfwppMMwMffwwhptttttttttttttt",
-            "ttttttttttttttphpfwwwwwhwwwfpppMffMwMMMtttttttttttttt",
-            "ttttttttttttttpphpfwwhpppwpphpppMMdwdddtttttttttttttt",
-            "ttttttttttttttpphffwwwwpwwphhhfhfddddddtttttttttttttt",
-            "ttttttttttttttMhffffwwwpwwwwwffpffDDpDftttttttttttttt",
-            "tttttttttttttthhhppsphfpbbpwwfwfMfhfffptttttttttttttt",
-            "ttttttttttttttdDmDdmmppswwwppppwMMMMhpptttttttttttttt",
-            "ttttttttttttttddddddmMpwwMwwwspppMMhfpftttttttttttttt",
-            "ttttttttttttttDdddDmMpwwdwpbbbffphMpffptttttttttttttt",
-            "ttttttttttttttDDpdpDddsdsddddddffhhpwfftttttttttttttt",
-            "ttttttttttttttphfsspsssssssssssdfMMMwwwtttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            "ttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
+            "sssssttuuTTTTTTuuuTTTTTTTuuTTTTTTTuTTTTTttTTTTTTTTTtt",
+            "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuuuuTTTuuTTuuTTuuuTuu",
+            "stssttttWWWWWTTWWWWWWWWWTTWWWWWWWTTTTWWWWWWWWWWWWWWWW",
+            "sssssttWWWWWWWTTTWWWWWWWWWWWWTTTTWTTuWWWWWWWWWWWWWWWW",
+            "sssssssttttWWWWuTTTttttTtTTTTuttuTTTuttWWtttssWWutttt",
+            "ssstsssssttttWWWuuuTTTTTTtttttuTTTuttttttssssssWWuWtt",
+            "sssssssssstttWWWWWuWuTTtsstttuTTTTutWWttttssstsWWtttt",
+            "sssssssstttWWTTWWTWWTTtsssstTTtuTTTtTuttssssssttttttt",
+            "ssttttttWWuTuWWWTTTtttssssttTTtttTTTttttttstttttttttt",
+            "ssssstttttTuWuTuTuttttsssttttTtTuTTTTTtttsstWuWuuWWuu",
+            "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWWWWWW",
+            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtssooooooooooo",
+            "stppptssppppbbspbbhpspsssppwbwhfpMhwbfssssooooooooooo",
+            "pppppsspppppssssspppsssssssphwhpMMhhbsssssssooooooooo",
+            "ssppppsssppsshpsssssssssssshhhphhMhwwwhtssssooooooooo",
+            "ssspppsssssshhhhhsssssssppfspwwpphpwwwMMooooooooooooo",
+            "spppsspppsphhphhhppfhpwwwfwppMMwMffwwhpoooooooooooooo",
+            "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMoooooooooooooo",
+            "sspppffppssspppphpfwwhpppwpphpppMMdwddddooooooooooooo",
+            "ssppfMMpppsspppphffwwwwpwwphhhfhfdddddddDddoooooooooo",
+            "ssppfMhpppssMMMhffffwwwpwwwwwffpffDDpDfdddooooooooooo",
+            "sspfhhpsssppMhhhhppsphfpbbpwwfwfMfhfffpoooobbbbbboooo",
+            "ssspppssppddmDdDmDdmmppswwwppppwMMMMhppppoobboboooooo",
+            "sssssssdDdDmdDddddddmMpwwMwwwspppMMhfpfooooobbooooooo",
+            "ssphsddddDmdddDdddDmMpwwdwpbbbffphMpffpoooooooooooooo",
+            "ssppppddmDDDddDDpdpDddsdsddddddffhhpwffoooooooooooooo",
+            "ssppppddDDDDphphfsspsssssssssssdfMMMwwwoooooooooooooo",
+            "sssssssssssssssssssssssssssssssssssssssssssssssssssss",
+            "sssssssssssssssssssssssssssssssssssssssssssssssssssss",
+            "sssssssssssssssssssssssssssssssssssssssssssssssssssss",
+            "sssssssssssssssssssssssssssssssssssssssssssssssssssss",
+            "sssssssssssssssssssssssssssssssssssssssssssssssssssss",
+            "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+            "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+            "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+            "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+            "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
     };
+
+    private static WorldHex makeHex(char c, HexContents contents, int state) {
+        int roads = 0;
+        int rivers = 0;
+        HexLocation location = null;
+        if (contents != null) {
+            roads = contents.roads;;
+            rivers = contents.rivers;
+            location = contents.location;
+        }
+        if (c == 't') {
+            return new TundraHex(roads, rivers, location, state);
+        } else if (c == 'T') {
+            return new TundraMountain(roads, rivers, state);
+        } else if (c == 'u') {
+            return new TundraHills(roads, rivers, state);
+        } else if (c == 'W') {
+            return new TundraWoods(roads, rivers, state);
+        } else if (c == 's') {
+            return new SeaHex(state);
+        } else if (c == 'w') {
+            return new WoodsHex(roads, rivers, state);
+        } else if (c == 'p') {
+            return new PlainsHex(roads, rivers, location, state);
+        } else if (c == 'b') {
+            return new SwampHex(roads, rivers, state);
+        } else if (c == 'M') {
+            return new MountainHex(roads, rivers, state);
+        } else if (c == 'm') {
+            return new DesertMountain(roads, rivers, state);
+        } else if (c == 'h') {
+            return new HillsHex(roads, rivers, state);
+        } else if (c == 'f') {
+            return new FieldsHex(roads, rivers, state);
+        } else if (c == 'd') {
+            return new DesertHex(roads, rivers, location, state);
+        } else if (c == 'D') {
+            return new DesertHills(roads, rivers, state);
+        } else if (c == 'o') {
+            return new DeepWoodsHex(roads, rivers, state);
+        } else if (c == 'j') {
+            return new JungleHex(roads, rivers, state);
+        }
+        throw new IllegalStateException("No hex can be created for token '" + c + "'");
+    }
 
     private static Map<Point, HexContents> makeHexContents() {
         Map<Point, HexContents> contents = new HashMap<>();
@@ -304,45 +349,6 @@ public class WorldBuilder {
                 hexes[x][y].setRivers(hexes[x][y].getRivers() | direction);
             }
         }
-    }
-
-    private static WorldHex makeHex(char c, HexContents contents, int state) {
-        int roads = 0;
-        int rivers = 0;
-        HexLocation location = null;
-        if (contents != null) {
-            roads = contents.roads;;
-            rivers = contents.rivers;
-            location = contents.location;
-        }
-        if (c == 't') {
-            return new TundraHex(roads, rivers, location, state);
-        } else if (c == 'T') {
-            return new TundraMountain(roads, rivers, state);
-        } else if (c == 'u') {
-            return new TundraHills(roads, rivers, state);
-        } else if (c == 's') {
-            return new SeaHex(state);
-        } else if (c == 'w') {
-            return new WoodsHex(roads, rivers, state);
-        } else if (c == 'p') {
-            return new PlainsHex(roads, rivers, location, state);
-        } else if (c == 'b') {
-            return new SwampHex(roads, rivers, state);
-        } else if (c == 'M') {
-            return new MountainHex(roads, rivers, state);
-        } else if (c == 'm') {
-            return new DesertMountain(roads, rivers, state);
-        } else if (c == 'h') {
-            return new HillsHex(roads, rivers, state);
-        } else if (c == 'f') {
-            return new FieldsHex(roads, rivers, state);
-        } else if (c == 'd') {
-            return new DesertHex(roads, rivers, location, state);
-        } else if (c == 'D') {
-            return new DesertHills(roads, rivers, state);
-        }
-        throw new IllegalStateException("No hex can be created for token '" + c + "'");
     }
 
     public static Rectangle getWorldBounds(int currentState) {

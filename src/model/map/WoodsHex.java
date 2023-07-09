@@ -19,8 +19,12 @@ public class WoodsHex extends WorldHex {
 
     private static SubView subView = new ImageSubView("thewoods", "THE WOODS", "You are in the woods.", true);
 
+    public WoodsHex(int roads, int rivers, HexLocation location, int state) {
+        super(MyColors.GREEN, roads, rivers, location, state);
+    }
+
     public WoodsHex(int roads, int rivers, int state) {
-        super(MyColors.GREEN, roads, rivers, new WoodsLocation(), state);
+        this(roads, rivers, new WoodsLocation(false), state);
     }
 
     @Override
