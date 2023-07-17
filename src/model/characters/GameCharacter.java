@@ -394,8 +394,9 @@ public class GameCharacter extends Combatant {
 
     public double calcAverageDamage() {
         double sum = 0.0;
+        int rank = getRankForSkill(equipment.getWeapon().getSkillToUse(this));
         for (int roll=1; roll <=10; roll++) {
-            int modified = roll + getRankForSkill(equipment.getWeapon().getSkillToUse(this));
+            int modified = roll + rank;
             if (roll == 10) {
                 sum += equipment.getWeapon().getDamage(modified, this) * 2;
             } else {
@@ -488,7 +489,9 @@ public class GameCharacter extends Combatant {
     }
 
     public GameCharacter copy() {
-        return new GameCharacter(firstName, lastName, race, charClass, appearance.copy(), classes, equipment);
+        GameCharacter clone = new GameCharacter(firstName, lastName, race, charClass, appearance.copy(), classes, equipment);
+        clone.setLevel(getLevel());
+        return clone;
     }
 
     public void addToXP(int toAdd) {
