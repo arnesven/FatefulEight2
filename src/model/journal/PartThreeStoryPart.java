@@ -68,9 +68,9 @@ public class PartThreeStoryPart extends StoryPart {
     }
 
     @Override
-    public void progress(int track) {
+    public void progress() {
         if (!previousStoryPart.isCompleted()) {
-            previousStoryPart.progress(track);
+            previousStoryPart.progress();
             if (previousStoryPart.isCompleted()) {
                 internalStep++;
             }
@@ -111,7 +111,7 @@ public class PartThreeStoryPart extends StoryPart {
 
 
     @Override
-    public StoryPart transition(Model model) {
+    protected StoryPart getNextStoryPart(Model model, int track) {
         return new PartFourStoryPart(this, castleName);
     }
 
@@ -266,7 +266,7 @@ public class PartThreeStoryPart extends StoryPart {
                         "find them once we take care of your crazy experiment, right?");
                 portraitSay("Of course! But please, prepare well, those automatons are very dangerous. And there's a fair few of them in there.");
                 leaderSay("We can handle ourselves.");
-                model.getMainStory().increaseStep(model);
+                increaseStep(model);
                 model.transitionToDialog(new SimpleMessageView(model.getView(),
                         "Warning. It is recommended that your party members " +
                                 "are at least level 3 before doing the quest " +
@@ -316,8 +316,8 @@ public class PartThreeStoryPart extends StoryPart {
                             "Do you really think the Quad could have returned?");
                     portraitSay("It's possible. You should inform the proper authorities about it.");
                     leaderSay("Yes. I'm heading back to " + castleName + " to tell the " + castle.getLordTitle() + " about this.");
-                    model.getMainStory().increaseStep(model);
-                    model.getMainStory().transitionStep(model);
+                    increaseStep(model);
+                    transitionStep(model);
                     JournalEntry.printMapExpandedMessage(model);
                     model.setWorldState(model.getMainStory().getExpandDirection());
                     portraitSay("Good idea. I'm going to try to get my machine working properly.");

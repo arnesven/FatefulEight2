@@ -6,17 +6,14 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.map.TownLocation;
-import model.map.locations.*;
 import model.quests.FrogmenProblemQuest;
 import model.quests.Quest;
 import model.races.Race;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.dailyaction.VisitEverixNode;
 import model.states.dailyaction.VisitUncleNode;
-import util.MyRandom;
 import view.subviews.PortraitSubView;
 
-import java.awt.*;
 import java.util.List;
 
 public class InitialStoryPart extends StoryPart {
@@ -25,35 +22,30 @@ public class InitialStoryPart extends StoryPart {
     private static final int DO_QUEST_STEP = 1;
     private static final int QUEST_COMPLETED_STEP = 2;
     private static final int ASK_EVERIX_STEP = 3;
+    private final String townName;
 
     private int internalStep = 0;
     public static int REWARD_GOLD = 120;
-    private final MainStorySpawnLocation spawnData;
     private final GameCharacter whosUncle;
     private final AdvancedAppearance unclePortrait;
     private final AdvancedAppearance everixPortrait;
+    private WitchStoryPart witchPart = null;
 
-    public InitialStoryPart(GameCharacter whosUncle) {
-        List<MainStorySpawnLocation> townsAndCastles = List.of(
-                new MainStorySpawnEast(),
-                new MainStorySpawnSouth(),
-                new MainStorySpawnNorth(),
-                new MainStorySpawnWest()
-        );
-        spawnData = MyRandom.sample(townsAndCastles);
+    public InitialStoryPart(GameCharacter whosUncle, String townName) {
         this.whosUncle = whosUncle;
+        this.townName = townName;
         this.unclePortrait = PortraitSubView.makeRandomPortrait(Classes.None, whosUncle.getRace());
         this.everixPortrait = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL);
     }
 
     @Override
     public List<JournalEntry> getJournalEntries() {
-        return List.of(new FirstMainStoryTask(spawnData.getTown(), whosUncle));
+        return List.of(new FirstMainStoryTask(townName, whosUncle));
     }
 
     @Override
     public void handleTownSetup(TownDailyActionState townDailyActionState) {
-        if (townDailyActionState.getTown().getName().equals(spawnData.getTown())) {
+        if (townDailyActionState.getTown().getName().equals(townName)) {
             int randomSeed = townDailyActionState.getTown().getName().hashCode();
             townDailyActionState.addNodeInFreeSlot(new VisitUncleNode(townDailyActionState.getTown(), this), randomSeed);
             townDailyActionState.addNodeInFreeSlot(new VisitEverixNode(this), randomSeed+1);
@@ -61,7 +53,7 @@ public class InitialStoryPart extends StoryPart {
     }
 
     @Override
-    public void progress(int track) {
+    public void progress() {
         internalStep++;
     }
 
@@ -70,7 +62,7 @@ public class InitialStoryPart extends StoryPart {
         if (internalStep == DO_QUEST_STEP) {
             if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
                 TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
-                if (loc.getName().equals(spawnData.getTown())) {
+                if (loc.getName().equals(townName)) {
                     quests.add(getQuestAndSetPortrait(FrogmenProblemQuest.QUEST_NAME, unclePortrait,
                             whosUncle.getFirstName() + "'s Uncle"));
                 }
@@ -79,12 +71,14 @@ public class InitialStoryPart extends StoryPart {
     }
 
     @Override
-    public StoryPart transition(Model model) {
-        return new PartTwoStoryPart(this);
-    }
-
-    public String getStartingLocationName() {
-        return spawnData.getTown();
+    protected StoryPart getNextStoryPart(Model model, int track) {
+        if (witchPart == null) {
+            witchPart = new WitchStoryPart(model.getMainStory().getWitchPosition(), model.getMainStory().getCastleName());
+        }
+        if (track == 0) {
+            return new RescueMissionStoryPart(witchPart, model.getMainStory().getCastleName(), model.getMainStory().getLibraryTownName());
+        }
+        return witchPart;
     }
 
     public GameCharacter getWhosUncle() {
@@ -103,25 +97,9 @@ public class InitialStoryPart extends StoryPart {
         return everixPortrait;
     }
 
-    public String getCastleName() {
-        return spawnData.getCastle();
-    }
-
     @Override
     public boolean isCompleted() {
         return internalStep > ASK_EVERIX_STEP;
-    }
-
-    public Point getWitchPosition() {
-        return spawnData.getWitch();
-    }
-
-    public String getLibraryTownName() {
-        return spawnData.getLibraryTown();
-    }
-
-    public int getExpandDirection() {
-        return spawnData.getExpandDirection();
     }
 
     public class FirstMainStoryTask extends MainStoryTask {
@@ -142,11 +120,11 @@ public class InitialStoryPart extends StoryPart {
                     return "Visit " + whosUncle.getFirstName() + "'s uncle in the " + town +
                         ". He needs a capable group of adventurers to take care of a 'Frogmen Problem'.";
                 case DO_QUEST_STEP:
-                    return "Complete the '" + FrogmenProblemQuest.QUEST_NAME + "' Quest.";
+                    return "Complete the '" + FrogmenProblemQuest.QUEST_NAME + "' Quest (in the " + town + ").";
                 case QUEST_COMPLETED_STEP:
-                    return "Return to " + whosUncle.getFirstName() + "'s uncle to claim your reward.";
+                    return "Return to " + whosUncle.getFirstName() + "'s uncle in the " + town + ", to claim your reward.";
                 case ASK_EVERIX_STEP:
-                    return "Ask Everix about the crimson orb.";
+                    return "Ask Everix in the " + town + " about the crimson orb.";
             }
 
             return "You helped " + whosUncle.getFirstName() + "'s uncle and the " +

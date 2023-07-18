@@ -9,6 +9,7 @@ import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.quests.RescueMissionQuest;
+import model.quests.SpecialDeliveryQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
@@ -21,13 +22,13 @@ public class RescueMissionStoryPart extends StoryPart {
     private static final int DO_QUEST_STEP = 1;
     private static final int QUEST_DONE_STEP = 2;
     private final String libraryTown;
+    private final StoryPart witchPart;
     private int internalStep = 0;
     private final String castleName;
-    private PartTwoStoryPart storyPartTwo;
     private AdvancedAppearance courtMage = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.ALL);
 
-    public RescueMissionStoryPart(PartTwoStoryPart partTwo, String castleName, String libraryTown) {
-        this.storyPartTwo = partTwo;
+    public RescueMissionStoryPart(StoryPart witchPart, String castleName, String libraryTown) {
+        this.witchPart = witchPart;
         this.castleName = castleName;
         this.libraryTown = libraryTown;
     }
@@ -43,7 +44,7 @@ public class RescueMissionStoryPart extends StoryPart {
     }
 
     @Override
-    public void progress(int track) {
+    public void progress() {
         internalStep++;
     }
 
@@ -61,8 +62,8 @@ public class RescueMissionStoryPart extends StoryPart {
     }
 
     @Override
-    public StoryPart transition(Model model) {
-        return null;
+    protected StoryPart getNextStoryPart(Model model, int track) {
+        throw new IllegalStateException("Should not be called.");
     }
 
     @Override
@@ -143,7 +144,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 portraitSay("He's tall, pretty good-looking. He always wears a headband, and he carries his sword " +
                         "on his back rather than by his side.");
                 leaderSay("Alright. We'll keep our eyes open.");
-                model.getMainStory().increaseStep(model, StoryPart.TRACK_A);
+                increaseStep(model);
             } else if (internalStep == DO_QUEST_STEP) {
                 portraitSay("Have you found Caid yet?");
                 if (witchPartCompleted()) {
@@ -162,7 +163,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 portraitSay("Splendid. Where is he now?");
                 leaderSay("Still on the mission you gave him. He wanted you to know that.");
                 portraitSay("Thank you so much for your help.");
-                model.getMainStory().increaseStep(model, TRACK_A);
+                increaseStep(model);
                 if (witchPartCompleted()) {
                     leaderSay("Now, we really need to discuss an urgent matter.");
                     portraitSay("And that is?");
@@ -238,8 +239,8 @@ public class RescueMissionStoryPart extends StoryPart {
         }
     }
 
-    private boolean witchPartCompleted() {
-        return storyPartTwo.witchPartCompleted();
+   private boolean witchPartCompleted() {
+        return witchPart.isCompleted();
     }
 
     public class GoToCastleTask extends MainStoryTask {

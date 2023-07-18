@@ -30,9 +30,7 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public void progress(int track) {
-
-    }
+    public void progress() { }
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
@@ -40,7 +38,7 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public StoryPart transition(Model model) {
+    public StoryPart getNextStoryPart(Model model, int track) {
         return null;
     }
 

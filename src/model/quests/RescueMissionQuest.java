@@ -39,11 +39,6 @@ public class RescueMissionQuest extends MainQuest {
     }
 
     @Override
-    protected int getStoryTrack() {
-        return StoryPart.TRACK_A;
-    }
-
-    @Override
     public String getPrerequisites(Model model) {
         if (model.getParty().size() < 2) {
             return "You must have at least two party members to accept this quest.";

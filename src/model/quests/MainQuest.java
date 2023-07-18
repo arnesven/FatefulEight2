@@ -2,12 +2,14 @@ package model.quests;
 
 import model.Model;
 import model.characters.appearance.CharacterAppearance;
+import model.journal.StoryPart;
 import model.states.GameState;
 import model.states.QuestState;
 
 public abstract class MainQuest extends Quest {
     private CharacterAppearance portrait;
     private boolean completed = false; // TODO: This is not persistent in save... causes some quests to be labled as "in progress".
+    private StoryPart storyPart;
 
     public MainQuest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, int exp, String text, String endText) {
         super(name, provider, difficulty, partyRep, gold, exp, text, endText);
@@ -22,10 +24,14 @@ public abstract class MainQuest extends Quest {
         this.portrait = unclePortrait;
     }
 
+    public void setStoryPart(StoryPart storyPart) {
+        this.storyPart = storyPart;
+    }
+
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         if (questWasSuccess) {
-            model.getMainStory().increaseStep(model, getStoryTrack());
+            storyPart.increaseStep(model);
             this.completed = true;
         } else if (model.getCurrentHex().getLocation() != null) {
             state.println("However, this quest can be accepted again.");
@@ -33,8 +39,6 @@ public abstract class MainQuest extends Quest {
         }
         return super.endOfQuest(model, state, questWasSuccess);
     }
-
-    protected abstract int getStoryTrack();
 
     public boolean isCompleted() {
         return completed;

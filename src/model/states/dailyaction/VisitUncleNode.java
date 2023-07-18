@@ -65,7 +65,7 @@ public class VisitUncleNode extends DailyActionNode {
             super(model);
             this.town = town;
             this.storyPart = storyPart;
-            this.castle = model.getWorld().getCastleByName(storyPart.getCastleName());
+            this.castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
         }
 
         @Override
@@ -73,7 +73,7 @@ public class VisitUncleNode extends DailyActionNode {
             setCurrentTerrainSubview(model);
             GameCharacter whos = storyPart.getWhosUncle();
             if (storyPart.getStep() == 0) {
-                model.getMainStory().increaseStep(model);
+                storyPart.increaseStep(model);
                 println("You enter the hut where " + whos.getFirstName() + "'s uncle lives. The man greets you cheerfully.");
                 showUnclePortrait(model);
                 if (model.getParty().getPartyMembers().contains(whos)) {
@@ -164,8 +164,8 @@ public class VisitUncleNode extends DailyActionNode {
                     partyMemberSay(storyPart.getWhosUncle(), "Bye uncle!");
                     portraitSay("Good bye " + storyPart.getWhosUncle().getFirstName() + ". Have fun on your adventures, and stay safe.");
                 }
-                model.getMainStory().increaseStep(model);
-                model.getMainStory().transitionStep(model);
+                storyPart.increaseStep(model);
+                storyPart.transitionStep(model);
             } else {
                 showUnclePortrait(model);
                 portraitSay("Thanks again for helping us. Safe travels!");

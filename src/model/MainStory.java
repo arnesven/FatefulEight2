@@ -2,21 +2,19 @@ package model;
 
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
-import model.characters.KruskTalandro;
 import model.characters.WillisCharacter;
-import model.classes.CharacterClass;
-import model.classes.Classes;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.*;
-import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
+import util.MyRandom;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,32 +84,12 @@ public class MainStory implements Serializable {
     private boolean townVisited = false;
     private boolean castleVisited = false;
     private boolean templeVisited = false;
-    private StoryPart currentStoryPart = null;
-    private InitialStoryPart firstStoryPart;
+    private List<StoryPart> storyParts = new ArrayList<>();
+    private MainStorySpawnLocation spawnData;
     private GameCharacter caidCharacter = new CaidCharacter();
     private GameCharacter willisCharacter = new WillisCharacter();
 
-    public MainStory() {
-        // TODO: This is just test stuff
-//        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
-//                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
-//        firstStoryPart = new InitialStoryPart(dummy);
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        firstStoryPart.progress();
-//        currentStoryPart = new PartTwoStoryPart(firstStoryPart);
-//        currentStoryPart.progress(StoryPart.TRACK_B);
-//        currentStoryPart.progress(StoryPart.TRACK_B);
-//        currentStoryPart.progress(StoryPart.TRACK_B);
-//        currentStoryPart.progress(StoryPart.TRACK_B);
-//        currentStoryPart = new PartThreeStoryPart(currentStoryPart, firstStoryPart.getCastleName(), firstStoryPart.getLibraryTownName());
-//        currentStoryPart.progress(StoryPart.TRACK_A);
-//        currentStoryPart.progress(StoryPart.TRACK_A);
-//        currentStoryPart.progress(StoryPart.TRACK_A);
-//        currentStoryPart.progress(StoryPart.TRACK_A);
-//        currentStoryPart.progress(StoryPart.TRACK_A);
-    }
+    public MainStory() { }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
         if (isStarted() || model.getCurrentHex().getLocation() instanceof UrbanLocation || model.getParty().size() < 2) {
@@ -123,8 +101,8 @@ public class MainStory implements Serializable {
     public List<JournalEntry> getMainStoryTasks(Model model) {
         if (isStarted()) {
             List<JournalEntry> result = new ArrayList<>();
-            if (currentStoryPart != null) {
-                result.addAll(currentStoryPart.getJournalEntries());
+            for (StoryPart sp : storyParts) {
+                result.addAll(sp.getJournalEntries());
             }
             result.add(new VisitTask("Town", townVisited));
             result.add(new VisitTask("Castle", castleVisited));
@@ -148,45 +126,55 @@ public class MainStory implements Serializable {
     }
 
     public void setupStory(GameCharacter whosUncle) {
-        this.firstStoryPart = new InitialStoryPart(whosUncle);
-        currentStoryPart = firstStoryPart;
+        List<MainStorySpawnLocation> townsAndCastles = List.of(
+                new MainStorySpawnEast(),
+                new MainStorySpawnSouth(),
+                new MainStorySpawnNorth(),
+                new MainStorySpawnWest()
+        );
+        spawnData = MyRandom.sample(townsAndCastles);
+        storyParts.add(new InitialStoryPart(whosUncle, spawnData.getTown()));
     }
 
     public TownLocation getStartingLocation(Model model) {
-        return model.getWorld().getTownByName(firstStoryPart.getStartingLocationName());
+        return model.getWorld().getTownByName(spawnData.getTown());
     }
 
     public void handleTownSetup(TownDailyActionState townDailyActionState) {
         townVisited = true;
         if (isStarted()) {
-            currentStoryPart.handleTownSetup(townDailyActionState);
+            for (StoryPart sp : storyParts) {
+                sp.handleTownSetup(townDailyActionState);
+            }
         }
     }
 
     public boolean isStarted() {
-        return currentStoryPart != null;
+        return spawnData != null;
     }
 
-    public void increaseStep(Model model, int track) {
-        if (isStarted()) {
-            currentStoryPart.progress(track);
-            JournalEntry.printJournalUpdateMessage(model);
-        }
-    }
+  //  public void increaseStep(Model model, int track) {
+  //      if (isStarted()) {
+  //          currentStoryPart.progress(track);
+  //          JournalEntry.printJournalUpdateMessage(model);
+  //      }
+  //  }
 
-    public void increaseStep(Model model) {
-        increaseStep(model, StoryPart.TRACK_A);
-    }
+  //  public void increaseStep(Model model) {
+  //      increaseStep(model, StoryPart.TRACK_A);
+  //  }
 
-    public void transitionStep(Model model) {
-        if (isStarted()) {
-            currentStoryPart = currentStoryPart.transition(model);
-        }
-    }
+//    public void transitionStep(Model model) {
+//        if (isStarted()) {
+//            currentStoryPart = currentStoryPart.transition(model);
+//        }
+//    }
 
     public void addQuests(Model model, List<Quest> quests) {
         if (isStarted()) {
-            currentStoryPart.addQuests(model, quests);
+            for (StoryPart sp : storyParts) {
+                sp.addQuests(model, quests);
+            }
         }
     }
 
@@ -214,17 +202,29 @@ public class MainStory implements Serializable {
     }
 
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
-        return currentStoryPart.getVisitLordEvent(model, location);
+        for (StoryPart sp : storyParts) {
+            DailyEventState event = sp.getVisitLordEvent(model, location);
+            if (event != null) {
+                return event;
+            }
+        }
+        return null;
     }
 
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
         if (isStarted()) {
-            currentStoryPart.drawMapObjects(model, x, y, screenX, screenY);
+            for (StoryPart sp : storyParts) {
+                sp.drawMapObjects(model, x, y, screenX, screenY);
+            }
         }
     }
 
     public List<DailyAction> getDailyActionsForHex(Model model, WorldHex worldHex) {
-        return currentStoryPart.getDailyActions(model, worldHex);
+        List<DailyAction> result = new ArrayList<>();
+        for (StoryPart sp : storyParts) {
+            result.addAll(sp.getDailyActions(model, worldHex));
+        }
+        return result;
     }
 
     public GameCharacter getCaidCharacter() {
@@ -236,6 +236,26 @@ public class MainStory implements Serializable {
     }
 
     public int getExpandDirection() {
-        return firstStoryPart.getExpandDirection();
+        return spawnData.getExpandDirection();
+    }
+
+    public void addStoryPart(StoryPart nextPart) {
+        storyParts.add(nextPart);
+    }
+
+    public String getCastleName() {
+        return spawnData.getCastle();
+    }
+
+    public String getLibraryTownName() {
+        return spawnData.getLibraryTown();
+    }
+
+    public Point getWitchPosition() {
+        return spawnData.getWitch();
+    }
+
+    public List<StoryPart> getStoryParts() {
+        return storyParts;
     }
 }

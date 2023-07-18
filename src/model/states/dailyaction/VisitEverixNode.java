@@ -92,7 +92,8 @@ public class VisitEverixNode extends DailyActionNode {
                         "questions.");
                 leaderSay("Naturally. Why be helpful?");
                 portraitSay("Oh, she'll be helpful. She's just... well let's just call it self preservation.");
-                model.getMainStory().increaseStep(model, StoryPart.TRACK_B);
+                storyPart.increaseStep(model);
+                storyPart.transitionStep(model, 1);
             } else if (storyPart.getStep() < 3) {
                 println("Everix is not at home right now.");
             } else {

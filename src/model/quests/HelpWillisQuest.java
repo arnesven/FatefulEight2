@@ -18,11 +18,6 @@ public class HelpWillisQuest extends MainQuest {
     }
 
     @Override
-    protected int getStoryTrack() {
-        return StoryPart.TRACK_A;
-    }
-
-    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Interview candidates", List.of(
                 new SoloSkillCheckSubScene(1, 1, Skill.Perception, 11, "Let's see what these guys are about.")

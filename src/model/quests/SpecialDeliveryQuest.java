@@ -28,11 +28,6 @@ public class SpecialDeliveryQuest extends MainQuest {
     }
 
     @Override
-    protected int getStoryTrack() {
-        return StoryPart.TRACK_B;
-    }
-
-    @Override
     public CombatTheme getCombatTheme() {
         if (fightInTown) {
             return new TownCombatTheme();

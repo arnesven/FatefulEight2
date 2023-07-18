@@ -12,40 +12,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartTwoStoryPart extends StoryPart {
-    private final InitialStoryPart initialStoryPart;
     private StoryPart rescueMissionPart;
     private StoryPart deliverPackagePart;
 
-    public PartTwoStoryPart(InitialStoryPart storyPart) {
-        this.initialStoryPart = storyPart;
-        rescueMissionPart = new RescueMissionStoryPart(this, initialStoryPart.getCastleName(), initialStoryPart.getLibraryTownName());
-        deliverPackagePart = new WitchStoryPart(initialStoryPart.getWitchPosition(), initialStoryPart.getCastleName());
+    public PartTwoStoryPart(Model model) {
+        throw new IllegalStateException("Should not be instantiated.");
+        //deliverPackagePart = new WitchStoryPart(model.getMainStory().getWitchPosition(), model.getMainStory().getCastleName());
+        //rescueMissionPart = new RescueMissionStoryPart(deliverPackagePart, model.getMainStory().getCastleName(), model.getMainStory().getLibraryTownName());
+
     }
 
     @Override
     public List<JournalEntry> getJournalEntries() {
         List<JournalEntry> entries = new ArrayList<>();
-        entries.addAll(initialStoryPart.getJournalEntries());
         entries.addAll(rescueMissionPart.getJournalEntries());
         entries.addAll(deliverPackagePart.getJournalEntries());
         return entries;
     }
 
     @Override
-    public void handleTownSetup(TownDailyActionState townDailyActionState) {
-        initialStoryPart.handleTownSetup(townDailyActionState);
-    }
+    public void handleTownSetup(TownDailyActionState townDailyActionState) { }
 
     @Override
-    public void progress(int track) {
-        if (track == StoryPart.TRACK_A) {
-            rescueMissionPart.progress();
-        } else { // track B
-            deliverPackagePart.progress();
-        }
-        if (!initialStoryPart.isCompleted()) {
-            initialStoryPart.progress(track);
-        }
+    public void progress() {
+        throw new IllegalStateException("Should not be called!");
     }
 
     @Override
@@ -65,8 +55,8 @@ public class PartTwoStoryPart extends StoryPart {
     }
 
     @Override
-    public StoryPart transition(Model model) {
-        return new PartThreeStoryPart(this, initialStoryPart.getCastleName(), initialStoryPart.getLibraryTownName());
+    protected StoryPart getNextStoryPart(Model model, int track) {
+        return new PartThreeStoryPart(this, model.getMainStory().getCastleName(), model.getMainStory().getLibraryTownName());
     }
 
     @Override

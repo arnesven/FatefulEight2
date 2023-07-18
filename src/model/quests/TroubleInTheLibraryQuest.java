@@ -329,11 +329,6 @@ public class TroubleInTheLibraryQuest extends MainQuest {
     }
 
     @Override
-    protected int getStoryTrack() {
-        return StoryPart.TRACK_A;
-    }
-
-    @Override
     public List<QuestBackground> getDecorations() {
         if (decorations == null) {
             return super.getDecorations();

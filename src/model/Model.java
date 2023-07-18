@@ -1,5 +1,6 @@
 package model;
 
+import control.FatefulEight;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.characters.*;
@@ -15,6 +16,7 @@ import model.tutorial.TutorialHandler;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
+import test.MainStoryTest;
 import util.MyPair;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
@@ -110,6 +112,9 @@ public class Model {
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
         playMainSong();
+        if (FatefulEight.TEST_MODE) {
+            MainStoryTest.testSuit(this);// TODO: Remove when not testing.
+        }
     }
 
     public boolean gameStarted() {
@@ -437,5 +442,9 @@ public class Model {
     public void setWorldState(int worldState) {
         gameData.worldState = worldState;
         this.world.setCurrentState(gameData.worldState);
+    }
+
+    public void resetMainStory() {
+        this.gameData.mainStory = new MainStory();
     }
 }

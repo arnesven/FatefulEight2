@@ -38,11 +38,6 @@ public class FrogmenProblemQuest extends MainQuest {
     }
 
     @Override
-    protected int getStoryTrack() {
-        return StoryPart.TRACK_A;
-    }
-
-    @Override
     public boolean drawTownOrCastleInBackground() {
         return true;
     }

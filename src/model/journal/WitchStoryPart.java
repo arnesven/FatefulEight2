@@ -23,14 +23,13 @@ import java.util.List;
 public class WitchStoryPart extends StoryPart {
 
     private static final Sprite MAP_SPRITE = new SpriteQuestMarker();
-    private static final int INITIAL_STATE = 0;
     private static final int FIND_WITCH = 1;
     private static final int DO_QUEST = 2;
     private static final int QUEST_DONE = 3;
     private static final int COMPLETE = 4;
     private final Point witchPoint;
     private final String castleName;
-    private int internalStep = INITIAL_STATE;
+    private int internalStep = FIND_WITCH;
     private AdvancedAppearance witchAppearance = PortraitSubView.makeRandomPortrait(Classes.WIT, Race.ALL, true);
 
     public WitchStoryPart(Point witchPosition, String castleName) {
@@ -40,10 +39,7 @@ public class WitchStoryPart extends StoryPart {
 
     @Override
     public List<JournalEntry> getJournalEntries() {
-        if (internalStep > 0) {
-            return List.of(new FindTheWitch());
-        }
-        return new ArrayList<>();
+        return List.of(new FindTheWitch());
     }
 
     @Override
@@ -52,7 +48,7 @@ public class WitchStoryPart extends StoryPart {
     }
 
     @Override
-    public void progress(int track) {
+    public void progress() {
         internalStep++;
     }
 
@@ -68,24 +64,20 @@ public class WitchStoryPart extends StoryPart {
 
     @Override
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
-        if (internalStep > INITIAL_STATE) {
-            if (witchPoint.x == x && witchPoint.y == y) {
-                model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
-            }
+        if (witchPoint.x == x && witchPoint.y == y) {
+            model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         }
     }
 
     @Override
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) {
-        if (internalStep > INITIAL_STATE) {
-            Point hexPoint = model.getWorld().getPositionForHex(worldHex);
-            if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
-                String name = "Find Witch";
-                if (internalStep > FIND_WITCH) {
-                    name = "Visit Witch";
-                }
-                return List.of(new DailyAction(name, new VisitWitchEvent(model)));
+        Point hexPoint = model.getWorld().getPositionForHex(worldHex);
+        if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
+            String name = "Find Witch";
+            if (internalStep > FIND_WITCH) {
+                name = "Visit Witch";
             }
+            return List.of(new DailyAction(name, new VisitWitchEvent(model)));
         }
         return super.getDailyActions(model, worldHex);
     }
@@ -93,12 +85,11 @@ public class WitchStoryPart extends StoryPart {
     @Override
     protected boolean isCompleted() {
         return internalStep >= COMPLETE;
-
     }
 
     @Override
-    public StoryPart transition(Model model) {
-        return null;
+    protected StoryPart getNextStoryPart(Model model, int track) {
+        throw new IllegalStateException("Should not be called!");
     }
 
     public class FindTheWitch extends MainStoryTask {
@@ -115,7 +106,9 @@ public class WitchStoryPart extends StoryPart {
             } else if (internalStep == QUEST_DONE) {
                 return "Return to the witch to get information about the Crimson Pearl.";
             }
-            return "You helped the witch in the wood deliver a special potion to her client.\n\nCompleted";
+            return "You helped the witch in the wood deliver a special potion to her client. " +
+                    "In return you learned valuable information about the Quad, which you should " +
+                    "report to the proper authorities.\n\nCompleted";
         }
 
         @Override
@@ -185,7 +178,7 @@ public class WitchStoryPart extends StoryPart {
                         "Although in this case, it seems somebody has been blabbing.");
                 portraitSay("Do this and I'll tell you the story about your crimson orb. If your wondering if it will be worth " +
                         "it, you can stop. It will be. Now off you go.");
-                model.getMainStory().increaseStep(model, StoryPart.TRACK_B);
+                increaseStep(model);
             } else if (internalStep == DO_QUEST) {
                 portraitSay("You better deliver that potion soon. My Client is waiting!");
                 leaderSay(iOrWeCap() + " are getting around to it.");
@@ -225,8 +218,7 @@ public class WitchStoryPart extends StoryPart {
                     leaderSay("No chance we can just sell the pearl to you? Then you can do whatever you like with it, no questions asked...");
                     portraitSay("Thanks for the offer, but I think this time I'll put the greater good ahead of my own interests.");
                 }
-                model.getMainStory().increaseStep(model, StoryPart.TRACK_B);
-                model.getMainStory().transitionStep(model);
+                increaseStep(model);
             } else {
                 portraitSay("I'm afraid I have no more information for you, unless you want to learn about witchcraft. Do you?");
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.WIT);

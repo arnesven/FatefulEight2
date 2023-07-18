@@ -23,4 +23,12 @@ public abstract class MainStoryTask implements JournalEntry {
     public boolean isFailed() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "MainStoryTask{" +
+                "name='" + name + '\'' +
+                "text='" + getText() + '\'' +
+                '}';
+    }
 }
