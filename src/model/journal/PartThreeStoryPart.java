@@ -86,7 +86,7 @@ public class PartThreeStoryPart extends StoryPart {
 
     @Override
     protected StoryPart getNextStoryPart(Model model, int track) {
-        return new PartFourStoryPart(this, castleName);
+        return new PartFourStoryPart(castleName);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class PartThreeStoryPart extends StoryPart {
                 case TALK_TO_WILLIS_STEP:
                     return "Go to the library in the " + libraryTown + ".";
                 case DO_QUEST_STEP:
-                    return "Complete the quest 'Trouble in the Library'.";
+                    return "Complete the quest '" + TroubleInTheLibraryQuest.QUEST_NAME + "'.";
                 case QUEST_COMPLETED_STEP:
                     return "Talk to Willis again (in the " + libraryTown + ").";
                 default:

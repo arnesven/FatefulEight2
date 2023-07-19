@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartFourStoryPart extends StoryPart {
-    private final PartThreeStoryPart previous;
     private final String castleName;
 
-    public PartFourStoryPart(PartThreeStoryPart previousPart, String castleName) {
-        this.previous = previousPart;
+    public PartFourStoryPart(String castleName) {
         this.castleName = castleName;
     }
 
@@ -20,7 +18,6 @@ public class PartFourStoryPart extends StoryPart {
     public List<JournalEntry> getJournalEntries() {
         List<JournalEntry> entries = new ArrayList<>();
         entries.add(new InformLordEntry());
-        entries.addAll(previous.getJournalEntries());
         return entries;
     }
 
@@ -33,9 +30,7 @@ public class PartFourStoryPart extends StoryPart {
     public void progress() { }
 
     @Override
-    public void addQuests(Model model, List<Quest> quests) {
-        previous.addQuests(model, quests);
-    }
+    public void addQuests(Model model, List<Quest> quests) { }
 
     @Override
     public StoryPart getNextStoryPart(Model model, int track) {

@@ -28,7 +28,7 @@ public abstract class MainStoryTask implements JournalEntry {
     public String toString() {
         return "MainStoryTask{" +
                 "name='" + name + '\'' +
-                "text='" + getText() + '\'' +
+                " text='" + getText() + '\'' +
                 '}';
     }
 }
