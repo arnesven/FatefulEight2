@@ -29,7 +29,6 @@ public class PartThreeStoryPart extends StoryPart {
 
     private static final Sprite SPRITE = new LibrarySprite();
 
-    private final StoryPart previousStoryPart;
     private static final int INITIAL_STEP = 0;
     private static final int TALK_TO_WILLIS_STEP = 1;
     private static final int DO_QUEST_STEP = 2;
@@ -41,8 +40,7 @@ public class PartThreeStoryPart extends StoryPart {
     private int internalStep = INITIAL_STEP;
     private boolean helpOffered = false;
 
-    public PartThreeStoryPart(StoryPart previous, String castleName, String libraryTown) {
-        this.previousStoryPart = previous;
+    public PartThreeStoryPart(String castleName, String libraryTown) {
         this.castleName = castleName;
         this.libraryTown = libraryTown;
     }
@@ -51,58 +49,34 @@ public class PartThreeStoryPart extends StoryPart {
     public List<JournalEntry> getJournalEntries() {
         List<JournalEntry> entries = new ArrayList<>();
         entries.add(new LibraryTask());
-        entries.addAll(previousStoryPart.getJournalEntries());
         return entries;
     }
 
     @Override
     public void handleTownSetup(TownDailyActionState townDailyActionState) {
-        if (!previousStoryPart.isCompleted()) {
-            previousStoryPart.handleTownSetup(townDailyActionState);
-        } else {
-            if (townDailyActionState.getTown().getName().equals(libraryTown)) {
-                int randomSeed = townDailyActionState.getTown().getName().hashCode();
-                townDailyActionState.addNodeInFreeSlot(new VisitLibraryNode(townDailyActionState.getTown(), this), randomSeed);
-            }
+        if (townDailyActionState.getTown().getName().equals(libraryTown)) {
+            int randomSeed = townDailyActionState.getTown().getName().hashCode();
+            townDailyActionState.addNodeInFreeSlot(new VisitLibraryNode(townDailyActionState.getTown(), this), randomSeed);
         }
     }
 
     @Override
     public void progress() {
-        if (!previousStoryPart.isCompleted()) {
-            previousStoryPart.progress();
-            if (previousStoryPart.isCompleted()) {
-                internalStep++;
-            }
-        } else {
-            internalStep++;
-        }
-    }
-
-    @Override
-    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
-        if (internalStep == INITIAL_STEP) {
-            return previousStoryPart.getVisitLordEvent(model, location);
-        }
-        return super.getVisitLordEvent(model, location);
+        internalStep++;
     }
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
-        if (!previousStoryPart.isCompleted()) {
-            previousStoryPart.addQuests(model, quests);
-        } else {
-            if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
-                TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
-                if (loc.getName().equals(libraryTown)) {
-                    GameCharacter willis =  model.getMainStory().getWillisCharacter();
-                    if (internalStep == DO_QUEST_STEP) {
-                        quests.add(getQuestAndSetPortrait(TroubleInTheLibraryQuest.QUEST_NAME, willis.getAppearance(),
-                                willis.getFirstName()));
-                    } else if (internalStep == LIBRARY_CLEANED && helpOffered) {
-                        quests.add(getQuestAndSetPortrait(HelpWillisQuest.QUEST_NAME, willis.getAppearance(),
-                                willis.getFirstName()));
-                    }
+        if (model.getCurrentHex().getLocation() != null && model.getCurrentHex().getLocation() instanceof TownLocation) {
+            TownLocation loc = (TownLocation) model.getCurrentHex().getLocation();
+            if (loc.getName().equals(libraryTown)) {
+                GameCharacter willis =  model.getMainStory().getWillisCharacter();
+                if (internalStep == DO_QUEST_STEP) {
+                    quests.add(getQuestAndSetPortrait(TroubleInTheLibraryQuest.QUEST_NAME, willis.getAppearance(),
+                            willis.getFirstName()));
+                } else if (internalStep == LIBRARY_CLEANED && helpOffered) {
+                    quests.add(getQuestAndSetPortrait(HelpWillisQuest.QUEST_NAME, willis.getAppearance(),
+                            willis.getFirstName()));
                 }
             }
         }

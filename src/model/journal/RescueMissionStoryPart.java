@@ -223,6 +223,7 @@ public class RescueMissionStoryPart extends StoryPart {
                     portraitSay("I'm sending you to " + libraryTown.getName() + ". There's a library there and the " +
                             "finest historian in the realm, Willis Johanssen. There is nobody more likely than Willis to know " +
                             "what there is to know about the Quad and the pearl. Or if she doesn't she'll find out from the books in the library.");
+                    progressPartThree(model);
                 } else {
                     leaderSay("We'll be on our way now.");
                     portraitSay("Fortune be with you in your travels.");
@@ -239,7 +240,17 @@ public class RescueMissionStoryPart extends StoryPart {
         }
     }
 
-   private boolean witchPartCompleted() {
+    private void progressPartThree(Model model) {
+        for (StoryPart part : model.getMainStory().getStoryParts()) {
+            if (part instanceof PartThreeStoryPart) {
+                part.progress();
+                return;
+            }
+        }
+        throw new IllegalStateException("Could not find part three to progress.");
+    }
+
+    private boolean witchPartCompleted() {
         return witchPart.isCompleted();
     }
 

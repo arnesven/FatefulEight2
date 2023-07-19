@@ -89,7 +89,7 @@ public class WitchStoryPart extends StoryPart {
 
     @Override
     protected StoryPart getNextStoryPart(Model model, int track) {
-        throw new IllegalStateException("Should not be called!");
+        return new PartThreeStoryPart(model.getMainStory().getCastleName(), model.getMainStory().getLibraryTownName());
     }
 
     public class FindTheWitch extends MainStoryTask {
@@ -106,9 +106,7 @@ public class WitchStoryPart extends StoryPart {
             } else if (internalStep == QUEST_DONE) {
                 return "Return to the witch to get information about the Crimson Pearl.";
             }
-            return "You helped the witch in the wood deliver a special potion to her client. " +
-                    "In return you learned valuable information about the Quad, which you should " +
-                    "report to the proper authorities.\n\nCompleted";
+            return "You helped the witch in the wood deliver a special potion to her client.\n\nCompleted";
         }
 
         @Override
@@ -129,14 +127,6 @@ public class WitchStoryPart extends StoryPart {
 
         @Override
         protected void doEvent(Model model) {
-            //   The witch promises to tell all she knows about the pearl, if the party delivers
-            //   a package for her. Seems easy enough, but there are others who are interested in
-            //   the contents of the package, ready to intercept the party en route.
-            //   Once completed, the Witch explains that the Crimson Pearl is a sorcerer's tool
-            //   for dominating somebody's mind. But how did it end up in a frogman's belly?
-            //   Pearls like these haven't been made for centuries, and only by a secluded cult of
-            //   sorcerer's known as the Cordial Quad. It is the general belief that they were all wiped out centuries ago.
-            //   The party should inform the proper authorities about this.
             showExplicitPortrait(model, witchAppearance, "Witch");
             if (internalStep == FIND_WITCH) {
                 println("You find a small hut in a dank grove. Light emanates from " +
@@ -219,6 +209,7 @@ public class WitchStoryPart extends StoryPart {
                     portraitSay("Thanks for the offer, but I think this time I'll put the greater good ahead of my own interests.");
                 }
                 increaseStep(model);
+                transitionStep(model);
             } else {
                 portraitSay("I'm afraid I have no more information for you, unless you want to learn about witchcraft. Do you?");
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.WIT);

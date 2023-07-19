@@ -9,6 +9,7 @@ import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.journal.RuinsEntry;
 import model.quests.FrogmenProblemQuest;
+import model.quests.RescueMissionQuest;
 import model.quests.SpecialDeliveryQuest;
 import model.races.Race;
 import util.MyPair;
@@ -122,9 +123,7 @@ public class MainStoryTest {
                 @Override
                 public void stimuli(Model model) {
                     progressInitialPartToCompletion(model);
-                    model.getMainStory().getStoryParts().get(2).progress();
-                    model.getMainStory().getStoryParts().get(2).progress();
-                    model.getMainStory().getStoryParts().get(2).progress();
+                    progressWitchPartToCompletion(model);
                 }
 
                 @Override
@@ -132,6 +131,59 @@ public class MainStoryTest {
                     expected.add(new MyPair<>("Dummy's Uncle", "You helped Dummy's uncle and the"));
                     expected.add(new MyPair<>("Reward at", "gold, your reward for dealing with the frogmen problem"));
                     expected.add(new MyPair<>("The Witch in the Woods", "You helped the witch in the wood deliver a special potion to her client"));
+                    expected.add(new MyPair<>("Go to the Library", "Inform the lord of"));
+                }
+            },
+            new Parameter("09 - RescueMissionStoryPart, after WitchPart, progress once") {
+                @Override
+                public void stimuli(Model model) {
+                    progressInitialPartToCompletion(model);
+                    progressWitchPartToCompletion(model);
+                    model.getMainStory().getStoryParts().get(1).progress();  // Visit lord
+                }
+
+                @Override
+                public void updateExpected(Model model, List<MyPair<String, String>> expected) {
+                    expected.add(new MyPair<>("Dummy's Uncle", "You helped Dummy's uncle and the"));
+                    expected.add(new MyPair<>("Reward at", "Complete the '" + RescueMissionQuest.QUEST_NAME));
+                    expected.add(new MyPair<>("The Witch in the Woods", "You helped the witch in the wood deliver a special potion to her client"));
+                    expected.add(new MyPair<>("Go to the Library", "Inform the lord of"));
+                }
+            },
+            new Parameter("10 - RescueMissionStoryPart, after WitchPart, progress twice") {
+                @Override
+                public void stimuli(Model model) {
+                    progressInitialPartToCompletion(model);
+                    progressWitchPartToCompletion(model);
+                    model.getMainStory().getStoryParts().get(1).progress();  // Visit lord
+                    model.getMainStory().getStoryParts().get(1).progress();  // Do rescue mission quest
+                }
+
+                @Override
+                public void updateExpected(Model model, List<MyPair<String, String>> expected) {
+                    expected.add(new MyPair<>("Dummy's Uncle", "You helped Dummy's uncle and the"));
+                    expected.add(new MyPair<>("Reward at", "to explain where Caid is"));
+                    expected.add(new MyPair<>("The Witch in the Woods", "You helped the witch in the wood deliver a special potion to her client"));
+                    expected.add(new MyPair<>("Go to the Library", "Inform the lord of"));
+                }
+            },
+            new Parameter("11 - RescueMissionStoryPart, after WitchPart, progress three times") {
+                @Override
+                public void stimuli(Model model) {
+                    progressInitialPartToCompletion(model);
+                    progressWitchPartToCompletion(model);
+                    model.getMainStory().getStoryParts().get(1).progress();  // Visit lord
+                    model.getMainStory().getStoryParts().get(1).progress();  // Do rescue mission quest
+                    model.getMainStory().getStoryParts().get(1).progress();  // Returns to lord, task completed
+                    model.getMainStory().getStoryParts().get(3).progress();  // Progressed at lord because witch part is done
+                }
+
+                @Override
+                public void updateExpected(Model model, List<MyPair<String, String>> expected) {
+                    expected.add(new MyPair<>("Dummy's Uncle", "You helped Dummy's uncle and the"));
+                    expected.add(new MyPair<>("Reward at", "You found Caid"));
+                    expected.add(new MyPair<>("The Witch in the Woods", "You helped the witch in the wood deliver a special potion to her client"));
+                    expected.add(new MyPair<>("Go to the Library", "Go to the library in the"));
                 }
             }
     };
@@ -143,6 +195,13 @@ public class MainStoryTest {
         model.getMainStory().getStoryParts().get(0).transitionStep(model, 0); // Gets "Reward at ... Castle" Task
         model.getMainStory().getStoryParts().get(0).progress();     // Visits Everix
         model.getMainStory().getStoryParts().get(0).transitionStep(model, 1); // Gets "Find Witch" Task
+    }
+
+    private static void progressWitchPartToCompletion(Model model) {
+        model.getMainStory().getStoryParts().get(2).progress();   // Visits witch, get Special Delivery Quest
+        model.getMainStory().getStoryParts().get(2).progress();   // Completes special delivery quests
+        model.getMainStory().getStoryParts().get(2).progress();   // Returns to witch, get Crimson Pearl info -> completes task
+        model.getMainStory().getStoryParts().get(2).transitionStep(model); // Gets part three story part
     }
 
     public static void testSuit(Model model) {
