@@ -54,8 +54,6 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
-        return new PartyMemberWantsToLeaveEvent(model);
-        /*
         DailyEventState tutorialEvent = model.getTutorial().getTutorialEvent(model);
         if (tutorialEvent != null) {
             return tutorialEvent;
@@ -76,7 +74,7 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState && MyRandom.randInt(5) == 0) {
             eventToReturn = generatePartyEvent(model);
         }
-        return eventToReturn; */
+        return eventToReturn;
     }
 
     protected abstract DailyEventState generateTerrainSpecificEvent(Model model);
@@ -358,6 +356,7 @@ public abstract class WorldHex {
     private DailyEventState generatePartyEvent(Model model) {
         return MyRandom.sample(List.of(
                 new RationsGoneBadEvent(model),
+                new PartyMemberWantsToLeaveEvent(model),
                 new PartyMemberWantsToLeaveEvent(model)
         ));
     }
