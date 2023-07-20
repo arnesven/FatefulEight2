@@ -21,6 +21,9 @@ public class SpellFinalCombatAction extends CombatAction {
         if (success) {
             combat.addSpecialEffect(performer, new CastingEffectSprite());
             spell.applyCombatEffect(model, combat, performer, target);
+            if (target instanceof GameCharacter) {
+                ((GameCharacter) target).addToAttitude(performer, 2);
+            }
         } else {
             combat.addSpecialEffect(performer, new MiscastEffectSprite());
         }

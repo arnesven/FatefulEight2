@@ -50,6 +50,7 @@ public class TalkToPartyNode extends DailyActionNode {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("You guys doing alright?",
                         "Ready to head out?", "How's it going?", "Everything OK over here?", "Enjoying the establishment?"));
                 model.setSubView(new PartyAttitudesDialog(model));
+                model.getTutorial().attitudes(model);
                 waitForReturn();
                 GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                 model.getParty().partyMemberSay(model, gc, List.of("Just having a brew...", "I'm loving it.3",

@@ -19,6 +19,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
             new TutorialAlchemy(null),
             new TutorialAllies(null),
             new TutorialAlignment(null),
+            new TutorialAttitudes(null),
             new TutorialClassesDialog(null),
             new TutorialCombatActionsDialog(null),
             new TutorialCombatDamageDialog(null),

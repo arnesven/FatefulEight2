@@ -48,9 +48,11 @@ public class ItemCombatAction extends CombatAction {
                 res.add(new CombatAction(item.getName()) {
                     @Override
                     public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                        String message = item.useYourself(model, (GameCharacter) target);
+                        GameCharacter character = (GameCharacter)target;
+                        String message = item.useYourself(model, character);
                         combat.println(message);
                         model.getParty().getInventory().remove(item);
+                        character.addToAttitude(performer, 2);
                     }
                 });
             } else if (target instanceof Enemy && item instanceof ThrowablePotion) {

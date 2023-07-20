@@ -186,6 +186,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void attitudes(Model model) {
+        runOnce("attitudes", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialAttitudes(model.getView()));
+        });
+    }
+
     public boolean isTutorialEnabled() {
         return tutorialOn;
     }

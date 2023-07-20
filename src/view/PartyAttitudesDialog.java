@@ -21,7 +21,6 @@ public class PartyAttitudesDialog extends SubView {
 
     public PartyAttitudesDialog(Model model) {
         super();
-
     }
 
     @Override
