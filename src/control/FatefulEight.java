@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class FatefulEight extends JFrame {
 
-    public static final boolean TEST_MODE = true;
+    public static final boolean TEST_MODE = false;
     private static final int TIMER_DELAY_MS = 20;
     private DrawingArea drawingArea;
     private boolean inFullScreenMode = false;

@@ -38,6 +38,7 @@ public class SpikedShield extends ShieldItem {
     public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
         combatEvent.println(this.getName() + " deals 1 damage to " + enemy.getName() + ".");
         combatEvent.doDamageToEnemy(enemy, 1, null);
+        combatEvent.addStrikeEffect(enemy, 1, false);
     }
 
     @Override

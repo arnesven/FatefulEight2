@@ -14,7 +14,7 @@ import view.MyColors;
 import view.sprites.*;
 
 public class PoisonGasSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new CombatSpellSprite(0, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public PoisonGasSpell() {
         super("Poison Gas", 20, MyColors.BLACK, 8, 1, false);

@@ -350,6 +350,8 @@ public class Party implements Serializable {
 
         }
         gc.addToXP(xp);
+        gc.addToHP(1000);
+        gc.addToSP(1000);
     }
 
     private GameCharacter findBestPerformer(Skill skill, List<GameCharacter> performers) {

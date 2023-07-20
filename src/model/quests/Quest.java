@@ -24,12 +24,13 @@ public abstract class Quest {
     private final String name;
     private final Reward reward;
     private final String text;
+    private final String endingText;
     private String provider;
     private final QuestDifficulty difficulty;
-    private final List<QuestScene> scenes;
-    private final List<QuestJunction> junctions;
-    private final QuestSuccessfulNode successEnding;
-    private final QuestNode failEnding;
+    private List<QuestScene> scenes;
+    private List<QuestJunction> junctions;
+    private QuestSuccessfulNode successEnding;
+    private QuestNode failEnding;
 
     public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, int exp, String text, String endText) {
         this.name = name;
@@ -37,7 +38,12 @@ public abstract class Quest {
         this.difficulty = difficulty;
         this.reward = new Reward(partyRep, gold, exp);
         this.text = text;
-        successEnding = new QuestSuccessfulNode(reward, endText);
+        this.endingText = endText;
+        resetQuest();
+    }
+
+    protected void resetQuest() {
+        successEnding = new QuestSuccessfulNode(reward, endingText);
         failEnding = new QuestFailNode();
         scenes = buildScenes();
         junctions = buildJunctions(scenes);
