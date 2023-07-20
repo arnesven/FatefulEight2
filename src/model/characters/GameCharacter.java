@@ -603,10 +603,11 @@ public class GameCharacter extends Combatant {
     }
 
     public int getAttitude(GameCharacter target) {
-        if (!attitudes.containsKey(target)) {
-            return 0;
+        return -30;
+        /*if (!attitudes.containsKey(target)) {
+            attitudes.put(target, 0);
         }
-        return attitudes.get(target);
+        return attitudes.get(target); */
     }
 
     public void addToAttitude(GameCharacter target, int i) {

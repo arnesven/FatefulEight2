@@ -119,13 +119,22 @@ public class RecruitState extends GameState {
                 } else if (selectedAction[0] == 'D' && model.getParty().size() > 1) {
                     print("Which party member do you wish to dismiss? ");
                     GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
-                    int goldLost = Math.min(model.getParty().getGold(),
-                            toDismiss.getCharClass().getStartingGold() + toDismiss.getLevel()*5);
-                    print(toDismiss.getFullName() + " will return all equipment and claim " + goldLost + " from the party's purse." +
-                            " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
-                    if (yesNoInput()) {
-                        model.getParty().remove(toDismiss, true, true, goldLost);
-                        println(toDismiss.getFullName() + " left the party.");
+                    int goldLost =
+                            toDismiss.getCharClass().getStartingGold() + toDismiss.getLevel()*5 + 5;
+                    if (goldLost > model.getParty().getGold()) {
+                        print("Since you do not have " + goldLost + " to pay, " + toDismiss.getFullName() + " will keep all equipment." +
+                                " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
+                        if (yesNoInput()) {
+                            model.getParty().remove(toDismiss, false, false, 0);
+                            println(toDismiss.getFullName() + " left the party.");
+                        }
+                    } else {
+                        print(toDismiss.getFullName() + " will return all equipment and claim " + goldLost + " from the party's purse." +
+                                " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
+                        if (yesNoInput()) {
+                            model.getParty().remove(toDismiss, true, true, goldLost);
+                            println(toDismiss.getFullName() + " left the party.");
+                        }
                     }
                 } else if (selectedAction[0] == 'Q') {
                     break;

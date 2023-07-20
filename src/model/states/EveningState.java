@@ -265,7 +265,7 @@ public class EveningState extends GameState {
             }
             println(gc.getFirstName() + " starves.");
             if (gc != model.getParty().getLeader()) {
-                gc.addToAttitude(model.getParty().getLeader(), -2);
+                gc.addToAttitude(model.getParty().getLeader(), -3);
             }
         }
 

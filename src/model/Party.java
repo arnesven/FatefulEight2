@@ -407,6 +407,9 @@ public class Party implements Serializable {
             if (result.isSuccessful()) {
                 partyMemberSay(model, performer, List.of("Piece of cake!", "All done.", "No trouble at all.",
                         "That was fun!", "Child's play!", "I rock!"));
+                if (performer != getLeader()) {
+                    performer.addToAttitude(getLeader(), 1);
+                }
             } else {
                 partyMemberSay(model, performer, List.of("Sorry!", "Nope, can't do it.", "Aaaagh!#", "Phooey",
                         "Well, I tried.", "What, I failed?", "Darn it!"));
