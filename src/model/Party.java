@@ -410,6 +410,9 @@ public class Party implements Serializable {
             } else {
                 partyMemberSay(model, performer, List.of("Sorry!", "Nope, can't do it.", "Aaaagh!#", "Phooey",
                         "Well, I tried.", "What, I failed?", "Darn it!"));
+                if (performer != getLeader()) {
+                    performer.addToAttitude(getLeader(), -1);
+                }
             }
         }
         return new MyPair<>(result.isSuccessful(), performer);

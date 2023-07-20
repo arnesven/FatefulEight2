@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.states.GameState;
 import util.MyRandom;
+import view.PartyAttitudesDialog;
 import view.sprites.Sprite;
 import view.subviews.TavernSubView;
 
@@ -48,6 +49,8 @@ public class TalkToPartyNode extends DailyActionNode {
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("You guys doing alright?",
                         "Ready to head out?", "How's it going?", "Everything OK over here?", "Enjoying the establishment?"));
+                model.setSubView(new PartyAttitudesDialog(model));
+                waitForReturn();
                 GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                 model.getParty().partyMemberSay(model, gc, List.of("Just having a brew...", "I'm loving it.3",
                         "Ready for action!", "Whenever you're ready boss.", "Ready to roll."));

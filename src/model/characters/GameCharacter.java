@@ -47,12 +47,11 @@ public class GameCharacter extends Combatant {
     private int level;
     private Equipment equipment;
     private final Map<Skill, SkillBonus> temporarySkillBonuses = new HashMap<>();
-
     private int currentSp = 1;
     private int currentXp = 0;
     private Party party;
     private int xpGivenCounter = 0;
-
+    private final Map<GameCharacter, Integer> attitudes = new HashMap<>();
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
                          CharacterClass[] classes, Equipment equipment) {
@@ -601,5 +600,19 @@ public class GameCharacter extends Combatant {
 
     public boolean canChangeAccessory() {
         return true;
+    }
+
+    public int getAttitude(GameCharacter target) {
+        if (!attitudes.containsKey(target)) {
+            return 0;
+        }
+        return attitudes.get(target);
+    }
+
+    public void addToAttitude(GameCharacter target, int i) {
+        if (!attitudes.containsKey(target)) {
+            attitudes.put(target, 0);
+        }
+        attitudes.put(target, attitudes.get(target) + i);
     }
 }

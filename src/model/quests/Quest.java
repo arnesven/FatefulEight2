@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.Party;
 import model.TimeOfDay;
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
@@ -166,7 +167,20 @@ public abstract class Quest {
         state.waitForReturn();
         QuestState.setCurrentTerrainSubview(model);
         model.setTimeOfDay(TimeOfDay.EVENING);
+        adjustAttitudes(model, questWasSuccess);
         return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    private void adjustAttitudes(Model model, boolean questWasSuccess) {
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc != model.getParty().getLeader()) {
+                if (questWasSuccess) {
+                    gc.addToAttitude(model.getParty().getLeader(), 10);
+                } else {
+                    gc.addToAttitude(model.getParty().getLeader(), -10);
+                }
+            }
+        }
     }
 
     public boolean arePrerequisitesMet(Model model) {
