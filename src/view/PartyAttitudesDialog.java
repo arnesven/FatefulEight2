@@ -11,13 +11,13 @@ import java.awt.*;
 
 
 public class PartyAttitudesDialog extends SubView {
-    private static final Sprite NEUTRAL_SPRITE = new AttitudeSprite(0x00, MyColors.GRAY);
-    private static final Sprite HAPPY_SPRITE = new AttitudeSprite(0x01, MyColors.LIGHT_GREEN);
-    private static final Sprite SAD_SPRITE = new AttitudeSprite(0x02, MyColors.PEACH);
-    private static final Sprite VERY_HAPPY_SPRITE = new AttitudeSprite(0x10, MyColors.GREEN);
-    private static final Sprite VERY_SAD_SPRITE = new AttitudeSprite(0x11, MyColors.RED);
-    private static final Sprite HATE_SPRITE = new AttitudeSprite(0x12, MyColors.DARK_RED);
-    private static final Sprite LOVE_SPRITE = new AttitudeSprite(0x20, MyColors.RED);
+    public static final Sprite NEUTRAL_SPRITE = new AttitudeSprite(0x00, MyColors.GRAY);
+    public static final Sprite HAPPY_SPRITE = new AttitudeSprite(0x01, MyColors.LIGHT_GREEN);
+    public static final Sprite SAD_SPRITE = new AttitudeSprite(0x02, MyColors.PEACH);
+    public static final Sprite VERY_HAPPY_SPRITE = new AttitudeSprite(0x10, MyColors.GREEN);
+    public static final Sprite VERY_SAD_SPRITE = new AttitudeSprite(0x11, MyColors.RED);
+    public static final Sprite HATE_SPRITE = new AttitudeSprite(0x12, MyColors.DARK_RED);
+    public static final Sprite LOVE_SPRITE = new AttitudeSprite(0x20, MyColors.RED);
 
     public PartyAttitudesDialog(Model model) {
         super();
