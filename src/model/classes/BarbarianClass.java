@@ -60,4 +60,22 @@ public class BarbarianClass extends CharacterClass {
         }
         return 2;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.RED;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x02;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Barbarian are tribal warriors native to hills and mountainous areas. " +
+                "They are heavy fighters who rely on raw power rather than finesse in battle. " +
+                "Barbarians rely on their toughness and instincts to survive in the wild and they rarely shy away from " +
+                "performing tasks requiring high levels of strength and fortitude.";
+    }
 }

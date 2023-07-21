@@ -9,9 +9,10 @@ import view.sprites.CharSprite;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public abstract class HelpDialog extends SelectableListMenu {
+public class HelpDialog extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 35;
     private static final int DIALOG_HEIGHT = 20;
 
@@ -31,7 +32,11 @@ public abstract class HelpDialog extends SelectableListMenu {
     }
 
     public HelpDialog(GameView previous, String title, String text) {
-        this(previous, DIALOG_WIDTH, MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-1).length+6, title, text);
+        this(previous, DIALOG_WIDTH, getHeightForText(text)+6, title, text);
+    }
+
+    protected static int getHeightForText(String text) {
+        return MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-1).length;
     }
 
     @Override
@@ -75,5 +80,19 @@ public abstract class HelpDialog extends SelectableListMenu {
 
     public String getTitle() {
         return title;
+    }
+
+    public boolean isExpandable() {
+        return false;
+    }
+
+    public void setExpanded(boolean expand) { }
+
+    public boolean isExpanded() {
+        return false;
+    }
+
+    public List<HelpDialog> getSubSections() {
+        return new ArrayList<>();
     }
 }

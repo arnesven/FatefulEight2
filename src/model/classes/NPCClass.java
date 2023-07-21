@@ -3,6 +3,7 @@ package model.classes;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.races.Race;
+import view.MyColors;
 import view.sprites.AvatarSprite;
 
 public abstract class NPCClass extends CharacterClass {
@@ -23,5 +24,20 @@ public abstract class NPCClass extends CharacterClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0;
+    }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.BEIGE;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Unused";
     }
 }

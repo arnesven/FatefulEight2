@@ -24,6 +24,15 @@ public class AmazonClass extends CharacterClass {
     }
 
     @Override
+    public String getDescription() {
+        return "Amazons are native warriors from forests, jungles and swamplands. " +
+                "They are light fighters, often skilled in " +
+                "more primitive forms of weapons. Amazons are light on their feet, " +
+                "brilliant trail blazers, excellent survivalists " +
+                "and possess a small affinity for green magic.";
+    }
+
+    @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnHideRight(characterAppearance, MyColors.BROWN);
         Looks.putOnHideLeft(characterAppearance, MyColors.BROWN);
@@ -42,5 +51,15 @@ public class AmazonClass extends CharacterClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0;
+    }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.GREEN;
     }
 }

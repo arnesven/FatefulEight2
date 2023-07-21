@@ -20,7 +20,18 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-        return List.of(new TextDecoration(getHeading(), xStart + 1, yStart + 1, MyColors.WHITE, MyColors.BLUE, false),
+        return List.of(new DrawableObject(xStart + 1, yStart + index + 2) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        int scroll = y - position.y;
+                        print(model.getScreenHandler(), x, y - 2*scroll, (char)0x10+"");
+                    }
+                });
+    }
+
+    @Override
+    protected void drawNonScrollingParts(Model model, int xStart, int yStart) {
+        List<DrawableObject> list = List.of(new TextDecoration(getHeading(), xStart + 1, yStart + 1, MyColors.WHITE, MyColors.BLUE, false),
                 new DrawableObject(xStart + 1, yStart + 1) {
                     @Override
                     public void drawYourself(Model model, int x, int y) {
@@ -28,13 +39,10 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
                                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, false);
                         drawContent(model, index, x+xOffset, y-1);
                     }
-                },
-                new DrawableObject(xStart + 1, yStart + index + 2) {
-                    @Override
-                    public void drawYourself(Model model, int x, int y) {
-                        print(model.getScreenHandler(), x, y, (char)0x10+"");
-                    }
                 });
+        for (DrawableObject dobj : list) {
+            dobj.drawYourself(model, dobj.position.x, dobj.position.y);
+        }
     }
 
     protected abstract void drawContent(Model model, int index, int x, int y);
@@ -50,6 +58,7 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     index = finalI;
+                    indexWasSelected(index);
                     TwoPaneSelectableListMenu.this.madeChanges();
                 }
 
@@ -61,6 +70,8 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
         }
         return content;
     }
+
+    protected void indexWasSelected(int index) { }
 
     protected abstract String getEntryName(int index);
 

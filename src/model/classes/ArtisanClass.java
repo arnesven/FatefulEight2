@@ -29,6 +29,13 @@ public class ArtisanClass extends CharacterClass {
     }
 
     @Override
+    public String getDescription() {
+        return "Artisans are the crafters, tailors, cobblers, smiths and woodworkers of the world. " +
+                "Handy with tools, they have a keen eye for what will work, what's stylish and proper. " +
+                "Artisans are often well connected and are comfortable with social interaction.";
+    }
+
+    @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, SHIRT_COLOR);
         putOnApron(characterAppearance);
@@ -58,5 +65,15 @@ public class ArtisanClass extends CharacterClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.PEACH;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x01;
     }
 }

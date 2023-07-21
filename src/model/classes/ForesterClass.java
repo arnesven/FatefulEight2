@@ -50,4 +50,21 @@ public class ForesterClass extends CharacterClass {
     public void finalizeLook(CharacterAppearance appearance) {
         Looks.finalizeCap(appearance);
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.GREEN;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x04;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Foresters are the wardens of the forest. They are lumberjacks or rangers who feel most at home " +
+                "surrounded by tall trees and the musky scent of fir, pine or oak. They are light fighters, but often " +
+                "rugged and hardened by hard labor. They are good pathfinders and guids when trekking through the wilderness.";
+    }
 }

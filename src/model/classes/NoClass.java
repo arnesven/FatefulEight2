@@ -31,4 +31,19 @@ public class NoClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.BEIGE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Unused";
+    }
 }

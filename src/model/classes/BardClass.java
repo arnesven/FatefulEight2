@@ -49,4 +49,21 @@ public class BardClass extends CharacterClass {
     public void finalizeLook(CharacterAppearance appearance) {
         Looks.finalizeCap(appearance);
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.PURPLE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x03;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Bards are said to have silver tongues, but they're more than just entertainers. " +
+                "Bards can handle social situations, spurious combat and the odd bit of skulduggery." +
+                "They can also function well as leaders. All things considers, bards are versatile characters. ";
+    }
 }

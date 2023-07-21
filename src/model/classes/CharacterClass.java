@@ -4,14 +4,18 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.races.Race;
+import view.MyColors;
 import view.sprites.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class CharacterClass implements Serializable {
 
+    private static final Map<String, Sprite> icons = new HashMap<>();
     private final String shortname;
     private final WeightedSkill[] skillBonuses;
     private final int startGold;
@@ -112,6 +116,21 @@ public abstract class CharacterClass implements Serializable {
         return 0;
     }
 
+    public final Sprite getIconSprite() {
+        if (!icons.containsKey(getShortName())) {
+            icons.put(getShortName(), new CharClassIconSprite(getIconNumber(), getIconColor()));
+        }
+        return icons.get(getShortName());
+    }
+
+    protected MyColors getIconColor() {
+        return MyColors.BEIGE;
+    }
+
+    protected int getIconNumber() {
+        return 0;
+    }
+
     protected static class WeightedSkill implements Serializable {
         public Skill skill;
         public int weight;
@@ -144,5 +163,9 @@ public abstract class CharacterClass implements Serializable {
         classes.add(Classes.WIZ);
         classes.add(Classes.WIT);
         return classes;
+    }
+
+    public String getDescription() {
+        return "TODO";
     }
 }

@@ -9,7 +9,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class GoblinClass extends CharacterClass {
+public class GoblinClass extends SpecialCharacterClass {
     protected GoblinClass() {
         super("Goblin", "GBN", 5, 5, true, 0,
                 new WeightedSkill[]{

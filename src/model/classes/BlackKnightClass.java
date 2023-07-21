@@ -78,4 +78,21 @@ public class BlackKnightClass extends CharacterClass {
     public boolean coversEars() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.DARK_GREEN;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x05;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Not all knights are graceful heroes. Some betray their masters, are dishonorably discharged, or simply " +
+                "find their own selfish paths. Black Knights are fierce fighters who manage to stay agile even in heavy armor. " +
+                "What they lack in social skills they make up for in battle prowess and keen senses.";
+    }
 }
