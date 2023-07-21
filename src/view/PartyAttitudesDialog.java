@@ -8,6 +8,7 @@ import view.sprites.Sprite;
 import view.subviews.SubView;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 
 public class PartyAttitudesDialog extends SubView {
@@ -18,9 +19,11 @@ public class PartyAttitudesDialog extends SubView {
     public static final Sprite VERY_SAD_SPRITE = new AttitudeSprite(0x11, MyColors.RED);
     public static final Sprite HATE_SPRITE = new AttitudeSprite(0x12, MyColors.DARK_RED);
     public static final Sprite LOVE_SPRITE = new AttitudeSprite(0x20, MyColors.RED);
+    private boolean showNumbers;
 
     public PartyAttitudesDialog(Model model) {
         super();
+        this.showNumbers = false;
     }
 
     @Override
@@ -67,7 +70,9 @@ public class PartyAttitudesDialog extends SubView {
                 p.y += 1;
                 if (of == vs) {
                     p.y += 1;
-                    BorderFrame.drawString(model.getScreenHandler(), "N/A", p.x, p.y, MyColors.WHITE, MyColors.BLUE);
+                    BorderFrame.drawString(model.getScreenHandler(), ((char)0x80 + "" + (char)0x81), p.x, p.y, MyColors.WHITE, MyColors.BLUE);
+                } else if (showNumbers) {
+                    BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", of.getAttitude(vs)), p.x-1, p.y+1, MyColors.WHITE, MyColors.BLUE);
                 } else {
                     Sprite symbol = getSymbolForAttitude(of.getAttitude(vs));
                     model.getScreenHandler().register(symbol.getName(), p, symbol);
@@ -101,11 +106,20 @@ public class PartyAttitudesDialog extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Attitude of party member vs another party member.";
+        return "Press SPACE to toggle numerical display.";
     }
 
     @Override
     protected String getTitleText(Model model) {
         return "PARTY ATTITUDES";
+    }
+
+    @Override
+    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            showNumbers = !showNumbers;
+        }
+
+        return super.handleKeyEvent(keyEvent, model);
     }
 }
