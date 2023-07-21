@@ -71,7 +71,7 @@ public abstract class WorldHex {
         } else {
             eventToReturn = generateTerrainSpecificEvent(model);
         }
-        if (eventToReturn instanceof NoEventState && MyRandom.randInt(5) == 0) {
+        if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
         return eventToReturn;
@@ -357,6 +357,11 @@ public abstract class WorldHex {
         return MyRandom.sample(List.of(
                 new RationsGoneBadEvent(model),
                 new PartyMemberArgument(model),
+                new PartyEntertainmentEvent(model),
+                new PartyCookingEvent(model),
+                new PartyJokeEvent(model),
+                new PartyLowOnCashEvent(model),
+                new PartySalaryEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
                 new PartyMemberWantsToLeaveEvent(model)
         ));

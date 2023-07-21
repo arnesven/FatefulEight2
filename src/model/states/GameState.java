@@ -7,6 +7,7 @@ import model.combat.Condition;
 import model.combat.PoisonCondition;
 import model.items.spells.Spell;
 import util.MyPair;
+import view.PartyAttitudesDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
 import view.subviews.OnTheRoadSubView;
@@ -174,4 +175,10 @@ public abstract class GameState {
     protected String iOrWeCap() { return model.getParty().size() == 1 ? "I":"We"; }
 
     protected String iveOrWeve() { return model.getParty().size() == 1 ? "I've":"we've"; }
+
+    protected void showPartyAttitudesSubView(Model model) {
+        model.setSubView(new PartyAttitudesDialog(model));
+        model.getTutorial().attitudes(model);
+        waitForReturn();
+    }
 }

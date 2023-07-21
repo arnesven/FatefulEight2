@@ -41,6 +41,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
                 print(gc.getName() + " was thinking about leaving the party but has decided to stay for now.");
             }
         }
+        showPartyAttitudesSubView(model);
     }
 
     private boolean wantsToLeave(Model model, GameCharacter gc) {

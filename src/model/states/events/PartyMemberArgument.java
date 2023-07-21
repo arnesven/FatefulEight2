@@ -66,7 +66,7 @@ public class PartyMemberArgument extends DailyEventState {
         } else {
             stormOff(model, charaB, charaA);
         }
-
+        showPartyAttitudesSubView(model);
     }
 
     private void stormOff(Model model, GameCharacter charaA, GameCharacter charaB) {
