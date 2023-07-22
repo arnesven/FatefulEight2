@@ -54,4 +54,21 @@ public class SorcererClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return false;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.RED;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x0A;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Sorcerers are mages who primarily delve into black and red magic. They tend to be more reckless " +
+                "than Wizards, and more ambitious in their designs than witches and magicians. Sorcerer's do not rule " +
+                "out violence as a solutions when the situation requires it.";
+    }
 }

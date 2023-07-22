@@ -59,4 +59,20 @@ public class CaptainClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return false;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.GRAY;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x13;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Captains are capable men-at-arms, weathered by life in the army. The are proficient with a variety of " +
+                "weapons and are good leaders. Captains are often trained strategists and exhibit fair survival skills.";
+    }
 }

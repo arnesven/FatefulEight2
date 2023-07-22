@@ -123,13 +123,9 @@ public abstract class CharacterClass implements Serializable {
         return icons.get(getShortName());
     }
 
-    protected MyColors getIconColor() {
-        return MyColors.BEIGE;
-    }
+    protected abstract MyColors getIconColor();
 
-    protected int getIconNumber() {
-        return 0;
-    }
+    protected abstract int getIconNumber();
 
     protected static class WeightedSkill implements Serializable {
         public Skill skill;
@@ -165,7 +161,5 @@ public abstract class CharacterClass implements Serializable {
         return classes;
     }
 
-    public String getDescription() {
-        return "TODO";
-    }
+    public abstract String getDescription();
 }

@@ -57,4 +57,21 @@ public class DruidClass extends CharacterClass {
     public boolean coversEars() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.DARK_GREEN;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x06;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Druids are nature mages who are highly attuned with Green Magic. They often live " +
+                "as hermits which require them to have good survival skills and fair combat abilities. " +
+                "Druids are often highly intelligent and can make good decisions as leaders.";
+    }
 }

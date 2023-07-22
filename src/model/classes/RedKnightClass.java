@@ -14,7 +14,7 @@ import view.sprites.FilledBlockSprite;
 
 import static model.classes.BlackKnightClass.putOnKnightsHelm;
 
-public class RedKnightClass extends CharacterClass {
+public class RedKnightClass extends SpecialCharacterClass {
     protected RedKnightClass() {
         super("Red Knight", "RKN", 8, 5, true, 0, new WeightedSkill[]{
                 new WeightedSkill(Skill.Axes, 4),

@@ -45,4 +45,21 @@ public class WizardClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.BLUE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x0D;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Wizards are the masters of magic. Apart from white magic, wizards are vastly knowledgeable about " +
+                "different types of magic. They are also highly intelligent, and are often academics or scholars. " +
+                "While not very apt as leaders, they have no difficulty handling social interactions.";
+    }
 }

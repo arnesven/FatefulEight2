@@ -7,7 +7,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
 
-public class SwordMasterClass extends CharacterClass {
+public class SwordMasterClass extends SpecialCharacterClass {
     protected SwordMasterClass() {
         super("Sword Master", "SWM", 8, 5, true, 0, new WeightedSkill[]{
                 new WeightedSkill(Skill.Acrobatics, 5),

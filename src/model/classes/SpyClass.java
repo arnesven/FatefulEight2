@@ -58,4 +58,21 @@ public class SpyClass extends CharacterClass {
     public void finalizeLook(CharacterAppearance appearance) {
         Looks.finalizeCap(appearance);
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.DARK_BLUE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x0C;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Spies are everywhere. Members of this class are often agile, perceptive, clever and " +
+                "masters of the larceny. While very deft in the skills needed to acquire information, spies " +
+                "normally lack much combat ability and general fortitude.";
+    }
 }

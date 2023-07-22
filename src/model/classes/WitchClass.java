@@ -45,4 +45,21 @@ public class WitchClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.WHITE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x09;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Witches are magic users who focus on green and black magic. Witches " +
+                "can be devilishly clever and quite stealthy to boot. Most witches live alone and must therefore " +
+                "learn to protect themselves and live off the land.";
+    }
 }

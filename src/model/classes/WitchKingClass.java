@@ -9,7 +9,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class WitchKingClass extends CharacterClass {
+public class WitchKingClass extends SpecialCharacterClass {
     protected WitchKingClass() {
         super("Witch King", "WKN", 8, 3, false, 0, new WeightedSkill[] {
                 new WeightedSkill(Skill.Blades, 4),

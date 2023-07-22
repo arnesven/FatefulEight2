@@ -56,4 +56,22 @@ public class MagicianClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.PURPLE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x0B;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Magicians are individuals who mostly use magic as a form of entertainment. However, should " +
+                "the need arise, the can cast spells to protect themselves. They are often charismatic and do " +
+                "well in social contexts. It is not unheard of that magician also take jobs of the less " +
+                "reputable variety.";
+    }
 }

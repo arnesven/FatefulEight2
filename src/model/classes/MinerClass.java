@@ -53,4 +53,20 @@ public class MinerClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return false;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.YELLOW;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x0E;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Miners are laborers who dig and hack in the earth after precious crystals and ore. " +
+                "They are proficient with heavy weapons like axes and hammers and have great fortitude.";
+    }
 }

@@ -8,7 +8,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class EnchantressClass extends CharacterClass {
+public class EnchantressClass extends SpecialCharacterClass {
     protected EnchantressClass() {
         super("Enchantress", "ENC", 6, 6, false, 0,
                 new WeightedSkill[]{

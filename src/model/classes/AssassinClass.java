@@ -68,4 +68,21 @@ public class AssassinClass extends CharacterClass {
     public boolean coversEars() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.LIGHT_GRAY;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x07;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Assassins are trained killers who use stealth and deception to get to, " +
+                "and eliminate their targets. They can climb smooth walls, pick complex locks and " +
+                "even cast the odd blue spell. In combat, assassins prefer blades and bows.";
+    }
 }

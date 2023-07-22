@@ -62,4 +62,22 @@ public class NobleClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.CYAN;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x10;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Nobles are the leaders and rulers of society. Nobles have longer educations than most and are skilled " +
+                "broadly in both martial skills and academics. From an early age they are instructed how to act during " +
+                "social gatherings and adult nobles are often able to mix negotiation, persuasion and intimidation " +
+                "to get what they want.";
+    }
 }

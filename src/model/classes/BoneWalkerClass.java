@@ -6,7 +6,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class BoneWalkerClass extends CharacterClass {
+public class BoneWalkerClass extends SpecialCharacterClass {
     protected BoneWalkerClass() {
         super("BoneWalker", "BoneWalker", 7, 3, true, 0, new WeightedSkill[]{
                 new WeightedSkill(Skill.Blades, 6)

@@ -6,7 +6,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class FamiliarClass extends CharacterClass {
+public class FamiliarClass extends SpecialCharacterClass {
     protected FamiliarClass() {
         super("Familiar", "Familiar", 4, 8, false, 0, new WeightedSkill[]{
                 new WeightedSkill(Skill.Blades, 5)

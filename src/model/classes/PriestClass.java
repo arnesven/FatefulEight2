@@ -44,4 +44,21 @@ public class PriestClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.LIGHT_YELLOW;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x12;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Priests are monks and healers, normally connected with a religion or faith. They are skilled practitioners " +
+                "of white magic and make good leaders. Priests excel in soft skills but are normally not opposed " +
+                "to doing manual work.";
+    }
 }

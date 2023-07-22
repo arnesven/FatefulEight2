@@ -55,4 +55,20 @@ public class MarksmanClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.PEACH;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x11;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Marksmen are good archers and scouts. They have good survival skills, and are generally perceptive and stealthy." +
+                "Their basic combat training lets them have a basic proficiency of weapon types apart from the bow.";
+    }
 }

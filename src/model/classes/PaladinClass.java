@@ -46,4 +46,21 @@ public class PaladinClass extends CharacterClass {
     public boolean isBackRowCombatant() {
         return false;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.WHITE;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x0F;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Paladins are noble knights and grand protectors of the Order of Light. They possess powerful " +
+                "combat skills, and are proficient with blades, blunt weapons and polearms. They are natural leaders " +
+                "and have a little affinity for white magic";
+    }
 }

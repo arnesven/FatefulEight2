@@ -58,4 +58,22 @@ public class ThiefClass extends CharacterClass {
     public boolean coversEars() {
         return true;
     }
+
+    @Override
+    protected MyColors getIconColor() {
+        return MyColors.BROWN;
+    }
+
+    @Override
+    protected int getIconNumber() {
+        return 0x08;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Anywhere there are people living in urban dwellings, there are thieves. " +
+                "Thieves rely heavily on their senses and their dexterity to. Be it lifting purses, " +
+                "prying a safe open, or obtaining that rare prize, the thief uses all skills at her disposal " +
+                "to achieve success.";
+    }
 }

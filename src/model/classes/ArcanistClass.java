@@ -7,7 +7,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
-public class ArcanistClass extends CharacterClass {
+public class ArcanistClass extends SpecialCharacterClass {
     protected ArcanistClass() {
         super("Arcanist", "ARC", 6, 2, false, 0,
                 new WeightedSkill[]{
