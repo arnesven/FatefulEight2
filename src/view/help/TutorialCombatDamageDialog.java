@@ -2,7 +2,7 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialCombatDamageDialog extends HelpDialog {
+public class TutorialCombatDamageDialog extends SubChapterHelpDialog {
     private static final String text =
             "Each combat round, enemies will do damage to a random characters standing in the front row. " +
             "if there are now eligible targets in the front row, enemies will attack characters in " +
@@ -12,6 +12,6 @@ public class TutorialCombatDamageDialog extends HelpDialog {
             "characters Armor Points (AP). Damage can never be reduced to less than 0.";
 
     public TutorialCombatDamageDialog(GameView view) {
-        super(view, "Combat - Damage", text);
+        super(view, "Damage and Armor", text);
     }
 }

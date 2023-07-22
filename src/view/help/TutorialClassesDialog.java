@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TutorialClassesDialog extends HelpDialog {
+public class TutorialClassesDialog extends ExpandableHelpDialog {
     private static final String text =
             "A character's class defines that characters baseline of Health Points and Speed, " +
             "their skills and whether or not that character can wear heavy armor. A character's " +
@@ -21,51 +21,29 @@ public class TutorialClassesDialog extends HelpDialog {
             "Each character has four classes which he or she may assume. Various events will allow " +
             "characters to change their class. Think carefully before switching classes, you may not " +
             "get a chance to switch back soon!";
-    private boolean expanded = false;
-    private final List<HelpDialog> subsections;
 
     public TutorialClassesDialog(GameView view) {
         super(view, "Classes", text);
-        subsections = new ArrayList<>();
+    }
+
+    @Override
+    protected List<HelpDialog> makeSubSections(GameView view) {
+        List<HelpDialog> subsections = new ArrayList<>();
         for (CharacterClass characterClass : Classes.allClasses) {
             if (characterClass != Classes.None) {
                 subsections.add(new SpecificClassHelpDialog(view, characterClass));
             }
         }
-    }
-
-    @Override
-    public boolean isExpandable() {
-        return true;
-    }
-
-    @Override
-    public boolean isExpanded() {
-        return expanded;
-    }
-
-    @Override
-    public void setExpanded(boolean expand) {
-        expanded = expand;
-    }
-
-    @Override
-    public List<HelpDialog> getSubSections() {
         return subsections;
     }
 
-    private static class SpecificClassHelpDialog extends HelpDialog {
+    private static class SpecificClassHelpDialog extends SubChapterHelpDialog {
         private final CharacterClass charClass;
 
         public SpecificClassHelpDialog(GameView view, CharacterClass characterClass) {
             super(view, 30, characterClass.getFullName() + " (" + characterClass.getShortName() + ")",
                     "\n\n\n\n\n" + characterClass.getDescription());
             this.charClass = characterClass;
-        }
-
-        @Override
-        public String getTitle() {
-            return "+" + super.getTitle();
         }
 
         @Override

@@ -2,7 +2,7 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialCombatActionsDialog extends HelpDialog {
+public class TutorialCombatActionsDialog extends SubChapterHelpDialog {
     private static final String text =
             "Each combat round, characters take one combat action on their turn. Use the " +
             "arrow keys to select targets during combat.\n\n" +
@@ -19,6 +19,6 @@ public class TutorialCombatActionsDialog extends HelpDialog {
             "Pass: Do nothing in combat.";
 
     public TutorialCombatActionsDialog(GameView view) {
-        super(view, "Combat - Actions", text);
+        super(view, "Combat Actions", text);
     }
 }

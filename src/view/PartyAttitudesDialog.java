@@ -47,10 +47,10 @@ public class PartyAttitudesDialog extends SubView {
         int count = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             Point p = translateToScreen(count, 1);
-            //model.getScreenHandler().register(gc.getAvatarSprite().getName(), p, gc.getAvatarSprite());
-            for (int i = 0; i < gc.getFirstName().length(); i++) {
+            String name = gc.getFirstName().substring(0, Math.min(9, gc.getFirstName().length()));
+            for (int i = 0; i < name.length(); i++) {
                 BorderFrame.drawString(model.getScreenHandler(),
-                        ""+gc.getFirstName().charAt(gc.getFirstName().length()-i-1),
+                        ""+name.charAt(name.length()-i-1),
                         p.x + 5, p.y - i + 3,
                         model.getParty().getColorForPartyMember(gc), MyColors.BLUE);
             }
@@ -62,9 +62,9 @@ public class PartyAttitudesDialog extends SubView {
 
     private void drawContent(Model model) {
         int y = 0;
-        for (GameCharacter of : model.getParty().getPartyMembers()) {
+        for (GameCharacter vs : model.getParty().getPartyMembers()) {
             int x = 0;
-            for (GameCharacter vs : model.getParty().getPartyMembers()) {
+            for (GameCharacter of : model.getParty().getPartyMembers()) {
                 Point p = translateToScreen(x+1, y+2);
                 p.x += 1;
                 p.y += 1;

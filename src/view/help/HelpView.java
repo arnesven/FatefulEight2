@@ -24,9 +24,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
             new TutorialAlignment(null),
             new TutorialAttitudes(null),
             new TutorialClassesDialog(null),
-            new TutorialCombatActionsDialog(null),
-            new TutorialCombatDamageDialog(null),
-            new TutorialCombatFormationDialog(null),
+            new CombatHelpChapter(null),
             new TutorialCrafting(null),
             new TutorialCraftingDesigns(null),
             new TutorialDailyActions(null),
@@ -60,6 +58,11 @@ public class HelpView extends TwoPaneSelectableListMenu {
 
     @Override
     protected String getEntryName(int index) {
+        if (chapters.get(index).isExpandable()) {
+            if (!chapters.get(index).isExpanded()) {
+                return chapters.get(index).getTitle() + ((char) 0x7E);
+            }
+        }
         return chapters.get(index).getTitle();
     }
 
