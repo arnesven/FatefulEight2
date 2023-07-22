@@ -4,6 +4,7 @@ import model.Model;
 import sound.SoundEffects;
 import view.sprites.Animation;
 import view.sprites.AnimationManager;
+import view.sprites.CharClassIconSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class IntroGameView extends GameView implements Animation {
     private static final long FANFARE_START_MS = 3000;
     private static final String START_SOUND = "Rise03";
     private static final String JINGLE_SOUND = "Rise06";
+    private static final Sprite BLACK_SPRITE = new CharClassIconSprite(0x1F, MyColors.RED);
     private static Sprite splashSprite = makeSprite();
     private static Sprite[] titleSprites = makeTitle();
     private int aniIndex = 0;
@@ -53,6 +55,9 @@ public class IntroGameView extends GameView implements Animation {
     @Override
     public void internalUpdate(Model model) {
         model.getScreenHandler().put(0, 5, splashSprite);
+        for (int x = 0; x < 640/32; ++x) {
+            model.getScreenHandler().put(x*4, 46, BLACK_SPRITE);
+        }
         model.getScreenHandler().clearForeground();
         if (!fading) {
             model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex]);
