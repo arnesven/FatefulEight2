@@ -18,4 +18,5 @@ Features:
 - Original soundtrack.
   
 
-Just download the jar and run it. Enjoy!
+Just download the jar and run it. At least Java 11 is required.
+Enjoy!
