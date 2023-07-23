@@ -163,10 +163,10 @@ public class MainStory implements Serializable {
 
     public void setupStory(GameCharacter whosUncle) {
         List<MainStorySpawnLocation> townsAndCastles = List.of(
-                //new MainStorySpawnEast(),
-                //new MainStorySpawnSouth(),
-                new MainStorySpawnNorth()
-                //new MainStorySpawnWest()
+                new MainStorySpawnEast(),
+                new MainStorySpawnSouth(),
+                new MainStorySpawnNorth(),
+                new MainStorySpawnWest()
         );
         spawnData = MyRandom.sample(townsAndCastles);
         storyParts.add(new InitialStoryPart(whosUncle, spawnData.getTown()));

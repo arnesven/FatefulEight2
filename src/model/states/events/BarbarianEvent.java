@@ -35,6 +35,7 @@ public class BarbarianEvent extends DailyEventState {
             String gender = MyRandom.randomGender();
             println("The barbarian is quickly bored by your exaggerations, superlatives " +
                     " and expletives. With an ugly frown, " + gender + " just wanders off.");
+            leaderSay("I guess " + gender + " got offended...");
         }
     }
 }
