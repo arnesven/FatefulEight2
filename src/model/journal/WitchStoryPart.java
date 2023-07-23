@@ -22,7 +22,6 @@ import java.util.List;
 
 public class WitchStoryPart extends StoryPart {
 
-    private static final Sprite MAP_SPRITE = new SpriteQuestMarker();
     private static final int FIND_WITCH = 1;
     private static final int DO_QUEST = 2;
     private static final int QUEST_DONE = 3;
@@ -64,7 +63,7 @@ public class WitchStoryPart extends StoryPart {
 
     @Override
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
-        if (witchPoint.x == x && witchPoint.y == y) {
+        if (witchPoint.x == x && witchPoint.y == y && internalStep < COMPLETE) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         }
     }
@@ -72,7 +71,7 @@ public class WitchStoryPart extends StoryPart {
     @Override
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) {
         Point hexPoint = model.getWorld().getPositionForHex(worldHex);
-        if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
+        if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y && internalStep < COMPLETE) {
             String name = "Find Witch";
             if (internalStep > FIND_WITCH) {
                 name = "Visit Witch";

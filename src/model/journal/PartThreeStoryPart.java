@@ -86,7 +86,7 @@ public class PartThreeStoryPart extends StoryPart {
 
     @Override
     protected StoryPart getNextStoryPart(Model model, int track) {
-        return new PartFourStoryPart(castleName);
+        return new PartFourStoryPart(castleName, model.getMainStory().getCampPosition());
     }
 
     @Override

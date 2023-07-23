@@ -13,6 +13,7 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new ArkvaleCastle().getName(),
               new Point(38, 11),
               new UrnTownTown().getName(),
-                WorldBuilder.EXPAND_EAST);
+              WorldBuilder.EXPAND_EAST,
+              new Point(40, 10));
     }
 }

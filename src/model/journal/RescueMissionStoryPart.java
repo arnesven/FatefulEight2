@@ -21,6 +21,7 @@ public class RescueMissionStoryPart extends StoryPart {
     private static final int VISIT_CASTLE_STEP = 0;
     private static final int DO_QUEST_STEP = 1;
     private static final int QUEST_DONE_STEP = 2;
+    private static final int COMPLETED = 3;
     private final String libraryTown;
     private final StoryPart witchPart;
     private int internalStep = 0;
@@ -69,7 +70,7 @@ public class RescueMissionStoryPart extends StoryPart {
     @Override
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
         if (location instanceof CastleLocation &&
-                ((CastleLocation) location).getName().equals(castleName)) {
+                ((CastleLocation) location).getName().equals(castleName) && internalStep < COMPLETED) {
             return new RescueMissionLordEvent(model, model.getWorld().getCastleByName(castleName), model.getWorld().getTownByName(libraryTown));
         }
         return super.getVisitLordEvent(model, location);
@@ -77,7 +78,7 @@ public class RescueMissionStoryPart extends StoryPart {
 
     @Override
     protected boolean isCompleted() {
-        return internalStep > QUEST_DONE_STEP;
+        return internalStep >= COMPLETED;
     }
 
     private class RescueMissionLordEvent extends DailyEventState {
@@ -163,7 +164,9 @@ public class RescueMissionStoryPart extends StoryPart {
                 portraitSay("Splendid. Where is he now?");
                 leaderSay("Still on the mission you gave him. He wanted you to know that.");
                 portraitSay("Thank you so much for your help.");
-                increaseStep(model);
+                if (internalStep < COMPLETED) {
+                    increaseStep(model);
+                }
                 if (witchPartCompleted()) {
                     leaderSay("Now, we really need to discuss an urgent matter.");
                     portraitSay("And that is?");
@@ -224,6 +227,7 @@ public class RescueMissionStoryPart extends StoryPart {
                             "finest historian in the realm, Willis Johanssen. There is nobody more likely than Willis to know " +
                             "what there is to know about the Quad and the pearl. Or if she doesn't she'll find out from the books in the library.");
                     progressPartThree(model);
+                    increaseStep(model);
                 } else {
                     leaderSay("We'll be on our way now.");
                     portraitSay("Fortune be with you in your travels.");

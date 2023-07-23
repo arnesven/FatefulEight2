@@ -113,7 +113,9 @@ public class Model {
         gameStarted = true;
         playMainSong();
         if (FatefulEight.TEST_MODE) {
-            MainStoryTest.testSuit(this);// TODO: Remove when not testing.
+            MainStoryTest.testSuit(this);
+        } else {
+            gameData.mainStory.progressStoryForTesting(this);
         }
     }
 

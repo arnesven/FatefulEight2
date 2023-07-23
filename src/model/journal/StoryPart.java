@@ -10,12 +10,15 @@ import model.quests.MainQuest;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import view.sprites.Sprite;
+import view.sprites.SpriteQuestMarker;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class StoryPart implements Serializable {
+    protected static final Sprite MAP_SPRITE = new SpriteQuestMarker();
 
     public abstract List<JournalEntry> getJournalEntries();
 

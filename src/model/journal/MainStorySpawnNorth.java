@@ -13,6 +13,7 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
               new BogdownCastle().getName(),
               new Point(19, 18),
               new EastDurhamTown().getName(),
-                WorldBuilder.EXPAND_NORTH);
+              WorldBuilder.EXPAND_NORTH,
+              new Point(17, 10));
     }
 }

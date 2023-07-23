@@ -2,12 +2,17 @@ package model;
 
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.KruskTalandro;
 import model.characters.WillisCharacter;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
+import model.map.WorldBuilder;
 import model.map.WorldHex;
 import model.quests.*;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
@@ -89,7 +94,38 @@ public class MainStory implements Serializable {
     private GameCharacter caidCharacter = new CaidCharacter();
     private GameCharacter willisCharacter = new WillisCharacter();
 
+
     public MainStory() { }
+
+    public void progressStoryForTesting(Model model) {
+        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
+                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
+        setupStory(dummy);                // Get task "visit uncle"
+        getStoryParts().get(0).progress();     // Visit uncle, get Frogmen Problem quest
+        getStoryParts().get(0).progress();     // Completes frogmen problem quest
+        getStoryParts().get(0).progress();     // Returns to uncle, get visit Everix task
+        getStoryParts().get(0).transitionStep(model, 0); // Gets "Reward at ... Castle" Task
+        getStoryParts().get(0).progress();     // Visits Everix
+        getStoryParts().get(0).transitionStep(model, 1); // Gets "Find Witch" Task
+
+        getStoryParts().get(1).progress();  // Visit lord
+        getStoryParts().get(1).progress();  // Do rescue mission quest
+        getStoryParts().get(1).progress();  // Returns to lord, task completed
+
+
+        getStoryParts().get(2).progress();   // Visits witch, get Special Delivery Quest
+        getStoryParts().get(2).progress();   // Completes special delivery quests
+        getStoryParts().get(2).progress();   // Returns to witch, get Crimson Pearl info -> completes task
+        getStoryParts().get(2).transitionStep(model); // Gets part three story part
+
+
+        getStoryParts().get(3).progress();  // Progressed at lord because witch part is done
+        getStoryParts().get(3).progress();  // Talks to Willis, gets trouble in the library quest
+        getStoryParts().get(3).progress();  // Completes Trouble in the Library Quest,
+        getStoryParts().get(3).progress();  // Returns to willis, cleans library and gets more info on quad.
+        getStoryParts().get(3).transitionStep(model);
+        model.setWorldState(model.getMainStory().getExpandDirection());
+    }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
         if (isStarted() || model.getCurrentHex().getLocation() instanceof UrbanLocation || model.getParty().size() < 2) {
@@ -127,10 +163,10 @@ public class MainStory implements Serializable {
 
     public void setupStory(GameCharacter whosUncle) {
         List<MainStorySpawnLocation> townsAndCastles = List.of(
-                new MainStorySpawnEast(),
-                new MainStorySpawnSouth(),
-                new MainStorySpawnNorth(),
-                new MainStorySpawnWest()
+                //new MainStorySpawnEast(),
+                //new MainStorySpawnSouth(),
+                new MainStorySpawnNorth()
+                //new MainStorySpawnWest()
         );
         spawnData = MyRandom.sample(townsAndCastles);
         storyParts.add(new InitialStoryPart(whosUncle, spawnData.getTown()));
@@ -257,5 +293,20 @@ public class MainStory implements Serializable {
 
     public List<StoryPart> getStoryParts() {
         return storyParts;
+    }
+
+    public String getExpandDirectionName() {
+        if (spawnData.getExpandDirection() == WorldBuilder.EXPAND_EAST) {
+            return "east";
+        } else if (spawnData.getExpandDirection() == WorldBuilder.EXPAND_SOUTH) {
+            return "south";
+        } else if (spawnData.getExpandDirection() == WorldBuilder.EXPAND_WEST) {
+            return "west";
+        }
+        return "north";
+    }
+
+    public Point getCampPosition() {
+        return spawnData.getCamp();
     }
 }
