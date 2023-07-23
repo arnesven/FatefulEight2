@@ -15,8 +15,8 @@ public class SoundManager {
             if (f.exists()) {
                 is = new FileInputStream(path);
             } else {
-                String path2 = "/" + path.replace("resources/", "");
-                is = SoundManager.class.getResourceAsStream(path2);
+                String path2 = path.replace("resources/", "");
+                is = SoundManager.class.getClassLoader().getResourceAsStream(path2);
             }
 
             if (is == null) {

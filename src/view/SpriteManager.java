@@ -41,6 +41,10 @@ public class SpriteManager {
                         path = s.replace("resources\\", "");
                     }
                     is = SpriteManager.class.getClassLoader().getResourceAsStream(path);
+                    if (is == null) {
+                        System.out.println("Trying with replaced slashes");
+                        is = SpriteManager.class.getClassLoader().getResourceAsStream(path.replaceAll("\\\\", "/"));
+                    }
                 }
                 img = ImageIO.read(is);
                 filemap.put(s, img);
