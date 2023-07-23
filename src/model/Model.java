@@ -33,7 +33,7 @@ import java.util.List;
 
 public class Model {
     private static final String HALL_OF_FAME_PATH = "hall_of_fame.ff8";
-
+    private FatefulEight frame;
     private GameData gameData;
 
     private World world = new World(WorldBuilder.buildWorld());
@@ -448,5 +448,13 @@ public class Model {
 
     public void resetMainStory() {
         this.gameData.mainStory = new MainStory();
+    }
+
+    public void setFrame(FatefulEight frame) {
+        this.frame = frame;
+    }
+
+    public void toggleFullScreen() {
+        frame.toggleFullScreen();
     }
 }

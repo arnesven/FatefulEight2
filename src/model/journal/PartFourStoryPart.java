@@ -69,7 +69,7 @@ public class PartFourStoryPart extends StoryPart {
             Point position = model.getWorld().getPositionForHex(model.getCurrentHex());
             if (position.x == campPoint.x && position.y == campPoint.y) {
                 CastleLocation loc = model.getWorld().getCastleByName(castleName);
-                quests.add(getQuestAndSetPortrait(SpecialDeliveryQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
+                //quests.add(getQuestAndSetPortrait(SpecialDeliveryQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
             }
         }
     }

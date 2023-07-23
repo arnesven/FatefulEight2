@@ -17,8 +17,9 @@ public class FatefulEight extends JFrame {
 
     public static final boolean TEST_MODE = false;
     private static final int TIMER_DELAY_MS = 20;
+    public static String version = "1.24";
     private DrawingArea drawingArea;
-    private boolean inFullScreenMode = false;
+    public static boolean inFullScreenMode = false;
     private Deque<KeyEvent> keyboardEvents = new LinkedList<>();
     private Timer timer;
 
@@ -64,6 +65,7 @@ public class FatefulEight extends JFrame {
         DrawingArea drawingArea = new DrawingArea();
         Model model = new Model(drawingArea.getScreenHandler());
         FatefulEight frame = new FatefulEight(model, drawingArea);
+        model.setFrame(frame);
         model.runGameScript();
     }
 

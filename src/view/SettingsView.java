@@ -1,5 +1,6 @@
 package view;
 
+import control.FatefulEight;
 import model.Model;
 import model.SettingsManager;
 import view.party.SelectableListMenu;
@@ -62,6 +63,12 @@ public class SettingsView extends SelectableListMenu {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     model.getSettings().toggleLevelUpSummary();
+                }
+            },
+            new ListContent(xStart+2, yStart+12, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    model.toggleFullScreen();
                 }
             }
             );

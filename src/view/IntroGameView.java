@@ -1,5 +1,6 @@
 package view;
 
+import control.FatefulEight;
 import model.Model;
 import sound.SoundEffects;
 import view.sprites.Animation;
@@ -58,6 +59,8 @@ public class IntroGameView extends GameView implements Animation {
         for (int x = 0; x < 640/32; ++x) {
             model.getScreenHandler().put(x*4, 46, BLACK_SPRITE);
         }
+        BorderFrame.drawCentered(model.getScreenHandler(), "Alt + Enter for fullscreen", 47, MyColors.WHITE);
+        BorderFrame.drawCentered(model.getScreenHandler(), "Fateful Eight v " + FatefulEight.version + " - Written by Erik A. Nilsson - Copyright (C) 2023", 49, MyColors.CYAN);
         model.getScreenHandler().clearForeground();
         if (!fading) {
             model.getScreenHandler().register("titleani", new Point(0, 0), titleSprites[aniIndex]);
