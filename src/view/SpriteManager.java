@@ -32,7 +32,12 @@ public class SpriteManager {
                 if (f.exists()) {
                     is = new FileInputStream(s);
                 } else {
-                    String path = "/" + s.replace("resources/", "");
+                    String path = s;
+                    if (s.contains("resources/")) { // linux
+                        path = "/" + s.replace("resources/", "");
+                    } else if (s.contains("resources\\")) { // windows
+                        path = "\\" + s.replace("resources\\", "");
+                    }
                     is = SpriteManager.class.getResourceAsStream(path);
                 }
                 img = ImageIO.read(is);
