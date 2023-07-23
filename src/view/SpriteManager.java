@@ -25,20 +25,22 @@ public class SpriteManager {
     public static BufferedImage getFile(String s) throws IOException {
         BufferedImage img = filemap.get(s);
         if (img == null) {
-            System.out.println("Smurfing for '" + s + "' Img is null, loading image.");
+            System.out.print("Smurfing for '" + s + "' Img is null, loading image.");
             try {
                 File f = new File(s);
                 InputStream is;
                 if (f.exists()) {
+                    System.out.println(" - existed.");
                     is = new FileInputStream(s);
                 } else {
+                    System.out.println(" - didn't exist. Trying modified path.");
                     String path = s;
                     if (s.contains("resources/")) { // linux
-                        path = "/" + s.replace("resources/", "");
+                        path = s.replace("resources/", "");
                     } else if (s.contains("resources\\")) { // windows
-                        path = "\\" + s.replace("resources\\", "");
+                        path = s.replace("resources\\", "");
                     }
-                    is = SpriteManager.class.getResourceAsStream(path);
+                    is = SpriteManager.class.getClassLoader().getResourceAsStream(path);
                 }
                 img = ImageIO.read(is);
                 filemap.put(s, img);
