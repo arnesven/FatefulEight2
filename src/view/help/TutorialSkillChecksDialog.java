@@ -1,8 +1,12 @@
 package view.help;
 
+import model.classes.Skill;
 import view.GameView;
 
-public class TutorialSkillChecksDialog extends HelpDialog {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TutorialSkillChecksDialog extends ExpandableHelpDialog {
     private static final String text =
             "Skill checks occur when the party must overcome some sort of non-combat challenge. " +
             "During skill checks, characters test skills by roll a D10, adding their " +
@@ -18,5 +22,20 @@ public class TutorialSkillChecksDialog extends HelpDialog {
 
     public TutorialSkillChecksDialog(GameView view) {
         super(view, "Skill Checks", text);
+    }
+
+    @Override
+    protected List<HelpDialog> makeSubSections(GameView view) {
+        List<HelpDialog> result = new ArrayList<>();
+        for (Skill s : Skill.values()) {
+            result.add(new SpecificSkillHelpDialog(view, s));
+        }
+        return result;
+    }
+
+    private class SpecificSkillHelpDialog extends SubChapterHelpDialog {
+        public SpecificSkillHelpDialog(GameView view, Skill s) {
+            super(view, 30, s.getName(), s.getDescription());
+        }
     }
 }
