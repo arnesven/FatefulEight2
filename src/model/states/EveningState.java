@@ -79,6 +79,7 @@ public class EveningState extends GameState {
         }
         if (this.goOnQuest == null) {
             if (doAutoSave && model.getSettings().autosaveEnabled()) {
+                model.getLog().addAnimated("Autosaving...\n");
                 model.saveToFile("auto");
             }
             return model.getCurrentHex().getDailyActionState(model);

@@ -56,6 +56,8 @@ public class LogView extends GameView {
             return MyColors.CYAN;
         } else if (s.contains("\"")) {
             return MyColors.YELLOW;
+        } else if (s.contains("Autosaving")) {
+            return MyColors.GRAY;
         }
         return MyColors.LIGHT_GREEN;
     }
