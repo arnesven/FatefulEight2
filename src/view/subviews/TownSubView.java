@@ -8,6 +8,7 @@ import model.states.dailyaction.TownDailyActionState;
 import sprites.CombatCursorSprite;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x16;
 import view.sprites.Sprite32x32;
@@ -22,9 +23,8 @@ public class TownSubView extends DailyActionSubView {
     public static final MyColors STREET_COLOR = MyColors.GRAY;
     public static final Sprite STREET = new Sprite32x32("streetground", "world_foreground.png", 0x02, GROUND_COLOR, PATH_COLOR, MyColors.TAN);
     private static final Sprite STREET_INNER = new Sprite32x32("streetground", "world_foreground.png", 0x02, STREET_COLOR, PATH_COLOR, MyColors.TAN);
-    private static final Sprite WATER = makeWaterSprite();
-    private static final Sprite DOCK = new Sprite32x32("towndock", "world_foreground.png", 0x42,
-            MyColors.LIGHT_BLUE, MyColors.DARK_BLUE, MyColors.BROWN, MyColors.DARK_GRAY);
+    private static final Sprite WATER = new DockSprite(0xA6);
+    private static final Sprite DOCK = new DockSprite(0xB6);
     public static final Sprite[] TOWN_HOUSES = new Sprite[]{
             new Sprite32x32("townhouse", "world_foreground.png", 0x43,
                     MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.CYAN),
@@ -112,11 +112,15 @@ public class TownSubView extends DailyActionSubView {
         }
     }
 
-    private static Sprite makeWaterSprite() {
-        Sprite sprite = new Sprite32x16("water", "world.png", 0x40);
-        sprite.setColor1(MyColors.LIGHT_BLUE);
-        sprite.setColor2(MyColors.BLUE);
-        return sprite;
+    private static class DockSprite extends LoopingSprite {
+        public DockSprite(int num) {
+            super("docksprite"+num, "world_foreground.png", num, 32, 32);
+            setFrames(4);
+            setDelay(32);
+            setColor1(MyColors.LIGHT_BLUE);
+            setColor2(MyColors.CYAN);
+            setColor3(MyColors.BROWN);
+            setColor4(MyColors.DARK_GRAY);
+        }
     }
-
 }

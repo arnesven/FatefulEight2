@@ -10,6 +10,7 @@ import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
 import util.MyRandom;
+import view.sprites.Sprite;
 import view.subviews.CombatTheme;
 import view.subviews.DailyActionMenu;
 import view.subviews.GrassCombatTheme;
@@ -19,7 +20,6 @@ import view.ScreenHandler;
 import view.sprites.HexSprite;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +27,10 @@ public abstract class WorldHex {
 
     private final int state;
     private MyColors color;
-    private HexSprite upperLeft;
-    private HexSprite upperRight;
-    private HexSprite lowerLeft;
-    private HexSprite lowerRight;
+    private Sprite upperLeft;
+    private Sprite upperRight;
+    private Sprite lowerLeft;
+    private Sprite lowerRight;
     private int roads;
     private int rivers;
     private HexLocation hexLocation;
@@ -86,19 +86,19 @@ public abstract class WorldHex {
         this.lowerRight = getLowerRightSprite(color, roads, rivers);
     }
 
-    protected HexSprite getUpperLeftSprite(MyColors color, int roads, int rivers) {
+    protected Sprite getUpperLeftSprite(MyColors color, int roads, int rivers) {
         return new HexSprite(getTerrainName()+"ul", 0x00 + (roads % 4)*4 + rivers % 4, color);
     }
 
-    protected HexSprite getUpperRightSprite(MyColors color, int roads, int rivers) {
+    protected Sprite getUpperRightSprite(MyColors color, int roads, int rivers) {
         return new HexSprite(getTerrainName()+"ur", 0x20  + ((roads / 4) % 4)*4 + (rivers / 4) % 4, color);
     }
 
-    protected HexSprite getLowerLeftSprite(MyColors color, int roads, int rivers) {
+    protected Sprite getLowerLeftSprite(MyColors color, int roads, int rivers) {
         return new HexSprite(getTerrainName()+"ll", 0x10 + (roads / 64)*4 + (rivers / 64), color);
     }
 
-    protected HexSprite getLowerRightSprite(MyColors color, int roads, int rivers) {
+    protected Sprite getLowerRightSprite(MyColors color, int roads, int rivers) {
         return  new HexSprite(getTerrainName()+"lr", 0x30 + ((roads / 16) % 4) * 4 + (rivers / 16) % 4, color);
     }
 

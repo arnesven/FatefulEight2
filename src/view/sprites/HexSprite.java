@@ -2,7 +2,6 @@ package view.sprites;
 
 import view.MyColors;
 
-import java.awt.*;
 
 public class HexSprite extends Sprite16x16 {
     public HexSprite(String name, int number, MyColors color) {
