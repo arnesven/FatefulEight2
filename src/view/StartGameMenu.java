@@ -56,8 +56,10 @@ public class StartGameMenu extends GameView {
                 setTimeToTransition(true);
             } else if (cursorPos == 1) {
                 model.transitionToDialog(new SelectSaveSlotMenu(this, true));
-            } else {
+            } else if (cursorPos == 2) {
                 model.showHallOfFame();
+            } else {
+                model.showCredits();
             }
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             SoundEffects.matrixSelect();

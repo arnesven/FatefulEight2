@@ -403,6 +403,10 @@ public class Model {
         gameView = new HallOfFameView(this);
     }
 
+    public void showCredits() {
+        gameView = new CreditsView();
+    }
+
     public void setGameStarted(boolean b) {
         gameStarted = b;
     }
