@@ -73,6 +73,7 @@ public class TravelBySeaState extends GameState {
 
         model.getCurrentHex().travelFrom(model);
         stepToNextDay(model);
+        println("The party spends the day on the ship traveling to the " + first.getName());
         stepToNextDay(model);
         System.out.println("TravelBySeaState: after step to next day.");
         model.getParty().setPosition(newPosition);

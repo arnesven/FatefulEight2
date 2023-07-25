@@ -19,7 +19,7 @@ public class SwiftRing extends JewelryItem {
 
     @Override
     public int getSpeedModifier() {
-        return 1;
+        return 3;
     }
 
     @Override
