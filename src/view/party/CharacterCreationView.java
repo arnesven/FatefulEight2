@@ -24,7 +24,7 @@ import java.util.List;
 
 public class CharacterCreationView extends SelectableListMenu {
 
-    private static final Integer INPUT_MAX_LENGTH = 13;
+    private static final Integer INPUT_MAX_LENGTH = 12;
     private static final String START_STRING = "þþþþþþþþþþþþ";
     private static final int COLUMN_SKIP = 12;
     private List<MyPair<StringBuffer, Integer>> buffers = new ArrayList<>();
