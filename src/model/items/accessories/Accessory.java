@@ -81,4 +81,14 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public String getAnalysisType() {
         return "Armor Analysis";
     }
+
+    @Override
+    public boolean supportsHigherTier() {
+        return true;
+    }
+
+    @Override
+    public Item makeHigherTierCopy() {
+        return new SuperiorAccessory((Accessory)copy());
+    }
 }
