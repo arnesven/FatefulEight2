@@ -15,7 +15,9 @@ import view.BorderFrame;
 import view.DrawingArea;
 import view.GameView;
 import view.MyColors;
+import view.help.TutorialClassesDialog;
 import view.sprites.Sprite;
+import view.sprites.Sprite8x8;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,6 +29,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final Integer INPUT_MAX_LENGTH = 12;
     private static final String START_STRING = "þþþþþþþþþþþþ";
     private static final int COLUMN_SKIP = 12;
+    private static final Sprite CHECK_SPRITE = new Sprite8x8("check", "charset.png", 0xB6, MyColors.BLACK, MyColors.LIGHT_GREEN, MyColors.BLUE, MyColors.CYAN);
+    private static final Sprite NOT_OK_SPRITE = new Sprite8x8("notok", "charset.png", 0xB7, MyColors.BLACK, MyColors.LIGHT_RED, MyColors.BLUE, MyColors.CYAN);
     private List<MyPair<StringBuffer, Integer>> buffers = new ArrayList<>();
     private boolean gender = true;
     private static final Race[] raceSet = Race.allRaces;
@@ -151,8 +155,21 @@ public class CharacterCreationView extends SelectableListMenu {
                 int midX = x + COLUMN_SKIP + 14;
                 int row = 17;
                 drawCharacterDetails(model, lastCharacter, midX, row);
+                drawChecksAndNotOk(model, x);
+
             }
         });
+    }
+
+    private void drawChecksAndNotOk(Model model, int x) {
+        model.getScreenHandler().put(x+COLUMN_SKIP+12, 6, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
+
+        model.getScreenHandler().put(x+COLUMN_SKIP+8, 36, selectedClass!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+
+        model.getScreenHandler().put(x+COLUMN_SKIP+7, 38, other1!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+7, 40, other2!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+7, 42, other3!=0?CHECK_SPRITE:NOT_OK_SPRITE);
     }
 
     public static void drawCharacterDetails(Model model, GameCharacter lastCharacter, int midX, int row) {
@@ -318,6 +335,12 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedDetailColor = Arithmetics.incrementWithWrap(selectedDetailColor, detailColorSet.length);
                     }
                 },
+                new SelectableListContent(xStart + 3, yStart + 31, "About Classes") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        model.transitionToDialog(new TutorialClassesDialog(model.getView()));
+                    }
+                },
                 new CarouselListContent(xStart + COLUMN_SKIP, yStart + 33,
                         classSet[selectedClass] == Classes.None ? "Not Set" : classSet[selectedClass].getFullName()) {
                     @Override
@@ -371,8 +394,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
                     @Override
                     public boolean isEnabled(Model model) {
-                        boolean namesOk = !buffers.get(0).first.toString().equals(START_STRING) &&
-                                !buffers.get(1).first.toString().equals(START_STRING);
+                        boolean namesOk = nameOk(1) && nameOk(2);
                         return other1 != 0 && other2 != 0 && other3 != 0 && selectedClass != 0 && namesOk;
 
                     }
@@ -385,6 +407,10 @@ public class CharacterCreationView extends SelectableListMenu {
                     }
                 }
         );
+    }
+
+    private boolean nameOk(int i) {
+        return !buffers.get(i-1).first.toString().equals(START_STRING);
     }
 
     private void setOther1(int index) {
