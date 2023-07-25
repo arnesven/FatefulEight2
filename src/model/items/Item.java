@@ -92,4 +92,16 @@ public abstract class Item implements Serializable, Comparable<Item> {
     public String getAnalysisType() {
         return "";
     }
+
+    public boolean supportsHigherTier() {
+        return false;
+    }
+
+    public Item makeHigherTierCopy() {
+        throw new IllegalStateException("Higher Tier not implemented for this item: " + getName());
+    }
+
+    public Sprite getSpriteForHigherTier() {
+        return getSprite();
+    }
 }

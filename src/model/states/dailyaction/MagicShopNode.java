@@ -32,11 +32,11 @@ public class MagicShopNode extends GeneralShopNode {
     @Override
     protected List<Item> makeInventory(Model model) {
         List<Item> inventory = new ArrayList<>();
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWands(), MyRandom.randInt(2,4), Prevalence.unspecified));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allSpells(), MyRandom.randInt(4, 7), Prevalence.unspecified));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotions(), MyRandom.randInt(1, 6), Prevalence.unspecified));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allScrolls(), MyRandom.randInt(4), Prevalence.unspecified));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotionRecipes(), MyRandom.randInt(2), Prevalence.unspecified));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWands(), MyRandom.randInt(2,4), Prevalence.unspecified, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allSpells(), MyRandom.randInt(4, 7), Prevalence.unspecified, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotions(), MyRandom.randInt(1, 6), Prevalence.unspecified, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allScrolls(), MyRandom.randInt(4), Prevalence.unspecified, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotionRecipes(), MyRandom.randInt(2), Prevalence.unspecified, 0.0));
 
         for (int i = 0; i < 4; ++i) {
             if (MyRandom.randInt(2) == 0) {

@@ -30,9 +30,9 @@ public class AccessoryShopNode extends GeneralShopNode {
     @Override
     protected List<Item> makeInventory(Model model) {
         List<Item> inventory = new ArrayList<>();
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allJewelry(), MyRandom.randInt(3, 10), Prevalence.unspecified));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allHeadGear(), MyRandom.randInt(1,7), Prevalence.unspecified));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allGloves(), MyRandom.randInt(1,7), Prevalence.unspecified));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allJewelry(), MyRandom.randInt(3, 10), Prevalence.unspecified, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allHeadGear(), MyRandom.randInt(1,7), Prevalence.unspecified, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allGloves(), MyRandom.randInt(1,7), Prevalence.unspecified, 0.0));
         Collections.sort(inventory);
         return inventory;
     }

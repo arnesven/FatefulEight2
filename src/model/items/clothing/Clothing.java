@@ -3,11 +3,10 @@ package model.items.clothing;
 import model.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.items.ArmorItem;
 import model.items.EquipableItem;
 import model.items.Item;
-import util.MyPair;
+import model.items.SuperiorClothing;
 import view.AnalyzeArmorDialog;
 import view.AnalyzeDialog;
 
@@ -65,5 +64,15 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     @Override
     public String getAnalysisType() {
         return "Armor Analysis";
+    }
+
+    @Override
+    public boolean supportsHigherTier() {
+        return true;
+    }
+
+    @Override
+    public Item makeHigherTierCopy() {
+        return new SuperiorClothing((Clothing)copy());
     }
 }

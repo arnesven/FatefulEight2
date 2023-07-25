@@ -5,12 +5,13 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
+import model.items.Item;
 import util.MyStrings;
 import view.AnalyzeDialog;
 import view.AnalyzeWeaponDialog;
-import view.GameView;
 import view.sprites.LoopingSprite;
 import view.sprites.AvatarItemSprite;
+import view.sprites.Sprite;
 
 public abstract class Weapon extends EquipableItem {
 
@@ -50,7 +51,7 @@ public abstract class Weapon extends EquipableItem {
         return bldr.substring(0, bldr.length()-1);
     }
 
-    private int[] getDamageTable() {
+    public int[] getDamageTable() {
         if (!isBurning) {
             return damageTable;
         }
@@ -132,5 +133,15 @@ public abstract class Weapon extends EquipableItem {
     @Override
     public String getAnalysisType() {
         return "Damage Analysis";
+    }
+
+    @Override
+    public boolean supportsHigherTier() {
+        return true;
+    }
+
+    @Override
+    public Item makeHigherTierCopy() {
+        return new SuperiorWeapon((Weapon)copy());
     }
 }

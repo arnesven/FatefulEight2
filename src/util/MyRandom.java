@@ -47,4 +47,8 @@ public class MyRandom {
     public static Race nextRace() {
         return sample(Arrays.asList(Race.allRaces));
     }
+
+    public static double nextDouble() {
+        return random.nextDouble();
+    }
 }

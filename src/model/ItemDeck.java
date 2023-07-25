@@ -17,29 +17,44 @@ import java.util.List;
 
 public class ItemDeck extends ArrayList<Item> {
 
+    private static final double LOW_HIGHER_TIER_CHANCE = 0.05;
+
     public ItemDeck() {
         this.addAll(allItems());
         Collections.shuffle(this);
     }
 
-    public List<Item> draw(List<? extends Item> source, int count, Prevalence prevalence) {
+    public List<Item> draw(List<? extends Item> source, int count, Prevalence prevalence, double higherTierChance) {
         List<Item> drawn = new ArrayList<>();
+        boolean isHigherTier = MyRandom.nextDouble() > (1.0 - higherTierChance);
         for (int i = count; i > 0; --i) {
             Item it;
             do {
                 it = MyRandom.sample(source);
-            } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified);
-            drawn.add(it.copy());
+            } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified || (isHigherTier && !it.supportsHigherTier()));
+            if (isHigherTier && it.supportsHigherTier()) {
+                drawn.add(it.makeHigherTierCopy());
+            } else {
+                drawn.add(it.copy());
+            }
         }
         return drawn;
     }
 
+    public List<Item> draw(int count, Prevalence prevalence, double higherTierChance) {
+        return draw(this, count, prevalence, higherTierChance);
+    }
+
+    public List<Item> draw(int count, double higherTierChance) {
+        return draw(count, Prevalence.unspecified, higherTierChance);
+    }
+
     public List<Item> draw(int count, Prevalence prevalence) {
-        return draw(this, count, prevalence);
+        return draw(this, count, prevalence, LOW_HIGHER_TIER_CHANCE);
     }
 
     public List<Item> draw(int count) {
-        return draw(count, Prevalence.unspecified);
+        return draw(count, Prevalence.unspecified, LOW_HIGHER_TIER_CHANCE);
     }
 
     public Spell getRandomSpell() {
@@ -62,7 +77,10 @@ public class ItemDeck extends ArrayList<Item> {
 
     public CraftingDesign getRandomDesign() {return (CraftingDesign) MyRandom.sample(allCraftingDesigns()).copy(); }
 
-    public Item getRandomItem() { return draw(1).get(0); }
+
+    public Item getRandomItem(double higherTierChance) { return draw(1, higherTierChance).get(0); }
+
+    public Item getRandomItem() { return getRandomItem(LOW_HIGHER_TIER_CHANCE); }
 
     private static Collection<? extends Item> allItems() {
         List<Item> allItems = new ArrayList<>();

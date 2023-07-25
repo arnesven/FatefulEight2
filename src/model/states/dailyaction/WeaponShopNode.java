@@ -25,9 +25,9 @@ public class WeaponShopNode extends GeneralShopNode {
     @Override
     protected List<Item> makeInventory(Model model) {
         List<Item> inventory = new ArrayList<>();
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(2,10), Prevalence.common));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(3,10), Prevalence.uncommon));
-        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(1,5), Prevalence.rare));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(2,10), Prevalence.common, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(3,10), Prevalence.uncommon, 0.0));
+        inventory.addAll(model.getItemDeck().draw(ItemDeck.allWeapons(), MyRandom.randInt(1,5), Prevalence.rare, 0.0));
         Collections.sort(inventory);
         return inventory;
     }

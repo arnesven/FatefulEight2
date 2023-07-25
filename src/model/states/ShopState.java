@@ -206,9 +206,9 @@ public class ShopState extends GameState {
 
     public static List<Item> makeGeneralShopInventory(Model model, int commons, int uncommons, int rares) {
         List<Item> shopInventory = new ArrayList<>();
-        shopInventory.addAll(model.getItemDeck().draw(commons, Prevalence.common));
-        shopInventory.addAll(model.getItemDeck().draw(uncommons, Prevalence.uncommon));
-        shopInventory.addAll(model.getItemDeck().draw(rares, Prevalence.rare));
+        shopInventory.addAll(model.getItemDeck().draw(commons, Prevalence.common, 0.0));
+        shopInventory.addAll(model.getItemDeck().draw(uncommons, Prevalence.uncommon, 0.0));
+        shopInventory.addAll(model.getItemDeck().draw(rares, Prevalence.rare, 0.0));
         Collections.sort(shopInventory);
         return shopInventory;
     }

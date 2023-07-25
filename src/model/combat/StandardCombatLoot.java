@@ -18,13 +18,13 @@ public class StandardCombatLoot extends CombatLoot {
         if (dieRoll <= 7) {
             gold = dieRoll - 1;
         } else if (dieRoll <= 9) {
-            items.add(model.getItemDeck().getRandomItem());
+            items.add(model.getItemDeck().getRandomItem(0.10));
         }
         if (dieRoll == 7) {
             gold++;
         }
         if (dieRoll >= 10) {
-            items.add(model.getItemDeck().getRandomItem());
+            items.add(model.getItemDeck().getRandomItem(0.5));
         }
     }
 
