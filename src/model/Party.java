@@ -331,7 +331,9 @@ public class Party implements Serializable {
             return;
         }
         System.out.println(gc.getName() + " got " + xp + " XP.");
+        boolean levelUp = false;
         if (gc.getXpToNextLevel() <= xp) {
+            levelUp = true;
             SoundEffects.playSound("levelup");
             partyMemberSay(model, gc, List.of("I am learning every day.^",
                     "Experience is its own reward.^",
@@ -349,8 +351,10 @@ public class Party implements Serializable {
 
         }
         gc.addToXP(xp);
-        gc.addToHP(1000);
-        gc.addToSP(1000);
+        if (levelUp) {
+            gc.addToHP(1000);
+            gc.addToSP(1000);
+        }
     }
 
     private GameCharacter findBestPerformer(Skill skill, List<GameCharacter> performers) {
