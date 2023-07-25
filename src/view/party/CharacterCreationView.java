@@ -167,9 +167,9 @@ public class CharacterCreationView extends SelectableListMenu {
 
         model.getScreenHandler().put(x+COLUMN_SKIP+8, 36, selectedClass!=0?CHECK_SPRITE:NOT_OK_SPRITE);
 
-        model.getScreenHandler().put(x+COLUMN_SKIP+7, 38, other1!=0?CHECK_SPRITE:NOT_OK_SPRITE);
-        model.getScreenHandler().put(x+COLUMN_SKIP+7, 40, other2!=0?CHECK_SPRITE:NOT_OK_SPRITE);
-        model.getScreenHandler().put(x+COLUMN_SKIP+7, 42, other3!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+8, 38, other1!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+8, 40, other2!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP+8, 42, other3!=0?CHECK_SPRITE:NOT_OK_SPRITE);
     }
 
     public static void drawCharacterDetails(Model model, GameCharacter lastCharacter, int midX, int row) {
