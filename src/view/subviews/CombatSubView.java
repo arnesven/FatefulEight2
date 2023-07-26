@@ -149,7 +149,14 @@ public class CombatSubView extends SubView {
     public synchronized void addStrikeEffect(Combatant target, int damge, boolean critical) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
         addOngoingEffect(new MyPair<>(point, new StrikeEffectSprite()));
-        addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, critical)));
+        if (damge > 15) {
+            Point left = new Point(point);
+            left.x -= 1;
+            addOngoingEffect(new MyPair<>(left, new DamageValueEffect(damge/10, critical)));
+            addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, critical)));
+        } else {
+            addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, critical)));
+        }
     }
 
     public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
