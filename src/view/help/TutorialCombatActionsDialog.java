@@ -7,8 +7,6 @@ public class TutorialCombatActionsDialog extends SubChapterHelpDialog {
             "Each combat round, characters take one combat action on their turn. Use the " +
             "arrow keys to select targets during combat.\n\n" +
             "Attack: The character uses their equipped weapon to attack the selected enemy. " +
-            "Each weapons uses it's specified skill and damage table. Natural rolls of 10 " +
-            "produce critical hits which result in double damage. " +
             "Only ranged weapons can attack from the back row.\n\n" +
             "Item: Use an item from your inventory on the selected target.\n\n" +
             "Spell: Cast a Combat Spell on the selected target.\n\n" +

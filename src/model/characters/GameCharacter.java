@@ -155,6 +155,7 @@ public class GameCharacter extends Combatant {
     }
 
     private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
+        model.getTutorial().combatAttacks(model);
         for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
             if (target.isDead()) {
                 return;

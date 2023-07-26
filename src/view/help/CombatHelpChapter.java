@@ -1,5 +1,6 @@
 package view.help;
 
+import model.tutorial.TutorialCombatAttacks;
 import view.GameView;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
                 new TutorialCombatActionsDialog(null),
+                new TutorialCombatAttacks(null),
                 new TutorialCombatDamageDialog(null),
                 new TutorialCombatFormationDialog(null)
         );
