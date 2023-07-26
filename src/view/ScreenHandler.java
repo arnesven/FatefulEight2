@@ -52,6 +52,9 @@ public class ScreenHandler {
     }
 
     public synchronized void put(int col, int row, Sprite sprite) {
+        if (sprite == null) {
+            throw new IllegalArgumentException("Tried adding null sprite to background!");
+        }
         backgroundSprites.put(new Point(col, row), sprite);
     }
 

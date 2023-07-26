@@ -82,10 +82,12 @@ public abstract class CombatSubScene extends QuestSubScene {
         }
         GameCharacter gc = setTemporaryLeader(model, state);
         combat.run(model);
-        model.getParty().setLeader(gc);
-        state.transitionToQuestView(model);
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
-        if (combat.fled()) {
+        if (!model.getParty().isWipedOut()) {
+            model.getParty().setLeader(gc);
+            state.transitionToQuestView(model);
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+        }
+        if (combat.fled() || model.getParty().isWipedOut()) {
             return getFailEdge();
         }
         if (combat.didTimeOut()) {
