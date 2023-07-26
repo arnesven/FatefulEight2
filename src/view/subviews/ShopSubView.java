@@ -3,9 +3,11 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.Item;
+import model.states.ShopState;
 import sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
+import view.sprites.ArrowSprites;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
@@ -16,28 +18,40 @@ import java.util.Map;
 import java.util.List;
 
 public class ShopSubView extends SubView {
+    private static final int[] CURSOR_POSITIONS = new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24};
     private final String seller;
     private final Map<Item, Integer> priceMap;
+    private final ShopState state;
+    private int topCursorIndex = 0;
     private SteppingMatrix<Item> matrix;
-    private String title;
+    private boolean isBuying;
     private Sprite crossSprite = new Sprite32x32("crosssprite", "combat.png", 0x00, MyColors.BLACK, MyColors.CYAN, MyColors.RED);
     private boolean overflow = false;
+    private boolean isInTopRow = false;
 
-    public ShopSubView(SteppingMatrix<Item> items, String title, String seller,
-                       Map<Item, Integer> prices) {
+    public ShopSubView(SteppingMatrix<Item> items, boolean isBuying, String seller,
+                       Map<Item, Integer> prices, ShopState state) {
         super(3);
         this.matrix = items;
-        this.title = title;
+        this.isBuying = isBuying;
         this.seller = seller;
         this.priceMap = prices;
+        this.state = state;
+        setTopCursorIndex();
+
+    }
+
+    private void setTopCursorIndex() {
+        topCursorIndex = isBuying ? 0:1;
     }
 
     @Override
     protected void drawArea(Model model) {
-        BorderFrame.drawCentered(model.getScreenHandler(), title, 4,
-                title.equals("BUYING") ? MyColors.YELLOW: MyColors.LIGHT_BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "BUY",  X_OFFSET+4, 4, MyColors.YELLOW);
+        BorderFrame.drawString(model.getScreenHandler(), "SELL", X_OFFSET+14, 4, state.maySell(model)?MyColors.LIGHT_BLUE:MyColors.GRAY);
+        BorderFrame.drawString(model.getScreenHandler(), "EXIT", X_OFFSET+25, 4, MyColors.LIGHT_RED);
 
-        if (title.equals("SELLING")) {
+        if (!isBuying) {
             checkSellIntegrity(model);
         }
 
@@ -48,7 +62,7 @@ public class ShopSubView extends SubView {
                 int yPos = Y_OFFSET + row * 4 + 2;
                 if (it != null) {
                     it.drawYourself(model.getScreenHandler(), xPos, yPos);
-                    if ((title.equals("BUYING") && priceMap.get(it) > model.getParty().getGold())) {
+                    if ((isBuying && priceMap.get(it) > model.getParty().getGold())) {
                         model.getScreenHandler().register("crossedout", new Point(xPos, yPos), crossSprite);
                     }
                 } else {
@@ -63,8 +77,12 @@ public class ShopSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(),"All items not shown",  xPos, yPos,
                     MyColors.RED, MyColors.BLACK);
         }
-
-        drawCursor(model);
+        if (!isInTopRow) {
+            drawCursor(model);
+            model.getScreenHandler().put(CURSOR_POSITIONS[topCursorIndex], 4, ArrowSprites.RIGHT_BLACK);
+        } else {
+            model.getScreenHandler().put(CURSOR_POSITIONS[topCursorIndex], 4, ArrowSprites.RIGHT_BLACK_BLINK);
+        }
     }
 
     private void checkSellIntegrity(Model model) {
@@ -113,7 +131,7 @@ public class ShopSubView extends SubView {
         Item it = matrix.getSelectedElement();
         if (it != null) {
             int cost = it.getCost();
-            if (title.equals("BUYING")) {
+            if (isBuying) {
                 cost = priceMap.get(it);
             } else {
                 cost /= 2;
@@ -128,8 +146,9 @@ public class ShopSubView extends SubView {
         return "SHOP - " + seller.toUpperCase();
     }
 
-    public void setText(String text) {
-        this.title = text;
+    public void setIsBuying(boolean isBuying) {
+        this.isBuying = isBuying;
+        setTopCursorIndex();
     }
 
     public void setContent(SteppingMatrix<Item> content) {
@@ -138,10 +157,39 @@ public class ShopSubView extends SubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (isInTopRow) {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+                isInTopRow = false;
+                setTopCursorIndex();
+                return true;
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+                topCursorIndex = (topCursorIndex + 1) % 3;
+                return true;
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+                topCursorIndex--;
+                if (topCursorIndex < 0) {
+                    topCursorIndex = 2;
+                }
+                return true;
+            }
+            return false;
+        } else {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_UP && matrix.getSelectedPoint().y == 0) {
+                isInTopRow = true;
+                return true;
+            }
+        }
         return matrix.handleKeyEvent(keyEvent);
     }
 
     public void setOverflowWarning(boolean b) {
         this.overflow = b;
+    }
+
+    public int getTopCommand() {
+        if (!isInTopRow) {
+            return -1;
+        }
+        return topCursorIndex;
     }
 }

@@ -45,7 +45,7 @@ public class ShopState extends GameState {
         }
         sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
-        this.subView = new ShopSubView(buyItems, "BUYING", seller, prices);
+        this.subView = new ShopSubView(buyItems, true, seller, prices, this);
     }
 
     private void makePricesMap(List<Item> itemsForSale, int[] specialPrices) {
@@ -72,21 +72,24 @@ public class ShopState extends GameState {
 
             model.getTutorial().shopping(model);
             waitForReturnSilently();
+            int topCommand = subView.getTopCommand();
+            if (topCommand == 2) {
+                break;
+            } else if ((topCommand == 1 && showingBuyItems) || topCommand == 0 && !showingBuyItems) {
+                toggleBuySell(model);
+                continue;
+            }
 
             List<String> buySellActions = new ArrayList<>();
-            buySellActions.add("Buy");
-            if (maySell(model)) {
-                if (matrixToUse == sellItems) {
-                    buySellActions.add(0, "Sell");
-                } else {
-                    buySellActions.add("Sell");
-                }
+            if (showingBuyItems) {
+                buySellActions.add("Buy");
+            } else {
+                buySellActions.add("Sell");
             }
             if (matrixToUse.getSelectedElement().isAnalyzable()) {
                 buySellActions.add("Analyze");
             }
             buySellActions.add("Back");
-            buySellActions.add("Done");
 
             int xPos = matrixToUse.getSelectedPoint().x*4 + SubView.X_OFFSET;
             int yPos = matrixToUse.getSelectedPoint().y*4 + 10;
@@ -98,8 +101,6 @@ public class ShopState extends GameState {
                         selectedAction[0] = 'B';
                     } else if (buySellActions.get(cursorPos).equals("Sell")) {
                         selectedAction[0] = 'S';
-                    } else if (buySellActions.get(cursorPos).equals("Done")) {
-                        selectedAction[0] = 'Q';
                     } else if (buySellActions.get(cursorPos).equals("Analyze")) {
                         selectedAction[0] = 'A';
                     }
@@ -107,70 +108,53 @@ public class ShopState extends GameState {
                 }
             });
             waitForReturnSilently();
-            if (selectedAction[0] == 'Q') {
-                break;
-            }
             if (selectedAction[0] == 'B') {
-                if (!showingBuyItems) {
-                    toggleBuySell();
+                Item it = buyItems.getSelectedElement();
+                int cost = prices.get(it);
+                if (cost > model.getParty().getGold()) {
+                    println("You cannot afford that.");
                 } else {
-                    Item it = buyItems.getSelectedElement();
-                    int cost = prices.get(it);
-                    if (cost > model.getParty().getGold()) {
-                        println("You cannot afford that.");
+                    buyItems.remove(it);
+                    itemsForSale.remove(it);
+                    model.getParty().getInventory().addItem(it);
+                    model.getParty().addToGold(-1 * cost);
+                    if (cost > 0) {
+                        println("You bought " + it.getName() + " for " + cost + " gold.");
                     } else {
-                        buyItems.remove(it);
-                        itemsForSale.remove(it);
-                        model.getParty().getInventory().addItem(it);
-                        model.getParty().addToGold(-1 * cost);
-                        if (cost > 0) {
-                            println("You bought " + it.getName() + " for " + cost + " gold.");
-                        } else {
-                            println("You received " + it.getName() + ".");
-                        }
-                        SoundEffects.playSound(it.getSound());
-                        model.getTutorial().equipment(model);
-                        sellItems.addElementLast(it);
-                        if (buyItems.getElementList().isEmpty()) {
-                            if (!sellingEnabled || sellItems.getElementList().isEmpty()) {
-                                break;
-                            } else {
-                                toggleBuySell();
-                            }
-                        }
-                        if (mayOnlyBuyOne) {
+                        println("You received " + it.getName() + ".");
+                    }
+                    SoundEffects.playSound(it.getSound());
+                    model.getTutorial().equipment(model);
+                    sellItems.addElementLast(it);
+                    if (buyItems.getElementList().isEmpty()) {
+                        if (!sellingEnabled || sellItems.getElementList().isEmpty()) {
                             break;
+                        } else {
+                            toggleBuySell(model);
                         }
+                    }
+                    if (mayOnlyBuyOne) {
+                        break;
                     }
                 }
             } else if (selectedAction[0] == 'S' && sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
-                if (showingBuyItems) {
-                    toggleBuySell();
-                    if (warnAboutManyItems) {
-                        model.transitionToDialog(new SimpleMessageView(model.getView(),
-                                "Please note that you currently have more items than can be displayed in this view."));
-                        warnAboutManyItems = false;
-                        subView.setOverflowWarning(true);
+                Item it = sellItems.getSelectedElement();
+                if (!isCurrentlyEquipped(model, it)) {
+                    sellItems.remove(it);
+                    int money = it.getCost() / 2;
+                    model.getParty().addToGold(money);
+                    model.getParty().getInventory().remove(it);
+                    println("You sold " + it.getName() + " for " + money + " gold.");
+                    SoundEffects.sellItem();
+                    if (model.getParty().getInventory().noOfsellableItems() == 0) {
+                        if (buyItems.getElementList().isEmpty()) {
+                            break;
+                        } else {
+                            toggleBuySell(model);
+                        }
                     }
                 } else {
-                    Item it = sellItems.getSelectedElement();
-                    if (!isCurrentlyEquipped(model, it)) {
-                        sellItems.remove(it);
-                        int money = it.getCost() / 2;
-                        model.getParty().addToGold(money);
-                        model.getParty().getInventory().remove(it);
-                        println("You sold " + it.getName() + " for " + money + " gold.");
-                        SoundEffects.sellItem();
-                        if (model.getParty().getInventory().noOfsellableItems() == 0) {
-                            if (buyItems.getElementList().isEmpty()) {
-                                break;
-                            } else {
-                                toggleBuySell();
-                            }
-                        }
-                    } else {
-                        println("You cannot sell an item that is currently equipped.");
-                    }
+                    println("You cannot sell an item that is currently equipped.");
                 }
             } else if (selectedAction[0] == 'A') {
                 model.transitionToDialog(matrixToUse.getSelectedElement().getAnalysisDialog(model));
@@ -179,7 +163,7 @@ public class ShopState extends GameState {
         return new EveningState(model);
     }
 
-    private boolean maySell(Model model) {
+    public boolean maySell(Model model) {
         return sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0;
     }
 
@@ -187,14 +171,20 @@ public class ShopState extends GameState {
         return !model.getParty().getInventory().getAllItems().contains(it);
     }
 
-    private void toggleBuySell() {
+    private void toggleBuySell(Model model) {
         showingBuyItems = !showingBuyItems;
         if (showingBuyItems) {
             subView.setContent(buyItems);
-            subView.setText("BUYING");
+            subView.setIsBuying(true);
         } else {
             subView.setContent(sellItems);
-            subView.setText("SELLING");
+            subView.setIsBuying(false);
+            if (warnAboutManyItems) {
+                model.transitionToDialog(new SimpleMessageView(model.getView(),
+                        "Please note that you currently have more items than can be displayed in this view."));
+                warnAboutManyItems = false;
+                subView.setOverflowWarning(true);
+            }
         }
         subView.setOverflowWarning(false);
     }
