@@ -23,7 +23,7 @@ public class HealthBar {
         Map<MyColors, Sprite> map = new HashMap<>();
         for (MyColors color : colors) {
             Sprite sprite = new Sprite8x8(name+color.name(), "charset.png", num,
-                    color, color, color, color);
+                    color, MyColors.WHITE, color, color);
             map.put(color, sprite);
         }
         return map;
@@ -37,7 +37,7 @@ public class HealthBar {
             screenHandler.put(col + i, row, FULL_BAR.get(color));
         }
         if (parts % 4 != 0) {
-            screenHandler.put(col + parts/4 - 1, row, PARTIAL_BARS.get((parts % 4) - 1).get(color));
+            screenHandler.put(col + parts/4, row, PARTIAL_BARS.get((parts % 4) - 1).get(color));
         }
     }
 
