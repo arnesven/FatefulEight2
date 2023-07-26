@@ -24,6 +24,7 @@ public class CombatSubView extends SubView {
     private final CombatMatrix combatMatrix;
     private final CombatTheme theme;
     private final Sprite initiativeMarker = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
+    private final Sprite currentMarker = new QuestCursorSprite();
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
@@ -89,6 +90,9 @@ public class CombatSubView extends SubView {
                 int ypos = Y_OFFSET + (row+2)*4 + shiftForCurrent(combatant);
                 if (combatant != null) {
                     combatant.drawYourself(model.getScreenHandler(), xpos, ypos, getInitiativeSymbol(combatant, model));
+                    if (combatant == combat.getCurrentCombatant()) {
+                        model.getScreenHandler().register(currentMarker.getName(), new Point(xpos, ypos), currentMarker);
+                    }
                 }
             }
         }
