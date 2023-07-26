@@ -101,7 +101,7 @@ public class InventoryView extends SelectableListMenu {
         List<ListContent> contents = new ArrayList<>();
         int row = yStart+1;
         for (Item it : tabNames[selectedTab].getItems(model)) {
-            contents.add(new SelectableListContent(xStart+1, row++, it.getName()) {
+            contents.add(new SelectableListContent(xStart+1, row++, makeItemTitle(it)) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     setInnerMenu(new EquipItemMenu(InventoryView.this, x, y, it), model);
@@ -112,6 +112,14 @@ public class InventoryView extends SelectableListMenu {
             contents.add(new ListContent(xStart+1, yStart+1, "*No Items*"));
         }
         return contents;
+    }
+
+    private String makeItemTitle(Item it) {
+        String result = it.getName();
+        if (it.getName().contains("Superior")) {
+            result = result.replace("Superior", "Sup");
+        }
+        return result.substring(0, Math.min(result.length()-1, WIDTH - 24));
     }
 
     @Override
