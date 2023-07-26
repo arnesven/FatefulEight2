@@ -23,6 +23,7 @@ public abstract class AdvancedDailyActionState extends GameState {
     public AdvancedDailyActionState(Model model) {
         super(model);
         matrix = new SteppingMatrix<>(TOWN_MATRIX_COLUMNS, TOWN_MATRIX_ROWS);
+        matrix.setSimplifiedSteppingEnabled(true);
         currentPosition = getStartingPosition();
     }
 

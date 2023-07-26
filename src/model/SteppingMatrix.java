@@ -13,6 +13,7 @@ public class SteppingMatrix<T> {
     private List<List<T>> grid;
     private List<T> list;
     private Point selected;
+    private boolean simplifiedStepping = false;
 
     public SteppingMatrix(int columns, int rows) {
         this.columns = columns;
@@ -123,6 +124,18 @@ public class SteppingMatrix<T> {
             return;
         }
         SoundEffects.matrixSelect();
+        if (simplifiedStepping) {
+            simplifiedStepping(dx, dy);
+        } else {
+            normalStepping(dx, dy, firstTime);
+        }
+    }
+
+    public synchronized void step(int dx, int dy) {
+        step(dx, dy, true);
+    }
+
+    private void normalStepping(int dx, int dy, boolean firstTime) {
         T nextSelected = findExactMatch(dx, dy, firstTime);
         if (nextSelected != null) {
             selected = getPositionFor(nextSelected);
@@ -134,12 +147,21 @@ public class SteppingMatrix<T> {
             return;
         }
         if (firstTime) {
-            step(-dx, -dy, false);
+            normalStepping(-dx, -dy, false);
         }
     }
 
-    public synchronized void step(int dx, int dy) {
-        step(dx, dy, true);
+    private void simplifiedStepping(int dx, int dy) {
+        int index = list.indexOf(getSelectedElement());
+        if (dx > 0 || dy > 0) {
+            index = (index + 1) % list.size();
+        } else {
+            index = index - 1;
+            if (index < 0) {
+                index = list.size() - 1;
+            }
+        }
+        selected = getPositionFor(list.get(index));
     }
 
     private T findExactMatch(int dx, int dy, boolean searchForward) {
@@ -228,5 +250,9 @@ public class SteppingMatrix<T> {
 
     public boolean isFull() {
         return list.size() == columns * rows;
+    }
+
+    public void setSimplifiedSteppingEnabled(boolean b) {
+        simplifiedStepping = b;
     }
 }
