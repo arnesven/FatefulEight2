@@ -25,6 +25,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
+import view.widget.HealthBar;
 
 import java.awt.Point;
 import java.util.*;
@@ -88,6 +89,7 @@ public class GameCharacter extends Combatant {
 
         String raceAndClassString = this.getRace().getName() + " " + this.getGameClass() + " Lvl " + this.getLevel();
         BorderFrame.drawString(screenHandler, raceAndClassString, col, row+1, DEFAULT_TEXT_COLOR);
+        HealthBar.drawHealthBar(screenHandler, this, col, row+2);
 
         if (party != null && party.getBench().contains(this)) {
             BorderFrame.drawString(screenHandler, "ABSENT", col+1, row+5, DEFAULT_TEXT_COLOR);
@@ -102,7 +104,7 @@ public class GameCharacter extends Combatant {
         }
         BorderFrame.drawString(screenHandler, xPString, col+8, row+2, xpColor);
         BorderFrame.drawString(screenHandler, String.format("%2d AP", this.getAP()), col+17, row+2, DEFAULT_TEXT_COLOR);
-        BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, getHealthColor());
+        BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, HealthBar.getHealthColor(this.getHP(), this.getMaxHP()));
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), col+18, row+3, getStaminaColor());
         BorderFrame.drawString(screenHandler, String.format("SPEED %2d", this.getSpeed()), col+8, row+4, DEFAULT_TEXT_COLOR);
         String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
@@ -123,18 +125,6 @@ public class GameCharacter extends Combatant {
 
     private MyColors getStaminaColor() {
         return getSP() == 0 ? MyColors.YELLOW : (getSP() == getMaxSP() ? MyColors.GREEN : DEFAULT_TEXT_COLOR);
-    }
-
-    private MyColors getHealthColor() {
-        MyColors healthColor = DEFAULT_TEXT_COLOR;
-        if (getHP() < 3) {
-            healthColor = MyColors.RED;
-        } else if (getHP() == getMaxHP()) {
-            healthColor = MyColors.GREEN;
-        } else {
-            healthColor = MyColors.YELLOW;
-        }
-        return healthColor;
     }
 
     public void drawAppearance(ScreenHandler screenHandler, int col, int row) {
