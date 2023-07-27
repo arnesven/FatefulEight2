@@ -44,7 +44,7 @@ public class OrcWarrior extends Enemy {
 
     private static class OrcWarriorSprite extends LoopingSprite {
         public OrcWarriorSprite() {
-            super("mugger", "enemies.png", 0x3C, 32, 32);
+            super("orcwarrior", "enemies.png", 0x3C, 32, 32);
             setColor1(MyColors.BLACK);
             setColor2(MyColors.TAN);
             setColor3(MyColors.ORC_GREEN);

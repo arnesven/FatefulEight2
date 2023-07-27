@@ -23,7 +23,7 @@ public class OutpostEvent extends DailyEventState {
         if (model.getParty().getGold() > 0) {
             print("If you pay 1 gold per party member you can stay and rest here for the night. Do you wish to stay at the outpost? (Y/N) ");
             if (yesNoInput()) {
-                if (EveningState.partyCanAffordLodging(model)) {
+                if (model.getParty().getGold() < model.getParty().size()) {
                     println("The proprietor scoffs as you short him.");
                 }
                 model.getParty().addToGold(-model.getParty().size());

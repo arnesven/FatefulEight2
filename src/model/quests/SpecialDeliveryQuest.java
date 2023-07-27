@@ -143,6 +143,11 @@ public class SpecialDeliveryQuest extends MainQuest {
         return MyColors.GREEN;
     }
 
+    @Override
+    public MainQuest copy() {
+        return new SpecialDeliveryQuest();
+    }
+
     private static class HandOverPackageSubScene extends YesOrNodeNode {
         private final int people;
 

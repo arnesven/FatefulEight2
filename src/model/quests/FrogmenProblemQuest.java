@@ -137,6 +137,11 @@ public class FrogmenProblemQuest extends MainQuest {
         return MyColors.GREEN;
     }
 
+    @Override
+    public MainQuest copy() {
+        return new FrogmenProblemQuest();
+    }
+
     private static class FrogmanGuardsCombat extends CombatSubScene {
         public FrogmanGuardsCombat(int col, int row) {
             super(col, row, List.of(new FrogmanScoutEnemy('A'), new FrogmanLeaderEnemy('B'),

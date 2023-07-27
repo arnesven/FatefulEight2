@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import util.MyRandom;
 import util.MyStrings;
@@ -116,7 +117,9 @@ public class EveningState extends GameState {
                 if (q.arePrerequisitesMet(model)) {
                     this.goOnQuest = q;
                     println("You have accepted quest '" + q.getName() + "'!");
-                    model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
+                    if (model.getCurrentHex().getLocation() != null) {
+                        model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
+                    }
                     q.accept(model.getParty());
                     done = true;
                 } else {

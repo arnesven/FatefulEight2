@@ -24,7 +24,7 @@ public class RepeatingCrossbow extends BowWeapon {
 
     @Override
     public String getExtraText() {
-        return "2x " + super.getExtraText();
+        return super.getExtraText();
     }
 
     @Override

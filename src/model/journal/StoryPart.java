@@ -44,7 +44,7 @@ public abstract class StoryPart implements Serializable {
     public abstract void addQuests(Model model, List<Quest> quests);
 
     protected MainQuest getQuestAndSetPortrait(String questName, CharacterAppearance appearance, String portraitName) {
-        MainQuest quest = MainStory.getQuest(questName);
+        MainQuest quest = MainStory.getQuest(questName).copy();
         quest.setStoryPart(this);
         quest.setPortrait(appearance);
         quest.setProvider(portraitName);

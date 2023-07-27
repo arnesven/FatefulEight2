@@ -60,6 +60,11 @@ public class RescueMissionQuest extends MainQuest {
     }
 
     @Override
+    public MainQuest copy() {
+        return new RescueMissionQuest();
+    }
+
+    @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Search for clues",
                 List.of(new CollaborativeSkillCheckSubScene(5, 0, Skill.Security, 8, // 8

@@ -6,11 +6,13 @@ import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
 import model.quests.SpecialDeliveryQuest;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import view.SimpleMessageView;
 import view.party.CharacterCreationView;
 import view.subviews.PortraitSubView;
 
@@ -69,7 +71,7 @@ public class PartFourStoryPart extends StoryPart {
             Point position = model.getWorld().getPositionForHex(model.getCurrentHex());
             if (position.x == campPoint.x && position.y == campPoint.y) {
                 CastleLocation loc = model.getWorld().getCastleByName(castleName);
-                //quests.add(getQuestAndSetPortrait(SpecialDeliveryQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
+                quests.add(getQuestAndSetPortrait(OrcWarCampQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
             }
         }
     }
@@ -175,6 +177,9 @@ public class PartFourStoryPart extends StoryPart {
                         "bulk of the enemy force and what the invaders' orders are.");
                 leaderSay("Leave it to us.");
                 portraitSay("Thank you.");
+                model.transitionToDialog(new SimpleMessageView(model.getView(),
+                        "Warning. It is recommended that your party members " +
+                                "are at least level 4 before taking on the orc camp."));
                 increaseStep(model);
             } else if (step == TRAVEL_STEP) {
                 showLord(model);

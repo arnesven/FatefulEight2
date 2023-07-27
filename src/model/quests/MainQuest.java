@@ -44,4 +44,6 @@ public abstract class MainQuest extends Quest {
     public boolean isCompleted() {
         return completed;
     }
+
+    public abstract MainQuest copy();
 }

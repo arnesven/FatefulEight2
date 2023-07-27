@@ -6,8 +6,8 @@ public enum Skill implements Comparable<Skill> {
     Blades("Blades", "handling and fighting with all types of bladed weapons, from daggers to claymores."),               // 3
     BluntWeapons("Blunt Weapons", "handling and fighting with blunt weapons, like clubs, maces, hammers, flails and staffs."),  // 0
     Bows("Bows", "archery. This includes proficiency in using crossbows."),                   // 4
-    Endurance("Endurance", "resisting all kinds of elements and strain, like cold weather, searing heat, poisons or working for long periods of time."),         // 12
-    Entertain("Entertain", "all kinds of entertainment, like singing, acting, doing party tricks or making speeches. This skill also covers less formal occasions like just being able to engage well in conversation."),         // 8
+    Endurance("Endurance", "resisting all kinds of elements and strain, like cold weather, searing heat, poisons or performing physical activity for long periods of time."),         // 12
+    Entertain("Entertain", "all kinds of entertainment, like singing, acting, doing party tricks or making speeches. This skill also covers less formal occasions like just being able to engage well in conversation. This skill is used for when a character needs to disguise herself. "),         // 8
     Labor("Labor", "all kinds of day-to-day work, like chopping wood, mending garments, plowing fields, painting a house or repairing a fence."),                 // 9
     Leadership("Leadership", "leading and inspiring other individuals.\n\nSpecifically this skill is used by the leader of the party at quest decision points and during flee attempts in combat."),       // 4
     Logic("Logic", "representing a persons capacity for reasoning and deduction, and to some degree knowledge."),                 // 13

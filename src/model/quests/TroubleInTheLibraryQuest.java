@@ -21,7 +21,6 @@ import java.util.List;
 
 public class TroubleInTheLibraryQuest extends MainQuest {
 
-
     private static MyColors BACKGROUND_COLOR = MyColors.BLACK;
     public static final String QUEST_NAME = "Trouble in the Library";
     private static final String INTRO_TEXT = "In search of invaluable information, the party has come to a large library. " +
@@ -334,5 +333,10 @@ public class TroubleInTheLibraryQuest extends MainQuest {
             return super.getDecorations();
         }
         return decorations;
+    }
+
+    @Override
+    public MainQuest copy() {
+        return new TroubleInTheLibraryQuest();
     }
 }

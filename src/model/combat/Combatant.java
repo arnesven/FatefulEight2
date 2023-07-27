@@ -1,6 +1,7 @@
 package model.combat;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -20,6 +21,7 @@ import java.util.Set;
 public abstract class Combatant implements Serializable {
     private int currentHp;
     private List<Condition> conditions = new ArrayList<>();
+    private boolean fortified = false;
 
     public abstract int getMaxHP();
 
@@ -53,6 +55,10 @@ public abstract class Combatant implements Serializable {
 
     public boolean getsCombatTurn() {
         return !isDead() && !Condition.disablesCombatTurn(conditions);
+    }
+
+    public void setFortified(boolean b) {
+        fortified = b;
     }
 
     public void addCondition(Condition cond) {
@@ -153,5 +159,9 @@ public abstract class Combatant implements Serializable {
         for (Condition cond : conditionsToTraverse) {
             cond.endOfCombatRoundTrigger(model, state, this);
         }
+    }
+
+    public boolean canBeAttackedBy(GameCharacter gameCharacter) {
+        return !fortified || gameCharacter.getEquipment().getWeapon().isRangedAttack();
     }
 }

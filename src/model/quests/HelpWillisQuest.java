@@ -40,4 +40,9 @@ public class HelpWillisQuest extends MainQuest {
     public MyColors getBackgroundColor() {
         return MyColors.BLACK;
     }
+
+    @Override
+    public MainQuest copy() {
+        return new HelpWillisQuest();
+    }
 }
