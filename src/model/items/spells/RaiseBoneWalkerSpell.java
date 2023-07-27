@@ -51,6 +51,7 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
         }
         GameCharacter boneWalker = new BoneWalkerAlly();
         combat.addAllies(List.of(boneWalker));
+        AnimationManager.synchAnimations();
         performer.addCondition(new SummonCondition(boneWalker));
         combat.addSpecialEffect(boneWalker, new SmokeBallAnimation());
     }
