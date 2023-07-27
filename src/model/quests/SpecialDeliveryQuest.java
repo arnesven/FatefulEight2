@@ -81,7 +81,7 @@ public class SpecialDeliveryQuest extends MainQuest {
                 state.println("A noble and a constable approaches you.");
                 state.println("Noble: \"So he's dead then?\"");
                 state.println("Constable: \"Looks so. We'll clean this mess up.\"");
-                state.print("The noble turns to you.");
+                state.println("The noble turns to you.");
                 state.println("Noble: \"Thank you. You played your part brilliantly?\"");
                 state.leaderSay("Part? What part? Please explain yourself.");
                 state.println("Noble: \"Aha, that sly witch. She didn't fill you in on the details. Well perhaps it was for the best.\"");

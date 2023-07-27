@@ -31,7 +31,7 @@ import java.util.Random;
 
 public class ForestTrollQuest extends Quest {
     private static final String INTRO = "Albedan the mage has been taken prisoner by a Oleg, a troll in the Dank\n" +
-            "Forest. The party sets out to rescue Albedan but the sleeping troll is a\n" +
+            "Forest. The party sets out to rescue Albedan but the sleeping troll is a " +
             "formidable foe, can it be circumvented?";
     private static final String ENDING = "Albedan is ecstatic over your rescue and pays you well for your assistance.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.HIGH_ELF);

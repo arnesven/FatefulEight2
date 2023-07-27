@@ -33,7 +33,7 @@ public class ElfEnemy extends Enemy {
 
     @Override
     public int getDamage() {
-        return 4;
+        return 3;
     }
 
     @Override
