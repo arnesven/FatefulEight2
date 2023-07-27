@@ -104,6 +104,9 @@ public class PartFourStoryPart extends StoryPart {
                 return "Inform the lord of " + castleName + " about what you have learned about the Quad.";
             } else if (step == TRAVEL_STEP) {
                 return "Travel to the location of the war camp and investigate it.";
+            } else if (step == RETURN_STEP) {
+                return "Return to the lord of " + castleName + " to the deliver the intel you've gathered " +
+                        "and receive your reward.";
             }
             return "Completed";
         }
@@ -186,6 +189,11 @@ public class PartFourStoryPart extends StoryPart {
                 portraitSay("Have you investigated the war camp yet?");
                 leaderSay("Not yet. But we will.");
                 portraitSay("Please hurry, we need to deploy our forces to deal with these invaders.");
+            } else if (step == RETURN_STEP) {
+                showLord(model);
+                portraitSay("You've returned. I was getting worried. We've had many more raids since you " +
+                        "were last here. Please tell me you have some solid intelligence for us to act on.");
+                leaderSay("Indeed we do.");
             }
         }
 
