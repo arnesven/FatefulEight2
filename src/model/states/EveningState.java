@@ -226,7 +226,7 @@ public class EveningState extends GameState {
                         "I think I'm lying on a root.#",
                         "This tent is nice, but a bit small.",
                         "Can somebody feed that fire, it's dying.",
-                        "Anybody know a ghost story?",
+                        "Anybody know a camp story?",
                         "I need some rest.",
                         "Let's hit the sack people.",
                         "Who's been using my sleeping bag?",

@@ -60,8 +60,8 @@ public class PartyCookingEvent extends DailyEventState {
                     model.getParty().partyMemberSay(model, gc,
                             List.of("Yuck!", "Uhm, I think I've had enough.", "Is this a hair?",
                                     "This is still raw.", "Definitely overcooked.", "Not my favorite."));
-                    gc.addToAttitude(cooker, -diff/2);
-                    cooker.addToAttitude(gc, -diff/4);
+                    gc.addToAttitude(cooker, diff/2);
+                    cooker.addToAttitude(gc, diff/4);
                 }
             }
         }

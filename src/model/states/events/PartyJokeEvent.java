@@ -40,8 +40,8 @@ public class PartyJokeEvent extends DailyEventState {
                             List.of("Hehehe", "Funny!", "That's good!"));
                 } else {
                     println(gc.getFirstName() + " didn't enjoy the joke.");
-                    gc.addToAttitude(joker, -diff);
-                    joker.addToAttitude(gc, -diff/2);
+                    gc.addToAttitude(joker, diff);
+                    joker.addToAttitude(gc, diff/2);
                 }
             }
         }

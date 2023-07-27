@@ -119,7 +119,7 @@ public class InventoryView extends SelectableListMenu {
         if (it.getName().contains("Superior")) {
             result = result.replace("Superior", "Sup");
         }
-        return result.substring(0, Math.min(result.length(), WIDTH - 24));
+        return result.substring(0, Math.min(result.length(), WIDTH - 25));
     }
 
     @Override

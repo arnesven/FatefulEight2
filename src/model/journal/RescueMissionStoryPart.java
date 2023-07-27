@@ -70,7 +70,7 @@ public class RescueMissionStoryPart extends StoryPart {
     @Override
     public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
         if (location instanceof CastleLocation &&
-                ((CastleLocation) location).getName().equals(castleName) && internalStep < COMPLETED) {
+                ((CastleLocation) location).getName().equals(castleName) && internalStep <= COMPLETED) {
             return new RescueMissionLordEvent(model, model.getWorld().getCastleByName(castleName), model.getWorld().getTownByName(libraryTown));
         }
         return super.getVisitLordEvent(model, location);

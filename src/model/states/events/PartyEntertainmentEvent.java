@@ -94,8 +94,8 @@ public class PartyEntertainmentEvent extends DailyEventState {
                                     "Meh.", "Can't say I love this", "Really?", "This was some low quality entertainment.",
                                     "Not my cup of tea.", "Less than good.", "Not so great."));
                     for (GameCharacter ent : entertainers) {
-                        gc.addToAttitude(ent, -diff/2);
-                        ent.addToAttitude(gc, -diff/4);
+                        gc.addToAttitude(ent, diff/2);
+                        ent.addToAttitude(gc, diff/4);
                     }
                 }
             }
