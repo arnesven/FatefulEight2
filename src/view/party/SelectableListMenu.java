@@ -19,8 +19,8 @@ public abstract class SelectableListMenu extends GameView {
     private final int height;
     private SelectableListMenu innerMenu;
     private int scrollShift = 0;
-    private static Sprite downScroll = new AnimatedCharSprite((char)0xB2, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, 2);
-    private static Sprite upScroll = new AnimatedCharSprite((char)0xB4, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, 2);
+    public static Sprite downScroll = new AnimatedCharSprite((char)0xB2, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, 2);
+    public static Sprite upScroll = new AnimatedCharSprite((char)0xB4, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, 2);
 
 
     public SelectableListMenu(GameView previous, int width, int height) {

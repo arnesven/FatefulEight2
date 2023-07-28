@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import sound.SoundEffects;
+import view.party.SelectableListMenu;
 import view.sprites.ArrowSprites;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
@@ -63,6 +64,10 @@ public abstract class ArrowMenuGameView extends GameView {
         Sprite arrow = ArrowSprites.RIGHT;
         arrow.setColor3(MyColors.BLUE);
         model.getScreenHandler().put(xStart+1, yStart + 2 + cursorPos*2, arrow);
+        if (labels.size() > height/2 - 1) {
+            model.getScreenHandler().put(xStart + width - 1, yStart + 1, SelectableListMenu.upScroll);
+            model.getScreenHandler().put(xStart + width - 1, yStart + height - 1, SelectableListMenu.downScroll);
+        }
     }
 
     @Override
@@ -81,7 +86,7 @@ public abstract class ArrowMenuGameView extends GameView {
                 cursorPos = cursorPos - 1;
                 if (cursorPos == -1) {
                     cursorPos = maxToUse - 1;
-                    scrollshift = labels.size() - MAX_LABELS;
+                    scrollshift = Math.max(labels.size() - MAX_LABELS, 0);
                 }
             }
             madeChanges();
