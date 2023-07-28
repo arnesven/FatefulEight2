@@ -185,7 +185,7 @@ public class Model {
 
     public String getHexInfo(Point position) {
         return "(" + position.x + "," + position.y + ") " +
-                getWorld().getHex(position).getDescription();
+                getWorld().getHex(position).getDescription() + gameData.mainStory.getHexInfo(position);
     }
 
     public void handleKeyEvent(KeyEvent event) {

@@ -69,6 +69,14 @@ public class WitchStoryPart extends StoryPart {
     }
 
     @Override
+    public String getHexInfo(Point position) {
+        if (position.x == witchPoint.x && position.y == witchPoint.y && internalStep < COMPLETE) {
+            return "the Witch in the Woods";
+        }
+        return super.getHexInfo(position);
+    }
+
+    @Override
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) {
         Point hexPoint = model.getWorld().getPositionForHex(worldHex);
         if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y && internalStep < COMPLETE) {

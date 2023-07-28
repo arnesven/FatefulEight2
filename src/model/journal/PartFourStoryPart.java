@@ -84,6 +84,14 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
+    public String getHexInfo(Point position) {
+        if (campPoint.x == position.x && campPoint.y == position.y && INITIAL_STEP < step && step < COMPLETE) {
+            return "Orc War Camp";
+        }
+        return super.getHexInfo(position);
+    }
+
+    @Override
     public StoryPart getNextStoryPart(Model model, int track) {
         return null;
     }

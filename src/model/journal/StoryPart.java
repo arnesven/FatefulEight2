@@ -13,6 +13,7 @@ import model.states.dailyaction.TownDailyActionState;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,4 +61,8 @@ public abstract class StoryPart implements Serializable {
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) { return new ArrayList<>(); }
 
     protected abstract boolean isCompleted();
+
+    public String getHexInfo(Point position) {
+        return null;
+    }
 }

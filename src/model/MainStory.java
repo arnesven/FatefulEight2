@@ -125,8 +125,8 @@ public class MainStory implements Serializable {
 //        getStoryParts().get(3).progress();  // Returns to willis, cleans library and gets more info on quad.
 //        getStoryParts().get(3).transitionStep(model);
 //        model.setWorldState(model.getMainStory().getExpandDirection());
-
-       // getStoryParts().get(4).progress();
+//
+//        getStoryParts().get(4).progress();
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
@@ -295,5 +295,16 @@ public class MainStory implements Serializable {
 
     public Point getCampPosition() {
         return spawnData.getCamp();
+    }
+
+    public String getHexInfo(Point position) {
+        StringBuilder bldr = new StringBuilder();
+        for (StoryPart part : storyParts) {
+            String info = part.getHexInfo(position);
+            if (info != null) {
+                bldr.append(", " + info);
+            }
+        }
+        return bldr.toString();
     }
 }
