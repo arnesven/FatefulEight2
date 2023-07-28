@@ -10,7 +10,7 @@ public class TutorialCrafting extends HelpDialog {
             "You can only craft items which are already in your inventory or currently " +
             "equipped to a party member. Spells and potions cannot be crafted. Crafting an item " +
             "requires a single party member, the crafter, to complete three successful steps - three skill checks. " +
-            "First the crafter must inspecting the item which " +
+            "First the crafter must inspect the item which " +
             "they are trying to replicate (Perception), then they must figure out how to achieve the desired " +
             "results (Logic) and finally they must make the item out of the materials (Labor).\n\n" +
             "The difficulty and material cost of crafting items is dependent on value of the item.\n\n" +

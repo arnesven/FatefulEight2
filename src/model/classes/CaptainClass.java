@@ -72,7 +72,7 @@ public class CaptainClass extends CharacterClass {
 
     @Override
     public String getDescription() {
-        return "Captains are capable men-at-arms, weathered by life in the army. The are proficient with a variety of " +
+        return "Captains are capable men-at-arms, weathered by life in the army. They are proficient with a variety of " +
                 "weapons and are good leaders. Captains are often trained strategists and exhibit fair survival skills.";
     }
 }

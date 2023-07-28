@@ -7,9 +7,8 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
-import model.items.spells.DispellSpell;
+import model.items.spells.DispelSpell;
 import model.items.spells.Spell;
-import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
@@ -36,7 +35,7 @@ public class HauntedMansionQuest extends Quest {
 
     public HauntedMansionQuest() {
         super("Haunted Mansion", "Nobleman", QuestDifficulty.HARD, 1, 50, 0, INTRO, ENDING);
-        getScenes().get(4).get(0).addSpellCallback(new DispellSpell().getName(), new SpellCallback() {
+        getScenes().get(4).get(0).addSpellCallback(new DispelSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
                 state.println("The curse has been dispelled.");

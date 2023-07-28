@@ -6,7 +6,7 @@ import model.characters.WitchKingCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.WitchKingEnemy;
-import model.items.spells.DispellSpell;
+import model.items.spells.DispelSpell;
 import model.ruins.DungeonMonster;
 import model.ruins.DungeonRoom;
 import model.ruins.FinalDungeonLevel;
@@ -151,14 +151,14 @@ public class WitchKingEvent extends DailyEventState {
                             "But he's struggling with himself, like an unseen force was controlling his limbs.");
                     GameCharacter gc2 = model.getParty().getRandomPartyMember();
                     model.getParty().partyMemberSay(model, gc2, "Maybe we can nullify the spell somehow?");
-                    model.getSpellHandler().acceptSpell(new DispellSpell().getName());
+                    model.getSpellHandler().acceptSpell(new DispelSpell().getName());
                     try {
                         boolean result = tryBreakSpell(model, exploreRuinsState);
                         if (result) {
                             return;
                         }
                     } catch (SpellCastException sce) {
-                        if (sce.getSpell().getName().equals(new DispellSpell().getName())) {
+                        if (sce.getSpell().getName().equals(new DispelSpell().getName())) {
                             if (sce.getSpell().castYourself(model, exploreRuinsState, sce.getCaster())) {
                                 breakSpell(exploreRuinsState);
                                 break;
@@ -167,7 +167,7 @@ public class WitchKingEvent extends DailyEventState {
                     }
                 }
             } while (true);
-            model.getSpellHandler().unacceptSpell(new DispellSpell().getName());
+            model.getSpellHandler().unacceptSpell(new DispelSpell().getName());
             exploreRuinsState.setDungeonExited(true);
         }
 

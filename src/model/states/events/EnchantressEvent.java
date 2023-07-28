@@ -6,12 +6,10 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Condition;
-import model.enemies.BearEnemy;
 import model.enemies.EnchantressEnemy;
 import model.enemies.Enemy;
-import model.enemies.WildBoarEnemy;
 import model.items.Item;
-import model.items.spells.DispellSpell;
+import model.items.spells.DispelSpell;
 import model.items.spells.MindControlSpell;
 import model.items.spells.Spell;
 import model.states.*;
@@ -19,7 +17,6 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
-import view.subviews.GrassCombatTheme;
 import view.subviews.MansionTheme;
 
 import java.util.ArrayList;
@@ -213,18 +210,18 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     private boolean attemptToBreakSpell(Model model, int difficulty) {
-        model.getSpellHandler().acceptSpell(new DispellSpell().getName());
+        model.getSpellHandler().acceptSpell(new DispelSpell().getName());
         boolean result = false;
         try {
             result = model.getParty().doSoloSkillCheck(model, this, Skill.MagicBlue, difficulty);
         } catch (SpellCastException sce) {
-            if (sce.getSpell().getName().equals(new DispellSpell().getName())) {
+            if (sce.getSpell().getName().equals(new DispelSpell().getName())) {
                 if (sce.getSpell().castYourself(model, this, sce.getCaster())) {
                     result = true;
                 }
             }
         }
-        model.getSpellHandler().unacceptSpell(new DispellSpell().getName());
+        model.getSpellHandler().unacceptSpell(new DispelSpell().getName());
         return result;
     }
 

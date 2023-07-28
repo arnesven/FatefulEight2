@@ -6,10 +6,8 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.AutomatonEnemy;
-import model.enemies.OrcWarrior;
 import model.enemies.RedMageEnemy;
-import model.enemies.WarlockEnemy;
-import model.items.spells.DispellSpell;
+import model.items.spells.DispelSpell;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -114,7 +112,7 @@ public class WizardsTowerQuest extends Quest {
                 new QuestEdge(scenes.get(3).get(1), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(3).get(2))),
                 "Okay Rostomel. Time to pay up.");
-        qd2.addSpellCallback(new DispellSpell().getName(), new SpellCallback() {
+        qd2.addSpellCallback(new DispelSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
                 state.println(caster.getFirstName() + " dispells the illusion!");
