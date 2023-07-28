@@ -30,12 +30,12 @@ public enum Skill implements Comparable<Skill> {
     UnarmedCombat("Unarmed Combat", "for fighting without a weapon.\n\nA character does not have ranks in this skill, but it is used when making an unarmed attack in combat and can receive bonuses in certain situations.");
 
     private static final int[][] RANK_MATRIX = new int[][]{
-            new int[]{0, 0, 1, 1, 1, 2}, // Weight 1
-            new int[]{1, 1, 1, 2, 2, 3}, // Weight 2
-            new int[]{2, 2, 3, 3, 3, 4}, // Weight 3
-            new int[]{2, 3, 3, 4, 4, 5}, // Weight 4
-            new int[]{2, 3, 4, 5, 5, 6}, // Weight 5
-            new int[]{3, 4, 5, 5, 6, 7}  // Weight 6
+            new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3}, // Weight 1
+            new int[]{1, 1, 1, 2, 2, 3, 3, 3, 4}, // Weight 2
+            new int[]{2, 2, 3, 3, 3, 4, 4, 5, 5}, // Weight 3
+            new int[]{2, 3, 3, 4, 4, 5, 5, 5, 6}, // Weight 4
+            new int[]{2, 3, 4, 5, 5, 6, 6, 6, 6}, // Weight 5
+            new int[]{3, 4, 5, 5, 6, 7, 7, 7, 7}  // Weight 6
     };
     private String name;
     private String description;
@@ -48,6 +48,9 @@ public enum Skill implements Comparable<Skill> {
     public static int getRankForSkill(int weightForSkill, int level) {
         if (weightForSkill == 0) {
             return 0;
+        }
+        if (level > RANK_MATRIX[0].length) {
+            level = RANK_MATRIX[0].length;
         }
         return RANK_MATRIX[weightForSkill-1][level-1];
     }

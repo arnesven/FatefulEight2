@@ -35,7 +35,8 @@ public class GameCharacter extends Combatant {
                                                         MyColors.LIGHT_BLUE, MyColors.BEIGE, MyColors.WHITE, MyColors.LIGHT_PINK, MyColors.LIGHT_YELLOW};
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
     private static final int MAX_SP = 2;
-    private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1000};
+    private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1000, 1400,
+                                                    2000, 2500, 3000, 3500, 4000, 4500, 5000};
     private static final int NO_DIFFICULTY = Integer.MAX_VALUE;
 
     private final String firstName;
@@ -73,6 +74,9 @@ public class GameCharacter extends Combatant {
     }
 
     public static int getXPForNextLevel(int level) {
+        if (level >= XP_LEVELS.length) {
+            return 99999;
+        }
         return XP_LEVELS[level];
     }
 
@@ -499,8 +503,8 @@ public class GameCharacter extends Combatant {
     }
 
     public int getXpToNextLevel() {
-        if (level == 6) {
-            return -1;
+        if (level == XP_LEVELS.length) {
+            return 99999;
         }
         return XP_LEVELS[level] - currentXp;
     }
