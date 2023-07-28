@@ -17,40 +17,32 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 
-public class ShopSubView extends SubView {
-    private static final int[] CURSOR_POSITIONS = new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24};
+public class ShopSubView extends TopMenuSubView {
     private final String seller;
     private final Map<Item, Integer> priceMap;
     private final ShopState state;
-    private int topCursorIndex = 0;
     private SteppingMatrix<Item> matrix;
     private boolean isBuying;
     private Sprite crossSprite = new Sprite32x32("crosssprite", "combat.png", 0x00, MyColors.BLACK, MyColors.CYAN, MyColors.RED);
     private boolean overflow = false;
-    private boolean isInTopRow = false;
 
     public ShopSubView(SteppingMatrix<Item> items, boolean isBuying, String seller,
                        Map<Item, Integer> prices, ShopState state) {
-        super(3);
+        super(3, MyColors.BLACK, new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24});
         this.matrix = items;
         this.isBuying = isBuying;
         this.seller = seller;
         this.priceMap = prices;
         this.state = state;
-        setTopCursorIndex();
-
+        setTopCursorIndex(getDefaultIndex());
     }
 
-    private void setTopCursorIndex() {
-        topCursorIndex = isBuying ? 0:1;
+    protected int getDefaultIndex() {
+        return isBuying ? 0:1;
     }
 
     @Override
-    protected void drawArea(Model model) {
-        BorderFrame.drawString(model.getScreenHandler(), "BUY",  X_OFFSET+4, 4, MyColors.YELLOW);
-        BorderFrame.drawString(model.getScreenHandler(), "SELL", X_OFFSET+14, 4, state.maySell(model)?MyColors.LIGHT_BLUE:MyColors.GRAY);
-        BorderFrame.drawString(model.getScreenHandler(), "EXIT", X_OFFSET+25, 4, MyColors.LIGHT_RED);
-
+    protected void drawInnerArea(Model model) {
         if (!isBuying) {
             checkSellIntegrity(model);
         }
@@ -77,11 +69,25 @@ public class ShopSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(),"All items not shown",  xPos, yPos,
                     MyColors.RED, MyColors.BLACK);
         }
-        if (!isInTopRow) {
-            drawCursor(model);
-            model.getScreenHandler().put(CURSOR_POSITIONS[topCursorIndex], 4, ArrowSprites.RIGHT_BLACK);
-        } else {
-            model.getScreenHandler().put(CURSOR_POSITIONS[topCursorIndex], 4, ArrowSprites.RIGHT_BLACK_BLINK);
+    }
+
+    @Override
+    protected MyColors getTitleColor(Model model, int i) {
+        if (i == 0) {
+            return MyColors.YELLOW;
+        }
+        if (i == 2) {
+            return MyColors.LIGHT_RED;
+        }
+        return state.maySell(model)?MyColors.LIGHT_BLUE:MyColors.GRAY;
+    }
+
+    @Override
+    protected String getTitle(int i) {
+        switch (i) {
+            case 0 : return "BUY";
+            case 1 : return "SELL";
+            default : return "EXIT";
         }
     }
 
@@ -115,8 +121,8 @@ public class ShopSubView extends SubView {
         }
     }
 
-
-    private void drawCursor(Model model) {
+    @Override
+    protected void drawCursor(Model model) {
         if (matrix.getSelectedPoint() != null) {
             Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
             Point p = new Point(matrix.getSelectedPoint());
@@ -148,7 +154,7 @@ public class ShopSubView extends SubView {
 
     public void setIsBuying(boolean isBuying) {
         this.isBuying = isBuying;
-        setTopCursorIndex();
+        setTopCursorIndex(getDefaultIndex());
     }
 
     public void setContent(SteppingMatrix<Item> content) {
@@ -157,39 +163,19 @@ public class ShopSubView extends SubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (isInTopRow) {
-            if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-                isInTopRow = false;
-                setTopCursorIndex();
-                return true;
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-                topCursorIndex = (topCursorIndex + 1) % 3;
-                return true;
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-                topCursorIndex--;
-                if (topCursorIndex < 0) {
-                    topCursorIndex = 2;
-                }
-                return true;
-            }
-            return false;
-        } else {
-            if (keyEvent.getKeyCode() == KeyEvent.VK_UP && matrix.getSelectedPoint().y == 0) {
-                isInTopRow = true;
-                return true;
-            }
+        if (super.handleKeyEvent(keyEvent, model)) {
+            return true;
         }
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    @Override
+    protected boolean cursorOnBorderToTop() {
+        return matrix.getSelectedPoint().y == 0;
     }
 
     public void setOverflowWarning(boolean b) {
         this.overflow = b;
     }
 
-    public int getTopCommand() {
-        if (!isInTopRow) {
-            return -1;
-        }
-        return topCursorIndex;
-    }
 }

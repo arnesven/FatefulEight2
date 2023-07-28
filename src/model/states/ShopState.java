@@ -3,12 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.*;
-import model.items.spells.BindDaemonSpell;
-import model.items.spells.HarmonizeSpell;
-import model.items.spells.TurnUndeadSpell;
-import model.items.weapons.Weapon;
 import sound.SoundEffects;
-import view.AnalyzeWeaponDialog;
 import view.SimpleMessageView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
@@ -72,7 +67,7 @@ public class ShopState extends GameState {
 
             model.getTutorial().shopping(model);
             waitForReturnSilently();
-            int topCommand = subView.getTopCommand();
+            int topCommand = subView.getTopIndex();
             if (topCommand == 2) {
                 break;
             } else if ((topCommand == 1 && showingBuyItems) || topCommand == 0 && !showingBuyItems) {
