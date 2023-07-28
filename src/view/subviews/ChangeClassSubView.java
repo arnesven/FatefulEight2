@@ -16,7 +16,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
-public class ChangeClassSubView extends SubView {
+public class ChangeClassSubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
     private final HashMap<GameCharacter, GameCharacter> charMap;
     private final CharacterClass targetClass;
@@ -24,6 +24,7 @@ public class ChangeClassSubView extends SubView {
     private Point cursorPos = new Point(1,1);
 
     public ChangeClassSubView(SteppingMatrix<GameCharacter> matrix, CharacterClass targetClass) {
+        super(2, new int[]{X_OFFSET + 4, X_OFFSET+20});
         this.matrix = matrix;
         this.charMap = new HashMap<GameCharacter, GameCharacter>();
         this.targetClass = targetClass;
@@ -36,10 +37,8 @@ public class ChangeClassSubView extends SubView {
     }
 
     @Override
-    protected void drawArea(Model model) {
+    protected void drawInnerArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
-        BorderFrame.drawCentered(model.getScreenHandler(), targetClass.getFullName().toUpperCase(), 5,
-                MyColors.WHITE, MyColors.BLUE);
         if (details) {
             GameCharacter gc = matrix.getSelectedElement();
             if (gc != null) {
@@ -51,8 +50,20 @@ public class ChangeClassSubView extends SubView {
             }
         } else {
             drawCandidates(model);
-            drawCursor(model);
         }
+    }
+
+    @Override
+    protected MyColors getTitleColor(Model model, int i) {
+        return MyColors.WHITE;
+    }
+
+    @Override
+    protected String getTitle(int i) {
+        if (i == 0) {
+            return "CANDIDATES";
+        }
+        return "EXIT";
     }
 
     private void drawCharacterDetails(Model model, GameCharacter gc, int midX, int row) {
@@ -78,13 +89,16 @@ public class ChangeClassSubView extends SubView {
         }
     }
 
-    private void drawCursor(Model model) {
-        Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
-        Point p = new Point(matrix.getSelectedPoint());
-        p.x = X_OFFSET + p.x*10 + 4;
-        p.y = Y_OFFSET + p.y*11 + 1;
-        model.getScreenHandler().register("changeclasscursor", p, cursor, 2);
-        this.cursorPos = p;
+    @Override
+    protected void drawCursor(Model model) {
+        if (!details) {
+            Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+            Point p = new Point(matrix.getSelectedPoint());
+            p.x = X_OFFSET + p.x * 10 + 4;
+            p.y = Y_OFFSET + p.y * 11 + 1;
+            model.getScreenHandler().register("changeclasscursor", p, cursor, 2);
+            this.cursorPos = p;
+        }
     }
 
     private void drawCandidates(Model model) {
@@ -119,15 +133,25 @@ public class ChangeClassSubView extends SubView {
 
     @Override
     protected String getTitleText(Model model) {
-        return "CHANGE CLASS";
+        return "CHANGE CLASS - " + targetClass.getFullName().toUpperCase();
     }
 
     @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+    protected boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model) {
         if (!details) {
             return matrix.handleKeyEvent(keyEvent);
         }
         return false;
+    }
+
+    @Override
+    protected int getDefaultIndex() {
+        return 0;
+    }
+
+    @Override
+    protected boolean cursorOnBorderToTop() {
+        return matrix.getSelectedPoint().y == 0 && !details;
     }
 
     public void toggleDetails() {

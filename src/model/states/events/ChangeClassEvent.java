@@ -37,23 +37,10 @@ public class ChangeClassEvent extends DailyEventState {
             model.getTutorial().classes(model);
             waitForReturn();
 
-            char[] selectedAction = new char[1];
-            Point cursorPos = subView.getCursorPosition();
-            model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                    List.of("Change", "Back", "Done"), cursorPos.x+2, cursorPos.y+5, ArrowMenuSubView.NORTH_WEST) {
-                @Override
-                protected void enterPressed(Model model, int cursorPos) {
-                    if (cursorPos == 0) {
-                        selectedAction[0] = 'C';
-                    } else if (cursorPos == 2) {
-                        selectedAction[0] = 'Q';
-                    }
-                    model.setSubView(getPrevious());
-                }
-            });
-            waitForReturn();
-
-            if (selectedAction[0] == 'C') {
+            int topAction = subView.getTopIndex();
+            if (topAction == 1) { // Exit
+                break;
+            } else if (topAction == -1) { // Cursor in matrix
                 subView.toggleDetails();
                 GameCharacter gc = matrix.getSelectedElement();
                 print("Are you sure you want to make " + gc.getName() + " a " + targetClasss.getFullName() + "? (Y/N) ");
@@ -72,8 +59,6 @@ public class ChangeClassEvent extends DailyEventState {
                     }
                 }
                 subView.toggleDetails();
-            } else if (selectedAction[0] == 'Q') {
-                break;
             }
         } while (true);
     }
