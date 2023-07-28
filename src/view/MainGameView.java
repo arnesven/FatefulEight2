@@ -52,7 +52,7 @@ public class MainGameView extends GameView {
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyChar() == '§') {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
             setTimeToTransition(true);
             nextView = new LogView(this);
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {

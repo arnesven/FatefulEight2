@@ -34,7 +34,7 @@ public class TopText {
     }
 
     protected void drawKeyTexts(Model model) {
-        BorderFrame.drawString(model.getScreenHandler(), "ESC=MENU \\=LOG F1=HELP", 58, 0, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), "ESC=MENU F1=HELP F2=LOG", 57, 0, MyColors.WHITE);
     }
 
     private static CharSprite makeAlignmentSprite() {

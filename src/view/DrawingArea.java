@@ -20,16 +20,10 @@ public class DrawingArea extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.setColor(MyColors.DARK_GRAY.toAwtColor());
-        g.fillRect(0, 0, getWidth(), getHeight());
         if (this.buffer != null) {
-            int xoffset = (getWidth() - SCREEN_WIDTH*magnification) / 2;
-            int yoffset = (getHeight() - SCREEN_HEIGHT*magnification) / 2;
             g.setColor(MyColors.BLACK.toAwtColor());
-            g.fillRect(xoffset, yoffset,
-                    SCREEN_WIDTH * magnification,
-                    SCREEN_HEIGHT * magnification);
-            g.drawImage(buffer, xoffset, yoffset, buffer.getWidth()*magnification, buffer.getHeight()*magnification, null);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            g.drawImage(buffer, 0, 0, getWidth(), getHeight(), null);
         }
     }
 

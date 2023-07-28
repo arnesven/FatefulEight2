@@ -69,7 +69,7 @@ public class LogView extends GameView {
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
-         if (keyEvent.getKeyChar() == '§') {
+         if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
              nextView = previousView;
             setTimeToTransition(true);
          }  if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
