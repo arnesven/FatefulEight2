@@ -12,6 +12,7 @@ import java.util.List;
 public abstract class ArrowMenuGameView extends GameView {
 
     private static final Sprite FILLED_BLOCK = CharSprite.make((char)0xFF, MyColors.BLUE);
+    public static final int MAX_LABELS = 16;
     private final int xStart;
     private final int yStart;
     private final int width;
@@ -19,6 +20,7 @@ public abstract class ArrowMenuGameView extends GameView {
     private final List<String> labels;
     private int cursorPos;
     private boolean quitSoundEnabled = true;
+    private int scrollshift = 0;
 
     public ArrowMenuGameView(boolean doesPauseGame, int xStart, int yStart, int width, int height, List<String> labels) {
         super(doesPauseGame);
@@ -48,7 +50,7 @@ public abstract class ArrowMenuGameView extends GameView {
     @Override
     protected void internalUpdate(Model model) {
         int row = yStart+2;
-        for (int i = 0; i < labels.size(); ++i) {
+        for (int i = scrollshift; i < labels.size() && i < MAX_LABELS + scrollshift; ++i) {
             MyColors fg = MyColors.WHITE;
             if (!optionEnabled(model, i)) {
                 fg = MyColors.GRAY;
@@ -65,24 +67,38 @@ public abstract class ArrowMenuGameView extends GameView {
 
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
+        int maxToUse = Math.min(labels.size(), MAX_LABELS);
+
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
             if (quitSoundEnabled) {
                 SoundEffects.menuQuit();
             }
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            cursorPos = cursorPos - 1;
-            if (cursorPos == -1) {
-                cursorPos = labels.size() - 1;
+            if (cursorPos == 0 && scrollshift > 0) {
+                scrollshift--;
+            } else {
+                cursorPos = cursorPos - 1;
+                if (cursorPos == -1) {
+                    cursorPos = maxToUse - 1;
+                    scrollshift = labels.size() - MAX_LABELS;
+                }
             }
             madeChanges();
             SoundEffects.menuUp();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            cursorPos = (cursorPos + 1) % labels.size();
+            if (cursorPos == MAX_LABELS-1 && scrollshift < labels.size() - MAX_LABELS) {
+                scrollshift++;
+            } else {
+                if (cursorPos == maxToUse - 1) {
+                    scrollshift = 0;
+                }
+                cursorPos = (cursorPos + 1) % maxToUse;
+            }
             madeChanges();
             SoundEffects.menuDown();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            enterPressed(model, cursorPos);
+            enterPressed(model, cursorPos + scrollshift);
             SoundEffects.menuSelect();
         }
     }

@@ -97,8 +97,8 @@ public class CraftItemState extends GameState {
         List<String> options = new ArrayList<>(optionNames);
         options.add("Cancel");
         println("What item would you like to craft?");
-        final String[] selected = {null}; // TODO, what to do when options are many?
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 34 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
+        final String[] selected = {null};
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 38, ArrowMenuSubView.SOUTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selected[0] = options.get(cursorPos);

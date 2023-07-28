@@ -24,6 +24,9 @@ public abstract class ArrowMenuSubView extends SubView {
         int yStart = yPos;
         int width = 4+findMax(labels);
         int height = labels.size()*2 + 2;
+        if (labels.size() > ArrowMenuGameView.MAX_LABELS) {
+            height = 2*ArrowMenuGameView.MAX_LABELS + 2;
+        }
 
         if (anchor == NORTH_EAST) {
             xStart -= width;
