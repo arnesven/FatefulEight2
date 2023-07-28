@@ -24,6 +24,7 @@ public abstract class SubView {
     public static final int X_OFFSET = BorderFrame.CHARACTER_WINDOW_COLUMNS + 1;
     public static final int X_MAX = DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS - 1;
     protected static final Sprite blueBlock = new FilledBlockSprite(MyColors.BLUE);
+    protected static final Sprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
     private final Set<MyPair<Point, RunOnceAnimationSprite>> ongoingEffects = new HashSet<>();
 
     private TitleText topCenterText = new TitleText();

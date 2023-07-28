@@ -71,73 +71,26 @@ public class RecruitState extends GameState {
             model.setSubView(subView);
 
             do {
-                List<String> optionList = new ArrayList<>(List.of("Recruit", "Back", "Done"));
-                if (model.getParty().size() > 1) {
-                    optionList.add(2, "Dismiss");
-                }
                 print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
                         " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
                         recruitableNames() + ".");
                 waitForReturn();
 
-                char[] selectedAction = new char[1];
-                Point cursorPos = subView.getCursorPosition();
-                model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                        optionList, cursorPos.x+2, cursorPos.y+5, ArrowMenuSubView.NORTH_WEST) {
-                    @Override
-                    protected void enterPressed(Model model, int cursorPos) {
-                        if (optionList.get(cursorPos).equals("Done")) {
-                            selectedAction[0] = 'Q';
-                        } else {
-                            selectedAction[0] = optionList.get(cursorPos).charAt(0);
-                        }
-                        model.setSubView(getPrevious());
-                    }
-                });
-                waitForReturn();
-
-                if (selectedAction[0] == 'R') {
-                    if (model.getParty().isFull()) {
-                        println("Your party is currently full. You must dismiss party members to recruit new ones.");
-                    } else {
-                        GameCharacter gc = recruitMatrix.getSelectedElement();
-                        recruitMatrix.remove(gc);
-                        recruitables.remove(gc);
-                        println("You recruited " + gc.getFullName() + "!");
-                        model.getParty().recruit(gc, model.getDay());
-                        model.getAllCharacters().remove(gc);
-                        int amount = gc.getCharClass().getStartingGold();
-                        if (startingGold && amount != 0) {
-                            model.getParty().addToGold(amount);
-                            println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
-                        }
-                        model.getTutorial().leader(model);
-                        if (recruitables.size() == 0) {
-                            break;
-                        }
-                    }
-                } else if (selectedAction[0] == 'D' && model.getParty().size() > 1) {
-                    print("Which party member do you wish to dismiss? ");
-                    GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
-                    int goldLost =
-                            toDismiss.getCharClass().getStartingGold() + toDismiss.getLevel()*5 + 5;
-                    if (goldLost > model.getParty().getGold()) {
-                        print("Since you do not have " + goldLost + " to pay, " + toDismiss.getFullName() + " will keep all equipment." +
-                                " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
-                        if (yesNoInput()) {
-                            model.getParty().remove(toDismiss, false, false, 0);
-                            println(toDismiss.getFullName() + " left the party.");
-                        }
-                    } else {
-                        print(toDismiss.getFullName() + " will return all equipment and claim " + goldLost + " from the party's purse." +
-                                " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
-                        if (yesNoInput()) {
-                            model.getParty().remove(toDismiss, true, true, goldLost);
-                            println(toDismiss.getFullName() + " left the party.");
-                        }
-                    }
-                } else if (selectedAction[0] == 'Q') {
+                int topCommand = subView.getTopIndex();
+                if (topCommand == 2) { // Exit
                     break;
+                }
+                if (topCommand == 1) { // Dismiss
+                    if (model.getParty().size() > 1){
+                        dismiss(model);
+                    } else {
+                        println("You cannot dismiss your last party member.");
+                    }
+                } else if (topCommand == -1){ // Selecting in matrix
+                    recruitSelectedCharacter(model);
+                    if (recruitables.size() == 0) {
+                        break;
+                    }
                 }
             } while (true);
         } else {
@@ -148,6 +101,47 @@ public class RecruitState extends GameState {
             }
         }
         return new EveningState(model);
+    }
+
+    private void recruitSelectedCharacter(Model model) {
+        if (model.getParty().isFull()) {
+            println("Your party is currently full. You must dismiss party members to recruit new ones.");
+        } else {
+            GameCharacter gc = recruitMatrix.getSelectedElement();
+            recruitMatrix.remove(gc);
+            recruitables.remove(gc);
+            println("You recruited " + gc.getFullName() + "!");
+            model.getParty().recruit(gc, model.getDay());
+            model.getAllCharacters().remove(gc);
+            int amount = gc.getCharClass().getStartingGold();
+            if (startingGold && amount != 0) {
+                model.getParty().addToGold(amount);
+                println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
+            }
+            model.getTutorial().leader(model);
+        }
+    }
+
+    private void dismiss(Model model) {
+        print("Which party member do you wish to dismiss? ");
+        GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
+        int goldLost =
+                toDismiss.getCharClass().getStartingGold() + toDismiss.getLevel()*5 + 5;
+        if (goldLost > model.getParty().getGold()) {
+            print("Since you do not have " + goldLost + " to pay, " + toDismiss.getFullName() + " will keep all equipment." +
+                    " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
+            if (yesNoInput()) {
+                model.getParty().remove(toDismiss, false, false, 0);
+                println(toDismiss.getFullName() + " left the party.");
+            }
+        } else {
+            print(toDismiss.getFullName() + " will return all equipment and claim " + goldLost + " from the party's purse." +
+                    " Are you sure you want to dismiss " + toDismiss.getFirstName() + " (Y/N)? ");
+            if (yesNoInput()) {
+                model.getParty().remove(toDismiss, true, true, goldLost);
+                println(toDismiss.getFullName() + " left the party.");
+            }
+        }
     }
 
     private void setRandomClasses(List<GameCharacter> recruitables) {
@@ -182,7 +176,6 @@ public class RecruitState extends GameState {
             return new MyPair<>(1, "");
         }
         return new MyPair<>(0, modifier.second);
-
     }
 
     private boolean partyHasAHalfOrc(Party party) {

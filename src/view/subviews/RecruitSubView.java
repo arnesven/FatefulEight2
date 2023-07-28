@@ -14,29 +14,47 @@ import view.sprites.Sprite32x32;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class RecruitSubView extends SubView {
+public class RecruitSubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
     private final RecruitState state;
     private Point cursorPosition;
 
     public RecruitSubView(RecruitState state, SteppingMatrix<GameCharacter> recruitMatrix) {
+        super(2, new int[]{X_OFFSET + 2, X_OFFSET+13, X_OFFSET+24});
         this.state = state;
         this.matrix = recruitMatrix;
     }
 
     @Override
-    protected void drawArea(Model model) {
-        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
+    protected void drawInnerArea(Model model) {
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+1, Y_MAX, blueBlock);
         drawRecruitables(model);
-        drawCursor(model);
     }
 
-    private void drawCursor(Model model) {
+    @Override
+    protected MyColors getTitleColor(Model model, int i) {
+        if (i == 0 || i == 2) {
+            return MyColors.WHITE;
+        }
+        return model.getParty().size() > 1 ? MyColors.WHITE : MyColors.GRAY;
+    }
+
+    @Override
+    protected String getTitle(int i) {
+        switch (i) {
+            case 0 : return "RECRUIT";
+            case 1 : return "DISMISS";
+            default : return "EXIT";
+        }
+    }
+
+    @Override
+    protected void drawCursor(Model model) {
         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
         if (matrix.getSelectedElement() != null) {
             Point p = new Point(matrix.getSelectedPoint());
             p.x = X_OFFSET + p.x * 14 + 6;
-            p.y = Y_OFFSET + p.y * 12 - 2;
+            p.y = Y_OFFSET + p.y * 12 - 1;
             model.getScreenHandler().register("recruitcursor", p, cursor, 2);
             this.cursorPosition = p;
         }
@@ -48,7 +66,7 @@ public class RecruitSubView extends SubView {
                 GameCharacter gc = matrix.getElementAt(col, row);
                 if (gc != null) {
                     int xPos = X_OFFSET + col*14 + 5;
-                    int yPos = Y_OFFSET + row*12 + 2;
+                    int yPos = Y_OFFSET + row*12 + 3;
                     drawCharacter(model, gc, xPos, yPos);
                 }
             }
@@ -83,8 +101,18 @@ public class RecruitSubView extends SubView {
     }
 
     @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+    protected boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model) {
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    @Override
+    protected int getDefaultIndex() {
+        return 0;
+    }
+
+    @Override
+    protected boolean cursorOnBorderToTop() {
+        return matrix.getSelectedPoint().y == 0;
     }
 
     public Point getCursorPosition() {

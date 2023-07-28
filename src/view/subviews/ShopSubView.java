@@ -28,7 +28,7 @@ public class ShopSubView extends TopMenuSubView {
 
     public ShopSubView(SteppingMatrix<Item> items, boolean isBuying, String seller,
                        Map<Item, Integer> prices, ShopState state) {
-        super(3, MyColors.BLACK, new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24});
+        super(3, new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24});
         this.matrix = items;
         this.isBuying = isBuying;
         this.seller = seller;
@@ -162,14 +162,6 @@ public class ShopSubView extends TopMenuSubView {
     }
 
     @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (super.handleKeyEvent(keyEvent, model)) {
-            return true;
-        }
-        return matrix.handleKeyEvent(keyEvent);
-    }
-
-    @Override
     protected boolean cursorOnBorderToTop() {
         return matrix.getSelectedPoint().y == 0;
     }
@@ -178,4 +170,8 @@ public class ShopSubView extends TopMenuSubView {
         this.overflow = b;
     }
 
+    @Override
+    protected boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model) {
+        return matrix.handleKeyEvent(keyEvent);
+    }
 }

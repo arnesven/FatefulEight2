@@ -12,13 +12,11 @@ public abstract class TopMenuSubView extends SubView {
     private final int[] cursorPositions;
     private boolean isInTopRow = false;
     private int topCursorIndex;
-    private MyColors backgroundColor;
 
-    public TopMenuSubView(int centerRows, MyColors backgroundColor, int[] cursorPositions) {
+    public TopMenuSubView(int centerRows, int[] cursorPositions) {
         super(centerRows);
         topCursorIndex = 0;
         this.cursorPositions = cursorPositions;
-        this.backgroundColor = backgroundColor;
     }
 
     protected void setTopCursorIndex(int topCursorIndex) {
@@ -34,12 +32,11 @@ public abstract class TopMenuSubView extends SubView {
 
     @Override
     protected final void drawArea(Model model) {
-        for (int i = 0; i < cursorPositions.length; ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), getTitle(i),  cursorPositions[i]+1, 4, getTitleColor(model, i), backgroundColor);
-        }
-
         drawInnerArea(model);
-
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+1, blackBlock);
+        for (int i = 0; i < cursorPositions.length; ++i) {
+            BorderFrame.drawString(model.getScreenHandler(), getTitle(i),  cursorPositions[i]+1, 4, getTitleColor(model, i));
+        }
         if (!isInTopRow) {
             drawCursor(model);
             model.getScreenHandler().put(cursorPositions[topCursorIndex], 4, ArrowSprites.RIGHT_BLACK);
@@ -57,7 +54,7 @@ public abstract class TopMenuSubView extends SubView {
     protected abstract String getTitle(int i);
 
     @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+    public final boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (isInTopRow) {
             if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
                 isInTopRow = false;
@@ -79,8 +76,10 @@ public abstract class TopMenuSubView extends SubView {
             isInTopRow = true;
             return true;
         }
-        return false;
+        return innerHandleKeyEvent(keyEvent, model);
     }
+
+    protected abstract boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model);
 
     protected abstract int getDefaultIndex();
 
