@@ -204,6 +204,13 @@ public class TutorialHandler implements Serializable {
         return tutorialOn;
     }
 
+    public void evading(Model model) {
+        runOnce("evading", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialEvading(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

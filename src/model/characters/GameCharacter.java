@@ -536,6 +536,12 @@ public class GameCharacter extends Combatant {
     }
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
+        if (checkForEvade(enemy)) {
+            combatEvent.addStrikeTextEffect(this, true);
+            combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
+            model.getTutorial().evading(model);
+            return;
+        }
         MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
         int damage = pair.first;
         int reduction = Math.min(damage, calculateDamageReduction());
@@ -551,6 +557,12 @@ public class GameCharacter extends Combatant {
         combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
         combatEvent.addStrikeEffect(this, damage, pair.second);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
+    }
+
+    private boolean checkForEvade(Enemy enemy) {
+        int speedDiff = Math.max(getSpeed() - enemy.getSpeed(), 0) / 2;
+        int roll = MyRandom.rollD10();
+        return roll <= speedDiff;
     }
 
     private int calculateDamageReduction() {

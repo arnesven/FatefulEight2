@@ -18,6 +18,14 @@ public class DamageValueEffect extends RunOnceAnimationSprite {
         }
     }
 
+    public DamageValueEffect(int num) {
+        super("floatingtext" + num, "charset.png",
+                num % 16, num / 16, 8, 8, 1, MyColors.CYAN);
+        setColor2(MyColors.DARK_BLUE);
+        this.count = 0;
+        this.shift = 0;
+    }
+
     @Override
     public void stepAnimation(long elapsedTimeMs, Model model) {
         this.count++;

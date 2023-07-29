@@ -159,6 +159,18 @@ public class CombatSubView extends SubView {
         }
     }
 
+    public synchronized void addStrikeTextEffect(Combatant target, boolean evade) {
+        Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
+        if (evade) {
+            for (int x = 0; x < 3; ++x) {
+                addOngoingEffect(new MyPair<>(new Point(point.x + x - 1, point.y),
+                        new DamageValueEffect(0xF0 + x)));
+            }
+        } else { // TODO: Block
+
+        }
+    }
+
     public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
         if (target instanceof Enemy) {
