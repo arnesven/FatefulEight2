@@ -149,7 +149,7 @@ public abstract class Enemy extends Combatant {
             damage = damage * 2;
             return new MyPair<>(damage, true);
         }
-        while (damage > 0 && MyRandom.randInt(3) == 0) {
+        if (damage > 0 && MyRandom.randInt(3) == 0) {
             damage--;
         }
         return new MyPair<>(damage, false);
