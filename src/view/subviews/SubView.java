@@ -5,6 +5,7 @@ import util.MyPair;
 import view.BorderFrame;
 import view.DrawingArea;
 import view.MyColors;
+import view.sprites.AnimationManager;
 import view.sprites.FilledBlockSprite;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
@@ -52,6 +53,7 @@ public abstract class SubView {
                         p.second.getXShift(), -p.second.getYShift());
             } else {
                 toRemove.add(p);
+                AnimationManager.unregister(p.second);
             }
         }
         ongoingEffects.remove(toRemove);

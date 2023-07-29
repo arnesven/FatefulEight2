@@ -25,7 +25,8 @@ public class CreditsView extends GameView implements Animation {
             new String[]{
             "Play Testers",
             "Nathalie Bjallerhag",
-            "Peter Komaromy"}
+            "Peter Komaromy",
+            "Pontus Haglund"}
     };
 
     public CreditsView() {
