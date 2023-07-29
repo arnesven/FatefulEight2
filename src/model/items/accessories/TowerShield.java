@@ -14,7 +14,7 @@ public class TowerShield extends ShieldItem {
             new AvatarItemSprite(0x60, MyColors.BROWN, MyColors.GRAY, MyColors.PINK, MyColors.BEIGE));
 
     public TowerShield() {
-        super("Tower Shield", 28, true);
+        super("Tower Shield", 34, true, 3);
     }
 
     @Override

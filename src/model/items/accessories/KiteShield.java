@@ -13,7 +13,7 @@ public class KiteShield extends PointedShield {
     private final ItemSprite sprite;
 
     public KiteShield() {
-        super("Kite Shield", 24, false);
+        super("Kite Shield", 28, false);
         this.sprite = new ItemSprite(2, 3, MyColors.GRAY, MyColors.BEIGE);
         sprite.setColor4(MyRandom.sample(List.of(MyColors.GREEN, MyColors.RED, MyColors.BLUE)));
     }

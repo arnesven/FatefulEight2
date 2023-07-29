@@ -13,7 +13,7 @@ public class HeraldicShield extends PointedShield {
     private final ItemSprite sprite;
 
     public HeraldicShield() {
-        super("Heraldic Shield", 16, true);
+        super("Heraldic Shield", 20, true);
         this.sprite = new ItemSprite(3, 3,
                 MyRandom.sample(List.of(MyColors.GRAY_RED, MyColors.DARK_RED, MyColors.GRAY, MyColors.DARK_GREEN, MyColors.DARK_PURPLE)),
                 MyRandom.sample(List.of(MyColors.PINK, MyColors.ORANGE, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.CYAN)));

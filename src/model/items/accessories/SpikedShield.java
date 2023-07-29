@@ -11,7 +11,7 @@ public class SpikedShield extends ShieldItem {
     private static final Sprite SPRITE = new ItemSprite(4, 3);
 
     public SpikedShield() {
-        super("Spiked Shield", 28, true);
+        super("Spiked Shield", 30, true, 1);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class SpikedShield extends ShieldItem {
 
     @Override
     public String getExtraText() {
-        return "deals 1 damage to attacker when hit";
+        return super.getExtraText() + ", Deals 1 damage to attacker on hit";
     }
 
     @Override

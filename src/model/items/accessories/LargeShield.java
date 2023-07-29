@@ -8,7 +8,7 @@ public class LargeShield extends ShieldItem {
     private static final Sprite SPRITE =  new ItemSprite(0, 3);
 
     public LargeShield() {
-        super("Large Shield", 22, false);
+        super("Large Shield", 26, false, 2);
     }
 
     @Override

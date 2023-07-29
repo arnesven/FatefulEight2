@@ -542,21 +542,35 @@ public class GameCharacter extends Combatant {
             model.getTutorial().evading(model);
             return;
         }
-        MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
-        int damage = pair.first;
-        int reduction = Math.min(damage, calculateDamageReduction());
-        String reductionString = "";
-        if (getAP() > 0) {
-            reductionString = " (reduced by " + reduction + ")";
+        if (checkForBlock(enemy)) {
+            combatEvent.addStrikeTextEffect(this, false);
+            combatEvent.println(getFirstName() + "'s shield blocked " + enemy.getName() + "'s attack!");
+            model.getTutorial().blocking(model);
+        } else {
+            MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
+            int damage = pair.first;
+            boolean critical = pair.second;
+            int reduction = Math.min(damage, calculateDamageReduction());
+            String reductionString = "";
+            if (getAP() > 0) {
+                reductionString = " (reduced by " + reduction + ")";
+            }
+            damage = damage - reduction;
+            addToHP(-1 * damage);
+            if (pair.second) {
+                reductionString = ", Critical Hit" + reductionString;
+            }
+            combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
+            combatEvent.addStrikeEffect(this, damage, critical);
         }
-        damage = damage - reduction;
-        addToHP(-1 * damage);
-        if (pair.second) {
-            reductionString = ", Critical Hit" + reductionString;
-        }
-        combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
-        combatEvent.addStrikeEffect(this, damage, pair.second);
         equipment.wielderWasAttackedBy(enemy, combatEvent);
+    }
+
+    private boolean checkForBlock(Enemy enemy) {
+        if (equipment.getAccessory() instanceof ShieldItem) {
+            return MyRandom.rollD10() <= ((ShieldItem)equipment.getAccessory()).getBlockChance();
+        }
+        return false;
     }
 
     private boolean checkForEvade(Enemy enemy) {

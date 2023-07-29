@@ -22,8 +22,9 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
-                new TutorialCombatActionsDialog(null),
                 new TutorialCombatAttacks(null),
+                new TutorialBlocking(null),
+                new TutorialCombatActionsDialog(null),
                 new TutorialCombatDamageDialog(null),
                 new TutorialEvading(null),
                 new TutorialCombatFormationDialog(null)

@@ -9,7 +9,7 @@ public class Buckler extends ShieldItem {
     private static final Sprite SPRITE =  new ItemSprite(1, 3);
 
     public Buckler() {
-        super("Buckler", 14, false);
+        super("Buckler", 16, false, 1);
     }
 
     @Override
