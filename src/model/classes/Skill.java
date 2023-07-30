@@ -46,7 +46,7 @@ public enum Skill implements Comparable<Skill> {
     }
 
     public static int getRankForSkill(int weightForSkill, int level) {
-        if (weightForSkill == 0) {
+        if (weightForSkill == 0 || level == 0) {
             return 0;
         }
         if (level > RANK_MATRIX[0].length) {
