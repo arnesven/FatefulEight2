@@ -27,8 +27,8 @@ public class WorldBuilder {
 
     private static String[] worldTemplate = new String[]{
             "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
-            "sssssttuuTTTTTTuuuTTTTTTTuuTTTTTTTuTTTTTttTTTTTTTTTtt",
-            "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuuuuTTTuuTTuuTTuuuTuu",
+            "sssssttuuTTTTTTuuuTTTTTTTuuTTTTTTTtTTTTTttTTTTTTTTTtt",
+            "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuutuTTTuuTTuuTTuuuTuu",
             "stssttttWWWWWTTWWWWWWWWWTTWWWWWWWTTTTWWWWWWWWWWWWWWWW",
             "sssssttWWWWWWWTTTWWWWWWWWWWWWTTTTWTTuWWWWWWWWWWWWWWWW",
             "sssssssttttWWWWuTTTttttTtTTTTuttuTTTuttWWtttssWWutttt",
@@ -43,7 +43,7 @@ public class WorldBuilder {
             "pppppsspppppssssspppsssssssphwhpMMhhbsssssssooooooooo",
             "ssppppsssppsshpsssssssssssshhhphhMhwwwhtssssooooooooo",
             "ssspppsssssshhhhhsssssssppfspwwpphpwwwMMooooooooooooo",
-            "spppsspppsphhphhhppfhpwwwfwppMMwMffwwhpoooooooooooooo",
+            "spppsspppsphhphhhppfhpwwwfwppMMwMffwwhpoooooooooopooo",
             "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMoooooooooooooo",
             "sspppffppssspppphpfwwhpppwpphpppMMdwddddooooooooooooo",
             "ssppfMMpppsspppphffwwwwpwwphhhfhfdddddddDddoooooooooo",
@@ -63,7 +63,7 @@ public class WorldBuilder {
             "jjjjjjjjjjjjjjjjjjjjjMMMMMjjjjjjjjjwjjjjjjjjjjjjjjjjj",
             "jjjjjjjjjjjjjjjjjjjjjjjjMjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
             "jjjjjjjjjjjjjjjjjjjjjjjjjMMjjjjjjjjjjjjjjjjjjjjjjjjjj",
-            "jjjjjjjjjjjjjjjjjjjjjjjjjjjMMjjjjjjjjjjjjjjjjjjjjjjjj",
+            "jjjjjjjjjjjjjjjjjpjjjjjjjjjMMjjjjjjjjjjjjjjjjjjjjjjjj",
     };
 
     private static WorldHex makeHex(char c, HexContents contents, int state) {
@@ -113,6 +113,9 @@ public class WorldBuilder {
 
     private static Map<Point, HexContents> makeHexContents() {
         Map<Point, HexContents> contents = new HashMap<>();
+
+        addEvilTower(contents, 34, 1, EXPAND_NORTH);
+
         addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);
         addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,30, 10, SOUTH_WEST | SOUTH_EAST, 0);
@@ -159,6 +162,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 29, 17, 0, SOUTH_WEST);
         addRoadsAndRivers(contents, 30, 17, 0, SOUTH);
         addTemple(contents, 38, 17, "the Peaks");
+        addEvilTower(contents, 49, 17, EXPAND_EAST);
 
         addRoadsAndRivers(contents, 14, 18, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 15, 18, 0, NORTH_WEST | NORTH | NORTH_EAST);
@@ -178,6 +182,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 23, 19, SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 24, 19, NORTH_WEST | SOUTH_EAST, 0);
         addInn(contents,26,19, "Crossroads Inn", NORTH_EAST | SOUTH_EAST | SOUTH | SOUTH_WEST, 0);
+        addEvilTower(contents, 2, 19, EXPAND_WEST);
         addRoadsAndRivers(contents, 27, 19, SOUTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 29, 19, 0, NORTH);
         addRoadsAndRivers(contents, 31, 19, 0, NORTH | SOUTH_EAST | NORTH_EAST);
@@ -257,7 +262,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 28, 26, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 29, 26, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
-
+        addEvilTower(contents, 17, 37, EXPAND_SOUTH);
 
         return contents;
     }
@@ -268,6 +273,10 @@ public class WorldBuilder {
 
     private static void addRuins(Map<Point, HexContents> contents, int x, int y, String ruinsName, int roads, int rivers) {
         contents.put(new Point(x, y), new HexContents(new RuinsLocation(ruinsName), roads, rivers));
+    }
+
+    private static void addEvilTower(Map<Point, HexContents> contents, int x, int y, int expandDirection) {
+        contents.put(new Point(x, y), new HexContents(new AncientStrongholdLocation(expandDirection), 0, 0));
     }
 
     private static void addTemple(Map<Point, HexContents> contents, int x, int y, String templeName) {
