@@ -113,7 +113,7 @@ public class PartFourStoryPart extends StoryPart {
             } else if (step == TRAVEL_STEP) {
                 return "Travel to the location of the war camp and investigate it.";
             } else if (step == RETURN_STEP) {
-                return "Return to the lord of " + castleName + " to the deliver the intel you've gathered " +
+                return "Return to the lord of " + castleName + " to deliver the intel you've gathered " +
                         "and receive your reward.";
             }
             return "Completed";

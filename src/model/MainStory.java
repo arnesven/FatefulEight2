@@ -98,35 +98,36 @@ public class MainStory implements Serializable {
     public MainStory() { }
 
     public void progressStoryForTesting(Model model) {
-        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
-                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
-        setupStory(dummy);                // Get task "visit uncle"
-        getStoryParts().get(0).progress();     // Visit uncle, get Frogmen Problem quest
-        getStoryParts().get(0).progress();     // Completes frogmen problem quest
-        getStoryParts().get(0).progress();     // Returns to uncle, get visit Everix task
-        getStoryParts().get(0).transitionStep(model, 0); // Gets "Reward at ... Castle" Task
-        getStoryParts().get(0).progress();     // Visits Everix
-        getStoryParts().get(0).transitionStep(model, 1); // Gets "Find Witch" Task
-
-        getStoryParts().get(1).progress();  // Visit lord
-        getStoryParts().get(1).progress();  // Do rescue mission quest
-        getStoryParts().get(1).progress();  // Returns to lord, task completed
-
-
-        getStoryParts().get(2).progress();   // Visits witch, get Special Delivery Quest
-        getStoryParts().get(2).progress();   // Completes special delivery quests
-        getStoryParts().get(2).progress();   // Returns to witch, get Crimson Pearl info -> completes task
-        getStoryParts().get(2).transitionStep(model); // Gets part three story part
-
-
-        getStoryParts().get(3).progress();  // Progressed at lord because witch part is done
-        getStoryParts().get(3).progress();  // Talks to Willis, gets trouble in the library quest
-        getStoryParts().get(3).progress();  // Completes Trouble in the Library Quest,
-        getStoryParts().get(3).progress();  // Returns to willis, cleans library and gets more info on quad.
-        getStoryParts().get(3).transitionStep(model);
-        model.setWorldState(model.getMainStory().getExpandDirection());
-
-        getStoryParts().get(4).progress();
+//        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
+//                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
+//        setupStory(dummy);                // Get task "visit uncle"
+//        getStoryParts().get(0).progress();     // Visit uncle, get Frogmen Problem quest
+//        getStoryParts().get(0).progress();     // Completes frogmen problem quest
+//        getStoryParts().get(0).progress();     // Returns to uncle, get visit Everix task
+//        getStoryParts().get(0).transitionStep(model, 0); // Gets "Reward at ... Castle" Task
+//        getStoryParts().get(0).progress();     // Visits Everix
+//        getStoryParts().get(0).transitionStep(model, 1); // Gets "Find Witch" Task
+//
+//        getStoryParts().get(1).progress();  // Visit lord
+//        getStoryParts().get(1).progress();  // Do rescue mission quest
+//        getStoryParts().get(1).progress();  // Returns to lord, task completed
+//
+//
+//        getStoryParts().get(2).progress();   // Visits witch, get Special Delivery Quest
+//        getStoryParts().get(2).progress();   // Completes special delivery quests
+//        getStoryParts().get(2).progress();   // Returns to witch, get Crimson Pearl info -> completes task
+//        getStoryParts().get(2).transitionStep(model); // Gets part three story part
+//
+//
+//        getStoryParts().get(3).progress();  // Progressed at lord because witch part is done
+//        getStoryParts().get(3).progress();  // Talks to Willis, gets trouble in the library quest
+//        getStoryParts().get(3).progress();  // Completes Trouble in the Library Quest,
+//        getStoryParts().get(3).progress();  // Returns to willis, cleans library and gets more info on quad.
+//        getStoryParts().get(3).transitionStep(model);
+//        model.setWorldState(model.getMainStory().getExpandDirection());
+//
+//        getStoryParts().get(4).progress(); // Get Go to Orc War Camp task
+//        getStoryParts().get(4).progress(); // Quest done, return.
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
