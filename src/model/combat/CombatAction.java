@@ -27,4 +27,8 @@ public abstract class CombatAction implements Serializable {
     public List<CombatAction> getInnerActions(Model model) {
         return new ArrayList<>();
     }
+
+    public boolean takeAnotherAction() {
+        return false;
+    }
 }

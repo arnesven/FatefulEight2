@@ -1,5 +1,6 @@
 package model.states;
 
+import model.actions.SneakAttackCombatAction;
 import model.combat.CombatAction;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
@@ -10,6 +11,7 @@ import model.classes.SkillCheckResult;
 import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyPair;
 import util.MyRandom;
 import view.sprites.AnimationManager;
 import view.sprites.RunOnceAnimationSprite;
@@ -19,7 +21,6 @@ import java.util.*;
 
 public class CombatEvent extends DailyEventState {
 
-    private final List<Enemy> startingEnemies;
     private List<GameCharacter> participants;
     private List<Enemy> enemies = new ArrayList<>();
     private List<Combatant> initiativeOrder;
@@ -40,12 +41,13 @@ public class CombatEvent extends DailyEventState {
     private int fledEnemies = 0;
     private int timeLimit = Integer.MAX_VALUE;
     private int roundCounter = 1;
+    private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
+    private final Set<GameCharacter> blockSneakAttack = new HashSet<>();
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
         selectingFormation = true;
         combatMatrix = new CombatMatrix();
-        this.startingEnemies = startingEnemies;
         enemies.addAll(startingEnemies);
         combatMatrix.addEnemies(enemies);
         combatMatrix.addParty(model.getParty());
@@ -57,6 +59,7 @@ public class CombatEvent extends DailyEventState {
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.fleeingEnabled = fleeingEnabled;
         this.isAmbush = isAmbush;
+        this.sneakAttackers = new ArrayList<>();
     }
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {
@@ -166,35 +169,61 @@ public class CombatEvent extends DailyEventState {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {
                 if (!isAmbush) {
-                    List<Enemy> enms = new ArrayList<>(enemies);
-                    for (Enemy e : enms) {
-                        if (e.getEnemyGroup() == ((Enemy) turnTaker).getEnemyGroup()) {
-                            currentCombatant = e;
-                            model.getLog().waitForAnimationToFinish();
-                            e.takeCombatTurn(model, this);
-                        }
-                    }
+                    handleEnemyTurn(model, turnTaker);
                 }
             } else {
-                currentCombatant = turnTaker;
-                combatMatrix.moveSelectedToEnemy();
-                GameCharacter character = (GameCharacter) turnTaker;
-                if (!character.getsCombatTurn()) {
-                    if (!character.isDead()) {
-                        println(character.getName() + " turn was skipped.");
-                    }
-                } else {
-                    print(character.getFirstName() + "'s turn. ");
-                    model.getTutorial().combatActions(model);
-                    waitToProceed();
-                    selectedCombatAction.doAction(model, this, character, selectedTarget);
-                    selectedCombatAction = null;
-                    selectedTarget = null;
-                }
-                character.decreaseTimedConditions(model, this);
+                handleCharacterTurn(model, turnTaker);
             }
         }
+        if (!combatDone(model)) {
+            handleSneakAttacks(model);
+        }
         isAmbush = false;
+    }
+
+    private void handleEnemyTurn(Model model, Combatant turnTaker) {
+        List<Enemy> enms = new ArrayList<>(enemies);
+        for (Enemy e : enms) {
+            if (e.getEnemyGroup() == ((Enemy) turnTaker).getEnemyGroup()) {
+                currentCombatant = e;
+                model.getLog().waitForAnimationToFinish();
+                e.takeCombatTurn(model, this);
+            }
+        }
+    }
+
+    private void handleCharacterTurn(Model model, Combatant turnTaker) {
+        currentCombatant = turnTaker;
+        combatMatrix.moveSelectedToEnemy();
+        GameCharacter character = (GameCharacter) turnTaker;
+        if (!character.getsCombatTurn()) {
+            if (!character.isDead()) {
+                println(character.getName() + " turn was skipped.");
+            }
+        } else {
+            print(character.getFirstName() + "'s turn. ");
+            model.getTutorial().combatActions(model);
+            do {
+                waitToProceed();
+                selectedCombatAction.doAction(model, this, character, selectedTarget);
+                if (!selectedCombatAction.takeAnotherAction()) {
+                    break;
+                }
+                selectedCombatAction = null;
+            } while (true);
+            selectedCombatAction = null;
+            selectedTarget = null;
+        }
+        character.decreaseTimedConditions(model, this);
+    }
+
+    private void handleSneakAttacks(Model model) {
+        for (MyPair<GameCharacter, SneakAttackCombatAction> pair : sneakAttackers) {
+            currentCombatant = pair.first;
+            combatMatrix.moveSelectedToEnemy();
+            pair.second.resolveSneakAttack(model, this);
+        }
+        sneakAttackers.clear();
     }
 
     private void waitToProceed() {
@@ -447,5 +476,38 @@ public class CombatEvent extends DailyEventState {
 
     public int getCurrentRound() {
         return roundCounter;
+    }
+
+    public void addSneakAttacker(GameCharacter chara, SneakAttackCombatAction action) {
+        sneakAttackers.add(new MyPair<>(chara, action));
+    }
+
+    public void removeSneaker(GameCharacter randomTarget) {
+        int size = sneakAttackers.size();
+        sneakAttackers.removeIf((MyPair<GameCharacter, SneakAttackCombatAction> pair) -> pair.first == randomTarget);
+        if (size > sneakAttackers.size()) {
+            println(randomTarget.getFirstName() + " sneak attack was cancelled.");
+        }
+    }
+
+    public boolean checkForSneakAvoidAttack(GameCharacter randomTarget) {
+        MyPair<GameCharacter, SneakAttackCombatAction> found = null;
+        for (MyPair<GameCharacter, SneakAttackCombatAction> sneaker : sneakAttackers) {
+            if (sneaker.first == randomTarget) {
+                found = sneaker;
+            }
+        }
+        if (found == null) {
+            return false;
+        }
+        return MyRandom.rollD10() + 5 < found.second.getSneakValue();
+    }
+
+    public boolean isEligibleForSneakAttack(GameCharacter performer) {
+        return !blockSneakAttack.contains(performer);
+    }
+
+    public void blockSneakAttackFor(GameCharacter character) {
+        blockSneakAttack.add(character);
     }
 }

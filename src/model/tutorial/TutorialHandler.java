@@ -214,6 +214,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void sneakAttack(Model model) {
+        runOnce("sneak attack", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialSneakAttack(model.getView()));
+        });
+    }
+
     public boolean isTutorialEnabled() {
         return tutorialOn;
     }

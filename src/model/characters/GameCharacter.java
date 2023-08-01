@@ -1,5 +1,6 @@
 package model.characters;
 
+import model.actions.AbilityCombatAction;
 import model.combat.*;
 import model.Model;
 import model.Party;
@@ -164,19 +165,28 @@ public class GameCharacter extends Combatant {
             if (target.isDead()) {
                 return;
             }
-            int bonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
-            SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
-            int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
-            String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
-            if (result.isCritical() && equipment.getWeapon().allowsCriticalHits()) {
-                damage *= 2;
-                extraInfo += " x2 Critical Hit";
-            }
-            extraInfo += ")";
-            combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
-            combatEvent.addStrikeEffect(target, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
-            combatEvent.doDamageToEnemy(target, damage, this);
+            doOneAttack(combatEvent, target, false);
         }
+    }
+
+    public void doOneAttack(CombatEvent combatEvent, Combatant target, boolean sneakAttack) {
+        int bonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
+        SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
+        int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
+        String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
+        if (sneakAttack) {
+            damage *= 3;
+            extraInfo += " x3 Sneak Attack";
+        }
+        if (result.isCritical() && equipment.getWeapon().allowsCriticalHits()) {
+            damage *= 2;
+            extraInfo += " x2 Critical Hit";
+        }
+        extraInfo += ")";
+        combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
+        combatEvent.addStrikeEffect(target, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
+        combatEvent.doDamageToEnemy(target, damage, this);
+        combatEvent.blockSneakAttackFor(this);
     }
 
     private void performFleeFromBattle(Model model, CombatEvent combatEvent) {
@@ -325,16 +335,23 @@ public class GameCharacter extends Combatant {
             });
         }
 
-        Set<UsableItem> usableItems = new HashSet<>();
-        usableItems.addAll(model.getParty().getInventory().getPotions());
-        usableItems.addAll(model.getParty().getInventory().getCombatScrolls());
-        if (usableItems.size() > 0 && model.getParty().getPartyMembers().contains(this)) {
-            result.add(new ItemCombatAction(usableItems, target));
-        }
+        if (model.getParty().getPartyMembers().contains(this)) {
+            Set<UsableItem> usableItems = new HashSet<>();
+            usableItems.addAll(model.getParty().getInventory().getPotions());
+            usableItems.addAll(model.getParty().getInventory().getCombatScrolls());
+            if (usableItems.size() > 0) {
+                result.add(new ItemCombatAction(usableItems, target));
+            }
 
-        List<CombatSpell> combatSpells = model.getParty().getInventory().getCombatSpells();
-        if (!combatSpells.isEmpty() && model.getParty().getPartyMembers().contains(this)) {
-            result.add(new SpellCombatAction(combatSpells, target));
+            List<CombatSpell> combatSpells = model.getParty().getInventory().getCombatSpells();
+            if (!combatSpells.isEmpty()) {
+                result.add(new SpellCombatAction(combatSpells, target));
+            }
+
+            AbilityCombatAction abilities = new AbilityCombatAction(this, target);
+            if (abilities.getInnerActions(model).size() > 0 ) {
+                result.add(abilities);
+            }
         }
 
         result.add(new CombatAction("Pass") {
@@ -536,6 +553,7 @@ public class GameCharacter extends Combatant {
     }
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
+        combatEvent.blockSneakAttackFor(this);
         if (checkForEvade(enemy)) {
             combatEvent.addStrikeTextEffect(this, true);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");

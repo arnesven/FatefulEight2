@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.actions.SneakAttackCombatAction;
 import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
@@ -85,11 +86,15 @@ public abstract class Enemy extends Combatant {
             if (candidates.isEmpty()) {
                 candidates.addAll(model.getParty().getBackRow());
             }
-            candidates.removeIf((GameCharacter gc) -> gc.isDead());
-            Collections.shuffle(candidates);
-            if (!candidates.isEmpty()) {
+            candidates.removeIf(Combatant::isDead);
+            while (!candidates.isEmpty()) {
+                Collections.shuffle(candidates);
                 GameCharacter randomTarget = candidates.get(0);
-                attack(model, randomTarget, combatEvent);
+                if (candidates.size() == 1 || !combatEvent.checkForSneakAvoidAttack(randomTarget)) {
+                    attack(model, randomTarget, combatEvent);
+                    combatEvent.removeSneaker(randomTarget);
+                    break;
+                }
             }
         }
         decreaseTimedConditions(model, combatEvent);
