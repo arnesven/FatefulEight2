@@ -41,6 +41,9 @@ public class AbilityCombatAction extends CombatAction {
         if (canDoDefendAbility(performer)) {
             list.add(new DefendCombatAction());
         }
+        if (performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer)) {
+            list.add(new RestCombatAction());
+        }
         return list;
     }
 

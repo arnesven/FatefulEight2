@@ -231,6 +231,13 @@ public class TutorialHandler implements Serializable {
         return tutorialOn;
     }
 
+    public void combatResting(Model model) {
+        runOnce("resting", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCombatResting(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
