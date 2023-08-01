@@ -171,7 +171,7 @@ public class GameCharacter extends Combatant {
     }
 
     public void doOneAttack(CombatEvent combatEvent, Combatant target, boolean sneakAttack) {
-        int bonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
+        int bonus = getAttackBonusesFromConditions();
         SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";

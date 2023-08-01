@@ -2,7 +2,6 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.SkillCheckResult;
 import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.combat.Condition;
@@ -12,6 +11,8 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class DefendCombatAction extends CombatAction {
+    public static final int DEFEND_SKILL_RANKS = 3;
+
     public DefendCombatAction() {
         super("Defend");
     }

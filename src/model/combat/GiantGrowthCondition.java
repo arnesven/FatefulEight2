@@ -26,4 +26,9 @@ public class GiantGrowthCondition extends Condition {
     public Sprite getSymbol() {
         return CONDITION_SPRITE;
     }
+
+    @Override
+    public int getAttackBonus() {
+        return 2;
+    }
 }

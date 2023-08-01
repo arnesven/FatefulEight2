@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbilityCombatAction extends CombatAction {
-    private static final int DEFEND_SKILL_RANKS = 3;
     private final GameCharacter performer;
     private final Combatant target;
 
@@ -44,13 +43,16 @@ public class AbilityCombatAction extends CombatAction {
         if (performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer)) {
             list.add(new RestCombatAction());
         }
+        if (performer.getRankForSkill(Skill.Leadership) >= InspireCombatAction.INSPIRE_SKILL_RANKS) {
+            list.add(new InspireCombatAction());
+        }
         return list;
     }
 
     private boolean canDoDefendAbility(GameCharacter performer) {
         Skill[] skills = new Skill[]{Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms};
         for (Skill s : skills) {
-            if (performer.getRankForSkill(s) >= DEFEND_SKILL_RANKS) {
+            if (performer.getRankForSkill(s) >= DefendCombatAction.DEFEND_SKILL_RANKS) {
                 return true;
             }
         }

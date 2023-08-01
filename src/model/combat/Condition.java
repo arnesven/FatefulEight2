@@ -1,6 +1,7 @@
 package model.combat;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.states.GameState;
 import view.sprites.Sprite;
 
@@ -76,4 +77,7 @@ public abstract class Condition implements Serializable {
     public void endOfDayTrigger(Model model, GameState state, Combatant comb) { }
 
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) { }
+
+    public int getAttackBonus() { return 0; }
+
 }

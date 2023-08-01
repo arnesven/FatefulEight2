@@ -164,4 +164,13 @@ public abstract class Combatant implements Serializable {
     public boolean canBeAttackedBy(GameCharacter gameCharacter) {
         return !fortified || gameCharacter.getEquipment().getWeapon().isRangedAttack();
     }
+
+
+    public int getAttackBonusesFromConditions() {
+        int sum = 0;
+        for (Condition cond : conditions) {
+            sum += cond.getAttackBonus();
+        }
+        return sum;
+    }
 }
