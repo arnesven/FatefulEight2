@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.actions.AbilityCombatAction;
+import model.actions.DefendCombatAction;
 import model.combat.*;
 import model.Model;
 import model.Party;
@@ -562,7 +563,7 @@ public class GameCharacter extends Combatant {
         }
         if (checkForBlock(enemy)) {
             combatEvent.addStrikeTextEffect(this, false);
-            combatEvent.println(getFirstName() + "'s shield blocked " + enemy.getName() + "'s attack!");
+            combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
         } else {
             MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
@@ -585,8 +586,9 @@ public class GameCharacter extends Combatant {
     }
 
     private boolean checkForBlock(Enemy enemy) {
+        int defendBonus = DefendCombatAction.isDefending(this) ? 2 : 0;
         if (equipment.getAccessory() instanceof ShieldItem) {
-            return MyRandom.rollD10() <= ((ShieldItem)equipment.getAccessory()).getBlockChance();
+            return MyRandom.rollD10() <= ((ShieldItem)equipment.getAccessory()).getBlockChance() + defendBonus;
         }
         return false;
     }

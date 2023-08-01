@@ -220,6 +220,12 @@ public class TutorialHandler implements Serializable {
             model.transitionToDialog(new TutorialSneakAttack(model.getView()));
         });
     }
+    public void defending(Model model) {
+        runOnce("defending", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialDefending(model.getView()));
+        });
+    }
 
     public boolean isTutorialEnabled() {
         return tutorialOn;

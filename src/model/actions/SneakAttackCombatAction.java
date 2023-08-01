@@ -79,5 +79,10 @@ public class SneakAttackCombatAction extends CombatAction {
         public Sprite getSymbol() {
             return SPRITE;
         }
+
+        @Override
+        public boolean removeAtEndOfCombat() {
+            return true;
+        }
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AbilityCombatAction extends CombatAction {
+    private static final int DEFEND_SKILL_RANKS = 3;
     private final GameCharacter performer;
     private final Combatant target;
 
@@ -37,6 +38,19 @@ public class AbilityCombatAction extends CombatAction {
         if (performer.getRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy) {
             list.add(new SneakAttackCombatAction());
         }
+        if (canDoDefendAbility(performer)) {
+            list.add(new DefendCombatAction());
+        }
         return list;
+    }
+
+    private boolean canDoDefendAbility(GameCharacter performer) {
+        Skill[] skills = new Skill[]{Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms};
+        for (Skill s : skills) {
+            if (performer.getRankForSkill(s) >= DEFEND_SKILL_RANKS) {
+                return true;
+            }
+        }
+        return false;
     }
 }
