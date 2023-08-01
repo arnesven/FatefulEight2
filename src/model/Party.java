@@ -231,7 +231,7 @@ public class Party implements Serializable {
     public int partyStrength() {
         int str = 0;
         for (GameCharacter gc : partyMembers) {
-            str += 9 + gc.getLevel();
+            str += 14 + gc.getLevel();
         }
         return str;
     }
