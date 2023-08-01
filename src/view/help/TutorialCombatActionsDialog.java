@@ -17,6 +17,6 @@ public class TutorialCombatActionsDialog extends SubChapterHelpDialog {
             "Pass: Do nothing in combat.";
 
     public TutorialCombatActionsDialog(GameView view) {
-        super(view, "Combat Actions", text);
+        super(view, "Actions", text);
     }
 }

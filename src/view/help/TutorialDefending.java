@@ -12,5 +12,6 @@ public class TutorialDefending extends SubChapterHelpDialog {
 
     public TutorialDefending(GameView view) {
         super(view, "Defending", TEXT);
+        setLevel(2);
     }
 }

@@ -13,6 +13,7 @@ public class TutorialCombatResting extends SubChapterHelpDialog {
             "either 1 Health Point or 1 Stamina at equal probability.";
 
     public TutorialCombatResting(GameView view) {
-        super(view, "Resting in Combat", TEXT);
+        super(view, "Resting", TEXT);
+        setLevel(2);
     }
 }

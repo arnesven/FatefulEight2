@@ -2,7 +2,9 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialCrafting extends HelpDialog {
+import java.util.List;
+
+public class TutorialCrafting extends ExpandableHelpDialog {
     private static final String TEXT =
             "During your travels you will collect many materials with which " +
             "you may craft items. Items can be crafted at work benches which can " +
@@ -19,5 +21,10 @@ public class TutorialCrafting extends HelpDialog {
 
     public TutorialCrafting(GameView view) {
         super(view, "Crafting", TEXT);
+    }
+
+    @Override
+    protected List<HelpDialog> makeSubSections(GameView view) {
+        return List.of(new TutorialCraftingDesigns(view));
     }
 }

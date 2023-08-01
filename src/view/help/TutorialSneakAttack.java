@@ -20,5 +20,6 @@ public class TutorialSneakAttack extends SubChapterHelpDialog {
 
     public TutorialSneakAttack(GameView view) {
         super(view, "Sneak Attack", TEXT);
+        setLevel(2);
     }
 }

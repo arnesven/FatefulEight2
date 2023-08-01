@@ -22,16 +22,38 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
+                new CombatAbilitiesChapter(),
+                new TutorialCombatActionsDialog(null),
                 new TutorialCombatAttacks(null),
                 new TutorialBlocking(null),
-                new TutorialCombatActionsDialog(null),
                 new TutorialCombatDamageDialog(null),
-                new TutorialDefending(null),
                 new TutorialEvading(null),
-                new TutorialCombatFormationDialog(null),
-                new TutorialInspire(null),
-                new TutorialCombatResting(null),
-                new TutorialSneakAttack(null)
+                new TutorialCombatFormationDialog(null)
         );
+    }
+
+    private static class CombatAbilitiesChapter extends ExpandableHelpDialog {
+        private static final String ABILITIES_TEXT =
+                "Combat abilities are special actions which can be taken in combat if a character " +
+                "fulfill certain criteria.";
+
+        public CombatAbilitiesChapter() {
+            super(null, "Abilities", ABILITIES_TEXT);
+        }
+
+        @Override
+        public String getTitle() {
+            return ((char)0x7D) + super.getTitle();
+        }
+
+        @Override
+        protected List<HelpDialog> makeSubSections(GameView view) {
+            return List.of(
+                    new TutorialDefending(null),
+                    new TutorialInspire(null),
+                    new TutorialCombatResting(null),
+                    new TutorialSneakAttack(null)
+            );
+        }
     }
 }

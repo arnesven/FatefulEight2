@@ -17,5 +17,6 @@ public class TutorialInspire extends SubChapterHelpDialog {
 
     public TutorialInspire(GameView view) {
         super(view, "Inspire", TEXT);
+        setLevel(2);
     }
 }
