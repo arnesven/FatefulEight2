@@ -50,7 +50,7 @@ public class SkillCheckResult {
         return modifiedRoll >= difficulty && roll != 1;
     }
 
-    public boolean isCritical() {
-        return roll == 10;
+    public boolean isCritical(int critLevel) {
+        return roll >= 10;
     }
 }

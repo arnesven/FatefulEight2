@@ -2,7 +2,6 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.combat.Condition;
 import model.enemies.Enemy;
@@ -11,7 +10,7 @@ import view.MyColors;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class RiposteCombatAction extends CombatAction {
+public class RiposteCombatAction extends StaminaCombatAbility {
     public static final int ACROBATICS_RANKS_REQUIREMENT = 3;
 
     public RiposteCombatAction() {
@@ -20,27 +19,23 @@ public class RiposteCombatAction extends CombatAction {
 
     public static void doRiposte(CombatEvent combatEvent, GameCharacter gameCharacter, Enemy enemy) {
         combatEvent.println(gameCharacter.getFirstName() + " counter-attacks!");
-        gameCharacter.doOneAttack(combatEvent, enemy, false);
+        gameCharacter.doOneAttack(combatEvent, enemy, false, 0, 10);
         gameCharacter.removeCondition(RiposteStanceCondition.class);
     }
 
-    @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (performer.getSP() > 0) {
-            model.getTutorial().riposte(model);
-            combat.println(performer.getFirstName() + " exhausts 1 Stamina Point and gets ready to perform a riposte.");
-            performer.addToSP(-1);
-            performer.addCondition(new RiposteStanceCondition());
-        } else {
-            combat.println(performer.getFirstName() + " is too exhausted to perform a riposte.");
-        }
-    }
 
     public static int getEvadeBonus(GameCharacter gameCharacter) {
         return gameCharacter.hasCondition(RiposteStanceCondition.class) ? 2 : 0;
     }
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD0), MyColors.LIGHT_BLUE, MyColors.BLACK, MyColors.CYAN);
+
+    @Override
+    protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+        model.getTutorial().riposte(model);
+        combat.println(performer.getFirstName() + " gets ready to perform a riposte.");
+        performer.addCondition(new RiposteCombatAction.RiposteStanceCondition());
+    }
 
     private static class RiposteStanceCondition extends Condition {
         public RiposteStanceCondition() {

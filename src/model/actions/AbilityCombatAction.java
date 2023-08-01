@@ -6,7 +6,9 @@ import model.classes.Skill;
 import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
+import model.items.weapons.AxeWeapon;
 import model.items.weapons.BladedWeapon;
+import model.items.weapons.BluntWeapon;
 import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
 
@@ -51,7 +53,16 @@ public class AbilityCombatAction extends CombatAction {
         if (canDoRiposteAbility(performer)) {
             list.add(new RiposteCombatAction());
         }
+        if (canDoHeavyBlowAbility(performer)) {
+            list.add(new HeavyBlowCombatAction());
+        }
         return list;
+    }
+
+    private boolean canDoHeavyBlowAbility(GameCharacter performer) {
+        return performer.getRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT &&
+                (performer.getEquipment().getWeapon() instanceof BluntWeapon ||
+                performer.getEquipment().getWeapon() instanceof AxeWeapon);
     }
 
     private boolean canDoRiposteAbility(GameCharacter performer) {

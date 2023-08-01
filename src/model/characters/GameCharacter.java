@@ -167,26 +167,30 @@ public class GameCharacter extends Combatant {
             if (target.isDead()) {
                 return;
             }
-            doOneAttack(combatEvent, target, false);
+            doOneAttack(combatEvent, target, false, 0, 10);
         }
     }
 
-    public void doOneAttack(CombatEvent combatEvent, Combatant target, boolean sneakAttack) {
+    public void doOneAttack(CombatEvent combatEvent, Combatant target, boolean sneakAttack, int extraDamage, int crit) {
         int bonus = getAttackBonusesFromConditions();
         SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
+        if (damage > 0) {
+            damage += extraDamage;
+            extraInfo += " +" + extraDamage;
+        }
         if (sneakAttack) {
             damage *= 3;
             extraInfo += " x3 Sneak Attack";
         }
-        if (result.isCritical() && equipment.getWeapon().allowsCriticalHits()) {
+        if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
             damage *= 2;
             extraInfo += " x2 Critical Hit";
         }
         extraInfo += ")";
         combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
-        combatEvent.addStrikeEffect(target, damage, result.isCritical() && equipment.getWeapon().allowsCriticalHits());
+        combatEvent.addStrikeEffect(target, damage, result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits());
         combatEvent.doDamageToEnemy(target, damage, this);
         combatEvent.blockSneakAttackFor(this);
     }

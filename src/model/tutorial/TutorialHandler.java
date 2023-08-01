@@ -252,6 +252,13 @@ public class TutorialHandler implements Serializable {
         return tutorialOn;
     }
 
+    public void heavyBlow(Model model) {
+        runOnce("heavy blow", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialHeavyBlow(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
