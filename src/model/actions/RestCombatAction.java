@@ -15,6 +15,10 @@ public class RestCombatAction extends CombatAction {
         another = false;
     }
 
+    public static boolean canDoRestAbility(Model model, GameCharacter performer) {
+        return performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer);
+    }
+
     @Override
     public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().combatResting(model);

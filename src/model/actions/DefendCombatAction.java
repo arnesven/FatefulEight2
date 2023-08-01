@@ -2,6 +2,7 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.combat.Condition;
@@ -26,6 +27,16 @@ public class DefendCombatAction extends CombatAction {
         model.getTutorial().defending(model);
         combat.println(performer.getFirstName() + " takes a defensive stance.");
         performer.addCondition(new DefendCondition());
+    }
+
+    public static boolean canDoDefendAbility(GameCharacter performer) {
+        Skill[] skills = new Skill[]{Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms};
+        for (Skill s : skills) {
+            if (performer.getRankForSkill(s) >= DefendCombatAction.DEFEND_SKILL_RANKS) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static final Sprite SPRITE = CharSprite.make((char) (0xD1), MyColors.WHITE, MyColors.BLUE, MyColors.CYAN);

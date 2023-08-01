@@ -2,9 +2,12 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.Condition;
 import model.enemies.Enemy;
+import model.items.weapons.BladedWeapon;
+import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CharSprite;
@@ -29,6 +32,12 @@ public class RiposteCombatAction extends StaminaCombatAbility {
     }
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD0), MyColors.LIGHT_BLUE, MyColors.BLACK, MyColors.CYAN);
+
+    public static boolean canDoRiposteAbility(GameCharacter performer) {
+        return performer.getRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
+                (performer.getEquipment().getWeapon() instanceof BladedWeapon ||
+                        performer.getEquipment().getWeapon() instanceof PolearmWeapon);
+    }
 
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {

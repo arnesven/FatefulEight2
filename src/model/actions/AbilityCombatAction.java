@@ -41,43 +41,25 @@ public class AbilityCombatAction extends CombatAction {
         if (performer.getRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy) {
             list.add(new SneakAttackCombatAction());
         }
-        if (canDoDefendAbility(performer)) {
+        if (DefendCombatAction.canDoDefendAbility(performer)) {
             list.add(new DefendCombatAction());
         }
-        if (performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer)) {
+        if (RestCombatAction.canDoRestAbility(model, performer)) {
             list.add(new RestCombatAction());
         }
-        if (performer.getRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT) {
+        if (InspireCombatAction.canDoInspireAbility(performer)) {
             list.add(new InspireCombatAction());
         }
-        if (canDoRiposteAbility(performer)) {
+        if (RiposteCombatAction.canDoRiposteAbility(performer)) {
             list.add(new RiposteCombatAction());
         }
-        if (canDoHeavyBlowAbility(performer)) {
+        if (HeavyBlowCombatAction.canDoHeavyBlowAbility(performer)) {
             list.add(new HeavyBlowCombatAction());
+        }
+        if (SniperShotCombatAction.canDoSniperShotAbility(performer)) {
+            list.add(new SniperShotCombatAction());
         }
         return list;
     }
 
-    private boolean canDoHeavyBlowAbility(GameCharacter performer) {
-        return performer.getRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT &&
-                (performer.getEquipment().getWeapon() instanceof BluntWeapon ||
-                performer.getEquipment().getWeapon() instanceof AxeWeapon);
-    }
-
-    private boolean canDoRiposteAbility(GameCharacter performer) {
-        return performer.getRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
-                (performer.getEquipment().getWeapon() instanceof BladedWeapon ||
-                performer.getEquipment().getWeapon() instanceof PolearmWeapon);
-    }
-
-    private boolean canDoDefendAbility(GameCharacter performer) {
-        Skill[] skills = new Skill[]{Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms};
-        for (Skill s : skills) {
-            if (performer.getRankForSkill(s) >= DefendCombatAction.DEFEND_SKILL_RANKS) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

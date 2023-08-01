@@ -54,7 +54,8 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                     new TutorialHeavyBlow(null),
                     new TutorialCombatResting(null),
                     new TutorialRiposte(null),
-                    new TutorialSneakAttack(null)
+                    new TutorialSneakAttack(null),
+                    new TutorialSniperShot(null)
             );
         }
     }

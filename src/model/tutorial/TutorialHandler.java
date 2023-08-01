@@ -259,6 +259,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void sniperShot(Model model) {
+        runOnce("sniper shot", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialSniperShot(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
