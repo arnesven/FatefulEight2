@@ -5,7 +5,7 @@ import view.GameView;
 
 public class TutorialInspire extends SubChapterHelpDialog {
     private static final String TEXT =
-            "A character with at least " + InspireCombatAction.INSPIRE_SKILL_RANKS +
+            "A character with at least " + InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT +
             " ranks of Leadership can perform the Inspire ability in combat. The character " +
             "performs a Leadership Skill check, which receives a +1 bonus if the character is currently " +
             "the party leader. Depending on the result the rest of the party is inspired and receives a " +

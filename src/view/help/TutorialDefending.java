@@ -8,7 +8,7 @@ public class TutorialDefending extends SubChapterHelpDialog {
             "A character with at least " + DefendCombatAction.DEFEND_SKILL_RANKS +
             " ranks of Axes, Blades, Blunt Weapons or Polearms can " +
             "perform the Defend ability. The character enters a defensive stance and receives an " +
-            "innate 20% block chance for the remainder of one combat round.";
+            "innate 20% block chance until the end of their next turn.";
 
     public TutorialDefending(GameView view) {
         super(view, "Defending", TEXT);

@@ -2,6 +2,7 @@ package model.characters;
 
 import model.actions.AbilityCombatAction;
 import model.actions.DefendCombatAction;
+import model.actions.RiposteCombatAction;
 import model.combat.*;
 import model.Model;
 import model.Party;
@@ -559,6 +560,7 @@ public class GameCharacter extends Combatant {
             combatEvent.addStrikeTextEffect(this, true);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
             model.getTutorial().evading(model);
+            RiposteCombatAction.doRiposte(combatEvent, this, enemy);
             return;
         }
         if (checkForBlock(enemy)) {
@@ -595,6 +597,7 @@ public class GameCharacter extends Combatant {
 
     private boolean checkForEvade(Enemy enemy) {
         int speedDiff = Math.max(getSpeed() - enemy.getSpeed(), 0) / 2;
+        speedDiff += RiposteCombatAction.getEvadeBonus(this);
         int roll = MyRandom.rollD10();
         return roll <= speedDiff;
     }

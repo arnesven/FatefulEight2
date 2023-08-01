@@ -241,6 +241,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void riposte(Model model) {
+        runOnce("reposte", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialRiposte(model.getView()));
+        });
+    }
+
     public boolean isTutorialEnabled() {
         return tutorialOn;
     }

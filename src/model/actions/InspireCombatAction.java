@@ -15,7 +15,7 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class InspireCombatAction extends CombatAction {
-    public static final int INSPIRE_SKILL_RANKS = 4;
+    public static final int LEADERSHIP_RANKS_REQUIREMENT = 4;
 
     public InspireCombatAction() {
         super("Inspire");

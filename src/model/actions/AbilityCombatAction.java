@@ -6,6 +6,8 @@ import model.classes.Skill;
 import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
+import model.items.weapons.BladedWeapon;
+import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
 
 import java.util.ArrayList;
@@ -43,10 +45,19 @@ public class AbilityCombatAction extends CombatAction {
         if (performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer)) {
             list.add(new RestCombatAction());
         }
-        if (performer.getRankForSkill(Skill.Leadership) >= InspireCombatAction.INSPIRE_SKILL_RANKS) {
+        if (performer.getRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT) {
             list.add(new InspireCombatAction());
         }
+        if (canDoRiposteAbility(performer)) {
+            list.add(new RiposteCombatAction());
+        }
         return list;
+    }
+
+    private boolean canDoRiposteAbility(GameCharacter performer) {
+        return performer.getRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
+                (performer.getEquipment().getWeapon() instanceof BladedWeapon ||
+                performer.getEquipment().getWeapon() instanceof PolearmWeapon);
     }
 
     private boolean canDoDefendAbility(GameCharacter performer) {
