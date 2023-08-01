@@ -81,7 +81,7 @@ public abstract class Quest {
         return junctions.get(0);
     }
 
-    public QuestNode getSuccessEndingNode() {
+    public QuestSuccessfulNode getSuccessEndingNode() {
         return successEnding;
     }
 

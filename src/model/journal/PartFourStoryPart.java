@@ -2,18 +2,16 @@ package model.journal;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
+import model.items.Item;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
-import model.quests.SpecialDeliveryQuest;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 import view.SimpleMessageView;
-import view.party.CharacterCreationView;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
@@ -78,14 +76,14 @@ public class PartFourStoryPart extends StoryPart {
 
     @Override
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
-        if (campPoint.x == x && campPoint.y == y && INITIAL_STEP < step && step < COMPLETE) {
+        if (campPoint.x == x && campPoint.y == y && step == TRAVEL_STEP) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         }
     }
 
     @Override
     public String getHexInfo(Point position) {
-        if (campPoint.x == position.x && campPoint.y == position.y && INITIAL_STEP < step && step < COMPLETE) {
+        if (campPoint.x == position.x && campPoint.y == position.y && step == TRAVEL_STEP) {
             return "Orc War Camp";
         }
         return super.getHexInfo(position);
@@ -93,12 +91,12 @@ public class PartFourStoryPart extends StoryPart {
 
     @Override
     public StoryPart getNextStoryPart(Model model, int track) {
-        return null;
+        return new PartFiveStoryPart(castleName);
     }
 
     @Override
     protected boolean isCompleted() {
-        return false;
+        return step >= COMPLETE;
     }
 
     private class InformLordEntry extends MainStoryTask {
@@ -116,7 +114,7 @@ public class PartFourStoryPart extends StoryPart {
                 return "Return to the lord of " + castleName + " to deliver the intel you've gathered " +
                         "and receive your reward.";
             }
-            return "Completed";
+            return "YouCompleted";
         }
 
         @Override
@@ -202,6 +200,48 @@ public class PartFourStoryPart extends StoryPart {
                 portraitSay("You've returned. I was getting worried. We've had many more raids since you " +
                         "were last here. Please tell me you have some solid intelligence for us to act on.");
                 leaderSay("Indeed we do.");
+                println("You present your intel to the " + castle.getLordTitle() + " and " +
+                        hisOrHer(castle.getLordGender()) + " military command.");
+                showExplicitPortrait(model, general, "General");
+                portraitSay("This is excellent work. Now we can deploy our armies!");
+                leaderSay("Glad we could help.");
+                showLord(model);
+                leaderSay("But my lord, the source of this evil...");
+                portraitSay("Yes, I'm afraid you are right. We've had more reports of these crimson pearls " +
+                        "and everything seems to be pointing to an evil abomination to the " +
+                        model.getMainStory().getExpandDirectionName() + ".");
+                portraitSay("And I'm also afraid that I have nobody better to send to deal with this threat " +
+                        "than you and your team. But I'm not sending you off with nothing, I have something prepared.");
+                leaderSay("Oh, what might that be?");
+                portraitSay("Well, it's three fold actually. Firstly, let me tap into what remains of my coffers to " +
+                        "make sure you have the funds to properly prepare for this mission. Here, take this.");
+                println("The " + castle.getLordTitle() + " hands you a rather sizable purse.");
+                println("The party receives 300 gold!");
+                model.getParty().addToGold(300);
+                portraitSay("Secondly, I've asked my marshall to fetch the finest equipment we have from our armory. " +
+                        "Here he comes now.");
+                showExplicitPortrait(model, marshall, "Marshall");
+                portraitSay("These have been kept in display cases in the armory. Please take good care of them, " +
+                        "our artisans manufactured with great expenditure of time and resources.");
+                for (int i = 0; i < 4; ++i) {
+                    Item it = model.getItemDeck().getRandomItem(0.99);
+                    println("The party receives " + it.getName() + ".");
+                    model.getParty().getInventory().addItem(it);
+                }
+                showLord(model);
+                portraitSay("And finally, I will mark another location on your map. There you will find a secret workshop " +
+                        "and Xelbi, a dwarven tinkerer.");
+                leaderSay("I see. A powerful warrior or weapon smith?");
+                portraitSay("Oh no, not at all. Quite the fretful fellow. But he has a magnificent mind and he has been working " +
+                        "on a special project. If you think you have time, I think you should go and see him.");
+                leaderSay("I will consider it.");
+                portraitSay("Now I wish you good luck. Please return once the Quad has been dealt with.");
+                leaderSay("We will");
+                model.transitionToDialog(new SimpleMessageView(model.getView(),
+                        "Warning. It is recommended that your party members " +
+                                "are at least level 5 before venturing to the Ancient Stronghold."));
+                increaseStep(model);
+                transitionStep(model);
             }
         }
 

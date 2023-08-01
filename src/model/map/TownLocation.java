@@ -53,6 +53,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
         return true;
     }
 
+    @Override
     public SubView getImageSubView() {
         return subView;
                 }

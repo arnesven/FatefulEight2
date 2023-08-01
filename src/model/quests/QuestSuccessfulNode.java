@@ -14,11 +14,14 @@ public class QuestSuccessfulNode extends QuestNode {
             MyColors.BLACK, MyColors.WHITE, MyColors.GREEN, MyColors.GREEN);
     private final Reward reward;
     private final String text;
+    private final Point position;
     private int numberOfPartyMembers;
 
     public QuestSuccessfulNode(Reward reward, String text) {
         this.reward = reward;
         this.text = text;
+        this.position = new Point(QuestState.QUEST_MATRIX_COLUMNS-2,
+                QuestState.QUEST_MATRIX_ROWS-1);
     }
 
     @Override
@@ -28,12 +31,12 @@ public class QuestSuccessfulNode extends QuestNode {
 
     @Override
     public int getColumn() {
-        return QuestState.QUEST_MATRIX_COLUMNS-2;
+        return position.x;
     }
 
     @Override
     public int getRow() {
-        return QuestState.QUEST_MATRIX_ROWS-1;
+        return position.y;
     }
 
     @Override
@@ -67,5 +70,10 @@ public class QuestSuccessfulNode extends QuestNode {
 
     public void setNumberOfStartingPartyMembers(int size) {
         this.numberOfPartyMembers = size;
+    }
+
+    public void move(int col, int row) {
+        this.position.x = col;
+        this.position.y = row;
     }
 }
