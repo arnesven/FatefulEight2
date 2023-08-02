@@ -18,7 +18,7 @@ import java.util.List;
 public class AncientStrongholdLocation extends HexLocation {
     private static final Sprite TOWER_TOP = new AncientStrongholdUpperSprite();
     private final int direction;
-    private static final ImageSubView subView = new ImageSubView("stronghold", "Ancient Stronghold", "An ancient stronghold.", true);
+    private static final ImageSubView subView = new ImageSubView("stronghold", "ANCIENT STRONGHOLD", "An ancient stronghold.", true);
 
 
     public AncientStrongholdLocation(int expandDirection) {

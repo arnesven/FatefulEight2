@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MyStrings {
     private static final List<String> NUM_WORDS = List.of(
@@ -56,5 +57,11 @@ public class MyStrings {
 
     public static String numberWord(int num) {
         return NUM_WORDS.get(num);
+    }
+
+    public static String capitalize(String name) {
+        String first = name.substring(0, 1).toUpperCase();
+        String rest = name.substring(1).toLowerCase();
+        return first+rest;
     }
 }
