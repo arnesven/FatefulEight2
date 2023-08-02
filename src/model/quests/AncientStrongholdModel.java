@@ -3,6 +3,7 @@ package model.quests;
 import view.MyColors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AncientStrongholdModel {
@@ -10,12 +11,27 @@ public class AncientStrongholdModel {
     private static final Integer FULL = 2;
     private static final Integer HALF = 1;
     private static final Integer WRONG = 0;
-    private final MyColors[] code;
+    private MyColors[] code;
     private List<AncientStrongholdControlPanel> controlPanels = new ArrayList<>();
 
     public AncientStrongholdModel() {
         controlPanels.add(new AncientStrongholdControlPanel(this));
-        this.code = new MyColors[]{MyColors.BLACK, MyColors.BLUE, MyColors.ORANGE, MyColors.BLACK};
+        generateCode();
+    }
+
+    private void generateCode() {
+        List<MyColors> list = new ArrayList<>();
+        for (MyColors color : AncientStrongholdControlPanel.PEARL_COLORS) {
+            list.add(color);
+        }
+        Collections.shuffle(list);
+        this.code = new MyColors[AncientStrongholdControlPanel.NUMBER_OF_PEARL_SLOTS];
+        System.out.print("Ancient stronghold code is ");
+        for (int i = 0; i < code.length; ++i) {
+            code[i] = list.get(i);
+            System.out.print(code[i].name() + ", ");
+        }
+        System.out.println(" ");
     }
 
     public AncientStrongholdControlPanel getControlPanel(int index) {
