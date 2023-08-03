@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum MyColors {
-    BLACK       (new Color(0x000000)),
+    BLACK       (new Color(0x010101)),
     WHITE       (new Color(0xFFFFFE)),
     DARK_RED    (new Color(0x880000)),
     CYAN        (new Color(0xAAFFEE)),

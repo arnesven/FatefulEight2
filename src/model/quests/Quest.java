@@ -142,7 +142,9 @@ public abstract class Quest {
         List<String> result = new ArrayList<>();
         for (QuestScene sc : getScenes()) {
             for (QuestSubScene qss : sc) {
-                result.add(qss.getDetailedDescription());
+                if (qss.getDetailedDescription() != null) {
+                    result.add(qss.getDetailedDescription());
+                }
             }
         }
         return result;

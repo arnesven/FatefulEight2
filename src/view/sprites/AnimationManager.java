@@ -18,23 +18,10 @@ public class AnimationManager {
     public static synchronized void registerPausable(Animation as) {pausableAnimations.add(as); }
 
     public static synchronized void stepAnimations(long elapsedTimeMs, Model model) {
-        totalTime += elapsedTimeMs;
-        if (totalTime > 10000) {
-            totalTime = 0;
-            System.out.println("Number of animations: " + animatons.size());
-//            for (Animation a : animatons) {
-//                System.out.println(" " + a);
-//            }
-        }
         animatons.forEach((animation -> animation.stepAnimation(elapsedTimeMs, model)));
     }
 
     public static synchronized void stepPausableAnimations(long timeSinceLast, Model model) {
-        totalTimePausable += timeSinceLast;
-        if (totalTimePausable > 10000) {
-            totalTimePausable = 0;
-            System.out.println("Number of pausable animations: " + animatons.size());
-        }
         pausableAnimations.forEach((animation) -> animation.stepAnimation(timeSinceLast, model));
     }
 

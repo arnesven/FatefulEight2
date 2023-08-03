@@ -28,7 +28,11 @@ public abstract class QuestSubScene extends QuestNode implements Serializable {
     }
 
     public void connectFail(QuestNode questNode, boolean align) {
-        this.failConnection = new QuestEdge(questNode, align, MyColors.LIGHT_RED);
+        this.failConnection = new QuestEdge(questNode, align, getFailEdgeColor());
+    }
+
+    protected MyColors getFailEdgeColor() {
+        return MyColors.LIGHT_RED;
     }
 
     public void connectFail(QuestNode questNode) {

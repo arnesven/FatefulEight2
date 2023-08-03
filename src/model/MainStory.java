@@ -19,6 +19,7 @@ import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
 import util.MyRandom;
+import view.MyColors;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -177,6 +178,7 @@ public class MainStory implements Serializable {
         );
         spawnData = MyRandom.sample(townsAndCastles);
         storyParts.add(new InitialStoryPart(whosUncle, spawnData.getTown()));
+        spawnData.setAncientStrongholdCode(AncientStrongholdModel.generateCode());
     }
 
     public TownLocation getStartingLocation(Model model) {
@@ -313,5 +315,9 @@ public class MainStory implements Serializable {
             }
         }
         return bldr.toString();
+    }
+
+    public MyColors[] getAncientStrongholdCode() {
+        return spawnData.getCode();
     }
 }

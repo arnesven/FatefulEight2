@@ -1,5 +1,7 @@
 package model.journal;
 
+import view.MyColors;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -10,6 +12,7 @@ public class MainStorySpawnLocation implements Serializable {
     private String castle;
     private Point witch;
     private String libraryTown;
+    private MyColors[] code;
 
     public MainStorySpawnLocation(String town, String castle, Point witchLocation, String libraryTown, int expandedMapState, Point camp) {
         this.town = town;
@@ -40,5 +43,13 @@ public class MainStorySpawnLocation implements Serializable {
 
     public Point getCamp() {
         return camp;
+    }
+
+    public MyColors[] getCode() {
+        return code;
+    }
+
+    public void setAncientStrongholdCode(MyColors[] generateCode) {
+        this.code = generateCode;
     }
 }

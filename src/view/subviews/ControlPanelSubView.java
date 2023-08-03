@@ -64,7 +64,7 @@ public class ControlPanelSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
-        int frameStartX = X_OFFSET+5;
+        int frameStartX = X_MAX-4;
         int frameStartY = Y_OFFSET+12;
         int frameWidth = 21;
         int frameHeight = 9;
