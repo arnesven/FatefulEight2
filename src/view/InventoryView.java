@@ -140,7 +140,9 @@ public class InventoryView extends SelectableListMenu {
                 new ItemTab("All") {
                     @Override
                     public List<? extends Item> getItems(Model model) {
-                        return model.getParty().getInventory().getAllItems();
+                        List<Item> result = new ArrayList<>(model.getParty().getInventory().getAllItems());
+                        result.addAll(model.getParty().getInventory().getSpecialItems());
+                        return result;
                     }
                 },
                 new ItemTab("Weapons") {
