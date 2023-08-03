@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.*;
+import model.quests.scenes.CombatSubScene;
 import model.states.CombatEvent;
 import model.states.QuestState;
 import sound.BackgroundMusic;
@@ -73,14 +74,14 @@ public class AncientStrongholdQuest extends MainQuest {
             subScenes.add(floors[i]);
             subScenes.add(machines[i]);
         }
-        return List.of(new QuestScene("Floors and Machines", subScenes));
+        return List.of(new QuestScene("Floors and Machines", subScenes),
+                new QuestScene("Final Scene", List.of(new FinalCombatSubScene(1, 0))));
     }
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        SimpleJunction elevator = new SimpleJunction(1, 7, new QuestEdge(getSuccessEndingNode(), QuestEdge.VERTICAL));
         return List.of(new StrongholdStartingPoint(new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL),
-                "I guess we're really doing this..."), elevator);
+                "I guess we're really doing this..."));
     }
 
     @Override
@@ -91,8 +92,10 @@ public class AncientStrongholdQuest extends MainQuest {
             }
             scenes.get(0).get(i*2).connectFail(scenes.get(0).get(i*2 + 1), QuestEdge.VERTICAL);
         }
-        scenes.get(0).get(1).connectSuccess(junctions.get(1));
+        scenes.get(0).get(1).connectSuccess(scenes.get(1).get(0));
         scenes.get(0).get(1).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
+
+        scenes.get(1).get(0).connectSuccess(getSuccessEndingNode());
     }
 
     @Override
@@ -336,5 +339,25 @@ public class AncientStrongholdQuest extends MainQuest {
             controlPanels.add(new QuestBackground(new Point(3, 7-i), CONTROL_PANEL, false));
         }
         return controlPanels;
+    }
+
+    private static class FinalCombatSubScene extends CombatSubScene {
+        public FinalCombatSubScene(int col, int row) {
+            super(col, row, List.of(new QuadMinionEnemy('A'), new QuadMinionEnemy('A'),
+                    new GhostEnemy('B'), new GhostEnemy('B'),
+                    new GhostEnemy('B'), new GhostEnemy('B'),
+                    new QuadMinionEnemy('A'), new QuadMinionEnemy('A'),
+
+                    new QuadMinionEnemy('A'), new QuadMinionEnemy('A'),
+                    new GhostEnemy('B'), new QuadSpiritEnemy('C'),
+                    new QuadMinionEnemy('A'), new QuadMinionEnemy('A'),
+                    new QuadMinionEnemy('A'), new QuadMinionEnemy('A')
+                    ));
+        }
+
+        @Override
+        protected String getCombatDetails() {
+            return "the Quad?";
+        }
     }
 }

@@ -110,7 +110,7 @@ public class AncientStrongholdEnemySet {
 
     private static MyPair<List<Enemy>, MyColors> makeOrcEnemies() {
         if (MyRandom.flipCoin()) {
-            return new MyPair<>(List.of(new OrcChieftain('A'), new OrcChieftain('A'),
+            return new MyPair<>(List.of(new OrcChieftain('A'), new OrcChieftain('A'), new OrcChieftain('A'),
                     new OrcArcherEnemy('B'), new OrcArcherEnemy('B'), new OrcArcherEnemy('B')),
                     MyColors.GREEN);
         }
