@@ -3,12 +3,9 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.*;
-import model.items.potions.Potion;
 import model.items.spells.Spell;
-import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.Arithmetics;
-import util.BeforeAndAfterLine;
 import util.MyStrings;
 import view.party.FixedPositionSelectableListMenu;
 import view.party.SelectableListMenu;
@@ -141,7 +138,7 @@ public class InventoryView extends SelectableListMenu {
                     @Override
                     public List<? extends Item> getItems(Model model) {
                         List<Item> result = new ArrayList<>(model.getParty().getInventory().getAllItems());
-                        result.addAll(model.getParty().getInventory().getSpecialItems());
+                        result.addAll(model.getParty().getInventory().getPearls());
                         return result;
                     }
                 },
@@ -171,7 +168,7 @@ public class InventoryView extends SelectableListMenu {
                         result.addAll(model.getParty().getInventory().getRecipes());
                         result.addAll(model.getParty().getInventory().getCraftingDesigns());
                         result.addAll(model.getParty().getInventory().getScrolls());
-                        result.addAll(model.getParty().getInventory().getSpecialItems());
+                        result.addAll(model.getParty().getInventory().getPearls());
                         return result;
                     }
                 }};

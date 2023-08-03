@@ -1,5 +1,7 @@
 package model.quests;
 
+import model.enemies.*;
+import util.MyRandom;
 import view.MyColors;
 
 import java.util.ArrayList;

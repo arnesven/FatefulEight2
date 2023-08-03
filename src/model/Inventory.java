@@ -175,11 +175,11 @@ public class Inventory implements Serializable {
         return result;
     }
 
-    public List<Item> getSpecialItems() {
+    public List<Item> getPearls() {
         return specialItems;
     }
 
-    public void removeSpecialItem(PearlItem pearl) {
+    public void removePearl(PearlItem pearl) {
         specialItems.remove(pearl);
     }
 }

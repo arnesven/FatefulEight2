@@ -1,7 +1,13 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.enemies.*;
+import model.states.CombatEvent;
 import model.states.QuestState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -130,7 +136,22 @@ public class AncientStrongholdQuest extends MainQuest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
-            // TODO: Random fight
+            if (MyRandom.flipCoin()) {
+                state.print("The party encounters a group of enemies! Press enter to continue.");
+                state.waitForReturn();
+                AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
+                CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
+                        state.getCombatTheme(), true, false);
+                combat.addExtraLoot(enemySet.getPearls());
+                combat.run(model);
+                if (!model.getParty().isWipedOut()) {
+                    state.transitionToQuestView(model);
+                    ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+                } else {
+                    return new QuestEdge(state.getQuest().getFailEndingNode());
+                }
+            }
+
             state.print("You are on the " + floorNumberText(floorNumber).toLowerCase() + " floor of the tower. " +
                     "Select a location to go to.");
             while (true) {

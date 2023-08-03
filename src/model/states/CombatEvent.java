@@ -9,6 +9,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.*;
+import model.items.Item;
+import model.items.special.PearlItem;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
@@ -43,6 +45,7 @@ public class CombatEvent extends DailyEventState {
     private int roundCounter = 1;
     private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
     private final Set<GameCharacter> blockSneakAttack = new HashSet<>();
+    private List<CombatLoot> extraLoot;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -139,6 +142,7 @@ public class CombatEvent extends DailyEventState {
                 loot.add(l);
             }
         }
+        loot.addAll(extraLoot);
         return loot;
     }
 
@@ -509,5 +513,9 @@ public class CombatEvent extends DailyEventState {
 
     public void blockSneakAttackFor(GameCharacter character) {
         blockSneakAttack.add(character);
+    }
+
+    public void addExtraLoot(List<CombatLoot> extraLoot) {
+        this.extraLoot = extraLoot;
     }
 }

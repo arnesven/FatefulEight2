@@ -1,6 +1,5 @@
 package model.quests;
 
-import model.Inventory;
 import model.Model;
 import model.items.Item;
 import model.items.special.PearlItem;
@@ -11,7 +10,6 @@ import view.subviews.ArrowMenuSubView;
 import view.subviews.SubView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -143,7 +141,7 @@ public class AncientStrongholdControlPanel {
         if (getPearlSlot(selectedIndex) != null && isLeverOn()) {
             state.println("The pearl cannot be removed. Something is holding it firmly in place.");
         } else { // Set or replace pearl
-            if (model.getParty().getInventory().getSpecialItems().isEmpty()) {
+            if (model.getParty().getInventory().getPearls().isEmpty()) {
                 state.println("A pearl clearly goes in this slot, but you have none to put in it.");
             } else {
                 MyColors selectedPearlColor = getSelectedPearlColor(model, state, selectedIndex, getPearlSlot(selectedIndex) != null);
@@ -158,12 +156,12 @@ public class AncientStrongholdControlPanel {
                         model.getParty().getInventory().addSpecialItem(PearlItem.makeFromColor(previousColor));
                     }
                     Item found = null;
-                    for (Item it : model.getParty().getInventory().getSpecialItems()) {
+                    for (Item it : model.getParty().getInventory().getPearls()) {
                         if (it.getName().contains(getPearlNameForColor(selectedPearlColor))) {
                             found = it;
                         }
                     }
-                    model.getParty().getInventory().removeSpecialItem((PearlItem) found);
+                    model.getParty().getInventory().removePearl((PearlItem) found);
                 }
             }
         }
@@ -173,7 +171,7 @@ public class AncientStrongholdControlPanel {
         List<String> optionList = new ArrayList<>();
         for (MyColors color : PEARL_COLORS) {
             String name = getPearlNameForColor(color);
-            int count = countNumberOf(model.getParty().getInventory().getSpecialItems(), name);
+            int count = countNumberOf(model.getParty().getInventory().getPearls(), name);
             if (count > 0) {
                 optionList.add(name + " (" + count + ")");
             }
