@@ -144,6 +144,9 @@ public class AncientStrongholdEnemySet {
                 pearls.add(new PearlLoot(PearlItem.makeFromColor(colorToMake)));
             }
         }
+        if (MyRandom.rollD10() == 10 && MyRandom.rollD10() == 10) {
+            pearls.add(new PearlLoot(PearlItem.makeFromColor(MyColors.DARK_RED)));
+        }
         return pearls;
     }
 
