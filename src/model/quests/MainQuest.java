@@ -2,7 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.characters.appearance.CharacterAppearance;
-import model.items.special.CrimsonPearlItem;
+import model.items.special.CrimsonPearl;
 import model.journal.StoryPart;
 import model.states.GameState;
 import model.states.QuestState;
@@ -50,6 +50,6 @@ public abstract class MainQuest extends Quest {
 
     protected void getCrimsonPearl(Model model, QuestState state) {
         state.println("The party receives a Crimson Pearl.");
-        model.getParty().getInventory().addItem(new CrimsonPearlItem());
+        model.getParty().getInventory().addItem(new CrimsonPearl());
     }
 }

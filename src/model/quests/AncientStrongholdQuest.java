@@ -134,6 +134,7 @@ public class AncientStrongholdQuest extends MainQuest {
             state.print("You are on the " + floorNumberText(floorNumber).toLowerCase() + " floor of the tower. " +
                     "Select a location to go to.");
             while (true) {
+                state.setSelectedElement(this);
                 state.waitForReturn();
                 if (state.getSelectedElement() == this) {
                     state.print("You are on the " + floorNumberText(floorNumber).toLowerCase() + " floor of the tower. " +

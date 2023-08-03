@@ -5,11 +5,13 @@ import model.actions.DailyAction;
 import model.map.HexLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
+import util.MyPair;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.HexLocationSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
+import view.subviews.DailyActionMenu;
 import view.subviews.ImageSubView;
 
 import java.awt.*;
@@ -45,6 +47,11 @@ public class AncientStrongholdLocation extends HexLocation {
     public void drawUpperHalf(ScreenHandler screenHandler, int x, int y, int flag) {
         super.drawUpperHalf(screenHandler, x, y, flag);
         screenHandler.register(TOWER_TOP.getName(), new Point(x, y-4), TOWER_TOP);
+    }
+
+    @Override
+    public MyPair<Point, Integer> getDailyActionMenuAnchor() {
+        return DailyActionMenu.LOWER_RIGHT_CORNER;
     }
 
     @Override

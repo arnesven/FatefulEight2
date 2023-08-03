@@ -8,7 +8,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
-import model.items.special.CrimsonPearlItem;
+import model.items.special.*;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.states.GameState;
@@ -54,7 +54,14 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
-        inventory.addSpecialItem(new CrimsonPearlItem());
+        inventory.addSpecialItem(new CrimsonPearl());
+        inventory.addSpecialItem(PearlItem.makeFromColor(MyColors.DARK_RED));
+        inventory.addSpecialItem(new PinkPearl());
+        inventory.addSpecialItem(new BluePearl());
+        inventory.addSpecialItem(new GreenPearl());
+        inventory.addSpecialItem(new BlackPearl());
+        inventory.addSpecialItem(new OrangePearl());
+        inventory.addSpecialItem(new PurplePearl());
     }
 
     private LoopingSprite[] makeCursorSprites() {

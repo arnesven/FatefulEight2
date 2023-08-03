@@ -3,13 +3,10 @@ package model;
 import model.items.*;
 import model.items.accessories.*;
 import model.items.clothing.Clothing;
-import model.items.clothing.DragonArmor;
-import model.items.clothing.WarmCape;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
-import model.items.special.CrimsonPearlItem;
+import model.items.special.PearlItem;
 import model.items.spells.CombatSpell;
-import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
 
@@ -54,7 +51,7 @@ public class Inventory implements Serializable {
 
     public void add(Scroll scroll) { scrolls.add(scroll); }
 
-    public void addSpecialItem(CrimsonPearlItem item) {
+    public void addSpecialItem(PearlItem item) {
         specialItems.add(item);
     }
 
@@ -178,7 +175,11 @@ public class Inventory implements Serializable {
         return result;
     }
 
-    public Collection<? extends Item> getSpecialItems() {
+    public List<Item> getSpecialItems() {
         return specialItems;
+    }
+
+    public void removeSpecialItem(PearlItem pearl) {
+        specialItems.remove(pearl);
     }
 }

@@ -1,12 +1,17 @@
 package model.quests;
 
+import model.Inventory;
 import model.Model;
+import model.items.Item;
+import model.items.special.PearlItem;
 import model.states.QuestState;
 import util.MyStrings;
 import view.MyColors;
 import view.subviews.ArrowMenuSubView;
+import view.subviews.SubView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -138,12 +143,28 @@ public class AncientStrongholdControlPanel {
         if (getPearlSlot(selectedIndex) != null && isLeverOn()) {
             state.println("The pearl cannot be removed. Something is holding it firmly in place.");
         } else { // Set or replace pearl
-            MyColors selectedPearlColor = getSelectedPearlColor(model, state, selectedIndex, getPearlSlot(selectedIndex) != null);
-            setPearl(selectedIndex, selectedPearlColor);
-            if (selectedPearlColor == null) {
-                state.println("You remove the pearl from the slot.");
+            if (model.getParty().getInventory().getSpecialItems().isEmpty()) {
+                state.println("A pearl clearly goes in this slot, but you have none to put in it.");
             } else {
-                state.println("You place the pearl into the slot.");
+                MyColors selectedPearlColor = getSelectedPearlColor(model, state, selectedIndex, getPearlSlot(selectedIndex) != null);
+                MyColors previousColor = getPearlSlot(selectedIndex);
+                setPearl(selectedIndex, selectedPearlColor);
+                if (selectedPearlColor == null) {
+                    state.println("You remove the pearl from the slot.");
+                    model.getParty().getInventory().addSpecialItem(PearlItem.makeFromColor(previousColor));
+                } else {
+                    state.println("You place the pearl into the slot.");
+                    if (previousColor != null) {
+                        model.getParty().getInventory().addSpecialItem(PearlItem.makeFromColor(previousColor));
+                    }
+                    Item found = null;
+                    for (Item it : model.getParty().getInventory().getSpecialItems()) {
+                        if (it.getName().contains(getPearlNameForColor(selectedPearlColor))) {
+                            found = it;
+                        }
+                    }
+                    model.getParty().getInventory().removeSpecialItem((PearlItem) found);
+                }
             }
         }
     }
@@ -151,10 +172,10 @@ public class AncientStrongholdControlPanel {
     private MyColors getSelectedPearlColor(Model model, QuestState state, int xShift, boolean remove) {
         List<String> optionList = new ArrayList<>();
         for (MyColors color : PEARL_COLORS) {
-            if (color == MyColors.DARK_RED) {
-                optionList.add("Crimson");
-            } else {
-                optionList.add(MyStrings.capitalize(color.name()));
+            String name = getPearlNameForColor(color);
+            int count = countNumberOf(model.getParty().getInventory().getSpecialItems(), name);
+            if (count > 0) {
+                optionList.add(name + " (" + count + ")");
             }
         }
         if (remove) {
@@ -162,7 +183,7 @@ public class AncientStrongholdControlPanel {
         }
         int[] selectedAction = new int[1];
         model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                optionList, 32+xShift*4, 22, ArrowMenuSubView.NORTH_WEST) {
+                optionList, SubView.X_MAX - 10 + xShift*4, 22, ArrowMenuSubView.NORTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selectedAction[0] = cursorPos;
@@ -170,9 +191,36 @@ public class AncientStrongholdControlPanel {
             }
         });
         state.waitForReturnSilently();
-        if (selectedAction[0] == AncientStrongholdControlPanel.PEARL_COLORS.length) {
+        if (selectedAction[0] == optionList.size()-1 && remove) {
             return null;
         }
-        return AncientStrongholdControlPanel.PEARL_COLORS[selectedAction[0]];
+        for (MyColors color : PEARL_COLORS) {
+            if (optionList.get(selectedAction[0]).contains(getPearlNameForColor(color))) {
+                return color;
+            }
+        }
+        throw new IllegalStateException("Could not find selected option in list.");
+    }
+
+    private String getPearlNameForColor(MyColors color) {
+        String name = MyStrings.capitalize(color.name());
+        if (color == MyColors.DARK_RED) {
+            name = "Crimson";
+        }
+        return name;
+    }
+
+    private int countNumberOf(List<Item> items, String name) {
+        int count = 0;
+        for (Item it : items) {
+            if (it.getName().contains(name)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public String getPearlNameForSlot(int cursorPos) {
+        return getPearlNameForColor(getPearlSlot(cursorPos));
     }
 }

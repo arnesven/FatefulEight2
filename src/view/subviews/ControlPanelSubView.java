@@ -64,7 +64,7 @@ public class ControlPanelSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
-        int frameStartX = X_MAX-4;
+        int frameStartX = X_MAX-12;
         int frameStartY = Y_OFFSET+12;
         int frameWidth = 21;
         int frameHeight = 9;
@@ -145,7 +145,7 @@ public class ControlPanelSubView extends SubView {
         if (controlPanel.getPearlSlot(cursorPos) == null) {
             return "Empty slot";
         }
-        return "A slot with " + controlPanel.getPearlSlot(cursorPos).name().toLowerCase() + " pearl";
+        return "A slot with " + controlPanel.getPearlNameForSlot(cursorPos).toLowerCase() + " pearl";
     }
 
     @Override
