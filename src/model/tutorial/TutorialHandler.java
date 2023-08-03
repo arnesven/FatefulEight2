@@ -266,6 +266,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void ambush(Model model) {
+        runOnce("ambush", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialAmbush(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

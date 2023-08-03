@@ -140,11 +140,16 @@ public class AncientStrongholdQuest extends MainQuest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             if (MyRandom.flipCoin()) {
-                state.print("The party encounters a group of enemies! Press enter to continue.");
+                boolean ambush = MyRandom.flipCoin();
+                state.print("The party encounters a group of enemies!");
+                if (ambush) {
+                    state.print(" They seem to have been caught off guard by your presence! ");
+                }
+                state.print("Press enter to continue.");
                 state.waitForReturn();
                 AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
                 CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
-                        state.getCombatTheme(), true, false);
+                        state.getCombatTheme(), true, ambush);
                 combat.addExtraLoot(enemySet.getPearls());
                 combat.run(model);
                 if (!model.getParty().isWipedOut()) {

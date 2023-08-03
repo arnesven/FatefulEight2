@@ -76,6 +76,9 @@ public class CombatEvent extends DailyEventState {
         if (allies.size() > 0) {
             model.getTutorial().allies(model);
         }
+        if (isAmbush) {
+            model.getTutorial().ambush(model);
+        }
         setInitiativeOrder(model);
         AnimationManager.synchAnimations();
         model.setInCombat(true);
