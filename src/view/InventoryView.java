@@ -169,6 +169,7 @@ public class InventoryView extends SelectableListMenu {
                         result.addAll(model.getParty().getInventory().getRecipes());
                         result.addAll(model.getParty().getInventory().getCraftingDesigns());
                         result.addAll(model.getParty().getInventory().getScrolls());
+                        result.addAll(model.getParty().getInventory().getSpecialItems());
                         return result;
                     }
                 }};

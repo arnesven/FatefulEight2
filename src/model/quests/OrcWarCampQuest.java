@@ -81,9 +81,10 @@ public class OrcWarCampQuest extends MainQuest {
                 state.println("Hesitantly, " + model.getParty().getLeader().getFirstName() +
                         " pulls out a knife and kneels down by the corpse to slice the abdomen open. " +
                         "Instantly a mass of black guts spill out on the ground. There, among blood and intestines, " +
-                        "lies a shiny crimson orb.");
+                        "lies a shiny crimson pearl.");
                 state.leaderSay("I knew it. These orcs are being manipulated by the Quad. " +
                         "Now let's get out of here, before more orcs arrive.");
+                getCrimsonPearl(model, state);
             }
         };
         StoryJunction afterSearch = new StoryJunction(4, 5, new QuestEdge(getSuccessEndingNode(), QuestEdge.VERTICAL)) {

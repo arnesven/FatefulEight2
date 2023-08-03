@@ -9,6 +9,7 @@ import model.enemies.FrogmanChiefEnemy;
 import model.enemies.FrogmanLeaderEnemy;
 import model.enemies.FrogmanScoutEnemy;
 import model.enemies.FrogmanShamanEnemy;
+import model.items.special.CrimsonPearlItem;
 import model.journal.StoryPart;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
@@ -82,6 +83,7 @@ public class FrogmenProblemQuest extends MainQuest {
                 state.leaderSay("What's this? A pearl? Why would a frogman have it in his belly. Did he eat it by mistake?");
                 state.println("You clean the pearl a bit and put it into your pocket.");
                 state.leaderSay("Perhaps it is valuable?");
+                getCrimsonPearl(model, state);
             }
         };
         StoryJunction peacefulEnding = new StoryJunction(6, 7, new QuestEdge(getSuccessEndingNode())) {
@@ -100,6 +102,7 @@ public class FrogmenProblemQuest extends MainQuest {
                 state.leaderSay("What's this? A red pearl? Why would a frogman have it in his belly. Did he eat it by mistake?");
                 state.println("You clean the pearl a bit and put it into your pocket.");
                 state.leaderSay("Perhaps it is valuable?");
+                getCrimsonPearl(model, state);
             }
         };
         return List.of(qsp, qdp, simp, combatEnding, peacefulEnding);

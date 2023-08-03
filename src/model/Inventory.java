@@ -7,6 +7,7 @@ import model.items.clothing.DragonArmor;
 import model.items.clothing.WarmCape;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
+import model.items.special.CrimsonPearlItem;
 import model.items.spells.CombatSpell;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
@@ -24,6 +25,7 @@ public class Inventory implements Serializable {
     private List<CraftingDesign> designs = new ArrayList<>();
     private List<PotionRecipe> recipes = new ArrayList<>();
     private List<Scroll> scrolls = new ArrayList<>();
+    private List<Item> specialItems = new ArrayList<>();
     private int food = 10;
     private int ingredients = 0;
     private int materials = 0;
@@ -51,6 +53,10 @@ public class Inventory implements Serializable {
     public void add(PotionRecipe recipe) { recipes.add(recipe); }
 
     public void add(Scroll scroll) { scrolls.add(scroll); }
+
+    public void addSpecialItem(CrimsonPearlItem item) {
+        specialItems.add(item);
+    }
 
     public List<Weapon> getWeapons() {
         return weapons;
@@ -170,5 +176,9 @@ public class Inventory implements Serializable {
             }
         }
         return result;
+    }
+
+    public Collection<? extends Item> getSpecialItems() {
+        return specialItems;
     }
 }
