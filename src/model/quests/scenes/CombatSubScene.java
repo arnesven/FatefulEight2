@@ -30,6 +30,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     private final boolean fleeingEnabled;
     private boolean defeated = false;
     private int timeLimit = 0;
+    private boolean ambush = false;
 
     public CombatSubScene(int col, int row, List<Enemy> enemies, boolean fleeingEnabled) {
         super(col, row);
@@ -72,7 +73,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     public QuestEdge run(Model model, QuestState state) {
         state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
         state.waitForReturn();
-        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, false);
+        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, ambush);
         List<GameCharacter> allies = getAllies();
         if (!allies.isEmpty()) {
             combat.addAllies(allies);
@@ -135,6 +136,10 @@ public abstract class CombatSubScene extends QuestSubScene {
 
     public List<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public void setAmbush(boolean ambush) {
+        this.ambush = ambush;
     }
 
     @Override
