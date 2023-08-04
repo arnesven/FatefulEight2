@@ -163,7 +163,7 @@ public class ShopSubView extends TopMenuSubView {
 
     @Override
     protected boolean cursorOnBorderToTop() {
-        return matrix.getSelectedPoint().y == 0;
+        return matrix.getSelectedPoint().y == matrix.getMinimumRow();
     }
 
     public void setOverflowWarning(boolean b) {

@@ -11,7 +11,8 @@ public class TutorialEquipmentDialog extends HelpDialog {
             "You can equip characters from the Party Menu, or the Inventory Menu. Please note that items which " +
             "are currently equipped on other party members do not appear as available when equipping. You must " +
             "first unequip an item to equip it to somebody else.\n\n" +
-            "Only characters who's class permit heavy armor can equip heavy armor.\n\n" +
+            "Only characters who's class permit heavy armor can equip heavy armor. " +
+            "Heavy armor always reduce a character's speed.\n\n" +
             "No character may equip a two-handed weapon and a shield at the same time.";
 
     public TutorialEquipmentDialog(GameView view) {

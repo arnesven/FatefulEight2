@@ -151,7 +151,7 @@ public class ChangeClassSubView extends TopMenuSubView {
 
     @Override
     protected boolean cursorOnBorderToTop() {
-        return matrix.getSelectedPoint().y == 0 && !details;
+        return matrix.getSelectedPoint().y == matrix.getMinimumRow() && !details;
     }
 
     public void toggleDetails() {

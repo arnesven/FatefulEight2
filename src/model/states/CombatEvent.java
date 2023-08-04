@@ -45,7 +45,7 @@ public class CombatEvent extends DailyEventState {
     private int roundCounter = 1;
     private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
     private final Set<GameCharacter> blockSneakAttack = new HashSet<>();
-    private List<CombatLoot> extraLoot;
+    private List<CombatLoot> extraLoot = new ArrayList<>();
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -519,6 +519,6 @@ public class CombatEvent extends DailyEventState {
     }
 
     public void addExtraLoot(List<CombatLoot> extraLoot) {
-        this.extraLoot = extraLoot;
+        this.extraLoot.addAll(extraLoot);
     }
 }

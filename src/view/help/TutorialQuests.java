@@ -7,7 +7,7 @@ public class TutorialQuests extends HelpDialog {
             "Quests are encountered in towns and castles. Quests are the main way of getting " +
             "Party Reputation. Each evening you spend at a town " +
             "or castle, you will be offered a random quest. If you accept, the party will " +
-            "set on out on the quest the following day. Only one quest can be accepted per " +
+            "set out on the quest the following day. Only one quest can be accepted per " +
             "town or castle.\n\n" +
             "During quests, the leader will make decisions about which paths to take. At " +
             "decision points, the leader must pass a Leadership 6 check. If the check fails " +

@@ -146,7 +146,9 @@ public class GameCharacter extends Combatant {
     }
 
     public int getSpeed() {
-        return charClass.getSpeed() + race.getSpeedModifier() + equipment.getSpeedModifiers();
+        int heavyClothing = equipment.getClothing().isHeavy() ? -2 : 0;
+        int heavyAccessory = equipment.getAccessory() != null && equipment.getAccessory().isHeavy() ? -1 : 0;
+        return charClass.getSpeed() + race.getSpeedModifier() + equipment.getSpeedModifiers() + heavyClothing + heavyAccessory;
     }
 
     @Override

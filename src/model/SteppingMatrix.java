@@ -255,4 +255,15 @@ public class SteppingMatrix<T> {
     public void setSimplifiedSteppingEnabled(boolean b) {
         simplifiedStepping = b;
     }
+
+    public int getMinimumRow() {
+        for (int row = 0; row < getRows(); ++row) {
+            for (int col = 0; col < getColumns(); ++col) {
+                if (getElementAt(col, row) != null) {
+                    return row;
+                }
+            }
+        }
+        return 0;
+    }
 }
