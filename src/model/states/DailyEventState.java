@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.combat.CaveTheme;
 import model.enemies.Enemy;
 import model.map.World;
 import model.races.Race;
@@ -77,11 +78,18 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void runCombat(List<Enemy> enemies) {
-        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), true, false);
+        runCombat(enemies, defaultCombatTheme(getModel()), true, false);
+    }
+
+    private CombatTheme defaultCombatTheme(Model model) {
+        if (model.isInCaveSystem()) {
+            return new CaveTheme();
+        }
+        return model.getCurrentHex().getCombatTheme();
     }
 
     protected void runCombat(List<Enemy> enemies, boolean fleeingEnabled) {
-        runCombat(enemies, getModel().getCurrentHex().getCombatTheme(), fleeingEnabled, false);
+        runCombat(enemies, defaultCombatTheme(getModel()), fleeingEnabled, false);
     }
 
     protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {

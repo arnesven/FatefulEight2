@@ -84,5 +84,10 @@ public class InspireCombatAction extends CombatAction {
         public int getAttackBonus() {
             return bonus;
         }
+
+        @Override
+        public boolean removeAtEndOfCombat() {
+            return true;
+        }
     }
 }

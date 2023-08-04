@@ -67,6 +67,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
                 if (didFlee) {
                     return;
                 }
+                setCurrentTerrainSubview(model);
                 if (goblinChar.isDead()) {
                     println("The goblin have been slaughtered. Unfortunately so has the goblin fugitive.");
                     model.getParty().randomPartyMemberSay(model,

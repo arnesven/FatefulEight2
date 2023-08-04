@@ -39,7 +39,7 @@ public class QuadSpiritEnemy extends Enemy {
 
     @Override
     public int getDamage() {
-        return 7;
+        return 9;
     }
 
     @Override

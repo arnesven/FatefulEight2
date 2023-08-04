@@ -116,7 +116,6 @@ public class SteppingMatrix<T> {
         Point p = getPositionFor(elem);
         grid.get(p.x).set(p.y, null);
         selected = nextSelected;
-        System.out.println("Object remove from stepping matrix, new Selected: " + getSelectedElement());
     }
 
     public synchronized void step(int dx, int dy, boolean firstTime) {

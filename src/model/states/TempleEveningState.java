@@ -12,7 +12,7 @@ public class TempleEveningState extends EveningState {
 
     @Override
     protected void locationSpecificEvening(Model model) {
-        print("Please select how you will spend the evening.");
+        println("Please select how you will spend the evening.");
         if (model.getParty().getGold() >= model.getParty().size()) {
             int res = multipleOptionArrowMenu(model, 24, 35, List.of("Camp outside the temple", "Stay at temple (" + model.getParty().size() + " gold)"));
             if (res == 1) {

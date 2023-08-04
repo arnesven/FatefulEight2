@@ -12,6 +12,8 @@ import java.awt.*;
 import java.util.List;
 
 public class UndergroundLakeEvent extends DailyEventState {
+    private boolean combatTriggeredOnce = false;
+
     public UndergroundLakeEvent(Model model) {
         super(model);
     }
@@ -61,7 +63,8 @@ public class UndergroundLakeEvent extends DailyEventState {
     }
 
     private void startCombat(Model model, int probability) {
-        if (MyRandom.rollD10() < probability) {
+        if (MyRandom.rollD10() < probability && !combatTriggeredOnce) {
+            combatTriggeredOnce = true;
             model.getParty().randomPartyMemberSay(model, List.of("Wha... wha... what's that!?"));
             println("A large hulk of slimy tentacles heaves itself out of the black water.");
             model.getParty().randomPartyMemberSay(model, List.of("Didn't I say the lake was a bad idea?"));

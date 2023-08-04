@@ -10,6 +10,7 @@ import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OctopusEnemy extends BeastEnemy {
 
@@ -21,7 +22,8 @@ public class OctopusEnemy extends BeastEnemy {
 
     @Override
     public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
-        for (Enemy e : combatEvent.getEnemies()) {
+        List<Enemy> others = new ArrayList<>(combatEvent.getEnemies());
+        for (Enemy e : others) {
             combatEvent.doDamageToEnemy(e, 99, killer);
         }
     }

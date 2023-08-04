@@ -47,7 +47,7 @@ public class TempleGuardsEvent extends DailyEventState {
                 model.getParty().banFromTemple(templeName);
             }
         }
-        println("You are forced off the temple guards.");
+        println("You are forced off the temple grounds.");
     }
 
     @Override

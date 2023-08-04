@@ -34,7 +34,7 @@ public class SneakAttackCombatAction extends CombatAction {
             this.target = target;
             combat.addSneakAttacker(performer, this);
             performer.addCondition(new SneakAttackCondition());
-            combat.println(performer.getFirstName() + " prepares to perform a sneak attack, " + result.asString() + ".");
+            combat.println(performer.getFirstName() + " prepares to perform a sneak attack, Sneaking " + result.asString() + ".");
         } else {
             combat.println(performer.getFirstName() + " has already been spotted by the enemy and cannot perform a sneak attack.");
             this.takeAnotherAction = true;
