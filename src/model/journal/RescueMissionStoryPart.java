@@ -216,7 +216,7 @@ public class RescueMissionStoryPart extends StoryPart {
                     showLord(model);
                     portraitSay("No, you should keep it. You will need it.");
                     leaderSay("Need it? For what?");
-                    portraitSay("I sending you on a mission, if you are willing to aid me in this. I need " +
+                    portraitSay("I'm sending you on a mission, if you are willing to aid me in this. I need " +
                             "somebody to investigate this matter further. I need someone capable, and who knows the " +
                             "details of the case. And most of all, I need somebody I can trust.");
                     leaderSay("What about Caid?");

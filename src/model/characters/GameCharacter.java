@@ -178,7 +178,7 @@ public class GameCharacter extends Combatant {
         SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
-        if (damage > 0) {
+        if (extraDamage > 0) {
             damage += extraDamage;
             extraInfo += " +" + extraDamage;
         }

@@ -7,6 +7,7 @@ import model.items.Item;
 import model.states.DailyEventState;
 import model.states.ShopState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SorcerersTowerEvent extends DailyEventState {
@@ -26,7 +27,7 @@ public class SorcerersTowerEvent extends DailyEventState {
             ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.SOR);
             changeClassEvent.areYouInterested(model);
             println("The sorcerer also offers to sell you a spell at a discount of 5 gold.");
-            List<Item> items = List.of(model.getItemDeck().getRandomSpell());
+            List<Item> items = new ArrayList<>(List.of(model.getItemDeck().getRandomSpell()));
             ShopState shop = new ShopState(model, "sorcerer", items,
                     new int[]{Math.max(1, items.get(0).getCost() - 5)});
             shop.setSellingEnabled(false);
