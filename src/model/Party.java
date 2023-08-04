@@ -387,8 +387,6 @@ public class Party implements Serializable {
                 System.out.println("Solo skill check interrupted by spell " + spe.getSpell().getName());
                 if (spe.getSpell() instanceof SkillBoostingSpell) {
                     spe.getSpell().castYourself(model, event, spe.getCaster());
-                } else {
-                    throw spe;
                 }
             }
         }
@@ -443,8 +441,6 @@ public class Party implements Serializable {
             } catch (SpellCastException spe) {
                 if (spe.getSpell() instanceof SkillBoostingSpell) {
                     spe.getSpell().castYourself(model, event, spe.getCaster());
-                } else {
-                    throw spe;
                 }
             }
         }
@@ -498,8 +494,6 @@ public class Party implements Serializable {
             } catch (SpellCastException spe) {
                 if (spe.getSpell() instanceof SkillBoostingSpell) {
                     spe.getSpell().castYourself(model, event, spe.getCaster());
-                } else {
-                    throw spe;
                 }
             }
         }
@@ -558,7 +552,6 @@ public class Party implements Serializable {
             model.setSubView(previous);
         } catch (SpellCastException spe) {
             model.setSubView(previous);
-            throw spe;
         }
         return subView.getSelectedCharacter();
     }

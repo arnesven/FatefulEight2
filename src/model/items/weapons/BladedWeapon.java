@@ -7,6 +7,9 @@ import view.sprites.AvatarItemSprite;
 public abstract class BladedWeapon extends Weapon {
     private static final AvatarItemSprite SWORD_SPRITES[] = makeShiftedSpriteSet(
             new AvatarItemSprite(0x0, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.PINK));
+    protected static final AvatarItemSprite[] TWO_HANDED_SWORD_SPRITES = makeShiftedSpriteSet(
+            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
+
     private final int speedBonus;
     private boolean twoHander;
 
@@ -33,6 +36,9 @@ public abstract class BladedWeapon extends Weapon {
 
     @Override
     protected AvatarItemSprite getOnAvatarSprite(int index) {
+        if (isTwoHanded()) {
+            return TWO_HANDED_SWORD_SPRITES[index];
+        }
         return SWORD_SPRITES[index];
     }
 }

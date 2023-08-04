@@ -8,8 +8,6 @@ import view.sprites.AvatarItemSprite;
 
 public class TwoHandedSword extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(11, 0);
-    private static final AvatarItemSprite[] TWO_HANDED_SWORD_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
 
     public TwoHandedSword() {
         super("Two-Handed Sword", 24, new int[]{6, 10, 11, 14}, true, 0);
@@ -23,10 +21,5 @@ public class TwoHandedSword extends BladedWeapon {
     @Override
     public Item copy() {
         return new TwoHandedSword();
-    }
-
-    @Override
-    protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return TWO_HANDED_SWORD_SPRITES[index];
     }
 }

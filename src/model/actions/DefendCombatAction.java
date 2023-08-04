@@ -32,7 +32,8 @@ public class DefendCombatAction extends CombatAction {
     public static boolean canDoDefendAbility(GameCharacter performer) {
         Skill[] skills = new Skill[]{Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms};
         for (Skill s : skills) {
-            if (performer.getRankForSkill(s) >= DefendCombatAction.DEFEND_SKILL_RANKS) {
+            if (performer.getRankForSkill(s) >= DefendCombatAction.DEFEND_SKILL_RANKS &&
+                    performer.getEquipment().getWeapon().getSkill() == s) {
                 return true;
             }
         }
