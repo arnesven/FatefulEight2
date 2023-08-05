@@ -60,16 +60,19 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
 
     protected Point selectDirection(Model model, ExplicitTravelSubView mapSubView) {
         Point selectedDir;
+        boolean valid;
         do {
+            valid = true;
             print(getTravelPrompt());
             waitForReturn();
             selectedDir = mapSubView.getCurrentPosition(model);
             boolean seaHex = model.getWorld().getHex(selectedDir) instanceof SeaHex;
             if (!isValidDestination(model, selectedDir) || seaHex) {
                 println(" That is not a valid destination.");
+                valid = false;
             }
-        } while (selectedDir.x == model.getParty().getPosition().x &&
-                selectedDir.y == model.getParty().getPosition().y);
+        } while ((selectedDir.x == model.getParty().getPosition().x &&
+                selectedDir.y == model.getParty().getPosition().y) || !valid);
         return selectedDir;
     }
 

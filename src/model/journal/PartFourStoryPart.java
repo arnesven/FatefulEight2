@@ -235,6 +235,7 @@ public class PartFourStoryPart extends StoryPart {
                 portraitSay("Oh no, not at all. Quite the fretful fellow. But he has a magnificent mind and he has been working " +
                         "on a special project. If you think you have time, I think you should go and see him.");
                 leaderSay("I will consider it.");
+                model.getMainStory().addStoryPart(new ZeppelinStoryPart(model.getMainStory().getXelbiPosition(), castle.getLordTitle()));
                 portraitSay("Now I wish you good luck. Please return once the Quad has been dealt with.");
                 leaderSay("We will");
                 model.transitionToDialog(new SimpleMessageView(model.getView(),

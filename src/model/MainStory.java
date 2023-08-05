@@ -132,7 +132,9 @@ public class MainStory implements Serializable {
 //        getStoryParts().get(4).progress(); // Get Go to Orc War Camp task
 //        getStoryParts().get(4).progress(); // Quest done, return.
 //        getStoryParts().get(4).progress(); // Get stuff from lord
+//        addStoryPart(new ZeppelinStoryPart(model.getMainStory().getXelbiPosition(), "FJANT"));
 //        getStoryParts().get(4).transitionStep(model);
+//        model.getParty().addToGold(300);
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
@@ -319,5 +321,9 @@ public class MainStory implements Serializable {
 
     public MyColors[] getAncientStrongholdCode() {
         return spawnData.getCode();
+    }
+
+    public Point getXelbiPosition() {
+        return spawnData.getXelbi();
     }
 }

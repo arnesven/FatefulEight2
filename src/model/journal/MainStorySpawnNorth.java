@@ -14,6 +14,7 @@ public class MainStorySpawnNorth extends MainStorySpawnLocation {
               new Point(19, 18),
               new EastDurhamTown().getName(),
               WorldBuilder.EXPAND_NORTH,
-              new Point(17, 10));
+              new Point(17, 10),
+              new Point(18, 14));
     }
 }

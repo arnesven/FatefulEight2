@@ -13,7 +13,8 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
               new ArdhCastle().getName(),
               new Point(27, 21),
               new BullsVilleTown().getName(),
-                WorldBuilder.EXPAND_SOUTH,
-                new Point(36, 29));
+              WorldBuilder.EXPAND_SOUTH,
+              new Point(36, 29),
+              new Point(33, 23));
     }
 }

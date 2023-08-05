@@ -43,6 +43,11 @@ public class ShopState extends GameState {
         this.subView = new ShopSubView(buyItems, true, seller, prices, this);
     }
 
+    public static void pressToEnterShop(DailyEventState state) {
+        state.print("Press enter to continue.");
+        state.waitForReturn();
+    }
+
     private void makePricesMap(List<Item> itemsForSale, int[] specialPrices) {
         prices = new HashMap<>();
         int i = 0;

@@ -28,7 +28,7 @@ public class MerchantEvent extends DailyEventState {
             showRandomPortrait(model, Classes.MERCHANT, "Merchant");
             portraitSay("Please, I have lots of merchandise and I just know you adventurer types are always in " +
                     "need of something. Won't you please have a look?");
-            waitForReturn();
+            ShopState.pressToEnterShop(this);
         }
         List<Item> items = new ArrayList<>();
         items.addAll(model.getItemDeck().draw(6));

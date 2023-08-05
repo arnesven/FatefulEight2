@@ -14,6 +14,7 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
               new Point(22, 21),
               new AckervilleTown().getName(),
               WorldBuilder.EXPAND_WEST,
-              new Point(11, 25));
+              new Point(11, 25),
+              new Point(19, 27));
     }
 }
