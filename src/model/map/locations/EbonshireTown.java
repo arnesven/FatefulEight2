@@ -28,4 +28,9 @@ public class EbonshireTown extends TownLocation {
     public boolean getLordGender() {
         return true;
     }
+
+    @Override
+    public int charterBoatEveryNDays() {
+        return 5;
+    }
 }

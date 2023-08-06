@@ -34,7 +34,7 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
         if (!endAtSea) {
             if (model.getCurrentHex().getRivers() != Direction.NONE) {
                 print("You are currently in a coastal hex. Do you want to continue your journey by sea tomorrow? (Y/N) ");
-                endAtSea = !yesNoInput();
+                endAtSea = yesNoInput();
             }
         }
         if (!endAtSea) {
@@ -77,6 +77,6 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
 
     @Override
     protected boolean dontAllowSeaHexes() {
-        return true;
+        return false;
     }
 }

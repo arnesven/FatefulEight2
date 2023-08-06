@@ -27,4 +27,9 @@ public class RoukonTown extends TownLocation {
     public boolean getLordGender() {
         return true;
     }
+
+    @Override
+    public int charterBoatEveryNDays() {
+        return 2;
+    }
 }

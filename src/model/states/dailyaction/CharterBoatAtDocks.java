@@ -5,7 +5,7 @@ import model.states.GameState;
 import model.states.events.TravelByCharteredBoat;
 
 public class CharterBoatAtDocks extends GoTheDocksNode {
-    private static final int CHARTER_COST = 5; // TODO 35;
+    private static final int CHARTER_COST = 35;
     private boolean travelled = false;
 
     public CharterBoatAtDocks(Model model) {
@@ -37,7 +37,7 @@ public class CharterBoatAtDocks extends GoTheDocksNode {
             print("Do you charter the boat? (Y/N) ");
             if (yesNoInput()) {
                 travelled = true;
-                new TravelByCharteredBoat(model).run(model);
+                return new TravelByCharteredBoat(model).run(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }

@@ -158,4 +158,8 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public Sprite getExitSprite() {
         return KeepSubView.RUG;
     }
+
+    public int charterBoatEveryNDays() {
+        return Integer.MAX_VALUE;
+    }
 }

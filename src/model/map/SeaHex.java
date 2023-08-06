@@ -4,6 +4,7 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.NoEventState;
 import view.sprites.Sprite;
+import view.subviews.ImageSubView;
 import view.subviews.SubView;
 import view.MyColors;
 import view.sprites.HexSprite;
@@ -14,6 +15,8 @@ public class SeaHex extends WorldHex {
     private static final SeaHexSprite SPRITE_UR = new SeaHexSprite(0xA4);
     private static final SeaHexSprite SPRITE_LL = new SeaHexSprite(0xB0);
     private static final SeaHexSprite SPRITE_LR = new SeaHexSprite(0xB4);
+
+    public static SubView SUB_VIEW = new ImageSubView("ship", "THE SEA", "You are sailing the sea.");
 
     public SeaHex(int state) {
         super(MyColors.LIGHT_BLUE, 0, Direction.ALL, null, state);
@@ -50,7 +53,7 @@ public class SeaHex extends WorldHex {
 
     @Override
     protected SubView getSubView() {
-        throw new IllegalStateException("Should not be called!");
+        return SUB_VIEW;
     }
 
     @Override

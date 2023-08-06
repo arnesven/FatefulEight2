@@ -28,7 +28,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         addNode(7, 2, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
         if (isCoastal && !urbanLocation.noBoat()) {
-            if (model.getDay() % 3 == 2) {
+            if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 1) {
                 addNode(2, 0, new GoTheDocksNode(model));
             } else {
                 addNode(1, 0, new GoTheDocksNode(model));

@@ -174,4 +174,8 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     public Sprite getExitSprite() {
         return TownHallSubView.DOOR;
     }
+
+    public int charterBoatEveryNDays() {
+        return Integer.MAX_VALUE;
+    }
 }

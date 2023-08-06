@@ -30,4 +30,9 @@ public class EastDurhamTown extends TownLocation {
     public boolean getLordGender() {
         return false;
     }
+
+    @Override
+    public int charterBoatEveryNDays() {
+        return 3;
+    }
 }
