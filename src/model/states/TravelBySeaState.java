@@ -2,8 +2,6 @@ package model.states;
 
 import model.Model;
 import model.map.TownLocation;
-import model.map.World;
-import model.map.WorldHex;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -11,14 +9,13 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.CollapsingTransition;
 import view.subviews.MapSubView;
-import view.subviews.SubView;
 
 import java.awt.*;
 
 public class TravelBySeaState extends GameState {
     private final MyPair<TownLocation, Integer> ship;
     private boolean didTravel = false;
-    private Sprite shipAvatar = new Sprite32x32("shipavatar", "world.png", 0x26,
+    public static final Sprite SHIP_AVATAR = new Sprite32x32("shipavatar", "world.png", 0x26,
             MyColors.BLACK, MyColors.BEIGE, MyColors.BROWN);
 
     public TravelBySeaState(Model model) {
@@ -61,7 +58,7 @@ public class TravelBySeaState extends GameState {
                 break;
             }
             mapSubView.addMovementAnimation(
-                    shipAvatar,
+                    SHIP_AVATAR,
                     model.getWorld().translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
                     model.getWorld().translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
             mapSubView.waitForAnimation();

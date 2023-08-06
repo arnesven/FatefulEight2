@@ -67,13 +67,17 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
             waitForReturn();
             selectedDir = mapSubView.getCurrentPosition(model);
             boolean seaHex = model.getWorld().getHex(selectedDir) instanceof SeaHex;
-            if (!isValidDestination(model, selectedDir) || seaHex) {
-                println(" That is not a valid destination.");
+            if (!isValidDestination(model, selectedDir) || (seaHex && dontAllowSeaHexes())) {
+                println("That is not a valid destination.");
                 valid = false;
             }
         } while ((selectedDir.x == model.getParty().getPosition().x &&
                 selectedDir.y == model.getParty().getPosition().y) || !valid);
         return selectedDir;
+    }
+
+    protected boolean dontAllowSeaHexes() {
+        return true;
     }
 
     private class ExplicitTravelSubView extends MapSubView {
