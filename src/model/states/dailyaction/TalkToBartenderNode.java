@@ -64,7 +64,8 @@ public class TalkToBartenderNode extends DailyActionNode {
                         "Towns are great places to find jobs and quests.",
                         "Be wary of the Brotherhood. Think twice about making any deals with them.",
                         "Try to keep your fellow party members happy. Things can get out of hand quickly if they " +
-                        "start disliking the leader."));
+                        "start disliking the leader.",
+                        "Having a good formation during combat is crucial. And watch out for enemies with ranged weapons."));
                 println("Bartender: \"" + line + "\"");
             } else {
                 new BuyRationsState(model).run(model);
