@@ -14,6 +14,7 @@ public class TopText {
     private static final CharSprite INGREDIENTS_ICON_SPRITE = CharSprite.make(0x12, MyColors.WHITE, MyColors.LIGHT_GREEN, MyColors.BLACK);
     private static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
     public static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
+    public static final CharSprite HORSES_ICON_SPRITE = CharSprite.make(0x15, MyColors.BEIGE, MyColors.BLACK, MyColors.BLACK);
 
     public void drawYourself(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), String.format("DAY %d", model.getDay()), 0, 0, MyColors.CYAN);
@@ -29,6 +30,9 @@ public class TopText {
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", DailyEventState.getPartyAlignment(model)), 30, 0, MyColors.WHITE);
         model.getScreenHandler().put(37, 0, REP_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 35, 0, MyColors.WHITE);
+        model.getScreenHandler().put(44, 0, HORSES_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%1d/%1d",  model.getParty().getHorsesFullBlood(),
+                model.getParty().getPonies()), 41, 0, MyColors.WHITE);
 
         drawKeyTexts(model);
     }

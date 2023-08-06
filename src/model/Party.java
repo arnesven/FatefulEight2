@@ -8,6 +8,8 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
+import model.horses.Horse;
+import model.horses.Pony;
 import model.items.special.*;
 import model.items.spells.*;
 import model.map.UrbanLocation;
@@ -50,6 +52,8 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
     private final Set<String> specialCharactersRecruited = new HashSet<>();
     private Loan currentLoan = null;
+    private int horsesFullBlood = 0;
+    private int ponies = 0;
 
     public Party() {
         position = new Point(26, 19);
@@ -655,5 +659,21 @@ public class Party implements Serializable {
 
     public Loan getLoan() {
         return currentLoan;
+    }
+
+    public void addHorse(Horse horse) {
+        if (horse instanceof Pony) {
+            ponies++;
+        } else {
+            horsesFullBlood++;
+        }
+    }
+
+    public int getHorsesFullBlood() {
+        return horsesFullBlood;
+    }
+
+    public int getPonies() {
+        return ponies;
     }
 }
