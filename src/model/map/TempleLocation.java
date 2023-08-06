@@ -3,7 +3,6 @@ package model.map;
 import model.Model;
 import model.actions.DailyAction;
 import model.states.*;
-import model.states.dailyaction.BuyRationsNode;
 import model.states.dailyaction.BuyRationsState;
 import model.states.events.*;
 import util.MyPair;

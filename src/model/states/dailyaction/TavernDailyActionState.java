@@ -17,7 +17,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         this.inTown = inTown;
         addNode(2, 5, new RecruitNode(model));
         addNode(6, 1, new LodgingNode(freeLodging));
-        addNode(2, 3, new BuyRationsNode());
+        addNode(2, 3, new TalkToBartenderNode());
         addNode(5, 5, new TalkToPartyNode());
         if (inTown) {
             Point doorPos = getDoorPosition();
