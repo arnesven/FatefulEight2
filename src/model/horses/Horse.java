@@ -3,7 +3,9 @@ package model.horses;
 import view.MyColors;
 import view.sprites.Sprite;
 
-public abstract class Horse {
+import java.io.Serializable;
+
+public abstract class Horse implements Serializable {
     private static final Sprite BACKGROUND = new HorseSprite(0, 3, MyColors.LIGHT_GRAY, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.LIGHT_BLUE);
     private final String name;
     private int cost;

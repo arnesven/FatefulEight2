@@ -39,16 +39,17 @@ public class BuyHorseSubView extends SubView {
         Point horsePos = new Point(frameStartX+1, frameStartY+3);
         model.getScreenHandler().clearSpace(horsePos.x, horsePos.x+8, horsePos.y, horsePos.y+8);
         model.getScreenHandler().put(horsePos.x, horsePos.y, Horse.getBackgroundSprite());
-        model.getScreenHandler().register(state.getHorse().getSprite().getName(), horsePos, state.getHorse().getSprite());
+        Horse horse = model.getParty().getHorseHandler().getAvailableHorse(model);
+        model.getScreenHandler().register(horse.getSprite().getName(), horsePos, horse.getSprite());
         BorderFrame.drawCentered(model.getScreenHandler(), "Buy Horse", frameStartY+1, MyColors.WHITE, MyColors.BLUE);
 
         int textRow = horsePos.y;
-        BorderFrame.drawString(model.getScreenHandler(), "Type: " + state.getHorse().getType(),
+        BorderFrame.drawString(model.getScreenHandler(), "Type: " + horse.getType(),
                 frameStartX + 10, textRow++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Cost: " + state.getHorse().getCost(),
+        BorderFrame.drawString(model.getScreenHandler(), "Cost: " + horse.getCost(),
                 frameStartX + 10, textRow++, MyColors.WHITE, MyColors.BLUE);
         textRow++;
-        String[] textParts = MyStrings.partition(state.getHorse().getInfo(), 22);
+        String[] textParts = MyStrings.partition(horse.getInfo(), 22);
         for (int i = 0; i < textParts.length; ++i) {
             BorderFrame.drawString(model.getScreenHandler(), textParts[i],
                     frameStartX + 10, textRow++, MyColors.WHITE, MyColors.BLUE);

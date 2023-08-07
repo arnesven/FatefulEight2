@@ -9,10 +9,12 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.horses.Horse;
+import model.horses.HorseHandler;
 import model.horses.Pony;
 import model.items.special.*;
 import model.items.spells.*;
 import model.map.UrbanLocation;
+import model.races.AllRaces;
 import model.states.GameState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
@@ -52,8 +54,7 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
     private final Set<String> specialCharactersRecruited = new HashSet<>();
     private Loan currentLoan = null;
-    private int horsesFullBlood = 0;
-    private int ponies = 0;
+    private HorseHandler horseHandler = new HorseHandler();
 
     public Party() {
         position = new Point(26, 19);
@@ -661,19 +662,19 @@ public class Party implements Serializable {
         return currentLoan;
     }
 
-    public void addHorse(Horse horse) {
-        if (horse instanceof Pony) {
-            ponies++;
-        } else {
-            horsesFullBlood++;
-        }
+    public boolean hasHorses() {
+        return horseHandler.size() > 0;
     }
 
-    public int getHorsesFullBlood() {
-        return horsesFullBlood;
+    public boolean canRide() {
+        return horseHandler.canRide(partyMembers);
     }
 
-    public int getPonies() {
-        return ponies;
+    public HorseHandler getHorseHandler() {
+        return horseHandler;
+    }
+
+    public boolean canBuyMoreHorses() {
+        return horseHandler.size() < partyMembers.size() + 2;
     }
 }

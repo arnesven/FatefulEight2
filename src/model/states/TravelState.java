@@ -6,6 +6,7 @@ import model.map.UrbanLocation;
 import model.map.World;
 import model.map.WorldHex;
 import model.states.events.RiverEvent;
+import view.YesNoMessageView;
 import view.subviews.EmptySubView;
 import view.subviews.MapSubView;
 import view.subviews.CollapsingTransition;
@@ -22,9 +23,38 @@ public class TravelState extends GameState {
     public final GameState run(Model model) {
         MapSubView mapSubView = new MapSubView(model);
         CollapsingTransition.transition(model, mapSubView);
-
         model.getTutorial().travel(model);
 
+        boolean riding = checkForRiding(model);
+
+        GameState state = travelOneStep(model, mapSubView);
+        if (state != null) {
+            return state;
+        }
+        if (riding) {
+            mapSubView = new MapSubView(model);
+            CollapsingTransition.transition(model, mapSubView);
+            state = travelOneStep(model, mapSubView);
+            if (state != null) {
+                return state;
+            }
+        }
+        return nextState(model);
+    }
+
+    private boolean checkForRiding(Model model) {
+        if (!model.getParty().hasHorses()) {
+            return false;
+        }
+        if (model.getParty().canRide()) {
+            print("You have enough horses for your party to ride. Do you want to? (Y/N) ");
+        } else {
+            println("Your whole party cannot ride because at least one party member does not have a suitable mount.");
+        }
+        return yesNoInput();
+    }
+
+    private GameState travelOneStep(Model model, MapSubView mapSubView) {
         Point selectedDir = selectDirection(model, mapSubView);
         Point newPosition = new Point(model.getParty().getPosition());
         model.getWorld().move(newPosition, selectedDir.x, selectedDir.y);
@@ -52,8 +82,7 @@ public class TravelState extends GameState {
         CollapsingTransition.transition(model, new EmptySubView());
 
         moveToHex(model, selectedDir, mapSubView);
-
-        return nextState(model);
+        return null;
     }
 
     private void moveToHex(Model model, Point selectedDir, MapSubView mapSubView) {

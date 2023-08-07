@@ -31,8 +31,8 @@ public class TopText {
         model.getScreenHandler().put(37, 0, REP_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 35, 0, MyColors.WHITE);
         model.getScreenHandler().put(44, 0, HORSES_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%1d/%1d",  model.getParty().getHorsesFullBlood(),
-                model.getParty().getPonies()), 41, 0, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%1d/%1d",  model.getParty().getHorseHandler().getFullBloods(),
+                model.getParty().getHorseHandler().getPonies()), 41, 0, MyColors.WHITE);
 
         drawKeyTexts(model);
     }

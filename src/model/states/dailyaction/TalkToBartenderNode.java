@@ -15,16 +15,14 @@ import java.util.List;
 public class TalkToBartenderNode extends DailyActionNode {
     private static final Sprite STOOL = new Sprite32x32("barstool", "world_foreground.png", 0x55,
             MyColors.GRAY, MyColors.DARK_RED, MyColors.DARK_GREEN, MyColors.CYAN);
-    private Horse todaysHorse;
 
     public TalkToBartenderNode() {
         super("Talk to bartender");
-        todaysHorse = BuyHorseState.generateHorse();
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new TalkToBartenderState(model, todaysHorse);
+        return new TalkToBartenderState(model);
     }
 
     @Override
@@ -46,18 +44,15 @@ public class TalkToBartenderNode extends DailyActionNode {
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 
     private static class TalkToBartenderState extends GameState {
-        private final Horse horse;
-        private boolean horseAvailable = true;
 
-        public TalkToBartenderState(Model model, Horse todaysHorse) {
+        public TalkToBartenderState(Model model) {
             super(model);
-            this.horse = todaysHorse;
         }
 
         @Override
         public GameState run(Model model) {
             List<String> options = new ArrayList<>(List.of("Get Advice", "Buy Rations"));
-            if (horseAvailable) {
+            if (model.getParty().getHorseHandler().getAvailableHorse(model) != null) {
                 options.add("Buy Horse");
             }
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
@@ -66,7 +61,7 @@ public class TalkToBartenderNode extends DailyActionNode {
             } else if (selected == 1){
                 new BuyRationsState(model).run(model);
             } else {
-                new BuyHorseState(model, horse).run(model);
+                new BuyHorseState(model).run(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }
