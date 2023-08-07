@@ -46,7 +46,7 @@ public class Brigandine extends SuperHeavyArmorClothing {
             super(14, 3);
             setColor2(MyColors.BROWN);
             setColor3(MyColors.LIGHT_GRAY);
-            setColor4(MyColors.ORANGE);
+            setColor4(MyColors.GOLD);
         }
     }
 }
