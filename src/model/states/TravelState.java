@@ -48,10 +48,11 @@ public class TravelState extends GameState {
         }
         if (model.getParty().canRide()) {
             print("You have enough horses for your party to ride. Do you want to? (Y/N) ");
+            return yesNoInput();
         } else {
             println("Your whole party cannot ride because at least one party member does not have a suitable mount.");
         }
-        return yesNoInput();
+        return false;
     }
 
     private GameState travelOneStep(Model model, MapSubView mapSubView) {

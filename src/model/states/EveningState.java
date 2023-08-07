@@ -214,7 +214,7 @@ public class EveningState extends GameState {
     }
 
     public static int lodgingCost(Model model) {
-        return model.getParty().size() + (model.getParty().size()+1) / 2;
+        return model.getParty().size() + (model.getParty().size()+1) / 2 + model.getParty().getHorseHandler().size();
     }
 
     protected void notLodging(Model model) {

@@ -18,4 +18,9 @@ public abstract class EquipableItem extends Item {
         }
         return sprites;
     }
+
+    @Override
+    public boolean canBeUsedFromMenu() {
+        return true;
+    }
 }

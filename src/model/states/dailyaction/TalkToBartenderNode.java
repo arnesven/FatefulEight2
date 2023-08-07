@@ -52,16 +52,22 @@ public class TalkToBartenderNode extends DailyActionNode {
         @Override
         public GameState run(Model model) {
             List<String> options = new ArrayList<>(List.of("Get Advice", "Buy Rations"));
-            if (model.getParty().getHorseHandler().getAvailableHorse(model) != null) {
+            boolean buyHorse = model.getParty().getHorseHandler().getAvailableHorse(model) != null;
+            if (buyHorse) {
                 options.add("Buy Horse");
+            }
+            if (model.getParty().getHorseHandler().size() > 0) {
+                options.add("Sell Horse");
             }
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
             if (selected == 0) {
                 getAdvice(model);
             } else if (selected == 1){
                 new BuyRationsState(model).run(model);
-            } else {
+            } else if (buyHorse) {
                 new BuyHorseState(model).run(model);
+            } else {
+                new SellHorseState(model).run(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }

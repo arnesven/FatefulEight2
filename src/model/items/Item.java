@@ -104,4 +104,12 @@ public abstract class Item implements Serializable, Comparable<Item> {
     public Sprite getSpriteForHigherTier() {
         return getSprite();
     }
+
+    public int getSpriteSize() {
+        return 4;
+    }
+
+    public boolean canBeUsedFromMenu() {
+        return false;
+    }
 }

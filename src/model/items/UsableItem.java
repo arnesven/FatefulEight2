@@ -12,4 +12,9 @@ public abstract class UsableItem extends Item {
     public abstract String useYourself(Model model, GameCharacter gc);
 
     public abstract boolean canBeUsedOn(Model model, GameCharacter target);
+
+    @Override
+    public boolean canBeUsedFromMenu() {
+        return true;
+    }
 }

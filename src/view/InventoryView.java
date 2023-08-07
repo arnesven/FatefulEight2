@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.horses.HorseItemAdapter;
 import model.items.*;
 import model.items.spells.Spell;
 import sound.SoundEffects;
@@ -19,18 +20,18 @@ import java.util.List;
 
 public class InventoryView extends SelectableListMenu {
     private static final int WIDTH = 48;
-    private static final int HEIGHT = 29;
+    private static final int HEIGHT = 30;
     private static AnimatedCharSprite arrowSprite = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
     private static ItemTab[] tabNames = makeTabs();
     private int selectedTab = 0;
 
     public InventoryView(GameView previous) {
-        super(previous, WIDTH-29, HEIGHT-3);
+        super(previous, WIDTH-29, HEIGHT-4);
     }
 
     @Override
     protected void clearPreviousForeground(Model model, int xStart, int yStart) {
-        model.getScreenHandler().clearForeground(xStart, xStart + WIDTH, yStart-4, yStart + HEIGHT);
+        model.getScreenHandler().clearForeground(xStart, xStart + WIDTH, yStart-5, yStart + HEIGHT);
     }
 
     @Override
@@ -47,30 +48,43 @@ public class InventoryView extends SelectableListMenu {
     }
 
     @Override
+    protected int getYStart() {
+        return super.getYStart()+1;
+    }
+
+    @Override
     protected void drawNonScrollingParts(Model model, int x, int y) {
         BorderFrame.drawFrame(model.getScreenHandler(),
-                x-1, y-2, WIDTH, HEIGHT,
+                x-1, y-3, WIDTH, HEIGHT,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, false);
 
         int offset = 0;
         for (int i = 0; i < tabNames.length; ++i) {
-            print(model.getScreenHandler(), x+offset, y-1, " " + tabNames[i].getName() + " ");
+            int row = y-2;
+            if (i > 4) {
+                row++;
+            }
+            int col = x+offset;
+            print(model.getScreenHandler(), col, row, " " + tabNames[i].getName() + " ");
             if (selectedTab == i) {
-                model.getScreenHandler().put(x+offset, y-1, arrowSprite);
+                model.getScreenHandler().put(col, row, arrowSprite);
             }
             offset += tabNames[i].getName().length() + 2;
+            if (i == 4) {
+                offset = 0;
+            }
         }
 
         int rightTabX = x + 20;
         BorderFrame.drawFrame(model.getScreenHandler(),
-                rightTabX, y, WIDTH - 22, HEIGHT - 3,
+                rightTabX, y, WIDTH - 22, HEIGHT - 4,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
         if (tabNames[selectedTab].getItems(model).size() > 0) {
             Item it = tabNames[selectedTab].getItems(model).get(getSelectedRow());
             it.drawYourself(model.getScreenHandler(), rightTabX + 11, y + 2);
             String text = it.getName() + " " + it.getShoppingDetails() + ", Value: " + it.getCost();
             String[] parts = text.split(", ");
-            int row = y + 7;
+            int row = y + it.getSpriteSize() + 3;
             for (String s : parts) {
                 String[] innerParts = MyStrings.partition(s, 24);
                 for (String s2 : innerParts) {
@@ -98,12 +112,16 @@ public class InventoryView extends SelectableListMenu {
         List<ListContent> contents = new ArrayList<>();
         int row = yStart+1;
         for (Item it : tabNames[selectedTab].getItems(model)) {
-            contents.add(new SelectableListContent(xStart+1, row++, makeItemTitle(it)) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    setInnerMenu(new EquipItemMenu(InventoryView.this, x, y, it), model);
-                }
-            });
+            if (it.canBeUsedFromMenu()) {
+                contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitle(it)) {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        setInnerMenu(new EquipItemMenu(InventoryView.this, x, y, it), model);
+                    }
+                });
+            } else {
+                contents.add(new ListContent(xStart + 1, row++, makeItemTitle(it)));
+            }
         }
         if (tabNames[selectedTab].getItems(model).size() == 0) {
             contents.add(new ListContent(xStart+1, yStart+1, "*No Items*"));
@@ -160,15 +178,37 @@ public class InventoryView extends SelectableListMenu {
                         return model.getParty().getInventory().getAccessories();
                     }
                 },
-                new ItemTab("Other   ") {
+                new ItemTab("Spells  ") {
                     @Override
                     public List<? extends Item> getItems(Model model) {
-                        List<Item> result = new ArrayList<>(model.getParty().getInventory().getSpells());
-                        result.addAll(model.getParty().getInventory().getPotions());
-                        result.addAll(model.getParty().getInventory().getRecipes());
+                        return model.getParty().getInventory().getSpells();
+                    }
+                },
+                new ItemTab("Potions") {
+                    @Override
+                    public List<? extends Item> getItems(Model model) {
+                        return model.getParty().getInventory().getPotions();
+                    }
+                },
+                new ItemTab("Parchments") {
+                    @Override
+                    public List<? extends Item> getItems(Model model) {
+                        List<Item> result = new ArrayList<>(model.getParty().getInventory().getRecipes());
                         result.addAll(model.getParty().getInventory().getCraftingDesigns());
                         result.addAll(model.getParty().getInventory().getScrolls());
-                        result.addAll(model.getParty().getInventory().getPearls());
+                        return result;
+                    }
+                },
+                new ItemTab("Horses") {
+                    @Override
+                    public List<? extends Item> getItems(Model model) {
+                        return model.getParty().getHorseHandler().getHorsesAsItems();
+                    }
+                },
+                new ItemTab("Other           ") {
+                    @Override
+                    public List<? extends Item> getItems(Model model) {
+                        List<Item> result = new ArrayList<>(model.getParty().getInventory().getPearls());
                         return result;
                     }
                 }};
@@ -192,7 +232,7 @@ public class InventoryView extends SelectableListMenu {
             String label = "Equip";
             if (itemToEquip instanceof Spell) {
                 label = "Cast";
-            } else if (itemToEquip instanceof UsableItem){
+            } else if (itemToEquip instanceof UsableItem) {
                 label = "Use";
             }
             return List.of(new TextDecoration(label+"?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));

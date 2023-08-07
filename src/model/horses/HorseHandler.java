@@ -74,4 +74,22 @@ public class HorseHandler extends ArrayList<Horse> {
         model.getParty().getHorseHandler().setHorseBoughtOn(model.getDay());
         nextAvailableHorse = generateHorse();
     }
+
+    public List<HorseItemAdapter> getHorsesAsItems() {
+        List<HorseItemAdapter> list = new ArrayList<>();
+        for (Horse h : this) {
+            list.add(new HorseItemAdapter(h));
+        }
+        return list;
+    }
+
+    public void sellHorse(Model model, Horse horse) {
+        remove(horse);
+        if (horse instanceof Pony) {
+            ponies--;
+        } else {
+            horsesFullBlood--;
+        }
+        model.getParty().addToGold(horse.getCost()/2);
+    }
 }

@@ -28,11 +28,11 @@ public class TopText {
         BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getInventory().getMaterials()), 24, 0, MyColors.LIGHT_GRAY);
         model.getScreenHandler().put(32, 0, ALIGNMENT_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", DailyEventState.getPartyAlignment(model)), 30, 0, MyColors.WHITE);
-        model.getScreenHandler().put(37, 0, REP_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 35, 0, MyColors.WHITE);
-        model.getScreenHandler().put(44, 0, HORSES_ICON_SPRITE);
+        model.getScreenHandler().put(39, 0, HORSES_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%1d/%1d",  model.getParty().getHorseHandler().getFullBloods(),
-                model.getParty().getHorseHandler().getPonies()), 41, 0, MyColors.WHITE);
+                model.getParty().getHorseHandler().getPonies()), 36, 0, MyColors.WHITE);
+        model.getScreenHandler().put(44, 0, REP_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 42, 0, MyColors.WHITE);
 
         drawKeyTexts(model);
     }

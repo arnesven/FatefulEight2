@@ -25,6 +25,11 @@ public abstract class Spell extends Item {
     }
 
     @Override
+    public boolean canBeUsedFromMenu() {
+        return true;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         inventory.add(this);
     }
