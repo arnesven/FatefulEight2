@@ -30,6 +30,7 @@ public class UndertowEvent extends RiverEvent {
             turnedBack = true;
         } else {
             List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Endurance, 5);
+            model.getParty().getHorseHandler().someHorsesRunAway(model);
             if (failers.isEmpty()) {
                 println("The party manages to swim across.");
             } else {

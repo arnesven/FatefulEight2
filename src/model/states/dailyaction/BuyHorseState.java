@@ -10,14 +10,21 @@ import view.subviews.SubView;
 
 public class BuyHorseState extends GameState {
 
+    private int price;
+
     public BuyHorseState(Model model) {
         super(model);
+        this.price = model.getParty().getHorseHandler().getAvailableHorse(model).getCost();
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     @Override
     public GameState run(Model model) {
         Horse horse = model.getParty().getHorseHandler().getAvailableHorse(model);
-        println("Bartender: \"We have a nice " + horse.getName() + " for sale for " + horse.getCost() + " gold, if you are interested.\"");
+        println("Bartender: \"We have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.\"");
         model.getTutorial().horses(model);
         if (model.getParty().getGold() < horse.getCost()) {
             leaderSay("I'd love to, but I can't afford it right now.");
@@ -30,7 +37,7 @@ public class BuyHorseState extends GameState {
             waitForReturn();
             if (subView.didAccept()) {
                 println("You bought the " + horse.getName() + ".");
-                model.getParty().getHorseHandler().buyAvailableHorse(model);
+                model.getParty().getHorseHandler().buyAvailableHorse(model, price);
             } else {
                 leaderSay("A fine creature, but unfortunately I have to decline.");
             }

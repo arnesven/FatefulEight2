@@ -21,8 +21,12 @@ public class ChasmEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("This looks very difficult.",
                 "I think we should turn back.", "Are we really going to do this?",
                 "We've come so far. Going back will take so long..."));
+        if (model.getParty().hasHorses()) {
+            println("Your horses cannot walk on the narrow path.");
+        }
         print("If you double back now, the journey will take you an extra day. Do you try to cross the chasm? (Y/N) ");
         if (yesNoInput()) {
+            model.getParty().getHorseHandler().abandonHorses(model);
             List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Acrobatics, 3);
             if (failers.isEmpty()) {
                 println("The party manages to cross without incident.");

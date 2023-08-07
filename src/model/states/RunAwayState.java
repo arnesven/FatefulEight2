@@ -34,6 +34,13 @@ public class RunAwayState extends TravelState {
         return MyRandom.sample(result);
     }
 
+    @Override
+    protected boolean checkForRiding(Model model) {
+        println("You run away to another hex.");
+        model.getParty().getHorseHandler().someHorsesRunAway(model);
+        return false;
+    }
+
     private boolean movesOutsideMap(Point position, Point dir) {
         Point p2 = new Point(position);
         getModel().getWorld().move(p2, dir.x, dir.y);

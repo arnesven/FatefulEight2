@@ -46,6 +46,9 @@ public class RaftEvent extends RiverEvent {
             println("There are enough vines and logs here to make a good raft. " +
                     "Not only could the party use it to cross the river, but travel " +
                     "downstream as well.");
+            if (model.getParty().hasHorses()) {
+                println("Your horses cannot accompany you an a raft.");
+            }
             print("Do you wish to attempt to build a raft? (Y/N) ");
             if (!yesNoInput()) {
                 return false;
@@ -61,13 +64,12 @@ public class RaftEvent extends RiverEvent {
                 println("You have failed to build the raft, and cannot cross the river today.");
                 return false;
             }
+            model.getParty().getHorseHandler().abandonHorses(model);
             return true;
         }
 
         @Override
-        protected void eventOutro(Model model) {
-
-        }
+        protected void eventOutro(Model model) { }
 
         @Override
         protected String getTitleText() {

@@ -68,11 +68,15 @@ public class HorseHandler extends ArrayList<Horse> {
         lastBoughtHorseOnDay = day;
     }
 
-    public void buyAvailableHorse(Model model) {
-        model.getParty().addToGold(-nextAvailableHorse.getCost());
+    public void buyAvailableHorse(Model model, int specialPrice) {
+        model.getParty().addToGold(-specialPrice);
         model.getParty().getHorseHandler().addHorse(nextAvailableHorse);
         model.getParty().getHorseHandler().setHorseBoughtOn(model.getDay());
         nextAvailableHorse = generateHorse();
+    }
+
+    public void buyAvailableHorse(Model model) {
+        buyAvailableHorse(model, nextAvailableHorse.getCost());
     }
 
     public List<HorseItemAdapter> getHorsesAsItems() {
@@ -84,12 +88,41 @@ public class HorseHandler extends ArrayList<Horse> {
     }
 
     public void sellHorse(Model model, Horse horse) {
+        removeHorse(horse);
+        model.getParty().addToGold(horse.getCost()/2);
+    }
+
+    private void removeHorse(Horse horse) {
         remove(horse);
         if (horse instanceof Pony) {
             ponies--;
         } else {
             horsesFullBlood--;
         }
-        model.getParty().addToGold(horse.getCost()/2);
+    }
+
+    public void someHorsesRunAway(Model model) {
+        if (size() > 0) {
+            int times = size();
+            for (int i = 0; i < times; ++i) {
+                if (MyRandom.flipCoin()) {
+                    removeHorse(get(MyRandom.randInt(size())));
+                }
+            }
+            if (isEmpty()) {
+                model.getLog().addAnimated("!You have lost your horses!\n");
+            } else {
+                model.getLog().addAnimated("!Some of your horses have run away!\n");
+            }
+        }
+    }
+
+    public void abandonHorses(Model model) {
+        if (size() > 0) {
+            model.getLog().addAnimated("!You have lost your horses!\n");
+            clear();
+            ponies = 0;
+            horsesFullBlood = 0;
+        }
     }
 }

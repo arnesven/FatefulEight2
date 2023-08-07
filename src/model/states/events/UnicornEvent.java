@@ -2,7 +2,9 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.horses.Unicorn;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.util.List;
 
@@ -25,5 +27,14 @@ public class UnicornEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("I feel so refreshed.3",
                 "Weird. It's like I've woken up from a long troubled sleep.",
                 "I feel so good.3"));
+        println("The unicorn seems very friendly and is appraising the party.");
+        calculatePartyAlignment(model, this);
+        if (getPartyAlignment(model) > 0 && MyRandom.rollD10() > 8) {
+            println("The unicorn seems to have taken to you and allows members of your party to mount it.");
+            println("You have gained a horse, the unicorn. The unicorn is a full-blood.");
+            model.getParty().getHorseHandler().addHorse(new Unicorn());
+        } else {
+            println("The unicorn neighs softly and then trots away into the bushes.");
+        }
     }
 }

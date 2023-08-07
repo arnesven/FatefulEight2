@@ -42,7 +42,7 @@ public class TravelState extends GameState {
         return nextState(model);
     }
 
-    private boolean checkForRiding(Model model) {
+    protected boolean checkForRiding(Model model) {
         if (!model.getParty().hasHorses()) {
             return false;
         }

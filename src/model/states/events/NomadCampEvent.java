@@ -11,6 +11,7 @@ import model.enemies.WarriorNomadEnemy;
 import model.items.Item;
 import model.states.DailyEventState;
 import model.states.ShopState;
+import model.states.dailyaction.BuyHorseState;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -98,18 +99,23 @@ public class NomadCampEvent extends DailyEventState {
 
             int[] prices = null;
             if (attitude == Attitude.Friendly) {
-                prices = new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
-                        items.get(2).getCost()/2, items.get(3).getCost()/2,
-                        items.get(4).getCost()/2, items.get(5).getCost()/2};
+                prices = new int[]{items.get(0).getCost() / 2, items.get(1).getCost() / 2,
+                        items.get(2).getCost() / 2, items.get(3).getCost() / 2,
+                        items.get(4).getCost() / 2, items.get(5).getCost() / 2};
             } else {
-                prices = new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
-                        items.get(2).getCost()-2, items.get(3).getCost()-2,
-                        items.get(4).getCost()+10, items.get(5).getCost()+10};
+                prices = new int[]{items.get(0).getCost() / 2, items.get(1).getCost() / 2,
+                        items.get(2).getCost() - 2, items.get(3).getCost() - 2,
+                        items.get(4).getCost() + 10, items.get(5).getCost() + 10};
             }
 
             ShopState merchantShop = new ShopState(model, "nomad trader", items, prices);
             merchantShop.setSellingEnabled(false);
             merchantShop.run(model);
+        } else if (roll % 3 == 1) {
+            print("The nomads offer to sell you a horse.");
+            BuyHorseState buyHorseState = new BuyHorseState(model);
+            buyHorseState.setPrice(model.getParty().getHorseHandler().getAvailableHorse(model).getCost() + MyRandom.randInt(-20, 20));
+            buyHorseState.run(model);
         } else if (!isWarriorClan) {
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);
             print("The nomads offer to teach you in their ancestral worship");

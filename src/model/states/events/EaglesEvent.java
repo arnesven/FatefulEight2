@@ -26,6 +26,11 @@ public class EaglesEvent extends AlternativeTravelEvent {
         println("The party encounter some giant eagles. You are amazed to find that the eagles can talk! They are\n" +
                 "however not too pleased that the party is trespassing here. " +
                 "They offer to fly you down from the mountain.");
+        if (model.getParty().hasHorses()) {
+            print("You will have to leave your horses behind if you fly with the eagles. Do you abandon your horses? (Y/N) ");
+            model.getParty().getHorseHandler().abandonHorses(model);
+            return yesNoInput();
+        }
         return true;
     }
 

@@ -16,6 +16,10 @@ public class WagonTravelEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        if (model.getParty().hasHorses()) {
+            new NoEventState(model).doEvent(model);
+            return;
+        }
         println("A horse and wagon catches up to you on the road. A farmer sits in the saddle.");
         showRandomPortrait(model, Classes.FARMER, "Farmer");
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), false);

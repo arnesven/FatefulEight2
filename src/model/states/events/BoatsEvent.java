@@ -52,6 +52,10 @@ public class BoatsEvent extends RiverEvent {
                 "go for a longer ride in, but surely they will hold for just crossing the river.");
         model.getLog().waitForAnimationToFinish();
         println("The boats are rather small however and the party must split into smaller groups.");
+        if (model.getParty().hasHorses()) {
+            println("Your horses will not fit in these boats. You will have to leave your horses behind if you cross the " +
+                    "river in the boats.");
+        }
         makeBoats(model);
         shore = new ArrayList<>();
         shore.addAll(model.getParty().getPartyMembers());
@@ -79,6 +83,7 @@ public class BoatsEvent extends RiverEvent {
         println("You cross the river in the boats.");
         riverCrossed = true;
         println("The party disembarks on the other.");
+        model.getParty().getHorseHandler().abandonHorses(model);
         model.getLog().waitForAnimationToFinish();
 
         int roll = MyRandom.rollD10();

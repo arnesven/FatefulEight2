@@ -27,8 +27,13 @@ public class PegasusEvent extends AlternativeTravelEvent {
         }
         model.getParty().randomPartyMemberSay(model,
                 List.of("We're gonna fly? Oh what a wonderful sensation to soar among the clouds!"));
-        print("Do you ride the pegasus? (Y/N) ");
+        if (model.getParty().hasHorses()) {
+            print("Do you ride the pegasus? You will have to abandon your horses. (Y/N) ");
+        } else {
+            print("Do you ride the pegasus? (Y/N) ");
+        }
         if (yesNoInput()) {
+            model.getParty().getHorseHandler().abandonHorses(model);
             return true;
         }
         return false;

@@ -55,5 +55,10 @@ public class RapidsEvent extends RiverEvent {
             }
             return MyRandom.sample(result);
         }
+
+        @Override
+        protected boolean checkForRiding(Model model) {
+            return false;
+        }
     }
 }

@@ -290,12 +290,17 @@ public class ZeppelinStoryPart extends StoryPart {
                         "daydream about what it'll be like to fly among the clouds. It's late in the day before the whole thing is ready. " +
                         "Now with the balloon inflated, it looks spectacular.");
             }
-            portraitSay("There's enough fuel in the engine for one trip, and there's a spare canister in the basket. " +
-                    "In total you have enough for two trips.");
-            println("You received " + (new ZeppelinFuel()).getName() + ".");
+            portraitSay("There's enough fuel in the engine for one trip, and there's two spare canisters in the basket. " +
+                    "In total you have enough for three trips.");
+            println("You received 2 " + (new ZeppelinFuel()).getName() + ".");
+            model.getParty().getInventory().add(new ZeppelinFuel());
             model.getParty().getInventory().add(new ZeppelinFuel());
             portraitSay("You can come back and see me any time if you want to buy more. It takes a little time to make " +
                     "and it's a volatile substance so don't expect me to have a huge stock of it on hand.");
+            if (model.getParty().hasHorses()) {
+                portraitSay("Oh, and your horses won't fit in the zeppelin, so if you want to fly, " +
+                        "you will have to leave them behind.");
+            }
             stockDay = model.getDay();
             leaderSay("Thanks Xelbi, that's really helpful.");
             if (step == INITIAL_STEP) {
@@ -328,6 +333,7 @@ public class ZeppelinStoryPart extends StoryPart {
         @Override
         protected boolean eventIntro(Model model) {
             inAnimation = true;
+            model.getParty().getHorseHandler().abandonHorses(model);
             return true;
         }
 

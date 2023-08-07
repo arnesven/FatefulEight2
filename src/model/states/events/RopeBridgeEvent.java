@@ -23,11 +23,15 @@ public class RopeBridgeEvent extends RiverEvent {
 
     @Override
     protected void doEvent(Model model) {
-        print("A bridge of rope and planks is hoisted over the river, " +
+        println("A bridge of rope and planks is hoisted over the river, " +
                 "it looks very old and worn. Crossing will obviously be " +
                 "perilous.");
-        print(" Do you try? (Y/N) ");
+        if (model.getParty().hasHorses()) {
+            println("Your horses cannot cross the rope bridge.");
+        }
+        print(" Do you try to cross? (Y/N) ");
         if (yesNoInput()) {
+            model.getParty().getHorseHandler().abandonHorses(model);
             List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Acrobatics, 4);
             if (failers.isEmpty()) {
                 println("The party manages to cross without incident.");
