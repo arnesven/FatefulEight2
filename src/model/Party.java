@@ -11,8 +11,13 @@ import model.combat.Combatant;
 import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.horses.Pony;
+import model.items.clothing.Brigandine;
 import model.items.special.*;
 import model.items.spells.*;
+import model.items.weapons.BecDeCorbin;
+import model.items.weapons.HeavyCrossbow;
+import model.items.weapons.ShortSpear;
+import model.items.weapons.Zweihander;
 import model.map.UrbanLocation;
 import model.races.AllRaces;
 import model.states.GameState;
@@ -59,6 +64,12 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
+        inventory.add(new ShortSpear());
+        inventory.add(new Zweihander());
+        inventory.add(new HeavyCrossbow());
+        inventory.add(new BecDeCorbin());
+        inventory.add(new Brigandine());
+
     }
 
     private LoopingSprite[] makeCursorSprites() {

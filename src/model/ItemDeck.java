@@ -239,12 +239,12 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<? extends Weapon> allSpears() {
         return List.of(new WoodenSpear(), new Spear(), new Javelins(), new Trident(),
-                new Glaive(), new Halberd(), new Pike());
+                new Glaive(), new Halberd(), new Pike(), new ShortSpear(), new BecDeCorbin());
     }
 
     public static List<? extends Weapon> allBows() {
         return List.of(new TrainingBow(), new ShortBow(), new CompositeBow(), new RepeatingCrossbow(),
-                new HuntersBow(), new YewBow(), new BoneBow(), new Crossbow(), new LongBow());
+                new HuntersBow(), new YewBow(), new BoneBow(), new Crossbow(), new LongBow(), new HeavyCrossbow());
     }
 
     public static List<? extends Weapon> allWands() {
@@ -267,7 +267,7 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(new Dirk(), new Dagger(), new ThrowingKnives(), new ShortSword(),
                 new OrcishKnife(), new RitualDagger(), new Scimitar(), new Falchion(),
                 new Broadsword(), new Longsword(), new Katana(), new TwoHandedSword(),
-                new Claymore(), new BastardSword());
+                new Claymore(), new BastardSword(), new Zweihander());
     }
 
 }
