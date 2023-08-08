@@ -1,7 +1,6 @@
 package model.quests;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
 import model.states.CombatEvent;
@@ -35,8 +34,10 @@ public class AncientStrongholdQuest extends MainQuest {
             MyColors.BLACK, MyColors.WHITE, MyColors.GRAY, MyColors.BROWN);
     private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackgroundSprites();
 
-    private AncientStrongholdModel strongholdModel;
+    private final AncientStrongholdModel strongholdModel;
     private List<QuestBackground> decorations;
+    private boolean willisIntroElevatorRun = false;
+    private boolean willisIntroOtherRun = false;
 
     public AncientStrongholdQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD, 2, 0, 100, TEXT, END_TEXT);
@@ -239,8 +240,9 @@ public class AncientStrongholdQuest extends MainQuest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             state.println("This room has a large machine with cogs, pistons and gears. " +
-                    "There's a control panel in the middle of the room with a single lever. Next to it " +
+                    "There's a control panel in the middle of the room with a single lever. Next to the lever " +
                     "are four round slots.");
+            willisIntro(model, state);
             do {
                 state.print("Do you step up to the control panel (Y) or do you wish to return to the previous room (N)? ");
                 if (state.yesNoInput()) {
@@ -258,6 +260,39 @@ public class AncientStrongholdQuest extends MainQuest {
                 }
             } while (true);
             return new QuestEdge(previous);
+        }
+
+        private void willisIntro(Model model, QuestState state) {
+            if (!willisInParty(model)) {
+                return;
+            }
+            if (willisIntroElevatorRun && willisIntroOtherRun) {
+                return;
+            }
+
+            if (isElevator && !willisIntroElevatorRun) {
+                willisSay(model, "This is arcanic machinery!");
+                state.leaderSay("Fascinating. Any idea what it could be good for?");
+                willisIntroElevatorRun = true;
+                willisSay(model, "This machine probably powers the elevator I spotted on the outside of the stronghold.");
+                state.leaderSay("Interesting.");
+                willisSay(model, "...and this trap door we're standing on.");
+                state.println("You quickly jump away.");
+                state.leaderSay("Thanks for the heads up Willis.");
+                willisSay(model, "This control panel has some dials. My guess is we want all the dials cranked up to red " +
+                        "to get this thing working. The wrong code might open the trap door.");
+                state.leaderSay("Okay, better let it be until we know what the code is.");
+            } else if (!isElevator && !willisIntroOtherRun) {
+                willisSay(model, "This is arcanic machinery!");
+                state.leaderSay("Fascinating. Any idea what it could be good for?");
+                willisIntroOtherRun = true;
+                willisSay(model, "No clue. Maybe it is connected to the colored pearls some how.");
+                state.leaderSay("Interesting.");
+                willisSay(model, "This control panel has some dials. My guess is we want all the dials cranked up to red " +
+                        "to get this thing working.");
+                state.leaderSay("Okay. Do you think it's safe to fiddle with it?");
+                willisSay(model, "I see no harm in it.");
+            }
         }
 
         private boolean controlPanelLoop(Model model, QuestState state) {
@@ -286,6 +321,14 @@ public class AncientStrongholdQuest extends MainQuest {
         }
 
         protected abstract AncientStrongholdControlPanel getControlPanel();
+    }
+
+    private void willisSay(Model model, String text) {
+        model.getParty().partyMemberSay(model, model.getMainStory().getWillisCharacter(), text);
+    }
+
+    private boolean willisInParty(Model model) {
+        return model.getParty().getPartyMembers().contains(model.getMainStory().getWillisCharacter());
     }
 
     @Override
