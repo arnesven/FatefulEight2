@@ -13,7 +13,7 @@ public class StartGameMenu extends GameView {
     private static final int Y_START = 6;
 
     private int cursorPos = 0;
-    private static String[] options = new String[]{"New Game", "Load Game", "Hall of Fame", "Credits"};
+    private static String[] options = new String[]{"New Game", "Load Game", "Hall of Fame", "Credits", "Quit"};
 
     public StartGameMenu() {
         super(true);
@@ -58,8 +58,11 @@ public class StartGameMenu extends GameView {
                 model.transitionToDialog(new SelectSaveSlotMenu(this, true));
             } else if (cursorPos == 2) {
                 model.showHallOfFame();
-            } else {
+            } else if (cursorPos == 3) {
                 model.showCredits();
+            } else {
+                model.setGameStarted(true);
+                model.setExitGame(true);
             }
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
             SoundEffects.matrixSelect();
