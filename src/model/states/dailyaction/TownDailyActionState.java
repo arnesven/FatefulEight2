@@ -29,11 +29,10 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         addNode(7, 1, new FlagPoleNode());
         if (isCoastal && !urbanLocation.noBoat()) {
             if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 1) {
-                addNode(2, 0, new GoTheDocksNode(model));
-            } else {
                 addNode(1, 0, new GoTheDocksNode(model));
                 addNode(4, 0, new CharterBoatAtDocks(model));
-
+            } else {
+                addNode(2, 0, new GoTheDocksNode(model));
             }
         }
         for (GeneralShopNode shop : urbanLocation.getShops(model)) {

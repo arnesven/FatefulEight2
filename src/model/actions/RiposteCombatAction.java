@@ -21,9 +21,11 @@ public class RiposteCombatAction extends StaminaCombatAbility {
     }
 
     public static void doRiposte(CombatEvent combatEvent, GameCharacter gameCharacter, Enemy enemy) {
-        combatEvent.println(gameCharacter.getFirstName() + " counter-attacks!");
-        gameCharacter.doOneAttack(combatEvent, enemy, false, 0, 10);
-        gameCharacter.removeCondition(RiposteStanceCondition.class);
+        if (gameCharacter.hasCondition(RiposteStanceCondition.class)) {
+            combatEvent.println(gameCharacter.getFirstName() + " counter-attacks!");
+            gameCharacter.doOneAttack(combatEvent, enemy, false, 0, 10);
+            gameCharacter.removeCondition(RiposteStanceCondition.class);
+        }
     }
 
 

@@ -57,6 +57,9 @@ public class OrcRaidEvent extends DailyEventState {
             }
             combat.addAllies(allies);
             combat.run(model);
+            if (combat.fled()) {
+                return;
+            }
             println("You have fended off the orcish marauders. There is much confusion " +
                     "in the aftermath but there doesn't seem to be many injured or any damage to the town.");
             showRandomPortrait(model, Classes.CONSTABLE, "Militia");
@@ -109,6 +112,6 @@ public class OrcRaidEvent extends DailyEventState {
 
     @Override
     public boolean haveFledCombat() {
-        return didFlee || (combat != null && combat.haveFledCombat());
+        return didFlee || (combat != null && combat.fled());
     }
 }

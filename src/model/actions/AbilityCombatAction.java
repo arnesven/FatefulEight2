@@ -38,9 +38,18 @@ public class AbilityCombatAction extends CombatAction {
     @Override
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> list = new ArrayList<>();
-        if (performer.getRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy  && target.canBeAttackedBy(performer)) {
-            list.add(new SneakAttackCombatAction());
+        if (model.getParty().getFrontRow().contains(performer)) {
+            if (performer.getRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy && target.canBeAttackedBy(performer)) {
+                list.add(new SneakAttackCombatAction());
+            }
+            if (RiposteCombatAction.canDoRiposteAbility(performer) && target.canBeAttackedBy(performer)) {
+                list.add(new RiposteCombatAction());
+            }
+            if (HeavyBlowCombatAction.canDoHeavyBlowAbility(performer) && target.canBeAttackedBy(performer)) {
+                list.add(new HeavyBlowCombatAction());
+            }
         }
+
         if (DefendCombatAction.canDoDefendAbility(performer)) {
             list.add(new DefendCombatAction());
         }
@@ -49,12 +58,6 @@ public class AbilityCombatAction extends CombatAction {
         }
         if (InspireCombatAction.canDoInspireAbility(performer)) {
             list.add(new InspireCombatAction());
-        }
-        if (RiposteCombatAction.canDoRiposteAbility(performer) && target.canBeAttackedBy(performer)) {
-            list.add(new RiposteCombatAction());
-        }
-        if (HeavyBlowCombatAction.canDoHeavyBlowAbility(performer) && target.canBeAttackedBy(performer)) {
-            list.add(new HeavyBlowCombatAction());
         }
         if (SniperShotCombatAction.canDoSniperShotAbility(performer)) {
             list.add(new SniperShotCombatAction());
