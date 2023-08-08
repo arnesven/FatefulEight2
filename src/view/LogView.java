@@ -10,6 +10,7 @@ public class LogView extends GameView {
     private TopText topText = new TopText();
     private GameView nextView;
     private GameView previousView;
+    private int scroll = 0;
 
     public LogView(GameView previous) {
         super(false);
@@ -34,16 +35,19 @@ public class LogView extends GameView {
         model.getScreenHandler().clearAll();
         BorderFrame.drawFrameTop(model.getScreenHandler());
         topText.drawYourself(model);
-        drawLog(model, DrawingArea.WINDOW_ROWS-2, 2);
+        drawLog(model, DrawingArea.WINDOW_ROWS-2, 2, scroll);
     }
 
-    public static void drawLog(Model model, int totalRows, int rowOffset) {
+    public static void drawLog(Model model, int totalRows, int rowOffset, int scroll) {
         int row = Math.min(totalRows, model.getLog().size()) - 1 + rowOffset;
         int count = 0;
         for (String s : model.getLog().getContents()) {
-            BorderFrame.drawString(model.getScreenHandler(), s, 0, row--, getColorForLine(s));
             count++;
-            if (count == totalRows) {
+            if (count < scroll+1) {
+                continue;
+            }
+            BorderFrame.drawString(model.getScreenHandler(), s, 0, row--, getColorForLine(s));
+            if (count == totalRows + scroll) {
                 break;
             }
         }
@@ -78,7 +82,15 @@ public class LogView extends GameView {
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             setTimeToTransition(true);
             nextView = new HelpView(this);
-        }  if (model.getLog().isAcceptingInput()) {
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_UP) {
+             this.scroll++;
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+             if (scroll > 0) {
+                 this.scroll--;
+             }
+        }
+
+         if (model.getLog().isAcceptingInput()) {
             model.getLog().keyTyped(keyEvent, model);
         }
     }

@@ -84,7 +84,9 @@ public abstract class CombatSubScene extends QuestSubScene {
         GameCharacter gc = setTemporaryLeader(model, state);
         combat.run(model);
         if (!model.getParty().isWipedOut()) {
-            model.getParty().setLeader(gc);
+            if (!gc.isDead()) {
+                model.getParty().setLeader(gc);
+            }
             state.transitionToQuestView(model);
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         }

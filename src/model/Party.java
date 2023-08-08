@@ -195,6 +195,12 @@ public class Party implements Serializable {
     }
 
     public void setLeader(GameCharacter gc) {
+        if (gc.isDead()) {
+            throw new IllegalStateException("Should not set a leader that is dead!");
+        }
+        if (!partyMembers.contains(gc)) {
+            throw new IllegalStateException("Set a leader which was not part of the party.");
+        }
         this.leader = gc;
     }
 
