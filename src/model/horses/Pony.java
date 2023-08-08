@@ -18,4 +18,9 @@ public class Pony extends Horse {
     public String getInfo() {
         return "Can only be ridden by halflings and dwarves.";
     }
+
+    @Override
+    public Horse copy() {
+        return new Pony();
+    }
 }

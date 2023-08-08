@@ -37,6 +37,8 @@ public abstract class Horse implements Serializable {
         return type;
     }
 
+    public abstract Horse copy();
+
     protected static class HorseSprite extends Sprite {
         public HorseSprite(int col, int row, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
             super("horse", "horses.png", col, row, 64, 64);

@@ -82,12 +82,16 @@ public class LogView extends GameView {
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_F1) {
             setTimeToTransition(true);
             nextView = new HelpView(this);
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_UP) {
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
              this.scroll++;
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
              if (scroll > 0) {
                  this.scroll--;
              }
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_UP) {
+             this.scroll += 20;
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+             this.scroll = Math.max(this.scroll - 20, 0);
         }
 
          if (model.getLog().isAcceptingInput()) {

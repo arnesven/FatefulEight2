@@ -61,7 +61,7 @@ public class HorseHandler extends ArrayList<Horse> {
 
 
     public static Horse generateHorse() {
-        return MyRandom.sample(HORSES);
+        return MyRandom.sample(HORSES).copy();
     }
 
     public void setHorseBoughtOn(int day) {

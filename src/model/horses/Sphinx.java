@@ -14,4 +14,9 @@ public class Sphinx extends FullBloodHorse {
     public Sprite getSprite() {
         return SPRITE;
     }
+
+    @Override
+    public Horse copy() {
+        return new Sphinx();
+    }
 }
