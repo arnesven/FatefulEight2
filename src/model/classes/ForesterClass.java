@@ -62,6 +62,12 @@ public class ForesterClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Look for lumber mills in the forest. There you will find foresters who can teach you their trade. " +
+                "I also hear many half-orcs are foresters. Half-orcs dwell in hilly areas.";
+    }
+
+    @Override
     public String getDescription() {
         return "Foresters are the wardens of the forest. They are lumberjacks or rangers who feel most at home " +
                 "surrounded by tall trees and the musky scent of fir, pine or oak. They are light fighters, but often " +

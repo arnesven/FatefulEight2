@@ -28,4 +28,9 @@ public class SheffieldTown extends TownLocation {
     public boolean getLordGender() {
         return true;
     }
+
+    @Override
+    public Point getCareerOfficePosition() {
+        return new Point(2, 2);
+    }
 }

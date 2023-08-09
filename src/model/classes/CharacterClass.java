@@ -127,6 +127,8 @@ public abstract class CharacterClass implements Serializable {
 
     protected abstract int getIconNumber();
 
+    public abstract String getHowToLearn();
+
     protected static class WeightedSkill implements Serializable {
         public Skill skill;
         public int weight;

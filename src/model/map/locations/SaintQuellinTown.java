@@ -28,4 +28,9 @@ public class SaintQuellinTown extends TownLocation {
     public Point getTavernPosition() {
         return new Point(5, 5);
     }
+
+    @Override
+    public Point getCareerOfficePosition() {
+        return new Point(2, 5);
+    }
 }

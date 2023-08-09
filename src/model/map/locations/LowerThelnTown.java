@@ -3,8 +3,10 @@ package model.map.locations;
 import model.Model;
 import model.map.TownLocation;
 import model.states.dailyaction.ArmorShopNode;
+import model.states.dailyaction.CareerOfficeNode;
 import model.states.dailyaction.GeneralShopNode;
 
+import java.awt.*;
 import java.util.List;
 
 public class LowerThelnTown extends TownLocation {
@@ -21,5 +23,10 @@ public class LowerThelnTown extends TownLocation {
     @Override
     public boolean getLordGender() {
         return false;
+    }
+
+    @Override
+    public Point getCareerOfficePosition() {
+        return new Point(5, 2);
     }
 }

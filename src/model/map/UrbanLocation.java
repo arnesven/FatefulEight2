@@ -24,6 +24,6 @@ public interface UrbanLocation {
     String getLordTitle();
     boolean getLordGender();
     Sprite getExitSprite();
-
     int charterBoatEveryNDays();
+    Point getCareerOfficePosition();
 }

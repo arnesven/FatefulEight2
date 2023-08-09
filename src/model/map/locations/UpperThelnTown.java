@@ -30,4 +30,9 @@ public class UpperThelnTown extends TownLocation {
         p.y--;
         return p;
     }
+
+    @Override
+    public Point getCareerOfficePosition() {
+        return new Point(2, 5);
+    }
 }

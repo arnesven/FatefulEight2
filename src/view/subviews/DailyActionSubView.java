@@ -13,6 +13,7 @@ import view.sprites.Sprite;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Random;
 
 public abstract class DailyActionSubView extends AvatarSubView {
 
@@ -117,6 +118,27 @@ public abstract class DailyActionSubView extends AvatarSubView {
                 spr.synch();
                 drawForeground(model, points.get(i).x, points.get(i).y, spr);
                 i++;
+            }
+        }
+    }
+
+    protected void drawSmallRoom(Model model, Sprite lowerWallSprite) {
+        Random random = new Random(4312);
+        for (int row = 1; row < 8; ++row) {
+            for (int col = 0; col < 7; ++col) {
+                Point p = convertToScreen(new Point(col, row));
+                if ((col == 0 || col == 6) && row < 7) {
+                    model.getScreenHandler().put(p.x, p.y, TavernSubView.SIDE_WALL);
+                } else if (1 < row && row < 6) {
+                    model.getScreenHandler().put(p.x, p.y, TavernSubView.FLOOR);
+                } else if (row == 1) {
+                    model.getScreenHandler().put(p.x, p.y, TavernSubView.WALL);
+                } else if (row == 6) {
+                    model.getScreenHandler().put(p.x, p.y, lowerWallSprite);
+                } else {
+                    model.getScreenHandler().put(p.x, p.y,
+                            GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+                }
             }
         }
     }

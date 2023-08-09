@@ -23,4 +23,9 @@ public abstract class SpecialCharacterClass extends CharacterClass {
     public String getDescription() {
         return "Undefined";
     }
+
+    @Override
+    public String getHowToLearn() {
+        return "Undefined";
+    }
 }

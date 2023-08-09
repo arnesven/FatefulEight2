@@ -25,7 +25,7 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.DARK_GRAY, MyColors.BROWN, MyColors.BROWN);
     public static final Sprite FLOOR = new Sprite32x32("tavernfloor", "combat.png", 0x53,
             MyColors.BROWN, FLOOR_COLOR, MyColors.TAN);
-    private static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
+    public static final Sprite LOWER_WALL = new Sprite32x32("lowerwall", "world_foreground.png", 0x24,
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN);
     private static final Sprite BAR_UPPER = new Sprite32x32("barupper", "world_foreground.png", 0x15,
             MyColors.BLACK, MyColors.TAN, Race.NORTHERN_HUMAN.getColor(), MyColors.BEIGE);

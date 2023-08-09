@@ -67,6 +67,12 @@ public class MarksmanClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Archers at castles will probably be able to teach you how to become a marksman. There are also many veterans of wars " +
+                "scattered about. Look for them in farmlands, they can often instruct you on the ways of being a soldier.";
+    }
+
+    @Override
     public String getDescription() {
         return "Marksmen are good archers and scouts. They have good survival skills, and are generally perceptive and stealthy." +
                 "Their basic combat training lets them have a basic proficiency of weapon types apart from the bow.";

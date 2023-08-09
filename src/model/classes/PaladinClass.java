@@ -58,6 +58,12 @@ public class PaladinClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Paladins can sometimes be found at temples. Some High-Elves are paladins. " +
+                "Elves can be found in woods and in plains.";
+    }
+
+    @Override
     public String getDescription() {
         return "Paladins are noble knights and grand protectors of the Order of Light. They possess powerful " +
                 "combat skills, and are proficient with blades, blunt weapons and polearms. They are natural leaders " +

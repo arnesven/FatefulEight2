@@ -90,6 +90,12 @@ public class BlackKnightClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Black Knights sometimes guard river crossings, although I doubt one would agree to teach you their " +
+                "martial ways, unless you could prove yourself worthy of course.";
+    }
+
+    @Override
     public String getDescription() {
         return "Not all knights are graceful heroes. Some betray their masters, are dishonorably discharged, or simply " +
                 "find their own selfish paths. Black Knights are fierce fighters who manage to stay agile even in heavy armor. " +

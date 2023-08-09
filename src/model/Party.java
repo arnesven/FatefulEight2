@@ -52,6 +52,7 @@ public class Party implements Serializable {
     private Loan currentLoan = null;
     private HorseHandler horseHandler = new HorseHandler();
     private List<GameCharacter> recruitmentPersistence = null;
+    private boolean seminarHeld = false;
 
     public Party() {
         position = new Point(26, 19);
@@ -687,5 +688,13 @@ public class Party implements Serializable {
 
     public void setRecruitmentPersistence(List<GameCharacter> recruitables) {
         this.recruitmentPersistence = recruitables;
+    }
+
+    public boolean isSeminarHeld() {
+        return seminarHeld;
+    }
+
+    public void setSeminarHeld(boolean seminarHeld) {
+        this.seminarHeld = seminarHeld;
     }
 }

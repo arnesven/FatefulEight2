@@ -40,4 +40,9 @@ public abstract class NPCClass extends CharacterClass {
     public String getDescription() {
         return "Unused";
     }
+
+    @Override
+    public String getHowToLearn() {
+        return "Undefined";
+    }
 }

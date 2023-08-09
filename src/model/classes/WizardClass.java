@@ -57,6 +57,12 @@ public class WizardClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Wizards come in two varieties. The respectable ones and hedge wizards. Look for the respectable ones " +
+                "in castles. Hedge wizards usually live in hills. Either type should be able to instruct you in wizardry.";
+    }
+
+    @Override
     public String getDescription() {
         return "Wizards are the masters of magic. Apart from white magic, wizards are vastly knowledgeable about " +
                 "different types of magic. They are also highly intelligent, and are often academics or scholars. " +

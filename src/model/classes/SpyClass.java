@@ -70,6 +70,12 @@ public class SpyClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Spycraft is not easily learned, but I've heard dark-elves are inclined to become spies. " +
+                "Elves can be found woods and in plains.";
+    }
+
+    @Override
     public String getDescription() {
         return "Spies are everywhere. Members of this class are often agile, perceptive, clever and " +
                 "masters of the larceny. While very deft in the skills needed to acquire information, spies " +

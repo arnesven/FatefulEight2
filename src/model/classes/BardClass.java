@@ -61,6 +61,12 @@ public class BardClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Sometimes there will be a play in town. I've heard the minstrels sometimes agree to teach about the ways " +
+                "of being a bard. If you ever visit a castle, a court jester may do the same.";
+    }
+
+    @Override
     public String getDescription() {
         return "Bards are said to have silver tongues, but they're more than just entertainers. " +
                 "Bards can handle social situations, spurious combat and the odd bit of skulduggery." +

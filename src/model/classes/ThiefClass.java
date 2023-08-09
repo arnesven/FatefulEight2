@@ -70,6 +70,12 @@ public class ThiefClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Thieves are common in towns. They are however, more likely to cut your purse, than to guide you in " +
+                "the ways of skullduggery.";
+    }
+
+    @Override
     public String getDescription() {
         return "Anywhere there are people living in urban dwellings, there are thieves. " +
                 "Thieves rely heavily on their senses and their dexterity to. Be it lifting purses, " +

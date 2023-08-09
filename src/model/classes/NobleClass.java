@@ -74,6 +74,12 @@ public class NobleClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Noblemen can usually be found in castles, but sometimes they travel with their entourage on the road. " +
+                "Halflings are sometimes noblemen. Halflings can be found in fields and in the woods.";
+    }
+
+    @Override
     public String getDescription() {
         return "Nobles are the leaders and rulers of society. Nobles have longer educations than most and are skilled " +
                 "broadly in both martial skills and academics. From an early age they are instructed how to act during " +

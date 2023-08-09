@@ -38,6 +38,10 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         for (GeneralShopNode shop : urbanLocation.getShops(model)) {
             addNode(shop.getColumn(), shop.getRow(), shop);
         }
+        Point careerOfficePosition = urbanLocation.getCareerOfficePosition();
+        if (careerOfficePosition != null) {
+            addNode(careerOfficePosition.x, careerOfficePosition.y, new CareerOfficeNode());
+        }
         this.isCoastal = isCoastal;
         model.getMainStory().handleTownSetup(this);
     }

@@ -297,6 +297,7 @@ public class Model {
         gameData.timeOfDay = TimeOfDay.MORNING;
         log.addAnimated("\n- DAY " + gameData.day + " -\n");
         gameData.party.setRecruitmentPersistence(null);
+        gameData.party.getHorseHandler().newAvailableHorse();
     }
 
     public void saveToFile(String filename) {

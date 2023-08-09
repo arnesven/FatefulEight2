@@ -68,6 +68,11 @@ public class MagicianClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Magicians usually travel the world to show their tricks to people as they go. Look for them on the road.";
+    }
+
+    @Override
     public String getDescription() {
         return "Magicians are individuals who mostly use magic as a form of entertainment. However, should " +
                 "the need arise, the can cast spells to protect themselves. They are often charismatic and do " +

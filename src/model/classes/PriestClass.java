@@ -56,6 +56,12 @@ public class PriestClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Priest will often gladly offer you their teachings. Priests can be found in many places, " +
+                "at castles, temples and even wandering the countryside roads, helping those in need";
+    }
+
+    @Override
     public String getDescription() {
         return "Priests are monks and healers, normally connected with a religion or faith. They are skilled practitioners " +
                 "of white magic and make good leaders. Priests excel in soft skills but are normally not opposed " +

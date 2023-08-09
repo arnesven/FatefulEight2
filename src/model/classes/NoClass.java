@@ -46,4 +46,9 @@ public class NoClass extends CharacterClass {
     public String getDescription() {
         return "Unused";
     }
+
+    @Override
+    public String getHowToLearn() {
+        return "Unused";
+    }
 }

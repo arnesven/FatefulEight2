@@ -71,6 +71,12 @@ public class CaptainClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "A master-at-arms at a castle could show you how to become a captain. There are also many veterans of wars " +
+                "scattered about. Look for them in farmlands, they can often instruct you on the ways of being a soldier.";
+    }
+
+    @Override
     public String getDescription() {
         return "Captains are capable men-at-arms, weathered by life in the army. They are proficient with a variety of " +
                 "weapons and are good leaders. Captains are often trained strategists and exhibit fair survival skills.";

@@ -69,6 +69,12 @@ public class DruidClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Look for stone circles out on the plains. Druids sometimes use those for worship and rituals. They may " +
+                "agree to teach you their ways. On the plains you may also find nomads. Nomads sometimes practice druidism.";
+    }
+
+    @Override
     public String getDescription() {
         return "Druids are nature mages who are highly attuned with Green Magic. They often live " +
                 "as hermits which require them to have good survival skills and fair combat abilities. " +

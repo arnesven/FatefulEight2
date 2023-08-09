@@ -72,6 +72,12 @@ public class BarbarianClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Barbarians live in hills, mountains and tundra areas. They can sometimes be persuaded to teach you their ways. " +
+                "I hear some half-orcs are barbarians. Half-orcs sometimes dwell in hilly areas.";
+    }
+
+    @Override
     public String getDescription() {
         return "Barbarian are tribal warriors native to hills and mountainous areas. " +
                 "They are heavy fighters who rely on raw power rather than finesse in battle. " +

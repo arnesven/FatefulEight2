@@ -76,4 +76,10 @@ public class ArtisanClass extends CharacterClass {
     protected int getIconNumber() {
         return 0x01;
     }
+
+    @Override
+    public String getHowToLearn() {
+        return "It is not uncommon to find artisans travelling on roads. They will often agree to teach you their trade. " +
+                "I've heard that many dwarves are artisans. Dwarves can be found in hills and mountains.";
+    }
 }

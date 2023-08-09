@@ -70,8 +70,8 @@ public class HorseHandler extends ArrayList<Horse> {
 
     public void buyAvailableHorse(Model model, int specialPrice) {
         model.getParty().addToGold(-specialPrice);
-        model.getParty().getHorseHandler().addHorse(nextAvailableHorse);
-        model.getParty().getHorseHandler().setHorseBoughtOn(model.getDay());
+        addHorse(nextAvailableHorse);
+        setHorseBoughtOn(model.getDay());
         nextAvailableHorse = generateHorse();
     }
 
@@ -124,5 +124,9 @@ public class HorseHandler extends ArrayList<Horse> {
             ponies = 0;
             horsesFullBlood = 0;
         }
+    }
+
+    public void newAvailableHorse() {
+        nextAvailableHorse = generateHorse();
     }
 }

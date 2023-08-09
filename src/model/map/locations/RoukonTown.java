@@ -32,4 +32,9 @@ public class RoukonTown extends TownLocation {
     public int charterBoatEveryNDays() {
         return 2;
     }
+
+    @Override
+    public Point getCareerOfficePosition() {
+        return new Point(5, 4);
+    }
 }

@@ -57,6 +57,11 @@ public class WitchClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Witches can normally be found in woods and swamps. Perhaps one will teach you about witchcraft?";
+    }
+
+    @Override
     public String getDescription() {
         return "Witches are magic users who focus on green and black magic. Witches " +
                 "can be devilishly clever and quite stealthy to boot. Most witches live alone and must therefore " +

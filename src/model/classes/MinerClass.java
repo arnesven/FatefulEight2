@@ -65,6 +65,12 @@ public class MinerClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "Miners can be found in mines in the mountains. Dwarves are often miners. " +
+                "Dwarves can be found in hills and mountains.";
+    }
+
+    @Override
     public String getDescription() {
         return "Miners are laborers who dig and hack in the earth after precious crystals and ore. " +
                 "They are proficient with heavy weapons like axes and hammers and have great fortitude.";

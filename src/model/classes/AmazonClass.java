@@ -62,4 +62,9 @@ public class AmazonClass extends CharacterClass {
     protected MyColors getIconColor() {
         return MyColors.GREEN;
     }
+
+    @Override
+    public String getHowToLearn() {
+        return "Sometimes you can encounter amazons in swamps who will teach you how to become one.";
+    }
 }

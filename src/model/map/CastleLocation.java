@@ -162,4 +162,9 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public int charterBoatEveryNDays() {
         return Integer.MAX_VALUE;
     }
+
+    @Override
+    public Point getCareerOfficePosition() {
+        return null;
+    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 18;
+    private static final int HEIGHT = 17;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);

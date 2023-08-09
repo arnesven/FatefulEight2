@@ -80,6 +80,11 @@ public class AssassinClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "The assassin's guild are practically in every town. Perhaps they would be willing to teach you their craft?";
+    }
+
+    @Override
     public String getDescription() {
         return "Assassins are trained killers who use stealth and deception to get to, " +
                 "and eliminate their targets. They can climb smooth walls, pick complex locks and " +

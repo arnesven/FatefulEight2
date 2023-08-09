@@ -66,6 +66,12 @@ public class SorcererClass extends CharacterClass {
     }
 
     @Override
+    public String getHowToLearn() {
+        return "I've heard sorcerers often dwell in towers in the woods. Perhaps if you could gain entry, " +
+                "the sorcerer would divulge his secrets to you?";
+    }
+
+    @Override
     public String getDescription() {
         return "Sorcerers are mages who primarily delve into black and red magic. They tend to be more reckless " +
                 "than Wizards, and more ambitious in their designs than witches and magicians. Sorcerer's do not rule " +
