@@ -13,13 +13,11 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class BuyHorseSubView extends SubView {
-    private final BuyHorseState state;
     private final SubView previous;
     private boolean accepted = false;
 
-    public BuyHorseSubView(SubView previous, BuyHorseState buyHorseState) {
+    public BuyHorseSubView(SubView previous) {
         this.previous = previous;
-        this.state = buyHorseState;
     }
 
     @Override

@@ -6,6 +6,8 @@ import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.LodgingSummarySubView;
+import view.subviews.SubView;
 import view.subviews.TavernSubView;
 
 public class LodgingNode extends DailyActionNode {
@@ -38,11 +40,12 @@ public class LodgingNode extends DailyActionNode {
             state.println("You can't afford to pay for food and lodging here.");
             return false;
         }
+        SubView prev = model.getSubView();
+        model.setSubView(new LodgingSummarySubView(model));
         state.print("Pay " + EveningState.lodgingCost(model) + " for food and lodging here? (Y/N) ");
-        if (state.yesNoInput()) {
-            return true;
-        }
-        return false;
+        boolean toReturn = state.yesNoInput();
+        model.setSubView(prev);
+        return toReturn;
     }
 
     @Override

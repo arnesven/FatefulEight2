@@ -216,6 +216,14 @@ public class EveningState extends GameState {
         return model.getParty().size() + (model.getParty().size()+1) / 2 + model.getParty().getHorseHandler().size();
     }
 
+    public static List<String> lodgingBreakdown(Model model) {
+        List<String> result = new ArrayList<>();
+        result.add("Food & Drink x" + model.getParty().size());
+        int rooms = (model.getParty().size()+1) / 2;
+        result.add("Room x" + rooms);
+        result.add("Stable x" + model.getParty().getHorseHandler().size());
+        return result;
+    }
     protected void notLodging(Model model) {
         if (hasEnoughFood(model)) {
             println("The party makes camp and consumes rations.");

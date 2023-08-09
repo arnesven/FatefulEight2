@@ -34,7 +34,7 @@ public class BuyHorseState extends GameState {
             leaderSay("I don't think we can handle more horses right now.");
         } else {
             SubView previous = model.getSubView();
-            BuyHorseSubView subView = new BuyHorseSubView(model.getSubView(), this);
+            BuyHorseSubView subView = new BuyHorseSubView(model.getSubView());
             model.setSubView(subView);
             waitForReturn();
             if (subView.didAccept()) {
