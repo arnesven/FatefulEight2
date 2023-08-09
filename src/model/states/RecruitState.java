@@ -41,6 +41,7 @@ public class RecruitState extends GameState {
         setLevels(recruitables);
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
+        model.getParty().setRecruitmentPersistence(recruitables);
     }
 
     private void setLevels(List<GameCharacter> recruitables) {
@@ -58,8 +59,10 @@ public class RecruitState extends GameState {
     public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
         super(model);
         recruitables.addAll(preSelectedRecruitables);
+        model.getParty().setRecruitmentPersistence(recruitables);
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
+        recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
     }
 
     @Override

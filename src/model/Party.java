@@ -51,6 +51,7 @@ public class Party implements Serializable {
     private final Set<String> specialCharactersRecruited = new HashSet<>();
     private Loan currentLoan = null;
     private HorseHandler horseHandler = new HorseHandler();
+    private List<GameCharacter> recruitmentPersistence = null;
 
     public Party() {
         position = new Point(26, 19);
@@ -678,5 +679,13 @@ public class Party implements Serializable {
 
     public boolean canBuyMoreHorses() {
         return horseHandler.size() < partyMembers.size() + 2;
+    }
+
+    public List<GameCharacter> getRecruitmentPersistence() {
+        return recruitmentPersistence;
+    }
+
+    public void setRecruitmentPersistence(List<GameCharacter> recruitables) {
+        this.recruitmentPersistence = recruitables;
     }
 }

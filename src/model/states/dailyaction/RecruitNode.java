@@ -16,7 +16,11 @@ public class RecruitNode extends DailyActionNode {
 
     public RecruitNode(Model model) {
         super("Recruit Adventurers");
-        this.recruitState = new RecruitState(model);
+        if (model.getParty().getRecruitmentPersistence() == null) {
+            this.recruitState = new RecruitState(model);
+        } else {
+            this.recruitState = new RecruitState(model, model.getParty().getRecruitmentPersistence());
+        }
     }
 
     @Override
