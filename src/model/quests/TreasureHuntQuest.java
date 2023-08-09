@@ -38,7 +38,7 @@ public class TreasureHuntQuest extends Quest {
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public TreasureHuntQuest() {
-        super("Treasure Hunt", "Junk Seller", QuestDifficulty.HARD, 1, 50, 0, TEXT, END_TEXT);
+        super("Treasure Hunt", "Junk Seller", QuestDifficulty.HARD, 1, 250, 0, TEXT, END_TEXT);
     }
 
     @Override

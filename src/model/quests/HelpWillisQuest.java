@@ -25,7 +25,7 @@ public class HelpWillisQuest extends MainQuest {
     private int recruited = 0;
 
     public HelpWillisQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.EASY, 0, 15, 0, INTRO_TEXT, ENDING_TEXT);
+        super(QUEST_NAME, "", QuestDifficulty.EASY, 0, 75, 0, INTRO_TEXT, ENDING_TEXT);
     }
 
     @Override

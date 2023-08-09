@@ -58,7 +58,7 @@ public class ElvenHighCouncilQuest extends Quest {
     private boolean foughtGuards = false;
 
     public ElvenHighCouncilQuest() {
-        super("Elven High Council", "Human Lords", QuestDifficulty.HARD, 1, 35, 35, INTRO, ENDING);
+        super("Elven High Council", "Human Lords", QuestDifficulty.HARD, 1, 175, 35, INTRO, ENDING);
     }
 
     @Override

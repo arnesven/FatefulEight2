@@ -15,7 +15,6 @@ public class QuestSuccessfulNode extends QuestNode {
     private final Reward reward;
     private final String text;
     private final Point position;
-    private int numberOfPartyMembers;
 
     public QuestSuccessfulNode(Reward reward, String text) {
         this.reward = reward;
@@ -47,9 +46,8 @@ public class QuestSuccessfulNode extends QuestNode {
     @Override
     public QuestEdge run(Model model, QuestState state) {
         state.println(text);
-        int gold = (reward.getGold() * numberOfPartyMembers);
-        String goldPart = " You receive " + gold + " gold,";
-        if (gold == 0) {
+        String goldPart = " You receive " + reward.getGold() + " gold,";
+        if (reward.getGold() == 0) {
             goldPart = "";
         }
         if (reward.getExp() > 0) {
@@ -64,12 +62,8 @@ public class QuestSuccessfulNode extends QuestNode {
             state.println(".");
         }
         model.getQuestDeck().setSuccessfulIn(model.getCurrentHex().getLocation());
-        reward.giveYourself(model, numberOfPartyMembers);
+        reward.giveYourself(model);
         return new QuestEdge(this);
-    }
-
-    public void setNumberOfStartingPartyMembers(int size) {
-        this.numberOfPartyMembers = size;
     }
 
     public void move(int col, int row) {

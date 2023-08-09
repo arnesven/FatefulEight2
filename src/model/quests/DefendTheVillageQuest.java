@@ -43,7 +43,7 @@ public class DefendTheVillageQuest extends Quest {
 
     public DefendTheVillageQuest() {
         super("Defend the Village", "Desperate Peasants", QuestDifficulty.HARD,
-                1, 50, 0, TEXT, END_TEXT);
+                1, 250, 0, TEXT, END_TEXT);
     }
 
     @Override

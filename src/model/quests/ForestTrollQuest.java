@@ -41,7 +41,7 @@ public class ForestTrollQuest extends Quest {
     private static final List<QuestBackground> BACKGROUND = makeBackgroundSprites();
 
     public ForestTrollQuest() {
-        super("Forest Troll", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 35, 0, INTRO, ENDING);
+        super("Forest Troll", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, ENDING);
         getScenes().get(2).get(0).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {

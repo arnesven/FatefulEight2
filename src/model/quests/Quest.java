@@ -100,10 +100,6 @@ public abstract class Quest {
         return all;
     }
 
-    public void accept(Party party) {
-        this.successEnding.setNumberOfStartingPartyMembers(party.size());
-    }
-
     public List<QuestBackground> getBackgroundSprites() { return new ArrayList<>(); }
 
     public abstract MyColors getBackgroundColor();

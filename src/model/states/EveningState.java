@@ -120,7 +120,6 @@ public class EveningState extends GameState {
                     if (model.getCurrentHex().getLocation() != null) {
                         model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
                     }
-                    q.accept(model.getParty());
                     done = true;
                 } else {
                     println(q.getPrerequisites(model));

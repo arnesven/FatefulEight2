@@ -35,7 +35,7 @@ public class MurderMysteryQuest extends Quest {
     private int questSuccesses = 0;
 
     public MurderMysteryQuest() {
-        super("Murder Mystery", "Sheriff", QuestDifficulty.HARD, 1, 50, 0, INTRO, ENDING);
+        super("Murder Mystery", "Sheriff", QuestDifficulty.HARD, 1, 250, 0, INTRO, ENDING);
     }
 
     @Override

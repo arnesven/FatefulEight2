@@ -29,9 +29,9 @@ public class Reward implements Serializable {
         return exp;
     }
 
-    public void giveYourself(Model model, int numberOfPartyMembers) {
+    public void giveYourself(Model model) {
         Party party = model.getParty();
-        party.addToGold(gold * numberOfPartyMembers);
+        party.addToGold(gold);
         party.addToReputation(rep);
         for (GameCharacter gc : party.getPartyMembers()) {
             party.giveXP(model, gc, exp);
@@ -49,6 +49,6 @@ public class Reward implements Serializable {
         } else if (rep < 0) {
             reputation = ", but your reputation will DECREASE.";
         }
-        return "you will be paid " + gold + " gold per party member" + experience + reputation;
+        return "you will be paid " + gold + " gold" + experience + reputation;
     }
 }

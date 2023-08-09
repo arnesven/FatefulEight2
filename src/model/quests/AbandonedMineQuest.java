@@ -57,7 +57,7 @@ public class AbandonedMineQuest extends Quest {
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MIN, Race.DWARF);
 
     public AbandonedMineQuest() {
-        super("Abandoned Mine", "Murak", QuestDifficulty.HARD, 1, 50, 0, INTRO, OUTRO);
+        super("Abandoned Mine", "Murak", QuestDifficulty.HARD, 1, 250, 0, INTRO, OUTRO);
         getScenes().get(1).get(0).addSpellCallback(new LevitateSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {

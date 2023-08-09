@@ -23,7 +23,7 @@ public class SpecialDeliveryQuest extends MainQuest {
     private boolean fightInTown;
 
     public SpecialDeliveryQuest() {
-        super("Special Delivery", "", QuestDifficulty.MEDIUM, 0, 35, 50, INTRO_TEXT, END_TEXT);
+        super("Special Delivery", "", QuestDifficulty.MEDIUM, 0, 175, 50, INTRO_TEXT, END_TEXT);
         this.fightInTown = false;
     }
 

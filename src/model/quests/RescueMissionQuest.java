@@ -33,7 +33,7 @@ public class RescueMissionQuest extends MainQuest {
 
     public RescueMissionQuest() {
         super(QUEST_NAME, "", QuestDifficulty.MEDIUM,
-                1, 35, 0, TEXT, ENDING);
+                1, 175, 0, TEXT, ENDING);
         this.caidAppearance = PortraitSubView.makeRandomPortrait(Classes.CAP, Race.ALL, false);
     }
 

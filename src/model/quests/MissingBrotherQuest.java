@@ -63,7 +63,7 @@ public class MissingBrotherQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public MissingBrotherQuest() {
-        super("Missing Brother", "Ghania", QuestDifficulty.MEDIUM, 1, 35, 0, text, endText);
+        super("Missing Brother", "Ghania", QuestDifficulty.MEDIUM, 1, 175, 0, text, endText);
     }
 
     @Override
