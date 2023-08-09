@@ -8,13 +8,15 @@ import java.io.Serializable;
 public abstract class Horse implements Serializable {
     private static final Sprite BACKGROUND = new HorseSprite(0, 3, MyColors.LIGHT_GRAY, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.LIGHT_BLUE);
     private final String name;
+    private final MyColors avatarColor;
     private int cost;
     private String type;
 
-    public Horse(String type, String name, int cost) {
+    public Horse(String type, String name, int cost, MyColors avatarColor) {
         this.type = type;
         this.name = name;
         this.cost = cost;
+        this.avatarColor = avatarColor;
     }
 
     public static Sprite getBackgroundSprite() {
@@ -38,6 +40,10 @@ public abstract class Horse implements Serializable {
     }
 
     public abstract Horse copy();
+
+    public MyColors getAvatarColor() {
+        return avatarColor;
+    }
 
     protected static class HorseSprite extends Sprite {
         public HorseSprite(int col, int row, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {

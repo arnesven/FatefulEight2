@@ -7,7 +7,7 @@ public class Pony extends Horse {
     private static final Sprite SPRITE = new HorseSprite(0, 0, MyColors.BROWN, MyColors.BEIGE, MyColors.DARK_BROWN, MyColors.YELLOW);
 
     public Pony() {
-        super("Pony", "Pony", 35);
+        super("Pony", "Pony", 35, MyColors.BROWN);
     }
 
     @Override

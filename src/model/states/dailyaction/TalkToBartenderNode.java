@@ -65,7 +65,7 @@ public class TalkToBartenderNode extends DailyActionNode {
             } else if (selected == 1){
                 new BuyRationsState(model).run(model);
             } else if (buyHorse) {
-                new BuyHorseState(model).run(model);
+                new BuyHorseState(model, "Bartender").run(model);
             } else {
                 new SellHorseState(model).run(model);
             }

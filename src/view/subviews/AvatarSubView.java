@@ -61,13 +61,17 @@ public abstract class AvatarSubView extends SubView {
         private boolean done = false;
 
         public MovementAnimation(Point fromPoint, Point toPoint, Sprite avatarSprite) {
-            this.from = fromPoint;
-            this.to = toPoint;
+            this.from = bottomAlign(fromPoint, avatarSprite);
+            this.to = bottomAlign(toPoint, avatarSprite);
             this.sprite = avatarSprite;
             this.shift = new Point2D.Double(0.0, 0.0);
             steps = fromPoint.distance(toPoint)/1.5;
             this.diff = new Point2D.Double((to.x - from.x) / steps, (to.y - from.y) / steps);
             AnimationManager.registerPausable(this);
+        }
+
+        private Point bottomAlign(Point point, Sprite avatarSprite) {
+            return new Point(point.x, point.y - avatarSprite.getHeight()/8 + 4);
         }
 
         @Override

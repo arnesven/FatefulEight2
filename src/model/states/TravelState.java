@@ -7,6 +7,8 @@ import model.map.World;
 import model.map.WorldHex;
 import model.states.events.RiverEvent;
 import view.YesNoMessageView;
+import view.sprites.RidingSprite;
+import view.sprites.Sprite;
 import view.subviews.EmptySubView;
 import view.subviews.MapSubView;
 import view.subviews.CollapsingTransition;
@@ -14,6 +16,8 @@ import view.subviews.CollapsingTransition;
 import java.awt.*;
 
 public class TravelState extends GameState {
+
+    private Sprite spriteToUse;
 
     public TravelState(Model model) {
         super(model);
@@ -26,6 +30,12 @@ public class TravelState extends GameState {
         model.getTutorial().travel(model);
 
         boolean riding = checkForRiding(model);
+        if (riding) {
+            spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().get(0));
+            model.getWorld().setAlternativeAvatar(spriteToUse);
+        } else {
+            spriteToUse = model.getParty().getLeader().getAvatarSprite();
+        }
 
         GameState state = travelOneStep(model, mapSubView);
         if (state != null) {
@@ -35,6 +45,7 @@ public class TravelState extends GameState {
             mapSubView = new MapSubView(model);
             CollapsingTransition.transition(model, mapSubView);
             state = travelOneStep(model, mapSubView);
+            model.getWorld().setAlternativeAvatar(null);
             if (state != null) {
                 return state;
             }
@@ -47,6 +58,9 @@ public class TravelState extends GameState {
             return false;
         }
         if (model.getParty().canRide()) {
+            if (model.getSettings().alwaysRide()) {
+                return true;
+            }
             print("You have enough horses for your party to ride. Do you want to? (Y/N) ");
             return yesNoInput();
         } else {
@@ -75,8 +89,7 @@ public class TravelState extends GameState {
         }
 
         mapSubView.drawAvatarEnabled(false);
-        mapSubView.addMovementAnimation(
-                model.getParty().getLeader().getAvatarSprite(),
+        mapSubView.addMovementAnimation(spriteToUse,
                 model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
                 model.getWorld().translateToScreen(newPosition, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
         mapSubView.waitForAnimation();

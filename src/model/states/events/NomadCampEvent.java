@@ -112,9 +112,10 @@ public class NomadCampEvent extends DailyEventState {
             merchantShop.setSellingEnabled(false);
             merchantShop.run(model);
         } else if (roll % 3 == 1) {
-            print("The nomads offer to sell you a horse.");
-            BuyHorseState buyHorseState = new BuyHorseState(model);
-            buyHorseState.setPrice(model.getParty().getHorseHandler().getAvailableHorse(model).getCost() + MyRandom.randInt(-20, 20));
+            println("The nomads offer to sell you a horse.");
+            BuyHorseState buyHorseState = new BuyHorseState(model, "Nomad");
+            buyHorseState.setPrice(model.getParty().getHorseHandler().getAvailableHorse(model).getCost() +
+                    MyRandom.randInt(-20, 10));
             buyHorseState.run(model);
         } else if (!isWarriorClan) {
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);

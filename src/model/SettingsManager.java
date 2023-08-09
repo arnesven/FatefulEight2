@@ -12,6 +12,7 @@ public class SettingsManager implements Serializable {
     private LogSpeed logSpeed = LogSpeed.FAST;
     private LogSpeed combatLogSpeed = LogSpeed.FAST;
     private boolean levelUpSummary = true;
+    private boolean alwaysRide = false;
 
     public void toggleAutosave() {
         autosave = !autosave;
@@ -71,4 +72,8 @@ public class SettingsManager implements Serializable {
     public void toggleLevelUpSummary() {
         levelUpSummary = !levelUpSummary;
     }
+
+    public boolean alwaysRide() { return alwaysRide; }
+
+    public void toggleAlwaysRide() { alwaysRide = !alwaysRide; }
 }

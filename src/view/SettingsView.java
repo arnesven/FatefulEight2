@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 16;
+    private static final int HEIGHT = 18;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -65,7 +65,13 @@ public class SettingsView extends SelectableListMenu {
                     model.getSettings().toggleLevelUpSummary();
                 }
             },
-            new ListContent(xStart+2, yStart+12, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
+            new ListContent(xStart+2, yStart+12, "Always Ride " + (model.getSettings().alwaysRide()?"ON":"OFF")) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    model.getSettings().toggleAlwaysRide();
+                }
+            },
+            new ListContent(xStart+2, yStart+14, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     model.toggleFullScreen();

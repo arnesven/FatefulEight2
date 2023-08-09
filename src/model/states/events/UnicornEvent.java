@@ -31,7 +31,7 @@ public class UnicornEvent extends DailyEventState {
         calculatePartyAlignment(model, this);
         if (getPartyAlignment(model) > 0 && MyRandom.rollD10() > 8) {
             println("The unicorn seems to have taken to you and allows members of your party to mount it.");
-            println("You have gained a horse, the unicorn. The unicorn is a full-blood.");
+            println("You have gained a horse, the unicorn. The unicorn is a steed.");
             model.getParty().getHorseHandler().addHorse(new Unicorn());
         } else {
             println("The unicorn neighs softly and then trots away into the bushes.");

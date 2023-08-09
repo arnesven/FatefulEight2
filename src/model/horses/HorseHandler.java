@@ -12,7 +12,7 @@ public class HorseHandler extends ArrayList<Horse> {
     private static final List<Horse> HORSES = List.of(
             new Pony(), new Pony(), new Pony(),
             new Prancer(), new Regal(), new Sphinx(),
-            new Merrygold());
+            new Merrygold(), new Faxe());
 
     private int horsesFullBlood = 0;
     private int ponies = 0;
@@ -37,7 +37,7 @@ public class HorseHandler extends ArrayList<Horse> {
         }
         int tallsLeft = partyMembers.size() - shortsLeft;
 
-        if (tallsLeft > horsesFullBlood) { // Enough full bloods for tall guys?
+        if (tallsLeft > horsesFullBlood) { // Enough steeds for tall guys?
             return false;
         }
         shortsLeft -= Math.min(shortsLeft, ponies); // Put short guys on ponies.
