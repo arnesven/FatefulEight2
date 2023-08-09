@@ -51,7 +51,7 @@ public class MansionHeistQuest extends Quest {
     private static final String endText = "You return to your contact and deliver the contents of Lady Golbrads safe.";
 
     public MansionHeistQuest() {
-        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM, -1, 35, text, endText);
+        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM, -1, 175, text, endText);
     }
 
     @Override

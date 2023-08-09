@@ -98,7 +98,7 @@ public class SelectQuestSubView extends SubView {
             model.getScreenHandler().put(xStart + 10, yStart + (row-1), TopText.REP_ICON_SPRITE);
         }
         if (quest.getReward().getGold() != 0) {
-            BorderFrame.drawString(model.getScreenHandler(), "  " + quest.getReward().getGold()*model.getParty().size(),
+            BorderFrame.drawString(model.getScreenHandler(), "  " + quest.getReward().getGold(),
                     xStart + 10, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
             model.getScreenHandler().put(xStart + 10, yStart + (row-1), TopText.GOLD_ICON_SPRITE);
         }
