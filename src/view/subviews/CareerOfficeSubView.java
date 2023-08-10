@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
@@ -37,11 +38,15 @@ public class CareerOfficeSubView extends DailyActionSubView {
         java.util.List<Point> partyPositions = List.of(new Point(4, 4), new Point(2, 4),
                 new Point(2, 5), new Point(4, 5), new Point(5, 4),
                 new Point(5, 5), new Point(1, 5));
-        for (int i = 1; i < model.getParty().getPartyMembers().size(); ++i) {
-            AvatarSprite avatar = model.getParty().getPartyMember(i).getAvatarSprite();
-            avatar.synch();
-            Point drawPos = convertToScreen(partyPositions.get(i - 1));
-            model.getScreenHandler().register(avatar.getName(), drawPos, avatar);
+        int count = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc != model.getParty().getLeader()) {
+                AvatarSprite avatar = gc.getAvatarSprite();
+                avatar.synch();
+                Point drawPos = convertToScreen(partyPositions.get(count));
+                model.getScreenHandler().register(avatar.getName(), drawPos, avatar);
+                count++;
+            }
         }
 
         for (int x = 1; x < 6; ++x) {
