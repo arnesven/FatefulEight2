@@ -61,10 +61,6 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
-        inventory.add(new Estoc());
-        inventory.add(new RaidersAxe());
-        inventory.add(new Wakizashi());
-        inventory.add(new DaiKatana());
     }
 
     private LoopingSprite[] makeCursorSprites() {
