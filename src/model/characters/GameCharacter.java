@@ -169,7 +169,7 @@ public class GameCharacter extends Combatant {
             if (target.isDead()) {
                 return;
             }
-            doOneAttack(combatEvent, target, false, 0, 10);
+            doOneAttack(combatEvent, target, false, 0, equipment.getWeapon().getCriticalTarget());
         }
     }
 
@@ -416,7 +416,7 @@ public class GameCharacter extends Combatant {
         int rank = getRankForSkill(equipment.getWeapon().getSkillToUse(this));
         for (int roll=1; roll <=10; roll++) {
             int modified = roll + rank;
-            if (roll == 10) {
+            if (roll >= equipment.getWeapon().getCriticalTarget()) {
                 sum += equipment.getWeapon().getDamage(modified, this) * 2;
             } else {
                 sum += equipment.getWeapon().getDamage(modified, this);

@@ -144,4 +144,8 @@ public abstract class Weapon extends EquipableItem {
     public Item makeHigherTierCopy() {
         return new SuperiorWeapon((Weapon)copy());
     }
+
+    public int getCriticalTarget() {
+        return 10;
+    }
 }
