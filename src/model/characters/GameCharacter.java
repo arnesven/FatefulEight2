@@ -414,12 +414,14 @@ public class GameCharacter extends Combatant {
     public double calcAverageDamage() {
         double sum = 0.0;
         int rank = getRankForSkill(equipment.getWeapon().getSkillToUse(this));
-        for (int roll=1; roll <=10; roll++) {
-            int modified = roll + rank;
-            if (roll >= equipment.getWeapon().getCriticalTarget()) {
-                sum += equipment.getWeapon().getDamage(modified, this) * 2;
-            } else {
-                sum += equipment.getWeapon().getDamage(modified, this);
+        for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); ++i) {
+            for (int roll = 1; roll <= 10; roll++) {
+                int modified = roll + rank;
+                if (roll >= equipment.getWeapon().getCriticalTarget()) {
+                    sum += equipment.getWeapon().getDamage(modified, this) * 2;
+                } else {
+                    sum += equipment.getWeapon().getDamage(modified, this);
+                }
             }
         }
         return sum / 10.0;

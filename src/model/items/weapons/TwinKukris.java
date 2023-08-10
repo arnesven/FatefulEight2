@@ -2,14 +2,19 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
-import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+import view.sprites.TwoHandedItemSprite;
 
-public class Kukri extends BladedWeapon {
-    private static final Sprite SPRITE = new ItemSprite(4, 11);
+public class TwinKukris extends BladedWeapon {
+    private static final Sprite SPRITE = new TwoHandedItemSprite(6, 11);
 
-    public Kukri() {
-        super("Kukri", 22, new int[]{5, 9}, false, 1);
+    public TwinKukris() {
+        super("Twin Kukris", 44, new int[]{5, 9}, true, 1);
+    }
+
+    @Override
+    public int getNumberOfAttacks() {
+        return 2;
     }
 
     @Override
@@ -19,7 +24,7 @@ public class Kukri extends BladedWeapon {
 
     @Override
     public Item copy() {
-        return new Kukri();
+        return new TwinKukris();
     }
 
     @Override

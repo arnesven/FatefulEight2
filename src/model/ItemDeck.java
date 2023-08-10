@@ -254,20 +254,20 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<? extends Weapon> allAxes() {
         return List.of(new Hatchet(), new ThrowingAxes(), new Pickaxe(), new RaidersAxe(), new BattleAxe(),
-                new Choppa(), new DoubleAxe(), new GreatAxe());
+                new Choppa(), new TwinHatchets(), new DoubleAxe(), new GreatAxe());
     }
 
     public static List<? extends Weapon> allBluntWeapons() {
         return List.of(new Club(), new LongStaff(), new OldStaff(), new MagesStaff(),
                 new Scepter(), new MorningStar(), new Flail(), new Warhammer(), new Mace(),
-                new GrandMaul());
+                new GrandMaul(), new TripleFlail());
     }
 
     public static List<? extends Weapon> allBlades() {
         return List.of(new Dirk(), new Dagger(), new ThrowingKnives(), new Kukri(), new ShortSword(),
                 new OrcishKnife(), new RitualDagger(), new Scimitar(), new Falchion(), new Wakizashi(),
                 new Broadsword(), new Longsword(), new Estoc(), new Katana(), new TwoHandedSword(),
-                new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana());
+                new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(), new TwinKukris());
     }
 
 }
