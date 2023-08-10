@@ -114,7 +114,7 @@ public class PartFourStoryPart extends StoryPart {
                 return "Return to the lord of " + castleName + " to deliver the intel you've gathered " +
                         "and receive your reward.";
             }
-            return "YouCompleted";
+            return "You infiltrated the orc war camp and gathered valuable intel for the lord of " + castleName+ "\n\nCompleted";
         }
 
         @Override

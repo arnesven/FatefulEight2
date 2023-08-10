@@ -5,11 +5,13 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.map.CastleLocation;
+import model.map.MountainHex;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.quests.RescueMissionQuest;
 import model.quests.SpecialDeliveryQuest;
+import model.quests.VampiresLairQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
@@ -59,6 +61,10 @@ public class RescueMissionStoryPart extends StoryPart {
                             castle.getLordName()));
                 }
             }
+        }
+        if (model.getCurrentHex() instanceof MountainHex && internalStep >= COMPLETED && !model.getMainStory().isCaidQuestDone()) {
+            quests.add(getQuestAndSetPortrait(VampiresLairQuest.QUEST_NAME, model.getMainStory().getCaidCharacter().getAppearance(),
+                    model.getMainStory().getCaidCharacter().getName()));
         }
     }
 

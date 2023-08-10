@@ -11,7 +11,6 @@ import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.map.WorldHex;
-import model.map.locations.AncientStrongholdLocation;
 import model.quests.*;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -95,46 +94,47 @@ public class MainStory implements Serializable {
     private MainStorySpawnLocation spawnData;
     private GameCharacter caidCharacter = new CaidCharacter();
     private GameCharacter willisCharacter = new WillisCharacter();
+    private boolean caidQuestDone;
 
 
     public MainStory() { }
 
     public void progressStoryForTesting(Model model) {
-//        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
-//                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
-//        setupStory(dummy);                // Get task "visit uncle"
-//        getStoryParts().get(0).progress();     // Visit uncle, get Frogmen Problem quest
-//        getStoryParts().get(0).progress();     // Completes frogmen problem quest
-//        getStoryParts().get(0).progress();     // Returns to uncle, get visit Everix task
-//        getStoryParts().get(0).transitionStep(model, 0); // Gets "Reward at ... Castle" Task
-//        getStoryParts().get(0).progress();     // Visits Everix
-//        getStoryParts().get(0).transitionStep(model, 1); // Gets "Find Witch" Task
-//
-//        getStoryParts().get(1).progress();  // Visit lord
-//        getStoryParts().get(1).progress();  // Do rescue mission quest
-//        getStoryParts().get(1).progress();  // Returns to lord, task completed
-//        getStoryParts().get(1).progress();  //
-//
-//
-//        getStoryParts().get(2).progress();   // Visits witch, get Special Delivery Quest
-//        getStoryParts().get(2).progress();   // Completes special delivery quests
-//        getStoryParts().get(2).progress();   // Returns to witch, get Crimson Pearl info -> completes task
-//        getStoryParts().get(2).transitionStep(model); // Gets part three story part
-//
-//
-//        getStoryParts().get(3).progress();  // Progressed at lord because witch part is done
-//        getStoryParts().get(3).progress();  // Talks to Willis, gets trouble in the library quest
-//        getStoryParts().get(3).progress();  // Completes Trouble in the Library Quest,
-//        getStoryParts().get(3).progress();  // Returns to willis, cleans library and gets more info on quad.
-//        getStoryParts().get(3).transitionStep(model);
-//        model.setWorldState(model.getMainStory().getExpandDirection());
-//
-//        getStoryParts().get(4).progress(); // Get Go to Orc War Camp task
-//        getStoryParts().get(4).progress(); // Quest done, return.
-//        getStoryParts().get(4).progress(); // Get stuff from lord
-//        addStoryPart(new ZeppelinStoryPart(model.getMainStory().getXelbiPosition(), "FJANT"));
-//        getStoryParts().get(4).transitionStep(model);
-//        model.getParty().addToGold(300);
+        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
+                new KruskTalandro(), new CharacterClass[]{Classes.WIT, Classes.DRU, Classes.MAG, Classes.SOR});
+        setupStory(dummy);                // Get task "visit uncle"
+        getStoryParts().get(0).progress();     // Visit uncle, get Frogmen Problem quest
+        getStoryParts().get(0).progress();     // Completes frogmen problem quest
+        getStoryParts().get(0).progress();     // Returns to uncle, get visit Everix task
+        getStoryParts().get(0).transitionStep(model, 0); // Gets "Reward at ... Castle" Task
+        getStoryParts().get(0).progress();     // Visits Everix
+        getStoryParts().get(0).transitionStep(model, 1); // Gets "Find Witch" Task
+
+        getStoryParts().get(1).progress();  // Visit lord
+        getStoryParts().get(1).progress();  // Do rescue mission quest
+        getStoryParts().get(1).progress();  // Returns to lord, task completed
+        getStoryParts().get(1).progress();  //
+
+
+        getStoryParts().get(2).progress();   // Visits witch, get Special Delivery Quest
+        getStoryParts().get(2).progress();   // Completes special delivery quests
+        getStoryParts().get(2).progress();   // Returns to witch, get Crimson Pearl info -> completes task
+        getStoryParts().get(2).transitionStep(model); // Gets part three story part
+
+
+        getStoryParts().get(3).progress();  // Progressed at lord because witch part is done
+        getStoryParts().get(3).progress();  // Talks to Willis, gets trouble in the library quest
+        getStoryParts().get(3).progress();  // Completes Trouble in the Library Quest,
+        getStoryParts().get(3).progress();  // Returns to willis, cleans library and gets more info on quad.
+        getStoryParts().get(3).transitionStep(model);
+        model.setWorldState(model.getMainStory().getExpandDirection());
+
+        getStoryParts().get(4).progress(); // Get Go to Orc War Camp task
+        getStoryParts().get(4).progress(); // Quest done, return.
+        getStoryParts().get(4).progress(); // Get stuff from lord
+        addStoryPart(new ZeppelinStoryPart(model.getMainStory().getXelbiPosition(), "FJANT"));
+        getStoryParts().get(4).transitionStep(model);
+        model.getParty().addToGold(300);
     }
 
     public EveningState generateInitialLeadsEveningState(Model model, boolean freeLodging, boolean freeRations) {
@@ -228,6 +228,8 @@ public class MainStory implements Serializable {
         map.put(orcWarCamp.getName(), orcWarCamp);
         AncientStrongholdQuest strongholdQuest = new AncientStrongholdQuest();
         map.put(strongholdQuest.getName(), strongholdQuest);
+        VampiresLairQuest vampireQuest = new VampiresLairQuest();
+        map.put(vampireQuest.getName(), vampireQuest);
         return map;
     }
 
@@ -325,5 +327,13 @@ public class MainStory implements Serializable {
 
     public Point getXelbiPosition() {
         return spawnData.getXelbi();
+    }
+
+    public boolean isCaidQuestDone() {
+        return caidQuestDone;
+    }
+
+    public void setCaidQuestDone(boolean caidQuestDone) {
+        this.caidQuestDone = caidQuestDone;
     }
 }

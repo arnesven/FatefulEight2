@@ -161,6 +161,10 @@ public abstract class Quest {
     }
 
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        return endOfQuestProcedure(model, state, questWasSuccess);
+    }
+
+    protected static GameState endOfQuestProcedure(Model model, QuestState state, boolean questWasSuccess) {
         state.print("Press enter to continue.");
         state.waitForReturn();
         QuestState.setCurrentTerrainSubview(model);
@@ -169,7 +173,7 @@ public abstract class Quest {
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 
-    private void adjustAttitudes(Model model, boolean questWasSuccess) {
+    private static void adjustAttitudes(Model model, boolean questWasSuccess) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc != model.getParty().getLeader()) {
                 if (questWasSuccess) {
