@@ -73,7 +73,9 @@ public class VampirePuppeteer extends UndeadEnemy {
             }
         }
         if (count > 0) {
-            combatEvent.println(MyStrings.numberWord(count) + " thralls have retreated from combat!");
+            combatEvent.println("As the spell of the vampire puppeteer dissipates, " +
+                    "the thralls seem to wake up from a deep slumber. " +
+                    "Now " + MyStrings.numberWord(count) + " thralls retreat from combat!");
         }
     }
 

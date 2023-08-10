@@ -58,8 +58,6 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
-        inventory.add(new TwinDaggers());
-        inventory.add(new TwinKukris());
     }
 
     private LoopingSprite[] makeCursorSprites() {

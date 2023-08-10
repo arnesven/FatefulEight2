@@ -57,19 +57,19 @@ public class VampiresLairQuest extends MainQuest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Thralls #1", List.of(
-                    new CollectiveSkillCheckSubScene(1, 1, Skill.Sneak, 1, "Let's try to be quiet now."), // 5
+                    new CollectiveSkillCheckSubScene(1, 1, Skill.Sneak, 5, "Let's try to be quiet now."), // 5
                     new VampirePuppeteerCombatSubScene(2, 1, 11, 1))),
                 new QuestScene("Thralls #2", List.of(
-                    new CollectiveSkillCheckSubScene(2, 3, Skill.Sneak, 1, "Maybe we can still remain undetected in here..."), // 6
+                    new CollectiveSkillCheckSubScene(2, 3, Skill.Sneak, 6, "Maybe we can still remain undetected in here..."), // 6
                     new VampirePuppeteerCombatSubScene(3, 3, 16, 2))),
                 new QuestScene("Thralls #3", List.of(
-                    new CollectiveSkillCheckSubScene(3, 5, Skill.Sneak, 1, "Amazing, nobody has noticed us yet! Let's keep going."), // 7
+                    new CollectiveSkillCheckSubScene(3, 5, Skill.Sneak, 7, "Amazing, nobody has noticed us yet! Let's keep going."), // 7
                     new VampirePuppeteerCombatSubScene(4, 5, 21, 3))),
                 new QuestScene("Assassination", List.of(
-                        new SoloSkillCheckSubScene(3, 6, Skill.Perception, 1, "Hmm... two of the vampires are talking. If we get a little closer we may overhear " +
+                        new SoloSkillCheckSubScene(3, 6, Skill.Perception, 8, "Hmm... two of the vampires are talking. If we get a little closer we may overhear " +
                                 "the conversation and learn where the missing sister is being held."), // 8
-                        new SoloSkillCheckSubScene(1, 7, Skill.Sneak, 1, "Maybe we can just sneak up and take her out?"), // 12
-                        new SoloSkillCheckSubScene(2, 7, Skill.Bows, 1, "With one well placed arrow, she'll be one vanquished vampire.") // 12
+                        new SoloSkillCheckSubScene(1, 7, Skill.Sneak, 14, "Maybe we can just sneak up and take her out?"), // 12
+                        new SoloSkillCheckSubScene(2, 7, Skill.Bows, 12, "With one well placed arrow, she'll be one vanquished vampire.") // 12
                 ))
                 );
     }
