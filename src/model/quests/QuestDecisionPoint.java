@@ -17,6 +17,7 @@ import java.util.List;
 public class QuestDecisionPoint extends QuestJunction {
 
     private final String leaderTalk;
+    private int defaultConnectionIndex = 0;
 
     public QuestDecisionPoint(int column, int row, List<QuestEdge> connections, String leaderTalk) {
         super(column, row);
@@ -61,11 +62,11 @@ public class QuestDecisionPoint extends QuestJunction {
             state.leaderSay(leaderTalk);
         }
 
-        if (model.getParty().size() == 1) {
+        if (model.getParty().size() - model.getParty().getBench().size() == 1) {
             state.println("(Since you are alone in your party you automatically succeed a the decision point).");
         } else {
             if (leadershipTestFailed(model, state)) {
-                return getConnection(0);
+                return getConnection(defaultConnectionIndex);
             }
         }
 
@@ -94,4 +95,11 @@ public class QuestDecisionPoint extends QuestJunction {
     }
 
 
+    public void setDefaultConnectionIndex(int defaultConnectionIndex) {
+        this.defaultConnectionIndex = defaultConnectionIndex;
+    }
+
+    public int getDefaultConnectionIndex() {
+        return defaultConnectionIndex;
+    }
 }

@@ -1,30 +1,37 @@
 package model.enemies;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.combat.CombatLoot;
-import model.races.HighElf;
+import model.combat.PersonCombatLoot;
 import model.races.Race;
+import model.states.CombatEvent;
+import model.states.GameState;
+import util.MyRandom;
+import util.MyStrings;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 public class VampirePuppeteer extends UndeadEnemy {
     private static final Sprite SPRITE = new VampirePuppeteerSprite();
 
     public VampirePuppeteer(char a) {
         super(a, "Vampire Puppeteer");
+        setFortified(true);
     }
 
     @Override
     public int getMaxHP() {
-        return 0;
+        return 12;
     }
 
     @Override
     public int getSpeed() {
-        return 0;
+        return 6;
     }
 
     @Override
@@ -34,12 +41,40 @@ public class VampirePuppeteer extends UndeadEnemy {
 
     @Override
     public int getDamage() {
-        return 0;
+        return 5;
     }
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return null;
+        return new PersonCombatLoot(model);
+    }
+
+    @Override
+    protected int getFightingStyle() {
+        return FIGHTING_STYLE_MIXED;
+    }
+
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        boolean stillPuppeteer = false;
+        for (Enemy e : combatEvent.getEnemies()) {
+            if (e instanceof VampirePuppeteer) {
+                stillPuppeteer = true;
+                break;
+            }
+        }
+        int count = 0;
+        for (Enemy e : new ArrayList<>(combatEvent.getEnemies())) {
+            if (e instanceof ThrallEnemy) {
+                if (!stillPuppeteer || MyRandom.flipCoin()) {
+                    count++;
+                    combatEvent.retreatEnemy(e);
+                }
+            }
+        }
+        if (count > 0) {
+            combatEvent.println(MyStrings.numberWord(count) + " thralls have retreated from combat!");
+        }
     }
 
     private static class VampirePuppeteerSprite extends LoopingSprite {
@@ -48,8 +83,31 @@ public class VampirePuppeteer extends UndeadEnemy {
             setFrames(4);
             setColor1(MyColors.BLACK);
             setColor2(MyColors.DARK_PURPLE);
-            setColor2(Race.HIGH_ELF.getColor());
+            setColor3(Race.HIGH_ELF.getColor());
             setColor4(MyColors.DARK_RED);
+        }
+    }
+
+    @Override
+    public String getStatus() {
+        String extra = "";
+        if (isFortified()) {
+            extra = ", Unreachable";
+        }
+        return super.getStatus() + extra;
+    }
+
+    @Override
+    public void conditionsEndOfCombatRoundTrigger(Model model, GameState state) {
+        super.conditionsEndOfCombatRoundTrigger(model, state);
+        if (state instanceof CombatEvent) {
+            int thrallCount = 0;
+            for (Enemy e : ((CombatEvent) state).getEnemies()) {
+                if (e instanceof ThrallEnemy) {
+                    thrallCount++;
+                }
+            }
+            setFortified(thrallCount > 7);
         }
     }
 }

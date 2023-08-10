@@ -8,7 +8,8 @@ public class MyStrings {
     private static final List<String> NUM_WORDS = List.of(
             "zero", "one", "two", "three", "four", "five", "six",
             "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
-            "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty");
+            "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
+            "twenty-one", "twenty-two", "twenty-three", "twenty-four");
 
     public static String[] partition(String text, int maxWidth) {
         if (text.length() >= maxWidth) {

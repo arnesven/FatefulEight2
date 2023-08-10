@@ -61,6 +61,10 @@ public abstract class Combatant implements Serializable {
         fortified = b;
     }
 
+    public boolean isFortified() {
+        return fortified;
+    }
+
     public void addCondition(Condition cond) {
         if (!hasCondition(cond.getClass())) {
             conditions.add(cond);
