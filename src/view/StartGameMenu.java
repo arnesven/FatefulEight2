@@ -13,7 +13,7 @@ public class StartGameMenu extends GameView {
     private static final int Y_START = 6;
 
     private int cursorPos = 0;
-    private static String[] options = new String[]{"New Game", "Load Game", "Hall of Fame", "Credits", "Quit"};
+    private static String[] options = new String[]{"New Game", "Load Game", "Hall of Fame", "Credits", "Sprite Previewer", "Quit"};
 
     public StartGameMenu() {
         super(true);
@@ -60,6 +60,8 @@ public class StartGameMenu extends GameView {
                 model.showHallOfFame();
             } else if (cursorPos == 3) {
                 model.showCredits();
+            } else if (cursorPos == 4) {
+                model.showSpritePreviewer();
             } else {
                 model.setGameStarted(true);
                 model.setExitGame(true);

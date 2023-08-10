@@ -18,6 +18,7 @@ import sound.ClientSoundManager;
 import sound.SoundEffects;
 import test.MainStoryTest;
 import util.MyPair;
+import view.dev.SpritePreviewerView;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
 import view.subviews.PortraitSubView;
@@ -462,5 +463,9 @@ public class Model {
 
     public void toggleFullScreen() {
         frame.toggleFullScreen();
+    }
+
+    public void showSpritePreviewer() {
+        this.gameView = new SpritePreviewerView(gameView);
     }
 }

@@ -29,8 +29,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final Integer INPUT_MAX_LENGTH = 12;
     private static final String START_STRING = "þþþþþþþþþþþþ";
     private static final int COLUMN_SKIP = 12;
-    private static final Sprite CHECK_SPRITE = new Sprite8x8("check", "charset.png", 0xB6, MyColors.BLACK, MyColors.LIGHT_GREEN, MyColors.BLUE, MyColors.CYAN);
-    private static final Sprite NOT_OK_SPRITE = new Sprite8x8("notok", "charset.png", 0xB7, MyColors.BLACK, MyColors.LIGHT_RED, MyColors.BLUE, MyColors.CYAN);
+    public static final Sprite CHECK_SPRITE = new Sprite8x8("check", "charset.png", 0xB6, MyColors.BLACK, MyColors.LIGHT_GREEN, MyColors.BLUE, MyColors.CYAN);
+    public static final Sprite NOT_OK_SPRITE = new Sprite8x8("notok", "charset.png", 0xB7, MyColors.BLACK, MyColors.LIGHT_RED, MyColors.BLUE, MyColors.CYAN);
     private List<MyPair<StringBuffer, Integer>> buffers = new ArrayList<>();
     private boolean gender = true;
     private static final Race[] raceSet = Race.allRaces;
