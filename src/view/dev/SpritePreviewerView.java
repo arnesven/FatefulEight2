@@ -21,7 +21,6 @@ public class SpritePreviewerView extends SelectableListMenu {
     private static final int COLUMN_SKIP = 15;
     private static final Integer INPUT_MAX_LENGTH = 20;
     private static final StringBuffer START_STRING = new StringBuffer("items.pngþþþþþþþþþþþ");
-    private String path;
     private int[] sizeSet = new int[]{8, 16, 24, 32, 48, 64};
     private MyColors[] colorSet = MyColors.values();
     private String[] backgroundSetNames = new String[]{"BLACK", "BLUE", "WHITE", "PINK"};
@@ -38,8 +37,7 @@ public class SpritePreviewerView extends SelectableListMenu {
     private int selectedBackground = 0;
 
     public SpritePreviewerView(GameView previous) {
-        super(previous, 40, 20);
-        this.path = "items.png";
+        super(previous, 40, 22);
         this.mapPos = new Point(0, 0);
         this.size = new Dimension(3, 3);
 
@@ -50,10 +48,7 @@ public class SpritePreviewerView extends SelectableListMenu {
 
     public void generateSprite() {
         Dimension spriteSize = new Dimension(sizeSet[size.width], sizeSet[size.height]);
-        String path = mapBuffer.first.toString();
-        if (path.contains("þ")) {
-            path = mapBuffer.first.substring(0, mapBuffer.first.indexOf("þ"));
-        }
+        String path = getMapPathFromBuffer();
         Sprite oldSprite = this.latestSprite;
         try {
             this.latestSprite = new Sprite("previewsprite", path, mapPos.x, mapPos.y, spriteSize.width, spriteSize.height);
@@ -67,6 +62,14 @@ public class SpritePreviewerView extends SelectableListMenu {
             System.err.println("Error when reading sprite");
             mapPathOk = false;
         }
+    }
+
+    private String getMapPathFromBuffer() {
+        String path = mapBuffer.first.toString();
+        if (path.contains("þ")) {
+            path = mapBuffer.first.substring(0, mapBuffer.first.indexOf("þ"));
+        }
+        return path;
     }
 
     @Override
@@ -91,7 +94,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         y+3, y+3+latestSprite.getHeight()/8, backgroundSet[selectedBackground]);
                 model.getScreenHandler().register(latestSprite.getName(), new Point(spriteX, y+3), latestSprite);
 
-                String[] labels = new String[]{"Map Path", "",
+                String[] labels = new String[]{"Map Path", "", "",
                 "Width", "Height", "",
                 "Column", "Row", "",
                 "Color 1", "Color 2", "Color 3", "Color 4", "",
@@ -108,7 +111,15 @@ public class SpritePreviewerView extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 4),
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 6, String.format(" %2d ", sizeSet[size.width])) {
+                new SelectableListContent(xStart + 3, yStart + 5, "Reload Map") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        SpriteManager.unRegister(getMapPathFromBuffer());
+                        generateSprite();
+                        madeChanges();
+                    }
+                },
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 7, String.format(" %2d ", sizeSet[size.width])) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -120,7 +131,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         size.width = Arithmetics.incrementWithWrap(size.width, sizeSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 7, String.format(" %2d ", sizeSet[size.height])) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 8, String.format(" %2d ", sizeSet[size.height])) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -132,7 +143,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         size.height = Arithmetics.incrementWithWrap(size.height, sizeSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 9, String.format(" %2d ", mapPos.x)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 10, String.format(" %2d ", mapPos.x)) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -144,7 +155,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         mapPos.x = Arithmetics.incrementWithWrap(mapPos.x, 16);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 10, String.format(" %2d ", mapPos.y)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 11, String.format(" %2d ", mapPos.y)) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -156,7 +167,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         mapPos.y = Arithmetics.incrementWithWrap(mapPos.y, 20);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 12, colorSet[colors[0]].name()) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 13, colorSet[colors[0]].name()) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -168,7 +179,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         colors[0] = Arithmetics.incrementWithWrap(colors[0], colorSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 13, colorSet[colors[1]].name()) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 14, colorSet[colors[1]].name()) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -180,7 +191,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         colors[1] = Arithmetics.incrementWithWrap(colors[1], colorSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 14, colorSet[colors[2]].name()) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 15, colorSet[colors[2]].name()) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -192,7 +203,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         colors[2] = Arithmetics.incrementWithWrap(colors[2], colorSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 15, colorSet[colors[3]].name()) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 16, colorSet[colors[3]].name()) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -204,7 +215,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                         colors[3] = Arithmetics.incrementWithWrap(colors[3], colorSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 17, backgroundSetNames[selectedBackground]) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 18, backgroundSetNames[selectedBackground]) {
 
                     @Override
                     public void turnLeft(Model model) {
@@ -220,7 +231,7 @@ public class SpritePreviewerView extends SelectableListMenu {
 
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
         } else if (getSelectedRow() == 0) {
             if (' ' == keyEvent.getKeyChar() || '_' == keyEvent.getKeyChar() || '.' == keyEvent.getKeyChar() ||

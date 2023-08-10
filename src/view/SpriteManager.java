@@ -67,4 +67,9 @@ public class SpriteManager {
     public static Sprite getSprite(String key) {
         return nameMap.get(key);
     }
+
+    public static void unRegister(String mapName) {
+        String key = Sprite.makePath(new String[]{"resources", "sprites"}) + mapName;
+        filemap.remove(key);
+    }
 }
