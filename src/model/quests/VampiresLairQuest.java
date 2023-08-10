@@ -2,11 +2,16 @@ package model.quests;
 
 import model.Model;
 import model.classes.Skill;
+import model.enemies.Enemy;
+import model.enemies.ThrallEnemy;
+import model.enemies.VampirePuppeteer;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
+import model.quests.scenes.CombatSubScene;
 import model.states.GameState;
 import model.states.QuestState;
 import view.MyColors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VampiresLairQuest extends MainQuest {
@@ -33,13 +38,15 @@ public class VampiresLairQuest extends MainQuest {
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Thralls", List.of(
-                new CollectiveSkillCheckSubScene(1, 1, Skill.Sneak, 5, "Perhaps we can sneak by this lot.")
+                new CollectiveSkillCheckSubScene(1, 1, Skill.Sneak, 5, "Perhaps we can sneak by this lot."),
+                new VampirePuppeteerCombatSubScene(1, 2)
         )));
     }
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        return List.of(new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(0).get(0)), "TODO"));
+        return List.of(new QuestStartPoint(List.of(new QuestEdge(scenes.get(0).get(0)),
+                new QuestEdge(scenes.get(0).get(1))), "TODO"));
     }
 
     @Override
@@ -50,5 +57,29 @@ public class VampiresLairQuest extends MainQuest {
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.BLACK;
+    }
+
+    private static class VampirePuppeteerCombatSubScene extends CombatSubScene {
+        public VampirePuppeteerCombatSubScene(int col, int row) {
+            super(col, row, makeEnemies());
+
+        }
+
+        @Override
+        protected String getCombatDetails() {
+            return "Lots of thralls";
+        }
+    }
+
+    private static List<Enemy> makeEnemies() {
+        List<Enemy> enemies = new ArrayList<>();
+        for (int i = 0; i < 10; ++i) {
+            enemies.add(new ThrallEnemy('B'));
+        }
+        enemies.add(new VampirePuppeteer('A'));
+        for (int i = 0; i < 5; ++i) {
+            enemies.add(new ThrallEnemy('B'));
+        }
+        return enemies;
     }
 }

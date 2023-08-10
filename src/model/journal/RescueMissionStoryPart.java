@@ -17,6 +17,7 @@ import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 import view.subviews.PortraitSubView;
 
+import java.awt.*;
 import java.util.List;
 
 public class RescueMissionStoryPart extends StoryPart {
@@ -29,6 +30,7 @@ public class RescueMissionStoryPart extends StoryPart {
     private int internalStep = 0;
     private final String castleName;
     private AdvancedAppearance courtMage = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.ALL);
+    private Point caidQuestPosition = null;
 
     public RescueMissionStoryPart(StoryPart witchPart, String castleName, String libraryTown) {
         this.witchPart = witchPart;
@@ -62,10 +64,36 @@ public class RescueMissionStoryPart extends StoryPart {
                 }
             }
         }
-        if (model.getCurrentHex() instanceof MountainHex && internalStep >= COMPLETED && !model.getMainStory().isCaidQuestDone()) {
+        if (giveCaidQuest(model)) {
             quests.add(getQuestAndSetPortrait(VampiresLairQuest.QUEST_NAME, model.getMainStory().getCaidCharacter().getAppearance(),
                     model.getMainStory().getCaidCharacter().getName()));
+            this.caidQuestPosition = new Point(model.getParty().getPosition());
         }
+    }
+
+    private boolean giveCaidQuest(Model model) {
+        return model.getCurrentHex() instanceof MountainHex &&
+                internalStep >= COMPLETED &&
+                !model.getMainStory().isCaidQuestDone() &&
+                (caidQuestPosition == null ||
+                        (caidQuestPosition.x == model.getParty().getPosition().x &&
+                         caidQuestPosition.y == model.getParty().getPosition().y));
+    }
+
+    @Override
+    public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
+        if (caidQuestPosition != null && caidQuestPosition.x == x && caidQuestPosition.y == y &&
+                !model.getMainStory().isCaidQuestDone()) {
+            model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
+        }
+    }
+
+    @Override
+    public String getHexInfo(Point position) {
+        if (caidQuestPosition != null && caidQuestPosition.x == position.x && caidQuestPosition.y == position.y) {
+            return "Quest with Caid Sanchez";
+        }
+        return super.getHexInfo(position);
     }
 
     @Override
