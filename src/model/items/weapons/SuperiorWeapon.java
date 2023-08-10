@@ -53,4 +53,9 @@ public class SuperiorWeapon extends Weapon {
     protected AvatarItemSprite getOnAvatarSprite(int index) {
         return inner.getOnAvatarSprite(index);
     }
+
+    @Override
+    public boolean isRangedAttack() {
+        return inner.isRangedAttack();
+    }
 }

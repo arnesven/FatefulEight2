@@ -68,7 +68,8 @@ public class MarksmanClass extends CharacterClass {
 
     @Override
     public String getHowToLearn() {
-        return "Archers at castles will probably be able to teach you how to become a marksman. There are also many veterans of wars " +
+        return "Archers at castles will probably be able to teach you how to become a marksman. Wood elves are sometimes marksmen. " +
+                "Elves can be found in woods and plains. There are also many veterans of wars " +
                 "scattered about. Look for them in farmlands, they can often instruct you on the ways of being a soldier.";
     }
 

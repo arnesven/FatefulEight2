@@ -8,6 +8,7 @@ import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.combat.Condition;
 import model.states.CombatEvent;
+import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.CharSprite;
@@ -22,6 +23,11 @@ public class SneakAttackCombatAction extends CombatAction {
     public SneakAttackCombatAction() {
         super("Sneak Attack");
         takeAnotherAction = false;
+    }
+
+    public static void cancel(GameState state, GameCharacter randomTarget) {
+        state.println(randomTarget.getFirstName() + " sneak attack was cancelled.");
+        randomTarget.removeCondition(SneakAttackCondition.class);
     }
 
     @Override

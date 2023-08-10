@@ -493,7 +493,7 @@ public class CombatEvent extends DailyEventState {
         int size = sneakAttackers.size();
         sneakAttackers.removeIf((MyPair<GameCharacter, SneakAttackCombatAction> pair) -> pair.first == randomTarget);
         if (size > sneakAttackers.size()) {
-            println(randomTarget.getFirstName() + " sneak attack was cancelled.");
+            SneakAttackCombatAction.cancel(this, randomTarget);
         }
     }
 

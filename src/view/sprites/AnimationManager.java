@@ -25,7 +25,7 @@ public class AnimationManager {
         pausableAnimations.forEach((animation) -> animation.stepAnimation(timeSinceLast, model));
     }
 
-    public static void synchAnimations() {
+    public static synchronized void synchAnimations() {
         animatons.forEach((animation -> animation.synch()));
     }
 

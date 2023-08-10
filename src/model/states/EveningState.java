@@ -221,7 +221,9 @@ public class EveningState extends GameState {
         result.add("Food & Drink x" + model.getParty().size());
         int rooms = (model.getParty().size()+1) / 2;
         result.add("Room x" + rooms);
-        result.add("Stable x" + model.getParty().getHorseHandler().size());
+        if (model.getParty().hasHorses()) {
+            result.add("Stable x" + model.getParty().getHorseHandler().size());
+        }
         return result;
     }
     protected void notLodging(Model model) {
