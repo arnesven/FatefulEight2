@@ -124,7 +124,7 @@ public class CraftItemState extends GameState {
     private List<Item> getAllItems(Model model) {
         List<Item> allItems = new ArrayList<>();
         allItems.addAll(model.getParty().getInventory().getAllItems());
-        allItems.removeIf((Item it ) -> it instanceof Spell || it instanceof Potion || it instanceof PotionRecipe || it instanceof CraftingDesign);
+        allItems.removeIf((Item it ) -> it instanceof Spell || it instanceof Potion || it instanceof PotionRecipe);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (!(gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon)) {
                 allItems.add(gc.getEquipment().getWeapon());

@@ -389,7 +389,7 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("I'm glad somebody noticed I was missing. Even if it was just my employer.");
             leaderSay("What happened to you?");
             portraitSay("Well, I've been trying to track down my lord's sister, and...");
-            leaderSay("You went undercover with a gang called 'the Vermine'?");
+            leaderSay("You went undercover with a gang called 'the Vermin'?");
             portraitSay("Yes, exactly! How did you know that?");
             leaderSay("Uhm... lucky guess... please go on.");
             portraitSay("Well, the gang had a connection to the person I was trying to find, who seem to be very elusive by the way. " +

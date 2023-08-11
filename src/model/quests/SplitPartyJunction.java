@@ -34,7 +34,7 @@ public class SplitPartyJunction extends QuestJunction {
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
         model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
-        if (groupB != null && groupA != null && enableAvatar && !groupB.isEmpty()) {
+        if (groupB != null && groupA != null && enableAvatar && !groupB.isEmpty() && !groupA.isEmpty()) {
             GameCharacter otherLeader = groupA.get(0);
             if (groupA.contains(model.getParty().getLeader())) {
                 otherLeader = groupB.get(0);

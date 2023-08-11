@@ -17,13 +17,17 @@ public class MuggingEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.BANDIT, "Muggers");
-        println("Two scruffy men approach the party as you cut through" +
+        println("Some scruffy men approach the party as you cut through" +
                 " an alley.");
         println("Thug: \"Okay kid, hand it over!\"");
         model.getParty().randomPartyMemberSay(model, List.of("Are we just gonna let these bozos take our stuff?"));
         print("Fight the muggers? (Y/N) ");
         if (yesNoInput()) {
-            runCombat(List.of(new MuggerEnemy('A'), new MuggerEnemy('A')));
+            if (model.getParty().partyStrength() > 40) {
+                runCombat(List.of(new MuggerEnemy('A'), new MuggerEnemy('A')));
+            } else {
+                runCombat(List.of(new MuggerEnemy('A'), new MuggerEnemy('A'), new MuggerEnemy('A'), new MuggerEnemy('A')));
+            }
         } else {
             model.getParty().randomPartyMemberSay(model, List.of("Here, take this and leave us alone."));
             int foodTaken = MyRandom.randInt(model.getParty().getFood());
