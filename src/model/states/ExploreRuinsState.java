@@ -159,7 +159,7 @@ public class ExploreRuinsState extends GameState {
     public void descend() {
         generalMoveAnimation(0, 0, 0, -4);
         currentLevel++;
-        changeLevel();
+        changeLevel(true);
         generalMoveAnimation(0, -4, 0,0);
         getCurrentRoom().entryTrigger(getModel(), this);
     }
@@ -180,13 +180,17 @@ public class ExploreRuinsState extends GameState {
     public void ascend() {
         generalMoveAnimation(0, 0, 0, -4);
         currentLevel--;
-        changeLevel();
-        generalMoveAnimation(0, 0, -4, 0);
+        changeLevel(false);
+        generalMoveAnimation(0, -4, 0, 0);
         getCurrentRoom().entryTrigger(getModel(), this);
     }
 
-    private void changeLevel() {
-        partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
+    private void changeLevel(boolean down) {
+        if (down) {
+            partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
+        } else {
+            partyPosition = dungeon.getLevel(currentLevel).getDescentPoint();
+        }
         populateMatrix();
     }
 

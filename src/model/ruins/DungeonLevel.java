@@ -66,6 +66,10 @@ public class DungeonLevel implements Serializable {
         return startingPoint;
     }
 
+    public Point getDescentPoint() {
+        return descentPoint;
+    }
+
     private void makeBasicLevelLayout() {
         rooms[levelSize/2][levelSize/2] = makeDungeonRoom();
         rooms[levelSize/2+1][levelSize/2] = makeDungeonRoom();
