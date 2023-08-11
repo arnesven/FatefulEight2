@@ -63,5 +63,10 @@ public class RiposteCombatAction extends StaminaCombatAbility {
         public Sprite getSymbol() {
             return SPRITE;
         }
+
+        @Override
+        public boolean removeAtEndOfCombat() {
+            return true;
+        }
     }
 }
