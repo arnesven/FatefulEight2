@@ -19,6 +19,7 @@ public class SpriteManager {
     private static Map<String, BufferedImage> filemap = new HashMap<>();
 
     public static void register(Sprite sprite) {
+        //System.out.println("New sprite! " + sprite.toString() + " " + sprite.getName());
         nameMap.put(sprite.getName(), sprite);
     }
 

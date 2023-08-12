@@ -13,15 +13,17 @@ import java.util.List;
 public class SuperiorAccessory extends Accessory {
     private static final int COST_MULTIPLIER = 3;
     private final Accessory inner;
+    private final SuperiorItemSprite sprite;
 
     public SuperiorAccessory(Accessory inner) {
         super("Superior " + inner.getName(), inner.getCost() * COST_MULTIPLIER);
         this.inner = inner;
+        this.sprite = new SuperiorItemSprite(inner.getSpriteForHigherTier());
     }
 
     @Override
     protected Sprite getSprite() {
-        return new SuperiorItemSprite(inner.getSpriteForHigherTier());
+        return sprite;
     }
 
     @Override

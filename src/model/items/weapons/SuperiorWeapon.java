@@ -9,10 +9,12 @@ public class SuperiorWeapon extends Weapon {
     private static final int COST_MULTIPLIER = 3;
     private static final int EXTRA_HIT_NUMBER = 8;
     private final Weapon inner;
+    private Sprite sprite;
 
     public SuperiorWeapon(Weapon inner) {
         super("Superior " + inner.getName(), inner.getCost()*COST_MULTIPLIER, inner.getSkill(), makeDamageTable(inner.getDamageTable()));
         this.inner = inner;
+        sprite = new SuperiorItemSprite(inner.getSpriteForHigherTier());
     }
 
     private static int[] makeDamageTable(int[] damageTable) {
@@ -36,7 +38,7 @@ public class SuperiorWeapon extends Weapon {
 
     @Override
     protected Sprite getSprite() {
-        return new SuperiorItemSprite(inner.getSpriteForHigherTier());
+        return sprite;
     }
 
     @Override
