@@ -170,6 +170,9 @@ public class GameCharacter extends Combatant {
                 return;
             }
             doOneAttack(combatEvent, target, false, 0, equipment.getWeapon().getCriticalTarget());
+            if (i < equipment.getWeapon().getNumberOfAttacks() - 1) {
+                model.getLog().waitForAnimationToFinish();
+            }
         }
     }
 

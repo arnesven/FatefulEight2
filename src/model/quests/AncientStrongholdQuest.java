@@ -1,7 +1,10 @@
 package model.quests;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.enemies.*;
+import model.items.special.PearlItem;
 import model.quests.scenes.CombatSubScene;
 import model.states.CombatEvent;
 import model.states.QuestState;
@@ -121,6 +124,7 @@ public class AncientStrongholdQuest extends MainQuest {
     private static class StrongholdCombatSubScene extends QuestSubScene {
         private final int floorNumber;
         private final QuestSubScene previous;
+        private boolean pearlsFound = false;
 
         public StrongholdCombatSubScene(int col, int row, int floorNumber, QuestSubScene previous) {
             super(col, row);
@@ -159,6 +163,19 @@ public class AncientStrongholdQuest extends MainQuest {
                 } else {
                     return new QuestEdge(state.getQuest().getFailEndingNode());
                 }
+            } else if (!pearlsFound) {
+                for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                    if (gc.testSkill(Skill.Perception, 8).isSuccessful()) {
+                        state.println("You spot some pearls on the floor and pick them up.");
+                        for (int i = 0; i < 3; ++i) {
+                            PearlItem pearl = makeRandomPearl();
+                            state.println("The party gains a " + pearl.getName() + ".");
+                            model.getParty().getInventory().addSpecialItem(pearl);
+                        }
+                        pearlsFound = true;
+                        break;
+                    }
+                }
             }
 
             state.print("You are on the " + floorNumberText(floorNumber).toLowerCase() + " floor of the tower. " +
@@ -179,6 +196,15 @@ public class AncientStrongholdQuest extends MainQuest {
                     state.print("You cannot there from your current location.");
                 }
             }
+        }
+
+        public static PearlItem makeRandomPearl() {
+            MyColors color;
+            do {
+                MyColors[] colors = AncientStrongholdControlPanel.PEARL_COLORS;
+                color = colors[MyRandom.randInt(colors.length)];
+            } while (color == MyColors.DARK_RED);
+            return PearlItem.makeFromColor(color);
         }
 
         private String floorNumberText(int floorNumber) {

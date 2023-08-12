@@ -367,7 +367,7 @@ public class ZeppelinStoryPart extends StoryPart {
 
         @Override
         protected boolean isSelectableDestination(Point startPoint, Point cursorPos, int dx, int dy) {
-            return startPoint.distance(cursorPos.x+dx, cursorPos.y+dy) < 5;
+            return startPoint.distance(cursorPos.x+dx, cursorPos.y+dy) < 6;
         }
     }
 

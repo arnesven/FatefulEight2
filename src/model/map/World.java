@@ -81,7 +81,7 @@ public class World implements Serializable {
                         avatar = alternativeAvatar;
                     }
                     int bottomAlignedYpos = screenY - avatar.getHeight() / 8 + 4;
-                    screenHandler.register(avatar.getName(), new Point(screenX, bottomAlignedYpos), avatar, 1);
+                    screenHandler.register(avatar.getName(), new Point(screenX, bottomAlignedYpos), avatar, 3);
                 }
                 if ((cursorPos == null && (x == viewPoint.x && y == viewPoint.y)) ||
                     (cursorPos != null && (x == cursorPos.x && y == cursorPos.y))) {
