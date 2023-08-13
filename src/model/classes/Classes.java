@@ -36,6 +36,7 @@ public interface Classes {
     CharacterClass CONSTABLE = new ConstableNPCClass();
     CharacterClass TEMPLE_GUARD = new TempleGuardNPCClass();
     CharacterClass WARLOCK = new WarlockNPCClass();
+    CharacterClass OFFICIAL = new OfficialNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();

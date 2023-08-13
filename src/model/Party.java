@@ -9,6 +9,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.horses.HorseHandler;
+import model.items.clothing.FurArmor;
 import model.items.spells.*;
 import model.items.weapons.*;
 import model.map.UrbanLocation;
@@ -58,6 +59,11 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
+        inventory.add(new FurArmor());
+        inventory.add(new FurArmor());
+        inventory.add(new FurArmor());
+        inventory.add(new FurArmor());
+        inventory.add(new FurArmor());
     }
 
     private LoopingSprite[] makeCursorSprites() {
