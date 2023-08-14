@@ -8,6 +8,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.PaladinClass;
+import model.enemies.TournamentEnemy;
 import model.items.Equipment;
 import model.items.RedKnightsHelm;
 import model.items.accessories.*;
@@ -27,7 +28,7 @@ import view.subviews.TournamentSubView;
 import java.util.*;
 
 public class TournamentEvent extends DailyEventState {
-    private static final int ENTRY_FEE = 25;
+    protected static final int ENTRY_FEE = 25;
     private static final Map<CharacterClass, List<NameAndGender>> NAMES_FOR_CLASSES = makeFighterNames();
     private static final List<Clothing> HEAVY_ARMORS = List.of(
              new DragonArmor(), new ScaleArmor(), new BreastPlate(), new FullPlateArmor(),
@@ -45,6 +46,7 @@ public class TournamentEvent extends DailyEventState {
     private final CastleLocation castle;
     private final CharacterAppearance official = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL, Race.ALL);
     private final CharacterAppearance sponsor = PortraitSubView.makeRandomPortrait(Classes.THF, Race.ALL);
+    private final CharacterAppearance announcer = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL);
 
     public TournamentEvent(Model model, CastleLocation castleLocation) {
         super(model);
@@ -53,8 +55,7 @@ public class TournamentEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        enterTournament(model, false); // TODO: Remove
-
+        new ParticipateInTournamentEvent(model, false, castle).doEvent(model); // TODO: Remove
 
         print("The " + castle.getLordTitle() + " is hosting a melee tournament today. " +
                 "Do you wish to attend? (Y/N) ");
@@ -67,7 +68,7 @@ public class TournamentEvent extends DailyEventState {
                 "all bustling about and getting ready for the tournament. Some people are lining up at a little booth " +
                 "where a small gentleman in fancy clothing is accepting coins and writing things down in big ledgers.");
         model.getLog().waitForAnimationToFinish();
-        showExplicitPortrait(model, official, "Official");
+        showOfficial();
         portraitSay("Yes, we're still accepting participants. Are you here to fight in the tournament?");
         leaderSay("Perhaps. What are the parameters?");
         portraitSay("The entry fee is 25 gold. Eight champions will enter the tournament. There will be one-on-one " +
@@ -77,7 +78,7 @@ public class TournamentEvent extends DailyEventState {
         boolean sponsored = false;
         if (model.getParty().getGold() < ENTRY_FEE) {
             println("You are about to reply that you can't afford it when a shady fellow in a hood steps up behind you.");
-            showExplicitPortrait(model, sponsor, "Mysterious Stranger");
+            showSponsor();
             portraitSay("You look like your the capable sort, I can front the money for the fight. But I'll expect half the " +
                     "prize money if you come out on top. What do you say?");
             print("Do you accept the strangers sponsorship? (Y/N) ");
@@ -86,49 +87,25 @@ public class TournamentEvent extends DailyEventState {
             print("Will you enter one of your party members into the tournament? (Y/N)");
         }
         if (yesNoInput()) {
-            enterTournament(model, sponsored);
+            new ParticipateInTournamentEvent(model, sponsored, castle).doEvent(model);
         } else {
-            // watchTournament(model); // TODO
+            // new BetOnTournamentEvent(model, castle).doEvent(model); // TODO
         }
     }
 
-    private void enterTournament(Model model, boolean sponsored) {
-        if (!sponsored) {
-            println("The party pays " + ENTRY_FEE + " to the official.");
-            model.getParty().addToGold(ENTRY_FEE);
-        }
-        print("Which party member do you wish to enter into the tournament?");
-        GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-        partyMemberSay(chosen, "I'll enter the tournament.");
-        showExplicitPortrait(model, official, "Official");
-        portraitSay("There needs to be a name on the entry. Do you wish to give your name, or just an alias?");
-        if (chosen.getCharClass() == Classes.BKN) {
-            partyMemberSay(chosen, "Just put down 'the Black Knight'.");
-            if (chosen != model.getParty().getLeader()) {
-                leaderSay("Oh come on " + chosen.getFirstName() + ", seriously?");
-                partyMemberSay(chosen, "Okay then, I guess there's no reason to hide my identity.");
-            } else {
-                partyMemberSay(chosen, "No wait... I changed my mind. There's no reason to hide my identity.");
-            }
-        }
-        partyMemberSay(chosen, "You can put down my name, it's " + chosen.getName());
-        portraitSay("Okay then. That means we have all eight combatants! Let me just randomize the setup.");
-        println("The official places eight slips of paper into his hat, and then pulls them out one by one. For each one " +
-                "he writes the name on a large sign next to the booth.");
-        portraitSay("This is the match tree. It shows who will fight whom and what the outcome has been as the fights conclude, " +
-                "Please have a look at it now.");
-        waitForReturn();
-        List<GameCharacter> fighters = makeFighters(model, 7);
-        fighters.add(MyRandom.randInt(fighters.size()), chosen);
-        while (fighters.size() > 1) {
-            TournamentSubView tournamentSubView = new TournamentSubView(fighters);
-            model.setSubView(tournamentSubView);
-            waitForReturn();
-            fighters.remove(0);
-        }
+    protected void showOfficial() {
+        showExplicitPortrait(getModel(), official, "Official");
     }
 
-    private List<GameCharacter> makeFighters(Model model, int number) {
+    protected void showAnnouncer() {
+        showExplicitPortrait(getModel(), announcer, "Announcer");
+    }
+
+    protected void showSponsor() {
+        showExplicitPortrait(getModel(), sponsor, "Mysterious Stranger");
+    }
+
+    protected List<GameCharacter> makeFighters(Model model, int number) {
         List<GameCharacter> result = new ArrayList<>();
         List<CharacterClass> fighterClasses = new ArrayList<>(NAMES_FOR_CLASSES.keySet());
         Collections.shuffle(fighterClasses);

@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import sprites.CombatCursorSprite;
 import view.MyColors;
+import view.sprites.AvatarSprite;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -40,7 +41,7 @@ public class TournamentSubView extends AvatarSubView {
             matrix.addElement(
                      slotsOneLevelUp - (i - fightersInBottom) - 1,
                     3 - treeHeight + 1,
-                    fighters.get(i));
+                    fighters.get(fighters.size() - (i - fightersInBottom) - 1));
         }
     }
 
@@ -107,8 +108,9 @@ public class TournamentSubView extends AvatarSubView {
         for (int y = 0; y < matrix.getRows(); ++y) {
             for (int x = 0; x < matrix.getColumns(); ++x) {
                 if (matrix.getElementAt(x, y) != null) {
-                    Sprite avatar = matrix.getElementAt(x, y).getAvatarSprite();
+                    AvatarSprite avatar = matrix.getElementAt(x, y).getAvatarSprite();
                     Point pos = makeFighterPos(x, y);
+                    avatar.synch();
                     model.getScreenHandler().register(avatar.getName(), pos, avatar);
                     if (matrix.getSelectedPoint().x == x && matrix.getSelectedPoint().y == y) {
                         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;

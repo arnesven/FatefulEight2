@@ -59,11 +59,6 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
-        inventory.add(new FurArmor());
-        inventory.add(new FurArmor());
-        inventory.add(new FurArmor());
-        inventory.add(new FurArmor());
-        inventory.add(new FurArmor());
     }
 
     private LoopingSprite[] makeCursorSprites() {

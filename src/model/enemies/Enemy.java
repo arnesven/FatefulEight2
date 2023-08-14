@@ -1,6 +1,5 @@
 package model.enemies;
 
-import model.actions.SneakAttackCombatAction;
 import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
