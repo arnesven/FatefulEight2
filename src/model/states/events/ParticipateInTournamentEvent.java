@@ -28,7 +28,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
     protected void doEvent(Model model) {
         if (!sponsored) {
             println("The party pays " + ENTRY_FEE + " gold to the official.");
-            model.getParty().addToGold(ENTRY_FEE);
+            model.getParty().addToGold(-ENTRY_FEE);
         }
         print("Which party member do you wish to enter into the tournament?");
         GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
@@ -262,13 +262,9 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         return announceOutcomeOfCombat(partyMember, npcFighter, haveFledCombat());
     }
 
-    private void runDetailedNPCFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
-        runAbstractedNPCFight(model, fighterA, fighterB); // TODO : make better
-    }
-
     private void runAbstractedNPCFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
         println("The two combatants fight well, but in the end, one of them comes out on top.");
-        if (MyRandom.flipCoin()) { // TODO : Make better
+        if (MyRandom.flipCoin()) { // TODO : Base the probability on the odds given for the fighters
             fighterA.addToHP(-fighterA.getMaxHP());
             if (MyRandom.flipCoin()) {
                 fighterA.addToHP(1);

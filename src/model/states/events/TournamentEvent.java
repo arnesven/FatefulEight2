@@ -44,9 +44,9 @@ public class TournamentEvent extends DailyEventState {
             new TwoHandedSword(), new BastardSword(), new DaiKatana(), new Zweihander());
 
     private final CastleLocation castle;
-    private final CharacterAppearance official = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL, Race.ALL);
-    private final CharacterAppearance sponsor = PortraitSubView.makeRandomPortrait(Classes.THF, Race.ALL);
-    private final CharacterAppearance announcer = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL);
+    private static final CharacterAppearance official = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL, Race.ALL);
+    private static final CharacterAppearance sponsor = PortraitSubView.makeRandomPortrait(Classes.THF, Race.ALL);
+    private static final CharacterAppearance announcer = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL);
 
     public TournamentEvent(Model model, CastleLocation castleLocation) {
         super(model);
@@ -55,8 +55,6 @@ public class TournamentEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        new ParticipateInTournamentEvent(model, false, castle).doEvent(model); // TODO: Remove
-
         print("The " + castle.getLordTitle() + " is hosting a melee tournament today. " +
                 "Do you wish to attend? (Y/N) ");
         if (!yesNoInput()) {
@@ -84,13 +82,49 @@ public class TournamentEvent extends DailyEventState {
             print("Do you accept the strangers sponsorship? (Y/N) ");
             sponsored = true;
         } else {
-            print("Will you enter one of your party members into the tournament? (Y/N)");
+            print("Will you enter one of your party members into the tournament (Y), or will you " +
+                    "remain on the sidelines and place bets on the combatants (N)? ");
         }
         if (yesNoInput()) {
             new ParticipateInTournamentEvent(model, sponsored, castle).doEvent(model);
         } else {
             // new BetOnTournamentEvent(model, castle).doEvent(model); // TODO
         }
+    }
+
+    protected void runDetailedNPCFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
+        if (fighterA.getSpeed() < fighterB.getSpeed()) {
+            runDetailedNPCFight(model, fighterB, fighterA);
+            return;
+        }
+        println("Two fighters enter the fighting pit.");
+        print("The first one is ");
+        detailDescribe(fighterA);
+        print("The second one is ");
+        detailDescribe(fighterB);
+        new NPCCombatEvent(model, fighterA, fighterB).doTheEvent(model);
+        setCurrentTerrainSubview(model);
+    }
+
+    private void detailDescribe(GameCharacter fighter) {
+        if (fighter.getCharClass() == Classes.None) {
+            print("not of any particular class");
+        } else if (fighter.getCharClass() == Classes.AMZ || fighter.getCharClass() == Classes.ASN) {
+            print("an " + fighter.getCharClass().getFullName().toLowerCase());
+        } else {
+            print("a " + fighter.getCharClass().getFullName().toLowerCase());
+        }
+        print(" equipped with " + fighter.getEquipment().getWeapon().getName().toLowerCase());
+        if (fighter.getEquipment().getAccessory() instanceof ShieldItem) {
+            print(" and a " + fighter.getEquipment().getAccessory().getName().toLowerCase());
+        }
+        println(".");
+        print(heOrSheCap(fighter.getGender()) + " is dressed in " +
+                fighter.getEquipment().getClothing().getName().toLowerCase());
+        if (!(fighter.getEquipment().getAccessory() instanceof ShieldItem)) {
+            print(" and " + fighter.getEquipment().getAccessory().getName().toLowerCase());
+        }
+        println(".");
     }
 
     protected void showOfficial() {
@@ -143,7 +177,7 @@ public class TournamentEvent extends DailyEventState {
                 new NameAndGender("Igor", "Stormfist", false),
                 new NameAndGender("Olga", "Ouagadoo", true),
                 new NameAndGender("Belthor", "Oz", false)));
-        result.put(Classes.BKN, List.of(new NameAndGender("Black", "Knight", false)));
+        result.put(Classes.BKN, List.of(new NameAndGender("Black Knight", "", false)));
         result.put(Classes.FOR, List.of(
                 new NameAndGender("Teddy", "Ostermuller", false),
                 new NameAndGender("Veronica", "Rockfort", true)));
@@ -152,8 +186,8 @@ public class TournamentEvent extends DailyEventState {
                 new NameAndGender("Engelbrecht", "Anderson", false),
                 new NameAndGender("Maria", "Samuelsen", true)));
         result.put(Classes.ASN, List.of(
-                new NameAndGender("Masked", "Fighter", true)));
-        result.put(Classes.None, List.of(new NameAndGender("the", "fool", false)));
+                new NameAndGender("Masked Fighter", "", true)));
+        result.put(Classes.None, List.of(new NameAndGender("The Fool", "", false)));
         result.put(Classes.RED_KNIGHT, List.of(new NameAndGender("Red", "Knight", false)));
         return result;
     }

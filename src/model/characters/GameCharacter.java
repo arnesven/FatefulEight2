@@ -281,6 +281,9 @@ public class GameCharacter extends Combatant {
     }
 
     public String getFullName() {
+        if (this.getLastName().equals("")) {
+            return this.getFirstName();
+        }
         return this.getFirstName() + " " + this.getLastName();
     }
 
@@ -329,7 +332,7 @@ public class GameCharacter extends Combatant {
 
     public List<CombatAction> getCombatActions(Model model, Combatant target, CombatEvent combatEvent) {
         List<CombatAction> result = new ArrayList<>();
-        if (!(target instanceof GameCharacter) && canAttackInCombat() && target.canBeAttackedBy(this)) {
+        if (canAttackInCombat() && target.canBeAttackedBy(this)) {
             result.add(new CombatAction("Attack") {
                 @Override
                 public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {

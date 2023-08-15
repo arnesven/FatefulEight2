@@ -82,7 +82,7 @@ public class CombatSubView extends SubView {
         model.getScreenHandler().register("combatcursor", p, cursor, 2);
     }
 
-    private void drawCombatants(Model model) {
+    protected void drawCombatants(Model model) {
         for (int row = 0; row < combatMatrix.getRows(); ++row) {
             for (int col = 0; col < combatMatrix.getColumns(); ++col) {
                 Combatant combatant = combatMatrix.getCombatant(col, row);
@@ -205,6 +205,9 @@ public class CombatSubView extends SubView {
             if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER && combat.getCurrentCombatant() instanceof GameCharacter) {
                 Point point = convertToScreen(combatMatrix.getPositionFor(combatant), combatant);
                 List<CombatAction> combatActions = ((GameCharacter) combat.getCurrentCombatant()).getCombatActions(model, combatant, combat);
+                if (combatant instanceof GameCharacter) {
+                    combatActions.removeIf((CombatAction ca) -> ca.getName().equals("Attack"));
+                }
                 CombatActionMenu menu = new CombatActionMenu(model.getSubView(), combatActions, CombatActionMenu.toStringList(combatActions),
                         point.x + 3, point.y, DailyActionMenu.NORTH_WEST, combat, combatant, this);
                 model.setSubView(menu);
