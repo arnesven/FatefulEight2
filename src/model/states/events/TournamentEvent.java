@@ -116,7 +116,7 @@ public class TournamentEvent extends DailyEventState {
 
             NameAndGender name = MyRandom.sample(NAMES_FOR_CLASSES.get(selectedClass));
             Race race = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
-            AdvancedAppearance app = PortraitSubView.makeRandomPortrait(selectedClass, race);
+            AdvancedAppearance app = PortraitSubView.makeRandomPortrait(selectedClass, race, name.gender);
             GameCharacter fighter = new GameCharacter(name.firstName, name.lastName, race, selectedClass, app,
                     new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
                     generateEquipmentFor(selectedClass));

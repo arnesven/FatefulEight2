@@ -17,6 +17,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                                                             "tough", "hardened", "capable", "powerful", "skilled",
                                                             "vicious", "fierce");
     private final boolean sponsored;
+    private boolean saidCheating = false;
 
     public ParticipateInTournamentEvent(Model model, boolean sponsored, CastleLocation castleLocation) {
         super(model, castleLocation);
@@ -55,10 +56,11 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         TournamentSubView tournamentSubView = new TournamentSubView(fighters);
         model.setSubView(tournamentSubView);
         waitForReturn();
+        setCurrentTerrainSubview(model);
 
         List<GameCharacter> winners = new ArrayList<>();
+        List<GameCharacter> losers = new ArrayList<>();
         for (int i = 0; i < 4; ++i) {
-            setCurrentTerrainSubview(model);
             GameCharacter fighterB = fighters.remove(fighters.size() - 1);
             GameCharacter fighterA = fighters.remove(fighters.size() - 1);
             if (i == 0) {
@@ -80,27 +82,145 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                         "fighting pits and take your seats again.");
             }
             GameCharacter winner = performOneFight(model, fighterA, fighterB);
-            setCurrentTerrainSubview(model);
             model.getParty().unbenchAll();
             winners.add(0, winner);
+            losers.add(fighterB == winner ? fighterA : fighterB);
             List<GameCharacter> current = new ArrayList<>(fighters);
             current.addAll(winners);
-            announcerSay("Please get up and stretch your legs as we prepare for the next match. " +
-                    "Why not place some bets while you are at it?");
-            if (!current.contains(chosen)) {
-                leaderSay("Well, that's it, we're out of the tournament.");
-                println("Disappointed in your misfortune, you leave the tournament and try to set your mind to your adventuring instead.");
-                break;
+            if (i == 0) {
+                announcerSay("Please get up and stretch your legs as we prepare for the next match. " +
+                        "Why not place some bets while you are at it?");
+            } else if (i < 3) {
+                announcerSay("Please get up and stretch your legs as we prepare for the next match.");
+            } else {
+                announcerSay("That concludes the quarter matches. We will now have a longer break before we proceed " +
+                        "to the semi-finals.");
             }
-            println("You get up from your seats and walk over to the board next to the booth where you signed up " +
-                    "for the tournament. It has already been updated.");
-            model.getLog().waitForAnimationToFinish();
-            tournamentSubView = new TournamentSubView(current);
-            model.setSubView(tournamentSubView);
-            waitForReturn();
+            if (checkForOutOfTournament(current, chosen)) {
+                return;
+            }
+            lookAtBoard(model, current);
         }
 
-        // TODO: Second tier of fights. (Semi-finals)
+        doLongBreak(model, winners, losers, fighters, chosen);
+        announcerSay("We are about ready to start the semi-finals! Please take your seats.");
+
+        winners.clear();
+        losers.clear();
+        for (int i = 0; i < 2; ++i) {
+            GameCharacter fighterB = fighters.remove(fighters.size() - 1);
+            GameCharacter fighterA = fighters.remove(fighters.size() - 1);
+            if (i == 1) {
+                println("You hear the announcer start to call out that the fight is about to start, so you walk back over to the " +
+                        "fighting pits and take your seats again.");
+            }
+            GameCharacter winner = performOneFight(model, fighterA, fighterB);
+            model.getParty().unbenchAll();
+            winners.add(0, winner);
+            losers.add(fighterB == winner ? fighterA : fighterB);
+            List<GameCharacter> current = new ArrayList<>(fighters);
+            current.addAll(winners);
+            if (i == 0) {
+                announcerSay("Please get up and stretch your legs as we prepare for the next match.");
+            } else {
+                announcerSay("That concludes the semi-finals. We will now have a longer break before we proceed " +
+                        "to the final fight between " + winners.get(0).getName() + " and " + winners.get(1).getName() + "!");
+            }
+            if (checkForOutOfTournament(current, chosen)) {
+                return;
+            }
+            lookAtBoard(model, current);
+        }
+
+        doLongBreak(model, winners, losers, fighters, chosen);
+        announcerSay("We are about ready to start the semi-finals! Please take your seats.");
+        GameCharacter winner = performOneFight(model, fighters.get(0), fighters.get(1));
+        model.getParty().unbenchAll();
+        announcerSay("That means we have a winner ladies and gentlemen... It's " + winner.getName() + "!");
+        if (winner == chosen) {
+            println(chosen.getName() + " accepts the prize money of 100 gold!");
+            model.getParty().addToGold(100);
+        } else {
+            leaderSay("Well, we lost.");
+            if (chosen.isDead()) {
+                leaderSay("And we lost " + chosen.getFirstName() + "... It hasn't been a good day.");
+            } else {
+                leaderSay("At least we didn't lose " + chosen.getFirstName() +
+                        "... Let's focus on the tasks before us instead.");
+            }
+        }
+
+    }
+
+    private void doLongBreak(Model model, List<GameCharacter> winners, List<GameCharacter> losers,
+                             List<GameCharacter> fighters, GameCharacter chosen) {
+        println("Taking advantage of the longer break, you have a stroll around to look at some of the side attractions.");
+        new FoodStandsEvent(model).doEvent(model);
+        setCurrentTerrainSubview(model);
+        fighters.addAll(winners);
+        winners.remove(chosen);
+        handleQuarterWinners(model, winners);
+        handleQuarterLosers(model, losers);
+        println("You're surprised at how quickly time has passed when you again hear the voice of the announcer.");
+    }
+
+    private void lookAtBoard(Model model, List<GameCharacter> current) {
+        println("You get up from your seats and walk over to the board next to the booth where you signed up " +
+                "for the tournament. It has already been updated.");
+        model.getLog().waitForAnimationToFinish();
+        TournamentSubView tournamentSubView = new TournamentSubView(current);
+        model.setSubView(tournamentSubView);
+        waitForReturn();
+        setCurrentTerrainSubview(model);
+    }
+
+    private boolean checkForOutOfTournament(List<GameCharacter> current, GameCharacter chosen) {
+        if (!current.contains(chosen)) {
+            leaderSay("Well, that's it, we're out of the tournament.");
+            println("Disappointed in your misfortune, you leave the tournament and try to set your mind to your adventuring instead.");
+            return true;
+        }
+        return false;
+    }
+
+    private void handleQuarterWinners(Model model, List<GameCharacter> winners) {
+        for (GameCharacter gc : winners) {
+            gc.addToHP(MyRandom.randInt(1, 5));
+        }
+        GameCharacter gc = MyRandom.sample(winners);
+        println("You spot one of the fighters from the tournament, " + gc.getName() + ". " + heOrSheCap(gc.getGender()) +
+                " is consuming a health potion.");
+        if (model.getParty().size() > 1 && !saidCheating) {
+            this.saidCheating = true;
+            partyMemberSay(model.getParty().getRandomPartyMember(model.getParty().getLeader()), "Hey! Isn't that cheating?");
+            leaderSay("I don't really see why it would be. We could do the same thing...");
+        }
+    }
+
+
+    private void handleQuarterLosers(Model model, List<GameCharacter> losers) {
+        losers.removeIf(GameCharacter::isDead);
+        if (losers.isEmpty()) {
+            println("You spot some men carrying away the bodies of the fallen fighters.");
+            leaderSay("Pretty gruesome business this...");
+        } else {
+            print("You spot one of the fighters from the tournament, ");
+            GameCharacter loser = MyRandom.sample(losers);
+            println(loser.getName() + ". " + heOrSheCap(loser.getGender()) +
+                    " is being bandage by a medic and is sitting with " + hisOrHer(loser.getGender()) + " head hanging.");
+            if (loser.getCharClass() == Classes.BKN) {
+                showExplicitPortrait(model, loser.getAppearance(), "Black Knight");
+                portraitSay("I am defeated.");
+                println("The black knight looks up at your party.");
+                portraitSay("But you fought well!");
+                println("The black knight offers to instruct you in his martial ways, ");
+                ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.BKN);
+                changeClassEvent.areYouInterested(model);
+            } else {
+                leaderSay("Poor sod. But we can't all be winners...");
+            }
+        }
+        setCurrentTerrainSubview(model);
     }
 
     private GameCharacter performOneFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
@@ -116,10 +236,10 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         print("Do you want to skip the details of the fight? (Y/N) ");
         if (yesNoInput()) {
             runAbstractedNPCFight(model, fighterA, fighterB);
-            return announceOutcomeOfCombat(fighterA, fighterB, false);
+            return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() == 1);
         }
         runDetailedNPCFight(model, fighterA, fighterB);
-        return announceOutcomeOfCombat(fighterA, fighterB, false);
+        return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() == 1);
     }
 
     private GameCharacter runRealCombat(Model model, GameCharacter partyMember, GameCharacter npcFighter) {
@@ -130,9 +250,15 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                 model.getParty().benchPartyMembers(List.of(gc));
             }
         }
+        GameCharacter oldLeader = model.getParty().getLeader();
+        model.getParty().setLeader(partyMember);
         List<Enemy> enemies = List.of(new TournamentEnemy(npcFighter));
         runCombat(enemies);
+        if (!oldLeader.isDead()) {
+            model.getParty().setLeader(oldLeader);
+        }
         npcFighter.addToHP(-(enemies.get(0).getMaxHP() - enemies.get(0).getHP()));
+        setCurrentTerrainSubview(model);
         return announceOutcomeOfCombat(partyMember, npcFighter, haveFledCombat());
     }
 
@@ -144,8 +270,14 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         println("The two combatants fight well, but in the end, one of them comes out on top.");
         if (MyRandom.flipCoin()) { // TODO : Make better
             fighterA.addToHP(-fighterA.getMaxHP());
+            if (MyRandom.flipCoin()) {
+                fighterA.addToHP(1);
+            }
         } else {
             fighterB.addToHP(-fighterB.getMaxHP());
+            if (MyRandom.flipCoin()) {
+                fighterB.addToHP(1);
+            }
         }
     }
 

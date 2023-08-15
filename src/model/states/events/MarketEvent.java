@@ -18,10 +18,13 @@ public class MarketEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("Today is market day. The party casually browses the stands and booths.");
-        if (MyRandom.flipCoin()) {
-            pushyMerchant(model);
-        } else {
+        int roll = MyRandom.rollD10();
+        if (roll <= 2) {
+            new FoodStandsEvent(model).doEvent(model);
+        } else if (roll <= 5) {
             horseTrader(model);
+        } else {
+            pushyMerchant(model);
         }
     }
 

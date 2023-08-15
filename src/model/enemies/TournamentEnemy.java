@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
+import model.states.CombatEvent;
+import model.states.GameState;
 import view.sprites.Sprite;
 
 public class TournamentEnemy extends Enemy {
@@ -24,6 +26,17 @@ public class TournamentEnemy extends Enemy {
     }
 
     @Override
+    public int getDamageReduction() {
+        if (innerChar.getAP() < 3) {
+            return 0;
+        }
+        if (innerChar.getAP() < 7) {
+            return 1;
+        }
+        return 2;
+    }
+
+    @Override
     public int getSpeed() {
         return innerChar.getSpeed();
     }
@@ -35,11 +48,20 @@ public class TournamentEnemy extends Enemy {
 
     @Override
     public int getDamage() {
-        return innerChar.getEquipment().getWeapon().getDamageTable().length - 1;
+        return innerChar.getEquipment().getWeapon().getDamageTable().length;
     }
 
     @Override
     public CombatLoot getLoot(Model model) {
         return new NoCombatLoot();
+    }
+
+    @Override
+    public void conditionsEndOfCombatRoundTrigger(Model model, GameState state) {
+        super.conditionsEndOfCombatRoundTrigger(model, state);
+        if (getHP() < 3) {
+            state.println(getName() + ": \"I yield!\"");
+            ((CombatEvent)state).retreatEnemy(this);
+        }
     }
 }
