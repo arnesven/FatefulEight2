@@ -212,7 +212,7 @@ public class CombatEvent extends DailyEventState {
             model.getTutorial().combatActions(model);
             do {
                 waitToProceed();
-                selectedCombatAction.doAction(model, this, character, selectedTarget);
+                selectedCombatAction.executeCombatAction(model, this, character, selectedTarget);
                 if (!selectedCombatAction.takeAnotherAction()) {
                     break;
                 }

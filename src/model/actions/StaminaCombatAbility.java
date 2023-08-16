@@ -10,7 +10,7 @@ public abstract class StaminaCombatAbility extends CombatAction {
     private boolean takeAnotherAction = false;
 
     public StaminaCombatAbility(String name) {
-        super(name);
+        super(name, true);
     }
 
     @Override

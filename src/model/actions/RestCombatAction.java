@@ -11,7 +11,7 @@ public class RestCombatAction extends CombatAction {
     private boolean another;
 
     public RestCombatAction() {
-        super("Rest");
+        super("Rest", false);
         another = false;
     }
 
@@ -20,7 +20,7 @@ public class RestCombatAction extends CombatAction {
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().combatResting(model);
         boolean fullHP = performer.getHP() == performer.getMaxHP();
         boolean fullSP = performer.getSP() == performer.getMaxSP();

@@ -11,12 +11,12 @@ public class SpellFinalCombatAction extends CombatAction {
     private final CombatSpell spell;
 
     public SpellFinalCombatAction(CombatSpell spell) {
-        super(spell.getName());
+        super(spell.getName(), false);
         this.spell = spell;
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         boolean success = spell.castYourself(model, combat, performer);
         if (success) {
             combat.addSpecialEffect(performer, new CastingEffectSprite());

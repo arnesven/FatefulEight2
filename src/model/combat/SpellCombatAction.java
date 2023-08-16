@@ -15,13 +15,13 @@ public class SpellCombatAction extends CombatAction {
     private final Combatant target;
 
     public SpellCombatAction(List<CombatSpell> combatSpells, Combatant target) {
-        super("Spell");
+        super("Spell", false);
         this.combatSpells = combatSpells;
         this.target = target;
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         // unused
     }
 

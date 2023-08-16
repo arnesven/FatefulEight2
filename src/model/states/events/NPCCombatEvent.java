@@ -34,15 +34,20 @@ public class NPCCombatEvent extends CombatEvent {
         round = 1;
         while (!endOfCombat(fighter1)) {
             waitForReturnSilently();
-            fighter1.getCombatActions(model, fighter2, this).get(0).doAction(model, this, fighter1, fighter2);
+            fighter1.getCombatActions(model, fighter2, this).get(0).executeCombatAction(model, this, fighter1, fighter2);
             waitForReturnSilently();
             if (endOfCombat(fighter2)) {
                 return;
             }
-            fighter2.getCombatActions(model, fighter1, this).get(0).doAction(model, this, fighter2, fighter1);
+            fighter2.getCombatActions(model, fighter1, this).get(0).executeCombatAction(model, this, fighter2, fighter1);
             round++;
         }
         waitForReturnSilently();
+    }
+
+    @Override
+    public int getCurrentRound() {
+        return round;
     }
 
     private boolean endOfCombat(GameCharacter fighter) {
@@ -61,6 +66,11 @@ public class NPCCombatEvent extends CombatEvent {
         subView.addStrikeEffect(target, damage, critical);
     }
 
+    @Override
+    public void addStrikeTextEffect(Combatant target, boolean evade) {
+        subView.addStrikeTextEffect(target, evade);
+    }
+
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
         if (damager == null) {
             target.takeCombatDamage(this, damage);
@@ -69,12 +79,6 @@ public class NPCCombatEvent extends CombatEvent {
             int hpBefore = enemy.getHP();
             ((GameCharacter)target).getAttackedBy(enemy, getModel(), this);
             target.addToHP(enemy.getHP() - hpBefore);
-            if (target.getHP() <= 0) {
-                RunOnceAnimationSprite killAnimation = enemy.getKillAnimation();
-                if (killAnimation != null) {
-                    subView.addSpecialEffect(target, killAnimation);
-                }
-            }
         }
     }
 

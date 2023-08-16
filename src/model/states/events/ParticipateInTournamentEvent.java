@@ -55,7 +55,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         fighters.add(MyRandom.randInt(fighters.size()), chosen);
         TournamentSubView tournamentSubView = new TournamentSubView(fighters);
         model.setSubView(tournamentSubView);
-        waitForReturn();
+        waitForReturnSilently();
         setCurrentTerrainSubview(model);
 
         List<GameCharacter> winners = new ArrayList<>();
@@ -140,6 +140,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         if (winner == chosen) {
             println(chosen.getName() + " accepts the prize money of 100 gold!");
             model.getParty().addToGold(100);
+            // TODO: what about the sponsor?
         } else {
             leaderSay("Well, we lost.");
             if (chosen.isDead()) {
@@ -170,7 +171,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         model.getLog().waitForAnimationToFinish();
         TournamentSubView tournamentSubView = new TournamentSubView(current);
         model.setSubView(tournamentSubView);
-        waitForReturn();
+        waitForReturnSilently();
         setCurrentTerrainSubview(model);
     }
 
@@ -236,10 +237,10 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         print("Do you want to skip the details of the fight? (Y/N) ");
         if (yesNoInput()) {
             runAbstractedNPCFight(model, fighterA, fighterB);
-            return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() == 1);
+            return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() <= 2);
         }
         runDetailedNPCFight(model, fighterA, fighterB);
-        return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() == 1);
+        return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() <= 2);
     }
 
     private GameCharacter runRealCombat(Model model, GameCharacter partyMember, GameCharacter npcFighter) {

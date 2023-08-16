@@ -248,9 +248,6 @@ public class TutorialHandler implements Serializable {
         });
     }
 
-    public boolean isTutorialEnabled() {
-        return tutorialOn;
-    }
 
     public void heavyBlow(Model model) {
         runOnce("heavy blow", () -> {
@@ -278,6 +275,17 @@ public class TutorialHandler implements Serializable {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialHorses(model.getView()));
         });
+    }
+
+    public void fatigue(Model model) {
+        runOnce("fatigue", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialFatigue(model.getView()));
+        });
+    }
+
+    public boolean isTutorialEnabled() {
+        return tutorialOn;
     }
 
     private interface TutorialStep {

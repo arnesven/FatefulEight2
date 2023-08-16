@@ -18,13 +18,13 @@ public class ItemCombatAction extends CombatAction {
     private final Combatant target;
 
     public ItemCombatAction(Set<UsableItem> usableItems, Combatant target) {
-        super("Item");
+        super("Item", false);
         this.usableItems = usableItems;
         this.target = target;
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         // Unused
     }
 
@@ -45,9 +45,9 @@ public class ItemCombatAction extends CombatAction {
                     }
                 }
             } else if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
-                res.add(new CombatAction(item.getName()) {
+                res.add(new CombatAction(item.getName(), false) {
                     @Override
-                    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         GameCharacter character = (GameCharacter)target;
                         String message = item.useYourself(model, character);
                         combat.println(message);
@@ -56,9 +56,9 @@ public class ItemCombatAction extends CombatAction {
                     }
                 });
             } else if (target instanceof Enemy && item instanceof ThrowablePotion) {
-                res.add(new CombatAction(item.getName()) {
+                res.add(new CombatAction(item.getName(), true) {
                     @Override
-                    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         ThrowablePotion tp = (ThrowablePotion)item;
                         tp.throwYourself(model, combat, performer, target);
                         model.getParty().getInventory().remove(item);

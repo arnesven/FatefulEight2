@@ -21,7 +21,7 @@ public class SneakAttackCombatAction extends CombatAction {
     private boolean takeAnotherAction;
 
     public SneakAttackCombatAction() {
-        super("Sneak Attack");
+        super("Sneak Attack", true);
         takeAnotherAction = false;
     }
 
@@ -31,7 +31,7 @@ public class SneakAttackCombatAction extends CombatAction {
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().sneakAttack(model);
         if (combat.isEligibleForSneakAttack(performer)) {
             this.performer = performer;

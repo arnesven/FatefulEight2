@@ -15,7 +15,7 @@ public class DefendCombatAction extends CombatAction {
     public static final int DEFEND_SKILL_RANKS = 3;
 
     public DefendCombatAction() {
-        super("Defend");
+        super("Defend", false);
     }
 
     public static boolean isDefending(GameCharacter gameCharacter) {

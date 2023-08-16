@@ -18,11 +18,11 @@ public class InspireCombatAction extends CombatAction {
     public static final int LEADERSHIP_RANKS_REQUIREMENT = 4;
 
     public InspireCombatAction() {
-        super("Inspire");
+        super("Inspire", false);
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().inspire(model);
         int isLeader = model.getParty().getLeader() == performer? 1 : 0;
         combat.println(performer.getFirstName() + " attempts to inspire the party.");

@@ -13,4 +13,9 @@ public class OfficialNPCClass extends NPCClass {
         Looks.putOnCap(characterAppearance, MyColors.GRAY);
         Looks.putOnFancyRobe(characterAppearance, MyColors.GRAY, MyColors.LIGHT_GRAY);
     }
+
+    @Override
+    public void finalizeLook(CharacterAppearance appearance) {
+        Looks.finalizeCap(appearance);
+    }
 }

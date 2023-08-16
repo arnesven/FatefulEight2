@@ -20,7 +20,7 @@ public class AbilityCombatAction extends CombatAction {
     private final Combatant target;
 
     public AbilityCombatAction(GameCharacter performer, Combatant target) {
-        super("Ability");
+        super("Ability", false);
         this.performer = performer;
         this.target = target;
     }
@@ -31,7 +31,7 @@ public class AbilityCombatAction extends CombatAction {
     }
 
     @Override
-    public void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+    protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         // Unused
     }
 
