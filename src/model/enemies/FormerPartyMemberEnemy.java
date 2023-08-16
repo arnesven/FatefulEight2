@@ -18,6 +18,7 @@ public class FormerPartyMemberEnemy extends Enemy {
     public FormerPartyMemberEnemy(GameCharacter gc) {
         super(getGroupForSpeed(gc), gc.getFullName());
         this.basedOn = gc;
+        setCurrentHp(basedOn.getHP());
     }
 
     private static char getGroupForSpeed(GameCharacter gc) {
@@ -32,6 +33,9 @@ public class FormerPartyMemberEnemy extends Enemy {
 
     @Override
     public int getMaxHP() {
+        if (basedOn == null) {
+            return 1;
+        }
         return basedOn.getMaxHP();
     }
 
