@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.enemies.Enemy;
@@ -140,7 +141,31 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         if (winner == chosen) {
             println(chosen.getName() + " accepts the prize money of 100 gold!");
             model.getParty().addToGold(100);
-            // TODO: what about the sponsor?
+            if (sponsored) {
+                println("You are about to start celebrating when the mysterious stranger pops out like out of nowhere.");
+                showSponsor();
+                portraitSay("Congratulations. I knew you had it in you. Now please, pay me my share.");
+                print("Do you hand over 50 gold to the stranger? (Y/N) ");
+                if (yesNoInput()) {
+                    model.getParty().addToGold(-50);
+                    portraitSay("Thank you. The Brotherhood likes it when people pay their dues.");
+                    model.getLog().waitForAnimationToFinish();
+                    removePortraitSubView(model);
+                    println("The mystery man then promptly disappears.");
+                } else {
+                    leaderSay("I think we'll hang on to that gold for now. Perhaps we can pay you back some other time?");
+                    portraitSay("Certainly. The Brotherhood regularly lends money to those who are in need. " +
+                            "You can find us at taverns in towns and castles.");
+                    if (model.getParty().getLoan() != null) {
+                        Loan currentLoan = model.getParty().getLoan();
+                        model.getParty().setLoan(new Loan(currentLoan.getAmount() + ENTRY_FEE, currentLoan.getDay()));
+                    } else {
+                        model.getParty().setLoan(new Loan(ENTRY_FEE, model.getDay()));
+                    }
+                    println("The mysterious stranger just smiles, then he disappears.");
+                    leaderSay("Wait... what did we just agree to?");
+                }
+            }
         } else {
             leaderSay("Well, we lost.");
             if (chosen.isDead()) {

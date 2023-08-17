@@ -9,6 +9,7 @@ import model.states.CombatEvent;
 import model.states.CombatMatrix;
 import sprites.CombatCursorSprite;
 import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;
@@ -148,6 +149,8 @@ public class CombatSubView extends SubView {
 
     public synchronized void addStrikeEffect(Combatant target, int damge, boolean critical) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
+        point.x += MyRandom.randInt(-1, 1);
+        point.y += MyRandom.randInt(-1, 1);
         addOngoingEffect(new MyPair<>(point, new StrikeEffectSprite()));
         if (damge > 15) {
             Point left = new Point(point);
