@@ -3,7 +3,11 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.SilhouetteAppearance;
+import model.items.Item;
 import sprites.CombatCursorSprite;
+import view.BorderFrame;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.CharSprite;
@@ -11,13 +15,17 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TournamentSubView extends AvatarSubView {
     private static final Sprite VERTICAL_LINE = CharSprite.make(0xAC, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final Sprite HORIZONTAL_LINE = CharSprite.make(0xAD, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final Sprite CORNER = CharSprite.make(0xAE, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
+    private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();
     private final SteppingMatrix<GameCharacter> matrix;
+    private Set<GameCharacter> knownFighters = new HashSet<>();
 
     public TournamentSubView(List<GameCharacter> fighters) {
         this.matrix = new SteppingMatrix<>(8, 5);
@@ -50,6 +58,25 @@ public class TournamentSubView extends AvatarSubView {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
         drawTree(model, matrix.getElementList().size()-1);
         drawFighters(model);
+        drawCharacterCard(model);
+    }
+
+    private void drawCharacterCard(Model model) {
+        Point pos = new Point(X_OFFSET + 4, Y_MAX-10);
+        model.getScreenHandler().clearSpace(X_OFFSET, X_MAX, pos.y, Y_MAX);
+        GameCharacter fighter = matrix.getSelectedElement();
+        BorderFrame.drawString(model.getScreenHandler(), fighter.getName(), pos.x, pos.y, MyColors.LIGHT_GRAY);
+        String raceAndClassString = fighter.getRace().getName() + " " + fighter.getCharClass().getShortName() + " Lvl " + fighter.getLevel();
+        BorderFrame.drawString(model.getScreenHandler(), raceAndClassString, pos.x, pos.y+1, MyColors.LIGHT_GRAY);
+        if (knownFighters.contains(fighter) || model.getParty().getPartyMembers().contains(fighter)) {
+            fighter.getAppearance().drawYourself(model.getScreenHandler(), pos.x, pos.y + 3);
+            fighter.getEquipment().drawYourself(model.getScreenHandler(), pos.x, pos.y);
+        } else {
+            SIL_APPEARANCE.drawYourself(model.getScreenHandler(), pos.x, pos.y + 3);
+            model.getScreenHandler().put(pos.x + 8, pos.y + 6, Item.EMPTY_ITEM_SPRITE);
+            model.getScreenHandler().put(pos.x + 13, pos.y + 6, Item.EMPTY_ITEM_SPRITE);
+            model.getScreenHandler().put(pos.x + 18, pos.y + 6, Item.EMPTY_ITEM_SPRITE);
+        }
     }
 
     private void drawTree(Model model, int fightsRemaining) {
@@ -150,5 +177,24 @@ public class TournamentSubView extends AvatarSubView {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    public void setSelectedFighterKnown() {
+        knownFighters.add(matrix.getSelectedElement());
+    }
+
+    public void setFightersAsKnown(List<GameCharacter> fighters) {
+        for (GameCharacter fighter : fighters) {
+            knownFighters.add(fighter);
+        }
+    }
+
+    public Point getCursorPosition() {
+        Point selected = matrix.getSelectedPoint();
+        return convertToScreen(selected.x, selected.y);
+    }
+
+    public GameCharacter getSelectedFighter() {
+        return matrix.getSelectedElement();
     }
 }

@@ -133,7 +133,7 @@ public abstract class GameState {
                 model.setSubView(getPrevious());
             }
         });
-        waitForReturn();
+        waitForReturnSilently();
         return selectedAction[0];
     }
 

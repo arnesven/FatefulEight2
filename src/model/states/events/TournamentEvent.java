@@ -69,7 +69,7 @@ public class TournamentEvent extends DailyEventState {
         showOfficial();
         portraitSay("Yes, we're still accepting participants. Are you here to fight in the tournament?");
         leaderSay("Perhaps. What are the parameters?");
-        portraitSay("The entry fee is 25 gold. Eight champions will enter the tournament. There will be one-on-one " +
+        portraitSay("The entry fee is " + ENTRY_FEE + " gold. Eight champions will enter the tournament. There will be one-on-one " +
                 "face offs until only one remains. Fights continue until one combatant yields, or to the death! The winner receives " +
                 "100 gold and the " + castle.getLordTitle() + " blessing - which is worth more than any bag of gold mind you.");
         portraitSay("But all of you can't fight. We only have room for one more. Are you still interested?");
@@ -85,6 +85,7 @@ public class TournamentEvent extends DailyEventState {
             print("Will you enter one of your party members into the tournament (Y), or will you " +
                     "remain on the sidelines and place bets on the combatants (N)? ");
         }
+        removePortraitSubView(model);
         if (yesNoInput()) {
             new ParticipateInTournamentEvent(model, sponsored, castle).doEvent(model);
         } else {

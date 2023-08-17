@@ -101,7 +101,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                 handleSponsorWhenLost(model);
                 return;
             }
-            lookAtBoard(model, current);
+            lookAtBoard(model, current, winners);
         }
 
         doLongBreak(model, winners, losers, fighters, chosen);
@@ -132,7 +132,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                 handleSponsorWhenLost(model);
                 return;
             }
-            lookAtBoard(model, current);
+            lookAtBoard(model, current, current);
         }
 
         doLongBreak(model, winners, losers, fighters, chosen);
@@ -231,11 +231,12 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         println("You're surprised at how quickly time has passed when you again hear the voice of the announcer.");
     }
 
-    private void lookAtBoard(Model model, List<GameCharacter> current) {
+    private void lookAtBoard(Model model, List<GameCharacter> current, List<GameCharacter> knownFighters) {
         println("You get up from your seats and walk over to the board next to the booth where you signed up " +
                 "for the tournament. It has already been updated.");
         model.getLog().waitForAnimationToFinish();
         TournamentSubView tournamentSubView = new TournamentSubView(current);
+        tournamentSubView.setFightersAsKnown(knownFighters);
         model.setSubView(tournamentSubView);
         waitForReturnSilently();
         setCurrentTerrainSubview(model);

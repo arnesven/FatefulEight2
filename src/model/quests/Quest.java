@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Quest {
-    private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();;
+    private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();
     private final String name;
     private final Reward reward;
     private final String text;
