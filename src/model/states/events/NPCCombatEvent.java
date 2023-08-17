@@ -8,7 +8,6 @@ import model.combat.NoCombatLoot;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
-import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.NPCCombatSubView;

@@ -146,7 +146,7 @@ public class AncientStrongholdQuest extends MainQuest {
         public QuestEdge run(Model model, QuestState state) {
             if (MyRandom.flipCoin()) {
                 boolean ambush = MyRandom.flipCoin();
-                state.print("The party encounters a group of enemies!");
+                state.print("The party encounters a group of enemies! ");
                 if (ambush) {
                     state.print(" They seem to have been caught off guard by your presence! ");
                 }
@@ -336,6 +336,9 @@ public class AncientStrongholdQuest extends MainQuest {
                     break;
                 } else if (selectedIndex == AncientStrongholdControlPanel.NUMBER_OF_PEARL_SLOTS) {
                     result = controlPanel.handleLever(model, state, isElevator);
+                    if (!result) {
+                        return false;
+                    }
                 } else { // Pearl slot index in 0..3
                     controlPanel.handlePearl(model, state, selectedIndex);
                 }
