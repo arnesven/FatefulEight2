@@ -98,6 +98,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                         "to the semi-finals.");
             }
             if (checkForOutOfTournament(current, chosen)) {
+                handleSponsorWhenLost(model);
                 return;
             }
             lookAtBoard(model, current);
@@ -128,6 +129,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                         "to the final fight between " + winners.get(0).getName() + " and " + winners.get(1).getName() + "!");
             }
             if (checkForOutOfTournament(current, chosen)) {
+                handleSponsorWhenLost(model);
                 return;
             }
             lookAtBoard(model, current);
@@ -152,8 +154,35 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                 leaderSay("At least we didn't lose " + chosen.getFirstName() +
                         "... Let's focus on the tasks before us instead.");
             }
+            if (sponsored) {
+                handleSponsorWhenLost(model);
+            }
         }
+    }
 
+    private void handleSponsorWhenLost(Model model) {
+        println("You turn away from the tournament grounds and start back toward the castle when the mysterious stranger " +
+                "suddenly pops up as out of nowhere.");
+        showSponsor();
+        portraitSay("Rotten luck friend. I really thought you were going to win. " +
+                "The way I see it, you owe me " + ENTRY_FEE + " gold.");
+        if (model.getParty().getGold() >= ENTRY_FEE) {
+            print("Let the mystery man have " + ENTRY_FEE + " gold? (Y/N) ");
+            if (yesNoInput()) {
+                model.getParty().addToGold(-ENTRY_FEE);
+                leaderSay("Fine... Now this day can't possibly get any worse.");
+                portraitSay("Much appreciated friend. Well good-bye and good luck next time I suppose.");
+            } else {
+                refuseToPayBack(model);
+            }
+        } else {
+            leaderSay("I'm afraid I just don't have it.");
+            portraitSay("That's okay friend, you can pay the Brotherhood back later.");
+            addToEntryFeeToLoan(model);
+            addToEntryFeeToLoan(model);
+            println("The mysterious stranger just smiles, then he disappears.");
+            leaderSay("Wait... what did we just agree to?");
+        }
     }
 
     private void handleSponsorWhenWon(Model model) {
@@ -168,17 +197,25 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
             removePortraitSubView(model);
             println("The mystery man then promptly disappears.");
         } else {
-            leaderSay("I think we'll hang on to that gold for now. Perhaps we can pay you back some other time?");
-            portraitSay("Certainly. The Brotherhood regularly lends money to those who are in need. " +
-                    "You can find us at taverns in towns and castles.");
-            if (model.getParty().getLoan() != null) {
-                Loan currentLoan = model.getParty().getLoan();
-                model.getParty().setLoan(new Loan(currentLoan.getAmount() + ENTRY_FEE, currentLoan.getDay()));
-            } else {
-                model.getParty().setLoan(new Loan(ENTRY_FEE, model.getDay()));
-            }
-            println("The mysterious stranger just smiles, then he disappears.");
-            leaderSay("Wait... what did we just agree to?");
+            refuseToPayBack(model);
+        }
+    }
+
+    private void refuseToPayBack(Model model) {
+        leaderSay("I think we'll hang on to that gold for now. Perhaps we can pay you back some other time?");
+        portraitSay("Certainly. The Brotherhood regularly lends money to those who are in need. " +
+                "You can find us at taverns in towns and castles.");
+        addToEntryFeeToLoan(model);
+        println("The mysterious stranger just smiles, then he disappears.");
+        leaderSay("Wait... what did we just agree to?");
+    }
+
+    private void addToEntryFeeToLoan(Model model) {
+        if (model.getParty().getLoan() != null) {
+            Loan currentLoan = model.getParty().getLoan();
+            model.getParty().setLoan(new Loan(currentLoan.getAmount() + ENTRY_FEE, currentLoan.getDay()));
+        } else {
+            model.getParty().setLoan(new Loan(ENTRY_FEE, model.getDay()));
         }
     }
 

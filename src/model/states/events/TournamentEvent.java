@@ -88,7 +88,7 @@ public class TournamentEvent extends DailyEventState {
         if (yesNoInput()) {
             new ParticipateInTournamentEvent(model, sponsored, castle).doEvent(model);
         } else {
-            // new BetOnTournamentEvent(model, castle).doEvent(model); // TODO
+            new BetOnTournamentEvent(model, castle).doEvent(model);
         }
     }
 
