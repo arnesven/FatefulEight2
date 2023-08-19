@@ -127,7 +127,7 @@ public class CombatEvent extends DailyEventState {
         model.setInCombat(false);
     }
 
-    private void removeCombatConditions(Model model) {
+    protected void removeCombatConditions(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             gc.removeCombatConditions();
         }

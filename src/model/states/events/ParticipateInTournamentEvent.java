@@ -14,9 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipateInTournamentEvent extends TournamentEvent {
-    private static final List<String> ADJECTIVES =  List.of("strong", "mysterious", "rugged",
-                                                            "tough", "hardened", "capable", "powerful", "skilled",
-                                                            "vicious", "fierce");
     private final boolean sponsored;
     private boolean saidCheating = false;
 
@@ -291,107 +288,5 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         setCurrentTerrainSubview(model);
     }
 
-    private GameCharacter performOneFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
-        if (model.getParty().getPartyMembers().contains(fighterA)) {
-            return runRealCombat(model, fighterA, fighterB);
-        }
-        if (model.getParty().getPartyMembers().contains(fighterB)) {
-            return runRealCombat(model, fighterB, fighterA);
-        }
 
-        println("You sit down on one of the benches overlooking the fighting pit.");
-        announcerStartOfCombat(fighterA, fighterB);
-        print("Do you want to skip the details of the fight? (Y/N) ");
-        if (yesNoInput()) {
-            runAbstractedNPCFight(model, fighterA, fighterB);
-            return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() <= 2);
-        }
-        runDetailedNPCFight(model, fighterA, fighterB);
-        return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() <= 2);
-    }
-
-    private GameCharacter runRealCombat(Model model, GameCharacter partyMember, GameCharacter npcFighter) {
-        println(partyMember.getName() + " enters the fighting pit...");
-        announcerStartOfCombat(partyMember, npcFighter);
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc != partyMember) {
-                model.getParty().benchPartyMembers(List.of(gc));
-            }
-        }
-        GameCharacter oldLeader = model.getParty().getLeader();
-        model.getParty().setLeader(partyMember);
-        List<Enemy> enemies = List.of(new TournamentEnemy(npcFighter));
-        runCombat(enemies);
-        if (!oldLeader.isDead()) {
-            model.getParty().setLeader(oldLeader);
-        }
-        npcFighter.addToHP(-(enemies.get(0).getMaxHP() - enemies.get(0).getHP()));
-        setCurrentTerrainSubview(model);
-        return announceOutcomeOfCombat(partyMember, npcFighter, haveFledCombat());
-    }
-
-    private void runAbstractedNPCFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
-        println("The two combatants fight well, but in the end, one of them comes out on top.");
-        if (MyRandom.flipCoin()) { // TODO : Base the probability on the odds given for the fighters
-            fighterA.addToHP(-fighterA.getMaxHP());
-            if (MyRandom.flipCoin()) {
-                fighterA.addToHP(1);
-            }
-        } else {
-            fighterB.addToHP(-fighterB.getMaxHP());
-            if (MyRandom.flipCoin()) {
-                fighterB.addToHP(1);
-            }
-        }
-    }
-
-    private GameCharacter announceOutcomeOfCombat(GameCharacter fighterA, GameCharacter fighterB, boolean aYield) {
-        announcerSay("Well ladies and gentlemen, it's over.");
-        if (fighterA.isDead()) {
-            announcerSay(fighterA.getName() + " has been slain, but " + heOrShe(fighterA.getGender()) +
-                    " has perished with honor!");
-            announcerSay(fighterB.getName() + " is the victor of the fight!");
-            return fighterB;
-        }
-        if (fighterB.isDead()) {
-            announcerSay(fighterB.getName() + " has been slain, but " + heOrShe(fighterB.getGender()) +
-                    " has perished with honor!");
-            announcerSay(fighterA.getName() + " is the victor of the fight!");
-            return fighterA;
-        }
-        if (aYield) {
-            announcerSay(fighterA.getName() + " has yielded and must withdraw from the tournament to tend to " +
-                    hisOrHer(fighterA.getGender()) + " wounds!");
-            announcerSay(fighterB.getName() + " is the victor of the fight!");
-            return fighterB;
-        }
-        announcerSay(fighterB.getName() + " has yielded and must withdraw from the tournament to tend to " +
-                hisOrHer(fighterB.getGender()) + " wounds!");
-        announcerSay(fighterA.getName() + " is the victor of the fight!");
-        return fighterA;
-    }
-
-    private void announcerStartOfCombat(GameCharacter fighterA, GameCharacter fighterB) {
-        announcerSay("And now, ladies and gentlemen, we are about to see a " +
-                MyRandom.sample(List.of("fierce", "exciting", "hectic")) + " " +
-                MyRandom.sample(List.of("fight", "face off", "combat", "bout", "match")) + " between two skilled opponents!");
-        announcerSay("In one corner, we have a" + present(fighterA) + ". Let's have a big round of applause for... " +
-                fighterA.getName() + "!");
-        announcerSay("And in the other corner, we have a" + present(fighterB) + ". Let's have another big round of applause for... " +
-                fighterB.getName() + "!");
-        getModel().getLog().waitForAnimationToFinish();
-    }
-
-    private String present(GameCharacter fighter) {
-        if (fighter.getCharClass() == Classes.None) {
-            return "... uh, well a fellow..";
-        }
-        return " " + MyRandom.sample(ADJECTIVES) + " " + fighter.getCharClass().getFullName().toLowerCase();
-
-    }
-
-    private void announcerSay(String s) {
-        super.showAnnouncer();
-        portraitSay(s);
-    }
 }

@@ -17,19 +17,24 @@ public class FoodStandsEvent extends DailyEventState {
                     "fried bread and sugary treats. Do you pay 2 gold for your entire party? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().addToGold(-2);
+                if (model.getParty().size() == 1) {
+                    leaderSay("Yum!");
+                }
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    int increase = MyRandom.randInt(0, 2);
-                    gc.addToAttitude(model.getParty().getLeader(), increase);
-                    print(gc.getFirstName() + " ");
-                    switch (increase) {
-                        case 2:
-                            println("appreciates the snacks a lot!");
-                            break;
-                        case 1:
-                            println("appreciates the snacks.");
-                            break;
-                        default:
-                            println("doesn't really appreciate the snacks.");
+                    if (gc != model.getParty().getLeader()) {
+                        int increase = MyRandom.randInt(0, 2);
+                        gc.addToAttitude(model.getParty().getLeader(), increase);
+                        print(gc.getFirstName() + " ");
+                        switch (increase) {
+                            case 2:
+                                println("appreciates the snacks a lot!");
+                                break;
+                            case 1:
+                                println("appreciates the snacks.");
+                                break;
+                            default:
+                                println("doesn't really appreciate the snacks.");
+                        }
                     }
                 }
                 showPartyAttitudesSubView(model);

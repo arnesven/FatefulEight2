@@ -8,6 +8,7 @@ import model.combat.NoCombatLoot;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
+import view.sprites.AnimationManager;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.NPCCombatSubView;
@@ -30,6 +31,7 @@ public class NPCCombatEvent extends CombatEvent {
     @Override
     protected void doEvent(Model model) {
         CollapsingTransition.transition(model, subView);
+        AnimationManager.synchAnimations();
         round = 1;
         while (!endOfCombat(fighter1)) {
             waitForReturnSilently();
@@ -41,6 +43,7 @@ public class NPCCombatEvent extends CombatEvent {
             fighter2.getCombatActions(model, fighter1, this).get(0).executeCombatAction(model, this, fighter2, fighter1);
             round++;
         }
+        removeCombatConditions(model);
         waitForReturnSilently();
     }
 
@@ -53,7 +56,7 @@ public class NPCCombatEvent extends CombatEvent {
         if (fighter.isDead()) {
             return true;
         }
-        if (fighter.getHP() <= 2) {
+        if (fighter.getHP() <= 2 && fighter.getHP() != fighter.getMaxHP()) {
             println(fighter.getName() + ": \"I yield!\"");
             return true;
         }

@@ -26,7 +26,7 @@ public abstract class CombatAction {
     }
 
     private void checkFatigue(Model model, CombatEvent combat, GameCharacter performer) {
-        if (fatigue && wearingHeavyArmor(performer)) {
+        if (fatigue && performer.getEquipment().anyHeavy()) {
             if (performer.hasCondition(FatigueCondition.class)) {
                 if (performer.getSP() > 0) {
                     performer.addToSP(-1);
@@ -48,12 +48,6 @@ public abstract class CombatAction {
                 }
             }
         }
-    }
-
-    private boolean wearingHeavyArmor(GameCharacter performer) {
-        return performer.getEquipment().getClothing().isHeavy() ||
-                (performer.getEquipment().getAccessory() != null &&
-                        performer.getEquipment().getAccessory().isHeavy());
     }
 
     protected abstract void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target);

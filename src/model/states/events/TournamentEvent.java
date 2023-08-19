@@ -8,6 +8,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.PaladinClass;
+import model.enemies.Enemy;
 import model.enemies.TournamentEnemy;
 import model.items.Equipment;
 import model.items.RedKnightsHelm;
@@ -42,6 +43,9 @@ public class TournamentEvent extends DailyEventState {
     private static final List<Weapon> TWO_HANDED_WEAPONS = List.of(new Spear(), new Trident(), new Glaive(), new Halberd(),
             new Pike(), new BecDeCorbin(), new DoubleAxe(), new GreatAxe(), new TwinHatchets(), new GrandMaul(), new Katana(),
             new TwoHandedSword(), new BastardSword(), new DaiKatana(), new Zweihander());
+    private static final List<String> ADJECTIVES =  List.of("strong", "mysterious", "rugged",
+            "tough", "hardened", "capable", "powerful", "skilled",
+            "vicious", "fierce");
 
     private final CastleLocation castle;
     private static final CharacterAppearance official = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL, Race.ALL);
@@ -55,6 +59,7 @@ public class TournamentEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        new BetOnTournamentEvent(model, castle).doEvent(model);
         print("The " + castle.getLordTitle() + " is hosting a melee tournament today. " +
                 "Do you wish to attend? (Y/N) ");
         if (!yesNoInput()) {
@@ -227,7 +232,7 @@ public class TournamentEvent extends DailyEventState {
             if (blade.isTwoHanded()) {
                 return new Equipment(blade, randomArmor(false), new LeatherCap());
             }
-            return new Equipment(blade, randomArmor(false), new SpikedShield());
+            return new Equipment(blade, randomArmor(false), new KiteShield());
         }
         if (selectedClass == Classes.None) {
             return new Equipment(new ShortSword(), new FancyJerkin(), new Buckler());
@@ -251,6 +256,119 @@ public class TournamentEvent extends DailyEventState {
             return MyRandom.sample(HEAVY_ARMORS);
         }
         return MyRandom.sample(LIGHT_ARMORS);
+    }
+
+    protected int calculateFighterStrength(GameCharacter fighter) {
+        boolean hasHeavy = fighter.getEquipment().anyHeavy();
+        return fighter.getHP() + (fighter.getSpeed() / 2) + (fighter.getAP() * (hasHeavy?1:2)) +
+                (int)Math.ceil(fighter.calcAverageDamage());
+    }
+
+    protected GameCharacter performOneFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
+        if (model.getParty().getPartyMembers().contains(fighterA)) {
+            return runRealCombat(model, fighterA, fighterB);
+        }
+        if (model.getParty().getPartyMembers().contains(fighterB)) {
+            return runRealCombat(model, fighterB, fighterA);
+        }
+
+        println("You sit down on one of the benches overlooking the fighting pit.");
+        announcerStartOfCombat(fighterA, fighterB);
+        print("Do you want to skip the details of the fight? (Y/N) ");
+        if (yesNoInput()) {
+            runAbstractedNPCFight(model, fighterA, fighterB);
+            return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() <= 2);
+        }
+        runDetailedNPCFight(model, fighterA, fighterB);
+        return announceOutcomeOfCombat(fighterA, fighterB, fighterA.getHP() <= 2);
+    }
+
+    private GameCharacter runRealCombat(Model model, GameCharacter partyMember, GameCharacter npcFighter) {
+        println(partyMember.getName() + " enters the fighting pit...");
+        announcerStartOfCombat(partyMember, npcFighter);
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc != partyMember) {
+                model.getParty().benchPartyMembers(List.of(gc));
+            }
+        }
+        GameCharacter oldLeader = model.getParty().getLeader();
+        model.getParty().setLeader(partyMember);
+        List<Enemy> enemies = List.of(new TournamentEnemy(npcFighter));
+        runCombat(enemies);
+        if (!oldLeader.isDead()) {
+            model.getParty().setLeader(oldLeader);
+        }
+        npcFighter.addToHP(-(enemies.get(0).getMaxHP() - enemies.get(0).getHP()));
+        setCurrentTerrainSubview(model);
+        return announceOutcomeOfCombat(partyMember, npcFighter, haveFledCombat());
+    }
+
+    private void runAbstractedNPCFight(Model model, GameCharacter fighterA, GameCharacter fighterB) {
+        println("The two combatants fight well, but in the end, one of them comes out on top.");
+        int strA = calculateFighterStrength(fighterA);
+        int strB = calculateFighterStrength(fighterB);
+        if (MyRandom.randInt(0, strA + strB) < strB) {
+            fighterB.addToHP(-(fighterB.getMaxHP()/2));
+            fighterA.addToHP(-fighterA.getMaxHP());
+            if (MyRandom.flipCoin()) {
+                fighterA.addToHP(1);
+            }
+        } else {
+            fighterA.addToHP(-(fighterB.getMaxHP()/2));
+            fighterB.addToHP(-fighterB.getMaxHP());
+            if (MyRandom.flipCoin()) {
+                fighterB.addToHP(1);
+            }
+        }
+    }
+
+    private GameCharacter announceOutcomeOfCombat(GameCharacter fighterA, GameCharacter fighterB, boolean aYield) {
+        announcerSay("Well ladies and gentlemen, it's over.");
+        if (fighterA.isDead()) {
+            announcerSay(fighterA.getName() + " has been slain, but " + heOrShe(fighterA.getGender()) +
+                    " has perished with honor!");
+            announcerSay(fighterB.getName() + " is the victor of the fight!");
+            return fighterB;
+        }
+        if (fighterB.isDead()) {
+            announcerSay(fighterB.getName() + " has been slain, but " + heOrShe(fighterB.getGender()) +
+                    " has perished with honor!");
+            announcerSay(fighterA.getName() + " is the victor of the fight!");
+            return fighterA;
+        }
+        if (aYield) {
+            announcerSay(fighterA.getName() + " has yielded and must withdraw from the tournament to tend to " +
+                    hisOrHer(fighterA.getGender()) + " wounds!");
+            announcerSay(fighterB.getName() + " is the victor of the fight!");
+            return fighterB;
+        }
+        announcerSay(fighterB.getName() + " has yielded and must withdraw from the tournament to tend to " +
+                hisOrHer(fighterB.getGender()) + " wounds!");
+        announcerSay(fighterA.getName() + " is the victor of the fight!");
+        return fighterA;
+    }
+
+    private void announcerStartOfCombat(GameCharacter fighterA, GameCharacter fighterB) {
+        announcerSay("And now, ladies and gentlemen, we are about to see a " +
+                MyRandom.sample(List.of("fierce", "exciting", "hectic")) + " " +
+                MyRandom.sample(List.of("fight", "face off", "combat", "bout", "match")) + " between two skilled opponents!");
+        announcerSay("In one corner, we have a" + present(fighterA) + ". Let's have a big round of applause for... " +
+                fighterA.getName() + "!");
+        announcerSay("And in the other corner, we have a" + present(fighterB) + ". Let's have another big round of applause for... " +
+                fighterB.getName() + "!");
+        getModel().getLog().waitForAnimationToFinish();
+    }
+
+    private String present(GameCharacter fighter) {
+        if (fighter.getCharClass() == Classes.None) {
+            return "... uh, well a fellow..";
+        }
+        return " " + MyRandom.sample(ADJECTIVES) + " " + fighter.getCharClass().getFullName().toLowerCase();
+    }
+
+    protected void announcerSay(String s) {
+        showAnnouncer();
+        portraitSay(s);
     }
 
     private static class NameAndGender {

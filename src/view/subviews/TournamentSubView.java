@@ -6,7 +6,9 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.items.Item;
+import model.states.events.TournamentOdds;
 import sprites.CombatCursorSprite;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -17,18 +19,22 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-public class TournamentSubView extends AvatarSubView {
+public class TournamentSubView extends TopMenuSubView {
     private static final Sprite VERTICAL_LINE = CharSprite.make(0xAC, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final Sprite HORIZONTAL_LINE = CharSprite.make(0xAD, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final Sprite CORNER = CharSprite.make(0xAE, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();
     private final SteppingMatrix<GameCharacter> matrix;
+    private final Map<GameCharacter, TournamentOdds> odds;
     private Set<GameCharacter> knownFighters = new HashSet<>();
 
-    public TournamentSubView(List<GameCharacter> fighters) {
+    public TournamentSubView(List<GameCharacter> fighters, Map<GameCharacter, TournamentOdds> odds) {
+        super(2, new int[]{X_OFFSET+3, X_OFFSET+16});
         this.matrix = new SteppingMatrix<>(8, 5);
+        this.odds = odds;
         int treeHeight = 3;
         if (fighters.size() <= 4) {
             treeHeight--;
@@ -53,12 +59,8 @@ public class TournamentSubView extends AvatarSubView {
         }
     }
 
-    @Override
-    protected void specificDrawArea(Model model) {
-        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
-        drawTree(model, matrix.getElementList().size()-1);
-        drawFighters(model);
-        drawCharacterCard(model);
+    public TournamentSubView(List<GameCharacter> fighters) {
+        this(fighters, null);
     }
 
     private void drawCharacterCard(Model model) {
@@ -139,12 +141,6 @@ public class TournamentSubView extends AvatarSubView {
                     Point pos = makeFighterPos(x, y);
                     avatar.synch();
                     model.getScreenHandler().register(avatar.getName(), pos, avatar);
-                    if (matrix.getSelectedPoint().x == x && matrix.getSelectedPoint().y == y) {
-                        Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
-                        Point pos2 = new Point(pos);
-                        pos2.y -= 4;
-                        model.getScreenHandler().register(cursor.getName(), pos2, cursor, 2);
-                    }
                 }
             }
         }
@@ -166,7 +162,11 @@ public class TournamentSubView extends AvatarSubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return matrix.getSelectedElement().getName();
+        String extraText = "";
+        if (odds != null) {
+            extraText = ", Current odds: " + odds.get(matrix.getSelectedElement()).getOddsString();
+        }
+        return matrix.getSelectedElement().getName() + extraText;
     }
 
     @Override
@@ -175,8 +175,48 @@ public class TournamentSubView extends AvatarSubView {
     }
 
     @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+    protected void drawCursor(Model model) {
+        Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+        Point p = matrix.getSelectedPoint();
+        Point pos2 = new Point(makeFighterPos(p.x, p.y));
+        pos2.y -= 4;
+        model.getScreenHandler().register(cursor.getName(), pos2, cursor, 2);
+    }
+
+    @Override
+    protected void drawInnerArea(Model model) {
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
+        drawTree(model, matrix.getElementList().size()-1);
+        drawFighters(model);
+        drawCharacterCard(model);
+    }
+
+    @Override
+    protected MyColors getTitleColor(Model model, int i) {
+        return MyColors.WHITE;
+    }
+
+    @Override
+    protected String getTitle(int i) {
+        if (i == 0) {
+            return "Wait 5 Min";
+        }
+        return "Next Fight";
+    }
+
+    @Override
+    protected boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model) {
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    @Override
+    protected int getDefaultIndex() {
+        return 1;
+    }
+
+    @Override
+    protected boolean cursorOnBorderToTop() {
+        return matrix.getSelectedPoint().y == matrix.getMinimumRow();
     }
 
     public void setSelectedFighterKnown() {
@@ -196,5 +236,9 @@ public class TournamentSubView extends AvatarSubView {
 
     public GameCharacter getSelectedFighter() {
         return matrix.getSelectedElement();
+    }
+
+    public boolean isFighterKnown(GameCharacter fighter) {
+        return knownFighters.contains(fighter);
     }
 }

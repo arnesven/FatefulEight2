@@ -170,4 +170,8 @@ public class Equipment implements Serializable {
         }
         return 0;
     }
+
+    public boolean anyHeavy() {
+        return clothing.isHeavy() || (accessory != null && accessory.isHeavy());
+    }
 }

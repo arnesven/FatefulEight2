@@ -21,16 +21,6 @@ public class NPCCombatSubView extends CombatSubView {
         this.topFighter = topFighter;
         this.bottomFighter = bottomFighter;
         this.theme = new TownCombatTheme();
-        synchAnimations(topFighter);
-        synchAnimations(bottomFighter);
-    }
-
-    private void synchAnimations(GameCharacter chara) {
-        chara.getEquipment().getWeapon().getOnAvatarSprite(chara).synch();
-        if (chara.getEquipment().getAccessory() instanceof ShieldItem) {
-            ((Animation)((ShieldItem) chara.getEquipment().getAccessory()).getOnAvatarSprite(chara)).synch();
-        }
-        chara.getAvatarSprite().synch();
     }
 
     private static CombatMatrix makeMatrix(GameCharacter topFighter, GameCharacter bottomFighter) {
