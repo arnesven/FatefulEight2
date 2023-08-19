@@ -21,6 +21,9 @@ import java.util.List;
 public class CombatSubView extends SubView {
 
     public static final String TITLE_TEXT = "COMBAT";
+    public static final int BLOCK_TEXT = 1;
+    public static final int EVADE_TEXT = 0;
+    public static final int MISS_TEXT = 2;
     private final CombatEvent combat;
     private final CombatMatrix combatMatrix;
     private final CombatTheme theme;
@@ -162,9 +165,9 @@ public class CombatSubView extends SubView {
         }
     }
 
-    public synchronized void addStrikeTextEffect(Combatant target, boolean evade) {
+    public synchronized void addStrikeTextEffect(Combatant target, int strikeTextEffect) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        int mapOffset = evade ? 0xF0 : 0xF3;
+        int mapOffset = 0xF0 + strikeTextEffect*3;
         for (int x = 0; x < 3; ++x) {
             addOngoingEffect(new MyPair<>(new Point(point.x + x - 1, point.y),
                     new DamageValueEffect(mapOffset + x)));

@@ -330,8 +330,8 @@ public class CombatEvent extends DailyEventState {
         subView.addStrikeEffect(target, damage, critical);
     }
 
-    public void addStrikeTextEffect(Combatant target, boolean evade) {
-        subView.addStrikeTextEffect(target, evade);
+    public void addStrikeTextEffect(Combatant target, int strikeTextEffect) {
+        subView.addStrikeTextEffect(target, strikeTextEffect);
     }
 
     public void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {

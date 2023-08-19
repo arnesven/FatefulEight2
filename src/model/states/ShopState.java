@@ -75,7 +75,8 @@ public class ShopState extends GameState {
             int topCommand = subView.getTopIndex();
             if (topCommand == 2) {
                 break;
-            } else if ((topCommand == 1 && showingBuyItems) || topCommand == 0 && !showingBuyItems) {
+            } else if ((topCommand == 1 && showingBuyItems && !sellItems.getElementList().isEmpty()) ||
+                    (topCommand == 0 && !showingBuyItems && !buyItems.getElementList().isEmpty())) {
                 toggleBuySell(model);
                 continue;
             }

@@ -28,6 +28,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
+import view.subviews.CombatSubView;
 import view.widget.HealthBar;
 
 import java.awt.Point;
@@ -195,7 +196,11 @@ public class GameCharacter extends Combatant {
         }
         extraInfo += ")";
         combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
-        combatEvent.addStrikeEffect(target, damage, result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits());
+        if (damage > 0) {
+            combatEvent.addStrikeEffect(target, damage, result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits());
+        } else {
+            combatEvent.addStrikeTextEffect(target, CombatSubView.MISS_TEXT);
+        }
         combatEvent.doDamageToEnemy(target, damage, this);
         combatEvent.blockSneakAttackFor(this);
     }
@@ -571,14 +576,14 @@ public class GameCharacter extends Combatant {
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
         combatEvent.blockSneakAttackFor(this);
         if (checkForEvade(enemy)) {
-            combatEvent.addStrikeTextEffect(this, true);
+            combatEvent.addStrikeTextEffect(this, CombatSubView.EVADE_TEXT);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
             model.getTutorial().evading(model);
             RiposteCombatAction.doRiposte(combatEvent, this, enemy);
             return;
         }
         if (checkForBlock(enemy)) {
-            combatEvent.addStrikeTextEffect(this, false);
+            combatEvent.addStrikeTextEffect(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
         } else {

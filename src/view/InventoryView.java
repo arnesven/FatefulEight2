@@ -270,6 +270,7 @@ public class InventoryView extends SelectableListMenu {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);
                                 model.getParty().getInventory().remove(itemToEquip);
                                 checkForSelectedRowReset(model);
+                                InventoryView.this.checkForSelectedRowReset(model);
                                 if (!message.equals("")) {
                                     InventoryView.this.setInnerMenu(new SimpleMessageView(EquipItemMenu.this, message), model);
                                 }

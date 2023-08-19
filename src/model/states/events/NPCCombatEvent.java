@@ -70,14 +70,14 @@ public class NPCCombatEvent extends CombatEvent {
     }
 
     @Override
-    public void addStrikeTextEffect(Combatant target, boolean evade) {
-        subView.addStrikeTextEffect(target, evade);
+    public void addStrikeTextEffect(Combatant target, int strikeTextEffect) {
+        subView.addStrikeTextEffect(target, strikeTextEffect);
     }
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
         if (damager == null) {
             target.takeCombatDamage(this, damage);
-        } else {
+        } else if (damage > 0) {
             CharacterWrappedEnemy enemy = new CharacterWrappedEnemy(damager, damage);
             int hpBefore = enemy.getHP();
             ((GameCharacter)target).getAttackedBy(enemy, getModel(), this);
