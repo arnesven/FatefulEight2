@@ -11,7 +11,9 @@ import model.states.dailyaction.TownDailyActionState;
 import java.util.List;
 
 public class PartFiveStoryPart extends StoryPart {
+    private static final int QUEST_DONE = 1;
     private final String castleName;
+    private int internalStep = 0;
 
     public PartFiveStoryPart(String castleName) {
         this.castleName = castleName;
@@ -29,7 +31,7 @@ public class PartFiveStoryPart extends StoryPart {
 
     @Override
     public void progress() {
-
+        internalStep++;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class PartFiveStoryPart extends StoryPart {
     @Override
     public void addQuests(Model model, List<Quest> quests) {
         if (model.getCurrentHex().getLocation() != null &&
-                model.getCurrentHex().getLocation() instanceof AncientStrongholdLocation) {
+                model.getCurrentHex().getLocation() instanceof AncientStrongholdLocation && internalStep < QUEST_DONE) {
             CastleLocation loc = model.getWorld().getCastleByName(castleName);
             quests.add(getQuestAndSetPortrait(AncientStrongholdQuest.QUEST_NAME, model.getLordPortrait(loc), loc.getLordName()));
         }
