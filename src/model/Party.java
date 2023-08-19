@@ -60,10 +60,6 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
-        inventory.addSpecialItem(PearlItem.makeFromColor(MyColors.BLACK));
-        inventory.addSpecialItem(PearlItem.makeFromColor(MyColors.GREEN));
-        inventory.addSpecialItem(PearlItem.makeFromColor(MyColors.BLUE));
-        inventory.addSpecialItem(PearlItem.makeFromColor(MyColors.PINK));
     }
 
     private LoopingSprite[] makeCursorSprites() {
