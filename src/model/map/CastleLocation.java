@@ -99,8 +99,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new TournamentEvent(model, this);
-        /*
         int dieRoll = MyRandom.rollD10();
         if (dieRoll >= 3) {
             return MyRandom.sample(List.of(
@@ -120,7 +118,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
             ));
         }
         return new NoEventState(model);
-        */
     }
 
     @Override

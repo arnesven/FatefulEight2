@@ -30,6 +30,7 @@ public class TournamentSubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
     private final Map<GameCharacter, TournamentOdds> odds;
     private Set<GameCharacter> knownFighters = new HashSet<>();
+    private int timeLeft = -1;
 
     public TournamentSubView(List<GameCharacter> fighters, Map<GameCharacter, TournamentOdds> odds) {
         super(2, new int[]{X_OFFSET+3, X_OFFSET+16});
@@ -186,6 +187,10 @@ public class TournamentSubView extends TopMenuSubView {
     @Override
     protected void drawInnerArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX, blueBlock);
+        if (timeLeft != -1) {
+            BorderFrame.drawCentered(model.getScreenHandler(), "Time Left: " + timeLeft + " min", Y_OFFSET + 2,
+                    MyColors.WHITE, MyColors.BLUE);
+        }
         drawTree(model, matrix.getElementList().size()-1);
         drawFighters(model);
         drawCharacterCard(model);
@@ -240,5 +245,9 @@ public class TournamentSubView extends TopMenuSubView {
 
     public boolean isFighterKnown(GameCharacter fighter) {
         return knownFighters.contains(fighter);
+    }
+
+    public void setTimeLeft(int i) {
+        this.timeLeft = i;
     }
 }

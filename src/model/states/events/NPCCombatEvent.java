@@ -43,7 +43,8 @@ public class NPCCombatEvent extends CombatEvent {
             fighter2.getCombatActions(model, fighter1, this).get(0).executeCombatAction(model, this, fighter2, fighter1);
             round++;
         }
-        removeCombatConditions(model);
+        fighter1.removeCombatConditions();
+        fighter2.removeCombatConditions();
         waitForReturnSilently();
     }
 

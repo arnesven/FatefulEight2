@@ -19,4 +19,8 @@ public class TournamentOdds {
     public double getBetMultiplier() {
         return (double) total / (double) strength;
     }
+
+    public double getValue() {
+        return 0;
+    }
 }

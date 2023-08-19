@@ -59,7 +59,6 @@ public class TournamentEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        new BetOnTournamentEvent(model, castle).doEvent(model);
         print("The " + castle.getLordTitle() + " is hosting a melee tournament today. " +
                 "Do you wish to attend? (Y/N) ");
         if (!yesNoInput()) {

@@ -1,22 +1,23 @@
 package model.states.events;
 
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.map.CastleLocation;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.TournamentSubView;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class BetOnTournamentEvent extends TournamentEvent  {
 
-    private List<MyPair<GameCharacter, TournamentOdds>> placedBets = new ArrayList<>();
+    private List<TournamentBet> placedBets = new ArrayList<>();
+    private List<GameCharacter> alwaysKnown = new ArrayList<>();
 
     public BetOnTournamentEvent(Model model, CastleLocation castle) {
         super(model, castle);
@@ -71,7 +72,7 @@ public class BetOnTournamentEvent extends TournamentEvent  {
             println("You get up from your seats and walk over to the board next to the booth where you signed up " +
                     "for the tournament. It has already been updated.");
             model.getLog().waitForAnimationToFinish();
-            tournamentViewMenu(model, current, winners);
+            tournamentViewMenu(model, current, i<3?winners:current);
             if (i == 3 || i == 5) {
                 for (GameCharacter gc : current) {
                     gc.addToHP(MyRandom.randInt(1, 5));
@@ -81,21 +82,54 @@ public class BetOnTournamentEvent extends TournamentEvent  {
             }
         }
         announcerSay("Ladies and gentlemen, we have a winner of the tournament! It's " + winners.get(0).getName() + "!");
+        int winnings = getWinningsFromTickets(winners.get(0));
+        if (winnings > 0) {
+            println("You return to the booth where people are lining up to collect their winnings.");
+            showOfficial();
+            portraitSay("Yes, may I see your tickets?");
+            leaderSay("Here they are!");
+            portraitSay("Congratulations, here are your winnings.");
+            println("The party gains " + winnings + " gold!");
+            model.getParty().addToGold(winnings);
+        } else {
+            println(model.getParty().getLeader() + " looks at the betting tickets.");
+            leaderSay("Well, we didn't win. Perhaps we should have paid more attention to the fighters.");
+            GameCharacter rando = model.getParty().getRandomPartyMember();
+            partyMemberSay(rando, "Or we were just unlucky.");
+            println("Disappointed, you head back to the castle.");
+        }
 
+    }
+
+    private int getWinningsFromTickets(GameCharacter winner) {
+        int sum = 0;
+        for (TournamentBet bets : placedBets) {
+            if (bets.getFighter() == winner) {
+                int goldWon = (int)Math.ceil(bets.getBet() * bets.getOdds().getBetMultiplier());
+               sum += goldWon;
+            }
+        }
+        return sum;
     }
 
     private void tournamentViewMenu(Model model, List<GameCharacter> fighters, List<GameCharacter> knownFighters) {
         Map<GameCharacter, TournamentOdds> odds = calculateOdds(fighters);
         TournamentSubView tournamentSubView = new TournamentSubView(fighters, odds);
         tournamentSubView.setFightersAsKnown(knownFighters);
+        tournamentSubView.setFightersAsKnown(alwaysKnown);
         model.setSubView(tournamentSubView);
+        List<MyPair<GameCharacter, GameCharacter>> delayedSearchers = new ArrayList<>();
         int timeLeft = 6;
         do {
+            tournamentSubView.setTimeLeft(timeLeft*5);
             waitForReturnSilently();
             if (tournamentSubView.getTopIndex() == 1) {
                 timeLeft = 1;
             } else if (tournamentSubView.getTopIndex() == 0) {
-                println("There is " + (--timeLeft) * 5 + " minutes until the next fight begins.");
+                timeLeft--;
+                if (MyRandom.randInt(3) < delayedSearchers.size()) {
+                    returnASearcher(model, delayedSearchers, tournamentSubView);
+                }
             } else {
                 Point pos = tournamentSubView.getCursorPosition();
                 GameCharacter fighter = tournamentSubView.getSelectedFighter();
@@ -103,7 +137,6 @@ public class BetOnTournamentEvent extends TournamentEvent  {
                 switch (sel) {
                     case 0:
                         betOnFighter(model, fighter, odds);
-                        timeLeft--;
                         break;
                     case 1:
                         List<GameCharacter> notBenched = new ArrayList<>(model.getParty().getPartyMembers());
@@ -114,15 +147,10 @@ public class BetOnTournamentEvent extends TournamentEvent  {
                             if (tournamentSubView.isFighterKnown(fighter)) {
                                 println("You already know everything about " + fighter.getName() + ".");
                             } else {
-                                MyPair<Boolean, GameCharacter> success =
-                                        model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.SeekInfo, 6);
-                                if (success.first) {
-                                    println(success.second.getFirstName() + " finds out the details about " + fighter.getName() + ".");
-                                    tournamentSubView.setSelectedFighterKnown();
-                                } else {
-                                    partyMemberSay(success.second, "Can't find " + himOrHer(fighter.getGender()) + " anywhere...");
-                                }
-                                model.getParty().benchPartyMembers(List.of(success.second));
+                                print("Who do you want to send to find info about " + fighter.getName() + "? ");
+                                GameCharacter chara = model.getParty().partyMemberInput(model, this, notBenched.get(0));
+                                delayedSearchers.add(new MyPair<>(chara, fighter));
+                                model.getParty().benchPartyMembers(List.of(chara));
                                 timeLeft--;
                             }
                         }
@@ -131,10 +159,28 @@ public class BetOnTournamentEvent extends TournamentEvent  {
                 }
             }
         } while (timeLeft > 1);
-        model.getParty().unbenchAll();
+        while (!delayedSearchers.isEmpty()) {
+            returnASearcher(model, delayedSearchers, tournamentSubView);
+        }
+        model.getLog().waitForAnimationToFinish();
         setCurrentTerrainSubview(model);
         println("With only five minutes left to the next fight you hurry " +
                 "over to the fighting pit. You take your places and the fight begins.");
+    }
+
+    private void returnASearcher(Model model, List<MyPair<GameCharacter, GameCharacter>> delayedSearchers, TournamentSubView tournamentSubView) {
+        Collections.shuffle(delayedSearchers);
+        MyPair<GameCharacter, GameCharacter> searcher = delayedSearchers.remove(0);
+        println(searcher.first.getFirstName() + " has comes back");
+        model.getParty().unbenchPartyMembers(List.of(searcher.first));
+        SkillCheckResult success = model.getParty().doSkillCheckWithReRoll(model, this, searcher.first, Skill.SeekInfo, 6, 10, 0);
+        if (success.isSuccessful()) {
+            println(searcher.first.getFirstName() + " finds out the details about " + searcher.second.getName() + ".");
+            tournamentSubView.setFightersAsKnown(List.of(searcher.second));
+            this.alwaysKnown.add(searcher.second);
+        } else {
+            partyMemberSay(searcher.first, "Couldn't find " + himOrHer(searcher.second.getGender()) + " anywhere...");
+        }
     }
 
     private void betOnFighter(Model model, GameCharacter fighter, Map<GameCharacter, TournamentOdds> odds) {
@@ -143,7 +189,7 @@ public class BetOnTournamentEvent extends TournamentEvent  {
         int bet = integerInput();
         if (0 < bet && bet <= model.getParty().getGold()) {
             model.getParty().addToGold(-bet);
-            placedBets.add(new MyPair<>(fighter, odds.get(fighter)));
+            placedBets.add(new TournamentBet(fighter, bet, odds.get(fighter)));
             println("Official: \"I've registered your wager. Here's your ticket.\"");
         } else if (0 < bet) {
             println("You cannot afford that.");
@@ -172,4 +218,26 @@ public class BetOnTournamentEvent extends TournamentEvent  {
         return result;
     }
 
+    private static class TournamentBet {
+        private final GameCharacter fighter;
+        private final int bet;
+        private final TournamentOdds odds;
+        public TournamentBet(GameCharacter fighter, int bet, TournamentOdds odds) {
+            this.fighter = fighter;
+            this.bet = bet;
+            this.odds = odds;
+        }
+
+        public GameCharacter getFighter() {
+            return fighter;
+        }
+
+        public int getBet() {
+            return bet;
+        }
+
+        public TournamentOdds getOdds() {
+            return odds;
+        }
+    }
 }
