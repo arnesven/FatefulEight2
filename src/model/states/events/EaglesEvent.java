@@ -28,8 +28,11 @@ public class EaglesEvent extends AlternativeTravelEvent {
                 "They offer to fly you down from the mountain.");
         if (model.getParty().hasHorses()) {
             print("You will have to leave your horses behind if you fly with the eagles. Do you abandon your horses? (Y/N) ");
-            model.getParty().getHorseHandler().abandonHorses(model);
-            return yesNoInput();
+            if (yesNoInput()) {
+                model.getParty().getHorseHandler().abandonHorses(model);
+                return true;
+            }
+            return false;
         }
         return true;
     }

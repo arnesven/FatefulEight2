@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 import model.enemies.CultistEnemy;
 import model.enemies.CultistLeaderEnemy;
