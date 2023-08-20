@@ -55,7 +55,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
         if (!yesNoInput()) {
             model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                     List.of("Perhaps it's just better with some peace and quiet for now.",
-                            "Let's try to stay focused at the task at hand.",
+                            "Let's try to stay focused on the task at hand.",
                             "We can do that some other time.",
                             "This isn't the right time for that."));
             return;

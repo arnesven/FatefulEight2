@@ -46,6 +46,6 @@ public class WardSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "Conjures a protective ward which makes the target immune to magic attacks for two rounds.";
+        return "Protection which makes the target immune to magic attacks for 2 rounds.";
     }
 }

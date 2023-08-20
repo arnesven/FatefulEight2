@@ -99,8 +99,8 @@ public abstract class Combatant implements Serializable {
         }
         if (found != null) {
             conditions.remove(found);
+            found.wasRemoved(this);
         }
-        found.wasRemoved(this);
     }
 
     public String getStatus() {
