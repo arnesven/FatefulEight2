@@ -65,13 +65,13 @@ public class NPCCombatEvent extends CombatEvent {
     }
 
     @Override
-    public void addStrikeEffect(Combatant target, int damage, boolean critical) {
-        subView.addStrikeEffect(target, damage, critical);
+    public void addFloatyDamage(Combatant target, int damage, boolean critical) {
+        subView.addFloatyDamage(target, damage, critical);
     }
 
     @Override
-    public void addStrikeTextEffect(Combatant target, int strikeTextEffect) {
-        subView.addStrikeTextEffect(target, strikeTextEffect);
+    public void addFloatyText(Combatant target, int strikeTextEffect) {
+        subView.addFloatyText(target, strikeTextEffect);
     }
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {

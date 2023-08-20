@@ -5,6 +5,7 @@ import model.combat.CombatLoot;
 import model.combat.SingleItemCombatLoot;
 import model.combat.StandardCombatLoot;
 import model.enemies.behaviors.MeleeAttackBehavior;
+import model.enemies.behaviors.RangedAttackBehavior;
 import model.items.potions.HealthPotion;
 import model.states.events.PeskyCrowEvent;
 import view.MyColors;

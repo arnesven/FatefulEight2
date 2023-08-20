@@ -3,7 +3,6 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.TimedParalysisCondition;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
@@ -43,7 +42,7 @@ public class MagmaBlastSpell extends CombatSpell {
         for (Enemy e : targets) {
             int damage = MyRandom.randInt(7) + 1;
             combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
-            combat.addStrikeEffect(e, damage, true);
+            combat.addFloatyDamage(e, damage, true);
             combat.addSpecialEffect(e, new MagmaBlastEffectSprite());
             combat.doDamageToEnemy(e, damage, performer);
         }

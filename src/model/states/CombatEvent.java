@@ -9,8 +9,6 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.*;
-import model.items.Item;
-import model.items.special.PearlItem;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
@@ -263,7 +261,7 @@ public class CombatEvent extends DailyEventState {
                 } else {
                     println(backMover.getFirstName() + " took 1 damage from opportunity attack while moving to back row.");
                     backMover.addToHP(-1);
-                    addStrikeEffect(backMover, 1, false);
+                    addFloatyDamage(backMover, 1, false);
                 }
             }
         }
@@ -326,12 +324,12 @@ public class CombatEvent extends DailyEventState {
         return combatMatrix.getSelectedElement();
     }
 
-    public void addStrikeEffect(Combatant target, int damage, boolean critical) {
-        subView.addStrikeEffect(target, damage, critical);
+    public void addFloatyDamage(Combatant target, int damage, boolean critical) {
+        subView.addFloatyDamage(target, damage, critical);
     }
 
-    public void addStrikeTextEffect(Combatant target, int strikeTextEffect) {
-        subView.addStrikeTextEffect(target, strikeTextEffect);
+    public void addFloatyText(Combatant target, int strikeTextEffect) {
+        subView.addFloatyText(target, strikeTextEffect);
     }
 
     public void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {

@@ -9,9 +9,7 @@ import model.items.Item;
 import util.MyStrings;
 import view.AnalyzeDialog;
 import view.AnalyzeWeaponDialog;
-import view.sprites.LoopingSprite;
-import view.sprites.AvatarItemSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 public abstract class Weapon extends EquipableItem {
 
@@ -147,5 +145,9 @@ public abstract class Weapon extends EquipableItem {
 
     public int getCriticalTarget() {
         return 10;
+    }
+
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new StrikeEffectSprite();
     }
 }

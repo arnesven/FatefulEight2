@@ -194,6 +194,10 @@ public abstract class Enemy extends Combatant {
 
     public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) { }
 
+    public RunOnceAnimationSprite getStrikeEffect() {
+        return combatBehavior.getStrikeEffect();
+    }
+
     private static class KillAnimation extends RunOnceAnimationSprite {
         private static final int ANIMATION_STEPS = 10;
         private final BufferedImage[] images = new BufferedImage[ANIMATION_STEPS];

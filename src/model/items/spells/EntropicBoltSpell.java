@@ -37,7 +37,7 @@ public class EntropicBoltSpell extends CombatSpell {
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         int damage = 4;
         combat.println(target.getName() + " was hit by entropic bolt, took " + damage + " damage.");
-        combat.addStrikeEffect(target, damage, true);
+        combat.addFloatyDamage(target, damage, true);
         combat.addSpecialEffect(target, new EntropicBoltEffect());
         combat.doDamageToEnemy(target, damage, performer);
     }

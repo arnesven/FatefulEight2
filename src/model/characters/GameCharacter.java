@@ -196,10 +196,11 @@ public class GameCharacter extends Combatant {
         }
         extraInfo += ")";
         combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
+        combatEvent.addSpecialEffect(target, equipment.getWeapon().getEffectSprite());
         if (damage > 0) {
-            combatEvent.addStrikeEffect(target, damage, result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits());
+            combatEvent.addFloatyDamage(target, damage, result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits());
         } else {
-            combatEvent.addStrikeTextEffect(target, CombatSubView.MISS_TEXT);
+            combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
         }
         combatEvent.doDamageToEnemy(target, damage, this);
         combatEvent.blockSneakAttackFor(this);
@@ -575,15 +576,16 @@ public class GameCharacter extends Combatant {
 
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
         combatEvent.blockSneakAttackFor(this);
+        combatEvent.addSpecialEffect(this, enemy.getStrikeEffect());
         if (checkForEvade(enemy)) {
-            combatEvent.addStrikeTextEffect(this, CombatSubView.EVADE_TEXT);
+            combatEvent.addFloatyText(this, CombatSubView.EVADE_TEXT);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
             model.getTutorial().evading(model);
             RiposteCombatAction.doRiposte(combatEvent, this, enemy);
             return;
         }
         if (checkForBlock(enemy)) {
-            combatEvent.addStrikeTextEffect(this, CombatSubView.BLOCK_TEXT);
+            combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
         } else {
@@ -601,7 +603,7 @@ public class GameCharacter extends Combatant {
                 reductionString = ", Critical Hit" + reductionString;
             }
             combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
-            combatEvent.addStrikeEffect(this, damage, critical);
+            combatEvent.addFloatyDamage(this, damage, critical);
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }
