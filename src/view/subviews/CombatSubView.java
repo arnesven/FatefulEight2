@@ -7,7 +7,7 @@ import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;

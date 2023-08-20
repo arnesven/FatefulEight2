@@ -6,7 +6,7 @@ import model.Model;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import model.states.CombatEvent;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyPixel;
 import util.MyRandom;

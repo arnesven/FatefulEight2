@@ -1,9 +1,6 @@
-package sprites;
+package view.sprites;
 
 import view.MyColors;
-import view.sprites.LoopingSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 public class CombatCursorSprite extends LoopingSprite {
     public static final Sprite DEFAULT_CURSOR = new CombatCursorSprite(MyColors.WHITE);

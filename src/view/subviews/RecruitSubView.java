@@ -4,12 +4,10 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.states.RecruitState;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

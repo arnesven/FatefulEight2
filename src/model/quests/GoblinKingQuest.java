@@ -8,7 +8,7 @@ import model.enemies.GoblinSpearman;
 import model.quests.scenes.CombatSubScene;
 import model.ruins.DungeonChest;
 import model.states.QuestState;
-import sprites.DungeonWallSprite;
+import view.sprites.DungeonWallSprite;
 import view.MyColors;
 import view.sprites.FirePlaceSprite;
 import view.sprites.Sprite;

@@ -3,16 +3,14 @@ package view;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.states.TrainingState;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.SubView;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class TrainingView extends SubView {
     private final TrainingState state;

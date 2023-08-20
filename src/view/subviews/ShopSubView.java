@@ -4,10 +4,9 @@ import model.Model;
 import model.SteppingMatrix;
 import model.items.Item;
 import model.states.ShopState;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.ArrowSprites;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 

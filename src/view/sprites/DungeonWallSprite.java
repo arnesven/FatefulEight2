@@ -1,7 +1,6 @@
-package sprites;
+package view.sprites;
 
 import view.MyColors;
-import view.sprites.Sprite32x32;
 
 public class DungeonWallSprite extends Sprite32x32 {
     public static DungeonWallSprite DOOR = new DungeonWallSprite(0x31);

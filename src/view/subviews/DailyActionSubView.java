@@ -5,8 +5,7 @@ import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.TownDailyActionState;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 

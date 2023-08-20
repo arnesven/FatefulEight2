@@ -2,13 +2,12 @@ package view.subviews;
 
 import model.Model;
 import model.quests.AncientStrongholdControlPanel;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
 import view.sprites.Sprite32x32;
-import view.sprites.Sprite8x8;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

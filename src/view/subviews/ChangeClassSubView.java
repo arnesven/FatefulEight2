@@ -6,7 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.items.Equipment;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.ArrowSprites;

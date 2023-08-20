@@ -1,8 +1,10 @@
 package model.items.weapons;
 
 import model.classes.Skill;
+import view.sprites.RangedStrikeEffect;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BowWeapon extends Weapon {
 
@@ -31,5 +33,10 @@ public abstract class BowWeapon extends Weapon {
     @Override
     protected AvatarItemSprite getOnAvatarSprite(int index) {
         return BOW_SPRITES[index];
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new RangedStrikeEffect();
     }
 }

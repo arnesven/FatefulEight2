@@ -4,12 +4,11 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.states.events.BoatsEvent;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.MyColors;
 import view.sprites.BoatSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.util.ArrayList;

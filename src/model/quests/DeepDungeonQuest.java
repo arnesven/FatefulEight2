@@ -11,7 +11,7 @@ import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
-import sprites.DungeonWallSprite;
+import view.sprites.DungeonWallSprite;
 import view.MyColors;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;

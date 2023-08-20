@@ -5,16 +5,12 @@ import model.SteppingMatrix;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
-import sprites.CombatCursorSprite;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x16;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class TownSubView extends DailyActionSubView {

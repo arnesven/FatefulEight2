@@ -15,7 +15,7 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.QuestState;
-import sprites.DungeonWallSprite;
+import view.sprites.DungeonWallSprite;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite32x32;

@@ -3,7 +3,7 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
-import sprites.CombatCursorSprite;
+import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
