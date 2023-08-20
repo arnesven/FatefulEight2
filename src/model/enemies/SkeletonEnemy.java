@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.LoopingSprite;
 import view.sprites.SkeletonEnemySprite;
 import view.sprites.Sprite;
@@ -12,7 +13,7 @@ public class SkeletonEnemy extends UndeadEnemy {
     private static final LoopingSprite skeletonSprite = new SkeletonEnemySprite();
 
     public SkeletonEnemy(char a) {
-        super(a, "Skeleton");
+        super(a, "Skeleton", new MeleeAttackBehavior());
     }
 
     @Override

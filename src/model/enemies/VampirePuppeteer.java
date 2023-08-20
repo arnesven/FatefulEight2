@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
+import model.enemies.behaviors.MixedAttackBehavior;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.GameState;
@@ -20,7 +21,7 @@ public class VampirePuppeteer extends UndeadEnemy {
     private static final Sprite SPRITE = new VampirePuppeteerSprite();
 
     public VampirePuppeteer(char a) {
-        super(a, "Vampire Puppeteer");
+        super(a, "Vampire Puppeteer", new MixedAttackBehavior());
         setFortified(true);
     }
 
@@ -47,11 +48,6 @@ public class VampirePuppeteer extends UndeadEnemy {
     @Override
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_MIXED;
     }
 
     @Override

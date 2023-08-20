@@ -1,5 +1,7 @@
 package model.enemies;
 
+import model.enemies.behaviors.KnockDownAttackBehavior;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.GoblinSprite;
 import view.sprites.Sprite;
@@ -8,7 +10,7 @@ public class GoblinClubWielder extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0xA7, MyColors.BROWN);
 
     public GoblinClubWielder(char a) {
-        super(a, "Goblin Club Wielder");
+        super(a, "Goblin Club Wielder", new KnockDownAttackBehavior(2));
     }
 
     @Override

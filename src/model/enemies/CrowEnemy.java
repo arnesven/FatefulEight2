@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.SingleItemCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import model.items.potions.HealthPotion;
 import model.states.events.PeskyCrowEvent;
 import view.MyColors;
@@ -14,7 +15,7 @@ public class CrowEnemy extends BeastEnemy {
     public static final Sprite SPRITE = new CrowSprite();
 
     public CrowEnemy(char a) {
-        super(a, "Pesky Crow", NORMAL);
+        super(a, "Pesky Crow", NORMAL, new MeleeAttackBehavior());
     }
 
     @Override

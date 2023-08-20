@@ -3,6 +3,8 @@ package model.enemies;
 import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
+import model.enemies.behaviors.EnemyAttackBehavior;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import model.states.CombatEvent;
 import sprites.CombatCursorSprite;
 import util.MyPair;
@@ -23,16 +25,19 @@ import java.awt.Point;
 
 public abstract class Enemy extends Combatant {
 
-    protected static final int FIGHTING_STYLE_MELEE = 0;
-    protected static final int FIGHTING_STYLE_RANGED = 1;
-    protected static final int FIGHTING_STYLE_MIXED = 2;
     private final char enemyGroup;
+    private EnemyAttackBehavior combatBehavior;
     private String name;
 
-    public Enemy(char enemyGroup, String name) {
+    public Enemy(char enemyGroup, String name, EnemyAttackBehavior combatBehavior) {
         this.enemyGroup = enemyGroup;
         this.name = name;
         this.setCurrentHp(getMaxHP());
+        this.combatBehavior = combatBehavior;
+    }
+
+    public Enemy(char group, String name) {
+        this(group, name, new MeleeAttackBehavior());
     }
 
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
@@ -100,23 +105,18 @@ public abstract class Enemy extends Combatant {
     }
 
     public boolean canTargetBackRow() {
-        return getFightingStyle() != FIGHTING_STYLE_MELEE;
+        return combatBehavior.canAttackBackRow();
     }
-
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_MELEE;
-    }
-
 
     public char getEnemyGroup() {
         return enemyGroup;
     }
 
-    public void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
+    public final void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
         if (model.getParty().getBackRow().contains(target)) {
             combatEvent.print(getName() + " performs a ranged attack! ");
         }
-        target.getAttackedBy(this, model, combatEvent);
+        combatBehavior.performAttack(model, this, target, combatEvent);
         model.getTutorial().combatDamage(model);
         if (target.isDead()) {
             combatEvent.println("!" + target.getName() + " has been slain in combat!");
@@ -142,14 +142,11 @@ public abstract class Enemy extends Combatant {
     public abstract CombatLoot getLoot(Model model);
 
     public MyPair<Integer, Boolean> calculateBaseDamage(boolean isRanged) {
-        int damage = getDamage();
-        if (isRanged && getFightingStyle() == FIGHTING_STYLE_MIXED) {
-            damage = (int)(Math.ceil(((double)damage) / 2.0));
-        }
+        int damage = combatBehavior.calculateDamage(this, isRanged);
         if (hasCondition(WeakenCondition.class)) {
             damage = Math.max(1, damage - 2);
         }
-        if (MyRandom.rollD10() == 10) {
+        if (combatBehavior.isCriticalHit()) {
             damage = damage * 2;
             return new MyPair<>(damage, true);
         }
@@ -235,5 +232,9 @@ public abstract class Enemy extends Combatant {
 
     public int getDamageReduction() {
         return 0;
+    }
+
+    public void setAttackBehavior(EnemyAttackBehavior behavior) {
+        this.combatBehavior = behavior;
     }
 }

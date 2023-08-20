@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.*;
+import model.enemies.behaviors.PoisonAttackBehavior;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -13,17 +14,7 @@ public class ScorpionEnemy extends BeastEnemy {
             MyColors.BLACK, MyColors.GOLD, MyColors.BROWN, MyColors.RED);
 
     public ScorpionEnemy(char a) {
-        super(a, "Scorpion", NORMAL);
-    }
-
-    @Override
-    public void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
-        int hpBefore = target.getHP();
-        super.attack(model, target, combatEvent);
-        if (hpBefore > target.getHP() && !target.isDead()) {
-            combatEvent.println(target.getName() + " has been poisoned!");
-            target.addCondition(new PoisonCondition());
-        }
+        super(a, "Scorpion", NORMAL, new PoisonAttackBehavior(5));
     }
 
     @Override

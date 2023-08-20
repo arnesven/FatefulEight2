@@ -3,10 +3,11 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.FrogmanLoot;
+import model.enemies.behaviors.EnemyAttackBehavior;
 
 public abstract class FrogmanEnemy extends Enemy {
-    public FrogmanEnemy(char enemyGroup, String name) {
-        super(enemyGroup, name);
+    public FrogmanEnemy(char enemyGroup, String name, EnemyAttackBehavior behavior) {
+        super(enemyGroup, name, behavior);
     }
 
     @Override

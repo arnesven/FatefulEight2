@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.GoblinSprite;
 import view.sprites.Sprite;
 
@@ -7,7 +8,7 @@ public class GoblinSpearman extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0x84);
 
     public GoblinSpearman(char a) {
-        super(a, "Goblin Spearman");
+        super(a, "Goblin Spearman", new MeleeAttackBehavior());
     }
 
     @Override

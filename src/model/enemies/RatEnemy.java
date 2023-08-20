@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -12,7 +13,7 @@ public class RatEnemy extends BeastEnemy {
             MyColors.BLACK, MyColors.BROWN, MyColors.LIGHT_PINK, MyColors.BEIGE);
 
     public RatEnemy(char a) {
-        super(a, "Rat", DOCILE);
+        super(a, "Rat", DOCILE, new MeleeAttackBehavior());
     }
 
     @Override

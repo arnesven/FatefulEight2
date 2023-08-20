@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
+import model.enemies.behaviors.MixedAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -11,7 +12,7 @@ public class GhostEnemy extends UndeadEnemy {
     private static final Sprite SPRITE = new GhostSprite();
 
     public GhostEnemy(char a) {
-        super(a, "Ghost");
+        super(a, "Ghost", new MixedAttackBehavior());
     }
 
     @Override
@@ -32,11 +33,6 @@ public class GhostEnemy extends UndeadEnemy {
     @Override
     public int getDamage() {
         return 4;
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_MIXED;
     }
 
     @Override

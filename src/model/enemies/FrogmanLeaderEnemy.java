@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.FrogManSprite;
 import view.sprites.Sprite;
 
@@ -7,7 +8,7 @@ public class FrogmanLeaderEnemy extends FrogmanEnemy {
     private static final Sprite SPRITE = new FrogManSprite(0xC8);
 
     public FrogmanLeaderEnemy(char a) {
-        super(a, "Frogman Leader");
+        super(a, "Frogman Leader", new MeleeAttackBehavior());
     }
 
     @Override

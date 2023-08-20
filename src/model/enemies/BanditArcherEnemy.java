@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.RangedAttackBehavior;
 import model.races.Race;
 import view.sprites.BanditSprite;
 import view.sprites.LoopingSprite;
@@ -12,11 +13,7 @@ public class BanditArcherEnemy extends BanditEnemy {
 
     public BanditArcherEnemy(char a) {
         super(a, "Bandit Archer", 4);
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_RANGED;
+        setAttackBehavior(new RangedAttackBehavior());
     }
 
     @Override

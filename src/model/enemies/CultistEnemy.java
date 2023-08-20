@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
+import model.enemies.behaviors.MixedAttackBehavior;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -12,7 +13,7 @@ public class CultistEnemy extends Enemy {
     private static final Sprite SPRITE = new CultistEnemySprite();
 
     public CultistEnemy(char a) {
-        super(a, "Cultist");
+        super(a, "Cultist", new MixedAttackBehavior());
     }
 
     @Override
@@ -33,11 +34,6 @@ public class CultistEnemy extends Enemy {
     @Override
     public int getDamage() {
         return 4;
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_MIXED;
     }
 
     @Override

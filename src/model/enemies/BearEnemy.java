@@ -3,6 +3,8 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.RationsCombatLoot;
+import model.enemies.behaviors.KnockDownAttackBehavior;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.BearSprite;
 import view.sprites.Sprite;
 
@@ -13,7 +15,7 @@ public class BearEnemy extends BigBeastEnemy {
     private static Sprite sprite = new BearSprite("bear", "enemies.png", 0x10);
 
     public BearEnemy(char group) {
-        super(group, "Bear", NORMAL);
+        super(group, "Bear", NORMAL, new KnockDownAttackBehavior(5));
     }
 
     @Override

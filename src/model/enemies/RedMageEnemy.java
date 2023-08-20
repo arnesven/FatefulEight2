@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
+import model.enemies.behaviors.MixedAttackBehavior;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -12,7 +13,7 @@ public class RedMageEnemy extends Enemy {
     private static final Sprite SPRITE = new RedMageSprite();
 
     public RedMageEnemy(char a) {
-        super(a, "Red Mage");
+        super(a, "Red Mage", new MixedAttackBehavior());
     }
 
     @Override
@@ -48,10 +49,5 @@ public class RedMageEnemy extends Enemy {
             setColor2(MyColors.RED);
             setColor3(Race.DARK_ELF.getColor());
         }
-    }
-    
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_MIXED;
     }
 }

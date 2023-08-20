@@ -1,5 +1,7 @@
 package model.enemies;
 
+import model.enemies.behaviors.KnockBackAttackBehavior;
+import model.enemies.behaviors.MixedAttackBehavior;
 import view.sprites.GoblinSprite;
 import view.sprites.Sprite;
 
@@ -7,7 +9,7 @@ public class GoblinKingEnemy extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0xB7);
 
     public GoblinKingEnemy(char a) {
-        super(a, "Goblin King");
+        super(a, "Goblin King", new KnockBackAttackBehavior(5));
     }
 
     @Override

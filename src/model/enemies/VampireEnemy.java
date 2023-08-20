@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -12,7 +13,7 @@ public class VampireEnemy extends UndeadEnemy {
     private static final LoopingSprite SPRITE = new VampireEnemySprite();
 
     public VampireEnemy(char a) {
-        super(a, "Vampire");
+        super(a, "Vampire", new MeleeAttackBehavior());
     }
 
     @Override

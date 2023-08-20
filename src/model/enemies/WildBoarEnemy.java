@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.RationsCombatLoot;
+import model.enemies.behaviors.KnockBackAttackBehavior;
 import view.sprites.BearSprite;
 import view.sprites.Sprite;
 import view.sprites.WildBoarSprite;
@@ -13,7 +14,7 @@ public class WildBoarEnemy extends BigBeastEnemy {
     private static Sprite sprite = new WildBoarSprite("wildboar", "enemies.png", 0x20);
 
     public WildBoarEnemy(char a) {
-        super(a, "Wild Boar", NORMAL);
+        super(a, "Wild Boar", NORMAL, new KnockBackAttackBehavior(4));
     }
 
     @Override

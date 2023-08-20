@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.RangedAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -10,11 +11,7 @@ public class OrcArcherEnemy extends OrcWarrior {
     public OrcArcherEnemy(char c) {
         super(c);
         setName("Orc Archer");
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_RANGED;
+        setAttackBehavior(new RangedAttackBehavior());
     }
 
     @Override

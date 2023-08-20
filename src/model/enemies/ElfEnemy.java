@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.RangedAttackBehavior;
 import model.races.Race;
 import view.sprites.ElfEnemySprite;
 import view.sprites.LoopingSprite;
@@ -13,7 +14,7 @@ public class ElfEnemy extends Enemy {
     private static final LoopingSprite elfSprite = new ElfEnemySprite(Race.WOOD_ELF.getColor());
 
     public ElfEnemy(char a) {
-        super(a, "Elf");
+        super(a, "Elf", new RangedAttackBehavior());
     }
 
     @Override
@@ -34,11 +35,6 @@ public class ElfEnemy extends Enemy {
     @Override
     public int getDamage() {
         return 3;
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_RANGED;
     }
 
     @Override

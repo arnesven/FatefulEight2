@@ -1,14 +1,15 @@
 package model.enemies;
 
+import model.enemies.behaviors.RangedAttackBehavior;
 import view.MyColors;
 import view.sprites.GoblinSprite;
 import view.sprites.Sprite;
 
-public class GoblinBowman extends GoblinEnemy{
+public class GoblinBowman extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0xAB, MyColors.BROWN);
 
     public GoblinBowman(char a) {
-        super(a, "Goblin Bowman");
+        super(a, "Goblin Bowman", new RangedAttackBehavior());
     }
 
     @Override
@@ -19,10 +20,5 @@ public class GoblinBowman extends GoblinEnemy{
     @Override
     public GoblinEnemy copy() {
         return new GoblinBowman(getEnemyGroup());
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_RANGED;
     }
 }

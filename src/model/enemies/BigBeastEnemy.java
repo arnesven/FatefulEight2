@@ -1,10 +1,12 @@
 package model.enemies;
 
+import model.enemies.behaviors.EnemyAttackBehavior;
+
 import java.awt.Point;
 
 public abstract class BigBeastEnemy extends BeastEnemy {
-    public BigBeastEnemy(char enemyGroup, String name, int aggressiveness) {
-        super(enemyGroup, name, aggressiveness);
+    public BigBeastEnemy(char enemyGroup, String name, int aggressiveness, EnemyAttackBehavior behavior) {
+        super(enemyGroup, name, aggressiveness, behavior);
     }
 
     @Override

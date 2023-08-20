@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.EnemyAttackBehavior;
 import model.states.CombatEvent;
 
 public abstract class BeastEnemy extends Enemy {
@@ -9,8 +10,8 @@ public abstract class BeastEnemy extends Enemy {
     public static final int RAMPAGING = 4;
     private int aggro;
 
-    public BeastEnemy(char enemyGroup, String name, int aggressiveness) {
-        super(enemyGroup, name);
+    public BeastEnemy(char enemyGroup, String name, int aggressiveness, EnemyAttackBehavior attackBehavior) {
+        super(enemyGroup, name, attackBehavior);
         this.aggro = aggressiveness;
     }
 

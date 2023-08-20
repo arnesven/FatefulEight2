@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
+import model.enemies.behaviors.RangedAttackBehavior;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -12,7 +13,7 @@ public class FaeryEnemy extends Enemy {
             MyColors.BLACK, MyColors.PINK, MyColors.LIGHT_BLUE, MyColors.BLUE);
 
     public FaeryEnemy(char a) {
-        super(a, "Faery");
+        super(a, "Faery", new RangedAttackBehavior());
     }
 
     @Override
@@ -33,11 +34,6 @@ public class FaeryEnemy extends Enemy {
     @Override
     public int getDamage() {
         return 1;
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_RANGED;
     }
 
     @Override

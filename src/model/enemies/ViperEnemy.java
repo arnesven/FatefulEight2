@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.RationsCombatLoot;
+import model.enemies.behaviors.PoisonAttackBehavior;
 import view.sprites.Sprite;
 import view.sprites.ViperSprite;
 
@@ -10,7 +11,7 @@ public class ViperEnemy extends BeastEnemy {
     private static Sprite sprite = new ViperSprite("viper", "enemies.png", 0x00);
 
     public ViperEnemy(char enemyGroup) {
-        super(enemyGroup, "Viper", HOSTILE);
+        super(enemyGroup, "Viper", HOSTILE, new PoisonAttackBehavior(1));
     }
 
     @Override

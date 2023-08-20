@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MixedAttackBehavior;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -14,7 +15,7 @@ public class DragonEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new DragonSprite();
 
     public DragonEnemy(char a) {
-        super(a, "Dragon", RAMPAGING);
+        super(a, "Dragon", RAMPAGING, new MixedAttackBehavior());
     }
 
     @Override
@@ -50,11 +51,6 @@ public class DragonEnemy extends BeastEnemy {
     @Override
     public CombatLoot getLoot(Model model) {
         return new DragonLoot(model);
-    }
-
-    @Override
-    protected int getFightingStyle() {
-        return FIGHTING_STYLE_MIXED;
     }
 
     private static class DragonLoot extends StandardCombatLoot {

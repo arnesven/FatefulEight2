@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -13,7 +14,7 @@ public class GiantRatEnemy extends BeastEnemy {
             MyColors.BLACK, MyColors.BROWN, MyColors.LIGHT_PINK, MyColors.BEIGE);
 
     public GiantRatEnemy(char a) {
-        super(a, "Giant Rat", NORMAL);
+        super(a, "Giant Rat", NORMAL, new MeleeAttackBehavior());
     }
 
     @Override

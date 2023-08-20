@@ -6,6 +6,7 @@ import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.ParalysisCondition;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.ParalysisAttackBehavior;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
@@ -16,7 +17,7 @@ public class SpiderEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new SpiderSprite();
 
     public SpiderEnemy(char a) {
-        super(a, "Spider", NORMAL);
+        super(a, "Spider", NORMAL, new ParalysisAttackBehavior(1));
     }
 
     @Override
@@ -37,18 +38,6 @@ public class SpiderEnemy extends BeastEnemy {
     @Override
     public int getDamage() {
         return 3;
-    }
-
-    @Override
-    public void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
-        int hpBefore = target.getHP();
-        super.attack(model, target, combatEvent);
-        if (hpBefore > target.getHP()) {
-            if (MyRandom.rollD10() == 10) {
-                combatEvent.println(target.getName() + " has been paralyzed!");
-                target.addCondition(new ParalysisCondition());
-            }
-        }
     }
 
     @Override
