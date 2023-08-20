@@ -33,12 +33,16 @@ public class ShiningAegisSpell extends CombatSpell {
 
     @Override
     public boolean canBeCastOn(Model model, Combatant target) {
-        return target instanceof GameCharacter && !target.hasCondition(ShiningAegisCondition.class);
+        return target instanceof GameCharacter;
     }
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        target.addCondition(new ShiningAegisCondition());
-        combat.addSpecialEffect(target, new UpArrowAnimation());
+        if (target.hasCondition(ShiningAegisCondition.class)) {
+            combat.println(getName() + " had no effect on " + target.getName() + ".");
+        } else {
+            target.addCondition(new ShiningAegisCondition());
+            combat.addSpecialEffect(target, new UpArrowAnimation());
+        }
     }
 }

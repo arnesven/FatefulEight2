@@ -587,7 +587,8 @@ public class GameCharacter extends Combatant {
             RiposteCombatAction.doRiposte(combatEvent, this, enemy);
             return;
         }
-        if (checkForBlock(enemy) && enemy.getAttackBehavior().isPhysicalAttack()) {
+        if ((checkForBlock(enemy) && enemy.getAttackBehavior().isPhysicalAttack()) ||
+                (!enemy.getAttackBehavior().isPhysicalAttack() && hasCondition(WardCondition.class))) {
             combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
