@@ -1,6 +1,8 @@
 package model.items.weapons;
 
 import model.items.Item;
+import view.sprites.RangedStrikeEffect;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
@@ -24,5 +26,10 @@ public class ThrowingAxes extends AxeWeapon {
     @Override
     public Item copy() {
         return new ThrowingAxes();
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new RangedStrikeEffect();
     }
 }

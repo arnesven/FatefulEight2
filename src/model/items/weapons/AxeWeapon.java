@@ -3,6 +3,8 @@ package model.items.weapons;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.CuttingStrikeEffectSprite;
+import view.sprites.RunOnceAnimationSprite;
 
 public abstract class AxeWeapon extends Weapon {
     private static final AvatarItemSprite[] AXE_SPRITES = makeShiftedSpriteSet(new AvatarItemSprite(0x04, MyColors.BROWN, MyColors.DARK_GRAY, MyColors.GRAY, MyColors.BEIGE));
@@ -26,5 +28,10 @@ public abstract class AxeWeapon extends Weapon {
     @Override
     protected AvatarItemSprite getOnAvatarSprite(int index) {
         return AXE_SPRITES[index];
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new CuttingStrikeEffectSprite();
     }
 }

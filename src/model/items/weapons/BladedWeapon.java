@@ -3,6 +3,8 @@ package model.items.weapons;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.CuttingStrikeEffectSprite;
+import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BladedWeapon extends Weapon {
     private static final AvatarItemSprite SWORD_SPRITES[] = makeShiftedSpriteSet(
@@ -40,5 +42,10 @@ public abstract class BladedWeapon extends Weapon {
             return TWO_HANDED_SWORD_SPRITES[index];
         }
         return SWORD_SPRITES[index];
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new CuttingStrikeEffectSprite();
     }
 }

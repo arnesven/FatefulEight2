@@ -2,6 +2,8 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.sprites.RangedStrikeEffect;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
@@ -27,4 +29,8 @@ public class Javelins extends PolearmWeapon {
         return true;
     }
 
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new RangedStrikeEffect();
+    }
 }
