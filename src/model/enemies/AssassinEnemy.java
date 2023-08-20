@@ -4,6 +4,7 @@ import model.Model;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
+import model.enemies.behaviors.BleedAttackBehavior;
 import util.MyRandom;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
@@ -12,7 +13,7 @@ public class AssassinEnemy extends Enemy {
     private final AvatarSprite sprite;
 
     public AssassinEnemy(char a) {
-        super(a, "Assassin");
+        super(a, "Assassin", new BleedAttackBehavior(4));
         this.sprite = Classes.ASN.getAvatar(new MyRandom().nextRace(), null);
     }
 

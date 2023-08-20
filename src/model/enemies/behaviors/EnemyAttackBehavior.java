@@ -32,4 +32,8 @@ public abstract class EnemyAttackBehavior {
     }
 
     public abstract String getUnderText();
+
+    public int numberOfAttacks() {
+        return 1;
+    }
 }

@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.BleedAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -14,7 +15,7 @@ public class CrocodileEnemy extends BeastEnemy {
                                                    MyColors.BLACK, MyColors.WHITE, MyColors.GREEN, MyColors.DARK_GREEN);
 
     public CrocodileEnemy(char a) {
-        super(a, "Crocodile", HOSTILE, new MeleeAttackBehavior());
+        super(a, "Crocodile", HOSTILE, new BleedAttackBehavior(1));
     }
 
     @Override

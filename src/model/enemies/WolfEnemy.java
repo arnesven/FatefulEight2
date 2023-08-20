@@ -5,6 +5,7 @@ import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.RandomMoneyCombatLoot;
 import model.combat.RationsCombatLoot;
+import model.enemies.behaviors.BleedAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.Sprite;
 import view.sprites.WildBoarSprite;
@@ -16,7 +17,7 @@ public class WolfEnemy extends BigBeastEnemy {
     private final int damage;
 
     public WolfEnemy(char a, int health, int damage) {
-        super(a, "Wolf", HOSTILE, new MeleeAttackBehavior());
+        super(a, "Wolf", HOSTILE, new BleedAttackBehavior(3));
         this.health = health;
         this.damage = damage;
         this.setCurrentHp(getMaxHP());

@@ -26,6 +26,7 @@ public class ParalysisAttackBehavior extends EnemyAttackBehavior {
         if (hpBefore > target.getHP() && !target.isDead()) {
             if (MyRandom.rollD10() <= chance) {
                 combatEvent.println(target.getName() + " has been paralyzed!");
+                model.getTutorial().enemyAttacks(model);
                 target.addCondition(new ParalysisCondition());
             }
         }

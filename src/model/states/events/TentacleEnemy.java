@@ -14,7 +14,7 @@ public class TentacleEnemy extends Enemy {
     private static final Sprite SPRITE = new TentacleSprite();
 
     public TentacleEnemy(char a) {
-        super(a, "Tentacle");
+        super(a, "Tentacle"); // TODO: Pull forward attack behavior
     }
 
     @Override

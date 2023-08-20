@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MultiAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -12,7 +13,7 @@ public class TrollEnemy extends Enemy {
     private static final Sprite SPRITE = new TrollEnemySprite();
 
     public TrollEnemy(char a) {
-        super(a, "Troll");
+        super(a, "Troll", new MultiAttackBehavior(2));
     }
 
     @Override

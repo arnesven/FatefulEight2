@@ -27,6 +27,7 @@ public class KnockBackAttackBehavior extends EnemyAttackBehavior {
                 model.getParty().getFrontRow().remove(target);
                 model.getParty().getBackRow().add(target);
                 combatEvent.println(target.getName() + " has been knocked back!");
+                // TODO: Trigger tutorial
             }
         }
     }

@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
 import model.enemies.behaviors.MixedAttackBehavior;
+import model.enemies.behaviors.MultiMagicAttackBehavior;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -15,7 +16,7 @@ public class DragonEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new DragonSprite();
 
     public DragonEnemy(char a) {
-        super(a, "Dragon", RAMPAGING, new MixedAttackBehavior());
+        super(a, "Dragon", RAMPAGING, new MultiMagicAttackBehavior(4));
     }
 
     @Override
@@ -35,7 +36,7 @@ public class DragonEnemy extends BeastEnemy {
 
     @Override
     public int getDamage() {
-        return 5;
+        return 4;
     }
 
     @Override

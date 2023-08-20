@@ -81,27 +81,35 @@ public abstract class Enemy extends Combatant {
         if (!getsCombatTurn()) {
             combatEvent.println(getName() + "'s turn is skipped.");
         } else {
-            List<GameCharacter> candidates = new ArrayList<>();
-            if (canTargetBackRow()) {
-                candidates.addAll(model.getParty().getBackRow());
-            }
-            candidates.addAll(model.getParty().getFrontRow());
-            candidates.addAll(combatEvent.getAllies());
-            if (candidates.isEmpty()) {
-                candidates.addAll(model.getParty().getBackRow());
-            }
-            candidates.removeIf(Combatant::isDead);
-            while (!candidates.isEmpty()) {
-                Collections.shuffle(candidates);
-                GameCharacter randomTarget = candidates.get(0);
-                if (candidates.size() == 1 || !combatEvent.checkForSneakAvoidAttack(randomTarget)) {
-                    attack(model, randomTarget, combatEvent);
-                    combatEvent.removeSneaker(randomTarget);
-                    break;
+            List<GameCharacter> candidates = getCandidateTargets(model, combatEvent);
+            for (int i = 0; i < combatBehavior.numberOfAttacks(); ++i) {
+                while (!candidates.isEmpty()) {
+                    Collections.shuffle(candidates);
+                    GameCharacter randomTarget = candidates.get(0);
+                    if (candidates.size() == 1 || !combatEvent.checkForSneakAvoidAttack(randomTarget)) {
+                        attack(model, randomTarget, combatEvent);
+                        combatEvent.removeSneaker(randomTarget);
+                        candidates.remove(randomTarget);
+                        break;
+                    }
                 }
             }
         }
         decreaseTimedConditions(model, combatEvent);
+    }
+
+    private List<GameCharacter> getCandidateTargets(Model model, CombatEvent combatEvent) {
+        List<GameCharacter> candidates = new ArrayList<>();
+        if (canTargetBackRow()) {
+            candidates.addAll(model.getParty().getBackRow());
+        }
+        candidates.addAll(model.getParty().getFrontRow());
+        candidates.addAll(combatEvent.getAllies());
+        if (candidates.isEmpty()) {
+            candidates.addAll(model.getParty().getBackRow());
+        }
+        candidates.removeIf(Combatant::isDead);
+        return candidates;
     }
 
     public boolean canTargetBackRow() {

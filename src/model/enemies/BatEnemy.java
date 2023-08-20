@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
+import model.enemies.behaviors.BleedAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -12,7 +13,7 @@ public class BatEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new BatSprite();
 
     public BatEnemy(char enemyGroup) {
-        super(enemyGroup, "Bat", NORMAL, new MeleeAttackBehavior());
+        super(enemyGroup, "Bat", NORMAL, new BleedAttackBehavior(1));
     }
 
     @Override

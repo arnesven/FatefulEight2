@@ -5,6 +5,7 @@ import model.characters.BungoDarkwood;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
+import model.enemies.behaviors.KnockDownAttackBehavior;
 import model.races.Race;
 import view.sprites.Sprite;
 
@@ -13,7 +14,7 @@ public class HalflingMartialArtist extends Enemy {
     private static final Sprite SPRITE = Classes.None.getAvatar(Race.HALFLING, new BungoDarkwood());;
 
     public HalflingMartialArtist(char a) {
-        super(a, "Halfling Martial Artist");
+        super(a, "Halfling Martial Artist", new KnockDownAttackBehavior(3));
     }
 
     @Override

@@ -1,8 +1,11 @@
 package model.enemies;
 
+import model.enemies.behaviors.MultiMagicAttackBehavior;
+
 public class DoomMageEnemy extends RedMageEnemy {
     public DoomMageEnemy(char a) {
         super(a);
+        setAttackBehavior(new MultiMagicAttackBehavior(3));
     }
 
     @Override

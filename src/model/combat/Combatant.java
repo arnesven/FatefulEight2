@@ -26,7 +26,11 @@ public abstract class Combatant implements Serializable {
     public abstract int getMaxHP();
 
     public void addToHP(int i) {
+        int before = currentHp;
         currentHp = Math.max(0, Math.min(currentHp + i, getMaxHP()));
+        if (currentHp > before) {
+            removeCondition(BleedingCondition.class);
+        }
     }
 
     public int getHP() {

@@ -25,7 +25,7 @@ public class MagicRangedAttackBehavior extends EnemyAttackBehavior {
 
     @Override
     public void performAttack(Model model, Enemy enemy, GameCharacter target, CombatEvent combatEvent) {
-        model.getTutorial().magicAttacks(model);
+        model.getTutorial().enemyAttacks(model);
         super.performAttack(model, enemy, target, combatEvent);
     }
 
