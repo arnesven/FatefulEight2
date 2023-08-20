@@ -6,6 +6,7 @@ import model.classes.Classes;
 import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MultiMagicRangedAttackBehavior;
 import model.races.Race;
 import util.MyRandom;
 import view.sprites.Sprite;
@@ -15,6 +16,7 @@ public class QuadSpiritEnemy extends Enemy {
 
     public QuadSpiritEnemy(char c) {
         super(c, "Spirit of the Quad");
+        setAttackBehavior(new MultiMagicRangedAttackBehavior(5));
     }
 
     @Override
@@ -39,7 +41,7 @@ public class QuadSpiritEnemy extends Enemy {
 
     @Override
     public int getDamage() {
-        return 9;
+        return 5;
     }
 
     @Override

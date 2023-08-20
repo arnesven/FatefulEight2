@@ -1,6 +1,6 @@
 package model.enemies.behaviors;
 
-public class MultiMagicAttackBehavior extends EnemyAttackBehavior {
+public class MultiMagicAttackBehavior extends MagicMeleeAttackBehavior {
     private int number;
 
     public MultiMagicAttackBehavior(int number) {

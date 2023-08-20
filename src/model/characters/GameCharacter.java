@@ -17,6 +17,8 @@ import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
 import model.items.spells.CombatSpell;
+import model.items.spells.QuickenedCondition;
+import model.items.spells.QuickeningSpell;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
@@ -149,7 +151,8 @@ public class GameCharacter extends Combatant {
     public int getSpeed() {
         int heavyClothing = equipment.getClothing().isHeavy() ? -2 : 0;
         int heavyAccessory = equipment.getAccessory() != null && equipment.getAccessory().isHeavy() ? -1 : 0;
-        return charClass.getSpeed() + race.getSpeedModifier() + equipment.getSpeedModifiers() + heavyClothing + heavyAccessory;
+        int quickened = hasCondition(QuickenedCondition.class) ? QuickeningSpell.SPEED_BONUS : 0;
+        return charClass.getSpeed() + race.getSpeedModifier() + equipment.getSpeedModifiers() + heavyClothing + heavyAccessory + quickened;
     }
 
     @Override

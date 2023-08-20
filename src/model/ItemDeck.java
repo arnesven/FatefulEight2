@@ -193,6 +193,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new EscapeSpell(),
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
+                // TODO: Add ward spell
                 new HealingWordSpell(),
                 new SouthernCrossSpell(),
                 new AuraOfAllureSpell(),
@@ -209,6 +210,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new CallOfTheWildSpell(),
                 new GiantGrowthSpell(),
                 new SummonFamiliarSpell(),
+                new QuickeningSpell(),
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),
                 new RaiseBoneWalkerSpell(),
