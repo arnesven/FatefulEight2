@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.MagicMeleeAttackBehavior;
 import view.sprites.Sprite;
 
 public class DaemonEnemy extends AltarEnemy {
@@ -7,6 +8,7 @@ public class DaemonEnemy extends AltarEnemy {
 
     public DaemonEnemy(char a) {
         super(a, "Daemon");
+        setAttackBehavior(new MagicMeleeAttackBehavior());
     }
 
     @Override
@@ -16,7 +18,7 @@ public class DaemonEnemy extends AltarEnemy {
 
     @Override
     public int getSpeed() {
-        return 5;
+        return 4;
     }
 
     @Override

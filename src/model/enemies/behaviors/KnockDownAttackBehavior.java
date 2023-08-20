@@ -2,8 +2,6 @@ package model.enemies.behaviors;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.Condition;
-import model.combat.ParalysisCondition;
 import model.combat.TimedParalysisCondition;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
@@ -27,5 +25,10 @@ public class KnockDownAttackBehavior extends EnemyAttackBehavior {
         if (!target.isDead() && MyRandom.rollD10() <= chance) {
             target.addCondition(new TimedParalysisCondition());
         }
+    }
+
+    @Override
+    public String getUnderText() {
+        return "Knock Down";
     }
 }

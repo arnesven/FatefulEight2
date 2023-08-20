@@ -30,4 +30,9 @@ public class KnockBackAttackBehavior extends EnemyAttackBehavior {
             }
         }
     }
+
+    @Override
+    public String getUnderText() {
+        return "Knock Back";
+    }
 }

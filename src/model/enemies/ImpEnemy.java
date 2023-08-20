@@ -1,6 +1,6 @@
 package model.enemies;
 
-import model.enemies.behaviors.RangedAttackBehavior;
+import model.enemies.behaviors.MagicRangedAttackBehavior;
 import view.sprites.Sprite;
 
 public class ImpEnemy extends AltarEnemy {
@@ -8,7 +8,7 @@ public class ImpEnemy extends AltarEnemy {
 
     public ImpEnemy(char a) {
         super(a, "Imp");
-        setAttackBehavior(new RangedAttackBehavior());
+        setAttackBehavior(new MagicRangedAttackBehavior());
     }
 
     @Override
@@ -28,6 +28,6 @@ public class ImpEnemy extends AltarEnemy {
 
     @Override
     public int getDamage() {
-        return 5;
+        return 3;
     }
 }

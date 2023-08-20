@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.enemies.behaviors.MagicRangedAttackBehavior;
 import view.sprites.Sprite;
 
 public class SuccubusEnemy extends AltarEnemy {
@@ -7,6 +8,7 @@ public class SuccubusEnemy extends AltarEnemy {
 
     public SuccubusEnemy(char a) {
         super(a, "Succubus");
+        setAttackBehavior(new MagicRangedAttackBehavior());
     }
 
     @Override
@@ -26,6 +28,6 @@ public class SuccubusEnemy extends AltarEnemy {
 
     @Override
     public int getDamage() {
-        return 5;
+        return 4;
     }
 }

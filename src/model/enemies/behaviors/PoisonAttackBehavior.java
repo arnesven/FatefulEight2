@@ -28,4 +28,9 @@ public class PoisonAttackBehavior extends EnemyAttackBehavior {
             target.addCondition(new PoisonCondition());
         }
     }
+
+    @Override
+    public String getUnderText() {
+        return "Poison";
+    }
 }

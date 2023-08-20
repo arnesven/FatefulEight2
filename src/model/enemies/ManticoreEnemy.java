@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MagicMeleeAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import util.MyRandom;
 import view.MyColors;
@@ -15,7 +16,7 @@ public class ManticoreEnemy extends BeastEnemy {
             MyColors.BLACK, MyColors.GOLD, MyColors.DARK_RED, MyColors.DARK_BROWN);
 
     public ManticoreEnemy(char a) {
-        super(a, "Manticore", HOSTILE, new MeleeAttackBehavior());
+        super(a, "Manticore", HOSTILE, new MagicMeleeAttackBehavior());
     }
 
     @Override
@@ -35,7 +36,7 @@ public class ManticoreEnemy extends BeastEnemy {
 
     @Override
     public int getDamage() {
-        return MyRandom.randInt(3, 5);
+        return MyRandom.randInt(2, 4);
     }
 
     @Override

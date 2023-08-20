@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
+import model.enemies.behaviors.MagicRangedAttackBehavior;
 import model.enemies.behaviors.MixedAttackBehavior;
 import model.races.Race;
 import view.MyColors;
@@ -13,7 +14,7 @@ public class RedMageEnemy extends Enemy {
     private static final Sprite SPRITE = new RedMageSprite();
 
     public RedMageEnemy(char a) {
-        super(a, "Red Mage", new MixedAttackBehavior());
+        super(a, "Red Mage", new MagicRangedAttackBehavior());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class RedMageEnemy extends Enemy {
 
     @Override
     public int getDamage() {
-        return 8;
+        return 4;
     }
 
     @Override

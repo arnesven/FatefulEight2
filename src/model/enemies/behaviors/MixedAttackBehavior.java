@@ -16,4 +16,9 @@ public class MixedAttackBehavior extends EnemyAttackBehavior {
         }
         return damage;
     }
+
+    @Override
+    public String getUnderText() {
+        return "Ranged";
+    }
 }

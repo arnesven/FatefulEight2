@@ -5,4 +5,9 @@ public class MeleeAttackBehavior extends EnemyAttackBehavior {
     public boolean canAttackBackRow() {
         return false;
     }
+
+    @Override
+    public String getUnderText() {
+        return "";
+    }
 }

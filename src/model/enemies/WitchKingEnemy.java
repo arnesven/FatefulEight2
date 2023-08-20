@@ -5,6 +5,7 @@ import model.characters.WitchKingAppearance;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;
+import model.enemies.behaviors.MagicMeleeAttackBehavior;
 import model.races.Race;
 import view.sprites.Sprite;
 
@@ -13,6 +14,7 @@ public class WitchKingEnemy extends Enemy {
 
     public WitchKingEnemy(char enemyGroup) {
         super(enemyGroup, "Witch King");
+        setAttackBehavior(new MagicMeleeAttackBehavior());
     }
 
     @Override

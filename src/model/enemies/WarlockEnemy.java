@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
+import model.enemies.behaviors.MagicMeleeAttackBehavior;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -12,7 +13,8 @@ public class WarlockEnemy extends Enemy {
     private static final Sprite SPRITE = new WarlockEnemySprite();
 
     public WarlockEnemy(char a) {
-        super(a, "Warlock"); // TODO: make warlock cast some spells
+        super(a, "Warlock");
+        setAttackBehavior(new MagicMeleeAttackBehavior());
     }
 
     @Override

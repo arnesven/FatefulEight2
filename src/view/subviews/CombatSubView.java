@@ -46,8 +46,10 @@ public class CombatSubView extends SubView {
         } else {
             status = ", " + status;
         }
-        if (selected instanceof Enemy && ((Enemy) selected).canTargetBackRow()) {
-            status += " RANGED";
+        if (selected instanceof Enemy) {
+            if (!((Enemy) selected).getAttackBehavior().getUnderText().equals("")) {
+                status += ", " + ((Enemy) selected).getAttackBehavior().getUnderText() + " Attack";
+            }
         }
         return selected.getName() + String.format(" %d/%d HP", selected.getHP(), selected.getMaxHP()) + status;
     }

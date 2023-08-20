@@ -592,12 +592,14 @@ public class GameCharacter extends Combatant {
             MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
             int damage = pair.first;
             boolean critical = pair.second;
-            int reduction = Math.min(damage, calculateDamageReduction());
             String reductionString = "";
-            if (getAP() > 0) {
-                reductionString = " (reduced by " + reduction + ")";
+            if (enemy.getAttackBehavior().allowsDamageReduction()) {
+                int reduction = Math.min(damage, calculateDamageReduction());
+                if (getAP() > 0) {
+                    reductionString = " (reduced by " + reduction + ")";
+                }
+                damage = damage - reduction;
             }
-            damage = damage - reduction;
             addToHP(-1 * damage);
             if (pair.second) {
                 reductionString = ", Critical Hit" + reductionString;

@@ -4,27 +4,33 @@ import model.Model;
 import view.MyColors;
 import view.sprites.RunOnceAnimationSprite;
 
-public class RangedAttackBehavior extends EnemyAttackBehavior {
+public class MagicRangedAttackBehavior extends EnemyAttackBehavior {
     @Override
     public boolean canAttackBackRow() {
         return true;
     }
 
     @Override
-    public RunOnceAnimationSprite getStrikeEffect() {
-        return new EnemyRangedStrikeEffectSprite();
+    public boolean allowsDamageReduction() {
+        return false;
     }
 
     @Override
     public String getUnderText() {
-        return "Ranged";
+        return "Magic Ranged";
     }
 
-    private static class EnemyRangedStrikeEffectSprite extends RunOnceAnimationSprite {
+    @Override
+    public RunOnceAnimationSprite getStrikeEffect() {
+        return new RangedMagicStrikeEffectSprite();
+    }
+
+    private static class RangedMagicStrikeEffectSprite extends RunOnceAnimationSprite {
         private int shift = -64;
 
-        public EnemyRangedStrikeEffectSprite() {
-            super("rangedstrike", "combat.png", 8, 0, 32, 32, 4, MyColors.WHITE);
+        public RangedMagicStrikeEffectSprite() {
+            super("enemyrangedmagiceffect", "combat.png", 8, 2, 32, 32, 4, MyColors.WHITE);
+            setColor2(MyColors.LIGHT_RED);
         }
 
         @Override

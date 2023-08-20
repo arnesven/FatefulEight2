@@ -30,4 +30,9 @@ public class ParalysisAttackBehavior extends EnemyAttackBehavior {
             }
         }
     }
+
+    @Override
+    public String getUnderText() {
+        return "Paralysis";
+    }
 }

@@ -198,6 +198,10 @@ public abstract class Enemy extends Combatant {
         return combatBehavior.getStrikeEffect();
     }
 
+    public EnemyAttackBehavior getAttackBehavior() {
+        return combatBehavior;
+    }
+
     private static class KillAnimation extends RunOnceAnimationSprite {
         private static final int ANIMATION_STEPS = 10;
         private final BufferedImage[] images = new BufferedImage[ANIMATION_STEPS];

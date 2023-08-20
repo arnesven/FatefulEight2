@@ -26,4 +26,10 @@ public abstract class EnemyAttackBehavior {
     public RunOnceAnimationSprite getStrikeEffect() {
         return new StrikeEffectSprite();
     }
+
+    public boolean allowsDamageReduction() {
+        return true;
+    }
+
+    public abstract String getUnderText();
 }
