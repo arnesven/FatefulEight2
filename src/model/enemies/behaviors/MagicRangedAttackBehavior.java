@@ -1,6 +1,9 @@
 package model.enemies.behaviors;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.enemies.Enemy;
+import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.RunOnceAnimationSprite;
 
@@ -11,13 +14,19 @@ public class MagicRangedAttackBehavior extends EnemyAttackBehavior {
     }
 
     @Override
-    public boolean allowsDamageReduction() {
+    public boolean isPhysicalAttack() {
         return false;
     }
 
     @Override
     public String getUnderText() {
         return "Magic Ranged";
+    }
+
+    @Override
+    public void performAttack(Model model, Enemy enemy, GameCharacter target, CombatEvent combatEvent) {
+        model.getTutorial().magicAttacks(model);
+        super.performAttack(model, enemy, target, combatEvent);
     }
 
     @Override

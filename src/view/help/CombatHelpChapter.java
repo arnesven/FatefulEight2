@@ -30,7 +30,8 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                 new TutorialCombatDamageDialog(null),
                 new TutorialEvading(null),
                 new TutorialFatigue(null),
-                new TutorialCombatFormationDialog(null)
+                new TutorialCombatFormationDialog(null),
+                new TutorialMagicAttacks(null)
         );
     }
 

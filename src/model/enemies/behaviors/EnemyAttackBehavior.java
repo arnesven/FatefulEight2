@@ -27,7 +27,7 @@ public abstract class EnemyAttackBehavior {
         return new StrikeEffectSprite();
     }
 
-    public boolean allowsDamageReduction() {
+    public boolean isPhysicalAttack() {
         return true;
     }
 

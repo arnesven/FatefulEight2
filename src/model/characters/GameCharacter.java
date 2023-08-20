@@ -584,7 +584,7 @@ public class GameCharacter extends Combatant {
             RiposteCombatAction.doRiposte(combatEvent, this, enemy);
             return;
         }
-        if (checkForBlock(enemy)) {
+        if (checkForBlock(enemy) && enemy.getAttackBehavior().isPhysicalAttack()) {
             combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
@@ -593,7 +593,7 @@ public class GameCharacter extends Combatant {
             int damage = pair.first;
             boolean critical = pair.second;
             String reductionString = "";
-            if (enemy.getAttackBehavior().allowsDamageReduction()) {
+            if (enemy.getAttackBehavior().isPhysicalAttack()) {
                 int reduction = Math.min(damage, calculateDamageReduction());
                 if (getAP() > 0) {
                     reductionString = " (reduced by " + reduction + ")";

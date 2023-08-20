@@ -288,6 +288,13 @@ public class TutorialHandler implements Serializable {
         return tutorialOn;
     }
 
+    public void magicAttacks(Model model) {
+        runOnce("magicattacks", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialMagicAttacks(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
