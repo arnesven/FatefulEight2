@@ -48,7 +48,7 @@ public class ChangeClassEvent extends DailyEventState {
                     ChangeClassTransitionSubView.transition(model, subView, gc, subView.getWouldBe(gc));
                     gc.setClass(targetClasss);
                     if (gc.getLevel() == 0) {
-                        gc.setLevel(Math.max(1, (int)RecruitState.calculateAverageLevel(model)));
+                        gc.setLevel(Math.max(1, (int)Math.round(RecruitState.calculateAverageLevel(model))));
                         println("From the experience of being in the party, " + gc.getName() + " advances to level " + gc.getLevel() + "!");
                     }
                     println(gc.getName() + " is now a " + targetClasss.getFullName() + "!");

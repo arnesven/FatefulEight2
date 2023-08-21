@@ -179,7 +179,7 @@ public class CombatSubView extends SubView {
     public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
         if (target instanceof Enemy) {
-            point.x -= (target.getWidth() / 2) * 4;
+            point.x += (target.getWidth() / 2) * 4;
         }
         addOngoingEffect(new MyPair<>(point, sprite));
     }

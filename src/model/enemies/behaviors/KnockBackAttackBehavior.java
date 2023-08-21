@@ -24,8 +24,7 @@ public class KnockBackAttackBehavior extends EnemyAttackBehavior {
         super.performAttack(model, enemy, target, combatEvent);
         if (target.getHP() < hpBefore && !target.isDead() && MyRandom.rollD10() < this.chance) {
             if (model.getParty().getFrontRow().contains(target)) {
-                model.getParty().getFrontRow().remove(target);
-                model.getParty().getBackRow().add(target);
+                combatEvent.toggleFormationFor(model, target);
                 combatEvent.println(target.getName() + " has been knocked back!");
                 // TODO: Trigger tutorial
             }

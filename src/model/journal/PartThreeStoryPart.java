@@ -138,7 +138,7 @@ public class PartThreeStoryPart extends StoryPart {
         @Override
         public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
             if (internalStep == INITIAL_STEP) {
-                model.getLog().addAnimated("The library isn't open right now.");
+                state.println("The library isn't open right now.");
             }
             return internalStep > INITIAL_STEP;
         }

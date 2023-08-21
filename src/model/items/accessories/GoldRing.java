@@ -14,7 +14,12 @@ public class GoldRing extends JewelryItem {
 
     @Override
     public int getHealthBonus() {
-        return 2;
+        return 1;
+    }
+
+    @Override
+    public int getSpeedModifier() {
+        return 1;
     }
 
     @Override

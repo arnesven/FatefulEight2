@@ -253,9 +253,11 @@ public class RescueMissionStoryPart extends StoryPart {
                     portraitSay("I'm sending you on a mission, if you are willing to aid me in this. I need " +
                             "somebody to investigate this matter further. I need someone capable, and who knows the " +
                             "details of the case. And most of all, I need somebody I can trust.");
-                    leaderSay("What about Caid?");
-                    portraitSay("Yes, that would be a good choice. I would have preferred that he go with you, but he " +
-                            "is engaged in another task at the moment.");
+                    if (!model.getParty().getPartyMembers().contains(model.getMainStory().getCaidCharacter())) {
+                        leaderSay("What about Caid?");
+                        portraitSay("Yes, that would be a good choice. I would have preferred that he go with you, but he " +
+                                "is engaged in another task at the moment.");
+                    }
                     leaderSay("If I would accept this mission, what would I need to do?");
                     portraitSay("I'm sending you to " + libraryTown.getName() + ". There's a library there and the " +
                             "finest historian in the realm, Willis Johanssen. There is nobody more likely than Willis to know " +

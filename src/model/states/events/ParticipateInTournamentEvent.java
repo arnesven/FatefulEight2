@@ -176,7 +176,6 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
             leaderSay("I'm afraid I just don't have it.");
             portraitSay("That's okay friend, you can pay the Brotherhood back later.");
             addToEntryFeeToLoan(model);
-            addToEntryFeeToLoan(model);
             println("The mysterious stranger just smiles, then he disappears.");
             leaderSay("Wait... what did we just agree to?");
         }
@@ -214,6 +213,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         } else {
             model.getParty().setLoan(new Loan(ENTRY_FEE, model.getDay()));
         }
+        model.getTutorial().loans(model);
     }
 
     private void doLongBreak(Model model, List<GameCharacter> winners, List<GameCharacter> losers,

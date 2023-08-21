@@ -186,7 +186,7 @@ public class SpecialDeliveryQuest extends MainQuest {
                 state.println("Brotherhood Boss: \"Yes, hehehe. Well bottoms up friend!\"");
                 state.println("The Brotherhood boss uncorks the potion and drinks it all in one gulp. He belches loudly and smirks at you. Then suddenly his smirk turns " +
                         "into an ugly grimace.");
-                state.println("Brotherhood Boss: \"You! You swapped the potions didn't you. I uhh... I'll...\"");
+                state.println("Brotherhood Boss: \"You! You swapped the potions didn't you? I uhh... I'll...\"");
                 state.println("The man suddenly drops to his knees, clutching his belly.");
                 state.println("Brotherhood Boss: \"Aaaarghgh. Glllgll.\"");
                 state.println("He falls down, froth coming from his mouth.");

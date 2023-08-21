@@ -60,7 +60,10 @@ public class PartFiveStoryPart extends StoryPart {
 
         @Override
         public String getText() {
-            return "Travel to the location of the Ancient Stronghold.";
+            if (internalStep == 0) {
+                return "Travel to the location of the Ancient Stronghold.";
+            }
+            return "Return to " + castleName + " to report your success.";
         }
 
         @Override

@@ -153,8 +153,15 @@ public class GoblinTunnelsQuest extends Quest {
     }
 
     private class GoblinCombatSubScene extends CombatSubScene {
+        private final String text;
+
         public GoblinCombatSubScene(int col, int row, int number, GoblinEnemy type) {
             super(col, row, makeGoblins(number, type));
+            if (type.getName().contains("man")) {
+                this.text = type.getName().replace("man", "men");
+            } else {
+                text = type.getName() + "s";
+            }
         }
 
         @Override
@@ -173,7 +180,7 @@ public class GoblinTunnelsQuest extends Quest {
 
         @Override
         protected String getCombatDetails() {
-            return "Goblin Spearmen";
+            return text;
         }
     }
 

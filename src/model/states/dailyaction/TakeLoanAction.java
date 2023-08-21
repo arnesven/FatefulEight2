@@ -18,7 +18,7 @@ public class TakeLoanAction extends GameState {
         if (model.getParty().getLoan() == null) {
             println("Brotherhood Agent: \"Low on cash? The brotherhood will help you out.\"");
             model.getTutorial().loans(model);
-            print("Do you wish to take a loan?");
+            println("Do you wish to take a loan?");
             int choice = multipleOptionArrowMenu(model, 28, 20, List.of("Small Loan (50)", "Large Loan (100)", "No thank you!"));
             if (choice == 0) {
                 model.getParty().setLoan(new Loan(50, model.getDay()));

@@ -22,7 +22,7 @@ public class PlayEvent extends DailyEventState {
         print("The entrance fee is 1 gold per person.");
         int cost = model.getParty().size();
         if (model.getParty().getGold() < cost) {
-            print(" But since you cannot afford it anyway you glumly turn away and go about your business.");
+            println(" But since you cannot afford it anyway you glumly turn away and go about your business.");
         } else {
             print(" Do you pay? (Y/N) ");
             if (yesNoInput()) {

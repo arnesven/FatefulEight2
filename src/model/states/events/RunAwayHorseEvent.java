@@ -27,7 +27,7 @@ public class RunAwayHorseEvent extends DailyEventState {
         leaderSay("Where's your master, huh?");
         println("You look around, but there is nobody here except your party.");
         Horse horse = HorseHandler.generateHorse();
-        print("The horse is a" + horse.getType() + ", do you keep it? (Y/N) ");
+        print("The horse is a " + horse.getType() + ", do you keep it? (Y/N) ");
         if (yesNoInput()) {
             if (MyRandom.randInt(3) == 0) {
                 println("You are about to get up on the horse when you hear an angry voice.");

@@ -37,7 +37,7 @@ public class SurveillanceQuest extends Quest {
     private GameCharacter wallClimber;
 
     public SurveillanceQuest() {
-        super("Surveillance", "General", QuestDifficulty.MEDIUM, 1, 35, START_TEXT, END_TEXT);
+        super("Surveillance", "General", QuestDifficulty.MEDIUM, 1, 175, START_TEXT, END_TEXT);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SurveillanceQuest extends Quest {
                 new QuestScene("Infiltrate",
                         List.of(new ClimbOverWallSubScene(6, 4),
                                 new SneakAroundTheCampSubScene(7, 5),
-                                new CollaborativeSkillCheckSubScene(5, 4, Skill.Persuade, 10,
+                                new CollaborativeSkillCheckSubScene(5, 4, Skill.Persuade, 11,
                                         "Or perhaps we can persuade them to let us in and have a look around?"))),
                 new QuestScene("Alarm Raised",
                         List.of(new OrcsCombatSubScene(2, 6, 3),

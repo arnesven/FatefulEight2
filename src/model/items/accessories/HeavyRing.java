@@ -13,7 +13,7 @@ public class HeavyRing extends JewelryItem {
     private static final Sprite SPRITE = new ItemSprite(8, 9, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY);
 
     public HeavyRing() {
-        super("Heavy Ring", 14);
+        super("Heavy Ring", 10);
     }
 
     @Override
