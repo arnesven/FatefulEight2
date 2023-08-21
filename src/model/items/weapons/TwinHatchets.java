@@ -1,8 +1,12 @@
 package model.items.weapons;
 
+import model.classes.Skill;
 import model.items.Item;
+import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
+
+import java.util.List;
 
 public class TwinHatchets extends AxeWeapon {
 
@@ -25,5 +29,10 @@ public class TwinHatchets extends AxeWeapon {
     @Override
     public Item copy() {
         return new TwinHatchets();
+    }
+
+    @Override
+    public List<MyPair<Skill, Integer>> getSkillBonuses() {
+        return List.of(new MyPair<>(Skill.Axes, -2));
     }
 }

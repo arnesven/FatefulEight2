@@ -1,8 +1,12 @@
 package model.items.weapons;
 
+import model.classes.Skill;
 import model.items.Item;
+import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
+
+import java.util.List;
 
 public class TwinDaggers extends TwinBladedWeapon {
 
@@ -25,5 +29,10 @@ public class TwinDaggers extends TwinBladedWeapon {
     @Override
     public Item copy() {
         return new TwinDaggers();
+    }
+
+    @Override
+    public List<MyPair<Skill, Integer>> getSkillBonuses() {
+        return List.of(new MyPair<>(Skill.Blades, -2));
     }
 }
