@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class TwinKukris extends BladedWeapon {
+public class TwinKukris extends TwinBladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(6, 11);
 
     public TwinKukris() {

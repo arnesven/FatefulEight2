@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class TwinDaggers extends BladedWeapon {
+public class TwinDaggers extends TwinBladedWeapon {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(5, 11);
 
