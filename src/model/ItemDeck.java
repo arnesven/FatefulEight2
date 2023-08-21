@@ -26,8 +26,8 @@ public class ItemDeck extends ArrayList<Item> {
 
     public List<Item> draw(List<? extends Item> source, int count, Prevalence prevalence, double higherTierChance) {
         List<Item> drawn = new ArrayList<>();
-        boolean isHigherTier = MyRandom.nextDouble() > (1.0 - higherTierChance);
         for (int i = count; i > 0; --i) {
+            boolean isHigherTier = MyRandom.nextDouble() > (1.0 - higherTierChance);
             Item it;
             do {
                 it = MyRandom.sample(source);
