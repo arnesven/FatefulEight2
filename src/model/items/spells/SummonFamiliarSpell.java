@@ -10,6 +10,7 @@ import model.combat.Combatant;
 import model.combat.SummonCondition;
 import model.items.Equipment;
 import model.items.Item;
+import model.items.weapons.FamiliarWeapon;
 import model.items.weapons.ShortSword;
 import model.races.Race;
 import model.states.CombatEvent;
@@ -65,7 +66,7 @@ public class SummonFamiliarSpell extends CombatSpell {
     private static class FamiliarAlly extends GameCharacter {
         public FamiliarAlly() {
             super("Familiar", "", Race.SOUTHERN_HUMAN, Classes.FAMILIAR,
-                    new LonnieLiebgott(), new CharacterClass[0], new Equipment(new ShortSword()));
+                    new LonnieLiebgott(), new CharacterClass[0], new Equipment(new FamiliarWeapon()));
         }
     }
 }

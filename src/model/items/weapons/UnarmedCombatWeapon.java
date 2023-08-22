@@ -6,7 +6,7 @@ import model.items.Item;
 import view.sprites.Sprite;
 import view.sprites.AvatarItemSprite;
 
-public class UnarmedCombatWeapon extends Weapon {
+public class UnarmedCombatWeapon extends NaturalWeapon {
     public UnarmedCombatWeapon() {
         super("Unarmed", 0, Skill.UnarmedCombat, new int[]{7,10});
     }
@@ -26,11 +26,6 @@ public class UnarmedCombatWeapon extends Weapon {
             return dmg;
         }
         return super.getDamage(modifiedRoll, damager);
-    }
-
-    @Override
-    protected Sprite getSprite() {
-        return EMPTY_ITEM_SPRITE;
     }
 
     @Override

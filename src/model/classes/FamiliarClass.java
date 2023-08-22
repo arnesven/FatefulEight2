@@ -9,7 +9,7 @@ import view.sprites.AvatarSprite;
 public class FamiliarClass extends SpecialCharacterClass {
     protected FamiliarClass() {
         super("Familiar", "Familiar", 4, 8, false, 0, new WeightedSkill[]{
-                new WeightedSkill(Skill.Blades, 5)
+                new WeightedSkill(Skill.UnarmedCombat, 5)
         });
     }
 

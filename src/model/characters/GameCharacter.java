@@ -19,6 +19,7 @@ import model.items.clothing.JustClothes;
 import model.items.spells.CombatSpell;
 import model.items.spells.QuickenedCondition;
 import model.items.spells.QuickeningSpell;
+import model.items.weapons.NaturalWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
@@ -313,7 +314,7 @@ public class GameCharacter extends Combatant {
             screenHandler.register("avatarfor" + getFullName() + "dead", new Point(xpos, ypos), avatarSprite.getDead());
         } else {
             screenHandler.register("avatarfor" + getFullName(), new Point(xpos, ypos), avatarSprite);
-            if (!(equipment.getWeapon() instanceof UnarmedCombatWeapon)) {
+            if (!(equipment.getWeapon() instanceof NaturalWeapon)) {
                 screenHandler.register("avatarweapon" + getFullName(), new Point(xpos, ypos), equipment.getWeapon().getOnAvatarSprite(this));
             }
             if (equipment.getAccessory() instanceof ShieldItem) {
