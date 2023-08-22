@@ -17,7 +17,7 @@ public class FatefulEight extends JFrame {
 
     public static final boolean TEST_MODE = false;
     private static final int TIMER_DELAY_MS = 20;
-    public static String version = "1.291";
+    public static String version = "1.292";
     private DrawingArea drawingArea;
     public static boolean inFullScreenMode = false;
     private Deque<KeyEvent> keyboardEvents = new LinkedList<>();
