@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CultistDenQuest extends Quest {
-    private static final int TIME_MINUTES = 10;
+    private static final int TIME_MINUTES = 5;
     private static final String INTRO = "A group of cultists are reportedly performing some dark ritual to resurrect " +
             "an other-wordly demigod. Stop them.\n" +
             "!! This is a timed quest. You have " + TIME_MINUTES + " minutes until the ritual is complete.";;

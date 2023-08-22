@@ -155,7 +155,7 @@ public abstract class Enemy extends Combatant {
             damage = Math.max(1, damage - 2);
         }
         if (combatBehavior.isCriticalHit()) {
-            damage = damage * 2;
+            damage = damage + 2;
             return new MyPair<>(damage, true);
         }
         if (damage > 0 && MyRandom.randInt(3) == 0) {
