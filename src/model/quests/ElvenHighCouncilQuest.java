@@ -186,7 +186,7 @@ public class ElvenHighCouncilQuest extends Quest {
             state.leaderSay("We're only going to get one shot at this. Let's choose our words well.");
             model.getParty().randomPartyMemberSay(model, List.of("The elves may be more willing to listen if somebody of their kin handled the talking."));
             state.print("Which party member should perform the Solo Persuade " + diff + " check?");
-            model.getSpellHandler().acceptSkillBoostingSpells(Skill.Persuade);
+            model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), Skill.Persuade);
             GameCharacter talker = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
             int bonus = 0;
             if (talker.getRace().id() == Race.HIGH_ELF.id()) {

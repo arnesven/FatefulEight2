@@ -13,7 +13,6 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
 
     public SkillBoostingSpell(String name, int cost, MyColors color, int difficulty, int hpCost) {
         super(name, cost, color, difficulty, hpCost);
-        SpellHandler.registerSkillBoostingSpell(this, getBoostingSkill());
     }
 
     protected abstract Skill getBoostingSkill();
@@ -36,5 +35,9 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
     @Override
     public String getDescription() {
         return "Temporarily raises a character's rank in " + getBoostingSkill().getName() + ".";
+    }
+
+    public boolean boostsSkill(Skill skill) {
+        return getBoostingSkill() == skill;
     }
 }

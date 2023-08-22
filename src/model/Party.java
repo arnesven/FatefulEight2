@@ -380,7 +380,7 @@ public class Party implements Serializable {
     public MyPair<Boolean, GameCharacter> doSoloSkillCheckWithPerformer(Model model, GameState event, Skill skill, int difficulty) {
         GameCharacter performer = null;
         while (true) {
-            model.getSpellHandler().acceptSkillBoostingSpells(skill);
+            model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
             try {
                 if (size() > 1) {
                     GameCharacter best = findBestPerformer(skill);
@@ -433,7 +433,7 @@ public class Party implements Serializable {
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> performers) {
         GameCharacter performer = null;
         while (true) {
-            model.getSpellHandler().acceptSkillBoostingSpells(skill);
+            model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
             try {
                 if (size() > 1) {
                     GameCharacter best = findBestPerformer(skill, performers);
@@ -496,7 +496,7 @@ public class Party implements Serializable {
         event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
         model.getTutorial().skillChecks(model);
         while (true) {
-            model.getSpellHandler().acceptSkillBoostingSpells(skill);
+            model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
             try {
                 event.waitForReturn(true);
                 break;
@@ -561,6 +561,7 @@ public class Party implements Serializable {
             model.setSubView(previous);
         } catch (SpellCastException spe) {
             model.setSubView(previous);
+            throw spe;
         }
         return subView.getSelectedCharacter();
     }
