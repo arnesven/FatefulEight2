@@ -13,10 +13,9 @@ public class TutorialStartDialog extends HelpDialog {
 
     private static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLUE);
 
-
     private static final String text =
             "You've decided to leave your old life behind to become an adventurer.\n\n" +
-            "Your objective is to achieve a Party Reputation of 6 within 100 days.\n\n\n\n" +
+            "Your objective is to achieve a Party Reputation of " + Model.REP_TO_WIN + " within 100 days.\n\n\n\n" +
             "You have many things to learn about adventuring, but perhaps you already know it? " +
             "Would you like to enable the tutorial?";
 

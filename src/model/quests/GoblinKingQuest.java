@@ -37,7 +37,7 @@ public class GoblinKingQuest extends Quest {
     private List<Enemy> currentEnemySet;
 
     public GoblinKingQuest() {
-        super("Goblin King", "Nobody", QuestDifficulty.MEDIUM, 2, 500, 0, INTRO, ENDING);
+        super("Goblin King", "Nobody", QuestDifficulty.MEDIUM, 2, 300, 0, INTRO, ENDING);
         waves = new ArrayList<>();
         waves.add(new ArrayList<>(List.of(new GoblinKingEnemy('A'), new GoblinSpearman('B'),
                 new GoblinSpearman('B'), new GoblinSpearman('B'), new GoblinSpearman('B'))));
