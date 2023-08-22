@@ -1,6 +1,7 @@
 package view.help;
 
 import model.Model;
+import view.BorderFrame;
 import view.GameView;
 import view.MyColors;
 import view.sprites.CharSprite;
@@ -39,7 +40,7 @@ public class TutorialStartDialog extends HelpDialog {
         textContent.add(new DrawableObject(xStart+16, yStart+11) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                model.getScreenHandler().put(x, y, CharSprite.make('6', MyColors.YELLOW, MyColors.BLUE, MyColors.BLUE));
+                BorderFrame.drawString(model.getScreenHandler(),  "" + Model.REP_TO_WIN, x-1, y, MyColors.YELLOW, MyColors.BLUE);
                 model.getScreenHandler().put(x+1, y, REP_ICON_SPRITE);
             }
         });
