@@ -10,6 +10,7 @@ import model.quests.QuestSubScene;
 import model.states.CombatEvent;
 import model.states.GameState;
 import model.states.QuestState;
+import model.states.SpellCastException;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.MyColors;
@@ -71,8 +72,22 @@ public abstract class CombatSubScene extends QuestSubScene {
 
     @Override
     public QuestEdge run(Model model, QuestState state) {
-        state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
-        state.waitForReturn();
+        acceptAllSpells(model);
+        do {
+            state.print("The party encounters " + getCombatDetails() + "! Press enter to continue.");
+            try {
+                state.waitForReturn(true);
+                break;
+            } catch (SpellCastException spe) {
+                QuestEdge edge = tryCastSpell(model, state, spe);
+                if (edge != null) {
+                    unacceptAllSpells(model);
+                    return edge;
+                }
+            }
+        } while (true);
+        unacceptAllSpells(model);
+
         CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, ambush);
         List<GameCharacter> allies = getAllies();
         if (!allies.isEmpty()) {

@@ -51,6 +51,7 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
             } catch (SpellCastException sce) {
                 QuestEdge edge = tryCastSpell(model, state, sce);
                 if (edge != null) {
+                    unacceptAllSpells(model);
                     return edge;
                 }
             }

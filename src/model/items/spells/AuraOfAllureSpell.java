@@ -10,7 +10,7 @@ import view.sprites.Sprite;
 public class AuraOfAllureSpell extends SkillBoostingSpell {
     private static final Sprite SPRITE = new ItemSprite(2, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
     public AuraOfAllureSpell() {
-        super("Aura of Allure", 16, MyColors.WHITE, 8, 1);
+        super("Aura of Allure", 12, MyColors.WHITE, 8, 1);
     }
 
     @Override

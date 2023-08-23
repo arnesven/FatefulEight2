@@ -7,14 +7,22 @@ import model.enemies.FrogmanChiefEnemy;
 import model.enemies.FrogmanLeaderEnemy;
 import model.enemies.FrogmanScoutEnemy;
 import model.enemies.FrogmanShamanEnemy;
+import model.items.spells.HarmonizeSpell;
+import model.items.spells.MindControlSpell;
+import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.QuestState;
 import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.widget.QuestBackground;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FrogmenProblemQuest extends MainQuest {
@@ -23,6 +31,11 @@ public class FrogmenProblemQuest extends MainQuest {
             "frogmen. The frogmen have their settlement nearby. You could just wipe them all out, but is there " +
             "something more to this job than meets the eye?";
     private static final String END_TEXT = "You return to town to report your success. You are rewarded for your service.";
+    private static final Sprite SWAMP = new Sprite32x32("frogmenswamp", "quest.png", 0x0F,
+            MyColors.DARK_BROWN, MyColors.DARK_GREEN, MyColors.TAN, MyColors.GREEN);
+    private static final Sprite HUTS = new Sprite32x32("frogmenhuts", "quest.png", 0x1F,
+            MyColors.DARK_BROWN, MyColors.DARK_GREEN, MyColors.TAN, MyColors.GREEN);
+    private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public FrogmenProblemQuest() {
         super(QUEST_NAME, "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
@@ -113,6 +126,10 @@ public class FrogmenProblemQuest extends MainQuest {
 
         scenes.get(2).get(0).connectFail(getFailEndingNode());
         scenes.get(2).get(0).connectSuccess(scenes.get(3).get(0));
+        scenes.get(2).get(0).addSpellCallback(new HarmonizeSpell().getName(), (SpellCallback) (model, state, spell, caster) -> {
+            state.println("The frogmen seem to have calmed down and let you go about your business.");
+            return new QuestEdge(scenes.get(3).get(0));
+        });
 
         scenes.get(2).get(1).connectFail(junctions.get(2));
         scenes.get(2).get(1).connectSuccess(scenes.get(2).get(2));
@@ -125,14 +142,61 @@ public class FrogmenProblemQuest extends MainQuest {
 
         scenes.get(3).get(0).connectFail(getFailEndingNode());
         scenes.get(3).get(0).connectSuccess(scenes.get(3).get(1));
+        scenes.get(3).get(0).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                state.println("The frogmen seem to have calmed down and let you go about your business.");
+                return new QuestEdge(scenes.get(3).get(1));
+            }
+        });
 
         scenes.get(3).get(1).connectFail(getFailEndingNode());
         scenes.get(3).get(1).connectSuccess(junctions.get(3), QuestEdge.VERTICAL);
+        scenes.get(3).get(1).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
+            @Override
+            public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
+                return new QuestEdge(junctions.get(4));
+            }
+        });
     }
 
     @Override
     public MyColors getBackgroundColor() {
         return MyColors.GREEN;
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
+
+    private static List<QuestBackground> makeBgSprites() {
+        List<QuestBackground> background = new ArrayList<>();
+        for (int y = 0; y < 4; ++y) {
+            for (int x = 1+y; x < 8; ++x) {
+                background.add(new QuestBackground(new Point(x, y), SWAMP));
+            }
+        }
+        for (int y = 2; y < 9; ++y) {
+            background.add(new QuestBackground(new Point(1, y), SWAMP));
+            background.add(new QuestBackground(new Point(0, y), SWAMP));
+        }
+        background.add(new QuestBackground(new Point(4, 4), HUTS));
+
+        for (int y = 4; y < 7; ++y) {
+            background.add(new QuestBackground(new Point(6, y), HUTS));
+            background.add(new QuestBackground(new Point(7, y), HUTS));
+        }
+        background.add(new QuestBackground(new Point(7, 7), HUTS));
+
+        for (int x = 3; x < 6; ++x) {
+            background.add(new QuestBackground(new Point(x, 7), HUTS));
+        }
+        for (int x = 2; x < 6; ++x) {
+            background.add(new QuestBackground(new Point(x, 8), SWAMP));
+        }
+        return background;
     }
 
     @Override
