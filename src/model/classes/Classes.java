@@ -37,6 +37,7 @@ public interface Classes {
     CharacterClass TEMPLE_GUARD = new TempleGuardNPCClass();
     CharacterClass WARLOCK = new WarlockNPCClass();
     CharacterClass OFFICIAL = new OfficialNPCClass();
+    CharacterClass BAKER = new BakerNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
@@ -47,4 +48,5 @@ public interface Classes {
     CharacterClass FAMILIAR = new FamiliarClass();
     CharacterClass SWORD_MASTER = new SwordMasterClass();
     CharacterClass ARCANIST = new ArcanistClass();
+
 }

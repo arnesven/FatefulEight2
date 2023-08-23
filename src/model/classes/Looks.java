@@ -189,4 +189,15 @@ public abstract class Looks {
         characterAppearance.setSprite(4, 4, new FaceAndClothesSpriteWithBack(0x41, clothingColor, MyColors.DARK_GRAY));
         characterAppearance.setSprite(3, 5, new FaceAndClothesSprite(0x91, clothingColor));
     }
+
+    public static void putOnApron(CharacterAppearance characterAppearance, MyColors apronColor, MyColors shirtColor) {
+        characterAppearance.setSprite(1, 6, new ClothesSprite(0xC6, shirtColor, apronColor));
+        characterAppearance.setSprite(2, 6, new ClothesSprite(0xC7, shirtColor, apronColor));
+        characterAppearance.setSprite(3, 6, new ClothesSprite(0xC7, shirtColor, apronColor));
+        characterAppearance.setSprite(4, 6, new ClothesSprite(0xC7, shirtColor, apronColor));
+        characterAppearance.setSprite(5, 6, new ClothesSprite(0xC8, shirtColor, apronColor));
+
+        characterAppearance.setSprite(1, 5, new ClothesSprite(0xB6, shirtColor, apronColor));
+        characterAppearance.setSprite(5, 5, new ClothesSprite(0xB8, shirtColor, apronColor));
+    }
 }

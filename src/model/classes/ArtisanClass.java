@@ -38,18 +38,7 @@ public class ArtisanClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, SHIRT_COLOR);
-        putOnApron(characterAppearance);
-    }
-
-    private void putOnApron(CharacterAppearance characterAppearance) {
-        characterAppearance.setSprite(1, 6, new ClothesSprite(0xC6, SHIRT_COLOR, APRON_COLOR));
-        characterAppearance.setSprite(2, 6, new ClothesSprite(0xC7, SHIRT_COLOR, APRON_COLOR));
-        characterAppearance.setSprite(3, 6, new ClothesSprite(0xC7, SHIRT_COLOR, APRON_COLOR));
-        characterAppearance.setSprite(4, 6, new ClothesSprite(0xC7, SHIRT_COLOR, APRON_COLOR));
-        characterAppearance.setSprite(5, 6, new ClothesSprite(0xC8, SHIRT_COLOR, APRON_COLOR));
-
-        characterAppearance.setSprite(1, 5, new ClothesSprite(0xB6, SHIRT_COLOR, APRON_COLOR));
-        characterAppearance.setSprite(5, 5, new ClothesSprite(0xB8, SHIRT_COLOR, APRON_COLOR));
+        Looks.putOnApron(characterAppearance, APRON_COLOR, SHIRT_COLOR);
     }
 
     @Override
