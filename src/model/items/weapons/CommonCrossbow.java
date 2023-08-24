@@ -4,10 +4,10 @@ import model.items.Item;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class Crossbow extends BowWeapon {
+public class CommonCrossbow extends CrossbowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 7);
 
-    public Crossbow() {
+    public CommonCrossbow() {
         super("Crossbow", 24, new int[]{8,9,10,14});
     }
 
@@ -18,6 +18,6 @@ public class Crossbow extends BowWeapon {
 
     @Override
     public Item copy() {
-        return new Crossbow();
+        return new CommonCrossbow();
     }
 }

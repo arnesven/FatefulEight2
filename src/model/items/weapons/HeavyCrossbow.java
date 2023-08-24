@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class HeavyCrossbow extends BowWeapon {
+public class HeavyCrossbow extends CrossbowWeapon {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(8, 6);
 

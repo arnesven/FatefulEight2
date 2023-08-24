@@ -102,15 +102,21 @@ public class PortraitSubView extends SubView {
     protected void drawArea(Model model) {
         previous.drawArea(model);
         model.getScreenHandler().clearForeground(X_OFFSET+5, X_OFFSET+17+16,
-                Y_OFFSET+5, Y_OFFSET+7+12);
+                Y_OFFSET+5, Y_OFFSET+7+13);
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET+7, Y_OFFSET+7,
-                16, 12, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
+                16, 13, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         } else {
             silhouetteAppearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         }
-        BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET+17, MyColors.LIGHT_GRAY, MyColors.BLACK);
+        if (portraitName.length() > 14 && portraitName.contains(" ")) {
+               String[] splits = portraitName.split(" ");
+            BorderFrame.drawCentered(model.getScreenHandler(), splits[0], Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
+            BorderFrame.drawCentered(model.getScreenHandler(), splits[1], Y_OFFSET + 18, MyColors.LIGHT_GRAY, MyColors.BLACK);
+        } else {
+            BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
+        }
         if (callout != null) {
             model.getScreenHandler().register(callout.getName()+"portrait", new Point(40, 12), callout);
             if (callout.isDone()) {

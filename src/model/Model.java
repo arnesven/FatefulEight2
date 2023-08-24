@@ -100,8 +100,7 @@ public class Model {
         } catch (IOException e) {
             throw new CorruptSaveFileException();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
+            throw new CorruptSaveFileException();
         }
     }
 

@@ -17,7 +17,7 @@ public class GiantGrowthSpell extends CombatSpell {
 
 
     public GiantGrowthSpell() {
-        super("Giant Growth", 20, MyColors.GREEN, 8, 2); // TODO: Diff 8
+        super("Giant Growth", 20, MyColors.GREEN, 8, 2);
     }
 
     @Override

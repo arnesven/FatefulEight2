@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class RepeatingCrossbow extends BowWeapon {
+public class RepeatingCrossbow extends CrossbowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(3, 7);
 
     public RepeatingCrossbow() {
