@@ -14,6 +14,7 @@ public class SteppingMatrix<T> {
     private List<T> list;
     private Point selected;
     private boolean simplifiedStepping = false;
+    private boolean soundEnabled = true;
 
     public SteppingMatrix(int columns, int rows) {
         this.columns = columns;
@@ -122,7 +123,9 @@ public class SteppingMatrix<T> {
         if (list.size() < 2) {
             return;
         }
-        SoundEffects.matrixSelect();
+        if (soundEnabled) {
+            SoundEffects.matrixSelect();
+        }
         if (simplifiedStepping) {
             simplifiedStepping(dx, dy);
         } else {
@@ -264,5 +267,9 @@ public class SteppingMatrix<T> {
             }
         }
         return 0;
+    }
+
+    public void setSoundEnabled(boolean b) {
+        this.soundEnabled = b;
     }
 }
