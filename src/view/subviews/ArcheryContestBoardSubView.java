@@ -37,7 +37,7 @@ public class ArcheryContestBoardSubView extends TopMenuSubView {
     protected void drawCursor(Model model) {
         Point pos = new Point(matrix.getSelectedPoint());
         pos.x += X_OFFSET;
-        pos.y += Y_OFFSET + 3;
+        pos.y += Y_OFFSET + 4;
         model.getScreenHandler().put(pos.x, pos.y, ArrowSprites.RIGHT);
     }
 

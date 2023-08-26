@@ -2,7 +2,10 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.items.weapons.Weapon;
 import util.Arithmetics;
+import util.MyPair;
+import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
@@ -19,7 +22,7 @@ public class ArcheryTargetSubView extends SubView {
     public static final int ON_GROUND = -1;
     public static final int ON_LEG = -2;
     public static final int OVER_TARGET = -3;
-
+    public static final int TARGET_DIAMETER = 30;
     protected static final Sprite whiteBlock = new FilledBlockSprite(MyColors.WHITE);
     protected static final Sprite redBlock = new FilledBlockSprite(MyColors.RED);
     protected static final Sprite greenBlock = new FilledBlockSprite(MyColors.GREEN);
@@ -28,23 +31,26 @@ public class ArcheryTargetSubView extends SubView {
     private static final Sprite[][] bullseyeSprites = makeBullseyeSprites();
     private static final Sprite[][] windSprites = makeWindSprites();
     private static final Sprite CURSOR = new Sprite16x16("archerycursor", "arrows.png", 0x12);
-    private static final Sprite ARROW = new Sprite16x16("archeryarrow", "arrows.png", 0x00);
     private static final Point WIND_POSITION = new Point(X_MAX-4, Y_OFFSET+1);
     private static final String[] POWER_NAMES = new String[]{"VERY WEAK", "WEAK", "MEDIUM", "STRONG", "VERY STRONG"};
+    private static final String[] DIST_NAMES = new String[]{"V. SHORT", "SHORT", "MEDIUM", "FAR", "V. FAR"};
+    private static final List<MyColors> FLETCH_COLORS = List.of(MyColors.RED, MyColors.GREEN, MyColors.YELLOW,
+            MyColors.PURPLE, MyColors.PINK, MyColors.PEACH, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.LIGHT_BLUE);
     private final Point wind;
     private final int distance;
+    private final Weapon bow;
     private SteppingMatrix<Integer> matrix;
-    private static final Point OFFSETS = new Point(15, 17);
+    private static final Point OFFSETS = new Point(TARGET_DIAMETER/2, TARGET_DIAMETER/2 + 2);
     private static final Point ORIGIN = new Point(X_OFFSET+OFFSETS.x, Y_OFFSET+OFFSETS.y);
     private double[] ringSizes = new double[]{3.6, 6.7, 9.8, 13.0, 16};
     private int currentPower;
-    private int powerBound;
-    private List<Point> arrows = new ArrayList<>();
+    private List<MyPair<Point, Sprite>> arrows = new ArrayList<>();
     private boolean cursorEnabled = true;
+    private boolean powerLocked = false;
 
-    public ArcheryTargetSubView(int powerBound, Point wind, int distance) {
-        this.powerBound = powerBound;
-        this.currentPower = powerBound-1;
+    public ArcheryTargetSubView(Weapon bow, Point wind, int distance) {
+        this.bow = bow;
+        this.currentPower = bow.getDamageTable().length-1;
         this.wind = wind;
         this.distance = distance;
         setupMatrix();
@@ -79,8 +85,8 @@ public class ArcheryTargetSubView extends SubView {
     }
 
     private void drawArrows(Model model) {
-        for (Point p : arrows) {
-            model.getScreenHandler().register(ARROW.getName(), p, ARROW, 1, -4, -4);
+        for (MyPair<Point, Sprite> p : arrows) {
+            model.getScreenHandler().register(p.second.getName(), p.first, p.second, 1, -4, -4);
         }
     }
 
@@ -134,8 +140,8 @@ public class ArcheryTargetSubView extends SubView {
     private void drawDistance(Model model) {
         BorderFrame.drawString(model.getScreenHandler(), "DISTANCE",
                 X_OFFSET+1, Y_OFFSET+1, MyColors.BLACK, MyColors.CYAN);
-        BorderFrame.drawString(model.getScreenHandler(), "" + distance,
-                X_OFFSET+4, Y_OFFSET+2, MyColors.BLACK, MyColors.CYAN);
+        BorderFrame.drawString(model.getScreenHandler(), DIST_NAMES[distance],
+                X_OFFSET+2, Y_OFFSET+2, MyColors.BLACK, MyColors.CYAN);
     }
 
     private void drawCursor(Model model) {
@@ -168,7 +174,11 @@ public class ArcheryTargetSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Shot Power: " + POWER_NAMES[currentPower];
+        String extra = "";
+        if (powerLocked) {
+            extra = " - Fixed";
+        }
+        return "Shot Power: " + POWER_NAMES[currentPower] + extra + " (" + bow.getName() + ")";
     }
 
     private int getWindStrength() {
@@ -186,8 +196,8 @@ public class ArcheryTargetSubView extends SubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            currentPower = Arithmetics.incrementWithWrap(currentPower, this.powerBound);
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !powerLocked) {
+            currentPower = Arithmetics.incrementWithWrap(currentPower, this.bow.getDamageTable().length);
         }
         return matrix.handleKeyEvent(keyEvent);
     }
@@ -200,8 +210,14 @@ public class ArcheryTargetSubView extends SubView {
     }
 
     public void addArrow(Point p) {
-        this.arrows.add(new Point(X_OFFSET + p.x + OFFSETS.x,
-                Y_OFFSET + p.y + OFFSETS.y + 1));
+        this.arrows.add(new MyPair<>(new Point(X_OFFSET + p.x + OFFSETS.x,
+                Y_OFFSET + p.y + OFFSETS.y + 1),
+                makeArrowSprite()));
+    }
+
+    private static Sprite makeArrowSprite() {
+        return new Sprite16x16("archeryarrow", "arrows.png", MyRandom.randInt(8),
+                MyColors.BLACK, MyColors.BLACK, MyRandom.sample(FLETCH_COLORS), MyColors.BEIGE);
     }
 
 
@@ -252,5 +268,9 @@ public class ArcheryTargetSubView extends SubView {
             }
         }
         throw new IllegalStateException("Where did that arrow go? result was " + result.x + "," + result.y);
+    }
+
+    public void setPowerLocked(boolean b) {
+        this.powerLocked = b;
     }
 }

@@ -6,19 +6,17 @@ import model.characters.GameCharacter;
 import model.characters.GoblinCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.classes.Skill;
-import model.classes.SkillCheckResult;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.weapons.*;
 import model.map.CastleLocation;
 import model.races.Race;
+import model.states.ArcheryState;
 import model.states.RecruitState;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,8 +24,6 @@ import java.util.List;
 import static model.classes.Classes.None;
 
 public class ArcheryContestEvent extends TournamentEvent {
-    private static final int SHOT_DIFFICULTY = 12;
-    private static final int[] TARGET_POINTS = new int[]{25, 15, 10, 7, 4, 1};
     private final CastleLocation castle;
     private List<Weapon> bows;
 
@@ -41,7 +37,9 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     @Override
     protected void doEvent(Model model) {
-        shootArrowAtTarget(model, model.getParty().getLeader(), 3);
+        showOfficial();
+        playRoundOne(model, model.getParty().getLeader(), new LongBow(), makeMarksmen(model));
+
 
 //        print("The " + castle.getLordTitle() + " is hosting a archery competition today. " +
 //                "Do you wish to attend? (Y/N) ");
@@ -159,76 +157,11 @@ public class ArcheryContestEvent extends TournamentEvent {
         waitForReturnSilently();
         model.setSubView(prevSubView);
 
-        shootArrowAtTarget(model, chosen, 2);
-    }
-
-    private void shootArrowAtTarget(Model model, GameCharacter chosen, int targetDistance) {
-        do {
-            Point wind = new Point(MyRandom.randInt(-5, 5), MyRandom.randInt(-5, 5));
-            ArcheryTargetSubView targetSubView = new ArcheryTargetSubView(5, wind, targetDistance);
-            CollapsingTransition.transition(model, targetSubView);
-            print("Aim at the target with the arrow keys. Use space to change the power of the shot. Press enter to fire.");
-            waitForReturn();
-            targetSubView.setCursorEnabled(false);
-            int skillResult = fireArrowSkillCheck(chosen);
-            int error = 2 * Math.max(0, SHOT_DIFFICULTY -skillResult);
-            int xError = MyRandom.randInt(error);
-            int yError = error - xError;
-            if (MyRandom.flipCoin()) {
-                xError = -xError;
-            }
-            if (MyRandom.flipCoin()) {
-                yError = -yError;
-            }
-            System.out.println(" ");
-            System.out.println("Error: (" + xError + "," + yError + ")");
-            Point aim = targetSubView.getAim();
-            int power = -4 * (targetSubView.getSelectedPower() - targetDistance);
-            System.out.println("Power: (0," + power + ")");
-            System.out.println("Aim:   (" + aim.x + "," + aim.y + ")");
-            wind = new Point(wind.x*2, wind.y*2);
-            System.out.println("Wind:  (" + wind.x + "," + wind.y + ")");
-            System.out.println("-----------------------------------------");
-            Point result = new Point(aim.x + wind.x + xError, aim.y + wind.y + yError + power);
-            System.out.println("SHOT-> (" + result.x + "," + result.y + ")");
-            int shotResult = targetSubView.getResultForShot(result);
-            if (shotResult >= 0) {
-                print("The arrow hit the target! ");
-                if (shotResult == 0) {
-                    println("It's a bullseye - " + TARGET_POINTS[shotResult] + " points!");
-                } else {
-                    println(TARGET_POINTS[shotResult] + " point" + (TARGET_POINTS[shotResult]>1?"s.":"."));
-                }
-                targetSubView.addArrow(result);
-            } else if (shotResult == ArcheryTargetSubView.ON_LEG) {
-                println("The arrow hit the target's wooden stands.");
-                targetSubView.addArrow(result);
-            } else if (shotResult == ArcheryTargetSubView.OVER_TARGET) {
-                println("The arrow flew over the target.");
-            } else {
-                println("The arrow missed the target and landed in the grass.");
-            }
-            waitForReturnSilently();
-        } while (true);
-    }
-
-    private int fireArrowSkillCheck(GameCharacter chosen) {
-        print(chosen.getFirstName() + " fires the arrow! ");
-        SkillCheckResult skillCheckResult;
-        do {
-            skillCheckResult = chosen.testSkill(Skill.Bows);
-            println("Roll of " + skillCheckResult.asString() + ".");
-            if (chosen.getSP() == 0) {
-                break;
-            } else {
-                print("Use 1 Stamina Point to re-roll? (Y/N) ");
-                if (!yesNoInput()) {
-                    break;
-                }
-                chosen.addToSP(-1);
-            }
-        } while (true);
-        return skillCheckResult.getModifiedRoll();
+        ArcheryState state = new ArcheryState(model, chosen, bowToUse, ArcheryState.MEDIUM_DISTANCE);
+        List<GameCharacter> others = new ArrayList<>(contestants);
+        others.remove(chosen);
+        state.addNPCShooters(others);
+        state.run(model);
     }
 
     private List<GameCharacter> makeMarksmen(Model model) {
