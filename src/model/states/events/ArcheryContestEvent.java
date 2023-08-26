@@ -13,6 +13,7 @@ import model.map.CastleLocation;
 import model.races.Race;
 import model.states.ArcheryState;
 import model.states.RecruitState;
+import model.states.ShootBallsState;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.*;
@@ -20,6 +21,7 @@ import view.subviews.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static model.classes.Classes.None;
 
@@ -37,31 +39,30 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     @Override
     protected void doEvent(Model model) {
+        new ShootBallsState(model, model.getParty().getLeader()).run(model);
+        enterTournament(model, false);
+
+        print("The " + castle.getLordTitle() + " is hosting a archery competition today. " +
+                "Do you wish to attend? (Y/N) ");
+        if (!yesNoInput()) {
+            return;
+        }
+        println("Outside the castle walls many tents and pavilions have been erected. And there, " +
+                "on a long stretch of lawn, several archery targets have been placed.");
+        println("As you wander around you see marksmen, fair ladies, noblemen, merchants and commoners " +
+                "all bustling about and getting ready for the contest. Some people are lining up at a little booth " +
+                "where a small gentleman in fancy clothing is accepting coins and writing things down in big ledgers.");
+        model.getLog().waitForAnimationToFinish();
         showOfficial();
-        playRoundOne(model, model.getParty().getLeader(), new LongBow(), makeMarksmen(model));
-
-
-//        print("The " + castle.getLordTitle() + " is hosting a archery competition today. " +
-//                "Do you wish to attend? (Y/N) ");
-//        if (!yesNoInput()) {
-//            return;
-//        }
-//        println("Outside the castle walls many tents and pavilions have been erected. And there, " +
-//                "on a long stretch of lawn, several archery targets have been placed.");
-//        println("As you wander around you see marksmen, fair ladies, noblemen, merchants and commoners " +
-//                "all bustling about and getting ready for the contest. Some people are lining up at a little booth " +
-//                "where a small gentleman in fancy clothing is accepting coins and writing things down in big ledgers.");
-//        model.getLog().waitForAnimationToFinish();
-//        showOfficial();
-//        portraitSay("Yes, we're still accepting participants. Are you here to compete in the archery contest?");
-//        leaderSay("Perhaps. What are the parameters?");
-//        portraitSay("The entry fee is " + ENTRY_FEE + " gold. Twenty marksmen will enter the competition, which has three rounds. " +
-//                "In the first round each contestant fires a single arrow at the target. The ten who made the best shots qualify." +
-//                "In the second round each contestant must shoot at apples which have been tossed into the air. The contestants who " +
-//                "can hit the most apples tossed at the same time will qualify to the third round. In the third round, each contestant is " +
-//                "given three arrows and score points for how well they hit the target. The contestant who scores the most points in the final " +
-//                "round wins a marvelous prize - the Golden Bow. Oh and you'll also receive the " + castle.getLordTitle() +
-//                " blessing - which is probably equally valuable.");
+        portraitSay("Yes, we're still accepting participants. Are you here to compete in the archery contest?");
+        leaderSay("Perhaps. What are the parameters?");
+        portraitSay("The entry fee is " + ENTRY_FEE + " gold. Twenty marksmen will enter the competition, which has three rounds. " +
+                "In the first round each contestant fires a single arrow at the target. The ten who made the best shots qualify." +
+                "In the second round each contestant must shoot at apples which have been tossed into the air. The contestants who " +
+                "can hit the most apples tossed at the same time will qualify to the third round. In the third round, each contestant is " +
+                "given three arrows and score points for how well they hit the target. The contestant who scores the most points in the final " +
+                "round wins a marvelous prize - the Golden Bow. Oh and you'll also receive the " + castle.getLordTitle() +
+                " blessing - which is probably equally valuable.");
         showOfficial();
         portraitSay("But all of you can't enter the contest, in fact we only have room for one more. Are you still interested?");
         boolean sponsored = false;
@@ -86,7 +87,7 @@ public class ArcheryContestEvent extends TournamentEvent {
     }
 
     private void enterTournament(Model model, boolean sponsored) {
-        println("Which party member should enter the tournament?");
+        println("Which party member should enter the contest?");
         GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         partyMemberSay(chosen, "I'll enter the contest.");
         if (!sponsored) {
@@ -125,8 +126,9 @@ public class ArcheryContestEvent extends TournamentEvent {
         List<GameCharacter> contestants = makeMarksmen(model);
         contestants.add(chosen);
         Collections.shuffle(contestants);
-        playRoundOne(model, chosen, bowToUse, contestants);
-        //playRoundTwo(model, chosen, bowToUse, contestants);
+        Map<GameCharacter, Integer> points = playRoundOne(model, chosen, bowToUse, contestants);
+        // TODO: Check if out of competition.
+        playRoundTwo(model, chosen, bowToUse, contestants, points);
         //playRoundThree(model, chosen, bowToUse, contestants);
     }
 
@@ -149,7 +151,8 @@ public class ArcheryContestEvent extends TournamentEvent {
         println("The party receives " + (new TrainingBow()).getName() + ".");
     }
 
-    private void playRoundOne(Model model, GameCharacter chosen, Weapon bowToUse, List<GameCharacter> contestants) {
+    private Map<GameCharacter, Integer> playRoundOne(Model model, GameCharacter chosen,
+                                                     Weapon bowToUse, List<GameCharacter> contestants) {
         portraitSay("To my left is a board with the names of all the contestants. Please have a look at it now.");
         waitForReturnSilently();
         SubView prevSubView = model.getSubView();
@@ -157,11 +160,33 @@ public class ArcheryContestEvent extends TournamentEvent {
         waitForReturnSilently();
         model.setSubView(prevSubView);
 
+        setCurrentTerrainSubview(model);
+        showAnnouncer();
+        portraitSay("Ladies and gentlemen! Please take your seats, for it is time to witness the first round of " +
+                "this archery competition. Each contestant will shoot a single arrow at the target. Only those who hit " +
+                "the target will qualify to the next round.");
         ArcheryState state = new ArcheryState(model, chosen, bowToUse, ArcheryState.MEDIUM_DISTANCE);
         List<GameCharacter> others = new ArrayList<>(contestants);
         others.remove(chosen);
         state.addNPCShooters(others);
         state.run(model);
+        return state.getPoints();
+    }
+
+    private void playRoundTwo(Model model, GameCharacter chosen, Weapon bowToUse,
+                              List<GameCharacter> contestants, Map<GameCharacter, Integer> points) {
+        setCurrentTerrainSubview(model);
+        showAnnouncer();
+        portraitSay("The first round is over. We will now have a short break before continuing the competition.");
+        println("You walk over to the booth with the board. It has already been updated with the scores from the first round.");
+
+        ArcheryContestBoardSubView board = new ArcheryContestBoardSubView(contestants);
+        board.setPoints(points);
+        model.setSubView(board);
+        waitForReturnSilently();
+
+
+
     }
 
     private List<GameCharacter> makeMarksmen(Model model) {

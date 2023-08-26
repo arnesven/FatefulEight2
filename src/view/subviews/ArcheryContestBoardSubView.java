@@ -10,9 +10,11 @@ import view.sprites.ArrowSprites;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Map;
 
 public class ArcheryContestBoardSubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
+    private Map<GameCharacter, Integer> points;
 
     public ArcheryContestBoardSubView(List<GameCharacter> contestants) {
         super(2, new int[]{X_OFFSET + 12});
@@ -47,8 +49,16 @@ public class ArcheryContestBoardSubView extends TopMenuSubView {
         BorderFrame.drawString(model.getScreenHandler(), "CONTESTANT          R1  R2  R3",
                 X_OFFSET + 1, Y_OFFSET + 2, MyColors.WHITE, MyColors.BLUE);
         for (int i = 0; i < matrix.getElementList().size(); ++i) {
-            BorderFrame.drawString(model.getScreenHandler(), matrix.getElementAt(0, i).getName(),
-                    X_OFFSET + 1, Y_OFFSET + 4 + i, MyColors.WHITE, MyColors.BLUE);
+            GameCharacter contestant = matrix.getElementAt(0, i);
+            int row = Y_OFFSET + 4 + i;
+            BorderFrame.drawString(model.getScreenHandler(), contestant.getName(),
+                    X_OFFSET + 1, row, MyColors.WHITE, MyColors.BLUE);
+            if (points != null) {
+                if (points.get(contestant) != null) {
+                    BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", points.get(contestant)),
+                            X_OFFSET+21, row, MyColors.WHITE, MyColors.BLUE);
+                }
+            }
         }
 
         drawSelectedContestant(model);
@@ -88,5 +98,9 @@ public class ArcheryContestBoardSubView extends TopMenuSubView {
     @Override
     protected boolean cursorOnBorderToTop() {
         return matrix.getSelectedPoint().y == matrix.getMinimumRow();
+    }
+
+    public void setPoints(Map<GameCharacter, Integer> points) {
+        this.points = points;
     }
 }

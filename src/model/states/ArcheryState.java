@@ -163,4 +163,8 @@ public class ArcheryState extends GameState {
     public void addNPCShooters(List<GameCharacter> marksmen) {
         npcShooters.addAll(marksmen);
     }
+
+    public Map<GameCharacter, Integer> getPoints() {
+        return points;
+    }
 }

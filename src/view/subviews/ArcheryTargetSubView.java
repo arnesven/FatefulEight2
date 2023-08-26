@@ -18,19 +18,15 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class ArcheryTargetSubView extends SubView {
+public class ArcheryTargetSubView extends AimingSubView {
     public static final int ON_GROUND = -1;
     public static final int ON_LEG = -2;
     public static final int OVER_TARGET = -3;
-    public static final int TARGET_DIAMETER = 30;
     protected static final Sprite whiteBlock = new FilledBlockSprite(MyColors.WHITE);
     protected static final Sprite redBlock = new FilledBlockSprite(MyColors.RED);
-    protected static final Sprite greenBlock = new FilledBlockSprite(MyColors.GREEN);
     protected static final Sprite brownBlock = new FilledBlockSprite(MyColors.BROWN);
-    protected static final Sprite lightBlueBlock = new FilledBlockSprite(MyColors.CYAN);
     private static final Sprite[][] bullseyeSprites = makeBullseyeSprites();
     private static final Sprite[][] windSprites = makeWindSprites();
-    private static final Sprite CURSOR = new Sprite16x16("archerycursor", "arrows.png", 0x12);
     private static final Point WIND_POSITION = new Point(X_MAX-4, Y_OFFSET+1);
     private static final String[] POWER_NAMES = new String[]{"VERY WEAK", "WEAK", "MEDIUM", "STRONG", "VERY STRONG"};
     private static final String[] DIST_NAMES = new String[]{"V. SHORT", "SHORT", "MEDIUM", "FAR", "V. FAR"};
@@ -39,13 +35,10 @@ public class ArcheryTargetSubView extends SubView {
     private final Point wind;
     private final int distance;
     private final Weapon bow;
-    private SteppingMatrix<Integer> matrix;
-    private static final Point OFFSETS = new Point(TARGET_DIAMETER/2, TARGET_DIAMETER/2 + 2);
     private static final Point ORIGIN = new Point(X_OFFSET+OFFSETS.x, Y_OFFSET+OFFSETS.y);
     private double[] ringSizes = new double[]{3.6, 6.7, 9.8, 13.0, 16};
     private int currentPower;
     private List<MyPair<Point, Sprite>> arrows = new ArrayList<>();
-    private boolean cursorEnabled = true;
     private boolean powerLocked = false;
 
     public ArcheryTargetSubView(Weapon bow, Point wind, int distance) {
@@ -57,31 +50,25 @@ public class ArcheryTargetSubView extends SubView {
     }
 
     private void setupMatrix() {
-        this.matrix = new SteppingMatrix<>(32, 36);
-        matrix.setSoundEnabled(false);
-        int counter = 0;
-        for (int y = 0; y < matrix.getRows(); ++y) {
-            for (int x = 0; x < matrix.getColumns(); ++x) {
-                if (x == OFFSETS.x && y == OFFSETS.y) {
-                    this.matrix.addElement(x, y, -1);
-                } else {
-                    this.matrix.addElement(x, y, counter++);
-                }
-            }
-        }
-        matrix.setSelectedPoint(-1);
+
     }
 
     @Override
-    protected void drawArea(Model model) {
+    protected void innerDrawArea(Model model) {
         drawTarget(model);
         drawBullseye(model);
         drawArrows(model);
         drawWind(model);
         drawDistance(model);
-        if (cursorEnabled) {
-            drawCursor(model);
+    }
+
+    @Override
+    protected boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !powerLocked) {
+            currentPower = Arithmetics.incrementWithWrap(currentPower, this.bow.getDamageTable().length);
+            return true;
         }
+        return false;
     }
 
     private void drawArrows(Model model) {
@@ -144,14 +131,6 @@ public class ArcheryTargetSubView extends SubView {
                 X_OFFSET+2, Y_OFFSET+2, MyColors.BLACK, MyColors.CYAN);
     }
 
-    private void drawCursor(Model model) {
-        Point p = new Point(matrix.getSelectedPoint());
-        p.x += X_OFFSET;
-        p.y += Y_OFFSET;
-        model.getScreenHandler().register(CURSOR.getName(), p, CURSOR, 2, -4, -4);
-    }
-
-
     private Sprite spriteForDist(int x, int y) {
         double dist = Math.sqrt(x*x + y*y);
         Sprite[] blocks = new Sprite[]{whiteBlock, redBlock, whiteBlock, redBlock, whiteBlock};
@@ -188,25 +167,6 @@ public class ArcheryTargetSubView extends SubView {
     @Override
     protected String getTitleText(Model model) {
         return "ARCHERY CONTEST - ROUND 1";
-    }
-
-    public void setCursorEnabled(boolean b) {
-        this.cursorEnabled = b;
-    }
-
-    @Override
-    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !powerLocked) {
-            currentPower = Arithmetics.incrementWithWrap(currentPower, this.bow.getDamageTable().length);
-        }
-        return matrix.handleKeyEvent(keyEvent);
-    }
-
-    public Point getAim() {
-        Point p = new Point(matrix.getSelectedPoint());
-        p.x -= OFFSETS.x;
-        p.y -= OFFSETS.y;
-        return p;
     }
 
     public void addArrow(Point p) {
