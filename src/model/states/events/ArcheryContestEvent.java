@@ -16,18 +16,18 @@ import model.states.RecruitState;
 import model.states.ShootBallsState;
 import model.states.ShopState;
 import util.MyRandom;
+import util.MyStrings;
+import view.sprites.Sprite;
 import view.subviews.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static model.classes.Classes.None;
 
 public class ArcheryContestEvent extends TournamentEvent {
     private final CastleLocation castle;
     private List<Weapon> bows;
+    private Map<GameCharacter, Sprite> fletchings;
 
     public ArcheryContestEvent(Model model, CastleLocation castleLocation) {
         super(model, castleLocation);
@@ -39,9 +39,6 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     @Override
     protected void doEvent(Model model) {
-        new ShootBallsState(model, model.getParty().getLeader(), new CompetitionBow()).run(model);
-        enterTournament(model, false);
-
         print("The " + castle.getLordTitle() + " is hosting a archery competition today. " +
                 "Do you wish to attend? (Y/N) ");
         if (!yesNoInput()) {
@@ -120,16 +117,58 @@ public class ArcheryContestEvent extends TournamentEvent {
             waitForReturnSilently();
         } while (!bowEquipped(chosen));
 
-        Weapon bowToUse = chosen.getEquipment().getWeapon();
+        BowWeapon bowToUse = (BowWeapon)chosen.getEquipment().getWeapon();
         println(chosen.getName() + " will use a " + bowToUse.getName().toLowerCase() + " in the contest.");
 
         List<GameCharacter> contestants = makeMarksmen(model);
         contestants.add(chosen);
+        this.fletchings = makeFletchings(contestants);
         Collections.shuffle(contestants);
         Map<GameCharacter, Integer> points = playRoundOne(model, chosen, bowToUse, contestants);
-        // TODO: Check if out of competition.
-        playRoundTwo(model, chosen, bowToUse, contestants, points);
-        //playRoundThree(model, chosen, bowToUse, contestants);
+        if (didWinInRound1(points, chosen)) {
+            winContest(model, chosen, sponsored, bowToUse);
+            return;
+        }
+        if (points.get(chosen) == 0) { // Lost in round 1
+            loseContest();
+            return;
+        }
+        Map<GameCharacter, Integer> points2 = playRoundTwo(model, chosen, bowToUse, contestants, points);
+        int maxBalls = findMaxPoints(points2);
+        if (didWinInRound2(points2, maxBalls, chosen)) {
+            winContest(model, chosen, sponsored, bowToUse);
+            return;
+        }
+        System.out.println("Max balls is " + maxBalls);
+        if (points2.get(chosen) < maxBalls) { // Lost in round 2
+            loseContest();
+            return;
+        }
+        Map<GameCharacter, Integer> points3 = playRoundThree(model, chosen, bowToUse, contestants,
+                                                             points, points2, maxBalls);
+        ArcheryContestBoardSubView board = new ArcheryContestBoardSubView(contestants, fletchings);
+        board.addPoints(points);
+        board.addPoints(points2);
+        board.addPoints(points3);
+        model.setSubView(board);
+        waitForReturnSilently();
+        int maxPoints = findMaxPoints(points3);
+        if (points3.get(chosen) == maxPoints) {
+            winContest(model, chosen, sponsored, bowToUse);
+        } else {
+            loseContest();
+        }
+    }
+
+    private void loseContest() {
+        if (MyRandom.flipCoin()) {
+            leaderSay("Well, that's it. We didn't qualify for the second round. Better luck next time I suppose.");
+            println("The party leaves the competition grounds and tries to put their minds on their future adventures.");
+        } else {
+            leaderSay("We gave it our best shot, literally. But we didn't qualify. " +
+                    "We should focus on the tasks before us instead of this little side show.");
+            println("The party leaves the competition grounds.");
+        }
     }
 
     private void stillNeedABow(Model model, GameCharacter chosen) {
@@ -152,11 +191,11 @@ public class ArcheryContestEvent extends TournamentEvent {
     }
 
     private Map<GameCharacter, Integer> playRoundOne(Model model, GameCharacter chosen,
-                                                     Weapon bowToUse, List<GameCharacter> contestants) {
+                                                     BowWeapon bowToUse, List<GameCharacter> contestants) {
         portraitSay("To my left is a board with the names of all the contestants. Please have a look at it now.");
         waitForReturnSilently();
         SubView prevSubView = model.getSubView();
-        model.setSubView(new ArcheryContestBoardSubView(contestants));
+        model.setSubView(new ArcheryContestBoardSubView(contestants, fletchings));
         waitForReturnSilently();
         model.setSubView(prevSubView);
 
@@ -169,24 +208,183 @@ public class ArcheryContestEvent extends TournamentEvent {
         List<GameCharacter> others = new ArrayList<>(contestants);
         others.remove(chosen);
         state.addNPCShooters(others);
+        state.useFletchings(fletchings);
         state.run(model);
+        print("Press enter to continue.");
+        waitForReturn();
+        setCurrentTerrainSubview(model);
+        showAnnouncer();
+        portraitSay("The first round is over. Any contestant who managed to hit the target will qualify for the next round. " +
+                "We will now have a short break before continuing the competition.");
         return state.getPoints();
     }
 
-    private void playRoundTwo(Model model, GameCharacter chosen, Weapon bowToUse,
-                              List<GameCharacter> contestants, Map<GameCharacter, Integer> points) {
-        setCurrentTerrainSubview(model);
-        showAnnouncer();
-        portraitSay("The first round is over. We will now have a short break before continuing the competition.");
-        println("You walk over to the booth with the board. It has already been updated with the scores from the first round.");
+    private boolean didWinInRound1(Map<GameCharacter, Integer> points, GameCharacter chosen) {
+        for (GameCharacter gc : points.keySet()) {
+            if (points.get(gc) > 0 && gc != chosen) {
+                return false;
+            }
+        }
+        return points.get(chosen) > 0;
+    }
 
-        ArcheryContestBoardSubView board = new ArcheryContestBoardSubView(contestants);
-        board.setPoints(points);
+    private Map<GameCharacter, Integer> playRoundTwo(Model model, GameCharacter chosen, BowWeapon bowToUse,
+                              List<GameCharacter> contestants, Map<GameCharacter, Integer> points) {
+        println("You walk over to the booth with the board. It has already been updated with the scores from the first round.");
+        ArcheryContestBoardSubView board = new ArcheryContestBoardSubView(contestants, fletchings);
+        board.addPoints(points);
         model.setSubView(board);
         waitForReturnSilently();
+        setCurrentTerrainSubview(model);
+        announcerSay("And now ladies and gentlemen, round two of this contest is about to begin! In this round each contestant " +
+                "will have to prove their accuracy as well as their quickness. Three balls will be thrown into the air and the " +
+                "contestant must try to hit them before they hit the ground.");
+        Map<GameCharacter, Integer> newPoints = new HashMap<>();
+        for (GameCharacter chara : contestants) {
+            if (points.get(chara) == 0) {
+                continue;
+            }
+            if (chara == chosen) {
+                println("It is now " + chosen.getName() + "'s turn.");
+                model.getLog().waitForAnimationToFinish();
+                ShootBallsState state = new ShootBallsState(model, chosen, bowToUse);
+                state.useFletching(fletchings.get(chosen));
+                state.run(model);
+                newPoints.put(chosen, state.getPoints());
+                setCurrentTerrainSubview(model);
+            } else {
+                BowWeapon bow = (BowWeapon) chara.getEquipment().getWeapon();
+                print(chara.getName() + " gets ready with " + hisOrHer(chara.getGender()) +" " + bow.getName() +
+                        ". Three balls are tossed into the air... ");
+                int roll = MyRandom.rollD10();
+                int balls = 0;
+                if (roll == 10 && bow.getReloadSpeed() < 4) {
+                    balls = 3;
+                } else if (roll > 7 && bow.getReloadSpeed() < 4) {
+                    balls = 2;
+                } else if (roll > 4) {
+                    balls = 1;
+                }
+                if (balls == 0) {
+                    println(heOrSheCap(chara.getGender()) + " doesn't hit a single ball.");
+                    println(chara.getName() + ": \"" + MyRandom.sample(List.of("Darn!", "That's disappointing.", "Phooey!",
+                            "Rats.", "Oh come on!", "I'm out.", "Too tricky.", "Hey! It's harder than it looks.", "I just can't do it.")));
+                } else if (balls > 1) {
+                    println(heOrSheCap(chara.getGender()) + " hits " + MyStrings.numberWord(balls) + " balls!");
+                    println(chara.getName() + ": \"" + MyRandom.sample(List.of("Sweet!", "Yes!", "Alright!", "Did it!", "Gotcha!")));
+                } else {
+                    println(heOrSheCap(chara.getGender()) + " hits one ball.");
+                }
+                newPoints.put(chara, balls);
+            }
+        }
+        portraitSay("The second round is over. We will now have a short break before continuing the competition.");
+        return newPoints;
+    }
+
+    private int findMaxPoints(Map<GameCharacter, Integer> points) {
+        int max = 0;
+        for (GameCharacter gc : points.keySet()) {
+            if (points.get(gc) > max) {
+                max = points.get(gc);
+            }
+        }
+        return max;
+    }
+
+    private boolean didWinInRound2(Map<GameCharacter, Integer> points2, int maxBalls, GameCharacter chosen) {
+        for (GameCharacter gc : points2.keySet()) {
+            if (points2.get(gc) == maxBalls && gc != chosen) {
+                return false;
+            }
+        }
+        return points2.get(chosen) == maxBalls;
+    }
+
+    private Map<GameCharacter, Integer> playRoundThree(Model model, GameCharacter chosen, BowWeapon bowToUse,
+                                                       List<GameCharacter> contestants,
+                                                        Map<GameCharacter, Integer> points,
+                                                       Map<GameCharacter, Integer> points2, int maxBalls) {
+        println("You walk over to the booth with the board. It has already been updated with the scores from the second round.");
+        ArcheryContestBoardSubView board = new ArcheryContestBoardSubView(contestants, fletchings);
+        board.addPoints(points);
+        board.addPoints(points2);
+        model.setSubView(board);
+        waitForReturnSilently();
+        setCurrentTerrainSubview(model);
+        showAnnouncer();
+        List<GameCharacter> finalists = new ArrayList<>();
+        for (GameCharacter gc : points2.keySet()) {
+            if (points2.get(gc) == maxBalls) {
+                finalists.add(gc);
+            }
+        }
+        portraitSay("Ladies and gentlemen, we made it to the final round. It looks like " +
+                MyStrings.numberWord(finalists.size()) + " contestants have qualified. In this round, each contestant is given " +
+                "three arrows, with which they must score as many points as possible. Oh, and we've also moved the targets further away! " +
+                "Good luck!");
+        ArcheryState state = new ArcheryState(model, chosen, bowToUse, ArcheryState.VERY_FAR_DISTANCE);
+        List<GameCharacter> others = new ArrayList<>(finalists);
+        others.remove(chosen);
+        state.addNPCShooters(others);
+        state.setShots(3);
+        state.useFletchings(fletchings);
+        state.run(model);
+        print("Press enter to continue.");
+        waitForReturn();
+        setCurrentTerrainSubview(model);
+        portraitSay("The contest is over! Ladies and gentlemen let's look at the score board!");
+        return state.getPoints();
+    }
 
 
+    private void winContest(Model model, GameCharacter chosen, boolean sponsored, BowWeapon bow) {
+        portraitSay("We have a winner of the contest, it's " + chosen.getName() + "! You can claim " +
+                "your prize, the golden bow, at the booth.");
+        println("The party congratulates " + chosen.getFirstName() + " and head over to the booth.");
+        showOfficial();
+        portraitSay("Congratulations. Here's your prize.");
+        Weapon prize = new GoldenBow();
+        model.getParty().getInventory().add(prize);
+        println("The party receives " + prize.getName() + ".");
+        if (sponsored) {
+            println("As out of nowhere, the mysterious sponsor shows up behind the party.");
+            showSponsor();
+            portraitSay("Masterfully done. I hope you haven't forgotten about or deal?");
+            println("Hand over the " + bow.getName() + " to the stranger? (Y/N) ");
+            if (yesNoInput()) {
+                leaderSay("Fine. We've got a new one anyway.");
+                remove(model, bow);
+                println("You have lost the " + bow.getName() + ".");
+                portraitSay("Much obliged. I think you have some fans who will pay handsomely for " +
+                        "the bow which won you the contest. Bye bye now...");
+                leaderSay("What an odd fellow.");
+            } else {
+                leaderSay("You know what? I think we'll hang on to it for now.");
+                portraitSay("Oh, that's alright. You can just pay the brotherhood back later. Bye bye now.");
+                addToEntryFeeToLoan(model);
+                println("The mysterious stranger disappears as quickly as he appeared.");
+                leaderSay("Did he say, 'the brotherhood'?");
+            }
+            println("Although puzzled by the interaction with the stranger, the party returns to the castle to celebrate.");
+        } else {
+            println("Filled with bravado and glee, the party returns to the castle for a night of whimsy and celebration.");
+        }
+        partyMemberSay(model.getParty().getRandomPartyMember(), "Huzzah!");
+    }
 
+    private void remove(Model model, BowWeapon bow) {
+        if (model.getParty().getInventory().getAllItems().contains(bow)) {
+            model.getParty().getInventory().remove(bow);
+            return;
+        }
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc.getEquipment().getWeapon() == bow) {
+                gc.unequipWeapon();
+                model.getParty().getInventory().remove(bow);
+                return;
+            }
+        }
     }
 
     private List<GameCharacter> makeMarksmen(Model model) {
@@ -252,5 +450,13 @@ public class ArcheryContestEvent extends TournamentEvent {
         merchantShop.setSellingEnabled(false);
         merchantShop.run(model);
         setCurrentTerrainSubview(model);
+    }
+
+    private Map<GameCharacter, Sprite> makeFletchings(List<GameCharacter> contestants) {
+        Map<GameCharacter, Sprite> fletchings = new HashMap<>();
+        for (GameCharacter gc : contestants) {
+            fletchings.put(gc, AimingSubView.makeArrowSprite());
+        }
+        return fletchings;
     }
 }

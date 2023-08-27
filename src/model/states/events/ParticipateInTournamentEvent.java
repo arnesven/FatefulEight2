@@ -201,19 +201,9 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         leaderSay("I think we'll hang on to that gold for now. Perhaps we can pay you back some other time?");
         portraitSay("Certainly. The Brotherhood regularly lends money to those who are in need. " +
                 "You can find us at taverns in towns and castles.");
-        addToEntryFeeToLoan(model);
+        super.addToEntryFeeToLoan(model);
         println("The mysterious stranger just smiles, then he disappears.");
         leaderSay("Wait... what did we just agree to?");
-    }
-
-    private void addToEntryFeeToLoan(Model model) {
-        if (model.getParty().getLoan() != null) {
-            Loan currentLoan = model.getParty().getLoan();
-            model.getParty().setLoan(new Loan(currentLoan.getAmount() + ENTRY_FEE, currentLoan.getDay()));
-        } else {
-            model.getParty().setLoan(new Loan(ENTRY_FEE, model.getDay()));
-        }
-        model.getTutorial().loans(model);
     }
 
     private void doLongBreak(Model model, List<GameCharacter> winners, List<GameCharacter> losers,

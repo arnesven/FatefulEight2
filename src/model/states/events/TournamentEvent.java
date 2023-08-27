@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.ItemDeck;
 import model.Model;
+import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
@@ -368,6 +369,16 @@ public class TournamentEvent extends DailyEventState {
     protected void announcerSay(String s) {
         showAnnouncer();
         portraitSay(s);
+    }
+
+    protected void addToEntryFeeToLoan(Model model) {
+        if (model.getParty().getLoan() != null) {
+            Loan currentLoan = model.getParty().getLoan();
+            model.getParty().setLoan(new Loan(currentLoan.getAmount() + ENTRY_FEE, currentLoan.getDay()));
+        } else {
+            model.getParty().setLoan(new Loan(ENTRY_FEE, model.getDay()));
+        }
+        model.getTutorial().loans(model);
     }
 
     private static class NameAndGender {

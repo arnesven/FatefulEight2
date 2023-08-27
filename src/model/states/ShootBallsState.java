@@ -7,6 +7,7 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.BowWeapon;
 import util.MyRandom;
 import view.sprites.Sprite;
+import view.subviews.CollapsingTransition;
 import view.subviews.ShootBallsSubView;
 
 import java.awt.*;
@@ -16,6 +17,8 @@ public class ShootBallsState extends GameState {
     private final GameCharacter shooter;
     private Sprite arrowSprite;
     private BowWeapon bowToUse;
+    private ShootBallsSubView subView;
+    private Sprite fletching = null;
 
     public ShootBallsState(Model model, GameCharacter shooter, BowWeapon bowToUse) {
         super(model);
@@ -25,20 +28,23 @@ public class ShootBallsState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        ShootBallsSubView subView = new ShootBallsSubView(this, shooter, bowToUse);
-        model.setSubView(subView);
+        this.subView = new ShootBallsSubView(this, shooter, bowToUse);
+        CollapsingTransition.transition(model, subView);
         println("Press enter when you are ready for the balls to be thrown, fire with enter.");
         waitForReturnSilently();
         subView.startAnimation();
-        arrowSprite = ShootBallsSubView.makeArrowSprite();
+        if (fletching == null) {
+            arrowSprite = ShootBallsSubView.makeArrowSprite();
+        } else {
+            arrowSprite = fletching;
+        }
         do {
             waitForReturnSilently();
+            if (!subView.stillBallsToShoot()) {
+                break;
+            }
             if (subView.shotReady()) {
-                if (subView.stillBallsToShoot()) {
-                    shoot(model, subView);
-                } else {
-                    break;
-                }
+                shoot(model, subView);
             }
         } while (true);
         println("Game over. You got " + subView.getScore() + " out of " + subView.MAX_BALLS + " balls.");
@@ -74,5 +80,13 @@ public class ShootBallsState extends GameState {
         subView.clearArrows();
 
         subView.startAnimation();
+    }
+
+    public int getPoints() {
+        return subView.getScore();
+    }
+
+    public void useFletching(Sprite sprite) {
+        this.fletching = sprite;
     }
 }

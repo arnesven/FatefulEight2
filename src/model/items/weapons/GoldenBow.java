@@ -9,11 +9,11 @@ import view.sprites.TwoHandedItemSprite;
 
 import java.util.List;
 
-public class CompetitionBow extends BowWeapon {
-    private static final Sprite SPRITE = new TwoHandedItemSprite(9, 6, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.BEIGE);
+public class GoldenBow extends BowWeapon {
+    private static final Sprite SPRITE = new TwoHandedItemSprite(9, 6, MyColors.GOLD, MyColors.ORANGE, MyColors.LIGHT_GRAY);
 
-    public CompetitionBow() {
-        super("Competition Bow", 10, new int[]{13,13,15,15});
+    public GoldenBow() {
+        super("Golden Bow", 84, new int[]{7,11,11,11,15});
     }
 
     @Override
@@ -22,12 +22,22 @@ public class CompetitionBow extends BowWeapon {
     }
 
     @Override
-    public Item copy() {
-        return new CompetitionBow();
+    public int getReloadSpeed() {
+        return 2;
+    }
+
+    @Override
+    public int getSpeedModifier() {
+        return 1;
     }
 
     @Override
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
         return List.of(new MyPair<>(Skill.Bows, 1));
+    }
+
+    @Override
+    public Item copy() {
+        return new GoldenBow();
     }
 }

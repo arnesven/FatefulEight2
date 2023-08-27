@@ -6,19 +6,25 @@ import model.characters.GameCharacter;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.ArrowSprites;
+import view.sprites.FilledBlockSprite;
+import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ArcheryContestBoardSubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
-    private Map<GameCharacter, Integer> points;
+    private final Map<GameCharacter, Sprite> fletchings;
+    protected static final Sprite whiteBlock = new FilledBlockSprite(MyColors.WHITE);
+    private List<Map<GameCharacter, Integer>> points = new ArrayList<>();
 
-    public ArcheryContestBoardSubView(List<GameCharacter> contestants) {
+    public ArcheryContestBoardSubView(List<GameCharacter> contestants, Map<GameCharacter, Sprite> fletchings) {
         super(2, new int[]{X_OFFSET + 12});
         this.matrix = new SteppingMatrix<>(1, contestants.size());
+        this.fletchings = fletchings;
         int row = 0;
         for (GameCharacter chara : contestants) {
             matrix.addElement(0, row++, chara);
@@ -53,11 +59,13 @@ public class ArcheryContestBoardSubView extends TopMenuSubView {
             int row = Y_OFFSET + 4 + i;
             BorderFrame.drawString(model.getScreenHandler(), contestant.getName(),
                     X_OFFSET + 1, row, MyColors.WHITE, MyColors.BLUE);
-            if (points != null) {
-                if (points.get(contestant) != null) {
-                    BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", points.get(contestant)),
-                            X_OFFSET+21, row, MyColors.WHITE, MyColors.BLUE);
+            int col = 0;
+            for (Map<GameCharacter, Integer> pointMap : points) {
+                if (pointMap.get(contestant) != null) {
+                    BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", pointMap.get(contestant)),
+                            X_OFFSET+21 + col, row, MyColors.WHITE, MyColors.BLUE);
                 }
+                col += 4;
             }
         }
 
@@ -73,6 +81,10 @@ public class ArcheryContestBoardSubView extends TopMenuSubView {
         BorderFrame.drawString(model.getScreenHandler(), raceAndClassString, pos.x, pos.y+1, MyColors.LIGHT_GRAY);
         fighter.getAppearance().drawYourself(model.getScreenHandler(), pos.x, pos.y + 3);
         fighter.getEquipment().drawYourself(model.getScreenHandler(), pos.x, pos.y);
+        Sprite fletch = fletchings.get(matrix.getSelectedElement());
+        model.getScreenHandler().fillSpace(pos.x + 13, pos.x + 20, pos.y + 6, pos.y + 10, whiteBlock);
+        BorderFrame.drawString(model.getScreenHandler(), "ARROW", pos.x + 14, pos.y + 6, MyColors.BLACK, MyColors.WHITE);
+        model.getScreenHandler().register(fletch.getName(), new Point(pos.x + 15, pos.y + 7), fletch);
     }
 
     @Override
@@ -100,7 +112,7 @@ public class ArcheryContestBoardSubView extends TopMenuSubView {
         return matrix.getSelectedPoint().y == matrix.getMinimumRow();
     }
 
-    public void setPoints(Map<GameCharacter, Integer> points) {
-        this.points = points;
+    public void addPoints(Map<GameCharacter, Integer> points) {
+        this.points.add(points);
     }
 }

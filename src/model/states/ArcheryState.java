@@ -7,6 +7,8 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.CrossbowWeapon;
 import model.items.weapons.Weapon;
 import util.MyRandom;
+import view.sprites.Sprite;
+import view.subviews.AimingSubView;
 import view.subviews.ArcheryTargetSubView;
 import view.subviews.CollapsingTransition;
 
@@ -23,7 +25,7 @@ public class ArcheryState extends GameState {
     public static final int SHORT_DISTANCE = 1;
     public static final int VERY_SHORT_DISTANCE = 0;
 
-    private static final int[] SHOT_DIFFICULTIES = new int[]{8, 10, 12, 14, 16, 18};
+    private static final int[] SHOT_DIFFICULTIES = new int[]{10, 11, 12, 13, 14, 15};
     private static final int[] TARGET_POINTS = new int[]{25, 15, 10, 7, 4, 1};
     private static final int POWER_FACTOR = -4;
     private final int targetDistance;
@@ -33,6 +35,8 @@ public class ArcheryState extends GameState {
     private final Point wind;
     private ArcheryTargetSubView targetSubView;
     private Map<GameCharacter, Integer> points = new HashMap<>();
+    private int shotsPerShooter = 1;
+    private Map<GameCharacter, Sprite> fletchings = null;
 
     public ArcheryState(Model model, GameCharacter shooter, Weapon bowToUse, int targetDistance) {
         super(model);
@@ -60,36 +64,49 @@ public class ArcheryState extends GameState {
     }
 
     private void characterTakesShot(Model model) {
-        targetSubView.setCursorEnabled(true);
-        print("Aim at the target with the arrow keys. Use space to change the power of the shot. Press enter to fire.");
-        waitForReturn();
-        targetSubView.setCursorEnabled(false);
-        int skillResult = fireArrowSkillCheck(shooter);
-        int error = 2 * Math.max(0, SHOT_DIFFICULTIES[targetDistance-1] - skillResult);
-        int xError = MyRandom.randInt(error);
-        int yError = error - xError;
-        if (MyRandom.flipCoin()) {
-            xError = -xError;
+        for (int i = 0; i < shotsPerShooter; ++i) {
+            targetSubView.setCursorEnabled(true);
+            if (i == 0) {
+                print("Aim at the target with the arrow keys. Use space to change the power of the shot. Press enter to fire.");
+            } else {
+                print("You have " + (shotsPerShooter - i) + " shots remaining. Press enter to fire.");
+            }
+            waitForReturn();
+            targetSubView.setCursorEnabled(false);
+            int skillResult = fireArrowSkillCheck(shooter);
+            int error = 2 * Math.max(0, SHOT_DIFFICULTIES[targetDistance - 1] - skillResult);
+            int xError = 0;
+            int yError = 0;
+            if (error > 0) {
+                xError = MyRandom.randInt(error);
+                yError = error - xError;
+            }
+            if (MyRandom.flipCoin()) {
+                xError = -xError;
+            }
+            if (MyRandom.flipCoin()) {
+                yError = -yError;
+            }
+            System.out.println(" ");
+            System.out.println("Error: (" + xError + "," + yError + ")");
+            Point aim = targetSubView.getAim();
+            int power = POWER_FACTOR * (targetSubView.getSelectedPower() - targetDistance);
+            System.out.println("Power: (0," + power + ")");
+            System.out.println("Aim:   (" + aim.x + "," + aim.y + ")");
+            Point newWind = new Point(wind.x * 2, wind.y * 2);
+            System.out.println("Wind:  (" + newWind.x + "," + newWind.y + ")");
+            System.out.println("-----------------------------------------");
+            Point result = new Point(aim.x + newWind.x + xError, aim.y + newWind.y + yError + power);
+            System.out.println("SHOT-> (" + result.x + "," + result.y + ")");
+            if (!points.containsKey(shooter)) {
+                points.put(shooter, 0);
+            }
+            points.put(shooter, points.get(shooter) + shootArrow(shooter, result));
         }
-        if (MyRandom.flipCoin()) {
-            yError = -yError;
-        }
-        System.out.println(" ");
-        System.out.println("Error: (" + xError + "," + yError + ")");
-        Point aim = targetSubView.getAim();
-        int power = POWER_FACTOR * (targetSubView.getSelectedPower() - targetDistance);
-        System.out.println("Power: (0," + power + ")");
-        System.out.println("Aim:   (" + aim.x + "," + aim.y + ")");
-        Point newWind = new Point(wind.x*2, wind.y*2);
-        System.out.println("Wind:  (" + newWind.x + "," + newWind.y + ")");
-        System.out.println("-----------------------------------------");
-        Point result = new Point(aim.x + newWind.x + xError, aim.y + newWind.y + yError + power);
-        System.out.println("SHOT-> (" + result.x + "," + result.y + ")");
-        points.put(shooter, shootArrow(result));
         waitForReturnSilently();
     }
 
-    private int shootArrow(Point result) {
+    private int shootArrow(GameCharacter shooter, Point result) {
         int shotResult = targetSubView.getResultForShot(result);
         if (shotResult >= 0) {
             print("The arrow hit the target! ");
@@ -98,7 +115,13 @@ public class ArcheryState extends GameState {
             } else {
                 println(TARGET_POINTS[shotResult] + " point" + (TARGET_POINTS[shotResult]>1?"s.":"."));
             }
-            targetSubView.addArrow(result);
+            Sprite sprite = AimingSubView.makeArrowSprite();
+            if (fletchings != null) {
+                if (fletchings.get(shooter) != null) {
+                    sprite = fletchings.get(shooter);
+                }
+            }
+            targetSubView.addArrow(result, sprite);
             return TARGET_POINTS[shotResult];
         }
 
@@ -136,27 +159,41 @@ public class ArcheryState extends GameState {
 
     private void npcsShoot(List<GameCharacter> shooters) {
         for (GameCharacter npc : shooters) {
-            Weapon bow = npc.getEquipment().getWeapon();
-            print(npc.getName() + " takes a shot with " + hisOrHer(npc.getGender()) + " "
-                    + bow.getName() + "... Press enter to continue.");
-            waitForReturn();
-            int skillRoll = npc.testSkill(Skill.Bows).getModifiedRoll();
+            for (int i = 0; i < shotsPerShooter; ++i) {
+                Weapon bow = npc.getEquipment().getWeapon();
+                if (i == 0) {
+                    print(npc.getName() + " takes a shot with " + hisOrHer(npc.getGender()) + " "
+                            + bow.getName().toLowerCase() + ".");
+                } else {
+                    print(npc.getName() + " takes another shot.");
+                }
+                getModel().getLog().waitForAnimationToFinish();
+                int skillRoll = npc.testSkill(Skill.Bows).getModifiedRoll();
 
-            int power = 0;
-            int weaponPower = npc.getEquipment().getWeapon().getDamageTable().length;
-            if (npc.getEquipment().getWeapon() instanceof CrossbowWeapon || weaponPower < targetDistance) {
-                power = POWER_FACTOR * (weaponPower - targetDistance);
+                int power = 0;
+                int weaponPower = npc.getEquipment().getWeapon().getDamageTable().length;
+                if (npc.getEquipment().getWeapon() instanceof CrossbowWeapon || weaponPower < targetDistance) {
+                    power = POWER_FACTOR * (weaponPower - targetDistance);
+                }
+                int randBoxSize = ArcheryTargetSubView.TARGET_DIAMETER + ArcheryTargetSubView.TARGET_DIAMETER / 2
+                        - skillRoll * 2 + targetDistance * 2;
+                System.out.println(npc.getName() + " taking a shot...");
+                System.out.println("  Skill roll: " + skillRoll);
+                System.out.println("  Power error: " + power);
+                System.out.println("  Randboxsize: " + randBoxSize);
+                Point shot;
+                if (randBoxSize < 2) {
+                    shot = new Point(0, power);
+                } else {
+                    shot = new Point(MyRandom.randInt(-randBoxSize / 2, randBoxSize / 2),
+                            MyRandom.randInt(-randBoxSize / 2, randBoxSize / 2) + power);
+                }
+                System.out.println("    Shot: (" + shot.x + "," + shot.y + ")");
+                if (!points.containsKey(npc)) {
+                    points.put(npc, 0);
+                }
+                points.put(npc, points.get(npc) + shootArrow(npc, shot));
             }
-            int randBoxSize = ArcheryTargetSubView.TARGET_DIAMETER + ArcheryTargetSubView.TARGET_DIAMETER/2
-                    - skillRoll*2 + targetDistance*2;
-            System.out.println(npc.getName() + " taking a shot...");
-            System.out.println("  Skill roll: " + skillRoll);
-            System.out.println("  Power error: " + power);
-            System.out.println("  Randboxsize: " + randBoxSize);
-            Point shot = new Point(MyRandom.randInt(-randBoxSize/2, randBoxSize/2),
-                            MyRandom.randInt(-randBoxSize/2, randBoxSize/2) + power);
-            System.out.println("    Shot: (" + shot.x + "," + shot.y + ")");
-            points.put(npc, shootArrow(shot));
         }
     }
 
@@ -166,5 +203,13 @@ public class ArcheryState extends GameState {
 
     public Map<GameCharacter, Integer> getPoints() {
         return points;
+    }
+
+    public void setShots(int i) {
+        this.shotsPerShooter = i;
+    }
+
+    public void useFletchings(Map<GameCharacter, Sprite> fletchings) {
+        this.fletchings = fletchings;
     }
 }
