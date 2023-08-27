@@ -63,4 +63,20 @@ public class SoundEffects {
     public static void playSpellSuccess() { play("spell_suc"); }
 
     public static void playSpellFail() { play("spell_fail"); }
+
+    public static void playMiss() {
+        play("miss");
+    }
+
+    public static void playGrass() {
+        play("grass");
+    }
+
+    public static void playTargetHit() {
+        play("target_hit");
+    }
+
+    public static void playHitWood() {
+        play("wood");
+    }
 }

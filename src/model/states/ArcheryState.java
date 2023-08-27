@@ -6,6 +6,8 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.CrossbowWeapon;
 import model.items.weapons.Weapon;
+import sound.ClientSoundManager;
+import sound.SoundEffects;
 import util.MyRandom;
 import view.sprites.Sprite;
 import view.subviews.AimingSubView;
@@ -110,6 +112,7 @@ public class ArcheryState extends GameState {
         int shotResult = targetSubView.getResultForShot(result);
         if (shotResult >= 0) {
             print("The arrow hit the target! ");
+            SoundEffects.playTargetHit();
             if (shotResult == 0) {
                 println("It's a bullseye - " + TARGET_POINTS[shotResult] + " points!");
             } else {
@@ -128,10 +131,13 @@ public class ArcheryState extends GameState {
         if (shotResult == ArcheryTargetSubView.ON_LEG) {
             println("The arrow hit the target's wooden stands.");
             targetSubView.addArrow(result);
+            SoundEffects.playHitWood();
         } else if (shotResult == ArcheryTargetSubView.OVER_TARGET) {
             println("The arrow flew over the target.");
+            SoundEffects.playMiss();
         } else {
             println("The arrow missed the target and landed in the grass.");
+            SoundEffects.playGrass();
         }
         return 0;
     }
@@ -163,9 +169,9 @@ public class ArcheryState extends GameState {
                 Weapon bow = npc.getEquipment().getWeapon();
                 if (i == 0) {
                     print(npc.getName() + " takes a shot with " + hisOrHer(npc.getGender()) + " "
-                            + bow.getName().toLowerCase() + ".");
+                            + bow.getName().toLowerCase() + ". ");
                 } else {
-                    print(npc.getName() + " takes another shot.");
+                    print(npc.getName() + " takes another shot. ");
                 }
                 getModel().getLog().waitForAnimationToFinish();
                 int skillRoll = npc.testSkill(Skill.Bows).getModifiedRoll();

@@ -27,7 +27,7 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
     private final BowWeapon bowToUse;
     private boolean animationStarted = false;
     private int internalCount = 0;
-    private int animationDelay = 4;
+    private int animationDelay = 2;
     private static final Rectangle SUBVIEW_BOUNDS = new Rectangle(X_OFFSET+1, Y_OFFSET+1, X_MAX - X_OFFSET-2, Y_MAX - Y_OFFSET - 2);
     private static final Rectangle OUTER_BOUNDS = new Rectangle(X_OFFSET+1, Y_OFFSET-19, X_MAX - X_OFFSET-2, Y_MAX - Y_OFFSET - 2 + 20);
     private final List<MyPair<Ball, RunOnceAnimationSprite>> destroyAnimations = new ArrayList<>();

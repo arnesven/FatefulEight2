@@ -10,7 +10,7 @@ import view.sprites.TwoHandedItemSprite;
 import java.util.List;
 
 public class GoldenBow extends BowWeapon {
-    private static final Sprite SPRITE = new TwoHandedItemSprite(9, 6, MyColors.GOLD, MyColors.ORANGE, MyColors.LIGHT_GRAY);
+    private static final Sprite SPRITE = new TwoHandedItemSprite(9, 6, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.DARK_RED);
 
     public GoldenBow() {
         super("Golden Bow", 84, new int[]{7,11,11,11,15});

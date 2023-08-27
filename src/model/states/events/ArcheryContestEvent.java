@@ -54,9 +54,9 @@ public class ArcheryContestEvent extends TournamentEvent {
         portraitSay("Yes, we're still accepting participants. Are you here to compete in the archery contest?");
         leaderSay("Perhaps. What are the parameters?");
         portraitSay("The entry fee is " + ENTRY_FEE + " gold. Twenty marksmen will enter the competition, which has three rounds. " +
-                "In the first round each contestant fires a single arrow at the target. The ten who made the best shots qualify." +
-                "In the second round each contestant must shoot at apples which have been tossed into the air. The contestants who " +
-                "can hit the most apples tossed at the same time will qualify to the third round. In the third round, each contestant is " +
+                "In the first round each contestant fires a single arrow at the target. Those who hit the target qualify. " +
+                "In the second round each contestant must shoot at balls which have been tossed into the air. The contestants who " +
+                "can hit the most balls tossed at the same time will qualify to the third round. In the third round, each contestant is " +
                 "given three arrows and score points for how well they hit the target. The contestant who scores the most points in the final " +
                 "round wins a marvelous prize - the Golden Bow. Oh and you'll also receive the " + castle.getLordTitle() +
                 " blessing - which is probably equally valuable.");
@@ -73,7 +73,6 @@ public class ArcheryContestEvent extends TournamentEvent {
         } else {
             print("Will you enter one of your party members into the contest? (Y/N) ");
         }
-        removePortraitSubView(model);
         if (yesNoInput()) {
             enterTournament(model, sponsored);
         } else {
@@ -84,7 +83,7 @@ public class ArcheryContestEvent extends TournamentEvent {
     }
 
     private void enterTournament(Model model, boolean sponsored) {
-        println("Which party member should enter the contest?");
+        print("Which party member should enter the contest?");
         GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         partyMemberSay(chosen, "I'll enter the contest.");
         if (!sponsored) {

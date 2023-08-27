@@ -40,7 +40,7 @@ public class ArcheryTargetSubView extends AimingSubView {
 
     public ArcheryTargetSubView(Weapon bow, Point wind, int distance) {
         this.bow = bow;
-        this.currentPower = bow.getDamageTable().length-1;
+        this.currentPower = bow.getDamageTable().length/2;
         this.wind = wind;
         this.distance = distance;
         setupMatrix();
