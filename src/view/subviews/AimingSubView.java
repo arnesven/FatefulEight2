@@ -3,6 +3,8 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import util.Arithmetics;
+import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
@@ -10,6 +12,8 @@ import view.sprites.Sprite16x16;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AimingSubView extends SubView {
 
@@ -19,8 +23,12 @@ public abstract class AimingSubView extends SubView {
     protected static final Sprite greenBlock = new FilledBlockSprite(MyColors.GREEN);
     protected static final Sprite lightBlueBlock = new FilledBlockSprite(MyColors.CYAN);
 
+    private static final java.util.List<MyColors> FLETCH_COLORS = List.of(MyColors.RED, MyColors.GREEN, MyColors.YELLOW,
+            MyColors.PURPLE, MyColors.PINK, MyColors.PEACH, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.LIGHT_BLUE);
+
     private SteppingMatrix<Integer> matrix;
     private boolean cursorEnabled = true;
+    private List<MyPair<Point, Sprite>> arrows = new ArrayList<>();
 
     public AimingSubView() {
         this.matrix = new SteppingMatrix<>(32, 36);
@@ -41,6 +49,7 @@ public abstract class AimingSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         innerDrawArea(model);
+        drawArrows(model);
         if (cursorEnabled) {
             drawCursor(model);
         }
@@ -75,4 +84,29 @@ public abstract class AimingSubView extends SubView {
     }
 
     protected abstract boolean innerHandleKeyEvent(KeyEvent keyEvent, Model model);
+
+    public void addArrow(Point p, Sprite sprite) {
+        this.arrows.add(new MyPair<>(new Point(X_OFFSET + p.x + OFFSETS.x,
+                Y_OFFSET + p.y + OFFSETS.y + 1),
+                sprite));
+    }
+
+    public void addArrow(Point p) {
+        addArrow(p, makeArrowSprite());
+    }
+
+    public static Sprite makeArrowSprite() {
+        return new Sprite16x16("archeryarrow", "arrows.png", MyRandom.randInt(8),
+                MyColors.BLACK, MyColors.BLACK, MyRandom.sample(FLETCH_COLORS), MyColors.BEIGE);
+    }
+
+    private void drawArrows(Model model) {
+        for (MyPair<Point, Sprite> p : arrows) {
+            model.getScreenHandler().register(p.second.getName(), p.first, p.second, 1, -4, -4);
+        }
+    }
+
+    public void clearArrows() {
+        arrows.clear();
+    }
 }

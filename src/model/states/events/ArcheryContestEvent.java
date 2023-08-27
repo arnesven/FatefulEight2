@@ -39,7 +39,7 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     @Override
     protected void doEvent(Model model) {
-        new ShootBallsState(model, model.getParty().getLeader()).run(model);
+        new ShootBallsState(model, model.getParty().getLeader(), new CompetitionBow()).run(model);
         enterTournament(model, false);
 
         print("The " + castle.getLordTitle() + " is hosting a archery competition today. " +

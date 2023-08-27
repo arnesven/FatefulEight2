@@ -39,4 +39,8 @@ public abstract class BowWeapon extends Weapon {
     public RunOnceAnimationSprite getEffectSprite() {
         return new RangedStrikeEffect();
     }
+
+    public int getReloadSpeed() {
+        return 3;
+    }
 }

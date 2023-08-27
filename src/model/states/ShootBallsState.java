@@ -4,7 +4,9 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.weapons.BowWeapon;
 import util.MyRandom;
+import view.sprites.Sprite;
 import view.subviews.ShootBallsSubView;
 
 import java.awt.*;
@@ -12,25 +14,35 @@ import java.awt.*;
 public class ShootBallsState extends GameState {
     private static final int DIFFICULTY = 8;
     private final GameCharacter shooter;
+    private Sprite arrowSprite;
+    private BowWeapon bowToUse;
 
-    public ShootBallsState(Model model, GameCharacter shooter) {
+    public ShootBallsState(Model model, GameCharacter shooter, BowWeapon bowToUse) {
         super(model);
         this.shooter = shooter;
+        this.bowToUse = bowToUse;
     }
 
     @Override
     public GameState run(Model model) {
-        ShootBallsSubView subView = new ShootBallsSubView(this, shooter);
+        ShootBallsSubView subView = new ShootBallsSubView(this, shooter, bowToUse);
         model.setSubView(subView);
-        println("Press return when you are ready for the balls to be thrown, fire arrows with SPACE.");
+        println("Press enter when you are ready for the balls to be thrown, fire with enter.");
         waitForReturnSilently();
         subView.startAnimation();
+        arrowSprite = ShootBallsSubView.makeArrowSprite();
         do {
             waitForReturnSilently();
-            shoot(model, subView);
+            if (subView.shotReady()) {
+                if (subView.stillBallsToShoot()) {
+                    shoot(model, subView);
+                } else {
+                    break;
+                }
+            }
         } while (true);
-
-        //return model.getCurrentHex().getDailyActionState(model);
+        println("Game over. You got " + subView.getScore() + " out of " + subView.MAX_BALLS + " balls.");
+        return model.getCurrentHex().getDailyActionState(model);
     }
 
     private void shoot(Model model, ShootBallsSubView subView) {
@@ -49,14 +61,17 @@ public class ShootBallsState extends GameState {
         System.out.println("Aim is  : (" + aim.x + "," + aim.y + ")");
         System.out.println("Error is: (" + xError + "," + yError + ")");
         System.out.println("Result  : (" + finalResult.x + "," + finalResult.y + ")");
-        if (subView.checkForHit(finalResult)) {
+        model.getLog().waitForAnimationToFinish();
+        if (subView.shootArrow(finalResult, arrowSprite)) {
             println("It hits a ball!");
         } else {
             println("The arrow missed the ball.");
         }
 
+
         println("Press enter to continue.");
         waitForReturnSilently();
+        subView.clearArrows();
 
         subView.startAnimation();
     }

@@ -30,15 +30,12 @@ public class ArcheryTargetSubView extends AimingSubView {
     private static final Point WIND_POSITION = new Point(X_MAX-4, Y_OFFSET+1);
     private static final String[] POWER_NAMES = new String[]{"VERY WEAK", "WEAK", "MEDIUM", "STRONG", "VERY STRONG"};
     private static final String[] DIST_NAMES = new String[]{"V. SHORT", "SHORT", "MEDIUM", "FAR", "V. FAR"};
-    private static final List<MyColors> FLETCH_COLORS = List.of(MyColors.RED, MyColors.GREEN, MyColors.YELLOW,
-            MyColors.PURPLE, MyColors.PINK, MyColors.PEACH, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.LIGHT_BLUE);
     private final Point wind;
     private final int distance;
     private final Weapon bow;
     private static final Point ORIGIN = new Point(X_OFFSET+OFFSETS.x, Y_OFFSET+OFFSETS.y);
     private double[] ringSizes = new double[]{3.6, 6.7, 9.8, 13.0, 16};
     private int currentPower;
-    private List<MyPair<Point, Sprite>> arrows = new ArrayList<>();
     private boolean powerLocked = false;
 
     public ArcheryTargetSubView(Weapon bow, Point wind, int distance) {
@@ -57,7 +54,6 @@ public class ArcheryTargetSubView extends AimingSubView {
     protected void innerDrawArea(Model model) {
         drawTarget(model);
         drawBullseye(model);
-        drawArrows(model);
         drawWind(model);
         drawDistance(model);
     }
@@ -69,12 +65,6 @@ public class ArcheryTargetSubView extends AimingSubView {
             return true;
         }
         return false;
-    }
-
-    private void drawArrows(Model model) {
-        for (MyPair<Point, Sprite> p : arrows) {
-            model.getScreenHandler().register(p.second.getName(), p.first, p.second, 1, -4, -4);
-        }
     }
 
     private void drawTarget(Model model) {
@@ -118,7 +108,9 @@ public class ArcheryTargetSubView extends AimingSubView {
             }
             toDraw = windSprites[i][1];
         }
-        model.getScreenHandler().register(toDraw.getName(), WIND_POSITION, toDraw);
+        if (toDraw != null) { // If not no wind.
+            model.getScreenHandler().register(toDraw.getName(), WIND_POSITION, toDraw);
+        }
         BorderFrame.drawString(model.getScreenHandler(), "WIND " + getWindStrength(),
                 X_MAX-6, Y_OFFSET+4, MyColors.BLACK, MyColors.CYAN);
     }
@@ -167,17 +159,6 @@ public class ArcheryTargetSubView extends AimingSubView {
     @Override
     protected String getTitleText(Model model) {
         return "ARCHERY CONTEST - ROUND 1";
-    }
-
-    public void addArrow(Point p) {
-        this.arrows.add(new MyPair<>(new Point(X_OFFSET + p.x + OFFSETS.x,
-                Y_OFFSET + p.y + OFFSETS.y + 1),
-                makeArrowSprite()));
-    }
-
-    private static Sprite makeArrowSprite() {
-        return new Sprite16x16("archeryarrow", "arrows.png", MyRandom.randInt(8),
-                MyColors.BLACK, MyColors.BLACK, MyRandom.sample(FLETCH_COLORS), MyColors.BEIGE);
     }
 
 

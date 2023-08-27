@@ -36,4 +36,9 @@ public class RepeatingCrossbow extends CrossbowWeapon {
     public Prevalence getPrevalence() {
         return Prevalence.rare;
     }
+
+    @Override
+    public int getReloadSpeed() {
+        return 1;
+    }
 }

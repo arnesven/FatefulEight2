@@ -1,11 +1,10 @@
 package view.subviews;
 
-import model.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.Skill;
-import model.classes.SkillCheckResult;
+import model.items.weapons.BowWeapon;
 import model.states.ShootBallsState;
+import util.Arithmetics;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -20,24 +19,30 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
 
     private static final Sprite BALL_SPRITE = new BallSprite();
     private static final int[] VERTICAL_SPEEDS = new int[]{12, 12, 10, 8};
+    public static final int MAX_BALLS = 3;
     private final List<Ball> balls = new ArrayList<>();
     private final List<Ball> destroyedBalls = new ArrayList<>();
     private final ShootBallsState state;
     private final GameCharacter shooter;
+    private final BowWeapon bowToUse;
     private boolean animationStarted = false;
     private int internalCount = 0;
     private int animationDelay = 6;
-    private static final Rectangle bounds = new Rectangle(X_OFFSET+1, Y_OFFSET+1, X_MAX - X_OFFSET-2, Y_MAX - Y_OFFSET - 2);
+    private static final Rectangle SUBVIEW_BOUNDS = new Rectangle(X_OFFSET+1, Y_OFFSET+1, X_MAX - X_OFFSET-2, Y_MAX - Y_OFFSET - 2);
+    private static final Rectangle OUTER_BOUNDS = new Rectangle(X_OFFSET+1, Y_OFFSET-19, X_MAX - X_OFFSET-2, Y_MAX - Y_OFFSET - 2 + 20);
     private final List<MyPair<Ball, RunOnceAnimationSprite>> destroyAnimations = new ArrayList<>();
+    private int reloadCounter;
 
-    public ShootBallsSubView(ShootBallsState shootBallsState, GameCharacter shooter) {
+    public ShootBallsSubView(ShootBallsState shootBallsState, GameCharacter shooter, BowWeapon bowToUse) {
         this.state = shootBallsState;
         this.shooter = shooter;
+        this.bowToUse = bowToUse;
+        reloadCounter = 0;
 
         AnimationManager.registerPausable(this);
-        balls.add(makeBall());
-        balls.add(makeBall());
-        balls.add(makeBall());
+        for (int i = 0; i < MAX_BALLS; ++i) {
+            balls.add(makeBall());
+        }
     }
 
     private Ball makeBall() {
@@ -54,7 +59,13 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Aim and shoot the balls!";
+        String text = "Using " + bowToUse.getName() + ", ";
+        if (shotReady()) {
+            text += "SHOT READY.";
+        } else {
+            text += "next shot in " + reloadCounter + " seconds.";
+        }
+        return text;
     }
 
     @Override
@@ -69,7 +80,7 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_MAX-9, Y_MAX,
                 greenBlock);
         for (Ball b : balls) {
-            if (bounds.contains(b.position)) {
+            if (SUBVIEW_BOUNDS.contains(b.position)) {
                 model.getScreenHandler().register(BALL_SPRITE.getName(), b.position, BALL_SPRITE, 0,
                         b.shift.x - 12, b.shift.y - 12);
             }
@@ -110,6 +121,9 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
                         b.velocity.y += 1;
                     }
                 }
+                if (internalCount % (animationDelay*4) == 0) {
+                    reloadCounter = Math.max(reloadCounter - 1, 0);
+                }
             }
         }
     }
@@ -143,6 +157,29 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
             return super.handleKeyEvent(keyEvent, model);
         }
         return false;
+    }
+
+    public boolean stillBallsToShoot() {
+        for (Ball b : balls) {
+            if (OUTER_BOUNDS.contains(b.position)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getScore() {
+        return MAX_BALLS - balls.size();
+    }
+
+    public boolean shootArrow(Point finalResult, Sprite arrowSprite) {
+        addArrow(finalResult, arrowSprite);
+        reloadCounter = bowToUse.getReloadSpeed();
+        return checkForHit(finalResult);
+    }
+
+    public boolean shotReady() {
+        return reloadCounter == 0;
     }
 
     private static class Ball {
