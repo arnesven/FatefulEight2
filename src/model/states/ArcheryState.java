@@ -37,6 +37,7 @@ public class ArcheryState extends GameState {
     private final Point wind;
     private ArcheryTargetSubView targetSubView;
     private Map<GameCharacter, Integer> points = new HashMap<>();
+    private List<Integer> detailedResults = new ArrayList<>();
     private int shotsPerShooter = 1;
     private Map<GameCharacter, Sprite> fletchings = null;
 
@@ -103,9 +104,12 @@ public class ArcheryState extends GameState {
             if (!points.containsKey(shooter)) {
                 points.put(shooter, 0);
             }
-            points.put(shooter, points.get(shooter) + shootArrow(shooter, result));
+            int shotResult = shootArrow(shooter, result);
+            points.put(shooter, points.get(shooter) + shotResult);
+            detailedResults.add(shotResult);
         }
-        waitForReturnSilently();
+        print("Press enter to continue.");
+        waitForReturn();
     }
 
     private int shootArrow(GameCharacter shooter, Point result) {
@@ -217,5 +221,13 @@ public class ArcheryState extends GameState {
 
     public void useFletchings(Map<GameCharacter, Sprite> fletchings) {
         this.fletchings = fletchings;
+    }
+
+    public static int getPointsForBullseye() {
+        return TARGET_POINTS[0];
+    }
+
+    public List<Integer> getDetailedResults() {
+        return detailedResults;
     }
 }
