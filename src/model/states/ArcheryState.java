@@ -4,7 +4,9 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.weapons.BowWeapon;
 import model.items.weapons.CrossbowWeapon;
+import model.items.weapons.ShortBow;
 import model.items.weapons.Weapon;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
@@ -229,5 +231,13 @@ public class ArcheryState extends GameState {
 
     public List<Integer> getDetailedResults() {
         return detailedResults;
+    }
+
+    public static BowWeapon getCharactersBowOrDefault(GameCharacter shooter) {
+        BowWeapon bowToUse = new ShortBow();
+        if (shooter.getEquipment().getWeapon() instanceof BowWeapon) {
+            bowToUse = (BowWeapon) shooter.getEquipment().getWeapon();
+        }
+        return bowToUse;
     }
 }

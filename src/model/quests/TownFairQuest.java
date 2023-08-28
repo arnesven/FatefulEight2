@@ -4,19 +4,28 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.RolfFryt;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.MarksmanClass;
 import model.classes.Skill;
+import model.items.Equipment;
 import model.items.spells.FireworksSpell;
 import model.items.spells.Spell;
+import model.items.weapons.BowWeapon;
+import model.items.weapons.CompetitionBow;
+import model.items.weapons.ShortBow;
+import model.items.weapons.YewBow;
 import model.map.UrbanLocation;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
+import model.states.ArcheryState;
 import model.states.QuestState;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.CollapsingTransition;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 import view.widget.TopText;
@@ -24,6 +33,7 @@ import view.widget.TopText;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TownFairQuest extends Quest {
     private static final String INTRO =
@@ -77,7 +87,7 @@ public class TownFairQuest extends Quest {
                         List.of(new PayOutSoloSkillCheckSubScene(1, 6, Skill.Endurance, 10,
                                 "Next, an eating contest. Any volunteers?"))),
                 new QuestScene("Shooting Contest",
-                        List.of(new PayOutSoloSkillCheckSubScene(5, 7, Skill.Bows, 12,
+                        List.of(new ArcherySubScene(5, 7,
                                 "What town fair would be complete without a bow and arrow contest? Let's enter."))));
     }
 
@@ -225,4 +235,69 @@ public class TownFairQuest extends Quest {
         return result;
     }
 
+    private static class ArcherySubScene extends QuestSubScene {
+        private final String leaderTalk;
+
+        public ArcherySubScene(int col, int row, String leaderTalk) {
+            super(col, row);
+            this.leaderTalk = leaderTalk;
+        }
+
+        @Override
+        public void drawYourself(Model model, int xPos, int yPos) {
+            Sprite sprite = SoloSkillCheckSubScene.SPRITE;
+            model.getScreenHandler().register(sprite.getName(), new Point(xPos, yPos), sprite, 1);
+        }
+
+        @Override
+        public String getDescription() {
+            return "Compete in archery contest.";
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            if (model.getParty().size() > 1) {
+                model.getParty().partyMemberSay(model, model.getParty().getLeader(), leaderTalk);
+            }
+            state.print("Who shall compete in the archery contest? ");
+            GameCharacter shooter = model.getParty().partyMemberInput(model, state, model.getParty().getPartyMember(0));
+            BowWeapon bowToUse = ArcheryState.getCharactersBowOrDefault(shooter);
+            ArcheryState archeryState = new ArcheryState(model, shooter, bowToUse, ArcheryState.SHORT_DISTANCE);
+            List<GameCharacter> opponents = List.of(
+                    new GameCharacter("Tamara", "Didriksson", Race.NORTHERN_HUMAN, Classes.MAR,
+                        PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, true),
+                        new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                            new Equipment(new CompetitionBow())),
+                    new GameCharacter("Golbert", "Volantis", Race.DARK_ELF, Classes.FOR,
+                        PortraitSubView.makeRandomPortrait(Classes.FOR, Race.DARK_ELF, false),
+                        new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                            new Equipment(new YewBow())));
+            for (GameCharacter gc : opponents) {
+                gc.setLevel(4);
+            }
+            archeryState.addNPCShooters(opponents);
+            archeryState.run(model);
+            state.print("Press enter to continue.");
+            state.waitForReturn();
+            CollapsingTransition.transition(model, state.getSubView());
+            Map<GameCharacter, Integer> points = archeryState.getPoints();
+            if (points.get(shooter) >= points.get(opponents.get(0)) && points.get(shooter) >= points.get(opponents.get(1))) {
+                model.getParty().partyMemberSay(model, shooter, "Yes! I rock!");
+                payOutFromSoloSkillCheckSubScene(model, state);
+                return getSuccessEdge();
+            }
+            model.getParty().partyMemberSay(model, shooter, "Darn! I really thought I could do it.");
+            return getSuccessEdge();
+        }
+
+        @Override
+        protected MyColors getSuccessEdgeColor() {
+            return MyColors.WHITE;
+        }
+
+        @Override
+        public String getDetailedDescription() {
+            return "Bows H";
+        }
+    }
 }

@@ -31,10 +31,7 @@ public class ArcheryRangeEvent extends DailyEventState {
                 model.getParty().addToGold(-COST_TO_PLAY);
                 print("Which party member do you want to use? ");
                 GameCharacter shooter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-                BowWeapon bowToUse = new ShortBow();
-                if (shooter.getEquipment().getWeapon() instanceof BowWeapon) {
-                    bowToUse = (BowWeapon) shooter.getEquipment().getWeapon();
-                }
+                BowWeapon bowToUse = ArcheryState.getCharactersBowOrDefault(shooter);
                 ArcheryState archeryState = new ArcheryState(model, shooter,bowToUse, ArcheryState.FAR_DISTANCE);
                 archeryState.setShots(3);
                 archeryState.run(model);
