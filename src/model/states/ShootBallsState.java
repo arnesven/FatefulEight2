@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.BowWeapon;
 import util.MyRandom;
+import view.sprites.AnimationManager;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.ShootBallsSubView;
@@ -47,7 +48,8 @@ public class ShootBallsState extends GameState {
                 shoot(model, subView);
             }
         } while (true);
-        println("Game over. You got " + subView.getScore() + " out of " + subView.MAX_BALLS + " balls.");
+        AnimationManager.unregister(this.subView);
+        println("Game over. You got " + subView.getScore() + " out of " + ShootBallsSubView.MAX_BALLS + " balls.");
         return model.getCurrentHex().getDailyActionState(model);
     }
 

@@ -31,5 +31,6 @@ public class AnimationManager {
 
     public static void unregister(Animation ani) {
         animatons.remove(ani);
+        pausableAnimations.remove(ani);
     }
 }
