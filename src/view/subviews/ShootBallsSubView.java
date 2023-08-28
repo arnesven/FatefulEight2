@@ -37,7 +37,7 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
         this.state = shootBallsState;
         this.shooter = shooter;
         this.bowToUse = bowToUse;
-        animationDelay = Math.max(4, 2 + shooter.getSpeed());
+        animationDelay = Math.max(4, 1 + shooter.getSpeed());
         reloadCounter = 0;
 
         AnimationManager.registerPausable(this);

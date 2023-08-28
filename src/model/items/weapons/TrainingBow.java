@@ -20,4 +20,9 @@ public class TrainingBow extends BowWeapon {
     public Item copy() {
         return new TrainingBow();
     }
+
+    @Override
+    public int getReloadSpeed() {
+        return 5;
+    }
 }

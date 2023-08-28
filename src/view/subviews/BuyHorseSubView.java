@@ -14,10 +14,16 @@ import java.awt.event.KeyEvent;
 
 public class BuyHorseSubView extends SubView {
     private final SubView previous;
+    private final int specialPrice;
     private boolean accepted = false;
 
-    public BuyHorseSubView(SubView previous) {
+    public BuyHorseSubView(SubView previous, int specialPrice) {
         this.previous = previous;
+        this.specialPrice = specialPrice;
+    }
+
+    public BuyHorseSubView(SubView previous) {
+        this(previous, -1);
     }
 
     @Override
@@ -44,7 +50,7 @@ public class BuyHorseSubView extends SubView {
         int textRow = horsePos.y;
         BorderFrame.drawString(model.getScreenHandler(), "Type: " + horse.getType(),
                 frameStartX + 10, textRow++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Cost: " + horse.getCost(),
+        BorderFrame.drawString(model.getScreenHandler(), "Cost: " + (specialPrice!=-1 ? specialPrice : horse.getCost()),
                 frameStartX + 10, textRow++, MyColors.WHITE, MyColors.BLUE);
         textRow++;
         String[] textParts = MyStrings.partition(horse.getInfo(), 22);

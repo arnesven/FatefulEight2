@@ -28,13 +28,13 @@ public class BuyHorseState extends GameState {
         Horse horse = model.getParty().getHorseHandler().getAvailableHorse(model);
         println(seller + ": \"We have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.\"");
         model.getTutorial().horses(model);
-        if (model.getParty().getGold() < horse.getCost()) {
+        if (model.getParty().getGold() < price) {
             leaderSay("I'd love to, but I can't afford it right now.");
         } else if (!model.getParty().canBuyMoreHorses()){
             leaderSay("I don't think we can handle more horses right now.");
         } else {
             SubView previous = model.getSubView();
-            BuyHorseSubView subView = new BuyHorseSubView(model.getSubView());
+            BuyHorseSubView subView = new BuyHorseSubView(model.getSubView(), price);
             model.setSubView(subView);
             waitForReturn();
             if (subView.didAccept()) {

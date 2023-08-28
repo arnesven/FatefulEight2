@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.BowWeapon;
+import model.items.weapons.ShortBow;
+import model.items.weapons.TrainingBow;
 import util.MyRandom;
 import view.sprites.AnimationManager;
 import view.sprites.Sprite;
@@ -90,5 +92,13 @@ public class ShootBallsState extends GameState {
 
     public void useFletching(Sprite sprite) {
         this.fletching = sprite;
+    }
+
+    public static BowWeapon getCharactersBowOrDefault(GameCharacter shooter) {
+        BowWeapon bowToUse = new TrainingBow();
+        if (shooter.getEquipment().getWeapon() instanceof BowWeapon) {
+            bowToUse = (BowWeapon) shooter.getEquipment().getWeapon();
+        }
+        return bowToUse;
     }
 }
