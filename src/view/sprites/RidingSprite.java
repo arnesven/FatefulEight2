@@ -13,8 +13,8 @@ public class RidingSprite extends LoopingSprite {
     private final AvatarSprite avatar;
     private boolean isShort = false;
 
-    public RidingSprite(GameCharacter leader, Horse horse) {
-        super("riding", "riding.png", 0, 32, 48);
+    public RidingSprite(GameCharacter leader, Horse horse, int version) {
+        super("riding", "riding.png", 0x10*version, 32, 48);
         setFrames(4);
         setColor1(MyColors.BLACK);
         setColor2(MyColors.WHITE);
@@ -23,6 +23,10 @@ public class RidingSprite extends LoopingSprite {
             this.isShort = true;
         }
         this.avatar = leader.getAvatarSprite();
+    }
+
+    public RidingSprite(GameCharacter leader, Horse horse) {
+        this(leader, horse, 0);
     }
 
     @Override
