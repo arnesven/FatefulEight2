@@ -64,9 +64,9 @@ public class HorseRaceTrack {
         }
     }
 
-    public void drawYourself(Model model, HorseRacingSubView horseRacingSubView) {
-        Point position = horseRacingSubView.getPosition();
-        int yShift = horseRacingSubView.getYShift();
+    public void drawYourself(Model model, HorseRacingSubView horseRacingSubView, HorseRacer player) {
+        Point position = player.getPosition();
+        int yShift = player.getYShift();
         for (int y = 0; y < SLICES_TO_DRAW; ++y) {
             int slice = y - HorseRacingSubView.HORSE_VERTICAL_POSITION + position.y;
             if (slice < 0) {
