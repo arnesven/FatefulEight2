@@ -17,7 +17,7 @@ public class HorseRacer {
     private final HorseRaceTrack horseRaceTrack;
     private Point position;
     private int positionShift = 0;
-    private int currentSpeed = 1;
+    private int currentSpeed = 0;
     private int accelStep = 0;
     private int laneChangeCooldown = 0;
     private int jumpCounter = 0;
@@ -106,9 +106,9 @@ public class HorseRacer {
 
     private void applyTerrain() {
         TrackTerrain currentTerrain = getCurrentTerrain();
-        if (currentSpeed > currentTerrain.getMaximumSpeed()) {
-            if (currentTerrain.getMaximumSpeed() == 0 || jumpCounter == 0) {
-                currentSpeed = currentTerrain.getMaximumSpeed();
+        if (currentSpeed > currentTerrain.getMaximumSpeed(this)) {
+            if ((currentTerrain.getMaximumSpeed(this) == 0 && !currentTerrain.canBeEntered()) || jumpCounter == 0) {
+                currentSpeed = currentTerrain.getMaximumSpeed(this);
                 accelStep = 0;
                 jumpCounter = 0;
             }

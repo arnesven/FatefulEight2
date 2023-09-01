@@ -25,7 +25,7 @@ class WaterTrackTerrain extends TrackTerrain {
     }
 
     @Override
-    public int getMaximumSpeed() {
+    public int getMaximumSpeed(HorseRacer racer) {
         return 2;
     }
 }

@@ -5,7 +5,6 @@ import model.characters.GameCharacter;
 import model.horses.Horse;
 import model.states.horserace.HorseRaceTrack;
 import model.states.horserace.HorseRacer;
-import model.states.horserace.TrackTerrain;
 import view.sprites.*;
 
 import java.awt.*;
@@ -20,6 +19,7 @@ public class HorseRacingSubView extends SubView implements Animation {
     private long internalStep = 0;
 
     private HorseRacer player;
+    private boolean animationStarted = false;
 
     public HorseRacingSubView(GameCharacter rider, Horse horse) {
         this.horse = horse;
@@ -44,8 +44,7 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Speed: " + player.getCurrentSpeed(); // + ", Strafe " + (laneChangeCooldown>0?"not ready":"READY") + ", " +
-                //(jumpCounter>0?"JUMPING":"");
+        return "Speed: " + player.getCurrentSpeed() + ", Position: " + player.getPosition().y;
     }
 
     @Override
@@ -55,6 +54,9 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     @Override
     public void stepAnimation(long elapsedTimeMs, Model model) {
+        if (!animationStarted) {
+            return;
+        }
         internalStep++;
         if (internalStep % ANIMATION_DELAY == 0) {
             player.updateYourself(model);
@@ -81,4 +83,11 @@ public class HorseRacingSubView extends SubView implements Animation {
         return super.handleKeyEvent(keyEvent, model);
     }
 
+    public void startRace() {
+        animationStarted = true;
+    }
+
+    public boolean raceIsOver() {
+        return false;
+    }
 }

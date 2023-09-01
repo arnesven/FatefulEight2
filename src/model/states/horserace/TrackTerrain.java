@@ -13,11 +13,14 @@ public abstract class TrackTerrain {
     public static TrackTerrain randomTerrain() {
         if (MyRandom.flipCoin()) {
             if (MyRandom.flipCoin()) {
-                if (MyRandom.flipCoin()) {
+                int roll = MyRandom.rollD10();
+                if (roll < 5) {
                     return new WaterTrackTerrain();
-                } else {
-                    return new ObstacleTrackTerrain();
                 }
+                if (roll < 7) {
+                    return new JumpableObstacleTrackTerrain();
+                }
+                return new ObstacleTrackTerrain();
             }
             return new PathTrackTerrain();
         }
@@ -34,7 +37,7 @@ public abstract class TrackTerrain {
         return null;
     }
 
-    public abstract int getMaximumSpeed();
+    public abstract int getMaximumSpeed(HorseRacer racer);
 
     public boolean canBeEntered() {
         return true;
