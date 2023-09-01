@@ -138,7 +138,7 @@ public class CombatSubView extends SubView {
         return false;
     }
 
-    private Sprite getInitiativeSymbol(Combatant combatant, Model model) {
+    public static Sprite getInitiativeSymbol(Combatant combatant, Model model) {
         if (model.getParty().getPartyMembers().contains(combatant)) {
             return model.getParty().getInitiativeSymbol(combatant);
         }

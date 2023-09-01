@@ -19,7 +19,7 @@ public class HorseRacingEvent extends DailyEventState {
         }
         HorseRacingSubView subView = new HorseRacingSubView(model.getParty().getPartyMember(0), horse);
         model.setSubView(subView);
-        println("Welcome to the horse race. Press enter to start!");
+        print("Welcome to the horse race. Press enter to start!");
         waitForReturn();
         subView.startRace();
         while (!subView.raceIsOver()) {

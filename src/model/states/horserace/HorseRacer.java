@@ -2,6 +2,7 @@ package model.states.horserace;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.Combatant;
 import model.horses.Horse;
 import view.sprites.RidingSprite;
 import view.sprites.Sprite;
@@ -15,6 +16,7 @@ public class HorseRacer {
     private static final int JUMP_LENGTH = 10;
 
     private final HorseRaceTrack horseRaceTrack;
+    private final GameCharacter character;
     private Point position;
     private int positionShift = 0;
     private int currentSpeed = 0;
@@ -26,6 +28,7 @@ public class HorseRacer {
 
     public HorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRaceTrack horseRaceTrack) {
         position = new Point(xStart, 0);
+        this.character = chara;
         trotSprite = new RidingSprite(chara, horse, 0);
         gallopSprite = new RidingSprite(chara, horse, 1);
         this.horseRaceTrack = horseRaceTrack;
@@ -149,5 +152,9 @@ public class HorseRacer {
         if (jumpCounter == 0) {
             jumpCounter = JUMP_LENGTH;
         }
+    }
+
+    public GameCharacter getCharacter() {
+        return character;
     }
 }

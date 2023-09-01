@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HorseRaceTrack {
     public static final int TRACK_WIDTH = 7;
-    private static final int TRACK_LENGTH = 100;
+    public static final int TRACK_LENGTH = 100;
     private static final int SLICES_TO_DRAW = 9;
     private static SideSprite SIDE_TREE = new SideSprite(2, 3);
     private static SideSprite SIDE_POLE = new SideSprite(4, 5);
