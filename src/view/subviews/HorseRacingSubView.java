@@ -12,6 +12,8 @@ import view.sprites.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HorseRacingSubView extends SubView implements Animation {
@@ -82,7 +84,22 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Speed: " + player.getCurrentSpeed() + ", Lap: " + player.getLap();
+        String extra = "";
+        if (!npcs.isEmpty()) {
+            extra = ", Place: " + findPlace();
+        }
+        return "Speed: " + player.getCurrentSpeed() + ", Lap: " + player.getLap() + extra;
+    }
+
+    private int findPlace() {
+        List<HorseRacer> racers = new ArrayList<>(npcs);
+        racers.add(player);
+        racers.sort((r1, r2) -> {
+            int left = r1.getLap() * 10000 + r1.getPosition().y * 100 + r1.getYShift();
+            int right = r2.getLap() * 10000 + r2.getPosition().y * 100 + r2.getYShift();
+            return right - left;
+        });
+        return racers.indexOf(player) + 1;
     }
 
     @Override

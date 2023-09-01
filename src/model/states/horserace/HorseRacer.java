@@ -2,6 +2,7 @@ package model.states.horserace;
 
 import model.Model;
 import model.characters.GameCharacter;;
+import model.classes.Skill;
 import model.horses.Horse;
 import util.Arithmetics;
 import util.MyRandom;
@@ -14,10 +15,9 @@ import java.awt.*;
 
 public class HorseRacer {
 
-    private static final int JUMP_LENGTH = 10;
-
     private final HorseRaceTrack horseRaceTrack;
     private final GameCharacter character;
+    private final int jumpLength;
     private Point position;
     private int positionShift = 0;
     private int currentSpeed = 0;
@@ -27,6 +27,8 @@ public class HorseRacer {
     private int lap = 1;
     private final RidingSprite gallopSprite;
     private final RidingSprite trotSprite;
+    private final int changeDelay;
+    private int strafeShift = 0;
 
     public HorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRaceTrack horseRaceTrack) {
         position = new Point(xStart, 0);
@@ -34,6 +36,8 @@ public class HorseRacer {
         trotSprite = new RidingSprite(chara, horse, 0);
         gallopSprite = new RidingSprite(chara, horse, 1);
         this.horseRaceTrack = horseRaceTrack;
+        this.changeDelay = 25 - chara.getRankForSkill(Skill.Survival) * 2;
+        this.jumpLength = 8 + chara.getRankForSkill(Skill.Survival);
         //gallopSprite.setDelay(8);
     }
 
@@ -43,7 +47,7 @@ public class HorseRacer {
         if (jumpCounter > 0) {
             spriteToUse = gallopSprite;
             spriteToUse.synch();
-            yshift = -(JUMP_LENGTH/2 - Math.abs(JUMP_LENGTH/2 - jumpCounter));
+            yshift = -(jumpLength/2 - Math.abs(jumpLength/2 - jumpCounter));
         } else {
             if (currentSpeed > 2) {
                 spriteToUse = gallopSprite;
@@ -58,12 +62,17 @@ public class HorseRacer {
         }
 
         model.getScreenHandler().register(gallopSprite.getName(), HorseRacingSubView.convertToScreen(position.x, horseVerticalPosition),
-                spriteToUse, 1, 0, yshift + shiftDiff);
+                spriteToUse, 1, strafeShift, yshift + shiftDiff);
+        if (strafeShift > 0) {
+            strafeShift -= 2;
+        } else if (strafeShift < 0) {
+            strafeShift += 2;
+        }
         Sprite effectSprite = getCurrentTerrain().getEffectSprite();
         if (effectSprite != null && jumpCounter == 0) {
             Point effectPos = HorseRacingSubView.convertToScreen(position.x, horseVerticalPosition + 1);
             model.getScreenHandler().register(effectSprite.getName(), effectPos,
-                    effectSprite, 2, 0, shiftDiff);
+                    effectSprite, 2, strafeShift, shiftDiff);
         }
     }
 
@@ -123,7 +132,7 @@ public class HorseRacer {
         if (currentSpeed == 0) {
             return 5;
         }
-        return 30;
+        return 32 - character.getRankForSkill(Skill.Survival);
     }
 
     private void applyTerrain() {
@@ -141,6 +150,7 @@ public class HorseRacer {
         int newX = Math.max(0, position.x - 1);
         if (canEnter(newX, allRacers)) {
             changeLanes(newX);
+            strafeShift = 28;
         }
     }
 
@@ -148,6 +158,7 @@ public class HorseRacer {
         int newX = Math.min(HorseRaceTrack.TRACK_WIDTH-1, position.x + 1);
         if (canEnter(newX, allRacers)) {
             changeLanes(newX);
+            strafeShift = -28;
         }
     }
 
@@ -159,7 +170,7 @@ public class HorseRacer {
         } else {
             currentSpeed = Math.max(1, currentSpeed);
         }
-        laneChangeCooldown = 20;
+        laneChangeCooldown = changeDelay;
     }
 
     private boolean canEnter(int newX, List<HorseRacer> allRacers) {
@@ -174,7 +185,7 @@ public class HorseRacer {
 
     public void possiblyJump() {
         if (jumpCounter == 0) {
-            jumpCounter = JUMP_LENGTH;
+            jumpCounter = jumpLength;
         }
     }
 

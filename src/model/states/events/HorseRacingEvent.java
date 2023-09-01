@@ -4,6 +4,9 @@ import model.Model;
 import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.states.DailyEventState;
+import sound.BackgroundMusic;
+import sound.ClientSound;
+import sound.ClientSoundManager;
 import view.subviews.HorseRacingSubView;
 
 public class HorseRacingEvent extends DailyEventState {
@@ -17,6 +20,7 @@ public class HorseRacingEvent extends DailyEventState {
         if (model.getParty().getHorseHandler().size() > 0) {
             horse = model.getParty().getHorseHandler().get(0);
         }
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.citySong);
         HorseRacingSubView subView = new HorseRacingSubView(model.getParty().getPartyMember(0), horse);
         model.setSubView(subView);
         subView.addNPC(model.getAllCharacters().get(0), HorseHandler.generateHorse());

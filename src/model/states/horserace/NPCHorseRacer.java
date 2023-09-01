@@ -8,6 +8,8 @@ import java.awt.*;
 import java.util.List;
 
 public class NPCHorseRacer extends HorseRacer {
+    private static final int LOOK_AHEAD_DISTANCE = 4;
+
     public NPCHorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRaceTrack horseRaceTrack) {
         super(xStart, chara, horse, horseRaceTrack);
     }
@@ -57,9 +59,9 @@ public class NPCHorseRacer extends HorseRacer {
 
     private int countResistance(int x, int y, int shift, List<HorseRacer> allRaces) {
         int resist = 0;
-        for (int count = 1; count < 5; ++count) {
+        for (int count = 1; count < LOOK_AHEAD_DISTANCE + 1; ++count) {
 
-            resist += getHorseRaceTrack().getTerrain(new Point(x, y+count), shift).getResistance(this) * (5 - count);
+            resist += getHorseRaceTrack().getTerrain(new Point(x, y+count), shift).getResistance(this) * (LOOK_AHEAD_DISTANCE + 1 - count);
             for (HorseRacer r : allRaces) {
                 if (r.getPosition().y == y+count && r.getPosition().x == x) {
                     resist += 10 * (10 - count);
