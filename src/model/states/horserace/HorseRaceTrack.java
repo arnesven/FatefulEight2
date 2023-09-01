@@ -54,7 +54,8 @@ public class HorseRaceTrack {
     private void fixMultipleObstacles(List<TrackTerrain> slice) {
         int count = 0;
         for (int i = 0; i < slice.size(); ++i) {
-            if (slice.get(i) instanceof ObstacleTrackTerrain) {
+            if (slice.get(i) instanceof ObstacleTrackTerrain ||
+                    slice.get(i) instanceof JumpableObstacleTrackTerrain) {
                 count++;
                 if (count == 2) {
                     count = 0;

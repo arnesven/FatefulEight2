@@ -5,11 +5,13 @@ import model.characters.GameCharacter;
 import model.horses.Horse;
 import model.states.horserace.HorseRaceTrack;
 import model.states.horserace.HorseRacer;
+import model.states.horserace.NPCHorseRacer;
 import view.MyColors;
 import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HorseRacingSubView extends SubView implements Animation {
@@ -24,18 +26,34 @@ public class HorseRacingSubView extends SubView implements Animation {
     private long internalStep = 0;
 
     private HorseRacer player;
+    private List<NPCHorseRacer> npcs = new ArrayList<>();
+    private List<HorseRacer> allRacers = new ArrayList<>();
     private boolean animationStarted = false;
 
     public HorseRacingSubView(GameCharacter rider, Horse horse) {
         this.horse = horse;
         this.player = new HorseRacer(3, rider, horse, horseRaceTrack);
+        allRacers.add(player);
         AnimationManager.registerPausable(this);
     }
 
     @Override
     protected void drawArea(Model model) {
         horseRaceTrack.drawYourself(model, this, player);
-        player.drawHorse(model, HORSE_VERTICAL_POSITION);
+        player.drawHorse(model, HORSE_VERTICAL_POSITION, 0);
+        for (HorseRacer npc : npcs) {
+            int yPos = HORSE_VERTICAL_POSITION +
+                    (npc.getPosition().y + npc.getLap()*HorseRaceTrack.TRACK_LENGTH) -
+                    (player.getPosition().y + player.getLap()*HorseRaceTrack.TRACK_LENGTH);
+            int shiftDiff = npc.getYShift() - player.getYShift();
+            if (0 < yPos && yPos < 8) {
+                npc.drawHorse(model, yPos, shiftDiff);
+            } else if (yPos == 0 && shiftDiff > 0) {
+                npc.drawHorse(model, yPos, shiftDiff);
+            } else if (yPos == 8 && shiftDiff < 0) {
+                npc.drawHorse(model, yPos, shiftDiff);
+            }
+        }
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+4, blackBlock, 20);
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_MAX-4, Y_MAX, blackBlock, 20);
         drawBanner(model);
@@ -48,10 +66,12 @@ public class HorseRacingSubView extends SubView implements Animation {
         }
         model.getScreenHandler().register(BANNER_ICON.getName(),
                 new Point(X_OFFSET + (X_MAX - X_OFFSET)/2, Y_OFFSET), BANNER_ICON, 23);
-        Sprite symbol = CombatSubView.getInitiativeSymbol(player.getCharacter(), model);
-        int halfPos = (player.getPosition().y + HorseRaceTrack.TRACK_LENGTH / 2) % HorseRaceTrack.TRACK_LENGTH;
-        int xPos = (halfPos * (X_MAX - X_OFFSET)) / HorseRaceTrack.TRACK_LENGTH;
-        model.getScreenHandler().register(symbol.getName(), new Point(X_OFFSET + xPos, Y_OFFSET+2), symbol, 22);
+        for (HorseRacer racer : allRacers) {
+            Sprite symbol = CombatSubView.getInitiativeSymbol(racer.getCharacter(), model);
+            int halfPos = (racer.getPosition().y + HorseRaceTrack.TRACK_LENGTH / 2) % HorseRaceTrack.TRACK_LENGTH;
+            int xPos = (halfPos * (X_MAX - X_OFFSET)) / HorseRaceTrack.TRACK_LENGTH;
+            model.getScreenHandler().register(symbol.getName(), new Point(X_OFFSET + xPos, Y_OFFSET + 2), symbol, 22);
+        }
     }
 
 
@@ -62,7 +82,7 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Speed: " + player.getCurrentSpeed() + ", Position: " + player.getPosition().y;
+        return "Speed: " + player.getCurrentSpeed() + ", Lap: " + player.getLap();
     }
 
     @Override
@@ -77,7 +97,14 @@ public class HorseRacingSubView extends SubView implements Animation {
         }
         internalStep++;
         if (internalStep % ANIMATION_DELAY == 0) {
-            player.updateYourself(model);
+            player.updateYourself(allRacers);
+            for (HorseRacer npc : npcs) {
+                npc.updateYourself(allRacers);
+            }
+        }
+
+        for (NPCHorseRacer npc : npcs) {
+            npc.steer(allRacers);
         }
     }
 
@@ -87,11 +114,11 @@ public class HorseRacingSubView extends SubView implements Animation {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            player.possiblyMoveLeft();
+            player.possiblyMoveLeft(allRacers);
             return true;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            player.possiblyMoveRight();
+            player.possiblyMoveRight(allRacers);
             return true;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -103,10 +130,21 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     public void startRace() {
         animationStarted = true;
+        player.setSpeed(1);
+        for (HorseRacer npc : npcs){
+            npc.setSpeed(1);
+        }
     }
 
     public boolean raceIsOver() {
         return false;
+    }
+
+    public void addNPC(GameCharacter chara, Horse horse) {
+        int[] positionsForNpcSize = new int[]{2, 4, 1, 5, 0, 6};
+        NPCHorseRacer npc = new NPCHorseRacer(positionsForNpcSize[npcs.size()], chara, horse, horseRaceTrack);
+        this.npcs.add(npc);
+        allRacers.add(0, npc);
     }
 
     private static class BannerSprite extends Sprite {

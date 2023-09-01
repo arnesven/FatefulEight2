@@ -43,4 +43,7 @@ public abstract class TrackTerrain {
         return true;
     }
 
+    public int getResistance(HorseRacer racer) {
+        return 10 - getMaximumSpeed(racer);
+    }
 }
