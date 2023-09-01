@@ -1,6 +1,6 @@
 package model.states.events;
 
-import model.ItemDeck;
+import model.items.ItemDeck;
 import model.Model;
 import model.actions.Loan;
 import model.characters.GameCharacter;
@@ -8,7 +8,6 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.classes.PaladinClass;
 import model.enemies.Enemy;
 import model.enemies.TournamentEnemy;
 import model.items.Equipment;
@@ -20,12 +19,8 @@ import model.map.CastleLocation;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.RecruitState;
-import model.states.TravelBySeaState;
-import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
-import view.subviews.SubView;
-import view.subviews.TournamentSubView;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
 package model.horses;
 
-import model.Inventory;
+import model.items.Inventory;
 import model.items.Item;
 import view.ScreenHandler;
 import view.sprites.Sprite;

@@ -1,6 +1,6 @@
 package model.states.dailyaction;
 
-import model.ItemDeck;
+import model.items.ItemDeck;
 import model.Model;
 import model.items.Item;
 import model.items.Prevalence;

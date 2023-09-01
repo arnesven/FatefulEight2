@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.ItemDeck;
 import model.map.WorldBuilder;
 import model.ruins.RuinsDungeon;
 import model.tutorial.TutorialHandler;

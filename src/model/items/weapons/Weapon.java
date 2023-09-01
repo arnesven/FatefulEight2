@@ -1,6 +1,6 @@
 package model.items.weapons;
 
-import model.Inventory;
+import model.items.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;

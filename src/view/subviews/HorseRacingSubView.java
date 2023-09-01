@@ -21,7 +21,6 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     private HorseRacer player;
 
-
     public HorseRacingSubView(GameCharacter rider, Horse horse) {
         this.horse = horse;
         this.player = new HorseRacer(3, rider, horse, horseRaceTrack);

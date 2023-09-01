@@ -1,6 +1,6 @@
 package model.items.designs;
 
-import model.Inventory;
+import model.items.Inventory;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.clothing.Clothing;

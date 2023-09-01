@@ -1,6 +1,5 @@
 package model.items;
 
-import model.Inventory;
 import model.items.potions.Potion;
 import view.MyColors;
 import view.sprites.ItemSprite;

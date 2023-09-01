@@ -1,4 +1,4 @@
-package model;
+package model.items;
 
 import model.items.*;
 import model.items.accessories.*;

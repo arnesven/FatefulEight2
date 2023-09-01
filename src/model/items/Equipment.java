@@ -1,6 +1,5 @@
 package model.items;
 
-import model.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -14,7 +13,6 @@ import model.items.weapons.Weapon;
 import model.states.CombatEvent;
 import util.MyPair;
 import view.ScreenHandler;
-import view.SimpleMessageView;
 import view.sprites.Sprite;
 
 import java.io.Serializable;

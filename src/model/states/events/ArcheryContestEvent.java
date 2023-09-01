@@ -1,6 +1,6 @@
 package model.states.events;
 
-import model.ItemDeck;
+import model.items.ItemDeck;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.GoblinCharacter;

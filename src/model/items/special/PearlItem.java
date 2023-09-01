@@ -1,6 +1,6 @@
 package model.items.special;
 
-import model.Inventory;
+import model.items.Inventory;
 import model.items.Item;
 import view.MyColors;
 import view.sprites.ItemSprite;

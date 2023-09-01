@@ -9,6 +9,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.horses.HorseHandler;
+import model.items.Inventory;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.states.GameState;

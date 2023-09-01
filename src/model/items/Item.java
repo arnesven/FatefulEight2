@@ -1,14 +1,11 @@
 package model.items;
 
-import model.Inventory;
 import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
 import view.AnalyzeDialog;
-import view.GameView;
 import view.ScreenHandler;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;

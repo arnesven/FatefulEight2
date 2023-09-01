@@ -1,10 +1,7 @@
 package model.states.dailyaction;
 
-import model.ItemDeck;
 import model.Model;
 import model.items.Item;
-import model.items.Prevalence;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;

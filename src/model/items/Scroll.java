@@ -1,11 +1,8 @@
 package model.items;
 
-import model.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
-import model.items.spells.AlchemySpell;
 import model.items.spells.Spell;
-import model.items.weapons.Weapon;
 import view.*;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;

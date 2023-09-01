@@ -1,14 +1,12 @@
 package model.items.accessories;
 
-import model.Inventory;
+import model.items.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.items.ArmorItem;
 import model.items.EquipableItem;
 import model.items.Item;
 import model.items.spells.Spell;
-import util.MyPair;
 import util.MyStrings;
 import view.AnalyzeArmorDialog;
 import view.AnalyzeDialog;
