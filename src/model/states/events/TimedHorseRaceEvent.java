@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.races.Race;
@@ -33,7 +34,12 @@ public class TimedHorseRaceEvent extends DailyEventState {
         }
         portraitSay("Alright then! The record time is " + model.getParty().getHorseHandler().getTimedRaceRecord() +
                 " seconds. If you can beat that, I'll give you 20 gold.");
-        HorseRacingEvent horseRace = new HorseRacingEvent(model, model.getParty().getHorseHandler().get(0));
+        GameCharacter chosen = model.getParty().getPartyMember(0);
+        if (model.getParty().size() > 1) {
+            print("Which party member should ride in the race?");
+            chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+        }
+        HorseRacingEvent horseRace = new HorseRacingEvent(model, chosen, model.getParty().getHorseHandler().get(0));
         horseRace.setTrack(HorseRaceTrack.TIME_TRACK);
         horseRace.setLaps(1);
         horseRace.setTimeModeEnabled(true);

@@ -22,10 +22,10 @@ public class HorseRacingEvent extends DailyEventState {
     private boolean npcsAdded = false;
     private int track;
 
-    public HorseRacingEvent(Model model, Horse horse) {
+    public HorseRacingEvent(Model model, GameCharacter racer, Horse horse) {
         super(model);
         this.horse = horse;
-        subView = new HorseRacingSubView(model.getParty().getPartyMember(0), horse);
+        subView = new HorseRacingSubView(racer, horse);
     }
 
     @Override
@@ -33,6 +33,7 @@ public class HorseRacingEvent extends DailyEventState {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.citySong);
         CollapsingTransition.transition(model, subView);
         print("Welcome to the horse race. Try to come in first place after two laps. Press enter to start!");
+        model.getTutorial().horseRacing(model);
         waitForReturn();
         subView.startRace();
         while (!subView.raceIsOver(targetlaps)) {

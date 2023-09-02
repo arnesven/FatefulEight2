@@ -85,7 +85,6 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new TimedHorseRaceEvent(model); /*
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
                     new MuggingEvent(model),
@@ -113,7 +112,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new TimedHorseRaceEvent(model)
             ));
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     @Override

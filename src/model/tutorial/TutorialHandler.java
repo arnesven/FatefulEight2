@@ -2,6 +2,7 @@ package model.tutorial;
 
 import model.Model;
 import model.states.DailyEventState;
+import model.states.events.HorseRacingEvent;
 import model.states.events.PeskyCrowEvent;
 import view.help.*;
 
@@ -292,6 +293,13 @@ public class TutorialHandler implements Serializable {
         runOnce("enemyattacks", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialEnemyAttacks(model.getView()));
+        });
+    }
+
+    public void horseRacing(Model model) {
+        runOnce("horseracing", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialHorseRacing(model.getView()));
         });
     }
 
