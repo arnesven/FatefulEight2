@@ -15,6 +15,8 @@ public class HorseRaceTrack {
     public static final int TRACK_WIDTH = 7;
     public static final int TRACK_LENGTH = 100;
     private static final int SLICES_TO_DRAW = 9;
+    public static int TIME_TRACK = 1;
+    public static int RANDOM_TRACK = 0;
     private static SideSprite SIDE_TREE = new SideSprite(2, 3);
     private static SideSprite SIDE_POLE = new SideSprite(4, 5);
     private static SideSprite SIDE_POLE_UL = new SideSprite(5, 5);
@@ -27,20 +29,38 @@ public class HorseRaceTrack {
     private static Sprite32x32 BANNER_RIGHT = new Sprite32x32("bannerright", "riding.png", 0x62,
             MyColors.BLACK, BANNER_COLOR, MyColors.PINK, MyColors.BEIGE);
     private List<List<TrackTerrain>> track;
+    private static final String[] timeTrackTemplate = new String[]{
+            "GGGGGGGGGGGGWWWWWWWWWWWWWWWGGGGGGGGPPPJPPJPPWPPGGGGGGGGGPPGPPGPPWPPGGGGGGGGGGPPPPPPGGGGGGGGGGGGGGGGG",
+            "GGGGGGGGGPPPPPPPPGGGGGGGGGGGPPPPPPPPGGGOGGGPPPPPPGPPPPPPPGGGGGGGGGGGGPGGGGGGGGGGGGGPPPGGGGGGGGGGPPPP",
+            "PPPPPPPPPPGGGGGGPPPPPPGPPPPPPGGGGGGPPPPGGGGWWWWGPPPGPPGGGGOOGGGGGGGGPPPPJPPPPGGGGGGGGGPPGGGGGGPPGPPP",
+            "PPPPOGGGGGGGGGGGGGGPGGPGGGPGPPGGGGGGGGWWWWWWWWWWWWWGGPPPGGOOGGGGGGGGGGOGGGGGGGGGGGGGGGGGGGGGPPGGGGPP",
+            "PPPGPWPGGGGGGPPPPPGGGGGGGGGGGPPPGGGGGPPPPPPPPPGGGWWWWWGPPPGGPPPPWPPPOPPPGGGGGGOOGGGGGGGGPPPPGWJPPPPP",
+            "GGGGGGGGPPPPPGGGGGGGGGGGGGGGGGGPPGGGGGGGGGGPPPPPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGOGWOGGGGGGJJOJGPPPPPGGG",
+            "GGGGGGGOWWWGOGGGGGGGGGGGGGGWWWWWWWWWWWGGGGGGGGPPPPJPPPPJPPPPGGGGGGGGGGGGGGPPPPPJPPPGGGGGGPPPGGGGGGGG"};
 
-    public HorseRaceTrack() {
+    public HorseRaceTrack(int trackType) {
         track = new ArrayList<>();
-        track.add(fullPathSlice());
-        track.add(fullPathSlice());
-        for (int i = 2; i < TRACK_LENGTH-1; i++) {
-            List<TrackTerrain> slice = new ArrayList<>();
-            for (int j = TRACK_WIDTH; j > 0; --j) {
-                slice.add(TrackTerrain.randomTerrain());
+        if (trackType == RANDOM_TRACK) {
+            track.add(fullPathSlice());
+            track.add(fullPathSlice());
+            for (int i = 2; i < TRACK_LENGTH - 1; i++) {
+                List<TrackTerrain> slice = new ArrayList<>();
+                for (int j = TRACK_WIDTH; j > 0; --j) {
+                    slice.add(TrackTerrain.randomTerrain());
+                }
+                fixMultipleObstacles(slice);
+                track.add(slice);
             }
-            fixMultipleObstacles(slice);
-            track.add(slice);
+            track.add(fullPathSlice());
+        } else {
+            for (int row = 0; row < timeTrackTemplate[0].length(); ++row) {
+                List<TrackTerrain> slice = new ArrayList<>();
+                for (String s : timeTrackTemplate) {
+                    slice.add(TrackTerrain.makeTerrain(s.charAt(row)));
+                }
+                track.add(slice);
+            }
         }
-        track.add(fullPathSlice());
     }
 
     private List<TrackTerrain> fullPathSlice() {

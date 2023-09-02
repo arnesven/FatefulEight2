@@ -35,6 +35,6 @@ public class RoukonTown extends TownLocation {
 
     @Override
     public Point getCareerOfficePosition() {
-        return new Point(5, 4);
+        return new Point(5, 3);
     }
 }

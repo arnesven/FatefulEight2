@@ -19,6 +19,8 @@ public class HorseRacingEvent extends DailyEventState {
     private final HorseRacingSubView subView;
     private boolean didWin;
     private int targetlaps = 1;
+    private boolean npcsAdded = false;
+    private int track;
 
     public HorseRacingEvent(Model model, Horse horse) {
         super(model);
@@ -40,18 +42,21 @@ public class HorseRacingEvent extends DailyEventState {
         int place = subView.getPlayerPlacement();
         subView.stopRace();
         print("The race is over! ");
-        if (place == 1) {
-            println("Congratulations, you came in 1st place!");
-            didWin = true;
-        } else {
-            println("You finished with position " + place + ".");
-            didWin = false;
+        if (npcsAdded) {
+            if (place == 1) {
+                println("Congratulations, you came in 1st place!");
+                didWin = true;
+            } else {
+                println("You finished with position " + place + ".");
+                didWin = false;
+            }
         }
         print("Press enter to continue.");
         waitForReturn();
     }
 
     public void addNPC(GameCharacter gameCharacter) {
+        npcsAdded = true;
         subView.addNPC(gameCharacter, HorseHandler.generateHorse());
     }
 
@@ -61,5 +66,17 @@ public class HorseRacingEvent extends DailyEventState {
 
     public void setLaps(int i) {
         targetlaps = i;
+    }
+
+    public void setTimeModeEnabled(boolean b) {
+        subView.setTimeModeEnabled(b);
+    }
+
+    public int getTimeResultSeconds() {
+        return subView.getTimeResult();
+    }
+
+    public void setTrack(int track) {
+        subView.setTrack(track);
     }
 }

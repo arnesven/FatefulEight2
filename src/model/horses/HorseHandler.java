@@ -18,6 +18,7 @@ public class HorseHandler extends ArrayList<Horse> {
     private int ponies = 0;
     private int lastBoughtHorseOnDay = -1;
     private Horse nextAvailableHorse = generateHorse();
+    private int timedRaceRecord = 60;
 
     public void addHorse(Horse horse) {
         this.add(horse);
@@ -128,5 +129,13 @@ public class HorseHandler extends ArrayList<Horse> {
 
     public void newAvailableHorse() {
         nextAvailableHorse = generateHorse();
+    }
+
+    public int getTimedRaceRecord() {
+        return timedRaceRecord;
+    }
+
+    public void setTimedRaceRecord(int time) {
+        timedRaceRecord = time;
     }
 }

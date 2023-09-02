@@ -4,8 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;;
 import model.classes.Skill;
 import model.horses.Horse;
-import util.Arithmetics;
-import util.MyRandom;
 import view.sprites.RidingSprite;
 import view.sprites.Sprite;
 import view.subviews.HorseRacingSubView;
@@ -15,9 +13,9 @@ import java.awt.*;
 
 public class HorseRacer {
 
-    private final HorseRaceTrack horseRaceTrack;
     private final GameCharacter character;
     private final int jumpLength;
+    private final HorseRacingSubView subView;
     private Point position;
     private int positionShift = 0;
     private int currentSpeed = 0;
@@ -30,12 +28,12 @@ public class HorseRacer {
     private final int changeDelay;
     private int strafeShift = 0;
 
-    public HorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRaceTrack horseRaceTrack) {
+    public HorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRacingSubView subView) {
         position = new Point(xStart, 0);
         this.character = chara;
         trotSprite = new RidingSprite(chara, horse, 0);
         gallopSprite = new RidingSprite(chara, horse, 1);
-        this.horseRaceTrack = horseRaceTrack;
+        this.subView = subView;
         this.changeDelay = 25 - chara.getRankForSkill(Skill.Survival) * 2;
         this.jumpLength = 8 + chara.getRankForSkill(Skill.Survival);
         //gallopSprite.setDelay(8);
@@ -77,7 +75,7 @@ public class HorseRacer {
     }
 
     private TrackTerrain getCurrentTerrain() {
-        return horseRaceTrack.getTerrain(position, positionShift);
+        return subView.getTrack().getTerrain(position, positionShift);
     }
 
     public int getCurrentSpeed() {
@@ -180,7 +178,7 @@ public class HorseRacer {
             }
         }
         return jumpCounter == 0 &&
-                horseRaceTrack.getTerrain(new Point(newX, position.y), positionShift).canBeEntered();
+                subView.getTrack().getTerrain(new Point(newX, position.y), positionShift).canBeEntered();
     }
 
     public void possiblyJump() {
@@ -198,7 +196,7 @@ public class HorseRacer {
     }
 
     protected HorseRaceTrack getHorseRaceTrack() {
-        return horseRaceTrack;
+        return subView.getTrack();
     }
 
     protected int getLaneChangeCooldown() {

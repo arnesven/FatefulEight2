@@ -3,17 +3,17 @@ package view.subviews;
 import model.Model;
 import model.characters.GameCharacter;
 import model.horses.Horse;
+import model.states.events.HorseRacingEvent;
 import model.states.horserace.HorseRaceTrack;
 import model.states.horserace.HorseRacer;
 import model.states.horserace.NPCHorseRacer;
+import view.BorderFrame;
 import view.MyColors;
 import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class HorseRacingSubView extends SubView implements Animation {
@@ -24,17 +24,19 @@ public class HorseRacingSubView extends SubView implements Animation {
     private static final long ANIMATION_DELAY = 3;
     public static final int HORSE_VERTICAL_POSITION = 2;
     private final Horse horse;
-    private HorseRaceTrack horseRaceTrack = new HorseRaceTrack();
+    private HorseRaceTrack horseRaceTrack = new HorseRaceTrack(HorseRaceTrack.RANDOM_TRACK);
     private long internalStep = 0;
 
     private HorseRacer player;
     private List<NPCHorseRacer> npcs = new ArrayList<>();
     private List<HorseRacer> allRacers = new ArrayList<>();
     private boolean animationStarted = false;
+    private boolean timeMode;
+    private long racingTime = 0;
 
     public HorseRacingSubView(GameCharacter rider, Horse horse) {
         this.horse = horse;
-        this.player = new HorseRacer(3, rider, horse, horseRaceTrack);
+        this.player = new HorseRacer(3, rider, horse, this);
         allRacers.add(player);
     }
 
@@ -87,7 +89,18 @@ public class HorseRacingSubView extends SubView implements Animation {
         if (!npcs.isEmpty()) {
             extra = ", Place: " + findPlace();
         }
+        if (timeMode) {
+            extra += ", " + getTimeString();
+        }
         return "Speed: " + player.getCurrentSpeed() + ", Lap: " + player.getLap() + extra;
+    }
+
+    public String getTimeString() {
+        int time = (int)(racingTime);
+        int min = time / (60 * 1000);
+        int sec = (time - min*60*1000) / 1000;
+        int hund = (time - min*60*1000 - sec*1000) / 10;
+        return String.format("Time: %02d:%02d:%02d", min, sec, hund);
     }
 
     private int findPlace() {
@@ -111,6 +124,7 @@ public class HorseRacingSubView extends SubView implements Animation {
         if (!animationStarted) {
             return;
         }
+        racingTime += elapsedTimeMs;
         internalStep++;
         if (internalStep % ANIMATION_DELAY == 0) {
             player.updateYourself(allRacers);
@@ -168,13 +182,29 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     public void addNPC(GameCharacter chara, Horse horse) {
         int[] positionsForNpcSize = new int[]{2, 4, 1, 5, 0, 6};
-        NPCHorseRacer npc = new NPCHorseRacer(positionsForNpcSize[npcs.size()], chara, horse, horseRaceTrack);
+        NPCHorseRacer npc = new NPCHorseRacer(positionsForNpcSize[npcs.size()], chara, horse, this);
         this.npcs.add(npc);
         allRacers.add(0, npc);
     }
 
     public int getPlayerPlacement() {
         return findPlace();
+    }
+
+    public void setTimeModeEnabled(boolean b) {
+        timeMode = b;
+    }
+
+    public int getTimeResult() {
+        return (int)(Math.ceil(racingTime / 1000.0));
+    }
+
+    public void setTrack(int track) {
+        horseRaceTrack = new HorseRaceTrack(track);
+    }
+
+    public HorseRaceTrack getTrack() {
+        return horseRaceTrack;
     }
 
     private static class BannerSprite extends Sprite {

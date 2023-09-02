@@ -3,6 +3,7 @@ package model.states.horserace;
 import model.characters.GameCharacter;
 import model.horses.Horse;
 import util.MyRandom;
+import view.subviews.HorseRacingSubView;
 
 import java.awt.*;
 import java.util.List;
@@ -10,8 +11,8 @@ import java.util.List;
 public class NPCHorseRacer extends HorseRacer {
     private static final int LOOK_AHEAD_DISTANCE = 4;
 
-    public NPCHorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRaceTrack horseRaceTrack) {
-        super(xStart, chara, horse, horseRaceTrack);
+    public NPCHorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRacingSubView subView) {
+        super(xStart, chara, horse, subView);
     }
 
     @Override

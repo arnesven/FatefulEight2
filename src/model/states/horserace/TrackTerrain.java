@@ -46,4 +46,20 @@ public abstract class TrackTerrain {
     public int getResistance(HorseRacer racer) {
         return 10 - getMaximumSpeed(racer);
     }
+
+    public static TrackTerrain makeTerrain(char c) {
+        switch (c) {
+            case 'P':
+                return new PathTrackTerrain();
+            case 'G':
+                return new GrassTrackTerrain();
+            case 'W':
+                return new WaterTrackTerrain();
+            case 'J':
+                return new JumpableObstacleTrackTerrain();
+            case 'O':
+                return new ObstacleTrackTerrain();
+        }
+        throw new IllegalStateException("Error in building horse race track " + c);
+    }
 }
