@@ -46,7 +46,8 @@ public class PlainsHex extends WorldHex {
                     new CairnEvent(model),
                     new WatchtowerEvent(model),
                     new HuntingEvent(model),
-                    new EnchantressEvent(model)
+                    new EnchantressEvent(model),
+                    new FarmersHorseRaceEvent(model)
             ));
         }
         return new NoEventState(model);

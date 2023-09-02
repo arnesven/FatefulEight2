@@ -78,10 +78,10 @@ public class HorseRaceTrack {
             if (y < SLICES_TO_DRAW-1 || yShift > 15) {
                 SideSprite left = SIDE_TREE;
                 SideSprite right = SIDE_TREE;
-                if (slice == 1) {
+                if (slice == TRACK_LENGTH-1) {
                     left = SIDE_POLE;
                     right = SIDE_POLE;
-                } else if (slice == 0) {
+                } else if (slice == TRACK_LENGTH-2) {
                     left = SIDE_POLE_UL;
                     right = SIDE_POLE_UR;
                 }
@@ -91,7 +91,7 @@ public class HorseRaceTrack {
                     Sprite spr = track.get(slice).get(x).getSprite();
                     drawAt(model.getScreenHandler(), horseRacingSubView, spr, x, y+1, 0, 0, -yShift);
                 }
-                if (slice == 0) {
+                if (slice == TRACK_LENGTH-2) {
                     drawAt(model.getScreenHandler(), horseRacingSubView, BANNER_LEFT, 0, y+1, 2, 0, -yShift);
                     for (int i = 1; i < 6; ++i) {
                         drawAt(model.getScreenHandler(), horseRacingSubView, BANNER_CENTER, i, y + 1, 2, 0, -yShift);
@@ -107,7 +107,7 @@ public class HorseRaceTrack {
     private void drawAt(ScreenHandler screenHandler, HorseRacingSubView horseRacingSubView,
                         Sprite sprite, int x, int y, int prio, int xshift, int yshift) {
         screenHandler.register(sprite.getName(),
-                horseRacingSubView.convertToScreen(x, y), sprite, prio, xshift, yshift);
+                HorseRacingSubView.convertToScreen(x, y), sprite, prio, xshift, yshift);
     }
 
     public TrackTerrain getTerrain(Point position, int shift) {

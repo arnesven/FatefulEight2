@@ -36,7 +36,6 @@ public class HorseRacingSubView extends SubView implements Animation {
         this.horse = horse;
         this.player = new HorseRacer(3, rider, horse, horseRaceTrack);
         allRacers.add(player);
-        AnimationManager.registerPausable(this);
     }
 
     @Override
@@ -146,6 +145,7 @@ public class HorseRacingSubView extends SubView implements Animation {
     }
 
     public void startRace() {
+        AnimationManager.registerPausable(this);
         animationStarted = true;
         player.setSpeed(1);
         for (HorseRacer npc : npcs){
@@ -153,8 +153,17 @@ public class HorseRacingSubView extends SubView implements Animation {
         }
     }
 
-    public boolean raceIsOver() {
-        return false;
+    public void stopRace() {
+        AnimationManager.unregister(this);
+        animationStarted = false;
+        player.setSpeed(0);
+        for (HorseRacer npc : npcs){
+            npc.setSpeed(0);
+        }
+    }
+
+    public boolean raceIsOver(int targetLaps) {
+        return player.getLap() > targetLaps;
     }
 
     public void addNPC(GameCharacter chara, Horse horse) {
@@ -162,6 +171,10 @@ public class HorseRacingSubView extends SubView implements Animation {
         NPCHorseRacer npc = new NPCHorseRacer(positionsForNpcSize[npcs.size()], chara, horse, horseRaceTrack);
         this.npcs.add(npc);
         allRacers.add(0, npc);
+    }
+
+    public int getPlayerPlacement() {
+        return findPlace();
     }
 
     private static class BannerSprite extends Sprite {
