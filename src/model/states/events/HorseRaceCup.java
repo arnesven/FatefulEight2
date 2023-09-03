@@ -17,10 +17,7 @@ import util.MyRandom;
 import util.MyStrings;
 import view.subviews.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HorseRaceCup extends TournamentEvent {
     private final CastleLocation castle;
@@ -115,6 +112,7 @@ public class HorseRaceCup extends TournamentEvent {
         CollapsingTransition.transition(model, prevSubView);
         showOfficial();
         portraitSay("You should hurry over to the track, the first race is about to begin!");
+        List<Map<GameCharacter, Integer>> allPoints = new ArrayList<>();
         for (int round = 1; round <= 3; ++round) {
             showAnnouncer();
             if (round == 1) {
@@ -149,7 +147,9 @@ public class HorseRaceCup extends TournamentEvent {
             println("You head over to the score board, which has already been updated.");
             waitForReturnSilently();
             prevSubView = model.getSubView();
-            horseRaceCupSubView.addPoints(makePointResult(event.getPlacements()));
+            Map<GameCharacter, Integer> points = makePointResult(event.getPlacements());
+            allPoints.add(points);
+            horseRaceCupSubView.addPoints(points);
             model.setSubView(horseRaceCupSubView);
             waitForReturnSilently();
             CollapsingTransition.transition(model, prevSubView);
@@ -157,6 +157,61 @@ public class HorseRaceCup extends TournamentEvent {
                 println("You head back to the racing track.");
             }
         }
+        List<GameCharacter> finalPlacements = findFinalPlacements(allPoints);
+        System.out.println("Cup results:");
+        for (int i = 0; i < 7; ++i) {
+            System.out.println(" " + (i+1) + ": " + finalPlacements.get(i).getName());
+        }
+        portraitSay("In third place, we have " + finalPlacements.get(2).getName() + ".");
+        portraitSay("In second place, we have " + finalPlacements.get(1).getName() + ".");
+        portraitSay("And finally, our grand champion of the horse race cup, is " + finalPlacements.get(0).getName() +
+                "! Congratulations, you can collect your winnings at the booth.");
+        if (finalPlacements.get(0) == chosenRider) {
+            partyMemberSay(chosenRider, "Yaaaay!");
+            println("The official at the booth smiles at you.");
+            showOfficial();
+            portraitSay("Here's your prize money! Spend it well.");
+            model.getParty().addToGold(100);
+            println("The party receives 100 gold!");
+            if (sponsored) {
+                println("You are about to leave the racing grounds when the mysterious sponsor shows up out of nowhere.");
+                showSponsor();
+                portraitSay("Well done... Now please hand me my share.");
+                print("Let the mysterious sponsor have 50 gold? (Y/N) ");
+                if (yesNoInput()) {
+                    leaderSay("Oh okay...");
+                    model.getParty().addToGold(-50);
+                    portraitSay("Much obliged! Toodeloo!");
+                    println("The mysterious sponsor then disappears...");
+                    leaderSay("How odd...");
+                } else {
+                    leaderSay("No, I think we'll hang on to it.");
+                    portraitSay("Oh okay. You can just pay the Brotherhood back another time then.");
+                    addToEntryFeeToLoan(model);
+                    addToEntryFeeToLoan(model);
+                    println("The mysterious sponsor then disappears...");
+                    leaderSay("Wait, did she just say 'the Brotherhood'?");
+                }
+                println("Bewildered, you leve the racing grounds and soon forget about the strange encounter.");
+            }
+        } else {
+            leaderSay("Well, you can't win every time. Let's focus on something else.");
+            println("The party heads back to the castle, trying not to think about the prize money you almost got your hands on.");
+        }
+    }
+
+    private List<GameCharacter> findFinalPlacements(List<Map<GameCharacter, Integer>> allPoints) {
+        Map<GameCharacter, Integer> totalPoints = new HashMap<>();
+        for (GameCharacter gc : allPoints.get(0).keySet()) {
+            int sum = 0;
+            for (Map<GameCharacter, Integer> map : allPoints) {
+                sum += map.get(gc);
+            }
+            totalPoints.put(gc, sum);
+        }
+        List<GameCharacter> placements = new ArrayList<>(allPoints.get(0).keySet());
+        placements.sort((c1, c2) -> totalPoints.get(c2) - totalPoints.get(c1));
+        return placements;
     }
 
     private Horse generateNonPony() {

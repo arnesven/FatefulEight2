@@ -21,7 +21,7 @@ public class NPCHorseRacer extends HorseRacer {
         if (getCurrentSpeed() == 0) {
             return 10;
         }
-        return 27 - getCharacter().getRankForSkill(Skill.Survival);
+        return 25 - getCharacter().getRankForSkill(Skill.Survival);
     }
 
     @Override

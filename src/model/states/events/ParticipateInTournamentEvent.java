@@ -202,6 +202,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         portraitSay("Certainly. The Brotherhood regularly lends money to those who are in need. " +
                 "You can find us at taverns in towns and castles.");
         super.addToEntryFeeToLoan(model);
+        super.addToEntryFeeToLoan(model);
         println("The mysterious stranger just smiles, then he disappears.");
         leaderSay("Wait... what did we just agree to?");
     }

@@ -48,7 +48,7 @@ public class HorseRacer {
         if (jumpCounter > 0) {
             spriteToUse = gallopSprite;
             spriteToUse.synch();
-            int jumpHeight = (int)(2.0 * (jumpLength/2 - Math.abs(jumpLength/2 - jumpCounter)));
+            int jumpHeight = (int)(3.0 * (jumpLength/2 - Math.abs(jumpLength/2 - jumpCounter)));
             yshift = -jumpHeight;
         } else {
             if (currentSpeed > 2) {
@@ -164,7 +164,7 @@ public class HorseRacer {
 
     public void possiblyMoveLeft(List<HorseRacer> allRacers) {
         int newX = Math.max(0, position.x - 1);
-        if (canEnter(newX, allRacers)) {
+        if (canEnter(newX, allRacers) && strafeShift == 0) {
             changeLanes(newX);
             strafeShift = 28;
         }
@@ -172,7 +172,7 @@ public class HorseRacer {
 
     public void possiblyMoveRight(List<HorseRacer> allRacers) {
         int newX = Math.min(HorseRaceTrack.TRACK_WIDTH-1, position.x + 1);
-        if (canEnter(newX, allRacers)) {
+        if (canEnter(newX, allRacers) && strafeShift == 0) {
             changeLanes(newX);
             strafeShift = -28;
         }
