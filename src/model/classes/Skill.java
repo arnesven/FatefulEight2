@@ -1,7 +1,7 @@
 package model.classes;
 
 public enum Skill implements Comparable<Skill> {
-    Acrobatics("Acrobatics", "acrobatic and athletic activities, like climbing, jumping, swimming, tumbling, running and crawling.\n\nSpecifically this skill is used in combat when the party is overrun and a character is moving from front formation to back."),       // 12
+    Acrobatics("Acrobatics", "acrobatic and athletic activities, like climbing, jumping, swimming, tumbling, running and crawling.\n\nSpecifically this skill is used in combat to avoid opportunity attacks when a character is moving from front formation to back."),       // 12
     Axes("Axes", "handling all types of axes, both during common work and in combat."),                   // 1
     Blades("Blades", "handling and fighting with all types of bladed weapons, from daggers to claymores."),               // 3
     BluntWeapons("Blunt Weapons", "handling and fighting with blunt weapons, like clubs, maces, hammers, flails and staffs."),  // 0

@@ -254,15 +254,13 @@ public class CombatEvent extends DailyEventState {
 
     private void checkForOpportunityAttacks(Model model) {
         for (GameCharacter backMover : backMovers) {
-            if (frontRowIsOverrun(model)) {
-                SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, backMover, Skill.Acrobatics, 7, 0, 0);
-                if (result.isSuccessful()) {
-                    println(backMover.getFirstName() + " avoided opportunity attack while moving back.");
-                } else {
-                    println(backMover.getFirstName() + " took 1 damage from opportunity attack while moving to back row.");
-                    backMover.addToHP(-1);
-                    addFloatyDamage(backMover, 1, false);
-                }
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, backMover, Skill.Acrobatics, 7, 0, 0);
+            if (result.isSuccessful()) {
+                println(backMover.getFirstName() + " avoided opportunity attack while moving back.");
+            } else {
+                println(backMover.getFirstName() + " took 1 damage from opportunity attack while moving to back row.");
+                backMover.addToHP(-1);
+                addFloatyDamage(backMover, 1, false);
             }
         }
     }

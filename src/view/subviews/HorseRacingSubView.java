@@ -2,6 +2,8 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.horses.Horse;
 import model.states.events.HorseRacingEvent;
 import model.states.horserace.HorseRaceTrack;
@@ -166,10 +168,20 @@ public class HorseRacingSubView extends SubView implements Animation {
     public void startRace() {
         AnimationManager.registerPausable(this);
         animationStarted = true;
-        player.setSpeed(1);
-        for (HorseRacer npc : npcs){
-            npc.setSpeed(1);
+        for (HorseRacer racer : allRacers) {
+            SkillCheckResult result = racer.getCharacter().testSkill(Skill.Survival);
+            racer.setSpeed(getStartSpeedFromSkillResult(result.getModifiedRoll()));
         }
+    }
+
+    private int getStartSpeedFromSkillResult(int modifiedRoll) {
+        if (modifiedRoll < 6) {
+            return 0;
+        }
+        if (modifiedRoll < 10) {
+            return 1;
+        }
+        return 2;
     }
 
     public void stopRace() {

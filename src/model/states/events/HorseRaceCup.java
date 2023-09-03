@@ -7,6 +7,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.horses.Horse;
 import model.horses.HorseHandler;
+import model.horses.Pony;
 import model.map.CastleLocation;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -103,7 +104,7 @@ public class HorseRaceCup extends TournamentEvent {
             horses.put(chosenRider, model.getParty().getHorseHandler().get(0));
         }
         for (GameCharacter gc : riders) {
-            horses.put(gc, HorseHandler.generateHorse());
+            horses.put(gc, generateNonPony());
         }
         riders.add(MyRandom.randInt(riders.size()), chosenRider);
         waitForReturnSilently();
@@ -156,6 +157,14 @@ public class HorseRaceCup extends TournamentEvent {
                 println("You head back to the racing track.");
             }
         }
+    }
+
+    private Horse generateNonPony() {
+        Horse horse = null;
+        do {
+            horse = HorseHandler.generateHorse();
+        } while (horse instanceof Pony);
+        return horse;
     }
 
     private Map<GameCharacter, Integer> makePointResult(List<HorseRacer> placements) {

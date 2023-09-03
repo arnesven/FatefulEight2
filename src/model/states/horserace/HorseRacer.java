@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class HorseRacer {
 
-    private static final int JUMP_COOLDOWN = 20;
+    private final int jumpCooldownMax;
     private final GameCharacter character;
     private final int jumpLength;
     private final HorseRacingSubView subView;
@@ -38,6 +38,7 @@ public class HorseRacer {
         this.subView = subView;
         this.changeDelay = 25 - chara.getRankForSkill(Skill.Survival) * 2;
         this.jumpLength = 8 + chara.getRankForSkill(Skill.Survival);
+        this.jumpCooldownMax = 22 - chara.getRankForSkill(Skill.Survival) * 2;
         //gallopSprite.setDelay(8);
     }
 
@@ -47,7 +48,8 @@ public class HorseRacer {
         if (jumpCounter > 0) {
             spriteToUse = gallopSprite;
             spriteToUse.synch();
-            yshift = -(jumpLength/2 - Math.abs(jumpLength/2 - jumpCounter));
+            int jumpHeight = (int)(2.0 * (jumpLength/2 - Math.abs(jumpLength/2 - jumpCounter)));
+            yshift = -jumpHeight;
         } else {
             if (currentSpeed > 2) {
                 spriteToUse = gallopSprite;
@@ -200,7 +202,12 @@ public class HorseRacer {
     public void possiblyJump() {
         if (jumpCounter == 0 && jumpCooldown == 0) {
             jumpCounter = jumpLength;
-            jumpCooldown = JUMP_COOLDOWN;
+            jumpCooldown = jumpCooldownMax;
+            if (getCurrentTerrain().getMaximumSpeed(this) == 0 && getCurrentTerrain().canBeEntered()) {
+                positionShift += 5; // Jump over a log.
+                currentSpeed = 1;
+                jumpCounter = jumpLength / 2 + 2;
+            }
         }
     }
 
