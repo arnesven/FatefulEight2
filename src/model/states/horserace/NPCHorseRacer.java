@@ -1,6 +1,7 @@
 package model.states.horserace;
 
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.horses.Horse;
 import util.MyRandom;
 import view.subviews.HorseRacingSubView;
@@ -20,7 +21,14 @@ public class NPCHorseRacer extends HorseRacer {
         if (getCurrentSpeed() == 0) {
             return 5;
         }
-        return 20;
+        return 25 - getCharacter().getRankForSkill(Skill.Survival);
+    }
+
+    @Override
+    protected void autoJump() {
+        if (getCharacter().testSkill(Skill.Survival, 4).isSuccessful()) {
+            possiblyJump();
+        }
     }
 
     public void steer(List<HorseRacer> allRacers) {

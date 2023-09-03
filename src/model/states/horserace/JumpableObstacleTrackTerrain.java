@@ -24,4 +24,9 @@ public class JumpableObstacleTrackTerrain extends TrackTerrain {
         }
         return 8;
     }
+
+    @Override
+    public int getResistance(HorseRacer racer) {
+        return 5;
+    }
 }

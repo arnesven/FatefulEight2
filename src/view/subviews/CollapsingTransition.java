@@ -25,15 +25,15 @@ public class CollapsingTransition extends TransitionView {
 
 
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+(STEPS_START-steps),
-                blackBlock, 3);
+                blackBlock, 33);
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_MAX-(STEPS_START-steps), Y_MAX,
-                blackBlock, 3);
+                blackBlock, 33);
 
         if (steps < STEPS_START - 1) {
             model.getScreenHandler().fillForeground(X_OFFSET, X_OFFSET+(STEPS_START-steps-1), Y_OFFSET, Y_MAX,
-                    blackBlock, 3);
+                    blackBlock, 33);
             model.getScreenHandler().fillForeground(X_MAX-(STEPS_START-steps-1), X_MAX, Y_OFFSET, Y_MAX,
-                    blackBlock, 3);
+                    blackBlock, 33);
         }
     }
 

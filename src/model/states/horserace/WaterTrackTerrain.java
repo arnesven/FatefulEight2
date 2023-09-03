@@ -28,4 +28,9 @@ class WaterTrackTerrain extends TrackTerrain {
     public int getMaximumSpeed(HorseRacer racer) {
         return 2;
     }
+
+    @Override
+    public int getResistance(HorseRacer racer) {
+        return 5;
+    }
 }

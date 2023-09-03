@@ -87,7 +87,7 @@ public class HorseRacingSubView extends SubView implements Animation {
     protected String getUnderText(Model model) {
         String extra = "";
         if (!npcs.isEmpty()) {
-            extra = ", Place: " + findPlace();
+            extra = ", Place: " + getPlayerPlacement();
         }
         if (timeMode) {
             extra += ", " + getTimeString();
@@ -103,7 +103,12 @@ public class HorseRacingSubView extends SubView implements Animation {
         return String.format("Time: %02d:%02d:%02d", min, sec, hund);
     }
 
-    private int findPlace() {
+    private int findPlace(HorseRacer forWhom) {
+        List<HorseRacer> racers = getPlacements();
+        return racers.indexOf(forWhom) + 1;
+    }
+
+    public List<HorseRacer> getPlacements() {
         List<HorseRacer> racers = new ArrayList<>(npcs);
         racers.add(player);
         racers.sort((r1, r2) -> {
@@ -111,7 +116,7 @@ public class HorseRacingSubView extends SubView implements Animation {
             int right = r2.getLap() * 10000 + r2.getPosition().y * 100 + r2.getYShift();
             return right - left;
         });
-        return racers.indexOf(player) + 1;
+        return racers;
     }
 
     @Override
@@ -188,7 +193,7 @@ public class HorseRacingSubView extends SubView implements Animation {
     }
 
     public int getPlayerPlacement() {
-        return findPlace();
+        return findPlace(player);
     }
 
     public void setTimeModeEnabled(boolean b) {

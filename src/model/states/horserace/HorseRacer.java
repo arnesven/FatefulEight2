@@ -13,6 +13,7 @@ import java.awt.*;
 
 public class HorseRacer {
 
+    private static final int JUMP_COOLDOWN = 20;
     private final GameCharacter character;
     private final int jumpLength;
     private final HorseRacingSubView subView;
@@ -27,6 +28,7 @@ public class HorseRacer {
     private final RidingSprite trotSprite;
     private final int changeDelay;
     private int strafeShift = 0;
+    private int jumpCooldown = 0;
 
     public HorseRacer(int xStart, GameCharacter chara, Horse horse, HorseRacingSubView subView) {
         position = new Point(xStart, 0);
@@ -95,6 +97,9 @@ public class HorseRacer {
         accelerate();
         laneChangeCooldown = Math.max(0, laneChangeCooldown-1);
         jumpCounter = Math.max(0, jumpCounter-1);
+        if (!inTheAir()) {
+            jumpCooldown = Math.max(0, jumpCooldown-1);
+        }
         applyTerrain();
         for (HorseRacer npc : allRacers) {
             if (npc.getPosition().x == position.x && npc.getPosition().y == position.y && npc != this) {
@@ -128,20 +133,31 @@ public class HorseRacer {
 
     protected int getAccelerationDelay() {
         if (currentSpeed == 0) {
-            return 5;
+            return 15;
         }
         return 32 - character.getRankForSkill(Skill.Survival);
     }
 
-    private void applyTerrain() {
+    protected void applyTerrain() {
         TrackTerrain currentTerrain = getCurrentTerrain();
-        if (currentSpeed > currentTerrain.getMaximumSpeed(this)) {
-            if ((currentTerrain.getMaximumSpeed(this) == 0 && !currentTerrain.canBeEntered()) || jumpCounter == 0) {
+        int maxSpeed = currentTerrain.getMaximumSpeed(this);
+        if (currentSpeed > maxSpeed) {
+            boolean blockingObstacle = maxSpeed == 0 && !currentTerrain.canBeEntered();
+            if (!blockingObstacle && maxSpeed < 3) {
+                autoJump();
+            }
+            if (blockingObstacle || !inTheAir()) {
                 currentSpeed = currentTerrain.getMaximumSpeed(this);
                 accelStep = 0;
                 jumpCounter = 0;
             }
         }
+    }
+
+    protected void autoJump() { }
+
+    private boolean inTheAir() {
+        return jumpCounter > 0;
     }
 
     public void possiblyMoveLeft(List<HorseRacer> allRacers) {
@@ -182,8 +198,9 @@ public class HorseRacer {
     }
 
     public void possiblyJump() {
-        if (jumpCounter == 0) {
+        if (jumpCounter == 0 && jumpCooldown == 0) {
             jumpCounter = jumpLength;
+            jumpCooldown = JUMP_COOLDOWN;
         }
     }
 

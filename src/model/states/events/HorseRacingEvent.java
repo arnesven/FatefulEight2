@@ -5,14 +5,17 @@ import model.characters.GameCharacter;
 import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.states.DailyEventState;
+import model.states.horserace.HorseRacer;
 import sound.BackgroundMusic;
 import sound.ClientSound;
 import sound.ClientSoundManager;
+import util.MyStrings;
 import view.subviews.CollapsingTransition;
 import view.subviews.HorseRacingSubView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HorseRacingEvent extends DailyEventState {
     private final Horse horse;
@@ -32,7 +35,8 @@ public class HorseRacingEvent extends DailyEventState {
     protected void doEvent(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.citySong);
         CollapsingTransition.transition(model, subView);
-        print("Welcome to the horse race. Try to come in first place after two laps. Press enter to start!");
+        print("Welcome to the horse race. Try to come in first place after " + MyStrings.numberWord(targetlaps) +
+                " laps. Press enter to start!");
         model.getTutorial().horseRacing(model);
         waitForReturn();
         subView.startRace();
@@ -56,9 +60,13 @@ public class HorseRacingEvent extends DailyEventState {
         waitForReturn();
     }
 
-    public void addNPC(GameCharacter gameCharacter) {
+    public void addNPC(GameCharacter gameCharacter, Horse horse) {
         npcsAdded = true;
-        subView.addNPC(gameCharacter, HorseHandler.generateHorse());
+        subView.addNPC(gameCharacter, horse);
+    }
+
+    public void addNPC(GameCharacter gameCharacter) {
+        addNPC(gameCharacter, HorseHandler.generateHorse());
     }
 
     public boolean didWin() {
@@ -79,5 +87,9 @@ public class HorseRacingEvent extends DailyEventState {
 
     public void setTrack(int track) {
         subView.setTrack(track);
+    }
+
+    public List<HorseRacer> getPlacements() {
+        return subView.getPlacements();
     }
 }

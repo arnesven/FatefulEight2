@@ -10,6 +10,11 @@ public class MyStrings {
             "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
             "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
             "twenty-one", "twenty-two", "twenty-three", "twenty-four");
+    private static final List<String> NTH_WORDS = List.of(
+            "zeroth", "first", "second", "third", "fourth", "fifth", "sixth",
+            "seventh", "eighth", "ninth", "tenth", "eleventh", "twelvth", "thirteenth",
+            "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth", "twentieth",
+            "twenty-first", "twenty-second", "twenty-third", "twenty-fourth");
 
     public static String[] partition(String text, int maxWidth) {
         if (text.length() >= maxWidth) {
@@ -58,6 +63,10 @@ public class MyStrings {
 
     public static String numberWord(int num) {
         return NUM_WORDS.get(num);
+    }
+
+    public static String nthWord(int num) {
+        return NTH_WORDS.get(num);
     }
 
     public static String capitalize(String name) {
