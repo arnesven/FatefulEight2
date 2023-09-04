@@ -27,6 +27,9 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     protected static String getHigherTierPrefix(int tier) {
+        if (tier > 4) {
+            tier = 4;
+        }
         return TIER_PREFIXES[tier-1];
     }
 
