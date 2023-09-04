@@ -10,19 +10,35 @@ import view.sprites.Sprite;
 
 public class HealthPotion extends Potion {
     private static final Sprite SPRITE = new ItemSprite(13, 7, MyColors.WHITE, MyColors.DARK_RED);
+    private static final Sprite[] higherTierSprites = new ItemSprite[]{
+            new ItemSprite(10, 6, MyColors.WHITE, MyColors.DARK_RED),
+            new ItemSprite(11, 6, MyColors.WHITE, MyColors.DARK_RED),
+            new ItemSprite(12, 6, MyColors.WHITE, MyColors.DARK_RED),
+            new ItemSprite(13, 6, MyColors.WHITE, MyColors.DARK_RED),
+    };
+
+    private int healingAmount = 5;
+    private final Sprite sprite;
 
     public HealthPotion() {
         super("Health Potion", 10);
+        sprite = SPRITE;
+    }
+
+    protected HealthPotion(int tier) {
+        super(getPrefixForTier(tier) + " Health Potion", ((tier*2)+1)*10);
+        healingAmount = 5 + tier*3;
+        sprite = getHigherTierSprite(tier);
     }
 
     @Override
     protected Sprite getSprite() {
-        return SPRITE;
+        return sprite;
     }
 
     @Override
     public String getShoppingDetails() {
-        return ", Restores 5 HP of one party member.";
+        return ", Restores " + healingAmount + " HP of one party member.";
     }
 
     @Override
@@ -33,7 +49,7 @@ public class HealthPotion extends Potion {
     @Override
     public String useYourself(Model model, GameCharacter gc) {
         int hpBefore = gc.getHP();
-        gc.addToHP(5);
+        gc.addToHP(healingAmount);
         return gc.getName() + " recovers " + (gc.getHP() - hpBefore) + " health!";
     }
 
@@ -45,5 +61,34 @@ public class HealthPotion extends Potion {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.common;
+    }
+
+    @Override
+    public boolean supportsHigherTier() {
+        return true;
+    }
+
+    @Override
+    public Item makeHigherTierCopy(int tier) {
+        return new HealthPotion(tier);
+    }
+
+    private Sprite getHigherTierSprite(int tier) {
+        if (tier > 4) {
+            tier = 4;
+        }
+        return higherTierSprites[tier-1];
+    }
+
+    private static String getPrefixForTier(int tier) {
+        switch (tier) {
+            case 1:
+                return "Greater";
+            case 2:
+                return "Superior";
+            case 3:
+                return "Premium";
+        }
+        return "Extreme";
     }
 }
