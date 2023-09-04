@@ -5,20 +5,21 @@ import model.items.Item;
 import model.items.spells.Spell;
 import util.MyPair;
 import view.sprites.Sprite;
-import view.sprites.SuperiorItemSprite;
+import view.sprites.HigherTierItemSprite;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SuperiorAccessory extends Accessory {
+public class HigherTierAccessory extends Accessory {
     private static final int COST_MULTIPLIER = 3;
     private final Accessory inner;
-    private final SuperiorItemSprite sprite;
+    private final HigherTierItemSprite sprite;
+    private final int tier;
 
-    public SuperiorAccessory(Accessory inner) {
+    public HigherTierAccessory(Accessory inner, int tier) {
         super("Superior " + inner.getName(), inner.getCost() * COST_MULTIPLIER);
         this.inner = inner;
-        this.sprite = new SuperiorItemSprite(inner.getSpriteForHigherTier());
+        this.sprite = new HigherTierItemSprite(inner.getSpriteForHigherTier(tier), tier);
+        this.tier = tier;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class SuperiorAccessory extends Accessory {
 
     @Override
     public Item copy() {
-        return new SuperiorAccessory((Accessory)inner.copy());
+        return new HigherTierAccessory((Accessory)inner.copy(), tier);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class SuperiorAccessory extends Accessory {
     @Override
     public int getAP() {
         if (inner.getAP() > 0) {
-            return inner.getAP() + 1;
+            return inner.getAP() + tier;
         }
         return 0;
     }
@@ -57,14 +58,14 @@ public class SuperiorAccessory extends Accessory {
 
     public int getHealthBonus() {
         if (inner.getHealthBonus() > 0) {
-            return inner.getHealthBonus() + 2;
+            return inner.getHealthBonus() + 2*tier;
         }
         return 0;
     }
 
     public int getSPBonus() {
         if (inner.getSPBonus() > 0) {
-            return inner.getSPBonus() + 1;
+            return inner.getSPBonus() + 1*tier;
         }
         return 0;
     }
@@ -72,7 +73,7 @@ public class SuperiorAccessory extends Accessory {
     @Override
     public int getSpeedModifier() {
         if (inner.getSpeedModifier() > 0) {
-            return inner.getSpeedModifier() + 2;
+            return inner.getSpeedModifier() + 2*tier;
         }
         return 0;
     }
@@ -83,7 +84,7 @@ public class SuperiorAccessory extends Accessory {
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
         List<MyPair<Skill, Integer>> bonuses = inner.getSkillBonuses();
         for (MyPair<Skill, Integer> pair : bonuses) {
-            pair.second += 1;
+            pair.second += 1*tier;
         }
         return bonuses;
     }

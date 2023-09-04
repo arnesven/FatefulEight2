@@ -181,4 +181,13 @@ public abstract class GameState {
         model.getTutorial().attitudes(model);
         waitForReturn();
     }
+
+    public static double calculateAverageLevel(Model model) {
+        double averageLevel = 0.0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            averageLevel += gc.getLevel();
+        }
+        averageLevel /= model.getParty().size();
+        return averageLevel;
+    }
 }

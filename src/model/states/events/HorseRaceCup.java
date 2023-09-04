@@ -9,14 +9,12 @@ import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.horses.Pony;
 import model.items.Equipment;
-import model.items.accessories.ComfyShoes;
 import model.items.accessories.SuedeBoots;
 import model.items.clothing.JustClothes;
-import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.ShortSword;
 import model.map.CastleLocation;
 import model.races.Race;
-import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.RecruitState;
 import model.states.horserace.HorseRacer;
 import util.MyRandom;
@@ -285,7 +283,7 @@ public class HorseRaceCup extends TournamentEvent {
             String lastName = lastNames.remove(MyRandom.randInt(lastNames.size()));
             GameCharacter gc = new GameCharacter(firstName, lastName, race, cls, portrait,
                     makeRandomClassSet(cls));
-            gc.setLevel((int)Math.ceil(RecruitState.calculateAverageLevel(getModel())));
+            gc.setLevel((int)Math.ceil(GameState.calculateAverageLevel(getModel())));
             riders.add(gc);
         }
         return riders;

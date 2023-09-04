@@ -17,12 +17,17 @@ import java.util.List;
 public abstract class Item implements Serializable, Comparable<Item> {
 
     public static final Sprite EMPTY_ITEM_SPRITE = new ItemSprite(0xF, 0);
+    private static final String[] TIER_PREFIXES = new String[]{"Finer", "Superior", "Premium", "Exquisite"};
     private final String name;
     private int cost;
 
     public Item(String name, int cost) {
         this.name = name;
         this.cost = cost;
+    }
+
+    protected static String getHigherTierPrefix(int tier) {
+        return TIER_PREFIXES[tier-1];
     }
 
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
@@ -94,11 +99,11 @@ public abstract class Item implements Serializable, Comparable<Item> {
         return false;
     }
 
-    public Item makeHigherTierCopy() {
+    public Item makeHigherTierCopy(int tier) {
         throw new IllegalStateException("Higher Tier not implemented for this item: " + getName());
     }
 
-    public Sprite getSpriteForHigherTier() {
+    public Sprite getSpriteForHigherTier(int tier) {
         return getSprite();
     }
 

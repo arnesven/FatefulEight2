@@ -18,7 +18,7 @@ import model.items.weapons.*;
 import model.map.CastleLocation;
 import model.races.Race;
 import model.states.DailyEventState;
-import model.states.RecruitState;
+import model.states.GameState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -155,7 +155,7 @@ public class TournamentEvent extends DailyEventState {
             GameCharacter fighter = new GameCharacter(name.firstName, name.lastName, race, selectedClass, app,
                     new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
                     generateEquipmentFor(selectedClass));
-            fighter.setLevel((int)Math.ceil(RecruitState.calculateAverageLevel(model)));
+            fighter.setLevel((int)Math.ceil(GameState.calculateAverageLevel(model)));
             result.add(fighter);
         }
         return result;

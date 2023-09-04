@@ -1,6 +1,5 @@
 package model.items;
 
-import model.items.*;
 import model.items.accessories.*;
 import model.items.clothing.*;
 import model.items.designs.CraftingDesign;
@@ -17,7 +16,8 @@ import java.util.List;
 
 public class ItemDeck extends ArrayList<Item> {
 
-    private static final double LOW_HIGHER_TIER_CHANCE = 0.05;
+    private int standardTier = 0;
+    private double higherTierChance = 0.05;
 
     public ItemDeck() {
         this.addAll(allItems());
@@ -31,11 +31,15 @@ public class ItemDeck extends ArrayList<Item> {
             Item it;
             do {
                 it = MyRandom.sample(source);
-            } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified || (isHigherTier && !it.supportsHigherTier()));
+            } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified);
             if (isHigherTier && it.supportsHigherTier()) {
-                drawn.add(it.makeHigherTierCopy());
+                drawn.add(it.makeHigherTierCopy(standardTier+1));
             } else {
-                drawn.add(it.copy());
+                if (standardTier > 0 && it.supportsHigherTier()) {
+                    drawn.add(it.makeHigherTierCopy(standardTier));
+                } else {
+                    drawn.add(it.copy());
+                }
             }
         }
         return drawn;
@@ -50,11 +54,11 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public List<Item> draw(int count, Prevalence prevalence) {
-        return draw(this, count, prevalence, LOW_HIGHER_TIER_CHANCE);
+        return draw(this, count, prevalence, higherTierChance);
     }
 
     public List<Item> draw(int count) {
-        return draw(count, Prevalence.unspecified, LOW_HIGHER_TIER_CHANCE);
+        return draw(count, Prevalence.unspecified, higherTierChance);
     }
 
     public Spell getRandomSpell() {
@@ -80,7 +84,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public Item getRandomItem(double higherTierChance) { return draw(1, higherTierChance).get(0); }
 
-    public Item getRandomItem() { return getRandomItem(LOW_HIGHER_TIER_CHANCE); }
+    public Item getRandomItem() { return getRandomItem(higherTierChance); }
 
     private static Collection<? extends Item> allItems() {
         List<Item> allItems = new ArrayList<>();
@@ -272,4 +276,16 @@ public class ItemDeck extends ArrayList<Item> {
                 new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(), new TwinKukris());
     }
 
+    public void setStandardItemTier(int averageLevel) {
+        int newStandard = averageLevel / 6;
+        double newChance = ((averageLevel % 6)*2 + 1) * 0.05;
+        if (newStandard != standardTier) {
+            System.out.println("New standard item tier! Tier " + newStandard);
+            standardTier = newStandard;
+        }
+        if (newChance != higherTierChance) {
+            System.out.println("New higher item tier chance! Chance " + newChance);
+            higherTierChance = newChance;
+        }
+    }
 }

@@ -3,8 +3,6 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.StandardCombatLoot;
-import model.journal.StoryPart;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.DailyEventState;
@@ -158,7 +156,7 @@ public class HelpWillisQuest extends MainQuest {
             println("Press enter to continue.");
             waitForReturn();
             GameCharacter willis = model.getMainStory().getWillisCharacter();
-            willis.setLevel((int)Math.ceil(RecruitState.calculateAverageLevel(model)));
+            willis.setLevel((int)Math.ceil(GameState.calculateAverageLevel(model)));
             RecruitState recruit = new RecruitState(model, List.of(willis));
             recruit.run(model);
             removePortraitSubView(model);

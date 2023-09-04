@@ -11,10 +11,7 @@ import model.items.Item;
 import model.items.weapons.*;
 import model.map.CastleLocation;
 import model.races.Race;
-import model.states.ArcheryState;
-import model.states.RecruitState;
-import model.states.ShootBallsState;
-import model.states.ShopState;
+import model.states.*;
 import util.MyRandom;
 import util.MyStrings;
 import view.sprites.Sprite;
@@ -427,7 +424,7 @@ public class ArcheryContestEvent extends TournamentEvent {
                 PortraitSubView.makeRandomPortrait(Classes.BRD, Race.DWARF, false), noClasses, randomBow()));
         result.add(new GameCharacter("Esmeralda", "Vix", Race.DARK_ELF, Classes.THF,
                 PortraitSubView.makeRandomPortrait(Classes.THF, Race.DARK_ELF, true), noClasses, randomBow()));
-        int lvl = (int)Math.round(RecruitState.calculateAverageLevel(model));
+        int lvl = (int)Math.round(GameState.calculateAverageLevel(model));
         for (GameCharacter chara : result) {
             chara.setLevel(lvl);
         }

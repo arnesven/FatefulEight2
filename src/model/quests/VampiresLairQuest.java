@@ -165,7 +165,7 @@ public class VampiresLairQuest extends MainQuest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             this.caidCharacter = model.getMainStory().getCaidCharacter();
-            caidCharacter.setLevel((int)Math.ceil(RecruitState.calculateAverageLevel(model)));
+            caidCharacter.setLevel((int)Math.ceil(GameState.calculateAverageLevel(model)));
             state.println("Caid: \"Wow, that's a lot of thralls, and they're coming straight for us. " +
                     "I really don't want to hurt them but it seems like we won't even be able to take a swing at " +
                     "the vampire before we cut some of them down.\"");
@@ -296,7 +296,7 @@ public class VampiresLairQuest extends MainQuest {
 
     private void possiblyRecruitCaid(Model model, QuestState state) {
         GameCharacter caid = model.getMainStory().getCaidCharacter();
-        caid.setLevel((int) Math.ceil(RecruitState.calculateAverageLevel(model)));
+        caid.setLevel((int) Math.ceil(GameState.calculateAverageLevel(model)));
         RecruitState recruit = new RecruitState(model, List.of(caid));
         recruit.run(model);
         if (model.getParty().getPartyMembers().contains(caid)) {

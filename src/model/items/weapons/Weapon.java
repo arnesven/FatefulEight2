@@ -139,8 +139,8 @@ public abstract class Weapon extends EquipableItem {
     }
 
     @Override
-    public Item makeHigherTierCopy() {
-        return new SuperiorWeapon((Weapon)copy());
+    public Item makeHigherTierCopy(int tier) {
+        return new HigherTierWeapon((Weapon)copy(), tier);
     }
 
     public int getCriticalTarget() {

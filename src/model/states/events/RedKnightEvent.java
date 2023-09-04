@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.RedKnightCharacter;
 import model.enemies.RedKnightEnemy;
 import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.RecruitState;
 
 import java.util.List;
@@ -110,7 +111,7 @@ public class RedKnightEvent extends DailyEventState {
         }
         println("You do your best to dress the knights wounds, even though he protests wildly when you try to remove his armor.");
         redKnightChar.addToHP(-redKnightChar.getMaxHP()+3);
-        redKnightChar.setLevel((int)Math.max(1, Math.floor(RecruitState.calculateAverageLevel(model))));
+        redKnightChar.setLevel((int)Math.max(1, Math.floor(GameState.calculateAverageLevel(model))));
         portraitSay("Thank you for helping me. I owe you an immense debt...");
         leaderSay("Oh no, don't you say it...");
         portraitSay("How can I ever repay you?");

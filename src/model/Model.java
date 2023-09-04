@@ -300,6 +300,7 @@ public class Model {
         log.addAnimated("\n- DAY " + gameData.day + " -\n");
         gameData.party.setRecruitmentPersistence(null);
         gameData.party.getHorseHandler().newAvailableHorse();
+        gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
     }
 
     public void saveToFile(String filename) {

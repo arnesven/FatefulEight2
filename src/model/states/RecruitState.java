@@ -7,14 +7,10 @@ import model.characters.*;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
-import model.tutorial.TutorialHandler;
 import util.MyPair;
 import util.MyRandom;
-import view.subviews.ArrowMenuSubView;
 import view.subviews.RecruitSubView;
-import view.subviews.SubView;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -229,15 +225,6 @@ public class RecruitState extends GameState {
             texts.add("");
         }
         return new MyPair<>(sum, MyRandom.sample(texts));
-    }
-
-    public static double calculateAverageLevel(Model model) {
-        double averageLevel = 0.0;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            averageLevel += gc.getLevel();
-        }
-        averageLevel /= model.getParty().size();
-        return averageLevel;
     }
 
     private String recruitableNames() {

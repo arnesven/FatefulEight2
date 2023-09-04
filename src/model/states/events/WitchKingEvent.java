@@ -11,10 +11,7 @@ import model.ruins.DungeonMonster;
 import model.ruins.DungeonRoom;
 import model.ruins.FinalDungeonLevel;
 import model.ruins.RuinsDungeon;
-import model.states.DailyEventState;
-import model.states.ExploreRuinsState;
-import model.states.RecruitState;
-import model.states.SpellCastException;
+import model.states.*;
 import util.MyPair;
 
 import java.awt.*;
@@ -72,7 +69,7 @@ public class WitchKingEvent extends DailyEventState {
             model.getParty().partyMemberSay(model, gc, "Adventuring, killing monsters, traveling... anything that we happen to fancy.");
             portraitSay("Would it be to presumptuous of me to ask to join you in your travels?");
             waitForReturn();
-            witchKingChar.setLevel((int)Math.max(1, Math.floor(RecruitState.calculateAverageLevel(model))));
+            witchKingChar.setLevel((int)Math.max(1, Math.floor(GameState.calculateAverageLevel(model))));
             RecruitState recruitState = new RecruitState(model, List.of(witchKingChar));
             recruitState.run(model);
             if (model.getParty().getPartyMembers().contains(witchKingChar)) {

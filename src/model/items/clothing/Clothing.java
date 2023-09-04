@@ -6,7 +6,7 @@ import model.characters.GameCharacter;
 import model.items.ArmorItem;
 import model.items.EquipableItem;
 import model.items.Item;
-import model.items.SuperiorClothing;
+import model.items.HigherTierClothing;
 import view.AnalyzeArmorDialog;
 import view.AnalyzeDialog;
 
@@ -72,7 +72,7 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     }
 
     @Override
-    public Item makeHigherTierCopy() {
-        return new SuperiorClothing((Clothing)copy());
+    public Item makeHigherTierCopy(int tier) {
+        return new HigherTierClothing((Clothing)copy(), tier);
     }
 }

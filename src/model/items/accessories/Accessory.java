@@ -86,7 +86,7 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     }
 
     @Override
-    public Item makeHigherTierCopy() {
-        return new SuperiorAccessory((Accessory)copy());
+    public Item makeHigherTierCopy(int tier) {
+        return new HigherTierAccessory((Accessory)copy(), tier);
     }
 }
