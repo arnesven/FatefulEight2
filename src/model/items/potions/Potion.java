@@ -10,6 +10,18 @@ public abstract class Potion extends UsableItem {
         super(name, cost);
     }
 
+    static String getPotionPrefixForHigherTier(int tier) {
+        switch (tier) {
+            case 1:
+                return "Greater";
+            case 2:
+                return "Superior";
+            case 3:
+                return "Premium";
+        }
+        return "Extreme";
+    }
+
     @Override
     public void addYourself(Inventory inventory) {
         inventory.add(this);

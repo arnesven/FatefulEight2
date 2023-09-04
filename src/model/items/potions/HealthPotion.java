@@ -26,7 +26,7 @@ public class HealthPotion extends Potion {
     }
 
     protected HealthPotion(int tier) {
-        super(getPrefixForTier(tier) + " Health Potion", ((tier*2)+1)*10);
+        super(getPotionPrefixForHigherTier(tier) + " Health Potion", ((tier*2)+1)*10);
         healingAmount = 5 + tier*3;
         sprite = getHigherTierSprite(tier);
     }
@@ -80,15 +80,4 @@ public class HealthPotion extends Potion {
         return higherTierSprites[tier-1];
     }
 
-    private static String getPrefixForTier(int tier) {
-        switch (tier) {
-            case 1:
-                return "Greater";
-            case 2:
-                return "Superior";
-            case 3:
-                return "Premium";
-        }
-        return "Extreme";
-    }
 }
