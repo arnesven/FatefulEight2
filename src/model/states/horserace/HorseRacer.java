@@ -65,11 +65,6 @@ public class HorseRacer {
 
         model.getScreenHandler().register(gallopSprite.getName(), HorseRacingSubView.convertToScreen(position.x, horseVerticalPosition),
                 spriteToUse, 1, strafeShift, yshift + shiftDiff);
-        if (strafeShift > 0) {
-            strafeShift -= 2;
-        } else if (strafeShift < 0) {
-            strafeShift += 2;
-        }
         Sprite effectSprite = getCurrentTerrain().getEffectSprite();
         if (effectSprite != null && jumpCounter == 0) {
             Point effectPos = HorseRacingSubView.convertToScreen(position.x, horseVerticalPosition + 1);
@@ -95,6 +90,7 @@ public class HorseRacer {
     }
 
     public void updateYourself(List<HorseRacer> allRacers) {
+        //int totalPos = position.y * 100 + positionShift;
         move();
         accelerate();
         laneChangeCooldown = Math.max(0, laneChangeCooldown-1);
@@ -109,6 +105,15 @@ public class HorseRacer {
                 accelStep = 0;
             }
         }
+//        if (totalPos == position.y * 100 + positionShift) {
+//            System.out.println(this.character.getName() + " has not moved! Position=" +
+//                    position.y + ", shift=" + positionShift + ", speed=" + currentSpeed +
+//                    ", jumpcounter=" + jumpCounter +
+//                    ", jumpcooldown=" + jumpCooldown + ", accel step=" + accelStep +
+//                    ", lanechangecooldown=" + laneChangeCooldown + ", changedelay=" + changeDelay +
+//                    ", strafeshift=" + strafeShift +
+//                    ", terraint=" + getCurrentTerrain().getName());
+//        }
     }
 
     private void move() {
@@ -229,5 +234,13 @@ public class HorseRacer {
 
     public int getLap() {
         return lap;
+    }
+
+    public void updateStrafeAnimation() {
+        if (strafeShift > 0) {
+            strafeShift -= 2;
+        } else if (strafeShift < 0) {
+            strafeShift += 2;
+        }
     }
 }

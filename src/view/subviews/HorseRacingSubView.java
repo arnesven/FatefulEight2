@@ -5,11 +5,9 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.horses.Horse;
-import model.states.events.HorseRacingEvent;
 import model.states.horserace.HorseRaceTrack;
 import model.states.horserace.HorseRacer;
 import model.states.horserace.NPCHorseRacer;
-import view.BorderFrame;
 import view.MyColors;
 import view.sprites.*;
 
@@ -20,12 +18,11 @@ import java.util.List;
 
 public class HorseRacingSubView extends SubView implements Animation {
 
-    private Sprite BANNER_ICON = new BannerSprite();
-    private Sprite PATH_ICON = new Sprite32x32("path", "riding.png",
-            0x61, MyColors.DARK_GREEN, MyColors.GREEN, MyColors.BROWN);
+    private static final Sprite BANNER_ICON = new BannerSprite();
+    private static final Sprite PATH_ICON = new Sprite32x32("path", "riding.png",
+            0x61, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.BROWN);
     private static final long ANIMATION_DELAY = 3;
     public static final int HORSE_VERTICAL_POSITION = 2;
-    private final Horse horse;
     private HorseRaceTrack horseRaceTrack = new HorseRaceTrack(HorseRaceTrack.RANDOM_TRACK);
     private long internalStep = 0;
 
@@ -37,7 +34,6 @@ public class HorseRacingSubView extends SubView implements Animation {
     private long racingTime = 0;
 
     public HorseRacingSubView(GameCharacter rider, Horse horse) {
-        this.horse = horse;
         this.player = new HorseRacer(3, rider, horse, this);
         allRacers.add(player);
     }
@@ -46,10 +42,10 @@ public class HorseRacingSubView extends SubView implements Animation {
     protected void drawArea(Model model) {
         horseRaceTrack.drawYourself(model, this, player);
         player.drawHorse(model, HORSE_VERTICAL_POSITION, 0);
+        player.updateStrafeAnimation();
         for (HorseRacer npc : npcs) {
-            int yPos = HORSE_VERTICAL_POSITION +
-                    (npc.getPosition().y + npc.getLap()*HorseRaceTrack.TRACK_LENGTH) -
-                    (player.getPosition().y + player.getLap()*HorseRaceTrack.TRACK_LENGTH);
+            int posDiff = calcPosDiff(npc);
+            int yPos = HORSE_VERTICAL_POSITION + posDiff;
             int shiftDiff = npc.getYShift() - player.getYShift();
             if (0 < yPos && yPos < 8) {
                 npc.drawHorse(model, yPos, shiftDiff);
@@ -58,10 +54,23 @@ public class HorseRacingSubView extends SubView implements Animation {
             } else if (yPos == 8 && shiftDiff < 0) {
                 npc.drawHorse(model, yPos, shiftDiff);
             }
+            npc.updateStrafeAnimation();
         }
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+4, blackBlock, 20);
         model.getScreenHandler().fillForeground(X_OFFSET, X_MAX, Y_MAX-4, Y_MAX, blackBlock, 20);
         drawBanner(model);
+    }
+
+    private int calcPosDiff(HorseRacer npc) {
+        int totalDiff = (npc.getPosition().y + npc.getLap() * HorseRaceTrack.TRACK_LENGTH) -
+                (player.getPosition().y + player.getLap() * HorseRaceTrack.TRACK_LENGTH); // TODO : Still not right...
+        while (totalDiff > HorseRaceTrack.TRACK_LENGTH / 2) {
+            totalDiff -= HorseRaceTrack.TRACK_LENGTH;
+        }
+        while (totalDiff < -HorseRaceTrack.TRACK_LENGTH / 2) {
+            totalDiff += HorseRaceTrack.TRACK_LENGTH;
+        }
+        return totalDiff;
     }
 
     private void drawBanner(Model model) {

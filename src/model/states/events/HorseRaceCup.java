@@ -8,6 +8,12 @@ import model.classes.Classes;
 import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.horses.Pony;
+import model.items.Equipment;
+import model.items.accessories.ComfyShoes;
+import model.items.accessories.SuedeBoots;
+import model.items.clothing.JustClothes;
+import model.items.clothing.PilgrimsCloak;
+import model.items.weapons.ShortSword;
 import model.map.CastleLocation;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -194,6 +200,32 @@ public class HorseRaceCup extends TournamentEvent {
                 }
                 println("Bewildered, you leve the racing grounds and soon forget about the strange encounter.");
             }
+        } else if (finalPlacements.get(1) == chosenRider || finalPlacements.get(2) == chosenRider) {
+            GameCharacter winner = finalPlacements.get(0);
+            println("Disappointed, you start to leave the racing ground when you see " + winner.getName() + " approaching you.");
+            showExplicitPortrait(model, winner.getAppearance(), winner.getName());
+            portraitSay("That was some great racing friend.");
+            leaderSay("It was indeed. How will you spend your winnings?");
+            portraitSay("I was thinking I would invest in some proper adventuring equipment.");
+            leaderSay("Oh really?");
+            portraitSay("Yes. I'm a good racer, but I've been longing to join up with a party and travel the world.");
+            winner.setEquipment(new Equipment(new ShortSword(), new JustClothes(), new SuedeBoots()));
+            RecruitState recruit = new RecruitState(model, List.of(winner));
+            recruit.run(model);
+            if (model.getParty().getPartyMembers().contains(winner)) {
+                removePortraitSubView(model);
+                leaderSay("Welcome to the team " + winner.getFirstName() + ".");
+                partyMemberSay(winner, "Thanks!");
+                println(winner.getName() + " has contributed an extra 25 gold and a horse, a " + horses.get(winner).getName() +
+                        ", to the party.");
+                model.getParty().addToGold(25);
+                model.getParty().getHorseHandler().addHorse(horses.get(winner));
+            } else {
+                leaderSay("Sorry " + winner.getFirstName() + ". I don't think it's a good match.");
+                portraitSay("How unfortunate. Well, so long I guess.");
+                leaderSay("Bye.");
+            }
+            println("You leave the racing grounds, and return to the castle.");
         } else {
             leaderSay("Well, you can't win every time. Let's focus on something else.");
             println("The party heads back to the castle, trying not to think about the prize money you almost got your hands on.");
