@@ -62,7 +62,7 @@ public class ElfEvent extends DailyEventState {
         if (dieRoll <= 3) {
             showRandomPortrait(model, Classes.MAR, Race.WOOD_ELF, "Archer");
             changeClass(model, Classes.MAR,
-                    " skilled archer who shows the party a few tri with her a bow. He offers to train you in the ways of marksmanship, ");
+                    " skilled archer who shows the party a few tricks with her a bow. He offers to train you in the ways of marksmanship, ");
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.MERCHANT, Race.WOOD_ELF, "Merchant");
             print(" merchant. Do you wish to trade with her? (Y/N) ");

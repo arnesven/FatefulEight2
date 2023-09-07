@@ -80,6 +80,7 @@ public class BakeryEvent extends DailyEventState {
 
         int money = points * 3;
         println("The party receives " + money + " gold.");
+        model.getParty().addToGold(money);
         println("You say goodbye to the baker and Freddy.");
     }
 

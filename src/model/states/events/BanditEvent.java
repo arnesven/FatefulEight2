@@ -48,7 +48,7 @@ public class BanditEvent extends DailyEventState {
         int numberOfEnemies = Math.max(2, model.getParty().partyStrength() / (new BanditEnemy('A')).getThreat());
         for (int i = numberOfEnemies; i > 0; --i) {
             if (MyRandom.randInt(3) == 0) {
-                enemies.add(new BanditArcherEnemy('A'));
+                enemies.add(new BanditArcherEnemy('B'));
             } else {
                 enemies.add(new BanditEnemy('A'));
             }
