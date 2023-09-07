@@ -38,6 +38,8 @@ public class ItemDeck extends ArrayList<Item> {
 
             if (tierOffset > 0 && it.supportsHigherTier()) {
                 drawn.add(it.makeHigherTierCopy(tierOffset));
+            } else if (standardTier > 0 && it.supportsHigherTier()) {
+                drawn.add(it.makeHigherTierCopy(standardTier));
             } else {
                 drawn.add(it.copy());
             }
@@ -49,27 +51,7 @@ public class ItemDeck extends ArrayList<Item> {
         if (MyRandom.nextDouble() < (1.0 - higherTierChance)) {
             return standardTier;
         }
-        if (MyRandom.flipCoin()) {
-            return randomHigherTier(standardTier+1);
-        }
-        if (standardTier == 0) {
-            return 0;
-        }
-        return randomLowerTier(standardTier-1);
-    }
-
-    private int randomLowerTier(int tier) {
-        if (MyRandom.nextDouble() < (1.0 - higherTierChance) || tier == 0) {
-            return tier;
-        }
-        return randomizeTier(tier - 1);
-    }
-
-    private int randomHigherTier(int tier) {
-        if (MyRandom.nextDouble() < (1.0 - higherTierChance) || tier == MAX_HIGHER_ITEM_TIERS) {
-            return tier;
-        }
-        return randomHigherTier(tier + 1);
+        return Math.min(standardTier+1, MAX_HIGHER_ITEM_TIERS);
     }
 
     public List<Item> draw(int count, Prevalence prevalence, double higherTierChance) {

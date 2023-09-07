@@ -88,4 +88,9 @@ public class HigherTierAccessory extends Accessory {
         }
         return bonuses;
     }
+
+    @Override
+    public boolean isOffHandItem() {
+        return inner.isOffHandItem();
+    }
 }

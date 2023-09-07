@@ -42,4 +42,9 @@ public abstract class ShieldItem extends Accessory {
     public String getExtraText() {
         return "Block " + getBlockChance();
     }
+
+    @Override
+    public boolean isOffHandItem() {
+        return true;
+    }
 }

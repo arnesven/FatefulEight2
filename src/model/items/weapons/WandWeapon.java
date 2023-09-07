@@ -4,6 +4,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.RangedStrikeEffect;
+import view.sprites.RunOnceAnimationSprite;
 
 public abstract class WandWeapon extends Weapon {
     private static final AvatarItemSprite WAND_SPRITES[] = makeShiftedSpriteSet(new AvatarItemSprite(0x10,
@@ -34,5 +36,10 @@ public abstract class WandWeapon extends Weapon {
     @Override
     protected AvatarItemSprite getOnAvatarSprite(int index) {
         return WAND_SPRITES[index];
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new RangedStrikeEffect();
     }
 }

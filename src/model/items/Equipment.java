@@ -54,7 +54,7 @@ public class Equipment implements Serializable {
             return person.getFirstName() + " cannot wear Heavy Armor.";
         }
         if (item instanceof Weapon && ((Weapon) item).isTwoHanded()
-                && person.getEquipment().getAccessory() instanceof ShieldItem) {
+                && person.getEquipment().getAccessory().isOffHandItem()) {
             return "Cannot equip a two-handed weapon while a shield is equipped.";
         }
         if (item instanceof ShieldItem && person.getEquipment().getWeapon().isTwoHanded()) {

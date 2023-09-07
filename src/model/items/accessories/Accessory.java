@@ -89,4 +89,8 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public Item makeHigherTierCopy(int tier) {
         return new HigherTierAccessory((Accessory)copy(), tier);
     }
+
+    public boolean isOffHandItem() {
+        return false;
+    }
 }

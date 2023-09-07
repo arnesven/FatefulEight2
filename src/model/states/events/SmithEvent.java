@@ -28,7 +28,7 @@ public class SmithEvent extends DailyEventState {
         waitForReturn();
         List<Item> items = new ArrayList<>();
         do {
-            Item it = model.getItemDeck().getRandomItem();
+            Item it = model.getItemDeck().getRandomItem(0.98);
             if (it instanceof BladedWeapon || it instanceof BluntWeapon || it instanceof AxeWeapon ||
                     (it instanceof HeavyArmorClothing)) {
                 items.add(it);
