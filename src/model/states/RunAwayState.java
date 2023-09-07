@@ -59,6 +59,6 @@ public class RunAwayState extends TravelState {
 
     @Override
     protected GameState nextState(Model model) {
-        return new EveningState(model);
+        return model.getCurrentHex().getEveningState(model, false, false);
     }
 }

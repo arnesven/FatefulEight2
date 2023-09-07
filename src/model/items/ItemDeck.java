@@ -16,8 +16,11 @@ import java.util.List;
 
 public class ItemDeck extends ArrayList<Item> {
 
+    private static final int LEVELS_PER_TIER = 5;
+    private static final double HIGHER_TIER_CHANCE_FACTOR = 1.0 / (4.0*LEVELS_PER_TIER);
+    private static final int MAX_HIGHER_ITEM_TIERS = 4;
     private int standardTier = 0;
-    private double higherTierChance = 0.05;
+    private double higherTierChance = HIGHER_TIER_CHANCE_FACTOR;
 
     public ItemDeck() {
         this.addAll(allItems());
@@ -27,22 +30,46 @@ public class ItemDeck extends ArrayList<Item> {
     public List<Item> draw(List<? extends Item> source, int count, Prevalence prevalence, double higherTierChance) {
         List<Item> drawn = new ArrayList<>();
         for (int i = count; i > 0; --i) {
-            boolean isHigherTier = MyRandom.nextDouble() > (1.0 - higherTierChance);
+            int tierOffset = randomizeTier(higherTierChance);
             Item it;
             do {
                 it = MyRandom.sample(source);
             } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified);
-            if (isHigherTier && it.supportsHigherTier()) {
-                drawn.add(it.makeHigherTierCopy(standardTier+1));
+
+            if (tierOffset > 0 && it.supportsHigherTier()) {
+                drawn.add(it.makeHigherTierCopy(tierOffset));
             } else {
-                if (standardTier > 0 && it.supportsHigherTier()) {
-                    drawn.add(it.makeHigherTierCopy(standardTier));
-                } else {
-                    drawn.add(it.copy());
-                }
+                drawn.add(it.copy());
             }
         }
         return drawn;
+    }
+
+    private int randomizeTier(double higherTierChance) {
+        if (MyRandom.nextDouble() < (1.0 - higherTierChance)) {
+            return standardTier;
+        }
+        if (MyRandom.flipCoin()) {
+            return randomHigherTier(standardTier+1);
+        }
+        if (standardTier == 0) {
+            return 0;
+        }
+        return randomLowerTier(standardTier-1);
+    }
+
+    private int randomLowerTier(int tier) {
+        if (MyRandom.nextDouble() < (1.0 - higherTierChance) || tier == 0) {
+            return tier;
+        }
+        return randomizeTier(tier - 1);
+    }
+
+    private int randomHigherTier(int tier) {
+        if (MyRandom.nextDouble() < (1.0 - higherTierChance) || tier == MAX_HIGHER_ITEM_TIERS) {
+            return tier;
+        }
+        return randomHigherTier(tier + 1);
     }
 
     public List<Item> draw(int count, Prevalence prevalence, double higherTierChance) {
@@ -277,8 +304,8 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public void setStandardItemTier(int averageLevel) {
-        int newStandard = averageLevel / 6;
-        double newChance = ((averageLevel % 6)*2 + 1) * 0.05;
+        int newStandard = averageLevel / LEVELS_PER_TIER;
+        double newChance = ((averageLevel % LEVELS_PER_TIER)*2 + 1) * HIGHER_TIER_CHANCE_FACTOR;
         if (newStandard != standardTier) {
             System.out.println("New standard item tier! Tier " + newStandard);
             standardTier = newStandard;

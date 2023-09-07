@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class Item implements Serializable, Comparable<Item> {
 
     public static final Sprite EMPTY_ITEM_SPRITE = new ItemSprite(0xF, 0);
-    private static final String[] TIER_PREFIXES = new String[]{"Finer", "Superior", "Premium", "Exquisite"};
+    public static final String[] TIER_PREFIXES = new String[]{"Fine", "Superior", "Premium", "Exquisite"};
     private final String name;
     private int cost;
 

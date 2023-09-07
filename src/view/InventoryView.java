@@ -131,8 +131,11 @@ public class InventoryView extends SelectableListMenu {
 
     private String makeItemTitle(Item it) {
         String result = it.getName();
-        if (it.getName().contains("Superior")) {
-            result = result.replace("Superior", "Sup");
+        for (String prefix : Item.TIER_PREFIXES) {
+            if (it.getName().contains(prefix)) {
+                result = result.replace(prefix, prefix.substring(0, 3));
+                break;
+            }
         }
         return result.substring(0, Math.min(result.length(), WIDTH - 25));
     }
