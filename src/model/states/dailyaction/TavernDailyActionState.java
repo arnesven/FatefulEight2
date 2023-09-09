@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.actions.Loan;
 import view.subviews.DailyActionSubView;
 import view.subviews.TavernSubView;
@@ -15,7 +16,11 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
     public TavernDailyActionState(Model model, boolean freeLodging, boolean inTown) {
         super(model);
         this.inTown = inTown;
-        addNode(2, 5, new RecruitNode(model));
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            addNode(2, 5, new CardGameNode());
+        } else {
+            addNode(2, 5, new RecruitNode(model));
+        }
         addNode(6, 1, new LodgingNode(freeLodging));
         addNode(2, 3, new TalkToBartenderNode());
         addNode(5, 5, new TalkToPartyNode());

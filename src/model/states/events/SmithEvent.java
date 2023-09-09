@@ -2,11 +2,13 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
+import model.items.HigherTierClothing;
 import model.items.Item;
 import model.items.clothing.HeavyArmorClothing;
 import model.items.weapons.AxeWeapon;
 import model.items.weapons.BladedWeapon;
 import model.items.weapons.BluntWeapon;
+import model.items.weapons.HigherTierWeapon;
 import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyRandom;
@@ -29,8 +31,7 @@ public class SmithEvent extends DailyEventState {
         List<Item> items = new ArrayList<>();
         do {
             Item it = model.getItemDeck().getRandomItem(0.98);
-            if (it instanceof BladedWeapon || it instanceof BluntWeapon || it instanceof AxeWeapon ||
-                    (it instanceof HeavyArmorClothing)) {
+            if (isSmithyItem(it)) {
                 items.add(it);
                 break;
             }
@@ -41,5 +42,10 @@ public class SmithEvent extends DailyEventState {
         print("The smith also offers to instruct you in the ways of being an Artisan, ");
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.ART);
         change.areYouInterested(model);
+    }
+
+    private boolean isSmithyItem(Item it) {
+        return it instanceof BladedWeapon || it instanceof BluntWeapon || it instanceof AxeWeapon ||
+                (it instanceof HeavyArmorClothing) || it instanceof HigherTierWeapon || it instanceof HigherTierClothing;
     }
 }

@@ -19,24 +19,17 @@ public class BorrowedMoneyEvent extends DailyEventState {
     protected void doEvent(Model model) {
         GameCharacter main = model.getParty().getRandomPartyMember();
         model.getParty().partyMemberSay(model, main, "Hey, I have a friend who moved to this town a while ago.");
-        String genderWord = MyRandom.sample(List.of("he", "she"));
-        String genderWord2 = "her";
-        if (genderWord.equals("he")) {
-            genderWord2 = "him";
-        }
+        boolean gender = MyRandom.flipCoin();
         if (model.getParty().size() > 1) {
             GameCharacter other = model.getParty().getRandomPartyMember(main);
-            model.getParty().partyMemberSay(model, other, "Oh, is " + genderWord + " nice?");
+            model.getParty().partyMemberSay(model, other, "Oh, is " + heOrShe(gender) + " nice?");
             model.getParty().partyMemberSay(model, main, "Not really.");
         }
-        model.getParty().partyMemberSay(model, main, "But " + genderWord + " owes me money. Let's track " +
-                genderWord2 + " down and make " + genderWord2 + " pay up.");
+        model.getParty().partyMemberSay(model, main, "But " + heOrShe(gender) + " owes me money. Let's track " +
+                himOrHer(gender) + " down and make " + himOrHer(gender) + " pay up.");
         boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 7);
         if (success) {
-            String name = "Bianca";
-            if (genderWord.equals("he")) {
-                name = "Johnny";
-            }
+            String name = randomFirstName(gender);
             showRandomPortrait(model, Classes.None, name);
             model.getParty().partyMemberSay(model, main, "Hey " + name + ", long time no see!");
             portraitSay("Oh, hi... it's you.");
@@ -50,13 +43,13 @@ public class BorrowedMoneyEvent extends DailyEventState {
                 portraitSay("I don't know what you're talking about. Now please excuse me, I have somewhere I have to be.");
                 if (model.getParty().size() > 1) {
                     GameCharacter other = model.getParty().getRandomPartyMember(main);
-                    model.getParty().partyMemberSay(model, other, "No, " + genderWord + " wasn't very nice.");
+                    model.getParty().partyMemberSay(model, other, "No, " + heOrShe(gender) + " wasn't very nice.");
                 } else {
                     model.getParty().partyMemberSay(model, main, "Damn. I'm not going to see that money again#");
                 }
             }
         } else {
-            model.getParty().partyMemberSay(model, main, "Maybe " + genderWord + " doesn't live here after all.");
+            model.getParty().partyMemberSay(model, main, "Maybe " + heOrShe(gender) + " doesn't live here after all.");
         }
         print("Press enter to continue.");
         waitForReturn();

@@ -262,12 +262,9 @@ public class HorseRaceCup extends TournamentEvent {
     }
 
     private List<GameCharacter> makeRiders() {
-        List<String> girlFirstNames = new ArrayList<>(List.of("Bella", "Steffi", "Ronya", "Felixa",
-                "Ipona", "Esmeralda", "Gemma", "Petra", "Sinorin", "Adalia", "Cormona"));
-        List<String> boyFirstNames = new ArrayList<>(List.of("Golbert", "Voldo", "Maxim", "Nestor",
-                "Karg", "Tobert", "Roger", "Sammy", "Oleg", "Trevor", "Quellic", "Ben"));
-        List<String> lastNames = new ArrayList<>(List.of("Wildfeather", "Cleareyes", "Al-Zaman",
-                "Gerson", "Essex", "Overhill", "Sloch", "Petty", "Inderfelt", "Sharptooth", "Zeltic"));
+        List<String> girlFirstNames = new ArrayList<>(COMMON_GIRL_FIRST_NAMES);
+        List<String> boyFirstNames = new ArrayList<>(COMMON_BOY_FIRST_NAMES);
+        List<String> lastNames = new ArrayList<>(COMMON_LAST_NAMES);
         List<GameCharacter> riders = new ArrayList<>();
         for (int i = 0; i < 6; ++i) {
             CharacterClass cls = Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)];

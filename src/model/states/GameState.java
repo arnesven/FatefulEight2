@@ -7,6 +7,7 @@ import model.combat.Condition;
 import model.combat.PoisonCondition;
 import model.items.spells.Spell;
 import util.MyPair;
+import util.MyRandom;
 import view.PartyAttitudesDialog;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
@@ -16,6 +17,18 @@ import view.subviews.SubView;
 import java.util.List;
 
 public abstract class GameState {
+
+    public static final List<String> COMMON_GIRL_FIRST_NAMES = List.of("Bella", "Steffi", "Ronya", "Felixa",
+            "Ipona", "Esmeralda", "Gemma", "Petra", "Sinorin", "Adalia", "Cormona", "Sheila", "Dora",
+            "Visenna", "Lara", "Gueniviere", "Cally", "Tessa", "Mandy", "Bianca", "Miranda",
+            "Helga");
+    public static final List<String> COMMON_BOY_FIRST_NAMES = List.of("Golbert", "Voldo", "Maxim", "Nestor",
+            "Karg", "Tobert", "Roger", "Sammy", "Oleg", "Trevor", "Quellic", "Ben", "Ivan", "Feodor", "Stig",
+            "Ralbert", "Rastigan", "Enoch", "Roy", "Georgi", "Leonard", "Albert", "Stanley", "Johnny", "Horace",
+            "Derric", "Felix", "Igor");
+    public static final List<String> COMMON_LAST_NAMES = List.of("Wildfeather", "Cleareyes", "Al-Zaman",
+            "Gerson", "Essex", "Overhill", "Sloch", "Petty", "Inderfelt", "Sharptooth", "Zeltic", "Hightower",
+            "Edelweiss", "Eastwood", "Hardwater", "Azure", "Stormfist", "Samuelesen");
 
     private final Model model;
 
@@ -189,5 +202,12 @@ public abstract class GameState {
         }
         averageLevel /= model.getParty().size();
         return averageLevel;
+    }
+
+    public static String randomFirstName(boolean gender) {
+        if (gender) {
+            return MyRandom.sample(COMMON_GIRL_FIRST_NAMES);
+        }
+        return MyRandom.sample(COMMON_BOY_FIRST_NAMES);
     }
 }
