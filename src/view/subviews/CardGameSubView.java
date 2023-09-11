@@ -1,8 +1,10 @@
 package view.subviews;
 
 import model.Model;
+import model.SteppingMatrix;
 import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGameObject;
 import model.states.cardgames.CardGamePlayer;
 import view.BorderFrame;
 import view.MyColors;
@@ -16,7 +18,7 @@ import java.awt.event.KeyEvent;
 public class CardGameSubView extends SubView {
 
     protected static final Sprite brownBlock = new FilledBlockSprite(MyColors.BROWN);
-    private static final int PLAYER_CARDS_OFFSET = X_OFFSET + 10;
+    private static final int PLAYER_CARDS_OFFSET = X_OFFSET + 2;
     private static final Sprite16x16 CURSOR = new Sprite16x16("cardcursor", "cardgame.png", 0x20,
             MyColors.YELLOW, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
     private CardGame cardGame;
@@ -28,20 +30,27 @@ public class CardGameSubView extends SubView {
         drawCorners(model);
         drawNPCs(model);
         drawPlayerArea(model);
+        drawGameArea(model);
+    }
 
+    private void drawGameArea(Model model) {
+        SteppingMatrix<CardGameObject> mat = cardGame.getMatrix();
+        for (int row = 0; row < mat.getRows(); ++row) {
+            for (int col = 0; col < mat.getColumns(); ++col) {
+                if (mat.getElementAt(col, row) != null) {
+                    CardGameObject card = mat.getElementAt(col, row);
+                    Sprite spr = card.getSprite();
+                    Point position = new Point(PLAYER_CARDS_OFFSET + col*2, Y_OFFSET + 3 + row*2);
+                    model.getScreenHandler().register(spr.getName(), position, spr);
+                    if (cardGame.cursorEnabled() && card == cardGame.getSelectedObject()) {
+                        model.getScreenHandler().register(CURSOR.getName(), position, CURSOR);
+                    }
+                }
+            }
+        }
     }
 
     private void drawPlayerArea(Model model) {
-        int count = 0;
-        for (CardGameCard card : cardGame.getCharacterPlayer().getCards()) {
-            Sprite spr = card.getSprite();
-            model.getScreenHandler().register(spr.getName(), new Point(PLAYER_CARDS_OFFSET + count*2, Y_MAX-4), spr);
-            if (cardGame.cursorEnabled() && card == cardGame.getSelectedCard()) {
-                model.getScreenHandler().register(CURSOR.getName(), new Point(PLAYER_CARDS_OFFSET + count*2, Y_MAX-4), CURSOR);
-            }
-            count++;
-        }
-
         String name = cardGame.getCharacterPlayer().getName();
         BorderFrame.drawString(model.getScreenHandler(), name, X_OFFSET + 16 - name.length(), Y_MAX-1, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), cardGame.getCharacterPlayer().getObols() + "@",
@@ -131,7 +140,7 @@ public class CardGameSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Play cards!";
+        return cardGame.getUnderText(model);
     }
 
     @Override

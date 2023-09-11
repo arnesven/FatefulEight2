@@ -25,7 +25,7 @@ public class CardGameState extends GameState {
     public GameState run(Model model) {
         this.cardGame = new RunnyCardGame(makeRandomRaces());
         subView.setGame(cardGame);
-        print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players are playing a game of Runny. Do you want to join? (Y/N) ");
+        print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players are playing a game of " + cardGame.getName() + ". Do you want to join? (Y/N) ");
         if (yesNoInput()) {
             playCardGame(model);
         }
@@ -34,7 +34,7 @@ public class CardGameState extends GameState {
 
     private List<Race> makeRandomRaces() {
         List<Race> result = new ArrayList<>();
-        int count = MyRandom.randInt(1, 5);
+        int count = MyRandom.randInt(2, RunnyCardGame.MAX_NUMBER_OF_PLAYERS-1);
         for (int i = 0; i < count; ++i) {
             result.add(Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
         }

@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.GameState;
 import util.MyRandom;
+import view.MyColors;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -15,14 +16,20 @@ import java.util.List;
 public abstract class CardGame {
     private final List<CardGamePlayer> players;
     private CardGamePlayer characterPlayer;
-    private SteppingMatrix<CardGameCard> playerHand = new SteppingMatrix<>(10, 1);
+    private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 16);
+    private final String name;
 
-    public CardGame(List<Race> npcRaces) {
+    public CardGame(String name, List<Race> npcRaces) {
+        this.name = name;
         this.players = new ArrayList<>();
         for (Race r : npcRaces) {
             boolean gender = MyRandom.flipCoin();
             players.add(new CardGamePlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40)));
         }
+//        cardArea.addElement(0, 0, new CardGameCard(0, MyColors.RED));
+//        cardArea.addElement(cardArea.getColumns()-1, 0, new CardGameCard(0, MyColors.RED));
+//        cardArea.addElement(0, cardArea.getRows()-1, new CardGameCard(0, MyColors.RED));
+//        cardArea.addElement(cardArea.getColumns()-1, cardArea.getRows()-1, new CardGameCard(0, MyColors.RED));
     }
 
     public abstract void setup();
@@ -50,8 +57,10 @@ public abstract class CardGame {
             }
             Collections.sort(p.getCards());
         }
-        playerHand.clear();
-        playerHand.addElements(characterPlayer.getCards());
+        int offset = (cardArea.getColumns() - characterPlayer.getCards().size()) / 2;
+        for (int i = 0; i < characterPlayer.getCards().size(); ++i) {
+            cardArea.addElement(offset + i, cardArea.getRows()-1, characterPlayer.getCards().get(i));
+        }
     }
 
     public CardGamePlayer getCharacterPlayer() {
@@ -62,11 +71,29 @@ public abstract class CardGame {
         return true;
     }
 
-    public CardGameCard getSelectedCard() {
-        return playerHand.getSelectedElement();
+    public CardGameObject getSelectedObject() {
+        return cardArea.getSelectedElement();
     }
 
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        return playerHand.handleKeyEvent(keyEvent);
+        return cardArea.handleKeyEvent(keyEvent);
+    }
+
+    public SteppingMatrix<CardGameObject> getMatrix() {
+        return cardArea;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getUnderText(Model model) {
+        if (getSelectedObject() == null) {
+            return "";
+        }
+        if (cardArea.getSelectedPoint().y == cardArea.getRows()-1) {
+            return "Your hand: " + cardArea.getSelectedElement().getText();
+        }
+        return cardArea.getSelectedElement().getText();
     }
 }

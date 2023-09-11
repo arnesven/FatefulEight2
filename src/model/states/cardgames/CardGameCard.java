@@ -3,7 +3,7 @@ package model.states.cardgames;
 import view.MyColors;
 import view.sprites.Sprite;
 
-public class CardGameCard implements Comparable<CardGameCard> {
+public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
     private int number;
     private MyColors color;
 
@@ -19,6 +19,11 @@ public class CardGameCard implements Comparable<CardGameCard> {
 
     public Sprite getSprite() {
         return CardGameDeck.getSpriteForCard(this);
+    }
+
+    @Override
+    public String getText() {
+        return color.name() + " " + number;
     }
 
     public MyColors getSuit() {

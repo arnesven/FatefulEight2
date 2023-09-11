@@ -9,15 +9,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CardGameDeck extends ArrayList<CardGameCard> {
+public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObject {
     private static final MyColors[] CARD_SUITS = new MyColors[]{MyColors.GREEN, MyColors.BLUE, MyColors.RED};
-    private static final int MAX_VALUE = 12;
+    private static final int MAX_VALUE = 9;
+    private static final Sprite SPRITE = new Sprite16x16("cardgamedeck", "cardgame.png", 0x15,
+            MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
     private static Map<MyColors, Sprite[]> sprites = makeSpriteMap();
 
     public CardGameDeck() {
-        for (MyColors suit : CARD_SUITS) {
-            for (int i = 0; i < MAX_VALUE + 1; ++i) {
-                this.add(new CardGameCard(i, suit));
+        for (int j = 0; j < 2; ++j) {
+            for (MyColors suit : CARD_SUITS) {
+                for (int i = 0; i < MAX_VALUE + 1; ++i) {
+                    this.add(new CardGameCard(i, suit));
+                }
             }
         }
         Collections.shuffle(this);
@@ -31,6 +35,15 @@ public class CardGameDeck extends ArrayList<CardGameCard> {
         return remove(0);
     }
 
+    @Override
+    public Sprite getSprite() {
+        return SPRITE;
+    }
+
+    @Override
+    public String getText() {
+        return "The Deck";
+    }
 
     private static Map<MyColors, Sprite[]> makeSpriteMap() {
         Map<MyColors, Sprite[]> result = new HashMap<>();
