@@ -1,5 +1,7 @@
 package model.states.cardgames;
 
+import model.Model;
+import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
@@ -43,6 +45,20 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
     @Override
     public String getText() {
         return "The Deck";
+    }
+
+    @Override
+    public void doAction(Model model, GameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot draw from empty deck.");
+        }
+        CardGameCard card = drawCard();
+        if (currentPlayer.isNPC()) {
+            state.println(currentPlayer.getName() + " draws a card from the deck.");
+        } else {
+            state.println("You draw a " + card.getText() + " from the deck.");
+        }
+        currentPlayer.giveCard(card, cardGame);
     }
 
     private static Map<MyColors, Sprite[]> makeSpriteMap() {

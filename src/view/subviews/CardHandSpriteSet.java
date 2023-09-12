@@ -35,7 +35,7 @@ public class CardHandSpriteSet {
     }
 
     public Sprite getCardHandSprite(CardGamePlayer npc, int num, int rotation) {
-        int cardsInHand = npc.getCards().size();
+        int cardsInHand = npc.numberOfCardsInHand();
         switch (cardsInHand) {
             case 0:
                 break;

@@ -1,5 +1,7 @@
 package model.states.cardgames;
 
+import model.Model;
+import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
 
@@ -24,6 +26,15 @@ public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
     @Override
     public String getText() {
         return color.name() + " " + number;
+    }
+
+    @Override
+    public void doAction(Model model, GameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
+        if (currentPlayer.hasCardInHand(this)) {
+            cardGame.doCardInHandAction(model, state, currentPlayer, this);
+        } else {
+            cardGame.doOtherCardAction(model, state, currentPlayer, this);
+        }
     }
 
     public MyColors getSuit() {

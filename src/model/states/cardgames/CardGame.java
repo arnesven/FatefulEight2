@@ -18,13 +18,14 @@ public abstract class CardGame {
     private CardGamePlayer characterPlayer;
     private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 16);
     private final String name;
+    private boolean cursorEnabled = false;
 
     public CardGame(String name, List<Race> npcRaces) {
         this.name = name;
         this.players = new ArrayList<>();
         for (Race r : npcRaces) {
             boolean gender = MyRandom.flipCoin();
-            players.add(new CardGamePlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40)));
+            players.add(new CardGamePlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40), true));
         }
 //        cardArea.addElement(0, 0, new CardGameCard(0, MyColors.RED));
 //        cardArea.addElement(cardArea.getColumns()-1, 0, new CardGameCard(0, MyColors.RED));
@@ -32,7 +33,9 @@ public abstract class CardGame {
 //        cardArea.addElement(cardArea.getColumns()-1, cardArea.getRows()-1, new CardGameCard(0, MyColors.RED));
     }
 
-    public abstract void setup();
+    public abstract void setup(GameState state);
+
+    public abstract void playRound(Model model, GameState state);
 
     public CardGamePlayer getNPC(int i) {
         return players.get(i);
@@ -46,21 +49,21 @@ public abstract class CardGame {
     }
 
     public void addPlayer(GameCharacter leader, int obols) {
-        this.characterPlayer = new CardGamePlayer(leader.getFirstName(), leader.getGender(), leader.getRace(), obols);
+        this.characterPlayer = new CardGamePlayer(leader.getFirstName(), leader.getGender(), leader.getRace(), obols, false);
         players.add(characterPlayer);
+    }
+
+    public List<CardGamePlayer> getPlayers() {
+        return players;
     }
 
     protected void dealCardsToPlayers(CardGameDeck deck, int amount) {
         for (CardGamePlayer p : players) {
             for (int i = 0; i < amount; ++i) {
-                p.giveCard(deck.drawCard());
+                p.giveCard(deck.drawCard(), this);
             }
-            Collections.sort(p.getCards());
         }
-        int offset = (cardArea.getColumns() - characterPlayer.getCards().size()) / 2;
-        for (int i = 0; i < characterPlayer.getCards().size(); ++i) {
-            cardArea.addElement(offset + i, cardArea.getRows()-1, characterPlayer.getCards().get(i));
-        }
+        refreshPlayerHand(characterPlayer);
     }
 
     public CardGamePlayer getCharacterPlayer() {
@@ -68,7 +71,7 @@ public abstract class CardGame {
     }
 
     public boolean cursorEnabled() {
-        return true;
+        return cursorEnabled;
     }
 
     public CardGameObject getSelectedObject() {
@@ -95,5 +98,25 @@ public abstract class CardGame {
             return "Your hand: " + cardArea.getSelectedElement().getText();
         }
         return cardArea.getSelectedElement().getText();
+    }
+
+    protected void setCursorEnabled(boolean b) {
+        cursorEnabled = b;
+    }
+
+    public abstract void doCardInHandAction(Model model, GameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
+
+    public abstract void doOtherCardAction(Model model, GameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
+
+    public void refreshPlayerHand(CardGamePlayer cardGamePlayer) {
+        for (int i = 0; i < cardGamePlayer.numberOfCardsInHand(); ++i) {
+            if (cardArea.getElementList().contains(cardGamePlayer.getCard(i))) {
+                cardArea.remove(cardGamePlayer.getCard(i));
+            }
+        }
+        int offset = (cardArea.getColumns() - characterPlayer.numberOfCardsInHand()) / 2;
+        for (int i = 0; i < characterPlayer.numberOfCardsInHand(); ++i) {
+            cardArea.addElement(offset + i, cardArea.getRows()-1, characterPlayer.getCard(i));
+        }
     }
 }

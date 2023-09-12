@@ -8,9 +8,9 @@ import model.states.cardgames.CardGameObject;
 import model.states.cardgames.CardGamePlayer;
 import view.BorderFrame;
 import view.MyColors;
+import view.sprites.CardGameCursor;
 import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite16x16;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,8 +19,7 @@ public class CardGameSubView extends SubView {
 
     protected static final Sprite brownBlock = new FilledBlockSprite(MyColors.BROWN);
     private static final int PLAYER_CARDS_OFFSET = X_OFFSET + 2;
-    private static final Sprite16x16 CURSOR = new Sprite16x16("cardcursor", "cardgame.png", 0x20,
-            MyColors.YELLOW, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
+    private static final Sprite CURSOR = new CardGameCursor();
     private CardGame cardGame;
     private static CardHandSpriteSet cardHandSprites = new CardHandSpriteSet(MyColors.PINK);
 
@@ -84,18 +83,18 @@ public class CardGameSubView extends SubView {
                 drawNPCTop(model, cardGame.getNPC(0));
                 break;
             case 3:
-                drawNPCTop(model, cardGame.getNPC(2));
+                drawNPCTop(model, cardGame.getNPC(1));
             case 2:
                 drawNPCToLeft(model, cardGame.getNPC(0), 10);
-                drawNPCToRight(model, cardGame.getNPC(1), 14);
+                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 18);
                 break;
             case 5:
-                drawNPCToRight(model, cardGame.getNPC(4), 24);
+                drawNPCToRight(model, cardGame.getNPC(3), 10);
             case 4:
                 drawNPCToLeft(model, cardGame.getNPC(0), 20);
                 drawNPCToLeft(model, cardGame.getNPC(1), 6);
                 drawNPCTop(model, cardGame.getNPC(2));
-                drawNPCToRight(model, cardGame.getNPC(3), 10);
+                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 24);
                 break;
         }
     }

@@ -44,8 +44,11 @@ public class CardGameState extends GameState {
     private void playCardGame(Model model) {
         cardGame.addPlayer(model.getParty().getLeader(), model.getParty().getObols());
         CollapsingTransition.transition(model, subView);
+        print("You sit down to play a game of " + cardGame.getName() + ". Press enter to continue.");
         waitForReturn();
-        cardGame.setup();
+        cardGame.setup(this);
+        waitForReturn();
+        cardGame.playRound(model, this);
         waitForReturn();
     }
 }

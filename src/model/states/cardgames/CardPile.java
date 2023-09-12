@@ -1,5 +1,7 @@
 package model.states.cardgames;
 
+import model.Model;
+import model.states.GameState;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
 
@@ -27,5 +29,17 @@ public class CardPile extends ArrayList<CardGameCard> implements CardGameObject 
             return "Discard (empty)";
         }
         return "Discard: " + topCard().getText();
+    }
+
+    @Override
+    public void doAction(Model model, GameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot draw from an empty pile");
+        }
+        CardGameCard drawn = topCard();
+        state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") +
+                " draw " + drawn.getText() + " from the discard.");
+        currentPlayer.giveCard(drawn, cardGame);
+        remove(drawn);
     }
 }
