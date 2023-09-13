@@ -53,12 +53,13 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
             throw new IllegalStateException("Cannot draw from empty deck.");
         }
         CardGameCard card = drawCard();
-        state.addHandAnimation(currentPlayer);
+        state.addHandAnimation(currentPlayer, false, true);
         if (currentPlayer.isNPC()) {
             state.println(currentPlayer.getName() + " draws a card from the deck.");
         } else {
             state.println("You draw a " + card.getText() + " from the deck.");
         }
+        state.waitForAnimationToFinish();
         currentPlayer.giveCard(card, cardGame);
     }
 

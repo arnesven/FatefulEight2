@@ -96,8 +96,9 @@ public class RunnyCardGame extends CardGame {
     public void doCardInHandAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") + " discards " + cardGameCard.getText() + ".");
         currentPlayer.removeCard(cardGameCard, this);
-        state.addHandAnimation(currentPlayer);
+        state.addHandAnimation(currentPlayer, true, false);
         discardPile.add(cardGameCard);
+        state.waitForAnimationToFinish();
     }
 
     @Override

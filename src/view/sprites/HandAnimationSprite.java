@@ -100,4 +100,19 @@ public class HandAnimationSprite extends Sprite implements Animation {
 
     @Override
     public void synch() { }
+
+    public int getArmLength() {
+        if (currentFrame < 8) {
+            return currentFrame;
+        }
+        return 15 - currentFrame;
+    }
+
+    public boolean doingFirstHalf() {
+        return currentFrame <= 7;
+    }
+
+    public boolean doingSecondHalf() {
+        return currentFrame >= 7;
+    }
 }

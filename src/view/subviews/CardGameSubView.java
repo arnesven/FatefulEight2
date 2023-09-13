@@ -24,7 +24,7 @@ public class CardGameSubView extends SubView {
 
     private CardGame cardGame;
     private static CardHandSpriteSet cardHandSprites = new CardHandSpriteSet(MyColors.PINK);
-    private HandAnimationSprite handAnimation = null;
+    private HandAnimation handAnimation = null;
 
     @Override
     protected void drawArea(Model model) {
@@ -38,24 +38,9 @@ public class CardGameSubView extends SubView {
 
     private void drawHandAnimation(Model model) {
         if (handAnimation != null) {
-            Point position = null;
-            switch (handAnimation.getSeating().rotation) {
-                case 0:
-                    position = new Point(X_OFFSET + handAnimation.getSeating().offset, Y_MAX-8);
-                    break;
-                case 90:
-                    position = new Point(X_OFFSET, Y_OFFSET + handAnimation.getSeating().offset);
-                    break;
-                case 180:
-                    position = new Point(X_OFFSET + handAnimation.getSeating().offset, Y_OFFSET);
-                    break;
-                default:
-                    position = new Point(X_MAX-8, Y_OFFSET + handAnimation.getSeating().offset);
-                    break;
-            }
-            model.getScreenHandler().register(handAnimation.getName(), position, handAnimation);
-            if (handAnimation.isDone()) {
-                AnimationManager.unregister(handAnimation);
+            handAnimation.drawYourself(model);
+
+            if (handAnimation.checkForDone()) {
                 handAnimation = null;
             }
         }
@@ -185,9 +170,9 @@ public class CardGameSubView extends SubView {
         return cardGame.handleKeyEvent(keyEvent, model);
     }
 
-    public void addHandAnimationFor(CardGamePlayer currentPlayer) {
+    public void addHandAnimationFor(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut) {
         TableSeating rotationAndOffset = getRotationAndOffsetForHandAnimation(currentPlayer);
-        this.handAnimation = new HandAnimationSprite(currentPlayer.getRace().getColor(), rotationAndOffset);
+        this.handAnimation = new HandAnimation(cardIn, cardOut, currentPlayer, rotationAndOffset);
     }
 
     private TableSeating getRotationAndOffsetForHandAnimation(CardGamePlayer currentPlayer) {
@@ -242,6 +227,77 @@ public class CardGameSubView extends SubView {
         if (handAnimation == null) {
             return true;
         }
-        return handAnimation.isDone();
+        return handAnimation.checkForDone();
+    }
+
+    public boolean handAnimationHalfWay() {
+        return handAnimation.isHalfWay();
+    }
+
+    private static class HandAnimation {
+        private final HandAnimationSprite sprite;
+        private final TableSeating rotationAndOffset;
+        private final Sprite32x32 cardSprite;
+        private final boolean cardIn;
+        private final boolean cardOut;
+
+        public HandAnimation(boolean cardIn, boolean cardOut, CardGamePlayer currentPlayer, TableSeating rotationAndOffset) {
+            this.cardIn = cardIn;
+            this.cardOut = cardOut;
+            this.sprite = new HandAnimationSprite(currentPlayer.getRace().getColor(), rotationAndOffset);
+            this.rotationAndOffset = rotationAndOffset;
+            this.cardSprite = new Sprite32x32("handanicard", "cardgame.png", 0x15,
+                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN);
+            cardSprite.setRotation(rotationAndOffset.rotation);
+        }
+
+        public TableSeating getSeating() {
+            return rotationAndOffset;
+        }
+
+        public boolean checkForDone() {
+            if (sprite.isDone()) {
+                AnimationManager.unregister(sprite);
+            }
+            return sprite.isDone();
+        }
+
+        public void drawYourself(Model model) {
+            Point position = null;
+            Point dxdy = null;
+            Point cardPos = null;
+            switch (getSeating().rotation) {
+                case 0:
+                    position = new Point(X_OFFSET + getSeating().offset, Y_MAX-8);
+                    cardPos = new Point(X_OFFSET + getSeating().offset-2, Y_MAX-2);
+                    dxdy = new Point(0, -1);
+                    break;
+                case 90:
+                    position = new Point(X_OFFSET, Y_OFFSET + getSeating().offset);
+                    cardPos = new Point(X_OFFSET-2, Y_OFFSET + getSeating().offset-2);
+                    dxdy = new Point(1, 0);
+                    break;
+                case 180:
+                    position = new Point(X_OFFSET + getSeating().offset, Y_OFFSET);
+                    cardPos = new Point(X_OFFSET + getSeating().offset, Y_OFFSET-2);
+                    dxdy = new Point(0, 1);
+                    break;
+                default:
+                    position = new Point(X_MAX-8, Y_OFFSET + getSeating().offset);
+                    cardPos = new Point(X_MAX-2, Y_OFFSET + getSeating().offset);
+                    dxdy = new Point(-1, 0);
+                    break;
+            }
+            model.getScreenHandler().register(sprite.getName(), position, sprite);
+            Point cardPoint = new Point(cardPos.x + dxdy.x * sprite.getArmLength(),
+                    cardPos.y + dxdy.y * sprite.getArmLength());
+            if ((cardIn && sprite.doingFirstHalf()) || (cardOut && sprite.doingSecondHalf())) {
+                model.getScreenHandler().register(cardSprite.getName(), cardPoint, cardSprite, 1);
+            }
+        }
+
+        public boolean isHalfWay() {
+            return sprite.doingSecondHalf();
+        }
     }
 }

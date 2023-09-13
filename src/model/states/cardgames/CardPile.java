@@ -39,8 +39,9 @@ public class CardPile extends ArrayList<CardGameCard> implements CardGameObject 
         CardGameCard drawn = topCard();
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") +
                 " draw " + drawn.getText() + " from the discard.");
+        state.addHandAnimation(currentPlayer, false, true);
         remove(drawn);
-        state.addHandAnimation(currentPlayer);
+        state.waitForAnimationToFinish();
         currentPlayer.giveCard(drawn, cardGame);
     }
 }
