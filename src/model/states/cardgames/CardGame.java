@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.races.Race;
+import model.states.CardGameState;
 import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
@@ -27,15 +28,11 @@ public abstract class CardGame {
             boolean gender = MyRandom.flipCoin();
             players.add(new CardGamePlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40), true));
         }
-//        cardArea.addElement(0, 0, new CardGameCard(0, MyColors.RED));
-//        cardArea.addElement(cardArea.getColumns()-1, 0, new CardGameCard(0, MyColors.RED));
-//        cardArea.addElement(0, cardArea.getRows()-1, new CardGameCard(0, MyColors.RED));
-//        cardArea.addElement(cardArea.getColumns()-1, cardArea.getRows()-1, new CardGameCard(0, MyColors.RED));
     }
 
     public abstract void setup(GameState state);
 
-    public abstract void playRound(Model model, GameState state);
+    public abstract void playRound(Model model, CardGameState state);
 
     public CardGamePlayer getNPC(int i) {
         return players.get(i);
@@ -104,9 +101,9 @@ public abstract class CardGame {
         cursorEnabled = b;
     }
 
-    public abstract void doCardInHandAction(Model model, GameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
+    public abstract void doCardInHandAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
 
-    public abstract void doOtherCardAction(Model model, GameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
+    public abstract void doOtherCardAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
 
     public void refreshPlayerHand(CardGamePlayer cardGamePlayer) {
         for (int i = 0; i < cardGamePlayer.numberOfCardsInHand(); ++i) {

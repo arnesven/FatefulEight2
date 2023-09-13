@@ -41,6 +41,7 @@ public class CardGamePlayer {
     public void removeCard(CardGameCard card, CardGame cardGame) {
         cards.remove(card);
         if (!isNPC) {
+            cardGame.getMatrix().remove(card);
             cardGame.refreshPlayerHand(this);
         }
     }

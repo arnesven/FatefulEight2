@@ -97,6 +97,7 @@ public class SteppingMatrix<T> {
                 }
             }
         }
+        System.err.println("Could not find " + elem.toString() + " in matrix.");
         throw new NoSuchElementException();
     }
 

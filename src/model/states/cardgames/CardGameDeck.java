@@ -1,7 +1,7 @@
 package model.states.cardgames;
 
 import model.Model;
-import model.states.GameState;
+import model.states.CardGameState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
@@ -48,11 +48,12 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
     }
 
     @Override
-    public void doAction(Model model, GameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
+    public void doAction(Model model, CardGameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
         if (isEmpty()) {
             throw new IllegalStateException("Cannot draw from empty deck.");
         }
         CardGameCard card = drawCard();
+        state.addHandAnimation(currentPlayer);
         if (currentPlayer.isNPC()) {
             state.println(currentPlayer.getName() + " draws a card from the deck.");
         } else {

@@ -1,7 +1,7 @@
 package model.states.cardgames;
 
 import model.Model;
-import model.states.GameState;
+import model.states.CardGameState;
 import view.MyColors;
 import view.sprites.Sprite;
 
@@ -29,7 +29,7 @@ public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
     }
 
     @Override
-    public void doAction(Model model, GameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
+    public void doAction(Model model, CardGameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
         if (currentPlayer.hasCardInHand(this)) {
             cardGame.doCardInHandAction(model, state, currentPlayer, this);
         } else {
@@ -43,5 +43,13 @@ public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
 
     public int getValue() {
         return number;
+    }
+
+    @Override
+    public String toString() {
+        return "CardGameCard{" +
+                "number=" + number +
+                ", color=" + color +
+                '}';
     }
 }

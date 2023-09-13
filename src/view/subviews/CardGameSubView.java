@@ -2,15 +2,10 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.states.cardgames.CardGame;
-import model.states.cardgames.CardGameCard;
-import model.states.cardgames.CardGameObject;
-import model.states.cardgames.CardGamePlayer;
+import model.states.cardgames.*;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.CardGameCursor;
-import view.sprites.FilledBlockSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -20,8 +15,16 @@ public class CardGameSubView extends SubView {
     protected static final Sprite brownBlock = new FilledBlockSprite(MyColors.BROWN);
     private static final int PLAYER_CARDS_OFFSET = X_OFFSET + 2;
     private static final Sprite CURSOR = new CardGameCursor();
+    private static final TableSeating BOTTOM_POSITION = new TableSeating(0, 20);
+    private static final TableSeating TOP_POSITION = new TableSeating(180, 10);
+    private static final TableSeating LOWER_LEFT_POSITION = new TableSeating(90, 28);
+    private static final TableSeating UPPER_LEFT_POSITION = new TableSeating(90, 14);
+    private static final TableSeating LOWER_RIGHT_POSITION = new TableSeating(270, 20);
+    private static final TableSeating UPPER_RIGHT_POSITION = new TableSeating(270, 6);
+
     private CardGame cardGame;
     private static CardHandSpriteSet cardHandSprites = new CardHandSpriteSet(MyColors.PINK);
+    private HandAnimationSprite handAnimation = null;
 
     @Override
     protected void drawArea(Model model) {
@@ -30,6 +33,32 @@ public class CardGameSubView extends SubView {
         drawNPCs(model);
         drawPlayerArea(model);
         drawGameArea(model);
+        drawHandAnimation(model);
+    }
+
+    private void drawHandAnimation(Model model) {
+        if (handAnimation != null) {
+            Point position = null;
+            switch (handAnimation.getSeating().rotation) {
+                case 0:
+                    position = new Point(X_OFFSET + handAnimation.getSeating().offset, Y_MAX-8);
+                    break;
+                case 90:
+                    position = new Point(X_OFFSET, Y_OFFSET + handAnimation.getSeating().offset);
+                    break;
+                case 180:
+                    position = new Point(X_OFFSET + handAnimation.getSeating().offset, Y_OFFSET);
+                    break;
+                default:
+                    position = new Point(X_MAX-8, Y_OFFSET + handAnimation.getSeating().offset);
+                    break;
+            }
+            model.getScreenHandler().register(handAnimation.getName(), position, handAnimation);
+            if (handAnimation.isDone()) {
+                AnimationManager.unregister(handAnimation);
+                handAnimation = null;
+            }
+        }
     }
 
     private void drawGameArea(Model model) {
@@ -85,16 +114,16 @@ public class CardGameSubView extends SubView {
             case 3:
                 drawNPCTop(model, cardGame.getNPC(1));
             case 2:
-                drawNPCToLeft(model, cardGame.getNPC(0), 10);
-                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 18);
+                drawNPCToLeft(model, cardGame.getNPC(0), 6);
+                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 26);
                 break;
             case 5:
-                drawNPCToRight(model, cardGame.getNPC(3), 10);
+                drawNPCToRight(model, cardGame.getNPC(3), 12);
             case 4:
                 drawNPCToLeft(model, cardGame.getNPC(0), 20);
                 drawNPCToLeft(model, cardGame.getNPC(1), 6);
                 drawNPCTop(model, cardGame.getNPC(2));
-                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 24);
+                drawNPCToRight(model, cardGame.getNPC(cardGame.getNumberOfNPCs()-1), 26);
                 break;
         }
     }
@@ -154,5 +183,65 @@ public class CardGameSubView extends SubView {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         return cardGame.handleKeyEvent(keyEvent, model);
+    }
+
+    public void addHandAnimationFor(CardGamePlayer currentPlayer) {
+        TableSeating rotationAndOffset = getRotationAndOffsetForHandAnimation(currentPlayer);
+        this.handAnimation = new HandAnimationSprite(currentPlayer.getRace().getColor(), rotationAndOffset);
+    }
+
+    private TableSeating getRotationAndOffsetForHandAnimation(CardGamePlayer currentPlayer) {
+        if (currentPlayer == cardGame.getCharacterPlayer()) {
+            return BOTTOM_POSITION;
+        }
+        if (currentPlayer == cardGame.getNPC(0)) {
+            switch (cardGame.getNumberOfNPCs()) {
+                case 1:
+                    return TOP_POSITION;
+                case 2:
+                case 3:
+                    return UPPER_LEFT_POSITION;
+                case 4:
+                case 5:
+                    return LOWER_LEFT_POSITION;
+
+            }
+        }
+        if (currentPlayer == cardGame.getNPC(1)) {
+            switch (cardGame.getNumberOfNPCs()) {
+                case 2:
+                    return LOWER_RIGHT_POSITION;
+                case 3:
+                    return TOP_POSITION;
+                case 4:
+                case 5:
+                    return UPPER_LEFT_POSITION;
+            }
+        }
+        if (currentPlayer == cardGame.getNPC(2)) {
+            switch (cardGame.getNumberOfNPCs()) {
+                case 3:
+                    return LOWER_RIGHT_POSITION;
+                case 4:
+                case 5:
+                    return TOP_POSITION;
+            }
+        }
+        if (currentPlayer == cardGame.getNPC(3)) {
+            switch (cardGame.getNumberOfNPCs()) {
+                case 4:
+                    return LOWER_RIGHT_POSITION;
+                case 5:
+                    return UPPER_RIGHT_POSITION;
+            }
+        }
+        return LOWER_RIGHT_POSITION;
+    }
+
+    public boolean handAnimationDone() {
+        if (handAnimation == null) {
+            return true;
+        }
+        return handAnimation.isDone();
     }
 }

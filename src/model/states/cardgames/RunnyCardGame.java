@@ -3,6 +3,7 @@ package model.states.cardgames;
 import model.Model;
 import model.SteppingMatrix;
 import model.races.Race;
+import model.states.CardGameState;
 import model.states.GameState;
 import util.Arithmetics;
 import util.MyRandom;
@@ -41,7 +42,7 @@ public class RunnyCardGame extends CardGame {
     }
 
     @Override
-    public void playRound(Model model, GameState state) {
+    public void playRound(Model model, CardGameState state) {
         int playerIndex = getPlayers().indexOf(startingPlayer);
         while (!gameOver()) {
             CardGamePlayer currentPlayer = getPlayers().get(playerIndex);
@@ -54,15 +55,13 @@ public class RunnyCardGame extends CardGame {
         }
     }
 
-    private void takeNPCTurn(Model model, GameState state, CardGamePlayer currentPlayer) {
+    private void takeNPCTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         state.print(currentPlayer.getName() + "'s turn. ");
         deck.doAction(model, state, this, currentPlayer);
         currentPlayer.getCard(0).doAction(model, state, this, currentPlayer);
-        state.print("Press enter to continue...");
-        state.waitForReturn();
     }
 
-    private void takePlayerTurn(Model model, GameState state, CardGamePlayer currentPlayer) {
+    private void takePlayerTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         CardGameObject deckOrDiscard = null;
         do {
             state.print("It's your turn. Draw a card from the deck or from the discard pile.");
@@ -81,6 +80,7 @@ public class RunnyCardGame extends CardGame {
             cardToDiscard = getMatrix().getSelectedElement();
         } while (!(cardToDiscard instanceof CardGameCard) || !currentPlayer.hasCardInHand((CardGameCard) cardToDiscard));
         cardToDiscard.doAction(model, state, this, currentPlayer);
+        setCursorEnabled(false);
     }
 
     private boolean gameOver() {
@@ -93,14 +93,15 @@ public class RunnyCardGame extends CardGame {
     }
 
     @Override
-    public void doCardInHandAction(Model model, GameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
+    public void doCardInHandAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") + " discards " + cardGameCard.getText() + ".");
         currentPlayer.removeCard(cardGameCard, this);
+        state.addHandAnimation(currentPlayer);
         discardPile.add(cardGameCard);
     }
 
     @Override
-    public void doOtherCardAction(Model model, GameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
+    public void doOtherCardAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         // Unused for Runny
     }
 }

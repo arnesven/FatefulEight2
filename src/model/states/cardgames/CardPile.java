@@ -1,7 +1,7 @@
 package model.states.cardgames;
 
 import model.Model;
-import model.states.GameState;
+import model.states.CardGameState;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
 
@@ -32,14 +32,15 @@ public class CardPile extends ArrayList<CardGameCard> implements CardGameObject 
     }
 
     @Override
-    public void doAction(Model model, GameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
+    public void doAction(Model model, CardGameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
         if (isEmpty()) {
             throw new IllegalStateException("Cannot draw from an empty pile");
         }
         CardGameCard drawn = topCard();
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") +
                 " draw " + drawn.getText() + " from the discard.");
-        currentPlayer.giveCard(drawn, cardGame);
         remove(drawn);
+        state.addHandAnimation(currentPlayer);
+        currentPlayer.giveCard(drawn, cardGame);
     }
 }

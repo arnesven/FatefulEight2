@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.races.Race;
 import model.states.cardgames.CardGame;
+import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.RunnyCardGame;
 import util.MyRandom;
 import util.MyStrings;
@@ -50,5 +51,16 @@ public class CardGameState extends GameState {
         waitForReturn();
         cardGame.playRound(model, this);
         waitForReturn();
+    }
+
+    public void addHandAnimation(CardGamePlayer currentPlayer) {
+        subView.addHandAnimationFor(currentPlayer);
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } while (!subView.handAnimationDone());
     }
 }
