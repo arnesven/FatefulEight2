@@ -37,6 +37,16 @@ public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
         }
     }
 
+    @Override
+    public boolean hasSpecialCursor() {
+        return false;
+    }
+
+    @Override
+    public Sprite getCursorSprite() {
+        return null;
+    }
+
     public MyColors getSuit() {
         return color;
     }

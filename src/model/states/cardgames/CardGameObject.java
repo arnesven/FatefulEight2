@@ -8,4 +8,6 @@ public interface CardGameObject {
     Sprite getSprite();
     String getText();
     void doAction(Model model, CardGameState state, CardGame cardGame, CardGamePlayer currentPlayer);
+    boolean hasSpecialCursor();
+    Sprite getCursorSprite();
 }

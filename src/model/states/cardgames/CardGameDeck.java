@@ -53,7 +53,7 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
             throw new IllegalStateException("Cannot draw from empty deck.");
         }
         CardGameCard card = drawCard();
-        state.addHandAnimation(currentPlayer, false, true);
+        state.addHandAnimation(currentPlayer, false, true, false);
         if (currentPlayer.isNPC()) {
             state.println(currentPlayer.getName() + " draws a card from the deck.");
         } else {
@@ -61,6 +61,16 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
         }
         state.waitForAnimationToFinish();
         currentPlayer.giveCard(card, cardGame);
+    }
+
+    @Override
+    public boolean hasSpecialCursor() {
+        return false;
+    }
+
+    @Override
+    public Sprite getCursorSprite() {
+        return null;
     }
 
     private static Map<MyColors, Sprite[]> makeSpriteMap() {

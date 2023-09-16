@@ -13,6 +13,7 @@ public class CardGamePlayer {
     private Race race;
     private int obols;
     private List<CardGameCard> cards = new ArrayList<>();
+    private int currentBet = 0;
 
     public CardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
         this.name = firstName;
@@ -70,5 +71,14 @@ public class CardGamePlayer {
 
     public boolean isNPC() {
         return isNPC;
+    }
+
+    public void addToBet(int i) {
+        obols -= i;
+        currentBet += i;
+    }
+
+    public int getBet() {
+        return currentBet;
     }
 }

@@ -22,6 +22,7 @@ public class CardGameSubView extends SubView {
     private static final TableSeating UPPER_LEFT_POSITION = new TableSeating(90, 14);
     private static final TableSeating LOWER_RIGHT_POSITION = new TableSeating(270, 20);
     private static final TableSeating UPPER_RIGHT_POSITION = new TableSeating(270, 6);
+    private static final Sprite[] BET_SPRITES = makeBetSprites();
 
     private CardGame cardGame;
     private static CardHandSpriteSet cardHandSprites = new CardHandSpriteSet(MyColors.PINK);
@@ -68,7 +69,11 @@ public class CardGameSubView extends SubView {
                     Point position = new Point(PLAYER_CARDS_OFFSET + col*2, Y_OFFSET + 3 + row*2);
                     model.getScreenHandler().register(spr.getName(), position, spr);
                     if (cardGame.cursorEnabled() && card == cardGame.getSelectedObject()) {
-                        model.getScreenHandler().register(CURSOR.getName(), position, CURSOR);
+                        if (card.hasSpecialCursor()) {
+                            model.getScreenHandler().register(card.getCursorSprite().getName(), position, card.getCursorSprite());
+                        } else {
+                            model.getScreenHandler().register(CURSOR.getName(), position, CURSOR);
+                        }
                     }
                 }
             }
@@ -80,6 +85,7 @@ public class CardGameSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), name, X_OFFSET + 16 - name.length(), Y_MAX-1, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), cardGame.getCharacterPlayer().getObols() + "@",
                 X_OFFSET + 17, Y_MAX-1, MyColors.LIGHT_GRAY, MyColors.BROWN);
+        drawBet(model, cardGame.getCharacterPlayer().getBet(), X_OFFSET+18, Y_MAX-10);
     }
 
     private void drawCorners(Model model) {
@@ -134,6 +140,26 @@ public class CardGameSubView extends SubView {
                 Y_OFFSET, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols() + "@",
                 X_OFFSET+20, Y_OFFSET, MyColors.LIGHT_GRAY, MyColors.BROWN);
+        drawBet(model, npc.getBet(), X_OFFSET + 12, Y_OFFSET + 4);
+    }
+
+    private void drawBet(Model model, int bet, int x, int y) {
+        if (bet == 0) {
+            return;
+        }
+        Sprite sprite = null;
+        if (bet <= 5) {
+            sprite = BET_SPRITES[bet-1];
+        } else if (bet < 10) {
+            sprite = BET_SPRITES[5];
+        } else if (bet < 15) {
+            sprite = BET_SPRITES[6];
+        } else {
+            sprite = BET_SPRITES[7];
+        }
+        model.getScreenHandler().register(sprite.getName(), new Point(x, y), sprite);
+        BorderFrame.drawString(model.getScreenHandler(), bet + "@",
+                x+2, y+1, MyColors.LIGHT_GRAY, MyColors.BROWN);
     }
 
     private void drawNPCToLeft(Model model, CardGamePlayer npc, int firstNPCY) {
@@ -146,7 +172,8 @@ public class CardGameSubView extends SubView {
                     Y_OFFSET + firstNPCY + i, MyColors.WHITE, MyColors.BLACK);
         }
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols() + "@",
-                X_OFFSET, Y_OFFSET + firstNPCY + Math.min(6, npc.getName().length()) + 1, MyColors.LIGHT_GRAY, MyColors.BROWN);
+                X_OFFSET, Y_OFFSET + firstNPCY + Math.max(6, npc.getName().length()) + 1, MyColors.LIGHT_GRAY, MyColors.BROWN);
+        drawBet(model, npc.getBet(), X_OFFSET + 6, Y_OFFSET + firstNPCY+6);
     }
 
     private void drawNPCToRight(Model model, CardGamePlayer npc, int firstNPCY) {
@@ -160,7 +187,8 @@ public class CardGameSubView extends SubView {
         }
         String obolsString = npc.getObols() + "@";
         BorderFrame.drawString(model.getScreenHandler(), obolsString,
-                X_MAX-obolsString.length(), Y_OFFSET + firstNPCY-3, MyColors.LIGHT_GRAY, MyColors.BROWN);
+                X_MAX-obolsString.length()-1, Y_OFFSET + firstNPCY-3, MyColors.LIGHT_GRAY, MyColors.BROWN);
+        drawBet(model, npc.getBet(), X_MAX-9, Y_OFFSET + firstNPCY-6);
     }
 
     @Override
@@ -182,9 +210,9 @@ public class CardGameSubView extends SubView {
         return cardGame.handleKeyEvent(keyEvent, model);
     }
 
-    public void addHandAnimationFor(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut) {
+    public void addHandAnimationFor(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut, boolean coin) {
         TableSeating rotationAndOffset = getRotationAndOffsetForHandAnimation(currentPlayer);
-        this.handAnimation = new HandAnimation(cardIn, cardOut, currentPlayer, rotationAndOffset);
+        this.handAnimation = new HandAnimation(cardIn, cardOut, coin, currentPlayer, rotationAndOffset);
     }
 
     private TableSeating getRotationAndOffsetForHandAnimation(CardGamePlayer currentPlayer) {
@@ -254,16 +282,30 @@ public class CardGameSubView extends SubView {
         return this.cardDealtAnimation == null || this.cardDealtAnimation.checkForDone();
     }
 
+    private static Sprite[] makeBetSprites() {
+        Sprite[] result = new Sprite[8];
+        for (int col = 0; col < 2; ++col) {
+            for (int row = 0; row < 4; ++row)
+                result[col*4 + row] = new Sprite16x16("betsprite"+col+"x"+row, "cardgame.png", 0x10*row + col + 0xE,
+                        MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.PINK, MyColors.BEIGE);
+        }
+        return result;
+    }
+
     private static class HandAnimation {
+        private static final Sprite COIN_SPRITE = new Sprite16x16("betcoin", "cardgame.png", 0x0D,
+                MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.PINK, MyColors.CYAN);
         private final HandAnimationSprite sprite;
         private final TableSeating rotationAndOffset;
         private final Sprite32x32 cardSprite;
         private final boolean cardIn;
         private final boolean cardOut;
+        private final boolean coin;
 
-        public HandAnimation(boolean cardIn, boolean cardOut, CardGamePlayer currentPlayer, TableSeating rotationAndOffset) {
+        public HandAnimation(boolean cardIn, boolean cardOut, boolean coin, CardGamePlayer currentPlayer, TableSeating rotationAndOffset) {
             this.cardIn = cardIn;
             this.cardOut = cardOut;
+            this.coin = coin;
             this.sprite = new HandAnimationSprite(currentPlayer.getRace().getColor(), rotationAndOffset);
             this.rotationAndOffset = rotationAndOffset;
             this.cardSprite = new Sprite32x32("handanicard", "cardgame.png", 0x15,
@@ -292,6 +334,9 @@ public class CardGameSubView extends SubView {
             if ((cardIn && sprite.doingFirstHalf()) || (cardOut && sprite.doingSecondHalf())) {
                 model.getScreenHandler().register(cardSprite.getName(), cardPoint, cardSprite, 1);
             }
+            if (coin && sprite.doingFirstHalf()) {
+                model.getScreenHandler().register(COIN_SPRITE.getName(), cardPoint, COIN_SPRITE, 1);
+            }
         }
 
         public boolean isHalfWay() {
@@ -310,7 +355,7 @@ public class CardGameSubView extends SubView {
             Point cardPos = seating.getHandPosition();
             Point center = new Point(X_OFFSET + (X_MAX - X_OFFSET)/2 - 2, Y_OFFSET + (Y_MAX - Y_OFFSET)/2 - 2);
             double distance = cardPos.distance(center);
-            this.animationSteps = (int)Math.round(distance*2);
+            this.animationSteps = (int)Math.round(distance);
             this.dxdy = new Point2D.Double((cardPos.x - center.x) / (double)animationSteps,
                                     (cardPos.y - center.y) / (double)animationSteps);
             currentPos = new Point2D.Double(center.x, center.y);
@@ -334,7 +379,7 @@ public class CardGameSubView extends SubView {
             Point totalPosition = new Point((int)(Math.round(currentPos.x * 8)), (int)(Math.round(currentPos.y * 8)));
             Point wholePosition = new Point(totalPosition.x / 8, totalPosition.y / 8);
             Point shift = new Point(totalPosition.x % 8, totalPosition.y % 8);
-            Sprite spriteToUse = SPRITES[(step / 6) % 4];
+            Sprite spriteToUse = SPRITES[(step / 3) % 4];
             model.getScreenHandler().register(spriteToUse.getName(), wholePosition, spriteToUse, 2, shift.x, shift.y);
         }
 

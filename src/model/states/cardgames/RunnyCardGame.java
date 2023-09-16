@@ -4,7 +4,6 @@ import model.Model;
 import model.SteppingMatrix;
 import model.races.Race;
 import model.states.CardGameState;
-import model.states.GameState;
 import util.Arithmetics;
 import util.MyRandom;
 
@@ -33,12 +32,12 @@ public class RunnyCardGame extends CardGame {
         matrix.clear();
         addDeckToPlayArea();
         super.dealCardsToPlayers(state, deck, 6);
+        state.print("The deck is shuffled and 6 cards are dealt to each player. ");
         discardPile.add(deck.remove(0));
         matrix.addElement(matrix.getColumns()/2, matrix.getRows()/2-1, discardPile);
         this.startingPlayer = MyRandom.sample(getPlayers());
         foldedPlayers = new HashSet<>();
-        state.println("The deck is shuffled and 6 cards are dealt to each player. " + startingPlayer.getName() +
-                " will start the game. Press enter to continue.");
+        state.println(startingPlayer.getName() + " will start the game. Press enter to continue.");
     }
 
     @Override
@@ -57,21 +56,28 @@ public class RunnyCardGame extends CardGame {
 
     private void takeNPCTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         state.print(currentPlayer.getName() + "'s turn. ");
+        RaiseCardGameObject raise = new RaiseCardGameObject();
+        raise.doAction(model, state, this, currentPlayer);
         deck.doAction(model, state, this, currentPlayer);
         currentPlayer.getCard(0).doAction(model, state, this, currentPlayer);
     }
 
     private void takePlayerTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
+        RaiseCardGameObject raise = new RaiseCardGameObject();
+        getMatrix().addElement(6, getMatrix().getRows()-2, raise);
         CardGameObject deckOrDiscard = null;
         do {
-            state.print("It's your turn. Draw a card from the deck or from the discard pile.");
-            setCursorEnabled(true);
-            state.waitForReturn();
-            deckOrDiscard = getMatrix().getSelectedElement();
-        } while (deckOrDiscard != deck && deckOrDiscard != discardPile);
-        setCursorEnabled(false);
-        deckOrDiscard.doAction(model, state, this, currentPlayer);
+            do {
+                state.print("It's your turn. Draw a card from the deck or from the discard pile, or raise the bet.");
+                setCursorEnabled(true);
+                state.waitForReturn();
+                deckOrDiscard = getMatrix().getSelectedElement();
+            } while (deckOrDiscard != deck && deckOrDiscard != discardPile && deckOrDiscard != raise);
+            setCursorEnabled(false);
+            deckOrDiscard.doAction(model, state, this, currentPlayer);
+        } while (deckOrDiscard == raise);
 
+        getMatrix().remove(raise);
         CardGameObject cardToDiscard = null;
         do {
             state.print("Select a card from your hand to discard.");
@@ -96,7 +102,7 @@ public class RunnyCardGame extends CardGame {
     public void doCardInHandAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") + " discards " + cardGameCard.getText() + ".");
         currentPlayer.removeCard(cardGameCard, this);
-        state.addHandAnimation(currentPlayer, true, false);
+        state.addHandAnimation(currentPlayer, true, false, false);
         discardPile.add(cardGameCard);
         state.waitForAnimationToFinish();
     }

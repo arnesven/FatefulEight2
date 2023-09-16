@@ -7,11 +7,9 @@ import model.races.Race;
 import model.states.CardGameState;
 import model.states.GameState;
 import util.MyRandom;
-import view.MyColors;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class CardGame {
