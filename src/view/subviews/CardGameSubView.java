@@ -9,6 +9,7 @@ import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 
 public class CardGameSubView extends SubView {
 
@@ -25,6 +26,7 @@ public class CardGameSubView extends SubView {
     private CardGame cardGame;
     private static CardHandSpriteSet cardHandSprites = new CardHandSpriteSet(MyColors.PINK);
     private HandAnimation handAnimation = null;
+    private CardAnimation cardDealtAnimation = null;
 
     @Override
     protected void drawArea(Model model) {
@@ -34,6 +36,16 @@ public class CardGameSubView extends SubView {
         drawPlayerArea(model);
         drawGameArea(model);
         drawHandAnimation(model);
+        drawCardDealtAnimation(model);
+    }
+
+    private void drawCardDealtAnimation(Model model) {
+        if (cardDealtAnimation != null) {
+            cardDealtAnimation.drawYourself(model);
+            if (cardDealtAnimation.checkForDone()) {
+                cardDealtAnimation = null;
+            }
+        }
     }
 
     private void drawHandAnimation(Model model) {
@@ -234,6 +246,14 @@ public class CardGameSubView extends SubView {
         return handAnimation.isHalfWay();
     }
 
+    public void addCardDealtAnimation(CardGamePlayer p) {
+        this.cardDealtAnimation = new CardAnimation(getRotationAndOffsetForHandAnimation(p));
+    }
+
+    public boolean cardDealtAnimationDone() {
+        return this.cardDealtAnimation == null || this.cardDealtAnimation.checkForDone();
+    }
+
     private static class HandAnimation {
         private final HandAnimationSprite sprite;
         private final TableSeating rotationAndOffset;
@@ -263,31 +283,9 @@ public class CardGameSubView extends SubView {
         }
 
         public void drawYourself(Model model) {
-            Point position = null;
-            Point dxdy = null;
-            Point cardPos = null;
-            switch (getSeating().rotation) {
-                case 0:
-                    position = new Point(X_OFFSET + getSeating().offset, Y_MAX-8);
-                    cardPos = new Point(X_OFFSET + getSeating().offset-2, Y_MAX-2);
-                    dxdy = new Point(0, -1);
-                    break;
-                case 90:
-                    position = new Point(X_OFFSET, Y_OFFSET + getSeating().offset);
-                    cardPos = new Point(X_OFFSET-2, Y_OFFSET + getSeating().offset-2);
-                    dxdy = new Point(1, 0);
-                    break;
-                case 180:
-                    position = new Point(X_OFFSET + getSeating().offset, Y_OFFSET);
-                    cardPos = new Point(X_OFFSET + getSeating().offset, Y_OFFSET-2);
-                    dxdy = new Point(0, 1);
-                    break;
-                default:
-                    position = new Point(X_MAX-8, Y_OFFSET + getSeating().offset);
-                    cardPos = new Point(X_MAX-2, Y_OFFSET + getSeating().offset);
-                    dxdy = new Point(-1, 0);
-                    break;
-            }
+            Point position = getSeating().getHandPosition();
+            Point cardPos = getSeating().getCardPosition();
+            Point dxdy = getSeating().getHandDirection();
             model.getScreenHandler().register(sprite.getName(), position, sprite);
             Point cardPoint = new Point(cardPos.x + dxdy.x * sprite.getArmLength(),
                     cardPos.y + dxdy.y * sprite.getArmLength());
@@ -298,6 +296,67 @@ public class CardGameSubView extends SubView {
 
         public boolean isHalfWay() {
             return sprite.doingSecondHalf();
+        }
+    }
+
+    private static class CardAnimation implements Animation {
+        private static final Sprite[] SPRITES = makeSprites();
+        private final Point2D.Double dxdy;
+        private final Point2D.Double currentPos;
+        private final int animationSteps;
+        private int step;
+
+        public CardAnimation(TableSeating seating) {
+            Point cardPos = seating.getHandPosition();
+            Point center = new Point(X_OFFSET + (X_MAX - X_OFFSET)/2 - 2, Y_OFFSET + (Y_MAX - Y_OFFSET)/2 - 2);
+            double distance = cardPos.distance(center);
+            this.animationSteps = (int)Math.round(distance*2);
+            this.dxdy = new Point2D.Double((cardPos.x - center.x) / (double)animationSteps,
+                                    (cardPos.y - center.y) / (double)animationSteps);
+            currentPos = new Point2D.Double(center.x, center.y);
+            this.step = 0;
+            AnimationManager.register(this);
+        }
+
+        @Override
+        public void stepAnimation(long elapsedTimeMs, Model model) {
+            if (step < animationSteps) {
+                currentPos.x += dxdy.x;
+                currentPos.y += dxdy.y;
+                step++;
+            }
+        }
+
+        @Override
+        public void synch() { }
+
+        public void drawYourself(Model model) {
+            Point totalPosition = new Point((int)(Math.round(currentPos.x * 8)), (int)(Math.round(currentPos.y * 8)));
+            Point wholePosition = new Point(totalPosition.x / 8, totalPosition.y / 8);
+            Point shift = new Point(totalPosition.x % 8, totalPosition.y % 8);
+            Sprite spriteToUse = SPRITES[(step / 6) % 4];
+            model.getScreenHandler().register(spriteToUse.getName(), wholePosition, spriteToUse, 2, shift.x, shift.y);
+        }
+
+        public boolean checkForDone() {
+            if (step == animationSteps) {
+                AnimationManager.unregister(this);
+            }
+            return step >= animationSteps;
+        }
+
+        private static Sprite[] makeSprites() {
+            Sprite[] sprites = new Sprite[]{new Sprite32x32("dealcard1", "cardgame.png", 0x15,
+                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN),
+                                            new Sprite32x32("dealcard2", "cardgame.png", 0x16,
+                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN),
+                                            new Sprite32x32("dealcard3", "cardgame.png", 0x15,
+                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN),
+                                            new Sprite32x32("dealcard4", "cardgame.png", 0x16,
+                                                    MyColors.BLACK, MyColors.PINK, MyColors.PINK, MyColors.CYAN)};
+            sprites[2].setRotation(90);
+            sprites[3].setRotation(90);
+            return sprites;
         }
     }
 }

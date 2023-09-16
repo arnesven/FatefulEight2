@@ -28,11 +28,11 @@ public class RunnyCardGame extends CardGame {
     }
 
     @Override
-    public void setup(GameState state) {
+    public void setup(CardGameState state) {
         SteppingMatrix<CardGameObject> matrix = getMatrix();
         matrix.clear();
         addDeckToPlayArea();
-        super.dealCardsToPlayers(deck, 6);
+        super.dealCardsToPlayers(state, deck, 6);
         discardPile.add(deck.remove(0));
         matrix.addElement(matrix.getColumns()/2, matrix.getRows()/2-1, discardPile);
         this.startingPlayer = MyRandom.sample(getPlayers());

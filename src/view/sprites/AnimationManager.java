@@ -29,7 +29,7 @@ public class AnimationManager {
         animatons.forEach((animation -> animation.synch()));
     }
 
-    public static void unregister(Animation ani) {
+    public static synchronized void unregister(Animation ani) {
         animatons.remove(ani);
         pausableAnimations.remove(ani);
     }

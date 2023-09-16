@@ -73,4 +73,15 @@ public class CardGameState extends GameState {
             }
         } while (!subView.handAnimationDone());
     }
+
+    public void addCardDealtAnimation(CardGamePlayer p) {
+        subView.addCardDealtAnimation(p);
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } while (!subView.cardDealtAnimationDone());
+    }
 }

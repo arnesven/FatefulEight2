@@ -30,7 +30,7 @@ public abstract class CardGame {
         }
     }
 
-    public abstract void setup(GameState state);
+    public abstract void setup(CardGameState state);
 
     public abstract void playRound(Model model, CardGameState state);
 
@@ -54,9 +54,10 @@ public abstract class CardGame {
         return players;
     }
 
-    protected void dealCardsToPlayers(CardGameDeck deck, int amount) {
-        for (CardGamePlayer p : players) {
-            for (int i = 0; i < amount; ++i) {
+    protected void dealCardsToPlayers(CardGameState state, CardGameDeck deck, int amount) {
+        for (int i = 0; i < amount; ++i) {
+            for (CardGamePlayer p : players) {
+                state.addCardDealtAnimation(p);
                 p.giveCard(deck.drawCard(), this);
             }
         }
