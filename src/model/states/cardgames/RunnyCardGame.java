@@ -32,11 +32,16 @@ public class RunnyCardGame extends CardGame {
         matrix.clear();
         addDeckToPlayArea();
         super.dealCardsToPlayers(state, deck, 6);
-        state.print("The deck is shuffled and 6 cards are dealt to each player. ");
+        state.println("The deck is shuffled and 6 cards are dealt to each player. ");
         discardPile.add(deck.remove(0));
         matrix.addElement(matrix.getColumns()/2, matrix.getRows()/2-1, discardPile);
         this.startingPlayer = MyRandom.sample(getPlayers());
         foldedPlayers = new HashSet<>();
+        state.println("Each player antes 1 obol.");
+        for (CardGamePlayer p : getPlayers()) {
+            state.addHandAnimation(p, false, false, true);
+            p.addToBet(1);
+        }
         state.println(startingPlayer.getName() + " will start the game. Press enter to continue.");
     }
 
@@ -63,12 +68,13 @@ public class RunnyCardGame extends CardGame {
     }
 
     private void takePlayerTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
+        state.println("It's your turn. ");
         RaiseCardGameObject raise = new RaiseCardGameObject();
         getMatrix().addElement(6, getMatrix().getRows()-2, raise);
         CardGameObject deckOrDiscard = null;
         do {
             do {
-                state.print("It's your turn. Draw a card from the deck or from the discard pile, or raise the bet.");
+                state.print("Draw a card from the deck or from the discard pile, or raise the bet.");
                 setCursorEnabled(true);
                 state.waitForReturn();
                 deckOrDiscard = getMatrix().getSelectedElement();
