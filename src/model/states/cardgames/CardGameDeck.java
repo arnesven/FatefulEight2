@@ -39,6 +39,9 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
 
     @Override
     public Sprite getSprite() {
+        if (isEmpty()) {
+            return BLANK_CARD_SPRITE;
+        }
         return SPRITE;
     }
 
@@ -50,7 +53,8 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
     @Override
     public void doAction(Model model, CardGameState state, CardGame cardGame, CardGamePlayer currentPlayer) {
         if (isEmpty()) {
-            throw new IllegalStateException("Cannot draw from empty deck.");
+            state.println("Deck is empty. The discard is reshuffled.");
+            cardGame.reshuffleDeck();
         }
         CardGameCard card = drawCard();
         state.addHandAnimation(currentPlayer, false, true, false);

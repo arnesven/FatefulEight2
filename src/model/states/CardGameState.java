@@ -51,6 +51,7 @@ public class CardGameState extends GameState {
         waitForReturn();
         cardGame.playRound(model, this);
         waitForReturn();
+        //model.getParty().setObols(cardGame.getPlayerObols());
     }
 
     public void addHandAnimation(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut, boolean coin) {

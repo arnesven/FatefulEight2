@@ -6,6 +6,7 @@ import model.races.Race;
 import model.states.CardGameState;
 import util.Arithmetics;
 import util.MyRandom;
+import view.MyColors;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,27 +15,20 @@ import java.util.Set;
 public class RunnyCardGame extends CardGame {
 
     public static final int MAX_NUMBER_OF_PLAYERS = 4;
-    private final CardGameDeck deck;
-    private CardPile discardPile = new CardPile();
     private CardGamePlayer startingPlayer;
-    private boolean winDeclared = false;
+    private CardGamePlayer winner = null;
     private Set<CardGamePlayer> foldedPlayers;
 
     public RunnyCardGame(List<Race> npcRaces) {
-        super("Runny", npcRaces);
-        this.deck = new CardGameDeck();
-        addDeckToPlayArea();
+        super("Runny", npcRaces, new CardGameDeck());
     }
 
     @Override
     public void setup(CardGameState state) {
         SteppingMatrix<CardGameObject> matrix = getMatrix();
-        matrix.clear();
-        addDeckToPlayArea();
-        super.dealCardsToPlayers(state, deck, 6);
+        super.dealCardsToPlayers(state,6);
         state.println("The deck is shuffled and 6 cards are dealt to each player. ");
-        discardPile.add(deck.remove(0));
-        matrix.addElement(matrix.getColumns()/2, matrix.getRows()/2-1, discardPile);
+        getDiscard().add(getDeck().remove(0));
         this.startingPlayer = MyRandom.sample(getPlayers());
         foldedPlayers = new HashSet<>();
         state.println("Each player antes 1 obol.");
@@ -48,7 +42,7 @@ public class RunnyCardGame extends CardGame {
     @Override
     public void playRound(Model model, CardGameState state) {
         int playerIndex = getPlayers().indexOf(startingPlayer);
-        while (!gameOver()) {
+        do {
             CardGamePlayer currentPlayer = getPlayers().get(playerIndex);
             if (currentPlayer.isNPC()) {
                 takeNPCTurn(model, state, currentPlayer);
@@ -56,14 +50,33 @@ public class RunnyCardGame extends CardGame {
                 takePlayerTurn(model, state, currentPlayer);
             }
             playerIndex = Arithmetics.incrementWithWrap(playerIndex, getPlayers().size());
+        } while (!checkForWin(model, state));
+        if (winner.isNPC()) {
+            state.print(winner.getName());
+        } else {
+            state.print("You");
         }
+        int winPot = makeWinPot();
+        state.println(" win the pot of " + winPot + " obols.");
+        winner.addToObols(winPot);
+    }
+
+    private int makeWinPot() {
+        int sum = 0;
+        for (CardGamePlayer player : getPlayers()) {
+            sum += player.getBet();
+            player.resetBet();
+        }
+        return sum;
     }
 
     private void takeNPCTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         state.print(currentPlayer.getName() + "'s turn. ");
-        RaiseCardGameObject raise = new RaiseCardGameObject();
-        raise.doAction(model, state, this, currentPlayer);
-        deck.doAction(model, state, this, currentPlayer);
+        if (MyRandom.randInt(3) == 0) {
+            RaiseCardGameObject raise = new RaiseCardGameObject();
+            raise.doAction(model, state, this, currentPlayer);
+        }
+        getDeck().doAction(model, state, this, currentPlayer);
         currentPlayer.getCard(0).doAction(model, state, this, currentPlayer);
     }
 
@@ -71,17 +84,47 @@ public class RunnyCardGame extends CardGame {
         state.println("It's your turn. ");
         drawFromDeckOrDiscard(model, state, currentPlayer);
         discardFromHand(model, state, currentPlayer);
-        raiseOrPass(model, state, currentPlayer);
+        if (hasWinningHand(currentPlayer)) {
+            state.println("You have won the game!");
+            winner = currentPlayer;
+        } else {
+            raiseOrPass(model, state, currentPlayer);
+        }
+    }
+
+    private boolean hasWinningHand(CardGamePlayer player) {
+        int lastValue = -1;
+        MyColors lastSuit = null;
+        int setCounter = 0;
+        int runCounter = 0;
+        for (int i = 0; i < player.numberOfCardsInHand(); ++i) {
+            CardGameCard card = player.getCard(i);
+            if (lastValue == card.getValue()) {
+                setCounter++;
+            } else if (lastValue == card.getValue()-1 && lastSuit == card.getSuit()) {
+                runCounter++;
+            } else {
+                if (lastValue != -1 && setCounter < 3 && runCounter < 3) {
+                    return false;
+                } else {
+                    setCounter = 0;
+                    runCounter = 0;
+                }
+            }
+            lastValue = card.getValue();
+            lastSuit = card.getSuit();
+        }
+        return setCounter >= 3 || runCounter >= 3;
     }
 
     private void drawFromDeckOrDiscard(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         CardGameObject deckOrDiscard = null;
         setCursorEnabled(true);
         do {
-            state.print("Draw a card from the deck or from the discard pile, or raise the bet.");
+            state.print("Draw a card from the deck or from the discard pile.");
             state.waitForReturn();
             deckOrDiscard = getMatrix().getSelectedElement();
-        } while (deckOrDiscard != deck && deckOrDiscard != discardPile);
+        } while (deckOrDiscard != getDeck() && deckOrDiscard != getDiscard());
         setCursorEnabled(false);
         deckOrDiscard.doAction(model, state, this, currentPlayer);
 
@@ -119,13 +162,8 @@ public class RunnyCardGame extends CardGame {
         getMatrix().remove(pass);
     }
 
-    private boolean gameOver() {
-        return foldedPlayers.size() == getPlayers().size()-1 || winDeclared;
-    }
-
-    private void addDeckToPlayArea() {
-        SteppingMatrix<CardGameObject> matrix = getMatrix();
-        matrix.addElement(matrix.getColumns()/2-1, matrix.getRows()/2-1, deck);
+    private boolean checkForWin(Model model, CardGameState state) {
+        return foldedPlayers.size() == getPlayers().size()-1 || winner != null;
     }
 
     @Override
@@ -133,7 +171,7 @@ public class RunnyCardGame extends CardGame {
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") + " discards " + cardGameCard.getText() + ".");
         currentPlayer.removeCard(cardGameCard, this);
         state.addHandAnimation(currentPlayer, true, false, false);
-        discardPile.add(cardGameCard);
+        getDiscard().add(cardGameCard);
         state.waitForAnimationToFinish();
     }
 

@@ -10,6 +10,7 @@ import util.MyRandom;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class CardGame {
@@ -18,14 +19,19 @@ public abstract class CardGame {
     private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 16);
     private final String name;
     private boolean cursorEnabled = false;
+    private final CardGameDeck deck;
+    private CardPile discardPile = new CardPile();
 
-    public CardGame(String name, List<Race> npcRaces) {
+    public CardGame(String name, List<Race> npcRaces, CardGameDeck deck) {
         this.name = name;
         this.players = new ArrayList<>();
         for (Race r : npcRaces) {
             boolean gender = MyRandom.flipCoin();
             players.add(new CardGamePlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40), true));
         }
+        this.deck = deck;
+        cardArea.addElement(cardArea.getColumns()/2-1, cardArea.getRows()/2-1, deck);
+        cardArea.addElement(cardArea.getColumns()/2, cardArea.getRows()/2-1, discardPile);
     }
 
     public abstract void setup(CardGameState state);
@@ -52,7 +58,7 @@ public abstract class CardGame {
         return players;
     }
 
-    protected void dealCardsToPlayers(CardGameState state, CardGameDeck deck, int amount) {
+    protected void dealCardsToPlayers(CardGameState state, int amount) {
         for (int i = 0; i < amount; ++i) {
             for (CardGamePlayer p : players) {
                 state.addCardDealtAnimation(p);
@@ -114,5 +120,23 @@ public abstract class CardGame {
         for (int i = 0; i < characterPlayer.numberOfCardsInHand(); ++i) {
             cardArea.addElement(offset + i, cardArea.getRows()-1, characterPlayer.getCard(i));
         }
+    }
+
+    public int getPlayerObols() {
+        return characterPlayer.getObols();
+    }
+
+    public void reshuffleDeck() {
+        deck.addAll(discardPile);
+        discardPile.clear();
+        Collections.shuffle(deck);
+    }
+
+    protected CardGameDeck getDeck() {
+        return deck;
+    }
+
+    protected CardPile getDiscard() {
+        return discardPile;
     }
 }

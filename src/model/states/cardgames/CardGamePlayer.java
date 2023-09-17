@@ -61,7 +61,7 @@ public class CardGamePlayer {
         return cards.size();
     }
 
-    public CardGameObject getCard(int i) {
+    public CardGameCard getCard(int i) {
         return cards.get(i);
     }
 
@@ -80,5 +80,13 @@ public class CardGamePlayer {
 
     public int getBet() {
         return currentBet;
+    }
+
+    public void resetBet() {
+        currentBet = 0;
+    }
+
+    public void addToObols(int winPot) {
+        obols += winPot;
     }
 }

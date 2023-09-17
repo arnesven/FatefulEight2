@@ -3,13 +3,10 @@ package model.states.cardgames;
 import model.Model;
 import model.states.CardGameState;
 import view.sprites.Sprite;
-import view.sprites.Sprite16x16;
 
 import java.util.ArrayList;
 
 public class CardPile extends ArrayList<CardGameCard> implements CardGameObject {
-
-    private static final Sprite BLANK = new Sprite16x16("blankcard", "cardgame.png", 0x21);
 
     public CardGameCard topCard() {
         return get(size()-1);
@@ -18,7 +15,7 @@ public class CardPile extends ArrayList<CardGameCard> implements CardGameObject 
     @Override
     public Sprite getSprite() {
         if (isEmpty()) {
-            return BLANK;
+            return BLANK_CARD_SPRITE;
         }
         return topCard().getSprite();
     }
