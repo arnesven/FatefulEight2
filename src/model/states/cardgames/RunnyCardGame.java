@@ -69,30 +69,54 @@ public class RunnyCardGame extends CardGame {
 
     private void takePlayerTurn(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         state.println("It's your turn. ");
-        RaiseCardGameObject raise = new RaiseCardGameObject();
-        getMatrix().addElement(6, getMatrix().getRows()-2, raise);
-        CardGameObject deckOrDiscard = null;
-        do {
-            do {
-                state.print("Draw a card from the deck or from the discard pile, or raise the bet.");
-                setCursorEnabled(true);
-                state.waitForReturn();
-                deckOrDiscard = getMatrix().getSelectedElement();
-            } while (deckOrDiscard != deck && deckOrDiscard != discardPile && deckOrDiscard != raise);
-            setCursorEnabled(false);
-            deckOrDiscard.doAction(model, state, this, currentPlayer);
-        } while (deckOrDiscard == raise);
+        drawFromDeckOrDiscard(model, state, currentPlayer);
+        discardFromHand(model, state, currentPlayer);
+        raiseOrPass(model, state, currentPlayer);
+    }
 
-        getMatrix().remove(raise);
+    private void drawFromDeckOrDiscard(Model model, CardGameState state, CardGamePlayer currentPlayer) {
+        CardGameObject deckOrDiscard = null;
+        setCursorEnabled(true);
+        do {
+            state.print("Draw a card from the deck or from the discard pile, or raise the bet.");
+            state.waitForReturn();
+            deckOrDiscard = getMatrix().getSelectedElement();
+        } while (deckOrDiscard != deck && deckOrDiscard != discardPile);
+        setCursorEnabled(false);
+        deckOrDiscard.doAction(model, state, this, currentPlayer);
+
+    }
+
+    private void discardFromHand(Model model, CardGameState state, CardGamePlayer currentPlayer) {
         CardGameObject cardToDiscard = null;
+        setCursorEnabled(true);
         do {
             state.print("Select a card from your hand to discard.");
-            setCursorEnabled(true);
             state.waitForReturn();
             cardToDiscard = getMatrix().getSelectedElement();
         } while (!(cardToDiscard instanceof CardGameCard) || !currentPlayer.hasCardInHand((CardGameCard) cardToDiscard));
-        cardToDiscard.doAction(model, state, this, currentPlayer);
         setCursorEnabled(false);
+        cardToDiscard.doAction(model, state, this, currentPlayer);
+    }
+
+    private void raiseOrPass(Model model, CardGameState state, CardGamePlayer currentPlayer) {
+        RaiseCardGameObject raise = new RaiseCardGameObject();
+        getMatrix().addElement(4, getMatrix().getRows()-2, raise);
+        ButtonCardGameObject pass = new PassCardGameObject();
+        getMatrix().addElement(6, getMatrix().getRows()-2, pass);
+        CardGameObject button = null;
+        getMatrix().setSelectedPoint(pass);
+        setCursorEnabled(true);
+        do {
+            state.print("Would you like to raise the bet, or pass?");
+            state.waitForReturn();
+            button = getMatrix().getSelectedElement();
+        } while (button != raise && button != pass);
+        setCursorEnabled(false);
+        button.doAction(model, state, this, currentPlayer);
+
+        getMatrix().remove(raise);
+        getMatrix().remove(pass);
     }
 
     private boolean gameOver() {

@@ -7,12 +7,9 @@ import view.sprites.CardGameButtonSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-import java.util.List;
-
-public class RaiseCardGameObject implements CardGameObject {
+public class RaiseCardGameObject extends ButtonCardGameObject {
 
     private static final Sprite SPRITE = new CardGameButtonSprite(0x13, MyColors.BEIGE);
-    private static final Sprite CURSOR = new ButtonCursorSprite();
 
     @Override
     public Sprite getSprite() {
@@ -32,21 +29,4 @@ public class RaiseCardGameObject implements CardGameObject {
         currentPlayer.addToBet(1);
     }
 
-    @Override
-    public boolean hasSpecialCursor() {
-        return true;
-    }
-
-    @Override
-    public Sprite getCursorSprite() {
-        return CURSOR;
-    }
-
-    private static class ButtonCursorSprite extends LoopingSprite {
-        public ButtonCursorSprite() {
-            super("cardgamebuttoncursor", "cardgame.png", 0x23, 32, 16);
-            setFrames(2);
-            setColor1(MyColors.YELLOW);
-        }
-    }
 }
