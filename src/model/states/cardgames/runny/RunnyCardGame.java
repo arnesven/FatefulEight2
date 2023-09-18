@@ -55,28 +55,43 @@ public class RunnyCardGame extends CardGame {
 
     @Override
     public void playRound(Model model, CardGameState state) {
-        int playerIndex = getPlayers().indexOf(startingPlayer);
-        do {
+        for (int playerIndex = getPlayers().indexOf(startingPlayer); !checkForWin(model, state);
+                playerIndex = Arithmetics.incrementWithWrap(playerIndex, getPlayers().size())) {
             CardGamePlayer currentPlayer = getPlayers().get(playerIndex);
-            currentPlayer.takeTurn(model, state, this);
-            playerIndex = Arithmetics.incrementWithWrap(playerIndex, getPlayers().size());
-        } while (!checkForWin(model, state));
+            if (!foldedPlayers.contains(currentPlayer)) {
+                currentPlayer.takeTurn(model, state, this);
+            }
+        }
         if (winner.isNPC()) {
-            state.print(winner.getName());
+            state.println(winner.getName() + " wins");
+            winner.clearCards();
+            state.println(winner.getName() + ": \"" +
+                    MyRandom.sample(List.of("I'm good at this",
+                    "I knew I had it in me.",
+                    "You just don't stand a chance.",
+                    "Looks like those obols are mine.",
+                    "Huzzah!", "At last!", "Wohoo, I won!",
+                    "Perfection.", "I love this game!",
+                    "That was equal parts luck and skill.")) +
+                    "\"");
         } else {
-            state.print("You");
+            state.print("You win");
         }
         int winPot = makeWinPot();
-        state.println(" win the pot of " + winPot + " obols.");
+        state.println(" the pot of " + winPot + " obols.");
         winner.addToObols(winPot);
     }
 
     @Override
-    public void foldPlayer(Model model, CardGamePlayer player) {
+    public void foldPlayer(Model model, CardGameState state, CardGamePlayer player) {
         foldedPlayers.add(player);
-        while (player.numberOfCardsInHand() > 0) {
-            player.removeCard(0, this);
-        }
+        player.clearCards();
+        state.println(winner.getName() + ": \"" +
+                MyRandom.sample(List.of("Too expensive for me",
+                        "I'm out.", "Nah, it's not worth it.",
+                        "I fold.", "I give in.", "My cards are rubbish.",
+                        "This isn't going well, better quit now.")) +
+                "\"");
     }
 
     @Override
@@ -95,7 +110,8 @@ public class RunnyCardGame extends CardGame {
 
     private boolean checkForWin(Model model, CardGameState state) {
         for (CardGamePlayer pl : getPlayers()) {
-            if (((RunnyCardGamePlayer)pl).hasWinningHand()) {
+            if (!foldedPlayers.contains(pl) && ((RunnyCardGamePlayer)pl).hasWinningHand()) {
+                winner = pl;
                 return true;
             }
         }
@@ -114,5 +130,14 @@ public class RunnyCardGame extends CardGame {
     @Override
     public void doOtherCardAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         // Unused for Runny
+    }
+
+    public void displayNPCHand(RunnyCardGamePlayer runnyCardGamePlayer) {
+        int col = getMatrix().getColumns() / 2 - 3;
+        int row = getMatrix().getRows() / 2 + 1;
+        for (int i = 0; i < runnyCardGamePlayer.numberOfCardsInHand(); ++i) {
+            CardGameCard card = runnyCardGamePlayer.getCard(i);
+            getMatrix().addElement(col + i, row, card);
+        }
     }
 }

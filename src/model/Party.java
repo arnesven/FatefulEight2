@@ -712,4 +712,8 @@ public class Party implements Serializable {
     public int getObols() {
         return obols;
     }
+
+    public void setObols(int playerObols) {
+        obols = playerObols;
+    }
 }

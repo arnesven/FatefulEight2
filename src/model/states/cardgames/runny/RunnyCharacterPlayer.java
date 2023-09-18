@@ -11,30 +11,22 @@ public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
     }
 
     @Override
-    public void takeTurn(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
+    protected void announceTurn(CardGameState state) {
         state.println("It's your turn. ");
-        if (runnyCardGame.getCurrentBet() > getBet()) {
-            callOrFold(model, state, runnyCardGame);
-        }
-        drawFromDeckOrDiscard(model, state, runnyCardGame);
-        discardFromHand(model, state, runnyCardGame);
-        if (hasWinningHand()) {
-            state.println("You have won the game!");
-        } else {
-            raiseOrPass(model, state, runnyCardGame);
-        }
     }
 
-    private void callOrFold(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
+    protected boolean callOrFold(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         ButtonCardGameObject call = new CallCardGameObject();
         ButtonCardGameObject button = runnyCardGame.twoButtonOption(state, call, new FoldCardGameObject(), call,
                 "The current bet is at " + runnyCardGame.getCurrentBet() + ". Do you wish to call or fold?");
         button.doAction(model, state, runnyCardGame, this);
+        return button != call;
     }
 
-    private void drawFromDeckOrDiscard(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
+    protected void drawFromDeckOrDiscard(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         CardGameObject deckOrDiscard = null;
         runnyCardGame.setCursorEnabled(true);
+        runnyCardGame.getMatrix().setSelectedPoint(runnyCardGame.getDeck());
         do {
             state.print("Draw a card from the deck or from the discard pile.");
             state.waitForReturn();
@@ -44,9 +36,10 @@ public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
         deckOrDiscard.doAction(model, state, runnyCardGame, this);
     }
 
-    private void discardFromHand(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
+    protected void discardFromHand(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         CardGameObject cardToDiscard = null;
         runnyCardGame.setCursorEnabled(true);
+        runnyCardGame.getMatrix().setSelectedPoint(getCard(2));
         do {
             state.print("Select a card from your hand to discard.");
             state.waitForReturn();
@@ -56,7 +49,7 @@ public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
         cardToDiscard.doAction(model, state, runnyCardGame, this);
     }
 
-    private void raiseOrPass(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
+    protected void raiseOrPass(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         ButtonCardGameObject pass = new PassCardGameObject();
         ButtonCardGameObject selected = runnyCardGame.twoButtonOption(state, new RaiseCardGameObject(),
                 pass, pass, "Would you like to raise the bet, or pass?");

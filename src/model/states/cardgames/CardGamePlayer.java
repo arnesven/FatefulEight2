@@ -93,4 +93,8 @@ public abstract class CardGamePlayer {
     public void addToObols(int winPot) {
         obols += winPot;
     }
+
+    public void clearCards() {
+        cards.clear();
+    }
 }

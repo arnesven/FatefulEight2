@@ -26,6 +26,6 @@ public class FoldCardGameObject extends ButtonCardGameObject {
         } else {
             state.println("You fold your hand.");
         }
-        cardGame.foldPlayer(model, currentPlayer);
+        cardGame.foldPlayer(model, state, currentPlayer);
     }
 }

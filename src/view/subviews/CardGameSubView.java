@@ -138,7 +138,7 @@ public class CardGameSubView extends SubView {
         }
         BorderFrame.drawString(model.getScreenHandler(), npc.getName(), X_OFFSET+19-npc.getName().length(),
                 Y_OFFSET, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), npc.getObols() + "@",
+        BorderFrame.drawString(model.getScreenHandler(), npc.getObols()+"",
                 X_OFFSET+20, Y_OFFSET, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_OFFSET + 12, Y_OFFSET + 4);
     }
@@ -158,7 +158,7 @@ public class CardGameSubView extends SubView {
             sprite = BET_SPRITES[7];
         }
         model.getScreenHandler().register(sprite.getName(), new Point(x, y), sprite);
-        BorderFrame.drawString(model.getScreenHandler(), bet + "@",
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", bet),
                 x, y+2, MyColors.LIGHT_GRAY, MyColors.BROWN);
     }
 
@@ -171,7 +171,7 @@ public class CardGameSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(), npc.getName().substring(i, i+1), X_OFFSET,
                     Y_OFFSET + firstNPCY + i, MyColors.WHITE, MyColors.BLACK);
         }
-        BorderFrame.drawString(model.getScreenHandler(), npc.getObols() + "@",
+        BorderFrame.drawString(model.getScreenHandler(), npc.getObols() + "",
                 X_OFFSET, Y_OFFSET + firstNPCY + Math.max(6, npc.getName().length()) + 1, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_OFFSET + 6, Y_OFFSET + firstNPCY+6);
     }
@@ -185,7 +185,7 @@ public class CardGameSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(), npc.getName().substring(i, i+1), X_MAX-1,
                     Y_OFFSET + firstNPCY + i - 1, MyColors.WHITE, MyColors.BLACK);
         }
-        String obolsString = npc.getObols() + "@";
+        String obolsString = npc.getObols() + "";
         BorderFrame.drawString(model.getScreenHandler(), obolsString,
                 X_MAX-obolsString.length()-1, Y_OFFSET + firstNPCY-3, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_MAX-9, Y_OFFSET + firstNPCY-6);

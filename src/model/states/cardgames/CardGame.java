@@ -31,7 +31,7 @@ public abstract class CardGame {
 
     public abstract void playRound(Model model, CardGameState state);
 
-    public abstract void foldPlayer(Model model, CardGamePlayer player);
+    public abstract void foldPlayer(Model model, CardGameState state, CardGamePlayer player);
 
     public CardGamePlayer getNPC(int i) {
         return players.get(i);

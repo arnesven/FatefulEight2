@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObject {
-    private static final MyColors[] CARD_SUITS = new MyColors[]{MyColors.GREEN, MyColors.BLUE, MyColors.RED};
-    private static final int MAX_VALUE = 9;
+    public static final MyColors[] CARD_SUITS = new MyColors[]{MyColors.GREEN, MyColors.BLUE, MyColors.RED};
+    public static final int MAX_VALUE = 9;
     private static final Sprite SPRITE = new Sprite16x16("cardgamedeck", "cardgame.png", 0x15,
             MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
     private static Map<MyColors, Sprite[]> sprites = makeSpriteMap();
