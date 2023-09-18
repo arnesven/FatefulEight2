@@ -24,7 +24,7 @@ public class RaiseCardGameObject extends ButtonCardGameObject {
         state.println((currentPlayer.isNPC() ? currentPlayer.getName() : "You") + " raise the current bet.");
         state.addHandAnimation(currentPlayer, false, false, true);
         state.waitForAnimationToFinish();
-        int bet = 1;
+        int bet = 1; // TODO: Raise more, but not more than maximum bet.
         currentPlayer.addToBet(bet);
         cardGame.addToCurrentBet(bet);
     }

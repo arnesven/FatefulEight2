@@ -74,8 +74,8 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
 
     @Override
     protected void raiseOrPass(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
-        if (MyRandom.randInt(3) == 0) {
-            RaiseCardGameObject raise = new RaiseCardGameObject();
+        if (MyRandom.randInt(3) == 0) {  // TODO: Not if already at max bet
+            RaiseCardGameObject raise = new RaiseCardGameObject(); 
             raise.doAction(model, state, runnyCardGame, this);
         }
     }
