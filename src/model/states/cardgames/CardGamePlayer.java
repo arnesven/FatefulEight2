@@ -1,12 +1,14 @@
 package model.states.cardgames;
 
+import model.Model;
 import model.races.Race;
+import model.states.CardGameState;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardGamePlayer {
+public abstract class CardGamePlayer {
     private final boolean isNPC;
     private String name;
     private boolean gender;
@@ -22,6 +24,8 @@ public class CardGamePlayer {
         this.obols = obols;
         this.isNPC = isNPC;
     }
+
+    public abstract void takeTurn(Model model, CardGameState state, RunnyCardGame runnyCardGame);
 
     public Race getRace() {
         return race;

@@ -159,7 +159,7 @@ public class CardGameSubView extends SubView {
         }
         model.getScreenHandler().register(sprite.getName(), new Point(x, y), sprite);
         BorderFrame.drawString(model.getScreenHandler(), bet + "@",
-                x+2, y+1, MyColors.LIGHT_GRAY, MyColors.BROWN);
+                x, y+2, MyColors.LIGHT_GRAY, MyColors.BROWN);
     }
 
     private void drawNPCToLeft(Model model, CardGamePlayer npc, int firstNPCY) {

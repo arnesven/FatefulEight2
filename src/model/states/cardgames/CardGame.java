@@ -21,14 +21,11 @@ public abstract class CardGame {
     private boolean cursorEnabled = false;
     private final CardGameDeck deck;
     private CardPile discardPile = new CardPile();
+    private int currentBet = 0;
 
-    public CardGame(String name, List<Race> npcRaces, CardGameDeck deck) {
+    public CardGame(String name, List<CardGamePlayer> npcPlayers, CardGameDeck deck) {
         this.name = name;
-        this.players = new ArrayList<>();
-        for (Race r : npcRaces) {
-            boolean gender = MyRandom.flipCoin();
-            players.add(new CardGamePlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40), true));
-        }
+        this.players = new ArrayList<>(npcPlayers);
         this.deck = deck;
         cardArea.addElement(cardArea.getColumns()/2-1, cardArea.getRows()/2-1, deck);
         cardArea.addElement(cardArea.getColumns()/2, cardArea.getRows()/2-1, discardPile);
@@ -38,9 +35,13 @@ public abstract class CardGame {
 
     public abstract void playRound(Model model, CardGameState state);
 
+    public abstract void foldPlayer(Model model, CardGamePlayer player);
+
     public CardGamePlayer getNPC(int i) {
         return players.get(i);
     }
+
+    protected abstract CardGamePlayer makeCharacterPlayer(GameCharacter leader, int obols);
 
     public int getNumberOfNPCs() {
         if (players.contains(characterPlayer)) {
@@ -50,7 +51,7 @@ public abstract class CardGame {
     }
 
     public void addPlayer(GameCharacter leader, int obols) {
-        this.characterPlayer = new CardGamePlayer(leader.getFirstName(), leader.getGender(), leader.getRace(), obols, false);
+        characterPlayer = makeCharacterPlayer(leader, obols);
         players.add(characterPlayer);
     }
 
@@ -138,5 +139,33 @@ public abstract class CardGame {
 
     protected CardPile getDiscard() {
         return discardPile;
+    }
+
+    public void addToCurrentBet(int bet) {
+        currentBet += bet;
+    }
+
+    protected int getCurrentBet() {
+        return currentBet;
+    }
+
+    public ButtonCardGameObject twoButtonOption(CardGameState state,
+                                                ButtonCardGameObject button1,
+                                                ButtonCardGameObject button2,
+                                                ButtonCardGameObject selected, String message) {
+        getMatrix().addElement(4, getMatrix().getRows()-2, button1);
+        getMatrix().addElement(6, getMatrix().getRows()-2, button2);
+        CardGameObject button = null;
+        getMatrix().setSelectedPoint(selected);
+        setCursorEnabled(true);
+        do {
+            state.print(message);
+            state.waitForReturn();
+            button = getMatrix().getSelectedElement();
+        } while (button != button1 && button != button2);
+        setCursorEnabled(false);
+        getMatrix().remove(button1);
+        getMatrix().remove(button2);
+        return (ButtonCardGameObject)button;
     }
 }
