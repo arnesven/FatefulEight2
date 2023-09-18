@@ -1,10 +1,14 @@
-package model.states.cardgames;
+package model.states.cardgames.runny;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.races.Race;
-import model.states.CardGameState;
+import model.states.cardgames.CardGameState;
 import model.states.GameState;
+import model.states.cardgames.CardGame;
+import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGameDeck;
+import model.states.cardgames.CardGamePlayer;
 import util.Arithmetics;
 import util.MyRandom;
 

@@ -2,7 +2,7 @@ package model.states.cardgames;
 
 import model.Model;
 import model.races.Race;
-import model.states.CardGameState;
+import model.states.cardgames.runny.RunnyCardGame;
 
 import java.util.ArrayList;
 import java.util.Collections;

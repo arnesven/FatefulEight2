@@ -1,7 +1,6 @@
 package model.states.cardgames;
 
 import model.Model;
-import model.states.CardGameState;
 import view.MyColors;
 import view.sprites.CardGameButtonSprite;
 import view.sprites.Sprite;

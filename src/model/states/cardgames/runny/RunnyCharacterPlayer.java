@@ -1,8 +1,9 @@
-package model.states.cardgames;
+package model.states.cardgames.runny;
 
 import model.Model;
 import model.races.Race;
-import model.states.CardGameState;
+import model.states.cardgames.CardGameState;
+import model.states.cardgames.*;
 
 public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
     public RunnyCharacterPlayer(String name, boolean gender, Race race, int obols) {

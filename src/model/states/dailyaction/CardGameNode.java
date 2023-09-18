@@ -1,7 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
-import model.states.CardGameState;
+import model.states.cardgames.CardGameState;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;

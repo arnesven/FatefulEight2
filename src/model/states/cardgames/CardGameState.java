@@ -1,10 +1,11 @@
-package model.states;
+package model.states.cardgames;
 
 import model.Model;
 import model.races.Race;
+import model.states.GameState;
 import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGamePlayer;
-import model.states.cardgames.RunnyCardGame;
+import model.states.cardgames.runny.RunnyCardGame;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.CardGameSubView;

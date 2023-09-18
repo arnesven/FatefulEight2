@@ -1,8 +1,11 @@
-package model.states.cardgames;
+package model.states.cardgames.runny;
 
 import model.Model;
 import model.races.Race;
-import model.states.CardGameState;
+import model.states.cardgames.CardGameState;
+import model.states.cardgames.CallCardGameObject;
+import model.states.cardgames.FoldCardGameObject;
+import model.states.cardgames.RaiseCardGameObject;
 import util.MyRandom;
 
 public class RunnyNPCPlayer extends RunnyCardGamePlayer {

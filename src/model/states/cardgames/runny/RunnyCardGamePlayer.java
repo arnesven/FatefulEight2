@@ -1,6 +1,8 @@
-package model.states.cardgames;
+package model.states.cardgames.runny;
 
 import model.races.Race;
+import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGamePlayer;
 import view.MyColors;
 
 public abstract class RunnyCardGamePlayer extends CardGamePlayer {

@@ -3,10 +3,6 @@ package model.states.cardgames;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
-import model.races.Race;
-import model.states.CardGameState;
-import model.states.GameState;
-import util.MyRandom;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -103,7 +99,7 @@ public abstract class CardGame {
         return cardArea.getSelectedElement().getText();
     }
 
-    protected void setCursorEnabled(boolean b) {
+    public void setCursorEnabled(boolean b) {
         cursorEnabled = b;
     }
 
@@ -133,11 +129,11 @@ public abstract class CardGame {
         Collections.shuffle(deck);
     }
 
-    protected CardGameDeck getDeck() {
+    public CardGameDeck getDeck() {
         return deck;
     }
 
-    protected CardPile getDiscard() {
+    public CardPile getDiscard() {
         return discardPile;
     }
 
@@ -145,7 +141,7 @@ public abstract class CardGame {
         currentBet += bet;
     }
 
-    protected int getCurrentBet() {
+    public int getCurrentBet() {
         return currentBet;
     }
 

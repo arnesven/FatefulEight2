@@ -1,7 +1,6 @@
 package model.states.cardgames;
 
 import model.Model;
-import model.states.CardGameState;
 import view.sprites.Sprite;
 
 import java.util.ArrayList;
