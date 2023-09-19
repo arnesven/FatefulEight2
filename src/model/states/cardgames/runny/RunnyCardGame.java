@@ -20,9 +20,11 @@ import java.util.Set;
 public class RunnyCardGame extends CardGame {
 
     public static final int MAX_NUMBER_OF_PLAYERS = 4;
+    public static final int MAXIMUM_BET = 30;
     private CardGamePlayer startingPlayer;
     private CardGamePlayer winner = null;
     private Set<CardGamePlayer> foldedPlayers;
+    private int currentRound = 0;
 
     public RunnyCardGame(List<Race> npcRaces) {
         super("Runny", makePlayers(npcRaces), new CardGameDeck());
@@ -32,7 +34,7 @@ public class RunnyCardGame extends CardGame {
         List<CardGamePlayer> players = new ArrayList<>();
         for (Race r : npcRaces) {
             boolean gender = MyRandom.flipCoin();
-            players.add(new RunnyNPCPlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(20, 40)));
+            players.add(new RunnyNPCPlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(MAXIMUM_BET, MAXIMUM_BET+20)));
         }
         return players;
     }
@@ -58,6 +60,9 @@ public class RunnyCardGame extends CardGame {
         for (int playerIndex = getPlayers().indexOf(startingPlayer); !checkForWin(model, state);
                 playerIndex = Arithmetics.incrementWithWrap(playerIndex, getPlayers().size())) {
             CardGamePlayer currentPlayer = getPlayers().get(playerIndex);
+            if (currentPlayer == startingPlayer) {
+                currentRound++;
+            }
             if (!foldedPlayers.contains(currentPlayer)) {
                 currentPlayer.takeTurn(model, state, this);
             }
@@ -143,6 +148,10 @@ public class RunnyCardGame extends CardGame {
 
     @Override
     public int getMaximumBet() {
-        return 30;
+        return MAXIMUM_BET;
+    }
+
+    public int getRound() {
+        return currentRound;
     }
 }

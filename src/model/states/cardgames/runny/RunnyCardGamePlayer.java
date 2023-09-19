@@ -100,15 +100,15 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
         handCards.removeAll(setPairs);
         pairs.addAll(setPairs);
 
-//        System.out.println(" ... Partitioning: ");
-//        System.out.println(" .... Singles:");
-//        for (CardGameCard card : handCards) {
-//            System.out.println("      " + card.getText());
-//        }
-//        System.out.println(" .... Pairs:");
-//        for (CardGameCard card : pairs) {
-//            System.out.println("      " + card.getText());
-//        }
+        System.out.println(" ... Partitioning: ");
+        System.out.println(" .... Singles:");
+        for (CardGameCard card : handCards) {
+            System.out.println("      " + card.getText());
+        }
+        System.out.println(" .... Pairs:");
+        for (CardGameCard card : pairs) {
+            System.out.println("      " + card.getText());
+        }
 
         return new MyPair<>(handCards, pairs);
     }
