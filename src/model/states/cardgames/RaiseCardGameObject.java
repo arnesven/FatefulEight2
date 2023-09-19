@@ -39,6 +39,8 @@ public class RaiseCardGameObject extends ButtonCardGameObject {
                     bet = Integer.parseInt(line);
                     if (bet <= maxBet) {
                         break;
+                    } else if (bet <= 0) {
+                        state.println("Please enter a positive number.");
                     }
                 } catch (NumberFormatException nfe) {
                     state.println("Please enter an integer.");

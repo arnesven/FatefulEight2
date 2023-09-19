@@ -59,15 +59,18 @@ public class TalkToBartenderNode extends DailyActionNode {
             if (model.getParty().getHorseHandler().size() > 0) {
                 options.add("Sell Horse");
             }
+            options.add("Buy Obols");
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
             if (selected == 0) {
                 getAdvice(model);
             } else if (selected == 1){
                 new BuyRationsState(model).run(model);
-            } else if (buyHorse && selected == 2) {
+            } else if (options.get(selected).contains("Buy Horse")) {
                 new BuyHorseState(model, "Bartender").run(model);
-            } else {
+            } else if (options.get(selected).contains("Sell Horse")) {
                 new SellHorseState(model).run(model);
+            } else {
+                buyObols(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }
@@ -90,6 +93,29 @@ public class TalkToBartenderNode extends DailyActionNode {
                             "start disliking the leader.",
                     "Having a good formation during combat is crucial. And watch out for enemies with ranged weapons."));
             println("Bartender: \"" + line + "\"");
+        }
+
+        private void buyObols(Model model) {
+            println("You have " + model.getParty().getObols() + " obols.");
+            int spend = 0;
+            do {
+                print("You get 10 obols for each gold. How much would you like to spend? ");
+                try {
+                    spend = Integer.parseInt(lineInput());
+                    if (spend < 0) {
+                        println("You cannot spend negative gold.");
+                    } else if (spend > model.getParty().getGold()) {
+                        println("You cannot afford that.");
+                    } else {
+                        break;
+                    }
+                } catch (NumberFormatException nfe) {
+                    println("Please enter an integer.");
+                }
+            } while (true);
+            println("You bought " + spend*10 + " obols");
+            model.getParty().setObols(model.getParty().getObols() + spend*10);
+            model.getParty().addToGold(-spend);
         }
     }
 }
