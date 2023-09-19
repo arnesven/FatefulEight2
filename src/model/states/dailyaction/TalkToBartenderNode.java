@@ -60,6 +60,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                 options.add("Sell Horse");
             }
             options.add("Buy Obols");
+            options.add("Sell Obols");
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
             if (selected == 0) {
                 getAdvice(model);
@@ -69,8 +70,10 @@ public class TalkToBartenderNode extends DailyActionNode {
                 new BuyHorseState(model, "Bartender").run(model);
             } else if (options.get(selected).contains("Sell Horse")) {
                 new SellHorseState(model).run(model);
-            } else {
+            } else if (options.get(selected).contains("Buy Obols")) {
                 buyObols(model);
+            } else {
+                sellObols(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }
@@ -116,6 +119,22 @@ public class TalkToBartenderNode extends DailyActionNode {
             println("You bought " + spend*10 + " obols");
             model.getParty().setObols(model.getParty().getObols() + spend*10);
             model.getParty().addToGold(-spend);
+        }
+
+        private void sellObols(Model model) {
+            int take = model.getParty().getObols() / 10;
+            if (take == 0) {
+                println("Bartender: \"Sorry, I only take 10 obols at a time.\"");
+                return;
+            }
+            println("Bartender: \"Want to cash in some obols? I can take " + take*10 +
+                    " of them off your hands and give you " + take + " gold.\"");
+            print("Do you accept? (Y/N) ");
+            if (yesNoInput()) {
+                model.getParty().setObols(model.getParty().getObols() - take*10);
+                model.getParty().addToGold(take);
+                println("You now have " + model.getParty().getObols() + " obols.");
+            }
         }
     }
 }
