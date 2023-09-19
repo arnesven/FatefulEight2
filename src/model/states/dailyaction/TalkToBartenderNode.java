@@ -116,8 +116,9 @@ public class TalkToBartenderNode extends DailyActionNode {
                     println("Please enter an integer.");
                 }
             } while (true);
-            println("You bought " + spend*10 + " obols");
+            print("You bought " + spend*10 + " obols.");
             model.getParty().setObols(model.getParty().getObols() + spend*10);
+            println(" You now have " + model.getParty().getObols() + " obols.");
             model.getParty().addToGold(-spend);
         }
 
