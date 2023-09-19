@@ -27,11 +27,20 @@ public class CardGameState extends GameState {
     public GameState run(Model model) {
         this.cardGame = new RunnyCardGame(makeRandomRaces());
         subView.setGame(cardGame);
-        print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players are playing a game of " + cardGame.getName() + ". Do you want to join? (Y/N) ");
-        if (yesNoInput()) {
-            playCardGame(model);
+        print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players are playing a game of " + cardGame.getName() + ". ");
+        if (notEnoughObols(model)) {
+            println("However, you do not have the minimum amount of obols required to play (" + cardGame.getMaximumBet() + ").");
+        } else {
+            print("Do you want to join? (Y/N) ");
+            if (yesNoInput()) {
+                playCardGame(model);
+            }
         }
         return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    private boolean notEnoughObols(Model model) {
+        return model.getParty().getObols() < cardGame.getMaximumBet();
     }
 
     private List<Race> makeRandomRaces() {
@@ -48,12 +57,22 @@ public class CardGameState extends GameState {
         CollapsingTransition.transition(model, subView);
         print("You sit down to play a game of " + cardGame.getName() + ". Press enter to continue.");
         waitForReturn();
-        cardGame.setup(this);
-        waitForReturn();
-        cardGame.playRound(model, this);
-        print("Press enter to continue.");
-        waitForReturn();
-        model.getParty().setObols(cardGame.getPlayerObols());
+        do {
+            cardGame.replacePlayersLowOnObols(model, this);
+            cardGame.setup(this);
+            waitForReturn();
+            cardGame.playRound(model, this);
+            model.getParty().setObols(cardGame.getPlayerObols());
+            if (notEnoughObols(model)) {
+                println("You do not have the minimum amount of obols required (" + cardGame.getMaximumBet() + ") to play another round.");
+                print("Press enter to continue.");
+                waitForReturn();
+                break;
+            } else {
+                print("Do you wish to play another round? (Y/N) ");
+            }
+        } while (yesNoInput());
+        println("You leave the card game.");
     }
 
     public void addHandAnimation(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut, boolean coin) {

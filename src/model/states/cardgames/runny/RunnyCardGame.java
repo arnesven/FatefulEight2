@@ -33,16 +33,24 @@ public class RunnyCardGame extends CardGame {
     private static List<CardGamePlayer> makePlayers(List<Race> npcRaces) {
         List<CardGamePlayer> players = new ArrayList<>();
         for (Race r : npcRaces) {
-            boolean gender = MyRandom.flipCoin();
-            players.add(new RunnyNPCPlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(MAXIMUM_BET, MAXIMUM_BET+20)));
+            players.add(makeRunnyNPC(r));
         }
         return players;
     }
 
+    private static CardGamePlayer makeRunnyNPC(Race r) {
+        boolean gender = MyRandom.flipCoin();
+        return new RunnyNPCPlayer(GameState.randomFirstName(gender), gender, r, MyRandom.randInt(MAXIMUM_BET, MAXIMUM_BET+20));
+    }
+
     @Override
     public void setup(CardGameState state) {
-        super.dealCardsToPlayers(state,6);
+        winner = null;
+        currentRound = 0;
+        reshuffleDeck();
+        resetCurrentBet();
         state.println("The deck is shuffled and 6 cards are dealt to each player. ");
+        super.dealCardsToPlayers(state,6);
         getDiscard().add(getDeck().remove(0));
         this.startingPlayer = MyRandom.sample(getPlayers());
         foldedPlayers = new HashSet<>();
@@ -68,17 +76,19 @@ public class RunnyCardGame extends CardGame {
             }
         }
         if (winner.isNPC()) {
-            state.println(winner.getName() + " wins");
             winner.clearCards();
             state.println(winner.getName() + ": \"" +
                     MyRandom.sample(List.of("I'm good at this",
                     "I knew I had it in me.",
+                    "Hah! Losers!",
+                    "Sweet obols...",
                     "You just don't stand a chance.",
                     "Looks like those obols are mine.",
                     "Huzzah!", "At last!", "Wohoo, I won!",
                     "Perfection.", "I love this game!",
                     "That was equal parts luck and skill.")) +
                     "\"");
+            state.print(winner.getName() + " wins");
         } else {
             state.print("You win");
         }
@@ -90,6 +100,9 @@ public class RunnyCardGame extends CardGame {
     @Override
     public void foldPlayer(Model model, CardGameState state, CardGamePlayer player) {
         foldedPlayers.add(player);
+        if (!player.isNPC()) {
+            removeCardsFromArea(player);
+        }
         player.clearCards();
         state.println(player.getName() + ": \"" +
                 MyRandom.sample(List.of("Too expensive for me",
@@ -120,7 +133,13 @@ public class RunnyCardGame extends CardGame {
                 return true;
             }
         }
-        return foldedPlayers.size() == getPlayers().size()-1;
+        if (foldedPlayers.size() == getPlayers().size()-1) {
+            List<CardGamePlayer> remaining = new ArrayList<>(getPlayers());
+            remaining.removeAll(foldedPlayers);
+            winner = remaining.get(0);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -149,6 +168,20 @@ public class RunnyCardGame extends CardGame {
     @Override
     public int getMaximumBet() {
         return MAXIMUM_BET;
+    }
+
+    @Override
+    public void replacePlayersLowOnObols(Model model, CardGameState cardGameState) {
+        for (int i = 0; i < getPlayers().size(); ++i) {
+            CardGamePlayer player = getPlayers().get(i);
+            if (player.isNPC() && player.getObols() < getMaximumBet()) {
+                cardGameState.println(player.getName() + " is low on obols and leaves the table.");
+                getPlayers().remove(player);
+                CardGamePlayer replacement = makeRunnyNPC(Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
+                getPlayers().add(i, replacement);
+                cardGameState.println(replacement.getName() + " sits down at the table.");
+            }
+        }
     }
 
     public int getRound() {

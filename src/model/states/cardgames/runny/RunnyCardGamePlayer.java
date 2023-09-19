@@ -30,7 +30,7 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
                 } else {
                     state.println("You have won the game! ");
                 }
-            } else {
+            } else if (runnyCardGame.getCurrentBet() < runnyCardGame.getMaximumBet()) {
                 raiseOrPass(model, state, runnyCardGame);
             }
         }

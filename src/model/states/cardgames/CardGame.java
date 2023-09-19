@@ -56,6 +56,10 @@ public abstract class CardGame {
     }
 
     protected void dealCardsToPlayers(CardGameState state, int amount) {
+        removeCardsFromArea(characterPlayer);
+        for (CardGamePlayer p : players) {
+            p.clearCards();
+        }
         for (int i = 0; i < amount; ++i) {
             for (CardGamePlayer p : players) {
                 state.addCardDealtAnimation(p);
@@ -108,14 +112,18 @@ public abstract class CardGame {
     public abstract void doOtherCardAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard);
 
     public void refreshPlayerHand(CardGamePlayer cardGamePlayer) {
+        removeCardsFromArea(cardGamePlayer);
+        int offset = (cardArea.getColumns() - characterPlayer.numberOfCardsInHand()) / 2;
+        for (int i = 0; i < characterPlayer.numberOfCardsInHand(); ++i) {
+            cardArea.addElement(offset + i, cardArea.getRows()-1, characterPlayer.getCard(i));
+        }
+    }
+
+    public void removeCardsFromArea(CardGamePlayer cardGamePlayer) {
         for (int i = 0; i < cardGamePlayer.numberOfCardsInHand(); ++i) {
             if (cardArea.getElementList().contains(cardGamePlayer.getCard(i))) {
                 cardArea.remove(cardGamePlayer.getCard(i));
             }
-        }
-        int offset = (cardArea.getColumns() - characterPlayer.numberOfCardsInHand()) / 2;
-        for (int i = 0; i < characterPlayer.numberOfCardsInHand(); ++i) {
-            cardArea.addElement(offset + i, cardArea.getRows()-1, characterPlayer.getCard(i));
         }
     }
 
@@ -140,6 +148,8 @@ public abstract class CardGame {
     public void addToCurrentBet(int bet) {
         currentBet += bet;
     }
+
+    public void resetCurrentBet() { currentBet = 0; }
 
     public int getCurrentBet() {
         return currentBet;
@@ -168,4 +178,6 @@ public abstract class CardGame {
     public int getMaximumBet() {
         return Integer.MAX_VALUE;
     }
+
+    public abstract void replacePlayersLowOnObols(Model model, CardGameState cardGameState);
 }

@@ -41,6 +41,8 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
         int benchMark = calcRoundStrengthBenchMark(runnyCardGame);
         log("Benchmark is " + benchMark);
         int bet = calculateSuitableBet(handStrength, runnyCardGame);
+        log("Suitable bet for hand is " + bet);
+        log("Current bet is " + runnyCardGame.getCurrentBet());
         int diff = runnyCardGame.getCurrentBet() - bet;
         log("Diff is " + diff);
         log("Acceptance is " + weakHandAcceptance);
