@@ -164,4 +164,8 @@ public abstract class CardGame {
         getMatrix().remove(button2);
         return (ButtonCardGameObject)button;
     }
+
+    public int getMaximumBet() {
+        return Integer.MAX_VALUE;
+    }
 }

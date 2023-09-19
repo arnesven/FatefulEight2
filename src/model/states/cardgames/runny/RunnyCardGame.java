@@ -86,7 +86,7 @@ public class RunnyCardGame extends CardGame {
     public void foldPlayer(Model model, CardGameState state, CardGamePlayer player) {
         foldedPlayers.add(player);
         player.clearCards();
-        state.println(winner.getName() + ": \"" +
+        state.println(player.getName() + ": \"" +
                 MyRandom.sample(List.of("Too expensive for me",
                         "I'm out.", "Nah, it's not worth it.",
                         "I fold.", "I give in.", "My cards are rubbish.",
@@ -139,5 +139,10 @@ public class RunnyCardGame extends CardGame {
             CardGameCard card = runnyCardGamePlayer.getCard(i);
             getMatrix().addElement(col + i, row, card);
         }
+    }
+
+    @Override
+    public int getMaximumBet() {
+        return 30;
     }
 }

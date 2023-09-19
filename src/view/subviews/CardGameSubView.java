@@ -83,7 +83,7 @@ public class CardGameSubView extends SubView {
     private void drawPlayerArea(Model model) {
         String name = cardGame.getCharacterPlayer().getName();
         BorderFrame.drawString(model.getScreenHandler(), name, X_OFFSET + 16 - name.length(), Y_MAX-1, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), cardGame.getCharacterPlayer().getObols() + "@",
+        BorderFrame.drawString(model.getScreenHandler(), cardGame.getCharacterPlayer().getObols() + "",
                 X_OFFSET + 17, Y_MAX-1, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, cardGame.getCharacterPlayer().getBet(), X_OFFSET+18, Y_MAX-10);
     }
