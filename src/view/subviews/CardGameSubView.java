@@ -38,6 +38,9 @@ public class CardGameSubView extends SubView {
         drawGameArea(model);
         drawHandAnimation(model);
         drawCardDealtAnimation(model);
+
+        BorderFrame.drawString(model.getScreenHandler(), cardGame.getDeck().size() + "",
+                X_OFFSET+10, Y_OFFSET+18, MyColors.PINK, MyColors.BROWN);
     }
 
     private void drawCardDealtAnimation(Model model) {

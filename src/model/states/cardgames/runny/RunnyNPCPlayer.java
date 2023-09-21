@@ -19,7 +19,7 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
 
     public RunnyNPCPlayer(String name, boolean gender, Race race, int obols) {
         super(name, gender, race, obols, true);
-        benchmarkThreshold = MyRandom.randInt(2, 10);
+        benchmarkThreshold = MyRandom.randInt(8, 14);
         benchmarkRoundFactor = MyRandom.randInt(2, 5);
         weakHandAcceptance = MyRandom.randInt(2, RunnyCardGame.MAXIMUM_BET/2);
         invertedBluffRatio = MyRandom.randInt(3, 50);
@@ -47,10 +47,11 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
         log("Diff is " + diff);
         log("Acceptance is " + weakHandAcceptance);
         if (diff > weakHandAcceptance) {
+            log("folds");
             new FoldCardGameObject().doAction(model, state, runnyCardGame, this);
             return true;
         }
-
+        log("calls");
         new CallCardGameObject().doAction(model, state, runnyCardGame, this);
         return false;
     }
@@ -108,16 +109,19 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
         log("Benchmark is " + benchMark);
         int max = runnyCardGame.getMaximumBet() - runnyCardGame.getCurrentBet();
         if (handStrength > benchMark && max > 0) {
-            int bet = calculateSuitableBet(handStrength, runnyCardGame);
-            RaiseCardGameObject raise = new RaiseCardGameObject(bet);
-            raise.doAction(model, state, runnyCardGame, this);
+            int bet = calculateSuitableBet(handStrength, runnyCardGame) - runnyCardGame.getCurrentBet();
+            if (bet > 0) {
+                RaiseCardGameObject raise = new RaiseCardGameObject(bet);
+                raise.doAction(model, state, runnyCardGame, this);
+            }
         }
     }
 
     private int calculateSuitableBet(int handStrength, RunnyCardGame runnyCardGame) {
         int max = runnyCardGame.getMaximumBet() - runnyCardGame.getCurrentBet();
         int diff = handStrength - calcRoundStrengthBenchMark(runnyCardGame);
-        return Math.min(diff, max);
+        int bet = (int)(diff * (runnyCardGame.getMaximumBet() / 60.0));
+        return Math.min(bet, max);
     }
 
     private int calcRoundStrengthBenchMark(RunnyCardGame runnyCardGame) {
