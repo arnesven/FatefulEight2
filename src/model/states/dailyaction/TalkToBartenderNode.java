@@ -100,6 +100,7 @@ public class TalkToBartenderNode extends DailyActionNode {
 
         private void buyObols(Model model) {
             println("You have " + model.getParty().getObols() + " obols.");
+            model.getTutorial().obols(model);
             int spend = 0;
             do {
                 print("You get 10 obols for each gold. How much would you like to spend? ");

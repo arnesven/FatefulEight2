@@ -303,6 +303,20 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void obols(Model model) {
+        runOnce("obols", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialObols(model.getView()));
+        });
+    }
+
+    public void cardGameRunny(Model model) {
+        runOnce("cardgamerunny", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCardGameRunny(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

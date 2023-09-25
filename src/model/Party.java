@@ -44,7 +44,7 @@ public class Party implements Serializable {
     private Point position;
     private Point previousPosition;
     private int gold = 30;
-    private int obols = 30;
+    private int obols = 0;
     private int reputation = 0;
     private boolean onRoad = true;
     private final LoopingSprite[] cursorSprites;
