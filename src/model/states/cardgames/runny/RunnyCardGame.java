@@ -3,12 +3,8 @@ package model.states.cardgames.runny;
 import model.Model;
 import model.characters.GameCharacter;
 import model.races.Race;
-import model.states.cardgames.CardGameState;
+import model.states.cardgames.*;
 import model.states.GameState;
-import model.states.cardgames.CardGame;
-import model.states.cardgames.CardGameCard;
-import model.states.cardgames.CardGameDeck;
-import model.states.cardgames.CardGamePlayer;
 import util.Arithmetics;
 import util.MyRandom;
 
@@ -47,7 +43,8 @@ public class RunnyCardGame extends CardGame {
     public void setup(CardGameState state) {
         winner = null;
         currentRound = 0;
-        reshuffleDeck();
+        clearCardsInMatrix(state);
+        setDeck(new CardGameDeck());
         resetCurrentBet();
         state.println("The deck is shuffled and 6 cards are dealt to each player. ");
         super.dealCardsToPlayers(state,6);
@@ -61,6 +58,14 @@ public class RunnyCardGame extends CardGame {
         }
         addToCurrentBet(1);
         state.println(startingPlayer.getName() + " will start the game. Press enter to continue.");
+    }
+
+    private void clearCardsInMatrix(CardGameState state) {
+        for (CardGameObject obj : new ArrayList<>(getMatrix().getElementList())) {
+            if (obj instanceof CardGameCard) {
+                getMatrix().remove(obj);
+            }
+        }
     }
 
     @Override

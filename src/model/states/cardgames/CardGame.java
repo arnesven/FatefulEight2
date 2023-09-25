@@ -15,15 +15,14 @@ public abstract class CardGame {
     private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 16);
     private final String name;
     private boolean cursorEnabled = false;
-    private final CardGameDeck deck;
+    private CardGameDeck deck;
     private CardPile discardPile = new CardPile();
     private int currentBet = 0;
 
     public CardGame(String name, List<CardGamePlayer> npcPlayers, CardGameDeck deck) {
         this.name = name;
         this.players = new ArrayList<>(npcPlayers);
-        this.deck = deck;
-        cardArea.addElement(cardArea.getColumns()/2-1, cardArea.getRows()/2-1, deck);
+        setDeck(deck);
         cardArea.addElement(cardArea.getColumns()/2, cardArea.getRows()/2-1, discardPile);
     }
 
@@ -139,6 +138,14 @@ public abstract class CardGame {
 
     public CardGameDeck getDeck() {
         return deck;
+    }
+
+    public void setDeck(CardGameDeck deck) {
+        if (cardArea.getElementList().contains(this.deck)) {
+            cardArea.remove(this.deck);
+        }
+        this.deck = deck;
+        cardArea.addElement(cardArea.getColumns()/2-1, cardArea.getRows()/2-1, deck);
     }
 
     public CardPile getDiscard() {
