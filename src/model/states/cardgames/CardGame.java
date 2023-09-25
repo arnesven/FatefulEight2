@@ -187,4 +187,10 @@ public abstract class CardGame {
     }
 
     public abstract void replacePlayersLowOnObols(Model model, CardGameState cardGameState);
+
+    public abstract void addMorePlayers(Model model, CardGameState cardGameState);
+
+    public void removePlayer() {
+        players.removeIf((CardGamePlayer player) -> !player.isNPC());
+    }
 }

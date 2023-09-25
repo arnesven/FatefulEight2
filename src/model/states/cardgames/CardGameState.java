@@ -3,9 +3,8 @@ package model.states.cardgames;
 import model.Model;
 import model.races.Race;
 import model.states.GameState;
-import model.states.cardgames.CardGame;
-import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.runny.RunnyCardGame;
+import model.states.dailyaction.CardGameNode;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.CardGameSubView;
@@ -17,16 +16,17 @@ import java.util.List;
 public class CardGameState extends GameState {
     private final CardGameSubView subView;
     private CardGame cardGame;
+    private int roundsPlayed = 0;
 
     public CardGameState(Model model) {
         super(model);
         this.subView = new CardGameSubView();
+        this.cardGame = new RunnyCardGame(makeRandomRaces());
+        subView.setGame(cardGame);
     }
 
     @Override
     public GameState run(Model model) {
-        this.cardGame = new RunnyCardGame(makeRandomRaces());
-        subView.setGame(cardGame);
         print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players are playing a game of " + cardGame.getName() + ". ");
         model.getTutorial().obols(model);
         if (notEnoughObols(model)) {
@@ -60,7 +60,13 @@ public class CardGameState extends GameState {
         model.getTutorial().cardGameRunny(model);
         waitForReturn();
         do {
+            roundsPlayed++;
             cardGame.replacePlayersLowOnObols(model, this);
+            cardGame.addMorePlayers(model, this);
+            if (cardGame.getPlayers().size() < 2) {
+                println("There's nobody left to play runny with now.");
+                break;
+            }
             cardGame.setup(this);
             waitForReturn();
             cardGame.playRound(model, this);
@@ -74,6 +80,7 @@ public class CardGameState extends GameState {
                 print("Do you wish to play another round? (Y/N) ");
             }
         } while (yesNoInput());
+        cardGame.removePlayer();
         println("You leave the card game.");
     }
 
@@ -107,5 +114,13 @@ public class CardGameState extends GameState {
                 e.printStackTrace();
             }
         } while (!subView.cardDealtAnimationDone());
+    }
+
+    public int getRoundsPlayed() {
+        return roundsPlayed;
+    }
+
+    public int getNumberOfPlayers() {
+        return cardGame.getPlayers().size();
     }
 }

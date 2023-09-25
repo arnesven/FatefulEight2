@@ -11,6 +11,7 @@ import view.subviews.TavernSubView;
 public class CardGameNode extends DailyActionNode {
     public static final Sprite TABLE = new Sprite32x32("cardstable", "world_foreground.png", 0x88,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN, MyColors.WHITE);
+    private CardGameState cardGameState = null;
 
     public CardGameNode() {
         super("Play Cards");
@@ -18,11 +19,21 @@ public class CardGameNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new CardGameState(model);
+        if (cardGameState == null) {
+            cardGameState = new CardGameState(model);
+        }
+        return cardGameState;
     }
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+        if (cardGameState == null) {
+            return true;
+        }
+        if (cardGameState.getNumberOfPlayers() < 2) {
+            state.println("It seems like nobody is interested in playing any more.");
+            return false;
+        }
         return true;
     }
 

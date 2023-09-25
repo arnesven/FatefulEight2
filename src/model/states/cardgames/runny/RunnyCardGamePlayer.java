@@ -72,6 +72,7 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
     }
 
     public MyPair<List<CardGameCard>, List<CardGameCard>> partitionHand() {
+        // TODO: This method still can't find all winning hands unfortunately...
         List<CardGameCard> handCards = new ArrayList<>();
         for (int i = 0; i < numberOfCardsInHand(); ++i) {
             handCards.add(getCard(i));
