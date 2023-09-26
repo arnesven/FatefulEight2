@@ -45,6 +45,7 @@ public class RunnyCardGame extends CardGame {
         currentRound = 0;
         clearCardsInMatrix(state);
         setDeck(new CardGameDeck());
+        setDiscard(new CardPile());
         resetCurrentBet();
         state.println("The deck is shuffled and 6 cards are dealt to each player. ");
         super.dealCardsToPlayers(state,6);
@@ -200,10 +201,22 @@ public class RunnyCardGame extends CardGame {
     public void addMorePlayers(Model model, CardGameState cardGameState) {
         if (getPlayers().size() < MAX_NUMBER_OF_PLAYERS &&
                 MyRandom.randInt(cardGameState.getRoundsPlayed()) == 0 && cardGameState.getRoundsPlayed() > 1) {
-            CardGamePlayer replacement = makeRunnyNPC(Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
+            CardGamePlayer replacement;
+            do {
+                replacement = makeRunnyNPC(Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
+            } while (alreadyAtTable(replacement));
             getPlayers().add(0, replacement);
             cardGameState.println(replacement.getName() + " sits down at the table.");
         }
+    }
+
+    private boolean alreadyAtTable(CardGamePlayer replacement) {
+        for (CardGamePlayer player : getPlayers()) {
+            if (player.getName().equals(replacement.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getRound() {

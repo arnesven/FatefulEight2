@@ -16,14 +16,14 @@ public abstract class CardGame {
     private final String name;
     private boolean cursorEnabled = false;
     private CardGameDeck deck;
-    private CardPile discardPile = new CardPile();
+    private CardPile discardPile;
     private int currentBet = 0;
 
     public CardGame(String name, List<CardGamePlayer> npcPlayers, CardGameDeck deck) {
         this.name = name;
         this.players = new ArrayList<>(npcPlayers);
         setDeck(deck);
-        cardArea.addElement(cardArea.getColumns()/2, cardArea.getRows()/2-1, discardPile);
+        setDiscard(new CardPile());
     }
 
     public abstract void setup(CardGameState state);
@@ -146,6 +146,15 @@ public abstract class CardGame {
         }
         this.deck = deck;
         cardArea.addElement(cardArea.getColumns()/2-1, cardArea.getRows()/2-1, deck);
+    }
+
+    public void setDiscard(CardPile pile) {
+        if (cardArea.getElementList().contains(this.discardPile)) {
+            cardArea.remove(this.discardPile);
+        }
+        this.discardPile = pile;
+        cardArea.addElement(cardArea.getColumns()/2, cardArea.getRows()/2-1, discardPile);
+
     }
 
     public CardPile getDiscard() {

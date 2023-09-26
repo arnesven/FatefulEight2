@@ -4,9 +4,12 @@ import model.Model;
 import model.races.Race;
 import model.states.cardgames.*;
 import util.MyPair;
+import view.MyColors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class RunnyCardGamePlayer extends CardGamePlayer {
     public RunnyCardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
@@ -72,26 +75,18 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
     }
 
     public MyPair<List<CardGameCard>, List<CardGameCard>> partitionHand() {
-        // TODO: This method still can't find all winning hands unfortunately...
         List<CardGameCard> handCards = new ArrayList<>();
         for (int i = 0; i < numberOfCardsInHand(); ++i) {
             handCards.add(getCard(i));
         }
-        List<CardGameCard> runs = findSets(handCards,
-                (CardGameCard current, CardGameCard previous) ->
-                        current.getValue() == previous.getValue() + 1 &&
-                        current.getSuit() == previous.getSuit(), 3);
-        handCards.removeAll(runs);
+        handCards.removeAll(findRuns(handCards, 3));
 
         List<CardGameCard> sets = findSets(handCards,
                 (CardGameCard current, CardGameCard previous) ->
                         current.getValue() == previous.getValue(), 3);
         handCards.removeAll(sets);
 
-        List<CardGameCard> runPairs = findSets(handCards,
-                (CardGameCard current, CardGameCard previous) ->
-                        current.getValue() == previous.getValue() + 1 &&
-                                current.getSuit() == previous.getSuit(), 2);
+        List<CardGameCard> runPairs = findRuns(handCards, 2);
         handCards.removeAll(runPairs);
         List<CardGameCard> pairs = new ArrayList<>(runPairs);
 
@@ -112,6 +107,24 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
         }
 
         return new MyPair<>(handCards, pairs);
+    }
+
+    private List<CardGameCard> findRuns(List<CardGameCard> handCards, int length) {
+        Map<MyColors, List<CardGameCard>> cardsBySuits = new HashMap<>();
+        for (CardGameCard c : handCards) {
+            if (!cardsBySuits.containsKey(c.getSuit())) {
+                cardsBySuits.put(c.getSuit(), new ArrayList<>());
+            }
+            cardsBySuits.get(c.getSuit()).add(c);
+        }
+        List<CardGameCard> result = new ArrayList<>();
+        for (MyColors color : cardsBySuits.keySet()) {
+            List<CardGameCard> runs = findSets(cardsBySuits.get(color),
+                    (CardGameCard current, CardGameCard previous) ->
+                    current.getValue() == previous.getValue() + 1, length);
+            result.addAll(runs);
+        }
+        return result;
     }
 
     protected List<CardGameCard> getUnlockedSingles() {
