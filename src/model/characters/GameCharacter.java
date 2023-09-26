@@ -306,7 +306,7 @@ public class GameCharacter extends Combatant {
     }
 
     public void addToSP(int i) {
-        currentSp = Math.max(0, Math.min(currentSp + i, MAX_SP));
+        currentSp = Math.max(0, Math.min(currentSp + i, getMaxSP()));
     }
 
     public void drawAvatar(ScreenHandler screenHandler, int xpos, int ypos) {
