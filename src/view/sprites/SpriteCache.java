@@ -17,6 +17,10 @@ public class SpriteCache {
     }
 
     public static void put(Sprite sprite, BufferedImage img) {
+        if (map.size() > 10000) {
+            System.out.println("Clearing sprite cache!");
+            map.clear();
+        }
         map.put(sprite, img);
     }
 

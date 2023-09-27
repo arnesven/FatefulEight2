@@ -156,17 +156,28 @@ public class Sprite implements Serializable {
         img = img.getSubimage(column * width, row * height, width*frames, height);
 
         Graphics2D g2d = (Graphics2D) g;
-        double rotationRequired = Math.toRadians(getRotation());
-        double locationX = img.getWidth() / 2;
-        double locationY = img.getHeight() / 2;
-        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        for (int n = 0; n < maxFrames; ++n) {
-            g2d.drawImage(op.filter(img,null), n*img.getWidth(), downShift, null);
-        }
-        for (Sprite s : layers) {
+        if (rotation > 0.0) {
+            double rotationRequired = Math.toRadians(getRotation());
+            double locationX = img.getWidth() / 2;
+            double locationY = img.getHeight() / 2;
+            AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
             for (int n = 0; n < maxFrames; ++n) {
-                g2d.drawImage(op.filter(s.internalGetImage(), null), n * (s.getWidth()*s.getFrames()), downShift, null);
+                g2d.drawImage(op.filter(img, null), n * img.getWidth(), downShift, null);
+            }
+            for (Sprite s : layers) {
+                for (int n = 0; n < maxFrames; ++n) {
+                    g2d.drawImage(op.filter(s.internalGetImage(), null), n * (s.getWidth() * s.getFrames()), downShift, null);
+                }
+            }
+        } else {
+            for (int n = 0; n < maxFrames; ++n) {
+                g2d.drawImage(img, n * img.getWidth(), downShift, null);
+            }
+            for (Sprite s : layers) {
+                for (int n = 0; n < maxFrames; ++n) {
+                    g2d.drawImage(s.internalGetImage(), n * (s.getWidth() * s.getFrames()), downShift, null);
+                }
             }
         }
 
