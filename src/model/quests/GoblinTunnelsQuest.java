@@ -109,17 +109,16 @@ public class GoblinTunnelsQuest extends Quest {
 
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
-        for (int i = 0; i < LOOT_REWARDS; ++i) {
-            StandardCombatLoot loot = new StandardCombatLoot(model);
-            if (loot.getText().equals("")) {
-                state.println("You have found something valuable, " + loot.getText() + ".");
-            } else {
-                state.println("You have found " + loot.getGold() + " gold.");
-            }
-            loot.giveYourself(model.getParty());
-        }
-        
         if (questWasSuccess) {
+            for (int i = 0; i < LOOT_REWARDS; ++i) {
+                StandardCombatLoot loot = new StandardCombatLoot(model);
+                if (!loot.getText().equals("")) {
+                    state.println("You have found something valuable, " + loot.getText() + ".");
+                } else if (loot.getGold() > 0) {
+                    state.println("You have found " + loot.getGold() + " gold.");
+                }
+                loot.giveYourself(model.getParty());
+            }
             state.print("Do you wish to immediately continue to the Goblin King Quest " +
                     "(you will not be able to come back and do this later)? (Y/N) ");
             if (state.yesNoInput()) {

@@ -30,7 +30,7 @@ public class UnlockThisBathroom extends SummonTask {
             if (success) {
                 summon.increaseStep();
                 SoundEffects.playUnlock();
-                print("The lock clicks open loudly and the door swings open.");
+                println("The lock clicks open loudly and the door swings open.");
                 println("Kid: \"Hey, I'm in here!\"");
                 println(location.getLordName() + ": \"What! Somebody was in there?\"");
                 leaderSay("I thought you said the lock was jammed for a while!");

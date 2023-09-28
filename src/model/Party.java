@@ -340,7 +340,6 @@ public class Party implements Serializable {
         boolean levelUp = false;
         if (gc.getXpToNextLevel() <= xp) {
             levelUp = true;
-            SoundEffects.playSound("levelup");
             partyMemberSay(model, gc, List.of("I am learning every day.^",
                     "Experience is its own reward.^",
                     "Faster, better, stronger, harder.^",
@@ -349,6 +348,7 @@ public class Party implements Serializable {
                     "Advancement!^",
                     "I think I'm getting the hang of this.^",
                     "I'm good, there's just no denying it.^"));
+            SoundEffects.playSound("levelup");
             if (model.getSettings().levelUpSummaryEnabled()) {
                 model.transitionToDialog(new LevelUpSummaryView(model, gc));
             } else {
