@@ -29,8 +29,12 @@ public class TopText {
         model.getScreenHandler().put(32, 0, ALIGNMENT_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", DailyEventState.getPartyAlignment(model)), 30, 0, MyColors.WHITE);
         model.getScreenHandler().put(39, 0, HORSES_ICON_SPRITE);
+        MyColors horsesColor = MyColors.LIGHT_RED;
+        if (model.getParty().getHorseHandler().canRide(model.getParty().getPartyMembers())){
+            horsesColor = MyColors.LIGHT_GREEN;
+        }
         BorderFrame.drawString(model.getScreenHandler(), String.format("%1d/%1d",  model.getParty().getHorseHandler().getFullBloods(),
-                model.getParty().getHorseHandler().getPonies()), 36, 0, MyColors.WHITE);
+                model.getParty().getHorseHandler().getPonies()), 36, 0, horsesColor);
         model.getScreenHandler().put(44, 0, REP_ICON_SPRITE);
         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",  model.getParty().getReputation()), 42, 0, MyColors.WHITE);
 

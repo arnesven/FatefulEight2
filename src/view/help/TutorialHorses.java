@@ -12,7 +12,8 @@ public class TutorialHorses extends HelpDialog {
             "When you are out in the world horses can find their own food while traveling, but at inns and taverns " +
             "your horses will need to stay at a stable, which costs 1 gold per horse.\n\n" +
             "You can see your current number of horses in the top bar at any time. The digit to the left is " +
-            "the number of steeds and the digit to the right is the number of ponies you have. " +
+            "the number of steeds and the digit to the right is the number of ponies you have. If you have enough " +
+            "horses for your party to travel two hexes, these digits will be green, red otherwise. " +
             "You can have at most two more horses than the number of characters in your party.";
 
     public TutorialHorses(GameView view) {

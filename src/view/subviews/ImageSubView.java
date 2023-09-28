@@ -4,6 +4,7 @@ import model.Model;
 import view.MyColors;
 import view.SpriteManager;
 import view.sprites.Sprite;
+import view.sprites.SpriteCache;
 
 public class ImageSubView extends SubView {
     private Sprite[][] imgsprite;
@@ -43,7 +44,8 @@ public class ImageSubView extends SubView {
 
         private void makeImage() {
         imgsprite = new Sprite[32][38];
-        boolean alreadyConverted = SpriteManager.isRegistered(imageName+0+":"+0+":" + "0");
+        boolean alreadyConverted = SpriteManager.isRegistered(imageName+0+":"+0+":" + "0") &&
+                SpriteCache.has(this.imgsprite[0][0]);
         if (alreadyConverted) {
             for (int x = 0; x < 32; ++x) {
                 for (int y = 0; y < 38; ++y) {
