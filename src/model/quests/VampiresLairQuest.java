@@ -247,7 +247,7 @@ public class VampiresLairQuest extends MainQuest {
             leaderSay("Well Caid, we've slaughtered every single vampire in this place and we haven't " +
                     "encountered your missing person. I'm sorry to say but your intel may have been wrong on this one.");
             portraitSay("Hmm... I don't understand. I was sure she was here...");
-            print("Caid looks around the crypt a bit. His eyes fall on one of the slain vampires.");
+            println("Caid looks around the crypt a bit. His eyes fall on one of the slain vampires.");
             portraitSay("Wait just a minute now... This vampire here, this IS the lord's sister!");
             leaderSay("Are you sure?");
             portraitSay("Of course, I'd know her anywhere, we grew up in the same castle.");

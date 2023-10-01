@@ -16,7 +16,8 @@ public class HigherTierAccessory extends Accessory {
     private final int tier;
 
     public HigherTierAccessory(Accessory inner, int tier) {
-        super("Superior " + inner.getName(), inner.getCost() * COST_MULTIPLIER);
+        super(Item.getHigherTierPrefix(tier) + " " + inner.getName(),
+                inner.getCost() * COST_MULTIPLIER);
         this.inner = inner;
         this.sprite = new HigherTierItemSprite(inner.getSpriteForHigherTier(tier), tier);
         this.tier = tier;
