@@ -1,9 +1,11 @@
 package model.items.weapons;
 
+import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.items.Item;
-import view.sprites.AvatarItemSprite;
-import view.sprites.Sprite;
-import view.sprites.HigherTierItemSprite;
+import model.items.Prevalence;
+import util.MyPair;
+import view.sprites.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,5 +72,45 @@ public class HigherTierWeapon extends Weapon {
     @Override
     public boolean isRangedAttack() {
         return inner.isRangedAttack();
+    }
+
+    @Override
+    public int getSpeedModifier() {
+        return inner.getSpeedModifier();
+    }
+
+    @Override
+    public List<MyPair<Skill, Integer>> getSkillBonuses() {
+        return inner.getSkillBonuses();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return inner.getPrevalence();
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return inner.getEffectSprite();
+    }
+
+    @Override
+    public LoopingSprite getOnAvatarSprite(GameCharacter gameCharacter) {
+        return inner.getOnAvatarSprite(gameCharacter);
+    }
+
+    @Override
+    public int getNumberOfAttacks() {
+        return inner.getNumberOfAttacks();
+    }
+
+    @Override
+    public String getExtraText() {
+        return inner.getExtraText();
+    }
+
+    @Override
+    public int getCriticalTarget() {
+        return inner.getCriticalTarget();
     }
 }
