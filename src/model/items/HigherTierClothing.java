@@ -1,8 +1,12 @@
 package model.items;
 
+import model.classes.Skill;
 import model.items.clothing.Clothing;
+import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.HigherTierItemSprite;
+
+import java.util.List;
 
 public class HigherTierClothing extends Clothing {
     private static final int COST_MULTIPLIER = 3;
@@ -26,5 +30,30 @@ public class HigherTierClothing extends Clothing {
     @Override
     public Item copy() {
         return new HigherTierClothing((Clothing) innerItem.copy(), tier);
+    }
+
+    @Override
+    public String getShoppingDetails() {
+        return innerItem.getShoppingDetails();
+    }
+
+    @Override
+    public String getSound() {
+        return innerItem.getSound();
+    }
+
+    @Override
+    public List<MyPair<Skill, Integer>> getSkillBonuses() {
+        return innerItem.getSkillBonuses();
+    }
+
+    @Override
+    public int getSpeedModifier() {
+        return innerItem.getSpeedModifier();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return innerItem.getPrevalence();
     }
 }

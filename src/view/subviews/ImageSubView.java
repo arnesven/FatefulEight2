@@ -25,7 +25,7 @@ public class ImageSubView extends SubView {
     }
 
     public void drawArea(Model model, int xStart, int yStart) {
-        if (imgsprite == null) {
+        if (imgsprite == null || !SpriteCache.has(this.imgsprite[0][0])) {
             makeImage();
         }
         model.getScreenHandler().clearSpace(xStart, xStart + (X_MAX - X_OFFSET),
@@ -42,7 +42,7 @@ public class ImageSubView extends SubView {
         drawArea(model, X_OFFSET, Y_OFFSET);
     }
 
-        private void makeImage() {
+    private void makeImage() {
         imgsprite = new Sprite[32][38];
         boolean alreadyConverted = SpriteManager.isRegistered(imageName+0+":"+0+":" + "0") &&
                 SpriteCache.has(this.imgsprite[0][0]);
@@ -56,9 +56,7 @@ public class ImageSubView extends SubView {
             for (int x = 0; x < 32; ++x) {
                 for (int y = 0; y < 38; ++y) {
                     this.imgsprite[x][y] = new Sprite(imageName+x+":"+y+":", imageName + ".png", x, y, 8, 8);
-                    if (convert) {
-                        MyColors.transformImage(this.imgsprite[x][y]);
-                    }
+                    MyColors.transformImage(this.imgsprite[x][y]);
                 }
             }
         }

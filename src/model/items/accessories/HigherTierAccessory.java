@@ -2,6 +2,7 @@ package model.items.accessories;
 
 import model.classes.Skill;
 import model.items.Item;
+import model.items.Prevalence;
 import model.items.spells.Spell;
 import util.MyPair;
 import view.sprites.Sprite;
@@ -93,5 +94,10 @@ public class HigherTierAccessory extends Accessory {
     @Override
     public boolean isOffHandItem() {
         return inner.isOffHandItem();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return inner.getPrevalence();
     }
 }
