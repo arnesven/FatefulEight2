@@ -33,11 +33,6 @@ public class HigherTierClothing extends Clothing {
     }
 
     @Override
-    public String getShoppingDetails() {
-        return innerItem.getShoppingDetails();
-    }
-
-    @Override
     public String getSound() {
         return innerItem.getSound();
     }
