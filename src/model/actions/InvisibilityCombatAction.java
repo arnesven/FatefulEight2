@@ -21,8 +21,9 @@ public class InvisibilityCombatAction extends CombatAction {
         super("Invisibility", false);
     }
 
-    public static boolean canDoAbility(GameCharacter performer) {
-        return performer.getRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
+    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
+        return target instanceof GameCharacter &&
+                performer.getRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }
