@@ -11,6 +11,8 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialSneakAttack;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -28,6 +30,11 @@ public class SneakAttackCombatAction extends CombatAction {
     public static void cancel(GameState state, GameCharacter randomTarget) {
         state.println(randomTarget.getFirstName() + " sneak attack was cancelled.");
         randomTarget.removeCondition(SneakAttackCondition.class);
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialSneakAttack(model.getView());
     }
 
     @Override

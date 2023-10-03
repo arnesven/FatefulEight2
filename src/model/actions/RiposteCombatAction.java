@@ -10,6 +10,8 @@ import model.items.weapons.BladedWeapon;
 import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialRiposte;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -46,6 +48,11 @@ public class RiposteCombatAction extends StaminaCombatAbility {
         model.getTutorial().riposte(model);
         combat.println(performer.getFirstName() + " gets ready to perform a riposte.");
         performer.addCondition(new RiposteCombatAction.RiposteStanceCondition());
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialRiposte(model.getView());
     }
 
     private static class RiposteStanceCondition extends Condition {

@@ -13,6 +13,8 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialCurseAbility;
 import view.sprites.CharSprite;
 import view.sprites.DamageValueEffect;
 import view.sprites.DownArrowAnimation;
@@ -32,6 +34,11 @@ public class CurseCombatAction extends CombatAction {
                 performer.getRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialCurseAbility(model.getView());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package model.combat;
 
 import model.Model;
+import model.actions.BasicCombatAction;
 import model.characters.GameCharacter;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
@@ -10,7 +11,7 @@ import view.sprites.MiscastEffectSprite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpellCombatAction extends CombatAction {
+public class SpellCombatAction extends BasicCombatAction {
     private final List<CombatSpell> combatSpells;
     private final Combatant target;
 

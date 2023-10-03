@@ -6,6 +6,8 @@ import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.states.CombatEvent;
 import util.MyRandom;
+import view.help.HelpDialog;
+import view.help.TutorialCombatResting;
 
 public class RestCombatAction extends CombatAction {
     private boolean another;
@@ -17,6 +19,11 @@ public class RestCombatAction extends CombatAction {
 
     public static boolean canDoRestAbility(Model model, GameCharacter performer) {
         return performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer);
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialCombatResting(model.getView());
     }
 
     @Override

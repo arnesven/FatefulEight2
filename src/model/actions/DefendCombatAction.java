@@ -8,6 +8,8 @@ import model.combat.Combatant;
 import model.combat.Condition;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialDefending;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -20,6 +22,11 @@ public class DefendCombatAction extends CombatAction {
 
     public static boolean isDefending(GameCharacter gameCharacter) {
         return gameCharacter.hasCondition(DefendCondition.class);
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialDefending(model.getView());
     }
 
     @Override

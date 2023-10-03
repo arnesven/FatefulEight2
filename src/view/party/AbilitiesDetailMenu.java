@@ -10,19 +10,18 @@ import model.combat.CombatAction;
 import model.enemies.Enemy;
 import model.enemies.SkeletonEnemy;
 import model.items.Equipment;
-import model.items.accessories.SkullCap;
-import model.items.clothing.LeatherArmor;
-import model.items.weapons.Longsword;
-import model.races.AllRaces;
 import model.races.Race;
 import view.MyColors;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
     private final List<String> abilities;
+    private static Map<String, CombatAction> abilityDictionary;
 
     public AbilitiesDetailMenu(Model model, PartyView partyView, GameCharacter gc, int x, int y) {
         super(partyView, 24, makeAbilities(model, gc).size()+2, x, y);
@@ -32,21 +31,23 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
     private static List<String> makeAbilities(Model model, GameCharacter gc) {
         List<String> result = new ArrayList<>();
         Enemy enemy = new SkeletonEnemy('A');
-        for (CombatAction act : new AbilityCombatAction(gc, enemy).getInnerActions(model)) {
-            result.add(act.getName());
-        }
+        abilityDictionary = new HashMap<>();
+        addAbilityEntries(model, new AbilityCombatAction(gc, enemy), result);
         GameCharacter other = makeDummyCharacter();
-        for (CombatAction act : new AbilityCombatAction(gc, other).getInnerActions(model)) {
-            if (!result.contains(act.getName())) {
-                result.add(act.getName());
-            }
-        }
-        for (CombatAction act : new AbilityCombatAction(gc, gc).getInnerActions(model)) {
-            if (!result.contains(act.getName())) {
-                result.add(act.getName());
-            }
-        }
+        addAbilityEntries(model, new AbilityCombatAction(gc, other), result);
+        addAbilityEntries(model, new AbilityCombatAction(gc, gc), result);
         return result;
+    }
+
+    private static void addAbilityEntries(Model model, AbilityCombatAction abilityCombatAction, List<String> result) {
+        for (CombatAction act : abilityCombatAction.getInnerActions(model)) {
+            if (!result.contains(act.getName())) {
+                result.add(act.getName());
+                if (!abilityDictionary.containsKey(act.getName())) {
+                    abilityDictionary.put(act.getName(), act);
+                }
+            }
+        }
     }
 
     private static GameCharacter makeDummyCharacter() {
@@ -65,7 +66,17 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
         List<ListContent> cont = new ArrayList<>();
         int count = 0;
         for (String str : abilities) {
-            cont.add(new ListContent( xStart+1, yStart+2+count, str));
+            cont.add(new SelectableListContent(xStart + 1, yStart + 2 + count, str) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setInnerMenu(abilityDictionary.get(str).getHelpChapter(model), model);
+                }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return true;
+                }
+            });
             count++;
         }
         return cont;
@@ -74,5 +85,9 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
 
+    }
+
+    public int getNoOfAbilities() {
+        return abilities.size();
     }
 }

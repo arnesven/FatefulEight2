@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.CombatEvent;
+import view.help.HelpDialog;
+import view.help.TutorialSniperShot;
 
 public class SniperShotCombatAction extends StaminaCombatAbility {
     public static final int PERCEPTION_RANKS_REQUIREMENT = 3;
@@ -24,5 +26,10 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
         combat.println(performer.getFirstName() + " is zeroing in on a weak spot.");
         performer.doOneAttack(combat, target, false, 0, 6);
 
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialSniperShot(model.getView());
     }
 }

@@ -10,6 +10,8 @@ import model.combat.InvisibilityCondition;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
+import view.help.HelpDialog;
+import view.help.TutorialInvisibility;
 import view.sprites.SmokeBallAnimation;
 
 public class InvisibilityCombatAction extends CombatAction {
@@ -26,6 +28,11 @@ public class InvisibilityCombatAction extends CombatAction {
                 performer.getRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialInvisibility(model.getView());
     }
 
     @Override

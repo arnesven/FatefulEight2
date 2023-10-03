@@ -11,6 +11,8 @@ import model.combat.Condition;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialInspire;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -19,6 +21,11 @@ public class InspireCombatAction extends CombatAction {
 
     public InspireCombatAction() {
         super("Inspire", false);
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialInspire(model.getView());
     }
 
     @Override

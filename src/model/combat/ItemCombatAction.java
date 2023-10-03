@@ -1,6 +1,7 @@
 package model.combat;
 
 import model.Model;
+import model.actions.BasicCombatAction;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.items.Scroll;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ItemCombatAction extends CombatAction {
+public class ItemCombatAction extends BasicCombatAction {
     private final Set<UsableItem> usableItems;
     private final Combatant target;
 
@@ -45,7 +46,7 @@ public class ItemCombatAction extends CombatAction {
                     }
                 }
             } else if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
-                res.add(new CombatAction(item.getName(), false) {
+                res.add(new BasicCombatAction(item.getName(), false) {
                     @Override
                     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         GameCharacter character = (GameCharacter)target;
@@ -56,7 +57,7 @@ public class ItemCombatAction extends CombatAction {
                     }
                 });
             } else if (target instanceof Enemy && item instanceof ThrowablePotion) {
-                res.add(new CombatAction(item.getName(), true) {
+                res.add(new BasicCombatAction(item.getName(), true) {
                     @Override
                     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         ThrowablePotion tp = (ThrowablePotion)item;

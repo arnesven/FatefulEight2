@@ -11,6 +11,7 @@ import model.items.weapons.BladedWeapon;
 import model.items.weapons.BluntWeapon;
 import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
+import view.help.HelpDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,11 @@ public class AbilityCombatAction extends CombatAction {
     @Override
     public boolean hasInnerMenu() {
         return true;
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return null; // unused
     }
 
     @Override

@@ -8,9 +8,9 @@ import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.items.weapons.*;
 import model.states.CombatEvent;
-import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialFairyHeal;
 import view.sprites.DamageValueEffect;
-import view.sprites.EntropicBoltEffect;
 
 public class FairyHealCombatAction extends CombatAction {
     private static final int DIFFICULTY = 7;
@@ -19,6 +19,11 @@ public class FairyHealCombatAction extends CombatAction {
 
     public FairyHealCombatAction() {
         super("Fairy Heal", false);
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialFairyHeal(model.getView());
     }
 
     @Override

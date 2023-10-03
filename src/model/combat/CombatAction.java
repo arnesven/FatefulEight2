@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.CombatEvent;
+import view.help.HelpDialog;
+import view.party.SelectableListMenu;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +51,8 @@ public abstract class CombatAction {
             }
         }
     }
+
+    public abstract HelpDialog getHelpChapter(Model model);
 
     protected abstract void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target);
 

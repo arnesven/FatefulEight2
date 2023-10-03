@@ -12,6 +12,8 @@ import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
 import model.states.GameState;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialRegenerate;
 import view.sprites.CharSprite;
 import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
@@ -24,7 +26,12 @@ public class RegenerationCombatAction extends CombatAction {
     public RegenerationCombatAction() {
         super("Regenerate", false);
     }
-    
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialRegenerate(model.getView());
+    }
+
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().regenerate(model);

@@ -1,13 +1,14 @@
 package model.combat;
 
 import model.Model;
+import model.actions.BasicCombatAction;
 import model.characters.GameCharacter;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 
-public class SpellFinalCombatAction extends CombatAction {
+public class SpellFinalCombatAction extends BasicCombatAction {
     private final CombatSpell spell;
 
     public SpellFinalCombatAction(CombatSpell spell) {

@@ -93,18 +93,19 @@ public class PartyView extends SelectableListMenu {
 
             @Override
             public boolean isEnabled(Model model) {
-                return true;
+                return gc.getConditions().size() > 0;
             }
         });
-        content.add(new SelectableListContent(x, y++, "Abilities") {
+        AbilitiesDetailMenu abilitiesDetails = new AbilitiesDetailMenu(model,PartyView.this, gc, x, y);
+        content.add(new SelectableListContent(x, y++, "Abilities " + abilitiesDetails.getNoOfAbilities()) {
             @Override
             public void performAction(Model model, int x, int y) {
-                PartyView.super.setInnerMenu(new AbilitiesDetailMenu(model,PartyView.this, gc, x, y), model);
+                PartyView.super.setInnerMenu(abilitiesDetails, model);
             }
 
             @Override
             public boolean isEnabled(Model model) {
-                return true;
+                return abilitiesDetails.getNoOfAbilities() > 0;
             }
         });
 

@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.actions.AbilityCombatAction;
+import model.actions.BasicCombatAction;
 import model.actions.DefendCombatAction;
 import model.actions.RiposteCombatAction;
 import model.combat.*;
@@ -29,6 +30,8 @@ import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
 import view.ScreenHandler;
+import view.help.CombatHelpChapter;
+import view.help.HelpDialog;
 import view.sprites.AvatarSprite;
 import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
@@ -350,7 +353,7 @@ public class GameCharacter extends Combatant {
     public List<CombatAction> getCombatActions(Model model, Combatant target, CombatEvent combatEvent) {
         List<CombatAction> result = new ArrayList<>();
         if (canAttackInCombat() && target.canBeAttackedBy(this)) {
-            result.add(new CombatAction("Attack", true) {
+            result.add(new BasicCombatAction("Attack", true) {
                 @Override
                 protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     performer.performAttack(model, combat, target);
@@ -358,7 +361,7 @@ public class GameCharacter extends Combatant {
             });
         }
         if (isLeader() && combatEvent.fleeingEnabled()) {
-            result.add(new CombatAction("Flee", false) {
+            result.add(new BasicCombatAction("Flee", false) {
                 @Override
                 protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     performFleeFromBattle(model, combat);
@@ -385,7 +388,7 @@ public class GameCharacter extends Combatant {
             }
         }
 
-        result.add(new CombatAction("Pass", false) {
+        result.add(new BasicCombatAction("Pass", false) {
             @Override
             protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                 combat.println("");

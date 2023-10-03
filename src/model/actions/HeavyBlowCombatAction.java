@@ -7,6 +7,8 @@ import model.combat.Combatant;
 import model.items.weapons.AxeWeapon;
 import model.items.weapons.BluntWeapon;
 import model.states.CombatEvent;
+import view.help.HelpDialog;
+import view.help.TutorialHeavyBlow;
 
 public class HeavyBlowCombatAction extends StaminaCombatAbility {
     public static final int LABOR_RANKS_REQUIREMENT = 3;
@@ -26,5 +28,10 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
         return performer.getRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT &&
                 (performer.getEquipment().getWeapon().isOfType(BluntWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(AxeWeapon.class));
+    }
+
+    @Override
+    public HelpDialog getHelpChapter(Model model) {
+        return new TutorialHeavyBlow(model.getView());
     }
 }
