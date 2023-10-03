@@ -68,6 +68,9 @@ public class AbilityCombatAction extends CombatAction {
         if (RegenerationCombatAction.canDoAbility(performer)) {
             list.add(new RegenerationCombatAction());
         }
+        if (InvisibilityCombatAction.canDoAbility(performer)) {
+            list.add(new InvisibilityCombatAction());
+        }
         return list;
     }
 

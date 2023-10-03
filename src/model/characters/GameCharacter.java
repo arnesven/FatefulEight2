@@ -330,7 +330,9 @@ public class GameCharacter extends Combatant {
 
     @Override
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
-        drawAvatar(screenHandler, xpos, ypos);
+        if (!hasCondition(InvisibilityCondition.class)) {
+            drawAvatar(screenHandler, xpos, ypos);
+        }
         screenHandler.register(getName() + "inittoken", new Point(xpos+3, ypos+3), initiativeSymbol);
         drawConditions(screenHandler, xpos, ypos);
     }

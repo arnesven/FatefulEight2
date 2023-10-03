@@ -331,6 +331,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void invisibility(Model model) {
+        runOnce("invisibility", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialInvisibility(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

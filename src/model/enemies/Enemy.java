@@ -109,6 +109,7 @@ public abstract class Enemy extends Combatant {
             candidates.addAll(model.getParty().getBackRow());
         }
         candidates.removeIf(Combatant::isDead);
+        candidates.removeIf((GameCharacter gc) -> gc.hasCondition(InvisibilityCondition.class));
         return candidates;
     }
 
