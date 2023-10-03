@@ -14,5 +14,6 @@ public class TutorialFairyHeal extends SubChapterHelpDialog {
 
     public TutorialFairyHeal(GameView view) {
         super(view, "Fairy Heal", TEXT);
+        setLevel(2);
     }
 }
