@@ -345,6 +345,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void curseAbility(Model model) {
+        runOnce("curseability", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCurseAbility(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

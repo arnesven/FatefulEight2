@@ -3,7 +3,11 @@ package model.combat;
 public class TimedParalysisCondition extends ParalysisCondition {
 
     public TimedParalysisCondition() {
-        setDuration(2);
+        this(1);
+    }
+
+    public TimedParalysisCondition(int duration) {
+        setDuration(duration + 1);
     }
 
 }

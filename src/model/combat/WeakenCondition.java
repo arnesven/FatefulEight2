@@ -7,9 +7,13 @@ import view.sprites.Sprite;
 public class WeakenCondition extends Condition {
     private static final Sprite SPRITE = CharSprite.make((char) (0xC2), MyColors.LIGHT_RED, MyColors.BLACK, MyColors.CYAN);
 
-    public WeakenCondition() {
+    public WeakenCondition(int duration) {
         super("Weakened", "WKN");
-        setDuration(4);
+        setDuration(duration + 1);
+    }
+
+    public WeakenCondition() {
+        this(3);
     }
 
     @Override
