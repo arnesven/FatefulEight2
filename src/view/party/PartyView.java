@@ -77,7 +77,6 @@ public class PartyView extends SelectableListMenu {
             }
         });
 
-        y++;
         addListContent(content, x, y++, String.format("Health %9s", gc.getHP() + "/" + gc.getMaxHP()));
         addListContent(content, x, y++, String.format("Stamina %8s", gc.getSP() + "/" + gc.getMaxSP()));
         addListContent(content, x, y++, String.format("Armor %10d", gc.getAP()));
@@ -90,6 +89,17 @@ public class PartyView extends SelectableListMenu {
             @Override
             public void performAction(Model model, int x, int y) {
                 PartyView.super.setInnerMenu(new ConditionsDetailMenu(PartyView.this, gc, x, y), model);
+            }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return true;
+            }
+        });
+        content.add(new SelectableListContent(x, y++, "Abilities") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                PartyView.super.setInnerMenu(new AbilitiesDetailMenu(model,PartyView.this, gc, x, y), model);
             }
 
             @Override
