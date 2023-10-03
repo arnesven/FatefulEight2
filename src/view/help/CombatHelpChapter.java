@@ -1,6 +1,5 @@
 package view.help;
 
-import model.actions.RegenerationCombatAction;
 import model.tutorial.TutorialCombatAttacks;
 import view.GameView;
 

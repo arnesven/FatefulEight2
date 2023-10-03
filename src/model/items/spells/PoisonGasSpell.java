@@ -4,13 +4,16 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.combat.Condition;
+import model.combat.PoisonCondition;
 import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
 import model.enemies.UndeadEnemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import model.states.GameState;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.*;
 
 public class PoisonGasSpell extends CombatSpell {
@@ -76,6 +79,11 @@ public class PoisonGasSpell extends CombatSpell {
             } else {
                 throw new IllegalStateException("EndOfCombatRoundTrigger was called with something other than combat event!");
             }
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new PoisonCondition().getHelpView(view);
         }
 
         @Override

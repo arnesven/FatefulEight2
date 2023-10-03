@@ -14,7 +14,9 @@ import model.items.spells.MindControlSpell;
 import model.items.spells.Spell;
 import model.states.*;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 import view.subviews.MansionTheme;
@@ -455,6 +457,10 @@ public class EnchantressEvent extends DailyEventState {
 
     private static final Sprite ENC_SPRITE = CharSprite.make((char)(0xD5), MyColors.DARK_PURPLE, MyColors.GREEN, MyColors.PURPLE);
 
+    public static Condition getCondition() {
+        return new EnchantedCondition();
+    }
+
     private static class EnchantedCondition extends Condition {
         public EnchantedCondition() {
             super("Enchanted", "ENC");
@@ -468,6 +474,12 @@ public class EnchantressEvent extends DailyEventState {
         @Override
         public Sprite getSymbol() {
             return ENC_SPRITE;
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this,
+                    "A condition indicating that this character is currently under the effects of an enchantment.");
         }
     }
 }

@@ -1,6 +1,8 @@
 package model.combat;
 
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -21,5 +23,11 @@ public class InvisibilityCondition extends Condition {
     @Override
     public Sprite getSymbol() {
         return SPRITE;
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is " +
+                "invisible and cannot be targeted by attacks.");
     }
 }

@@ -9,7 +9,9 @@ import model.enemies.Enemy;
 import model.items.weapons.BladedWeapon;
 import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.help.HelpDialog;
 import view.help.TutorialRiposte;
 import view.sprites.CharSprite;
@@ -55,6 +57,10 @@ public class RiposteCombatAction extends StaminaCombatAbility {
         return new TutorialRiposte(model.getView());
     }
 
+    public Condition getCondition() {
+        return new RiposteStanceCondition();
+    }
+
     private static class RiposteStanceCondition extends Condition {
         public RiposteStanceCondition() {
             super("Riposte", "RIP");
@@ -74,6 +80,12 @@ public class RiposteCombatAction extends StaminaCombatAbility {
         @Override
         public boolean removeAtEndOfCombat() {
             return true;
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this, "A condition indicating that this character is " +
+                    "currently in a Riposte Stance and may perform counter-attacks when attacked.");
         }
     }
 }

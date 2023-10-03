@@ -12,7 +12,9 @@ import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.help.HelpDialog;
 import view.help.TutorialCurseAbility;
 import view.sprites.CharSprite;
@@ -75,6 +77,10 @@ public class CurseCombatAction extends CombatAction {
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xC1), MyColors.DARK_RED, MyColors.BLACK, MyColors.CYAN);
 
+    public Condition getPainCondition() {
+        return new PainCondition(3);
+    }
+
     private static class PainCondition extends Condition {
 
         public PainCondition(int turns) {
@@ -103,6 +109,12 @@ public class CurseCombatAction extends CombatAction {
             if (comb.isDead()) {
                 state.println(comb.getName() + " has died from the pain!");
             }
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this, "A condition indicating that this " +
+                    "combatant is currently suffering from magically induced pain and will take damage each combat round.");
         }
     }
 }

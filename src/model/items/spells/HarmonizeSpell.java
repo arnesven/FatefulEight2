@@ -9,7 +9,9 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import model.states.GameState;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.CombatSpellSprite;
 import view.sprites.ItemSprite;
@@ -85,6 +87,12 @@ public class HarmonizeSpell extends CombatSpell {
                     }
                 }
             }
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this,
+                    "A condition indicating that this combatant has been pacified and may retreat at the end of the combat round.");
         }
     }
 }

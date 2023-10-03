@@ -7,7 +7,9 @@ import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.combat.Condition;
 import model.states.CombatEvent;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.help.HelpDialog;
 import view.help.TutorialDefending;
 import view.sprites.CharSprite;
@@ -49,6 +51,10 @@ public class DefendCombatAction extends CombatAction {
 
     private static final Sprite SPRITE = CharSprite.make((char) (0xD1), MyColors.WHITE, MyColors.BLUE, MyColors.CYAN);
 
+    public Condition getCondition() {
+        return new DefendCondition();
+    }
+
     private static class DefendCondition extends Condition {
         public DefendCondition() {
             super("Defend", "DEF");
@@ -68,6 +74,12 @@ public class DefendCombatAction extends CombatAction {
         @Override
         public boolean removeAtEndOfCombat() {
             return true;
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this,
+                    "A condition indicating that this combatant is currently in a defensive stance.");
         }
     }
 }

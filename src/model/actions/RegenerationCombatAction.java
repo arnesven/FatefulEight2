@@ -6,16 +6,13 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatAction;
 import model.combat.Combatant;
-import model.combat.Condition;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
-import model.states.GameState;
 import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialRegenerate;
 import view.sprites.CharSprite;
-import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
 
 public class RegenerationCombatAction extends CombatAction {
@@ -53,33 +50,4 @@ public class RegenerationCombatAction extends CombatAction {
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }
 
-    private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.LIGHT_GREEN, MyColors.BLACK, MyColors.GREEN);
-
-    private static class RegenerationCondition extends Condition {
-        public RegenerationCondition(int duration) {
-            super("Regeneration", "RGN");
-            setDuration(duration+1);
-        }
-
-        @Override
-        protected boolean noCombatTurn() {
-            return false;
-        }
-
-        @Override
-        public Sprite getSymbol() {
-            return CONDITION_SPRITE;
-        }
-
-        @Override
-        public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
-            if (comb.getHP() < comb.getMaxHP()) {
-                state.println(comb.getName() + " regenerates 1 Health Point.");
-                comb.addToHP(1);
-                if (state instanceof CombatEvent) {
-                    ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.HEALING);
-                }
-            }
-        }
-    }
 }

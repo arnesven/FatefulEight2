@@ -6,7 +6,6 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatAction;
 import model.combat.Combatant;
-import model.combat.Condition;
 import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
@@ -72,30 +71,8 @@ public class SneakAttackCombatAction extends CombatAction {
         }
     }
 
-    private static final Sprite SPRITE = CharSprite.make((char)(0xD7), MyColors.BROWN, MyColors.YELLOW, MyColors.CYAN);
-
     public int getSneakValue() {
         return sneakValue;
     }
 
-    private static class SneakAttackCondition extends Condition {
-        public SneakAttackCondition() {
-            super("Sneak Attack", "SNK");
-        }
-
-        @Override
-        protected boolean noCombatTurn() {
-            return false;
-        }
-
-        @Override
-        public Sprite getSymbol() {
-            return SPRITE;
-        }
-
-        @Override
-        public boolean removeAtEndOfCombat() {
-            return true;
-        }
-    }
 }

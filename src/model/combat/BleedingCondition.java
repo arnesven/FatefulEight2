@@ -3,7 +3,9 @@ package model.combat;
 import model.Model;
 import model.states.CombatEvent;
 import model.states.GameState;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
@@ -36,5 +38,11 @@ public class BleedingCondition extends Condition {
         if (comb.isDead()) {
             state.println(comb.getName() + " has bled out!");
         }
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is bleeding and " +
+                "will suffer damage each combat round until healed.");
     }
 }

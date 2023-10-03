@@ -1,6 +1,8 @@
 package model.combat;
 
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -19,5 +21,11 @@ public class ErodeCondition extends Condition {
     @Override
     public Sprite getSymbol() {
         return CONDITION_SPRITE;
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this,
+                "A condition indicating that the combatant's armor is currently degraded.");
     }
 }

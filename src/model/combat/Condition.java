@@ -3,6 +3,10 @@ package model.combat;
 import model.Model;
 import model.characters.GameCharacter;
 import model.states.GameState;
+import view.GameView;
+import view.help.ConditionHelpDialog;
+import view.help.HelpDialog;
+import view.help.HelpView;
 import view.sprites.Sprite;
 
 import java.io.Serializable;
@@ -79,5 +83,7 @@ public abstract class Condition implements Serializable {
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) { }
 
     public int getAttackBonus() { return 0; }
+
+    public abstract ConditionHelpDialog getHelpView(GameView view);
 
 }

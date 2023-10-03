@@ -1,7 +1,9 @@
 package model.combat;
 
 import model.characters.GameCharacter;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -22,6 +24,13 @@ public class SummonCondition extends Condition {
     @Override
     public boolean removeAtEndOfCombat() {
         return true;
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this,
+                "A condition indicating that this " +
+                "combatant has summoned another combatant.");
     }
 
     @Override

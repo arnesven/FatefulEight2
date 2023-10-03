@@ -2,7 +2,9 @@ package model.combat;
 
 import model.characters.GameCharacter;
 import model.items.weapons.Weapon;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -21,6 +23,12 @@ public class BurningWeaponCondition extends Condition {
     @Override
     public boolean removeAtEndOfCombat() {
         return true;
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this,
+                "A condition indicating that this character's weapon has been set ablaze, dealing more damage in combat.");
     }
 
     @Override

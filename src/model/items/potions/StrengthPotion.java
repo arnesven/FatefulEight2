@@ -2,8 +2,11 @@ package model.items.potions;
 
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.Condition;
 import model.items.Item;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.SkillBoostingPotionSprite;
 import view.sprites.Sprite;
@@ -31,6 +34,10 @@ public class StrengthPotion extends SkillBoostingPotion {
         return new StrengthBoostingCondition();
     }
 
+    public Condition getCondition() {
+        return new StrengthBoostingCondition();
+    }
+
     private class StrengthBoostingCondition extends SkillBoostingCondition {
         public StrengthBoostingCondition() {
             super("Strength Boost", "STR");
@@ -39,6 +46,12 @@ public class StrengthPotion extends SkillBoostingPotion {
         @Override
         public Sprite getSymbol() {
             return CONDITION_SPRITE;
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this, "A condition indicating that the character is currently " +
+                    "receiving a bonus to Strength-based skills, i.e. Acrobatics, Axes, BluntWeapons, Endurance and Labor.");
         }
 
         @Override

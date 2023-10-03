@@ -1,7 +1,8 @@
 package model.combat;
 
-import model.items.spells.GiantGrowthSpell;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -30,5 +31,11 @@ public class GiantGrowthCondition extends Condition {
     @Override
     public int getAttackBonus() {
         return 2;
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this, "A condition indicating that the combatant has been targeted " +
+                "by the Giant Growth spell.");
     }
 }

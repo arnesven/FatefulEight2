@@ -4,7 +4,9 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.states.DailyEventState;
 import model.states.GameState;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
@@ -32,5 +34,12 @@ public class PoisonCondition extends Condition {
         if (comb.isDead() && comb instanceof GameCharacter) {
             DailyEventState.characterDies(model, state, (GameCharacter)comb, " succumbed to the evil of the poison and died.");
         }
+    }
+
+    @Override
+    public ConditionHelpDialog getHelpView(GameView view) {
+        return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is suffering from " +
+                "poison.\n\nCharacters with this condition will lose health points each day until cured. " +
+                "Resting at inns and taverns normally cures poison.\n\nEnemies with this condition suffer damage each combat round.");
     }
 }

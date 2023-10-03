@@ -10,7 +10,9 @@ import model.combat.Combatant;
 import model.combat.Condition;
 import model.states.CombatEvent;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
+import view.help.ConditionHelpDialog;
 import view.help.HelpDialog;
 import view.help.TutorialInspire;
 import view.sprites.CharSprite;
@@ -67,6 +69,10 @@ public class InspireCombatAction extends CombatAction {
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD8), MyColors.BLACK, MyColors.PINK, MyColors.CYAN);
 
+    public Condition getCondition() {
+        return new InspiredCondition(1);
+    }
+
     private static class InspiredCondition extends Condition {
 
         private final int bonus;
@@ -90,6 +96,12 @@ public class InspireCombatAction extends CombatAction {
         @Override
         public int getAttackBonus() {
             return bonus;
+        }
+
+        @Override
+        public ConditionHelpDialog getHelpView(GameView view) {
+            return new ConditionHelpDialog(view, this, "A condition indicated that this combatant is inspired, " +
+                    "thus enjoying a bonus to combat rolls.");
         }
 
         @Override
