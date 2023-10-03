@@ -55,6 +55,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
             return List.of(
                     new TutorialDefending(null),
                     new TutorialInspire(null),
+                    new TutorialInvisibility(null),
                     new TutorialFairyHeal(null),
                     new TutorialHeavyBlow(null),
                     new TutorialCombatResting(null),

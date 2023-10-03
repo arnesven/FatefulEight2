@@ -36,7 +36,7 @@ public class InvisibilityCombatAction extends CombatAction {
         if (result.getModifiedRoll() < DIFFICULTY || target.hasCondition(InvisibilityCondition.class)) {
             combat.println("But it failed.");
         } else {
-            int turns = (result.getModifiedRoll() - DIFFICULTY + 2) / 2;
+            int turns = (result.getModifiedRoll() - DIFFICULTY + 3) / 3;
             combat.println(target.getName() + " turns invisible!");
             combat.addSpecialEffect(target, new SmokeBallAnimation());
             target.addCondition(new InvisibilityCondition(turns));
