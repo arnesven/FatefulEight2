@@ -7,6 +7,7 @@ import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
+import view.sprites.DamageValueEffect;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
@@ -41,6 +42,7 @@ public class HealingWordSpell extends CombatSpell {
         int totalRecovered = target.getHP() - hpBefore;
         combat.println(target.getName() + " recovers " + totalRecovered + " HP!");
         combat.addSpecialEffect(target, new ShinyRingEffect());
+        combat.addFloatyDamage(target, totalRecovered, DamageValueEffect.HEALING);
         if (target != performer) {
             model.getParty().partyMemberSay(model, (GameCharacter) target,
                     List.of("Thank you so much!3", "Much obliged!3",
@@ -50,7 +52,7 @@ public class HealingWordSpell extends CombatSpell {
 
     @Override
     public String getDescription() {
-        return "A soothing incantation which restores 4 HP of a character.";
+        return "A soothing incantation which restores 6 HP of a character.";
     }
 
     private static class ShinyRingEffect extends RunOnceAnimationSprite {

@@ -7,6 +7,7 @@ import model.items.Item;
 import model.states.CombatEvent;
 import sound.SoundEffects;
 import view.MyColors;
+import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
@@ -48,7 +49,7 @@ public class UnstablePotion extends ThrowablePotion {
     @Override
     public void throwYourself(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         combat.println(target.getName() + " was hit by the " + getName() + ", took " + damage + " damage.");
-        combat.addFloatyDamage(target, damage, true);
+        combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
         combat.doDamageToEnemy(target, damage, performer);
         SoundEffects.playBoom();
     }

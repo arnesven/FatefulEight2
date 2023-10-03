@@ -9,6 +9,7 @@ import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
+import view.sprites.DamageValueEffect;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
@@ -42,7 +43,7 @@ public class MagmaBlastSpell extends CombatSpell {
         for (Enemy e : targets) {
             int damage = MyRandom.randInt(7) + 1;
             combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
-            combat.addFloatyDamage(e, damage, true);
+            combat.addFloatyDamage(e, damage, DamageValueEffect.MAGICAL_DAMAGE);
             combat.addSpecialEffect(e, new MagmaBlastEffectSprite());
             combat.doDamageToEnemy(e, damage, performer);
         }

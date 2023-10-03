@@ -72,6 +72,7 @@ public class PoisonGasSpell extends CombatSpell {
             state.println(comb.getName() + " takes suffers 1 damage from the effects of the poison.");
             if (state instanceof CombatEvent) {
                 ((CombatEvent)state).doDamageToEnemy(comb, 1, caster);
+                ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.MAGICAL_DAMAGE);
             } else {
                 throw new IllegalStateException("EndOfCombatRoundTrigger was called with something other than combat event!");
             }

@@ -30,6 +30,7 @@ import view.BorderFrame;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.AvatarSprite;
+import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
 import view.subviews.CombatSubView;
 import view.widget.HealthBar;
@@ -202,7 +203,11 @@ public class GameCharacter extends Combatant {
         combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
         combatEvent.addSpecialEffect(target, equipment.getWeapon().getEffectSprite());
         if (damage > 0) {
-            combatEvent.addFloatyDamage(target, damage, result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits());
+            MyColors damageColor = DamageValueEffect.STANDARD_DAMAGE;
+            if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
+                damageColor = DamageValueEffect.CRITICAL_DAMAGE;
+            }
+            combatEvent.addFloatyDamage(target, damage, damageColor);
         } else {
             combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
         }
@@ -610,7 +615,7 @@ public class GameCharacter extends Combatant {
                 reductionString = ", Critical Hit" + reductionString;
             }
             combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
-            combatEvent.addFloatyDamage(this, damage, critical);
+            combatEvent.addFloatyDamage(this, damage, critical ? DamageValueEffect.CRITICAL_DAMAGE : DamageValueEffect.STANDARD_DAMAGE);
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }

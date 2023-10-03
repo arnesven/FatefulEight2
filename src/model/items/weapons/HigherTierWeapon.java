@@ -113,4 +113,9 @@ public class HigherTierWeapon extends Weapon {
     public int getCriticalTarget() {
         return inner.getCriticalTarget();
     }
+
+    @Override
+    public <E> boolean isOfType(Class<E> weaponClass) {
+        return inner.isOfType(weaponClass);
+    }
 }

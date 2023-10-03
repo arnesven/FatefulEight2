@@ -37,8 +37,8 @@ public class RiposteCombatAction extends StaminaCombatAbility {
 
     public static boolean canDoRiposteAbility(GameCharacter performer) {
         return performer.getRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
-                (performer.getEquipment().getWeapon() instanceof BladedWeapon ||
-                        performer.getEquipment().getWeapon() instanceof PolearmWeapon);
+                (performer.getEquipment().getWeapon().isOfType(BladedWeapon.class) ||
+                        performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class));
     }
 
     @Override

@@ -24,7 +24,7 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
 
     public static boolean canDoHeavyBlowAbility(GameCharacter performer) {
         return performer.getRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT &&
-                (performer.getEquipment().getWeapon() instanceof BluntWeapon ||
-                        performer.getEquipment().getWeapon() instanceof AxeWeapon);
+                (performer.getEquipment().getWeapon().isOfType(BluntWeapon.class) ||
+                        performer.getEquipment().getWeapon().isOfType(AxeWeapon.class));
     }
 }

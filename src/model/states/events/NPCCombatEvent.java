@@ -8,6 +8,7 @@ import model.combat.NoCombatLoot;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
+import view.MyColors;
 import view.sprites.AnimationManager;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
@@ -65,8 +66,8 @@ public class NPCCombatEvent extends CombatEvent {
     }
 
     @Override
-    public void addFloatyDamage(Combatant target, int damage, boolean critical) {
-        subView.addFloatyDamage(target, damage, critical);
+    public void addFloatyDamage(Combatant target, int damage, MyColors color) {
+        subView.addFloatyDamage(target, damage, color);
     }
 
     @Override

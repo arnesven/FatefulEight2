@@ -150,4 +150,8 @@ public abstract class Weapon extends EquipableItem {
     public RunOnceAnimationSprite getEffectSprite() {
         return new StrikeEffectSprite();
     }
+
+    public <E> boolean isOfType(Class<E> weaponClass) {
+        return weaponClass.isAssignableFrom(this.getClass());
+    }
 }

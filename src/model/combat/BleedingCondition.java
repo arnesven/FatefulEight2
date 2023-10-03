@@ -1,9 +1,11 @@
 package model.combat;
 
 import model.Model;
+import model.states.CombatEvent;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.CharSprite;
+import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
 
 public class BleedingCondition extends Condition {
@@ -28,6 +30,9 @@ public class BleedingCondition extends Condition {
         super.endOfCombatRoundTrigger(model, state, comb);
         state.println(comb.getName() + " takes 1 damage from bleeding.");
         comb.addToHP(-1);
+        if (state instanceof CombatEvent) {
+            ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.MAGICAL_DAMAGE);
+        }
         if (comb.isDead()) {
             state.println(comb.getName() + " has bled out!");
         }

@@ -317,6 +317,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void fairyHeal(Model model) {
+        runOnce("fairyheal", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialFairyHeal(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

@@ -4,6 +4,8 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
+import view.MyColors;
+import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
@@ -37,7 +39,7 @@ public class SpikedShield extends ShieldItem {
     @Override
     public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
         combatEvent.println(this.getName() + " deals 1 damage to " + enemy.getName() + ".");
-        combatEvent.addFloatyDamage(enemy, 1, false);
+        combatEvent.addFloatyDamage(enemy, 1, DamageValueEffect.STANDARD_DAMAGE);
         combatEvent.doDamageToEnemy(enemy, 1, null);
     }
 
