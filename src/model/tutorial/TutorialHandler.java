@@ -338,6 +338,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void magicMissile(Model model) {
+        runOnce("magicmissile", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialMagicMissile(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

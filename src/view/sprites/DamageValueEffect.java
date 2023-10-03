@@ -6,7 +6,7 @@ import view.MyColors;
 public class DamageValueEffect extends RunOnceAnimationSprite {
     public static final MyColors STANDARD_DAMAGE = MyColors.BLACK;
     public static final MyColors CRITICAL_DAMAGE = MyColors.RED;
-    public static final MyColors MAGICAL_DAMAGE = MyColors.ORANGE;
+    public static final MyColors MAGICAL_DAMAGE = MyColors.DARK_PURPLE;
     public static final MyColors HEALING = MyColors.GREEN;
 
     private int count;

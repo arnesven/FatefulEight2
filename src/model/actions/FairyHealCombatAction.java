@@ -8,7 +8,9 @@ import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.items.weapons.*;
 import model.states.CombatEvent;
+import view.MyColors;
 import view.sprites.DamageValueEffect;
+import view.sprites.EntropicBoltEffect;
 
 public class FairyHealCombatAction extends CombatAction {
     private static final int DIFFICULTY = 7;

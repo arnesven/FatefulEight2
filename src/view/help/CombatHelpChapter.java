@@ -58,6 +58,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                     new TutorialInvisibility(null),
                     new TutorialFairyHeal(null),
                     new TutorialHeavyBlow(null),
+                    new TutorialMagicMissile(null),
                     new TutorialCombatResting(null),
                     new TutorialRegenerate(null),
                     new TutorialRiposte(null),

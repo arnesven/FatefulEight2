@@ -71,8 +71,10 @@ public class AbilityCombatAction extends CombatAction {
         if (InvisibilityCombatAction.canDoAbility(performer, target)) {
             list.add(new InvisibilityCombatAction());
         }
+        if (MagicMissileCombatAction.canDoAbility(performer, target)) {
+            list.add(new MagicMissileCombatAction());
+        }
         // TODO: Curse combat ability (Black Magic)
-        // TODO: Magic Missile ability (Red Magic)
         return list;
     }
 
