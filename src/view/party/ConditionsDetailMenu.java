@@ -41,7 +41,17 @@ public class ConditionsDetailMenu extends FixedPositionSelectableListMenu {
         List<ListContent> contents = new ArrayList<>();
         int count = 0;
         for (Condition cond : character.getConditions()) {
-            contents.add(new ListContent( xStart+2, yStart+2+count, cond.getName() + " (" + cond.getShortName() + ")"));
+            contents.add(new SelectableListContent(xStart + 2, yStart + 2 + count, cond.getName() + " (" + cond.getShortName() + ")") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setInnerMenu(cond.getHelpView(model.getView()), model);
+                }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return true;
+                }
+            });
             count++;
         }
         return contents;

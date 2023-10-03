@@ -97,7 +97,11 @@ public class PartyView extends SelectableListMenu {
             }
         });
         AbilitiesDetailMenu abilitiesDetails = new AbilitiesDetailMenu(model,PartyView.this, gc, x, y);
-        content.add(new SelectableListContent(x, y++, "Abilities " + abilitiesDetails.getNoOfAbilities()) {
+        String abilityText = "Abilities...";
+        if (abilitiesDetails.getNoOfAbilities() == 0) {
+            abilityText = "No Abilities";
+        }
+        content.add(new SelectableListContent(x, y++, abilityText) {
             @Override
             public void performAction(Model model, int x, int y) {
                 PartyView.super.setInnerMenu(abilitiesDetails, model);
