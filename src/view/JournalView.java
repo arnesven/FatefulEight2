@@ -94,6 +94,16 @@ public class JournalView extends TwoPaneSelectableListMenu {
     }
 
     @Override
+    protected MyColors getEntryColor(int index) {
+        if (questsAndTasks.get(index).isComplete()) {
+            return MyColors.GRAY;
+        } else if (questsAndTasks.get(index).isFailed()) {
+            return MyColors.RED;
+        }
+        return super.getEntryColor(index);
+    }
+
+    @Override
     protected int getNumberOfEntries() {
         if (questsAndTasks.size() == 0) {
             return 1;

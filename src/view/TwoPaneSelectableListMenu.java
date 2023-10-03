@@ -66,6 +66,11 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
                 public boolean isEnabled(Model model) {
                     return true;
                 }
+
+                @Override
+                public MyColors getForegroundColor(Model model) {
+                    return getEntryColor(finalI);
+                }
             });
         }
         return content;
@@ -74,6 +79,10 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
     protected void indexWasSelected(int index) { }
 
     protected abstract String getEntryName(int index);
+
+    protected MyColors getEntryColor(int index) {
+        return MyColors.YELLOW;
+    }
 
     protected abstract int getNumberOfEntries();
 
