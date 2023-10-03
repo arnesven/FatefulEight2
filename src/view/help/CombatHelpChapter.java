@@ -1,5 +1,6 @@
 package view.help;
 
+import model.actions.RegenerationCombatAction;
 import model.tutorial.TutorialCombatAttacks;
 import view.GameView;
 
@@ -57,6 +58,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                     new TutorialFairyHeal(null),
                     new TutorialHeavyBlow(null),
                     new TutorialCombatResting(null),
+                    new TutorialRegenerate(null),
                     new TutorialRiposte(null),
                     new TutorialSneakAttack(null),
                     new TutorialSniperShot(null)

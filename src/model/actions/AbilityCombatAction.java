@@ -65,6 +65,9 @@ public class AbilityCombatAction extends CombatAction {
         if (FairyHealCombatAction.canDoAbility(performer)) {
             list.add(new FairyHealCombatAction());
         }
+        if (RegenerationCombatAction.canDoAbility(performer)) {
+            list.add(new RegenerationCombatAction());
+        }
         return list;
     }
 
