@@ -181,4 +181,8 @@ public abstract class Combatant implements Serializable {
         }
         return sum;
     }
+
+    public List<Condition> getConditions() {
+        return conditions;
+    }
 }

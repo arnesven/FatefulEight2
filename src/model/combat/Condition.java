@@ -21,7 +21,7 @@ public abstract class Condition implements Serializable {
         this.shortName = shortName;
     }
 
-    protected String getShortName() {
+    public String getShortName() {
         return shortName;
     }
 

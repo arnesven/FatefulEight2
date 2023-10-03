@@ -83,11 +83,21 @@ public class PartyView extends SelectableListMenu {
         addListContent(content, x, y++, String.format("Armor %10d", gc.getAP()));
         addListContent(content, x, y++, String.format("Speed %10d", gc.getSpeed()));
         String status = gc.getStatus();
-        if (status.length() < 15) {
-            addListContent(content, x, y++, String.format("Status %-9s", status));
-        } else {
-            addListContent(content, x, y++,String.format("Status %-9s", status.substring(0, 7) + " ..."));
+        if (status.length() >= 16) {
+            status = status.substring(0, 7) + " ...";
         }
+        content.add(new SelectableListContent(x, y++, String.format("Status %-9s", status)) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                PartyView.super.setInnerMenu(new ConditionsDetailMenu(PartyView.this, gc, x, y), model);
+            }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return true;
+            }
+        });
+
 
         y+=1;
         Weapon w = gc.getEquipment().getWeapon();
