@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SaberfishEvent extends RiverEvent {
     public SaberfishEvent(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class SaberfishEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         println("The party wades out into the shallows, vicious fish start " +
                 "nipping at their legs!");
         for (GameCharacter gc : model.getParty().getPartyMembers()) {

@@ -13,7 +13,7 @@ public class RopeBridgeEvent extends RiverEvent {
     private boolean walkAway = false;
 
     public RopeBridgeEvent(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class RopeBridgeEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         println("A bridge of rope and planks is hoisted over the river, " +
                 "it looks very old and worn. Crossing will obviously be " +
                 "perilous.");

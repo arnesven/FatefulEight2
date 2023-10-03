@@ -27,7 +27,7 @@ public class BoatsEvent extends RiverEvent {
     private boolean allowManualAssign = false;
 
     public BoatsEvent(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BoatsEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         if (model.getParty().size() < 3) {
             if (MyRandom.flipCoin()) {
                 new ShallowsEvent(model).doEvent(model);

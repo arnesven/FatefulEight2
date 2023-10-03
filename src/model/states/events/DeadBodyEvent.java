@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DeadBodyEvent extends RiverEvent {
     public DeadBodyEvent(Model model) {
-        super(model);
+        super(model, false);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class DeadBodyEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         println("The party encounters a dead body. This person has" +
                 " been dead for a while. There are remains " +
                 "of clothing and the stink of rotting flesh. In some places, " +

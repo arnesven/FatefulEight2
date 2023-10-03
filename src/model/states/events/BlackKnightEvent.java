@@ -11,7 +11,7 @@ public class BlackKnightEvent extends RiverEvent {
     private boolean didFlee = false;
 
     public BlackKnightEvent(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class BlackKnightEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         showRandomPortrait(model, Classes.BKN, "Black Knight");
         println("A narrow bridge spans the width of the river. Upon it, " +
                 "a knight in black armor stands guard.");

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RapidsEvent extends RiverEvent {
     public RapidsEvent(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class RapidsEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         println("The party wades out into the shallows but are soon swept " +
                 "away by an undertow. The river takes them to some " +
                 "rapids which bang them up nicely.");

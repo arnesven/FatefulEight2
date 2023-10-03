@@ -14,7 +14,7 @@ import java.awt.*;
 public class RaftEvent extends RiverEvent {
 
     public RaftEvent(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class RaftEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         InnerRaftEvent innerEvent = new InnerRaftEvent(model);
         innerEvent.doEvent(model);
     }

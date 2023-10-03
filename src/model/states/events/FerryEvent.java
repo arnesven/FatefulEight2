@@ -9,7 +9,7 @@ public class FerryEvent extends RiverEvent {
     private boolean paid;
 
     public FerryEvent(Model model) {
-        super(model);
+        super(model, true);
         paid = false;
     }
 
@@ -19,7 +19,7 @@ public class FerryEvent extends RiverEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected void doRiverEvent(Model model) {
         showSilhouettePortrait(model, "Ferryman");
         print("There's a ferry here. The ferryman will take the party across the river for 10 gold.");
         if (model.getParty().getGold() < 10) {
