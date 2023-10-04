@@ -7,7 +7,11 @@ import view.sprites.PortraitSprite;
 public class Dwarf extends Race {
     public Dwarf() {
         super("Dwarf", MyColors.PINK, +2, -2,
-                new Skill[]{Skill.Axes, Skill.Endurance, Skill.Labor});
+                new Skill[]{Skill.Axes, Skill.Endurance, Skill.Labor},
+                "Dwarves are short, stocky individuals who are skilled in all kinds of crafting " +
+                        "and manual labor. They are prevalent in hills, mountains and in caves. Dwarves have all " +
+                        "kinds of professions but is not uncommon for them to be Miners, Foresters, Artisans, " +
+                        "Paladins, Captains and Sorcerers.");
     }
 
     @Override

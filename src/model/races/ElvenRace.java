@@ -8,8 +8,8 @@ import view.sprites.PortraitSprite;
 
 public class ElvenRace extends Race {
 
-    public ElvenRace(String name, MyColors color, Skill[] skillBonuses) {
-        super(name, color, -1, +1, skillBonuses);
+    public ElvenRace(String name, MyColors color, Skill[] skillBonuses, String description) {
+        super(name, color, -1, +1, skillBonuses, description);
     }
 
     @Override

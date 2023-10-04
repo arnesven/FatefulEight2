@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class AllRaces extends Race {
     protected AllRaces() {
-        super("All", MyColors.WHITE, 0, 0, new Skill[]{});
+        super("All", MyColors.WHITE, 0, 0, new Skill[]{}, "");
     }
 
     @Override

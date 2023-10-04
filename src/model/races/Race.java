@@ -23,19 +23,21 @@ public abstract class Race implements Serializable {
     public static final Race[] allRaces = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC};
     private static int nextRaceId = 0;
     private final int id;
+    private final String description;
     private String name;
     private MyColors color;
     private int hpModifier;
     private int speedModifier;
     private Skill[] skillBonuses;
 
-    protected Race(String name, MyColors color, int hpModifier, int speed, Skill[] skillBonuses) {
+    protected Race(String name, MyColors color, int hpModifier, int speed, Skill[] skillBonuses, String description) {
         this.name = name;
         this.color = color;
         this.hpModifier = hpModifier;
         this.speedModifier = speed;
         this.skillBonuses = skillBonuses;
         this.id = nextRaceId++;
+        this.description = description;
     }
 
     public static List<Race> getAllRaces() {
@@ -93,5 +95,9 @@ public abstract class Race implements Serializable {
 
     public int id() {
         return id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
