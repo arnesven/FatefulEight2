@@ -17,7 +17,12 @@ public class SpecificRaceHelpDialog extends SubChapterHelpDialog {
     }
 
     private static String makeText(Race race) {
-        return "\n\n\n\n\n\n\n\n" + "Skill Bonuses: " + skillsAsString(race.getSkills()) + "\n\n" + race.getDescription();
+        return "\n\n\n\n\n\n\n\n" + healthAndSpeedBonuses(race) + "Skill Bonuses: " + skillsAsString(race.getSkills()) + "\n\n" + race.getDescription();
+    }
+
+    private static String healthAndSpeedBonuses(Race race) {
+        return "Health Bonus: " + race.getHPModifier() +
+                "\nSpeed Bonus: " + race.getSpeedModifier() + "\n";
     }
 
     private static String skillsAsString(List<Skill> skills) {
