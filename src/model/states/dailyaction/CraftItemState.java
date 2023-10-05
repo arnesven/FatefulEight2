@@ -30,10 +30,18 @@ public class CraftItemState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        println("What would you like to do at the workbench?");
+        int selected = multipleOptionArrowMenu(model, 30, 20, List.of("Craft Item", "Salvage Item", "Cancel"));
+        if (selected == 1) {
+            salvageItem(model);
+        }
+        if (selected > 0) {
+            return new DailyActionState(model);
+        }
         model.getTutorial().crafting(model);
         List<Item> allItems = getAllItems(model);
         if (allItems.isEmpty()) {
-            println("You cannot craft since you do not have any items!");
+            println("You cannot craft since you do not have any items.");
             return new DailyActionState(model);
         }
 
@@ -137,5 +145,43 @@ public class CraftItemState extends GameState {
             }
         }
         return allItems;
+    }
+
+
+    private void salvageItem(Model model) {
+        model.getTutorial().salvaging(model);
+        List<Item> salvageableItems = new ArrayList<>(model.getParty().getInventory().getWeapons());
+        salvageableItems.addAll(model.getParty().getInventory().getClothing());
+        salvageableItems.addAll(model.getParty().getInventory().getAccessories());
+        if (salvageableItems.isEmpty()) {
+            println("You have no items in your inventory which are salvageable.");
+            return;
+        }
+        println("Which item would you like to salvage?");
+        List<String> names = new ArrayList<>();
+        for (Item it : salvageableItems) {
+            names.add(it.getName());
+        }
+        int selected = multipleOptionArrowMenu(model, 24, 38, names);
+        Item itemToSalvage = salvageableItems.get(selected);
+        print("Which party member should attempt to salvage the " + itemToSalvage.getName() + "? ");
+        GameCharacter salvager = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, salvager, Skill.Labor, 5, 5, 0);
+        int materialsGained = Math.max(0, (itemToSalvage.getCost() + result.getModifiedRoll() - 5) / 5);
+        println("The " + itemToSalvage.getName() + " was destroyed.");
+        if (result.isSuccessful() && materialsGained > 0) {
+            println(salvager.getFirstName() + " managed to salvage " + materialsGained +
+                    " material " + (materialsGained==1?"":"s") + " from the " + itemToSalvage.getName() + ".");
+            model.getParty().partyMemberSay(model, salvager, List.of("Why throw something away just because it's old?",
+                    "We can probably use these materials for something.",
+                    "These are good quality materials, let's save them for later.",
+                    "Nice!"));
+        } else {
+            println(salvager.getFirstName() + " failed to salvage any materials.");
+            model.getParty().partyMemberSay(model, salvager, List.of("Darn it!#", "Doh!#", "Phooey!#",
+                    "That's too bad.", "What a waste...", "I'm sorry. This is ruined now.",
+                    "Hmm. I really thought I could do it.", "Trash..."));
+        }
+        model.getParty().getInventory().remove(itemToSalvage);
     }
 }

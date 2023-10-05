@@ -25,6 +25,6 @@ public class TutorialCrafting extends ExpandableHelpDialog {
 
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
-        return List.of(new TutorialCraftingDesigns(view));
+        return List.of(new TutorialCraftingDesigns(view), new TutorialSalvaging(view));
     }
 }
