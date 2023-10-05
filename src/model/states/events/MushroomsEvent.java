@@ -35,7 +35,7 @@ public class MushroomsEvent extends DailyEventState {
                     }
                 }
                 for (GameCharacter gc : died) {
-                    RiverEvent.characterDies(model, this, gc, " died from food poisoning.");
+                    RiverEvent.characterDies(model, this, gc, " died from food poisoning.", true);
                 }
             }
         } else {

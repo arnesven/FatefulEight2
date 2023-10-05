@@ -123,7 +123,7 @@ public abstract class RiverEvent extends DailyEventState {
                     "I just felt like having a dip."));
         } else {
             model.getLog().waitForAnimationToFinish();
-            characterDies(model, this, gc," has been swept away by the current and drowns!");
+            characterDies(model, this, gc," has been swept away by the current and drowns!", false);
         }
     }
 

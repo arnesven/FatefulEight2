@@ -4,12 +4,14 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.states.DailyEventState;
 import model.states.ExploreRuinsState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
 
@@ -43,12 +45,17 @@ public class DungeonTrap extends CenterDungeonObject {
 
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+        for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
             SkillCheckResult result = gc.testSkill(Skill.Acrobatics, 3);
             if (!result.isSuccessful()) {
                 exploreRuinsState.println(gc.getName() + " got injured from the trap! (Acrobatics " + result.asString() + ")");
                 gc.addToHP(-1);
-                model.getParty().partyMemberSay(model, gc, List.of("Ouch", "Darn spikes!", "I'm bleeding!", "Yeouch!"));
+                if (gc.isDead()) {
+                    DailyEventState.characterDies(model, exploreRuinsState, gc, " has died from the damage of the trap.",
+                            true);
+                } else {
+                    model.getParty().partyMemberSay(model, gc, List.of("Ouch", "Darn spikes!", "I'm bleeding!", "Yeouch!"));
+                }
             }
         }
     }

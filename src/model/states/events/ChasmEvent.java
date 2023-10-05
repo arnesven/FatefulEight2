@@ -32,7 +32,7 @@ public class ChasmEvent extends DailyEventState {
                 println("The party manages to cross without incident.");
             } else {
                 for (GameCharacter gc : failers) {
-                    DailyEventState.characterDies(model, this, gc, "has fallen to " + hisOrHer(gc.getGender()) + " death!");
+                    DailyEventState.characterDies(model, this, gc, "has fallen to " + hisOrHer(gc.getGender()) + " death!", false);
                     model.getLog().waitForAnimationToFinish();
                 }
             }

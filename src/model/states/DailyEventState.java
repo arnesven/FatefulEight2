@@ -8,7 +8,8 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.CaveTheme;
 import model.enemies.Enemy;
-import model.map.World;
+import model.items.potions.Potion;
+import model.items.potions.RevivingElixir;
 import model.races.Race;
 import util.MyStrings;
 import view.subviews.*;
@@ -111,7 +112,6 @@ public abstract class DailyEventState extends GameState {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.isDead()) {
                 toRemove.add(gc);
-                buf.append(gc.getFullName() + ", ");
             }
         }
         if (toRemove.isEmpty()) {
@@ -119,7 +119,13 @@ public abstract class DailyEventState extends GameState {
         }
 
         for (GameCharacter gc : toRemove) {
-            model.getParty().remove(gc, !abandonEquipment, false, 0);
+            if (!didResurrect(model, this, gc)) {
+                model.getParty().remove(gc, !abandonEquipment, false, 0);
+                buf.append(gc.getFullName() + ", ");
+            }
+        }
+        if (buf.toString().equals("")) {
+            return;
         }
         print("!" + buf.toString().substring(0, buf.length()-2) + " has died.");
         if (!abandonEquipment && model.getParty().size() > 0) {
@@ -129,9 +135,12 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    public static void characterDies(Model model, GameState event, GameCharacter gc, String reason) {
+    public static void characterDies(Model model, GameState event, GameCharacter gc, String reason, boolean offerResurrect) {
         boolean wasLeader = gc.isLeader();
         event.println(gc.getName() + reason);
+        if (offerResurrect && model.getParty().size() > 1 && didResurrect(model, event, gc)) {
+            return;
+        }
         model.getParty().remove(gc, false, false, 0);
         if (model.getParty().size() == 0) {
             event.println("Your last party member has been eliminated. Press any key to continue.");
@@ -145,6 +154,26 @@ public abstract class DailyEventState extends GameState {
                 event.println(model.getParty().getLeader().getName() + " is now the new leader of the party.");
             }
         }
+    }
+
+    public static boolean didResurrect(Model model, GameState event, GameCharacter gc) {
+        RevivingElixir revive = null;
+        for (Potion p : model.getParty().getInventory().getPotions()) {
+            if (p instanceof RevivingElixir) {
+                revive = (RevivingElixir) p;
+            }
+        }
+        if (revive == null) {
+            return false;
+        }
+        event.print("Do you want to use " + revive.getName() + " to revive " + gc.getName() + "? (Y/N) ");
+        if (!event.yesNoInput()) {
+            return false;
+        }
+        model.getParty().getInventory().remove(revive);
+        String result = revive.useYourself(model, gc);
+        event.println(result);
+        return true;
     }
 
     protected void forcedMovement(Model model, List<Point> path) {

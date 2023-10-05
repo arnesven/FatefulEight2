@@ -37,7 +37,7 @@ public class QuicksandEvent extends DailyEventState {
             GameCharacter fool = MyRandom.sample(failers);
             if (sinkers.contains(fool)) {
                 model.getParty().partyMemberSay(model, MyRandom.sample(nonSinkers), "Don't struggle!");
-                characterDies(model, this, fool, REASON);
+                characterDies(model, this, fool, REASON, false);
                 return;
             } else {
                 model.getParty().partyMemberSay(model, fool, "Don't worry, I'm coming!");
@@ -52,7 +52,7 @@ public class QuicksandEvent extends DailyEventState {
                 if (model.getParty().doSkillCheckWithReRoll(model, this, gc, Skill.Acrobatics, 7, 10, 0).isSuccessful()) {
                     println(gc.getName() + " manages to crawl out of the quicksand pit.");
                 } else {
-                    characterDies(model, this, gc, REASON);
+                    characterDies(model, this, gc, REASON, false);
                 }
             }
         } else {
@@ -65,7 +65,7 @@ public class QuicksandEvent extends DailyEventState {
             } else {
                 model.getParty().partyMemberSay(model, nonSinkers.get(0), "Aaah, aah, there's nothing to use!#");
                 for (GameCharacter gc : sinkers) {
-                    characterDies(model, this, gc, REASON);
+                    characterDies(model, this, gc, REASON, false);
                 }
             }
         }
@@ -80,7 +80,7 @@ public class QuicksandEvent extends DailyEventState {
             model.getParty().randomPartyMemberSay(model, List.of("Wow, that could have ended badly."));
         } else {
             characterDies(model, this, model.getParty().getPartyMember(0),
-                    REASON);
+                    REASON, false);
         }
     }
 }

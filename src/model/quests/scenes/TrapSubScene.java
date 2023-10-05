@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.quests.QuestEdge;
 import model.quests.QuestSubScene;
+import model.states.DailyEventState;
 import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
@@ -51,8 +52,10 @@ public class TrapSubScene extends QuestSubScene {
             int result = Math.max(0, MyRandom.rollD10()-damage);
             gc.addToHP(-result);
             if (gc.isDead()) {
-                model.getParty().remove(gc, true, false, 0);
                 state.println("The trap killed " + gc.getName() + "!");
+                if (!DailyEventState.didResurrect(model, state, gc)) {
+                    model.getParty().remove(gc, true, false, 0);
+                }
             } else {
                 state.println(gc.getName() + " takes " + result + " damage.");
             }

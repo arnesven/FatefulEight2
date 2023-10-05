@@ -32,7 +32,7 @@ public class PoisonCondition extends Condition {
         state.println(comb.getName() + " takes damage from the effects of the poison.");
         comb.addToHP(-2);
         if (comb.isDead() && comb instanceof GameCharacter) {
-            DailyEventState.characterDies(model, state, (GameCharacter)comb, " succumbed to the evil of the poison and died.");
+            DailyEventState.characterDies(model, state, (GameCharacter)comb, " succumbed to the evil of the poison and died.", true);
         }
     }
 

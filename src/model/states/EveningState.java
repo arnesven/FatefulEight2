@@ -285,7 +285,9 @@ public class EveningState extends GameState {
         for (GameCharacter gc : toRemove) {
             println(gc.getName() + " has starved to death! Press enter to continue.");
             waitForReturn();
-            model.getParty().remove(gc, true, false, 0);
+            if (!DailyEventState.didResurrect(model, this, gc)) {
+                model.getParty().remove(gc, true, false, 0);
+            }
         }
 
     }
