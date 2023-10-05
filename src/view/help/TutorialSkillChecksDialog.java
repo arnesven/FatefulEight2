@@ -33,9 +33,4 @@ public class TutorialSkillChecksDialog extends ExpandableHelpDialog {
         return result;
     }
 
-    private class SpecificSkillHelpDialog extends SubChapterHelpDialog {
-        public SpecificSkillHelpDialog(GameView view, Skill s) {
-            super(view, 30, s.getName(), s.getDescription());
-        }
-    }
 }

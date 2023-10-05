@@ -3,6 +3,7 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import view.help.SpecificSkillHelpDialog;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkillsView extends SelectableListMenu {
+    private static final int ROW_OFFSET = 14;
+
     public SkillsView(GameView previous) {
         super(previous, 45, 38);
     }
@@ -47,7 +50,7 @@ public class SkillsView extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> result = new ArrayList<>();
-        int row = 14;
+        int row = ROW_OFFSET;
         for (Skill skill : Skill.values()) {
             if (skill.areEqual(Skill.UnarmedCombat) || skill.areEqual(Skill.MagicAny)) {
                 continue;
@@ -73,13 +76,37 @@ public class SkillsView extends SelectableListMenu {
             bldr.append(String.format(" |%3d", best));
             int finalBestXpos = bestXpos;
             int finalBest = best;
-            result.add(new ListContent(xStart + 1, yStart + row, bldr.toString()) {
+            result.add(new SelectableListContent(xStart + 1, yStart + row, bldr.toString()) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setInnerMenu(new SpecificSkillHelpDialog(model.getView(), skill), model);
+                }
+
                 @Override
                 public void drawDecorations(Model model, int x, int y) {
+                    MyColors fgColor = MyColors.YELLOW;
+                    MyColors bgColor = MyColors.BLUE;
+                    MyColors bestFg = MyColors.LIGHT_YELLOW;
+                    if (y - ROW_OFFSET - yStart == getSelectedRow()) {
+                        fgColor = MyColors.BLACK;
+                        bgColor = MyColors.YELLOW;
+                        bestFg = MyColors.BLUE;
+                    }
+                    BorderFrame.drawString(model.getScreenHandler(), skill.getName(), x, y, fgColor, bgColor);
                     if (finalBest != 0) {
                         BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", finalBest), x + finalBestXpos, y,
-                                MyColors.YELLOW, MyColors.BLUE);
+                                bestFg, bgColor);
                     }
+                }
+
+                @Override
+                public MyColors getForegroundColor(Model model) {
+                    return MyColors.WHITE;
+                }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return true;
                 }
             });
 
