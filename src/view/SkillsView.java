@@ -86,10 +86,10 @@ public class SkillsView extends SelectableListMenu {
                 public void drawDecorations(Model model, int x, int y) {
                     MyColors fgColor = MyColors.YELLOW;
                     MyColors bgColor = MyColors.BLUE;
-                    MyColors bestFg = MyColors.LIGHT_YELLOW;
+                    MyColors bestFg = MyColors.YELLOW;
                     if (y - ROW_OFFSET - yStart == getSelectedRow()) {
                         fgColor = MyColors.BLACK;
-                        bgColor = MyColors.YELLOW;
+                        bgColor = MyColors.LIGHT_YELLOW;
                         bestFg = MyColors.BLUE;
                     }
                     BorderFrame.drawString(model.getScreenHandler(), skill.getName(), x, y, fgColor, bgColor);

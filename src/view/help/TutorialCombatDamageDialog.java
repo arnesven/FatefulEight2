@@ -4,7 +4,7 @@ import view.GameView;
 
 public class TutorialCombatDamageDialog extends SubChapterHelpDialog {
     private static final String text =
-            "Each combat round, enemies will do damage to a random characters standing in the front row. " +
+            "Each combat round, enemies will do damage to random characters standing in the front row. " +
             "if there are now eligible targets in the front row, enemies will attack characters in " +
             "the back row. Damage dealt is subtracted from the characters Health Points (HP). If a character " +
             "ever reaches 0 HP, they are dead.\n\n" +
