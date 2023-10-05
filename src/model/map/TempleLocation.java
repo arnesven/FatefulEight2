@@ -7,7 +7,10 @@ import model.states.dailyaction.BuyRationsState;
 import model.states.events.*;
 import util.MyPair;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TempleHelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.subviews.DailyActionMenu;
@@ -76,6 +79,11 @@ public class TempleLocation extends HexLocation {
     @Override
     public MyPair<Point, Integer> getDailyActionMenuAnchor() {
         return DailyActionMenu.LOWER_LEFT_CORNER;
+    }
+
+    @Override
+    public HelpDialog getHelpDialog(GameView view) {
+        return new TempleHelpDialog(view);
     }
 
     @Override

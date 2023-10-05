@@ -69,4 +69,10 @@ public class MountainHex extends WorldHex {
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
         return DailyActionMenu.LOWER_LEFT_CORNER;
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Mountainous areas are notably dangerous because of the difficulty, and sometimes impassable terrain, " +
+                "and dangerous denizens who dwell there. Orcs, half-orcs and dwarves are common in mountains.";
+    }
 }

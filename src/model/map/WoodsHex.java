@@ -65,4 +65,10 @@ public class WoodsHex extends WorldHex {
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
         return DailyActionMenu.UPPER_RIGHT_CORNER;
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Wooded areas often contain many creatures, most often benign but some are hostile. " +
+                "You commonly encounter elves and halfings in woods.";
+    }
 }

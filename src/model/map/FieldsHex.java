@@ -31,6 +31,12 @@ public class FieldsHex extends WorldHex {
     }
 
     @Override
+    public String getTerrainDescription() {
+        return "Fields are farmlands. Farmers are normally friendly to outsiders and will often offer shelter, or " +
+                "even the odd job to do.";
+    }
+
+    @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         if (MyRandom.rollD10() >= 5) {
             List<DailyEventState> events = new ArrayList<>();

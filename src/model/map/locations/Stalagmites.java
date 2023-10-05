@@ -6,7 +6,7 @@ import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 
-public class Stalagmites extends HexLocation {
+public class Stalagmites extends DecorativeHexLocation {
 
     public Stalagmites() {
         super("Stalagmites");
@@ -20,10 +20,5 @@ public class Stalagmites extends HexLocation {
     @Override
     protected Sprite getUpperSprite() {
         return HexLocationSprite.make("stalagmitsupper", 0x81, MyColors.DARK_GRAY, CaveHex.GROUND_COLOR, MyColors.TAN);
-    }
-
-    @Override
-    public boolean isDecoration() {
-        return true;
     }
 }

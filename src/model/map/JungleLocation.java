@@ -1,10 +1,11 @@
 package model.map;
 
+import model.map.locations.DecorativeHexLocation;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 
-public class JungleLocation extends HexLocation {
+public class JungleLocation extends DecorativeHexLocation {
 
     public JungleLocation() {
         super("Jungle");
@@ -20,9 +21,4 @@ public class JungleLocation extends HexLocation {
         return HexLocationSprite.make("jungleupper", 0xC1, MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN);
     }
 
-
-    @Override
-    public boolean isDecoration() {
-        return true;
-    }
 }

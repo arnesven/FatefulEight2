@@ -81,7 +81,7 @@ public abstract class SelectableListMenu extends GameView {
     }
 
     protected void clearPreviousForeground(Model model, int xStart, int yStart) {
-        model.getScreenHandler().clearForeground(xStart, xStart + width, yStart-3, yStart + height);
+        model.getScreenHandler().clearForeground(xStart - 2, xStart + width + 2, yStart-3, yStart + height);
     }
 
     protected void drawNonScrollingParts(Model model, int xStart, int yStart) {

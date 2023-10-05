@@ -67,4 +67,10 @@ public class HillsHex extends WorldHex {
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
         return DailyActionMenu.LOWER_LEFT_CORNER;
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Hills are moderately dangerous areas where Dwarves, Halfings, and Half-Orcs are commonly found. " +
+                "Hills often house barbarians and bandits.";
+    }
 }

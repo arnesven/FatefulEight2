@@ -30,6 +30,12 @@ public class SwampHex extends WorldHex {
     }
 
     @Override
+    public String getTerrainDescription() {
+        return "Swamps are wetlands and marshlands, which are often home to all matter of strange creatures " +
+                "and other dangers.";
+    }
+
+    @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
         if (roll >= 5) {
@@ -54,4 +60,6 @@ public class SwampHex extends WorldHex {
         }
         return new NoEventState(model);
     }
+
+
 }

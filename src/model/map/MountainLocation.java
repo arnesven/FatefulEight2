@@ -1,12 +1,13 @@
 package model.map;
 
+import model.map.locations.DecorativeHexLocation;
 import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
 
-public class MountainLocation extends HexLocation {
+public class MountainLocation extends DecorativeHexLocation {
 
     public MountainLocation() {
         super("mountainlocation");
@@ -21,10 +22,4 @@ public class MountainLocation extends HexLocation {
     protected Sprite getUpperSprite() {
         return HexLocationSprite.make("mountainlocationupper", 0xA0, MyColors.BLACK, MyColors.WHITE, MyColors.GRAY);
     }
-
-    @Override
-    public boolean isDecoration() {
-        return true;
-    }
-
 }

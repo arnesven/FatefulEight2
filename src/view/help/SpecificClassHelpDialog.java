@@ -13,7 +13,7 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
     private final CharacterClass charClass;
 
     public SpecificClassHelpDialog(GameView view, CharacterClass characterClass) {
-        super(view, 30, characterClass.getFullName() + " (" + characterClass.getShortName() + ")",
+        super(view, characterClass.getFullName() + " (" + characterClass.getShortName() + ")",
                 "\n\n\n\n\n" + characterClass.getDescription());
         this.charClass = characterClass;
     }

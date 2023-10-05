@@ -49,6 +49,7 @@ public abstract class WorldHex {
 
     public void setColor(MyColors col) {
         color = col;
+        setHexSprites();
     }
 
     public abstract String getTerrainName();
@@ -371,4 +372,6 @@ public abstract class WorldHex {
     public int getState() {
         return state;
     }
+
+    public abstract String getTerrainDescription();
 }

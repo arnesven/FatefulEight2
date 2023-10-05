@@ -9,7 +9,9 @@ import model.states.EveningState;
 import model.states.GameState;
 import model.states.events.NoEventState;
 import util.MyPair;
+import view.GameView;
 import view.MyColors;
+import view.help.HelpDialog;
 import view.sprites.Sprite16x16;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
@@ -107,4 +109,6 @@ public abstract class HexLocation implements Serializable {
     public boolean inhibitOnRoadSubview() {
         return false;
     }
+
+    public abstract HelpDialog getHelpDialog(GameView view);
 }

@@ -6,8 +6,10 @@ import model.map.HexLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
 import util.MyPair;
+import view.GameView;
 import view.MyColors;
 import view.ScreenHandler;
+import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -55,6 +57,11 @@ public class AncientStrongholdLocation extends HexLocation {
     }
 
     @Override
+    public HelpDialog getHelpDialog(GameView view) {
+        return new AncientStrongholdHelpDialog(view);
+    }
+
+    @Override
     public boolean hasDailyActions() {
         return true;
     }
@@ -98,6 +105,13 @@ public class AncientStrongholdLocation extends HexLocation {
             } else {
                 // TODO: What happens if you enter an A. Stronghold that wasn't part of the main story?
             }
+        }
+    }
+
+    private class AncientStrongholdHelpDialog extends HelpDialog {
+        public AncientStrongholdHelpDialog(GameView view) {
+            super(view, "Ancient Stronghold", "A strange, ancient fortress, filled with adversaries, riddles " +
+                    "and mystery.");
         }
     }
 }

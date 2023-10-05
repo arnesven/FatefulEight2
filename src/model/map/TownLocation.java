@@ -8,7 +8,10 @@ import model.states.events.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TownHelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -183,4 +186,9 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public Point getCareerOfficePosition() { return null; }
+
+    @Override
+    public HelpDialog getHelpDialog(GameView view) {
+        return new TownHelpDialog(view);
+    }
 }

@@ -2,6 +2,8 @@ package view;
 
 import model.Model;
 import model.map.World;
+import view.help.SpecificClassHelpDialog;
+import view.help.SpecificTerrainHelpDialog;
 import view.widget.FullMapTopText;
 import view.widget.TopText;
 
@@ -13,7 +15,7 @@ public class FullMapView extends GameView {
     private static final int MAP_WIDTH_HEXES = 20;
     private static final int MAP_HEIGHT_HEXES = 12;
     private static final int Y_OFFSET = 2;
-    private Point cursorPos;
+    private Point cursorPos = null;
     private final GameView previousView;
     private TopText topText = new FullMapTopText();
 
@@ -25,7 +27,9 @@ public class FullMapView extends GameView {
     @Override
     public void transitionedTo(Model model) {
         model.getScreenHandler().clearAll();
-        cursorPos = new Point(model.getParty().getPosition());
+        if (cursorPos == null) {
+            cursorPos = new Point(model.getParty().getPosition());
+        }
         update(model);
     }
 
@@ -62,6 +66,8 @@ public class FullMapView extends GameView {
         if (!handleMapMovement(keyEvent, model)) {
             if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 setTimeToTransition(true);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
+                model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(), model.getWorld().getHex(cursorPos), true));
             }
         }
     }

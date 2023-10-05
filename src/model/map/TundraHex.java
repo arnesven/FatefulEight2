@@ -64,4 +64,11 @@ public class TundraHex extends WorldHex {
     public CombatTheme getCombatTheme() {
         return new TundraCombatTheme();
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Tundra areas are frozen earth with and snow-swept landscape. Vegetation is sparse, with small bushes " +
+                "being prevalent rather than trees. Tundras are inherently dangerous places because of the harsh climate but " +
+                "also because of dangerous creatures inhabiting the tundra.";
+    }
 }

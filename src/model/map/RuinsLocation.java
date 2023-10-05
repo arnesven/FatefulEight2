@@ -3,11 +3,13 @@ package model.map;
 import model.Model;
 import model.actions.DailyAction;
 import model.actions.ExploreRuinsDailyAction;
-import model.states.GameState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
+import view.GameView;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.TutorialDungeons;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.subviews.DailyActionMenu;
@@ -74,5 +76,10 @@ public class RuinsLocation extends HexLocation {
     @Override
     public boolean inhibitOnRoadSubview() {
         return true;
+    }
+
+    @Override
+    public HelpDialog getHelpDialog(GameView view) {
+        return new TutorialDungeons(view);
     }
 }

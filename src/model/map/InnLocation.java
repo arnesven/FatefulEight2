@@ -9,7 +9,10 @@ import model.states.*;
 import model.states.dailyaction.TavernDailyActionState;
 import model.states.events.SilentNoEventState;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
+import view.help.HelpDialog;
+import view.help.InnHelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.subviews.ImageSubView;
@@ -83,5 +86,10 @@ public class InnLocation extends HexLocation {
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
         return new TavernDailyActionState(model, freeLodge, false);
+    }
+
+    @Override
+    public HelpDialog getHelpDialog(GameView view) {
+        return new InnHelpDialog(view);
     }
 }

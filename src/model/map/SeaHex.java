@@ -65,4 +65,10 @@ public class SeaHex extends WorldHex {
     public boolean canTravelTo(Model model) {
         return false;
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "The sea can be traversed by boat. Either by traveling on a standard line from port to port, or by " +
+                "chartering a boat.";
+    }
 }

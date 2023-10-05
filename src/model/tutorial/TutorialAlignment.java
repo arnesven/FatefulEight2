@@ -26,7 +26,7 @@ public class TutorialAlignment extends HelpDialog {
             "Noble               +1\n\n" +
             "Characters who's class is not listed in the table above do not contribute " +
             "to the party's alignment. You can see your current alignment in the top " +
-            "bar at any time. The alignment icon looks like this:\n\n\n";
+            "bar at any time. The alignment icon looks like this:\n\n\n.";
 
     public TutorialAlignment(GameView view) {
         super(view, "Alignment", TEXT);
@@ -35,7 +35,7 @@ public class TutorialAlignment extends HelpDialog {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = super.buildDecorations(model, xStart, yStart);
-        textContent.add(new DrawableObject(xStart+16, yStart+28) {
+        textContent.add(new DrawableObject(xStart+16, yStart+29) {
             @Override
             public void drawYourself(Model model, int x, int y) {
                 model.getScreenHandler().put(x+1, y, TopText.ALIGNMENT_ICON_SPRITE);

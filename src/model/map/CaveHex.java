@@ -117,4 +117,10 @@ public class CaveHex extends WorldHex {
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
         return DailyActionMenu.LOWER_LEFT_CORNER;
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Caves sprawl under the overworld. Goblins are common in caves, sometimes even stranger beings dwell here. " +
+                "Caves can be accessed through mountainous or hilly areas, and sometimes connect to mines.";
+    }
 }

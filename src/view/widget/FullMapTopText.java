@@ -8,6 +8,6 @@ public class FullMapTopText extends TopText {
 
     @Override
     protected void drawKeyTexts(Model model) {
-        BorderFrame.drawString(model.getScreenHandler(), "ESC=exit map view", 63, 0, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), "F3=info ESC=exit", 64, 0, MyColors.WHITE);
     }
 }

@@ -57,4 +57,10 @@ public class PlainsHex extends WorldHex {
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
         return DailyActionMenu.LOWER_RIGHT_CORNER;
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Plains are open fields of grass. Nomads and hunters normally roam these lands but here and there " +
+                "halflings can also be found. Plains are not particularly dangerous terrain.";
+    }
 }

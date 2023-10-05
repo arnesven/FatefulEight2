@@ -11,7 +11,8 @@ public class TutorialTravelDialog extends HelpDialog {
             "Traveling on roads is generally safer than traveling through the rough, but is not a " +
             "significantly quicker way of traveling.\n\n"+
             "When crossing a river you must first resolve a river event to see if you may cross " +
-            "at that particular location.";
+            "at that particular location.\n\n" +
+            "For more information about different features of the world, see 'Terrain'.";
 
     public TutorialTravelDialog(GameView view) {
         super(view, "Traveling", text);

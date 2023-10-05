@@ -41,6 +41,11 @@ public class SolidRockHex extends WorldHex {
     }
 
     @Override
+    public String getTerrainDescription() {
+        return "Unused";
+    }
+
+    @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         throw new IllegalStateException("Should never be called!");
     }

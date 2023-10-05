@@ -65,4 +65,11 @@ public class DesertHex extends WorldHex {
     public CombatTheme getCombatTheme() {
         return new DesertCombatTheme();
     }
+
+    @Override
+    public String getTerrainDescription() {
+        return "Desert areas are arid, sandy expanses where the sun has long since dried up any rivers or lakes. These " +
+                "areas are dangerous because of the harsh climate but also because of the dangerous creatures who live there. " +
+                "Such creatures are often hardened by the elements and hostile to any who come near them.";
+    }
 }
