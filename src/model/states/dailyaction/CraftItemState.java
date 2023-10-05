@@ -106,7 +106,7 @@ public class CraftItemState extends GameState {
         options.add("Cancel");
         println("What item would you like to craft?");
         final String[] selected = {null};
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 38, ArrowMenuSubView.SOUTH_WEST) {
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 40, ArrowMenuSubView.SOUTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selected[0] = options.get(cursorPos);
@@ -162,8 +162,21 @@ public class CraftItemState extends GameState {
         for (Item it : salvageableItems) {
             names.add(it.getName());
         }
-        int selected = multipleOptionArrowMenu(model, 24, 38, names);
-        Item itemToSalvage = salvageableItems.get(selected);
+        names.add("Cancel");
+        final int[] selected = new int[1];
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), names, 24, 40, ArrowMenuSubView.SOUTH_WEST) {
+            @Override
+            protected void enterPressed(Model model, int cursorPos) {
+                selected[0] = cursorPos;
+                model.setSubView(getPrevious());
+            }
+        });
+        waitForReturnSilently();
+
+        if (selected[0] >= salvageableItems.size()) {
+            return;
+        }
+        Item itemToSalvage = salvageableItems.get(selected[0]);
         print("Which party member should attempt to salvage the " + itemToSalvage.getName() + "? ");
         GameCharacter salvager = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, salvager, Skill.Labor, 5, 5, 0);
@@ -176,6 +189,7 @@ public class CraftItemState extends GameState {
                     "We can probably use these materials for something.",
                     "These are good quality materials, let's save them for later.",
                     "Nice!"));
+            model.getParty().getInventory().addToMaterials(materialsGained);
         } else {
             println(salvager.getFirstName() + " failed to salvage any materials.");
             model.getParty().partyMemberSay(model, salvager, List.of("Darn it!#", "Doh!#", "Phooey!#",

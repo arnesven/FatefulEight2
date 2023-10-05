@@ -20,6 +20,7 @@ public class AlchemySpell extends ImmediateSpell {
     private static final Sprite SPRITE = new ItemSprite(10, 8, MyColors.BEIGE, MyColors.GREEN);
     private Potion selectedPotion;
     private int ingredientCost = 0;
+    private boolean distill = false;
 
     public AlchemySpell() {
         super("Alchemy", 5, MyColors.GREEN, 6, 0);
@@ -43,15 +44,20 @@ public class AlchemySpell extends ImmediateSpell {
             return false;
         }
 
+        state.print(caster.getName() + " is preparing to cast Alchemy. Do you wish to brew (Y) or distill (N) potions? ");
+        this.distill = !state.yesNoInput();
+
         Set<String> setOfPotions = new HashSet<>();
         for (Potion p : model.getParty().getInventory().getPotions()) {
             int cost = p.getCost() / 2;
-            if (cost <= model.getParty().getInventory().getIngredients()) {
+            if (cost <= model.getParty().getInventory().getIngredients() || distill) {
                 setOfPotions.add(p.getName() + " (" + p.getCost() / 2 + ")");
             }
         }
-        for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
-            setOfPotions.add(recipe.getBrewable().getName() + " (" + recipe.getBrewable().getCost() / 3 + ")");
+        if (!distill) {
+            for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
+                setOfPotions.add(recipe.getBrewable().getName() + " (" + recipe.getBrewable().getCost() / 3 + ")");
+            }
         }
         if (setOfPotions.isEmpty()) {
             state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have enough ingredients.");
@@ -92,12 +98,19 @@ public class AlchemySpell extends ImmediateSpell {
 
     @Override
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
-        int cost = ingredientCost;
-        state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
-        model.getParty().getInventory().addToIngredients(-cost);
-        model.getParty().getInventory().addItem(selectedPotion.copy());
+        if (distill) {
+            state.println(caster.getName() + " distilled " + selectedPotion.getName() + " and recovered " + ingredientCost + " ingredients.");
+            model.getParty().getInventory().remove(selectedPotion);
+            model.getParty().getInventory().addToIngredients(ingredientCost);
+        } else {
+            int cost = ingredientCost;
+            state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
+            model.getParty().getInventory().addToIngredients(-cost);
+            model.getParty().getInventory().addItem(selectedPotion.copy());
+        }
         model.getParty().partyMemberSay(model, caster, List.of("Bubble bubble!", "Ahh, what an aroma.",
-                "I'm cooking!", "It took a little time, but now it's done.", "Let's save this for later."));
+                "I'm cooking!", "It took a little time, but now it's done.", "Let's save this for later.",
+                "Mmmm... magical.", "Potions, potions, potions..."));
     }
 
     @Override
