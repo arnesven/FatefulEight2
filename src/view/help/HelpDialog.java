@@ -53,18 +53,7 @@ public class HelpDialog extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        return List.of(
-                new SelectableListContent(40 - 2, yStart + getHeight() - 2, "OK") {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setTimeToTransition(true);
-                    }
-
-                    @Override
-                    public boolean isEnabled(Model model) {
-                        return true;
-                    }
-                });
+        return List.of(SelectableListMenu.makeOkButton(model, 40 - 2, yStart + getHeight() - 2, this));
     }
 
 

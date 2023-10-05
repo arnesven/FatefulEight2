@@ -322,4 +322,18 @@ public abstract class SelectableListMenu extends GameView {
     protected static void print(ScreenHandler screenHandler, int x, int y, String text) {
         BorderFrame.drawString(screenHandler, text, x, y, MyColors.WHITE, MyColors.BLUE);
     }
+
+    public static ListContent makeOkButton(Model model, int xStart, int yStart, SelectableListMenu parent) {
+        return new SelectableListContent(xStart, yStart, "OK") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                parent.setTimeToTransition(true);
+            }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return true;
+            }
+        };
+    }
 }

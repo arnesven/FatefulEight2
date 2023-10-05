@@ -13,10 +13,11 @@ import java.util.List;
 public class HelpView extends TwoPaneSelectableListMenu {
 
     private static final int WIDTH = 57;
+    public static final int HELP_VIEW_HEIGHT = 42;
     private final List<HelpDialog> chapters;
 
     public HelpView(GameView view) {
-        super(view, WIDTH, 42, 36);
+        super(view, WIDTH, HELP_VIEW_HEIGHT, 36);
         chapters = new ArrayList<>(List.of(
             new TutorialStartDialog(null),
             new TutorialAlchemy(null),

@@ -12,6 +12,7 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import util.MyPair;
 import view.*;
+import view.help.RaceAndClassHelpDialog;
 import view.help.SpecificClassHelpDialog;
 import view.sprites.ArrowSprites;
 
@@ -52,7 +53,7 @@ public class PartyView extends SelectableListMenu {
         content.add(new SelectableListContent(xStart + 1, yStart + 2, String.format("%-38sNext %4d", secondRow, GameCharacter.getXPForNextLevel(gc.getLevel()))) {
             @Override
             public void performAction(Model model, int x, int y) {
-                setInnerMenu(new SpecificClassHelpDialog(model.getView(), gc.getCharClass()), model);
+                setInnerMenu(new RaceAndClassHelpDialog(model, gc), model);
             }
 
             @Override

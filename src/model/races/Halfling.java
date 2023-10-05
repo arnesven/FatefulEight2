@@ -12,7 +12,7 @@ public class Halfling extends Race {
         }, "Halflings are small human-like creatures who are prevalent in plains, farmlands and in towns. " +
                 "They are considerably less hardy than other races but are often quick on their feed. Halflings " +
                 "often have curly hair, both on their heads and on their feet. Halflings take up all kinds of " +
-                "professions, but are often found to be Foresters, Artisans, Marksmen, Bards or Spies.55bb");
+                "professions, but are often found to be Foresters, Artisans, Marksmen, Bards or Spies.");
     }
 
     @Override
