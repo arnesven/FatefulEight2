@@ -10,6 +10,7 @@ import view.subviews.ImageSubView;
 import view.MyColors;
 import view.subviews.TundraCombatTheme;
 
+import java.awt.*;
 import java.util.List;
 
 public class TundraHex extends WorldHex {
@@ -33,6 +34,10 @@ public class TundraHex extends WorldHex {
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
+        Point position = model.getWorld().getPositionForHex(this);
+        if (position.y < 10 && MyRandom.randInt(3) == 0) {
+            return new TundraMonsterEvent(model);
+        }
         if (3 <= roll && roll <= 4 && getLocation() instanceof MountainLocation) {
             return MountainHex.generateMountainEvent(model);
         } else if (5 <= roll) {
