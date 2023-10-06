@@ -52,7 +52,11 @@ public class SpecificTerrainHelpDialog extends SubChapterHelpDialog {
         if (features) {
             int count = 0;
             if (hex.hasRoad()) {
-                addFeatureLink(content, count, xStart, yStart, "Roads", new RoadsTerrainHelpDialog(model.getView()));
+                if (hasBrokenRoad(hex)) {
+                    addFeatureLink(content, count, xStart, yStart, "Broken Road", new BrokenRoadTerrainHelpDialog(model.getView()));
+                } else {
+                    addFeatureLink(content, count, xStart, yStart, "Roads", new RoadsTerrainHelpDialog(model.getView()));
+                }
                 count++;
             }
             if (hex.getRivers() != 0) {
@@ -65,6 +69,19 @@ public class SpecificTerrainHelpDialog extends SubChapterHelpDialog {
             }
         }
         return content;
+    }
+
+    private boolean hasBrokenRoad(WorldHex hex) {
+        switch (hex.getRoads()) {
+            case Direction.NORTH:
+            case Direction.NORTH_WEST:
+            case Direction.NORTH_EAST:
+            case Direction.SOUTH:
+            case Direction.SOUTH_EAST:
+            case Direction.SOUTH_WEST:
+                return hex.getLocation() == null || hex.getLocation().isDecoration();
+        }
+        return false;
     }
 
     private void addFeatureLink(List<ListContent> content, int count, int xStart, int yStart, String name, HelpDialog helpDialog) {
