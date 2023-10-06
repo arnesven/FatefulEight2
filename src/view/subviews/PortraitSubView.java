@@ -11,13 +11,13 @@ import view.BorderFrame;
 import view.MyColors;
 import view.party.CharacterCreationView;
 import view.sprites.CalloutSprite;
-import view.sprites.Sprite;
-
 import java.awt.*;
 
 public class PortraitSubView extends SubView {
     public static final int SILHOUETTE = 0;
     private static final CharacterAppearance silhouetteAppearance = new SilhouetteAppearance();
+    public static final int PORTRAIT_FRAME_WIDTH = 16;
+    public static final int PORTRAIT_FRAME_HEIGHT = 13;
     private final SubView previous;
     private final CharacterAppearance appearance;
     private final String portraitName;
@@ -101,10 +101,10 @@ public class PortraitSubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
-        model.getScreenHandler().clearForeground(X_OFFSET+5, X_OFFSET+17+16,
-                Y_OFFSET+5, Y_OFFSET+7+13);
+        model.getScreenHandler().clearForeground(X_OFFSET+5, X_OFFSET+17+PORTRAIT_FRAME_WIDTH,
+                Y_OFFSET+5, Y_OFFSET+7+PORTRAIT_FRAME_HEIGHT);
         BorderFrame.drawFrame(model.getScreenHandler(), X_OFFSET+7, Y_OFFSET+7,
-                16, 13, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
+                PORTRAIT_FRAME_WIDTH, PORTRAIT_FRAME_HEIGHT, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         } else {
