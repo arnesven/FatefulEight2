@@ -29,7 +29,7 @@ public class CareerOfficeNode extends DailyActionNode {
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         if (state.isEvening()) {
-            state.println("The shop is closed for today..");
+            state.println("The shop is closed for today.");
             return false;
         }
         return true;
