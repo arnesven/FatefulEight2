@@ -22,7 +22,7 @@ public class WorldBuilder {
 
     private static String[] worldTemplate = new String[]{
             "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
-            "sssssttuuTTTTTTuuuTTTTTTTuuTTTTTTTtTTTTTttTTTTTTTTTtt",
+            "sssssttuuTTTTTTuuuTTTTTTTuuTTTtTTTtTTTTTttTTTTTTTTTtt",
             "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuutuTTTuuTTuuTTuuuTuu",
             "stssttttWWWWWTTWWWWWWWWWTTWWWWWWWTTTTWWWWWWWWWWWWWWWW",
             "sssssttWWWWWWWTTTWWWWWWWWWWWWTTTTWTTuWWWWWWWWWWWWWWWW",
@@ -113,11 +113,12 @@ public class WorldBuilder {
     private static Map<Point, HexContents> makeHexContents() {
         Map<Point, HexContents> contents = new HashMap<>();
 
+        addNorthernContents(contents);
         addEvilTower(contents, 34, 1, EXPAND_NORTH);
 
         addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);
         addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents,30, 10, SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents,30, 10, SOUTH_WEST | SOUTH_EAST | NORTH, 0);
 
         addTemple(contents, 15, 11, "Crystal");
         addTown(contents, 21, 11, new EastDurhamTown(), 0, SOUTH_EAST);
@@ -266,6 +267,23 @@ public class WorldBuilder {
         addEasternContents(contents);
 
         return contents;
+    }
+
+    private static void addNorthernContents(Map<Point, HexContents> contents) {
+        addInn(contents, 30, 1, "Frigid Slab Inn", SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 31, 2, NORTH_WEST | SOUTH, 0);
+        addRoadsAndRivers(contents, 31, 3, NORTH | SOUTH, 0);
+        addRoadsAndRivers(contents, 31, 4, NORTH | SOUTH, 0);
+
+        addRoadsAndRivers(contents, 30, 5, SOUTH_WEST, 0);
+        addRoadsAndRivers(contents, 31, 5, SOUTH_WEST, 0);
+
+        addRoadsAndRivers(contents, 29, 6, SOUTH, 0);
+        addRoadsAndRivers(contents, 29, 7, SOUTH, 0);
+
+        addRoadsAndRivers(contents, 30, 8, NORTH_WEST | SOUTH, 0);
+        addRoadsAndRivers(contents, 30, 9, NORTH | SOUTH, 0);
+
     }
 
     private static void addEasternContents(Map<Point, HexContents> contents) {
