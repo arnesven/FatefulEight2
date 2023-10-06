@@ -6,12 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static model.map.Direction.NORTH;
-import static model.map.Direction.SOUTH;
-import static model.map.Direction.SOUTH_EAST;
-import static model.map.Direction.SOUTH_WEST;
-import static model.map.Direction.NORTH_WEST;
-import static model.map.Direction.NORTH_EAST;
+import static model.map.Direction.*;
 
 public class WorldBuilder {
 
@@ -37,23 +32,23 @@ public class WorldBuilder {
             "sssssssstttWWTTWWTWWTTtsssstTTtuTTTtTuttssssssttttttt",
             "ssttttttWWuTuWWWTTTtttssssttTTtttTTTttttttstttttttttt",
             "ssssstttttTuWuTuTuttttsssttttTtTuTTTTTtttsstWuWuuWWuu",
-            "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWWWWWW",
-            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtssooooooooooo",
-            "stppptssppppbbspbbhpspsssppwbwhfpMhwbfssssooooooooooo",
-            "pppppsspppppssssspppsssssssphwhpMMhhbsssssssooooooooo",
-            "ssppppsssppsshpsssssssssssshhhphhMhwwwhtssssooooooooo",
-            "ssspppsssssshhhhhsssssssppfspwwpphpwwwMMooooooooooooo",
-            "spppsspppsphhphhhppfhpwwwfwppMMwMffwwhpoooooooooopooo",
-            "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMoooooooooooooo",
-            "sspppffppssspppphpfwwhpppwpphpppMMdwddddooooooooooooo",
-            "ssppfMMpppsspppphffwwwwpwwphhhfhfdddddddDddoooooooooo",
-            "ssppfMhpppssMMMhffffwwwpwwwwwffpffDDpDfdddooooooooooo",
-            "sspfhhpsssppMhhhhppsphfpbbpwwfwfMfhfffpoooobbbbbboooo",
-            "ssspppssppddmDdDmDdmmppswwwppppwMMMMhppppoobboboooooo",
-            "sssssssdDdDmdDddddddmMpwwMwwwspppMMhfpfooooobbooooooo",
-            "ssphsddddDmdddDdddDmMpwwdwpbbbffphMpffpoooooooooooooo",
-            "ssppppddmDDDddDDpdpDddsdsddddddffhhpwffoooooooooooooo",
-            "ssppppddDDDDphphfsspsssssssssssdfMMMwwwoooooooooooooo",
+            "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWXXWWW",
+            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtssXXXXxxXxXXX",
+            "stppptssppppbbspbbhpspsssppwbwhfpMhwbfssssXXXXXXXXXXX",
+            "pppppsspppppssssspppsssssssphwhpMMhhbsssssssXXXXXXxXX",
+            "ssppppsssppsshpsssssssssssshhhphhMhwwwwbssssXXXXxxxXX",
+            "ssspppsssssshhhhhsssssssppfspwwpphpwwwMMXXXXXXXXXXXXX",
+            "spppsspppsphhphhhppfhpwwwfwppMMwMffwwhpXXXXxxXXbXpxxX",
+            "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMXddXXXXxXXdDDd",
+            "sspppffppssspppphpfwwhpppwpphpppMMdwddddXdDDDXXMXXXDd",
+            "ssppfMMpppsspppphffwwwwpwwphhhfhfdddddddDddXXXMbXXXXX",
+            "ssppfMhpppssMMMhffffwwwpwwwwwffpffDDpDXXXXXXXbMsbXXpX",
+            "sspfhhpsssppMhhhhppsphfpbbpwwfwfMfhfffpwowXbbbbbMxxXX",
+            "ssspppssppddmDdDmDdmmppswwwppppwMMMMhppppwwbbbbooMMxM",
+            "sssssssdDdDmdDddddddmMpwwMwwwspppMMhfpffwwoobboooooMb",
+            "ssphsddddDmdddDdddDmMpwwdwpbbbffphMpffpfwooooooooooww",
+            "ssppppddmDDDddDDpdpDddsdsddddddffhhpwfffoooooooooowss",
+            "ssppppddDDDDphphfsspsssssssssssdfMMMwwwooooooooowwsss",
             "ssssssssssssssssssssssssssssssssMMwwwwwwsssssssssssss",
             "sssssssssssssssssssssssssssssssMMwwwwwwwsssssssssssss",
             "ssssssssssssssssssssssssssssssMhMwwwwswwsssssssssssss",
@@ -107,6 +102,10 @@ public class WorldBuilder {
             return new DeepWoodsHex(roads, rivers, state);
         } else if (c == 'j') {
             return new JungleHex(roads, rivers, state);
+        } else if (c == 'X') {
+            return new WastelandHex(roads, rivers, state);
+        } else if (c == 'x') {
+            return new WastelandHills(roads, rivers, state);
         }
         throw new IllegalStateException("No hex can be created for token '" + c + "'");
     }
@@ -230,7 +229,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 28, 23, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 29, 23, SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 30, 23, NORTH_WEST | SOUTH_EAST, 0);
-        addRoadsAndRivers(contents, 38, 23, SOUTH_WEST | NORTH, 0);
+        addRoadsAndRivers(contents, 38, 23, SOUTH_WEST | NORTH | NORTH_EAST, 0);
 
         addRuins(contents, 14, 24, "Zand", 0, 0);
         addRoadsAndRivers(contents, 26, 24, 0, SOUTH);
@@ -264,7 +263,81 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
         addEvilTower(contents, 17, 37, EXPAND_SOUTH);
 
+        addEasternContents(contents);
+
         return contents;
+    }
+
+    private static void addEasternContents(Map<Point, HexContents> contents) {
+        addRoadsAndRivers(contents, 44, 14, 0, SOUTH);
+
+        addRoadsAndRivers(contents, 44, 15, 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 45, 15, 0, SOUTH | SOUTH_WEST);
+        addRoadsAndRivers(contents, 46, 15, 0, SOUTH | SOUTH_WEST);
+
+        addRoadsAndRivers(contents, 41, 16, 0, SOUTH_EAST);
+        addRoadsAndRivers(contents, 42, 16, 0, SOUTH_WEST | NORTH_WEST);
+        addRoadsAndRivers(contents, 45, 16, 0, NORTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 46, 16, 0, SOUTH_EAST | NORTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 47, 16, 0, SOUTH_WEST);
+
+        addRoadsAndRivers(contents, 41, 17, 0, SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 42, 17, 0, SOUTH | SOUTH_WEST | SOUTH_EAST | NORTH_WEST);
+        addRoadsAndRivers(contents, 44, 17, 0, SOUTH | SOUTH_WEST);
+        addRoadsAndRivers(contents, 46, 17, 0, NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 47, 17, 0, SOUTH_WEST | NORTH_WEST);
+        addRoadsAndRivers(contents, 50, 17, SOUTH | NORTH_WEST, 0);
+
+        addRoadsAndRivers(contents, 41, 18, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 42, 18, 0, NORTH);
+        addRoadsAndRivers(contents, 43, 18, 0, NORTH | NORTH_EAST | NORTH_WEST);
+        addRoadsAndRivers(contents, 44, 18, 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 45, 18, 0, SOUTH | SOUTH_WEST);
+        addRoadsAndRivers(contents, 46, 18, 0, SOUTH_WEST | NORTH_EAST);
+        addRoadsAndRivers(contents, 47, 18, 0, SOUTH_WEST | SOUTH | NORTH_WEST);
+        addRoadsAndRivers(contents, 48, 18, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 50, 18, SOUTH_EAST | NORTH, 0);
+
+        addRoadsAndRivers(contents, 45, 19, 0, NORTH_EAST | SOUTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 46, 19, 0, SOUTH_EAST | SOUTH | SOUTH_WEST | NORTH_WEST);
+        addRoadsAndRivers(contents, 47, 19, 0, SOUTH | SOUTH_EAST | NORTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 48, 19, 0, NORTH_WEST);
+        addRoadsAndRivers(contents, 51, 19, SOUTH_EAST | NORTH_WEST, 0);
+        addRoadsAndRivers(contents, 52, 19, SOUTH | NORTH_WEST, 0);
+
+        addRoadsAndRivers(contents, 45, 20, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 46, 20, 0, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 47, 20, 0, SOUTH_WEST | NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 48, 20, 0, SOUTH);
+        addRoadsAndRivers(contents, 52, 20, SOUTH_WEST | NORTH,0);
+
+        addRoadsAndRivers(contents, 48, 21, 0, NORTH_WEST | NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 49, 21, 0, SOUTH | SOUTH_WEST);
+        addRoadsAndRivers(contents, 50, 21, SOUTH_WEST | NORTH_EAST,SOUTH_WEST);
+        addInn(contents, 51, 21, "Inn of the Vulture", SOUTH_WEST | NORTH_EAST, 0);
+
+        addRoadsAndRivers(contents, 47, 22, SOUTH_EAST | SOUTH_WEST, 0);
+        addRoadsAndRivers(contents, 48, 22, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 49, 22, SOUTH_WEST | NORTH_EAST, NORTH_EAST | NORTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 50, 22, 0, NORTH_WEST | SOUTH_WEST);
+
+        addRoadsAndRivers(contents, 39, 23, SOUTH_EAST | SOUTH_WEST, 0);
+        addRoadsAndRivers(contents, 40, 23, SOUTH_EAST | NORTH_WEST, 0);
+        addRoadsAndRivers(contents, 42, 23, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 43, 23, SOUTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 44, 23, NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 45, 23, NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 49, 23, 0, NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 50, 23, 0, NORTH_WEST | SOUTH_WEST | SOUTH);
+
+        addRoadsAndRivers(contents, 41, 24, NORTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 49, 24, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 50, 24, 0, NORTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 51, 24, 0, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 52, 24, 0, SOUTH_WEST);
+
+        addRoadsAndRivers(contents, 51, 25, 0, NORTH | NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 52, 25, 0, NORTH_WEST);
     }
 
     private static void addRoadsAndRivers(Map<Point, HexContents> contents, int x, int y, int roads, int rivers) {

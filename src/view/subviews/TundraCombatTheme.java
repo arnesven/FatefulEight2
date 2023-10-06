@@ -4,6 +4,6 @@ import view.MyColors;
 
 public class TundraCombatTheme extends MountainCombatTheme {
     public TundraCombatTheme() {
-        super(MyColors.WHITE);
+        super(MyColors.WHITE, MyColors.GRAY, MyColors.WHITE);
     }
 }

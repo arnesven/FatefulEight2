@@ -15,16 +15,16 @@ public class MountainCombatTheme extends CombatTheme {
     private Sprite mountLR;
     public Sprite[] groundSprites;
 
-    public MountainCombatTheme(MyColors groundColor) {
-        mountUL = new Sprite32x32("mountul", "combat.png", 0x70, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
-        mountUR = new Sprite32x32("mountur", "combat.png", 0x71, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
-        mountLL = new Sprite32x32("mountll", "combat.png", 0x80, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
-        mountLR = new Sprite32x32("mountlr", "combat.png", 0x81, MyColors.GRAY, groundColor, MyColors.WHITE, MyColors.CYAN);
+    public MountainCombatTheme(MyColors groundColor, MyColors mountainColor, MyColors snowColor) {
+        mountUL = new Sprite32x32("mountul", "combat.png", 0x70, mountainColor, groundColor, snowColor, MyColors.CYAN);
+        mountUR = new Sprite32x32("mountur", "combat.png", 0x71, mountainColor, groundColor, snowColor, MyColors.CYAN);
+        mountLL = new Sprite32x32("mountll", "combat.png", 0x80, mountainColor, groundColor, snowColor, MyColors.CYAN);
+        mountLR = new Sprite32x32("mountlr", "combat.png", 0x81, mountainColor, groundColor, snowColor, MyColors.CYAN);
         groundSprites = makeGroundSprites(groundColor, MyColors.GRAY, ROCKY_ROW);
     }
 
     public MountainCombatTheme() {
-        this(MyColors.TAN);
+        this(MyColors.TAN, MyColors.GRAY, MyColors.WHITE);
     }
 
     @Override

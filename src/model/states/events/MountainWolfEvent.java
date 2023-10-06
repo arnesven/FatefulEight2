@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.enemies.Enemy;
+import model.enemies.MountainWolfEnemy;
 import model.enemies.WolfEnemy;
 import model.states.DailyEventState;
 import view.subviews.CombatTheme;
@@ -19,6 +20,6 @@ public class MountainWolfEvent extends WolfEvent {
 
     @Override
     protected Enemy getWolf() {
-        return new WolfEnemy('A', 6, 4);
+        return new MountainWolfEnemy('A');
     }
 }

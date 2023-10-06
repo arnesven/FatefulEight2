@@ -5,6 +5,8 @@ import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.combat.Condition;
 import model.combat.PoisonCondition;
+import model.enemies.ElfEnemy;
+import model.enemies.Enemy;
 import model.items.spells.Spell;
 import util.MyPair;
 import util.MyRandom;
@@ -14,6 +16,7 @@ import view.subviews.CollapsingTransition;
 import view.subviews.OnTheRoadSubView;
 import view.subviews.SubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GameState {
@@ -209,5 +212,9 @@ public abstract class GameState {
             return MyRandom.sample(COMMON_GIRL_FIRST_NAMES);
         }
         return MyRandom.sample(COMMON_BOY_FIRST_NAMES);
+    }
+
+    public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {
+        return Math.max(1, model.getParty().partyStrength() / (enemy).getThreat());
     }
 }

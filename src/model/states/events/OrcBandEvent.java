@@ -64,7 +64,7 @@ public class OrcBandEvent extends DailyEventState {
         if (ambush) {
             runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         } else {
-            runCombat(enemies);
+            runCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         }
     }
 }

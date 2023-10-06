@@ -12,6 +12,7 @@ import model.races.ElvenRace;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
+import model.states.GameState;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -66,8 +67,7 @@ public class ElvenCampEvent extends DailyEventState {
 
     private List<Enemy> setupCombatWithElves(Model model) {
         List<Enemy> enemies = new ArrayList<>();
-        int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (new ElfEnemy('A')).getThreat());
-        for (int i = numberOfEnemies; i > 0; --i) {
+        for (int i = getSuggestedNumberOfEnemies(model, new ElfEnemy('A')); i > 0; --i) {
             enemies.add(new ElfEnemy('A'));
         }
         return enemies;
