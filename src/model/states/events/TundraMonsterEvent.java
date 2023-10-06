@@ -7,7 +7,7 @@ import util.MyRandom;
 
 import java.util.List;
 
-public class TundraMonsterEvent extends WastelandMonsterEvent {
+public class TundraMonsterEvent extends RoamingMonsterEvent {
     public TundraMonsterEvent(Model model) {
         super(model);
     }
