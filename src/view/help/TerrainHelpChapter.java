@@ -30,6 +30,7 @@ public class TerrainHelpChapter extends ExpandableHelpDialog {
                 new SpecificTerrainHelpDialog(view, new SwampHex(0, 0, 0), false),
                 new TempleHelpDialog(view),
                 new TownHelpDialog(view),
+                new SpecificTerrainHelpDialog(view, new WastelandHex(0, 0, 0), false),
                 new SpecificTerrainHelpDialog(view, new WoodsHex(0, 0, 0), false)
         );
     }

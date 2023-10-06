@@ -7,6 +7,6 @@ public class TundraWoods extends TundraHex {
 
     @Override
     public String getTerrainName() {
-        return "forzen forest";
+        return "frozen forest";
     }
 }
