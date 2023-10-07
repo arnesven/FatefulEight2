@@ -4,18 +4,23 @@ import model.Model;
 import model.enemies.*;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 import view.subviews.MountainCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AltarEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x10);
+
     public AltarEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Altar"));
         println("The party reaches the summit of the mountain. There is an altar here. " +
                 "Someone has perform some sort of sacrificial ritual here. Not only is the " +
                 "victim dead but there are " +

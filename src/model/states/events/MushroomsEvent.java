@@ -4,17 +4,22 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.DailyEventState;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MushroomsEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x01);
+
     public MushroomsEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mushrooms"));
         println("A large patch of mushrooms cover the ground ahead. " +
                 "The party is hungry and they do look delicious, but are " +
                 "they edible?");

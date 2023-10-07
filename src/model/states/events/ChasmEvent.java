@@ -5,16 +5,21 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import model.states.EveningState;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.List;
 
 public class ChasmEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x21);
+
     public ChasmEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Chasm"));
         println("A deep chasm lies in front of the party. There is a very " +
                 "narrow path and it will be difficult to traverse. Does the " +
                 "party dare?");

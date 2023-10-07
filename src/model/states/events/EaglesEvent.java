@@ -3,14 +3,17 @@ package model.states.events;
 import model.Model;
 import model.states.DailyEventState;
 import view.MyColors;
+import view.sprites.MiniPictureSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.MiniPictureSubView;
 
 import java.awt.*;
 
 public class EaglesEvent extends AlternativeTravelEvent {
     private static final Sprite SPRITE = new Sprite32x32("eagles", "enemies.png", 0x63,
             MyColors.BLACK, MyColors.BEIGE, MyColors.GRAY, MyColors.BROWN);
+    private static final MiniPictureSprite MINI_PIC_SPRITE = new MiniPictureSprite(0x02);
 
     public EaglesEvent(Model model) {
         super(model);
@@ -23,6 +26,7 @@ public class EaglesEvent extends AlternativeTravelEvent {
 
     @Override
     protected boolean eventIntro(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), MINI_PIC_SPRITE, "Eagles"));
         println("The party encounter some giant eagles. You are amazed to find that the eagles can talk! They are\n" +
                 "however not too pleased that the party is trespassing here. " +
                 "They offer to fly you down from the mountain.");

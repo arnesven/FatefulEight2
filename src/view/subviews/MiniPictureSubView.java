@@ -10,10 +10,12 @@ import java.awt.*;
 public class MiniPictureSubView extends SubView {
     private final SubView previous;
     private final MiniPictureSprite sprite;
+    private final String undertext;
 
-    public MiniPictureSubView(SubView previous, MiniPictureSprite sprite) {
+    public MiniPictureSubView(SubView previous, MiniPictureSprite sprite, String undertext) {
         this.previous = previous;
         this.sprite = sprite;
+        this.undertext = undertext;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class MiniPictureSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "An abandoned town?";
+        return undertext;
     }
 
     @Override

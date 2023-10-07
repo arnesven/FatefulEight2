@@ -3,15 +3,20 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.states.DailyEventState;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 public class MonumentEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x22);
+
     public MonumentEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
-        println("A large stone slab, adorned with a plaque. This " +
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Monument"));
+        println("Several large stone statues, adorned with a plaques. This " +
                 "monument was erected to honor the memory of a group " +
                 "of heroes who once saved this world from a terrible fate. " +
                 "The plaque has a detailed account of how the world was " +

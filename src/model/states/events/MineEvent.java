@@ -10,10 +10,14 @@ import model.items.weapons.RustyPickaxe;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.List;
 
 public class MineEvent extends DailyEventState {
+
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x12);
 
     public MineEvent(Model model) {
         super(model);
@@ -26,6 +30,7 @@ public class MineEvent extends DailyEventState {
             enteredFromSurface = false;
             model.getParty().randomPartyMemberSay(model, List.of("Looks like this cave is connected to a mine."));
         } else {
+            model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mine"));
             model.getParty().randomPartyMemberSay(model,
                     List.of("That looks like an old mine over there in the hillside."));
         }

@@ -26,7 +26,7 @@ public class GhostTownEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.miniSubView = new MiniPictureSubView(model.getSubView(), SPRITE);
+        this.miniSubView = new MiniPictureSubView(model.getSubView(), SPRITE, "An abandoned town?");
         model.setSubView(miniSubView);
         println("The party comes to what seems to be an abandoned town. What would you like to do?");
         int attackChance = MyRandom.randInt(5);

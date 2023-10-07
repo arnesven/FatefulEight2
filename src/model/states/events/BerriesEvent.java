@@ -7,16 +7,21 @@ import model.classes.SkillCheckResult;
 import model.combat.PoisonCondition;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.List;
 
 public class BerriesEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x11);
+
     public BerriesEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Berries"));
         println("The party encounters a large thicket, rich with bright red berries.");
         model.getParty().randomPartyMemberSay(model, List.of("Those look yummy!"));
         print("Do you wish to pick the berries? (Y/N) ");
