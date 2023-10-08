@@ -113,7 +113,7 @@ public class CombatEvent extends DailyEventState {
             StripedTransition.transition(model, new CombatSummarySubView(model, sumUp(destroyedEnemies), fledEnemies, combatLoot));
         }
 
-        println("Press enter to continue.");
+        print("Press enter to continue.");
         waitForReturn();
         if (combatLoot != null) {
             model.getParty().giveCombatLoot(combatLoot);

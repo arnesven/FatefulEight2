@@ -20,6 +20,7 @@ import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
@@ -122,6 +123,11 @@ public class ForestTrollQuest extends Quest {
     @Override
     public boolean drawTownOrCastleInBackground() {
         return true;
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new GrassCombatTheme();
     }
 
     @Override

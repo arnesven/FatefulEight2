@@ -44,23 +44,19 @@ public class ImageSubView extends SubView {
 
     private void makeImage() {
         imgsprite = new Sprite[32][38];
-        boolean alreadyConverted = SpriteManager.isRegistered(imageName+0+":"+0+":" + "0") &&
-                SpriteCache.has(this.imgsprite[0][0]);
-        if (alreadyConverted) {
-            for (int x = 0; x < 32; ++x) {
-                for (int y = 0; y < 38; ++y) {
-                    this.imgsprite[x][y] = SpriteManager.getSprite(imageName+x+":"+y+":"+"0");
-                }
-            }
-        } else {
-            for (int x = 0; x < 32; ++x) {
-                for (int y = 0; y < 38; ++y) {
-                    this.imgsprite[x][y] = new Sprite(imageName+x+":"+y+":", imageName + ".png", x, y, 8, 8);
+        for (int x = 0; x < 32; ++x) {
+            for (int y = 0; y < 38; ++y) {
+                String spriteName = imageName+x+":"+y+":";
+                boolean alreadyConverted = SpriteManager.isRegistered(spriteName+"0") &&
+                        SpriteCache.has(this.imgsprite[x][y]);
+                if (alreadyConverted) {
+                    this.imgsprite[x][y] = SpriteManager.getSprite(spriteName+"0");
+                } else {
+                    this.imgsprite[x][y] = new Sprite(spriteName, imageName + ".png", x, y, 8, 8);
                     MyColors.transformImage(this.imgsprite[x][y]);
                 }
             }
         }
-        
     }
 
     @Override

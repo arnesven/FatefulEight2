@@ -4,17 +4,22 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.DailyEventState;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StormEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x31);
+
     public StormEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Storm"));
         println("Dark clouds are looming and drops start to fall on your " +
                 "heads.");
         model.getParty().randomPartyMemberSay(model, List.of("Looks like bad weather...", "Here it comes...",
