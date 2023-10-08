@@ -24,7 +24,8 @@ public class MerchantEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         if (withIntro) {
-            println("A large wagon with tons of wares stacked upon it, and beside it stands a plump character in fancy clothing.");
+            println("The party encounters a large wagon with tons of wares stacked upon it. " +
+                    "Beside it stands a plump character in fancy clothing.");
             showRandomPortrait(model, Classes.MERCHANT, "Merchant");
             portraitSay("Please, I have lots of merchandise and I just know you adventurer types are always in " +
                     "need of something. Won't you please have a look?");

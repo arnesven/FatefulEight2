@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.Model;
+import util.Arithmetics;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.ArrowSprites;
@@ -17,6 +18,7 @@ public abstract class TopMenuSubView extends SubView {
         super(centerRows);
         topCursorIndex = 0;
         this.cursorPositions = cursorPositions;
+        setTopCursorIndex(getDefaultIndex());
     }
 
     protected void setTopCursorIndex(int topCursorIndex) {
@@ -61,13 +63,10 @@ public abstract class TopMenuSubView extends SubView {
                 topCursorIndex = getDefaultIndex();
                 return true;
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-                topCursorIndex = (topCursorIndex + 1) % 3;
+                topCursorIndex = Arithmetics.incrementWithWrap(topCursorIndex, cursorPositions.length);
                 return true;
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-                topCursorIndex--;
-                if (topCursorIndex < 0) {
-                    topCursorIndex = 2;
-                }
+                topCursorIndex = Arithmetics.decrementWithWrap(topCursorIndex, cursorPositions.length);
                 return true;
             }
             return false;

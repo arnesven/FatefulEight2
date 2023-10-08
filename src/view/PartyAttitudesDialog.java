@@ -83,7 +83,7 @@ public class PartyAttitudesDialog extends SubView {
         }
     }
 
-    private Sprite getSymbolForAttitude(int i) {
+    public static Sprite getSymbolForAttitude(int i) {
         if (i >= 30) {
             return LOVE_SPRITE;
         } else if (i >= 20) {
