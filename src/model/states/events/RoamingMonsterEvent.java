@@ -122,4 +122,58 @@ public abstract class RoamingMonsterEvent extends DailyEventState {
         }
         return result;
     }
+
+    protected List<Enemy> makeSpiderEnemies() {
+        List<Enemy> result = new ArrayList<>();
+        int num = getSuggestedNumberOfEnemies(getModel(), new SpiderEnemy('A'));
+        for (int i = num; i > 0; --i) {
+            result.add(new SpiderEnemy('A'));
+        }
+        return result;
+    }
+
+    protected List<Enemy> makeCrocodileEnemies() {
+        List<Enemy> result = new ArrayList<>();
+        int num = getSuggestedNumberOfEnemies(getModel(), new CrocodileEnemy('A'));
+        for (int i = num; i > 0; --i) {
+            result.add(new CrocodileEnemy('A'));
+        }
+        return result;
+    }
+
+    protected List<Enemy> makeFrogmenEnemies() {
+        List<Enemy> result = new ArrayList<>();
+        int num = getSuggestedNumberOfEnemies(getModel(), new FrogmanScoutEnemy('A'));
+        for (int i = num/3+1; i > 0; --i) {
+            result.add(new FrogmanScoutEnemy('B'));
+        }
+        num = getSuggestedNumberOfEnemies(getModel(), new FrogmanShamanEnemy('A'));
+        for (int i = num/3+1; i > 0; --i) {
+            result.add(new FrogmanShamanEnemy('C'));
+        }
+        num = getSuggestedNumberOfEnemies(getModel(), new FrogmanLeaderEnemy('A'));
+        for (int i = num/3; i > 0; --i) {
+            result.add(new FrogmanLeaderEnemy('A'));
+        }
+        return result;
+    }
+
+
+    protected List<Enemy> makeViperEnemies() {
+        List<Enemy> result = new ArrayList<>();
+        int num = getSuggestedNumberOfEnemies(getModel(), new ViperEnemy('A'));
+        for (int i = num; i > 0; --i) {
+            result.add(new ViperEnemy('A'));
+        }
+        return result;
+    }
+
+    protected List<Enemy> makeBatEnemies() {
+        List<Enemy> result = new ArrayList<>();
+        int num = getSuggestedNumberOfEnemies(getModel(), new BatEnemy('A'));
+        for (int i = num; i > 0; --i) {
+            result.add(new BatEnemy('A'));
+        }
+        return result;
+    }
 }

@@ -300,7 +300,7 @@ public abstract class WorldHex {
                 new BoatsEvent(model),
                 new BoatsEvent(model),
                 new BoatsEvent(model),
-                new RaftEvent(model),
+                new RaftOnRiverEvent(model),
                 new NoRiverCrossingEvent(model),
                 new NoRiverCrossingEvent(model)
         ));

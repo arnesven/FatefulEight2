@@ -37,7 +37,9 @@ public class SwampHex extends WorldHex {
     @Override
     public String getTerrainDescription() {
         return "Swamps are wetlands and marshlands, which are often home to all matter of strange creatures " +
-                "and other dangers.";
+                "and other dangers. They are often difficult to travel through and explorers often get lost in " +
+                "the unwelcoming environment. Some swamps are wet enough that a raft may be constructed to traverse the swamp " +
+                "upon.";
     }
 
     @Override
@@ -53,16 +55,17 @@ public class SwampHex extends WorldHex {
                     new CrocodilesEvent(model),
                     new LostEvent(model),
                     new LostEvent(model),
-                    new LostEvent(model),
                     new MosquitoesEvent(model),
                     new WoundedAdventurerEvent(model),
                     new MushroomsEvent(model),
                     new HermitEvent(model),
-                    // new SwampRaftEvent(model),
                     new AmazonEvent(model),
                     new ChestEvent(model),
                     new AbandonedShackEvent(model),
-                    new FrogmenScoutsEvent(model)
+                    new FrogmenScoutsEvent(model),
+                    new SwampRaftEvent(model),
+                    new SwampRaftEvent(model),
+                    new SwampRaftEvent(model)
             ));
         }
         return new NoEventState(model);
