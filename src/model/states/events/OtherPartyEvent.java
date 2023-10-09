@@ -44,6 +44,7 @@ public class OtherPartyEvent extends DailyEventState {
         this.subView = makeOtherPartySubView(model);
         model.setSubView(subView);
         print("You can trade with the other party, offer them something, attack them, talk to them, or leave.");
+        model.getTutorial().otherParties(model);
         do {
             waitForReturn();
             if (subView.getTopIndex() == 3) {
@@ -87,7 +88,7 @@ public class OtherPartyEvent extends DailyEventState {
             options.add("Offer cooked meal");
         }
 
-        int chosen = multipleOptionArrowMenu(model, 24, 30, options);
+        int chosen = multipleOptionArrowMenu(model, 24, 31, options);
         if (chosen < 2) {
             offerGoldOrRations(model, chosen == 0);
         } else if (chosen == 2) {
@@ -321,7 +322,7 @@ public class OtherPartyEvent extends DailyEventState {
     }
 
     private boolean talkToLeader(Model model) {
-        int chosen = multipleOptionArrowMenu(model, 24, 32,
+        int chosen = multipleOptionArrowMenu(model, 24, 33,
                 List.of("Ask about " + himOrHer(leader.getGender()) + "self",
                         "Ask about recent success",
                         "Propose to merge parties"
@@ -403,7 +404,7 @@ public class OtherPartyEvent extends DailyEventState {
 
     private void talkTo(Model model, GameCharacter who) {
         println("You approach " + who.getFullName() + ".");
-        int chosen = multipleOptionArrowMenu(model, 24, 32,
+        int chosen = multipleOptionArrowMenu(model, 24, 33,
                 List.of("Ask about " + himOrHer(who.getGender()) + "self",
                         "Ask about " + hisOrHer(who.getGender()) + " party",
                         "Ask if " + (heOrShe(who.getGender())) + " wants to join"
