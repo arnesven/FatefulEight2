@@ -1,18 +1,21 @@
 package view.subviews;
 
 import model.Model;
+import model.Party;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
 import view.PartyAttitudesDialog;
 import view.sprites.AttitudeSprite;
+import view.sprites.CalloutSprite;
 import view.sprites.CombatCursorSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 public class OtherPartySubView extends TopMenuSubView {
@@ -20,6 +23,8 @@ public class OtherPartySubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
     private final GameCharacter leader;
     private final HashMap<GameCharacter, Integer> attitudes;
+    private Set<GameCharacter> infoRevealed = new HashSet<>();
+    private List<MyPair<GameCharacter, CalloutSprite>> callouts = new ArrayList<>();
 
     public OtherPartySubView(List<GameCharacter> characters,
                              GameCharacter leader,
@@ -41,6 +46,9 @@ public class OtherPartySubView extends TopMenuSubView {
     @Override
     protected String getUnderText(Model model) {
         GameCharacter selected = matrix.getSelectedElement();
+        if (!infoRevealed.contains(selected)) {
+            return "???";
+        }
         return selected.getFullName() + ", " + selected.getRace().getName() + " " +
                 selected.getCharClass().getShortName() + " Lvl " + selected.getLevel();
     }
@@ -80,6 +88,15 @@ public class OtherPartySubView extends TopMenuSubView {
                     BorderFrame.drawString(model.getScreenHandler(), leaderIcon, xPos+3,
                             yPos+6, MyColors.WHITE);
                 }
+            }
+        }
+        callouts.removeIf((MyPair<GameCharacter, CalloutSprite> pair) -> pair.second.isDone());
+        for (MyPair<GameCharacter, CalloutSprite> pair : callouts) {
+            if (matrix.getElementList().contains(pair.first)) {
+                Point p = matrix.getPositionFor(pair.first);
+                int xPos = X_OFFSET + p.x * 8 + 7;
+                int yPos = Y_OFFSET + p.y * 8 + 3;
+                model.getScreenHandler().register(pair.second.getName(), new Point(xPos, yPos), pair.second);
             }
         }
     }
@@ -123,5 +140,21 @@ public class OtherPartySubView extends TopMenuSubView {
 
     public GameCharacter getSelectedCharacter() {
         return matrix.getSelectedElement();
+    }
+
+    public void revealInfo(GameCharacter who) {
+        this.infoRevealed.add(who);
+    }
+
+    public void removeFromParty(GameCharacter who) {
+        matrix.remove(who);
+        this.infoRevealed.remove(who);
+        attitudes.remove(who);
+    }
+
+    public String addCallout(GameCharacter gc, String s) {
+        MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(s);
+        this.callouts.add(new MyPair<>(gc, new CalloutSprite(pair.first)));
+        return pair.second;
     }
 }
