@@ -52,13 +52,13 @@ public class WorldBuilder {
             "ssssssssssssssssssssssssssssssssMMwwwwwwsssssssssssss",
             "sssssssssssssssssssssssssssssssMMwwwwwwwsssssssssssss",
             "ssssssssssssssssssssssssssssssMhMwwwwswwsssssssssssss",
-            "ssssssssssssssssssssssssssssMMhMhwhwhwwwsssssssssssss",
-            "sssssssssssssssssssssssssssMhhwwhjjwhwwwsssssssssssss",
-            "jjjjjjjjjjjjjjjjjjjjjjjMMjjMMjjjjwjjwjjjjjjjjjjjjjjjj",
-            "jjjjjjjjjjjjjjjjjjjjjMMMMMjjjjjjjjjwjjjjjjjjjjjjjjjjj",
-            "jjjjjjjjjjjjjjjjjjjjjjjjMjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
-            "jjjjjjjjjjjjjjjjjjjjjjjjjMMjjjjjjjjjjjjjjjjjjjjjjjjjj",
-            "jjjjjjjjjjjjjjjjjpjjjjjjjjjMMjjjjjjjjjjjjjjjjjjjjjjjj",
+            "dssssssssssdddssssssssssssssMMhMhwhwhwwwsssssssssssss",
+            "jdsssddddddjjjdddssssddssssMhhwwhjjwhwwwdddssssssssdd",
+            "jjdddjjjjjjjjjjjjdpddjjJJjjJJjjjjwjjwjjjjjjddddsdddjj",
+            "jjjjjjjjjjjjjjjjbjjbbJJJJJjjjbjjjjjwjjjjjjjddddsdjjjj",
+            "jjjjjjjjjjjjjbjbjjjjjjjbJjjbjjjjbjjjjjjjjjdsssssdjjjj",
+            "jjjjjjjjjjjjjjdddjjbbjjjbJJjjbbjjjjbjjjjjdsssssssdjjj",
+            "jjjjjjjjjjjjjdssbpjjjbbbbbbbJjjjjbjjjjjjjjjdssssssdjj",
     };
 
     private static WorldHex makeHex(char c, HexContents contents, int state) {
@@ -106,6 +106,8 @@ public class WorldBuilder {
             return new WastelandHex(roads, rivers, state);
         } else if (c == 'x') {
             return new WastelandHills(roads, rivers, state);
+        } else if (c == 'J') {
+            return new SwampMountain(roads, rivers, state);
         }
         throw new IllegalStateException("No hex can be created for token '" + c + "'");
     }
@@ -265,8 +267,43 @@ public class WorldBuilder {
         addEvilTower(contents, 17, 37, EXPAND_SOUTH);
 
         addEasternContents(contents);
+        addSouthernContents(contents);
 
         return contents;
+    }
+
+    private static void addSouthernContents(Map<Point, HexContents> contents) {
+        addInn(contents, 18, 33, "Monkey Inn", SOUTH_WEST, SOUTH_EAST | NORTH_EAST);
+
+        addRoadsAndRivers(contents, 19, 33, 0, SOUTH_WEST);
+
+        addRoadsAndRivers(contents, 16, 34, SOUTH | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 17, 34, SOUTH_WEST | NORTH_EAST, 0);
+        addRoadsAndRivers(contents, 18, 34, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
+        addRoadsAndRivers(contents, 19, 34, 0, SOUTH_WEST | NORTH_WEST);
+
+        addRoadsAndRivers(contents, 16, 35, SOUTH | NORTH, SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 17, 35, 0, SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 18, 35, 0, NORTH | NORTH_WEST | NORTH_EAST);
+        addRoadsAndRivers(contents, 19, 35, 0, NORTH_WEST | SOUTH_WEST);
+        addRoadsAndRivers(contents, 20, 35, 0, SOUTH_WEST);
+
+        addRoadsAndRivers(contents, 15, 36, 0, SOUTH_EAST);
+        addRoadsAndRivers(contents, 16, 36, NORTH | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 17, 36, 0, NORTH_WEST | NORTH);
+        addRoadsAndRivers(contents, 18, 36, 0, SOUTH_EAST);
+        addRoadsAndRivers(contents, 19, 36, 0, NORTH | NORTH_EAST | SOUTH_EAST | SOUTH);
+        addRoadsAndRivers(contents, 20, 36, 0, NORTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 22, 36, 0, SOUTH);
+
+        addRoadsAndRivers(contents, 18, 37, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 19, 37, 0, NORTH | NORTH_WEST | SOUTH_WEST | SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 20, 37, 0, NORTH | NORTH_WEST | NORTH_EAST);
+        for (int x = 21; x < 27; x += 2) {
+            addRoadsAndRivers(contents, x, 37, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
+            addRoadsAndRivers(contents, x + 1, 37, 0, NORTH_WEST | NORTH | NORTH_EAST);
+        }
+        addRoadsAndRivers(contents, 27, 37, 0, SOUTH_WEST);
     }
 
     private static void addNorthernContents(Map<Point, HexContents> contents) {

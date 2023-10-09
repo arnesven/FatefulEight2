@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.map.locations.SwampMountainLocation;
 import model.states.DailyEventState;
 import model.states.events.*;
 import sound.BackgroundMusic;
@@ -14,9 +15,13 @@ import java.util.List;
 public class SwampHex extends WorldHex {
     private static SubView subView = new ImageSubView("theswamp", "THE SWAMP", "A nasty bog...", true);;
 
-    public SwampHex(int roads, int rivers, int state) {
-        super(MyColors.GREEN, roads, rivers, new SwampLocation(), state);
+    public SwampHex(int roads, int rivers, HexLocation location, int state) {
+        super(MyColors.GREEN, roads, rivers, location, state);
         super.setMusic(BackgroundMusic.mysticSong);
+    }
+
+    public SwampHex(int roads, int rivers, int state) {
+        this(roads, rivers, new SwampLocation(), state);
     }
 
     @Override
@@ -38,7 +43,9 @@ public class SwampHex extends WorldHex {
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
-        if (roll >= 5) {
+        if (3 <= roll && roll <= 4 && getLocation() instanceof SwampMountainLocation) {
+            return MountainHex.generateMountainEvent(model);
+        } else if (roll >= 5) {
             return MyRandom.sample(List.of(
                     new SpidersEvent(model),
                     new WitchHutEvent(model),
