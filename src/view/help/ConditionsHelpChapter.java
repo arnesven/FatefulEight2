@@ -13,6 +13,7 @@ import model.items.spells.QuickenedCondition;
 import model.states.events.EnchantressEvent;
 import view.GameView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConditionsHelpChapter extends ExpandableHelpDialog {
@@ -33,6 +34,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new BleedingCondition().getHelpView(view),
                 new BurningWeaponCondition().getHelpView(view),
                 new CharismaPotion().getCondition().getHelpView(view),
+                new CowardlyCondition(new ArrayList<>()).getHelpView(view),
                 new DefendCombatAction().getCondition().getHelpView(view),
                 new DexterityPotion().getCondition().getHelpView(view),
                 EnchantressEvent.getCondition().getHelpView(view),
