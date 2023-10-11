@@ -47,6 +47,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new QuickenedCondition().getHelpView(view),
                 new RegenerationCondition(3).getHelpView(view),
                 new RiposteCombatAction().getCondition().getHelpView(view),
+                new RoutedCondition().getHelpView(view),
                 new ShiningAegisCondition().getHelpView(view),
                 new SneakAttackCondition().getHelpView(view),
                 new StrengthPotion().getCondition().getHelpView(view),

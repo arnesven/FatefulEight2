@@ -55,6 +55,7 @@ public class Party implements Serializable {
     private HorseHandler horseHandler = new HorseHandler();
     private List<GameCharacter> recruitmentPersistence = null;
     private boolean seminarHeld = false;
+    private int notoriety = 0;
 
     public Party() {
         position = new Point(26, 19);
@@ -243,7 +244,7 @@ public class Party implements Serializable {
     public int partyStrength() {
         int str = 0;
         for (GameCharacter gc : partyMembers) {
-            str += 14 + gc.getLevel();
+            str += gc.getCharacterStrength();
         }
         return str;
     }
@@ -715,5 +716,9 @@ public class Party implements Serializable {
 
     public void setObols(int playerObols) {
         obols = playerObols;
+    }
+
+    public void addToNotoriety(int i) {
+        this.notoriety += i;
     }
 }

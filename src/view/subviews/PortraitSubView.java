@@ -82,6 +82,10 @@ public class PortraitSubView extends SubView {
         return makeRandomPortrait(cls, race, MyRandom.flipCoin());
     }
 
+    public static AdvancedAppearance makeRandomPortrait(CharacterClass cls) {
+        return makeRandomPortrait(cls, Race.allRaces[MyRandom.randInt(Race.allRaces.length)], MyRandom.flipCoin());
+    }
+
     public PortraitSubView(SubView subView, int silhouette, String portraitName) {
         this.previous = subView;
         appearance = null;

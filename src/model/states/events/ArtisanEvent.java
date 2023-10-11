@@ -1,16 +1,26 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.enemies.ApprenticeEnemy;
+import model.enemies.BodyGuardEnemy;
+import model.enemies.Enemy;
+import model.enemies.ServantEnemy;
+import model.items.Equipment;
 import model.items.Item;
-import model.states.DailyEventState;
+import model.items.clothing.FancyJerkin;
+import model.items.weapons.Warhammer;
 import model.states.ShopState;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtisanEvent extends DailyEventState {
+public class ArtisanEvent extends DarkDeedsEvent {
     private final boolean withIntro;
 
     public ArtisanEvent(Model model, boolean withIntro) {
@@ -52,7 +62,12 @@ public class ArtisanEvent extends DailyEventState {
             println(" an enchanter and offers to sell you a wand at a discount.");
             itemList.add(model.getItemDeck().getRandomWand());
         }
-        showRandomPortrait(model, Classes.ART, subType);
+        CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.ART);
+        showExplicitPortrait(model, app, subType);
+        if (darkDeedsMenu(subType.toLowerCase(), makeArtisanCharacter(subType, app),
+                MyRandom.randInt(10, 40), makeRandomCompanions(), ProvokedStrategy.ALWAYS_ESCAPE)) {
+            return;
+        }
         ShopState shop = new ShopState(model, "artisan", itemList,
                 new int[]{itemList.get(0).getCost()/2});
         shop.setSellingEnabled(false);
@@ -62,5 +77,31 @@ public class ArtisanEvent extends DailyEventState {
         ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.ART);
         changeClassEvent.areYouInterested(model);
         println("You part ways with the artisan.");
+    }
+
+    private List<Enemy> makeRandomCompanions() {
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll <= 2) {
+            return List.of(new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None)));
+        }
+        if (dieRoll <= 4) {
+            return List.of(new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None)),
+                    new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None)));
+        }
+        if (dieRoll <= 6) {
+            return List.of(new ApprenticeEnemy(PortraitSubView.makeRandomPortrait(Classes.ART)));
+        }
+        if (dieRoll <= 8) {
+            return List.of(new BodyGuardEnemy('C'));
+        }
+        return List.of(new BodyGuardEnemy('C'), new BodyGuardEnemy('C'));
+    }
+
+    private GameCharacter makeArtisanCharacter(String subType, CharacterAppearance app) {
+        GameCharacter gc = new GameCharacter(subType, "", app.getRace(), Classes.ART, app,
+                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                new Equipment(new Warhammer(), new FancyJerkin(), null));
+        gc.setLevel(MyRandom.randInt(1, 4));
+        return gc;
     }
 }

@@ -439,7 +439,7 @@ public class CombatEvent extends DailyEventState {
         combatMatrix.remove(gc);
     }
 
-    public Collection<? extends GameCharacter> getAllies() {
+    public List<GameCharacter> getAllies() {
         return allies;
     }
 

@@ -697,4 +697,8 @@ public class GameCharacter extends Combatant {
         }
         attitudes.put(target, attitudes.get(target) + i);
     }
+
+    public int getCharacterStrength() {
+        return 14 + getLevel();
+    }
 }

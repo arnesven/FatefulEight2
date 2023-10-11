@@ -299,7 +299,7 @@ public abstract class CharacterAppearance implements Serializable {
 
     public abstract CharacterAppearance copy();
 
-    protected Race getRace() {
+    public Race getRace() {
         return race;
     }
 

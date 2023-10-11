@@ -1,0 +1,159 @@
+package model.states.events;
+
+import model.Model;
+import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.combat.CowardlyCondition;
+import model.combat.RoutedCondition;
+import model.enemies.Enemy;
+import model.enemies.FormerPartyMemberEnemy;
+import model.states.DailyEventState;
+import util.MyRandom;
+import util.MyStrings;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class DarkDeedsEvent extends DailyEventState {
+    private static final int PICK_POCKETING_NOTORIETY = 5;
+    private static final int MURDER_NOTORIETY = 50;
+
+    public DarkDeedsEvent(Model model) {
+        super(model);
+    }
+
+    public enum ProvokedStrategy {
+        ALWAYS_ESCAPE,
+        FIGHT_IF_ADVANTAGE,
+        FIGHT_TO_DEATH
+    }
+
+    protected boolean darkDeedsMenu(String victim, GameCharacter victimChar, int stealMoney,
+                                    List<Enemy> companions, ProvokedStrategy strat) {
+        if (!companions.isEmpty()) {
+            print("The " + victim + " is traveling with ");
+            if (companions.size() == 1) {
+                println("a " + companions.get(0).getName() + ".");
+            } else {
+                println(MyStrings.numberWord(companions.size()) + " " + companions.get(0).getName() + "s.");
+            }
+        }
+        println("How would you like to interact with the " + victim + "?");
+        List<String> options = new ArrayList<>(
+                List.of("Talk to " + victim, "Attack " + victim));
+        if (getModel().getParty().size() > 1) {
+            options.add("Steal from " + victim);
+        }
+        int chosen = multipleOptionArrowMenu(getModel(), 26, 33, options);
+        if (chosen == 0) {
+            return false;
+        }
+        if (chosen == 1) {
+            attack(victimChar, companions, strat);
+        }
+        if (chosen == 2) {
+            attemptPickPocket(victim, victimChar, stealMoney, companions, strat);
+        }
+        return true;
+    }
+
+    private void attemptPickPocket(String victim, GameCharacter victimChar, int stealMoney,
+                                   List<Enemy> companions, ProvokedStrategy strat) {
+        print("Who should attempt to pick-pocket the " + victim + "?");
+        GameCharacter thief = getModel().getParty().partyMemberInput(getModel(),
+                this, getModel().getParty().getPartyMember(0));
+        SkillCheckResult result = thief.testSkill(Skill.Sneak, 8 + victimChar.getRankForSkill(Skill.Perception));
+        GameCharacter decoy = getModel().getParty().getRandomPartyMember(thief);
+        println("While " + decoy.getFirstName() + " distracts " + victim + ", " + thief.getFirstName() +
+                " sneaks around from the back (Sneak " + result.asString() + ").");
+        if (result.isSuccessful()) {
+            result = thief.testSkill(Skill.Security, 6 + victimChar.getLevel());
+            println(thief.getFirstName() + " attempts to grap the " + victim +
+                    "'s purse (Security " + result.asString() + ").");
+            if (result.isSuccessful()) {
+                println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " from the " + victim + ".");
+                leaderSay("Please excuse us " + victim + ", we have pressing matters to attend.");
+                portraitSay(MyRandom.sample(List.of("Oh... alright.", "I see, goodbye.",
+                        "Safe travels.", "I understand, farewell")));
+                println("You take leave of the " + victim + ".");
+                partyMemberSay(decoy, "Nice work " + thief.getName() + ".");
+                partyMemberSay(thief, MyRandom.sample(List.of("Child's play", "Easy when you know how.",
+                        "Like taking candy from a baby.", heOrSheCap(victimChar.getGender()) + " never suspected a thing.",
+                        "What can I say? I'm good.", "Easy money")));
+                return;
+            }
+        }
+        addToNotoriety(PICK_POCKETING_NOTORIETY);
+        portraitSay(MyRandom.sample(List.of("Hey, there! Keep your fingers to yourself!",
+                "Stop! Thief!", "Huh? A pick-pocket? Get away from me!#")));
+        if (strat == ProvokedStrategy.ALWAYS_ESCAPE) {
+            print("Do you want to attack the " + victim + "? (Y/N)");
+            if (yesNoInput()) {
+                attack(victimChar, companions, strat);
+            } else {
+                println("The " + victim + " is enraged and stomps off.");
+            }
+        } else if (strat == ProvokedStrategy.FIGHT_IF_ADVANTAGE &&
+                CowardlyCondition.goodGuysHasTheAdvantage(getModel(), makeEnemyTeam(victimChar, companions),
+                        getModel().getParty().getPartyMembers())) {
+            portraitSay("I would fight you... but uh... Well, I just don't want to.");
+            print("Do you want to attack the " + victim + "? (Y/N)");
+            if (yesNoInput()) {
+                attack(victimChar, companions, strat);
+            } else {
+                println("The " + victim + " flees.");
+            }
+        } else {
+            attack(victimChar, companions, strat);
+        }
+    }
+
+    private void addToNotoriety(int notoriety) {
+        println("!Your notoriety has increased by " + notoriety + "!");
+        getModel().getParty().addToNotoriety(notoriety);
+    }
+
+
+    private void attack(GameCharacter victimChar, List<Enemy> companions, ProvokedStrategy combStrat) {
+        if (combStrat == ProvokedStrategy.ALWAYS_ESCAPE) {
+            portraitSay(MyRandom.sample(List.of("Help! I'm being attacked!",
+                    "What are you doing? Please don't hurt me!",
+                    "Help! Bandits are attacking me!",
+                    "Stay away!")));
+        } else if (combStrat == ProvokedStrategy.FIGHT_IF_ADVANTAGE) {
+            portraitSay(MyRandom.sample(List.of("You want to fight? Fine, I'll teach you a lesson!",
+                    "Come on then. I'll give you a proper thrashing!")));
+        } else {
+            portraitSay(MyRandom.sample(List.of("Now you die!",
+                    "You messed with the wrong " + victimChar.getRace().getName().toLowerCase() + "!")));
+        }
+        List<Enemy> enemies = makeEnemyTeam(victimChar, companions);
+        for (Enemy e : enemies) {
+            if (combStrat == ProvokedStrategy.ALWAYS_ESCAPE) {
+                e.addCondition(new RoutedCondition());
+            } else if (combStrat == ProvokedStrategy.FIGHT_IF_ADVANTAGE) {
+                e.addCondition(new CowardlyCondition(enemies));
+            }
+        }
+        runCombat(enemies);
+        int numberOfDead = 0;
+        for (Enemy e : enemies) {
+            if (e.isDead()) {
+                numberOfDead++;
+            }
+        }
+        if (numberOfDead < enemies.size()) {
+            println("Some of your enemies have escaped and reported your crime to the local authorities.");
+            addToNotoriety(numberOfDead * MURDER_NOTORIETY);
+        }
+        println("You continue on your journey.");
+    }
+
+    private List<Enemy> makeEnemyTeam(GameCharacter victimChar, List<Enemy> companions) {
+        List<Enemy> enemies = new ArrayList<>();
+        enemies.add(new FormerPartyMemberEnemy(victimChar));
+        enemies.addAll(companions);
+        return enemies;
+    }
+}
