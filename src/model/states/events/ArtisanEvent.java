@@ -92,9 +92,9 @@ public class ArtisanEvent extends DarkDeedsEvent {
             return List.of(new ApprenticeEnemy(PortraitSubView.makeRandomPortrait(Classes.ART)));
         }
         if (dieRoll <= 8) {
-            return List.of(new BodyGuardEnemy('C'));
+            return makeBodyGuards(1, 'C');
         }
-        return List.of(new BodyGuardEnemy('C'), new BodyGuardEnemy('C'));
+        return makeBodyGuards(2, 'C');
     }
 
     private GameCharacter makeArtisanCharacter(String subType, CharacterAppearance app) {

@@ -204,7 +204,7 @@ public abstract class WorldHex {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
-        return new ArtisanEvent(model); /*
+        return new NoblemanEvent(model); /*
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8) {
             List<DailyEventState> events = new ArrayList<>();

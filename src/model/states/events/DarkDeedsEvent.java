@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CowardlyCondition;
 import model.combat.RoutedCondition;
+import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.states.DailyEventState;
@@ -13,7 +14,9 @@ import util.MyRandom;
 import util.MyStrings;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class DarkDeedsEvent extends DailyEventState {
     private static final int PICK_POCKETING_NOTORIETY = 5;
@@ -33,11 +36,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
                                     List<Enemy> companions, ProvokedStrategy strat) {
         if (!companions.isEmpty()) {
             print("The " + victim + " is traveling with ");
-            if (companions.size() == 1) {
-                println("a " + companions.get(0).getName() + ".");
-            } else {
-                println(MyStrings.numberWord(companions.size()) + " " + companions.get(0).getName() + "s.");
-            }
+            println(makeCompanionString(companions) + ".");
+
         }
         println("How would you like to interact with the " + victim + "?");
         List<String> options = new ArrayList<>(
@@ -155,5 +155,43 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         enemies.add(new FormerPartyMemberEnemy(victimChar));
         enemies.addAll(companions);
         return enemies;
+    }
+
+    protected List<Enemy> makeBodyGuards(int number, char group) {
+        List<Enemy> list = new ArrayList<>();
+        for (int i = number; i > 0; --i) {
+            list.add(new BodyGuardEnemy(group));
+        }
+        return list;
+    }
+
+
+    private String makeCompanionString(List<Enemy> companions) {
+        Map<String, Integer> countMap = new HashMap<>();
+        for (Enemy e : companions) {
+            if (countMap.containsKey(e.getName())) {
+                countMap.put(e.getName(), countMap.get(e.getName()) + 1);
+            } else {
+                countMap.put(e.getName(), 1);
+            }
+        }
+
+        StringBuilder bldr = new StringBuilder();
+        for (String s : countMap.keySet()) {
+            bldr.append(MyStrings.numberWord(countMap.get(s)));
+            bldr.append(" ");
+            bldr.append(s.toLowerCase());
+            if (countMap.get(s) > 1) {
+                bldr.append("s");
+            }
+            bldr.append(", ");
+        }
+
+        String result =  bldr.substring(0, bldr.length()-2);
+        int index = result.lastIndexOf(", ");
+        if (index != -1) {
+            result = result.substring(0, index) + " and" + result.substring(index + 1);
+        }
+        return result;
     }
 }
