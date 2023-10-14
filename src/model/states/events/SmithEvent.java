@@ -1,32 +1,43 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.enemies.Enemy;
+import model.items.Equipment;
 import model.items.HigherTierClothing;
 import model.items.Item;
 import model.items.clothing.HeavyArmorClothing;
-import model.items.weapons.AxeWeapon;
-import model.items.weapons.BladedWeapon;
-import model.items.weapons.BluntWeapon;
-import model.items.weapons.HigherTierWeapon;
+import model.items.clothing.LeatherArmor;
+import model.items.weapons.*;
 import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmithEvent extends DailyEventState {
+public class SmithEvent extends DarkDeedsEvent {
+    private AdvancedAppearance portrait;
+
     public SmithEvent(Model model) {
-        super(model);
+        super(model, "Talk to", MyRandom.randInt(40, 60));
     }
 
     @Override
-    protected void doEvent(Model model) {
-        boolean gender = MyRandom.randInt(2) == 0;
-        showRandomPortrait(model, Classes.ART, "Smith");
-        println("The smith stands in the heat from the furnace. " + heOrSheCap(gender) + " is banging with a mallet on an " +
-                "anvil. " + heOrSheCap(gender) + " offers you a unique item.");
+    protected boolean doIntroAndContinueWithEvent(Model model) {
+        this.portrait = PortraitSubView.makeRandomPortrait(Classes.ART);
+        showExplicitPortrait(model, portrait, "Smith");
+        println("The smith stands in the heat from the furnace. " + heOrSheCap(portrait.getGender()) + " is banging with a mallet on an " +
+                "anvil.");
+        return true;
+    }
+
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        println(heOrSheCap(portrait.getGender()) + " offers you a unique item.");
         waitForReturn();
         List<Item> items = new ArrayList<>();
         do {
@@ -42,6 +53,27 @@ public class SmithEvent extends DailyEventState {
         print("The smith also offers to instruct you in the ways of being an Artisan, ");
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.ART);
         change.areYouInterested(model);
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, portrait, "Smith");
+        return true;
+    }
+
+    @Override
+    protected GameCharacter getVictimCharacter(Model model) {
+        GameCharacter gc = new GameCharacter("Smith", "", portrait.getRace(), Classes.ART, portrait,
+                Classes.NO_OTHER_CLASSES, new Equipment(new Warhammer(), new LeatherArmor(), null));
+        gc.setLevel(MyRandom.randInt(3, 6));
+        return gc;
+    }
+
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
     }
 
     private boolean isSmithyItem(Item it) {
