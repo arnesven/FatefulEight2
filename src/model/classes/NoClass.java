@@ -39,12 +39,12 @@ public class NoClass extends CharacterClass {
 
     @Override
     protected int getIconNumber() {
-        return 0;
+        return 0x1F;
     }
 
     @Override
     public String getDescription() {
-        return "Unused";
+        return "No Class";
     }
 
     @Override

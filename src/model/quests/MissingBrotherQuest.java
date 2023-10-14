@@ -41,7 +41,7 @@ public class MissingBrotherQuest extends Quest {
 
     private static final String endText = "You accompany Ghania's brother back to town " +
             "and she rewards you for returning him safely.";
-    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL, true);
     private static final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
     private static final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,

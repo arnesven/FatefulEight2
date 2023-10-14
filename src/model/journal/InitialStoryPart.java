@@ -34,8 +34,8 @@ public class InitialStoryPart extends StoryPart {
     public InitialStoryPart(GameCharacter whosUncle, String townName) {
         this.whosUncle = whosUncle;
         this.townName = townName;
-        this.unclePortrait = PortraitSubView.makeRandomPortrait(Classes.None, whosUncle.getRace());
-        this.everixPortrait = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL);
+        this.unclePortrait = PortraitSubView.makeRandomPortrait(Classes.None, whosUncle.getRace(), false);
+        this.everixPortrait = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL, true);
     }
 
     @Override

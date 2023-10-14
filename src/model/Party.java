@@ -535,7 +535,7 @@ public class Party implements Serializable {
         SkillCheckResult result;
         do {
             result = performer.testSkill(skill, difficulty, bonus);
-            event.println(performer.getName() + " performs " + skill.getName() + " " + result.asString());
+            event.println(performer.getFirstName() + " performs " + skill.getName() + " " + result.asString());
             if (result.isSuccessful()) {
                 if (exp > 0) {
                     giveXP(model, performer, exp);

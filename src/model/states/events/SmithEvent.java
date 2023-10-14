@@ -38,7 +38,6 @@ public class SmithEvent extends DarkDeedsEvent {
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         println(heOrSheCap(portrait.getGender()) + " offers you a unique item.");
-        waitForReturn();
         List<Item> items = new ArrayList<>();
         do {
             Item it = model.getItemDeck().getRandomItem(0.98);

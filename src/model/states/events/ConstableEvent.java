@@ -2,11 +2,13 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.ConstableEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.List;
 
@@ -37,8 +39,9 @@ public class ConstableEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.CONSTABLE, "Constable");
-        boolean gender = MyRandom.randInt(2) == 0;
+        CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.CONSTABLE);
+        showExplicitPortrait(model, app, "Constable");
+        boolean gender = app.getGender();
         if (withIntro) {
             print("The party encounters a constable on the street. " +
                     heOrSheCap(gender) + " approaches you, do you run away? (Y/N) ");
