@@ -194,6 +194,9 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             if (isAggressor) {
                 addToNotoriety(enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
             }
+        } else if (getModel().getCurrentHex().getLocation() instanceof UrbanLocation) {
+            println("Your crime has been witnessed and reported to the local authorities.");
+            addToNotoriety(numberOfDead * MURDER_NOTORIETY);
         }
         println("You continue on your journey.");
     }
