@@ -1,29 +1,44 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.enemies.Enemy;
+import model.items.Equipment;
 import model.items.Item;
+import model.items.clothing.CultistsRobes;
 import model.items.potions.Potion;
+import model.items.weapons.SkullWand;
 import model.states.DailyEventState;
 import model.states.ShopState;
+import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WitchHutEvent extends DailyEventState {
+public class WitchHutEvent extends DarkDeedsEvent {
+    private AdvancedAppearance portrait;
+
     public WitchHutEvent(Model model) {
-        super(model);
+        super(model, "Talk to", MyRandom.randInt(10, 30));
     }
 
     @Override
-    protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.WIT, "Witch");
+    protected boolean doIntroAndContinueWithEvent(Model model) {
+        this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIT);
+        showExplicitPortrait(model, portrait, "Witch");
         println("You find a small hut in a dank grove. Light emanates from " +
                 "the window. Inside a witch is stirring a cauldron and " +
                 "mumbling strange rhymes.");
         model.getParty().randomPartyMemberSay(model, List.of("Is that an incantation or she just insane?"));
-        println("She beckons you inside and offers to sell you a couple of bottles of the draft.");
+        return true;
+    }
 
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        println("She beckons you inside and offers to sell you a couple of bottles of the draft.");
         List<Item> itemList = new ArrayList<>();
         Potion pot = model.getItemDeck().getRandomPotion();
         itemList.addAll(List.of(pot.copy(), pot.copy(), pot.copy()));
@@ -35,6 +50,26 @@ public class WitchHutEvent extends DailyEventState {
         println("The witch also offers to reveal the dark secrets of witchcraft, ");
         ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.WIT);
         changeClassEvent.areYouInterested(model);
-        println("You leave the witch's hut.");
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, portrait, "Witch");
+        return true;
+    }
+
+    @Override
+    protected GameCharacter getVictimCharacter(Model model) {
+        GameCharacter gc = new GameCharacter("Witch", "", portrait.getRace(), Classes.WIT, portrait,
+                Classes.NO_OTHER_CLASSES, new Equipment(new SkullWand(), new CultistsRobes(), model.getItemDeck().getRandomJewelry()));
+        gc.setLevel(MyRandom.randInt(3, 6));
+        return gc;
+    }
+
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
     }
 }
