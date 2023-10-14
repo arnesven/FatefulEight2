@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -9,6 +10,8 @@ import model.combat.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
+import model.map.UrbanLocation;
+import model.map.WorldHex;
 import model.states.DailyEventState;
 import util.MyRandom;
 import util.MyStrings;
@@ -27,6 +30,17 @@ public abstract class DarkDeedsEvent extends DailyEventState {
 
     public DarkDeedsEvent(Model model) {
         super(model);
+    }
+
+    public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
+        if (model.getParty().getNotoriety() > 0) {
+            if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
+                if (MyRandom.rollD10() > 4) {
+                    return new ConstableEvent(model);
+                }
+            }
+        }
+        return null;
     }
 
     public enum ProvokedStrategy {

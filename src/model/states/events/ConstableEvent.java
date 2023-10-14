@@ -23,7 +23,7 @@ public class ConstableEvent extends DailyEventState {
             List<Integer> sentenceList = List.of(1, 2, 3, 5, 7, 10);
             int random = MyRandom.randInt(perpList.size());
             this.perp = perpList.get(random);
-            this.sentence = sentenceList.get(random);
+            this.sentence = sentenceList.get(random) + model.getParty().getNotoriety() / 25;
         } else {
             this.perp = "burglar";
             this.sentence = 6;
@@ -54,7 +54,7 @@ public class ConstableEvent extends DailyEventState {
         portraitSay("You're not from around here are you?");
         println("The constable squints and carefully looks at the party members...");
         int sum = calculatePartyAlignment(model, this);
-        sum += model.getParty().getReputation();
+        sum += model.getParty().getReputation() + model.getParty().getNotoriety() / 10;
         String wordToDescribe = null;
         if (sum <= -5) {
             wordToDescribe = "downright evil!";
@@ -105,7 +105,7 @@ public class ConstableEvent extends DailyEventState {
         leaderSay("But I'm innocent!");
         println("Clerk: \"You can either pay a fine of " + getFine() + " gold or spend " + getJailTime() +
                 " days in the town jail.\"");
-        if (sentence*5 > model.getParty().getGold()) {
+        if (getFine() > model.getParty().getGold()) {
             spendTimeInJail(model);
         } else {
             print("Pay the fine? (Y/N) ");
@@ -115,6 +115,7 @@ public class ConstableEvent extends DailyEventState {
                 spendTimeInJail(model);
             }
         }
+        model.getParty().addToNotoriety(-model.getParty().getNotoriety());
         leaderSay("Coming here was a mistake.");
     }
 

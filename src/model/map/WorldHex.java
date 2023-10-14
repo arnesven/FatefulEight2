@@ -64,6 +64,10 @@ public abstract class WorldHex {
         if (eventToReturn != null) {
             return eventToReturn;
         }
+        eventToReturn = DarkDeedsEvent.generateEvent(model, this);
+        if (eventToReturn != null) {
+            return eventToReturn;
+        }
 
         if (hexLocation != null && !hexLocation.isDecoration()) {
             eventToReturn = hexLocation.generateEvent(model);
