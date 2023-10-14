@@ -8,7 +8,10 @@ import view.sprites.AvatarSprite;
 
 public abstract class NPCClass extends CharacterClass {
     protected NPCClass(String name) {
-        super(name, "", 0, 0, false, 0, new WeightedSkill[0]);
+        super(name, "", 7, 0, false, 0,
+                new WeightedSkill[]{
+                        new WeightedSkill(Skill.Perception, 1),
+                        new WeightedSkill(Skill.Blades, 1)});
     }
 
     @Override

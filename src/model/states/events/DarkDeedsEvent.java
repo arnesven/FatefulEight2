@@ -16,10 +16,7 @@ import model.states.DailyEventState;
 import util.MyRandom;
 import util.MyStrings;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class DarkDeedsEvent extends DailyEventState {
     public static final int PICK_POCKETING_NOTORIETY = 5;
@@ -178,6 +175,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>();
         enemies.add(new FormerPartyMemberEnemy(victimChar));
         enemies.addAll(companions);
+        Collections.shuffle(enemies);
         return enemies;
     }
 

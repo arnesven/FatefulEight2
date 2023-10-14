@@ -67,10 +67,11 @@ public class ElfEvent extends DailyEventState {
             changeClass(model, Classes.MAR,
                     " skilled archer who shows the party a few tricks with her a bow. He offers to train you in the ways of marksmanship, ");
         } else if (dieRoll <= 6) {
-            showRandomPortrait(model, Classes.MERCHANT, Race.WOOD_ELF, "Merchant");
-            print(" merchant. Do you wish to trade with her? (Y/N) ");
+            CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.WOOD_ELF);
+            showExplicitPortrait(model, app, "Merchant");
+            print(" merchant. Do you wish to approach " + himOrHer(app.getGender()) + "? (Y/N) ");
             if (yesNoInput()) {
-                MerchantEvent me = new MerchantEvent(model, false);
+                MerchantEvent me = new MerchantEvent(model, false, app);
                 me.setPortraitSubView(this);
                 me.doEvent(model);
             }

@@ -332,4 +332,8 @@ public abstract class CharacterAppearance implements Serializable {
     protected MyColors getEyeballColor() {
         return MyColors.WHITE;
     }
+
+    public boolean getGender() {
+        return femaleGender;
+    }
 }
