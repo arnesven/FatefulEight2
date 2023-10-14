@@ -24,21 +24,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
     public static final int PICK_POCKETING_BASE_SNEAK_DIFFICULTY = 7;
     public static final int PICK_POCKETING_BASE_SECURITY_DIFFICULTY = 6;
     public static final int ASSAULT_NOTORIETY = 10;
-
-    public DarkDeedsEvent(Model model) {
-        super(model);
-    }
-
-    public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
-        if (model.getParty().getNotoriety() > 0) {
-            if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
-                if (MyRandom.rollD10() > 4) {
-                    return new ConstableEvent(model);
-                }
-            }
-        }
-        return null;
-    }
+    private final int stealMoney;
+    private final String interactText;
 
     public enum ProvokedStrategy {
         ALWAYS_ESCAPE,
@@ -46,16 +33,56 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         FIGHT_TO_DEATH
     }
 
-    protected boolean darkDeedsMenu(String victim, GameCharacter victimChar, int stealMoney,
-                                    List<Enemy> companions, ProvokedStrategy strat) {
+    public DarkDeedsEvent(Model model, String interactText, int stealMoney) {
+        super(model);
+        this.interactText = interactText;
+        this.stealMoney = stealMoney;
+    }
+
+    @Override
+    protected final void doEvent(Model model) {
+        if (!doIntroAndContinueWithEvent(model)) {
+            return;
+        }
+        if (darkDeedsMenu(getVictimCharacter(model),
+                getVictimCompanions(model), getProvokedStrategy(), true)) {
+            return;
+        }
+        if (!doMainEventAndShowDarkDeeds(model)) {
+            return;
+        }
+        if (darkDeedsMenu(getVictimCharacter(model), getVictimCompanions(model),
+                getProvokedStrategy(), false)) {
+            return;
+        }
+        doEnding(model);
+    }
+
+    protected abstract boolean doIntroAndContinueWithEvent(Model model);
+    protected abstract boolean doMainEventAndShowDarkDeeds(Model model);
+    protected void doEnding(Model model) {
+        println("You part ways with the " + getVictimCharacter(model).getName().toLowerCase() + ".");
+    }
+
+    protected abstract GameCharacter getVictimCharacter(Model model);
+    protected abstract List<Enemy> getVictimCompanions(Model model);
+    protected abstract ProvokedStrategy getProvokedStrategy();
+
+    private boolean darkDeedsMenu(GameCharacter victimChar, List<Enemy> companions,
+                                  ProvokedStrategy strat, boolean withInteract) {
+        String victim = getVictimCharacter(getModel()).getName().toLowerCase();
         if (!companions.isEmpty()) {
             print("The " + victim + " is traveling with ");
             println(makeCompanionString(companions) + ".");
 
         }
         println("How would you like to interact with the " + victim + "?");
-        List<String> options = new ArrayList<>(
-                List.of("Talk to " + victim, "Attack " + victim));
+        List<String> options = new ArrayList<>(List.of("Attack " + victim));
+        if (withInteract) {
+            options.add(0, this.interactText + " " + victim);
+        } else {
+            options.add(0, "Leave " + victim);
+        }
         if (getModel().getParty().size() > 1) {
             options.add("Steal from " + victim);
         }
@@ -179,14 +206,13 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         return enemies;
     }
 
-    protected List<Enemy> makeBodyGuards(int number, char group) {
+    protected static List<Enemy> makeBodyGuards(int number, char group) {
         List<Enemy> list = new ArrayList<>();
         for (int i = number; i > 0; --i) {
             list.add(new BodyGuardEnemy(group));
         }
         return list;
     }
-
 
     private String makeCompanionString(List<Enemy> companions) {
         Map<String, Integer> countMap = new HashMap<>();
@@ -215,5 +241,16 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             result = result.substring(0, index) + " and" + result.substring(index + 1);
         }
         return result;
+    }
+
+    public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
+        if (model.getParty().getNotoriety() > 0) {
+            if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
+                if (MyRandom.rollD10() > 4) {
+                    return new ConstableEvent(model);
+                }
+            }
+        }
+        return null;
     }
 }

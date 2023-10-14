@@ -16,7 +16,7 @@ public class DwarfEvent extends DailyEventState {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
             println(" miner.");
-            new MinerEvent(model, false).run(model);
+            new MinerEvent(model, false, Race.DWARF).run(model);
         } else if (dieRoll <= 6) {
             println(" a skilled craftsman.");
             new ArtisanEvent(model, false).run(model);

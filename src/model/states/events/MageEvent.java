@@ -33,7 +33,7 @@ public class MageEvent extends DarkDeedsEvent {
     private final CharacterAppearance appearance;
 
     public MageEvent(Model model, boolean withIntro, CharacterAppearance appearance) {
-        super(model);
+        super(model, "Talk to", MyRandom.randInt(20, 50));
         this.withIntro = withIntro;
         this.appearance = appearance;
     }
@@ -43,14 +43,17 @@ public class MageEvent extends DarkDeedsEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
             println("The party encounters a mage who seems eager to discuss the more academic aspects of magic.");
             showExplicitPortrait(model, appearance, "Mage");
-            if (darkDeedsMenu("Mage", makeCharacter(appearance), MyRandom.randInt(20, 50),
-                    makeCompanions(), ProvokedStrategy.FIGHT_IF_ADVANTAGE)) {
-                return;
-            }
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        if (withIntro) {
             portraitSay("So friend, please tell me, which is your favorite spell?");
             if (model.getParty().getInventory().getSpells().isEmpty() ||
                     MyRandom.rollD10() > model.getParty().getInventory().getSpells().size() + 5) {
@@ -77,15 +80,10 @@ public class MageEvent extends DarkDeedsEvent {
                 leaderSay("Uhm... " + model.getParty().getInventory().getSpells().get(0).getName() + "?");
                 portraitSay("Yes, that's an excellent one!");
             }
-        } else {
-            if (darkDeedsMenu("Mage", makeCharacter(appearance), MyRandom.randInt(20, 50),
-                    makeCompanions(), ProvokedStrategy.FIGHT_IF_ADVANTAGE)) {
-                return;
-            }
         }
         portraitSay("Say, I happen to have a few spell books here that I could be convinced of " +
                 "parting with for a few gold coins. Are you interested?");
-        waitForReturn();
+        ShopState.pressToEnterShop(this);
         List<Item> spellsbooks = new ArrayList<>();
         for (int i = 0; i < MyRandom.randInt(3, 5); ++i) {
             spellsbooks.add(model.getItemDeck().getRandomSpell());
@@ -96,10 +94,22 @@ public class MageEvent extends DarkDeedsEvent {
         }
         ShopState shop = new ShopState(model, "Mage", spellsbooks, prices);
         shop.run(model);
-        println("You part ways with the mage.");
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, appearance, "Mage");
+        return true;
     }
 
-    private List<Enemy> makeCompanions() {
+    @Override
+    protected GameCharacter getVictimCharacter(Model model) {
+        GameCharacter gc = new GameCharacter("Mage", "", appearance.getRace(), Classes.MAGE, appearance,
+                Classes.NO_OTHER_CLASSES, new Equipment(new MagesStaff(), new MagesRobes(),
+                (Accessory) MyRandom.sample(ItemDeck.allJewelry()).copy()));
+        gc.setLevel(MyRandom.randInt(1, 4));
+        return gc;
+    }
+
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
         List<Enemy> enemies = new ArrayList<>();
         for (int i = MyRandom.randInt(2); i > 0; --i) {
             enemies.add(new ApprenticeEnemy(PortraitSubView.makeRandomPortrait(Classes.MAGE), new OldWand()));
@@ -111,15 +121,12 @@ public class MageEvent extends DarkDeedsEvent {
     }
 
     @Override
-    protected List<CombatLoot> getExtraCombatLoot(Model model) {
-        return List.of(new SingleItemCombatLoot(model.getItemDeck().getRandomSpell()));
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
     }
 
-    private GameCharacter makeCharacter(CharacterAppearance appearance) {
-        GameCharacter gc = new GameCharacter("Mage", "", appearance.getRace(), Classes.MAGE, appearance,
-                Classes.NO_OTHER_CLASSES, new Equipment(new MagesStaff(), new MagesRobes(),
-                (Accessory) MyRandom.sample(ItemDeck.allJewelry()).copy()));
-        gc.setLevel(MyRandom.randInt(1, 4));
-        return gc;
+    @Override
+    protected List<CombatLoot> getExtraCombatLoot(Model model) {
+        return List.of(new SingleItemCombatLoot(model.getItemDeck().getRandomSpell()));
     }
 }

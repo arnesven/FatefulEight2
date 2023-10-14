@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -25,9 +26,11 @@ import java.util.List;
 public class ArtisanEvent extends DarkDeedsEvent {
     private final boolean withIntro;
     private ArrayList<Item> itemList;
+    private AdvancedAppearance portrait;
+    private String subType;
 
     public ArtisanEvent(Model model, boolean withIntro) {
-        super(model);
+        super(model, "Trade with", MyRandom.randInt(10, 40));
         this.withIntro = withIntro;
     }
 
@@ -36,14 +39,13 @@ public class ArtisanEvent extends DarkDeedsEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
             print("The party encounters an artisan on the road. ");
         }
         print("This particular artisan is a");
         int roll = MyRandom.rollD10();
         this.itemList = new ArrayList<>();
-        String subType = "";
         if (roll <= 2) {
             subType = "Tailor";
             println(" tailor and offers to sell you some apparel at a discount.");
@@ -65,12 +67,13 @@ public class ArtisanEvent extends DarkDeedsEvent {
             println(" an enchanter and offers to sell you a wand at a discount.");
             itemList.add(model.getItemDeck().getRandomWand());
         }
-        CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.ART);
-        showExplicitPortrait(model, app, subType);
-        if (darkDeedsMenu(subType.toLowerCase(), makeArtisanCharacter(subType, app),
-                MyRandom.randInt(10, 40), makeRandomCompanions(), ProvokedStrategy.ALWAYS_ESCAPE)) {
-            return;
-        }
+        this.portrait = PortraitSubView.makeRandomPortrait(Classes.ART);
+        showExplicitPortrait(model, portrait, subType);
+        return true;
+    }
+
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
         ShopState shop = new ShopState(model, "artisan", itemList,
                 new int[]{itemList.get(0).getCost()/2});
         shop.setSellingEnabled(false);
@@ -79,19 +82,23 @@ public class ArtisanEvent extends DarkDeedsEvent {
         println("The artisan also offers to educate you in the ways of his trade, ");
         ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.ART);
         changeClassEvent.areYouInterested(model);
-        println("You part ways with the artisan.");
+
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, portrait, subType);
+        return true;
     }
 
     @Override
-    protected List<CombatLoot> getExtraCombatLoot(Model model) {
-        List<CombatLoot> loots = new ArrayList<>();
-        for (Item it : itemList) {
-            loots.add(new SingleItemCombatLoot(it));
-        }
-        return loots;
+    protected GameCharacter getVictimCharacter(Model model) {
+        GameCharacter gc = new GameCharacter(subType, "", portrait.getRace(), Classes.ART, portrait,
+                Classes.NO_OTHER_CLASSES,
+                new Equipment(new Warhammer(), new FancyJerkin(), null));
+        gc.setLevel(MyRandom.randInt(1, 4));
+        return gc;
     }
 
-    private List<Enemy> makeRandomCompanions() {
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 2) {
             return List.of(new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None)));
@@ -109,11 +116,17 @@ public class ArtisanEvent extends DarkDeedsEvent {
         return makeBodyGuards(2, 'C');
     }
 
-    private GameCharacter makeArtisanCharacter(String subType, CharacterAppearance app) {
-        GameCharacter gc = new GameCharacter(subType, "", app.getRace(), Classes.ART, app,
-                Classes.NO_OTHER_CLASSES,
-                new Equipment(new Warhammer(), new FancyJerkin(), null));
-        gc.setLevel(MyRandom.randInt(1, 4));
-        return gc;
+    @Override
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.ALWAYS_ESCAPE;
+    }
+
+    @Override
+    protected List<CombatLoot> getExtraCombatLoot(Model model) {
+        List<CombatLoot> loots = new ArrayList<>();
+        for (Item it : itemList) {
+            loots.add(new SingleItemCombatLoot(it));
+        }
+        return loots;
     }
 }

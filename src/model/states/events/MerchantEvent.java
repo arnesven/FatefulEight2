@@ -28,7 +28,7 @@ public class MerchantEvent extends DarkDeedsEvent {
     private ArrayList<Item> items;
 
     public MerchantEvent(Model model, boolean withIntro, CharacterAppearance app) {
-        super(model);
+        super(model, "Trade with", MyRandom.randInt(20, 100));
         this.withIntro = withIntro;
         this.apperance = app;
     }
@@ -39,35 +39,42 @@ public class MerchantEvent extends DarkDeedsEvent {
     }
 
     @Override
-    protected void doEvent(Model model) {
+    protected boolean doIntroAndContinueWithEvent(Model model) {
         this.items = new ArrayList<>();
-        items.addAll(model.getItemDeck().draw(MyRandom.randInt(4,8)));
+        items.addAll(model.getItemDeck().draw(6));
         if (withIntro) {
             println("The party encounters a large wagon with tons of wares stacked upon it. " +
                     "Beside it stands a plump character in fancy clothing.");
             showExplicitPortrait(model, apperance, "Merchant");
-            if (darkDeedsMenu("merchant", makeCharacter(), MyRandom.randInt(20, 100),
-                    makeCompanions(), ProvokedStrategy.FIGHT_IF_ADVANTAGE)) {
-                return;
-            }
-            portraitSay("Please, I have lots of merchandise and I just know you adventurer types are always in " +
-                    "need of something. Won't you please have a look?");
-            ShopState.pressToEnterShop(this);
-        } else {
-            if (darkDeedsMenu("merchant", makeCharacter(), MyRandom.randInt(20, 100),
-                    makeCompanions(), ProvokedStrategy.FIGHT_IF_ADVANTAGE)) {
-                return;
-            }
         }
-        ShopState merchantShop = new ShopState(model, "merchant", items,
-                new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
-                items.get(2).getCost()-2, items.get(3).getCost()-2,
-                items.get(4).getCost()+10, items.get(5).getCost()+10});
-        merchantShop.run(model);
-        println("You part ways with the merchant");
+        return true;
     }
 
-    private List<Enemy> makeCompanions() {
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        portraitSay("Please, I have lots of merchandise and I just know you adventurer types are always in " +
+                "need of something. Won't you please have a look?");
+        ShopState.pressToEnterShop(this);
+        ShopState merchantShop = new ShopState(model, "merchant", items,
+                new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
+                        items.get(2).getCost()-2, items.get(3).getCost()-2,
+                        items.get(4).getCost()+10, items.get(5).getCost()+10});
+        merchantShop.run(model);
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, apperance, "Merchant");
+        return true;
+    }
+
+    @Override
+    protected GameCharacter getVictimCharacter(Model model) {
+        GameCharacter merchant = new GameCharacter("Merchant", "", apperance.getRace(), Classes.MERCHANT, apperance,
+                Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new PilgrimsCloak(), null));
+        merchant.setLevel(MyRandom.randInt(1, 4));
+        return merchant;
+    }
+
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
         List<Enemy> enemies = new ArrayList<>();
         for (int i = MyRandom.randInt(4); i > 0; --i) {
             enemies.add(new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None)));
@@ -76,6 +83,11 @@ public class MerchantEvent extends DarkDeedsEvent {
             enemies.add(new BodyGuardEnemy('C'));
         }
         return enemies;
+    }
+
+    @Override
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
     }
 
     @Override
@@ -88,7 +100,8 @@ public class MerchantEvent extends DarkDeedsEvent {
     }
 
     private GameCharacter makeCharacter() {
-        GameCharacter merchant = new GameCharacter("Merchant", "", apperance.getRace(), Classes.MERCHANT, apperance,
+        GameCharacter merchant = new GameCharacter("Merchant", "",
+                apperance.getRace(), Classes.MERCHANT, apperance,
                 Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new PilgrimsCloak(), null));
         merchant.setLevel(MyRandom.randInt(1, 4));
         return merchant;
