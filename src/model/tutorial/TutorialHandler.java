@@ -366,6 +366,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void pickPocketing(Model model) {
+        runOnce("pickpocketing", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new PickPocketing(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

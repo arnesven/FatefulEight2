@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class DarkDeedsEvent extends DailyEventState {
-    private static final int PICK_POCKETING_NOTORIETY = 5;
-    private static final int MURDER_NOTORIETY = 50;
+    public static final int PICK_POCKETING_NOTORIETY = 5;
+    public static final int MURDER_NOTORIETY = 50;
+    public static final int PICK_POCKETING_BASE_SNEAK_DIFFICULTY = 7;
+    public static final int PICK_POCKETING_BASE_SECURITY_DIFFICULTY = 6;
 
     public DarkDeedsEvent(Model model) {
         super(model);
@@ -60,15 +62,18 @@ public abstract class DarkDeedsEvent extends DailyEventState {
 
     private void attemptPickPocket(String victim, GameCharacter victimChar, int stealMoney,
                                    List<Enemy> companions, ProvokedStrategy strat) {
-        print("Who should attempt to pick-pocket the " + victim + "?");
+        print("Who should attempt to pick-pocket the " + victim + "?"); // TODO: Add tutorial about this
+        getModel().getTutorial().pickPocketing(getModel());
         GameCharacter thief = getModel().getParty().partyMemberInput(getModel(),
                 this, getModel().getParty().getPartyMember(0));
-        SkillCheckResult result = thief.testSkill(Skill.Sneak, 8 + victimChar.getRankForSkill(Skill.Perception));
+        SkillCheckResult result = thief.testSkill(Skill.Sneak,
+                PICK_POCKETING_BASE_SNEAK_DIFFICULTY + victimChar.getRankForSkill(Skill.Perception));
         GameCharacter decoy = getModel().getParty().getRandomPartyMember(thief);
         println("While " + decoy.getFirstName() + " distracts " + victim + ", " + thief.getFirstName() +
                 " sneaks around from the back (Sneak " + result.asString() + ").");
         if (result.isSuccessful()) {
-            result = thief.testSkill(Skill.Security, 6 + victimChar.getLevel());
+            result = thief.testSkill(Skill.Security,
+                    PICK_POCKETING_BASE_SECURITY_DIFFICULTY + victimChar.getLevel());
             println(thief.getFirstName() + " attempts to grap the " + victim +
                     "'s purse (Security " + result.asString() + ").");
             if (result.isSuccessful()) {
