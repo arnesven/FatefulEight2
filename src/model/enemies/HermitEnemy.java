@@ -3,10 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
-import model.races.Race;
-import view.MyColors;
-import view.sprites.LoopingSprite;
+import view.sprites.HermitSprite;
 import view.sprites.Sprite;
 
 public class HermitEnemy extends Enemy {
@@ -41,14 +38,4 @@ public class HermitEnemy extends Enemy {
         return new PersonCombatLoot(model);
     }
 
-    private static class HermitSprite extends LoopingSprite {
-        public HermitSprite() {
-            super("hermit", "enemies.png", 0x70, 32, 32);
-            setColor1(MyColors.BLACK);
-            setColor2(MyColors.TAN);
-            setColor3(Race.HIGH_ELF.getColor());
-            setColor4(MyColors.LIGHT_GRAY);
-            setFrames(4);
-        }
-    }
 }

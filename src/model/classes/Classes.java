@@ -38,6 +38,7 @@ public interface Classes {
     CharacterClass WARLOCK = new WarlockNPCClass();
     CharacterClass OFFICIAL = new OfficialNPCClass();
     CharacterClass BAKER = new BakerNPCClass();
+    CharacterClass HERMIT = new HermitNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
