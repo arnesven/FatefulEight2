@@ -2,10 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.*;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyPair;
+import view.subviews.PortraitSubView;
 
 import java.util.List;
 
@@ -16,7 +20,8 @@ public class CatInATreeEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showSilhouettePortrait(model, "Old Woman");
+        CharacterAppearance portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), true);
+        showExplicitPortrait(model, portrait, "Old Woman");
         println("As you cut through a small park you spot an old woman standing under a tree.");
         portraitSay("Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?");
         leaderSay("What's the problem then?");
@@ -51,4 +56,5 @@ public class CatInATreeEvent extends DailyEventState {
             }
         } while (true);
     }
+
 }

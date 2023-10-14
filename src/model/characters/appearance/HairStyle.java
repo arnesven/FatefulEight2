@@ -54,6 +54,28 @@ public abstract class HairStyle implements Serializable {
             new BigHairStyle(),
             new OldManHairStyle()
     };
+
+    public static HairStyle[] femaleHairStyles = new HairStyle[]{
+            allHairStyles[1],
+            allHairStyles[2], allHairStyles[3],
+            allHairStyles[4], allHairStyles[5],
+            allHairStyles[6], allHairStyles[7],
+            allHairStyles[9], allHairStyles[11],
+            allHairStyles[12], allHairStyles[15], allHairStyles[19],
+            allHairStyles[20], allHairStyles[23],
+            allHairStyles[24], allHairStyles[25],
+            allHairStyles[26], allHairStyles[27],
+            allHairStyles[30], allHairStyles[31],
+            allHairStyles[32], allHairStyles[33]};
+
+    public static HairStyle[] maleHairStyles = new HairStyle[]{
+            allHairStyles[0], allHairStyles[8], allHairStyles[10],
+            allHairStyles[13], allHairStyles[14], allHairStyles[16],
+            allHairStyles[17], allHairStyles[18], allHairStyles[19],
+            allHairStyles[21], allHairStyles[22], allHairStyles[28],
+            allHairStyles[29], allHairStyles[34], allHairStyles[35],
+            allHairStyles[36], allHairStyles[37]};
+
     private final boolean onTop;
     private final boolean inForehead;
     private final boolean hairInBack;
@@ -122,6 +144,13 @@ public abstract class HairStyle implements Serializable {
 
     public static HairStyle randomHairStyle() {
         return HairStyle.allHairStyles[MyRandom.randInt(HairStyle.allHairStyles.length)];
+    }
+
+    public static HairStyle randomHairStyle(boolean gender) {
+        if (gender) {
+            return femaleHairStyles[MyRandom.randInt(femaleHairStyles.length)];
+        }
+        return maleHairStyles[MyRandom.randInt(maleHairStyles.length)];
     }
 
     public int[] getOuterFrame() {

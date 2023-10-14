@@ -2,11 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.enemies.HermitEnemy;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.MountainCombatTheme;
+import view.subviews.PortraitSubView;
 
 import java.util.List;
 
@@ -17,7 +20,8 @@ public class HermitEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.None, "Hermit");
+        CharacterAppearance portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), false);
+        showExplicitPortrait(model, portrait, "Hermit");
         println("The party encounters an old man. He has a long beard, and his clothes are nothing " +
                 "but shreds. He must have lived out here in the wilderness " +
                 "for a long, long time. He seems tight lipped about his life " +
