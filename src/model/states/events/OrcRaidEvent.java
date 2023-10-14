@@ -91,21 +91,21 @@ public class OrcRaidEvent extends DailyEventState {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll < 3) {
             return new GameCharacter("Militia", "Swordsman", AllRaces.allRaces[raceIndex], Classes.CAP, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                    new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                    Classes.NO_OTHER_CLASSES,
                     new Equipment(new Longsword(), new LeatherArmor(), new SkullCap()));
         }
         if (dieRoll < 6) {
             return new GameCharacter("Militia", "Spearman", AllRaces.allRaces[raceIndex], Classes.CAP, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                    new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                    Classes.NO_OTHER_CLASSES,
                     new Equipment(new Spear(), new LeatherArmor(), new SkullCap()));
         }
         if (dieRoll < 9) {
             return new GameCharacter("Militia", "Bowman", AllRaces.allRaces[raceIndex], Classes.MAR, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                    new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                    Classes.NO_OTHER_CLASSES,
                     new Equipment(new ShortBow(), new OutlawArmor(), new LeatherCap()));
         }
         return new GameCharacter("Militia", "Elite", AllRaces.allRaces[raceIndex], Classes.PAL, new RandomAppearance(AllRaces.allRaces[raceIndex]),
-                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Glaive(), new ScaleArmor(), new HeavyRing()));
 
     }

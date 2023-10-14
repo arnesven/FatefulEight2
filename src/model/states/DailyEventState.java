@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.CaveTheme;
+import model.combat.CombatLoot;
 import model.enemies.Enemy;
 import model.items.potions.Potion;
 import model.items.potions.RevivingElixir;
@@ -74,8 +75,13 @@ public abstract class DailyEventState extends GameState {
 
     protected void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         CombatEvent combat = new CombatEvent(getModel(), enemies, theme, fleeingEnabled, isAmbush);
+        combat.addExtraLoot(getExtraCombatLoot(getModel()));
         combat.run(getModel());
         fledCombat = combat.fled();
+    }
+
+    protected List<CombatLoot> getExtraCombatLoot(Model model) {
+        return new ArrayList<>();
     }
 
     protected void runCombat(List<Enemy> enemies) {

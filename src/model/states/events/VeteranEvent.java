@@ -1,10 +1,19 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.items.Equipment;
+import model.items.weapons.Longsword;
 import model.states.DailyEventState;
+import util.MyRandom;
+import view.subviews.PortraitSubView;
 
-public class VeteranEvent extends DailyEventState {
+import java.util.ArrayList;
+
+public class VeteranEvent extends DarkDeedsEvent {
     private final boolean withIntro;
 
     public VeteranEvent(Model model, boolean withIntro) {
@@ -18,9 +27,14 @@ public class VeteranEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.None, "Veteran");
+        CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.None);
+        showExplicitPortrait(model, app, "Veteran");
         if (withIntro) {
-            print("The party passes an old tattered hut. Inside sits a venerable figure, who claims to be a veteran of the wars of old. ");
+            println("The party passes an old tattered hut. Inside sits a venerable figure, who claims to be a veteran of the wars of old. ");
+        }
+        if (darkDeedsMenu("veteran", makeCharacter(app), MyRandom.randInt(2, 10), new ArrayList<>(),
+                ProvokedStrategy.FIGHT_IF_ADVANTAGE)) {
+            return;
         }
         print("The veteran asks for some food. ");
         if (model.getParty().getFood() < 3) {
@@ -47,5 +61,12 @@ public class VeteranEvent extends DailyEventState {
             println("Veteran: \"Times are rough, but somehow I'll survive.\"");
         }
         println("You part ways with the veteran.");
+    }
+
+    private GameCharacter makeCharacter(CharacterAppearance app) {
+        GameCharacter gc = new GameCharacter("Veteran", "", app.getRace(), Classes.None, app,
+                Classes.NO_OTHER_CLASSES, new Equipment(new Longsword()));
+                gc.setLevel(MyRandom.randInt(3, 6));
+        return gc;
     }
 }

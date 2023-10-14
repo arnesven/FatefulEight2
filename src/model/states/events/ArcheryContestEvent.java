@@ -385,7 +385,7 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     private List<GameCharacter> makeMarksmen(Model model) {
         List<GameCharacter> result = new ArrayList<>();
-        CharacterClass[] noClasses = new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None};
+        CharacterClass[] noClasses = Classes.NO_OTHER_CLASSES;
         result.add(new GameCharacter("Ruben", "Hodd", Race.NORTHERN_HUMAN, Classes.MAR,
                 PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, false), noClasses, randomBow()));
         result.add(new GameCharacter("Ivar", "Longfellow", Race.NORTHERN_HUMAN, Classes.MAR,

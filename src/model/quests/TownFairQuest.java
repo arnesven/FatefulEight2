@@ -266,11 +266,11 @@ public class TownFairQuest extends Quest {
             List<GameCharacter> opponents = List.of(
                     new GameCharacter("Tamara", "Didriksson", Race.NORTHERN_HUMAN, Classes.MAR,
                         PortraitSubView.makeRandomPortrait(Classes.MAR, Race.NORTHERN_HUMAN, true),
-                        new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                        Classes.NO_OTHER_CLASSES,
                             new Equipment(new CompetitionBow())),
                     new GameCharacter("Golbert", "Volantis", Race.DARK_ELF, Classes.FOR,
                         PortraitSubView.makeRandomPortrait(Classes.FOR, Race.DARK_ELF, false),
-                        new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                        Classes.NO_OTHER_CLASSES,
                             new Equipment(new YewBow())));
             for (GameCharacter gc : opponents) {
                 gc.setLevel(4);

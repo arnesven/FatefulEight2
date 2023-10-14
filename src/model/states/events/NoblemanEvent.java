@@ -72,7 +72,7 @@ public class NoblemanEvent extends DarkDeedsEvent {
 
     private GameCharacter makeNobleCharacter(CharacterAppearance app) {
         GameCharacter chara = new GameCharacter("Noble", "", app.getRace(), Classes.NOB, app,
-                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Longsword()));
         chara.setLevel(MyRandom.randInt(1, 4));
         return chara;

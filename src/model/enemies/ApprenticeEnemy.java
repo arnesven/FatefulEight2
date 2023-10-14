@@ -3,15 +3,14 @@ package model.enemies;
 import model.characters.GameCharacter;
 import model.characters.LonnieLiebgott;
 import model.characters.appearance.AdvancedAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.items.Equipment;
-import model.items.weapons.Warhammer;
+import model.items.weapons.Weapon;
 
 public class ApprenticeEnemy extends FormerPartyMemberEnemy{
-    public ApprenticeEnemy(AdvancedAppearance app) {
+    public ApprenticeEnemy(AdvancedAppearance app, Weapon weapon) {
         super(new GameCharacter("Apprentice", "", app.getRace(), Classes.None, new LonnieLiebgott(),
-                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
-                new Equipment(new Warhammer())));
+                Classes.NO_OTHER_CLASSES,
+                new Equipment(weapon)));
     }
 }

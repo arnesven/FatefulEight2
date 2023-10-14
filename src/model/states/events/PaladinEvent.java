@@ -47,7 +47,7 @@ public class PaladinEvent extends DailyEventState {
                 println("You are about to spring into combat when a tall fellow, clad in armor, rushes in to aid you!");
                 CombatEvent combat = new CombatEvent(model, List.of(monster));
                 GameCharacter paladin = new GameCharacter("Paladin", "", race, Classes.PAL, new MiklosAutumntoft(),
-                            new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                            Classes.NO_OTHER_CLASSES,
                             new Equipment(new Warhammer(), new ScaleArmor(), new SkullCap()));
                 paladin.setLevel(3);
                 combat.addAllies(List.of(paladin));

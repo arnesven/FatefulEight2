@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.enemies.Enemy;
@@ -9,6 +10,7 @@ import model.races.Race;
 import model.races.WoodElf;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +41,17 @@ public class ElfEvent extends DailyEventState {
             changeClass(model, Classes.SPY, "n agent of a powerful organization. He offers to train you in the ways of spycraft, ");
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.CAP, Race.DARK_ELF, "Swordsman");
-            print(" swordsman who brags about his exploits and the gold he has made. Do you wish to c§lenge the swordsman? ");
+            print(" swordsman who brags about his exploits and the gold he has made. Do you wish to challenge the swordsman? ");
             if (yesNoInput()) {
                 List<Enemy> list = new ArrayList<>();
                 list.add(new SwordsmanEnemy('A', Race.DARK_ELF));
                 runCombat(list);
             }
         } else if (dieRoll <= 9) {
-            showRandomPortrait(model, Classes.MAGE, Race.DARK_ELF, "Mage");
+            CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.DARK_ELF);
+            showExplicitPortrait(model, app, "Mage");
             print(" mage who offers to sell you a spells.");
-            MageEvent event = new MageEvent(model, false);
+            MageEvent event = new MageEvent(model, false, app);
             event.setPortraitSubView(this);
             event.doEvent(model);
         } else {

@@ -49,4 +49,5 @@ public interface Classes {
     CharacterClass SWORD_MASTER = new SwordMasterClass();
     CharacterClass ARCANIST = new ArcanistClass();
 
+    CharacterClass[] NO_OTHER_CLASSES = Classes.NO_OTHER_CLASSES;
 }

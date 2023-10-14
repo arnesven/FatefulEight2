@@ -11,7 +11,7 @@ import model.items.weapons.Dagger;
 public class ServantEnemy extends FormerPartyMemberEnemy {
     public ServantEnemy(CharacterAppearance app) {
         super(new GameCharacter("Servant", "", app.getRace(), Classes.None, new LonnieLiebgott(),
-                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Dagger())));
     }
 }

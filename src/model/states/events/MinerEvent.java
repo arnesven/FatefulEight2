@@ -59,7 +59,7 @@ public class MinerEvent extends DarkDeedsEvent {
 
     private GameCharacter makeMinerCharacter(CharacterAppearance app) {
         GameCharacter gc = new GameCharacter("Miner", "", app.getRace(), Classes.MIN, app,
-                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Pickaxe(), new LeatherArmor(), new SkullCap()));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;

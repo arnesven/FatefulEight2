@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.combat.CombatLoot;
+import model.combat.SingleItemCombatLoot;
 import model.enemies.ApprenticeEnemy;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
@@ -22,6 +24,7 @@ import java.util.List;
 
 public class ArtisanEvent extends DarkDeedsEvent {
     private final boolean withIntro;
+    private ArrayList<Item> itemList;
 
     public ArtisanEvent(Model model, boolean withIntro) {
         super(model);
@@ -39,7 +42,7 @@ public class ArtisanEvent extends DarkDeedsEvent {
         }
         print("This particular artisan is a");
         int roll = MyRandom.rollD10();
-        List<Item> itemList = new ArrayList<>();
+        this.itemList = new ArrayList<>();
         String subType = "";
         if (roll <= 2) {
             subType = "Tailor";
@@ -79,6 +82,15 @@ public class ArtisanEvent extends DarkDeedsEvent {
         println("You part ways with the artisan.");
     }
 
+    @Override
+    protected List<CombatLoot> getExtraCombatLoot(Model model) {
+        List<CombatLoot> loots = new ArrayList<>();
+        for (Item it : itemList) {
+            loots.add(new SingleItemCombatLoot(it));
+        }
+        return loots;
+    }
+
     private List<Enemy> makeRandomCompanions() {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 2) {
@@ -89,7 +101,7 @@ public class ArtisanEvent extends DarkDeedsEvent {
                     new ServantEnemy(PortraitSubView.makeRandomPortrait(Classes.None)));
         }
         if (dieRoll <= 6) {
-            return List.of(new ApprenticeEnemy(PortraitSubView.makeRandomPortrait(Classes.ART)));
+            return List.of(new ApprenticeEnemy(PortraitSubView.makeRandomPortrait(Classes.ART), new Warhammer()));
         }
         if (dieRoll <= 8) {
             return makeBodyGuards(1, 'C');
@@ -99,7 +111,7 @@ public class ArtisanEvent extends DarkDeedsEvent {
 
     private GameCharacter makeArtisanCharacter(String subType, CharacterAppearance app) {
         GameCharacter gc = new GameCharacter(subType, "", app.getRace(), Classes.ART, app,
-                new CharacterClass[]{Classes.None, Classes.None, Classes.None, Classes.None},
+                Classes.NO_OTHER_CLASSES,
                 new Equipment(new Warhammer(), new FancyJerkin(), null));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;
