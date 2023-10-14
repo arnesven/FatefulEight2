@@ -23,6 +23,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
     public static final int MURDER_NOTORIETY = 50;
     public static final int PICK_POCKETING_BASE_SNEAK_DIFFICULTY = 7;
     public static final int PICK_POCKETING_BASE_SECURITY_DIFFICULTY = 6;
+    public static final int ASSAULT_NOTORIETY = 10;
 
     public DarkDeedsEvent(Model model) {
         super(model);
@@ -52,7 +53,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             return false;
         }
         if (chosen == 1) {
-            attack(victimChar, companions, strat);
+            attack(victimChar, companions, strat, true);
         }
         if (chosen == 2) {
             attemptPickPocket(victim, victimChar, stealMoney, companions, strat);
@@ -95,7 +96,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         if (strat == ProvokedStrategy.ALWAYS_ESCAPE) {
             print("Do you want to attack the " + victim + "? (Y/N)");
             if (yesNoInput()) {
-                attack(victimChar, companions, strat);
+                attack(victimChar, companions, strat, true);
             } else {
                 println("The " + victim + " is enraged and stomps off.");
             }
@@ -105,12 +106,12 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             portraitSay("I would fight you... but uh... Well, I just don't want to.");
             print("Do you want to attack the " + victim + "? (Y/N)");
             if (yesNoInput()) {
-                attack(victimChar, companions, strat);
+                attack(victimChar, companions, strat, true);
             } else {
                 println("The " + victim + " flees.");
             }
         } else {
-            attack(victimChar, companions, strat);
+            attack(victimChar, companions, strat, false);
         }
     }
 
@@ -120,7 +121,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
     }
 
 
-    private void attack(GameCharacter victimChar, List<Enemy> companions, ProvokedStrategy combStrat) {
+    private void attack(GameCharacter victimChar, List<Enemy> companions,
+                        ProvokedStrategy combStrat, boolean isAggressor) {
         if (combStrat == ProvokedStrategy.ALWAYS_ESCAPE) {
             portraitSay(MyRandom.sample(List.of("Help! I'm being attacked!",
                     "What are you doing? Please don't hurt me!",
@@ -151,6 +153,9 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         if (numberOfDead < enemies.size()) {
             println("Some of your enemies have escaped and reported your crime to the local authorities.");
             addToNotoriety(numberOfDead * MURDER_NOTORIETY);
+            if (isAggressor) {
+                addToNotoriety(enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
+            }
         }
         println("You continue on your journey.");
     }
