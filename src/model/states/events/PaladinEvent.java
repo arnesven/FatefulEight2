@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.MiklosAutumntoft;
+import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.enemies.*;
@@ -14,11 +15,13 @@ import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.List;
 
 public class PaladinEvent extends DailyEventState {
     private boolean fled = false;
+    private AdvancedAppearance portrait;
 
     public PaladinEvent(Model model) {
         super(model);
@@ -46,7 +49,8 @@ public class PaladinEvent extends DailyEventState {
                 Race race = Race.randomRace();
                 println("You are about to spring into combat when a tall fellow, clad in armor, rushes in to aid you!");
                 CombatEvent combat = new CombatEvent(model, List.of(monster));
-                GameCharacter paladin = new GameCharacter("Paladin", "", race, Classes.PAL, new MiklosAutumntoft(),
+                this.portrait = PortraitSubView.makeRandomPortrait(Classes.PAL, Race.HIGH_ELF);
+                GameCharacter paladin = new GameCharacter("Paladin", "", race, Classes.PAL, portrait,
                             Classes.NO_OTHER_CLASSES,
                             new Equipment(new Warhammer(), new ScaleArmor(), new SkullCap()));
                 paladin.setLevel(3);
@@ -58,11 +62,12 @@ public class PaladinEvent extends DailyEventState {
                 }
                 setCurrentTerrainSubview(model);
                 if (!paladin.isDead()) {
-                    showRandomPortrait(model, Classes.PAL, race, "Paladin");
+                    showExplicitPortrait(model, portrait, "Paladin");
                     println("The paladin helps the " + (gender?"girl":"boy") + " up and dusts " + himOrHer(gender) +
                             " off. Then he faces you.");
                     portraitSay("Good teamwork friend! We who can must protect those in need.");
                     changeClass(model);
+                    println("You part ways with the paladin.");
                 }
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),
@@ -79,6 +84,7 @@ public class PaladinEvent extends DailyEventState {
         ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.PAL);
         println("The paladin offers to train you in the ways of being a paladin, ");
         changeClassEvent.areYouInterested(model);
-        println("You part ways with the paladin.");
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, portrait, "Paladin");
     }
 }

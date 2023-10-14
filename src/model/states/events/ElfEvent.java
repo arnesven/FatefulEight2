@@ -37,8 +37,15 @@ public class ElfEvent extends DailyEventState {
         print("dark elf. This particular elf is a");
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
-            showRandomPortrait(model, Classes.SPY, Race.DARK_ELF, "Agent");
-            changeClass(model, Classes.SPY, "n agent of a powerful organization. He offers to train you in the ways of spycraft, ");
+            println("n agent of a powerful organization");
+            new SimpleDarkDeedsEvent(model, Classes.SPY, Race.DARK_ELF, "Agent",
+                    "n agent of a powerful organization") {
+                @Override
+                protected boolean doMainEventAndShowDarkDeeds(Model model) {
+                    changeClass(model, Classes.SPY, "The agent offers to train you in the ways of spycraft, ");
+                    return true;
+                }
+            }.doEvent(model);
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.CAP, Race.DARK_ELF, "Swordsman");
             print(" swordsman who brags about his exploits and the gold he has made. Do you wish to challenge the swordsman? ");
@@ -97,9 +104,13 @@ public class ElfEvent extends DailyEventState {
             courier.setRace(Race.HIGH_ELF);
             courier.doEvent(model);
         } else if (dieRoll <= 9) {
-            showRandomPortrait(model, Classes.PAL, Race.HIGH_ELF, "Paladin");
-            println(" a paladin.");
-            new PaladinEvent(model).changeClass(model);
+            new SimpleDarkDeedsEvent(model, Classes.PAL, Race.HIGH_ELF, "Paladin", " a paladin.") {
+                @Override
+                protected boolean doMainEventAndShowDarkDeeds(Model model) {
+                    new PaladinEvent(model).changeClass(model);
+                    return true;
+                }
+            };
         } else {
             adventurerWhoMayJoin(model, Race.HIGH_ELF);
         }

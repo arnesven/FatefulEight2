@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.RecruitState;
@@ -24,7 +25,13 @@ public class HalflingEvent extends DailyEventState {
             ThiefEvent thief = new ThiefEvent(model, false);
             thief.doEvent(model);
         } else if (dieRoll <= 6) {
-            println(" farmer who completely ignores the party.");
+            new SimpleDarkDeedsEvent(model, Classes.FARMER, Race.HALFLING, "Farmer", " farmer.") {
+                @Override
+                protected boolean doMainEventAndShowDarkDeeds(Model model) {
+                    println("The half-ling completely ignores the party.");
+                    return true;
+                }
+            }.doEvent(model);
         } else if (dieRoll <= 7) {
             print(" nobleman. ");
             NoblemanEvent noblemanEvent = new NoblemanEvent(model, Race.HALFLING);

@@ -29,9 +29,16 @@ public class HalfOrcEvent extends DailyEventState {
             barb.setRace(Race.HALF_ORC);
             barb.doEvent(model);
         } else if (dieRoll <= 6) {
-            showRandomPortrait(model, Classes.FOR, Race.HALF_ORC, "Forester");
-            print(" forester. He offers to train you in the ways of being a Forester, ");
-            new ChangeClassEvent(model, Classes.FOR).areYouInterested(model);
+            new SimpleDarkDeedsEvent(model, Classes.FOR, Race.HALF_ORC, "Forester", " forester.") {
+                @Override
+                protected boolean doMainEventAndShowDarkDeeds(Model model) {
+                    println("The half-orc offers to train you in the ways of being a forester, ");
+                    new ChangeClassEvent(model, Classes.FOR).areYouInterested(model);
+                    setCurrentTerrainSubview(model);
+                    showExplicitPortrait(model, getPortrait(), "Forester");
+                    return true;
+                }
+            }.doEvent(model);
         } else if (dieRoll <= 9) {
             println(" a bandit!");
             BanditEvent be = new BanditEvent(model);

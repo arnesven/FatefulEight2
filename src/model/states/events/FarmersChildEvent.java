@@ -12,16 +12,15 @@ import util.MyRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FarmersChildEvent extends DailyEventState {
+public class FarmersChildEvent extends FarmerEvent {
     public FarmersChildEvent(Model model) {
         super(model);
     }
 
     @Override
-    protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.FARMER, "Farmer");
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
-        print("You encounter a farmer who's begging you to take his teenage " +
+        print("The farmer beggs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +
                 (gender?"daughter":"son") + " as an apprentice adventurer. The kid seems" +
                 " ready to take on the world, but an apprentice may turn out to be a" +
                 "liability. Are you interested? (Y/N) ");
@@ -34,7 +33,8 @@ public class FarmersChildEvent extends DailyEventState {
             RecruitState recruitState = new RecruitState(model, list);
             recruitState.run(model);
         }
-        new GuestEvent(model).doEvent(model);
+        new GuestEvent(model, getPortrait()).doEvent(model);
+        return true;
     }
 
     @Override

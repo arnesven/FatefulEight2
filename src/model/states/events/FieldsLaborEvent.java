@@ -17,14 +17,13 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FieldsLaborEvent extends DarkDeedsEvent {
+public abstract class FieldsLaborEvent extends FarmerEvent {
     private final String introText;
     private final String failText;
     private boolean freeRations;
-    private CharacterAppearance portrait;
 
     public FieldsLaborEvent(Model model, String introText, String failText) {
-        super(model, "Talk to", MyRandom.randInt(2, 6));
+        super(model);
         freeRations = false;
         this.introText = introText;
         this.failText = failText;
@@ -35,14 +34,6 @@ public abstract class FieldsLaborEvent extends DarkDeedsEvent {
     @Override
     public boolean isFreeRations() {
         return freeRations;
-    }
-
-    @Override
-    protected boolean doIntroAndContinueWithEvent(Model model) {
-        println("The party encounters a farmer.");
-        this.portrait = PortraitSubView.makeRandomPortrait(Classes.FARMER);
-        showExplicitPortrait(model, portrait, "Farmer");
-        return true;
     }
 
     @Override
@@ -57,30 +48,6 @@ public abstract class FieldsLaborEvent extends DarkDeedsEvent {
         return false;
     }
 
-
-    @Override
-    protected GameCharacter getVictimCharacter(Model model) {
-        return new GameCharacter("Farmer", "", portrait.getRace(), Classes.FARMER,
-                portrait, Classes.NO_OTHER_CLASSES, new Equipment(randomWeapon()));
-    }
-
-    private Weapon randomWeapon() {
-        return MyRandom.sample(List.of(new WoodenSpear(), new Trident(), new Glaive(), new Warhammer(), new Broadsword()));
-    }
-
-    @Override
-    protected List<Enemy> getVictimCompanions(Model model) {
-        List<Enemy> list = new ArrayList<>();
-        for (int i = MyRandom.randInt(6); i > 0; --i) {
-            list.add(new CompanionEnemy(PortraitSubView.makeRandomPortrait(Classes.FARMER), Classes.FARMER, randomWeapon()));
-        }
-        return list;
-    }
-
-    @Override
-    protected ProvokedStrategy getProvokedStrategy() {
-        return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
-    }
 
     private void failure(Model model, String sitch) {
         println("The party just made a mess of things " + sitch + ". The farmer is appalled by " +
@@ -99,7 +66,7 @@ public abstract class FieldsLaborEvent extends DarkDeedsEvent {
     private void success(Model model) {
         println("The farmer thanks the party for the help and offers a small bag of coins (20 gold).");
         model.getParty().addToGold(20);
-        new GuestEvent(model, portrait).doEvent(model);
+        new GuestEvent(model, getPortrait()).doEvent(model);
         freeRations = true;
         model.getParty().randomPartyMemberSay(model, List.of("Sweaty, but at we got paid.",
                 "No shame in rolling up your sleeves every once in a while.",

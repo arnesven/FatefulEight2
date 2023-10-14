@@ -42,7 +42,7 @@ public class SwordsmanEnemy extends Enemy {
         return new SwordsmanCombatLoot(model);
     }
 
-    private class SwordsmanCombatLoot extends StandardCombatLoot {
+    private static class SwordsmanCombatLoot extends StandardCombatLoot {
         public SwordsmanCombatLoot(Model model) {
             super(model);
         }
