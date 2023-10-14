@@ -6,23 +6,32 @@ import model.characters.appearance.*;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.enemies.Enemy;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyPair;
+import util.MyRandom;
 import view.subviews.PortraitSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CatInATreeEvent extends DailyEventState {
+public class CatInATreeEvent extends DarkDeedsEvent {
+    private CharacterAppearance portrait;
+
     public CatInATreeEvent(Model model) {
-        super(model);
+        super(model, "Talk to", MyRandom.randInt(2, 10));
     }
 
     @Override
-    protected void doEvent(Model model) {
-        CharacterAppearance portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), true);
+    protected boolean doIntroAndContinueWithEvent(Model model) {
+        this.portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), true);
         showExplicitPortrait(model, portrait, "Old Woman");
         println("As you cut through a small park you spot an old woman standing under a tree.");
+        return true;
+    }
+
+    @Override
+    protected boolean doMainEventAndShowDarkDeeds(Model model) {
         portraitSay("Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?");
         leaderSay("What's the problem then?");
         portraitSay("My cat, Quincy. He won't come down. I think he chased a squirrel up there, " +
@@ -55,6 +64,23 @@ public class CatInATreeEvent extends DailyEventState {
                 break;
             }
         } while (true);
+        return true;
+    }
+
+    @Override
+    protected GameCharacter getVictimCharacter(Model model) {
+        return new GameCharacter("Old Woman", "", portrait.getRace(), Classes.None, portrait,
+                Classes.NO_OTHER_CLASSES);
+    }
+
+    @Override
+    protected List<Enemy> getVictimCompanions(Model model) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    protected ProvokedStrategy getProvokedStrategy() {
+        return ProvokedStrategy.ALWAYS_ESCAPE;
     }
 
 }
