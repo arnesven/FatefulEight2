@@ -33,7 +33,7 @@ public class PortraitSubView extends SubView {
         AdvancedAppearance appearance;
         Race raceToUse = race;
         if (race.id() == Race.ALL.id()) {
-            raceToUse = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
+            raceToUse = Race.randomRace();
         }
         MyColors hairColor;
         do {
@@ -83,7 +83,7 @@ public class PortraitSubView extends SubView {
     }
 
     public static AdvancedAppearance makeRandomPortrait(CharacterClass cls) {
-        return makeRandomPortrait(cls, Race.allRaces[MyRandom.randInt(Race.allRaces.length)], MyRandom.flipCoin());
+        return makeRandomPortrait(cls, Race.randomRace(), MyRandom.flipCoin());
     }
 
     public PortraitSubView(SubView subView, int silhouette, String portraitName) {

@@ -27,7 +27,7 @@ public class HalflingEvent extends DailyEventState {
             println(" farmer who completely ignores the party.");
         } else if (dieRoll <= 7) {
             print(" nobleman. ");
-            NoblemanEvent noblemanEvent = new NoblemanEvent(model);
+            NoblemanEvent noblemanEvent = new NoblemanEvent(model, Race.HALFLING);
             noblemanEvent.doEvent(model);
         } else if (dieRoll <= 9) {
             println(" bard.");

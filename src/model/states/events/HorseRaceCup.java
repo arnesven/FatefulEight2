@@ -268,7 +268,7 @@ public class HorseRaceCup extends TournamentEvent {
         List<GameCharacter> riders = new ArrayList<>();
         for (int i = 0; i < 6; ++i) {
             CharacterClass cls = Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)];
-            Race race = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
+            Race race = Race.randomRace();
             boolean gender = MyRandom.flipCoin();
             AdvancedAppearance portrait = PortraitSubView.makeRandomPortrait(cls, race, gender);
             String firstName;

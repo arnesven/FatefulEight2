@@ -11,22 +11,29 @@ import model.enemies.ServantEnemy;
 import model.items.Equipment;
 import model.items.weapons.Longsword;
 import model.items.weapons.ShortSword;
+import model.races.Race;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.List;
 
 public class NoblemanEvent extends DarkDeedsEvent {
+    private final Race race;
     private AdvancedAppearance portrait;
     private boolean success;
 
-    public NoblemanEvent(Model model) {
+    public NoblemanEvent(Model model, Race race) {
         super(model, "Talk to", MyRandom.randInt(10, 100));
+        this.race = race;
+    }
+
+    public NoblemanEvent(Model model) {
+        this(model, Race.randomRace());
     }
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        this.portrait = PortraitSubView.makeRandomPortrait(Classes.NOB);
+        this.portrait = PortraitSubView.makeRandomPortrait(Classes.NOB, race);
         println("You meet with a nobleman and " + hisOrHer(portrait.getGender()) + " entourage.");
         showExplicitPortrait(model, portrait, "Noble");
         return true;

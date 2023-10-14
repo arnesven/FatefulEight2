@@ -43,7 +43,7 @@ public class PaladinEvent extends DailyEventState {
                     "at a young " + (gender?"girl":"boy") + ".");
             print("Do you intervene? (Y/N) ");
             if (yesNoInput()) {
-                Race race = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
+                Race race = Race.randomRace();
                 println("You are about to spring into combat when a tall fellow, clad in armor, rushes in to aid you!");
                 CombatEvent combat = new CombatEvent(model, List.of(monster));
                 GameCharacter paladin = new GameCharacter("Paladin", "", race, Classes.PAL, new MiklosAutumntoft(),

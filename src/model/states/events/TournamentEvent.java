@@ -150,7 +150,7 @@ public class TournamentEvent extends DailyEventState {
             fighterClasses.remove(0);
 
             NameAndGender name = MyRandom.sample(NAMES_FOR_CLASSES.get(selectedClass));
-            Race race = Race.allRaces[MyRandom.randInt(Race.allRaces.length)];
+            Race race = Race.randomRace();
             AdvancedAppearance app = PortraitSubView.makeRandomPortrait(selectedClass, race, name.gender);
             GameCharacter fighter = new GameCharacter(name.firstName, name.lastName, race, selectedClass, app,
                     Classes.NO_OTHER_CLASSES,

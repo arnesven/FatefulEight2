@@ -32,7 +32,7 @@ public class MinerEvent extends DarkDeedsEvent {
     }
 
     public MinerEvent(Model model) {
-        this(model, true, Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
+        this(model, true, Race.randomRace());
     }
 
     @Override

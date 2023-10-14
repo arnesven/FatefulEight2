@@ -1,6 +1,7 @@
 package model.races;
 
 import model.classes.Skill;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.PortraitSprite;
@@ -99,5 +100,9 @@ public abstract class Race implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public static Race randomRace() {
+        return allRaces[MyRandom.randInt(allRaces.length)];
     }
 }

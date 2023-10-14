@@ -48,7 +48,7 @@ public class CardGameState extends GameState {
         List<Race> result = new ArrayList<>();
         int count = MyRandom.randInt(2, RunnyCardGame.MAX_NUMBER_OF_PLAYERS-1);
         for (int i = 0; i < count; ++i) {
-            result.add(Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
+            result.add(Race.randomRace());
         }
         return result;
     }

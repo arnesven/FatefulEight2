@@ -203,7 +203,7 @@ public class RunnyCardGame extends CardGame {
                 MyRandom.randInt(cardGameState.getRoundsPlayed()) == 0 && cardGameState.getRoundsPlayed() > 1) {
             CardGamePlayer replacement;
             do {
-                replacement = makeRunnyNPC(Race.allRaces[MyRandom.randInt(Race.allRaces.length)]);
+                replacement = makeRunnyNPC(Race.randomRace());
             } while (alreadyAtTable(replacement));
             getPlayers().add(0, replacement);
             cardGameState.println(replacement.getName() + " sits down at the table.");
