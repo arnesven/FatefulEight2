@@ -208,7 +208,6 @@ public abstract class WorldHex {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
-        return new CatInATreeEvent(model); /*
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8) {
             List<DailyEventState> events = new ArrayList<>();
@@ -232,7 +231,7 @@ public abstract class WorldHex {
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     public void travelTo(Model model) {

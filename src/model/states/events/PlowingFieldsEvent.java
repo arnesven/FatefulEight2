@@ -11,24 +11,13 @@ public class PlowingFieldsEvent extends FieldsLaborEvent {
     private boolean freeRations;
 
     public PlowingFieldsEvent(Model model) {
-        super(model);
-        freeRations = false;
+        super(model, "The farmer needs some help plowing his fields. Any help is much appreciated.",
+                "in the field");
     }
 
     @Override
-    protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.FARMER, "Farmer");
-        println("A farmer needs some help plowing his fields. Any help is much appreciated.");
-        boolean succ = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 6);
-        if (succ) {
-            success(model);
-        } else {
-            failure(model, "in the field");
-        }
+    protected boolean makeSkillRolls(Model model) {
+        return model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 6);
     }
 
-    @Override
-    public boolean isFreeRations() {
-        return freeRations;
-    }
 }
