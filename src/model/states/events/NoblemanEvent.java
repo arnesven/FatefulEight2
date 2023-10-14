@@ -61,7 +61,7 @@ public class NoblemanEvent extends DarkDeedsEvent {
     private List<Enemy> makeCompanions() {
         List<Enemy> entourage = makeBodyGuards(MyRandom.randInt(0, 3), 'B');
         for (int i = MyRandom.randInt(2, 4); i > 0; --i) {
-            entourage.add(0, new CompanionEnemy("Companion", PortraitSubView.makeRandomPortrait(Classes.NOB),
+            entourage.add(0, new CompanionEnemy(PortraitSubView.makeRandomPortrait(Classes.NOB),
                     Classes.NOB, new ShortSword()));
         }
         for (int i = MyRandom.randInt(2, 4); i > 0; --i) {

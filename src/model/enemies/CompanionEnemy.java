@@ -9,8 +9,8 @@ import model.items.weapons.ShortSword;
 import model.items.weapons.Weapon;
 
 public class CompanionEnemy extends FormerPartyMemberEnemy {
-    public CompanionEnemy(String name, CharacterAppearance app, CharacterClass charClass, Weapon weapon) {
-        super(new GameCharacter(name, "", app.getRace(), charClass, app, new CharacterClass[]{
+    public CompanionEnemy(CharacterAppearance app, CharacterClass charClass, Weapon weapon) {
+        super(new GameCharacter("Companion", "", app.getRace(), charClass, app, new CharacterClass[]{
                 Classes.None, Classes.None, Classes.None, Classes.None}, new Equipment((Weapon)weapon.copy())));
     }
 }
