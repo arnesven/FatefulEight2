@@ -63,9 +63,9 @@ public class ElfEvent extends DailyEventState {
         print("wood elf. This particular elf is a");
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
-            showRandomPortrait(model, Classes.MAR, Race.WOOD_ELF, "Archer");
-            changeClass(model, Classes.MAR,
-                    " skilled archer who shows the party a few tricks with her a bow. He offers to train you in the ways of marksmanship, ");
+            println(" skilled archer who shows the party a few tricks with her a bow");
+            ArcherEvent event = new ArcherEvent(model, false, PortraitSubView.makeRandomPortrait(Classes.MAR, Race.WOOD_ELF));
+            event.doEvent(model);
         } else if (dieRoll <= 6) {
             CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.WOOD_ELF);
             showExplicitPortrait(model, app, "Merchant");
