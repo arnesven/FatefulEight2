@@ -24,6 +24,7 @@ public class GuestEvent extends DailyEventState {
         println("The party is invited into the home of these farmers who " +
                 "gracefully offer a warm meal and the prospect of sleeping in " +
                 "the barn for the night.");
+        model.getLog().waitForAnimationToFinish();
     }
 
     @Override

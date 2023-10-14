@@ -88,9 +88,8 @@ public class ElfEvent extends DailyEventState {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
             println(" priest.");
-            showRandomPortrait(model, Classes.PRI, "Priest");
-            PriestEvent pri = new PriestEvent(model, false);
-            pri.setPortraitSubView(this);
+            PriestEvent pri = new PriestEvent(model, false,
+                    PortraitSubView.makeRandomPortrait(Classes.PRI, Race.HIGH_ELF));;
             pri.doEvent(model);
         } else if (dieRoll <= 6) {
             println(" courier.");
