@@ -159,7 +159,7 @@ public class InventoryView extends SelectableListMenu {
                     @Override
                     public List<? extends Item> getItems(Model model) {
                         List<Item> result = new ArrayList<>(model.getParty().getInventory().getAllItems());
-                        result.addAll(model.getParty().getInventory().getPearls());
+                        addResources(model, result);
                         return result;
                     }
                 },
@@ -211,10 +211,30 @@ public class InventoryView extends SelectableListMenu {
                 new ItemTab("Other           ") {
                     @Override
                     public List<? extends Item> getItems(Model model) {
-                        List<Item> result = new ArrayList<>(model.getParty().getInventory().getPearls());
+                        List<Item> result = new ArrayList<>();
+                        addResources(model, result);
                         return result;
                     }
                 }};
+    }
+
+    private static void addResources(Model model, List<Item> result) {
+        if (model.getParty().getInventory().getMaterials() > 0) {
+            result.add(0, new MaterialsDummyItem(model.getParty().getInventory().getMaterials()));
+        }
+        if (model.getParty().getInventory().getIngredients() > 0) {
+            result.add(0, new IngredientsDummyItem(model.getParty().getInventory().getIngredients()));
+        }
+        if (model.getParty().getFood() > 0) {
+            result.add(0, new FoodDummyItem(model.getParty().getFood()));
+        }
+        if (model.getParty().getObols() > 0) {
+            result.add(0, new ObolsDummyItem(model.getParty().getObols()));
+        }
+        if (model.getParty().getGold() > 0) {
+            result.add(0, new GoldDummyItem(model.getParty().getGold()));
+        }
+        result.addAll(model.getParty().getInventory().getPearls());
     }
 
     private class EquipItemMenu extends FixedPositionSelectableListMenu {
