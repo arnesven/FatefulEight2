@@ -26,6 +26,11 @@ public class LowerThelnTown extends TownLocation {
     }
 
     @Override
+    public int charterBoatEveryNDays() {
+        return 8;
+    }
+
+    @Override
     public Point getCareerOfficePosition() {
         return new Point(5, 2);
     }

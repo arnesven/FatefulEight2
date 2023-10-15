@@ -14,7 +14,7 @@ import java.util.List;
 public class SelectQuestSubView extends SubView {
     private final SubView previous;
     private final List<Quest> quests;
-    private static final int WIDTH = 33;
+    private static final int WIDTH = 35;
     private static final int HEIGHT = 14;
     private int index;
 
@@ -38,12 +38,12 @@ public class SelectQuestSubView extends SubView {
                     xStart, yStart-1, WIDTH, HEIGHT,
                     MyColors.BLACK, MyColors.WHITE, MyColors.BLACK, true);
             BorderFrame.drawString(model.getScreenHandler(), quest.getName(), xStart + 2, yStart, MyColors.WHITE, MyColors.BLACK);
-            drawProvider(model, xStart, yStart, quest);
+            drawProvider(model, xStart+1, yStart, quest);
 
             drawDifficulty(model, quest.getName().length() + xStart + 2, yStart, quest);
-            drawRewards(model, xStart, yStart, quest);
-            drawDetails(model, xStart, yStart, quest);
-            drawAcceptButton(model, xStart, yStart, index);
+            drawRewards(model, xStart+2, yStart, quest);
+            drawDetails(model, xStart+2, yStart, quest);
+            drawAcceptButton(model, xStart+2, yStart+1, index);
             yStart += 14;
             index++;
         }

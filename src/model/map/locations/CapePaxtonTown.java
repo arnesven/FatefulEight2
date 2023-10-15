@@ -25,6 +25,11 @@ public class CapePaxtonTown extends TownLocation {
     }
 
     @Override
+    public int charterBoatEveryNDays() {
+        return 4;
+    }
+
+    @Override
     public boolean getLordGender() {
         return true;
     }
