@@ -24,6 +24,7 @@ public class SettingsManager implements Serializable {
         miscFlags.put(TopText.OBOLS_SETTINGS_FLAG, false);
         miscFlags.put(TopText.FOOD_SETTINGS_FLAG, true);
         miscFlags.put(TopText.WEIGHT_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.CARRYING_CAPACITY_SETTINGS_FLAG, true);
         miscFlags.put(TopText.HORSE_SETTINGS_FLAG, true);
         miscFlags.put(TopText.ALIGNMENT_SETTINGS_FLAG, true);
         miscFlags.put(TopText.NOTORIETY_SETTINGS_FLAG, true);

@@ -12,6 +12,8 @@ public class TutorialTravelDialog extends HelpDialog {
             "significantly quicker way of traveling.\n\n"+
             "When crossing a river you must first resolve a river event to see if you may cross " +
             "at that particular location.\n\n" +
+            "If you party is carrying more than your Carrying Capacity you will need to abandon " +
+            "items and or resources before being able to venture forth.\n\n" +
             "For more information about different features of the world, see 'Terrain'.";
 
     public TutorialTravelDialog(GameView view) {

@@ -12,6 +12,7 @@ public class TopText {
     public static final String OBOLS_SETTINGS_FLAG = "showObolsInTopBar";
     public static final String FOOD_SETTINGS_FLAG = "showFoodInTopBar";
     public static final String WEIGHT_SETTINGS_FLAG = "showWeightInTopBar";
+    public static final String CARRYING_CAPACITY_SETTINGS_FLAG = "showCarryingCapacityInTopBar";
     public static final String HORSE_SETTINGS_FLAG = "showHorsesInTopBar";
     public static final String ALIGNMENT_SETTINGS_FLAG = "showAlignmentInTopBar";
     public static final String NOTORIETY_SETTINGS_FLAG = "showNotorietyInTopBar";
@@ -78,14 +79,21 @@ public class TopText {
     }
 
     private int addWeight(Model model, int col) {
-        model.getScreenHandler().put(col + 4, 0, WEIGHT_ICON_SPRITE);
         int weight = (int)Math.ceil(model.getParty().getInventory().getTotalWeight() / 1000.0);
         MyColors color = MyColors.WHITE;
         if (model.getParty().getInventory().getTotalWeight() > model.getParty().getCarryingCapacity()) {
             color = MyColors.LIGHT_RED;
         }
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", weight), col, 0, color);
-        return col + 6;
+        int width = 6;
+        if (isFlagSet(model, CARRYING_CAPACITY_SETTINGS_FLAG)) {
+            int cap = model.getParty().getCarryingCapacity() / 1000;
+            BorderFrame.drawString(model.getScreenHandler(), String.format("%4d/%3d", weight, cap), col, 0, color);
+            width += 4;
+        } else {
+            BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", weight), col, 0, color);
+        }
+        model.getScreenHandler().put(col + width - 2, 0, WEIGHT_ICON_SPRITE);
+        return col + width;
     }
 
     private int addObols(Model model, int col) {

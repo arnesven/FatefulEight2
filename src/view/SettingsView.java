@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 30;
+    private static final int HEIGHT = 31;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -92,6 +92,7 @@ public class SettingsView extends SelectableListMenu {
         y = addTopBarSettings(model, result, x, y, "Obols         ", TopText.OBOLS_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Food          ", TopText.FOOD_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Weight        ", TopText.WEIGHT_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Carrying Cap. ", TopText.CARRYING_CAPACITY_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Horses        ", TopText.HORSE_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Alignment     ", TopText.ALIGNMENT_SETTINGS_FLAG);
         y = addTopBarSettings(model, result, x, y, "Notoriety     ", TopText.NOTORIETY_SETTINGS_FLAG);

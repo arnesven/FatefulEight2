@@ -380,6 +380,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void carryingCapacity(Model model) {
+        runOnce("carryingcapacity", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCarryingCapacity(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
