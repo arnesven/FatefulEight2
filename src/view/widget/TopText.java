@@ -98,7 +98,7 @@ public class TopText {
 
     private int addObols(Model model, int col) {
         model.getScreenHandler().put(col + 4, 0, OBOL_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getGold()), col, 0, MyColors.LIGHT_GRAY);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getObols()), col, 0, MyColors.LIGHT_GRAY);
         return col + 6;
     }
 

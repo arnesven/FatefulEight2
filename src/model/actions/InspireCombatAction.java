@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.combat.Condition;
+import model.items.weapons.Lute;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.GameView;
@@ -33,9 +34,7 @@ public class InspireCombatAction extends CombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().inspire(model);
-        int isLeader = model.getParty().getLeader() == performer? 1 : 0;
-        combat.println(performer.getFirstName() + " attempts to inspire the party.");
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, combat, performer, Skill.Leadership, 8, 0, isLeader);
+        SkillCheckResult result = doSkillCheck(model, combat, performer);
         if (result.isSuccessful()) {
             String word = "a";
             int bonus = 1;
@@ -47,7 +46,8 @@ public class InspireCombatAction extends CombatAction {
                 bonus = 2;
             }
             String typeOfInspiration = "speech";
-            if (performer.getCharClass() instanceof BardClass) {
+            if (performer.getCharClass() instanceof BardClass ||
+                    performer.getEquipment().getWeapon().isOfType(Lute.class)) {
                 typeOfInspiration = "song";
             } else if (MyRandom.flipCoin()) {
                 typeOfInspiration = "chant";
@@ -61,6 +61,13 @@ public class InspireCombatAction extends CombatAction {
         } else {
             combat.println("However, nobody seems particularly inspired.");
         }
+    }
+
+    protected SkillCheckResult doSkillCheck(Model model, CombatEvent combat, GameCharacter performer) {
+        int isLeader = model.getParty().getLeader() == performer? 1 : 0;
+        combat.println(performer.getFirstName() + " attempts to inspire the party.");
+        return model.getParty().doSkillCheckWithReRoll(model, combat, performer,
+                Skill.Leadership, 8, 0, isLeader);
     }
 
     public static boolean canDoInspireAbility(GameCharacter performer) {

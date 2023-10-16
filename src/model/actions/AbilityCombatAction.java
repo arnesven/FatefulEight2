@@ -6,10 +6,7 @@ import model.classes.Skill;
 import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
-import model.items.weapons.AxeWeapon;
-import model.items.weapons.BladedWeapon;
-import model.items.weapons.BluntWeapon;
-import model.items.weapons.PolearmWeapon;
+import model.items.weapons.*;
 import model.states.CombatEvent;
 import view.help.HelpDialog;
 
@@ -82,6 +79,9 @@ public class AbilityCombatAction extends CombatAction {
         }
         if (CurseCombatAction.canDoAbility(performer, target)) {
             list.add(new CurseCombatAction());
+        }
+        if (Lute.canDoAbility(performer, target)) {
+            list.add(new BalladCombatAction());
         }
         return list;
     }

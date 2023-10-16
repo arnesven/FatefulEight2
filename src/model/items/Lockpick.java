@@ -2,7 +2,6 @@ package model.items;
 
 import model.Model;
 import model.states.GameState;
-import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.ItemSprite;

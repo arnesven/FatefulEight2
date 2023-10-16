@@ -12,6 +12,7 @@ import model.horses.HorseHandler;
 import model.items.Inventory;
 import model.items.Lockpick;
 import model.items.spells.*;
+import model.items.weapons.Lute;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.SpellCastException;

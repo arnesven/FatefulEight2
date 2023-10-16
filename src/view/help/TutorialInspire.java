@@ -13,7 +13,9 @@ public class TutorialInspire extends SubChapterHelpDialog {
             "   Result     Bonus\n" +
             "    8-10        1\n" +
             "   11-13        2\n" +
-            "    14+         3";
+            "    14+         3\n\n" +
+            "A character equipped with a Lute can perform a Ballad ability, which works like the Inspire " +
+            "ability, but uses the Entertain skill and always gets the +1 bonus as if they were the party leader.";
 
     public TutorialInspire(GameView view) {
         super(view, "Inspire", TEXT);
