@@ -4,13 +4,15 @@ import control.FatefulEight;
 import model.Model;
 import model.SettingsManager;
 import view.party.SelectableListMenu;
+import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 17;
+    private static final int HEIGHT = 30;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -34,50 +36,89 @@ public class SettingsView extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        return List.of(
-            new ListContent(xStart+2, yStart+3, "Autosave " + (model.getSettings().autosaveEnabled()?"ON":"OFF")) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    model.getSettings().toggleAutosave();
-                }
-            },
-            new ListContent(xStart+2, yStart+5, "Log Speed " + SettingsManager.logSpeedAsText(model.getSettings().getLogSpeed())) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    model.getSettings().toggleLogSpeed();
-                }
-            },
-            new ListContent(xStart+2, yStart+6, "Combat Speed " + SettingsManager.logSpeedAsText(model.getSettings().getCombatLogSpeed())) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    model.getSettings().toggleCombatLogSpeed();
-                }
-            },
-            new ListContent(xStart+2, yStart+8, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    SettingsManager.toggleTutorial(model);
-                }
-            },
-            new ListContent(xStart+2, yStart+10, "Level Up Summary " + (model.getSettings().levelUpSummaryEnabled()?"ON":"OFF")) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    model.getSettings().toggleLevelUpSummary();
-                }
-            },
-            new ListContent(xStart+2, yStart+12, "Always Ride " + (model.getSettings().alwaysRide()?"ON":"OFF")) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    model.getSettings().toggleAlwaysRide();
-                }
-            },
-            new ListContent(xStart+2, yStart+14, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
-                @Override
-                public void performAction(Model model, int x, int y) {
-                    model.toggleFullScreen();
-                }
+        List<ListContent> result = new ArrayList<>();
+        int y = yStart + 3;
+        result.add(new ListContent(xStart+2, y, "Autosave " + (model.getSettings().autosaveEnabled()?"ON":"OFF")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleAutosave();
             }
-            );
+        });
+
+        y += 2;
+        result.add(new ListContent(xStart+2, y, "Log Speed " + SettingsManager.logSpeedAsText(model.getSettings().getLogSpeed())) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleLogSpeed();
+            }
+        });
+
+        y += 1;
+        result.add(new ListContent(xStart+2, y, "Combat Speed " + SettingsManager.logSpeedAsText(model.getSettings().getCombatLogSpeed())) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleCombatLogSpeed();
+            }
+        });
+
+        y += 2;
+        result.add(new ListContent(xStart+2, y, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                SettingsManager.toggleTutorial(model);
+            }
+        });
+
+        y += 2;
+        result.add(new ListContent(xStart+2, y, "Level Up Summary " + (model.getSettings().levelUpSummaryEnabled()?"ON":"OFF")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleLevelUpSummary();
+            }
+        });
+
+        y += 2;
+        result.add(new ListContent(xStart+2, y, "Always Ride " + (model.getSettings().alwaysRide()?"ON":"OFF")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleAlwaysRide();
+            }
+        });
+
+        y += 2;
+        result.add(new ListContent(xStart+2, y, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.toggleFullScreen();
+            }
+        });
+
+        y += 2;
+        result.add(new ListContent(xStart+2, y++, "Top Bar Contents:"));
+        y = addTopBarSettings(model, result, xStart+3, y, "Gold          ", TopText.GOLD_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Obols         ", TopText.OBOLS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Food          ", TopText.FOOD_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Horses        ", TopText.HORSE_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Alignment     ", TopText.ALIGNMENT_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Notoriety     ", TopText.NOTORIETY_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Reputation    ", TopText.REPUTATION_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Materials     ", TopText.MATERIALS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Ingredients   ", TopText.INGREDIENTS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, xStart+3, y, "Key Reminders ", TopText.KEY_REMINDERS_SETTINGS_FLAG);
+
+        return result;
+    }
+
+    private int addTopBarSettings(Model model, List<ListContent> result, int xStart, int y, String label, String key) {
+        result.add(new ListContent(xStart, y++, label +
+                (model.getSettings().getMiscFlags().get(key)?"ON":"OFF")) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                boolean val = model.getSettings().getMiscFlags().get(key);
+                model.getSettings().getMiscFlags().put(key, !val);
+            }
+        });
+        return y;
     }
 
     @Override

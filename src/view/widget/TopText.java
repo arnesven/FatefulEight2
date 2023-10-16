@@ -8,8 +8,20 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class TopText {
+    public static final String GOLD_SETTINGS_FLAG = "showGoldInTopBar";
+    public static final String OBOLS_SETTINGS_FLAG = "showObolsInTopBar";
+    public static final String FOOD_SETTINGS_FLAG = "showFoodInTopBar";
+    public static final String HORSE_SETTINGS_FLAG = "showHorsesInTopBar";
+    public static final String ALIGNMENT_SETTINGS_FLAG = "showAlignmentInTopBar";
+    public static final String NOTORIETY_SETTINGS_FLAG = "showNotorietyInTopBar";
+    public static final String REPUTATION_SETTINGS_FLAG = "showReputationInTopBar";
+    public static final String MATERIALS_SETTINGS_FLAG = "showMaterialsInTopBar";
+    public static final String INGREDIENTS_SETTINGS_FLAG = "showIngredientsInTopBar";
+    public static final String KEY_REMINDERS_SETTINGS_FLAG = "keyRemindersInTopBar";
+
     private static final CharSprite FOOD_ICON_SPRITE = CharSprite.make(2, MyColors.PEACH, MyColors.WHITE, MyColors.BLACK);
     public static final CharSprite GOLD_ICON_SPRITE = CharSprite.make(0, MyColors.TAN, MyColors.LIGHT_YELLOW, MyColors.BLACK);
+    public static final CharSprite OBOL_ICON_SPRITE = CharSprite.make(0, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.BLACK);
     public static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLACK);
     private static final CharSprite INGREDIENTS_ICON_SPRITE = CharSprite.make(0x12, MyColors.WHITE, MyColors.LIGHT_GREEN, MyColors.BLACK);
     private static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
@@ -20,17 +32,50 @@ public class TopText {
     public void drawYourself(Model model) {
         int col = 0;
         col = addDay(model, col);
-        col = addGold(model, col);
-        col = addFood(model, col);
-        col = addHorses(model, col);
-        col = addAlighment(model, col);
-        col = addNotoriety(model, col);
-        col = addReputation(model, col);
+        if (isFlagSet(model, GOLD_SETTINGS_FLAG)) {
+            col = addGold(model, col);
+        }
+        if (isFlagSet(model, OBOLS_SETTINGS_FLAG)) {
+            col = addObols(model, col);
+        }
+        if (isFlagSet(model, FOOD_SETTINGS_FLAG)) {
+            col = addFood(model, col);
+        }
+        if (isFlagSet(model, HORSE_SETTINGS_FLAG)) {
+            col = addHorses(model, col);
+        }
+        if (isFlagSet(model, ALIGNMENT_SETTINGS_FLAG)) {
+            col = addAlighment(model, col);
+        }
+        if (isFlagSet(model, NOTORIETY_SETTINGS_FLAG)) {
+            col = addNotoriety(model, col);
+        }
+        if (isFlagSet(model, INGREDIENTS_SETTINGS_FLAG)) {
+            col = addIngredients(model, col);
+        }
+        if (isFlagSet(model, MATERIALS_SETTINGS_FLAG)) {
+            col = addMaterials(model, col);
+        }
+        if (isFlagSet(model, REPUTATION_SETTINGS_FLAG)) {
+            col = addReputation(model, col);
+        }
+        if (isFlagSet(model, KEY_REMINDERS_SETTINGS_FLAG)) {
+            drawKeyTexts(model);
+        }
+    }
 
-        //col = addIngredients(model, col);
-        //col = addMaterials(model, col); // TODO: Make top bar customizable by settings
+    private boolean isFlagSet(Model model, String key) {
+        Boolean val = model.getSettings().getMiscFlags().get(key);
+        if (val == null) {
+            return false;
+        }
+        return val;
+    }
 
-        drawKeyTexts(model);
+    private int addObols(Model model, int col) {
+        model.getScreenHandler().put(col + 4, 0, OBOL_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getGold()), col, 0, MyColors.LIGHT_GRAY);
+        return col + 6;
     }
 
     private int addNotoriety(Model model, int col) {

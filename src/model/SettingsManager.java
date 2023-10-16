@@ -1,6 +1,10 @@
 package model;
 
+import view.widget.TopText;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsManager implements Serializable {
 
@@ -13,6 +17,20 @@ public class SettingsManager implements Serializable {
     private LogSpeed combatLogSpeed = LogSpeed.FAST;
     private boolean levelUpSummary = true;
     private boolean alwaysRide = false;
+    private Map<String, Boolean> miscFlags = new HashMap<>();
+
+    public SettingsManager() {
+        miscFlags.put(TopText.GOLD_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.OBOLS_SETTINGS_FLAG, false);
+        miscFlags.put(TopText.FOOD_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.HORSE_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.ALIGNMENT_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.NOTORIETY_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.REPUTATION_SETTINGS_FLAG, true);
+        miscFlags.put(TopText.MATERIALS_SETTINGS_FLAG, false);
+        miscFlags.put(TopText.INGREDIENTS_SETTINGS_FLAG, false);
+        miscFlags.put(TopText.KEY_REMINDERS_SETTINGS_FLAG, true);
+    }
 
     public void toggleAutosave() {
         autosave = !autosave;
@@ -76,4 +94,8 @@ public class SettingsManager implements Serializable {
     public boolean alwaysRide() { return alwaysRide; }
 
     public void toggleAlwaysRide() { alwaysRide = !alwaysRide; }
+
+    public Map<String, Boolean> getMiscFlags() {
+        return miscFlags;
+    }
 }
