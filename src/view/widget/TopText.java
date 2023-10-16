@@ -84,14 +84,16 @@ public class TopText {
         if (model.getParty().getInventory().getTotalWeight() > model.getParty().getCarryingCapacity()) {
             color = MyColors.LIGHT_RED;
         }
-        int width = 6;
+        int width;
+        String str;
         if (isFlagSet(model, CARRYING_CAPACITY_SETTINGS_FLAG)) {
             int cap = model.getParty().getCarryingCapacity() / 1000;
-            BorderFrame.drawString(model.getScreenHandler(), String.format("%4d/%3d", weight, cap), col, 0, color);
-            width += 4;
+            str = String.format("%4d/%d", weight, cap);
         } else {
-            BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", weight), col, 0, color);
+            str = String.format("%4d", weight);
         }
+        BorderFrame.drawString(model.getScreenHandler(), str, col, 0, color);
+        width = str.length() + 2;
         model.getScreenHandler().put(col + width - 2, 0, WEIGHT_ICON_SPRITE);
         return col + width;
     }

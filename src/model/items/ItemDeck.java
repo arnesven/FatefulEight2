@@ -168,7 +168,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new KiteShield(),
                 new HeraldicShield(),
                 new SpikedShield(),
-                new TowerShield());
+                new TowerShield(),
+                new HolyChalice());
     }
 
     public static List<ShoesItem> allShoes() {

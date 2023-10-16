@@ -11,6 +11,7 @@ import model.combat.Combatant;
 import model.horses.HorseHandler;
 import model.items.Inventory;
 import model.items.Lockpick;
+import model.items.accessories.HolyChalice;
 import model.items.spells.*;
 import model.items.weapons.Lute;
 import model.map.UrbanLocation;
