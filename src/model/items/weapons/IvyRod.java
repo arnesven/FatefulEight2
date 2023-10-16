@@ -9,15 +9,15 @@ import model.items.spells.PoisonGasSpell;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
-import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class SkullWand extends WandWeapon {
-    private static final Sprite SPRITE = new ItemSprite(6, 6, MyColors.BROWN, MyColors.BEIGE);
+public class IvyRod extends WandWeapon {
+    private static final Sprite SPRITE = new ItemSprite(13, 11,
+            MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
 
-    public SkullWand() {
-        super("Skull Wand", 28, Skill.MagicBlack, new int[]{8,11,13,14});
+    public IvyRod() {
+        super("Ivy Rod", 36, Skill.MagicGreen, new int[]{8,10,13});
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SkullWand extends WandWeapon {
 
     @Override
     public Item copy() {
-        return new SkullWand();
+        return new IvyRod();
     }
 
     @Override
@@ -37,15 +37,14 @@ public class SkullWand extends WandWeapon {
 
     @Override
     public String getExtraText() {
-        return "20% Chance to absorb damage as HP";
+        return "20% Chance to apply Poison Gas";
     }
 
     @Override
     public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+        PoisonGasSpell spell = new PoisonGasSpell();
         if (MyRandom.rollD10() > 8) {
-            combatEvent.println("Absorbed " + damage + " health points from " + target.getName() + ".");
-            gameCharacter.addToHP(damage);
-            combatEvent.addFloatyDamage(target, damage, DamageValueEffect.HEALING);
+            spell.addPoisonGasEffect(combatEvent, gameCharacter, target);
         }
     }
 }

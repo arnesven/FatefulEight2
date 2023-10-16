@@ -1,11 +1,13 @@
 package model.items.weapons;
 
+import model.combat.Combatant;
 import model.items.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
 import model.items.Item;
+import model.states.CombatEvent;
 import util.MyStrings;
 import view.AnalyzeDialog;
 import view.AnalyzeWeaponDialog;
@@ -153,5 +155,10 @@ public abstract class Weapon extends EquipableItem {
 
     public <E> boolean isOfType(Class<E> weaponClass) {
         return weaponClass.isAssignableFrom(this.getClass());
+    }
+
+    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter,
+                                 Combatant target, int damage, int critical) {
+
     }
 }

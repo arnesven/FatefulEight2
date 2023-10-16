@@ -5,19 +5,19 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.Item;
 import model.items.Prevalence;
-import model.items.spells.PoisonGasSpell;
 import model.states.CombatEvent;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class SkullWand extends WandWeapon {
-    private static final Sprite SPRITE = new ItemSprite(6, 6, MyColors.BROWN, MyColors.BEIGE);
+public class ChargedRod extends WandWeapon {
+    private static final Sprite SPRITE = new ItemSprite(12, 11,
+            MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.GOLD);
+    private int charge = 0;
 
-    public SkullWand() {
-        super("Skull Wand", 28, Skill.MagicBlack, new int[]{8,11,13,14});
+    public ChargedRod() {
+        super("Charged Rod", 46, Skill.MagicWhite, new int[]{9, 11, 12, 14});
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SkullWand extends WandWeapon {
 
     @Override
     public Item copy() {
-        return new SkullWand();
+        return new ChargedRod();
     }
 
     @Override
@@ -37,15 +37,17 @@ public class SkullWand extends WandWeapon {
 
     @Override
     public String getExtraText() {
-        return "20% Chance to absorb damage as HP";
+        return "Every 5th shot does double damage.";
     }
 
     @Override
     public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-        if (MyRandom.rollD10() > 8) {
-            combatEvent.println("Absorbed " + damage + " health points from " + target.getName() + ".");
-            gameCharacter.addToHP(damage);
-            combatEvent.addFloatyDamage(target, damage, DamageValueEffect.HEALING);
+        charge++;
+        if (charge == 5) {
+            charge = 0;
+            combatEvent.println(target.getName() + " takes an additional " + (damage * 2) + " damage!");
+            combatEvent.doDamageToEnemy(target, damage*2, gameCharacter);
+            combatEvent.addFloatyDamage(target, damage*2, DamageValueEffect.MAGICAL_DAMAGE);
         }
     }
 }

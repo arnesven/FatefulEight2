@@ -40,6 +40,10 @@ public class PoisonGasSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+        addPoisonGasEffect(combat, performer, target);
+    }
+
+    public void addPoisonGasEffect(CombatEvent combat, GameCharacter performer, Combatant target) {
         if (target instanceof UndeadEnemy || target instanceof AutomatonEnemy ||
                 target.hasCondition(EnemyPoisonCondition.class)) {
             combat.println(getName() + " has no effect on " + target.getName());

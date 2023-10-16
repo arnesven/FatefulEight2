@@ -5,10 +5,14 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.Item;
 import model.items.Prevalence;
+import model.states.CombatEvent;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
+
+import java.util.List;
 
 public class Lute extends Weapon {
     public static final Sprite SPRITE = new TwoHandedItemSprite(12, 11,
@@ -65,5 +69,14 @@ public class Lute extends Weapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+        if (MyRandom.rollD10() > 8) {
+            combatEvent.println("The lute is broken!");
+            combatEvent.partyMemberSay(gameCharacter, MyRandom.sample(List.of("Darn it!", "That's unfortunate.", "No! My lute!")));
+            gameCharacter.unequipWeapon();
+        }
     }
 }

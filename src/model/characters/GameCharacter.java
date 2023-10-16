@@ -215,6 +215,7 @@ public class GameCharacter extends Combatant {
             combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
         }
         combatEvent.doDamageToEnemy(target, damage, this);
+        equipment.getWeapon().didOneAttackWith(combatEvent, this, target, damage, crit);
         combatEvent.blockSneakAttackFor(this);
     }
 

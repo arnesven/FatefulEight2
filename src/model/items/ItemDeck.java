@@ -265,7 +265,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<? extends Weapon> allWands() {
         return List.of(new OldWand(), new PineWand(), new ClaspedOrb(), new YewWand(), new OrbWand(),
-                new BoneWand(), new SkullWand());
+                new BoneWand(), new SkullWand(), new IceRod(), new FireRod(), new ChargedRod(), new IvyRod());
     }
 
     public static List<? extends Weapon> allAxes() {
