@@ -27,8 +27,7 @@ public class UnlockThisBathroom extends SummonTask {
                 " I'll pay you of course!\"");
         print("Do you wish to work the lock now? (Y/N) ");
         if (yesNoInput()) {
-            boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Security,
-                    Lockpick.askToUseLockpick(model, this, 9));
+            boolean success = model.getParty().doSoloLockpickCheck(model, this, 9);
             if (success) {
                 summon.increaseStep();
                 SoundEffects.playUnlock();

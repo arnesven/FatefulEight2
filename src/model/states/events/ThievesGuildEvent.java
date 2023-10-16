@@ -42,8 +42,7 @@ public class ThievesGuildEvent extends DailyEventState {
                 boolean result = true;
                 if (yesNoInput()) {
                     println("You help the thieves break into an estate on the edge of town.");
-                    result = model.getParty().doSoloSkillCheck(model, this, Skill.Security,
-                            Lockpick.askToUseLockpick(model, this, 8));
+                    result = model.getParty().doSoloLockpickCheck(model, this, 8);
                 } else {
                     println("You help sneak past the guards at an estate on the edge of town.");
                     result = model.getParty().doSoloSkillCheck(model, this, Skill.Sneak, 8);

@@ -70,8 +70,7 @@ public class CharlatanEvent extends DailyEventState {
         println("The crowd quickly turns into an angry mob. The doctor scrambles to get away and " +
                 "the townsfolk chase after him, throwing his elixir at him and yelling insults.");
         println("You search through the doctor's wagon and find bags of cherries and a small chest.");
-        boolean lockPicked = model.getParty().doSoloSkillCheck(model, this, Skill.Security,
-                Lockpick.askToUseLockpick(model, this, 8));
+        boolean lockPicked = model.getParty().doSoloLockpickCheck(model, this, 8);
         if (lockPicked) {
             println("The little chest contains a large number of coins, gems and jewels.");
             model.getParty().randomPartyMemberSay(model, List.of("Looks like business has been good for the Doctor."));

@@ -15,7 +15,7 @@ public class SoloLockpickingSubScene extends SoloSkillCheckSubScene{
     public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
         int newDifficulty = Lockpick.askToUseLockpick(model, state, difficulty);
         boolean result = super.performSkillCheck(model, state, skill, newDifficulty);
-        if (newDifficulty != difficulty) {
+        if (newDifficulty == difficulty) {
             Lockpick.checkForBreakage(model, state, result);
         }
         if (result) {

@@ -10,10 +10,12 @@ import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.horses.HorseHandler;
 import model.items.Inventory;
+import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.SpellCastException;
+import model.states.events.ChestEvent;
 import sound.SoundEffects;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
@@ -27,6 +29,7 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 public class Party implements Serializable {
     private static MyColors[] partyMemberColors = new MyColors[]{
@@ -725,5 +728,14 @@ public class Party implements Serializable {
     public int getCarryingCapacity() {
         return partyMembers.size() * 20 * 1000 +
                 horseHandler.size() * 50 * 1000;
+    }
+
+    public boolean doSoloLockpickCheck(Model model, GameState state, int difficulty) {
+        int newDiff = Lockpick.askToUseLockpick(model, state, difficulty);
+        boolean success = doSoloSkillCheck(model, state, Skill.Security, difficulty);
+        if (difficulty == newDiff) {
+            Lockpick.checkForBreakage(model, state, success);
+        }
+        return success;
     }
 }

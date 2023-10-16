@@ -75,8 +75,7 @@ public class DungeonChest extends CenterDungeonObject {
                         "Did anyone see a key?"));
             } else {
                 alreadyTried = true;
-                int difficulty = Lockpick.askToUseLockpick(model, state, MyRandom.randInt(5, 7));
-                boolean didUnlock = model.getParty().doSoloSkillCheck(model, state, Skill.Security, difficulty);
+                boolean didUnlock = model.getParty().doSoloLockpickCheck(model, state, MyRandom.randInt(5, 7));
                 if (didUnlock) {
                     isLocked = false;
                     SoundEffects.playUnlock();

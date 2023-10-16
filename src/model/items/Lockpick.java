@@ -58,7 +58,14 @@ public class Lockpick extends Item {
         if (model.getParty().getInventory().getLockpicks() == 0) {
             return difficulty + SECURITY_DIFFICULTY_REDUCTION;
         }
-        state.print("Do you want to use a lockpick to pick the lock? (Y/N) ");
+        if (difficulty < 7) {
+            state.print("The lock mechanism doesn't seem very complex");
+        } else if (difficulty < 9) {
+            state.print("The lock mechanism is of medium complexity");
+        } else {
+            state.print("The lock mechanism looks quite complex");
+        }
+        state.print(", do you want to use a lockpick on it? (Y/N) ");
         if (!state.yesNoInput()) {
             return difficulty + SECURITY_DIFFICULTY_REDUCTION;
         }

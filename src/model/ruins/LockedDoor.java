@@ -57,8 +57,7 @@ public class LockedDoor extends DungeonDoor {
             }
         } else {
             securityTried = true;
-            int difficulty = Lockpick.askToUseLockpick(model, state, MyRandom.randInt(5, 7));
-            boolean result = model.getParty().doSoloSkillCheck(model, state, Skill.Security, difficulty);
+            boolean result = model.getParty().doSoloLockpickCheck(model, state, MyRandom.randInt(5, 7));
             if (result) {
                 state.println("The door is unlocked!");
                 model.getLog().waitForAnimationToFinish();

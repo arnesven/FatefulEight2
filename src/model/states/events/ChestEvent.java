@@ -43,8 +43,8 @@ public class ChestEvent extends DailyEventState {
 
     public void findAChest(Model model) {
         println("The chest appears to be locked.");
-        boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Security,
-                Lockpick.askToUseLockpick(model, this, 7));
+        boolean success = model.getParty().doSoloLockpickCheck(model, this, 7);
+
         if (success) {
             model.getParty().randomPartyMemberSay(model, List.of("It's opening!"));
             SoundEffects.playUnlock();
