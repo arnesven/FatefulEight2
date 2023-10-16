@@ -15,6 +15,7 @@ public class TopText {
     private static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
     public static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
     public static final CharSprite HORSES_ICON_SPRITE = CharSprite.make(0x15, MyColors.BEIGE, MyColors.BLACK, MyColors.BLACK);
+    public static final CharSprite NOTORIETY_SPRITE = CharSprite.make(0x16, MyColors.RED, MyColors.BLACK, MyColors.BLACK);
 
     public void drawYourself(Model model) {
         int col = 0;
@@ -23,12 +24,21 @@ public class TopText {
         col = addFood(model, col);
         col = addHorses(model, col);
         col = addAlighment(model, col);
+        col = addNotoriety(model, col);
         col = addReputation(model, col);
 
         //col = addIngredients(model, col);
         //col = addMaterials(model, col); // TODO: Make top bar customizable by settings
 
         drawKeyTexts(model);
+    }
+
+    private int addNotoriety(Model model, int col) {
+        model.getScreenHandler().put(col+3, 0, NOTORIETY_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(),
+                String.format("%3d", model.getParty().getNotoriety()),
+                col, 0, MyColors.RED);
+        return col + 5;
     }
 
     private int addMaterials(Model model, int col) {

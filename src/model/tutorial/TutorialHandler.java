@@ -373,6 +373,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void notoriety(Model model) {
+        runOnce("notoriety", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialNotoriety(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
