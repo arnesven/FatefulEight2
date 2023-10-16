@@ -109,6 +109,7 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allCraftingDesigns());
         allItems.addAll(allPotionRecipes());
         allItems.addAll(allScrolls());
+        allItems.add(new Lockpick());
         return allItems;
     }
 

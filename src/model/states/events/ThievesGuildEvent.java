@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.items.Lockpick;
 import model.states.DailyEventState;
 
 import java.util.List;
@@ -40,8 +41,11 @@ public class ThievesGuildEvent extends DailyEventState {
                         "you could help with the most, breaking and entering (Y) or infiltrating the grounds (N)?");
                 boolean result = true;
                 if (yesNoInput()) {
-                    result = model.getParty().doSoloSkillCheck(model, this, Skill.Security, 8);
+                    println("You help the thieves break into an estate on the edge of town.");
+                    result = model.getParty().doSoloSkillCheck(model, this, Skill.Security,
+                            Lockpick.askToUseLockpick(model, this, 8));
                 } else {
+                    println("You help sneak past the guards at an estate on the edge of town.");
                     result = model.getParty().doSoloSkillCheck(model, this, Skill.Sneak, 8);
                 }
                 result = result && model.getParty().doSoloSkillCheck(model, this, Skill.Search, 7);

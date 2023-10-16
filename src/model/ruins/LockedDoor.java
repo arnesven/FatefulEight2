@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.Lockpick;
 import model.items.weapons.BowWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.ExploreRuinsState;
@@ -56,7 +57,8 @@ public class LockedDoor extends DungeonDoor {
             }
         } else {
             securityTried = true;
-            boolean result = model.getParty().doSoloSkillCheck(model, state, Skill.Security, MyRandom.randInt(5, 7));
+            int difficulty = Lockpick.askToUseLockpick(model, state, MyRandom.randInt(5, 7));
+            boolean result = model.getParty().doSoloSkillCheck(model, state, Skill.Security, difficulty);
             if (result) {
                 state.println("The door is unlocked!");
                 model.getLog().waitForAnimationToFinish();

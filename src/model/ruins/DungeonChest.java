@@ -6,6 +6,7 @@ import model.combat.CombatLoot;
 import model.combat.CombinedLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.PersonCombatLoot;
+import model.items.Lockpick;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
 import util.MyRandom;
@@ -74,7 +75,8 @@ public class DungeonChest extends CenterDungeonObject {
                         "Did anyone see a key?"));
             } else {
                 alreadyTried = true;
-                boolean didUnlock = model.getParty().doSoloSkillCheck(model, state, Skill.Security, MyRandom.randInt(5, 7));
+                int difficulty = Lockpick.askToUseLockpick(model, state, MyRandom.randInt(5, 7));
+                boolean didUnlock = model.getParty().doSoloSkillCheck(model, state, Skill.Security, difficulty);
                 if (didUnlock) {
                     isLocked = false;
                     SoundEffects.playUnlock();

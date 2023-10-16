@@ -10,10 +10,7 @@ import model.enemies.RedMageEnemy;
 import model.items.spells.DispelSpell;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
-import model.quests.scenes.CollaborativeSkillCheckSubScene;
-import model.quests.scenes.CollectiveSkillCheckSubScene;
-import model.quests.scenes.CombatSubScene;
-import model.quests.scenes.SoloSkillCheckSubScene;
+import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
@@ -62,7 +59,7 @@ public class WizardsTowerQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Front Door", List.of(
-                        new SoloSkillCheckSubScene(2, 7, Skill.Security, 10,
+                        new SoloLockpickingSubScene(2, 7, 10,
                                 "Can somebody pick this lock?"),
                         new SoloSkillCheckSubScene(2, 6, Skill.Acrobatics, 11,
                                 "Maybe one of us can climb in through that window?"))),
@@ -70,7 +67,7 @@ public class WizardsTowerQuest extends Quest {
                         new AutomatonCombatSubScene(5, 6),
                         new SoloSkillCheckSubScene(6, 6, Skill.Perception, 9,
                                 "Hang on a moment. Let's have a look at this thing before we smash it to bits."),
-                        new CollaborativeSkillCheckSubScene(6, 5, Skill.Security, 10,
+                        new CollaborativeLockpickingSubScene(6, 5, 10,
                                 "There is some kind of engine on it's back. Can we disable it?"))),
                 new QuestScene("Illusion", List.of(
                         new CollectiveSkillCheckSubScene(3, 3, Skill.Logic, 4,

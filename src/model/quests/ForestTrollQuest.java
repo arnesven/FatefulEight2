@@ -11,10 +11,7 @@ import model.enemies.SpiderEnemy;
 import model.items.spells.ErodeSpell;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
-import model.quests.scenes.CollaborativeSkillCheckSubScene;
-import model.quests.scenes.CollectiveSkillCheckSubScene;
-import model.quests.scenes.CombatSubScene;
-import model.quests.scenes.SoloSkillCheckSubScene;
+import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
@@ -79,7 +76,7 @@ public class ForestTrollQuest extends Quest {
                         new PetSpiderCombatScene(5, 3))),
                 new QuestScene("Albedan's Cage", List.of(
                         new SoloSkillCheckSubScene(3, 5, Skill.Labor, 12, "Is anyone strong enough to bend it open?"),
-                        new SoloSkillCheckSubScene(3, 6, Skill.Security, 11, "Can the lock be picked?"),
+                        new SoloLockpickingSubScene(3, 6, 11, "Can the lock be picked?"),
                         new SoloSkillCheckSubScene(3, 7, Skill.Sneak, 12, "Oleg is sleeping nearby, can we snatch the key of his chain?"))),
                 new QuestScene("Oleg's Fury", List.of(
                         new CombatOlegSubScene(2, 7)

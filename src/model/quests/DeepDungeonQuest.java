@@ -50,7 +50,7 @@ public class DeepDungeonQuest extends Quest {
                 new QuestScene("Mechanical Trap",
                         List.of(new TrapSubScene(4, 3),
                                 new SoloSkillCheckSubScene(3, 3, Skill.Security, 9,
-                                        "Do you think you can disable that?"),
+                                        "Do you think you can disable that trap?"),
                                 new CollectiveSkillCheckSubScene(5, 3, Skill.Acrobatics, 4,
                                         "We're going to have to be very careful now."))),
                 new QuestScene("Puzzle",

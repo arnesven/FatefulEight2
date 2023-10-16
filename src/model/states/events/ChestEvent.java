@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.StandardCombatLoot;
+import model.items.Lockpick;
 import model.states.DailyEventState;
 import sound.SoundEffects;
 
@@ -42,7 +43,8 @@ public class ChestEvent extends DailyEventState {
 
     public void findAChest(Model model) {
         println("The chest appears to be locked.");
-        boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Security, 7);
+        boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Security,
+                Lockpick.askToUseLockpick(model, this, 7));
         if (success) {
             model.getParty().randomPartyMemberSay(model, List.of("It's opening!"));
             SoundEffects.playUnlock();

@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.items.Item;
+import model.items.Lockpick;
 import model.states.ShopState;
 import util.MyRandom;
 import view.sprites.Sprite;
@@ -19,6 +20,9 @@ public class InnShoppingNode extends ShoppingNode {
     protected List<Item> makeInventory(Model model) {
         List<Item> inventory = new ArrayList<>(ShopState.makeGeneralShopInventory(model,
                 MyRandom.randInt(5, 9), MyRandom.randInt(4, 6), MyRandom.randInt(2)));
+        if (MyRandom.flipCoin()) {
+            inventory.add(new Lockpick());
+        }
         inventory.add(model.getItemDeck().getRandomSpell());
         inventory.add(model.getItemDeck().getRandomSpell());
         return inventory;

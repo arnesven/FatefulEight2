@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.SoldierEnemy;
+import model.quests.scenes.CollaborativeLockpickingSubScene;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
@@ -66,7 +67,7 @@ public class RescueMissionQuest extends MainQuest {
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Search for clues",
-                List.of(new CollaborativeSkillCheckSubScene(5, 0, Skill.Security, 8, // 8
+                List.of(new CollaborativeLockpickingSubScene(5, 0, 8, // 8
                 "Maybe there is something in Caid's quarters at the castle which can tell us his whereabouts. But his room is locked."),
                         new CollaborativeSkillCheckSubScene(4, 0, Skill.Search, 9,
                                 "Okay, we're inside. Let's snoop around for some clues."), // 9
@@ -86,7 +87,7 @@ public class RescueMissionQuest extends MainQuest {
                         new BenchOtherGroupSubScene(true, new CollectiveSkillCheckSubScene(3, 5, Skill.Sneak, 6, // 6
                                 "Be very careful when sneaking into the dungeon.")),
                         new BenchOtherGroupSubScene(true, new CombatGuardSubScene(4, 6)),
-                        new BenchOtherGroupSubScene(true, new CollaborativeSkillCheckSubScene(5, 6, Skill.Security, 10, // 10
+                        new BenchOtherGroupSubScene(true, new CollaborativeLockpickingSubScene(5, 6, 10, // 10
                                 "Just pick the lock and we'll get Caid out of there."))
                 )));
     }

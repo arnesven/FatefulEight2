@@ -16,6 +16,8 @@ public class Inventory implements Serializable {
     public static final int WEIGHT_OF_FOOD = 1000;
     public static final int WEIGHT_OF_MATERIALS = 1000;
     public static final int WEIGHT_OF_INGREDIENTS = 100;
+    public static final int WEIGHT_OF_LOCKPICKS = 10;
+
     private List<Weapon> weapons = new ArrayList<>();
     private List<Clothing> clothing = new ArrayList<>();
     private List<Accessory> accessories = new ArrayList<>();
@@ -28,6 +30,7 @@ public class Inventory implements Serializable {
     private int food = 10;
     private int ingredients = 0;
     private int materials = 0;
+    private int lockpicks = 0;
 
     public Inventory() { }
 
@@ -166,6 +169,8 @@ public class Inventory implements Serializable {
         this.ingredients += ingredients;
     }
 
+    public void addToLockpicks(int i) { this.lockpicks += i; }
+
     public List<Scroll> getCombatScrolls() {
         List<Scroll> result = new ArrayList<>();
         for (Scroll scroll : scrolls) {
@@ -193,5 +198,9 @@ public class Inventory implements Serializable {
         weightInGrams += (materials * WEIGHT_OF_MATERIALS);
         weightInGrams += (ingredients * WEIGHT_OF_INGREDIENTS);
         return weightInGrams;
+    }
+
+    public int getLockpicks() {
+        return lockpicks;
     }
 }

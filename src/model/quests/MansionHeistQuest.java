@@ -9,10 +9,7 @@ import model.enemies.Enemy;
 import model.enemies.MansionGuardEnemy;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
-import model.quests.scenes.CollaborativeSkillCheckSubScene;
-import model.quests.scenes.CollectiveSkillCheckSubScene;
-import model.quests.scenes.CombatSubScene;
-import model.quests.scenes.SoloSkillCheckSubScene;
+import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
@@ -80,7 +77,7 @@ public class MansionHeistQuest extends Quest {
                                         new CollectiveSkillCheckSubScene(5,4, Skill.Sneak, 5,
                                                 "Let's just quietly pass this lot."))),
                         new QuestScene("Crack Safe",
-                                List.of(new SoloSkillCheckSubScene(2, 7, Skill.Security, 10,
+                                List.of(new SoloLockpickingSubScene(2, 7, 10,
                                         "That lock needs to be picked."),
                                         new CollaborativeSkillCheckSubScene(3, 7, Skill.Labor, 10,
                                                 "If we work together, we can probably pry the safe open."),

@@ -221,6 +221,9 @@ public class InventoryView extends SelectableListMenu {
     }
 
     private static void addResources(Model model, List<Item> result) {
+        if (model.getParty().getInventory().getLockpicks() > 0) {
+            result.add(0, new LockpicksDummyItem(model.getParty().getInventory().getLockpicks()));
+        }
         if (model.getParty().getInventory().getMaterials() > 0) {
             result.add(0, new MaterialsDummyItem(model.getParty().getInventory().getMaterials()));
         }
