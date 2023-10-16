@@ -39,6 +39,7 @@ public abstract class Item implements Serializable, Comparable<Item> {
     }
 
     protected abstract Sprite getSprite();
+    public abstract int getWeight();
 
     public int getSpeedModifier() {
         return 0;
@@ -116,9 +117,5 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public boolean canBeUsedFromMenu() {
         return false;
-    }
-
-    public int getWeight() {
-        return 1000;
     }
 }

@@ -21,4 +21,9 @@ public class ObolsDummyItem extends InventoryDummyItem {
     public String getShoppingDetails() {
         return ", A sub-currency mostly used for gambling purposes.";
     }
+
+    @Override
+    public int getWeight() {
+        return 0;
+    }
 }

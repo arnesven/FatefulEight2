@@ -24,4 +24,9 @@ public class FoodDummyItem extends InventoryDummyItem {
         return ", Rations which can be consumed by the members of your party. Each party " +
                 "member consumes 1 ration per day unless they are fed in any other way.";
     }
+
+    @Override
+    public int getWeight() {
+        return amount * Inventory.WEIGHT_OF_FOOD;
+    }
 }

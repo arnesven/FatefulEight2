@@ -21,4 +21,9 @@ public class GoldDummyItem extends InventoryDummyItem {
     public String getShoppingDetails() {
         return ", The common currency of all realms.";
     }
+
+    @Override
+    public int getWeight() {
+        return 0;
+    }
 }

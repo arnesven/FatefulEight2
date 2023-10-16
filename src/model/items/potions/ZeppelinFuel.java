@@ -39,4 +39,9 @@ public class ZeppelinFuel extends Potion {
     public boolean canBeUsedOn(Model model, GameCharacter target) {
         return false;
     }
+
+    @Override
+    public int getWeight() {
+        return 500;
+    }
 }

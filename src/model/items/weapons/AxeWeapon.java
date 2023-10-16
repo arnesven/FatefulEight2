@@ -38,4 +38,9 @@ public abstract class AxeWeapon extends Weapon {
     public RunOnceAnimationSprite getEffectSprite() {
         return new CuttingStrikeEffectSprite();
     }
+
+    @Override
+    public int getWeight() {
+        return isTwoHanded() ? 5000 : 3000;
+    }
 }

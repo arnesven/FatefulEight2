@@ -28,6 +28,11 @@ public class FancyJerkin extends Clothing {
     }
 
     @Override
+    public int getWeight() {
+        return 1000;
+    }
+
+    @Override
     public Item copy() {
         return new FancyJerkin();
     }

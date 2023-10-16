@@ -27,4 +27,9 @@ public abstract class PolearmWeapon extends Weapon {
     protected AvatarItemSprite getOnAvatarSprite(int index) {
         return POLEARM_SPRITES[index];
     }
+
+    @Override
+    public int getWeight() {
+        return 4000;
+    }
 }

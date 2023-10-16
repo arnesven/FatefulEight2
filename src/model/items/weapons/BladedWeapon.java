@@ -48,4 +48,9 @@ public abstract class BladedWeapon extends Weapon {
     public RunOnceAnimationSprite getEffectSprite() {
         return new CuttingStrikeEffectSprite();
     }
+
+    @Override
+    public int getWeight() {
+        return isTwoHanded() ? 3000 : 1000;
+    }
 }

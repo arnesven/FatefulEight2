@@ -18,4 +18,9 @@ public class JustClothes extends Clothing {
     public Item copy() {
         throw new IllegalStateException("JustClothes should never be copied!");
     }
+
+    @Override
+    public int getWeight() {
+        return 0;
+    }
 }

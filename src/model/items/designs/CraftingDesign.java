@@ -3,13 +3,14 @@ package model.items.designs;
 import model.items.Inventory;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.WeightlessItem;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class CraftingDesign extends Item {
+public class CraftingDesign extends WeightlessItem {
     private static final Sprite ARMOR_SPRITE = new ItemSprite(6, 5, MyColors.WHITE, MyColors.BEIGE);
     private static final Sprite WEAPON_SPRITE = new ItemSprite(7, 5, MyColors.WHITE, MyColors.BEIGE);
     private static final Sprite ACCESSORY_SPRITE = new ItemSprite(8, 5, MyColors.WHITE, MyColors.BEIGE);

@@ -32,4 +32,9 @@ public abstract class RobesClothing extends Clothing {
     protected Sprite getSprite() {
         return sprite;
     }
+
+    @Override
+    public int getWeight() {
+        return 1500;
+    }
 }

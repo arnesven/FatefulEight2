@@ -29,6 +29,11 @@ public class UnarmedCombatWeapon extends NaturalWeapon {
     }
 
     @Override
+    public int getWeight() {
+        return 0;
+    }
+
+    @Override
     public Item copy() {
         throw new IllegalStateException("UnarmedCombatWeapon should never be copied!");
     }

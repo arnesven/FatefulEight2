@@ -16,4 +16,9 @@ public abstract class SuperHeavyArmorClothing extends HeavyArmorClothing {
         result.add(new MyPair<>(Skill.Sneak, -1));
         return result;
     }
+
+    @Override
+    public int getWeight() {
+        return 10000;
+    }
 }

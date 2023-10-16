@@ -35,4 +35,9 @@ public class OutlawArmor extends Clothing {
     public Prevalence getPrevalence() {
         return Prevalence.common;
     }
+
+    @Override
+    public int getWeight() {
+        return 2500;
+    }
 }

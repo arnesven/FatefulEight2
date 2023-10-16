@@ -42,4 +42,9 @@ public abstract class WandWeapon extends Weapon {
     public RunOnceAnimationSprite getEffectSprite() {
         return new RangedStrikeEffect();
     }
+
+    @Override
+    public int getWeight() {
+        return 200;
+    }
 }

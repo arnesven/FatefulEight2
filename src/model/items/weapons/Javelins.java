@@ -33,4 +33,9 @@ public class Javelins extends PolearmWeapon {
     public RunOnceAnimationSprite getEffectSprite() {
         return new RangedStrikeEffect();
     }
+
+    @Override
+    public int getWeight() {
+        return 1000;
+    }
 }

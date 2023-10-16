@@ -5,7 +5,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class PotionRecipe extends Item {
+public class PotionRecipe extends WeightlessItem {
     private static final Sprite SPRITE = new ItemSprite(9, 5, MyColors.WHITE, MyColors.BEIGE);
     private static int num = 1;
     private final Potion brewable;

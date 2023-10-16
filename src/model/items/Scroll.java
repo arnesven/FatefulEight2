@@ -104,4 +104,9 @@ public class Scroll extends UsableItem {
     public String getAnalysisType() {
         return "Cast Chance for";
     }
+
+    @Override
+    public int getWeight() {
+        return 0;
+    }
 }

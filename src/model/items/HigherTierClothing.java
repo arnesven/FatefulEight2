@@ -28,6 +28,11 @@ public class HigherTierClothing extends Clothing {
     }
 
     @Override
+    public int getWeight() {
+        return innerItem.getWeight();
+    }
+
+    @Override
     public Item copy() {
         return new HigherTierClothing((Clothing) innerItem.copy(), tier);
     }

@@ -24,6 +24,11 @@ public class StuddedTunic extends Clothing {
     }
 
     @Override
+    public int getWeight() {
+        return 1500;
+    }
+
+    @Override
     public Item copy() {
         return new StuddedTunic();
     }

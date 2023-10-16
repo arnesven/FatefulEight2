@@ -2,10 +2,11 @@ package model.items.special;
 
 import model.items.Inventory;
 import model.items.Item;
+import model.items.WeightlessItem;
 import view.MyColors;
 import view.sprites.ItemSprite;
 
-public abstract class PearlItem extends Item {
+public abstract class PearlItem extends WeightlessItem {
 
     public PearlItem(String name, int cost) {
         super(name, cost);

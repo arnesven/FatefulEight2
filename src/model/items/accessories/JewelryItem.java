@@ -10,4 +10,9 @@ public abstract class JewelryItem extends Accessory {
     public String getSound() {
         return "metal-ringing";
     }
+
+    @Override
+    public int getWeight() {
+        return 100;
+    }
 }

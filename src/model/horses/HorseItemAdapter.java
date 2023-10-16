@@ -29,6 +29,11 @@ public class HorseItemAdapter extends Item {
     }
 
     @Override
+    public int getWeight() {
+        return 0;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         throw new IllegalStateException("Should not add horse to inventory.");
     }

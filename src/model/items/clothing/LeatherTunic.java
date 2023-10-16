@@ -21,4 +21,9 @@ public class LeatherTunic extends Clothing {
     public Item copy() {
         return new LeatherTunic();
     }
+
+    @Override
+    public int getWeight() {
+        return 1000;
+    }
 }

@@ -38,6 +38,11 @@ public class FurArmor extends Clothing {
     }
 
     @Override
+    public int getWeight() {
+        return 2500;
+    }
+
+    @Override
     public Item copy() {
         return new FurArmor();
     }

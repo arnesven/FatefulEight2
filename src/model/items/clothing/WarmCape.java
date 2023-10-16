@@ -33,4 +33,9 @@ public class WarmCape extends Clothing {
     public Item copy() {
         return new WarmCape();
     }
+
+    @Override
+    public int getWeight() {
+        return 1000;
+    }
 }

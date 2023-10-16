@@ -31,4 +31,9 @@ public class EnchantressDress extends Clothing {
             setColor4(MyColors.DARK_GREEN);
         }
     }
+
+    @Override
+    public int getWeight() {
+        return 500;
+    }
 }

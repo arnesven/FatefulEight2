@@ -18,6 +18,11 @@ public class LeatherArmor extends Clothing {
     }
 
     @Override
+    public int getWeight() {
+        return 2000;
+    }
+
+    @Override
     public Item copy() {
         return new LeatherArmor();
     }

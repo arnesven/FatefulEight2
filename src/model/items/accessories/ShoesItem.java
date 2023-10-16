@@ -9,4 +9,9 @@ public abstract class ShoesItem extends Accessory {
     public String getSound() {
         return "chainmail1";
     }
+
+    @Override
+    public int getWeight() {
+        return 1000;
+    }
 }

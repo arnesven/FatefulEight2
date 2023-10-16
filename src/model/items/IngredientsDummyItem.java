@@ -8,9 +8,11 @@ public class IngredientsDummyItem extends InventoryDummyItem {
 
     private static final Sprite SPRITE = new ItemSprite(14, 7, MyColors.WHITE,
             MyColors.LIGHT_GREEN, MyColors.CYAN);
+    private final int amount;
 
     public IngredientsDummyItem(int ingredients) {
         super("Ingredients (" + ingredients + ")", 0);
+        this.amount = ingredients;
     }
 
     @Override
@@ -22,5 +24,10 @@ public class IngredientsDummyItem extends InventoryDummyItem {
     public String getShoppingDetails() {
         return ", Components which you can make alchemical drafts. This includes spices herbs " +
                 "tonics minerals and animal parts.";
+    }
+
+    @Override
+    public int getWeight() {
+        return amount * Inventory.WEIGHT_OF_INGREDIENTS;
     }
 }

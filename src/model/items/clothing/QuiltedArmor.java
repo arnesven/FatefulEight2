@@ -29,4 +29,9 @@ public class QuiltedArmor extends Clothing {
     public Item copy() {
         return new QuiltedArmor();
     }
+
+    @Override
+    public int getWeight() {
+        return 2000;
+    }
 }

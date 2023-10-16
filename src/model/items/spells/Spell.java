@@ -147,4 +147,9 @@ public abstract class Spell extends Item {
     public String getAnalysisType() {
         return "Cast Chance for";
     }
+
+    @Override
+    public int getWeight() {
+        return 300;
+    }
 }

@@ -47,4 +47,9 @@ public abstract class ShieldItem extends Accessory {
     public boolean isOffHandItem() {
         return true;
     }
+
+    @Override
+    public int getWeight() {
+        return 3000;
+    }
 }

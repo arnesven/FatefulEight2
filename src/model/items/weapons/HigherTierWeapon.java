@@ -118,4 +118,9 @@ public class HigherTierWeapon extends Weapon {
     public <E> boolean isOfType(Class<E> weaponClass) {
         return inner.isOfType(weaponClass);
     }
+
+    @Override
+    public int getWeight() {
+        return inner.getWeight();
+    }
 }

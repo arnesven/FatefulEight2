@@ -30,6 +30,11 @@ public class HigherTierAccessory extends Accessory {
     }
 
     @Override
+    public int getWeight() {
+        return inner.getWeight();
+    }
+
+    @Override
     public Item copy() {
         return new HigherTierAccessory((Accessory)inner.copy(), tier);
     }

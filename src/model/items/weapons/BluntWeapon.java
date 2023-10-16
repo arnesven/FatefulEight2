@@ -36,4 +36,9 @@ public abstract class BluntWeapon extends Weapon {
     protected AvatarItemSprite getOnAvatarSprite(int index) {
         return BLUNT_SPRITES[index];
     }
+
+    @Override
+    public int getWeight() {
+        return isTwoHanded() ? 3500 : 1500;
+    }
 }

@@ -31,4 +31,9 @@ public abstract class Potion extends UsableItem {
     public String getSound() {
         return "bottle";
     }
+
+    @Override
+    public int getWeight() {
+        return 250;
+    }
 }

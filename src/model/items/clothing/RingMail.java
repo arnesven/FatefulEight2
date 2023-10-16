@@ -29,4 +29,9 @@ public class RingMail extends Clothing {
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
         return List.of(new MyPair<>(Skill.Sneak, -1));
     }
+
+    @Override
+    public int getWeight() {
+        return 3000;
+    }
 }

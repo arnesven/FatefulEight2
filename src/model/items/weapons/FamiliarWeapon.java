@@ -9,6 +9,11 @@ public class FamiliarWeapon extends NaturalWeapon {
     }
 
     @Override
+    public int getWeight() {
+        return 0;
+    }
+
+    @Override
     public Item copy() {
         return new FamiliarWeapon();
     }

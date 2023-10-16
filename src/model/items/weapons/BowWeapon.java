@@ -43,4 +43,9 @@ public abstract class BowWeapon extends Weapon {
     public int getReloadSpeed() {
         return 3;
     }
+
+    @Override
+    public int getWeight() {
+        return getDamageTable().length * 200;
+    }
 }

@@ -80,4 +80,8 @@ public class HealthPotion extends Potion {
         return higherTierSprites[tier-1];
     }
 
+    @Override
+    public int getWeight() {
+        return 250 + healingAmount * 10;
+    }
 }

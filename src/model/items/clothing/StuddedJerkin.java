@@ -30,4 +30,9 @@ public class StuddedJerkin extends Clothing {
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
         return List.of(new MyPair<>(Skill.SeekInfo, 1));
     }
+
+    @Override
+    public int getWeight() {
+        return 2000;
+    }
 }

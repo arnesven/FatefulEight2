@@ -82,7 +82,9 @@ public class InventoryView extends SelectableListMenu {
         if (tabNames[selectedTab].getItems(model).size() > 0) {
             Item it = tabNames[selectedTab].getItems(model).get(getSelectedRow());
             it.drawYourself(model.getScreenHandler(), rightTabX + 11, y + 2);
-            String text = it.getName() + " " + it.getShoppingDetails() + ", Value: " + it.getCost();
+            String text = it.getName() + ", " + it.getShoppingDetails() +
+                    ", Value: " + it.getCost() +
+                    ", Weight: " + (it.getWeight() / 1000.0) + " Kg";
             String[] parts = text.split(", ");
             int row = y + it.getSpriteSize() + 3;
             for (String s : parts) {
