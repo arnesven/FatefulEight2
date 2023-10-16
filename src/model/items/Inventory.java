@@ -1,6 +1,5 @@
 package model.items;
 
-import model.items.*;
 import model.items.accessories.*;
 import model.items.clothing.Clothing;
 import model.items.designs.CraftingDesign;
@@ -14,6 +13,9 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Inventory implements Serializable {
+    public static final int WEIGHT_OF_FOOD = 1000;
+    public static final int WEIGHT_OF_MATERIALS = 1000;
+    public static final int WEIGHT_OF_INGREDIENTS = 100;
     private List<Weapon> weapons = new ArrayList<>();
     private List<Clothing> clothing = new ArrayList<>();
     private List<Accessory> accessories = new ArrayList<>();
@@ -99,7 +101,6 @@ public class Inventory implements Serializable {
         it.addYourself(this);
     }
 
-
     public int getFood() {
         return food;
     }
@@ -184,6 +185,13 @@ public class Inventory implements Serializable {
     }
 
     public int getTotalWeight() {
-        return 0;
+        int weightInGrams = 0;
+        for (Item it : getAllItems()) {
+            weightInGrams += it.getWeight();
+        }
+        weightInGrams += (food * WEIGHT_OF_FOOD);
+        weightInGrams += (materials * WEIGHT_OF_MATERIALS);
+        weightInGrams += (ingredients * WEIGHT_OF_INGREDIENTS);
+        return weightInGrams;
     }
 }

@@ -117,4 +117,8 @@ public abstract class Item implements Serializable, Comparable<Item> {
     public boolean canBeUsedFromMenu() {
         return false;
     }
+
+    public int getWeight() {
+        return 1000;
+    }
 }

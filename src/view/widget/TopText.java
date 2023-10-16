@@ -79,7 +79,12 @@ public class TopText {
 
     private int addWeight(Model model, int col) {
         model.getScreenHandler().put(col + 4, 0, WEIGHT_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getInventory().getTotalWeight() / 1000), col, 0, MyColors.WHITE);
+        int weight = (int)Math.ceil(model.getParty().getInventory().getTotalWeight() / 1000.0);
+        MyColors color = MyColors.WHITE;
+        if (model.getParty().getInventory().getTotalWeight() > model.getParty().getCarryingCapacity()) {
+            color = MyColors.LIGHT_RED;
+        }
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", weight), col, 0, color);
         return col + 6;
     }
 

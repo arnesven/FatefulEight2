@@ -1,19 +1,20 @@
 package model.states;
 
 import model.Model;
+import model.items.Inventory;
+import model.items.Item;
 import model.map.Direction;
 import model.map.UrbanLocation;
-import model.map.World;
-import model.map.WorldHex;
 import model.states.events.RiverEvent;
-import view.YesNoMessageView;
 import view.sprites.RidingSprite;
 import view.sprites.Sprite;
 import view.subviews.EmptySubView;
 import view.subviews.MapSubView;
 import view.subviews.CollapsingTransition;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TravelState extends GameState {
 
@@ -28,6 +29,8 @@ public class TravelState extends GameState {
         MapSubView mapSubView = new MapSubView(model);
         CollapsingTransition.transition(model, mapSubView);
         model.getTutorial().travel(model);
+
+        checkForOverEncumberance(model);
 
         boolean riding = checkForRiding(model);
         if (riding) {
@@ -51,6 +54,57 @@ public class TravelState extends GameState {
             }
         }
         return nextState(model);
+    }
+
+    private void checkForOverEncumberance(Model model) {
+        while (model.getParty().getInventory().getTotalWeight() >= model.getParty().getCarryingCapacity()) {
+            println("Your party is currently carrying to much to be able to travel. You must abandon " +
+                    "items, food or other resources before you can travel.");
+            List<String> options = new ArrayList<>();
+            int chosen;
+            do {
+                options.clear();
+                if (model.getParty().getInventory().getFood() > 0) {
+                    options.add("Food (" + Inventory.WEIGHT_OF_FOOD / 1000.0 + ")");
+                }
+                if (model.getParty().getInventory().getIngredients() > 0) {
+                    options.add("Ingredients (" + Inventory.WEIGHT_OF_INGREDIENTS / 1000.0 + ")");
+                }
+                if (model.getParty().getInventory().getMaterials() > 0) {
+                    options.add("Materials (" + Inventory.WEIGHT_OF_MATERIALS / 1000.0 + ")");
+                }
+                for (Item it : model.getParty().getInventory().getAllItems()) {
+                    options.add(it.getName() + " (" + (it.getWeight() / 1000.0) + ")");
+                }
+                options.add("Cancel");
+                chosen = multipleOptionArrowMenu(model, 24, 4, options);
+                if (options.get(chosen).contains("Food")) {
+                    println("You threw away 1 ration.");
+                    model.getParty().addToFood(-1);
+                } else if (options.get(chosen).contains("Ingredients")) {
+                    println("You threw away 1 ingredient.");
+                    model.getParty().getInventory().addToIngredients(-1);
+                } else if (options.get(chosen).contains("Materials")) {
+                    println("You threw away 1 material.");
+                    model.getParty().getInventory().addToMaterials(-1);
+                } else if (chosen == options.size()-1) {
+                    break;
+                } else {
+                    Item itemToThrowAway = null;
+                    for (Item it : model.getParty().getInventory().getAllItems()) {
+                        if (options.get(chosen).contains(it.getName())) {
+                            itemToThrowAway = it;
+                        }
+                    }
+                    if (itemToThrowAway == null) {
+                        throw new IllegalStateException("Could not find item to throw away.");
+                    } else {
+                        model.getParty().getInventory().remove(itemToThrowAway);
+                        println("You threw away " + itemToThrowAway.getName() + ".");
+                    }
+                }
+            } while (options.size() == 1);
+        }
     }
 
     protected boolean checkForRiding(Model model) {

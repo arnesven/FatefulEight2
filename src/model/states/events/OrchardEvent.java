@@ -23,8 +23,7 @@ public class OrchardEvent extends DailyEventState {
         portraitSay("Don't worry! I have " +
                 "way more fruit than I can ever sell at the market. Take " +
                 "as much as you want!");
-        int avail = model.getParty().rationsLimit() - model.getParty().getFood();
-        int gained = Math.min(avail, 5*model.getParty().size());
+        int gained = 5 * model.getParty().size();
         println("The party gains " + gained + " rations.");
         model.getParty().addToFood(gained);
         model.getParty().randomPartyMemberSay(model, List.of("Yummy!3"));

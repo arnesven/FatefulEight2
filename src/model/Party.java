@@ -320,11 +320,7 @@ public class Party implements Serializable {
     }
 
     public void addToFood(int i) {
-        inventory.setFood(Math.max(0, Math.min(inventory.getFood() + i, rationsLimit())));
-    }
-
-    public int rationsLimit() {
-        return size() * 20;
+        inventory.setFood(Math.max(0, inventory.getFood() + i));
     }
 
     public void addSummon(UrbanLocation destination) {
@@ -724,5 +720,10 @@ public class Party implements Serializable {
 
     public int getNotoriety() {
         return this.notoriety;
+    }
+
+    public int getCarryingCapacity() {
+        return partyMembers.size() * 20 * 1000 +
+                horseHandler.size() * 50 * 1000;
     }
 }

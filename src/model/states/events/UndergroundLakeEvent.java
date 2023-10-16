@@ -51,15 +51,10 @@ public class UndergroundLakeEvent extends DailyEventState {
     }
 
 
-    private void getRations(Model model, int i) {
-        if (model.getParty().getFood() == model.getParty().rationsLimit()) {
-            println("You cannot carry anymore rations!");
-        } else {
-            int amount = Math.min(i, model.getParty().rationsLimit() - model.getParty().getFood());
-            model.getParty().addToFood(amount);
-            println("The party gains " + amount + " rations.");
-            startCombat(model, amount);
-        }
+    private void getRations(Model model, int amount) {
+        model.getParty().addToFood(amount);
+        println("The party gains " + amount + " rations.");
+        startCombat(model, amount);
     }
 
     private void startCombat(Model model, int probability) {

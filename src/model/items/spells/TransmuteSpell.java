@@ -88,16 +88,7 @@ public class TransmuteSpell extends ImmediateSpell {
                 if (amount > max || amount < 0) {
                     error(state, max);
                 } else {
-                    if (selectedTarget.first.equalsIgnoreCase("food") &&
-                            model.getParty().getFood() + amount > model.getParty().rationsLimit()) {
-                        state.print("Warning: you can only carry " + model.getParty().rationsLimit() +
-                                " food. The excess will be lost! Proceed (Y/N)? ");
-                        if (state.yesNoInput()) {
-                            break;
-                        }
-                    } else {
-                        break;
-                    }
+                    break;
                 }
             } catch (NumberFormatException nfe) {
                 error(state, max);

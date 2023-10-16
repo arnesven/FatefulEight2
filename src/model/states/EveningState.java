@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.items.Inventory;
 import model.quests.MainQuest;
 import model.quests.Quest;
 import util.MyRandom;
@@ -155,14 +156,20 @@ public class EveningState extends GameState {
             state.println("But you can't afford any.");
             return;
         }
-        if (model.getParty().getFood() == model.getParty().rationsLimit()) {
+        int maxBuy = (model.getParty().getCarryingCapacity() - model.getParty().getInventory().getTotalWeight()) /
+                Inventory.WEIGHT_OF_FOOD;
+        if (maxBuy <= 0) {
             state.println("You cannot carry anymore rations.");
             return;
         }
 
         final boolean[] done = {false};
-        while (model.getParty().getInventory().getFood() < model.getParty().rationsLimit() && !done[0]) {
-            int maxBuy = model.getParty().rationsLimit() - model.getParty().getInventory().getFood();
+        while (!done[0]) {
+            maxBuy = (model.getParty().getCarryingCapacity() - model.getParty().getInventory().getTotalWeight()) /
+                    Inventory.WEIGHT_OF_FOOD;
+            if (maxBuy <= 0 || model.getParty().getGold() == 0) {
+                break;
+            }
             String sitch = "Your party can carry an additional ";
             int cost = (int) Math.ceil(maxBuy / 5.0);
             if (cost > model.getParty().getGold()) {

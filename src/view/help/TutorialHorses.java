@@ -5,7 +5,8 @@ import view.GameView;
 public class TutorialHorses extends HelpDialog {
     private static final String TEXT =
             "With horses your party can travel more quickly. During travel, if you have enough horses for your " +
-            "whole party, you will be able to travel two hexes instead of the normal one.\n\n" +
+            "whole party, you will be able to travel two hexes instead of the normal one. " +
+            "Horses also provide extra carrying capacity.\n\n" +
             "Horses can be bought and sold at inns and taverns. There are two types of horses, steeds and ponies. " +
             "Halflings and dwarves can only ride on steeds together with another non-halfling, non-dwarf character. " +
             "Only halflings and dwarves can ride on ponies.\n\n" +
