@@ -182,4 +182,8 @@ public class Inventory implements Serializable {
     public void removePearl(PearlItem pearl) {
         specialItems.remove(pearl);
     }
+
+    public int getTotalWeight() {
+        return 0;
+    }
 }

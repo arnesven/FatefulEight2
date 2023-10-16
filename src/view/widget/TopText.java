@@ -11,6 +11,7 @@ public class TopText {
     public static final String GOLD_SETTINGS_FLAG = "showGoldInTopBar";
     public static final String OBOLS_SETTINGS_FLAG = "showObolsInTopBar";
     public static final String FOOD_SETTINGS_FLAG = "showFoodInTopBar";
+    public static final String WEIGHT_SETTINGS_FLAG = "showWeightInTopBar";
     public static final String HORSE_SETTINGS_FLAG = "showHorsesInTopBar";
     public static final String ALIGNMENT_SETTINGS_FLAG = "showAlignmentInTopBar";
     public static final String NOTORIETY_SETTINGS_FLAG = "showNotorietyInTopBar";
@@ -28,6 +29,7 @@ public class TopText {
     public static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
     public static final CharSprite HORSES_ICON_SPRITE = CharSprite.make(0x15, MyColors.BEIGE, MyColors.BLACK, MyColors.BLACK);
     public static final CharSprite NOTORIETY_SPRITE = CharSprite.make(0x16, MyColors.RED, MyColors.BLACK, MyColors.BLACK);
+    public static final CharSprite WEIGHT_ICON_SPRITE = CharSprite.make(0x17, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK);
 
     public void drawYourself(Model model) {
         int col = 0;
@@ -40,6 +42,9 @@ public class TopText {
         }
         if (isFlagSet(model, FOOD_SETTINGS_FLAG)) {
             col = addFood(model, col);
+        }
+        if (isFlagSet(model, WEIGHT_SETTINGS_FLAG)) {
+            col = addWeight(model, col);
         }
         if (isFlagSet(model, HORSE_SETTINGS_FLAG)) {
             col = addHorses(model, col);
@@ -70,6 +75,12 @@ public class TopText {
             return false;
         }
         return val;
+    }
+
+    private int addWeight(Model model, int col) {
+        model.getScreenHandler().put(col + 4, 0, WEIGHT_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getInventory().getTotalWeight() / 1000), col, 0, MyColors.WHITE);
+        return col + 6;
     }
 
     private int addObols(Model model, int col) {

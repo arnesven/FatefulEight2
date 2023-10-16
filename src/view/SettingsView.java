@@ -86,25 +86,27 @@ public class SettingsView extends SelectableListMenu {
         });
 
         y += 2;
+        result.add(new ListContent(xStart+2, y++, "Top Bar Contents:"));
+        int x = xStart+3;
+        y = addTopBarSettings(model, result, x, y, "Gold          ", TopText.GOLD_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Obols         ", TopText.OBOLS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Food          ", TopText.FOOD_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Weight        ", TopText.WEIGHT_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Horses        ", TopText.HORSE_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Alignment     ", TopText.ALIGNMENT_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Notoriety     ", TopText.NOTORIETY_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Reputation    ", TopText.REPUTATION_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Materials     ", TopText.MATERIALS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Ingredients   ", TopText.INGREDIENTS_SETTINGS_FLAG);
+        y = addTopBarSettings(model, result, x, y, "Key Reminders ", TopText.KEY_REMINDERS_SETTINGS_FLAG);
+
+        y += 1;
         result.add(new ListContent(xStart+2, y, "Fullscreen Mode " + (FatefulEight.inFullScreenMode?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.toggleFullScreen();
             }
         });
-
-        y += 2;
-        result.add(new ListContent(xStart+2, y++, "Top Bar Contents:"));
-        y = addTopBarSettings(model, result, xStart+3, y, "Gold          ", TopText.GOLD_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Obols         ", TopText.OBOLS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Food          ", TopText.FOOD_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Horses        ", TopText.HORSE_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Alignment     ", TopText.ALIGNMENT_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Notoriety     ", TopText.NOTORIETY_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Reputation    ", TopText.REPUTATION_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Materials     ", TopText.MATERIALS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Ingredients   ", TopText.INGREDIENTS_SETTINGS_FLAG);
-        y = addTopBarSettings(model, result, xStart+3, y, "Key Reminders ", TopText.KEY_REMINDERS_SETTINGS_FLAG);
 
         return result;
     }
