@@ -93,6 +93,7 @@ public class GoToCastleActionNode extends DailyActionNode {
 
             }
         }
+        admitted = true;
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

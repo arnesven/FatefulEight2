@@ -61,6 +61,10 @@ public class TownHallNode extends DailyActionNode {
                 }
             }
         }
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            admitted = true;
+            return new SilentNoEventState(model);
+        }
         return model.getCurrentHex().getDailyActionState(model);
     }
 
