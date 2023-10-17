@@ -18,6 +18,7 @@ public class TopText {
     public static final String NOTORIETY_SETTINGS_FLAG = "showNotorietyInTopBar";
     public static final String REPUTATION_SETTINGS_FLAG = "showReputationInTopBar";
     public static final String MATERIALS_SETTINGS_FLAG = "showMaterialsInTopBar";
+    public static final String LOCKPICKS_SETTINGS_FLAG = "showLockpicksInTopBar";
     public static final String INGREDIENTS_SETTINGS_FLAG = "showIngredientsInTopBar";
     public static final String KEY_REMINDERS_SETTINGS_FLAG = "keyRemindersInTopBar";
 
@@ -27,6 +28,7 @@ public class TopText {
     public static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLACK);
     private static final CharSprite INGREDIENTS_ICON_SPRITE = CharSprite.make(0x12, MyColors.WHITE, MyColors.LIGHT_GREEN, MyColors.BLACK);
     private static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
+    private static final CharSprite LOCKPICKS_ICON_SPRITE = CharSprite.make(0x18, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
     public static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
     public static final CharSprite HORSES_ICON_SPRITE = CharSprite.make(0x15, MyColors.BEIGE, MyColors.BLACK, MyColors.BLACK);
     public static final CharSprite NOTORIETY_SPRITE = CharSprite.make(0x16, MyColors.RED, MyColors.BLACK, MyColors.BLACK);
@@ -62,12 +64,22 @@ public class TopText {
         if (isFlagSet(model, MATERIALS_SETTINGS_FLAG)) {
             col = addMaterials(model, col);
         }
+        if (isFlagSet(model, LOCKPICKS_SETTINGS_FLAG)) {
+            col = addLockpicks(model, col);
+        }
         if (isFlagSet(model, REPUTATION_SETTINGS_FLAG)) {
             col = addReputation(model, col);
         }
         if (isFlagSet(model, KEY_REMINDERS_SETTINGS_FLAG)) {
             drawKeyTexts(model);
         }
+    }
+
+    private int addLockpicks(Model model, int col) {
+        model.getScreenHandler().put(col+2, 0, LOCKPICKS_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",
+                model.getParty().getInventory().getLockpicks()), col, 0, MyColors.WHITE);
+        return col + 4;
     }
 
     private boolean isFlagSet(Model model, String key) {

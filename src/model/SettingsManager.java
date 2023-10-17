@@ -29,8 +29,9 @@ public class SettingsManager implements Serializable {
         miscFlags.put(TopText.ALIGNMENT_SETTINGS_FLAG, true);
         miscFlags.put(TopText.NOTORIETY_SETTINGS_FLAG, true);
         miscFlags.put(TopText.REPUTATION_SETTINGS_FLAG, true);
-        miscFlags.put(TopText.MATERIALS_SETTINGS_FLAG, false);
         miscFlags.put(TopText.INGREDIENTS_SETTINGS_FLAG, false);
+        miscFlags.put(TopText.MATERIALS_SETTINGS_FLAG, false);
+        miscFlags.put(TopText.LOCKPICKS_SETTINGS_FLAG, false);
         miscFlags.put(TopText.KEY_REMINDERS_SETTINGS_FLAG, true);
     }
 
