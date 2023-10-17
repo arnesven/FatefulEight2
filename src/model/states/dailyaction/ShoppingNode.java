@@ -55,6 +55,12 @@ public abstract class ShoppingNode extends DailyActionNode {
                         state.println("!Your crime has been witnessed, your notoriety has increased!");
                         model.getParty().addToNotoriety(bounty * 10);
                     }
+                } else {
+                    result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
+                    if (!result) {
+                        state.println("!Your crime has been witnessed, your notoriety has increased!");
+                        model.getParty().addToNotoriety(10);
+                    }
                 }
             }
             triedBreakIn = true;
