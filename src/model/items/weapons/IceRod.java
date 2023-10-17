@@ -14,7 +14,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class IceRod extends WandWeapon {
-    private static final Sprite SPRITE = new ItemSprite(12, 11,
+    private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
 
     public IceRod() {
