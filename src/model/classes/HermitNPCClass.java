@@ -17,6 +17,6 @@ public class HermitNPCClass extends NPCClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return super.getAvatar(race, appearance);
+        return new AvatarSprite(race, 0x87, MyColors.BEIGE, appearance.getNormalHair());
     }
 }

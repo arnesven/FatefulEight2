@@ -27,14 +27,14 @@ public class InitialStoryPart extends StoryPart {
     private int internalStep = 0;
     public static int REWARD_GOLD = 120;
     private final GameCharacter whosUncle;
-    private final AdvancedAppearance unclePortrait;
+    private final CharacterAppearance unclePortrait;
     private final AdvancedAppearance everixPortrait;
     private WitchStoryPart witchPart = null;
 
     public InitialStoryPart(GameCharacter whosUncle, String townName) {
         this.whosUncle = whosUncle;
         this.townName = townName;
-        this.unclePortrait = PortraitSubView.makeRandomPortrait(Classes.None, whosUncle.getRace(), false);
+        this.unclePortrait = PortraitSubView.makeOldPortrait(Classes.None, whosUncle.getRace(), false);
         this.everixPortrait = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL, true);
     }
 
