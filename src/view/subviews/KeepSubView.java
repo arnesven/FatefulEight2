@@ -33,9 +33,11 @@ public class KeepSubView extends DailyActionSubView {
             MyColors.DARK_BROWN, MyColors.GOLD, MyColors.RED, MyColors.CYAN);
     public static final Sprite COLUMN = new Sprite32x32("window", "world_foreground.png", 0x59,
             MyColors.BLACK, MyColors.WHITE, MyColors.BEIGE, MyColors.CYAN);
+    private final boolean drawLord;
 
-    public KeepSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
+    public KeepSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean drawLord) {
         super(state, matrix);
+        this.drawLord = drawLord;
     }
 
     @Override
@@ -65,7 +67,9 @@ public class KeepSubView extends DailyActionSubView {
             drawForeground(model, 6, i, COLUMN);
         }
         drawForeground(model, 4, 1, THRONE);
-        drawForeground(model, 4, 2, LORD);
+        if (drawLord) {
+            drawForeground(model, 4, 2, LORD);
+        }
         drawForeground(model, 0, 1, PLANT);
         drawForeground(model, 0, 8, PLANT);
         drawForeground(model, 7, 1, PLANT);

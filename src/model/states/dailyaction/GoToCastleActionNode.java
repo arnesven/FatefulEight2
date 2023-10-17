@@ -3,17 +3,21 @@ package model.states.dailyaction;
 import model.Model;
 import model.SteppingMatrix;
 import model.Summon;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
+import util.MyPair;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.KeepSubView;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 
 public class GoToCastleActionNode extends DailyActionNode {
     private final CastleLocation castle;
@@ -27,6 +31,10 @@ public class GoToCastleActionNode extends DailyActionNode {
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            return handleCastleBreakIn(model, state, location);
+        }
+
         DailyEventState mainStoryEvent = null;
         if (model.getMainStory().isStarted()) {
             mainStoryEvent = model.getMainStory().getVisitLordEvent(model, location);
@@ -46,9 +54,46 @@ public class GoToCastleActionNode extends DailyActionNode {
                 state.println("You were admitted to the keep.");
             }
             admitted = true;
-            return new VisitCastleLordDailyActionNode(model, summon, location);
+            return new VisitCastleLordDailyActionNode(model, summon, location, false);
         }
         return new VisitCastleEvent(model);
+    }
+
+    private GameState handleCastleBreakIn(Model model, AdvancedDailyActionState state, UrbanLocation location) {
+        state.print("The keep is closed, do you want to try to break in? (Y/N) ");
+        if (state.yesNoInput()) {
+            state.print("The gate is barred from the inside. " +
+                    "One party member will have to climb the wall to the balcony while " +
+                    "the rest of the party will remain outside. Do you want to continue? (Y/N) ");
+            if (state.yesNoInput()) {
+                MyPair<Boolean, GameCharacter> pair =
+                        model.getParty().doSoloSkillCheckWithPerformer(model, state, Skill.Acrobatics, 8);
+                if (pair.first) {
+                    GameCharacter cat = pair.second;
+                    model.getParty().benchPartyMembers(model.getParty().getPartyMembers());
+                    model.getParty().unbenchPartyMembers(List.of(cat));
+                    if (model.getParty().getLeader() != cat) {
+                        model.getParty().setLeader(cat);
+                        state.println("!" + cat.getName() + " has been set as the leader of the party.");
+                    }
+                    admitted = true;
+                    return new VisitCastleLordDailyActionNode(model, null, location, true);
+                } else {
+                    state.println(pair.second.getName() + " fell off the keep wall and took 2 damage!");
+                    pair.second.addToHP(-2);
+                    if (pair.second.isDead()) {
+                        DailyEventState.characterDies(model, state, pair.second,
+                                " has fallen to " + GameState.hisOrHer(pair.second.getGender()) + " death!",
+                                true);
+                    } else {
+                        model.getParty().partyMemberSay(model, pair.second, List.of("Ouch", "Lost my footing!",
+                                "I think I've broken something... or some things.", "Yeouch!"));
+                    }
+                }
+
+            }
+        }
+        return model.getCurrentHex().getEveningState(model, false, false);
     }
 
     @Override
@@ -66,10 +111,6 @@ public class GoToCastleActionNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (state.isEvening()) {
-            state.println("The castle is closed now. Try again tomorrow.");
-            return false;
-        }
         return true;
     }
 
@@ -101,13 +142,16 @@ public class GoToCastleActionNode extends DailyActionNode {
     }
 
     private static class VisitCastleLordDailyActionNode extends VisitLordDailyActionState {
-        public VisitCastleLordDailyActionNode(Model model, Summon summon, UrbanLocation location) {
-            super(model, summon, location);
+        private final boolean breakIn;
+
+        public VisitCastleLordDailyActionNode(Model model, Summon summon, UrbanLocation location, boolean breakIn) {
+            super(model, summon, location, breakIn);
+            this.breakIn = breakIn;
         }
 
         @Override
         protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-            return new KeepSubView(advancedDailyActionState, matrix);
+            return new KeepSubView(advancedDailyActionState, matrix, !breakIn);
         }
     }
 }

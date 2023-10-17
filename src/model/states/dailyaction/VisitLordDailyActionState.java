@@ -33,10 +33,6 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
         addNode(1, 1, new LordTreasuryNode(model, location, breakIn));
     }
 
-    public VisitLordDailyActionState(Model model, Summon summon, UrbanLocation location) {
-        this(model, summon, location, false);
-    }
-
     @Override
     protected Point getStartingPosition() {
         return new Point(3, 5);

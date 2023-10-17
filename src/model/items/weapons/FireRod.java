@@ -13,7 +13,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class FireRod extends WandWeapon {
-    private static final Sprite SPRITE = new ItemSprite(12, 11,
+    private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
 
     public FireRod() {

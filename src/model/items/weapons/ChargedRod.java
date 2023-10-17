@@ -12,7 +12,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class ChargedRod extends WandWeapon {
-    private static final Sprite SPRITE = new ItemSprite(12, 11,
+    private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.GOLD);
     private int charge = 0;
 

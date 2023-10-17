@@ -70,8 +70,10 @@ public abstract class DailyActionSubView extends AvatarSubView {
     }
 
     private void drawAvatar(Model model) {
-        Point p = convertToScreen(state.getCurrentPosition());
-        model.getScreenHandler().register("townavatar", p, model.getParty().getLeader().getAvatarSprite(), 2);
+        if (model.getParty().getLeader() != null) { // If party has been wiped out and this is just before game over screen
+            Point p = convertToScreen(state.getCurrentPosition());
+            model.getScreenHandler().register("townavatar", p, model.getParty().getLeader().getAvatarSprite(), 2);
+        }
     }
 
     @Override
