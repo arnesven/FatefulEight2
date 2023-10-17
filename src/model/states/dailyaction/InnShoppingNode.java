@@ -29,6 +29,11 @@ public class InnShoppingNode extends ShoppingNode {
     }
 
     @Override
+    protected int getShopSecurity() {
+        return 7;
+    }
+
+    @Override
     protected int[] getSpecialPrices(List<Item> inventory) {
         int[] prices = new int[inventory.size()];
         for (int i = 0; i < inventory.size(); ++i) {

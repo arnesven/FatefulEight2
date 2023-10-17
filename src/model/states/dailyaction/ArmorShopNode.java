@@ -34,6 +34,11 @@ public class ArmorShopNode extends GeneralShopNode {
     }
 
     @Override
+    protected int getShopSecurity() {
+        return 10;
+    }
+
+    @Override
     public Sprite getForegroundSprite() {
         return ARMOR_SIGN;
     }

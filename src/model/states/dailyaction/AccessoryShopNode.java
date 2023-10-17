@@ -36,4 +36,9 @@ public class AccessoryShopNode extends GeneralShopNode {
         Collections.sort(inventory);
         return inventory;
     }
+
+    @Override
+    protected int getShopSecurity() {
+        return 8;
+    }
 }

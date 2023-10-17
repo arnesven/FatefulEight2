@@ -30,6 +30,11 @@ public class RoyalArmory extends GeneralShopNode {
     }
 
     @Override
+    protected int getShopSecurity() {
+        return 11;
+    }
+
+    @Override
     public Sprite getForegroundSprite() {
         return SIGN;
     }

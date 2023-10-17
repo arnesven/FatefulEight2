@@ -26,6 +26,11 @@ public class GeneralShopNode extends ShoppingNode {
                 MyRandom.randInt(7, 12), MyRandom.randInt(10, 20), MyRandom.randInt(6));
     }
 
+    @Override
+    protected int getShopSecurity() {
+        return 8;
+    }
+
     public int getColumn() {
         return column;
     }

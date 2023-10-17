@@ -31,6 +31,11 @@ public class MagicSuperShop extends GeneralShopNode {
     }
 
     @Override
+    protected int getShopSecurity() {
+        return 10;
+    }
+
+    @Override
     public Sprite getForegroundSprite() {
         return SIGN;
     }

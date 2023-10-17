@@ -33,6 +33,11 @@ public class WeaponShopNode extends GeneralShopNode {
     }
 
     @Override
+    protected int getShopSecurity() {
+        return 9;
+    }
+
+    @Override
     public Sprite getForegroundSprite() {
         return WEAPON_SIGN;
     }

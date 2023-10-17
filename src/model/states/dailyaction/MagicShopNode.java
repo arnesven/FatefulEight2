@@ -50,4 +50,9 @@ public class MagicShopNode extends GeneralShopNode {
         Collections.sort(inventory);
         return inventory;
     }
+
+    @Override
+    protected int getShopSecurity() {
+        return 9;
+    }
 }
