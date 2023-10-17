@@ -8,7 +8,9 @@ import util.MyRandom;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.StrikeEffectSprite;
 
-public abstract class EnemyAttackBehavior {
+import java.io.Serializable;
+
+public abstract class EnemyAttackBehavior implements Serializable {
     public abstract boolean canAttackBackRow();
 
     public int calculateDamage(Enemy enemy, boolean isRanged) {

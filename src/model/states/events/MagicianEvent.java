@@ -20,7 +20,7 @@ public class MagicianEvent extends DarkDeedsEvent {
     private AdvancedAppearance portrait;
 
     public MagicianEvent(Model model) {
-        super(model, "Watch ", MyRandom.randInt(30, 70));
+        super(model, "Watch", MyRandom.randInt(30, 70));
     }
 
     @Override

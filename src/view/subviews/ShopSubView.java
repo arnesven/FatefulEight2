@@ -27,7 +27,7 @@ public class ShopSubView extends TopMenuSubView {
 
     public ShopSubView(SteppingMatrix<Item> items, boolean isBuying, String seller,
                        Map<Item, Integer> prices, ShopState state) {
-        super(3, new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24});
+        super(5, new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24});
         this.matrix = items;
         this.isBuying = isBuying;
         this.seller = seller;

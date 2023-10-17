@@ -13,7 +13,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class IvyRod extends WandWeapon {
-    private static final Sprite SPRITE = new ItemSprite(13, 11,
+    private static final Sprite SPRITE = new ItemSprite(14, 11,
             MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
 
     public IvyRod() {

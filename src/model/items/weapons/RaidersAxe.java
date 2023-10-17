@@ -9,7 +9,7 @@ public class RaidersAxe extends AxeWeapon {
     private static final Sprite SPRITE = new ItemSprite(2, 11);
 
     public RaidersAxe() {
-        super("Raider's Axe", 18, new int[]{5, 8, 8, 10}, false);
+        super("Raider's Axe", 24, new int[]{5, 8, 8, 11}, false);
     }
 
     @Override
