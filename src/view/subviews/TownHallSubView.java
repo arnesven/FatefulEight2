@@ -34,9 +34,11 @@ public class TownHallSubView extends DailyActionSubView {
             MyColors.DARK_BROWN, MyColors.GOLD, MyColors.RED, MyColors.CYAN);
     private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
             MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+    private final boolean drawLord;
 
-    public TownHallSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
+    public TownHallSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean drawLord) {
         super(state, matrix);
+        this.drawLord = drawLord;
     }
 
     @Override
@@ -75,7 +77,9 @@ public class TownHallSubView extends DailyActionSubView {
         drawForeground(model, 0, 6, PLANT);
         drawForeground(model, 7, 6, PLANT);
         drawForeground(model, 4, 1, THRONE);
-        drawForeground(model, 4, 2, LORD);
+        if (drawLord) {
+            drawForeground(model, 4, 2, LORD);
+        }
     }
 
     @Override

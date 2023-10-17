@@ -19,11 +19,11 @@ import java.util.List;
 import java.util.Random;
 
 public class DungeonChest extends CenterDungeonObject {
-    private static final Sprite32x32 CHEST_OPEN = new Sprite32x32("chestopen", "dungeon.png", 0x42,
+    public static final Sprite32x32 CHEST_OPEN = new Sprite32x32("chestopen", "dungeon.png", 0x42,
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);
-    private static final Sprite32x32 CHEST_CLOSED = new Sprite32x32("chestclosed", "dungeon.png", 0x41,
+    public static final Sprite32x32 CHEST_CLOSED = new Sprite32x32("chestclosed", "dungeon.png", 0x41,
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);
-    private static final Sprite32x32 BIG_CHEST_OPEN = new Sprite32x32("bigchestopen", "dungeon.png", 0x52,
+    public static final Sprite32x32 BIG_CHEST_OPEN = new Sprite32x32("bigchestopen", "dungeon.png", 0x52,
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);
     public static final Sprite32x32 BIG_CHEST_CLOSED = new Sprite32x32("bigchestclosed", "dungeon.png", 0x51,
             MyColors.BLACK, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BROWN);

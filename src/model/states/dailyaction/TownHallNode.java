@@ -3,9 +3,11 @@ package model.states.dailyaction;
 import model.Model;
 import model.SteppingMatrix;
 import model.Summon;
+import model.TimeOfDay;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -21,10 +23,12 @@ public class TownHallNode extends DailyActionNode {
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SPRITE2 = new Sprite32x32("townhallright", "world_foreground.png", 0x63,
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+    private final boolean lordIsIn;
     private boolean admitted = false;
 
     public TownHallNode() {
         super("Town Hall");
+        this.lordIsIn = MyRandom.flipCoin();
     }
 
     @Override
@@ -33,10 +37,31 @@ public class TownHallNode extends DailyActionNode {
         if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             state.println("You have been admitted to town hall!");
             admitted = true;
-            return new VisitMayorDailyActionState(model, model.getParty().getSummons().get(location.getPlaceName()), location);
+            return new VisitMayorDailyActionState(model,
+                    model.getParty().getSummons().get(location.getPlaceName()), location, false);
         }
-        state.println("You are not admitted to the town hall today.");
-        return new SilentNoEventState(model);
+        if (model.getTimeOfDay() == TimeOfDay.EVENING || !lordIsIn) {
+            state.print("Town hall is closed, would you like to attempt to break in? (Y/N) ");
+            if (state.yesNoInput()) {
+                boolean success = model.getParty().doSoloLockpickCheck(model, state, 7);
+                if (success) {
+                    state.println("You broke into town hall!");
+                    admitted = true;
+                    return new BreakIntoTownHallDailyActionState(model, null, location);
+                }
+            }
+        } else {
+            state.print("You are not admitted to the town hall, would you like to attempt to break in? (Y/N) ");
+            if (state.yesNoInput()) {
+                boolean success = model.getParty().doSoloLockpickCheck(model, state, 7);
+                if (success) {
+                    state.println("You broke into town hall!");
+                    admitted = true;
+                    return new VisitMayorDailyActionState(model, null, location, false);
+                }
+            }
+        }
+        return model.getCurrentHex().getDailyActionState(model);
     }
 
     @Override
@@ -64,16 +89,6 @@ public class TownHallNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
-        UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
-        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
-            if (model.getParty().getSummons().get(location.getPlaceName()).getStep() == Summon.COMPLETE) {
-                return true;
-            }
-        }
-        if (townDailyActionState.isEvening()) {
-            townDailyActionState.println("It's too late in the day for that.");
-            return false;
-        }
         return true;
     }
 
@@ -81,13 +96,22 @@ public class TownHallNode extends DailyActionNode {
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 
     private static class VisitMayorDailyActionState extends VisitLordDailyActionState {
-        public VisitMayorDailyActionState(Model model, Summon summon, UrbanLocation location) {
-            super(model, summon, location);
+        private final boolean breakIn;
+
+        public VisitMayorDailyActionState(Model model, Summon summon, UrbanLocation location, boolean breakIn) {
+            super(model, summon, location, breakIn);
+            this.breakIn = breakIn;
         }
 
         @Override
         protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-            return new TownHallSubView(advancedDailyActionState, matrix);
+            return new TownHallSubView(advancedDailyActionState, matrix, !breakIn);
+        }
+    }
+
+    private static class BreakIntoTownHallDailyActionState extends VisitMayorDailyActionState {
+        public BreakIntoTownHallDailyActionState(Model model, Summon summon, UrbanLocation location) {
+            super(model, summon, location, true);
         }
     }
 }

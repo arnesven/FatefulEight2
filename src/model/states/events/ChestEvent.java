@@ -7,6 +7,7 @@ import model.classes.SkillCheckResult;
 import model.combat.StandardCombatLoot;
 import model.items.Lockpick;
 import model.states.DailyEventState;
+import model.states.GameState;
 import sound.SoundEffects;
 
 import java.util.List;
@@ -46,24 +47,28 @@ public class ChestEvent extends DailyEventState {
         boolean success = model.getParty().doSoloLockpickCheck(model, this, 7);
 
         if (success) {
-            model.getParty().randomPartyMemberSay(model, List.of("It's opening!"));
-            SoundEffects.playUnlock();
-            int gold = 0;
-            for (int i = 0; i < 5; ++i) {
-                StandardCombatLoot loot = new StandardCombatLoot(model);
-                if (!loot.getText().equals("")) {
-                    println("The party finds " + loot.getText());
-                }
-                gold += loot.getGold();
-                loot.giveYourself(model.getParty());
-            }
-            println("The party finds " + gold + " gold!");
-            model.getParty().randomPartyMemberSay(model, List.of("Lucky!",
-                    "One man's treasure is another man's... well treasure.",
-                    "Who left this here?", "Free stuff!"));
+            chestOpens(model, this, 5);
         } else {
             model.getParty().randomPartyMemberSay(model, List.of("Well, we're not getting into that thing. We had better just forget about it."));
             model.getParty().randomPartyMemberSay(model, List.of("What a shame!", "But I really wanted to know what was inside!"));
         }
+    }
+
+    public static void chestOpens(Model model, GameState state, int loots) {
+        model.getParty().randomPartyMemberSay(model, List.of("It's opening!"));
+        SoundEffects.playUnlock();
+        int gold = 0;
+        for (int i = 0; i < loots; ++i) {
+            StandardCombatLoot loot = new StandardCombatLoot(model);
+            if (!loot.getText().equals("")) {
+                state.println("The party finds " + loot.getText());
+            }
+            gold += loot.getGold();
+            loot.giveYourself(model.getParty());
+        }
+        state.println("The party finds " + gold + " gold!");
+        model.getParty().randomPartyMemberSay(model, List.of("Lucky!",
+                "One man's treasure is another man's... well treasure.",
+                "Who left this here?", "Free stuff!"));
     }
 }

@@ -734,7 +734,7 @@ public class Party implements Serializable {
 
     public boolean doSoloLockpickCheck(Model model, GameState state, int difficulty) {
         int newDiff = Lockpick.askToUseLockpick(model, state, difficulty);
-        boolean success = doSoloSkillCheck(model, state, Skill.Security, difficulty);
+        boolean success = doSoloSkillCheck(model, state, Skill.Security, newDiff);
         if (difficulty == newDiff) {
             Lockpick.checkForBreakage(model, state, success);
         }

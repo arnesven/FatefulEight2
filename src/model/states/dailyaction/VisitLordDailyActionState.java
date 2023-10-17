@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
+import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
@@ -20,13 +21,20 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
     private final UrbanLocation location;
     private boolean spentNight;
 
-    public VisitLordDailyActionState(Model model, Summon summon, UrbanLocation location) {
+    public VisitLordDailyActionState(Model model, Summon summon, UrbanLocation location, boolean breakIn) {
         super(model);
         this.summon = summon;
         this.location = location;
         spentNight = false;
-        addNode(4, 3, new TalkToLordNode());
+        if (!breakIn) {
+            addNode(4, 3, new TalkToLordNode());
+        }
         addNode(3, 7, new ExitLocaleNode("Leave " + location.getLordDwelling(), location.getExitSprite()));
+        addNode(1, 1, new LordTreasuryNode(model, location, breakIn));
+    }
+
+    public VisitLordDailyActionState(Model model, Summon summon, UrbanLocation location) {
+        this(model, summon, location, false);
     }
 
     @Override
@@ -54,6 +62,11 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
 
         @Override
         public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+            if (summon == null) {
+                state.println(location.getLordName() + ": \"Excuse me, what are you doing in here? " +
+                        "I've told my servants I'm not to be disturbed with the trifles of commoners.\"");
+                return false;
+            }
             if (state.isEvening() && summon.getStep() != Summon.COMPLETE) {
                 state.println(location.getLordName() + ": \"I'm sorry but it's too late in the day now. Please come back tomorrow.\"");
                 return false;
