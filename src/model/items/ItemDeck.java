@@ -277,7 +277,7 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<? extends Weapon> allBluntWeapons() {
         return List.of(new Club(), new LongStaff(), new OldStaff(), new MagesStaff(),
                 new Scepter(), new MorningStar(), new Flail(), new Warhammer(), new Mace(),
-                new GrandMaul(), new TripleFlail());
+                new GrandMaul(), new TripleFlail(), new IronStaff(), new GrandStaff());
     }
 
     public static List<? extends Weapon> allBlades() {
