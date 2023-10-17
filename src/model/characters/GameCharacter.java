@@ -469,7 +469,9 @@ public class GameCharacter extends Combatant {
 
     public void unequipArmor() {
         if (!(equipment.getClothing() instanceof JustClothes)) {
-            party.getInventory().add(equipment.getClothing());
+            if (party != null) {
+                party.getInventory().add(equipment.getClothing());
+            }
         }
         equipment.setClothing(new JustClothes());
     }

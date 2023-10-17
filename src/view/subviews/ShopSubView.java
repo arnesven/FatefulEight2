@@ -141,7 +141,9 @@ public class ShopSubView extends TopMenuSubView {
             } else {
                 cost /= 2;
             }
-            return it.getName() + " " + cost + " gold" + it.getShoppingDetails();
+            return it.getName() + " " + cost + " gold, " +
+                    it.getWeight() / 1000.0 + " kg" +
+                    it.getShoppingDetails();
         }
         return "";
     }
