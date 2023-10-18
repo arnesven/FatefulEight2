@@ -92,6 +92,7 @@ public class LordTreasuryNode extends DailyActionNode {
             println("You were expelled from " + location.getLordDwelling() + ".");
             print("Press enter to continue.");
             waitForReturn();
+            model.getParty().unbenchAll();
             return new SilentNoEventState(model);
         }
 

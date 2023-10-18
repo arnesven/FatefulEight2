@@ -16,6 +16,7 @@ public class ExitLocaleNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        model.getParty().unbenchAll();
         return null;
     }
 
