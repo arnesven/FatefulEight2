@@ -3,8 +3,8 @@ package view.help;
 import model.Model;
 import view.GameView;
 import view.PartyAttitudesDialog;
+import view.party.DrawableObject;
 import view.sprites.Sprite;
-import view.widget.TopText;
 
 import java.awt.*;
 import java.util.List;

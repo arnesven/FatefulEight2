@@ -4,6 +4,7 @@ import model.Model;
 import model.map.*;
 import util.MyStrings;
 import view.GameView;
+import view.party.DrawableObject;
 
 import java.util.ArrayList;
 import java.util.List;

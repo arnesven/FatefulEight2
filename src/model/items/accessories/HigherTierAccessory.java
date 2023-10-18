@@ -1,6 +1,7 @@
 package model.items.accessories;
 
 import model.classes.Skill;
+import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.spells.Spell;
@@ -10,15 +11,14 @@ import view.sprites.HigherTierItemSprite;
 
 import java.util.List;
 
-public class HigherTierAccessory extends Accessory {
-    private static final int COST_MULTIPLIER = 3;
+public class HigherTierAccessory extends Accessory implements HigherTierItem {
     private final Accessory inner;
     private final HigherTierItemSprite sprite;
     private final int tier;
 
     public HigherTierAccessory(Accessory inner, int tier) {
         super(Item.getHigherTierPrefix(tier) + " " + inner.getName(),
-                inner.getCost() * COST_MULTIPLIER);
+                inner.getCost()*(tier*2+1));
         this.inner = inner;
         this.sprite = new HigherTierItemSprite(inner.getSpriteForHigherTier(tier), tier);
         this.tier = tier;
@@ -104,5 +104,15 @@ public class HigherTierAccessory extends Accessory {
     @Override
     public Prevalence getPrevalence() {
         return inner.getPrevalence();
+    }
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public Item getInnerItem() {
+        return inner;
     }
 }

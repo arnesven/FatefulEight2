@@ -2,6 +2,7 @@ package view.help;
 
 import model.Model;
 import view.GameView;
+import view.party.DrawableObject;
 import view.widget.TopText;
 
 import java.util.List;

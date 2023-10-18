@@ -2,13 +2,11 @@ package view;
 
 import model.Model;
 import model.items.Item;
-import model.items.weapons.Weapon;
-import util.BeforeAndAfterLine;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 

@@ -3,6 +3,7 @@ package view;
 import control.FatefulEight;
 import model.Model;
 import model.SettingsManager;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.widget.TopText;
 

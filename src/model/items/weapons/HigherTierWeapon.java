@@ -2,6 +2,7 @@ package model.items.weapons;
 
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
 import util.MyPair;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HigherTierWeapon extends Weapon {
+public class HigherTierWeapon extends Weapon implements HigherTierItem {
     private final Weapon inner;
     private final int tier;
     private Sprite sprite;
@@ -122,5 +123,15 @@ public class HigherTierWeapon extends Weapon {
     @Override
     public int getWeight() {
         return inner.getWeight();
+    }
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public Item getInnerItem() {
+        return inner;
     }
 }

@@ -2,6 +2,7 @@ package view.help;
 
 import model.Model;
 import model.characters.GameCharacter;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;

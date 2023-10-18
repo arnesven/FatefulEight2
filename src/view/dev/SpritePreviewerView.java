@@ -8,6 +8,7 @@ import view.GameView;
 import view.MyColors;
 import view.SpriteManager;
 import view.party.CharacterCreationView;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;

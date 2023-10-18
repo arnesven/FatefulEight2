@@ -6,6 +6,7 @@ import model.items.Item;
 import model.items.spells.Spell;
 import util.Arithmetics;
 import util.MyStrings;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.AnimatedCharSprite;
 import view.sprites.MovingRightArrow;

@@ -4,7 +4,6 @@ import model.Model;
 import model.actions.AbilityCombatAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.RandomAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.CombatAction;
 import model.enemies.Enemy;

@@ -7,9 +7,9 @@ import model.items.Item;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import util.BeforeAndAfterLine;
+import view.party.DrawableObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class AnalyzeArmorDialog extends AnalyzeDialog {

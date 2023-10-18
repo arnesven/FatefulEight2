@@ -4,6 +4,7 @@ import model.Model;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import view.GameView;
+import view.party.DrawableObject;
 import view.sprites.Sprite;
 
 import java.awt.*;

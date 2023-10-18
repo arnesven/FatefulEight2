@@ -3,7 +3,6 @@ package view.party;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Condition;
-import view.BorderFrame;
 import view.MyColors;
 
 import java.awt.*;

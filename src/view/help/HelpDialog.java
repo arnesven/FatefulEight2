@@ -4,12 +4,11 @@ import model.Model;
 import util.MyStrings;
 import view.GameView;
 import view.MyColors;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
-import view.sprites.CharSprite;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class HelpDialog extends SelectableListMenu {

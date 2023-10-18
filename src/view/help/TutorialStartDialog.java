@@ -4,6 +4,7 @@ import model.Model;
 import view.BorderFrame;
 import view.GameView;
 import view.MyColors;
+import view.party.DrawableObject;
 import view.sprites.CharSprite;
 
 import java.awt.event.KeyEvent;

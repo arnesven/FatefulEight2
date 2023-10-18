@@ -2,7 +2,6 @@ package view.party;
 
 import model.Model;
 import model.characters.GameCharacter;
-import view.BorderFrame;
 import view.MyColors;
 
 import java.awt.event.KeyEvent;

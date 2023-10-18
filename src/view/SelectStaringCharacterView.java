@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import util.Arithmetics;
 import view.party.CharacterCreationView;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.Sprite;
 

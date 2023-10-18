@@ -2,14 +2,14 @@ package model.items;
 
 import model.classes.Skill;
 import model.items.clothing.Clothing;
+import model.items.spells.Spell;
 import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.HigherTierItemSprite;
 
 import java.util.List;
 
-public class HigherTierClothing extends Clothing {
-    private static final int COST_MULTIPLIER = 3;
+public class HigherTierClothing extends Clothing implements HigherTierItem {
     private final Clothing innerItem;
     private final HigherTierItemSprite sprite;
     private final int tier;
@@ -43,17 +43,36 @@ public class HigherTierClothing extends Clothing {
     }
 
     @Override
-    public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        return innerItem.getSkillBonuses();
+    public int getSpeedModifier() {
+        if (innerItem.getSpeedModifier() > 0) {
+            return innerItem.getSpeedModifier() + 2*tier;
+        }
+        return 0;
     }
 
     @Override
-    public int getSpeedModifier() {
-        return innerItem.getSpeedModifier();
+    public List<MyPair<Skill, Integer>> getSkillBonuses() {
+        List<MyPair<Skill, Integer>> bonuses = innerItem.getSkillBonuses();
+        for (MyPair<Skill, Integer> pair : bonuses) {
+            if (pair.second > 0) {
+                pair.second += 1 * tier;
+            }
+        }
+        return bonuses;
     }
 
     @Override
     public Prevalence getPrevalence() {
         return innerItem.getPrevalence();
+    }
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public Item getInnerItem() {
+        return innerItem;
     }
 }

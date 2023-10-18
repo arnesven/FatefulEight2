@@ -2,8 +2,8 @@ package view;
 
 import model.GameScore;
 import model.Model;
-import model.states.GameState;
 import util.MyStrings;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;

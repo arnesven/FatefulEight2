@@ -6,6 +6,7 @@ import model.tutorial.TutorialLoans;
 import model.tutorial.TutorialTraining;
 import view.GameView;
 import view.TwoPaneSelectableListMenu;
+import view.party.DrawableObject;
 
 import java.util.ArrayList;
 import java.util.List;

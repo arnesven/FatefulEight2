@@ -387,6 +387,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void upgrading(Model model) {
+        runOnce("upgrading", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialUpgrading(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

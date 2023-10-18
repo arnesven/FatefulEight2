@@ -1,7 +1,6 @@
 package view.party;
 
 import model.Model;
-import sound.ClientSoundManager;
 import sound.SoundEffects;
 import view.*;
 import view.sprites.AnimatedCharSprite;
@@ -260,14 +259,6 @@ public abstract class SelectableListMenu extends GameView {
             }
             return MyColors.BLACK;
         }
-    }
-
-    protected abstract static class DrawableObject {
-        public Point position;
-        public DrawableObject(int x, int y) {
-            this.position = new Point(x, y);
-        }
-        public abstract void drawYourself(Model model, int x, int y);
     }
 
     protected static class TextDecoration extends DrawableObject {

@@ -5,6 +5,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
 import model.races.Race;
 import view.GameView;
+import view.party.DrawableObject;
 
 import java.util.List;
 

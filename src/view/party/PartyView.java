@@ -7,13 +7,11 @@ import model.classes.Skill;
 import model.items.ArmorItem;
 import model.items.Item;
 import model.items.accessories.Accessory;
-import model.items.clothing.Clothing;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import util.MyPair;
 import view.*;
 import view.help.RaceAndClassHelpDialog;
-import view.help.SpecificClassHelpDialog;
 import view.sprites.ArrowSprites;
 
 import java.awt.event.KeyEvent;

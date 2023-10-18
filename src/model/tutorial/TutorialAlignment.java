@@ -2,9 +2,8 @@ package model.tutorial;
 
 import model.Model;
 import view.GameView;
-import view.MyColors;
 import view.help.HelpDialog;
-import view.sprites.CharSprite;
+import view.party.DrawableObject;
 import view.widget.TopText;
 
 import java.util.List;

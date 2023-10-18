@@ -3,8 +3,8 @@ package view;
 import model.Model;
 import model.items.Item;
 import model.items.Scroll;
-import model.items.spells.Spell;
 import util.BeforeAndAfterLine;
+import view.party.DrawableObject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,12 +2,12 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.horses.HorseItemAdapter;
 import model.items.*;
 import model.items.spells.Spell;
 import sound.SoundEffects;
 import util.Arithmetics;
 import util.MyStrings;
+import view.party.DrawableObject;
 import view.party.FixedPositionSelectableListMenu;
 import view.party.SelectableListMenu;
 import view.sprites.AnimatedCharSprite;
@@ -135,7 +135,7 @@ public class InventoryView extends SelectableListMenu {
         String result = it.getName();
         for (String prefix : Item.TIER_PREFIXES) {
             if (it.getName().contains(prefix)) {
-                result = result.replace(prefix, prefix.substring(0, 3));
+                result = result.replace(prefix, prefix.substring(0, 3).toUpperCase());
                 break;
             }
         }

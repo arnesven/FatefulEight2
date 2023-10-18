@@ -4,15 +4,11 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Equipment;
 import model.items.Item;
-import model.items.accessories.Accessory;
-import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
 import util.BeforeAndAfterLine;
-import view.party.SelectableListMenu;
+import view.party.DrawableObject;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class AnalyzeWeaponDialog extends AnalyzeDialog {

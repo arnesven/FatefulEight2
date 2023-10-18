@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import util.BeforeAndAfterLine;
+import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
@@ -67,12 +68,7 @@ public class LevelUpSummaryView extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> list = new ArrayList<>();
-        list.add(new SelectableListContent(xStart+getWidth()/2-1, yStart+getHeight()-2, "OK") {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                setTimeToTransition(true);
-            }
-        });
+        list.add(makeOkButton(model, xStart+getWidth()/2-1, yStart+getHeight()-2, this));
         return list;
     }
 
