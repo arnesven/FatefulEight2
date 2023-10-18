@@ -9,7 +9,7 @@ public class Choppa extends AxeWeapon {
     private static final Sprite SPRITE = new ItemSprite(1, 11);
 
     public Choppa() {
-        super("Choppa", 12, new int[]{5, 6, 12}, false);
+        super("Choppa", 15, new int[]{5, 6, 12}, false);
     }
 
     @Override

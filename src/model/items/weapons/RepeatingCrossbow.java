@@ -9,7 +9,7 @@ public class RepeatingCrossbow extends CrossbowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(3, 7);
 
     public RepeatingCrossbow() {
-        super("Repeating Crossbow", 24, new int[]{7, 9});
+        super("Repeating Crossbow", 38, new int[]{7, 9});
     }
 
     @Override

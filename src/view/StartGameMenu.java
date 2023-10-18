@@ -1,12 +1,11 @@
 package view;
 
-import model.CorruptSaveFileException;
+import development.Balancing;
 import model.Model;
 import sound.SoundEffects;
 import view.sprites.ArrowSprites;
 
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 
 public class StartGameMenu extends GameView {
     private static final int X_START = 6;

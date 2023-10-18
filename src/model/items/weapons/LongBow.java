@@ -9,7 +9,7 @@ public class LongBow extends BowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 6);
 
     public LongBow() {
-        super("Long Bow", 22, new int[]{10,10,13,13});
+        super("Long Bow", 20, new int[]{10,10,13,13});
     }
 
     @Override

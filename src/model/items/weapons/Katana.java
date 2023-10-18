@@ -8,7 +8,7 @@ public class Katana extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(10, 0);
 
     public Katana() {
-        super("Katana", 26, new int[]{9, 10, 11, 12, 13}, true, 1);
+        super("Katana", 20, new int[]{9, 10, 11, 12, 13}, true, 1);
     }
 
     @Override

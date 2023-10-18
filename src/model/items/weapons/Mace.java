@@ -8,7 +8,7 @@ public class Mace extends BluntWeapon {
     private static final Sprite SPRITE = new ItemSprite(8, 1);
 
     public Mace() {
-        super("Mace", 16, new int[]{5, 8, 10}, false, 1);
+        super("Mace", 21, new int[]{5, 8, 10}, false, 1);
     }
 
     @Override

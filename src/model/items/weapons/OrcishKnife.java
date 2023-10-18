@@ -8,7 +8,7 @@ public class OrcishKnife extends BladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 0);
 
     public OrcishKnife() {
-        super("Orcish Knife", 14, new int[]{3, 7}, false, 1);
+        super("Orcish Knife", 18, new int[]{3, 7}, false, 1);
     }
 
     @Override

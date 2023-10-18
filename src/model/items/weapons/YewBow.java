@@ -12,7 +12,7 @@ public class YewBow extends BowWeapon {
     private final TwoHandedItemSprite sprite;
 
     public YewBow() {
-        super("Yew Bow", 18, new int[]{7,11,13,15});
+        super("Yew Bow", 21, new int[]{7,11,13,15});
         MyColors color = MyRandom.sample(List.of(MyColors.GREEN, MyColors.YELLOW, MyColors.LIGHT_BLUE, MyColors.TAN));
         sprite = new TwoHandedItemSprite(5, 7, MyColors.BROWN, MyColors.LIGHT_GRAY, color);
     }

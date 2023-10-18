@@ -10,7 +10,7 @@ public class Zweihander extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(12, 1);
 
     public Zweihander() {
-        super("Zweihander", 30, new int[]{6, 8, 13, 16, 19}, true, 1);
+        super("Zweihander", 30, new int[]{6, 8, 11, 14, 14}, true, 1);
     }
 
     @Override

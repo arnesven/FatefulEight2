@@ -13,7 +13,7 @@ public class TwinHatchets extends AxeWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 11);
 
     public TwinHatchets() {
-        super("Twin Hatchets", 10, new int[]{6, 11}, true);
+        super("Twin Hatchets", 16, new int[]{6, 11}, true);
     }
 
     @Override

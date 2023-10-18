@@ -8,7 +8,7 @@ public class Halberd extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(5, 4);
 
     public Halberd() {
-        super("Halberd", 26, new int[]{6,8,10,10});
+        super("Halberd", 23, new int[]{6,8,10,10});
     }
 
     @Override

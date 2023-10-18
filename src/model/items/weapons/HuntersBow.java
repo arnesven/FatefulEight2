@@ -8,7 +8,7 @@ public class HuntersBow extends BowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(4, 7);
 
     public HuntersBow() {
-        super("Hunter's Bow", 22, new int[]{8,9,11,14});
+        super("Hunter's Bow", 25, new int[]{8,9,11,14});
     }
 
     @Override

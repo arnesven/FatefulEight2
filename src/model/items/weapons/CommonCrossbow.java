@@ -8,7 +8,7 @@ public class CommonCrossbow extends CrossbowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 7);
 
     public CommonCrossbow() {
-        super("Crossbow", 24, new int[]{8,9,10,14});
+        super("Crossbow", 28, new int[]{8,9,10,14});
     }
 
     @Override

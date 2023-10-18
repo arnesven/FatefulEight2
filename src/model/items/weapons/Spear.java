@@ -9,7 +9,7 @@ public class Spear extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 4);
 
     public Spear() {
-        super("Spear", 16, new int[]{9, 9, 9, 9});
+        super("Spear", 20, new int[]{9, 9, 9, 9});
     }
 
     @Override

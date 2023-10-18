@@ -10,7 +10,7 @@ public class Claymore extends BladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(12, 0);
 
     public Claymore() {
-        super("Claymore", 26, new int[]{7,9,12,13}, true, 0);
+        super("Claymore", 24, new int[]{7,9,12,13}, true, 0);
     }
 
     @Override

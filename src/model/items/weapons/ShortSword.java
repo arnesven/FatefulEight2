@@ -9,7 +9,7 @@ public class ShortSword extends BladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(3, 0);
 
     public ShortSword() {
-        super("Short Sword", 10, new int[]{5, 9}, false, 1);
+        super("Short Sword", 14, new int[]{5, 9}, false, 1);
     }
 
     @Override

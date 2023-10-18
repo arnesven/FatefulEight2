@@ -9,7 +9,7 @@ public class Kukri extends BladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 11);
 
     public Kukri() {
-        super("Kukri", 22, new int[]{5, 9}, false, 1);
+        super("Kukri", 26, new int[]{5, 9}, false, 1);
     }
 
     @Override

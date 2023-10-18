@@ -13,7 +13,7 @@ public class TwinDaggers extends TwinBladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(5, 11);
 
     public TwinDaggers() {
-        super("Twin Daggers", 16, new int[]{4, 10}, true, 1);
+        super("Twin Daggers", 22, new int[]{4, 10}, true, 1);
     }
 
     @Override

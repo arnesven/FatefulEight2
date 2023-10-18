@@ -15,7 +15,7 @@ public class IronStaff extends StaffWeapon {
             MyColors.GRAY, MyColors.DARK_RED, MyColors.PEACH);
 
     public IronStaff() {
-        super("Iron Staff", 32, new int[]{6, 9, 11});
+        super("Iron Staff", 28, new int[]{6, 9, 11});
     }
 
     @Override

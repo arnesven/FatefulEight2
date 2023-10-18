@@ -8,7 +8,7 @@ public class Glaive extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(4, 4);
 
     public Glaive() {
-        super("Glaive", 24, new int[]{8,8,10,10,10});
+        super("Glaive", 26, new int[]{8,8,10,10,10});
     }
 
     @Override

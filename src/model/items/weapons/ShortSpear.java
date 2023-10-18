@@ -8,7 +8,7 @@ public class ShortSpear extends PolearmWeapon {
     private static final Sprite SPRITE = new ItemSprite(7, 4);
 
     public ShortSpear() {
-        super("Short Spear", 16, new int[]{8, 9, 10});
+        super("Short Spear", 18, new int[]{8, 9, 10});
     }
 
     @Override

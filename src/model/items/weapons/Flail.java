@@ -9,7 +9,7 @@ public class Flail extends BluntWeapon {
     private static final Sprite SPRITE = new ItemSprite(6, 1);
 
     public Flail() {
-        super("Flail", 16, new int[]{5,6,10}, false, -1);
+        super("Flail", 21, new int[]{5,6,10}, false, -1);
     }
 
     @Override

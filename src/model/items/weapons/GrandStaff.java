@@ -15,7 +15,7 @@ public class GrandStaff extends StaffWeapon {
             MyColors.PINK, MyColors.GRAY, MyColors.LIGHT_GREEN);
 
     public GrandStaff() {
-        super("Grand Staff", 44, new int[]{6, 9, 9, 11});
+        super("Grand Staff", 34, new int[]{6, 9, 9, 11});
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Pike extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(6, 4);
 
     public Pike() {
-        super("Pike", 22, new int[]{9,9,9,9,9,9});
+        super("Pike", 34, new int[]{9,9,9,9,9,9});
     }
 
     @Override

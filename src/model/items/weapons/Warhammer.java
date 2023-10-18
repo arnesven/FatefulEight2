@@ -8,7 +8,7 @@ public class Warhammer extends BluntWeapon {
     private static final Sprite SPRITE = new ItemSprite(7, 1);
 
     public Warhammer() {
-        super("Warhammer", 16, new int[]{4,7,10}, false, -1);
+        super("Warhammer", 18, new int[]{4,7,10}, false, -1);
     }
 
     @Override
