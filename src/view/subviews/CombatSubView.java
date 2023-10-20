@@ -27,15 +27,14 @@ public class CombatSubView extends SubView {
     private final CombatEvent combat;
     private final CombatMatrix combatMatrix;
     private final CombatTheme theme;
-    private final Sprite initiativeMarker = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
-    private final Sprite currentMarker = new QuestCursorSprite();
+    public static final Sprite INITIATIVE_MARKER = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
+    public static final Sprite CURRENT_MARKER = new QuestCursorSprite();
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
         this.combatMatrix = combatMatrix;
         this.theme = theme;
     }
-
 
     @Override
     protected String getUnderText(Model model) {
@@ -97,7 +96,7 @@ public class CombatSubView extends SubView {
                 if (combatant != null) {
                     combatant.drawYourself(model.getScreenHandler(), xpos, ypos, getInitiativeSymbol(combatant, model));
                     if (combatant == combat.getCurrentCombatant()) {
-                        model.getScreenHandler().register(currentMarker.getName(), new Point(xpos, ypos), currentMarker);
+                        model.getScreenHandler().register(CURRENT_MARKER.getName(), new Point(xpos, ypos), CURRENT_MARKER);
                     }
                 }
             }
@@ -121,7 +120,7 @@ public class CombatSubView extends SubView {
         for (Combatant combatant : combat.getInitiativeOrder()) {
             if (isCombatantsTurn(combatant)) {
                 model.getScreenHandler().put(xPosStart + col - 1, Y_MAX - 1 ,
-                        initiativeMarker);
+                        INITIATIVE_MARKER);
             }
             model.getScreenHandler().put(xPosStart + col, Y_MAX - 1 , getInitiativeSymbol(combatant, model));
             col += 2;

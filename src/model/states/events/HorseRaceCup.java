@@ -262,33 +262,11 @@ public class HorseRaceCup extends TournamentEvent {
     }
 
     private List<GameCharacter> makeRiders() {
-        List<String> girlFirstNames = new ArrayList<>(COMMON_GIRL_FIRST_NAMES);
-        List<String> boyFirstNames = new ArrayList<>(COMMON_BOY_FIRST_NAMES);
-        List<String> lastNames = new ArrayList<>(COMMON_LAST_NAMES);
+        int level = (int)Math.ceil(GameState.calculateAverageLevel(getModel()));
         List<GameCharacter> riders = new ArrayList<>();
         for (int i = 0; i < 6; ++i) {
-            CharacterClass cls = Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)];
-            Race race = Race.randomRace();
-            boolean gender = MyRandom.flipCoin();
-            AdvancedAppearance portrait = PortraitSubView.makeRandomPortrait(cls, race, gender);
-            String firstName;
-            if (gender) {
-                firstName = girlFirstNames.remove(MyRandom.randInt(girlFirstNames.size()));
-            } else {
-                firstName = boyFirstNames.remove(MyRandom.randInt(boyFirstNames.size()));
-            }
-            String lastName = lastNames.remove(MyRandom.randInt(lastNames.size()));
-            GameCharacter gc = new GameCharacter(firstName, lastName, race, cls, portrait,
-                    makeRandomClassSet(cls));
-            gc.setLevel((int)Math.ceil(GameState.calculateAverageLevel(getModel())));
-            riders.add(gc);
+            riders.add(makeRandomCharacter(level));
         }
         return riders;
-    }
-
-    private CharacterClass[] makeRandomClassSet(CharacterClass cls) {
-        return new CharacterClass[]{cls, Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)],
-                Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)],
-                Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)]};
     }
 }

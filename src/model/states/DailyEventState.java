@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -12,6 +13,7 @@ import model.enemies.Enemy;
 import model.items.potions.Potion;
 import model.items.potions.RevivingElixir;
 import model.races.Race;
+import util.MyRandom;
 import util.MyStrings;
 import view.subviews.*;
 
