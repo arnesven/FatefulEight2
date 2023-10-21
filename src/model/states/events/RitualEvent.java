@@ -23,10 +23,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class RitualEvent extends DailyEventState {
-    private static final int DEFAULT_NPC_MAGES = 4; // TODO: 4
-    private static final int CAST_BEAM_DIFFICULTY = 1; // TODO: 8
-    private static final int RECEIVE_BEAM_DIFFICULTY = 1; // TODO: 5
-    private static final int COMMAND_NPC_CHANCE = 8; // TODO: 7
+    private static final int DEFAULT_NPC_MAGES = 4;
+    public static final int CAST_BEAM_DIFFICULTY = 8;
+    public static final int RECEIVE_BEAM_DIFFICULTY = 5;
+    private static final int COMMAND_NPC_CHANCE = 8;
+    public static final int DROP_OUT_HP_THRESHOLD = 3;
     private final Skill primeMagicSkill;
     private List<GameCharacter> benched;
     private List<GameCharacter> ritualists;
@@ -68,6 +69,8 @@ public abstract class RitualEvent extends DailyEventState {
         CollapsingTransition.transition(model, subView);
 
         print("Press enter to start the ritual.");
+        model.getTutorial().rituals(model);
+        model.getTutorial().ritualBeams(model);
         waitForReturn();
         while (!ritualFailed() && !ritualSucceeded()) {
             print(turnTaker.getName() + "'s turn. ");
@@ -75,7 +78,7 @@ public abstract class RitualEvent extends DailyEventState {
                 println(turnTaker.getFirstName() + " takes damage from maintaining the beam.");
                 takeBeamDamage(turnTaker, subView);
             }
-            if (turnTaker.getHP() < 3) {
+            if (turnTaker.getHP() < DROP_OUT_HP_THRESHOLD) {
                 dropOut(turnTaker);
             } else {
                 subView.setCursor(turnTaker);

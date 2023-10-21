@@ -394,6 +394,20 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void rituals(Model model) {
+        runOnce("rituals", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialRituals(model.getView()));
+        });
+    }
+
+    public void ritualBeams(Model model) {
+        runOnce("ritualbeams", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialBeams(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

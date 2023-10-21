@@ -20,12 +20,12 @@ public class FertilityRitualEvent extends RitualEvent {
 
     @Override
     protected void runEventIntro(Model model, List<GameCharacter> ritualists) {
-        println("Fertility event intro text TODO");
+        println("There are some mages here who are about to perform a fertility ritual. Do you wish to help them?");
     }
 
     @Override
     protected void runEventOutro(Model model) {
-        println("Fertility event outro text TODO");
+        println("The fertility of the land has been greatly improved.");
     }
 
 }
