@@ -1,8 +1,8 @@
 package view.subviews;
 
 import model.Model;
-import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.events.RitualEvent;
 import util.Arithmetics;
@@ -13,34 +13,47 @@ import view.sprites.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static view.subviews.CombatSubView.CURRENT_MARKER;
 import static view.subviews.CombatSubView.INITIATIVE_MARKER;
 
 public class RitualSubView extends SubView implements Animation {
+    private static final int WINDOW_WIDTH = X_MAX - X_OFFSET;
+    private static final int EXTRA_Y_OFFSET = 4;
+    private static final int RADIUS = 10;
+    private static final Point ORIGIN = new Point(X_OFFSET + WINDOW_WIDTH/2 - 2, Y_OFFSET + RADIUS + EXTRA_Y_OFFSET);
+
     private final CombatTheme theme;
     private final RitualEvent ritual;
+    private final Sprite centerSprite;
     private int selected = 0;
-    private static final ParticleSprite BEAM_PARTICLE = new ParticleSprite(0x00, MyColors.LIGHT_GREEN);
-    private static final ParticleSprite SMALL_BEAM_PARTICLE = new ParticleSprite(0x10, MyColors.LIGHT_GREEN);
-    private static final ParticleSprite[] ANGLED_BEAMS = makeAngledBeams();
+    private ParticleSprite beamParticle;
+    private ParticleSprite smallBeamParticle;
+    private ParticleSprite[] angledBeams;
 
     private MyPair<GameCharacter, GameCharacter> temporaryBeam;
     private double tempBeamProgress = 0.0;
     private boolean ritualSuccess = false;
 
-    public RitualSubView(CombatTheme theme, RitualEvent ritual) {
+    public RitualSubView(CombatTheme theme, RitualEvent ritual, MyColors magicColor, Sprite centerSprite) {
         this.theme = theme;
         this.ritual = ritual;
         selected = 0;
         AnimationManager.register(this); // TODO: Dont forget to unregister this
+        this.centerSprite = centerSprite;
+
+        MyColors color = convertColor(magicColor);
+        beamParticle = new ParticleSprite(0x00, color);
+        smallBeamParticle = new ParticleSprite(0x10, color);
+        angledBeams = makeAngledBeams(magicColor);
     }
 
     @Override
     protected void drawArea(Model model) {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
-
+        model.getScreenHandler().register(centerSprite.getName(), ORIGIN, centerSprite);
         drawRitualists(model);
         drawBeams(model);
         drawBystanders(model);
@@ -51,10 +64,10 @@ public class RitualSubView extends SubView implements Animation {
 
     private void drawBeams(Model model) {
         for (MyPair<GameCharacter, GameCharacter> beam : ritual.getBeams()) {
-            drawBeam(model, beam, BEAM_PARTICLE, false);
+            drawBeam(model, beam, beamParticle, false);
         }
         if (temporaryBeam != null) {
-            drawBeam(model, temporaryBeam, SMALL_BEAM_PARTICLE, true);
+            drawBeam(model, temporaryBeam, smallBeamParticle, true);
         }
     }
 
@@ -88,11 +101,11 @@ public class RitualSubView extends SubView implements Animation {
 
     private ParticleSprite getSpriteForAngle(double angle) {
         double v = Math.PI / 2 - angle;
-        int row = (int)Math.floor((v / Math.PI) * (ANGLED_BEAMS.length + 1));
-        if (row == ANGLED_BEAMS.length + 1) {
+        int row = (int)Math.floor((v / Math.PI) * (angledBeams.length + 1));
+        if (row == angledBeams.length + 1) {
             row = 0;
         }
-        return ANGLED_BEAMS[row];
+        return angledBeams[row];
     }
 
     private void drawRitualists(Model model) {
@@ -148,16 +161,12 @@ public class RitualSubView extends SubView implements Animation {
     }
 
     private Point getPositionFor(GameCharacter gc, List<GameCharacter> list) {
-        int width = X_MAX - X_OFFSET;
-        int yOffset = 4;
-        int radius = 10;
-        Point origin = new Point(X_OFFSET + width/2 - 2, Y_OFFSET + radius + yOffset);
         int index = list.indexOf(gc);
         int starPoints = list.size();
 
         double angle = (Math.PI * 2.0 / starPoints) * index + Math.PI / 2.0;
-        double x = Math.round(origin.x + radius * Math.cos(angle));
-        double y = Math.round(origin.y - radius * Math.sin(angle));
+        double x = Math.round(ORIGIN.x + RADIUS * Math.cos(angle));
+        double y = Math.round(ORIGIN.y - RADIUS * Math.sin(angle));
         return new Point((int)x, (int)y);
     }
 
@@ -236,11 +245,28 @@ public class RitualSubView extends SubView implements Animation {
         ritualSuccess = b;
     }
 
-    private static ParticleSprite[] makeAngledBeams() {
+    private static ParticleSprite[] makeAngledBeams(MyColors color) {
         ParticleSprite[] sprites = new ParticleSprite[14];
         for (int i = 0; i < sprites.length; ++i) {
-            sprites[i] = new ParticleSprite(0x20 + i*0x10, MyColors.LIGHT_GREEN);
+            sprites[i] = new ParticleSprite(0x20 + i*0x10, color);
         }
         return sprites;
+    }
+
+    private static MyColors convertColor(MyColors magicColor) {
+        switch (magicColor) {
+            case GREEN:
+                return MyColors.LIGHT_GREEN;
+            case BLUE:
+                return MyColors.CYAN;
+            case BLACK:
+                return MyColors.GRAY;
+            case RED:
+                return MyColors.LIGHT_RED;
+            case WHITE:
+                return MyColors.LIGHT_YELLOW;
+            default:
+                throw new InputMismatchException("Bad input for color conversion: " + magicColor.name());
+        }
     }
 }

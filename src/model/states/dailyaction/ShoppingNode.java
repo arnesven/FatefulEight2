@@ -36,7 +36,7 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        if (state.isEvening()) {
+        if (state.isEvening() && supportsBreakIn()) {
             state.print("The shop is closed. Do you want to try to break in? (Y/N) ");
             if (state.yesNoInput()) {
                 boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
@@ -67,6 +67,10 @@ public abstract class ShoppingNode extends DailyActionNode {
             return model.getCurrentHex().getEveningState(model, false, false);
         }
         return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory));
+    }
+
+    protected boolean supportsBreakIn() {
+        return true;
     }
 
     protected abstract int getShopSecurity();

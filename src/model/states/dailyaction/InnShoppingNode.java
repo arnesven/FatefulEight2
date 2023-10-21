@@ -14,7 +14,11 @@ import java.util.List;
 public class InnShoppingNode extends ShoppingNode {
     public InnShoppingNode(Model model) {
         super(model, "Merchant");
+    }
 
+    @Override
+    protected boolean supportsBreakIn() {
+        return false;
     }
 
     protected List<Item> makeInventory(Model model) {

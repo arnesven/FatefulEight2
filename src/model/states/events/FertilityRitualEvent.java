@@ -3,14 +3,21 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import util.MyStrings;
+import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
 
 import java.util.List;
 
 public class FertilityRitualEvent extends RitualEvent {
+    private static final Sprite MAYPOLE_SPRITE = new Sprite32x32("maypole", "ritual.png", 0x01,
+            MyColors.DARK_GREEN, MyColors.ORC_GREEN, MyColors.LIGHT_RED, MyColors.YELLOW);
+
     public FertilityRitualEvent(Model model) {
-        super(model, Skill.MagicGreen);
+        super(model, MyColors.GREEN);
     }
 
     @Override
@@ -19,13 +26,48 @@ public class FertilityRitualEvent extends RitualEvent {
     }
 
     @Override
-    protected void runEventIntro(Model model, List<GameCharacter> ritualists) {
-        println("There are some mages here who are about to perform a fertility ritual. Do you wish to help them?");
+    protected boolean runEventIntro(Model model, List<GameCharacter> ritualists) {
+        println("There are " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a fertility ritual. " +
+                "They are looking for some extra mages to join them in performing it.");
+        if (ritualists.size() + model.getParty().size() < 5) {
+            println("Unfortunately you do not have enough party members to join the ritual.");
+            return false;
+        }
+        showExplicitPortrait(model, ritualists.get(0).getAppearance(), ritualists.get(0).getName());
+        portraitSay("We try this ritual once a year. For those years when the ritual has been successful " +
+                "the crops around here grow well, " +
+                "the orchards are full of fruit, and many babies are born.");
+        portraitSay("But when the ritual fails, there is drought, or terrible rains, and there is not much " +
+                "merrymaking in the huts.");
+        portraitSay("Some of you seem slightly magically inclined. Won't you lend us a hand?");
+        return true;
     }
 
     @Override
-    protected void runEventOutro(Model model) {
-        println("The fertility of the land has been greatly improved.");
+    protected void runEventOutro(Model model, boolean success, int power) {
+        if (success) {
+            portraitSay("Thank you for helping us. Please allow me to heal your wounds...");
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                println(gc.getName() + " is healed.");
+                model.getLog().waitForAnimationToFinish();
+                gc.addToHP(5);
+            }
+            portraitSay("Now the fertility of the land will be much improved and we " +
+                    "shall have no trouble replenishing our stores. Please allow me to grant you " +
+                    "this gift.");
+            println("The party receives " + power*15 + " ingredients.");
+            model.getParty().getInventory().addToIngredients(power*15);
+            println("The party receives " + power*20 + " rations.");
+            model.getParty().addToFood(power*20);
+        } else {
+            portraitSay("How unfortunate. Now we will have to endure another year of hardship. Well, so long friends.");
+            println("You part ways with the fertility mages.");
+        }
+    }
+
+    @Override
+    protected Sprite getCenterSprite() {
+        return MAYPOLE_SPRITE;
     }
 
 }

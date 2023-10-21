@@ -88,7 +88,7 @@ public abstract class Spell extends Item {
 
     protected abstract int getExperience();
 
-    private static Skill getSkillForColor(MyColors color) {
+    public static Skill getSkillForColor(MyColors color) {
         switch (color) {
             case BLACK:
                 return Skill.MagicBlack;

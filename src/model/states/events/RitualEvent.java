@@ -6,14 +6,18 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.spells.Spell;
 import model.states.DailyEventState;
 import model.states.GameState;
 import sound.SoundEffects;
 import util.Arithmetics;
 import util.MyPair;
 import util.MyRandom;
+import view.MyColors;
+import view.sprites.AnimationManager;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
+import view.sprites.Sprite;
 import view.subviews.*;
 
 import java.awt.*;
@@ -23,32 +27,37 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class RitualEvent extends DailyEventState {
-    private static final int DEFAULT_NPC_MAGES = 4;
+    private static final int DEFAULT_MAX_NPC_MAGES = 4;
     public static final int CAST_BEAM_DIFFICULTY = 8;
     public static final int RECEIVE_BEAM_DIFFICULTY = 5;
     private static final int COMMAND_NPC_CHANCE = 8;
     public static final int DROP_OUT_HP_THRESHOLD = 3;
     private final Skill primeMagicSkill;
+    private final MyColors magicColor;
     private List<GameCharacter> benched;
     private List<GameCharacter> ritualists;
     private GameCharacter turnTaker;
     private List<GameCharacter> turnOrder;
     private final List<MyPair<GameCharacter, GameCharacter>> beams;
 
-    public RitualEvent(Model model, Skill primaryMagicSkill) {
+    public RitualEvent(Model model, MyColors magicColor) {
         super(model);
-        this.primeMagicSkill = primaryMagicSkill;
+        this.magicColor = magicColor;
+        this.primeMagicSkill = Spell.getSkillForColor(magicColor);
         beams = new ArrayList<>();
     }
 
     protected abstract CombatTheme getTheme();
-    protected abstract void runEventIntro(Model model, List<GameCharacter> ritualists);
-    protected abstract void runEventOutro(Model model);
+    protected abstract boolean runEventIntro(Model model, List<GameCharacter> ritualists);
+    protected abstract void runEventOutro(Model model, boolean success, int power);
+    protected abstract Sprite getCenterSprite();
 
     @Override
     protected void doEvent(Model model) {
         ritualists = makeNPCMages(model);
-        runEventIntro(model, ritualists);
+        if (!runEventIntro(model, ritualists)) {
+            return;
+        }
         SubView prevSubView = model.getSubView();
 
         println("Please select which party members to participate in the ritual (B). " +
@@ -65,12 +74,11 @@ public abstract class RitualEvent extends DailyEventState {
         Collections.shuffle(ritualists);
         this.benched = new ArrayList<>(model.getParty().getBench());
 
-        RitualSubView subView = new RitualSubView(getTheme(), this);
+        RitualSubView subView = new RitualSubView(getTheme(), this, magicColor, getCenterSprite());
         CollapsingTransition.transition(model, subView);
 
         print("Press enter to start the ritual.");
         model.getTutorial().rituals(model);
-        model.getTutorial().ritualBeams(model);
         waitForReturn();
         while (!ritualFailed() && !ritualSucceeded()) {
             print(turnTaker.getName() + "'s turn. ");
@@ -109,9 +117,10 @@ public abstract class RitualEvent extends DailyEventState {
         }
         print("Press enter to continue.");
         waitForReturn();
+        AnimationManager.unregister(subView);
 
         CollapsingTransition.transition(model, prevSubView);
-        runEventOutro(model);
+        runEventOutro(model, !ritualFailed(), ritualists.size() - 4);
     }
 
     private void stepNextTurnTaker() {
@@ -170,8 +179,11 @@ public abstract class RitualEvent extends DailyEventState {
                 done = true;
             } else if (selected == 3) {
                 done = releaseBeams();
+            } else if (selected == 4) {
+                pass(turnTaker);
+                done = true;
             } else {
-                done = selected == 4;
+                done = false;
             }
         }
     }
@@ -196,6 +208,7 @@ public abstract class RitualEvent extends DailyEventState {
         turnOrder.remove(dropOut);
         benched.add(dropOut);
         releaseBeamsFor(dropOut);
+        getModel().getLog().waitForAnimationToFinish();
     }
 
     private void releaseBeamsFor(GameCharacter beamReleaser) {
@@ -222,6 +235,7 @@ public abstract class RitualEvent extends DailyEventState {
 
 
     private boolean tryToCastBeam(Model model, RitualSubView subView, GameCharacter receiver) {
+        model.getTutorial().ritualBeams(model);
         if (receiver == turnTaker) {
             println(turnTaker.getName() + " cannot cast a beam onto " + himOrHer(turnTaker.getGender()) + "self.");
             return false;
@@ -342,7 +356,7 @@ public abstract class RitualEvent extends DailyEventState {
                                                Classes.PRI, Classes.DRU, Classes.SOR);
         int level = (int)Math.ceil(GameState.calculateAverageLevel(getModel()));
         List<GameCharacter> result = new ArrayList<>();
-        for (int i = DEFAULT_NPC_MAGES; i > 0; --i) {
+        for (int i = MyRandom.randInt(2, DEFAULT_MAX_NPC_MAGES); i > 0; --i) {
             GameCharacter gc = makeRandomCharacter(level);
             gc.setClass(MyRandom.sample(classes));
             result.add(gc);
