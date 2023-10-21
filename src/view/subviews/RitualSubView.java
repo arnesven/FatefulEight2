@@ -24,8 +24,11 @@ public class RitualSubView extends SubView implements Animation {
     private int selected = 0;
     private static final ParticleSprite BEAM_PARTICLE = new ParticleSprite(0x00, MyColors.LIGHT_GREEN);
     private static final ParticleSprite SMALL_BEAM_PARTICLE = new ParticleSprite(0x10, MyColors.LIGHT_GREEN);
+    private static final ParticleSprite[] ANGLED_BEAMS = makeAngledBeams();
+
     private MyPair<GameCharacter, GameCharacter> temporaryBeam;
     private double tempBeamProgress = 0.0;
+    private boolean ritualSuccess = false;
 
     public RitualSubView(CombatTheme theme, RitualEvent ritual) {
         this.theme = theme;
@@ -75,9 +78,21 @@ public class RitualSubView extends SubView implements Animation {
             int yi = (int)Math.floor(a.y + i * dy);
             int xShift = (int)Math.floor(((a.x + i * dx) - xi) * 8.0);
             int yShift = (int)Math.floor(((a.y + i * dy) - yi) * 8.0);
+            if (!ritualSuccess && !useProgress) {
+                sprite = getSpriteForAngle(Math.atan(-dy/dx));
+            }
             model.getScreenHandler().register(sprite.getName(), new Point(xi, yi), sprite,
-                    2, xShift-4, yShift);
+                    2, xShift - 4, yShift);
         }
+    }
+
+    private ParticleSprite getSpriteForAngle(double angle) {
+        double v = Math.PI / 2 - angle;
+        int row = (int)Math.floor((v / Math.PI) * (ANGLED_BEAMS.length + 1));
+        if (row == ANGLED_BEAMS.length + 1) {
+            row = 0;
+        }
+        return ANGLED_BEAMS[row];
     }
 
     private void drawRitualists(Model model) {
@@ -215,5 +230,17 @@ public class RitualSubView extends SubView implements Animation {
     public void addFloatyDamage(GameCharacter turnTaker, int damage) {
         super.addFloatyDamage(getPositionFor(turnTaker, ritual.getRitualists()),
                 damage, DamageValueEffect.MAGICAL_DAMAGE);
+    }
+
+    public void setRitualSuccess(boolean b) {
+        ritualSuccess = b;
+    }
+
+    private static ParticleSprite[] makeAngledBeams() {
+        ParticleSprite[] sprites = new ParticleSprite[14];
+        for (int i = 0; i < sprites.length; ++i) {
+            sprites[i] = new ParticleSprite(0x20 + i*0x10, MyColors.LIGHT_GREEN);
+        }
+        return sprites;
     }
 }

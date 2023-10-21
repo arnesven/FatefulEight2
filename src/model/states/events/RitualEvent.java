@@ -67,6 +67,10 @@ public abstract class RitualEvent extends DailyEventState {
 
         while (!ritualFailed() && !ritualSucceeded()) {
             print(turnTaker.getName() + "'s turn. ");
+            if (getNumberOfBeams(turnTaker) > 0) {
+                println(turnTaker.getFirstName() + " takes damage from maintaining the beam.");
+                takeBeamDamage(turnTaker, subView);
+            }
             if (turnTaker.getHP() < 3) {
                 dropOut(turnTaker);
             } else {
@@ -80,19 +84,35 @@ public abstract class RitualEvent extends DailyEventState {
         }
 
         if (ritualFailed()) {
+            beams.clear();
             println("The ritual has failed");
         } else if (ritualSucceeded()) {
+            subView.setRitualSuccess(true);
             println("The ritual has succeeded!");
         }
+        print("Press enter to continue.");
+        waitForReturn();
 
-        // Logic for ritual
-
-        //CollapsingTransition.transition(model, prevSubView);
-        //runEventOutro(model);
+        CollapsingTransition.transition(model, prevSubView);
+        runEventOutro(model);
     }
 
-    private boolean ritualSucceeded() {
-        return false;
+    public boolean ritualSucceeded() {
+        if (beams.size() != ritualists.size()) {
+            return false;
+        }
+        for (MyPair<GameCharacter, GameCharacter> beam : beams) {
+            int index = ritualists.indexOf(beam.first);
+            int otherIndex = ritualists.indexOf(beam.second);
+            int forward = Arithmetics.incrementWithWrap(index, ritualists.size());
+            forward = Arithmetics.incrementWithWrap(forward, ritualists.size());
+            int backward = Arithmetics.decrementWithWrap(index, ritualists.size());
+            backward = Arithmetics.decrementWithWrap(backward, ritualists.size());
+            if (otherIndex != forward && otherIndex != backward) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean ritualFailed() {
@@ -174,8 +194,8 @@ public abstract class RitualEvent extends DailyEventState {
         } else {
             result2 = receiver.testSkill(Skill.MagicAny, RECEIVE_BEAM_DIFFICULTY);
             println(Skill.MagicAny.getName() + " " + result2.asString() + ".");
-            model.getLog().waitForAnimationToFinish();
         }
+        model.getLog().waitForAnimationToFinish();
         subView.removeTemporaryBeam();
         if (result2.isSuccessful()) {
             subView.addSpecialEffect(receiver, new CastingEffectSprite());

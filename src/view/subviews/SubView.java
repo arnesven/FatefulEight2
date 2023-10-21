@@ -81,7 +81,7 @@ public abstract class SubView {
         return lowCenterText.getRows();
     }
 
-    protected void addFloatyDamage(Point point, int damge, MyColors color) {
+    protected synchronized void addFloatyDamage(Point point, int damge, MyColors color) {
         point.x += MyRandom.randInt(-1, 1);
         point.y += MyRandom.randInt(-1, 1);
         if (damge > 15) {
@@ -94,7 +94,7 @@ public abstract class SubView {
         }
     }
 
-    protected void addFloatyText(Point point, int strikeTextEffect) {
+    protected synchronized void addFloatyText(Point point, int strikeTextEffect) {
         int mapOffset = 0xF0 + strikeTextEffect*3;
         for (int x = 0; x < 3; ++x) {
             addOngoingEffect(new MyPair<>(new Point(point.x + x - 1, point.y),
