@@ -166,7 +166,7 @@ public class RitualSubView extends SubView implements Animation {
         GameCharacter selectedChar = ritual.getRitualists().get(selected);
         return selectedChar.getName() + ", " + selectedChar.getCharClass().getShortName() +
                 " Lvl " + selectedChar.getLevel() + ", " +
-                String.format(" %d/%d HP", selectedChar.getHP(), selectedChar.getMaxHP());
+                String.format("%d/%d HP", selectedChar.getHP(), selectedChar.getMaxHP());
     }
 
     @Override
