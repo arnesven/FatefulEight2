@@ -22,7 +22,6 @@ public class RitualSubView extends SubView implements Animation {
     private final CombatTheme theme;
     private final RitualEvent ritual;
     private int selected = 0;
-    private final List<MyPair<GameCharacter, GameCharacter>> beams;
     private static final ParticleSprite BEAM_PARTICLE = new ParticleSprite(0x00, MyColors.LIGHT_GREEN);
     private static final ParticleSprite SMALL_BEAM_PARTICLE = new ParticleSprite(0x10, MyColors.LIGHT_GREEN);
     private MyPair<GameCharacter, GameCharacter> temporaryBeam;
@@ -32,7 +31,6 @@ public class RitualSubView extends SubView implements Animation {
         this.theme = theme;
         this.ritual = ritual;
         selected = 0;
-        beams = new ArrayList<>();
         AnimationManager.register(this); // TODO: Dont forget to unregister this
     }
 
@@ -49,7 +47,7 @@ public class RitualSubView extends SubView implements Animation {
     }
 
     private void drawBeams(Model model) {
-        for (MyPair<GameCharacter, GameCharacter> beam : beams) {
+        for (MyPair<GameCharacter, GameCharacter> beam : ritual.getBeams()) {
             drawBeam(model, beam, BEAM_PARTICLE, false);
         }
         if (temporaryBeam != null) {
@@ -152,7 +150,8 @@ public class RitualSubView extends SubView implements Animation {
     protected String getUnderText(Model model) {
         GameCharacter selectedChar = ritual.getRitualists().get(selected);
         return selectedChar.getName() + ", " + selectedChar.getCharClass().getShortName() +
-                " Lvl " + selectedChar.getLevel();
+                " Lvl " + selectedChar.getLevel() + ", " +
+                String.format(" %d/%d HP", selectedChar.getHP(), selectedChar.getMaxHP());
     }
 
     @Override
@@ -190,10 +189,6 @@ public class RitualSubView extends SubView implements Animation {
         return ritual.getRitualists().get(selected);
     }
 
-    public void addBeam(GameCharacter turnTaker, GameCharacter receiver) {
-        beams.add(new MyPair<>(turnTaker, receiver));
-    }
-
     public void addTemporaryBeam(GameCharacter turnTaker, GameCharacter receiver) {
         tempBeamProgress = 0.0;
         temporaryBeam = new MyPair<>(turnTaker, receiver);
@@ -215,5 +210,10 @@ public class RitualSubView extends SubView implements Animation {
     @Override
     public void synch() {
 
+    }
+
+    public void addFloatyDamage(GameCharacter turnTaker, int damage) {
+        super.addFloatyDamage(getPositionFor(turnTaker, ritual.getRitualists()),
+                damage, DamageValueEffect.MAGICAL_DAMAGE);
     }
 }

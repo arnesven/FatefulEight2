@@ -6,13 +6,11 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.Combatant;
 import model.states.DailyEventState;
 import model.states.GameState;
 import util.Arithmetics;
+import util.MyPair;
 import util.MyRandom;
-import view.sprites.Animation;
-import view.sprites.AnimationManager;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 import view.subviews.*;
@@ -24,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class RitualEvent extends DailyEventState {
-    private static final int DEFAULT_NPC_MAGES = 10; // TODO: 4
+    private static final int DEFAULT_NPC_MAGES = 4; // TODO: 4
     private static final int CAST_BEAM_DIFFICULTY = 1; // TODO: 8
     private static final int RECEIVE_BEAM_DIFFICULTY = 1; // TODO: 5
     private final Skill primeMagicSkill;
@@ -32,10 +30,12 @@ public abstract class RitualEvent extends DailyEventState {
     private List<GameCharacter> ritualists;
     private GameCharacter turnTaker;
     private List<GameCharacter> turnOrder;
+    private final List<MyPair<GameCharacter, GameCharacter>> beams;
 
     public RitualEvent(Model model, Skill primaryMagicSkill) {
         super(model);
         this.primeMagicSkill = primaryMagicSkill;
+        beams = new ArrayList<>();
     }
 
     protected abstract CombatTheme getTheme();
@@ -66,17 +66,16 @@ public abstract class RitualEvent extends DailyEventState {
         CollapsingTransition.transition(model, subView);
 
         while (!ritualFailed() && !ritualSucceeded()) {
-            println(turnTaker.getName() + "'s turn.");
-            subView.setCursor(turnTaker);
-            boolean done = true;
-            if (model.getParty().getPartyMembers().contains(turnTaker)) {
-                done = takeOneTurn(model, subView);
+            print(turnTaker.getName() + "'s turn. ");
+            if (turnTaker.getHP() < 3) {
+                dropOut(turnTaker);
             } else {
-                takeNPCTurn(model, subView);
-            }
-            if (done) {
-                int index = Arithmetics.incrementWithWrap(turnOrder.indexOf(turnTaker), turnOrder.size());
-                turnTaker = turnOrder.get(index);
+                subView.setCursor(turnTaker);
+                boolean done = takeOneTurn(model, subView);
+                if (done) {
+                    int index = Arithmetics.incrementWithWrap(turnOrder.indexOf(turnTaker), turnOrder.size());
+                    turnTaker = turnOrder.get(index);
+                }
             }
         }
 
@@ -100,11 +99,6 @@ public abstract class RitualEvent extends DailyEventState {
         return ritualists.size() < 5;
     }
 
-
-    private void takeNPCTurn(Model model, RitualSubView subView) {
-        println(turnTaker.getName() + " passes.");
-    }
-
     private boolean takeOneTurn(Model model, RitualSubView subView) {
         waitForReturnSilently();
         Point p = subView.getPositionForSelected();
@@ -115,50 +109,97 @@ public abstract class RitualEvent extends DailyEventState {
         } else if (selected == 1) {
             return swapWithNeighbor(model, p);
         } else if (selected == 2) {
-            println(turnTaker.getName() + " drops out of the ritual.");
-            ritualists.remove(turnTaker);
-            turnOrder.remove(turnTaker);
-            benched.add(turnTaker);
+            dropOut(turnTaker);
         }
         return selected < 4;
     }
 
+    private void dropOut(GameCharacter turnTaker) {
+        println(turnTaker.getName() + " drops out of the ritual.");
+        ritualists.remove(turnTaker);
+        turnOrder.remove(turnTaker);
+        benched.add(turnTaker);
+    }
+
     private boolean tryToCastBeam(Model model, RitualSubView subView) {
         if (subView.getSelected() == turnTaker) {
-            println("You cannot cast a beam onto yourself!");
+            println(turnTaker.getName() + " cannot cast a beam onto " + himOrHer(turnTaker.getGender()) + "self.");
+            return false;
+        }
+        if (getNumberOfBeams(turnTaker) == 2) {
+            println(turnTaker.getName() + " is already holding two beams, " + heOrShe(turnTaker.getGender()) +
+                    " can't hold any more!");
             return false;
         }
         GameCharacter receiver = subView.getSelected();
+        if (getNumberOfBeams(receiver) == 2) {
+            println(receiver.getName() + " is already holding two beams, " + heOrShe(receiver.getGender()) +
+                    " can't hold any more!");
+            return false;
+        }
+
         println(turnTaker.getName() + " attempts to cast a beam onto " + receiver.getName() + ".");
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, turnTaker, primeMagicSkill,
-                CAST_BEAM_DIFFICULTY, 10, turnTaker.getRankForSkill(Skill.SpellCasting));
+
+        SkillCheckResult result;
+        if (model.getParty().getPartyMembers().contains(turnTaker)) {
+            result = model.getParty().doSkillCheckWithReRoll(model, this, turnTaker, primeMagicSkill,
+                    CAST_BEAM_DIFFICULTY, 10, turnTaker.getRankForSkill(Skill.SpellCasting));
+        } else {
+            result = turnTaker.testSkill(primeMagicSkill, CAST_BEAM_DIFFICULTY, turnTaker.getRankForSkill(Skill.SpellCasting));
+            println(primeMagicSkill.getName() + " " + result.asString() + ".");
+        }
+        model.getLog().waitForAnimationToFinish();
         if (result.isSuccessful()) {
+            takeBeamDamage(turnTaker, subView);
             subView.addSpecialEffect(turnTaker, new CastingEffectSprite());
             subView.addTemporaryBeam(turnTaker, receiver);
-            println(receiver.getFirstName() + " tries to catch the beam.");
-            SkillCheckResult result2;
-            if (model.getParty().getPartyMembers().contains(receiver)) {
-                result2 = model.getParty().doSkillCheckWithReRoll(model, this, receiver, Skill.MagicAny,
-                        RECEIVE_BEAM_DIFFICULTY, 0, 0);
-            } else {
-                result2 = receiver.testSkill(Skill.MagicAny, RECEIVE_BEAM_DIFFICULTY);
-                println(Skill.MagicAny.getName() + " " + result2.asString() + ".");
-                model.getLog().waitForAnimationToFinish();
-            }
-            subView.removeTemporaryBeam();
-            if (result2.isSuccessful()) {
-                subView.addSpecialEffect(receiver, new CastingEffectSprite());
-                subView.addBeam(turnTaker, receiver);
-                println("A ritual beam was successfully established between " + turnTaker.getFirstName() +
-                        " and " + receiver.getFirstName());
-            } else {
-                println(receiver.getName() + " couldn't hold the beam, and it dissipates.");
-                subView.addSpecialEffect(receiver, new MiscastEffectSprite());
-            }
+            tryReceiveBeam(model, subView, turnTaker, receiver);
         } else {
             subView.addSpecialEffect(turnTaker, new MiscastEffectSprite());
         }
         return true;
+    }
+
+    private void takeBeamDamage(GameCharacter turnTaker, RitualSubView subView) {
+        turnTaker.addToHP(-1);
+        subView.addFloatyDamage(turnTaker, 1);
+    }
+
+    private void tryReceiveBeam(Model model, RitualSubView subView, GameCharacter turnTaker, GameCharacter receiver) {
+        println(receiver.getFirstName() + " tries to catch the beam.");
+        SkillCheckResult result2;
+        if (model.getParty().getPartyMembers().contains(receiver)) {
+            result2 = model.getParty().doSkillCheckWithReRoll(model, this, receiver, Skill.MagicAny,
+                    RECEIVE_BEAM_DIFFICULTY, 0, 0);
+        } else {
+            result2 = receiver.testSkill(Skill.MagicAny, RECEIVE_BEAM_DIFFICULTY);
+            println(Skill.MagicAny.getName() + " " + result2.asString() + ".");
+            model.getLog().waitForAnimationToFinish();
+        }
+        subView.removeTemporaryBeam();
+        if (result2.isSuccessful()) {
+            subView.addSpecialEffect(receiver, new CastingEffectSprite());
+            addBeam(turnTaker, receiver);
+            println("A ritual beam was successfully established between " + turnTaker.getFirstName() +
+                    " and " + receiver.getFirstName());
+        } else {
+            println(receiver.getName() + " couldn't hold the beam, and it dissipates.");
+            subView.addSpecialEffect(receiver, new MiscastEffectSprite());
+        }
+    }
+
+    private int getNumberOfBeams(GameCharacter target) {
+        int result = 0;
+        for (MyPair<GameCharacter, GameCharacter> pair : beams) {
+            if (pair.first == target || pair.second == target) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    private void addBeam(GameCharacter turnTaker, GameCharacter receiver) {
+        this.beams.add(new MyPair<GameCharacter, GameCharacter>(turnTaker, receiver));
     }
 
     private boolean swapWithNeighbor(Model model, Point p) {
@@ -227,5 +268,9 @@ public abstract class RitualEvent extends DailyEventState {
 
     public List<GameCharacter> getRitualistsInTurnOrder() {
         return turnOrder;
+    }
+
+    public List<MyPair<GameCharacter, GameCharacter>> getBeams() {
+        return beams;
     }
 }

@@ -153,26 +153,12 @@ public class CombatSubView extends SubView {
 
     public synchronized void addFloatyDamage(Combatant target, int damge, MyColors color) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        point.x += MyRandom.randInt(-1, 1);
-        point.y += MyRandom.randInt(-1, 1);
-        //addOngoingEffect(new MyPair<>(point, new StrikeEffectSprite()));
-        if (damge > 15) {
-            Point left = new Point(point);
-            left.x -= 1;
-            addOngoingEffect(new MyPair<>(left, new DamageValueEffect(damge/10, color)));
-            addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, color)));
-        } else {
-            addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, color)));
-        }
+        super.addFloatyDamage(point, damge, color);
     }
 
     public synchronized void addFloatyText(Combatant target, int strikeTextEffect) {
         Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        int mapOffset = 0xF0 + strikeTextEffect*3;
-        for (int x = 0; x < 3; ++x) {
-            addOngoingEffect(new MyPair<>(new Point(point.x + x - 1, point.y),
-                    new DamageValueEffect(mapOffset + x)));
-        }
+        super.addFloatyText(point, strikeTextEffect);
     }
 
     public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
