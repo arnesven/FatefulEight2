@@ -54,6 +54,7 @@ public class FieldsHex extends WorldHex {
             events.add(new VeteranEvent(model));
             events.add(new EnchantressEvent(model));
             events.add(new FarmersHorseRaceEvent(model));
+            events.add(new FertilityRitualEvent(model));
             return MyRandom.sample(events);
         }
         return new NoEventState(model);

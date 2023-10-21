@@ -53,7 +53,7 @@ public abstract class RitualEvent extends DailyEventState {
     protected abstract Sprite getCenterSprite();
 
     @Override
-    protected void doEvent(Model model) {
+    protected final void doEvent(Model model) {
         ritualists = makeNPCMages(model);
         if (!runEventIntro(model, ritualists)) {
             return;
@@ -118,6 +118,7 @@ public abstract class RitualEvent extends DailyEventState {
         print("Press enter to continue.");
         waitForReturn();
         AnimationManager.unregister(subView);
+        model.getParty().unbenchAll();
 
         CollapsingTransition.transition(model, prevSubView);
         runEventOutro(model, !ritualFailed(), ritualists.size() - 4);
@@ -225,6 +226,7 @@ public abstract class RitualEvent extends DailyEventState {
         List<GameCharacter> candidates = new ArrayList<>(ritualists);
         candidates.remove(turnTaker);
         candidates.removeIf((GameCharacter gc) -> getNumberOfBeams(gc) == 2);
+        candidates.removeIf((GameCharacter gc) -> hasABeam(turnTaker, gc));
         if (candidates.isEmpty()) {
             return false;
         }
@@ -250,6 +252,9 @@ public abstract class RitualEvent extends DailyEventState {
                     " can't hold any more!");
             return false;
         }
+        if (hasABeam(turnTaker, receiver)) {
+            println(turnTaker.getName() + " already has a been with " + receiver.getName() + ".");
+        }
 
         println(turnTaker.getName() + " attempts to cast a beam onto " + receiver.getName() + ".");
 
@@ -273,6 +278,16 @@ public abstract class RitualEvent extends DailyEventState {
             SoundEffects.playSpellFail();
         }
         return true;
+    }
+
+    private boolean hasABeam(GameCharacter turnTaker, GameCharacter receiver) {
+        for (MyPair<GameCharacter, GameCharacter> pair : beams) {
+            if ((pair.first == turnTaker && pair.second == receiver) ||
+                    (pair.second == turnTaker && pair.first == receiver)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void takeBeamDamage(GameCharacter turnTaker, RitualSubView subView) {
@@ -354,11 +369,11 @@ public abstract class RitualEvent extends DailyEventState {
     protected List<GameCharacter> makeNPCMages(Model model) {
         List<CharacterClass> classes = List.of(Classes.WIT, Classes.WIZ, Classes.MAG,
                                                Classes.PRI, Classes.DRU, Classes.SOR);
-        int level = (int)Math.ceil(GameState.calculateAverageLevel(getModel()));
         List<GameCharacter> result = new ArrayList<>();
         for (int i = MyRandom.randInt(2, DEFAULT_MAX_NPC_MAGES); i > 0; --i) {
-            GameCharacter gc = makeRandomCharacter(level);
+            GameCharacter gc = makeRandomCharacter();
             gc.setClass(MyRandom.sample(classes));
+            gc.addToHP(999);
             result.add(gc);
         }
         return result;
@@ -393,5 +408,13 @@ public abstract class RitualEvent extends DailyEventState {
 
     public List<MyPair<GameCharacter, GameCharacter>> getBeams() {
         return beams;
+    }
+
+    protected void healParty(Model model) {
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            println(gc.getName() + " is healed.");
+            model.getLog().waitForAnimationToFinish();
+            gc.addToHP(5);
+        }
     }
 }

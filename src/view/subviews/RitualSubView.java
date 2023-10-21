@@ -47,7 +47,7 @@ public class RitualSubView extends SubView implements Animation {
         MyColors color = convertColor(magicColor);
         beamParticle = new ParticleSprite(0x00, color);
         smallBeamParticle = new ParticleSprite(0x10, color);
-        angledBeams = makeAngledBeams(magicColor);
+        angledBeams = makeAngledBeams(color);
     }
 
     @Override

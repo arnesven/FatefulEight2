@@ -292,4 +292,9 @@ public abstract class DailyEventState extends GameState {
         classMap.put(Classes.NOB.id(), +1);
         return classMap;
     }
+
+    protected GameCharacter makeRandomCharacter() {
+        int level = (int)Math.ceil(GameState.calculateAverageLevel(getModel()));
+        return makeRandomCharacter(level);
+    }
 }
