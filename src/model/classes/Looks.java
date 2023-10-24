@@ -81,10 +81,15 @@ public abstract class Looks {
             characterAppearance.setSprite(1, 5, new ClothesSprite(0x60, color));
             characterAppearance.setSprite(5, 5, new ClothesSprite(0x61, color));
         }
-        characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0xE0, color, MyColors.DARK_GRAY));
-        characterAppearance.setSprite(3, 5, new FaceAndClothesSprite(0xE1, color));
-        characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0xE2, color, MyColors.DARK_GRAY));
+        if (characterAppearance.getRace().isThickNeck()) {
+            characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0x185, color, MyColors.DARK_GRAY));
+            characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0x195, color, MyColors.DARK_GRAY));
+        } else {
+            characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0xE0, color, MyColors.DARK_GRAY));
+            characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0xE2, color, MyColors.DARK_GRAY));
+        }
 
+        characterAppearance.setSprite(3, 5, new FaceAndClothesSprite(0xE1, color));
 
         characterAppearance.setSprite(2, 6, new ClothesSprite(0x80, color));
         characterAppearance.setSprite(3, 6, new ClothesSprite(0x71, color));

@@ -165,7 +165,7 @@ public class CharacterCreationView extends SelectableListMenu {
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 6, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
 
-        model.getScreenHandler().put(x+COLUMN_SKIP+8, 24, selectedClass!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP-4, 36, selectedClass!=0?CHECK_SPRITE:NOT_OK_SPRITE);
 
         model.getScreenHandler().put(x+COLUMN_SKIP+8, 38, other1!=0?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+8, 40, other2!=0?CHECK_SPRITE:NOT_OK_SPRITE);
