@@ -93,11 +93,19 @@ public abstract class Looks {
 
     protected static void putOnArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors underShirtColor) {
         // Left pauldron
-        characterAppearance.setSprite(0, 6, new ClothesSprite(0x12, underShirtColor, armorColor));
-        characterAppearance.setSprite(1, 6, new ClothesSprite(0x32, underShirtColor, armorColor));
+        if (characterAppearance.getRace().getShoulders() != Shoulders.NARROW) {
+            characterAppearance.setSprite(0, 6, new ClothesSprite(0x12, underShirtColor, armorColor));
+            characterAppearance.setSprite(0, 5, new ClothesSprite(0x02, underShirtColor, armorColor));
+            characterAppearance.setSprite(1, 6, new ClothesSprite(0x32, underShirtColor, armorColor));
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0x22, underShirtColor, armorColor));
+        } else {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0xCB, underShirtColor, armorColor));
+            characterAppearance.setSprite(1, 6, new ClothesSprite(0xDB, underShirtColor, armorColor));
+            characterAppearance.setSprite(0, 6, new ClothesSprite(0xDA, underShirtColor, armorColor));
+        }
+
         characterAppearance.setSprite(2, 6, new ClothesSprite(0x52, underShirtColor, armorColor));
-        characterAppearance.setSprite(0, 5, new ClothesSprite(0x02, underShirtColor, armorColor));
-        characterAppearance.setSprite(1, 5, new ClothesSprite(0x22, underShirtColor, armorColor));
+
         if (characterAppearance.getRace().isThickNeck()) {
             characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0x181, armorColor, underShirtColor));
             characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0x191, armorColor, underShirtColor));
@@ -111,11 +119,18 @@ public abstract class Looks {
 
         // Right pauldron
         characterAppearance.setSprite(4, 6, new ClothesSprite(0x53, underShirtColor, armorColor));
-        characterAppearance.setSprite(5, 6, new ClothesSprite(0x33, underShirtColor, armorColor));
-        characterAppearance.setSprite(6, 6, new ClothesSprite(0x13, underShirtColor, armorColor));
 
-        characterAppearance.setSprite(5, 5, new ClothesSprite(0x23, underShirtColor, armorColor));
-        characterAppearance.setSprite(6, 5, new ClothesSprite(0x03, underShirtColor, armorColor));
+        if (characterAppearance.getRace().getShoulders() != Shoulders.NARROW) {
+            characterAppearance.setSprite(5, 6, new ClothesSprite(0x33, underShirtColor, armorColor));
+            characterAppearance.setSprite(6, 6, new ClothesSprite(0x13, underShirtColor, armorColor));
+
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0x23, underShirtColor, armorColor));
+            characterAppearance.setSprite(6, 5, new ClothesSprite(0x03, underShirtColor, armorColor));
+        } else {
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0xCC, underShirtColor, armorColor));
+            characterAppearance.setSprite(5, 6, new ClothesSprite(0xDC, underShirtColor, armorColor));
+            characterAppearance.setSprite(6, 6, new ClothesSprite(0xDD, underShirtColor, armorColor));
+        }
     }
 
     protected static void putOnPointyHat(CharacterAppearance characterAppearance, MyColors hatColor) {
