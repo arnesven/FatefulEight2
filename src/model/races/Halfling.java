@@ -29,4 +29,14 @@ public class Halfling extends Race {
     public boolean isShort() {
         return true;
     }
+
+    @Override
+    public Shoulders getShoulders() {
+        return Shoulders.NARROW;
+    }
+
+    @Override
+    public boolean isThickNeck() {
+        return false;
+    }
 }

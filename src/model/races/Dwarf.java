@@ -28,4 +28,9 @@ public class Dwarf extends Race {
     public boolean isShort() {
         return true;
     }
+
+    @Override
+    public Shoulders getShoulders() {
+        return Shoulders.BROAD;
+    }
 }

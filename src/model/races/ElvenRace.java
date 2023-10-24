@@ -22,4 +22,8 @@ public class ElvenRace extends Race {
         return new FaceSpriteWithHair(0x82, hairColor);
     }
 
+    @Override
+    public boolean isThickNeck() {
+        return false;
+    }
 }

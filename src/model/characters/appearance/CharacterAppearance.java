@@ -11,24 +11,6 @@ import java.util.List;
 
 public abstract class CharacterAppearance implements Serializable {
 
-    private final PortraitSprite NECK_1 = new NakedFaceAndClothesSprite(0x90);
-    private final PortraitSprite NECK_LEFT = new NakedFaceAndClothesSprite(0xA0);
-    private final PortraitSprite NECK_RIGHT = new NakedFaceAndClothesSprite(0xB0);
-    private final PortraitSprite CHEST_1 = new NakedFaceAndClothesSprite(0xC2);
-    private final PortraitSprite CHEST_2 = new NakedFaceAndClothesSprite(0xC1);
-
-    private final PortraitSprite SHOULDER_LEFT_TOP = new NakedClothesSprite(0x00);
-    private final PortraitSprite SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x10);
-    private final PortraitSprite SHOULDER_TOP = new NakedClothesSprite(0x20);
-    private final PortraitSprite SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x01);
-    private final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
-    private final PortraitSprite SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x11);
-    private final PortraitSprite FRAME_UL_CORNER = new PortraitFrameSprite(PortraitFrameSprite.UL_CORNER);
-    private final PortraitSprite FRAME_TOP = new PortraitFrameSprite(PortraitFrameSprite.TOP);
-    private final PortraitSprite FRAME_UR_CORNER = new PortraitFrameSprite(PortraitFrameSprite.UR_CORNER);
-    private final PortraitSprite FRAME_LEFT = new PortraitFrameSprite(PortraitFrameSprite.LEFT);
-    private final PortraitSprite FRAME_RIGHT = new PortraitFrameSprite(PortraitFrameSprite.RIGHT);
-    private static final PortraitSprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
     private static Sprite hairSprite = new Sprite32x32("standardhair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private static Sprite noHairSprite = new Sprite32x32("nohair", "hair.png",0x0,
@@ -51,61 +33,47 @@ public abstract class CharacterAppearance implements Serializable {
 
     private void refresh() {
         grid = new PortraitSprite[7][7];
-        this.grid[0][0] = FRAME_UL_CORNER;
+        this.grid[0][0] = PortraitSprite.FRAME_UL_CORNER;
         this.grid[1][0] = getOuterFrameSprite(3);
         this.grid[2][0] = getOuterFrameSprite(4);
         this.grid[3][0] = getOuterFrameSprite(5);
         this.grid[4][0] = getOuterFrameSprite(6);
         this.grid[5][0] = getOuterFrameSprite(7);
-        this.grid[6][0] = FRAME_UR_CORNER;
+        this.grid[6][0] = PortraitSprite.FRAME_UR_CORNER;
 
-        this.grid[0][1] = FRAME_LEFT;
+        this.grid[0][1] = PortraitSprite.FRAME_LEFT;
         this.grid[1][1] = getOuterFrameSprite(2);
         this.grid[2][1] = new FaceSpriteWithHair(getHeadTopLeft(), hairColor);
         this.grid[3][1] = new FaceSpriteWithHair(getHeadTop(), hairColor);
         this.grid[4][1] = new FaceSpriteWithHair(getHeadTopRight(), hairColor);
         this.grid[5][1] = getOuterFrameSprite(8);
-        this.grid[6][1] = FRAME_RIGHT;
+        this.grid[6][1] = PortraitSprite.FRAME_RIGHT;
 
-        this.grid[0][2] = FRAME_LEFT;
+        this.grid[0][2] = PortraitSprite.FRAME_LEFT;
         this.grid[1][2] = getOuterFrameSprite(1);
         this.grid[2][2] = new FaceSpriteWithHair(getForeheadLeft(), hairColor);
         this.grid[3][2] = new FaceSpriteWithHair(getForeheadCenter(), hairColor);
         this.grid[4][2] = new FaceSpriteWithHair(getForeheadRight(), hairColor);
         this.grid[5][2] = getOuterFrameSprite(9);
-        this.grid[6][2] = FRAME_RIGHT;
+        this.grid[6][2] = PortraitSprite.FRAME_RIGHT;
 
-        this.grid[0][3] = FRAME_LEFT;
+        this.grid[0][3] = PortraitSprite.FRAME_LEFT;
         this.grid[1][3] = classSpecificEars() ? race.getLeftEar(hairColor) : getLeftEar(hairColor);
         this.grid[2][3] = new EyeSprite(symmetricalEyes() ? getEye() : getLeftEye(), hairColor, getEyeballColor());
         this.grid[3][3] = new FaceSprite(getNose());
         this.grid[4][3] = new EyeSprite(symmetricalEyes() ? getEye() : getRightEye(), hairColor, getEyeballColor());
         this.grid[5][3] = classSpecificEars() ? race.getRightEar(hairColor) : getRightEar(hairColor);
-        this.grid[6][3] = FRAME_RIGHT;
+        this.grid[6][3] = PortraitSprite.FRAME_RIGHT;
 
-        this.grid[0][4] = FRAME_LEFT;
-        this.grid[1][4] = blackBlock;
+        this.grid[0][4] = PortraitSprite.FRAME_LEFT;
+        this.grid[1][4] = PortraitSprite.BLACK_BLOCK;
         this.grid[2][4] = new FaceSpriteWithHair(getLeftCheek(), hairColor);
         this.grid[3][4] = new MouthSprite(getMouth(), hairColor);
         this.grid[4][4] = new FaceSpriteWithHair(getRightCheek(), hairColor);
-        this.grid[5][4] = blackBlock;
-        this.grid[6][4] = FRAME_RIGHT;
+        this.grid[5][4] = PortraitSprite.BLACK_BLOCK;
+        this.grid[6][4] = PortraitSprite.FRAME_RIGHT;
 
-        this.grid[0][5] = SHOULDER_LEFT_TOP;
-        this.grid[1][5] = SHOULDER_TOP;
-        this.grid[2][5] = NECK_LEFT;
-        this.grid[3][5] = NECK_1;
-        this.grid[4][5] = NECK_RIGHT;
-        this.grid[5][5] = SHOULDER_TOP;
-        this.grid[6][5] = SHOULDER_RIGHT_TOP;
-
-        this.grid[0][6] = SHOULDER_LEFT_BOTTOM;
-        this.grid[1][6] = FILLED_BLOCK_CLOTHES;
-        this.grid[2][6] = FILLED_BLOCK_CLOTHES;
-        this.grid[3][6] = femaleGender ? CHEST_1 : CHEST_2;
-        this.grid[4][6] = FILLED_BLOCK_CLOTHES;
-        this.grid[5][6] = FILLED_BLOCK_CLOTHES;
-        this.grid[6][6] = SHOULDER_RIGHT_BOTTOM;
+        race.makeNakedPortraitBottom(this.grid, femaleGender);
 
         specialization();
         setRaceSkinColor(race);
@@ -117,9 +85,9 @@ public abstract class CharacterAppearance implements Serializable {
             case 2:
             case 8:
             case 9:
-                return blackBlock;
+                return PortraitSprite.BLACK_BLOCK;
         }
-        return FRAME_TOP;
+        return PortraitSprite.FRAME_TOP;
     }
 
     protected void specialization() { }
@@ -321,12 +289,12 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void removeOuterHair() {
         for (int i = 1; i < 6; ++i) {
-            this.grid[i][0] = FRAME_TOP;
+            this.grid[i][0] = PortraitSprite.FRAME_TOP;
         }
-        this.grid[1][1] = blackBlock;
-        this.grid[1][2] = blackBlock;
-        this.grid[5][1] = blackBlock;
-        this.grid[5][2] = blackBlock;
+        this.grid[1][1] = PortraitSprite.BLACK_BLOCK;
+        this.grid[1][2] = PortraitSprite.BLACK_BLOCK;
+        this.grid[5][1] = PortraitSprite.BLACK_BLOCK;
+        this.grid[5][2] = PortraitSprite.BLACK_BLOCK;
     }
 
     protected MyColors getEyeballColor() {

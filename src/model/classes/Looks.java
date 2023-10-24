@@ -1,55 +1,62 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.races.Race;
+import model.races.Shoulders;
 import view.MyColors;
 import view.sprites.*;
 
 public abstract class Looks {
     protected static void putOnTunic(CharacterAppearance characterAppearance, MyColors color) {
+        Race race = characterAppearance.getRace();
         characterAppearance.setRow(5, new PortraitSprite[]{
-                new ShoulderLeftTop(color), new ShoulderTop(color), new NeckLeft(color),
-                new Neck(color), new NeckRight(color), new ShoulderTop(color), new ShoulderRightTop(color)
+                race.makeShoulderLeftTopSprite(color), race.makeShoulderInnerLeftTop(color), new NeckLeft(color, race),
+                new Neck(color), new NeckRight(color, race),
+                race.makeShoulderInnerRightTop(color), race.makeShoulderRightTopSprite(color)
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
-                new ShoulderLeftBottom(color), new FilledBlockClothes(color), new FilledBlockClothes(color),
-                new Chest(color), new FilledBlockClothes(color), new FilledBlockClothes(color),
-                new ShoulderRightBottom(color)
+                race.makeShoulderLeftBottomSprite(color), race.makeShoulderInnerLeftBottom(color), new FilledBlockClothes(color),
+                new Chest(color), new FilledBlockClothes(color), race.makeShoulderInnerRightBottom(color),
+                race.makeShoulderRightBottomSprite(color)
         });
     }
 
     protected static void putOnLooseShirt(CharacterAppearance characterAppearance, MyColors color) {
+        Race race = characterAppearance.getRace();
         characterAppearance.setRow(5, new PortraitSprite[]{
-                new ShoulderLeftTop(color), new ShoulderTop(color), new WideNeckLeft(color),
-                new Neck(color), new WideNeckRight(color), new ShoulderTop(color), new ShoulderRightTop(color)
+                race.makeShoulderLeftTopSprite(color), race.makeShoulderInnerLeftTop(color), new WideNeckLeft(color, race),
+                new Neck(color), new WideNeckRight(color, race), race.makeShoulderInnerRightTop(color), race.makeShoulderRightTopSprite(color)
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
-                new ShoulderLeftBottom(color), new FilledBlockClothes(color), new WideChestLeft(color),
-                new WideChest(color), new WideChestRight(color), new FilledBlockClothes(color),
-                new ShoulderRightBottom(color)
+                race.makeShoulderLeftBottomSprite(color), race.makeShoulderInnerLeftBottom(color), new WideChestLeft(color),
+                new WideChest(color), new WideChestRight(color), race.makeShoulderInnerRightBottom(color),
+                race.makeShoulderRightBottomSprite(color)
         });
     }
 
     protected static void putOnRobe(CharacterAppearance characterAppearance, MyColors color, MyColors detailColor) {
+        Race race = characterAppearance.getRace();
         characterAppearance.setRow(5, new PortraitSprite[]{
-                new ShoulderLeftTop(color), new ShoulderTop(color), new FancyNeckLeft(color, detailColor),
-                new Neck(color), new FancyNeckRight(color, detailColor), new ShoulderTop(color), new ShoulderRightTop(color)
+                race.makeShoulderLeftTopSprite(color), race.makeShoulderInnerLeftTop(color), new FancyNeckLeft(color, detailColor, race),
+                new Neck(color), new FancyNeckRight(color, detailColor, race), race.makeShoulderInnerRightTop(color), race.makeShoulderRightTopSprite(color)
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
-                new ShoulderLeftBottom(color), new FilledBlockClothes(color), new TriangleLeft(color, detailColor),
-                new FancyChest(detailColor), new TriangleRight(color, detailColor), new FilledBlockClothes(color),
-                new ShoulderRightBottom(color)
+                race.makeShoulderLeftBottomSprite(color), race.makeShoulderInnerLeftBottom(color), new TriangleLeft(color, detailColor),
+                new FancyChest(detailColor), new TriangleRight(color, detailColor), race.makeShoulderInnerRightBottom(color),
+                race.makeShoulderRightBottomSprite(color)
         });
     }
 
     protected static void putOnFancyRobe(CharacterAppearance characterAppearance, MyColors color, MyColors detailColor) {
+        Race race = characterAppearance.getRace();
         characterAppearance.setRow(5, new PortraitSprite[]{
-                new ShoulderLeftTop(color), new FancyShoulderTopLeft(color, detailColor), new RaisedNeckLeft(detailColor),
-                new Neck(color), new RaisedNeckRight(detailColor), new FancyShoulderTopRight(color, detailColor), new ShoulderRightTop(color)
+                race.makeShoulderLeftTopSprite(color), new FancyShoulderTopLeft(color, detailColor, race.getShoulders()), new RaisedNeckLeft(detailColor, race),
+                new Neck(color), new RaisedNeckRight(detailColor, race), new FancyShoulderTopRight(color, detailColor, race.getShoulders()), race.makeShoulderRightTopSprite(color)
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
-                new ShoulderLeftBottom(color), new FancyBottomLeftLeft(color, detailColor), new FancyBottomLeft(color, detailColor),
-                new VeryFancyChest(detailColor), new FancyBottomRight(color, detailColor), new FancyBottomRightRight(color, detailColor),
-                new ShoulderRightBottom(color)
+                race.makeShoulderLeftBottomSprite(color), new FancyBottomLeftLeft(color, detailColor, race.getShoulders()), new FancyBottomLeft(color, detailColor),
+                new VeryFancyChest(detailColor), new FancyBottomRight(color, detailColor), new FancyBottomRightRight(color, detailColor, race.getShoulders()),
+                race.makeShoulderRightBottomSprite(color)
         });
     }
 
@@ -67,11 +74,18 @@ public abstract class Looks {
         characterAppearance.setSprite(5, 3, new ClothesSprite(0x41, color));
         characterAppearance.setSprite(1, 4, new ClothesSprite(0x50, color));
         characterAppearance.setSprite(5, 4, new ClothesSprite(0x51, color));
-        characterAppearance.setSprite(1, 5, new ClothesSprite(0x60, color));
+        if (characterAppearance.getRace().getShoulders() == Shoulders.NARROW) {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0x6D, color));
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0x6E, color));
+        } else {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0x60, color));
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0x61, color));
+        }
         characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0xE0, color, MyColors.DARK_GRAY));
         characterAppearance.setSprite(3, 5, new FaceAndClothesSprite(0xE1, color));
         characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0xE2, color, MyColors.DARK_GRAY));
-        characterAppearance.setSprite(5, 5, new ClothesSprite(0x61, color));
+
+
         characterAppearance.setSprite(2, 6, new ClothesSprite(0x80, color));
         characterAppearance.setSprite(3, 6, new ClothesSprite(0x71, color));
         characterAppearance.setSprite(4, 6, new ClothesSprite(0x81, color));
@@ -84,7 +98,13 @@ public abstract class Looks {
         characterAppearance.setSprite(2, 6, new ClothesSprite(0x52, underShirtColor, armorColor));
         characterAppearance.setSprite(0, 5, new ClothesSprite(0x02, underShirtColor, armorColor));
         characterAppearance.setSprite(1, 5, new ClothesSprite(0x22, underShirtColor, armorColor));
-        characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0xA1, armorColor, underShirtColor));
+        if (characterAppearance.getRace().isThickNeck()) {
+            characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0x181, armorColor, underShirtColor));
+            characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0x191, armorColor, underShirtColor));
+        } else {
+            characterAppearance.setSprite(2, 5, new FaceAndClothesSpriteWithBack(0xA1, armorColor, underShirtColor));
+            characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0xB1, armorColor, underShirtColor));
+        }
 
         characterAppearance.setSprite(3, 6, new ClothesSprite(0x63, underShirtColor, armorColor));
         characterAppearance.setSprite(3, 5, new FaceAndClothesSpriteWithBack(0x92, armorColor, underShirtColor));
@@ -93,7 +113,7 @@ public abstract class Looks {
         characterAppearance.setSprite(4, 6, new ClothesSprite(0x53, underShirtColor, armorColor));
         characterAppearance.setSprite(5, 6, new ClothesSprite(0x33, underShirtColor, armorColor));
         characterAppearance.setSprite(6, 6, new ClothesSprite(0x13, underShirtColor, armorColor));
-        characterAppearance.setSprite(4, 5, new FaceAndClothesSpriteWithBack(0xB1, armorColor, underShirtColor));
+
         characterAppearance.setSprite(5, 5, new ClothesSprite(0x23, underShirtColor, armorColor));
         characterAppearance.setSprite(6, 5, new ClothesSprite(0x03, underShirtColor, armorColor));
     }
@@ -134,18 +154,37 @@ public abstract class Looks {
     }
 
     public static void putOnHideRight(CharacterAppearance characterAppearance, MyColors clothingColor) {
-        characterAppearance.setSprite(5, 5, new FaceAndClothesSprite(0xE8, clothingColor));
-        characterAppearance.setSprite(6, 5, new FaceAndClothesSprite(0xE9, clothingColor));
+        if (characterAppearance.getRace().getShoulders() == Shoulders.NARROW) {
+            characterAppearance.setSprite(5, 5, new FaceAndClothesSprite(0x13F, clothingColor));
+            characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0x14F, clothingColor));
+        } else {
+            characterAppearance.setSprite(5, 5, new FaceAndClothesSprite(0xE8, clothingColor));
+            if (characterAppearance.getRace().getShoulders() == Shoulders.BROAD) {
+                characterAppearance.setSprite(6, 5, new FaceAndClothesSprite(0x16F, clothingColor));
+            } else {
+                characterAppearance.setSprite(6, 5, new FaceAndClothesSprite(0xE9, clothingColor));
+            }
+            characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0xF8, clothingColor));
+            characterAppearance.setSprite(6, 6, new FaceAndClothesSprite(0xF9, clothingColor));
+        }
         characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0xF7, clothingColor));
-        characterAppearance.setSprite(5, 6, new FaceAndClothesSprite(0xF8, clothingColor));
-        characterAppearance.setSprite(6, 6, new FaceAndClothesSprite(0xF9, clothingColor));
     }
 
     public static void putOnHideLeft(CharacterAppearance characterAppearance, MyColors clothingColor) {
-        characterAppearance.setSprite(0, 5, new FaceAndClothesSprite(0xC7, clothingColor));
-        characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0xC8, clothingColor));
-        characterAppearance.setSprite(0, 6, new FaceAndClothesSprite(0xD7, clothingColor));
-        characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0xD8, clothingColor));
+        if (characterAppearance.getRace().getShoulders() == Shoulders.NARROW) {
+            characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x11F, clothingColor));
+            characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0x12F, clothingColor));
+        } else {
+            if (characterAppearance.getRace().getShoulders() == Shoulders.BROAD) {
+                characterAppearance.setSprite(0, 5, new FaceAndClothesSprite(0x15F, clothingColor));
+            } else {
+                characterAppearance.setSprite(0, 5, new FaceAndClothesSprite(0xC7, clothingColor));
+            }
+            characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0xC8, clothingColor));
+            characterAppearance.setSprite(0, 6, new FaceAndClothesSprite(0xD7, clothingColor));
+            characterAppearance.setSprite(1, 6, new FaceAndClothesSprite(0xD8, clothingColor));
+        }
+
         characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0xD9, clothingColor));
     }
 
@@ -159,13 +198,22 @@ public abstract class Looks {
     }
 
     public static void putOnLightArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors shirtColor) {
-        characterAppearance.setSprite(1, 5, new ClothesSprite(0x95, armorColor, shirtColor));
-        characterAppearance.setSprite(1, 6, new ClothesSprite(0xA5, armorColor, shirtColor));
+        if (characterAppearance.getRace().getShoulders() == Shoulders.NARROW) {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0xBE, armorColor, shirtColor));
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0xBF, armorColor, shirtColor));
+            characterAppearance.setSprite(1, 6, new ClothesSprite(0xCE, armorColor, shirtColor));
+            characterAppearance.setSprite(5, 6, new ClothesSprite(0xCF, armorColor, shirtColor));
+        } else {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0x95, armorColor, shirtColor));
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0x95, armorColor, shirtColor));
+            characterAppearance.setSprite(1, 6, new ClothesSprite(0xA5, armorColor, shirtColor));
+            characterAppearance.setSprite(5, 6, new ClothesSprite(0xA5, armorColor, shirtColor));
+        }
+
         characterAppearance.setSprite(2, 6, new ClothesSprite(0xA6, armorColor, shirtColor));
         characterAppearance.setSprite(3, 6, new ClothesSprite(0xA7, armorColor, shirtColor));
         characterAppearance.setSprite(4, 6, new ClothesSprite(0xA8, armorColor, shirtColor));
-        characterAppearance.setSprite(5, 5, new ClothesSprite(0x95, armorColor, shirtColor));
-        characterAppearance.setSprite(5, 6, new ClothesSprite(0xA5, armorColor, shirtColor));
+
     }
 
     protected static void putOnFarmersHat(CharacterAppearance characterAppearance, MyColors hatColor) {
@@ -191,13 +239,22 @@ public abstract class Looks {
     }
 
     public static void putOnApron(CharacterAppearance characterAppearance, MyColors apronColor, MyColors shirtColor) {
-        characterAppearance.setSprite(1, 6, new ClothesSprite(0xC6, shirtColor, apronColor));
         characterAppearance.setSprite(2, 6, new ClothesSprite(0xC7, shirtColor, apronColor));
         characterAppearance.setSprite(3, 6, new ClothesSprite(0xC7, shirtColor, apronColor));
         characterAppearance.setSprite(4, 6, new ClothesSprite(0xC7, shirtColor, apronColor));
-        characterAppearance.setSprite(5, 6, new ClothesSprite(0xC8, shirtColor, apronColor));
 
-        characterAppearance.setSprite(1, 5, new ClothesSprite(0xB6, shirtColor, apronColor));
-        characterAppearance.setSprite(5, 5, new ClothesSprite(0xB8, shirtColor, apronColor));
+        if (characterAppearance.getRace().getShoulders() == Shoulders.NARROW) {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0x9E, shirtColor, apronColor));
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0x9F, shirtColor, apronColor));
+
+            characterAppearance.setSprite(1, 6, new ClothesSprite(0xAE, shirtColor, apronColor));
+            characterAppearance.setSprite(5, 6, new ClothesSprite(0xAF, shirtColor, apronColor));
+        } else {
+            characterAppearance.setSprite(1, 5, new ClothesSprite(0xB6, shirtColor, apronColor));
+            characterAppearance.setSprite(5, 5, new ClothesSprite(0xB8, shirtColor, apronColor));
+
+            characterAppearance.setSprite(1, 6, new ClothesSprite(0xC6, shirtColor, apronColor));
+            characterAppearance.setSprite(5, 6, new ClothesSprite(0xC8, shirtColor, apronColor));
+        }
     }
 }

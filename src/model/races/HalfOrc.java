@@ -28,4 +28,8 @@ public class HalfOrc extends Race {
         return new FaceSpriteWithHair(0x81, hairColor);
     }
 
+    @Override
+    public Shoulders getShoulders() {
+        return Shoulders.BROAD;
+    }
 }
