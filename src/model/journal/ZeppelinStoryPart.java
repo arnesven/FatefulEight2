@@ -402,6 +402,7 @@ public class ZeppelinStoryPart extends StoryPart {
                     println("You step away from the zeppelin.");
                 }
             }
+            // TODO: If Willis is in the party, do ritual to make zeppelin permanently fueled.
             return model.getCurrentHex().getDailyActionState(model);
         }
     }
