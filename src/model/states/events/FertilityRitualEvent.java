@@ -35,12 +35,13 @@ public class FertilityRitualEvent extends RitualEvent {
         println("You come to a meadow where peasants have erected a maypole adorned with many beautiful flowers.");
         println("There are " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a fertility ritual. " +
                 "They are looking for some extra mages to join them in performing it.");
+        model.getLog().waitForAnimationToFinish();
         if (ritualists.size() + model.getParty().size() < 5) {
             println("Unfortunately you do not have enough party members to join the ritual.");
             model.getLog().waitForAnimationToFinish();
             return false;
         }
-        showExplicitPortrait(model, ritualists.get(0).getAppearance(), ritualists.get(0).getName());
+        showExplicitPortrait(model, ritualists.get(0).getAppearance(), "Druid");
         portraitSay("We try this ritual once a year. For those years when the ritual has been successful " +
                 "the crops around here grow well, " +
                 "the orchards are full of fruit, and many babies are born.");

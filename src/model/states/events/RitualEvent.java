@@ -421,4 +421,8 @@ public abstract class RitualEvent extends DailyEventState {
             gc.addToHP(5);
         }
     }
+
+    public Sprite getCenterSpriteSuccess() {
+        return getCenterSprite();
+    }
 }

@@ -37,12 +37,13 @@ public class PsychicRitual extends RitualEvent {
                 "You come into a large room. In the middle stands a bed, a child sleeping soundly in it.");
         println("There are " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a psychic ritual. " +
                 "They are looking for some extra mages to join them in performing it.");
+        model.getLog().waitForAnimationToFinish();
         if (ritualists.size() + model.getParty().size() < 5) {
             println("Unfortunately you do not have enough party members to join the ritual.");
             model.getLog().waitForAnimationToFinish();
             return false;
         }
-        showExplicitPortrait(model, ritualists.get(0).getAppearance(), ritualists.get(0).getName());
+        showExplicitPortrait(model, ritualists.get(0).getAppearance(), "Magician");
         portraitSay("This girl has been sleeping for many months now. Her parents have tried everything from doctors to priests. " +
                 "They're desperate. We've offered to perform a ritual in which we will enter her dreams and try to wake her " +
                 "up from within. We're a little short on mages at the moment. Do you think you could help?");

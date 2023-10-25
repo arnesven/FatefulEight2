@@ -16,6 +16,7 @@ import java.util.List;
 
 public class BanishDaemonRitualEvent extends RitualEvent {
     private final Sprite fiendSprite;
+    private SmokeBallAnimation flash;
 
     public BanishDaemonRitualEvent(Model model) {
         super(model, MyColors.RED);
@@ -38,12 +39,13 @@ public class BanishDaemonRitualEvent extends RitualEvent {
                 "and arguing amongst themselves.");
         println("There are also " + MyStrings.numberWord(ritualists.size()) + " mages here who are about to do a banishing ritual. " +
                 "They are looking for some extra mages to join them in performing it.");
+        model.getLog().waitForAnimationToFinish();
         if (ritualists.size() + model.getParty().size() < 5) {
             println("Unfortunately you do not have enough party members to join the ritual.");
             model.getLog().waitForAnimationToFinish();
             return false;
         }
-        showExplicitPortrait(model, ritualists.get(0).getAppearance(), ritualists.get(0).getName());
+        showExplicitPortrait(model, ritualists.get(0).getAppearance(), "Sorcerer");
         portraitSay("These miners here have been plagued for some time by a daemon. " +
                 "We've finally managed to trap it in the pit below, but to be rid of it once and for all " +
                 "we need to banish it from this world. We're a few mages short, and the dwarves know nothing but mining. " +
@@ -74,5 +76,13 @@ public class BanishDaemonRitualEvent extends RitualEvent {
     @Override
     public Sprite getCenterSprite() {
         return fiendSprite;
+    }
+
+    @Override
+    public Sprite getCenterSpriteSuccess() {
+        if (flash == null) {
+            flash = new SmokeBallAnimation();
+        }
+        return flash;
     }
 }
