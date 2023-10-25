@@ -27,7 +27,6 @@ public class RitualSubView extends SubView implements Animation {
 
     private final CombatTheme theme;
     private final RitualEvent ritual;
-    private final Sprite centerSprite;
     private int selected = 0;
     private ParticleSprite beamParticle;
     private ParticleSprite smallBeamParticle;
@@ -37,12 +36,11 @@ public class RitualSubView extends SubView implements Animation {
     private double tempBeamProgress = 0.0;
     private boolean ritualSuccess = false;
 
-    public RitualSubView(CombatTheme theme, RitualEvent ritual, MyColors magicColor, Sprite centerSprite) {
+    public RitualSubView(CombatTheme theme, RitualEvent ritual, MyColors magicColor) {
         this.theme = theme;
         this.ritual = ritual;
         selected = 0;
         AnimationManager.register(this); // TODO: Dont forget to unregister this
-        this.centerSprite = centerSprite;
 
         MyColors color = convertColor(magicColor);
         beamParticle = new ParticleSprite(0x00, color);
@@ -53,6 +51,7 @@ public class RitualSubView extends SubView implements Animation {
     @Override
     protected void drawArea(Model model) {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
+        Sprite centerSprite = ritual.getCenterSprite();
         model.getScreenHandler().register(centerSprite.getName(), ORIGIN, centerSprite);
         drawRitualists(model);
         drawBeams(model);
@@ -268,5 +267,9 @@ public class RitualSubView extends SubView implements Animation {
             default:
                 throw new InputMismatchException("Bad input for color conversion: " + magicColor.name());
         }
+    }
+
+    public void resetSelected() {
+        selected = 0;
     }
 }

@@ -69,7 +69,7 @@ public class FertilityRitualEvent extends RitualEvent {
     }
 
     @Override
-    protected Sprite getCenterSprite() {
+    public Sprite getCenterSprite() {
         return MAYPOLE_SPRITE;
     }
 

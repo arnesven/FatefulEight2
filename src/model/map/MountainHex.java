@@ -54,7 +54,8 @@ public class MountainHex extends WorldHex {
                     new WitchKingEvent(model),
                     new CaveEvent(model),
                     new CaveEvent(model),
-                    new CaveEvent(model)
+                    new CaveEvent(model),
+                    new BanishDaemonRitualEvent(model)
             ));
         }
         return new NoEventState(model);

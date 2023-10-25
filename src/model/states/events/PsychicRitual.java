@@ -71,7 +71,7 @@ public class PsychicRitual extends RitualEvent {
     }
 
     @Override
-    protected Sprite getCenterSprite() {
+    public Sprite getCenterSprite() {
         return SLEEPER;
     }
 

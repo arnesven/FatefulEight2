@@ -50,7 +50,7 @@ public abstract class RitualEvent extends DailyEventState {
     protected abstract CombatTheme getTheme();
     protected abstract boolean runEventIntro(Model model, List<GameCharacter> ritualists);
     protected abstract void runEventOutro(Model model, boolean success, int power);
-    protected abstract Sprite getCenterSprite();
+    public abstract Sprite getCenterSprite();
 
     @Override
     protected final void doEvent(Model model) {
@@ -74,7 +74,7 @@ public abstract class RitualEvent extends DailyEventState {
         Collections.shuffle(ritualists);
         this.benched = new ArrayList<>(model.getParty().getBench());
 
-        RitualSubView subView = new RitualSubView(getTheme(), this, magicColor, getCenterSprite());
+        RitualSubView subView = new RitualSubView(getTheme(), this, magicColor);
         CollapsingTransition.transition(model, subView);
 
         print("Press enter to start the ritual.");
@@ -87,13 +87,14 @@ public abstract class RitualEvent extends DailyEventState {
                 takeBeamDamage(turnTaker, subView);
             }
             if (turnTaker.getHP() < DROP_OUT_HP_THRESHOLD) {
-                dropOut(turnTaker);
+                dropOut(turnTaker, subView);
             } else {
                 subView.setCursor(turnTaker);
                 if (!model.getParty().getPartyMembers().contains(turnTaker)) {
                     if (MyRandom.rollD10() > COMMAND_NPC_CHANCE){
                         print(heOrSheCap(turnTaker.getGender()) + " acts of " + hisOrHer(turnTaker.getGender()) +
                                 " own volition! ");
+                        model.getLog().waitForAnimationToFinish();
                         takeNPCTurn(model, subView);
                     } else {
                         print(heOrSheCap(turnTaker.getGender()) + " awaits your instruction. ");
@@ -176,7 +177,7 @@ public abstract class RitualEvent extends DailyEventState {
             } else if (selected == 1) {
                 done = swapWithNeighbor(model, p);
             } else if (selected == 2) {
-                dropOut(turnTaker);
+                dropOut(turnTaker, subView);
                 done = true;
             } else if (selected == 3) {
                 done = releaseBeams();
@@ -202,8 +203,11 @@ public abstract class RitualEvent extends DailyEventState {
         println(turnTaker.getFirstName() + " does nothing.");
     }
 
-    private void dropOut(GameCharacter dropOut) {
+    private void dropOut(GameCharacter dropOut, RitualSubView subView) {
         println(dropOut.getName() + " drops out of the ritual.");
+        if (dropOut == subView.getSelected()) {
+            subView.resetSelected();
+        }
         stepNextTurnTaker();
         ritualists.remove(dropOut);
         turnOrder.remove(dropOut);
