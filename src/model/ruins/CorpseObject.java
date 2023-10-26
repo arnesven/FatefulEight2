@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.List;
 
 public class CorpseObject extends CenterDungeonObject {
-    private static final Sprite SPRITE = new Sprite32x32("dungeoncorpse", "dungeon.png", 0x45,
+    public static final Sprite SPRITE = new Sprite32x32("dungeoncorpse", "dungeon.png", 0x45,
             MyColors.BLACK, MyColors.BEIGE, MyColors.PINK, MyColors.BEIGE);
     private static final List<String> TALK_LIST = List.of("Poor bugger", "Let's not end up like him",
             "I don't want to end up like her.", "She must have gotten lost down here.",

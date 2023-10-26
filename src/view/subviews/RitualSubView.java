@@ -35,6 +35,7 @@ public class RitualSubView extends SubView implements Animation {
     private MyPair<GameCharacter, GameCharacter> temporaryBeam;
     private double tempBeamProgress = 0.0;
     private boolean ritualSuccess = false;
+    private boolean cursorEnabled;
 
     public RitualSubView(CombatTheme theme, RitualEvent ritual, MyColors magicColor) {
         this.theme = theme;
@@ -46,6 +47,7 @@ public class RitualSubView extends SubView implements Animation {
         beamParticle = new ParticleSprite(0x00, color);
         smallBeamParticle = new ParticleSprite(0x10, color);
         angledBeams = makeAngledBeams(color);
+        cursorEnabled = true;
     }
 
     @Override
@@ -60,7 +62,9 @@ public class RitualSubView extends SubView implements Animation {
         drawBeams(model);
         drawBystanders(model);
         drawInitiativeOrder(model);
-        drawCursor(model);
+        if (cursorEnabled) {
+            drawCursor(model);
+        }
 
     }
 
@@ -187,17 +191,11 @@ public class RitualSubView extends SubView implements Animation {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT && cursorEnabled) {
             selected = Arithmetics.decrementWithWrap(selected, ritual.getRitualists().size());
             return true;
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT && cursorEnabled) {
             selected = Arithmetics.incrementWithWrap(selected, ritual.getRitualists().size());
-            return true;
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            System.out.println("up");
-            return true;
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            System.out.println("down");
             return true;
         }
         return false;
@@ -274,5 +272,9 @@ public class RitualSubView extends SubView implements Animation {
 
     public void resetSelected() {
         selected = 0;
+    }
+
+    public void setCursorEnabled(boolean b) {
+        this.cursorEnabled = b;
     }
 }

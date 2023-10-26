@@ -63,12 +63,22 @@ public abstract class RitualEvent extends DailyEventState {
         println("Please select which party members to participate in the ritual (B). " +
                 "The remaining group (A), will stand back and watch the ritual unfold.");
         model.getLog().waitForAnimationToFinish();
-        List<GameCharacter> partOfParty = divideParty(model);
-        if (partOfParty.isEmpty()) {
-            model.getParty().unbenchAll();
-            println("You decline to participated in the ritual and continue on your journey.");
-            return;
-        }
+        List<GameCharacter> partOfParty;
+        do {
+            partOfParty = divideParty(model);
+            if (partOfParty.isEmpty()) {
+                model.getParty().unbenchAll();
+                println("You decline to participated in the ritual and continue on your journey.");
+                return;
+            }
+            if (partOfParty.size() + ritualists.size() < 5) {
+                println("You must select at least " + (5 - ritualists.size()) + " party members for " +
+                        "group B if you want to perform the ritual.");
+            } else {
+                break;
+            }
+        } while (true);
+
         ritualists.addAll(partOfParty);
         setupTurnOrder();
         Collections.shuffle(ritualists);
@@ -92,10 +102,12 @@ public abstract class RitualEvent extends DailyEventState {
                 subView.setCursor(turnTaker);
                 if (!model.getParty().getPartyMembers().contains(turnTaker)) {
                     if (MyRandom.rollD10() > COMMAND_NPC_CHANCE){
+                        subView.setCursorEnabled(false);
                         print(heOrSheCap(turnTaker.getGender()) + " acts of " + hisOrHer(turnTaker.getGender()) +
                                 " own volition! ");
                         model.getLog().waitForAnimationToFinish();
                         takeNPCTurn(model, subView);
+                        subView.setCursorEnabled(true);
                     } else {
                         print(heOrSheCap(turnTaker.getGender()) + " awaits your instruction. ");
                         takeOneTurn(model, subView);
@@ -108,7 +120,7 @@ public abstract class RitualEvent extends DailyEventState {
                 }
             }
         }
-
+        subView.setCursorEnabled(false);
         if (ritualFailed()) {
             beams.clear();
             println("The ritual has failed");

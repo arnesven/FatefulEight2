@@ -65,8 +65,8 @@ public class SwampHex extends WorldHex {
                     new FrogmenScoutsEvent(model),
                     new SwampRaftEvent(model),
                     new SwampRaftEvent(model),
-                    new SwampRaftEvent(model)
-                    // TODO: Necromancer's Ritual
+                    new SwampRaftEvent(model),
+                    new NecromancerRitual(model)
             ));
         }
         return new NoEventState(model);
