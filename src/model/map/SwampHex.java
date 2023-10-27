@@ -66,7 +66,7 @@ public class SwampHex extends WorldHex {
                     new SwampRaftEvent(model),
                     new SwampRaftEvent(model),
                     new SwampRaftEvent(model),
-                    new NecromancerRitual(model)
+                    new CryptEvent(model)
             ));
         }
         return new NoEventState(model);

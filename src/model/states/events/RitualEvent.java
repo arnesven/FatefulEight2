@@ -65,6 +65,7 @@ public abstract class RitualEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         List<GameCharacter> partOfParty;
         do {
+            model.getParty().unbenchAll();
             partOfParty = divideParty(model);
             if (partOfParty.isEmpty()) {
                 model.getParty().unbenchAll();

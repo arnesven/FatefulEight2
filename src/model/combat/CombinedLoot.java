@@ -39,7 +39,10 @@ public class CombinedLoot extends CombatLoot {
         if (ingredients > 0) {
             bldr.append(", ").append(ingredients).append(" ingredients");
         }
-        return bldr.toString().substring(2, bldr.length());
+        if (bldr.length() > 2) {
+            return bldr.substring(2, bldr.length());
+        }
+        return bldr.toString();
     }
 
     @Override
@@ -51,5 +54,9 @@ public class CombinedLoot extends CombatLoot {
 
     public void add(CombatLoot loot) {
         innerLoots.add(loot);
+    }
+
+    public boolean isNothing() {
+        return getText().equals("");
     }
 }

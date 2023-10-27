@@ -47,8 +47,9 @@ public class PlainsHex extends WorldHex {
                     new WatchtowerEvent(model),
                     new HuntingEvent(model),
                     new EnchantressEvent(model),
-                    new FarmersHorseRaceEvent(model)
-                    // TODO: Healing Ritual Event
+                    new FarmersHorseRaceEvent(model),
+                    new CryptEvent(model),
+                    new HealingRitualEvent(model)
             ));
         }
         return new NoEventState(model);

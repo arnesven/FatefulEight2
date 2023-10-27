@@ -30,12 +30,11 @@ import java.util.List;
 public class NecromancerRitual extends RitualEvent {
 
     private final Sprite animation;
-    private final SubView caveSubView;
+    private SubView introSubView;
 
     public NecromancerRitual(Model model) {
         super(model, MyColors.BLACK);
         animation = new SkeletonEnemy('A').getAvatar();
-        this.caveSubView = new CaveHex(0, 0).getImageSubView();
     }
 
     @Override
@@ -45,11 +44,7 @@ public class NecromancerRitual extends RitualEvent {
 
     @Override
     protected boolean runEventIntro(Model model, List<GameCharacter> ritualists) {
-        print("The party encounters a crypt. Do you wish to enter it? (Y/N) ");
-        if (!yesNoInput()) {
-            return false;
-        }
-        CollapsingTransition.transition(model, caveSubView);
+        this.introSubView = model.getSubView();
         GameCharacter witch = makeRandomCharacter(3);
         witch.setClass(Classes.WIT);
         witch.addToHP(999);
@@ -106,7 +101,7 @@ public class NecromancerRitual extends RitualEvent {
             Collections.shuffle(enemies);
             runCombat(enemies, getTheme(), true);
             if (!haveFledCombat()) {
-                CollapsingTransition.transition(model, caveSubView);
+                CollapsingTransition.transition(model, introSubView);
                 println("With the necromancer and their undead lord vanquished you help yourselves to the " +
                         "supplies and gear in the crypt.");
                 for (int i = MyRandom.randInt(6, 9); i > 0; i--) {

@@ -59,10 +59,9 @@ public class PsychicRitual extends RitualEvent {
             healParty(model);
             portraitSay("Thank you so much for helping us with this problem. We really were at our wits end with " +
                     "how to get her to wake up.");
-            println("Each party member gains " + 50*power + " XP!");
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                model.getParty().giveXP(model, gc, 50*power);
-            }
+            println("The girls parents happily pays you a reward.");
+            println("The party gains " + 30*power + " gold!");
+            model.getParty().addToGold(30*power);
             println("You leave the house of the sleepy girl.");
         } else {
             println("The girl remains fast asleep, despite the best efforts of the mages.");

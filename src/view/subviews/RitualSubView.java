@@ -57,7 +57,9 @@ public class RitualSubView extends SubView implements Animation {
         if (ritualSuccess) {
             centerSprite = ritual.getCenterSpriteSuccess();
         }
-        model.getScreenHandler().register(centerSprite.getName(), ORIGIN, centerSprite);
+        if (centerSprite != null) {
+            model.getScreenHandler().register(centerSprite.getName(), ORIGIN, centerSprite);
+        }
         drawRitualists(model);
         drawBeams(model);
         drawBystanders(model);
