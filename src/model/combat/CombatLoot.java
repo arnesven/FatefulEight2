@@ -17,4 +17,5 @@ public abstract class CombatLoot {
     public int getRations() { return 0; }
     public int getMaterials() { return 0; }
     public int getIngredients() { return 0; }
+    public int getObols() { return 0; }
 }

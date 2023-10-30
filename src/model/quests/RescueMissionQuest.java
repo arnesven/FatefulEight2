@@ -207,7 +207,9 @@ public class RescueMissionQuest extends MainQuest {
         state.print("Switching groups. Press enter to continue.");
         state.waitForReturn();
         model.getParty().unbenchAll();
-        model.getParty().benchPartyMembers(split.getNonLeaderGroup(model.getParty().getLeader()));
+        List<GameCharacter> groupToBench = new ArrayList<>(split.getNonLeaderGroup(model.getParty().getLeader()));
+        groupToBench.removeIf(GameCharacter::isDead);
+        model.getParty().benchPartyMembers(groupToBench);
         return true;
     }
 

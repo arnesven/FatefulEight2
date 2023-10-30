@@ -641,17 +641,21 @@ public class Party implements Serializable {
 
     public void benchPartyMembers(List<GameCharacter> benchers) {
         for (GameCharacter gc : benchers) {
-            backRow.remove(gc);
-            frontRow.remove(gc);
-            bench.add(gc);
+            if (partyMembers.contains(gc)) {
+                backRow.remove(gc);
+                frontRow.remove(gc);
+                bench.add(gc);
+            }
         }
     }
 
 
     public void unbenchPartyMembers(List<GameCharacter> unbenchers) {
         for (GameCharacter gc : unbenchers) {
-            bench.remove(gc);
-            frontRow.add(gc);
+            if (partyMembers.contains(gc)) {
+                bench.remove(gc);
+                frontRow.add(gc);
+            }
         }
     }
 
