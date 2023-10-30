@@ -212,7 +212,7 @@ public class ZeppelinStoryPart extends StoryPart {
                         "Parting with it without some kind of compensation just doesn't feel right.");
                 leaderSay("What do you consider to be a fair price for it?");
                 portraitSay("Well, the materials alone, including the engine, was more than 300 gold. " +
-                        "But I will consider letting it go for 250. Although I'll want more if you want to by extra fuel.");
+                        "But I will consider letting it go for 250. Although I'll want more if you want to buy extra fuel.");
 
                 if (model.getParty().getGold() < 250) {
                     rejectOffer();
