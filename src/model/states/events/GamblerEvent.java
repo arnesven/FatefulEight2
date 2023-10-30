@@ -15,7 +15,7 @@ public class GamblerEvent extends DailyEventState {
 
     public GamblerEvent(Model model) {
         super(model);
-        potSize = MyRandom.randInt(36)*2;
+        potSize = MyRandom.randInt(36)*2 + 2;
     }
 
     @Override

@@ -49,8 +49,12 @@ public class CorpseObject extends CenterDungeonObject {
                 CombinedLoot combinedLoot = new CombinedLoot();
                 combinedLoot.add(new PersonCombatLoot(model));
                 combinedLoot.add(new PersonCombatLoot(model));
-                state.println("You found " + combinedLoot.getText() + ".");
-                combinedLoot.giveYourself(model.getParty());
+                if (!combinedLoot.getText().equals("")) {
+                    state.println("You found " + combinedLoot.getText() + ".");
+                    combinedLoot.giveYourself(model.getParty());
+                } else {
+                    state.println("You found nothing of interest.");
+                }
             } else {
                 state.println("You found a map of these ruins!");
                 for (int i = 0; i <= state.getCurrentLevel(); ++i) {
