@@ -116,7 +116,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             println(thief.getFirstName() + " attempts to grap the " + victim +
                     "'s purse (Security " + result.asString() + ").");
             if (result.isSuccessful()) {
-                println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " from the " + victim + ".");
+                println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");
                 leaderSay("Please excuse us " + victim + ", we have pressing matters to attend.");
                 portraitSay(MyRandom.sample(List.of("Oh... alright.", "I see, goodbye.",
                         "Safe travels.", "I understand, farewell")));
@@ -132,7 +132,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         portraitSay(MyRandom.sample(List.of("Hey, there! Keep your fingers to yourself!",
                 "Stop! Thief!", "Huh? A pick-pocket? Get away from me!#")));
         if (strat == ProvokedStrategy.ALWAYS_ESCAPE) {
-            print("Do you want to attack the " + victim + "? (Y/N)");
+            print("Do you want to attack the " + victim + "? (Y/N) ");
             if (yesNoInput()) {
                 attack(victimChar, companions, strat, true);
             } else {
@@ -142,7 +142,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
                 CowardlyCondition.goodGuysHasTheAdvantage(getModel(), makeEnemyTeam(victimChar, companions),
                         getModel().getParty().getPartyMembers())) {
             portraitSay("I would fight you... but uh... Well, I just don't want to.");
-            print("Do you want to attack the " + victim + "? (Y/N)");
+            print("Do you want to attack the " + victim + "? (Y/N) ");
             if (yesNoInput()) {
                 attack(victimChar, companions, strat, true);
             } else {

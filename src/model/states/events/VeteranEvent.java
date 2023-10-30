@@ -62,6 +62,8 @@ public class VeteranEvent extends DarkDeedsEvent {
             print("The veteran is offering to train you in the ways of being a captain ");
             change = new ChangeClassEvent(model, Classes.CAP);
             change.areYouInterested(model);
+            setCurrentTerrainSubview(model);
+            showExplicitPortrait(model, app, "Veteran");
         } else {
             println("Veteran: \"Times are rough, but somehow I'll survive.\"");
         }

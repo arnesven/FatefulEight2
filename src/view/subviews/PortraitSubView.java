@@ -155,9 +155,8 @@ public class PortraitSubView extends SubView {
         return appearance.isFemale();
     }
 
-    public static CharacterAppearance makeOldPortrait(CharacterClass cls, Race race, boolean gender) {
+    public static CharacterAppearance makeOldPortrait(CharacterClass cls, Race raceToUse, boolean gender) {
         AdvancedAppearance appearance;
-        Race raceToUse = Race.randomRace();
         MyColors hairColor;
         do {
             hairColor = MyRandom.sample(List.of(MyColors.WHITE, MyColors.GRAY, MyColors.LIGHT_GRAY));

@@ -1,5 +1,7 @@
 package view;
 
+import view.sprites.SpriteCache;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -47,6 +49,7 @@ public class DrawingArea extends JComponent {
             g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
         this.buffer = img;
+        SpriteCache.checkForClear();
     }
 
     public ScreenHandler getScreenHandler() {
