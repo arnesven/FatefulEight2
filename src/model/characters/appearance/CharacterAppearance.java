@@ -2,6 +2,7 @@ package model.characters.appearance;
 
 import model.classes.CharacterClass;
 import model.races.Race;
+import model.races.Shoulders;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;
@@ -10,6 +11,34 @@ import java.io.Serializable;
 import java.util.List;
 
 public abstract class CharacterAppearance implements Serializable {
+
+    private final PortraitSprite NECK_1 = new NakedFaceAndClothesSprite(0x90);
+    private final PortraitSprite NECK_LEFT = new NakedFaceAndClothesSprite(0xA0);
+    private final PortraitSprite NECK_RIGHT = new NakedFaceAndClothesSprite(0xB0);
+
+    private final PortraitSprite NECK_LEFT_THICK = new NakedFaceAndClothesSprite(0x180);
+    private final PortraitSprite NECK_RIGHT_THICK = new NakedFaceAndClothesSprite(0x190);
+
+    private final PortraitSprite CHEST_1 = new NakedFaceAndClothesSprite(0xC2);
+    private final PortraitSprite CHEST_2 = new NakedFaceAndClothesSprite(0xC1);
+
+    private final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
+
+    private final PortraitSprite SHOULDER_LEFT_TOP = new NakedClothesSprite(0x00);
+    private final PortraitSprite SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x10);
+    private final PortraitSprite SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x01);
+    private final PortraitSprite SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x11);
+
+    private final PortraitSprite NARROW_SHOULDER_LEFT_TOP = new NakedClothesSprite(0x3D);
+    private final PortraitSprite NARROW_SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x4D);
+    private final PortraitSprite NARROW_SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x3E);
+    private final PortraitSprite NARROW_SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x4E);
+
+    private final PortraitSprite BROAD_SHOULDER_LEFT_TOP = new NakedClothesSprite(0x5D);
+    private final PortraitSprite BROAD_SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x5E);
+
+    private final PortraitSprite SHOULDER_TOP = new NakedClothesSprite(0x20);
+
 
     private static Sprite hairSprite = new Sprite32x32("standardhair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
@@ -73,7 +102,15 @@ public abstract class CharacterAppearance implements Serializable {
         this.grid[5][4] = PortraitSprite.BLACK_BLOCK;
         this.grid[6][4] = PortraitSprite.FRAME_RIGHT;
 
-        race.makeNakedPortraitBottom(this.grid, femaleGender);
+        makeNakedShoulders(grid, race.getShoulders());
+
+        grid[2][5] = race.isThickNeck() ? NECK_LEFT_THICK : NECK_LEFT;
+        grid[3][5] = NECK_1;
+        grid[4][5] = race.isThickNeck() ? NECK_RIGHT_THICK : NECK_RIGHT;
+
+        grid[2][6] = FILLED_BLOCK_CLOTHES;
+        grid[3][6] = femaleGender ? CHEST_1 : CHEST_2;
+        grid[4][6] = FILLED_BLOCK_CLOTHES;
 
         specialization();
         setRaceSkinColor(race);
@@ -303,5 +340,36 @@ public abstract class CharacterAppearance implements Serializable {
 
     public boolean getGender() {
         return femaleGender;
+    }
+
+    public void makeNakedShoulders(PortraitSprite[][] grid, Shoulders shoulders) {
+        if (shoulders == Shoulders.NARROW) {
+            grid[0][5] = PortraitSprite.FRAME_LEFT;
+            grid[0][6] = PortraitSprite.FRAME_LL_CORNER;
+
+            grid[1][5] = NARROW_SHOULDER_LEFT_TOP;
+            grid[1][6] = NARROW_SHOULDER_LEFT_BOTTOM;
+
+            grid[5][5] = NARROW_SHOULDER_RIGHT_TOP;
+            grid[5][6] = NARROW_SHOULDER_RIGHT_BOTTOM;
+
+            grid[6][5] = PortraitSprite.FRAME_RIGHT;
+            grid[6][6] = PortraitSprite.FRAME_LR_CORNER;
+        } else {
+            if (shoulders ==  Shoulders.NORMAL) {
+                grid[0][5] = SHOULDER_LEFT_TOP;
+                grid[6][5] = SHOULDER_RIGHT_TOP;
+            } else { // Shoulders.BROAD
+                grid[0][5] = BROAD_SHOULDER_LEFT_TOP;
+                grid[6][5] = BROAD_SHOULDER_RIGHT_TOP;
+            }
+
+            grid[0][6] = SHOULDER_LEFT_BOTTOM;
+            grid[1][5] = SHOULDER_TOP;
+            grid[1][6] = FILLED_BLOCK_CLOTHES;
+            grid[5][5] = SHOULDER_TOP;
+            grid[5][6] = FILLED_BLOCK_CLOTHES;
+            grid[6][6] = SHOULDER_RIGHT_BOTTOM;
+        }
     }
 }

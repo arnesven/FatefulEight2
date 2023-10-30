@@ -152,18 +152,24 @@ public class CombatSubView extends SubView {
     }
 
     public synchronized void addFloatyDamage(Combatant target, int damge, MyColors color) {
-        Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        super.addFloatyDamage(point, damge, color);
+        if (combatMatrix.getElementList().contains(target)) {
+            Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
+            super.addFloatyDamage(point, damge, color);
+        }
     }
 
     public synchronized void addFloatyText(Combatant target, int strikeTextEffect) {
-        Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        super.addFloatyText(point, strikeTextEffect);
+        if (combatMatrix.getElementList().contains(target)) {
+            Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
+            super.addFloatyText(point, strikeTextEffect);
+        }
     }
 
     public synchronized void addSpecialEffect(Combatant target, RunOnceAnimationSprite sprite) {
-        Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
-        addOngoingEffect(new MyPair<>(point, sprite));
+        if (combatMatrix.getElementList().contains(target)) {
+            Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
+            addOngoingEffect(new MyPair<>(point, sprite));
+        }
     }
 
     private static Point convertToScreen(Point point, Combatant target) {

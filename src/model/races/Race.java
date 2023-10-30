@@ -113,18 +113,6 @@ public abstract class Race implements Serializable {
         return true;
     }
 
-    public void makeNakedPortraitBottom(PortraitSprite[][] grid, boolean femaleGender) {
-        getShoulders().makeNakedShoulders(grid);
-
-        grid[2][5] = isThickNeck() ? PortraitSprite.NECK_LEFT_THICK : PortraitSprite.NECK_LEFT;
-        grid[3][5] = PortraitSprite.NECK_1;
-        grid[4][5] = isThickNeck() ? PortraitSprite.NECK_RIGHT_THICK : PortraitSprite.NECK_RIGHT;
-
-        grid[2][6] = PortraitSprite.FILLED_BLOCK_CLOTHES;
-        grid[3][6] = femaleGender ? PortraitSprite.CHEST_1 : PortraitSprite.CHEST_2;
-        grid[4][6] = PortraitSprite.FILLED_BLOCK_CLOTHES;
-    }
-
     public PortraitSprite makeShoulderLeftTopSprite(MyColors color) {
         return getShoulders().makeLeftTopSprite(color);
     }

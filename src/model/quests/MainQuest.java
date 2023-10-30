@@ -36,7 +36,9 @@ public abstract class MainQuest extends Quest {
             this.completed = true;
         } else if (model.getCurrentHex().getLocation() != null) {
             state.println("However, this quest can be accepted again.");
-            model.getQuestDeck().unsetFailureIn(model.getCurrentHex().getLocation());
+            if (model.getCurrentHex().getLocation() != null) {
+                model.getQuestDeck().unsetFailureIn(model.getCurrentHex().getLocation());
+            }
             resetQuest();
         }
         return super.endOfQuest(model, state, questWasSuccess);

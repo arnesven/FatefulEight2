@@ -55,7 +55,7 @@ public class RejuvenationPotion extends Potion {
 
     @Override
     public boolean canBeUsedOn(Model model, GameCharacter target) {
-        return target.getHP() < target.getMaxHP() || target.getSP() < target.getMaxSP();
+        return !target.isDead() && (target.getHP() < target.getMaxHP() || target.getSP() < target.getMaxSP());
     }
 
     @Override
