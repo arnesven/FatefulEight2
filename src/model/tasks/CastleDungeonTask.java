@@ -19,9 +19,9 @@ public class CastleDungeonTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        println(location.getLordName() + ": \"I'm afraid an evil presence has settled in the depths of my dungeons. " +
+        printQuote(location.getLordName(), "I'm afraid an evil presence has settled in the depths of my dungeons. " +
                 "My relative went down there to check what was going on and I haven't seen him for, uh, weeks." +
-                "I've been looking for some strong, brave adventuring types to root it out. Can you help me?\"");
+                "I've been looking for some strong, brave adventuring types to root it out. Can you help me?");
         print("Do you wish to descend into the dungeon now? (Y/N) ");
         if (yesNoInput()) {
             SubView sub = model.getSubView();
@@ -30,12 +30,12 @@ public class CastleDungeonTask extends SummonTask {
             if (explore.getDungeon().isCompleted()) {
                 CollapsingTransition.transition(model, sub);
                 summon.increaseStep();
-                println(location.getLordName() + ": \"There you are, I was beginning to think you found the same fate as my relative. " +
+                printQuote(location.getLordName(), "There you are, I was beginning to think you found the same fate as my relative. " +
                         "Thank you for dealing with my little 'problem'.");
             }
         } else {
-            println(location.getLordName() + ": \"I understand, you need more time to prepare. But please hurry. " +
-                    "Something is eating the staff, and good help is so hard to find.\"");
+            printQuote(location.getLordName(), "I understand, you need more time to prepare. But please hurry. " +
+                    "Something is eating the staff, and good help is so hard to find.");
         }
     }
 

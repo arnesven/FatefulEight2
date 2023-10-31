@@ -44,11 +44,11 @@ public class GoToCastleActionNode extends DailyActionNode {
         } else if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             Summon summon = model.getParty().getSummons().get(location.getPlaceName());
             if (summon.getStep() == Summon.ACCEPTED) {
-                state.println("Guard: \"Hey you! Stop right there! Where do you think you're going?\"");
+                state.printQuote("Guard", "Hey you! Stop right there! Where do you think you're going?");
                 state.leaderSay("Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
-                state.println("Guard: \"Do you have an invitation?\"");
+                state.printQuote("Guard", "Do you have an invitation?");
                 state.leaderSay("Yes, it's right here...");
-                state.println("Guard: \"Very well, proceed inside.\"");
+                state.printQuote("Guard", "Very well, proceed inside.");
                 model.getLog().waitForAnimationToFinish();
             } else {
                 state.println("You were admitted to the keep.");
@@ -74,7 +74,7 @@ public class GoToCastleActionNode extends DailyActionNode {
                     model.getParty().unbenchPartyMembers(List.of(cat));
                     if (model.getParty().getLeader() != cat) {
                         model.getParty().setLeader(cat);
-                        state.println("!" + cat.getName() + " has been set as the leader of the party.");
+                        state.printAlert(cat.getName() + " has been set as the leader of the party.");
                     }
                     admitted = true;
                     return new VisitCastleLordDailyActionNode(model, null, location, true);
@@ -125,13 +125,13 @@ public class GoToCastleActionNode extends DailyActionNode {
 
         @Override
         public GameState run(Model model) {
-            println("Guard: \"Hey you! Stop right there!\"");
+            printQuote("Guard", "Hey you! Stop right there!");
             leaderSay("Who, me?");
-            println("Guard: \"Yes you. Where do you think you're going?\"");
+            printQuote("Guard", "Yes you. Where do you think you're going?");
             leaderSay("Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
-            println("Guard: \"No you're not. Not without the proper invitation and I haven't been informed of any audiences today. Be on your way!\"");
+            printQuote("Guard", "No you're not. Not without the proper invitation and I haven't been informed of any audiences today. Be on your way!");
             leaderSay("But...");
-            println("Guard: \"No exceptions! Now off you go. Can't have any old riff raff hanging about.\"");
+            printQuote("Guard", "No exceptions! Now off you go. Can't have any old riff raff hanging about.");
             if (model.getParty().size() == 1) {
                 leaderSay("The nerve...#");
             } else {

@@ -128,7 +128,7 @@ public abstract class Enemy extends Combatant {
         combatBehavior.performAttack(model, this, target, combatEvent);
         model.getTutorial().combatDamage(model);
         if (target.isDead()) {
-            combatEvent.println("!" + target.getName() + " has been slain in combat!");
+            combatEvent.printAlert(target.getName() + " has been slain in combat!");
             if (model.getParty().getPartyMembers().contains(target)) {
                 if (target.isLeader() && model.getParty().appointNewLeader()) {
                     combatEvent.println(model.getParty().getLeader().getFullName() + " is now the new leader of the party.");
@@ -241,7 +241,7 @@ public abstract class Enemy extends Combatant {
         if (damage > 0 && getDamageReduction() > 0 && !hasCondition(ErodeCondition.class)) {
             int hpBefore = getHP();
             super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()));
-            combatEvent.println("!Damage was reduced by " + (damage - (hpBefore - getHP())) + "!");
+            combatEvent.printAlert("Damage was reduced by " + (damage - (hpBefore - getHP())) + "!");
         } else {
             super.takeCombatDamage(combatEvent, damage);
         }

@@ -297,7 +297,7 @@ public class Model {
     public void incrementDay() {
         gameData.day++;
         gameData.timeOfDay = TimeOfDay.MORNING;
-        log.addAnimated("\n- DAY " + gameData.day + " -\n");
+        log.addAnimated("\n" + LogView.CYAN_COLOR + "- DAY " + gameData.day + " -" + LogView.DEFAULT_COLOR + "\n" );
         gameData.party.setRecruitmentPersistence(null);
         gameData.party.getHorseHandler().newAvailableHorse();
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));

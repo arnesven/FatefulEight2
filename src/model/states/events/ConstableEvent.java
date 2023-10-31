@@ -106,8 +106,8 @@ public class ConstableEvent extends DailyEventState {
     private void goToJail(Model model) {
         println("You come along to the courthouse where a council promptly charges you and convicts you of being a " + perp + ".");
         leaderSay("But I'm innocent!");
-        println("Clerk: \"You can either pay a fine of " + getFine() + " gold or spend " + getJailTime() +
-                " days in the town jail.\"");
+        printQuote("Clerk", "You can either pay a fine of " + getFine() + " gold or spend " + getJailTime() +
+                " days in the town jail.");
         if (getFine() > model.getParty().getGold()) {
             spendTimeInJail(model);
         } else {

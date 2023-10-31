@@ -80,7 +80,7 @@ public class MineEvent extends DailyEventState {
                     gc.addToHP(-2);
                     if (gc.isDead()) {
                         model.getParty().remove(gc, true, false, 0);
-                        println("The gas has killed " + gc.getName() + "!");
+                        printAlert("The gas has killed " + gc.getName() + "!");
                     }
                 }
                 break;

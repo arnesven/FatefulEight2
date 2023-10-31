@@ -182,7 +182,7 @@ public class ArenaQuest extends Quest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
-            state.println("Announcer: \"" + ANNOUNCER.get(step) + "\"");
+            state.printQuote("Announcer", ANNOUNCER.get(step));
 
             state.print("Who will fight " + getCombatDetails() + "?");
             GameCharacter fighter = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());

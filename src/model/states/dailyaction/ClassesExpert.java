@@ -52,7 +52,7 @@ public class ClassesExpert extends CareerOfficePersonNode {
         }
 
         private void expertSay(String s) {
-            println("Expert: \"" + s + "\"");
+            printQuote("Expert", s);
         }
     }
 }

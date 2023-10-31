@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.races.AllRaces;
 import util.MyRandom;
+import view.LogView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,16 +112,16 @@ public class HorseHandler extends ArrayList<Horse> {
                 }
             }
             if (isEmpty()) {
-                model.getLog().addAnimated("!You have lost your horses!\n");
+                model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n");
             } else {
-                model.getLog().addAnimated("!Some of your horses have run away!\n");
+                model.getLog().addAnimated(LogView.RED_COLOR + "Some of your horses have run away!\n");
             }
         }
     }
 
     public void abandonHorses(Model model) {
         if (size() > 0) {
-            model.getLog().addAnimated("!You have lost your horses!\n");
+            model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n");
             clear();
             ponies = 0;
             horsesFullBlood = 0;

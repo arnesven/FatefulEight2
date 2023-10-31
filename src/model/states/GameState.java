@@ -14,6 +14,7 @@ import model.items.spells.Spell;
 import model.races.Race;
 import util.MyPair;
 import util.MyRandom;
+import view.LogView;
 import view.PartyAttitudesDialog;
 import view.subviews.*;
 
@@ -49,6 +50,14 @@ public abstract class GameState {
 
     public void print(String s) {
         model.getLog().addAnimated(s);
+    }
+
+    public void printAlert(String s) {
+        model.getLog().addAnimated(LogView.RED_COLOR + s + "\n");
+    }
+
+    public void printQuote(String who, String quote) {
+        model.getLog().addAnimated(who + ": " + LogView.YELLOW_COLOR + "\"" + quote + "\"");
     }
 
     public void println(String s) {

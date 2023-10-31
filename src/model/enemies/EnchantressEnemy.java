@@ -44,8 +44,8 @@ public class EnchantressEnemy extends Enemy {
 
     @Override
     public void takeCombatTurn(Model model, CombatEvent combatEvent) {
-        combatEvent.println("Enchantress: \"" + MyRandom.sample(List.of("Please, no! don't kill me!",
-                "No don't hurt me", "No!", "Please stop!", "Help!")) + "\"");
+        combatEvent.printQuote("Enchantress", MyRandom.sample(List.of("Please, no! don't kill me!",
+                "No don't hurt me", "No!", "Please stop!", "Help!")));
         combatEvent.println(getName() + "'s turn is skipped.");
     }
 

@@ -5,8 +5,29 @@ import view.help.HelpView;
 import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class LogView extends GameView {
+    public static final char RED_COLOR = (char)0xF1;
+    public static final char CYAN_COLOR = (char)0xF2;
+    public static final char YELLOW_COLOR = (char)0xF3;
+    public static final char GRAY_COLOR = (char)0xF4;
+    public static final char DEFAULT_COLOR = (char)0xF0;
+    public static final char WHITE_COLOR = (char)0xFA;
+    public static final char GOLD_COLOR = (char)0xFC;
+
+    private static final String SPECIAL_CHARS = makeSpecialCharsString();
+    private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GREEN;
+
+    private static final MyColors[] COLOR_FOR_CHAR = new MyColors[]{
+            DEFAULT_TEXT_COLOR, MyColors.LIGHT_RED,
+            MyColors.CYAN, MyColors.YELLOW, MyColors.GRAY, MyColors.PEACH,
+            MyColors.TAN, MyColors.LIGHT_YELLOW, MyColors.LIGHT_BLUE, MyColors.GREEN,
+            MyColors.WHITE, MyColors.ORANGE, MyColors.GOLD, MyColors.LIGHT_GRAY,
+            MyColors.BEIGE, MyColors.PURPLE};
+
     private TopText topText = new TopText();
     private GameView nextView;
     private GameView previousView;
@@ -46,25 +67,44 @@ public class LogView extends GameView {
             if (count < scroll+1) {
                 continue;
             }
-            BorderFrame.drawString(model.getScreenHandler(), s, 0, row--, getColorForLine(s));
+
+            MyColors colorToUse = DEFAULT_TEXT_COLOR;
+            for (int i = 0; i < s.length(); ++i) {
+                String substr = s.charAt(i) + "";
+                if (SPECIAL_CHARS.contains(substr)) {
+                    colorToUse = getColorForSpecialChar(s.charAt(i));
+                } else {
+                    BorderFrame.drawString(model.getScreenHandler(), substr, i, row, colorToUse);
+                }
+            }
+            row--;
+
             if (count == totalRows + scroll) {
                 break;
             }
         }
     }
 
-    private static MyColors getColorForLine(String s) {
-        if (s.startsWith("!")) {
-            return MyColors.LIGHT_RED;
-        } else if (s.contains("DAY")) {
-            return MyColors.CYAN;
-        } else if (s.contains("\"")) {
-            return MyColors.YELLOW;
-        } else if (s.contains("Autosaving")) {
-            return MyColors.GRAY;
+    private static MyColors getColorForSpecialChar(char c) {
+        int i = SPECIAL_CHARS.indexOf(c);
+        if (0 <= i && i < SPECIAL_CHARS.length()) {
+            return COLOR_FOR_CHAR[i];
         }
-        return MyColors.LIGHT_GREEN;
+        return DEFAULT_TEXT_COLOR;
     }
+
+//    private static MyColors getColorForLine(String s) {
+//        if (s.startsWith("!")) {
+//            return MyColors.LIGHT_RED;
+//        } else if (s.contains("DAY")) {
+//            return MyColors.CYAN;
+//        } else if (s.contains("\"")) {
+//            return MyColors.YELLOW;
+//        } else if (s.contains("Autosaving")) {
+//            return MyColors.GRAY;
+//        }
+//        return MyColors.LIGHT_GREEN;
+//    }
 
     @Override
     public GameView getNextView(Model model) {
@@ -97,5 +137,13 @@ public class LogView extends GameView {
          if (model.getLog().isAcceptingInput()) {
             model.getLog().keyTyped(keyEvent, model);
         }
+    }
+
+    private static String makeSpecialCharsString() {
+        StringBuilder bldr = new StringBuilder();
+        for (int i = 0; i < 0x10; i++) {
+            bldr.append((char)(0xF0 + i));
+        }
+        return bldr.toString();
     }
 }

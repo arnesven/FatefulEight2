@@ -134,7 +134,8 @@ public class GoblinKingQuest extends Quest {
                 model.getLog().waitForAnimationToFinish();
                 return getSuccessEdge();
             }
-            state.println("Aboz: \"Common lads! To me! To me! Let's show these uninvited guests some true goblin hospitality.\"");
+            state.printQuote("Aboz", "Common lads! To me! To me! Let's show these uninvited guests " +
+                    "some true goblin hospitality.");
             state.println("Suddenly, more goblins fill the hall and rush toward the party.");
             model.getLog().waitForAnimationToFinish();
             return getFailEdge();

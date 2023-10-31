@@ -190,7 +190,7 @@ public class BetOnTournamentEvent extends TournamentEvent  {
         if (0 < bet && bet <= model.getParty().getGold()) {
             model.getParty().addToGold(-bet);
             placedBets.add(new TournamentBet(fighter, bet, odds.get(fighter)));
-            println("Official: \"I've registered your wager. Here's your ticket.\"");
+            printQuote("Official", "I've registered your wager. Here's your ticket.");
         } else if (0 < bet) {
             println("You cannot afford that.");
         }

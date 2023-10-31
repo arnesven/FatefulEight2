@@ -128,7 +128,7 @@ public class CareerCoachNode extends CareerOfficePersonNode {
         }
 
         private void coachSay(String s) {
-            println("Career Coach: \"" + s + "\"");
+            printQuote("Career Coach", s);
         }
     }
 }

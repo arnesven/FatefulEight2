@@ -26,7 +26,7 @@ public class BuyHorseState extends GameState {
     @Override
     public GameState run(Model model) {
         Horse horse = model.getParty().getHorseHandler().getAvailableHorse(model);
-        println(seller + ": \"We have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.\"");
+        printQuote(seller, "We have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.");
         model.getTutorial().horses(model);
         if (model.getParty().getGold() < price) {
             leaderSay("I'd love to, but I can't afford it right now.");

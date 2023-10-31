@@ -7,6 +7,7 @@ import model.quests.MainQuest;
 import model.quests.Quest;
 import util.MyRandom;
 import util.MyStrings;
+import view.LogView;
 import view.help.HalfTimeDialog;
 import view.subviews.*;
 
@@ -81,7 +82,7 @@ public class EveningState extends GameState {
         }
         if (this.goOnQuest == null) {
             if (doAutoSave && model.getSettings().autosaveEnabled()) {
-                model.getLog().addAnimated("Autosaving...\n");
+                model.getLog().addAnimated(LogView.GRAY_COLOR + "Autosaving...\n" + LogView.DEFAULT_COLOR);
                 model.saveToFile("auto");
             }
             return model.getCurrentHex().getDailyActionState(model);

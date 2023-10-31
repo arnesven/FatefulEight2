@@ -31,7 +31,7 @@ public class BossRoom extends DungeonRoom {
                 "This has to be the last enemy...", "Everybody ready?"));
         String line = MyRandom.sample(List.of("Wahahaha! Come meet your doom!", "Who dares disturb me?",
                 "Now you shall all meet your end.", "Fools! Die for my happiness!"));
-        exploreRuinsState.println(boss.getName() + ": \"" + line + "\"");
+        exploreRuinsState.printQuote(boss.getName(), line);
         exploreRuinsState.waitForReturn();
         super.entryTrigger(model, exploreRuinsState);
         if (!exploreRuinsState.isDungeonExited()) {

@@ -97,20 +97,20 @@ public class LordTreasuryNode extends DailyActionNode {
         }
 
         private void lordIsOutraged(Model model) {
-            println(location.getLordName() + ": \"Stop! What do you think you're doing?\"");
+            printQuote(location.getLordName(), "Stop! What do you think you're doing?");
             leaderSay("Uhm, I was just looking for the restroom?");
             SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Persuade, 7);
 
             println(model.getParty().getLeader().getName() + " attempts to persuade " +
                     location.getLordName() + ", Persuade " + result.asString() + ".");
             if (result.isSuccessful()) {
-                println(location.getLordName() + ": \"It's not back there, I assure you. " +
-                        "There's an outhouse just around the corner...\"");
+                printQuote(location.getLordName(), "It's not back there, I assure you. " +
+                        "There's an outhouse just around the corner...");
                 leaderSay("Thank you. I'll be on my way then...");
             } else {
-                println(location.getLordName() + ": \"You don't fool me thief. Now get out.\"");
+                printQuote(location.getLordName(), "You don't fool me thief. Now get out.");
                 model.getParty().addToNotoriety(10);
-                println("!Your notoriety has increased!");
+                printAlert("Your notoriety has increased!");
             }
         }
 
@@ -130,7 +130,7 @@ public class LordTreasuryNode extends DailyActionNode {
             boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 4);
             if (!result) {
                 model.getParty().addToNotoriety(40);
-                println("!Your crime has been witnessed, your notoriety has increased!");
+                printAlert("Your crime has been witnessed, your notoriety has increased!");
             }
         }
     }

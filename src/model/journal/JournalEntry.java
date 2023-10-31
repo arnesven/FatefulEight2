@@ -3,6 +3,7 @@ package model.journal;
 import model.Model;
 import model.states.GameState;
 import model.states.InitialLeadsEveningState;
+import view.LogView;
 
 public interface JournalEntry {
     String getName();
@@ -12,10 +13,10 @@ public interface JournalEntry {
     boolean isTask();
 
     static void printJournalUpdateMessage(Model model) {
-        model.getLog().addAnimated("!Your journal has been updated!\n");
+        model.getLog().addAnimated(LogView.GOLD_COLOR + "Your journal has been updated!\n");
     }
 
     static void printMapExpandedMessage(Model model) {
-        model.getLog().addAnimated("!Your map has been expanded! You should check the map view.\n");
+        model.getLog().addAnimated(LogView.GOLD_COLOR + "Your map has been expanded! You should check the map view.\n");
     }
 }

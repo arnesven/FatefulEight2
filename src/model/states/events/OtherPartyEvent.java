@@ -531,7 +531,7 @@ public class OtherPartyEvent extends DailyEventState {
     private void otherPartyMemberSay(GameCharacter gc, String s) {
         getModel().getLog().waitForAnimationToFinish();
         String result = subView.addCallout(gc, s);
-        println(gc.getName() + ": \"" + result + "\"");
+        printQuote(gc.getName(),result);
     }
 
     private void otherLeaderSay(String s) {

@@ -154,7 +154,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
     }
 
     private void addToNotoriety(int notoriety) {
-        println("!Your notoriety has increased by " + notoriety + "!");
+        printAlert("Your notoriety has increased by " + notoriety + "!");
         if (getModel().getParty().getNotoriety() == 0) {
             getModel().getTutorial().notoriety(getModel());
         }

@@ -79,7 +79,7 @@ public class TalkToBartenderNode extends DailyActionNode {
         }
 
         private void getAdvice(Model model) {
-            println("I used to be an adventurer like you, then I took an arrow to the knee. " +
+            printQuote("Bartender", "I used to be an adventurer like you, then I took an arrow to the knee. " +
                     "Now I run this place, and I'm doing pretty well for myself, but I do sometimes dream back to the " +
                     "good old days when I was in a party of adventurers. The things we accomplished...");
             leaderSay("Got any good advice on adventuring?");
@@ -95,7 +95,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                     "Try to keep your fellow party members happy. Things can get out of hand quickly if they " +
                             "start disliking the leader.",
                     "Having a good formation during combat is crucial. And watch out for enemies with ranged weapons."));
-            println("Bartender: \"" + line + "\"");
+            printQuote("Bartender", line);
         }
 
         private void buyObols(Model model) {
@@ -126,11 +126,11 @@ public class TalkToBartenderNode extends DailyActionNode {
         private void sellObols(Model model) {
             int take = model.getParty().getObols() / 10;
             if (take == 0) {
-                println("Bartender: \"Sorry, I only take 10 obols at a time.\"");
+                printQuote("Bartender", "Sorry, I only take 10 obols at a time.");
                 return;
             }
-            println("Bartender: \"Want to cash in some obols? I can take " + take*10 +
-                    " of them off your hands and give you " + take + " gold.\"");
+            printQuote("Bartender", "Want to cash in some obols? I can take " + take*10 +
+                    " of them off your hands and give you " + take + " gold.");
             print("Do you accept? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().setObols(model.getParty().getObols() - take*10);

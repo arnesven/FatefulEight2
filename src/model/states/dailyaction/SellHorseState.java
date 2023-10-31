@@ -16,7 +16,7 @@ public class SellHorseState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        println("Bartender: \"Which horse did you want to sell?\"");
+        printQuote("Bartender", "Which horse did you want to sell?");
         List<String> options = new ArrayList<>();
         for (Horse h : model.getParty().getHorseHandler()) {
             options.add(h.getName());
@@ -28,7 +28,8 @@ public class SellHorseState extends GameState {
             print("Are you sure you want to sell the " + horse.getName() + " for " + horse.getCost()/2 + " gold? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().getHorseHandler().sellHorse(model, horse);
-                println("Bartender: \"We'll take care of " + himOrHer(MyRandom.flipCoin()) + " from now on then.\"");
+                printQuote("Bartender", "We'll take care of " + himOrHer(MyRandom.flipCoin()) +
+                        " from now on then.");
             }
         }
         return new DailyActionState(model);

@@ -19,7 +19,7 @@ public class MuggingEvent extends DailyEventState {
         showRandomPortrait(model, Classes.BANDIT, "Muggers");
         println("Some scruffy men approach the party as you cut through" +
                 " an alley.");
-        println("Thug: \"Okay kid, hand it over!\"");
+        printQuote("Thug", "Okay kid, hand it over!");
         model.getParty().randomPartyMemberSay(model, List.of("Are we just gonna let these bozos take our stuff?"));
         print("Fight the muggers? (Y/N) ");
         if (yesNoInput()) {

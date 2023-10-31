@@ -13,7 +13,7 @@ public class PeskyCrowEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("\"Caw caw!\"");
+        printQuote("Pesky Crow", "Caw caw!");
         println("You suddenly notice that a crow has been following you for some time. At first you " +
                 "try to shoo it away but it keeps coming closer and closer like it's drawn to you.");
         model.getParty().randomPartyMemberSay(model,

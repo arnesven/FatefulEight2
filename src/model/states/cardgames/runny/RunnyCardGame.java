@@ -83,7 +83,7 @@ public class RunnyCardGame extends CardGame {
         }
         if (winner.isNPC()) {
             winner.clearCards();
-            state.println(winner.getName() + ": \"" +
+            state.printQuote(winner.getName(),
                     MyRandom.sample(List.of("I'm good at this",
                     "I knew I had it in me.",
                     "Hah! Losers!",
@@ -92,8 +92,7 @@ public class RunnyCardGame extends CardGame {
                     "Looks like those obols are mine.",
                     "Huzzah!", "At last!", "Wohoo, I won!",
                     "Perfection.", "I love this game!",
-                    "That was equal parts luck and skill.")) +
-                    "\"");
+                    "That was equal parts luck and skill.")));
             state.print(winner.getName() + " wins");
         } else {
             state.print("You win");
@@ -110,12 +109,11 @@ public class RunnyCardGame extends CardGame {
             removeCardsFromArea(player);
         }
         player.clearCards();
-        state.println(player.getName() + ": \"" +
+        state.printQuote(player.getName(),
                 MyRandom.sample(List.of("Too expensive for me",
                         "I'm out.", "Nah, it's not worth it.",
                         "I fold.", "I give in.", "My cards are rubbish.",
-                        "This isn't going well, better quit now.")) +
-                "\"");
+                        "This isn't going well, better quit now.")));
     }
 
     @Override

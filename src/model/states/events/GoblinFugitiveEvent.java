@@ -47,10 +47,10 @@ public class GoblinFugitiveEvent extends DailyEventState {
         portraitSay("Help, help, they're going to kill me!");
         println("The screaming goblin rushes past you and hides behind the ranks of the party. " +
                 "The other goblins stop running and approach more carefully.");
-        println("Goblin Leader: \"Hand him over. This is none of your business " + model.getParty().getLeader().getRace().getName().toLowerCase() + ".\"");
+        printQuote("Goblin Leader", "Hand him over. This is none of your business " + model.getParty().getLeader().getRace().getName().toLowerCase() + ".");
         print("Hand over the goblin fugitive? (Y/N) ");
         if (yesNoInput()) {
-            println("Goblin Leader: \"Smart move. Now come here you!\"");
+            printQuote("Goblin Leader", "Smart move. Now come here you!");
             portraitSay("No, no, noooooo!");
             println("The goblins drag the fugitive away.");
             model.getParty().randomPartyMemberSay(model, List.of("As he said, it was none of our business."));
@@ -59,11 +59,11 @@ public class GoblinFugitiveEvent extends DailyEventState {
             if (pair.first) {
                 model.getParty().partyMemberSay(model, pair.second, List.of("You don't want to mess with us. We're not only bigger and stronger, " +
                         "but there's more of us than of you."));
-                println("Goblin Leader: \"Fair point. Ah, hell with it. Let's head back to the tunnels boys!\"");
+                printQuote("Goblin Leader", "Fair point. Ah, hell with it. Let's head back to the tunnels boys!");
                 recruit(model);
             } else {
                 model.getParty().partyMemberSay(model, pair.second, List.of("Come on, let him off. It's a nice day after all."));
-                println("Goblin Leader: \"No way.\"");
+                printQuote("Goblin Leader", "No way.");
                 doCombat(model);
                 if (didFlee) {
                     return;

@@ -37,7 +37,7 @@ public abstract class CombatAction {
                     performer.addToHP(-1);
                     combat.println(performer.getFirstName() + " loses 1 Health Point from fatigue.");
                     if (performer.isDead()) {
-                        combat.println("!" + performer.getName() + " has perished from the effects of the fatigue!");
+                        combat.printAlert(performer.getName() + " has perished from the effects of the fatigue!");
                     }
                 }
             } else if (combat.getCurrentRound() >= FATIGUE_START_ROUND) {

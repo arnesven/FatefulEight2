@@ -59,7 +59,7 @@ public class NPCCombatEvent extends CombatEvent {
             return true;
         }
         if (fighter.getHP() <= 2 && fighter.getHP() != fighter.getMaxHP()) {
-            println(fighter.getName() + ": \"I yield!\"");
+            printQuote(fighter.getName(), "I yield!");
             return true;
         }
         return false;

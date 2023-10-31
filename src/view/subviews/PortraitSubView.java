@@ -147,7 +147,7 @@ public class PortraitSubView extends SubView {
     public void portraitSay(Model model, GameState state, String line) {
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
-        state.println(portraitName + ": \"" + pair.second + "\"");
+        state.printQuote(portraitName, pair.second);
         callout = new CalloutSprite(pair.first);
     }
 

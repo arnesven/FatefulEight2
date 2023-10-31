@@ -205,7 +205,7 @@ public class GoblinTunnelsQuest extends Quest {
                         QuestSubView.convertToScreen(RIDDLE_JUNCTION_POINT));
                 state.getSubView().waitForAnimation();
                 state.getSubView().removeMovementAnimation();
-                state.println("! " + gc.getName() + " has been separated from the party!");
+                state.printAlert(gc.getName() + " has been separated from the party!");
 
                 riddleGuy = gc;
                 model.getParty().benchPartyMembers(List.of(riddleGuy));
@@ -245,7 +245,7 @@ public class GoblinTunnelsQuest extends Quest {
 
             if (withIntro) {
                 model.getParty().partyMemberSay(model, riddleGuy, List.of("Where the devil am I? Is that an underground lake?"));
-                state.println("Slimy Creature: \"Does my preshious want to play a game of riddles?\"");
+                state.printQuote("Slimy Creature", "Does my pressshious want to play a game of riddles?");
                 model.getParty().partyMemberSay(model, riddleGuy, List.of("Sure, why not? If you'll show me the way out of here afterwards"));
             }
             state.println("The slimy creature asks " + riddleGuy.getName() + " for the answer to a tricky riddle.");

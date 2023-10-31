@@ -73,21 +73,21 @@ public class HelpWillisQuest extends MainQuest {
                     case 0:
                         state.leaderSay("Welcome aboard. The library's that way. You're boss's name is Willis Johanssen. " +
                                 "Hope you like dusty books, because we have lots of them.");
-                        state.println("New Librarian: \"Uhm, okay...\"");
+                        state.printQuote("New Librarian", "Uhm, okay...");
                         break;
                     case 1:
                         state.leaderSay("You're hired. Working conditions are fair, pay is decent. " +
                                 "Benefits are... anyway, library is that way.");
-                        state.println("New Librarian: \"Okay, I'm on my way.\"");
+                        state.printQuote("New Librarian", "Okay, I'm on my way.");
                         break;
                     case 2:
                         state.leaderSay("The job is yours! Head on over to the library. No reading on the job!");
-                        state.println("New Librarian: \"I understand.\"");
+                        state.printQuote("New Librarian", "I understand.");
                         break;
                     default:
                         state.leaderSay("Nice to be working with you. Willis will be so glad to meet you. " +
                                 "Do you like to sort books?");
-                        state.println("New Librarian: \"Sure...\"");
+                        state.printQuote("New Librarian", "Sure...");
                 }
                 recruited++;
             }

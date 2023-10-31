@@ -135,7 +135,7 @@ public abstract class DailyEventState extends GameState {
         if (buf.toString().equals("")) {
             return;
         }
-        print("!" + buf.toString().substring(0, buf.length()-2) + " has died.");
+        printAlert(buf.toString().substring(0, buf.length()-2) + " has died.");
         if (!abandonEquipment && model.getParty().size() > 0) {
             println(" you bury them and collect the equipment.");
         } else {

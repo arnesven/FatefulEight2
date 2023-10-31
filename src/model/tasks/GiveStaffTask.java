@@ -25,12 +25,12 @@ public class GiveStaffTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        println(location.getLordName() + ": \"I would really like to give you a tour of the castle, but my bones have" +
-                " become so weak with age. If only I had a staff to lean on.\"");
+        printQuote(location.getLordName(), "I would really like to give you a tour of the castle, but my bones have" +
+                " become so weak with age. If only I had a staff to lean on.");
         Weapon staff = findStaff(model);
         if (staff == null) {
             println("Unfortunately you have no staffs to spare.");
-            println(location.getLordName() + ": \"Oh, my poor old bones...\"");
+            printQuote(location.getLordName(), "Oh, my poor old bones...");
         } else {
             print("Nobody in your party is currently using the " + staff.getName() +
                     ", are you willing to give it to the " + location.getLordTitle() + "? (Y/N) ");
@@ -38,15 +38,15 @@ public class GiveStaffTask extends SummonTask {
                 println("You hand over the " + staff.getName() + " to " + location.getLordName() + ".");
                 model.getParty().getInventory().remove(staff);
                 summon.increaseStep();
-                println(location.getLordName() + ": \"Heavens bless you! Now I can finally move around again. " +
-                        "Why don't we take that tour of the castle now? There is so much to see and tell!\"");
+                printQuote(location.getLordName(), "Heavens bless you! Now I can finally move around again. " +
+                        "Why don't we take that tour of the castle now? There is so much to see and tell!");
                 println("Each party member gains 50 experience!");
                 model.getLog().waitForAnimationToFinish();
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
                     model.getParty().giveXP(model, gc, 50);
                 }
             } else {
-                println(location.getLordName() + ": \"Oh, my poor old bones...\"");
+                printQuote(location.getLordName(), "Oh, my poor old bones...");
             }
         }
     }

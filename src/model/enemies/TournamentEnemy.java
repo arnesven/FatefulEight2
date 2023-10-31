@@ -60,7 +60,7 @@ public class TournamentEnemy extends Enemy {
     public void conditionsEndOfCombatRoundTrigger(Model model, GameState state) {
         super.conditionsEndOfCombatRoundTrigger(model, state);
         if (getHP() < 3) {
-            state.println(getName() + ": \"I yield!\"");
+            state.printQuote(getName(), "I yield!");
             ((CombatEvent)state).retreatEnemy(this);
         }
     }

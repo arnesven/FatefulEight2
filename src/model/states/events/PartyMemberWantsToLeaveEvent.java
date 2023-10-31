@@ -60,11 +60,11 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
         if (result == offset - 1) {
             sayGoodbye(model, gc);
             model.getParty().remove(gc, true, true, goldDemanded);
-            print("!" + gc.getName() + " has left the party!");
+            printAlert(gc.getName() + " has left the party!");
         } else if (result == offset) {
             sayGoodbye(model, gc);
             model.getParty().remove(gc, false, false, 0);
-            print("!" + gc.getName() + " has left the party!");
+            printAlert(gc.getName() + " has left the party!");
         } else {
             leaderSay("I'm sorry " + gc.getName() + " but I can't pay you, and I'm going to need those items.");
 
@@ -77,17 +77,17 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
             if (separtists.isEmpty()) {
                 partyMemberSay(gc, "... Fine... here you go. But I'm out of here.");
                 model.getParty().remove(gc, true, false, 0);
-                print("!" + gc.getName() + " has left the party!");
+                printAlert(gc.getName() + " has left the party!");
             } else {
                 partyMemberSay(gc, "Oh yeah? Well I'm not going to let you walk all over me! I'm leaving, and anyone else " +
                         "who's sick of " + model.getParty().getLeader().getFirstName() + " is welcome to join my new party.");
                 model.getParty().remove(gc, false, false, 0);
-                print("!" + gc.getName() + " has left the party!");
+                printAlert(gc.getName() + " has left the party!");
                 for (GameCharacter s : separtists) {
                     model.getParty().partyMemberSay(model, s,
                             List.of("Me too.", "I'm leaving too.", "I'm out of here too.", "Yeah. I'm out."));
                     model.getParty().remove(s, false, false, 0);
-                    print("!" + gc.getName() + " has left the party!");
+                    printAlert(gc.getName() + " has left the party!");
                 }
                 separtists.add(gc);
                 runCombat(transformToEnemies(separtists), model.getCurrentHex().getCombatTheme(), true);

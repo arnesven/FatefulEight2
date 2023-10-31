@@ -55,7 +55,7 @@ public class ThievesGuildEvent extends DailyEventState {
                     leaderSay("We're so bad!");
                 } else {
                     println("The heist has gone south and the authorities arrive.");
-                    println("Constable: \"Hey there! Stop right there!\"");
+                    printQuote("Constable", "Hey there! Stop right there!");
                     constableEvent.doEvent(model);
                 }
             } else {

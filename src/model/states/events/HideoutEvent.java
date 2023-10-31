@@ -37,14 +37,14 @@ public class HideoutEvent extends DailyEventState {
                 "Instead, they call for their leader. The bandit leader approaches you and takes a hard look at you.");
         int alignment = DailyEventState.calculatePartyAlignment(model, this);
         if (alignment >= 0) {
-            println("Bandit Leader: \"Kill them all!\"");
+            printQuote("Bandit Leader", "Kill them all!");
             leaderSay("Bring it on!");
             attackBandits(model);
         } else {
-            println("Bandit Leader: \"You look like the right kind of rascals, maybe we can help each other out.\"");
+            printQuote("Bandit Leader", "You look like the right kind of rascals, maybe we can help each other out.");
             leaderSay("What do you have in mind?");
-            println("Bandit Leader: \"Well, you see, we've got this rare loot that we've boosted, but we're having trouble " +
-                    "fencing it. You buy it from us, dirt cheap, then you can sell it!\"");
+            printQuote("Bandit Leader", "Well, you see, we've got this rare loot that we've boosted, but we're having trouble " +
+                    "fencing it. You buy it from us, dirt cheap, then you can sell it!");
             if (model.getParty().getGold() < 10) {
                 leaderSay("We're a bit short on cash...");
                 reject();
@@ -59,7 +59,7 @@ public class HideoutEvent extends DailyEventState {
                         println("The party receives " + it.getName() + ".");
                         model.getParty().getInventory().addItem(it);
                     }
-                    println("Bandit Leader: \"Oh, and if you want, you can use our secret passage to get to the nearest town.\"");
+                    printQuote("Bandit Leader", "Oh, and if you want, you can use our secret passage to get to the nearest town.");
                     secretPassage(model);
                 } else {
                     reject();
@@ -85,7 +85,7 @@ public class HideoutEvent extends DailyEventState {
     }
 
     private void reject() {
-        println("Bandit Leader: \"Never mind then. Off you go you worthless sleazebags!\"");
+        printQuote("Bandit Leader", "Never mind then. Off you go you worthless sleazebags!");
     }
 
     private void attackBandits(Model model) {

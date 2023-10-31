@@ -29,16 +29,16 @@ public class AltarEvent extends DailyEventState {
         int dieRoll = MyRandom.rollD10();
         List<Enemy> enemies = new ArrayList<>();
         if (dieRoll <= 3) {
-            println("Imp: \"Eeeeh, he he he he... More of you come to play huh?\"");
+            printQuote("Imp", "Eeeeh, he he he he... More of you come to play huh?");
             enemies.add(new ImpEnemy('A'));
         } else if (dieRoll <= 5) {
-            println("Fiend: \"More weaklings to slaughter!\"");
+            printQuote("Fiend", "More weaklings to slaughter!");
             enemies.add(new FiendEnemy('A'));
         } else if (dieRoll <= 7) {
-            println("Succubus: \"Come my dear, let me caress you...\"");
+            printQuote("Succubus", "Come my dear, let me caress you...");
             enemies.add(new SuccubusEnemy('A'));
         } else {
-            println("Daemon: \"Bwahahaha! Fire will consume you all.\"");
+            printQuote("Daemon", "Bwahahaha! Fire will consume you all.");
             enemies.add(new DaemonEnemy('A'));
         }
         runCombat(enemies);

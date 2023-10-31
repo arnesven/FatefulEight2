@@ -24,9 +24,9 @@ public class AlchemistEvent extends DailyEventState {
         println("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
         leaderSay("Opening up a new shop?");
-       portraitSay("Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.\"");
+        portraitSay("Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.");
         model.getParty().randomPartyMemberSay(model, List.of("Can we see your wares?"));
-       portraitSay("Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
+        portraitSay("Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
                 "chore that needs doing. Would you spread the word about my new shop?");
         print("Will you help Durok? (Y/N) ");
         if (yesNoInput()) {

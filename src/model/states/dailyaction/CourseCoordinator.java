@@ -74,7 +74,7 @@ public class CourseCoordinator extends CareerOfficePersonNode {
         }
 
         private void coordinatorSay(String s) {
-            println("Course Coordinator: \"" + s + "\"");
+            printQuote("Course Coordinator", s);
         }
     }
 }

@@ -59,12 +59,12 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
         @Override
         public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
             if (summon == null) {
-                state.println(location.getLordName() + ": \"Excuse me, what are you doing in here? " +
-                        "I've told my servants I'm not to be disturbed with the trifles of commoners.\"");
+                printQuote(location.getLordName(), "Excuse me, what are you doing in here? " +
+                        "I've told my servants I'm not to be disturbed with the trifles of commoners.");
                 return false;
             }
             if (state.isEvening() && summon.getStep() != Summon.COMPLETE) {
-                state.println(location.getLordName() + ": \"I'm sorry but it's too late in the day now. Please come back tomorrow.\"");
+                printQuote(location.getLordName(), "I'm sorry but it's too late in the day now. Please come back tomorrow.");
                 return false;
             }
             return true;
@@ -98,16 +98,16 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             String lord = location.getLordName();
             if (summon.getStep() == Summon.ACCEPTED) {
                 String leaderName = model.getParty().getLeader().getName();
-                println(lord + ": \"Hello there. " + leaderName + ", I presume? I've been expecting you.\"");
+                printQuote(lord, "Hello there. " + leaderName + ", I presume? I've been expecting you.");
                 leaderSay("Yes, that's me. Who are you?");
-                println(lord + ": \"I'm " + lord + ". I'm in charge here. First of all, " +
+                printQuote(lord, "I'm " + lord + ". I'm in charge here. First of all, " +
                         "let me formally welcome you to " + location.getPlaceName() +
-                        ", I hope you like our " + location.getLocationType() + ".\"");
+                        ", I hope you like our " + location.getLocationType() + ".");
                 model.getParty().randomPartyMemberSay(model,
                         List.of("Enough with the formalities. What is it you want?",
                                 "Get on with it, I haven't got all day!", "It's pleasant enough I suppose.",
                                 "Sure, it's great. Now what do you want?", "Thanks. Can I help you?", "How do you know my name?"));
-                println(lord + ": \"Your reputation has preceded you and I was wondering if you might be able to help me with a problem of mine.\"");
+                printQuote(lord, "Your reputation has preceded you and I was wondering if you might be able to help me with a problem of mine.");
                 summon.increaseStep();
             }
             if (summon.getStep() != Summon.COMPLETE) {
@@ -119,8 +119,8 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             }
 
             if (summon.getStep() == Summon.COMPLETE) {
-                println(lord + ": \"Thanks again for helping me with my problem. " +
-                        "Please, stay for supper and spend the night, there's room for everyone.\"");
+                printQuote(lord, "Thanks again for helping me with my problem. " +
+                        "Please, stay for supper and spend the night, there's room for everyone.");
                 print("Do you wish to spend the night here? (Y/N): ");
                 if (yesNoInput()) {
                     spentNight = true;

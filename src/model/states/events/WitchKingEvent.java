@@ -127,7 +127,7 @@ public class WitchKingEvent extends DailyEventState {
                     leaderSay("Can we break the spell?");
                     GameCharacter gc2 = model.getParty().getRandomPartyMember();
                     model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
-                    exploreRuinsState.println("Witch King: \"Please.... Help.... Me....\"");
+                    exploreRuinsState.printQuote("Witch King", "Please.... Help.... Me....");
                     tryBreakSpell(model, exploreRuinsState);
                     model.getParty().partyMemberSay(model, gc, "He appears to be waking up.");
                     break;
@@ -143,7 +143,7 @@ public class WitchKingEvent extends DailyEventState {
                     leaderSay("Well, now he will rest in peace.");
                     break;
                 } else {
-                    exploreRuinsState.println("Witch King: \"Free me.... from the.... spell....\"");
+                    exploreRuinsState.printQuote("Witch King", "Free me.... from the.... spell....");
                     leaderSay("He looks like he's trying to hold back. " +
                             "But he's struggling with himself, like an unseen force was controlling his limbs.");
                     GameCharacter gc2 = model.getParty().getRandomPartyMember();
@@ -184,7 +184,8 @@ public class WitchKingEvent extends DailyEventState {
         public void breakSpell(ExploreRuinsState state) {
             spellBroken = true;
             state.println("The witch king calms down and shudders with relief.");
-            state.println("Witch King: \"Thank you. Come, I'll tell you more outside. Let's get out of this wretched place.\"");
+            state.printQuote("Witch King", "Thank you. Come, I'll tell you more outside. " +
+                    "Let's get out of this wretched place.");
         }
 
         @Override

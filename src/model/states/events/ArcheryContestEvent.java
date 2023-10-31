@@ -263,11 +263,12 @@ public class ArcheryContestEvent extends TournamentEvent {
                 }
                 if (balls == 0) {
                     println(heOrSheCap(chara.getGender()) + " doesn't hit a single ball.");
-                    println(chara.getName() + ": \"" + MyRandom.sample(List.of("Darn!", "That's disappointing.", "Phooey!",
-                            "Rats.", "Oh come on!", "I'm out.", "Too tricky.", "Hey! It's harder than it looks.", "I just can't do it.")));
+                    printQuote(chara.getName(), MyRandom.sample(List.of("Darn!", "That's disappointing.", "Phooey!",
+                            "Rats.", "Oh come on!", "I'm out.", "Too tricky.",
+                            "Hey! It's harder than it looks.", "I just can't do it.")));
                 } else if (balls > 1) {
                     println(heOrSheCap(chara.getGender()) + " hits " + MyStrings.numberWord(balls) + " balls!");
-                    println(chara.getName() + ": \"" + MyRandom.sample(List.of("Sweet!", "Yes!", "Alright!", "Did it!", "Gotcha!")));
+                    printQuote(chara.getName(), MyRandom.sample(List.of("Sweet!", "Yes!", "Alright!", "Did it!", "Gotcha!")));
                 } else {
                     println(heOrSheCap(chara.getGender()) + " hits one ball.");
                 }

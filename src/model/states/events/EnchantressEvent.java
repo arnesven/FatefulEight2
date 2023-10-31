@@ -425,10 +425,10 @@ public class EnchantressEvent extends DailyEventState {
             giveAllFiftyExp(model);
             println("The villagers are gathering in the " +
                     "middle of the hamlet. They seem agitated and angry. You can't but help overhearing what they are saying.");
-            println("Angry Villager 1: \"It's that damn Enchantress. She's had us on our knees for months!\"");
-            println("Angry Villager 2: \"We must seek vengeance! Let's go to her hut. If we take her by surprise " +
-                    "perhaps she won't be able to put a spell on us again.\"");
-            println("Angry Villager 1: \"Yes, let's go. She must be punished severely for this atrocity!\"");
+            printQuote("Angry Villager 1", "It's that damn Enchantress. She's had us on our knees for months!");
+            printQuote("Angry Villager 2", "We must seek vengeance! Let's go to her hut. If we take her by surprise " +
+                    "perhaps she won't be able to put a spell on us again.");
+            printQuote("Angry Villager 1", "Yes, let's go. She must be punished severely for this atrocity!");
 
             print("You are close to the Enchantress' hut. Do you go to warn her? (Y/N) ");
             if (yesNoInput()) {

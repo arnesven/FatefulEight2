@@ -52,13 +52,13 @@ public abstract class ShoppingNode extends DailyActionNode {
                     state.leaderSay("Now let's try not to be spotted on our way out.");
                     result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
                     if (!result) {
-                        state.println("!Your crime has been witnessed, your notoriety has increased!");
+                        state.printAlert("Your crime has been witnessed, your notoriety has increased!");
                         model.getParty().addToNotoriety(bounty * 10);
                     }
                 } else {
                     result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
                     if (!result) {
-                        state.println("!Your crime has been witnessed, your notoriety has increased!");
+                        state.printAlert("Your crime has been witnessed, your notoriety has increased!");
                         model.getParty().addToNotoriety(10);
                     }
                 }

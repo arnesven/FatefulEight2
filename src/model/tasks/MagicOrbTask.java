@@ -30,22 +30,22 @@ public class MagicOrbTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        println(location.getLordName() + ": \"You see, some of the townsfolk recently found this magical orb in a nearby swamp. " +
+        printQuote(location.getLordName(), "You see, some of the townsfolk recently found this magical orb in a nearby swamp. " +
                 "I've let my most learned scholars look at it but nobody can tell me what it is. I'm tempted to just chuck it " +
-                "back into the swamp, but then again, what if it has some useful power? Would you examine it for me?\"");
+                "back into the swamp, but then again, what if it has some useful power? Would you examine it for me?");
         print("Do you wish to examine the magical orb now? (Y/N) ");
         if (yesNoInput()) {
             MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.SpellCasting, 8);
             if (pair.first) {
                 summon.increaseStep();
                 model.getParty().partyMemberSay(model, pair.second, "This is a " + MyRandom.sample(ORB_TYPES));
-                println(location.getLordName() + ": \"That's good to know, thank you. Here, let me pay you for your trouble.\"");
+                printQuote(location.getLordName(), "That's good to know, thank you. Here, let me pay you for your trouble.");
                 println("The party receives 25 gold.");
                 model.getParty().addToGold(25);
             }
         } else {
-            println(location.getLordName() + ": \"Uh, okay. But come back if you change your mind! " +
-                    "What is this thing...\"");
+            printQuote(location.getLordName(), "Uh, okay. But come back if you change your mind! " +
+                    "What is this thing...");
         }
     }
 

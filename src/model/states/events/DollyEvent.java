@@ -31,9 +31,9 @@ public class DollyEvent extends DailyEventState {
                 println("After spending some time searching, you finally find the dolly under a bush, not far from " +
                         "where you first encountered the mother and child. You hand the dolly over to the child, who grabs " +
                         "it and runs off in glee. The mother turns to you with a smile.");
-                println("Mother: \"Thank you so much. We would have had a rough night if you hadn't saved the day. " +
+                printQuote("Mother", "Thank you so much. We would have had a rough night if you hadn't saved the day. " +
                         "I was saving this heirloom for " + himOrHer(childGender) + ", but seeing as " +
-                        heOrShe(childGender) + " can never keep track of things, I might as well give it to you as thanks.\"");
+                        heOrShe(childGender) + " can never keep track of things, I might as well give it to you as thanks.");
                 Item heirloom = model.getItemDeck().getRandomJewelry();
                 println("You received " + heirloom.getName() + "!");
                 model.getParty().getInventory().addItem(heirloom);

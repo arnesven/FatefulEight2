@@ -60,9 +60,9 @@ public class OrcishStrongholdEvent extends DailyEventState {
     private void tradeWithOrcs(Model model) {
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Which one of you do you call your leader?");
         println("The orcs gruff a little amongst themselves, but after a little while a large one steps forward.");
-        println("Orc Chieftain: \"Me Chief. What you want?\"");
+        printQuote("Orc Chieftain", "Me Chief. What you want?");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Are you perhaps interested in trade?");
-        println("Orc Chieftain: \"Trade good! Us need gold and materials.\"");
+        printQuote("Orc Chieftain", "Trade good! Us need gold and materials.");
         waitForReturn();
         List<Item> items = model.getItemDeck().draw(MyRandom.randInt(4, 8), Prevalence.rare);
         items.addAll(model.getItemDeck().draw(MyRandom.randInt(4, 8), Prevalence.uncommon));
@@ -126,10 +126,10 @@ public class OrcishStrongholdEvent extends DailyEventState {
                 list.get(1).setRandomStartingClass();
                 list.get(1).setEquipment(new Equipment(model.getItemDeck().getRandomWeapon(), model.getItemDeck().getRandomApparel(), null));
                 println("You have rescued two prisoners!");
-                println(list.get(1).getName() + ": \"Thank you for rescuing us. We gladly offer our services!\"");
+                printQuote(list.get(1).getName(), "Thank you for rescuing us. We gladly offer our services!");
             } else {
                 println("You have rescued a prisoner!");
-                println(list.get(0).getName() + ": \"Thank you for rescuing me. I'll gladly offer my services!\"");
+                printQuote(list.get(0).getName(), "Thank you for rescuing me. I'll gladly offer my services!");
             }
             RecruitState recruitState = new RecruitState(model, list);
             recruitState.run(model);

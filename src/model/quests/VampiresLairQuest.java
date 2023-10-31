@@ -166,9 +166,9 @@ public class VampiresLairQuest extends MainQuest {
         public QuestEdge run(Model model, QuestState state) {
             this.caidCharacter = model.getMainStory().getCaidCharacter();
             caidCharacter.setLevel((int)Math.ceil(GameState.calculateAverageLevel(model)));
-            state.println("Caid: \"Wow, that's a lot of thralls, and they're coming straight for us. " +
+            state.printQuote("Caid", "Wow, that's a lot of thralls, and they're coming straight for us. " +
                     "I really don't want to hurt them but it seems like we won't even be able to take a swing at " +
-                    "the vampire before we cut some of them down.\"");
+                    "the vampire before we cut some of them down.");
             return super.run(model, state);
         }
 
@@ -304,7 +304,7 @@ public class VampiresLairQuest extends MainQuest {
             state.partyMemberSay(caid, "It's my pleasure.");
         } else {
             state.leaderSay("On the other hand. Maybe we should go our separate ways.");
-            state.println("Caid: \"Perhaps it's for the best. Goodbye friends, until our next meeting.\"");
+            state.printQuote("Caid", "Perhaps it's for the best. Goodbye friends, until our next meeting.");
             state.leaderSay("Bye Caid.");
         }
     }

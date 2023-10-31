@@ -21,10 +21,10 @@ public class ArcheryRangeEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("There is an archery range on the outskirts of town. The marksman there approaches you.");
-        println("Marksman: \"Hello there. Want to practice your marksmanship? For 5 gold I'll lend you " +
-                "a bow if you don't have one and some arrows.\"");
+        printQuote("Marksman", "Hello there. Want to practice your marksmanship? For 5 gold I'll lend you " +
+                "a bow if you don't have one and some arrows.");
         model.getParty().randomPartyMemberSay(model, List.of("I don't know... Do we really have time for this?"));
-        println("Marksman: \"Let's make it more interesting. If you hit the bull's eye, I'll give you " + WIN_SUM + " gold. Deal?\"");
+        printQuote("Marksman", "Let's make it more interesting. If you hit the bull's eye, I'll give you " + WIN_SUM + " gold. Deal?");
         while (model.getParty().getGold() >= COST_TO_PLAY) {
             print("Do you pay " + COST_TO_PLAY + " gold to play? (Y/N) ");
             if (yesNoInput()) {
@@ -41,16 +41,16 @@ public class ArcheryRangeEvent extends DailyEventState {
                             "Dead-center.", "Can't get much more in the middle than that.",
                             "Nice shot!"));
                     println("The marksman looks rather surprised.");
-                    println("Marksman: \"Nice shot indeed. Here's your gold.\"");
+                    printQuote("Marksman", "Nice shot indeed. Here's your gold.");
                     println("The party receives " + WIN_SUM + " gold.");
                     model.getParty().addToGold(WIN_SUM);
-                    println("Marksman: \"If you'll excuse me, I have to go now. Please come and" +
-                            " see me again some time.\"");
+                    printQuote("Marksman", "If you'll excuse me, I have to go now. Please come and" +
+                            " see me again some time.");
                     break;
                 } else {
                     model.getParty().randomPartyMemberSay(model, List.of("Hmm. Not my best performance.",
                             "That's a miss.", "Aaw, so close!"));
-                    println("Marksman: \"That's too bad. But you can always try again. Whaddaya say?\"");
+                    printQuote("Marksman", "That's too bad. But you can always try again. Whaddaya say?");
                 }
             } else {
                 break;

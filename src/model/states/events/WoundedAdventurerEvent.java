@@ -39,7 +39,7 @@ public class WoundedAdventurerEvent extends DailyEventState {
         } else {
             println(heOrSheCap(gender) + " appears to be alive, but in bad shape.");
         }
-        println("Wounded Adventurer: \"Water, please...\"");
+        printQuote("Wounded Adventurer", "Water, please...");
         String still = "";
         do {
             print("The wounded adventurer is " + still + "too weak to travel. Do you stay here tomorrow and help " +
@@ -57,7 +57,7 @@ public class WoundedAdventurerEvent extends DailyEventState {
                 println("You spend the day trying to help the wounded adventurer recover.");
                 if (MyRandom.randInt(2) == 0) {
                     println("The wounded adventurer recovered!");
-                    println("Wounded Adventurer: \"Thank you for helping me. I'll gladly offer my services!\"");
+                    printQuote("Wounded Adventurer", "Thank you for helping me. I'll gladly offer my services!");
                     model.getLog().waitForAnimationToFinish();
                     RecruitState recruitState = new RecruitState(model, list);
                     recruitState.run(model);
