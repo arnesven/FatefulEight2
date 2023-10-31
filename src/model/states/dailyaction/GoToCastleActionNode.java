@@ -144,15 +144,18 @@ public class GoToCastleActionNode extends DailyActionNode {
 
     private static class VisitCastleLordDailyActionNode extends VisitLordDailyActionState {
         private final boolean breakIn;
+        private final CastleLocation location;
 
         public VisitCastleLordDailyActionNode(Model model, Summon summon, UrbanLocation location, boolean breakIn) {
             super(model, summon, location, breakIn);
             this.breakIn = breakIn;
+            addNode(5, 3, new CourtMageNode((CastleLocation)location));
+            this.location = (CastleLocation)location;
         }
 
         @Override
         protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-            return new KeepSubView(advancedDailyActionState, matrix, !breakIn);
+            return new KeepSubView(advancedDailyActionState, matrix, !breakIn, location);
         }
     }
 }

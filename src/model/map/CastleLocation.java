@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.SteppingMatrix;
 import model.horses.HorseHandler;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.*;
@@ -27,14 +28,16 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     private final MyColors castleColor;
     private final SubView subView;
     private final Sprite questSprite;
+    private final Race lordRace;
 
-    public CastleLocation(String castleName, MyColors castleColor, String lordName) {
+    public CastleLocation(String castleName, MyColors castleColor, String lordName, Race lordRace) {
         super(castleName);
         this.castleColor = castleColor;
         this.lordName = lordName;
         subView = new ImageSubView("castle", "CASTLE", castleName, true);
         questSprite = new Sprite32x32("halfcastleq", "quest.png", 0x64,
                 MyColors.BLACK, MyColors.LIGHT_GRAY, this.castleColor, MyColors.GREEN);
+        this.lordRace = lordRace;
     }
 
     @Override
@@ -180,5 +183,9 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     @Override
     public HelpDialog getHelpDialog(GameView view) {
         return new CastleHelpDialog(view);
+    }
+
+    public Race getLordRace() {
+        return lordRace;
     }
 }

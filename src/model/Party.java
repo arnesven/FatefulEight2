@@ -11,14 +11,10 @@ import model.combat.Combatant;
 import model.horses.HorseHandler;
 import model.items.Inventory;
 import model.items.Lockpick;
-import model.items.accessories.HolyChalice;
 import model.items.spells.*;
-import model.items.weapons.Dagger;
-import model.items.weapons.Lute;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.SpellCastException;
-import model.states.events.ChestEvent;
 import sound.SoundEffects;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
@@ -32,7 +28,6 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class Party implements Serializable {
     private static MyColors[] partyMemberColors = new MyColors[]{

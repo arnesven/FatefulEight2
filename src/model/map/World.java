@@ -405,6 +405,19 @@ public class World implements Serializable {
         this.currentState = currState;
     }
 
+    public Point getPositionForLocation(HexLocation location) {
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() != null) {
+                    if (hexes[x][y].getLocation() == location) {
+                        return new Point(x, y);
+                    }
+                }
+            }
+        }
+        throw new IllegalArgumentException("No position found for argument " + location);
+    }
+
     private static class Interval {
         public int from;
         public int to;

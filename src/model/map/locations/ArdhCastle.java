@@ -2,6 +2,7 @@ package model.map.locations;
 
 import model.Model;
 import model.map.CastleLocation;
+import model.races.Race;
 import model.states.dailyaction.GeneralShopNode;
 import model.states.dailyaction.MagicSuperShop;
 import model.states.dailyaction.RoyalArmory;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class ArdhCastle extends CastleLocation {
     public ArdhCastle() {
-        super("Castle Ardh", MyColors.BLUE, "Count Aldeck");
+        super("Castle Ardh", MyColors.BLUE, "Count Aldeck", Race.HIGH_ELF);
     }
 
     @Override

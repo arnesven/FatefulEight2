@@ -2,6 +2,7 @@ package model.map.locations;
 
 import model.Model;
 import model.map.CastleLocation;
+import model.races.Race;
 import model.states.dailyaction.GeneralShopNode;
 import model.states.dailyaction.GrandEmporium;
 import model.states.dailyaction.RoyalArmory;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class SunblazeCastle extends CastleLocation {
     public SunblazeCastle() {
-        super("Sunblaze Castle", MyColors.YELLOW, "Prince Elozi");
+        super("Sunblaze Castle", MyColors.YELLOW, "Prince Elozi", Race.SOUTHERN_HUMAN);
     }
 
     @Override

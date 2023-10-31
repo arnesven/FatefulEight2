@@ -2,6 +2,7 @@ package model.map.locations;
 
 import model.Model;
 import model.map.CastleLocation;
+import model.races.Race;
 import model.states.dailyaction.GeneralShopNode;
 import model.states.dailyaction.GrandEmporium;
 import model.states.dailyaction.MagicSuperShop;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class ArkvaleCastle extends CastleLocation {
     public ArkvaleCastle() {
-        super("Arkvale Castle", MyColors.WHITE, "Queen Valstine");
+        super("Arkvale Castle", MyColors.WHITE, "Queen Valstine", Race.NORTHERN_HUMAN);
     }
 
     @Override
