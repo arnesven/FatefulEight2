@@ -31,7 +31,7 @@ public class CultistDenQuest extends Quest {
     private static final int TIME_MINUTES = 5;
     private static final String INTRO = "A group of cultists are reportedly performing some dark ritual to resurrect " +
             "an other-wordly demigod. Stop them.\n" +
-            LogView.RED_COLOR + "This is a timed quest. You have " + TIME_MINUTES + " minutes until the ritual is complete.";;
+            LogView.RED_COLOR + "This is a timed quest. You have " + TIME_MINUTES + " minutes until the ritual is complete." + LogView.DEFAULT_COLOR;
     private static final String ENDING = "You have cleared out the cultist den. The cleric thanks you for dealing with the cultist threat.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.TEMPLE_GUARD, AllRaces.ALL);
 

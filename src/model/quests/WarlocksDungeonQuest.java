@@ -24,7 +24,7 @@ public class WarlocksDungeonQuest extends Quest {
     private static final String INTRO =
             "Caught in an evil warlock's vast dungeon, you must use all your wits " +
             "to escape a labyrinth of dark halls, dangerous chambers and confusing clues.\n" +
-            LogView.RED_COLOR + "This is a timed quest. You have 10 minutes to escape the dungeon.";
+            LogView.RED_COLOR + "This is a timed quest. You have 10 minutes to escape the dungeon." + LogView.DEFAULT_COLOR;
     private static final String OUTRO =
             "You finally escape the dungeon and vow to one day return and deliver " +
             "vengeance upon the evil warlock.";

@@ -13,10 +13,10 @@ public interface JournalEntry {
     boolean isTask();
 
     static void printJournalUpdateMessage(Model model) {
-        model.getLog().addAnimated(LogView.GOLD_COLOR + "Your journal has been updated!\n");
+        model.getLog().addAnimated(LogView.GOLD_COLOR + "Your journal has been updated!\n" + LogView.DEFAULT_COLOR);
     }
 
     static void printMapExpandedMessage(Model model) {
-        model.getLog().addAnimated(LogView.GOLD_COLOR + "Your map has been expanded! You should check the map view.\n");
+        model.getLog().addAnimated(LogView.GOLD_COLOR + "Your map has been expanded! You should check the map view.\n" + LogView.DEFAULT_COLOR);
     }
 }

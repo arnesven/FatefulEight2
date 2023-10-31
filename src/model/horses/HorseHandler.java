@@ -112,16 +112,16 @@ public class HorseHandler extends ArrayList<Horse> {
                 }
             }
             if (isEmpty()) {
-                model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n");
+                model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n" + LogView.DEFAULT_COLOR);
             } else {
-                model.getLog().addAnimated(LogView.RED_COLOR + "Some of your horses have run away!\n");
+                model.getLog().addAnimated(LogView.RED_COLOR + "Some of your horses have run away!\n" + LogView.DEFAULT_COLOR);
             }
         }
     }
 
     public void abandonHorses(Model model) {
         if (size() > 0) {
-            model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n");
+            model.getLog().addAnimated(LogView.RED_COLOR + "You have lost your horses!\n" + LogView.DEFAULT_COLOR);
             clear();
             ponies = 0;
             horsesFullBlood = 0;
