@@ -19,14 +19,14 @@ public class LogView extends GameView {
     public static final char GOLD_COLOR = (char)0xFC;
 
     private static final String SPECIAL_CHARS = makeSpecialCharsString();
-    private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GREEN;
+    public static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GREEN;
 
     private static final MyColors[] COLOR_FOR_CHAR = new MyColors[]{
             DEFAULT_TEXT_COLOR, MyColors.LIGHT_RED,
             MyColors.CYAN, MyColors.YELLOW, MyColors.GRAY, MyColors.PEACH,
             MyColors.TAN, MyColors.LIGHT_YELLOW, MyColors.LIGHT_BLUE, MyColors.GREEN,
             MyColors.WHITE, MyColors.ORANGE, MyColors.GOLD, MyColors.LIGHT_GRAY,
-            MyColors.BEIGE, MyColors.PURPLE};
+            MyColors.BEIGE};
 
     private TopText topText = new TopText();
     private GameView nextView;
@@ -60,26 +60,26 @@ public class LogView extends GameView {
     }
 
     public static void drawLog(Model model, int totalRows, int rowOffset, int scroll) {
-        int row = Math.min(totalRows, model.getLog().size()) - 1 + rowOffset;
-        int count = 0;
-        for (String s : model.getLog().getContents()) {
-            count++;
-            if (count < scroll+1) {
-                continue;
-            }
-
-            MyColors colorToUse = DEFAULT_TEXT_COLOR;
-            for (int i = 0; i < s.length(); ++i) {
+        int logStartIndex = Math.min(totalRows - 1 + scroll + 5, model.getLog().size()-1);
+        int cutOff = Math.min(totalRows - 1 + scroll, model.getLog().size()-1);
+        int row = rowOffset;
+        MyColors colorToUse = DEFAULT_TEXT_COLOR;
+        for (; logStartIndex >= 0; logStartIndex--) {
+            String s = model.getLog().getContents().get(logStartIndex);
+            int col = 0;
+            for (int i = 0; i < s.length(); i++) {
                 String substr = s.charAt(i) + "";
                 if (SPECIAL_CHARS.contains(substr)) {
                     colorToUse = getColorForSpecialChar(s.charAt(i));
-                } else {
-                    BorderFrame.drawString(model.getScreenHandler(), substr, i, row, colorToUse);
+                } else if (logStartIndex <= cutOff) {
+                    BorderFrame.drawString(model.getScreenHandler(), substr, col++, row, colorToUse);
                 }
             }
-            row--;
 
-            if (count == totalRows + scroll) {
+            if (logStartIndex <= cutOff) {
+                row++;
+            }
+            if (row == DrawingArea.WINDOW_ROWS) {
                 break;
             }
         }
@@ -141,7 +141,7 @@ public class LogView extends GameView {
 
     private static String makeSpecialCharsString() {
         StringBuilder bldr = new StringBuilder();
-        for (int i = 0; i < 0x10; i++) {
+        for (int i = 0; i < 0xF; i++) {
             bldr.append((char)(0xF0 + i));
         }
         return bldr.toString();

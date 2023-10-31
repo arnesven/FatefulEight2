@@ -53,11 +53,12 @@ public abstract class GameState {
     }
 
     public void printAlert(String s) {
-        model.getLog().addAnimated(LogView.RED_COLOR + s + "\n");
+        model.getLog().addAnimated(LogView.RED_COLOR + s + "\n" + LogView.DEFAULT_COLOR);
     }
 
     public void printQuote(String who, String quote) {
-        model.getLog().addAnimated(who + ": " + LogView.YELLOW_COLOR + "\"" + quote + "\"");
+        model.getLog().addAnimated(who + ": " + LogView.YELLOW_COLOR + "\"" + quote + "\"\n" +
+                LogView.DEFAULT_COLOR);
     }
 
     public void println(String s) {

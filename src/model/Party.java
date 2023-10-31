@@ -307,7 +307,8 @@ public class Party implements Serializable {
     public void partyMemberSay(Model model, GameCharacter gc, String text) {
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(text);
-        model.getLog().addAnimated(gc.getName() + ": " + LogView.YELLOW_COLOR + "\"" + pair.second + "\"\n");
+        model.getLog().addAnimated(gc.getName() + ": " + LogView.YELLOW_COLOR + "\"" + pair.second +
+                "\"\n" + LogView.DEFAULT_COLOR);
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
         p.x += 3;

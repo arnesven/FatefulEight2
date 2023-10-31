@@ -2,6 +2,8 @@ package model.log;
 
 import model.Model;
 import model.SettingsManager;
+import view.LogView;
+import view.MyColors;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class GameLog {
     private char caret = ' ';
     private char FILLED_BLOCK = (char)(0xFF);
     private int caretBlinkCount = 0;
+    private MyColors color = LogView.DEFAULT_TEXT_COLOR;
 
     public int size() {
         return content.size() + 1;
