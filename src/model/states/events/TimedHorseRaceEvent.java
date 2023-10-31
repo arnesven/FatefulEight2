@@ -23,7 +23,7 @@ public class TimedHorseRaceEvent extends DailyEventState {
         portraitSay("Care to try out the new track?");
         if (model.getParty().getHorseHandler().isEmpty()) {
             leaderSay("Unfortunately, I don't have a horse.");
-            portraitSay("That's to bad, racing's the best there is.");
+            portraitSay("That's too bad, racing's the best there is.");
             println("You leave the horse track.");
             return;
         }
