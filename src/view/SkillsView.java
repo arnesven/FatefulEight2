@@ -25,27 +25,34 @@ public class SkillsView extends SelectableListMenu {
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-        return List.of(new DrawableObject(xStart+1, yStart+1) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                int charNum = 0;
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    for (int i = gc.getFirstName().length()-1; i >= 0; --i) {
-                        BorderFrame.drawString(model.getScreenHandler(), ""+gc.getFirstName().charAt(i),
-                                x + 3*charNum + 15, y+i-gc.getFirstName().length()+12,
-                                model.getParty().getColorForPartyMember(gc), MyColors.BLUE);
+        return List.of(new DrawableObject(xStart + 1, yStart + 1) {
+                   @Override
+                   public void drawYourself(Model model, int x, int y) {
+                       int charNum = 0;
+                       for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                           for (int i = gc.getFirstName().length() - 1; i >= 0; --i) {
+                               BorderFrame.drawString(model.getScreenHandler(), "" + gc.getFirstName().charAt(i),
+                                       x + 3 * charNum + 15, y + i - gc.getFirstName().length() + 12,
+                                       model.getParty().getColorForPartyMember(gc), MyColors.BLUE);
+                           }
+                           int row = 13;
+                           print(model.getScreenHandler(), x, y + row - 1, "____________________________________________");
+                           charNum++;
+                       }
+                       String best = "BEST";
+                       for (int i = best.length() - 1; i >= 0; --i) {
+                           print(model.getScreenHandler(), x + 3 * charNum + 17, y + i - best.length() + 12,
+                                   "" + best.charAt(i));
+                       }
+                   }
+               },
+                new DrawableObject(xStart+1, yStart+1) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        BorderFrame.drawString(model.getScreenHandler(), "Skills", x+1, y, MyColors.WHITE, MyColors.BLUE);
+                        BorderFrame.drawString(model.getScreenHandler(), "Overview", x+1, y+1, MyColors.WHITE, MyColors.BLUE);
                     }
-                    int row = 13;
-                    print(model.getScreenHandler(), x, y + row-1, "____________________________________________");
-                    charNum++;
-                }
-                String best = "BEST";
-                for (int i = best.length()-1; i >= 0; --i) {
-                    print(model.getScreenHandler(),x + 3*charNum + 17, y+i-best.length()+12,
-                            ""+best.charAt(i));
-                }
-            }
-        });
+                });
     }
 
     @Override
