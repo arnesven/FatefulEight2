@@ -5,6 +5,7 @@ import model.items.clothing.Clothing;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
 import model.items.special.PearlItem;
+import model.items.spells.AuxiliarySpell;
 import model.items.spells.CombatSpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
@@ -148,6 +149,8 @@ public class Inventory implements Serializable {
         for (Spell sp : spells) {
             if (sp instanceof CombatSpell) {
                 result.add((CombatSpell) sp);
+            }  else if (sp instanceof AuxiliarySpell && ((AuxiliarySpell)sp).canBeCastInCombat()) {
+                result.add(((AuxiliarySpell)sp).getCombatSpell());
             }
         }
         return result;

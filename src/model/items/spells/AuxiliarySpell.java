@@ -33,4 +33,8 @@ public abstract class AuxiliarySpell extends Spell {
 
     protected abstract void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster);
 
+    public CombatSpell getCombatSpell() { return null; }
+
+    public final boolean canBeCastInCombat() { return getCombatSpell() != null; }
+
 }

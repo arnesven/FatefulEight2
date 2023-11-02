@@ -3,6 +3,7 @@ package model.combat;
 import model.Model;
 import model.actions.BasicCombatAction;
 import model.characters.GameCharacter;
+import model.items.spells.AuxiliarySpell;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
 import view.sprites.CastingEffectSprite;
