@@ -2,6 +2,8 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.SkeletonAppearance;
 import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
@@ -31,10 +33,13 @@ public class NecromancerRitual extends RitualEvent {
 
     private final Sprite animation;
     private SubView introSubView;
+    private final CharacterAppearance undeadAppearance;
 
     public NecromancerRitual(Model model) {
         super(model, MyColors.BLACK);
         animation = new SkeletonEnemy('A').getAvatar();
+        undeadAppearance = new SkeletonAppearance(Race.HIGH_ELF, false);
+        undeadAppearance.setClass(Classes.SOR);
     }
 
     @Override
@@ -71,16 +76,16 @@ public class NecromancerRitual extends RitualEvent {
         if (success) {
             println("The mummified remains suddenly come to life");
             portraitSay("Oh great lord, we have awoken you so that you may instruct and educate us!");
-            showSilhouettePortrait(model, "Undead Lord");
+            showExplicitPortrait(model, undeadAppearance,"Undead Lord");
             portraitSay("Aah, well done my acolytes. Indeed I shall reward you all.");
             showExplicitPortrait(model, getRitualists().get(0).getAppearance(), "Necromancer");
             portraitSay("Thank you, oh lord!");
-            showSilhouettePortrait(model, "Undead Lord");
+            showExplicitPortrait(model, undeadAppearance, "Undead Lord");
             portraitSay("But who are these strangers? They do not wear the garb of our cult.");
             showExplicitPortrait(model, getRitualists().get(0).getAppearance(), "Necromancer");
             portraitSay("Uhm, they are allies... they aided us in the ritual. They have been promised " +
                     "some kind of reward...");
-            showSilhouettePortrait(model, "Undead Lord");
+            showExplicitPortrait(model, undeadAppearance, "Undead Lord");
             portraitSay("They are outsiders. Dispose of them immediately.");
             leaderSay("Now wait just a minute here...");
             showExplicitPortrait(model, getRitualists().get(0).getAppearance(), "Necromancer");
