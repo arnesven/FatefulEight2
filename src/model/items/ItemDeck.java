@@ -200,12 +200,14 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<Spell> allSpells() {
         return List.of(
+                // BLUE
                 new DispelSpell(),
                 new LevitateSpell(),
                 new MindControlSpell(),
                 new ConjurePhantasmSpell(),
                 new CreatureComfortsSpell(),
                 new EscapeSpell(),
+                // WHITE
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
                 new WardSpell(),
@@ -213,12 +215,14 @@ public class ItemDeck extends ArrayList<Item> {
                 new SouthernCrossSpell(),
                 new AuraOfAllureSpell(),
                 new TransmuteSpell(),
+                // RED
                 new FireworksSpell(),
                 new MagmaBlastSpell(),
                 new EntropicBoltSpell(),
                 new BindDaemonSpell(),
                 new BurningWeaponSpell(),
                 new ErodeSpell(),
+                // GREEN
                 new TransfigurationSpell(),
                 new AlchemySpell(),
                 new HarmonizeSpell(),
@@ -226,6 +230,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new GiantGrowthSpell(),
                 new SummonFamiliarSpell(),
                 new QuickeningSpell(),
+                // BLACK
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),
                 new RaiseBoneWalkerSpell(),

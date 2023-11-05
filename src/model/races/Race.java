@@ -144,4 +144,8 @@ public abstract class Race implements Serializable {
     public PortraitSprite makeShoulderInnerRightBottom(MyColors color) {
         return getShoulders().makeInnerRightBottomSprite(color);
     }
+
+    public boolean isSkeleton() {
+        return false;
+    }
 }

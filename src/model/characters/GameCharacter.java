@@ -4,6 +4,7 @@ import model.actions.AbilityCombatAction;
 import model.actions.BasicCombatAction;
 import model.actions.DefendCombatAction;
 import model.actions.RiposteCombatAction;
+import model.characters.appearance.SkeletonAppearance;
 import model.combat.*;
 import model.Model;
 import model.Party;
@@ -57,6 +58,7 @@ public class GameCharacter extends Combatant {
     private AvatarSprite avatarSprite;
     private CharacterClass charClass;
     private final CharacterAppearance appearance;
+    private final SkeletonAppearance deadAppearance;
     private int level;
     private Equipment equipment;
     private final Map<Skill, SkillBonus> temporarySkillBonuses = new HashMap<>();
@@ -75,6 +77,7 @@ public class GameCharacter extends Combatant {
         this.level = 1;
         this.classes = classes;
         this.equipment = equipment;
+        deadAppearance = new SkeletonAppearance(getRace(), appearance.getGender());
         setClass(charClass);
         super.setCurrentHp(getMaxHP());
     }
@@ -143,7 +146,11 @@ public class GameCharacter extends Combatant {
     }
 
     public void drawAppearance(ScreenHandler screenHandler, int col, int row) {
-        appearance.drawYourself(screenHandler, col, row);
+        if (!isDead()) {
+            appearance.drawYourself(screenHandler, col, row);
+        } else {
+            deadAppearance.drawYourself(screenHandler, col, row);
+        }
     }
 
     public boolean isLeader() {
@@ -524,6 +531,8 @@ public class GameCharacter extends Combatant {
         this.charClass = newClass;
         this.appearance.reset();
         this.appearance.setClass(charClass);
+        this.deadAppearance.reset();
+        this.deadAppearance.setClass(charClass);
         this.avatarSprite = makeAvatarSprite();
         if (!newClass.canUseHeavyArmor()) {
             if (equipment.getClothing().isHeavy()) {
