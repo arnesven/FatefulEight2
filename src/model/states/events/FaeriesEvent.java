@@ -23,14 +23,14 @@ public class FaeriesEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("Faeries!3"));
         println("The faeries are keeping their distance and assessing the party...");
         int partyAlign = calculatePartyAlignment(model, this);
-        if (partyAlign > 1) {
+        if (partyAlign > 0) {
             println("The faeries swoop in and seem elated and cheerful.");
             println("Each party member regains 3 health and 1 stamina.");
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 gc.addToHP(3);
                 gc.addToSP(1);
             }
-        } else if (partyAlign < 0) {
+        } else if (partyAlign < -1) {
             model.getParty().randomPartyMemberSay(model, List.of("Uh oh... They look pissed. What did we do?"));
             println("The faeries attack the party!");
             runCombat(List.of(new FaeryEnemy('A'), new FaeryEnemy('A'), new FaeryEnemy('A'), new FaeryEnemy('A'),

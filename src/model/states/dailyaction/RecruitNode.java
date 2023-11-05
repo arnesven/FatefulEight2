@@ -12,19 +12,21 @@ import view.subviews.TavernSubView;
 public class RecruitNode extends DailyActionNode {
     public static final Sprite TABLE = new Sprite32x32("table", "world_foreground.png", 0x04,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN, MyColors.WHITE);
-    private final RecruitState recruitState;
+    private RecruitState recruitState;
 
     public RecruitNode(Model model) {
         super("Recruit Adventurers");
-        if (model.getParty().getRecruitmentPersistence() == null) {
-            this.recruitState = new RecruitState(model);
-        } else {
-            this.recruitState = new RecruitState(model, model.getParty().getRecruitmentPersistence());
-        }
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        if (recruitState == null) {
+            if (model.getParty().getRecruitmentPersistence() == null) {
+                this.recruitState = new RecruitState(model);
+            } else {
+                this.recruitState = new RecruitState(model, model.getParty().getRecruitmentPersistence());
+            }
+        }
         return recruitState;
     }
 

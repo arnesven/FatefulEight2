@@ -29,6 +29,7 @@ import model.states.CombatEvent;
 import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
+import view.LogView;
 import view.MyColors;
 import view.ScreenHandler;
 import view.help.CombatHelpChapter;
@@ -207,7 +208,7 @@ public class GameCharacter extends Combatant {
         }
         if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
             damage *= 2;
-            extraInfo += " x2 Critical Hit";
+            extraInfo += LogView.YELLOW_COLOR +  " x2 Critical Hit" + LogView.DEFAULT_COLOR;
         }
         extraInfo += ")";
         combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
@@ -629,7 +630,7 @@ public class GameCharacter extends Combatant {
             }
             addToHP(-1 * damage);
             if (pair.second) {
-                reductionString = ", Critical Hit" + reductionString;
+                reductionString = ", " + LogView.WHITE_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
             }
             combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
             combatEvent.addFloatyDamage(this, damage, critical ? DamageValueEffect.CRITICAL_DAMAGE : DamageValueEffect.STANDARD_DAMAGE);

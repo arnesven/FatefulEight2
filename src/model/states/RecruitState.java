@@ -40,6 +40,16 @@ public class RecruitState extends GameState {
         model.getParty().setRecruitmentPersistence(recruitables);
     }
 
+    public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
+        super(model);
+        recruitables.addAll(preSelectedRecruitables);
+        model.getParty().setRecruitmentPersistence(recruitables);
+        recruitMatrix = new SteppingMatrix<>(2, 3);
+        recruitMatrix.addElements(recruitables);
+        recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
+    }
+
+
     private void setLevels(List<GameCharacter> recruitables) {
         double partyLevel = 0.0;
         for (GameCharacter gc : getModel().getParty().getPartyMembers()) {
@@ -50,15 +60,6 @@ public class RecruitState extends GameState {
         for (GameCharacter gc : recruitables) {
             gc.setLevel(MyRandom.randInt(1, (int)partyLevel));
         }
-    }
-
-    public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
-        super(model);
-        recruitables.addAll(preSelectedRecruitables);
-        model.getParty().setRecruitmentPersistence(recruitables);
-        recruitMatrix = new SteppingMatrix<>(2, 3);
-        recruitMatrix.addElements(recruitables);
-        recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
     }
 
     @Override
@@ -195,6 +196,14 @@ public class RecruitState extends GameState {
     private MyPair<Integer, String> getModifiers(Model model) {
         List<String> texts = new ArrayList<>();
         int sum = 0;
+        int roundIncr = MyRandom.randInt(4);
+        if (roundIncr > 0 && model.getParty().getGold() >= roundIncr) {
+            print("Offer to buy the next round (costs " + roundIncr + " gold)? (Y/N) ");
+            if (yesNoInput()) {
+                model.getParty().addToGold(-roundIncr);
+                sum += roundIncr;
+            }
+        }
         if (model.getParty().size() < 2) {
             sum -= 1;
             texts.add("party not big enough");

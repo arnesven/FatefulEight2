@@ -15,7 +15,7 @@ public class TutorialCarryingCapacity extends HelpDialog {
             "If your party has a greater load than what you can carry when you want to travel, you will be forced " +
             "to abandon items or resources before being able to venture forth.\n\n" +
             "Your current load and carrying capacity can be seen in the top bar " +
-            "by the icon that looks like this:";
+            "by the icon that looks like this:\n\n.";
 
     public TutorialCarryingCapacity(GameView view) {
         super(view, "Carrying Capacity", TEXT);
