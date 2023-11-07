@@ -17,4 +17,8 @@ public abstract class UsableItem extends Item {
     public boolean canBeUsedFromMenu() {
         return true;
     }
+
+    public String getUsageVerb() {
+        return "Use";
+    }
 }

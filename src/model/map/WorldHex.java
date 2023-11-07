@@ -370,7 +370,8 @@ public abstract class WorldHex {
                 new PartyLowOnCashEvent(model),
                 new PartySalaryEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
-                new PartyMemberWantsToLeaveEvent(model)
+                new PartyMemberWantsToLeaveEvent(model),
+                new FishingEvent(model)
                 // TODO: Two Party members fall in love and want to settle down
         ));
     }

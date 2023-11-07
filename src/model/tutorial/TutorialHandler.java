@@ -408,6 +408,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void fishing(Model model) {
+        runOnce("fishing", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialFishing(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

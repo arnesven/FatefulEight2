@@ -215,6 +215,8 @@ public class InventoryView extends SelectableListMenu {
                     public List<? extends Item> getItems(Model model) {
                         List<Item> result = new ArrayList<>();
                         addResources(model, result);
+                        result.addAll(model.getParty().getInventory().getPearls());
+                        result.addAll(model.getParty().getInventory().getFish());
                         return result;
                     }
                 }};
@@ -239,7 +241,6 @@ public class InventoryView extends SelectableListMenu {
         if (model.getParty().getGold() > 0) {
             result.add(0, new GoldDummyItem(model.getParty().getGold()));
         }
-        result.addAll(model.getParty().getInventory().getPearls());
     }
 
     private class EquipItemMenu extends FixedPositionSelectableListMenu {
@@ -258,10 +259,10 @@ public class InventoryView extends SelectableListMenu {
         @Override
         protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
             String label = "Equip";
-            if (itemToEquip instanceof Spell) {
+            if (itemToEquip instanceof Spell || itemToEquip instanceof Scroll) {
                 label = "Cast";
             } else if (itemToEquip instanceof UsableItem) {
-                label = "Use";
+                label = ((UsableItem)itemToEquip).getUsageVerb();
             }
             return List.of(new TextDecoration(label+"?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         }

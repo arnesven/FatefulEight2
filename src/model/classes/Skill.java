@@ -25,7 +25,7 @@ public enum Skill implements Comparable<Skill> {
     SeekInfo("Seek Info", "represents a character's ability to find information in towns or other urban locations. This may include figuring out who to talk to and what questions to ask, and even how to speak to people to get the most information out of them."),          // 13
     Sneak("Sneak", "moving covertly and hiding."),                 // 13
     SpellCasting("Spell Casting", "casting spells.\n\nA character's rank in this skill is added to each skill check when that character is attempting to cast a spell."),  // 3
-    Survival("Survival", "knowledge and ability to be able to survive in the wilderness. This includes many things like navigating rough terrain, find food and being able to cook it and setting up an adequate shelter or avoiding injury while traveling."),           // 16
+    Survival("Survival", "knowledge and ability to be able to survive in the wilderness. This includes many things like navigating rough terrain, finding food and being able to cook it and setting up an adequate shelter or avoiding injury while traveling."),           // 16
 
     UnarmedCombat("Unarmed Combat", "for fighting without a weapon.\n\nA character does not have ranks in this skill, but it is used when making an unarmed attack in combat and can receive bonuses in certain situations.");
 

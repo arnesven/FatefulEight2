@@ -9,12 +9,13 @@ import model.items.spells.AuxiliarySpell;
 import model.items.spells.CombatSpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
+import model.states.fishing.Fish;
 
 import java.io.Serializable;
 import java.util.*;
 
 public class Inventory implements Serializable {
-    public static final int WEIGHT_OF_FOOD = 1000;
+    public static final int WEIGHT_OF_FOOD = 500;
     public static final int WEIGHT_OF_MATERIALS = 1000;
     public static final int WEIGHT_OF_INGREDIENTS = 100;
     public static final int WEIGHT_OF_LOCKPICKS = 10;
@@ -28,6 +29,7 @@ public class Inventory implements Serializable {
     private List<PotionRecipe> recipes = new ArrayList<>();
     private List<Scroll> scrolls = new ArrayList<>();
     private List<Item> specialItems = new ArrayList<>();
+    private List<Item> fishes = new ArrayList<>();
     private int food = 10;
     private int ingredients = 0;
     private int materials = 0;
@@ -60,6 +62,8 @@ public class Inventory implements Serializable {
     public void addSpecialItem(PearlItem item) {
         specialItems.add(item);
     }
+
+    public void add(Fish fish) { fishes.add(fish); }
 
     public List<Weapon> getWeapons() {
         return weapons;
@@ -141,6 +145,7 @@ public class Inventory implements Serializable {
         sets.add(designs);
         sets.add(recipes);
         sets.add(scrolls);
+        sets.add(fishes);
         return sets;
     }
 
@@ -205,5 +210,13 @@ public class Inventory implements Serializable {
 
     public int getLockpicks() {
         return lockpicks;
+    }
+
+    public void addFish(Fish fish) {
+        fishes.add(fish);
+    }
+
+    public List<Item> getFish() {
+        return fishes;
     }
 }
