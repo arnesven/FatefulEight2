@@ -6,6 +6,7 @@ import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.enemies.behaviors.MixedAttackBehavior;
 import model.states.CombatEvent;
+import model.states.events.TentacleEnemy;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -62,6 +63,12 @@ public class OctopusEnemy extends BeastEnemy {
     @Override
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
+    }
+
+    public static List<Enemy> makeEnemyList() {
+        return List.of(new TentacleEnemy('A'),
+                new TentacleEnemy('A'), new OctopusEnemy('B'),
+                new TentacleEnemy('A'), new TentacleEnemy('A'));
     }
 
     private static class OctopusSprite extends LoopingSprite {

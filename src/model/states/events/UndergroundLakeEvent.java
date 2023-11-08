@@ -64,9 +64,7 @@ public class UndergroundLakeEvent extends DailyEventState {
             println("A large hulk of slimy tentacles heaves itself out of the black water.");
             model.getParty().randomPartyMemberSay(model, List.of("Didn't I say the lake was a bad idea?"));
             leaderSay("It's coming right for us. Get ready to fight!");
-            List<Enemy> enemies = List.of(new TentacleEnemy('A'),
-                    new TentacleEnemy('A'), new OctopusEnemy('B'),
-                    new TentacleEnemy('A'), new TentacleEnemy('A'));
+            List<Enemy> enemies = OctopusEnemy.makeEnemyList();
             runCombat(enemies, new CaveTheme(), false);
             model.getParty().randomPartyMemberSay(model, List.of("Phew... what a fight."));
         } else {

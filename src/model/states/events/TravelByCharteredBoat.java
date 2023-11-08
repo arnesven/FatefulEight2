@@ -54,21 +54,30 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
         if (!endAtSea) {
             return super.getEveningState(model);
         }
+        DailyEventState event = null;
         if (checkForPirateEvent(model)) {
-            DailyEventState event = new PirateShipEvent(model);
+            event = new PirateShipEvent(model);
+        } else if (checkForSeaMonsterEvent(model)) {
+            event = new SeaMonsterEvent(model);
+        }
+        if (event != null) {
             event.doTheEvent(model);
             if (event.haveFledCombat()) {
-                println("Your party escapes onto make-shift rafts and are set adrift on the surf.");
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    gc.addToSP(-100);
-                }
-                while (model.getCurrentHex() instanceof SeaHex) {
-                    new DriftingAtSeaState(model).run(model);
-                }
-                return model.getCurrentHex().getEveningState(model, false, false);
+                return setAdrift(model);
             }
         }
         return new EveningAtSeaState(model);
+    }
+
+    private GameState setAdrift(Model model) {
+        println("Your party escapes onto makeshift rafts and are set adrift on the surf.");
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            gc.addToSP(-100);
+        }
+        while (model.getCurrentHex() instanceof SeaHex) {
+            new DriftingAtSeaState(model).run(model);
+        }
+        return model.getCurrentHex().getEveningState(model, false, false);
     }
 
     private boolean checkForPirateEvent(Model model) {
@@ -76,6 +85,10 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
             return MyRandom.rollD10() < 5;
         }
         return MyRandom.rollD10() == 1;
+    }
+
+    private boolean checkForSeaMonsterEvent(Model model) {
+        return WorldBuilder.isInExtendedRegion(model.getParty().getPosition()) && MyRandom.rollD10() < 4;
     }
 
     @Override
