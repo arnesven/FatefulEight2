@@ -4,7 +4,9 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.NoEventState;
 import view.sprites.Sprite;
+import view.subviews.CombatTheme;
 import view.subviews.ImageSubView;
+import view.subviews.ShipCombatTheme;
 import view.subviews.SubView;
 import view.MyColors;
 import view.sprites.HexSprite;
@@ -70,5 +72,10 @@ public class SeaHex extends WorldHex {
     public String getTerrainDescription() {
         return "The sea can be traversed by boat. Either by traveling on a standard line from port to port, or by " +
                 "chartering a boat.";
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new ShipCombatTheme();
     }
 }

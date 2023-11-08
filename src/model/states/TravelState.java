@@ -56,7 +56,7 @@ public class TravelState extends GameState {
         return nextState(model);
     }
 
-    private void checkForOverEncumberance(Model model) {
+    protected void checkForOverEncumberance(Model model) {
         while (model.getParty().getInventory().getTotalWeight() > model.getParty().getCarryingCapacity()) {
             model.getTutorial().carryingCapacity(model);
             println("Your party is currently carrying to much to be able to travel. You must abandon " +

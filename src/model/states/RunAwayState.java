@@ -41,10 +41,15 @@ public class RunAwayState extends TravelState {
         return false;
     }
 
-    private boolean movesOutsideMap(Point position, Point dir) {
+    protected boolean movesOutsideMap(Point position, Point dir) {
         Point p2 = new Point(position);
         getModel().getWorld().move(p2, dir.x, dir.y);
         return (p2.x == position.x && p2.y == position.y);
+    }
+
+    @Override
+    protected void checkForOverEncumberance(Model model) {
+        // Skip this when running away
     }
 
     @Override

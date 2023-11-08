@@ -19,6 +19,10 @@ public class WorldBuilder {
     public static final int EXPAND_SOUTH = 2;
     public static final int EXPAND_WEST = 4;
     public static final int EXPAND_NORTH = 8;
+    private static final Rectangle INITIAL_WORLD_BOUNDS =
+            new Rectangle(EXTRA_WIDTH, EXTRA_HEIGHT,
+                    WORLD_WIDTH - 2 * EXTRA_WIDTH,
+                    WORLD_HEIGHT - 2 * EXTRA_HEIGHT);
 
     private static String[] worldTemplate = new String[]{
             "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
@@ -489,7 +493,7 @@ public class WorldBuilder {
     }
 
     public static Rectangle getWorldBounds(int currentState) {
-        Rectangle bounds = new Rectangle(EXTRA_WIDTH, EXTRA_HEIGHT, WORLD_WIDTH - 2*EXTRA_WIDTH, WORLD_HEIGHT - 2*EXTRA_HEIGHT);
+        Rectangle bounds = new Rectangle(INITIAL_WORLD_BOUNDS);
         if ((currentState & EXPAND_WEST) > 0) {
             bounds.x -= EXTRA_WIDTH;
             bounds.width += EXTRA_WIDTH;
@@ -505,6 +509,10 @@ public class WorldBuilder {
             bounds.height += EXTRA_HEIGHT;
         }
         return bounds;
+    }
+
+    public static boolean isInExtendedRegion(Point position) {
+        return !INITIAL_WORLD_BOUNDS.contains(position);
     }
 
 
