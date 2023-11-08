@@ -1,8 +1,10 @@
 package model.map;
 
 import model.Model;
+import model.TimeOfDay;
 import model.actions.*;
 import model.combat.TownCombatTheme;
+import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
 import model.states.*;
 import model.states.events.*;
@@ -164,7 +166,9 @@ public abstract class WorldHex {
     public List<DailyAction> getDailyActions(Model model) {
         List<DailyAction> actions;
         actions = new ArrayList<>();
-        actions.add(new DailyAction("Travel", new TravelState(model)));
+        if (model.getTimeOfDay() == TimeOfDay.MORNING) {
+            actions.add(new DailyAction("Travel", new TravelState(model)));
+        }
         actions.add(new StayInHexAction(model));
         if (hexLocation != null && hexLocation.hasDailyActions()) {
             actions.addAll(hexLocation.getDailyActions(model));
@@ -172,6 +176,7 @@ public abstract class WorldHex {
         if (model.getMainStory().isStarted()) {
             actions.addAll(model.getMainStory().getDailyActionsForHex(model, this));
         }
+        FishingDailyAction.addActionIfApplicable(model, actions);
         if (model.getParty().isOnRoad()) {
             actions.add(new GetOffRoadAction(model));
         } else if (hasRoad()) {
@@ -370,8 +375,7 @@ public abstract class WorldHex {
                 new PartyLowOnCashEvent(model),
                 new PartySalaryEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
-                new PartyMemberWantsToLeaveEvent(model),
-                new FishingEvent(model)
+                new PartyMemberWantsToLeaveEvent(model)
                 // TODO: Two Party members fall in love and want to settle down
         ));
     }

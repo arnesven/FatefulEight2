@@ -6,26 +6,23 @@ import model.classes.Skill;
 import model.items.Item;
 import model.items.weapons.FishingPole;
 import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.fishing.*;
 import util.MyPair;
 import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
-public class FishingEvent extends DailyEventState {
+public class FishingState extends GameState {
     private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x32);
     private MiniPictureSubView miniSubView;
 
-    public FishingEvent(Model model) {
+    public FishingState(Model model) {
         super(model);
     }
 
     @Override
-    protected void doEvent(Model model) {
-        if (model.getCurrentHex().getRivers() == 0) {
-            new NoEventState(model).doEvent(model);
-            return;
-        }
+    public GameState run(Model model) {
         println("The waters nearby may be suitable for fishing.");
         this.miniSubView = new MiniPictureSubView(model.getSubView(), SPRITE, "Fishing");
         model.setSubView(miniSubView);
@@ -33,11 +30,19 @@ public class FishingEvent extends DailyEventState {
         FishingPole pole = findFishingPole(model);
         if (pole == null) {
             println("Unfortunately, you don't have a fishing pole.");
+            return model.getCurrentHex().getDailyActionState(model);
         }
-        print("Do you want to go fishing? (Y/N) ");
+        goFishing(model);
+        print("If you wish to travel today you must leave now. Do you want to continue fishing? (Y/N) ");
         if (!yesNoInput()) {
-            return;
+            return model.getCurrentHex().getDailyActionState(model);
         }
+        goFishing(model);
+        goFishing(model);
+        return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    private void goFishing(Model model) {
         Fish fish = generateFish();
         MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.Survival, fish.getDifficulty());
         if (pair.first) {
@@ -55,7 +60,6 @@ public class FishingEvent extends DailyEventState {
         } else {
             partyMemberSay(pair.second, "Not a bite.");
         }
-
     }
 
     private Fish generateFish() {
