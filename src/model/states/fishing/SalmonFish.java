@@ -11,7 +11,7 @@ public class SalmonFish extends Fish {
             MyColors.GRAY, MyColors.PINK, MyColors.LIGHT_GRAY);
 
     public SalmonFish() {
-        super("Salmon", 3, 1500, 3500, 10);
+        super("Salmon", 12, 1500, 3500, 10);
     }
 
     @Override

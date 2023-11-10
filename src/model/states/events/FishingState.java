@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
 import model.items.weapons.FishingPole;
+import model.items.weapons.Weapon;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.fishing.*;
@@ -27,8 +28,7 @@ public class FishingState extends GameState {
         this.miniSubView = new MiniPictureSubView(model.getSubView(), SPRITE, "Fishing");
         model.setSubView(miniSubView);
         model.getTutorial().fishing(model);
-        FishingPole pole = findFishingPole(model);
-        if (pole == null) {
+        if (!findFishingPole(model)) {
             println("Unfortunately, you don't have a fishing pole.");
             return model.getCurrentHex().getDailyActionState(model);
         }
@@ -82,17 +82,20 @@ public class FishingState extends GameState {
         return new TunaFish();
     }
 
-    private FishingPole findFishingPole(Model model) {
+    private boolean findFishingPole(Model model) {
         for (Item it : model.getParty().getInventory().getAllItems()) {
-            if (it instanceof FishingPole) {
-                return (FishingPole) it;
+            if (it instanceof Weapon) {
+                Weapon w = (Weapon)it;
+                if (w.isOfType(FishingPole.class)) {
+                    return true;
+                }
             }
         }
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.getEquipment().getWeapon() instanceof FishingPole) {
-                return (FishingPole) gc.getEquipment().getWeapon();
+            if (gc.getEquipment().getWeapon().isOfType(FishingPole.class)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 }

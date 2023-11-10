@@ -10,7 +10,7 @@ public class TunaFish extends Fish {
     private static final Sprite SPRITE = new ItemSprite(10, 4, MyColors.GRAY, MyColors.PINK, MyColors.LIGHT_BLUE);
 
     public TunaFish() {
-        super("Tuna", 5, 2000, 6000, 10);
+        super("Tuna", 16, 2000, 6000, 10);
     }
 
     @Override

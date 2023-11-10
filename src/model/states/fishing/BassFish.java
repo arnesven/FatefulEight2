@@ -10,7 +10,7 @@ public class BassFish extends Fish {
     private static final Sprite SPRITE = new ItemSprite(12, 4, MyColors.LIGHT_GREEN, MyColors.RED, MyColors.BLACK);
 
     public BassFish() {
-        super("Bass", 2, 700, 2800, 9);
+        super("Bass", 8, 700, 2800, 9);
     }
 
     @Override
