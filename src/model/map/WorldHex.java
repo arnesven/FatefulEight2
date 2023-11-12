@@ -364,8 +364,7 @@ public abstract class WorldHex {
         return false;
     }
 
-
-    private DailyEventState generatePartyEvent(Model model) {
+    public static DailyEventState generatePartyEvent(Model model) {
         return MyRandom.sample(List.of(
                 new RationsGoneBadEvent(model),
                 new PartyMemberArgument(model),

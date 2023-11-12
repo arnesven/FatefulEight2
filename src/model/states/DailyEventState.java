@@ -12,6 +12,7 @@ import model.combat.CombatLoot;
 import model.enemies.Enemy;
 import model.items.potions.Potion;
 import model.items.potions.RevivingElixir;
+import model.map.WorldHex;
 import model.races.Race;
 import util.MyRandom;
 import util.MyStrings;
@@ -22,7 +23,7 @@ import java.util.*;
 import java.util.List;
 
 public abstract class DailyEventState extends GameState {
-    private static final Map<Integer, Integer> alignmentMap = makePartyAlignmentMap();;
+    private static final Map<Integer, Integer> alignmentMap = makePartyAlignmentMap();
     private boolean fledCombat = false;
     private PortraitSubView portraitSubView;
 
@@ -39,6 +40,9 @@ public abstract class DailyEventState extends GameState {
         }
         if (haveFledCombat()) {
             return new RunAwayState(model);
+        }
+        if (MyRandom.rollD10() <= model.getParty().getPartyMembers().size() - 4) {
+            return WorldHex.generatePartyEvent(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
         return getEveningState(model);
