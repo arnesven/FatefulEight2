@@ -7,7 +7,7 @@ import view.sprites.PortraitSprite;
 
 public class FemaleChest extends TorsoChest {
 
-    private final PortraitSprite CHEST_1 = new NakedFaceAndClothesSprite(0xC2);
+    private final PortraitSprite CHEST_1 = new NakedFaceAndClothesSprite(0x1B8);
 
     @Override
     public PortraitSprite makeNakedSprite() {
