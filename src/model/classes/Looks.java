@@ -104,7 +104,6 @@ public abstract class Looks {
     protected static void putOnArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors underShirtColor) {
         // Left pauldron
         characterAppearance.getShoulders().putOnLeftPauldron(characterAppearance, armorColor, underShirtColor);
-
         characterAppearance.setSprite(2, 6, new ClothesSprite(0x52, underShirtColor, armorColor));
 
         if (characterAppearance.getRace().isSkeleton()) {
