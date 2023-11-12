@@ -17,7 +17,7 @@ public abstract class Looks {
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
                 shoulders.makeLeftBottomSprite(color), shoulders.makeInnerLeftBottomSprite(color), new FilledBlockClothes(color),
-                new Chest(color), new FilledBlockClothes(color), shoulders.makeInnerRightBottomSprite(color),
+                characterAppearance.getChest().getTunicSprite(color), new FilledBlockClothes(color), shoulders.makeInnerRightBottomSprite(color),
                 shoulders.makeRightBottomSprite(color)
         });
     }
@@ -31,7 +31,7 @@ public abstract class Looks {
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
                 shoulders.makeLeftBottomSprite(color), shoulders.makeInnerLeftBottomSprite(color), new WideChestLeft(color),
-                new WideChest(color), new WideChestRight(color), shoulders.makeInnerRightBottomSprite(color),
+                characterAppearance.getChest().getLooseShirtSprite(color), new WideChestRight(color), shoulders.makeInnerRightBottomSprite(color),
                 shoulders.makeRightBottomSprite(color)
         });
     }
@@ -45,7 +45,7 @@ public abstract class Looks {
         });
         characterAppearance.setRow(6, new PortraitSprite[]{
                 shoulders.makeLeftBottomSprite(color), shoulders.makeInnerLeftBottomSprite(color), new TriangleLeft(color, detailColor),
-                new FancyChest(detailColor), new TriangleRight(color, detailColor), shoulders.makeInnerRightBottomSprite(color),
+                characterAppearance.getChest().getFancySprite(detailColor), new TriangleRight(color, detailColor), shoulders.makeInnerRightBottomSprite(color),
                 shoulders.makeRightBottomSprite(color)
         });
     }

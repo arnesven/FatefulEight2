@@ -19,11 +19,7 @@ public abstract class CharacterAppearance implements Serializable {
     private final PortraitSprite NECK_LEFT_THICK = new NakedFaceAndClothesSprite(0x180);
     private final PortraitSprite NECK_RIGHT_THICK = new NakedFaceAndClothesSprite(0x190);
 
-    private final PortraitSprite CHEST_1 = new NakedFaceAndClothesSprite(0xC2);
-    private final PortraitSprite CHEST_2 = new NakedFaceAndClothesSprite(0xC1);
-
     private final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
-
 
     private static Sprite hairSprite = new Sprite32x32("standardhair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
@@ -33,6 +29,7 @@ public abstract class CharacterAppearance implements Serializable {
     private final MyColors hairColor;
     private final boolean femaleGender;
     private final Shoulders shoulders;
+    private final TorsoChest chest;
 
     private PortraitSprite[][] grid;
 
@@ -41,6 +38,11 @@ public abstract class CharacterAppearance implements Serializable {
         this.race = race;
         this.femaleGender = femaleGender;
         shoulders = race.makeShoulders(femaleGender);
+        if (femaleGender) {
+            this.chest = new FemaleChest();
+        } else {
+            this.chest = new MaleChest();
+        }
     }
 
     public static Sprite noHair() {
@@ -96,7 +98,7 @@ public abstract class CharacterAppearance implements Serializable {
         grid[4][5] = race.isThickNeck() ? NECK_RIGHT_THICK : NECK_RIGHT;
 
         grid[2][6] = FILLED_BLOCK_CLOTHES;
-        grid[3][6] = femaleGender ? CHEST_1 : CHEST_2;
+        grid[3][6] = chest.makeNakedSprite();
         grid[4][6] = FILLED_BLOCK_CLOTHES;
 
         specialization();
@@ -331,5 +333,9 @@ public abstract class CharacterAppearance implements Serializable {
 
     public Shoulders getShoulders() {
         return shoulders;
+    }
+
+    public TorsoChest getChest() {
+        return chest;
     }
 }

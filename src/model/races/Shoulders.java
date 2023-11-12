@@ -5,7 +5,9 @@ import model.characters.appearance.SkeletonAppearance;
 import view.MyColors;
 import view.sprites.*;
 
-public abstract class Shoulders {
+import java.io.Serializable;
+
+public abstract class Shoulders implements Serializable {
 
     protected final PortraitSprite SHOULDER_TOP = new NakedClothesSprite(0x20);
     protected final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
