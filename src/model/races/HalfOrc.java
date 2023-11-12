@@ -29,7 +29,10 @@ public class HalfOrc extends Race {
     }
 
     @Override
-    public Shoulders getShoulders() {
-        return Shoulders.BROAD;
+    public Shoulders makeShoulders(boolean gender) {
+        if (gender) {
+            return new NormalShoulders();
+        }
+        return new BroadShoulders();
     }
 }

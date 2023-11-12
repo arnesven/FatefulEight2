@@ -8,11 +8,9 @@ import view.sprites.PortraitSprite;
 public class SkeletonRace extends Race {
     public static final CharacterEyes EYES = new CharacterEyes(0x167, 0x169);
     private static final PortraitSprite BLOCK_SPRITE = new FaceSprite(0x0F);
-    private final Race innerRace;
 
-    public SkeletonRace(Race innerRace) {
+    public SkeletonRace() {
         super("Skeleton", MyColors.WHITE, 0, 0, null, "");
-        this.innerRace = innerRace;
     }
 
     @Override
@@ -30,8 +28,4 @@ public class SkeletonRace extends Race {
         return true;
     }
 
-    @Override
-    public Shoulders getShoulders() {
-        return innerRace.getShoulders();
-    }
 }

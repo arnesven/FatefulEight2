@@ -107,42 +107,15 @@ public abstract class Race implements Serializable {
         return allRaces[MyRandom.randInt(allRaces.length)];
     }
 
-    public Shoulders getShoulders() { return Shoulders.NORMAL; }
+    public Shoulders makeShoulders(boolean gender) {
+        if (gender) {
+            return new SlenderShoulders();
+        }
+        return new NormalShoulders();
+    }
 
     public boolean isThickNeck() {
         return true;
-    }
-
-    public PortraitSprite makeShoulderLeftTopSprite(MyColors color) {
-        return getShoulders().makeLeftTopSprite(color);
-    }
-
-    public PortraitSprite makeShoulderInnerLeftTop(MyColors color) {
-        return getShoulders().makeInnerLeftTopSprite(color);
-    }
-
-    public PortraitSprite makeShoulderInnerRightTop(MyColors color) {
-        return getShoulders().makeInnerRightTopSprite(color);
-    }
-
-    public PortraitSprite makeShoulderRightTopSprite(MyColors color) {
-        return getShoulders().makeRightTopSprite(color);
-    }
-
-    public PortraitSprite makeShoulderLeftBottomSprite(MyColors color) {
-        return getShoulders().makeLeftBottomSprite(color);
-    }
-
-    public PortraitSprite makeShoulderRightBottomSprite(MyColors color) {
-        return getShoulders().makeRightBottomSprite(color);
-    }
-
-    public PortraitSprite makeShoulderInnerLeftBottom(MyColors color) {
-        return getShoulders().makeInnerLeftBottomSprite(color);
-    }
-
-    public PortraitSprite makeShoulderInnerRightBottom(MyColors color) {
-        return getShoulders().makeInnerRightBottomSprite(color);
     }
 
     public boolean isSkeleton() {

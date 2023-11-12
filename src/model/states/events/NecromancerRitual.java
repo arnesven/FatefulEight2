@@ -12,6 +12,7 @@ import model.enemies.UndeadLordEnemy;
 import model.items.Item;
 import model.items.ItemDeck;
 import model.map.CaveHex;
+import model.races.NormalShoulders;
 import model.races.Race;
 import model.ruins.CorpseObject;
 import model.states.DailyEventState;
@@ -38,7 +39,7 @@ public class NecromancerRitual extends RitualEvent {
     public NecromancerRitual(Model model) {
         super(model, MyColors.BLACK);
         animation = new SkeletonEnemy('A').getAvatar();
-        undeadAppearance = new SkeletonAppearance(Race.HIGH_ELF, false);
+        undeadAppearance = new SkeletonAppearance(new NormalShoulders(), false);
         undeadAppearance.setClass(Classes.SOR);
     }
 

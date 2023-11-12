@@ -78,7 +78,7 @@ public class GameCharacter extends Combatant {
         this.level = 1;
         this.classes = classes;
         this.equipment = equipment;
-        deadAppearance = new SkeletonAppearance(getRace(), appearance.getGender());
+        deadAppearance = new SkeletonAppearance(appearance.getShoulders(), appearance.getGender());
         setClass(charClass);
         super.setCurrentHp(getMaxHP());
     }

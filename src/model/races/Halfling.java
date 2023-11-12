@@ -31,8 +31,8 @@ public class Halfling extends Race {
     }
 
     @Override
-    public Shoulders getShoulders() {
-        return Shoulders.NARROW;
+    public Shoulders makeShoulders(boolean gender) {
+        return new NarrowShoulders();
     }
 
     @Override

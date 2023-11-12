@@ -24,21 +24,6 @@ public abstract class CharacterAppearance implements Serializable {
 
     private final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
 
-    private final PortraitSprite SHOULDER_LEFT_TOP = new NakedClothesSprite(0x00);
-    private final PortraitSprite SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x10);
-    private final PortraitSprite SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x01);
-    private final PortraitSprite SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x11);
-
-    private final PortraitSprite NARROW_SHOULDER_LEFT_TOP = new NakedClothesSprite(0x3D);
-    private final PortraitSprite NARROW_SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x4D);
-    private final PortraitSprite NARROW_SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x3E);
-    private final PortraitSprite NARROW_SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x4E);
-
-    private final PortraitSprite BROAD_SHOULDER_LEFT_TOP = new NakedClothesSprite(0x5D);
-    private final PortraitSprite BROAD_SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x5E);
-
-    private final PortraitSprite SHOULDER_TOP = new NakedClothesSprite(0x20);
-
 
     private static Sprite hairSprite = new Sprite32x32("standardhair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
@@ -47,6 +32,7 @@ public abstract class CharacterAppearance implements Serializable {
     private final Race race;
     private final MyColors hairColor;
     private final boolean femaleGender;
+    private final Shoulders shoulders;
 
     private PortraitSprite[][] grid;
 
@@ -54,6 +40,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.hairColor = hairColor;
         this.race = race;
         this.femaleGender = femaleGender;
+        shoulders = race.makeShoulders(femaleGender);
     }
 
     public static Sprite noHair() {
@@ -102,7 +89,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.grid[5][4] = PortraitSprite.BLACK_BLOCK;
         this.grid[6][4] = PortraitSprite.FRAME_RIGHT;
 
-        makeNakedShoulders(grid, race.getShoulders());
+        shoulders.makeNaked(grid);
 
         grid[2][5] = race.isThickNeck() ? NECK_LEFT_THICK : NECK_LEFT;
         grid[3][5] = NECK_1;
@@ -342,34 +329,7 @@ public abstract class CharacterAppearance implements Serializable {
         return femaleGender;
     }
 
-    public void makeNakedShoulders(PortraitSprite[][] grid, Shoulders shoulders) {
-        if (shoulders == Shoulders.NARROW) {
-            grid[0][5] = PortraitSprite.FRAME_LEFT;
-            grid[0][6] = PortraitSprite.FRAME_LL_CORNER;
-
-            grid[1][5] = NARROW_SHOULDER_LEFT_TOP;
-            grid[1][6] = NARROW_SHOULDER_LEFT_BOTTOM;
-
-            grid[5][5] = NARROW_SHOULDER_RIGHT_TOP;
-            grid[5][6] = NARROW_SHOULDER_RIGHT_BOTTOM;
-
-            grid[6][5] = PortraitSprite.FRAME_RIGHT;
-            grid[6][6] = PortraitSprite.FRAME_LR_CORNER;
-        } else {
-            if (shoulders ==  Shoulders.NORMAL) {
-                grid[0][5] = SHOULDER_LEFT_TOP;
-                grid[6][5] = SHOULDER_RIGHT_TOP;
-            } else { // Shoulders.BROAD
-                grid[0][5] = BROAD_SHOULDER_LEFT_TOP;
-                grid[6][5] = BROAD_SHOULDER_RIGHT_TOP;
-            }
-
-            grid[0][6] = SHOULDER_LEFT_BOTTOM;
-            grid[1][5] = SHOULDER_TOP;
-            grid[1][6] = FILLED_BLOCK_CLOTHES;
-            grid[5][5] = SHOULDER_TOP;
-            grid[5][6] = FILLED_BLOCK_CLOTHES;
-            grid[6][6] = SHOULDER_RIGHT_BOTTOM;
-        }
+    public Shoulders getShoulders() {
+        return shoulders;
     }
 }
