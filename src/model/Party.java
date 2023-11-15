@@ -326,8 +326,12 @@ public class Party implements Serializable {
         inventory.setFood(Math.max(0, inventory.getFood() + i));
     }
 
+    public boolean hasSummon(UrbanLocation destination) {
+        return summons.containsKey(destination.getPlaceName());
+    }
+
     public void addSummon(UrbanLocation destination) {
-        if (!summons.containsKey(destination.getPlaceName())) {
+        if (!hasSummon(destination)) {
             this.summons.put(destination.getPlaceName(), new Summon());
         }
     }

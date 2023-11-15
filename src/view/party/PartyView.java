@@ -135,7 +135,8 @@ public class PartyView extends SelectableListMenu {
             addListContent(content, x, y++, w.getExtraText());
         } else {
             content.add(new OpenWeaponMenuListContent(x, y++, gc, "NO WEAPON"));
-            y+=4;
+            addListContent(content, x, y++, w.getExtraText());
+            y+=3;
         }
 
         content.add(new OpenEquipMenuListContent(x, y++, gc, gc.getEquipment().getClothing().getName()) {

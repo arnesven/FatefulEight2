@@ -129,6 +129,10 @@ public abstract class CharacterClass implements Serializable {
 
     public abstract String getHowToLearn();
 
+    public boolean isSpecialCharacter() {
+        return false;
+    }
+
     protected static class WeightedSkill implements Serializable {
         public Skill skill;
         public int weight;

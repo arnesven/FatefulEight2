@@ -208,15 +208,24 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     public void setClass(CharacterClass charClass) {
-        if (grid == null) {
-            refresh();
-        }
+        refresh();
         charClass.putClothesOn(this);
         setRaceSkinColor(race);
         charClass.manipulateAvatar(this, race);
         charClass.finalizeLook(this);
         if (charClass.showFacialHair()) {
             applyFacialHair(race, charClass.coversEars());
+        }
+        addHairInBack();
+    }
+
+    public void setSpecificClothing(PortraitClothing clothing) {
+        refresh();
+        clothing.putClothesOn(this);
+        setRaceSkinColor(race);
+        clothing.finalizeLook(this);
+        if (clothing.showFacialHair()) {
+            applyFacialHair(race, clothing.coversEars());
         }
         addHairInBack();
     }

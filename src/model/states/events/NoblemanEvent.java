@@ -12,6 +12,7 @@ import model.items.Equipment;
 import model.items.weapons.Longsword;
 import model.items.weapons.ShortSword;
 import model.races.Race;
+import model.states.GameState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -41,26 +42,31 @@ public class NoblemanEvent extends DarkDeedsEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        this.success = model.getParty().doSoloSkillCheck(model, this, Skill.Entertain, 8);
-        if (success) {
-            println("After telling the great story of the party's exploits, the nobleman gladly gives you a small stipend.");
-            int amount = Math.min(10 * model.getParty().size(), 50);
-            model.getParty().addToGold(amount);
-            println("The party receives " + amount + " gold from the nobleman.");
-            model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
-                    List.of("Much obliged.", "This extra coin will come in handy.", "It's for a worthy cause.",
-                            "A good deed sir.", "Perhaps we can pay you back one day...",
-                            "How very generous of you!3"));
-            ChangeClassEvent change = new ChangeClassEvent(model, Classes.NOB);
-            print("The nobleman also offers to inspire you to take on the high life, ");
-            change.areYouInterested(model);
-        } else {
-            println("You try to explain why supporting the party would be a good deed, but the noble seems unimpressed " +
-                    "by your exploits.");
-        }
+        this.success = tryToGetGold(model, this);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, portrait, "Noble");
         return true;
+    }
+
+    public static boolean tryToGetGold(Model model, GameState state) {
+        boolean success = model.getParty().doSoloSkillCheck(model, state, Skill.Entertain, 8);
+        if (success) {
+            state.println("After telling the great story of the party's exploits, the noble gladly gives you a small stipend.");
+            int amount = Math.min(10 * model.getParty().size(), 50);
+            model.getParty().addToGold(amount);
+            state.println("The party receives " + amount + " gold from the noble.");
+            model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
+                    List.of("Much obliged.", "This extra coin will come in handy.", "It's for a worthy cause.",
+                            "A good deed.", "Perhaps we can pay you back one day...",
+                            "How very generous of you!3"));
+            ChangeClassEvent change = new ChangeClassEvent(model, Classes.NOB);
+            state.print("The noble also offers to inspire you to take on the high life, ");
+            change.areYouInterested(model);
+        } else {
+            state.println("You try to explain why supporting the party would be a good deed, but the noble seems unimpressed " +
+                    "by your exploits.");
+        }
+        return success;
     }
 
     @Override

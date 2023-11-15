@@ -2,9 +2,7 @@ package view;
 
 import model.Model;
 import view.help.HelpView;
-import view.widget.CenterText;
 import view.widget.MiniLog;
-import view.widget.TitleText;
 import view.widget.TopText;
 
 import java.awt.event.KeyEvent;

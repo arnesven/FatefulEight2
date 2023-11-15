@@ -28,4 +28,9 @@ public abstract class SpecialCharacterClass extends CharacterClass {
     public String getHowToLearn() {
         return "Undefined";
     }
+
+    @Override
+    public boolean isSpecialCharacter() {
+        return true;
+    }
 }

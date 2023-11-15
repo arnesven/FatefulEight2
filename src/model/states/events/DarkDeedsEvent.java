@@ -13,6 +13,7 @@ import model.enemies.FormerPartyMemberEnemy;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.states.DailyEventState;
+import model.states.GameState;
 import util.MyRandom;
 import util.MyStrings;
 
@@ -128,7 +129,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
                 return;
             }
         }
-        addToNotoriety(PICK_POCKETING_NOTORIETY);
+        addToNotoriety(getModel(), this, PICK_POCKETING_NOTORIETY);
         portraitSay(MyRandom.sample(List.of("Hey, there! Keep your fingers to yourself!",
                 "Stop! Thief!", "Huh? A pick-pocket? Get away from me!#")));
         if (strat == ProvokedStrategy.ALWAYS_ESCAPE) {
@@ -153,12 +154,12 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         }
     }
 
-    private void addToNotoriety(int notoriety) {
-        printAlert("Your notoriety has increased by " + notoriety + "!");
-        if (getModel().getParty().getNotoriety() == 0) {
-            getModel().getTutorial().notoriety(getModel());
+    public static void addToNotoriety(Model model, GameState state, int notoriety) {
+        state.printAlert("Your notoriety has increased by " + notoriety + "!");
+        if (model.getParty().getNotoriety() == 0) {
+            model.getTutorial().notoriety(model);
         }
-        getModel().getParty().addToNotoriety(notoriety);
+        model.getParty().addToNotoriety(notoriety);
     }
 
 
@@ -193,13 +194,13 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         }
         if (numberOfDead < enemies.size()) {
             println("Some of your enemies have escaped and reported your crime to the local authorities.");
-            addToNotoriety(numberOfDead * MURDER_NOTORIETY);
+            addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
             if (isAggressor) {
-                addToNotoriety(enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
+                addToNotoriety(getModel(), this, enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
             }
         } else if (getModel().getCurrentHex().getLocation() instanceof UrbanLocation) {
             println("Your crime has been witnessed and reported to the local authorities.");
-            addToNotoriety(numberOfDead * MURDER_NOTORIETY);
+            addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
         }
         println("You continue on your journey.");
     }

@@ -4,6 +4,7 @@ import model.actions.AbilityCombatAction;
 import model.actions.BasicCombatAction;
 import model.actions.DefendCombatAction;
 import model.actions.RiposteCombatAction;
+import model.characters.appearance.PortraitClothing;
 import model.characters.appearance.SkeletonAppearance;
 import model.combat.*;
 import model.Model;
@@ -32,8 +33,6 @@ import view.BorderFrame;
 import view.LogView;
 import view.MyColors;
 import view.ScreenHandler;
-import view.help.CombatHelpChapter;
-import view.help.HelpDialog;
 import view.sprites.AvatarSprite;
 import view.sprites.DamageValueEffect;
 import view.sprites.Sprite;
@@ -530,9 +529,7 @@ public class GameCharacter extends Combatant {
             charClass.takeClothesOff(appearance);
         }
         this.charClass = newClass;
-        this.appearance.reset();
-        this.appearance.setClass(charClass);
-        this.deadAppearance.reset();
+        this.appearance.setClass(charClass);;
         this.deadAppearance.setClass(charClass);
         this.avatarSprite = makeAvatarSprite();
         if (!newClass.canUseHeavyArmor()) {
@@ -713,5 +710,21 @@ public class GameCharacter extends Combatant {
 
     public int getCharacterStrength() {
         return 14 + getLevel();
+    }
+
+    public void setSpecificClothing(PortraitClothing clothes) {
+        appearance.setSpecificClothing(clothes);
+        if (clothes.hasSpecialAvatar()) {
+            avatarSprite = clothes.makeAvatar(race, appearance);
+        }
+    }
+
+    public void removeSpecificClothing() {
+        avatarSprite = makeAvatarSprite();
+        appearance.setClass(charClass);
+    }
+
+    public boolean isSpecialCharacter() {
+        return charClass.isSpecialCharacter();
     }
 }

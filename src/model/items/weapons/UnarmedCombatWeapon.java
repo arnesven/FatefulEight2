@@ -52,4 +52,9 @@ public class UnarmedCombatWeapon extends NaturalWeapon {
     public String getSound() {
         return "";
     }
+
+    @Override
+    public String getExtraText() {
+        return "Unarmed Combat, " + getDamageTableAsString();
+    }
 }
