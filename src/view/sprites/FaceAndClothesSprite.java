@@ -1,9 +1,6 @@
 package view.sprites;
 
 import view.MyColors;
-import view.sprites.FaceSprite;
-
-import java.awt.*;
 
 public class FaceAndClothesSprite extends FaceSprite {
     public FaceAndClothesSprite(int i, MyColors color2, MyColors color4) {
@@ -14,6 +11,6 @@ public class FaceAndClothesSprite extends FaceSprite {
     }
 
     public FaceAndClothesSprite(int i, MyColors color) {
-        this(i, color, MyColors.CYAN);
+        this(i, color, MyColors.BLACK);
     }
 }

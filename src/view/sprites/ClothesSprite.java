@@ -9,6 +9,7 @@ public class ClothesSprite extends PortraitSprite {
         this.setColor1(color);
         this.setColor2(MyColors.LIGHT_GRAY);
         this.setColor3(color3);
+        this.setColor4(MyColors.BLACK);
     }
 
     public ClothesSprite(int i, MyColors undershirtColor) {

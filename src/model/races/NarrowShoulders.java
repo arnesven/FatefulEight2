@@ -10,11 +10,18 @@ public class NarrowShoulders extends Shoulders {
     private final PortraitSprite NARROW_SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x4D);
     private final PortraitSprite NARROW_SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x3E);
     private final PortraitSprite NARROW_SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x4E);
+    private final PortraitSprite NARROW_SHOULDER_LEFT_BOTTOM_BUSTY = new NakedClothesSprite(0xD7);
+    private final PortraitSprite NARROW_SHOULDER_RIGHT_BOTTOM_BUSTY = new NakedClothesSprite(0xD8);
 
     private static final PortraitSprite SHOULDER_LEFT_TOP = new FaceAndClothesSprite(0x18A, MyColors.CYAN);
     private static final PortraitSprite SHOULDER_RIGHT_TOP = new FaceAndClothesSprite(0x18E, MyColors.CYAN);
     private static final PortraitSprite NARROW_SHOULDER_LEFT = new FaceAndClothesSprite(0x1BB, MyColors.CYAN);
     private static final PortraitSprite NARROW_SHOULDER_RIGHT = new FaceAndClothesSprite(0x1BC, MyColors.CYAN);
+    private final boolean busty;
+
+    public NarrowShoulders(boolean busty) {
+        this.busty = busty;
+    }
 
 
     @Override
@@ -23,10 +30,15 @@ public class NarrowShoulders extends Shoulders {
         grid[0][6] = PortraitSprite.FRAME_LL_CORNER;
 
         grid[1][5] = NARROW_SHOULDER_LEFT_TOP;
-        grid[1][6] = NARROW_SHOULDER_LEFT_BOTTOM;
+        if (busty) {
+            grid[1][6] = NARROW_SHOULDER_LEFT_BOTTOM_BUSTY;
+            grid[5][6] = NARROW_SHOULDER_RIGHT_BOTTOM_BUSTY;
+        } else {
+            grid[1][6] = NARROW_SHOULDER_LEFT_BOTTOM;
+            grid[5][6] = NARROW_SHOULDER_RIGHT_BOTTOM;
+        }
 
         grid[5][5] = NARROW_SHOULDER_RIGHT_TOP;
-        grid[5][6] = NARROW_SHOULDER_RIGHT_BOTTOM;
 
         grid[6][5] = PortraitSprite.FRAME_RIGHT;
         grid[6][6] = PortraitSprite.FRAME_LR_CORNER;
@@ -57,10 +69,16 @@ public class NarrowShoulders extends Shoulders {
     }
 
     public PortraitSprite makeInnerLeftBottomSprite(MyColors color) {
+        if (busty) {
+            return new ClothesSprite(0xD7, color);
+        }
         return new ClothesSprite(0x4D, color);
     }
 
     public PortraitSprite makeInnerRightBottomSprite(MyColors color) {
+        if (busty) {
+            return new ClothesSprite(0xD8, color);
+        }
         return new ClothesSprite(0x4E, color);
     }
 

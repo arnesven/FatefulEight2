@@ -12,6 +12,6 @@ public class FaceAndClothesSpriteWithBack extends FaceAndClothesSprite {
     }
 
     public FaceAndClothesSpriteWithBack(int i, MyColors color, MyColors backColor) {
-        this(i, color, backColor, MyColors.DARK_GREEN);
+        this(i, color, backColor, MyColors.BLACK);
     }
 }
