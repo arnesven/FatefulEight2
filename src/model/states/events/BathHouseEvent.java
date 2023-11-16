@@ -27,11 +27,15 @@ import java.util.List;
 public class BathHouseEvent extends DailyEventState {
     private final boolean prudeGender;
     private GameCharacter oldLeader = null;
-    private CharacterAppearance prudePerson;
+    private final CharacterAppearance prudePerson;
 
     public BathHouseEvent(Model model) {
         super(model);
-        this.prudeGender = MyRandom.flipCoin();
+        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
+            this.prudeGender = ((UrbanLocation) model.getCurrentHex().getLocation()).getLordGender();
+        } else {
+            this.prudeGender = MyRandom.flipCoin();
+        }
         prudePerson = PortraitSubView.makeRandomPortrait(Classes.MERCHANT, MyRandom.nextRace(), prudeGender);
         prudePerson.setSpecificClothing(new SwimAttire());
     }
