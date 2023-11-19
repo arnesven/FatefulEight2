@@ -27,6 +27,7 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
 import model.states.CombatEvent;
+import sprites.CombatSpeechBubble;
 import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
@@ -626,6 +627,7 @@ public class GameCharacter extends Combatant {
                 damage = damage - reduction;
             }
             addToHP(-1 * damage);
+            tookDamageTalk(damage, combatEvent);
             if (pair.second) {
                 reductionString = ", " + LogView.WHITE_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
             }
@@ -633,6 +635,22 @@ public class GameCharacter extends Combatant {
             combatEvent.addFloatyDamage(this, damage, critical ? DamageValueEffect.CRITICAL_DAMAGE : DamageValueEffect.STANDARD_DAMAGE);
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
+    }
+
+    private void tookDamageTalk(int damage, CombatEvent combatEvent) {
+        if (party == null) {
+            return;
+        }
+        if (damage > 0 && getHP() < 3) {
+            combatEvent.partyMemberSay(this, MyRandom.sample(List.of("I'm dying!",
+                    "I need healing!", "I don't feel so good...", "I need aid!")));
+        } else if (damage > 2 && MyRandom.randInt(4) == 0) {
+            combatEvent.partyMemberSay(this, MyRandom.sample(List.of("Ouch!", "That hurt!",
+                    "The pain!", "Ugh, that's gonna leave a scar...", "I'm taking some damage here!",
+                    "Get away from me!#", "Yeeouch!", "Argh!#", "Right in the...", "Ouchy!",
+                    "Ugh!#", "That was painful!")));
+            combatEvent.addSpecialEffect(this, new CombatSpeechBubble());
+        }
     }
 
     private boolean checkForBlock(Enemy enemy) {
