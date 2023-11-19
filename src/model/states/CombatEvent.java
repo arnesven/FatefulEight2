@@ -11,6 +11,7 @@ import model.classes.SkillCheckResult;
 import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import sprites.CombatSpeechBubble;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -518,5 +519,18 @@ public class CombatEvent extends DailyEventState {
 
     public void addExtraLoot(List<CombatLoot> extraLoot) {
         this.extraLoot.addAll(extraLoot);
+    }
+
+    public void tookDamageTalk(GameCharacter gameCharacter, int damage) {
+        if (damage > 0 && gameCharacter.getHP() < 3) {
+            partyMemberSay(gameCharacter, MyRandom.sample(List.of("I'm dying!",
+                    "I need healing!", "I don't feel so good...", "I need aid!")));
+        } else if (MyRandom.randInt(5) < (damage-1)) {
+            partyMemberSay(gameCharacter, MyRandom.sample(List.of("Ouch!", "That hurt!",
+                    "The pain!", "Ugh, that's gonna leave a scar...", "I'm taking some damage here!",
+                    "Get away from me!#", "Yeeouch!", "Argh!#", "Right in the...", "Ouchy!",
+                    "Ugh!#", "That was painful!", "I'm hit!")));
+            addSpecialEffect(gameCharacter, new CombatSpeechBubble());
+        }
     }
 }
