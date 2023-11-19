@@ -5,7 +5,7 @@ import view.sprites.AvatarItemSprite;
 
 public abstract class TwinBladedWeapon extends BladedWeapon {
     private static final AvatarItemSprite[] TWIN_BLADES =  makeShiftedSpriteSet(
-            new AvatarItemSprite(0x30, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));;
+            new AvatarItemSprite(0x40, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));;
 
     public TwinBladedWeapon(String name, int cost, int[] damageTable, boolean twoHander, int speedBonus) {
         super(name, cost, damageTable, twoHander, speedBonus);

@@ -158,7 +158,7 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     private void loseContest() {
         if (MyRandom.flipCoin()) {
-            leaderSay("Well, that's it. We didn't qualify for the second round. Better luck next time I suppose.");
+            leaderSay("Well, that's it. We didn't qualify for the next round. Better luck next time I suppose.");
             println("The party leaves the competition grounds and tries to put their minds on their future adventures.");
         } else {
             leaderSay("We gave it our best shot, literally. But we didn't qualify. " +
@@ -427,7 +427,7 @@ public class ArcheryContestEvent extends TournamentEvent {
                 PortraitSubView.makeRandomPortrait(Classes.THF, Race.DARK_ELF, true), noClasses, randomBow()));
         int lvl = (int)Math.round(GameState.calculateAverageLevel(model));
         for (GameCharacter chara : result) {
-            chara.setLevel(lvl);
+            chara.setLevel(Math.max(1, lvl + MyRandom.randInt(3) - 1));
         }
         return result;
     }
