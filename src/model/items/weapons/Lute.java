@@ -6,6 +6,7 @@ import model.combat.Combatant;
 import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
+import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
@@ -29,6 +30,11 @@ public class Lute extends Weapon {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<MyPair<Skill, Integer>> getSkillBonuses() {
+        return List.of(new MyPair<>(Skill.Entertain, 1));
     }
 
     @Override
