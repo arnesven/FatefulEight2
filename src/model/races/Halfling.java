@@ -7,7 +7,7 @@ import view.sprites.PortraitSprite;
 
 public class Halfling extends Race {
     public Halfling() {
-        super("Halfling", MyColors.PEACH, -2, 2, new Skill[]{
+        super("Halfling", MyColors.PEACH, -2, 2, 10, new Skill[]{
                 Skill.Entertain, Skill.Security, Skill.Sneak
         }, "Halflings are small human-like creatures who are prevalent in plains, farmlands and in towns. " +
                 "They are considerably less hardy than other races but are often quick on their feed. Halflings " +

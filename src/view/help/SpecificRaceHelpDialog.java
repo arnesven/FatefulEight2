@@ -22,8 +22,9 @@ public class SpecificRaceHelpDialog extends SubChapterHelpDialog {
     }
 
     private static String healthAndSpeedBonuses(Race race) {
-        return "Health Bonus: " + race.getHPModifier() +
-                "\nSpeed Bonus: " + race.getSpeedModifier() + "\n";
+        return "Health Bonus: " + race.getHPModifier() + "\n" +
+                "Speed Bonus: " + race.getSpeedModifier() + "\n" +
+                "Carry Cap: " + race.getCarryingCapacity() + "\n";
     }
 
     private static String skillsAsString(List<Skill> skills) {

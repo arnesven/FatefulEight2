@@ -8,7 +8,7 @@ import view.sprites.PortraitSprite;
 
 public class HalfOrc extends Race {
     protected HalfOrc() {
-        super("Half-Orc", MyColors.ORC_GREEN, 1, -1,
+        super("Half-Orc", MyColors.ORC_GREEN, 1, -1, 25,
                 new Skill[]{Skill.BluntWeapons, Skill.Endurance, Skill.Survival},
                 "Half-Orcs are a race which have form from millennia of sporadic breeding between " +
                         "Orcs and Humans (or in some cases Elves or Dwarves). They are hardy, stout, rugged " +

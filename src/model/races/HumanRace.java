@@ -2,9 +2,20 @@ package model.races;
 
 import model.classes.Skill;
 import view.MyColors;
+import view.sprites.PortraitSprite;
 
 public abstract class HumanRace extends Race {
-    public HumanRace(String name, MyColors color, int hpModifier, int speed, Skill[] skillBonuses, String description) {
-        super(name, color, hpModifier, speed, skillBonuses, description);
+    public HumanRace(String name, MyColors color, Skill[] skillBonuses, String description) {
+        super(name, color, 0, 0, 20, skillBonuses, description);
+    }
+
+    @Override
+    public PortraitSprite getLeftEar(MyColors hairColor) {
+        return Race.normalLeftEar(hairColor);
+    }
+
+    @Override
+    public PortraitSprite getRightEar(MyColors hairColor) {
+        return Race.normalRightEar(hairColor);
     }
 }

@@ -58,6 +58,7 @@ public class Party implements Serializable {
     private List<GameCharacter> recruitmentPersistence = null;
     private boolean seminarHeld = false;
     private int notoriety = 0;
+    private int carryingCapInKilos = 0;
 
     public Party() {
         position = new Point(26, 19);
@@ -79,6 +80,7 @@ public class Party implements Serializable {
         }
         partyMembers.add(gameCharacter);
         gameCharacter.setParty(this);
+        carryingCapInKilos += gameCharacter.getRace().getCarryingCapacity();
         if (gameCharacter.getCharClass().isBackRowCombatant()) {
             backRow.add(gameCharacter);
         } else {
@@ -596,6 +598,7 @@ public class Party implements Serializable {
         frontRow.remove(gc);
         backRow.remove(gc);
         bench.remove(gc);
+        carryingCapInKilos -= gc.getRace().getCarryingCapacity();
         return amount;
     }
 
@@ -734,7 +737,7 @@ public class Party implements Serializable {
     }
 
     public int getCarryingCapacity() {
-        return partyMembers.size() * 20 * 1000 +
+        return carryingCapInKilos * 1000 +
                 horseHandler.size() * 50 * 1000;
     }
 

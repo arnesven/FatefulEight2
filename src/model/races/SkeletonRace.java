@@ -10,7 +10,7 @@ public class SkeletonRace extends Race {
     private static final PortraitSprite BLOCK_SPRITE = new FaceSprite(0x0F);
 
     public SkeletonRace() {
-        super("Skeleton", MyColors.WHITE, 0, 0, null, "");
+        super("Skeleton", MyColors.WHITE, 0, 0, 20, null, "");
     }
 
     @Override

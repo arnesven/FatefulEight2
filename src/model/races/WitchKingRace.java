@@ -7,7 +7,7 @@ import view.sprites.PortraitSprite;
 
 public class WitchKingRace extends Race {
     protected WitchKingRace() {
-        super("Witch King", MyColors.CYAN, 0, 0, new Skill[]{},
+        super("Witch King", MyColors.CYAN, 0, 0, 20, new Skill[]{},
                 "The Witch King is a member of an ancient race of rulers, long forgotten in this world.");
     }
 

@@ -30,13 +30,15 @@ public abstract class Race implements Serializable {
     private MyColors color;
     private int hpModifier;
     private int speedModifier;
+    private int carryCap;
     private Skill[] skillBonuses;
 
-    protected Race(String name, MyColors color, int hpModifier, int speed, Skill[] skillBonuses, String description) {
+    protected Race(String name, MyColors color, int hpModifier, int speed, int carryCap, Skill[] skillBonuses, String description) {
         this.name = name;
         this.color = color;
         this.hpModifier = hpModifier;
         this.speedModifier = speed;
+        this.carryCap = carryCap;
         this.skillBonuses = skillBonuses;
         this.id = nextRaceId++;
         this.description = description;
@@ -120,5 +122,9 @@ public abstract class Race implements Serializable {
 
     public boolean isSkeleton() {
         return false;
+    }
+
+    public int getCarryingCapacity() {
+        return carryCap;
     }
 }

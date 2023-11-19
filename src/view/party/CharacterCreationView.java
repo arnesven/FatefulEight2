@@ -191,6 +191,9 @@ public class CharacterCreationView extends SelectableListMenu {
         BorderFrame.drawString(model.getScreenHandler(),
                 "Health: " + lastCharacter.getMaxHP() + " Speed: " + lastCharacter.getSpeed(),
                 midX, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(),
+                "Carrying Cap: " + lastCharacter.getRace().getCarryingCapacity(),
+                midX, row++, MyColors.WHITE, MyColors.BLUE);
         row++;
 
         for (Skill s : lastCharacter.getSkillSet()) {
