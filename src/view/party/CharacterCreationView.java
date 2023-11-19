@@ -165,11 +165,16 @@ public class CharacterCreationView extends SelectableListMenu {
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 6, nameOk(1)?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+12, 8, nameOk(2)?CHECK_SPRITE:NOT_OK_SPRITE);
 
-        model.getScreenHandler().put(x+COLUMN_SKIP-4, 36, selectedClass!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+        model.getScreenHandler().put(x+COLUMN_SKIP-4, 36, selectedClassOk()?CHECK_SPRITE:NOT_OK_SPRITE);
 
         model.getScreenHandler().put(x+COLUMN_SKIP+8, 38, other1!=0?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+8, 40, other2!=0?CHECK_SPRITE:NOT_OK_SPRITE);
         model.getScreenHandler().put(x+COLUMN_SKIP+8, 42, other3!=0?CHECK_SPRITE:NOT_OK_SPRITE);
+    }
+
+    private boolean selectedClassOk() {
+        return selectedClass!=0 &&
+                (selectedClass != other1 && selectedClass != other2 && selectedClass != other3);
     }
 
     public static void drawCharacterDetails(Model model, GameCharacter lastCharacter, int midX, int row) {
@@ -395,7 +400,8 @@ public class CharacterCreationView extends SelectableListMenu {
                     @Override
                     public boolean isEnabled(Model model) {
                         boolean namesOk = nameOk(1) && nameOk(2);
-                        return other1 != 0 && other2 != 0 && other3 != 0 && selectedClass != 0 && namesOk;
+                        boolean classOk = selectedClassOk();
+                        return other1 != 0 && other2 != 0 && other3 != 0 && classOk && namesOk;
 
                     }
                 },
