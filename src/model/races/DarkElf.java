@@ -14,4 +14,9 @@ public class DarkElf extends ElvenRace {
                         "Dark elves take up all kinds of professions but it is not uncommon for them to be " +
                         "Sorcerers, Wizards, Captains, Marksmen, Black Knights and Nobles.");
     }
+
+    @Override
+    public MyColors getMouthDefaultColor() {
+        return MyColors.DARK_GRAY;
+    }
 }

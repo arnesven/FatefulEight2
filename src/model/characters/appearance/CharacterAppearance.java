@@ -27,6 +27,8 @@ public abstract class CharacterAppearance implements Serializable {
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private final Race race;
     private final MyColors hairColor;
+    private MyColors mascaraColor;
+    private MyColors lipColor;
     private final boolean femaleGender;
     private final Shoulders shoulders;
     private final TorsoChest chest;
@@ -36,6 +38,8 @@ public abstract class CharacterAppearance implements Serializable {
     public CharacterAppearance(Race race, boolean femaleGender, MyColors hairColor) {
         this.hairColor = hairColor;
         this.race = race;
+        this.mascaraColor = race.getColor();
+        this.lipColor = race.getMouthDefaultColor();
         this.femaleGender = femaleGender;
         shoulders = race.makeShoulders(femaleGender);
         if (femaleGender) {
@@ -77,16 +81,16 @@ public abstract class CharacterAppearance implements Serializable {
 
         this.grid[0][3] = PortraitSprite.FRAME_LEFT;
         this.grid[1][3] = classSpecificEars() ? race.getLeftEar(hairColor) : getLeftEar(hairColor);
-        this.grid[2][3] = new EyeSprite(symmetricalEyes() ? getEye() : getLeftEye(), hairColor, getEyeballColor());
-        this.grid[3][3] = new FaceSprite(getNose());
-        this.grid[4][3] = new EyeSprite(symmetricalEyes() ? getEye() : getRightEye(), hairColor, getEyeballColor());
+        this.grid[2][3] = new EyeSprite(symmetricalEyes() ? getEye() : getLeftEye(), hairColor, getEyeballColor(), getMascaraColor());
+        this.grid[3][3] = new NoseSprite(getNose(), getMascaraColor());
+        this.grid[4][3] = new EyeSprite(symmetricalEyes() ? getEye() : getRightEye(), hairColor, getEyeballColor(), getMascaraColor());
         this.grid[5][3] = classSpecificEars() ? race.getRightEar(hairColor) : getRightEar(hairColor);
         this.grid[6][3] = PortraitSprite.FRAME_RIGHT;
 
         this.grid[0][4] = PortraitSprite.FRAME_LEFT;
         this.grid[1][4] = PortraitSprite.BLACK_BLOCK;
         this.grid[2][4] = new FaceSpriteWithHair(getLeftCheek(), hairColor);
-        this.grid[3][4] = new MouthSprite(getMouth(), hairColor);
+        this.grid[3][4] = new MouthSprite(getMouth(), getLipColor(), hairColor);
         this.grid[4][4] = new FaceSpriteWithHair(getRightCheek(), hairColor);
         this.grid[5][4] = PortraitSprite.BLACK_BLOCK;
         this.grid[6][4] = PortraitSprite.FRAME_RIGHT;
@@ -103,6 +107,14 @@ public abstract class CharacterAppearance implements Serializable {
 
         specialization();
         setRaceSkinColor(race);
+    }
+
+    private MyColors getLipColor() {
+        return lipColor;
+    }
+
+    private MyColors getMascaraColor() {
+        return mascaraColor;
     }
 
     protected PortraitSprite getOuterFrameSprite(int i) {
@@ -346,5 +358,13 @@ public abstract class CharacterAppearance implements Serializable {
 
     public TorsoChest getChest() {
         return chest;
+    }
+
+    public void setMascaraColor(MyColors myColors) {
+        this.mascaraColor = myColors;
+    }
+
+    public void setLipColor(MyColors myColors) {
+        this.lipColor = myColors;
     }
 }

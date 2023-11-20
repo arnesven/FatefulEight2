@@ -35,4 +35,9 @@ public class HalfOrc extends Race {
         }
         return new BroadShoulders();
     }
+
+    @Override
+    public MyColors getMouthDefaultColor() {
+        return MyColors.DARK_GRAY;
+    }
 }

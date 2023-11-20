@@ -3,9 +3,9 @@ package view.sprites;
 import view.MyColors;
 
 public class MouthSprite extends FaceSprite {
-    public MouthSprite(int i, MyColors hairColor) {
+    public MouthSprite(int i, MyColors lipColor, MyColors hairColor) {
         super(i);
-        setColor2(MyColors.DARK_RED);
+        setColor2(lipColor);
         setColor3(hairColor);
     }
 }

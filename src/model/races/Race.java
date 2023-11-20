@@ -127,4 +127,8 @@ public abstract class Race implements Serializable {
     public int getCarryingCapacity() {
         return carryCap;
     }
+
+    public MyColors getMouthDefaultColor() {
+        return MyColors.DARK_RED;
+    }
 }

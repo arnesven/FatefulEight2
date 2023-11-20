@@ -56,6 +56,16 @@ public class PortraitSubView extends SubView {
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
         setDetail(appearance);
+        if (gender) { // makup
+             if (MyRandom.randInt(3) == 0) {
+                 appearance.setMascaraColor(CharacterCreationView.makeupColorSet[
+                         MyRandom.randInt(CharacterCreationView.makeupColorSet.length)]);
+             }
+            if (MyRandom.randInt(3) == 0) {
+                appearance.setLipColor(CharacterCreationView.makeupColorSet[
+                        MyRandom.randInt(CharacterCreationView.makeupColorSet.length)]);
+            }
+        }
         appearance.setClass(cls);
         return appearance;
     }

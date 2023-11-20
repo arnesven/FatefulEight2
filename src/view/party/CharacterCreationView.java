@@ -43,6 +43,11 @@ public class CharacterCreationView extends SelectableListMenu {
     public static final MyColors[] detailColorSet = new MyColors[]{
             MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE, MyColors.DARK_BLUE,
             MyColors.ORANGE, MyColors.RED, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
+    public static final MyColors[] makeupColorSet = new MyColors[]{MyColors.WHITE,
+            MyColors.DARK_GREEN, MyColors.DARK_BLUE, MyColors.DARK_BROWN,
+            MyColors.GREEN, MyColors.BLUE, MyColors.RED,
+            MyColors.LIGHT_GREEN, MyColors.LIGHT_BLUE, MyColors.LIGHT_RED,
+            MyColors.PURPLE, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BEIGE};
     private static final CharacterClass[] classSet = Classes.allClasses;
     private static final Ears[] earSet = Ears.allEars;
     private static final FaceDetail[] accessorySet = FaceDetail.ALL_DETAILS;
@@ -63,6 +68,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private int accessory = 0;
     private int selectedDetailColor = 0;
     private int selectedEars = 0;
+    private int selectedMascara = 0;
+    private int selectedLipColor = 0;
 
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
@@ -90,6 +97,12 @@ public class CharacterCreationView extends SelectableListMenu {
         app.setEars(earSet[selectedEars]);
         app.setFaceDetail(accessorySet[accessory]);
         app.setDetailColor(detailColorSet[selectedDetailColor]);
+        if (selectedMascara > 0) {
+            app.setMascaraColor(makeupColorSet[selectedMascara]);
+        }
+        if (selectedLipColor > 0) {
+            app.setLipColor(makeupColorSet[selectedLipColor]);
+        }
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
             app.applyFacialHair(raceSet[selectedRace], false);
@@ -143,8 +156,8 @@ public class CharacterCreationView extends SelectableListMenu {
                 y++;
                 String[] labels = new String[]{"First Name", "", "Last Name", "", "", "",
                         "Gender", "", "Race", "", "", "",
-                        "Eyes", "Nose",
-                        "Mouth", "Ears", "Beard", "", "", "",
+                        "Eyes", "Mascara", "Nose",
+                        "Mouth", "Lipstick", "Ears", "Beard", "",
                         "Hair", "  Color", "", "Detail", "  Color", "", "", "", "", "",
                         "Class", "", "Other Class 1", "",
                         "Other Class 2", "", "Other Class 3"};
@@ -260,7 +273,18 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedEyes = Arithmetics.incrementWithWrap(selectedEyes, eyeSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 16, "Nose #" + (selectedNose + 1)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 16, selectedMascara==0?"NONE": makeupColorSet[selectedMascara].toString().replace("_", " ")) {
+                    @Override
+                    public void turnLeft(Model model) {
+                        selectedMascara = Arithmetics.decrementWithWrap(selectedMascara, makeupColorSet.length);
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        selectedMascara = Arithmetics.incrementWithWrap(selectedMascara, makeupColorSet.length);
+                    }
+                },
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 17, "Nose #" + (selectedNose + 1)) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedNose = Arithmetics.decrementWithWrap(selectedNose, noseSet.length);
@@ -271,7 +295,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedNose = Arithmetics.incrementWithWrap(selectedNose, noseSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 17, "Mouth #" + (selectedMouth + 1)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 18, "Mouth #" + (selectedMouth + 1)) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedMouth = Arithmetics.decrementWithWrap(selectedMouth, mouthSet.length);
@@ -282,7 +306,18 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedMouth = Arithmetics.incrementWithWrap(selectedMouth, mouthSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 18, earSet[selectedEars].getName()) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 19, selectedLipColor==0?"NONE": makeupColorSet[selectedLipColor].toString().replace("_", " ")) {
+                    @Override
+                    public void turnLeft(Model model) {
+                        selectedLipColor = Arithmetics.decrementWithWrap(selectedLipColor, makeupColorSet.length);
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        selectedLipColor = Arithmetics.incrementWithWrap(selectedLipColor, makeupColorSet.length);
+                    }
+                },
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 20, earSet[selectedEars].getName()) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedEars = Arithmetics.decrementWithWrap(selectedEars, earSet.length);
@@ -293,7 +328,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedEars = Arithmetics.incrementWithWrap(selectedEars, earSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 19, "Beard #" + (selectedBeard + 1)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 21, "Beard #" + (selectedBeard + 1)) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedBeard = Arithmetics.decrementWithWrap(selectedBeard, beardSet.length);
@@ -584,8 +619,10 @@ public class CharacterCreationView extends SelectableListMenu {
         selectedHairColor = MyRandom.randInt(hairColorSet.length);
         selectedDetailColor = MyRandom.randInt(detailColorSet.length);
         selectedMouth = MyRandom.randInt(mouthSet.length);
+        selectedLipColor = MyRandom.randInt(makeupColorSet.length);
         selectedNose = MyRandom.randInt(noseSet.length);
         selectedEyes = MyRandom.randInt(eyeSet.length);
+        selectedMascara = MyRandom.randInt(makeupColorSet.length);
         selectedHairStyle = MyRandom.randInt(hairStyleSet.length);
         selectedBeard = MyRandom.randInt(beardSet.length);
         accessory = MyRandom.randInt(accessorySet.length);
