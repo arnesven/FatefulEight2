@@ -290,7 +290,7 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<? extends Weapon> allBlades() {
         return List.of(new Dirk(), new Dagger(), new ThrowingKnives(), new Kukri(), new ShortSword(),
                 new OrcishKnife(), new RitualDagger(), new Scimitar(), new Falchion(), new Wakizashi(),
-                new Broadsword(), new Longsword(), new Estoc(), new Katana(), new TwoHandedSword(),
+                new Broadsword(), new Longsword(), new Estoc(), new Rapier(), new Katana(), new TwoHandedSword(),
                 new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(), new TwinKukris());
     }
 

@@ -1,4 +1,4 @@
-package development;
+package test;
 
 import model.Model;
 import model.characters.GameCharacter;

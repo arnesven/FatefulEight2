@@ -1,6 +1,5 @@
 package view;
 
-import development.Balancing;
 import model.Model;
 import sound.SoundEffects;
 import view.sprites.ArrowSprites;

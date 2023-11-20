@@ -1,12 +1,10 @@
 package test;
 
-import model.MainStory;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.KruskTalandro;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.journal.InitialStoryPart;
 import model.journal.JournalEntry;
 import model.journal.RuinsEntry;
 import model.quests.FrogmenProblemQuest;
@@ -14,7 +12,6 @@ import model.quests.RescueMissionQuest;
 import model.quests.SpecialDeliveryQuest;
 import model.quests.TroubleInTheLibraryQuest;
 import model.races.Race;
-import model.states.dailyaction.VisitUncleNode;
 import util.MyPair;
 import util.MyUnitTesting;
 

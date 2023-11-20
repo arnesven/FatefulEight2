@@ -1,6 +1,7 @@
 package control;
 
 import model.Model;
+import test.Balancing;
 import view.DrawingArea;
 import view.MyColors;
 import view.sprites.AnimationManager;
