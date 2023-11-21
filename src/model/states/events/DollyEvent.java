@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 import view.GameView;
 
@@ -40,9 +41,8 @@ public class DollyEvent extends DailyEventState {
             } else {
                 println("You spend hours looking for the toy. Finally you give up, frustrated and tired.");
                 println("Each party member exhausts 1 SP.");
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    gc.addToSP(-1);
-                }
+                MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(-1));
+
             }
             model.getParty().randomPartyMemberSay(model, List.of("I'm all sweaty!", "Kids..."));
         }

@@ -33,4 +33,13 @@ public class MyLists {
         }
         return result;
     }
+
+    public static <E> boolean all(List<E> source, Predicate<E> pred) {
+        for (E e : source) {
+            if (!pred.test(e)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -167,12 +167,7 @@ public class Party implements Serializable {
     }
 
     public boolean isWipedOut() {
-        for (GameCharacter chara : partyMembers) {
-            if (chara.getHP() > 0) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(partyMembers, (GameCharacter gc) -> gc.getHP() <= 0);
     }
 
     public List<GameCharacter> getPartyMembers() {
@@ -280,13 +275,8 @@ public class Party implements Serializable {
     }
 
     public List<GameCharacter> getMembersEligibleFor(CharacterClass charClass) {
-        List<GameCharacter> result = new ArrayList<>();
-        for (GameCharacter gc : partyMembers) {
-            if (gc.getCharClass().id() != charClass.id() && gc.canAssumeClass(charClass.id())) {
-                result.add(gc);
-            }
-        }
-        return result;
+        return MyLists.filter(partyMembers, (GameCharacter gc) ->
+            gc.getCharClass().id() != charClass.id() && gc.canAssumeClass(charClass.id()));
     }
 
     public boolean appointNewLeader() {

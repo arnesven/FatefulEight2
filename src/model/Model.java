@@ -18,6 +18,7 @@ import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
 import test.MainStoryTest;
+import util.MyLists;
 import util.MyPair;
 import view.dev.SpritePreviewerView;
 import view.sprites.AnimationManager;
@@ -264,7 +265,7 @@ public class Model {
         return gameData.itemDeck;
     }
 
-    public List<? extends GameCharacter> getAllCharacters() {
+    public List<GameCharacter> getAllCharacters() {
         return gameData.allCharacters;
     }
 
@@ -274,24 +275,14 @@ public class Model {
     }
 
     public List<GameCharacter> getAvailableCharactersOfRace(Race race) {
-        List<GameCharacter> list = new ArrayList<>();
-        for (GameCharacter gc : getAllCharacters()) {
-            if (((gc.getRace().id() == race.id() || race.id() == Race.ALL.id()) &&
-                    !getParty().getPartyMembers().contains(gc))) {
-                list.add(gc);
-            }
-        }
-        return list;
+        return MyLists.filter(getAllCharacters(), (GameCharacter gc) ->
+                (gc.getRace().id() == race.id() || race.id() == Race.ALL.id()) &&
+                        !getParty().getPartyMembers().contains(gc));
     }
 
     public List<GameCharacter> getAvailableCharactersByGender(boolean gender) {
-        List<GameCharacter> list = new ArrayList<>();
-        for (GameCharacter gc : getAllCharacters()) {
-            if (gc.getGender() == gender && !getParty().getPartyMembers().contains(gc)) {
-                list.add(gc);
-            }
-        }
-        return list;
+        return MyLists.filter(getAllCharacters(), (GameCharacter gc) ->
+            gc.getGender() == gender && !getParty().getPartyMembers().contains(gc));
     }
 
     public void incrementDay() {

@@ -7,6 +7,7 @@ import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
+import util.MyLists;
 
 import java.util.List;
 
@@ -51,11 +52,7 @@ public class HalflingVillage extends DailyEventState {
     }
 
     private boolean allHalflings(Party party) {
-        for (GameCharacter gc : party.getPartyMembers()) {
-            if (gc.getRace() != Race.HALFLING) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(party.getPartyMembers(),
+                (GameCharacter gc) -> gc.getRace().id() == Race.HALFLING.id());
     }
 }

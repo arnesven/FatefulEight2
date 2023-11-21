@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.GameCharacter;
+import util.MyLists;
 import view.sprites.AvatarSprite;
 
 import java.io.Serializable;
@@ -20,9 +21,7 @@ public class HallOfFameEntry implements Serializable {
         this.characters = new ArrayList<>();
         this.leaderName = chars.get(0).getName();
         when = new Date();
-        for (GameCharacter gc : chars) {
-            characters.add(gc.getAvatarSprite());
-        }
+        MyLists.forEach(chars, (GameCharacter gc) -> characters.add(gc.getAvatarSprite()));
         this.score = score;
     }
 

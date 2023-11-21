@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.GameCharacter;
+import util.MyLists;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,12 +11,7 @@ import java.util.List;
 public class HallOfFameData extends ArrayList<HallOfFameEntry> implements Serializable {
 
     public void append(Party party, GameScore score) {
-        List<GameCharacter> chars = new ArrayList<>();
-        for (GameCharacter gc : party.getPartyMembers()) { // moving leader first.
-            if (!gc.isLeader()) {
-                chars.add(gc);
-            }
-        }
+        List<GameCharacter> chars = MyLists.filter(party.getPartyMembers(), (GameCharacter gc) -> !gc.isLeader());
         chars.add(0, party.getLeader());
         HallOfFameEntry e = new HallOfFameEntry(chars, score.getTotal());
         add(e);

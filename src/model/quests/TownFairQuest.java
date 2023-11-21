@@ -21,6 +21,7 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import model.states.ArcheryState;
 import model.states.QuestState;
+import util.MyLists;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -272,9 +273,7 @@ public class TownFairQuest extends Quest {
                         PortraitSubView.makeRandomPortrait(Classes.FOR, Race.DARK_ELF, false),
                         Classes.NO_OTHER_CLASSES,
                             new Equipment(new YewBow())));
-            for (GameCharacter gc : opponents) {
-                gc.setLevel(4);
-            }
+            MyLists.forEach(opponents, (GameCharacter gc) -> gc.setLevel(4));
             archeryState.addNPCShooters(opponents);
             archeryState.run(model);
             state.print("Press enter to continue.");
