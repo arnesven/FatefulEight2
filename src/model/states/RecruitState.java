@@ -52,10 +52,8 @@ public class RecruitState extends GameState {
 
 
     private void setLevels(List<GameCharacter> recruitables) {
-        double partyLevel = 0.0;
-        for (GameCharacter gc : getModel().getParty().getPartyMembers()) {
-            partyLevel += gc.getLevel();
-        }
+        double partyLevel = MyLists.doubleAccumulate(getModel().getParty().getPartyMembers(),
+                                                     GameCharacter::getLevel);
         partyLevel /= getModel().getParty().size();
         partyLevel = Math.ceil(partyLevel);
         double finalPartyLevel = partyLevel;

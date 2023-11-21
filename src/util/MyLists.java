@@ -51,4 +51,22 @@ public class MyLists {
         }
         return result;
     }
+
+    public static <E> boolean any(List<E> source, Predicate<E> pred) {
+        for (E e : source) {
+            if (pred.test(e)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static <E> double doubleAccumulate(List<E> source,
+                                             MyUnaryDoubleFunction<E> fun) {
+        double result = 0.0;
+        for (E e : source) {
+            result += fun.apply(e);
+        }
+        return result;
+    }
 }

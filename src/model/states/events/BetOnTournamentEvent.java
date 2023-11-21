@@ -207,13 +207,9 @@ public class BetOnTournamentEvent extends TournamentEvent  {
 
     private Map<GameCharacter, TournamentOdds> calculateOdds(List<GameCharacter> fighters) {
         Map<GameCharacter, TournamentOdds> result = new HashMap<>();
-        int sum = 0;
-        for (GameCharacter fighter : fighters) {
-            sum += super.calculateFighterStrength(fighter);
-        }
-        int finalSum = sum;
+        int sum = MyLists.intAccumulate(fighters, super::calculateFighterStrength);
         MyLists.forEach(fighters, (GameCharacter fighter) ->
-            result.put(fighter, new TournamentOdds(super.calculateFighterStrength(fighter), finalSum)));
+            result.put(fighter, new TournamentOdds(super.calculateFighterStrength(fighter), sum)));
         return result;
     }
 

@@ -169,16 +169,14 @@ public class ArcheryContestEvent extends TournamentEvent {
     }
 
     private void stillNeedABow(Model model, GameCharacter chosen) {
-        for (GameCharacter chara : model.getParty().getPartyMembers()) {
-            if (chara.getEquipment().getWeapon() instanceof BowWeapon) {
-                return;
-            }
+        if (MyLists.any(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                gc.getEquipment().getWeapon().isOfType(BowWeapon.class))) {
+            return;
         }
 
-        for (Item it : model.getParty().getInventory().getAllItems()) {
-            if (it instanceof BowWeapon) {
-                return;
-            }
+        if (MyLists.any(model.getParty().getInventory().getAllItems(), (Item it) ->
+                (it instanceof Weapon && ((Weapon) it).isOfType(BowWeapon.class)))) {
+            return;
         }
 
         partyMemberSay(chosen, "Wait... I actually don't have a bow.");
@@ -311,12 +309,8 @@ public class ArcheryContestEvent extends TournamentEvent {
         waitForReturnSilently();
         setCurrentTerrainSubview(model);
         showAnnouncer();
-        List<GameCharacter> finalists = new ArrayList<>();
-        for (GameCharacter gc : points2.keySet()) {
-            if (points2.get(gc) == maxBalls) {
-                finalists.add(gc);
-            }
-        }
+        List<GameCharacter> finalists = MyLists.filter(new ArrayList<>(points2.keySet()),
+                (GameCharacter gc) -> points2.get(gc) == maxBalls);
         portraitSay("Ladies and gentlemen, we made it to the final round. It looks like " +
                 MyStrings.numberWord(finalists.size()) + " contestants have qualified. In this round, each contestant is given " +
                 "three arrows, with which they must score as many points as possible. Oh, and we've also moved the targets further away! " +

@@ -18,12 +18,11 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        List<GameCharacter> candidates = new ArrayList<>();
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc != model.getParty().getLeader() && gc.getAttitude(model.getParty().getLeader()) < 0) {
-                candidates.add(gc);
-            }
-        }
+        List<GameCharacter> candidates = MyLists.filter(model.getParty().getPartyMembers(),
+                (GameCharacter gc) ->
+                    (gc != model.getParty().getLeader() &&
+                     gc.getAttitude(model.getParty().getLeader()) < 0));
+
         if (candidates.isEmpty()) {
             new NoEventState(model).doEvent(model);
             return;
@@ -69,12 +68,9 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
         } else {
             leaderSay("I'm sorry " + gc.getName() + " but I can't pay you, and I'm going to need those items.");
 
-            List<GameCharacter> separtists = new ArrayList<>();
-            for (GameCharacter gc2 : model.getParty().getPartyMembers()) {
-                if (gc2 != model.getParty().getLeader() && gc2 != gc && gc2.getAttitude(model.getParty().getLeader()) < 0) {
-                    separtists.add(gc2);
-                }
-            }
+            List<GameCharacter> separtists = MyLists.filter(model.getParty().getPartyMembers(), (GameCharacter gc2) ->
+                    (gc2 != model.getParty().getLeader() && gc2 != gc && gc2.getAttitude(model.getParty().getLeader()) < 0));
+
             if (separtists.isEmpty()) {
                 partyMemberSay(gc, "... Fine... here you go. But I'm out of here.");
                 model.getParty().remove(gc, true, false, 0);

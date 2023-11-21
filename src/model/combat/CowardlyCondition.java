@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.GameState;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -13,6 +14,7 @@ import view.sprites.Sprite;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class CowardlyCondition extends Condition {
     private static final Sprite SPRITE = CharSprite.make((char)(0xC1), MyColors.YELLOW, MyColors.BLACK, MyColors.CYAN);
@@ -52,17 +54,15 @@ public class CowardlyCondition extends Condition {
     }
 
     private static int calculatePartyCombatStrength(Model model, List<GameCharacter> allies) {
-        int goodGuyCombatPower = 0;
-        for (GameCharacter gc : allies) {
-            if (!gc.isDead()) {
-                goodGuyCombatPower += gc.getCharacterStrength();
-            }
-        }
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (!model.getParty().getBench().contains(gc) && !gc.isDead()) {
-                goodGuyCombatPower += gc.getCharacterStrength();
-            }
-        }
+        int goodGuyCombatPower = MyLists.intAccumulate(
+                MyLists.filter(allies, Predicate.not(GameCharacter::isDead)),
+                GameCharacter::getCharacterStrength);
+        System.out.println("Combat power from allies: " + allies);
+        goodGuyCombatPower += MyLists.intAccumulate(
+                MyLists.filter(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                                (!model.getParty().getBench().contains(gc) && !gc.isDead())),
+        GameCharacter::getCharacterStrength);
+        System.out.println("Total combat power: " + goodGuyCombatPower);
         return goodGuyCombatPower;
     }
 

@@ -213,10 +213,7 @@ public abstract class GameState {
     }
 
     public static double calculateAverageLevel(Model model) {
-        double averageLevel = 0.0;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            averageLevel += gc.getLevel();
-        }
+        double averageLevel = MyLists.doubleAccumulate(model.getParty().getPartyMembers(), GameCharacter::getLevel);
         averageLevel /= model.getParty().size();
         return averageLevel;
     }

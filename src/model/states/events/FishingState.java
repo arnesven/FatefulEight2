@@ -9,6 +9,7 @@ import model.items.weapons.Weapon;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.fishing.*;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.sprites.MiniPictureSprite;
@@ -83,19 +84,11 @@ public class FishingState extends GameState {
     }
 
     private boolean findFishingPole(Model model) {
-        for (Item it : model.getParty().getInventory().getAllItems()) {
-            if (it instanceof Weapon) {
-                Weapon w = (Weapon)it;
-                if (w.isOfType(FishingPole.class)) {
-                    return true;
-                }
-            }
+        if (MyLists.any(model.getParty().getInventory().getAllItems(), (Item it) ->
+                (it instanceof Weapon && ((Weapon) it).isOfType(FishingPole.class)))) {
+            return true;
         }
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.getEquipment().getWeapon().isOfType(FishingPole.class)) {
-                return true;
-            }
-        }
-        return false;
+        return MyLists.any(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                gc.getEquipment().getWeapon().isOfType(FishingPole.class));
     }
 }

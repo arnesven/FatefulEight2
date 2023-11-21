@@ -150,11 +150,8 @@ public class CombatEvent extends DailyEventState {
     }
 
     private int sumUp(Map<GameCharacter, List<Enemy>> destroyedEnemies) {
-        int sum = 0;
-        for (GameCharacter gc : destroyedEnemies.keySet()) {
-            sum += destroyedEnemies.get(gc).size();
-        }
-        return sum;
+        return MyLists.intAccumulate(new ArrayList<>(destroyedEnemies.keySet()),
+                (GameCharacter gc) -> destroyedEnemies.get(gc).size());
     }
 
     private void setFormation(Model model) {
@@ -246,9 +243,7 @@ public class CombatEvent extends DailyEventState {
         if (!back.isEmpty() && frontRowIsOverrun(model)) {
             printAlert("Party overrun by enemies! All characters in back row are moved to front.");
             model.getLog().waitForAnimationToFinish();
-            for (GameCharacter gc : back) {
-                toggleFormationFor(model, gc);
-            }
+            MyLists.forEach(back, (GameCharacter gc) -> toggleFormationFor(model, gc));
             return true;
         }
         return false;

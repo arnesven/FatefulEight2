@@ -13,6 +13,7 @@ import model.items.spells.DispelSpell;
 import model.items.spells.MindControlSpell;
 import model.items.spells.Spell;
 import model.states.*;
+import util.MyLists;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;

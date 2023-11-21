@@ -24,6 +24,7 @@ import view.subviews.SubView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class BathHouseEvent extends DailyEventState {
     private final boolean prudeGender;
@@ -286,12 +287,7 @@ public class BathHouseEvent extends DailyEventState {
     }
 
     private boolean allAreGender(List<GameCharacter> groupB, boolean gender) {
-        for (GameCharacter gc : groupB) {
-            if (gender != gc.getGender()) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(groupB, (GameCharacter gc) -> gc.getGender() == gender);
     }
 
     private void restoreParty(Model model, List<GameCharacter> bathers) {
@@ -307,11 +303,6 @@ public class BathHouseEvent extends DailyEventState {
     }
 
     private boolean allDead(List<GameCharacter> bathers) {
-        for (GameCharacter gc : bathers) {
-            if (!gc.isDead()) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(bathers, GameCharacter::isDead);
     }
 }

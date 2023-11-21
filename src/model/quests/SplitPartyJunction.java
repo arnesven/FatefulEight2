@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.states.QuestState;
+import util.MyLists;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.SplitPartySubView;
@@ -106,11 +107,6 @@ public class SplitPartyJunction extends QuestJunction {
     }
 
     private static boolean groupDead(List<GameCharacter> group) {
-        for (GameCharacter gc : group) {
-            if (!gc.isDead()) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(group, GameCharacter::isDead);
     }
 }

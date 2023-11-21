@@ -109,12 +109,8 @@ public class DwarvenCityEvent extends DailyEventState {
     }
 
     private boolean partyContainsElves(Model model) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.getRace() instanceof ElvenRace) {
-                return true;
-            }
-        }
-        return false;
+        return MyLists.any(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                gc.getRace() instanceof ElvenRace);
     }
 
     @Override

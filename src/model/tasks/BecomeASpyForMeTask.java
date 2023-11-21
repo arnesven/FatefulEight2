@@ -9,6 +9,7 @@ import model.classes.Skill;
 import model.classes.SpyClass;
 import model.map.UrbanLocation;
 import model.states.events.ChangeClassEvent;
+import util.MyLists;
 
 import java.util.List;
 
@@ -58,12 +59,8 @@ public class BecomeASpyForMeTask extends SummonTask {
     }
 
     private boolean hasASpy(Party party) {
-        for (GameCharacter gc : party.getPartyMembers()) {
-            if (gc.getCharClass() instanceof SpyClass) {
-                return true;
-            }
-        }
-        return false;
+        return MyLists.any(party.getPartyMembers(), (GameCharacter gc) ->
+                gc.getCharClass() instanceof SpyClass);
     }
 
     @Override

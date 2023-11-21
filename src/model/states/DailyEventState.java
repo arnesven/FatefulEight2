@@ -14,6 +14,7 @@ import model.items.potions.Potion;
 import model.items.potions.RevivingElixir;
 import model.map.WorldHex;
 import model.races.Race;
+import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.*;
@@ -119,17 +120,12 @@ public abstract class DailyEventState extends GameState {
     protected void setFledCombat(boolean b) { fledCombat = b; }
 
     protected void removeKilledPartyMembers(Model model, boolean abandonEquipment) {
-        List<GameCharacter> toRemove = new ArrayList<>();
-        StringBuffer buf = new StringBuffer();
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.isDead()) {
-                toRemove.add(gc);
-            }
-        }
+        List<GameCharacter> toRemove = MyLists.filter(model.getParty().getPartyMembers(), GameCharacter::isDead);
         if (toRemove.isEmpty()) {
             return;
         }
 
+        StringBuffer buf = new StringBuffer();
         for (GameCharacter gc : toRemove) {
             if (!didResurrect(model, this, gc)) {
                 model.getParty().remove(gc, !abandonEquipment, false, 0);

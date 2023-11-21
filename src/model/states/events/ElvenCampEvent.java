@@ -13,6 +13,7 @@ import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -35,13 +36,8 @@ public class ElvenCampEvent extends DailyEventState {
         CharacterClass cls = MyRandom.sample(List.of(Classes.AMZ, Classes.MAR, Classes.PAL, Classes.CAP));
         Race race = MyRandom.sample(List.of(Race.HIGH_ELF, Race.WOOD_ELF, Race.DARK_ELF));
         showRandomPortrait(model, cls, race, "Elves");
-        int elves = 0;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.getRace() instanceof ElvenRace) {
-                elves++;
-            }
-        }
-
+        int elves = MyLists.filter(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                gc.getRace() instanceof ElvenRace).size();
         int roll = MyRandom.rollD10() + elves;
         if (roll >= 8) {
             println("The elves are celebrating the voyage of the moon and sun and will gladly share their campsite" +

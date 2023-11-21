@@ -9,6 +9,7 @@ import model.items.weapons.BowWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
+import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -70,12 +71,9 @@ public class LockedDoor extends DungeonDoor {
     }
 
     private boolean eligibleDamagesExist(Model model) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (!(gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon || gc.getEquipment().getWeapon().isRangedAttack())) {
-                return true;
-            }
-        }
-        return false;
+        return MyLists.any(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                        !(gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon ||
+                                gc.getEquipment().getWeapon().isRangedAttack()));
     }
 
     private void breakDownDoor(Model model, ExploreRuinsState state) {
