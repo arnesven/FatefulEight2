@@ -43,8 +43,8 @@ public class CharacterCreationView extends SelectableListMenu {
     public static final MyColors[] detailColorSet = new MyColors[]{
             MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE, MyColors.DARK_BLUE,
             MyColors.ORANGE, MyColors.RED, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
-    public static final MyColors[] makeupColorSet = new MyColors[]{MyColors.WHITE,
-            MyColors.DARK_GREEN, MyColors.DARK_BLUE, MyColors.DARK_BROWN,
+    public static final MyColors[] makeupColorSet = new MyColors[]{MyColors.BLUE,
+            MyColors.BLACK, MyColors.DARK_GREEN, MyColors.DARK_BLUE, MyColors.DARK_BROWN,
             MyColors.GREEN, MyColors.BLUE, MyColors.RED,
             MyColors.LIGHT_GREEN, MyColors.LIGHT_BLUE, MyColors.LIGHT_RED,
             MyColors.PURPLE, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BEIGE};
