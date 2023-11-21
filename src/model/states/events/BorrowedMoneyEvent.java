@@ -2,11 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.subviews.PortraitSubView;
 
 import java.util.List;
 
@@ -30,7 +33,8 @@ public class BorrowedMoneyEvent extends DailyEventState {
         boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 7);
         if (success) {
             String name = randomFirstName(gender);
-            showRandomPortrait(model, Classes.None, name);
+            CharacterAppearance randAppearance = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL, gender);
+            showExplicitPortrait(model, randAppearance, name);
             model.getParty().partyMemberSay(model, main, "Hey " + name + ", long time no see!");
             portraitSay("Oh, hi... it's you.");
             model.getParty().partyMemberSay(model, main, "Remember that gold you borrowed a little while back?");

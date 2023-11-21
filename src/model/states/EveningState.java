@@ -2,9 +2,11 @@ package model.states;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
 import model.items.Inventory;
 import model.quests.MainQuest;
 import model.quests.Quest;
+import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.LogView;
@@ -12,6 +14,8 @@ import view.help.HalfTimeDialog;
 import view.subviews.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class EveningState extends GameState {
@@ -45,8 +49,57 @@ public class EveningState extends GameState {
         if (model.getDay() == 50) {
             model.transitionToDialog(new HalfTimeDialog(model.getView()));
         }
+        checkForLeaderChange(model);
         super.stepToNextDay(model);
         return nextState(model);
+    }
+
+    private void checkForLeaderChange(Model model) {
+        if (model.getParty().size() < 3) {
+            return;
+        }
+        List<GameCharacter> dissidents = new ArrayList<>(MyLists.filter(model.getParty().getPartyMembers(),
+                (GameCharacter gc) -> gc.getAttitude(model.getParty().getLeader()) < 0));
+        if (dissidents.isEmpty()) {
+            return;
+        }
+        Collections.shuffle(dissidents);
+        partyMemberSay(dissidents.get(0), MyRandom.sample(List.of("Perhaps it's time for new leadership?",
+                "I think it's time for a new leader.", "This party needs new leadership, urgently.",
+                "Who else thinks we need to appoint a new leader?")));
+        if (dissidents.size() > 1) {
+            partyMemberSay(dissidents.get(1), MyRandom.sample(List.of("I agree!", "Here here!", "Well said.",
+                    "I concur.", "Couldn't have said it better myself!", "So true!")));
+        }
+        List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
+        candidates.remove(model.getParty().getLeader());
+        Collections.sort(candidates, (gc1, gc2) -> {
+            int total1 = gc1.getRankForSkill(Skill.Leadership) * 10 + gc1.getSpeed();
+            int total2 = gc2.getRankForSkill(Skill.Leadership) * 10 + gc2.getSpeed();
+            return total2 - total1;
+        });
+        if (candidates.get(0) == dissidents.get(0)) {
+            partyMemberSay(dissidents.get(0), "I think I would be a better leader.");
+        } else {
+            partyMemberSay(dissidents.get(0), "I think " + candidates.get(0).getFirstName() + " would be a great leader.");
+        }
+        print("Do you agree to make " + candidates.get(0).getName() + " the leader of the party? (Y/N) ");
+        if (yesNoInput()) {
+            leaderSay("Fine... I give up. " + candidates.get(0).getFirstName() + ", good luck...");
+            model.getParty().setLeader(candidates.get(0));
+            leaderSay("Thanks. Okay people, follow my lead.");
+            int dissidentAttitudeTowardNewLeader = dissidents.get(0).getAttitude(model.getParty().getLeader());
+            if (dissidentAttitudeTowardNewLeader < 0) {
+                dissidents.get(0).addToAttitude(model.getParty().getLeader(), -dissidentAttitudeTowardNewLeader);
+            }
+            println(dissidents.get(0).getName() + " has been appeased.");
+        } else {
+            if (MyRandom.flipCoin()) {
+                leaderSay("No way " + dissidents.get(0).getFirstName() + ".");
+            } else {
+                leaderSay("I refuse.");
+            }
+        }
     }
 
     public void setSubView(Model model) {
