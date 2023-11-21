@@ -219,13 +219,7 @@ public class Party implements Serializable {
     }
 
     public int livingCharactersInFrontRow() {
-        int i = 0;
-        for (GameCharacter gc : getFrontRow()) {
-            if (!gc.isDead()) {
-                i++;
-            }
-        }
-        return i;
+        return MyLists.filter(getFrontRow(), (GameCharacter gc) -> !gc.isDead()).size();
     }
 
     public Inventory getInventory() {
@@ -241,11 +235,7 @@ public class Party implements Serializable {
     }
 
     public int partyStrength() {
-        int str = 0;
-        for (GameCharacter gc : partyMembers) {
-            str += gc.getCharacterStrength();
-        }
-        return str;
+        return MyLists.intAccumulate(partyMembers, GameCharacter::getCharacterStrength);
     }
 
     public int getLastSuccessfulRecruitDay() {

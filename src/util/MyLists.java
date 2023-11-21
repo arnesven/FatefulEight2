@@ -42,4 +42,13 @@ public class MyLists {
         }
         return true;
     }
+
+    public static <E> int intAccumulate(List<E> source,
+                                        MyUnaryIntFunction<E> fun) {
+        int result = 0;
+        for (E e : source) {
+            result += fun.apply(e);
+        }
+        return result;
+    }
 }

@@ -295,21 +295,11 @@ public class CombatEvent extends DailyEventState {
     }
 
     private boolean isWipedOut() {
-        for (GameCharacter chara : participants) {
-            if (chara.getHP() > 0) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(participants, (GameCharacter gc) -> gc.getHP() <= 0);
     }
 
     private boolean allEnemiesDead() {
-        for (Enemy en : enemies) {
-            if (en.getHP() > 0) {
-                return false;
-            }
-        }
-        return true;
+        return MyLists.all(enemies, (Enemy en) -> en.getHP() <= 0);
     }
 
     public List<Combatant> getInitiativeOrder() {

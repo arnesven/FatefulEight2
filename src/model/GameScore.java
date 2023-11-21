@@ -3,6 +3,7 @@ package model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.spells.Spell;
+import util.MyLists;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,11 +40,7 @@ public class GameScore extends HashMap<String, Integer> {
                 sum += gc.getEquipment().getAccessory().getCost();
             }
         }
-
-        for (Item it : model.getParty().getInventory().getAllItems()) {
-            sum += it.getCost();
-        }
-
+        sum += MyLists.intAccumulate(model.getParty().getInventory().getAllItems(), Item::getCost);
         sum += model.getParty().getGold();
         return sum;
     }
