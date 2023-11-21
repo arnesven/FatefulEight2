@@ -7,6 +7,7 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.ConstableEnemy;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -133,9 +134,7 @@ public class ConstableEvent extends DailyEventState {
         println("The party is released from jail. You feel happy to get out, but sitting in that cell for " +
                 "days has left you tired and disillusioned.");
         println("Each party member loses all SP.");
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.addToSP(-gc.getSP());
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(-gc.getSP()));
     }
 
     private void payFine(Model model) {

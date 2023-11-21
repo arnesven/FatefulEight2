@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -64,9 +65,8 @@ public class QuicksandEvent extends DailyEventState {
                 model.getParty().partyMemberSay(model, sinkers.get(0), "Phew... that was close!");
             } else {
                 model.getParty().partyMemberSay(model, nonSinkers.get(0), "Aaah, aah, there's nothing to use!#");
-                for (GameCharacter gc : sinkers) {
-                    characterDies(model, this, gc, REASON, false);
-                }
+                MyLists.forEach(sinkers, (GameCharacter gc) ->
+                    characterDies(model, this, gc, REASON, false));
             }
         }
     }

@@ -9,6 +9,7 @@ import model.enemies.SoldierEnemy;
 import model.enemies.SoldierLeaderEnemy;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -43,9 +44,7 @@ public class CompanyEvent extends DailyEventState {
         print("Do you accept (Y) losing " + loss + " rations and indulging in their tiresome games or risk (N) angering the company of soldiers? ");
         if (yesNoInput()) {
             model.getParty().addToFood(-loss);
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                gc.addToSP(-1);
-            }
+            MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(-1));
             println("You grudgingly hand over your packs of food.");
             println("Each party member exhausts 1 SP.");
         } else {

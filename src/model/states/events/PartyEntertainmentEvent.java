@@ -7,6 +7,7 @@ import model.classes.MagicianClass;
 import model.classes.Skill;
 import model.classes.WizardClass;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -83,20 +84,20 @@ public class PartyEntertainmentEvent extends DailyEventState {
                             List.of("Spectacular!", "Wonderful!", "Please, do more!",
                                     "Encore!", "I love it!", "You are great!", "This was some high quality entertainment.",
                                     "I like what I see.", "Good stuff!", "Satisfying."));
-                    for (GameCharacter ent : entertainers) {
+                    MyLists.forEach(entertainers, (GameCharacter ent) -> {
                         gc.addToAttitude(ent, diff);
                         ent.addToAttitude(gc, diff/2);
-                    }
+                    });
                 } else {
                     println(gc.getName() + " is not entertained by the performance.");
                     model.getParty().partyMemberSay(model, gc,
                             List.of("I've seen better.", "Mediocre.", "Please stop.",
                                     "Meh.", "Can't say I love this", "Really?", "This was some low quality entertainment.",
                                     "Not my cup of tea.", "Less than good.", "Not so great."));
-                    for (GameCharacter ent : entertainers) {
+                    MyLists.forEach(entertainers, (GameCharacter ent) -> {
                         gc.addToAttitude(ent, diff/2);
                         ent.addToAttitude(gc, diff/4);
-                    }
+                    });
                 }
             }
         }

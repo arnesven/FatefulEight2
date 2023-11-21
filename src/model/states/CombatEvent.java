@@ -12,6 +12,7 @@ import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sprites.CombatSpeechBubble;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -129,9 +130,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     protected void removeCombatConditions(Model model) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.removeCombatConditions();
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), Combatant::removeCombatConditions);
     }
 
     private List<CombatLoot> generateCombatLoot(Model model, Map<GameCharacter, List<Enemy>> destroyedEnemies) {
@@ -428,9 +427,7 @@ public class CombatEvent extends DailyEventState {
 
 
     public void addAllies(List<GameCharacter> gcs) {
-        for (GameCharacter gc : allies) {
-            combatMatrix.remove(gc);
-        }
+        MyLists.forEach(allies, (GameCharacter gc) -> combatMatrix.remove(gc));
         this.allies.addAll(gcs);
         combatMatrix.addAllies(allies);
     }

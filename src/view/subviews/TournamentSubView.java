@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.items.Item;
 import model.states.events.TournamentOdds;
+import util.MyLists;
 import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
@@ -228,9 +229,7 @@ public class TournamentSubView extends TopMenuSubView {
     }
 
     public void setFightersAsKnown(List<GameCharacter> fighters) {
-        for (GameCharacter fighter : fighters) {
-            knownFighters.add(fighter);
-        }
+        MyLists.forEach(fighters, (GameCharacter gc) -> knownFighters.add(gc));
     }
 
     public Point getCursorPosition() {

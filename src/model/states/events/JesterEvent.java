@@ -12,6 +12,7 @@ import model.items.clothing.FancyJerkin;
 import model.items.weapons.*;
 import model.races.Race;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -55,9 +56,7 @@ public class JesterEvent extends DarkDeedsEvent {
                 "and a human princess. The party feels much refreshed " +
                 "when going to bed tonight.");
         println("Each character recovers 1 SP.");
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.addToSP(1);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(1));
         print("The " + shortName + " is kind enough to offer to train you in the ways of being a Bard, ");
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.BRD);
         change.areYouInterested(model);

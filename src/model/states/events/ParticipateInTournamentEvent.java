@@ -7,6 +7,7 @@ import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.TournamentEnemy;
 import model.map.CastleLocation;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.TournamentSubView;
 
@@ -240,9 +241,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
     }
 
     private void handleQuarterWinners(Model model, List<GameCharacter> winners) {
-        for (GameCharacter gc : winners) {
-            gc.addToHP(MyRandom.randInt(1, 5));
-        }
+        MyLists.forEach(winners, (GameCharacter gc) -> gc.addToHP(MyRandom.randInt(1, 5)));
         GameCharacter gc = MyRandom.sample(winners);
         println("You spot one of the fighters from the tournament, " + gc.getName() + ". " + heOrSheCap(gc.getGender()) +
                 " is consuming a health potion.");

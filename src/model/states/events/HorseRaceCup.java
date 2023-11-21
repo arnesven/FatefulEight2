@@ -17,6 +17,7 @@ import model.races.Race;
 import model.states.GameState;
 import model.states.RecruitState;
 import model.states.horserace.HorseRacer;
+import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.*;
@@ -104,9 +105,7 @@ public class HorseRaceCup extends TournamentEvent {
         } else {
             horses.put(chosenRider, model.getParty().getHorseHandler().get(0));
         }
-        for (GameCharacter gc : riders) {
-            horses.put(gc, generateNonPony());
-        }
+        MyLists.forEach(riders, (GameCharacter gc) -> horses.put(gc, generateNonPony()));
         riders.add(MyRandom.randInt(riders.size()), chosenRider);
         waitForReturnSilently();
         SubView prevSubView = model.getSubView();

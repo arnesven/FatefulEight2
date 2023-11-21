@@ -7,6 +7,7 @@ import model.items.weapons.BluntWeapon;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.Weapon;
 import model.map.UrbanLocation;
+import util.MyLists;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,9 +43,8 @@ public class GiveStaffTask extends SummonTask {
                         "Why don't we take that tour of the castle now? There is so much to see and tell!");
                 println("Each party member gains 50 experience!");
                 model.getLog().waitForAnimationToFinish();
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    model.getParty().giveXP(model, gc, 50);
-                }
+                MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                    model.getParty().giveXP(model, gc, 50));
             } else {
                 printQuote(location.getLordName(), "Oh, my poor old bones...");
             }

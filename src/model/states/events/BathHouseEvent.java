@@ -15,6 +15,7 @@ import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.ShopState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.MansionTheme;
 import view.subviews.PortraitSubView;
@@ -296,9 +297,7 @@ public class BathHouseEvent extends DailyEventState {
     private void restoreParty(Model model, List<GameCharacter> bathers) {
         if (!allDead(bathers)) {
             println("Since you are done at the bath house, you change back into your normal clothing again.");
-            for (GameCharacter gc : bathers) {
-                gc.removeSpecificClothing();
-            }
+            MyLists.forEach(bathers, GameCharacter::removeSpecificClothing);
         }
         model.getParty().unbenchAll();
         if (oldLeader != null) {

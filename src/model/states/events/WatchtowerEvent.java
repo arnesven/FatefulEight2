@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.states.DailyEventState;
+import util.MyLists;
 
 import java.util.List;
 
@@ -25,8 +26,7 @@ public class WatchtowerEvent extends DailyEventState {
                 "A good place for contemplation and meditation.",
                 "A peacful place."));
         println("Each party member gains 25 XP!");
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            model.getParty().giveXP(model, gc, 25);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+            model.getParty().giveXP(model, gc, 25));
     }
 }

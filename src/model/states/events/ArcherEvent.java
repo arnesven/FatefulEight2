@@ -10,6 +10,7 @@ import model.items.accessories.EmeraldRing;
 import model.items.clothing.StuddedJerkin;
 import model.items.weapons.CompositeBow;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -45,9 +46,8 @@ public class ArcherEvent extends DarkDeedsEvent {
         if (withIntro) {
             println("The archer gladly gives all who will listen a free lesson in marksmanship.");
             println("Each party member gains 10 experience.");
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                model.getParty().giveXP(model, gc, 10);
-            }
+            MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                model.getParty().giveXP(model, gc, 10));
         }
         print("The archer offers to train you in the ways of being a Marksman, ");
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.MAR);

@@ -7,6 +7,7 @@ import model.characters.*;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.RecruitSubView;
@@ -57,9 +58,8 @@ public class RecruitState extends GameState {
         }
         partyLevel /= getModel().getParty().size();
         partyLevel = Math.ceil(partyLevel);
-        for (GameCharacter gc : recruitables) {
-            gc.setLevel(MyRandom.randInt(1, (int)partyLevel));
-        }
+        double finalPartyLevel = partyLevel;
+        MyLists.forEach(recruitables, (GameCharacter gc) -> gc.setLevel(MyRandom.randInt(1, (int) finalPartyLevel)));
     }
 
     @Override
@@ -145,9 +145,7 @@ public class RecruitState extends GameState {
     }
 
     private void setRandomClasses(List<GameCharacter> recruitables) {
-        for (GameCharacter gc : recruitables) {
-            gc.setRandomStartingClass();
-        }
+        MyLists.forEach(recruitables, GameCharacter::setRandomStartingClass);
     }
 
     private MyPair<Integer, String> rollOnRecruitTable(Model model) {

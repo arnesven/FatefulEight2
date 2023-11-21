@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -98,11 +99,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
     }
 
     private List<Enemy> transformToEnemies(List<GameCharacter> separtists) {
-        List<Enemy> enemies = new ArrayList<>();
-        for (GameCharacter gc : separtists) {
-            enemies.add(new FormerPartyMemberEnemy(gc));
-        }
-        return enemies;
+        return MyLists.transform(separtists, FormerPartyMemberEnemy::new);
     }
 
     private void sayGoodbye(Model model, GameCharacter gc) {

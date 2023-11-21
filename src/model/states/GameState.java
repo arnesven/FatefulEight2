@@ -12,6 +12,7 @@ import model.enemies.ElfEnemy;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
 import model.races.Race;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.LogView;
@@ -141,9 +142,8 @@ public abstract class GameState {
     }
 
     protected void stepToNextDay(Model model) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.conditionsEndOfDayTrigger(model, this);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(),
+                (GameCharacter gc) -> gc.conditionsEndOfDayTrigger(model, this));
         model.incrementDay();
     }
 

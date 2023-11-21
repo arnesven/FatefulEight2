@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.DailyEventState;
+import util.MyLists;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
@@ -39,9 +40,9 @@ public class MushroomsEvent extends DailyEventState {
                         died.add(gc);
                     }
                 }
-                for (GameCharacter gc : died) {
-                    RiverEvent.characterDies(model, this, gc, " died from food poisoning.", true);
-                }
+                MyLists.forEach(died, (GameCharacter gc) ->
+                    RiverEvent.characterDies(model, this, gc,
+                            " died from food poisoning.", true));
             }
         } else {
             model.getParty().randomPartyMemberSay(model, List.of("Aww, my stomach is growling..."));

@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.map.CastleLocation;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.TournamentSubView;
@@ -74,9 +75,7 @@ public class BetOnTournamentEvent extends TournamentEvent  {
             model.getLog().waitForAnimationToFinish();
             tournamentViewMenu(model, current, i<3?winners:current);
             if (i == 3 || i == 5) {
-                for (GameCharacter gc : current) {
-                    gc.addToHP(MyRandom.randInt(1, 5));
-                }
+                MyLists.forEach(current, (GameCharacter gc) -> gc.addToHP(MyRandom.randInt(1, 5)));
                 fighters = new ArrayList<>(current);
                 winners.clear();
             }
@@ -212,9 +211,9 @@ public class BetOnTournamentEvent extends TournamentEvent  {
         for (GameCharacter fighter : fighters) {
             sum += super.calculateFighterStrength(fighter);
         }
-        for (GameCharacter fighter : fighters) {
-            result.put(fighter, new TournamentOdds(super.calculateFighterStrength(fighter), sum));
-        }
+        int finalSum = sum;
+        MyLists.forEach(fighters, (GameCharacter fighter) ->
+            result.put(fighter, new TournamentOdds(super.calculateFighterStrength(fighter), finalSum)));
         return result;
     }
 

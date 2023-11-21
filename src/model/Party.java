@@ -16,6 +16,7 @@ import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
+import util.MyLists;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyRandom;

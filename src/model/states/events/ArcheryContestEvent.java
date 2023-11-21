@@ -12,6 +12,7 @@ import model.items.weapons.*;
 import model.map.CastleLocation;
 import model.races.Race;
 import model.states.*;
+import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.sprites.Sprite;
@@ -426,9 +427,8 @@ public class ArcheryContestEvent extends TournamentEvent {
         result.add(new GameCharacter("Esmeralda", "Vix", Race.DARK_ELF, Classes.THF,
                 PortraitSubView.makeRandomPortrait(Classes.THF, Race.DARK_ELF, true), noClasses, randomBow()));
         int lvl = (int)Math.round(GameState.calculateAverageLevel(model));
-        for (GameCharacter chara : result) {
-            chara.setLevel(Math.max(1, lvl + MyRandom.randInt(3) - 1));
-        }
+        MyLists.forEach(result, (GameCharacter chara) ->
+            chara.setLevel(Math.max(1, lvl + MyRandom.randInt(3) - 1)));
         return result;
     }
 
@@ -451,9 +451,8 @@ public class ArcheryContestEvent extends TournamentEvent {
 
     private Map<GameCharacter, Sprite> makeFletchings(List<GameCharacter> contestants) {
         Map<GameCharacter, Sprite> fletchings = new HashMap<>();
-        for (GameCharacter gc : contestants) {
-            fletchings.put(gc, AimingSubView.makeArrowSprite());
-        }
+        MyLists.forEach(contestants, (GameCharacter gc) ->
+            fletchings.put(gc, AimingSubView.makeArrowSprite()));
         return fletchings;
     }
 }

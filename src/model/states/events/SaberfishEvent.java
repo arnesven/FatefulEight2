@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.List;
@@ -22,9 +23,7 @@ public class SaberfishEvent extends RiverEvent {
     protected void doRiverEvent(Model model) {
         println("The party wades out into the shallows, vicious fish start " +
                 "nipping at their legs!");
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.addToHP(-1);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToHP(-1));
         removeKilledPartyMembers(model, false);
         model.getParty().randomPartyMemberSay(model, List.of("Ouch!#", "Damn fishies!#", "Stop eating me!#",
                 "I though fish were vegetarians.", "Hey! that hurt..."));

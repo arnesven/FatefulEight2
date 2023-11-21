@@ -10,6 +10,7 @@ import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.ShopState;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 
@@ -184,9 +185,8 @@ public class DwarvenCityEvent extends DailyEventState {
             } else if (d10Roll < 7) {
                 println("The king gladly takes you on a tour of the city and you learn much about its culture and history.");
                 println("Each party member gains 20 experience.");
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    model.getParty().giveXP(model, gc, 20);
-                }
+                MyLists.forEach(model.getParty().getPartyMembers(),
+                        (GameCharacter gc) -> model.getParty().giveXP(model, gc, 20));
             } else if (d10Roll < 9) {
                 println("The king is happy to receive the party and offers a gift of some rare crafting materials.");
                 println("The party gains 15 materials.");

@@ -8,6 +8,7 @@ import model.enemies.Enemy;
 import model.enemies.HermitEnemy;
 import model.races.Race;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.MountainCombatTheme;
 import view.subviews.PortraitSubView;
@@ -54,9 +55,8 @@ public class HermitEvent extends DarkDeedsEvent {
             println("The Hermit just nods and grunts while he consumes one of your rations.");
         } else {
             println("After consuming one of your rations, the Hermit tells you a fantastic story. Each character gains 15 experience.");
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                model.getParty().giveXP(model, gc, 15);
-            }
+            MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                model.getParty().giveXP(model, gc, 15));
         }
         return true;
     }

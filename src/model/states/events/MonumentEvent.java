@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.states.DailyEventState;
+import util.MyLists;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
@@ -28,8 +29,7 @@ public class MonumentEvent extends DailyEventState {
         }
         println("Each party member gains 25 experience!");
         model.getLog().waitForAnimationToFinish();
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            model.getParty().giveXP(model, gc, 25);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+            model.getParty().giveXP(model, gc, 25));
     }
 }

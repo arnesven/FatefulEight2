@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.map.World;
 import model.states.RunAwayState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.MapSubView;
 
@@ -28,9 +29,7 @@ public class RapidsEvent extends RiverEvent {
                 "rapids which bang them up nicely.");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                 List.of("Hang on gang!", "This might get rough!", "Waaaah!#"));
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.addToHP(-2);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToHP(-2));
         removeKilledPartyMembers(model, false);
         println("Press enter to continue.");
         waitForReturn();

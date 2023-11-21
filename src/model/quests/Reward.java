@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
+import util.MyLists;
 
 import java.io.Serializable;
 
@@ -33,9 +34,7 @@ public class Reward implements Serializable {
         Party party = model.getParty();
         party.addToGold(gold);
         party.addToReputation(rep);
-        for (GameCharacter gc : party.getPartyMembers()) {
-            party.giveXP(model, gc, exp);
-        }
+        MyLists.forEach(party.getPartyMembers(), (GameCharacter gc) -> party.giveXP(model, gc, exp));
     }
 
     public String getDescription() {

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -71,9 +72,8 @@ public class HealingRitualEvent extends RitualEvent {
             healParty(model);
             portraitSay("Thank you so much for helping us with this problem.");
             println("Each party member gains " + 50*power + " XP!");
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                model.getParty().giveXP(model, gc, 50*power);
-            }
+            MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                model.getParty().giveXP(model, gc, 50*power));
             println("You leave the little village.");
         } else {
             println("The priest seems disappointed.");

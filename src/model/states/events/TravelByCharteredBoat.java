@@ -10,6 +10,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.RunAwayState;
 import model.states.TravelBySeaState;
+import util.MyLists;
 import util.MyRandom;
 import view.sprites.Sprite;
 import view.subviews.MapSubView;
@@ -71,9 +72,7 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
 
     private GameState setAdrift(Model model) {
         println("Your party escapes onto makeshift rafts and are set adrift on the surf.");
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            gc.addToSP(-100);
-        }
+        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(-100));
         while (model.getCurrentHex() instanceof SeaHex) {
             new DriftingAtSeaState(model).run(model);
         }
