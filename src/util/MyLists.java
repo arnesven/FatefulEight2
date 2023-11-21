@@ -69,4 +69,13 @@ public class MyLists {
         }
         return result;
     }
+
+    public static <E> E find(List<E> source, Predicate<E> pred) {
+        for (E e : source) {
+            if (pred.test(e)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }

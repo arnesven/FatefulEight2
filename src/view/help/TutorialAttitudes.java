@@ -18,7 +18,7 @@ public class TutorialAttitudes extends HelpDialog {
                 "*The outcome of Quests\n" +
                 "*When a character starves\n" +
                 "*When a character uses a potion\n or spell on another character\n" +
-                "*Various events\n" +
+                "*Paying a character's wages\n" +
             "\n" +
             "It is important to keep the party positively disposed toward the party leader. If a character starts to dislike the party " +
             "leader too much, she may consider leaving the party.\n\n" +
