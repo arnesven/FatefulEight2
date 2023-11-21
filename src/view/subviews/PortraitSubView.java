@@ -110,7 +110,7 @@ public class PortraitSubView extends SubView {
     }
 
     private static boolean isBeardyMouth(int mouthIndex) {
-        return mouthIndex == 4 || mouthIndex == 5 || mouthIndex == 12 || mouthIndex == 13 || mouthIndex == 14;
+        return mouthIndex == 4 || mouthIndex == 5 || mouthIndex >= 12;
     }
 
     @Override
