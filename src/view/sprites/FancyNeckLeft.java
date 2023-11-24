@@ -1,11 +1,14 @@
 package view.sprites;
 
-import model.races.Race;
 import view.MyColors;
 
 public class FancyNeckLeft extends FaceAndClothesSprite {
-    public FancyNeckLeft(MyColors color1, MyColors color2, Race race) {
-        super(0xA2 + (race.isSkeleton() ? 0x100 : race.isThickNeck() ? 0xE0 : 0), color1);
+    public FancyNeckLeft(int num, MyColors color1, MyColors color2) {
+        super(num, color1);
         setColor3(color2);
     }
+
+    // Skeleton : 0x1A2
+    // Normal: 0x182
+    // Slender: 0xA2
 }

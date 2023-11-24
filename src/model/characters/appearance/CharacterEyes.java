@@ -7,7 +7,8 @@ public class CharacterEyes implements Serializable {
             new CharacterEyes(1), new CharacterEyes(0), new CharacterEyes(2, 3),
             new CharacterEyes(4, 5), new CharacterEyes(6, 7), new CharacterEyes(8, 9),
             new CharacterEyes(0xA, 0xB), new CharacterEyes(0xC, 0xD),
-            new CharacterEyes(0xE, 0xF), new CharacterEyes(0x1A0, 0x1A1), new CharacterEyes(0x1A2, 0x1A3)};
+            new CharacterEyes(0xE, 0xF),
+            new CharacterEyes(0x1A5, 0x1A6), new CharacterEyes(0x1A7, 0x1A8)};
 
     private final int eye;
     private final boolean symmetric;

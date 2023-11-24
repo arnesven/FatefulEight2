@@ -1,5 +1,7 @@
 package model.races;
 
+import model.characters.appearance.ThickNeck;
+import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.FaceSprite;

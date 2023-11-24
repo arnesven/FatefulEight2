@@ -1,6 +1,8 @@
 package model.races;
 
 import model.characters.appearance.CharacterEyes;
+import model.characters.appearance.SkeletonNeck;
+import model.characters.appearance.TorsoNeck;
 import view.MyColors;
 import view.sprites.FaceSprite;
 import view.sprites.PortraitSprite;
@@ -28,4 +30,8 @@ public class SkeletonRace extends Race {
         return true;
     }
 
+    @Override
+    public TorsoNeck makeNeck() {
+        return new SkeletonNeck();
+    }
 }

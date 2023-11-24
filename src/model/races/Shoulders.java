@@ -27,6 +27,8 @@ public abstract class Shoulders implements Serializable {
     public static final PortraitSprite RIBS_RIGHT = new FaceAndClothesSprite(0x1AD, MyColors.CYAN);
     private static final PortraitSprite LR_CORNER = new FaceAndClothesSprite(0x1AE, MyColors.CYAN);
 
+
+
     public abstract void makeNaked(PortraitSprite[][] grid);
 
     public PortraitSprite makeLeftTopSprite(MyColors color) {

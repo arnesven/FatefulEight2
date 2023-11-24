@@ -1,9 +1,12 @@
 package model.races;
 
+import model.characters.appearance.NormalNeck;
+import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
+import view.sprites.Neck;
 import view.sprites.PortraitSprite;
 
 import java.io.Serializable;
@@ -116,10 +119,6 @@ public abstract class Race implements Serializable {
         return new NormalShoulders();
     }
 
-    public boolean isThickNeck() {
-        return true;
-    }
-
     public boolean isSkeleton() {
         return false;
     }
@@ -130,5 +129,9 @@ public abstract class Race implements Serializable {
 
     public MyColors getMouthDefaultColor() {
         return MyColors.DARK_RED;
+    }
+
+    public TorsoNeck makeNeck() {
+        return new NormalNeck();
     }
 }

@@ -1,5 +1,7 @@
 package model.races;
 
+import model.characters.appearance.ThickNeck;
+import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.PortraitSprite;
@@ -31,6 +33,11 @@ public class Dwarf extends Race {
 
     @Override
     public Shoulders makeShoulders(boolean gender) {
-        return new BroadShoulders();
+        return new HunkyShoulders();
+    }
+
+    @Override
+    public TorsoNeck makeNeck() {
+        return new ThickNeck();
     }
 }

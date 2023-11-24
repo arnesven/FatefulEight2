@@ -12,13 +12,6 @@ import java.util.List;
 
 public abstract class CharacterAppearance implements Serializable {
 
-    private final PortraitSprite NECK_1 = new NakedFaceAndClothesSprite(0x90);
-    private final PortraitSprite NECK_LEFT = new NakedFaceAndClothesSprite(0xA0);
-    private final PortraitSprite NECK_RIGHT = new NakedFaceAndClothesSprite(0xB0);
-
-    private final PortraitSprite NECK_LEFT_THICK = new NakedFaceAndClothesSprite(0x180);
-    private final PortraitSprite NECK_RIGHT_THICK = new NakedFaceAndClothesSprite(0x190);
-
     private final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
 
     private static Sprite hairSprite = new Sprite32x32("standardhair", "hair.png",0x0,
@@ -30,8 +23,9 @@ public abstract class CharacterAppearance implements Serializable {
     private MyColors mascaraColor;
     private MyColors lipColor;
     private final boolean femaleGender;
-    private final Shoulders shoulders;
+    private Shoulders shoulders;
     private final TorsoChest chest;
+    private TorsoNeck neck;
 
     private PortraitSprite[][] grid;
 
@@ -42,6 +36,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.lipColor = race.getMouthDefaultColor();
         this.femaleGender = femaleGender;
         shoulders = race.makeShoulders(femaleGender);
+        neck = race.makeNeck();
         if (femaleGender) {
             this.chest = new FemaleChest();
         } else {
@@ -96,10 +91,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.grid[6][4] = PortraitSprite.FRAME_RIGHT;
 
         shoulders.makeNaked(grid);
-
-        grid[2][5] = race.isThickNeck() ? NECK_LEFT_THICK : NECK_LEFT;
-        grid[3][5] = NECK_1;
-        grid[4][5] = race.isThickNeck() ? NECK_RIGHT_THICK : NECK_RIGHT;
+        neck.makeNaked(grid);
 
         grid[2][6] = FILLED_BLOCK_CLOTHES;
         grid[3][6] = chest.makeNakedSprite();
@@ -366,5 +358,17 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void setLipColor(MyColors myColors) {
         this.lipColor = myColors;
+    }
+
+    public void setShoulders(Shoulders newShoulders) {
+        this.shoulders = newShoulders;
+    }
+
+    public TorsoNeck getNeck() {
+        return neck;
+    }
+
+    public void setNeck(TorsoNeck neck) {
+        this.neck = neck;
     }
 }

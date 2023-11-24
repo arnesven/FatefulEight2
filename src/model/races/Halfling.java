@@ -1,5 +1,7 @@
 package model.races;
 
+import model.characters.appearance.SlenderNeck;
+import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
@@ -36,7 +38,7 @@ public class Halfling extends Race {
     }
 
     @Override
-    public boolean isThickNeck() {
-        return false;
+    public TorsoNeck makeNeck() {
+        return new SlenderNeck();
     }
 }
