@@ -32,7 +32,8 @@ public class Beard implements Serializable {
             new Beard(0xE, 0x00, false),
             new Beard(0xF, 0x00, false),
             new NarrowBeard(MyColors.BLACK),
-            new ScruffyBeard(MyColors.BLACK)
+            new ScruffyBeard(MyColors.BLACK),
+            new ShaggyBeard(MyColors.BLACK)
     };
 
     private final boolean isTrueBeard;
