@@ -253,7 +253,7 @@ public class CharacterCreationView extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 3, 0),
                 new InputFieldContent(xStart + COLUMN_SKIP, yStart + 5, 1),
-                new SelectableListContent(xStart + 3, yStart + 6, (showSkeleton?"Hide":"Show") + " Skeleton") {
+                new SelectableListContent(xStart + 3, yStart + 7, (showSkeleton?"Hide":"Show") + " Skeleton") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         showSkeleton = !showSkeleton;
@@ -405,13 +405,13 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 27, accessorySet[accessory].getName()) {
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 28, accessorySet[accessory].getName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 28, detailColorSet[selectedDetailColor].toString().replace("_", " ")) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 29, detailColorSet[selectedDetailColor].toString().replace("_", " ")) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedDetailColor = Arithmetics.decrementWithWrap(selectedDetailColor, detailColorSet.length);
