@@ -10,8 +10,15 @@ public class SlenderShoulders extends Shoulders {
     private final PortraitSprite SLENDER_SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x4F);
     private final PortraitSprite SLENDER_SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x5F);
     private final PortraitSprite SLENDER_SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x6F);
-    private final PortraitSprite SLENDER_ARM_LEFT = new NakedClothesSprite(0xF1);
-    private final PortraitSprite SLENDER_ARM_RIGHT = new NakedClothesSprite(0xF2);
+    private final PortraitSprite BUSTY_SLENDER_ARM_LEFT = new NakedClothesSprite(0xF1);
+    private final PortraitSprite BUSTY_SLENDER_ARM_RIGHT = new NakedClothesSprite(0xF2);
+    private final PortraitSprite SLENDER_ARM_LEFT = new NakedClothesSprite(0x10E);
+    private final PortraitSprite SLENDER_ARM_RIGHT = new NakedClothesSprite(0x10F);
+    private final boolean gender;
+
+    public SlenderShoulders(boolean gender) {
+        this.gender = gender;
+    }
 
     @Override
     public void makeNaked(PortraitSprite[][] grid) {
@@ -20,9 +27,14 @@ public class SlenderShoulders extends Shoulders {
         grid[0][6] = SLENDER_SHOULDER_LEFT_BOTTOM;
         grid[6][6] = SLENDER_SHOULDER_RIGHT_BOTTOM;
         grid[1][5] = SHOULDER_TOP;
-        grid[1][6] = SLENDER_ARM_LEFT;
         grid[5][5] = SHOULDER_TOP;
-        grid[5][6] = SLENDER_ARM_RIGHT;
+        if (gender) {
+            grid[1][6] = BUSTY_SLENDER_ARM_LEFT;
+            grid[5][6] = BUSTY_SLENDER_ARM_RIGHT;
+        } else {
+            grid[1][6] = SLENDER_ARM_LEFT;
+            grid[5][6] = SLENDER_ARM_RIGHT;
+        }
     }
 
 
@@ -46,11 +58,17 @@ public class SlenderShoulders extends Shoulders {
     }
 
     public PortraitSprite makeInnerLeftBottomSprite(MyColors color) {
-        return new ClothesSprite(0xF1, color);
+        if (gender) {
+            return new ClothesSprite(0xF1, color);
+        }
+        return new ClothesSprite(0x10E, color);
     }
 
     public PortraitSprite makeInnerRightBottomSprite(MyColors color) {
-        return new ClothesSprite(0xF2, color);
+        if (gender) {
+            return new ClothesSprite(0xF2, color);
+        }
+        return new ClothesSprite(0x10F, color);
     }
 
     @Override

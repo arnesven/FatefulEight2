@@ -11,5 +11,6 @@ public class LianaClearwater extends AdvancedAppearance {
                 CharacterCreationView.noseSet[9], CharacterEyes.allEyes[6], HairStyle.allHairStyles[26], Beard.allBeards[11]);
         setFaceDetail(new EarringsDetail());
         setDetailColor(MyColors.CYAN);
+        setMascaraColor(MyColors.LIGHT_RED);
     }
 }

@@ -13,5 +13,7 @@ public class PuyetGrantham extends AdvancedAppearance {
                 new HairStyle3x2(0x9, true, true, true, true, 0x06, 0x07), null);
         setFaceDetail(new EyePatchDetail());
         setDetailColor(MyColors.BLACK);
+        setLipColor(MyColors.DARK_RED);
+        setMascaraColor(MyColors.LIGHT_BLUE);
     }
 }

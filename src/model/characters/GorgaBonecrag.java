@@ -11,6 +11,7 @@ public class GorgaBonecrag extends AdvancedAppearance {
     public GorgaBonecrag() {
         super(Race.HALF_ORC, true, MyColors.DARK_GRAY, 7, 8, new CharacterEyes(1),
                 new HairStyle3x2(0x9D, false, 0x18), null);
+        setMascaraColor(MyColors.CYAN);
     }
 
     @Override

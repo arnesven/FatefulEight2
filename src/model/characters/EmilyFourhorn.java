@@ -11,5 +11,6 @@ public class EmilyFourhorn extends AdvancedAppearance {
                 CharacterCreationView.noseSet[2], CharacterEyes.allEyes[8], HairStyle.allHairStyles[30], Beard.allBeards[0]);
         setFaceDetail(new EarringsDetail());
         setDetailColor(MyColors.ORANGE);
+        setMascaraColor(MyColors.LIGHT_GRAY);
     }
 }

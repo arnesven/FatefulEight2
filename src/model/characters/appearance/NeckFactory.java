@@ -1,7 +1,7 @@
 package model.characters.appearance;
 
 public class NeckFactory {
-    public static String[] neckNames = new String[]{"Race Default", "Normal", "Slender", "Thick", "Skeleton"};
+    public static String[] neckNames = new String[]{"Race Default", "Normal", "Slender", "Thick"};
 
     public static TorsoNeck makeNeck(String key) {
         for (int i = 0; i < neckNames.length; ++i) {
@@ -15,9 +15,6 @@ public class NeckFactory {
                         return new SlenderNeck();
                     case 3:
                         return new ThickNeck();
-                    case 4:
-                        return new SkeletonNeck();
-
                 }
             }
         }

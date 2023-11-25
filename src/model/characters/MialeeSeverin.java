@@ -12,6 +12,7 @@ public class MialeeSeverin extends AdvancedAppearance {
                 2, 3, new CharacterEyes(2, 3),
                 new ExplicitHairStyle(true, 0x04, 0xEF, 0x14, 0x05, 0xFC, 0x15, 0x10, 0x00),
                 new Beard(2, 0x00));
+        setLipColor(MyColors.DARK_BLUE);
     }
 
     @Override

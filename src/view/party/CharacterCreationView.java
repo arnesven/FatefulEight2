@@ -72,6 +72,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedLipColor = 0;
     private int selectedShoulders = 0;
     private int selectedNeck = 0;
+    private boolean showSkeleton = false;
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
     private boolean canceled = false;
@@ -98,6 +99,9 @@ public class CharacterCreationView extends SelectableListMenu {
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);
+        if (showSkeleton) {
+            app = new SkeletonAppearance(app.getShoulders(), app.getGender());
+        }
         app.setRaceSpecificEars(selectedEars == 0);
         app.setEars(earSet[selectedEars]);
         app.setFaceDetail(accessorySet[accessory]);
@@ -109,7 +113,7 @@ public class CharacterCreationView extends SelectableListMenu {
             app.setLipColor(makeupColorSet[selectedLipColor]);
         }
         if (selectedShoulders > 0) {
-            app.setShoulders(ShouldersFactory.makeShoulders(shoulderSet[selectedShoulders]));
+            app.setShoulders(ShouldersFactory.makeShoulders(shoulderSet[selectedShoulders], gender));
         }
         if (selectedNeck > 0) {
             app.setNeck(NeckFactory.makeNeck(neckSet[selectedNeck]));
@@ -168,7 +172,7 @@ public class CharacterCreationView extends SelectableListMenu {
                 String[] labels = new String[]{"First Name", "", "Last Name", "", "", "",
                         "Gender", "", "Race", "", "", "",
                         "Eyes", "Mascara", "Nose",
-                        "Mouth", "Lipstick", "Ears", "Beard", "Shoulders", "Neck", "",
+                        "Mouth", "Lipstick", "Beard", "Ears", "Shoulders", "Neck", "",
                         "Hair", "  Color", "", "Detail", "  Color", "", "", "",
                         "Class", "", "Other Class 1", "",
                         "Other Class 2", "", "Other Class 3"};
@@ -249,6 +253,13 @@ public class CharacterCreationView extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 3, 0),
                 new InputFieldContent(xStart + COLUMN_SKIP, yStart + 5, 1),
+                new SelectableListContent(xStart + 3, yStart + 6, (showSkeleton?"Hide":"Show") + " Skeleton") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        showSkeleton = !showSkeleton;
+                        rebuildAppearance();
+                    }
+                },
                 new SelectableListContent(xStart + COLUMN_SKIP, yStart + 9, gender ? "Female" : "Male") {
                     @Override
                     public void performAction(Model model, int x, int y) {
@@ -328,18 +339,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedLipColor = Arithmetics.incrementWithWrap(selectedLipColor, makeupColorSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 20, earSet[selectedEars].getName()) {
-                    @Override
-                    public void turnLeft(Model model) {
-                        selectedEars = Arithmetics.decrementWithWrap(selectedEars, earSet.length);
-                    }
-
-                    @Override
-                    public void turnRight(Model model) {
-                        selectedEars = Arithmetics.incrementWithWrap(selectedEars, earSet.length);
-                    }
-                },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 21, "Beard #" + (selectedBeard + 1)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 20, "Beard #" + (selectedBeard + 1)) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedBeard = Arithmetics.decrementWithWrap(selectedBeard, beardSet.length);
@@ -348,6 +348,17 @@ public class CharacterCreationView extends SelectableListMenu {
                     @Override
                     public void turnRight(Model model) {
                         selectedBeard = Arithmetics.incrementWithWrap(selectedBeard, beardSet.length);
+                    }
+                },
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 21, earSet[selectedEars].getName()) {
+                    @Override
+                    public void turnLeft(Model model) {
+                        selectedEars = Arithmetics.decrementWithWrap(selectedEars, earSet.length);
+                    }
+
+                    @Override
+                    public void turnRight(Model model) {
+                        selectedEars = Arithmetics.incrementWithWrap(selectedEars, earSet.length);
                     }
                 },
                 new CarouselListContent(xStart + COLUMN_SKIP, yStart + 22, shoulderSet[selectedShoulders]) {
