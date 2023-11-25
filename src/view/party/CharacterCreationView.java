@@ -59,7 +59,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private int selectedNose = 0;
     private int selectedEyes = 0;
     private int selectedBeard = 0;
-    private int selectedHairColor = 0;
+    private int selectedHairColor = 1;
     private int selectedHairStyle = 0;
     private int selectedClass = 0;
     private int other1 = 0;
@@ -171,7 +171,7 @@ public class CharacterCreationView extends SelectableListMenu {
                 y++;
                 String[] labels = new String[]{"First Name", "", "Last Name", "", "", "",
                         "Gender", "", "Race", "", "", "",
-                        "Eyes", "Mascara", "Nose",
+                        "Eyes", "Eye Shadow", "Nose",
                         "Mouth", "Lipstick", "Beard", "Ears", "Shoulders", "Neck", "",
                         "Hair", "  Color", "", "Detail", "  Color", "", "", "",
                         "Class", "", "Other Class 1", "",
