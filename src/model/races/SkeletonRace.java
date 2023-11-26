@@ -31,7 +31,7 @@ public class SkeletonRace extends Race {
     }
 
     @Override
-    public TorsoNeck makeNeck() {
+    public TorsoNeck makeNeck(boolean gender) {
         return new SkeletonNeck();
     }
 }

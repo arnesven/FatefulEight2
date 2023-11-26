@@ -36,7 +36,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.lipColor = race.getMouthDefaultColor();
         this.femaleGender = femaleGender;
         shoulders = race.makeShoulders(femaleGender);
-        neck = race.makeNeck();
+        neck = race.makeNeck(femaleGender);
         if (femaleGender) {
             this.chest = new FemaleChest();
         } else {

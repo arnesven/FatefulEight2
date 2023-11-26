@@ -4,7 +4,6 @@ import model.characters.appearance.ThickNeck;
 import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
 import view.MyColors;
-import view.sprites.FaceSprite;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.PortraitSprite;
 
@@ -36,6 +35,14 @@ public class HalfOrc extends Race {
             return new NormalShoulders();
         }
         return new BroadShoulders();
+    }
+
+    @Override
+    public TorsoNeck makeNeck(boolean gender) {
+        if (gender) {
+            return super.makeNeck(gender);
+        }
+        return new ThickNeck();
     }
 
     @Override

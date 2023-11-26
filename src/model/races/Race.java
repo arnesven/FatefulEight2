@@ -131,7 +131,7 @@ public abstract class Race implements Serializable {
         return MyColors.DARK_RED;
     }
 
-    public TorsoNeck makeNeck() {
+    public TorsoNeck makeNeck(boolean gender) {
         return new NormalNeck();
     }
 }
