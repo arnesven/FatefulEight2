@@ -1,5 +1,6 @@
 package model.characters.appearance;
 
+import model.races.Race;
 import model.races.Shoulders;
 import model.races.SkeletonRace;
 import view.MyColors;
@@ -55,4 +56,7 @@ public class SkeletonAppearance extends AdvancedAppearance {
     protected void specialization() {
         innerShoulders.makeSkeleton(this);
     }
+
+    @Override
+    public void applyDetail(Race race, boolean coversEars) { }
 }

@@ -116,7 +116,7 @@ public abstract class Race implements Serializable {
         if (gender) {
             return new SlenderShoulders(true);
         }
-        return new NormalShoulders();
+        return new NormalShoulders(gender);
     }
 
     public boolean isSkeleton() {

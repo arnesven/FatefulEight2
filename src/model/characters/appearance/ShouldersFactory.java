@@ -12,15 +12,15 @@ public class ShouldersFactory {
                     case 0:
                         return null;
                     case 1:
-                        return new NormalShoulders();
+                        return new NormalShoulders(gender);
                     case 2:
-                        return new BroadShoulders();
+                        return new BroadShoulders(gender);
                     case 3:
                         return new SlenderShoulders(gender);
                     case 4:
                         return new NarrowShoulders(gender);
                     case 5:
-                        return new HunkyShoulders();
+                        return new HunkyShoulders(gender);
                 }
             }
         }

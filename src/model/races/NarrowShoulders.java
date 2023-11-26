@@ -20,6 +20,7 @@ public class NarrowShoulders extends Shoulders {
     private final boolean busty;
 
     public NarrowShoulders(boolean busty) {
+        super(busty);
         this.busty = busty;
     }
 

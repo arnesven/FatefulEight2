@@ -16,18 +16,15 @@ public class BroadShoulders extends Shoulders {
     private static final PortraitSprite BROAD_LR_CORNER = new FaceAndClothesSprite(0x19D, MyColors.CYAN);
     private static final PortraitSprite BROAD_LL_CORNER = new FaceAndClothesSprite(0x1BA, MyColors.CYAN);
 
+    public BroadShoulders(boolean gender) {
+        super(gender);
+    }
+
     @Override
     public void makeNaked(PortraitSprite[][] grid) {
+        super.makeNaked(grid);
         grid[0][5] = BROAD_SHOULDER_LEFT_TOP;
         grid[6][5] = BROAD_SHOULDER_RIGHT_TOP;
-
-        grid[0][6] = SHOULDER_LEFT_BOTTOM;
-        grid[6][6] = SHOULDER_RIGHT_BOTTOM;
-
-        grid[1][5] = SHOULDER_TOP;
-        grid[1][6] = FILLED_BLOCK_CLOTHES;
-        grid[5][5] = SHOULDER_TOP;
-        grid[5][6] = FILLED_BLOCK_CLOTHES;
     }
 
     public PortraitSprite makeLeftTopSprite(MyColors color) {

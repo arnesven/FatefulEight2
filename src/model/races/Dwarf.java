@@ -33,7 +33,7 @@ public class Dwarf extends Race {
 
     @Override
     public Shoulders makeShoulders(boolean gender) {
-        return new HunkyShoulders();
+        return new HunkyShoulders(gender);
     }
 
     @Override

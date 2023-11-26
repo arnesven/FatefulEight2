@@ -160,6 +160,9 @@ public abstract class Looks {
         }
         characterAppearance.getShoulders().putOnHideRight(characterAppearance, clothingColor);
         characterAppearance.setSprite(4, 6, new FaceAndClothesSprite(0xF7, clothingColor));
+        if (!characterAppearance.getGender()) {
+            characterAppearance.getSprite(5, 6).setColor4(characterAppearance.getRace().getColor());
+        }
     }
 
     public static void putOnHideLeft(CharacterAppearance characterAppearance, MyColors clothingColor) {
@@ -168,6 +171,9 @@ public abstract class Looks {
         }
         characterAppearance.getShoulders().putOnHideLeft(characterAppearance, clothingColor);
         characterAppearance.setSprite(2, 6, new FaceAndClothesSprite(0xD9, clothingColor));
+        if (!characterAppearance.getGender()) {
+            characterAppearance.getSprite(1, 6).setColor4(characterAppearance.getRace().getColor());
+        }
     }
 
     public static void putOnFancyDress(CharacterAppearance characterAppearance, MyColors baseColor, MyColors detailColor) {

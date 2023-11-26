@@ -9,6 +9,10 @@ public class HunkyShoulders extends BroadShoulders {
     protected final PortraitSprite SHOULDER_TOP_LEFT = new NakedClothesSprite(0x100);
     protected final PortraitSprite SHOULDER_TOP_RIGHT = new NakedClothesSprite(0x101);
 
+    public HunkyShoulders(boolean gender) {
+        super(gender);
+    }
+
     @Override
     public void makeNaked(PortraitSprite[][] grid) {
         super.makeNaked(grid);

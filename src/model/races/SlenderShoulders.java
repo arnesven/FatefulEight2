@@ -17,6 +17,7 @@ public class SlenderShoulders extends Shoulders {
     private final boolean gender;
 
     public SlenderShoulders(boolean gender) {
+        super(gender);
         this.gender = gender;
     }
 
@@ -107,5 +108,15 @@ public class SlenderShoulders extends Shoulders {
         characterAppearance.setSprite(6, 6, new ClothesSprite(0xBB, underShirtColor, armorColor));
         characterAppearance.setSprite(5, 5, new ClothesSprite(0x23, underShirtColor, armorColor));
         characterAppearance.setSprite(6, 5, new ClothesSprite(0xAB, underShirtColor, armorColor));
+    }
+
+    @Override
+    public void putOnApron(CharacterAppearance characterAppearance, MyColors apronColor, MyColors shirtColor) {
+        characterAppearance.setSprite(1, 5, new ClothesSprite(0xB6, shirtColor, apronColor));
+        characterAppearance.setSprite(5, 5, new ClothesSprite(0xB8, shirtColor, apronColor));
+        characterAppearance.setSprite(1, 6, new ClothesSprite(0xC6, shirtColor, apronColor));
+        characterAppearance.setSprite(5, 6, new ClothesSprite(0xC8, shirtColor, apronColor));
+        characterAppearance.getSprite(1, 6).setColor4(shirtColor);
+        characterAppearance.getSprite(5, 6).setColor4(shirtColor);
     }
 }

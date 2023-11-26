@@ -13,6 +13,11 @@ public abstract class Shoulders implements Serializable {
     protected final PortraitSprite FILLED_BLOCK_CLOTHES = new NakedClothesSprite(0xFF);
     protected final PortraitSprite SHOULDER_LEFT_BOTTOM = new NakedClothesSprite(0x10);
     protected final PortraitSprite SHOULDER_RIGHT_BOTTOM = new NakedClothesSprite(0x11);
+    private final PortraitSprite SHOULDER_LEFT_TOP = new NakedClothesSprite(0x00);
+    private final PortraitSprite SHOULDER_RIGHT_TOP = new NakedClothesSprite(0x01);
+
+    private final PortraitSprite BUSTY_ARM_LEFT = new NakedClothesSprite(0x10C);
+    private final PortraitSprite BUSTY_ARM_RIGHT = new NakedClothesSprite(0x10D);
 
     protected static final PortraitSprite SKELETON_SHOULDER_TOP = new FaceAndClothesSprite(0x18B, MyColors.CYAN);
     protected static final PortraitSprite NECK = new FaceAndClothesSprite(0x18C, MyColors.CYAN);
@@ -26,10 +31,30 @@ public abstract class Shoulders implements Serializable {
     public static final PortraitSprite RIBS_MIDDLE = new FaceAndClothesSprite(0x1AC, MyColors.CYAN);
     public static final PortraitSprite RIBS_RIGHT = new FaceAndClothesSprite(0x1AD, MyColors.CYAN);
     private static final PortraitSprite LR_CORNER = new FaceAndClothesSprite(0x1AE, MyColors.CYAN);
+    private final boolean gender;
 
+    public Shoulders(boolean gender) {
+        this.gender = gender;
+    }
 
+    public void makeNaked(PortraitSprite[][] grid) {
+        grid[0][5] = SHOULDER_LEFT_TOP;
+        grid[6][5] = SHOULDER_RIGHT_TOP;
 
-    public abstract void makeNaked(PortraitSprite[][] grid);
+        grid[0][6] = SHOULDER_LEFT_BOTTOM;
+        grid[6][6] = SHOULDER_RIGHT_BOTTOM;
+
+        grid[1][5] = SHOULDER_TOP;
+        grid[5][5] = SHOULDER_TOP;
+
+        if (gender) {
+            grid[1][6] = BUSTY_ARM_LEFT;
+            grid[5][6] = BUSTY_ARM_RIGHT;
+        } else {
+            grid[1][6] = FILLED_BLOCK_CLOTHES;
+            grid[5][6] = FILLED_BLOCK_CLOTHES;
+        }
+    }
 
     public PortraitSprite makeLeftTopSprite(MyColors color) {
         return new ShoulderLeftTop(color);
@@ -56,10 +81,16 @@ public abstract class Shoulders implements Serializable {
     }
 
     public PortraitSprite makeInnerLeftBottomSprite(MyColors color) {
+        if (gender) {
+            return new ClothesSprite(0x10C, color);
+        }
         return new FilledBlockClothes(color);
     }
 
     public PortraitSprite makeInnerRightBottomSprite(MyColors color) {
+        if (gender) {
+            return new ClothesSprite(0x10D, color);
+        }
         return new FilledBlockClothes(color);
     }
 
@@ -108,6 +139,10 @@ public abstract class Shoulders implements Serializable {
         characterAppearance.setSprite(5, 5, new ClothesSprite(0xB8, shirtColor, apronColor));
         characterAppearance.setSprite(1, 6, new ClothesSprite(0xC6, shirtColor, apronColor));
         characterAppearance.setSprite(5, 6, new ClothesSprite(0xC8, shirtColor, apronColor));
+        if (!characterAppearance.getGender()) {
+            characterAppearance.getSprite(1, 6).setColor4(shirtColor);
+            characterAppearance.getSprite(5, 6).setColor4(shirtColor);
+        }
     }
 
     public PortraitSprite makeFancyTopLeft(MyColors color, MyColors detailColor) {
@@ -119,10 +154,16 @@ public abstract class Shoulders implements Serializable {
     }
 
     public PortraitSprite makeFancyBottomLeft(MyColors color, MyColors detailColor) {
+        if (gender) {
+            return new ClothesSprite(0x10A, color, detailColor);
+        }
         return new FancyBottomLeftLeft(0xC2, color, detailColor);
     }
 
     public PortraitSprite makeFancyBottomRight(MyColors color, MyColors detailColor) {
+        if (gender) {
+            return new ClothesSprite(0x10B, color, detailColor);
+        }
         return new FancyBottomRightRight(0xC5, color, detailColor);
     }
 
