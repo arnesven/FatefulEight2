@@ -220,7 +220,12 @@ public abstract class CharacterAppearance implements Serializable {
         if (charClass.showFacialHair()) {
             applyFacialHair(race, charClass.coversEars());
         }
-        addHairInBack();
+        if (charClass.showDetail()) {
+            applyDetail(race, charClass.coversEars());
+        }
+        if (charClass.showHairInBack()) {
+            addHairInBack();
+        }
     }
 
     public void setSpecificClothing(PortraitClothing clothing) {
@@ -231,6 +236,7 @@ public abstract class CharacterAppearance implements Serializable {
         if (clothing.showFacialHair()) {
             applyFacialHair(race, clothing.coversEars());
         }
+        applyDetail(race, clothing.coversEars());
         addHairInBack();
     }
 
@@ -239,6 +245,10 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     protected void applyFacialHair(Race race, boolean coversEars) {
+
+    }
+
+    protected void applyDetail(Race race, boolean coversEars) {
 
     }
 

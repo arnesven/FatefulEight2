@@ -47,6 +47,11 @@ public class SkeletonAppearance extends AdvancedAppearance {
     }
 
     @Override
+    public Shoulders getShoulders() {
+        return innerShoulders;
+    }
+
+    @Override
     protected void specialization() {
         innerShoulders.makeSkeleton(this);
     }

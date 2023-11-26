@@ -59,6 +59,11 @@ public class DruidClass extends CharacterClass {
     }
 
     @Override
+    public boolean showHairInBack() {
+        return false;
+    }
+
+    @Override
     protected MyColors getIconColor() {
         return MyColors.DARK_GREEN;
     }

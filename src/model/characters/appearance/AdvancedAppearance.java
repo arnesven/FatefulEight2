@@ -167,7 +167,7 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     @Override
     public boolean hasBeard() {
-        return beard != null;
+        return beard != null && beard.isTrueBeard();
     }
 
     @Override
@@ -182,6 +182,10 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (beard != null) {
             beard.apply(this, race);
         }
+    }
+
+    @Override
+    public void applyDetail(Race race, boolean coversEars) {
         detail.applyYourself(this, race, coversEars);
     }
 

@@ -60,6 +60,11 @@ public class ThiefClass extends CharacterClass {
     }
 
     @Override
+    public boolean showHairInBack() {
+        return false;
+    }
+
+    @Override
     protected MyColors getIconColor() {
         return MyColors.BROWN;
     }

@@ -121,6 +121,7 @@ public class CharacterCreationView extends SelectableListMenu {
         if (classSet[selectedClass] == Classes.None) {
             app.reset();
             app.applyFacialHair(raceSet[selectedRace], false);
+            app.applyDetail(raceSet[selectedRace], false);
             app.addHairInBack();
         } else {
             app.setClass(classSet[selectedClass]);

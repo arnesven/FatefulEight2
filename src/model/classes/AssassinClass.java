@@ -80,6 +80,16 @@ public class AssassinClass extends CharacterClass {
     }
 
     @Override
+    public boolean showFacialHair() {
+        return false;
+    }
+
+    @Override
+    public boolean showHairInBack() {
+        return false;
+    }
+
+    @Override
     public String getHowToLearn() {
         return "The assassin's guild are practically in every town. Perhaps they would be willing to teach you their craft?";
     }

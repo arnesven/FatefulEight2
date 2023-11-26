@@ -75,6 +75,16 @@ public class BlackKnightClass extends CharacterClass {
     }
 
     @Override
+    public boolean showDetail() {
+        return false;
+    }
+
+    @Override
+    public boolean showHairInBack() {
+        return false;
+    }
+
+    @Override
     public boolean coversEars() {
         return true;
     }

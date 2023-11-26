@@ -97,6 +97,10 @@ public abstract class CharacterClass implements Serializable {
         return true;
     }
 
+    public boolean showDetail() {
+        return true;
+    }
+
     public int id() {
         return id;
     }
@@ -131,6 +135,10 @@ public abstract class CharacterClass implements Serializable {
 
     public boolean isSpecialCharacter() {
         return false;
+    }
+
+    public boolean showHairInBack() {
+        return true;
     }
 
     protected static class WeightedSkill implements Serializable {
