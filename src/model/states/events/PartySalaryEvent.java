@@ -18,6 +18,10 @@ public class PartySalaryEvent extends DailyEventState {
         }
 
         GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+        if (other.isSpecialCharacter()) {
+            new NoEventState(model).doEvent(model);
+            return;
+        }
         println(other.getFirstName() + " approaches you.");
         partyMemberSay(other, "Hey. I was thinking, since things are going pretty good, would it be okay for " +
                 "me to ask for an advance on my salary?");

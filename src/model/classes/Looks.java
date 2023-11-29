@@ -231,4 +231,15 @@ public abstract class Looks {
 
         characterAppearance.getShoulders().putOnApron(characterAppearance, apronColor, shirtColor);
     }
+
+    public static void putOnFancyHat(CharacterAppearance characterAppearance, MyColors lineColor, MyColors fillColor, MyColors featherColor) {
+        characterAppearance.removeOuterHair();
+        for (int y = 0; y <= 2; ++y) {
+            for (int x = 1; x <= 5; ++x) {
+                ClothesSprite spr = new ClothesSprite(0x110 + 0x10 * y + x-1, lineColor, fillColor);
+                spr.setColor4(featherColor);
+                characterAppearance.setSprite(x, y, spr);
+            }
+        }
+    }
 }

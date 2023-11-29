@@ -27,7 +27,7 @@ public class BardClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnLooseShirt(characterAppearance, MyColors.PURPLE);
-        Looks.putOnCap(characterAppearance, MyColors.PURPLE);
+        Looks.putOnFancyHat(characterAppearance, MyColors.DARK_PURPLE, MyColors.PURPLE, MyColors.BEIGE);
     }
 
     @Override
@@ -46,9 +46,7 @@ public class BardClass extends CharacterClass {
     }
 
     @Override
-    public void finalizeLook(CharacterAppearance appearance) {
-        Looks.finalizeCap(appearance);
-    }
+    public void finalizeLook(CharacterAppearance appearance) { }
 
     @Override
     protected MyColors getIconColor() {
