@@ -20,6 +20,8 @@ public class EnchantressCharacter extends GameCharacter {
                     HairStyle.allHairStyles[1], Beard.allBeards[10]);
             setFaceDetail(new EarringsDetail());
             setDetailColor(MyColors.LIGHT_GREEN);
+            setMascaraColor(MyColors.PEACH);
+            setLipColor(MyColors.RED);
         }
     }
 

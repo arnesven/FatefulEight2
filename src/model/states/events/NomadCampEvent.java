@@ -138,7 +138,7 @@ public class NomadCampEvent extends DailyEventState {
             }
             print("Furthermore, the nomads also offer some of their special elixirs. Press enter.");
             waitForReturn();
-            List<Item> items = List.of(model.getItemDeck().getRandomPotion());
+            List<Item> items = new ArrayList<>(List.of(model.getItemDeck().getRandomPotion()));
             int[] prices = null;
             if (attitude == Attitude.Friendly) {
                 prices = new int[]{0};

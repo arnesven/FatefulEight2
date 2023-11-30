@@ -16,17 +16,17 @@ public abstract class SpecialCharacterClass extends CharacterClass {
 
     @Override
     protected int getIconNumber() {
-        return 0;
+        return 0x14;
     }
 
     @Override
     public String getDescription() {
-        return "Undefined";
+        return "* Special Class *";
     }
 
     @Override
     public String getHowToLearn() {
-        return "Undefined";
+        return "";
     }
 
     @Override
