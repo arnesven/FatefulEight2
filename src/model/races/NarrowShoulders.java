@@ -145,4 +145,12 @@ public class NarrowShoulders extends Shoulders {
         appearance.setRow(6, new PortraitSprite[]{PortraitSprite.FRAME_LL_CORNER, NARROW_SHOULDER_LEFT, RIBS_LEFT, RIBS_MIDDLE, RIBS_RIGHT, NARROW_SHOULDER_RIGHT, PortraitSprite.FRAME_LR_CORNER});
         // TODO: Add case for Slender?
     }
+
+    public void putOnSuspenders(CharacterAppearance characterAppearance, MyColors shirtColor, MyColors susColor) {
+        characterAppearance.addSpriteOnTop(1, 5,  new ClothesSprite(0x11A, susColor));
+        characterAppearance.addSpriteOnTop(1, 6, new ClothesSprite(0x12A, susColor));
+
+        characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x11B, susColor));
+        characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x12B, susColor));
+    }
 }

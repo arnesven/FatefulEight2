@@ -172,5 +172,13 @@ public abstract class Shoulders implements Serializable {
         appearance.setRow(5, new PortraitSprite[]{SHOULDER_LEFT_TOP_WITH_FRAME, SKELETON_SHOULDER_TOP, SKELETON_SHOULDER_TOP, NECK, SKELETON_SHOULDER_TOP, SKELETON_SHOULDER_TOP, SHOULDER_RIGHT_TOP_WITH_FRAME});
         appearance.setRow(6, new PortraitSprite[]{LL_CORNER, RIBS_LEFT, RIBS_EXTENSION, RIBS_MIDDLE, RIBS_EXTENSION, RIBS_RIGHT, LR_CORNER});
     }
+
+    public void putOnSuspenders(CharacterAppearance characterAppearance, MyColors shirtColor, MyColors susColor) {
+        characterAppearance.addSpriteOnTop(1, 5,  new ClothesSprite(0x117, susColor));
+        characterAppearance.addSpriteOnTop(1, 6, new ClothesSprite(0x127, susColor));
+
+        characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x117, susColor));
+        characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x127, susColor));
+    }
 }
 

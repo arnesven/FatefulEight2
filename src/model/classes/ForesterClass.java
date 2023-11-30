@@ -28,12 +28,13 @@ public class ForesterClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnLooseShirt(characterAppearance, MyColors.RED);
+        Looks.putOnSuspenders(characterAppearance, MyColors.RED, MyColors.BLACK);
         Looks.putOnCap(characterAppearance, MyColors.DARK_GREEN);
     }
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x30, MyColors.RED, MyColors.DARK_GREEN, appearance.getBackHairOnly());
+        return new AvatarSprite(race, 0xD0, MyColors.RED, MyColors.DARK_GREEN, appearance.getBackHairOnly());
     }
 
     @Override

@@ -256,4 +256,7 @@ public abstract class Looks {
         }
     }
 
+    public static void putOnSuspenders(CharacterAppearance characterAppearance, MyColors shirtColor, MyColors susColor) {
+        characterAppearance.getShoulders().putOnSuspenders(characterAppearance, shirtColor, susColor);
+    }
 }

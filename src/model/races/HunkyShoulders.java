@@ -71,4 +71,12 @@ public class HunkyShoulders extends BroadShoulders {
         super.putOnHideLeft(characterAppearance, clothingColor);
         characterAppearance.setSprite(1, 5, new FaceAndClothesSprite(0x1D7, clothingColor));
     }
+
+    public void putOnSuspenders(CharacterAppearance characterAppearance, MyColors shirtColor, MyColors susColor) {
+        characterAppearance.addSpriteOnTop(1, 5,  new ClothesSprite(0x115, susColor));
+        characterAppearance.addSpriteOnTop(1, 6, new ClothesSprite(0x125, susColor));
+
+        characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x116, susColor));
+        characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x126, susColor));
+    }
 }

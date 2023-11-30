@@ -119,4 +119,12 @@ public class SlenderShoulders extends Shoulders {
         characterAppearance.getSprite(1, 6).setColor4(shirtColor);
         characterAppearance.getSprite(5, 6).setColor4(shirtColor);
     }
+
+    public void putOnSuspenders(CharacterAppearance characterAppearance, MyColors shirtColor, MyColors susColor) {
+        characterAppearance.addSpriteOnTop(1, 5,  new ClothesSprite(0x118, susColor));
+        characterAppearance.addSpriteOnTop(1, 6, new ClothesSprite(0x128, susColor));
+
+        characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x119, susColor));
+        characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x129, susColor));
+    }
 }
