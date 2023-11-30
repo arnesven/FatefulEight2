@@ -7,6 +7,8 @@ import model.races.Shoulders;
 import view.MyColors;
 import view.sprites.*;
 
+import java.time.temporal.Temporal;
+
 public abstract class Looks {
     protected static void putOnTunic(CharacterAppearance characterAppearance, MyColors color) {
         Race race = characterAppearance.getRace();
@@ -146,6 +148,17 @@ public abstract class Looks {
         appearance.setSprite(4, 2, new FaceAndClothesSpriteWithBack(0xF6, appearance.getHairColor(), color, MyColors.BEIGE));
     }
 
+
+    public static void putOnBowlersHat(CharacterAppearance appearance, MyColors fillColor) {
+        appearance.removeOuterHair();
+        for (int y = 0; y < 3; ++y) {
+            for (int x = 1; x < 6; ++x) {
+                PortraitSprite spr =  new FaceAndClothesSprite(0x1E4 + 0x10 * y + x, appearance.getHairColor(), fillColor);
+                appearance.setSprite(x, y, spr);
+            }
+        }
+    }
+
     protected static void finalizeCap(CharacterAppearance appearance) {
         if (appearance.hairInForehead()) {
             for (int x = 2; x <= 4; ++x) {
@@ -242,4 +255,5 @@ public abstract class Looks {
             }
         }
     }
+
 }
