@@ -6,6 +6,7 @@ import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite8x8;
 
 public class ThiefClass extends CharacterClass {
     protected ThiefClass() {
@@ -29,6 +30,15 @@ public class ThiefClass extends CharacterClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, MyColors.BROWN);
         Looks.putOnHood(characterAppearance, MyColors.BROWN);
+        putOnThiefsMask(characterAppearance);
+    }
+
+    public static void putOnThiefsMask(CharacterAppearance characterAppearance) {
+        for (int i = 0; i < 3; ++i) {
+            Sprite8x8 mask = new Sprite8x8("thiefmask" + i, "face.png", 0x1EA+i);
+            mask.setColor1(MyColors.BLACK);
+            characterAppearance.addSpriteOnTop(2+i, 3, mask);
+        }
     }
 
     @Override
