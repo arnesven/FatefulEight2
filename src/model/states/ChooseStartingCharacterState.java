@@ -3,9 +3,7 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import util.MyRandom;
-import view.ArrowMenuGameView;
-import view.GameView;
-import view.SelectStaringCharacterView;
+import view.*;
 import view.help.TutorialStartDialog;
 import view.party.CharacterCreationView;
 import view.subviews.ArrowMenuSubView;
@@ -24,22 +22,12 @@ public class ChooseStartingCharacterState extends GameState {
         model.getLog().waitForAnimationToFinish();
         GameCharacter gc;
         while (true) {
-            char[] choice = new char[1];
-            String choices = "SRC";
-            model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                    List.of("Choose character",
-                            "Random character",
-                            "Create custom character"),
-                    26, 16, ArrowMenuSubView.NORTH_WEST) {
-                @Override
-                protected void enterPressed(Model model, int cursorPos) {
-                    choice[0] = choices.charAt(cursorPos);
-                    model.setSubView(getPrevious());
-                }
-            });
-            waitForReturnSilently();
-            char selection = choice[0];
-            if (selection == 'C') {
+            int choice = multipleOptionArrowMenu(model, 30, 16, List.of("Choose Preset",
+                    "Random Preset",
+                    "Generate",
+                    "Create Custom"));
+
+            if (choice == 3) {
                 CharacterCreationView charCreation = new CharacterCreationView(model.getView());
                 model.transitionToDialog(charCreation);
                 print(" ");
@@ -48,8 +36,8 @@ public class ChooseStartingCharacterState extends GameState {
                 if (gc != null) {
                     break;
                 }
-            } else if (selection == 'S') {
-                SelectStaringCharacterView selectChar = new SelectStaringCharacterView(model);
+            } else if (choice == 0) {
+                StartingCharacterView selectChar = new SelectStaringCharacterView(model);
                 model.transitionToDialog(selectChar);
                 print(" ");
                 model.getLog().waitForAnimationToFinish();
@@ -57,11 +45,20 @@ public class ChooseStartingCharacterState extends GameState {
                 if (gc != null) {
                     break;
                 }
-            } else if (selection == 'R') {
+            } else if (choice == 1) {
                 gc = MyRandom.sample(model.getAllCharacters());
                 gc.setRandomStartingClass();
                 model.getAllCharacters().remove(gc);
                 break;
+            } else { // generate
+                GenerateStartingCharacterView genChar = new GenerateStartingCharacterView(model);
+                model.transitionToDialog(genChar);
+                print(" ");
+                model.getLog().waitForAnimationToFinish();
+                gc = genChar.getFinalCharacter();
+                if (gc != null) {
+                    break;
+                }
             }
         }
         println("");

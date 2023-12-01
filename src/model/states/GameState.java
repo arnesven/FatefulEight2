@@ -226,7 +226,7 @@ public abstract class GameState {
     }
 
     public static GameCharacter makeRandomCharacter(int level) {
-        CharacterClass cls = Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)];
+        CharacterClass cls = randomClass();
         Race race = Race.randomRace();
         boolean gender = MyRandom.flipCoin();
         AdvancedAppearance portrait = PortraitSubView.makeRandomPortrait(cls, race, gender);
@@ -238,10 +238,16 @@ public abstract class GameState {
         return gc;
     }
 
+    private static CharacterClass randomClass() {
+        CharacterClass cls = null;
+        do {
+            cls = Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)];
+        } while (cls == Classes.None);
+        return cls;
+    }
+
     private static CharacterClass[] makeRandomClassSet(CharacterClass cls) {
-        return new CharacterClass[]{cls, Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)],
-                Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)],
-                Classes.allClasses[MyRandom.randInt(Classes.allClasses.length)]};
+        return new CharacterClass[]{cls, randomClass(), randomClass(), randomClass()};
     }
 
     public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {
