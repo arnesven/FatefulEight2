@@ -79,4 +79,9 @@ public class HunkyShoulders extends BroadShoulders {
         characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x116, susColor));
         characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x126, susColor));
     }
+
+    public void putOnNecklaceTop(CharacterAppearance characterAppearance) {
+        characterAppearance.addSpriteOnTop(2, 5, new ClothesSprite(0x11D, MyColors.BLACK));
+        characterAppearance.addSpriteOnTop(4, 5, new ClothesSprite(0x11F, MyColors.BLACK));
+    }
 }

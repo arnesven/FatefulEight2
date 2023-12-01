@@ -28,7 +28,6 @@ public class ForesterClass extends CharacterClass {
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnLooseShirt(characterAppearance, MyColors.RED);
-        Looks.putOnSuspenders(characterAppearance, MyColors.RED, MyColors.BLACK);
         Looks.putOnCap(characterAppearance, MyColors.DARK_GREEN);
     }
 
@@ -50,6 +49,7 @@ public class ForesterClass extends CharacterClass {
     @Override
     public void finalizeLook(CharacterAppearance appearance) {
         Looks.finalizeCap(appearance);
+        Looks.putOnSuspenders(appearance, MyColors.RED, MyColors.BLACK);
     }
 
     @Override

@@ -259,4 +259,14 @@ public abstract class Looks {
     public static void putOnSuspenders(CharacterAppearance characterAppearance, MyColors shirtColor, MyColors susColor) {
         characterAppearance.getShoulders().putOnSuspenders(characterAppearance, shirtColor, susColor);
     }
+
+    public static void putOnNecklace(CharacterAppearance characterAppearance) {
+        for (int i = 0; i < 3; ++i) {
+            Sprite8x8 spr = new Sprite8x8("necklace", "clothes.png", 0x12C +i);
+            spr.setColor1(MyColors.BLACK);
+            spr.setColor3(MyColors.BEIGE);
+            characterAppearance.addSpriteOnTop(2 + i, 6, spr);
+        }
+        characterAppearance.getShoulders().putOnNecklaceTop(characterAppearance);
+    }
 }

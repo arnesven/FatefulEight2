@@ -180,5 +180,10 @@ public abstract class Shoulders implements Serializable {
         characterAppearance.addSpriteOnTop(5, 5, new ClothesSprite(0x117, susColor));
         characterAppearance.addSpriteOnTop(5, 6, new ClothesSprite(0x127, susColor));
     }
+
+    public void putOnNecklaceTop(CharacterAppearance characterAppearance) {
+        characterAppearance.addSpriteOnTop(2, 5, new ClothesSprite(0x11C, MyColors.BLACK));
+        characterAppearance.addSpriteOnTop(4, 5, new ClothesSprite(0x11E, MyColors.BLACK));
+    }
 }
 

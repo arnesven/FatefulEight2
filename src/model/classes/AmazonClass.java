@@ -6,6 +6,7 @@ import model.items.weapons.WoodenSpear;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.Sprite8x8;
 
 public class AmazonClass extends CharacterClass {
     protected AmazonClass() {
@@ -41,6 +42,11 @@ public class AmazonClass extends CharacterClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         return new AvatarSprite(race, 0x17, MyColors.BROWN, appearance.getNormalHair());
+    }
+
+    @Override
+    public void finalizeLook(CharacterAppearance appearance) {
+        Looks.putOnNecklace(appearance);
     }
 
     @Override
