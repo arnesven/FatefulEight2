@@ -9,7 +9,7 @@ import java.util.List;
 public class TutorialSkillChecksDialog extends ExpandableHelpDialog {
     private static final String text =
             "Skill checks occur when the party must overcome some sort of non-combat challenge. " +
-            "During skill checks, characters test skills by roll a D10, adding their " +
+            "During skill checks, characters test skills by rolling a D10, adding their " +
             "skill bonus to that result and comparing it to a difficulty. A result of a natural 1 is always a failure. " +
             "Stamina points can be used to re-roll. " +
             "Successful checks give the character(s) experience points (XP).\n\n" +

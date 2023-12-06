@@ -627,14 +627,14 @@ public class GameCharacter extends Combatant {
                 damage = damage - reduction;
             }
             addToHP(-1 * damage);
-            if (party != null) {
-                combatEvent.tookDamageTalk(this, damage);
-            }
             if (pair.second) {
                 reductionString = ", " + LogView.WHITE_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
             }
             combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
             combatEvent.addFloatyDamage(this, damage, critical ? DamageValueEffect.CRITICAL_DAMAGE : DamageValueEffect.STANDARD_DAMAGE);
+            if (party != null) {
+                combatEvent.tookDamageTalk(this, damage);
+            }
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }

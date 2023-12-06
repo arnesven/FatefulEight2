@@ -81,7 +81,7 @@ public class SplitPartyJunction extends QuestJunction {
     }
 
     public List<GameCharacter> getNonLeaderGroup(GameCharacter leader) {
-        if (groupB.contains(leader)) {
+        if (groupB == null || groupB.contains(leader)) {
             return groupA;
         }
         return groupB;

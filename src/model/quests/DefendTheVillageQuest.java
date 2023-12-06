@@ -42,8 +42,8 @@ public class DefendTheVillageQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public DefendTheVillageQuest() {
-        super("Defend the Village", "Desperate Peasants", QuestDifficulty.HARD,
-                1, 250, 0, TEXT, END_TEXT);
+        super("Defend the Village", "Desperate Peasants", QuestDifficulty.MEDIUM,
+                1, 150, 0, TEXT, END_TEXT);
     }
 
     @Override

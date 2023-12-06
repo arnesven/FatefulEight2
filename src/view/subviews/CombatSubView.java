@@ -16,6 +16,7 @@ import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CombatSubView extends SubView {
@@ -117,7 +118,8 @@ public class CombatSubView extends SubView {
     private void drawInitiativeOrder(Model model) {
         int col = 0;
         int xPosStart = X_OFFSET + (X_MAX - X_OFFSET) / 2 - combat.getInitiativeOrder().size();
-        for (Combatant combatant : combat.getInitiativeOrder()) {
+        List<Combatant> initOrder = new ArrayList<>(combat.getInitiativeOrder());
+        for (Combatant combatant : initOrder) {
             if (isCombatantsTurn(combatant)) {
                 model.getScreenHandler().put(xPosStart + col - 1, Y_MAX - 1 ,
                         INITIATIVE_MARKER);

@@ -406,7 +406,8 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("The new tenants of the fort didn't believe me when I told them who I was and seemed to have no intentions of " +
                     "letting me loose. So there I was stuck.");
             leaderSay("Until now. So what's the plan now?");
-            portraitSay("I still have a job to do. Thanks again for rescuing me. Please tell my employer " +
+            portraitSay("I still have a job to do. My only clue leads me to a cave somewhere in these mountains. I'd better be off. " +
+                    "Thanks again for rescuing me. Please tell my employer " +
                     "that I'll return when I have news of the missing relative.");
             leaderSay("Will do. So long.");
             model.getLog().waitForAnimationToFinish();

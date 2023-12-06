@@ -33,7 +33,7 @@ public class RegenerationCondition extends Condition {
 
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
-        if (comb.getHP() < comb.getMaxHP()) {
+        if (comb.getHP() < comb.getMaxHP() && !comb.isDead()) {
             state.println(comb.getName() + " regenerates 1 Health Point.");
             comb.addToHP(1);
             if (state instanceof CombatEvent) {

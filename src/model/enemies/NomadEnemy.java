@@ -1,6 +1,7 @@
 package model.enemies;
 
 import model.Model;
+import model.characters.LonnieLiebgott;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
@@ -9,7 +10,7 @@ import model.races.Race;
 import view.sprites.Sprite;
 
 public class NomadEnemy extends Enemy {
-    private static final Sprite SPRITE = Classes.AMZ.getAvatar(Race.NORTHERN_HUMAN, null);
+    private static final Sprite SPRITE = Classes.AMZ.getAvatar(Race.NORTHERN_HUMAN, new LonnieLiebgott());
 
     public NomadEnemy(char enemyGroup, String name) {
         super(enemyGroup, name);
