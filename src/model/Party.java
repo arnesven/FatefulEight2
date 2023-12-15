@@ -11,6 +11,7 @@ import model.combat.Combatant;
 import model.horses.HorseHandler;
 import model.items.Inventory;
 import model.items.Lockpick;
+import model.items.clothing.TemplarArmor;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.states.GameState;
