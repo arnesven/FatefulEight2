@@ -84,9 +84,9 @@ public abstract class CharacterAppearance implements Serializable {
 
         this.grid[0][4] = PortraitSprite.FRAME_LEFT;
         this.grid[1][4] = PortraitSprite.BLACK_BLOCK;
-        this.grid[2][4] = new FaceSpriteWithHair(getLeftCheek(), hairColor);
+        this.grid[2][4] = new FaceSpriteWithHair(getLeftCheek(), hairColor, MyColors.BLACK, lipColor);
         this.grid[3][4] = new MouthSprite(getMouth(), getLipColor(), hairColor);
-        this.grid[4][4] = new FaceSpriteWithHair(getRightCheek(), hairColor);
+        this.grid[4][4] = new FaceSpriteWithHair(getRightCheek(), hairColor, MyColors.BLACK, lipColor);
         this.grid[5][4] = PortraitSprite.BLACK_BLOCK;
         this.grid[6][4] = PortraitSprite.FRAME_RIGHT;
 
