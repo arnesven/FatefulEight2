@@ -67,6 +67,7 @@ public class FatefulEight extends JFrame {
         Model model = new Model(drawingArea.getScreenHandler());
         FatefulEight frame = new FatefulEight(model, drawingArea);
         model.setFrame(frame);
+        //Balancing.runWeaponValueAnalysis(model);
         model.runGameScript();
     }
 

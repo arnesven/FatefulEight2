@@ -31,9 +31,4 @@ public class Kukri extends BladedWeapon {
     public int getCriticalTarget() {
         return 9;
     }
-
-    @Override
-    public String getExtraText() {
-        return "20% Critical Hit Chance";
-    }
 }

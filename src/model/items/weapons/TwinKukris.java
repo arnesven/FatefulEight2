@@ -36,9 +36,4 @@ public class TwinKukris extends TwinBladedWeapon {
     public int getCriticalTarget() {
         return 9;
     }
-
-    @Override
-    public String getExtraText() {
-        return "20% Critical Hit Chance";
-    }
 }

@@ -96,6 +96,10 @@ public abstract class Weapon extends EquipableItem {
     }
 
     public String getExtraText() {
+        if (getCriticalTarget() != 10) {
+            int chance = (11 - getCriticalTarget()) * 10;
+            return chance + "% Critical Hit Chance";
+        }
         return "";
     }
 

@@ -3,6 +3,7 @@ package model.classes;
 import model.characters.appearance.CharacterAppearance;
 import model.items.weapons.Club;
 import model.items.Equipment;
+import model.items.weapons.LongStaff;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
@@ -37,7 +38,7 @@ public class PriestClass extends CharacterClass {
 
     @Override
     public Equipment getStartingEquipment() {
-        return new Equipment(new Club());
+        return new Equipment(new LongStaff());
     }
 
     @Override

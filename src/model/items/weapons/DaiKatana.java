@@ -26,4 +26,9 @@ public class DaiKatana extends BladedWeapon {
     public Prevalence getPrevalence() {
         return Prevalence.rare;
     }
+
+    @Override
+    public int getCriticalTarget() {
+        return 9;
+    }
 }

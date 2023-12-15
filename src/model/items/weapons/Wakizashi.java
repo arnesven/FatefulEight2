@@ -9,7 +9,7 @@ public class Wakizashi extends BladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(9, 11);
 
     public Wakizashi() {
-        super("Wakizashi", 22, new int[]{7, 8, 9}, false, 1);
+        super("Wakizashi", 22, new int[]{8, 9, 10}, false, 1);
     }
 
     @Override
@@ -20,6 +20,11 @@ public class Wakizashi extends BladedWeapon {
     @Override
     public Item copy() {
         return new Wakizashi();
+    }
+
+    @Override
+    public int getCriticalTarget() {
+        return 9;
     }
 
     @Override

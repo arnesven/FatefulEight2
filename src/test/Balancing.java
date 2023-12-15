@@ -49,6 +49,8 @@ public class Balancing {
             suggest += (w.getSpeedModifier() * 2);
             if (w instanceof WandWeapon || w instanceof StaffWeapon) {
                 suggest *= 1.25;
+            } else if (w.isTwoHanded()) {
+                suggest *= 0.95;
             }
             String tableRow = String.format("%-20s %3.1f  %4d   %2.6f   %2.2f", w.getName(), weaponDamage, w.getCost(), ratio, suggest);
             double diff = suggest - w.getCost();

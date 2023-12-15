@@ -12,7 +12,7 @@ public class BattleAxe extends AxeWeapon {
     private final Sprite sprite;
 
     public BattleAxe() {
-        super("Battle Axe", 18, new int[]{5, 8, 10}, false);
+        super("Battle Axe", 19, new int[]{5, 8, 9}, false);
         if (MyRandom.flipCoin()) {
             sprite = SPRITE;
         } else {
