@@ -46,10 +46,15 @@ public class ChooseStartingCharacterState extends GameState {
                     break;
                 }
             } else if (choice == 1) {
-                gc = MyRandom.sample(model.getAllCharacters());
-                gc.setRandomStartingClass();
-                model.getAllCharacters().remove(gc);
-                break;
+                RandomPresetStartingCharacterView randPreset = new RandomPresetStartingCharacterView(model);
+                model.transitionToDialog(randPreset);
+                print(" ");
+                model.getLog().waitForAnimationToFinish();
+                gc = randPreset.getFinalCharacter();
+                if (gc != null) {
+                    model.getAllCharacters().remove(gc);
+                    break;
+                }
             } else { // generate
                 GenerateStartingCharacterView genChar = new GenerateStartingCharacterView(model);
                 model.transitionToDialog(genChar);
