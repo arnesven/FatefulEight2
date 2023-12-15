@@ -397,6 +397,15 @@ public class GameCharacter extends Combatant {
             }
         }
 
+        if (combatEvent.canDelay(this)) {
+            result.add(new BasicCombatAction("Delay", false) {
+                @Override
+                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+                    combat.delayCombatant(performer);
+                }
+            });
+        }
+
         result.add(new BasicCombatAction("Pass", false) {
             @Override
             protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {

@@ -48,6 +48,7 @@ public class CombatEvent extends DailyEventState {
     private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
     private final Set<GameCharacter> blockSneakAttack = new HashSet<>();
     private List<CombatLoot> extraLoot = new ArrayList<>();
+    private List<Combatant> delayedCombatants = new ArrayList<>();
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -183,6 +184,7 @@ public class CombatEvent extends DailyEventState {
             handleSneakAttacks(model);
         }
         isAmbush = false;
+        delayedCombatants.clear();
     }
 
     private void handleEnemyTurn(Model model, Combatant turnTaker) {
@@ -513,6 +515,37 @@ public class CombatEvent extends DailyEventState {
                     "Get away from me!#", "Yeeouch!", "Argh!#", "Right in the...", "Ouchy!",
                     "Ugh!#", "That was painful!", "I'm hit!")));
             addSpecialEffect(gameCharacter, new CombatSpeechBubble());
+        }
+    }
+
+    private int delayIndex(Combatant performer) {
+        int newIndex = initiativeOrder.size()-1;
+        for (int i = initiativeOrder.size(); i > 0; --i) {
+            if (!delayedCombatants.contains(initiativeOrder.get(i-1))) {
+                return i;
+            }
+        }
+        return newIndex;
+    }
+
+    public boolean canDelay(Combatant performer) {
+        if (delayedCombatants.contains(performer)) {
+            return false;
+        }
+        return delayIndex(performer) > initiativeOrder.indexOf(performer);
+    }
+
+    public void delayCombatant(Combatant performer) {
+        initiativeOrder.remove(performer);
+        int delayIndex = delayIndex(performer);
+        initiativeOrder.add(delayIndex(performer), performer);
+        delayedCombatants.add(performer);
+        System.out.println("Delay index was " + delayIndex);
+        currentInit--;
+        if (performer instanceof GameCharacter) {
+            println(((GameCharacter) performer).getFirstName() + " delayed " + hisOrHer(((GameCharacter) performer).getGender()) + " turn.");
+        } else {
+            println(performer.getName() + " delayed.");
         }
     }
 }

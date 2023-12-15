@@ -14,6 +14,7 @@ public class TutorialCombatActionsDialog extends SubChapterHelpDialog {
             "one character in your party, this has a 60% chance of success. Otherwise the " +
             "leader must succeed in a Leadership test where the difficulty is 3 + the number " +
             "of party members.\n\n" +
+            "Delay: Postpone your action until later in the round.\n\n" +
             "Ability: Use one of the character's combat abilities.\n\n" +
             "Pass: Do nothing in combat.";
 
