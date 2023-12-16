@@ -22,7 +22,7 @@ public class LeverObject extends CenterDungeonObject {
     }
 
     @Override
-    protected Sprite getSprite() {
+    protected Sprite getSprite(DungeonTheme theme) {
         if (on) {
             return ON_SPRITE;
         }
@@ -30,8 +30,8 @@ public class LeverObject extends CenterDungeonObject {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(getSprite().getName(), new Point(xPos, yPos), getSprite());
+    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override

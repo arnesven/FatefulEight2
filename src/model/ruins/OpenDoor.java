@@ -10,22 +10,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.ruins.DungeonRoom.BRICK_COLOR;
-import static model.ruins.DungeonRoom.FLOOR_COLOR;
-
 public class OpenDoor extends DungeonDoor {
 
-    private static final Sprite32x32 HORI_DOOR = new Sprite32x32("horidoor", "dungeon.png", 0x12,
-            MyColors.BLACK, BRICK_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
-    private static final Sprite32x32 HORI_LEVER_DOOR = new Sprite32x32("horileverdoor", "dungeon.png", 0x23,
-            MyColors.BLACK, MyColors.PINK, MyColors.RED, MyColors.DARK_GRAY);
-    private static final Sprite32x32 VERTI_LEVER_DOOR = new Sprite32x32("vertileverdoor", "dungeon.png", 0x24,
-            MyColors.RED, MyColors.PINK, MyColors.DARK_RED, MyColors.DARK_GRAY);
-    private static final Sprite32x32 VERTI_DOOR = new Sprite32x32("vertidoor", "dungeon.png", 0x22,
-            MyColors.BLACK, BRICK_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
-    private static final Sprite32x32 DOOR_OVERLAY = new Sprite32x32("dooroverlay", "dungeon.png", 0x30,
-            MyColors.BLACK, BRICK_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
-    private final Sprite32x32 sprite;
+
     private final String direction;
     private final boolean isHorizontal;
     private List<LeverObject> levers = new ArrayList<>();
@@ -33,27 +20,24 @@ public class OpenDoor extends DungeonDoor {
     public OpenDoor(Point point, boolean isHorizontal, String direction) {
         super(point.x, point.y);
         this.isHorizontal = isHorizontal;
-        this.sprite = isHorizontal ? HORI_DOOR : VERTI_DOOR;
         this.direction = direction;
     }
 
     @Override
-    protected Sprite getSprite() {
-        return sprite;
+    protected Sprite getSprite(DungeonTheme theme) {
+        return theme.getDoor(isHorizontal, false);
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos) {
-        super.drawYourself(model, xPos, yPos);
+    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+        super.drawYourself(model, xPos, yPos, theme);
         if (isHorizontal) {
-            model.getScreenHandler().register(DOOR_OVERLAY.getName(), new Point(xPos, yPos), DOOR_OVERLAY, 3);
+            Sprite spr = theme.getDoorOverlay();
+            model.getScreenHandler().register(spr.getName(), new Point(xPos, yPos), spr, 3);
         }
         if (!levers.isEmpty() && leversWrong()) {
-            if (isHorizontal) {
-                model.getScreenHandler().register(HORI_LEVER_DOOR.getName(), new Point(xPos, yPos), HORI_LEVER_DOOR, 1);
-            } else {
-                model.getScreenHandler().register(VERTI_LEVER_DOOR.getName(), new Point(xPos, yPos), VERTI_LEVER_DOOR, 1);
-            }
+            Sprite spr = theme.getDoor(isHorizontal, true);
+            model.getScreenHandler().register(spr.getName(), new Point(xPos, yPos), spr, 1);
         }
     }
 

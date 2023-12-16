@@ -19,11 +19,11 @@ public abstract class DungeonObject implements Serializable {
         return internalPosition;
     }
 
-    public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().put(xPos, yPos, getSprite());
+    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+        model.getScreenHandler().put(xPos, yPos, getSprite(theme));
     }
 
-    protected abstract Sprite getSprite();
+    protected abstract Sprite getSprite(DungeonTheme theme);
 
     public abstract String getDescription();
 

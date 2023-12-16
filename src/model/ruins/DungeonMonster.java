@@ -5,7 +5,6 @@ import model.classes.Skill;
 import model.enemies.*;
 import model.items.potions.Potion;
 import model.items.potions.SleepingPotion;
-import model.items.potions.UnstablePotion;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
 import view.MyColors;
@@ -133,16 +132,16 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     @Override
-    protected Sprite getSprite() {
+    protected Sprite getSprite(model.ruins.DungeonTheme theme) {
         return enemies.get(0).getAvatar();
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(getSprite().getName(), new Point(xPos, yPos), getSprite());
+    public void drawYourself(Model model, int xPos, int yPos, model.ruins.DungeonTheme theme) {
+        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
         if (isSleeping) {
-            if (getSprite() instanceof Animation) {
-                ((Animation) getSprite()).synch();
+            if (getSprite(theme) instanceof Animation) {
+                ((Animation) getSprite(theme)).synch();
             }
             model.getScreenHandler().register(SLEEP_ANIMATION.getName(), new Point(xPos, yPos), SLEEP_ANIMATION);
         }

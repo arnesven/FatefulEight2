@@ -13,37 +13,6 @@ import java.util.List;
 
 public class DungeonRoom implements Serializable {
 
-    public static final MyColors BRICK_COLOR = MyColors.GRAY;
-    public static final MyColors FLOOR_COLOR = MyColors.GRAY_RED;
-    public static final MyColors FLOOR_DETAIL_COLOR = MyColors.DARK_GRAY;
-
-    private static final Sprite32x32 HORI_WALL = new Sprite32x32("horidungeonwall", "dungeon.png", 0x07,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-    private static final Sprite32x32 UL_CORNER = new Sprite32x32("dungeonul", "dungeon.png", 0x06,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-    private static final Sprite32x32 UR_CORNER = new Sprite32x32("dungeonur", "dungeon.png", 0x16,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-    private static final Sprite32x32 LR_CORNER = new Sprite32x32("dungeonlr", "dungeon.png", 0x25,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-    private static final Sprite32x32 LL_CORNER = new Sprite32x32("dungeonll", "dungeon.png", 0x15,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-    private static final Sprite32x32 T_WALL = new Sprite32x32("dungeontwall", "dungeon.png", 0x14,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-
-    private static final Sprite32x32 FLOOR = new Sprite32x32("dungeonfloor", "dungeon.png", 0x00,
-            FLOOR_DETAIL_COLOR, FLOOR_DETAIL_COLOR, MyColors.BLACK, FLOOR_COLOR);
-    private static final Sprite32x32 VERTI_WALL_LEFT = new Sprite32x32("leftvertidungeonwall", "dungeon.png", 0x05,
-            MyColors.BLACK, MyColors.BLACK, FLOOR_COLOR, MyColors.DARK_GRAY);
-    private static final Sprite32x32 VERTI_WALL_RIGHT = new Sprite32x32("rightvertidungeonwall", "dungeon.png", 0x05,
-            MyColors.BLACK, FLOOR_COLOR, MyColors.BLACK, MyColors.DARK_GRAY);
-    private static final Sprite32x32 VERTI_WALL_BOTH = new Sprite32x32("rightvertidungeonwall", "dungeon.png", 0x05,
-            MyColors.BLACK, FLOOR_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
-
-    private static final Sprite32x32[] leftArray = new Sprite32x32[] {UL_CORNER, VERTI_WALL_LEFT, LL_CORNER};
-    private static final Sprite32x32[] connect   = new Sprite32x32[] {T_WALL, VERTI_WALL_BOTH, HORI_WALL};
-    private static final Sprite32x32[] rightArray = new Sprite32x32[] {UR_CORNER, VERTI_WALL_RIGHT, LR_CORNER};
-    private static final Sprite32x32[] midArray = new Sprite32x32[] {HORI_WALL, FLOOR, HORI_WALL};
-
     private final ArrayList<DungeonObject> otherObjects;
     private final ArrayList<RoomDecoration> decorations;
     private final DungeonDoor[] connections = new DungeonDoor[4];
@@ -63,44 +32,45 @@ public class DungeonRoom implements Serializable {
         this(2, 2);
     }
 
-    public void drawYourself(Model model, Point position, boolean connectLeft, boolean connectRight, boolean leftCorner, boolean rightCorner) {
+    public void drawYourself(Model model, Point position, boolean connectLeft, boolean connectRight,
+                             boolean leftCorner, boolean rightCorner, DungeonTheme theme) {
         int xStart = position.x;
         int yStart = position.y;
 
         // TOP ROW
-        Sprite corner = leftCorner ? T_WALL : (connectLeft ? connect[0] : leftArray[0]);
+        Sprite corner = leftCorner ? theme.getConnect()[0] : (connectLeft ? theme.getConnect()[0] : theme.getLeft()[0]);
         model.getScreenHandler().put(xStart, yStart, corner);
         for (int w = 1; w < width+1; ++w) {
-            model.getScreenHandler().put(xStart + 4 * w, yStart, midArray[0]);
+            model.getScreenHandler().put(xStart + 4 * w, yStart, theme.getMid()[0]);
         }
-        corner = rightCorner ? T_WALL : (connectRight ? connect[0] : rightArray[0]);
+        corner = rightCorner ? theme.getConnect()[0] : (connectRight ? theme.getConnect()[0] : theme.getRight()[0]);
         model.getScreenHandler().put(xStart + 4*(width+1), yStart, corner);
 
         // MIDDLE ROWS
         for (int yCurr = 1; yCurr < height+1; yCurr++) {
-            corner = connectLeft ? connect[1] : leftArray[1];
+            corner = connectLeft ? theme.getConnect()[1] : theme.getLeft()[1];
             model.getScreenHandler().put(xStart, yStart + 4 * yCurr, corner);
 
             for (int w = 1; w < width+1; ++w) {
-                model.getScreenHandler().put(xStart + 4 * w, yStart + 4 * yCurr, midArray[1]);
+                model.getScreenHandler().put(xStart + 4 * w, yStart + 4 * yCurr, theme.getMid()[1]);
             }
 
-            corner = connectRight ? connect[1] : rightArray[1];
+            corner = connectRight ? theme.getConnect()[1] : theme.getRight()[1];
             model.getScreenHandler().put(xStart + 4 * (width+1), yStart + 4 * yCurr, corner);
         }
 
         // BOTTOM ROW
-        corner = (connectLeft ? connect[2] : leftArray[2]);
+        corner = (connectLeft ? theme.getConnect()[2] : theme.getLeft()[2]);
         model.getScreenHandler().put(xStart, yStart + 4 * (height+1), corner);
         for (int w = 1; w < width+1; ++w) {
-            model.getScreenHandler().put(xStart + 4 * w, yStart + 4 * (height+1), midArray[2]);
+            model.getScreenHandler().put(xStart + 4 * w, yStart + 4 * (height+1), theme.getMid()[2]);
         }
-        corner = (connectRight ? connect[2] : rightArray[2]);
+        corner = (connectRight ? theme.getConnect()[2] : theme.getRight()[2]);
         model.getScreenHandler().put(xStart + 4*(width+1), yStart + 4 * (height+1), corner);
 
 
         for (RoomDecoration decor : decorations) {
-            decor.drawYourself(model, xStart+decor.getInternalPosition().x*4, yStart+decor.getInternalPosition().y*4);
+            decor.drawYourself(model, xStart+decor.getInternalPosition().x*4, yStart+decor.getInternalPosition().y*4, theme);
         }
     }
 

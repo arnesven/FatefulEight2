@@ -21,13 +21,13 @@ public class CorpseObject extends CenterDungeonObject {
     private boolean looted = false;
 
     @Override
-    protected Sprite getSprite() {
+    protected Sprite getSprite(DungeonTheme theme) {
         return SPRITE;
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(getSprite().getName(), new Point(xPos, yPos), getSprite());
+    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override

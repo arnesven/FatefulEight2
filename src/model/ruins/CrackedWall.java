@@ -18,28 +18,21 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.ruins.DungeonRoom.BRICK_COLOR;
-import static model.ruins.DungeonRoom.FLOOR_COLOR;
-
 public class CrackedWall extends DungeonDoor {
 
-    private static final Sprite32x32 HORI_CRACK = new Sprite32x32("horicrack", "dungeon.png", 0x26,
-            MyColors.BLACK, BRICK_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
-    private static final Sprite32x32 VERTI_CRACK = new Sprite32x32("verticrack", "dungeon.png", 0x27,
-            MyColors.BLACK, FLOOR_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
+    private final boolean isHorizontal;
     private ExplosionAnimation explo;
-    private final Sprite sprite;
     private final String direction;
 
     public CrackedWall(Point point, boolean isHorizontal, String direction) {
         super(point.x, point.y);
-        this.sprite = isHorizontal ? HORI_CRACK : VERTI_CRACK;
         this.direction = direction;
+        this.isHorizontal = isHorizontal;
     }
 
     @Override
-    protected Sprite getSprite() {
-        return sprite;
+    protected Sprite getSprite(DungeonTheme theme) {
+        return theme.getCrackedWall(isHorizontal);
     }
 
     @Override
@@ -48,8 +41,8 @@ public class CrackedWall extends DungeonDoor {
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos) {
-        super.drawYourself(model, xPos, yPos);
+    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+        super.drawYourself(model, xPos, yPos, theme);
         if (explo != null && !explo.isDone()) {
             model.getScreenHandler().register(explo.getName(), new Point(xPos, yPos), explo);
         }

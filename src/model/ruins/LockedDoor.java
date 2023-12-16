@@ -2,10 +2,7 @@ package model.ruins;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.items.Lockpick;
-import model.items.weapons.BowWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
@@ -16,30 +13,26 @@ import view.sprites.Sprite32x32;
 
 import java.awt.*;
 
-import static model.ruins.DungeonRoom.BRICK_COLOR;
-import static model.ruins.DungeonRoom.FLOOR_COLOR;
+import static model.ruins.DefaultDungeonTheme.BRICK_COLOR;
+import static model.ruins.DefaultDungeonTheme.FLOOR_COLOR;
 
 public class LockedDoor extends DungeonDoor {
 
-    private static final Sprite32x32 HORI_DOOR_LOCKED = new Sprite32x32("horidoorlocked", "dungeon.png", 0x10,
-            MyColors.BLACK, BRICK_COLOR, MyColors.BROWN, MyColors.DARK_GRAY);
-    private static final Sprite32x32 VERTI_DOOR_LOCKED = new Sprite32x32("vertidoorlocked", "dungeon.png", 0x20,
-            MyColors.BLACK, BRICK_COLOR, FLOOR_COLOR, MyColors.DARK_GRAY);
-    private final Sprite32x32 sprite;
     private final String direction;
+    private final boolean isHorizontal;
     private boolean securityTried = false;
     private int hp = 10;
     private boolean firstBreakDown = true;
 
     public LockedDoor(Point point, boolean isHorizontal, String direction) {
         super(point.x, point.y);
-        this.sprite = isHorizontal ? HORI_DOOR_LOCKED : VERTI_DOOR_LOCKED;
         this.direction = direction;
+        this.isHorizontal = isHorizontal;
     }
 
     @Override
-    public Sprite32x32 getSprite() {
-        return sprite;
+    public Sprite32x32 getSprite(DungeonTheme theme) {
+        return theme.getLockedDoor(isHorizontal);
     }
 
     @Override

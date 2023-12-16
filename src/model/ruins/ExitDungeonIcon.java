@@ -16,7 +16,7 @@ public class ExitDungeonIcon extends DungeonObject {
     }
 
     @Override
-    protected Sprite getSprite() {
+    protected Sprite getSprite(DungeonTheme theme) {
         return SPRITE;
     }
 

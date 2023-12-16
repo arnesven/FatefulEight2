@@ -26,13 +26,13 @@ public class DungeonTrap extends CenterDungeonObject {
             MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.PINK, MyColors.DARK_GRAY);
 
     @Override
-    protected Sprite getSprite() {
+    protected Sprite getSprite(DungeonTheme theme) {
         return SPRITE;
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(getSprite().getName(), new Point(xPos, yPos), getSprite());
+    public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
+        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
         model.getScreenHandler().register(HORI_PATH.getName(), new Point(xPos, yPos-4), HORI_PATH);
         model.getScreenHandler().register(VERTI_PATH.getName(), new Point(xPos-4, yPos), VERTI_PATH);
         model.getScreenHandler().register(BOTH_PATH.getName(), new Point(xPos-4, yPos-4), BOTH_PATH);

@@ -20,6 +20,7 @@ public class RuinsDungeon implements Serializable {
     // x y
     private static final LoopingSprite cursor = new QuestCursorSprite();
     private final DungeonMap map;
+    private final DungeonTheme theme;
     private boolean drawAvatar = true;
     private boolean drawCursor = true;
     private boolean completed = false;
@@ -41,6 +42,7 @@ public class RuinsDungeon implements Serializable {
         System.out.println(" Level " + i + " is the final level");
         levels.add(new FinalDungeonLevel(random));
         this.map = new DungeonMap(this);
+        this.theme = randomDungeonTheme();
     }
 
     public RuinsDungeon() {
@@ -48,8 +50,8 @@ public class RuinsDungeon implements Serializable {
     }
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
-        drawRoomBackgrounds(model, currentPosition, currentLevel);
-        drawRoomObjects(model, currentPosition, matrix);
+        drawRoomBackgrounds(model, currentPosition, currentLevel, this.theme);
+        drawRoomObjects(model, currentPosition, matrix, this.theme);
         if (drawAvatar) {
             drawAvatar(model, currentPosition, currentLevel);
         }
@@ -70,7 +72,7 @@ public class RuinsDungeon implements Serializable {
         return result;
     }
 
-    private void drawRoomBackgrounds(Model model, Point currentPosition, int currentLevel) {
+    private void drawRoomBackgrounds(Model model, Point currentPosition, int currentLevel, DungeonTheme theme) {
         int minX = (currentPosition.x / 2) * 2;
         int minY = (currentPosition.y / 2) * 2;
         DungeonRoom[][] rooms = getLevel(currentLevel).getRooms();
@@ -84,13 +86,13 @@ public class RuinsDungeon implements Serializable {
                         rightCorner = connectsRight(rooms, x, y-1);
                     }
                     Point pos = convertToScreen(new Point(3*(x - minX), 3*(y - minY)));
-                    rooms[x][y].drawYourself(model, pos, connectsLeft(rooms, x, y), connectsRight(rooms, x, y), leftCorner, rightCorner);
+                    rooms[x][y].drawYourself(model, pos, connectsLeft(rooms, x, y), connectsRight(rooms, x, y), leftCorner, rightCorner, theme);
 
                     if (!(currentPosition.x == x && currentPosition.y == y)) {
                         for (DungeonObject dObj : rooms[x][y].getObjects()) {
                             dObj.drawYourself(model,
                                     pos.x + dObj.getInternalPosition().x*4,
-                                    pos.y + dObj.getInternalPosition().y*4);
+                                    pos.y + dObj.getInternalPosition().y*4, theme);
                         }
                     }
 
@@ -99,14 +101,14 @@ public class RuinsDungeon implements Serializable {
         }
     }
 
-    private void drawRoomObjects(Model model, Point currentPosition, SteppingMatrix<DungeonObject> matrix) {
+    private void drawRoomObjects(Model model, Point currentPosition, SteppingMatrix<DungeonObject> matrix, DungeonTheme theme) {
         for (int row = 0; row < matrix.getRows(); ++row) {
             for (int col = 0; col < matrix.getColumns(); ++col) {
                 if (matrix.getElementAt(col, row) != null) {
                     Point conv = convertToScreen(new Point(col, row));
                     int xPos = conv.x;
                     int yPos = conv.y;
-                    matrix.getElementAt(col, row).drawYourself(model, xPos, yPos);
+                    matrix.getElementAt(col, row).drawYourself(model, xPos, yPos, theme);
 
                     if (matrix.getSelectedElement() == matrix.getElementAt(col, row) && drawCursor) {
                         model.getScreenHandler().register("questcursor", new Point(xPos, yPos),
@@ -178,5 +180,11 @@ public class RuinsDungeon implements Serializable {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    private static DungeonTheme randomDungeonTheme() {
+        return MyRandom.sample(List.of(new DefaultDungeonTheme(),
+                new PurpleDungeonTheme(), new RedDungeonTheme(),
+                new BlueDungeonTheme(), new GreenDungeonTheme()));
     }
 }

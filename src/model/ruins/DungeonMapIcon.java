@@ -15,7 +15,7 @@ public class DungeonMapIcon extends DungeonObject {
     }
 
     @Override
-    protected Sprite getSprite() {
+    protected Sprite getSprite(DungeonTheme theme) {
         return SPRITE;
     }
 
