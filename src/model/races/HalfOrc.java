@@ -49,4 +49,15 @@ public class HalfOrc extends Race {
     public MyColors getMouthDefaultColor() {
         return MyColors.DARK_GRAY;
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        if (race.id() == id()) {
+            return POSITIVE_ATTITUDE;
+        }
+        if (race.id() == Race.DWARF.id()) {
+            return STRONG_DISLIKE_ATTITUDE;
+        }
+        return 0;
+    }
 }

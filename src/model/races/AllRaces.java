@@ -20,4 +20,9 @@ public class AllRaces extends Race {
     public PortraitSprite getRightEar(MyColors hairColor) {
         return Race.normalRightEar(hairColor);
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        return 0; // unused
+    }
 }

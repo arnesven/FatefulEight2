@@ -16,7 +16,8 @@ public class TutorialSkillChecksDialog extends ExpandableHelpDialog {
             "Solo Checks: One party member must perform the skill check alone.\n\n" +
             "Collective Checks: All party members must pass the skill check for it to be successful.\n\n" +
             "Collaborative Checks: One party member is designated as the main performer of the skill check. " +
-            "The other characters must pass a check of the same skill, but difficulty 7. Each other character " +
+            "The other characters must pass a check of the same skill, the difficulty of which depends " +
+            "on the character's attitude towards the main performer. Each other character " +
             "which passes this secondary check adds a +1 bonus to the main performer's roll. If that roll is successful, " +
             "the whole skill check is successful.";
 

@@ -20,4 +20,9 @@ public class WitchKingRace extends Race {
     public PortraitSprite getRightEar(MyColors hairColor) {
         return new FaceSpriteWithHair(0x82, hairColor);
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        return 0; // unused
+    }
 }

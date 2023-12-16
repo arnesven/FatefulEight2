@@ -19,4 +19,12 @@ public abstract class HumanRace extends Race {
     public PortraitSprite getRightEar(MyColors hairColor) {
         return Race.normalRightEar(hairColor);
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        if (race.id() == id()) {
+            return POSITIVE_ATTITUDE;
+        }
+        return 0;
+    }
 }

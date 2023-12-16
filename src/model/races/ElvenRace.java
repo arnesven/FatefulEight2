@@ -28,4 +28,15 @@ public class ElvenRace extends Race {
     public TorsoNeck makeNeck(boolean gender) {
         return new SlenderNeck();
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        if (race.id() == id()) {
+            return POSITIVE_ATTITUDE;
+        }
+        if (race instanceof ElvenRace) {
+            return SLIGHT_DISLIKE_ATTITUDE;
+        }
+        return DISLIKE_ATTITUDE;
+    }
 }

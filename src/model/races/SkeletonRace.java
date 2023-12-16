@@ -34,4 +34,9 @@ public class SkeletonRace extends Race {
     public TorsoNeck makeNeck(boolean gender) {
         return new SkeletonNeck();
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        return 0; // unused
+    }
 }

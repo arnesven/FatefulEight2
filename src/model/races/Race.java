@@ -35,6 +35,11 @@ public abstract class Race implements Serializable {
     private int speedModifier;
     private int carryCap;
     private Skill[] skillBonuses;
+    protected static final int STRONG_POSITIVE_ATTITUDE = 3;
+    protected static final int POSITIVE_ATTITUDE = 2;
+    protected static final int STRONG_DISLIKE_ATTITUDE = -3;
+    protected static final int DISLIKE_ATTITUDE = -2;
+    protected static final int SLIGHT_DISLIKE_ATTITUDE = -1;
 
     protected Race(String name, MyColors color, int hpModifier, int speed, int carryCap, Skill[] skillBonuses, String description) {
         this.name = name;
@@ -134,4 +139,6 @@ public abstract class Race implements Serializable {
     public TorsoNeck makeNeck(boolean gender) {
         return new NormalNeck();
     }
+
+    public abstract int getInitialAttitudeFor(Race race);
 }

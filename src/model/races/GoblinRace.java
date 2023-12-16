@@ -19,4 +19,9 @@ public class GoblinRace extends Race {
     public PortraitSprite getRightEar(MyColors hairColor) {
         return null;
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        return 0;
+    }
 }

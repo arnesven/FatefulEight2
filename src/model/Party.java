@@ -14,6 +14,7 @@ import model.items.Lockpick;
 import model.items.clothing.TemplarArmor;
 import model.items.spells.*;
 import model.map.UrbanLocation;
+import model.races.Race;
 import model.states.GameState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
@@ -79,6 +80,10 @@ public class Party implements Serializable {
         if (leader == null) {
             leader = gameCharacter;
         }
+        for (GameCharacter other : partyMembers) {
+            setInitialAttitude(gameCharacter, other);
+            setInitialAttitude(other, gameCharacter);
+        }
         partyMembers.add(gameCharacter);
         gameCharacter.setParty(this);
         carryingCapInKilos += gameCharacter.getRace().getCarryingCapacity();
@@ -87,6 +92,16 @@ public class Party implements Serializable {
         } else {
             frontRow.add(gameCharacter);
         }
+    }
+
+    private void setInitialAttitude(GameCharacter gameCharacter, GameCharacter other) {
+        int attitude = gameCharacter.getRace().getInitialAttitudeFor(other.getRace());
+        if (other == leader && attitude < 0) {
+            attitude = 0;
+        }
+        System.out.println("Initial attitude for " + gameCharacter.getFirstName() +
+                " vs " + other.getName() + " is " + attitude);
+        gameCharacter.addToAttitude(other, attitude);
     }
 
     public synchronized void drawYourself(ScreenHandler screenHandler) {
@@ -448,7 +463,7 @@ public class Party implements Serializable {
         for (GameCharacter gc : performers) {
             if (!bench.contains(gc)) {
                 if (gc != performer) {
-                    SkillCheckResult assistResult = gc.testSkill(skill, 7);
+                    SkillCheckResult assistResult = gc.testSkill(skill, getCollaborativeDifficulty(performer, gc));
                     if (assistResult.isSuccessful()) {
                         giveXP(model, gc, 5);
                         event.println(gc.getName() + " helps out (" + assistResult.asString() + ").");
@@ -468,6 +483,23 @@ public class Party implements Serializable {
                     "Come on, we have to do better.", "Well, better luck next time.", "Damn, so close!"));
         }
         return result.isSuccessful();
+    }
+
+    private int getCollaborativeDifficulty(GameCharacter mainPerformer, GameCharacter helper) {
+        int attitude = helper.getAttitude(mainPerformer);
+        if (attitude < -10) {
+            return 9;
+        }
+        if (attitude < -1) {
+            return 8;
+        }
+        if (attitude > 10) {
+            return 5;
+        }
+        if (attitude > 1) {
+            return 6;
+        }
+        return 7;
     }
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty) {

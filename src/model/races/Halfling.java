@@ -41,4 +41,12 @@ public class Halfling extends Race {
     public TorsoNeck makeNeck(boolean gender) {
         return new SlenderNeck();
     }
+
+    @Override
+    public int getInitialAttitudeFor(Race race) {
+        if (race.id() == id()) {
+            return STRONG_POSITIVE_ATTITUDE;
+        }
+        return SLIGHT_DISLIKE_ATTITUDE;
+    }
 }
