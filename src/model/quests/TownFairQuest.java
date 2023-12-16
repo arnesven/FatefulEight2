@@ -281,9 +281,12 @@ public class TownFairQuest extends Quest {
             CollapsingTransition.transition(model, state.getSubView());
             Map<GameCharacter, Integer> points = archeryState.getPoints();
             if (points.get(shooter) >= points.get(opponents.get(0)) && points.get(shooter) >= points.get(opponents.get(1))) {
+                state.println("You are the winner of the archery contest!");
                 model.getParty().partyMemberSay(model, shooter, "Yes! I rock!");
                 payOutFromSoloSkillCheckSubScene(model, state);
                 return getSuccessEdge();
+            } else {
+                state.println("Unfortunately, you did not win the archery contest.");
             }
             model.getParty().partyMemberSay(model, shooter, "Darn! I really thought I could do it.");
             return getSuccessEdge();
