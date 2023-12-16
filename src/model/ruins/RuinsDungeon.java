@@ -15,9 +15,9 @@ import java.util.List;
 
 public class RuinsDungeon implements Serializable {
 
-    private static final List<DungeonTheme> ALL_DUNGEON_THEMES = List.of(new DefaultDungeonTheme(),
-                                                                        new PurpleDungeonTheme(), new RedDungeonTheme(),
-                                                                        new BlueDungeonTheme(), new GreenDungeonTheme());
+    private static final List<DungeonTheme> ALL_DUNGEON_THEMES =
+            List.of(new DefaultDungeonTheme(), new PurpleDungeonTheme(), new RedDungeonTheme(),
+                    new BlueDungeonTheme(), new GreenDungeonTheme(), new CaveDungeonTheme());
     private final List<DungeonLevel> levels = new ArrayList<>();
 
     // x y

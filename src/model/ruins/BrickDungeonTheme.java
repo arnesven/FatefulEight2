@@ -168,6 +168,10 @@ public abstract class BrickDungeonTheme implements DungeonTheme {
 
     @Override
     public Sprite getLever(boolean on) {
+        return getLeverForOn(on);
+    }
+
+    public static Sprite getLeverForOn(boolean on) {
         if (on) {
             return ON_SPRITE;
         }
