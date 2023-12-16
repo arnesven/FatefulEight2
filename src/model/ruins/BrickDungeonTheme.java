@@ -5,6 +5,12 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 public abstract class BrickDungeonTheme implements DungeonTheme {
+
+    private static final Sprite ON_SPRITE = new Sprite32x32("onlever", "dungeon.png", 0x43,
+            MyColors.BLACK, MyColors.GRAY, MyColors.DARK_BROWN, MyColors.PINK);
+    private static final Sprite OFF_SPRITE = new Sprite32x32("offlever", "dungeon.png", 0x44,
+            MyColors.BLACK, MyColors.GRAY, MyColors.DARK_BROWN, MyColors.PINK);
+
     private final Sprite[] CONNECT;
     private final Sprite[] LEFT;
     private final Sprite[] MID;
@@ -158,5 +164,13 @@ public abstract class BrickDungeonTheme implements DungeonTheme {
     protected static Sprite32x32 makeVerticalCracked(MyColors baseColor, MyColors floorColor, MyColors detailColor) {
         return new Sprite32x32("verticrack", "dungeon.png", 0x27,
                 baseColor, floorColor, floorColor, detailColor);
+    }
+
+    @Override
+    public Sprite getLever(boolean on) {
+        if (on) {
+            return ON_SPRITE;
+        }
+        return OFF_SPRITE;
     }
 }

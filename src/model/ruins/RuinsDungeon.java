@@ -15,6 +15,9 @@ import java.util.List;
 
 public class RuinsDungeon implements Serializable {
 
+    private static final List<DungeonTheme> ALL_DUNGEON_THEMES = List.of(new DefaultDungeonTheme(),
+                                                                        new PurpleDungeonTheme(), new RedDungeonTheme(),
+                                                                        new BlueDungeonTheme(), new GreenDungeonTheme());
     private final List<DungeonLevel> levels = new ArrayList<>();
 
     // x y
@@ -42,7 +45,7 @@ public class RuinsDungeon implements Serializable {
         System.out.println(" Level " + i + " is the final level");
         levels.add(new FinalDungeonLevel(random));
         this.map = new DungeonMap(this);
-        this.theme = randomDungeonTheme();
+        this.theme = MyRandom.sample(ALL_DUNGEON_THEMES);
     }
 
     public RuinsDungeon() {
@@ -180,11 +183,5 @@ public class RuinsDungeon implements Serializable {
 
     public boolean isCompleted() {
         return completed;
-    }
-
-    private static DungeonTheme randomDungeonTheme() {
-        return MyRandom.sample(List.of(new DefaultDungeonTheme(),
-                new PurpleDungeonTheme(), new RedDungeonTheme(),
-                new BlueDungeonTheme(), new GreenDungeonTheme()));
     }
 }

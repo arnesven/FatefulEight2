@@ -3,7 +3,9 @@ package model.ruins;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public interface DungeonTheme {
+import java.io.Serializable;
+
+public interface DungeonTheme extends Serializable {
     Sprite[] getConnect();
     Sprite[] getLeft();
     Sprite[] getMid();
@@ -17,4 +19,6 @@ public interface DungeonTheme {
 
     Sprite getCrackedWall(boolean isHorizontal);
     Sprite32x32 getLockedDoor(boolean isHorizontal);
+
+    Sprite getLever(boolean on);
 }

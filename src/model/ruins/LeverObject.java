@@ -11,10 +11,6 @@ import java.awt.*;
 import java.util.Random;
 
 public class LeverObject extends CenterDungeonObject {
-    private static final Sprite ON_SPRITE = new Sprite32x32("onlever", "dungeon.png", 0x43,
-            MyColors.BLACK, MyColors.GRAY, MyColors.DARK_BROWN, MyColors.PINK);
-    private static final Sprite OFF_SPRITE = new Sprite32x32("offlever", "dungeon.png", 0x44,
-            MyColors.BLACK, MyColors.GRAY, MyColors.DARK_BROWN, MyColors.PINK);
     private boolean on;
 
     public LeverObject(Random random) {
@@ -23,10 +19,7 @@ public class LeverObject extends CenterDungeonObject {
 
     @Override
     protected Sprite getSprite(DungeonTheme theme) {
-        if (on) {
-            return ON_SPRITE;
-        }
-        return OFF_SPRITE;
+        return theme.getLever(on);
     }
 
     @Override
