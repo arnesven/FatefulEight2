@@ -23,6 +23,10 @@ public class RuinsDungeon implements Serializable {
     private static final List<DungeonTheme> ALL_CAVE_THEMES =
             List.of(new GrayCaveTheme(), new PurpleCaveTheme(), new RedCaveTheme(),
                     new BlueCaveTheme(), new GreenCaveTheme());
+    private static final List<DungeonTheme> ALL_RUINS_THEMES =
+            List.of(new GrayRuinsTheme(), new PurpleRuinsTheme(), new RedRuinsTheme(),
+                    new BlueRuinsTheme(), new GreenRuinsTheme());
+    public static final int NUMBER_OF_UPPER_LEVELS = 2;
     private final List<DungeonLevel> levels = new ArrayList<>();
 
     // x y
@@ -34,7 +38,7 @@ public class RuinsDungeon implements Serializable {
 
     private Random random = new Random();
 
-    public RuinsDungeon(int roomsTarget, int levelMinSize, int levelMaxSize) {
+    public RuinsDungeon(int roomsTarget, int levelMinSize, int levelMaxSize, boolean isRuins) {
         System.out.println("Creating a dungeon...");
         int i = 0;
         for (; roomsTarget >= levelMinSize*levelMinSize ; ++i) {
@@ -43,23 +47,29 @@ public class RuinsDungeon implements Serializable {
                 levelSize = MyRandom.randInt(levelMinSize, levelMaxSize);
             } while (roomsTarget < levelSize*levelSize);
             roomsTarget -= levelSize*levelSize;
-            levels.add(new DungeonLevel(random, i == 0, levelSize, makeDungeonTheme(i)));
+            levels.add(new DungeonLevel(random, i == 0, levelSize, makeDungeonTheme(i, isRuins)));
             System.out.println(" Level " + i + " is " + levelSize + "x" + levelSize);
         }
         System.out.println(" Level " + i + " is the final level");
-        levels.add(new FinalDungeonLevel(random, makeDungeonTheme(i)));
+        levels.add(new FinalDungeonLevel(random, makeDungeonTheme(i, isRuins)));
         this.map = new DungeonMap(this);
     }
 
-    private static DungeonTheme makeDungeonTheme(int i) {
-        if (i < 2) {
+    private static DungeonTheme makeDungeonTheme(int i, boolean isRuins) {
+        if (isRuins) {
+            if (i < NUMBER_OF_UPPER_LEVELS) {
+                return MyRandom.sample(ALL_RUINS_THEMES);
+            }
+            return MyRandom.sample(ALL_CAVE_THEMES);
+        }
+        if (i < NUMBER_OF_UPPER_LEVELS) {
             return MyRandom.sample(ALL_BRICK_THEMES);
         }
-        return MyRandom.sample(ALL_CAVE_THEMES);
+        return MyRandom.sample(ALL_RUINS_THEMES);
     }
 
-    public RuinsDungeon() {
-        this(120, 4, 8);
+    public RuinsDungeon(boolean isRuins) {
+        this(120, 4, 8, isRuins);
     }
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {

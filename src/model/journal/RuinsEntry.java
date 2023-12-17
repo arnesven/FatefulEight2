@@ -16,7 +16,7 @@ public class RuinsEntry implements JournalEntry {
         ruins = new ArrayList<>();
         allCompleted = true;
         for (RuinsLocation ruinsLocation : model.getWorld().getRuinsLocations()) {
-            MyPair<RuinsLocation, RuinsDungeon> pair = new MyPair<>(ruinsLocation, getDungeon(model, ruinsLocation.getName()));
+            MyPair<RuinsLocation, RuinsDungeon> pair = new MyPair<>(ruinsLocation, getDungeon(model, ruinsLocation.getName(), true));
             ruins.add(pair);
             if (pair.second == null || !pair.second.isCompleted()) {
                 allCompleted = false;
@@ -29,9 +29,9 @@ public class RuinsEntry implements JournalEntry {
         return true;
     }
 
-    private RuinsDungeon getDungeon(Model model, String name) {
+    private RuinsDungeon getDungeon(Model model, String name, boolean isRuins) {
         if (model.hasVisitedDungeon(name)) {
-            return model.getDungeon(name);
+            return model.getDungeon(name, isRuins);
         }
         return null;
     }

@@ -384,9 +384,9 @@ public class Model {
         return gameData.inUnderworld;
     }
 
-    public RuinsDungeon getDungeon(String ruinsName) {
+    public RuinsDungeon getDungeon(String ruinsName, boolean isRuins) {
         if (!hasVisitedDungeon(ruinsName)) {
-            gameData.dungeons.put(ruinsName, new RuinsDungeon());
+            gameData.dungeons.put(ruinsName, new RuinsDungeon(isRuins));
         }
         return gameData.dungeons.get(ruinsName);
     }

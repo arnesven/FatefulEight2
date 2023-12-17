@@ -6,6 +6,7 @@ import model.Summon;
 import model.TimeOfDay;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
 import model.tasks.SummonTask;
@@ -95,42 +96,53 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
 
         @Override
         public GameState run(Model model) {
-            String lord = location.getLordName();
-            if (summon.getStep() == Summon.ACCEPTED) {
-                String leaderName = model.getParty().getLeader().getName();
-                printQuote(lord, "Hello there. " + leaderName + ", I presume? I've been expecting you.");
-                leaderSay("Yes, that's me. Who are you?");
-                printQuote(lord, "I'm " + lord + ". I'm in charge here. First of all, " +
-                        "let me formally welcome you to " + location.getPlaceName() +
-                        ", I hope you like our " + location.getLocationType() + ".");
-                model.getParty().randomPartyMemberSay(model,
-                        List.of("Enough with the formalities. What is it you want?",
-                                "Get on with it, I haven't got all day!", "It's pleasant enough I suppose.",
-                                "Sure, it's great. Now what do you want?", "Thanks. Can I help you?", "How do you know my name?"));
-                printQuote(lord, "Your reputation has preceded you and I was wondering if you might be able to help me with a problem of mine.");
-                summon.increaseStep();
-            }
-            if (summon.getStep() != Summon.COMPLETE) {
-                SummonTask task = summon.getTask(model, location);
-                task.doTask(model);
-                if (summon.getStep() == Summon.COMPLETE) {
-                    summon.setCompletedOnDay(model.getDay());
-                }
-            }
-
-            if (summon.getStep() == Summon.COMPLETE) {
-                printQuote(lord, "Thanks again for helping me with my problem. " +
-                        "Please, stay for supper and spend the night, there's room for everyone.");
-                print("Do you wish to spend the night here? (Y/N): ");
-                if (yesNoInput()) {
-                    spentNight = true;
-                }
-            }
-
+            new InnerPortraitEvent(model).run(model);
             if (spentNight) {
                 return new LodgingState(model, true).run(model);
             }
             return new SilentNoEventState(model);
+        }
+
+        private class InnerPortraitEvent extends DailyEventState {
+            public InnerPortraitEvent(Model model) {
+                super(model);
+            }
+
+            @Override
+            protected void doEvent(Model model) {
+                String lord = location.getLordName();
+                showExplicitPortrait(model, model.getLordPortrait(location), location.getLordName());
+                if (summon.getStep() == Summon.ACCEPTED) {
+                    String leaderName = model.getParty().getLeader().getName();
+                    portraitSay("Hello there. " + leaderName + ", I presume? I've been expecting you.");
+                    leaderSay("Yes, that's me. Who are you?");
+                    portraitSay("I'm " + lord + ". I'm in charge here. First of all, " +
+                            "let me formally welcome you to " + location.getPlaceName() +
+                            ", I hope you like our " + location.getLocationType() + ".");
+                    model.getParty().randomPartyMemberSay(model,
+                            List.of("Enough with the formalities. What is it you want?",
+                                    "Get on with it, I haven't got all day!", "It's pleasant enough I suppose.",
+                                    "Sure, it's great. Now what do you want?", "Thanks. Can I help you?", "How do you know my name?"));
+                    portraitSay("Your reputation has preceded you and I was wondering if you might be able to help me with a problem of mine.");
+                    summon.increaseStep();
+                }
+                if (summon.getStep() != Summon.COMPLETE) {
+                    SummonTask task = summon.getTask(model, location);
+                    task.doTask(model);
+                    if (summon.getStep() == Summon.COMPLETE) {
+                        summon.setCompletedOnDay(model.getDay());
+                    }
+                }
+
+                if (summon.getStep() == Summon.COMPLETE) {
+                    portraitSay("Thanks again for helping me with my problem. " +
+                            "Please, stay for supper and spend the night, there's room for everyone.");
+                    print("Do you wish to spend the night here? (Y/N): ");
+                    if (yesNoInput()) {
+                        spentNight = true;
+                    }
+                }
+            }
         }
     }
 }

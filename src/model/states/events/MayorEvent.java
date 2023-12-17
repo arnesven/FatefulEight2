@@ -31,7 +31,6 @@ public class MayorEvent extends DailyEventState {
             println("The noble picks " + himOrHer(gender) +
                     "self off the ground and dusts off " + hisOrHer(gender) + " robes.");
             showExplicitPortrait(model, model.getLordPortrait(town), "Noble");
-            showRandomPortrait(model, Classes.NOB, "Noble");
             portraitSay("That would have been the end of me. If not for you. Thank you.");
             model.getParty().partyMemberSay(model, model.getParty().getLeader(), List.of("Damn wine sellers!",
                     "Be more careful in the future", "My pleasure.", "Don't worry about it."));
@@ -46,7 +45,7 @@ public class MayorEvent extends DailyEventState {
                 leaderSay("Don't even think about it. Hopefully one day somebody will do the same for me.");
                 portraitSay("What an honourable sentiment! I wish more people were like you in this town. " +
                         "Please come visit me later. Here take this.");
-                println("The noble hands you a slip of paper, then excuses himself.");
+                println("The noble hands you a slip of paper, then excuses " + himOrHer(gender) + "self.");
                 model.getParty().addSummon(town);
                 if (model.getParty().size() > 1) {
                     GameCharacter other = model.getParty().getPartyMember(model.getParty().size()-1);

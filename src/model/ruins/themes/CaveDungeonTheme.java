@@ -43,7 +43,7 @@ public class CaveDungeonTheme implements DungeonTheme {
             new Sprite32x32("horidoorlocked", "dungeon.png", 0xA0,
                     BASE_COLOR, stoneColor, doorColor, shadeColor),
             new Sprite32x32("vertidoorlocked", "dungeon.png", 0xB0,
-                    floorColor, stoneColor, shadeColor, doorColor),
+                    floorColor, stoneColor, shadeColor, BASE_COLOR),
             new Sprite32x32("dooroverlay", "dungeon.png", 0xB1,
                     BASE_COLOR, stoneColor, DONT_CARE, shadeColor),
         };
