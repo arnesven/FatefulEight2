@@ -6,7 +6,7 @@ import model.enemies.Enemy;
 import model.enemies.GoblinKingEnemy;
 import model.enemies.GoblinSpearman;
 import model.quests.scenes.CombatSubScene;
-import model.ruins.DungeonChest;
+import model.ruins.objects.DungeonChest;
 import model.states.QuestState;
 import view.sprites.DungeonWallSprite;
 import view.MyColors;

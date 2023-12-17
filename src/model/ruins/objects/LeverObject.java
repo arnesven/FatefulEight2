@@ -1,11 +1,10 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.Model;
+import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
-import view.MyColors;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.util.Random;

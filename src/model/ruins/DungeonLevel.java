@@ -1,5 +1,8 @@
 package model.ruins;
 
+import model.ruins.objects.*;
+import model.ruins.themes.DungeonTheme;
+
 import java.awt.*;
 import java.io.Serializable;
 import java.util.*;
@@ -21,15 +24,17 @@ public class DungeonLevel implements Serializable {
 
     private final Random random;
     private final int levelSize;
+    private final DungeonTheme theme;
 
     private DungeonRoom[][] rooms;
     private Point startingPoint;
     private Point descentPoint;
 
 
-    public DungeonLevel(Random random, boolean firstLevel, int levelSize) {
+    public DungeonLevel(Random random, boolean firstLevel, int levelSize, DungeonTheme theme) {
         this.random = random;
         this.levelSize = levelSize;
+        this.theme = theme;
         while (true) {
             rooms = new DungeonRoom[levelSize][levelSize];
             if (buildRandomLevel(firstLevel)) {
@@ -274,5 +279,9 @@ public class DungeonLevel implements Serializable {
             }
         }
         return roomList;
+    }
+
+    public DungeonTheme getTheme() {
+        return theme;
     }
 }

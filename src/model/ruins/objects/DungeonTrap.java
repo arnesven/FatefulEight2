@@ -1,9 +1,11 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.ruins.DungeonRoom;
+import model.ruins.themes.DungeonTheme;
 import model.states.DailyEventState;
 import model.states.ExploreRuinsState;
 import view.MyColors;

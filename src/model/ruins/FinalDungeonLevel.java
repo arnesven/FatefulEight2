@@ -1,11 +1,14 @@
 package model.ruins;
 
+import model.ruins.objects.StairsUp;
+import model.ruins.themes.DungeonTheme;
+
 import java.awt.*;
 import java.util.Random;
 
 public class FinalDungeonLevel extends DungeonLevel {
-    public FinalDungeonLevel(Random random) {
-        super(random, false, 1);
+    public FinalDungeonLevel(Random random, DungeonTheme theme) {
+        super(random, false, 1, theme);
         setFinalRoom(new BossRoom());
     }
 

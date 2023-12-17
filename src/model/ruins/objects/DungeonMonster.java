@@ -1,4 +1,4 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.Model;
 import model.classes.Skill;
@@ -132,12 +132,12 @@ public class DungeonMonster extends CenterDungeonObject {
     }
 
     @Override
-    protected Sprite getSprite(model.ruins.DungeonTheme theme) {
+    protected Sprite getSprite(model.ruins.themes.DungeonTheme theme) {
         return enemies.get(0).getAvatar();
     }
 
     @Override
-    public void drawYourself(Model model, int xPos, int yPos, model.ruins.DungeonTheme theme) {
+    public void drawYourself(Model model, int xPos, int yPos, model.ruins.themes.DungeonTheme theme) {
         model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
         if (isSleeping) {
             if (getSprite(theme) instanceof Animation) {

@@ -1,4 +1,4 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.enemies.*;
 import util.MyRandom;

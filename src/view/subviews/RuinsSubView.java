@@ -2,7 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.ruins.DungeonObject;
+import model.ruins.objects.DungeonObject;
 import model.states.ExploreRuinsState;
 import view.BorderFrame;
 import view.MyColors;

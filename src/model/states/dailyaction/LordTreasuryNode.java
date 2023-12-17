@@ -5,7 +5,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
-import model.ruins.DungeonChest;
+import model.ruins.objects.DungeonChest;
 import model.states.GameState;
 import model.states.events.ChestEvent;
 import model.states.events.SilentNoEventState;

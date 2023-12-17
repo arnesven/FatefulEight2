@@ -1,4 +1,4 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -6,12 +6,12 @@ import model.items.potions.Potion;
 import model.items.potions.UnstablePotion;
 import model.items.spells.ErodeSpell;
 import model.items.spells.Spell;
+import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
 import view.MyColors;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 import view.subviews.ArrowMenuSubView;
 
 import java.awt.*;

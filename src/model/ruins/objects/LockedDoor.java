@@ -1,20 +1,17 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.SkillCheckResult;
 import model.items.weapons.UnarmedCombatWeapon;
+import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyRandom;
-import view.MyColors;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
-
-import static model.ruins.DefaultDungeonTheme.BRICK_COLOR;
-import static model.ruins.DefaultDungeonTheme.FLOOR_COLOR;
 
 public class LockedDoor extends DungeonDoor {
 

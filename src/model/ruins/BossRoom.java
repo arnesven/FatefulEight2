@@ -1,6 +1,7 @@
 package model.ruins;
 
 import model.Model;
+import model.ruins.objects.BossMonsterObject;
 import model.states.ExploreRuinsState;
 import util.MyRandom;
 

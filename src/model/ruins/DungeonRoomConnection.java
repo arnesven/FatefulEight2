@@ -1,5 +1,7 @@
 package model.ruins;
 
+import model.ruins.objects.*;
+
 import java.awt.*;
 
 public enum DungeonRoomConnection {

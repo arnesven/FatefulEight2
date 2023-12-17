@@ -1,6 +1,7 @@
-package model.ruins;
+package model.ruins.objects;
 
 import model.Model;
+import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import view.sprites.Sprite;
 

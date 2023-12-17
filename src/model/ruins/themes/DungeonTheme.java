@@ -1,4 +1,4 @@
-package model.ruins;
+package model.ruins.themes;
 
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

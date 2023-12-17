@@ -1,4 +1,4 @@
-package model.ruins;
+package model.ruins.objects;
 
 public abstract class DungeonDoor extends DungeonObject {
 
@@ -12,7 +12,7 @@ public abstract class DungeonDoor extends DungeonObject {
         this.otherDoor = door;
     }
 
-    DungeonDoor getLinkedDoor() {
+    public DungeonDoor getLinkedDoor() {
         return otherDoor;
     }
 }

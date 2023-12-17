@@ -2,6 +2,8 @@ package model.ruins;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.ruins.objects.DungeonObject;
+import model.ruins.themes.*;
 import util.MyPair;
 import util.MyRandom;
 import view.sprites.LoopingSprite;
@@ -15,15 +17,17 @@ import java.util.List;
 
 public class RuinsDungeon implements Serializable {
 
-    private static final List<DungeonTheme> ALL_DUNGEON_THEMES =
-            List.of(new DefaultDungeonTheme(), new PurpleDungeonTheme(), new RedDungeonTheme(),
-                    new BlueDungeonTheme(), new GreenDungeonTheme(), new CaveDungeonTheme());
+    private static final List<DungeonTheme> ALL_BRICK_THEMES =
+            List.of(new GrayBrickTheme(), new PurpleBrickTheme(), new RedBrickTheme(),
+                    new BlueBrickTheme(), new GreenBrickTheme());
+    private static final List<DungeonTheme> ALL_CAVE_THEMES =
+            List.of(new GrayCaveTheme(), new PurpleCaveTheme(), new RedCaveTheme(),
+                    new BlueCaveTheme(), new GreenCaveTheme());
     private final List<DungeonLevel> levels = new ArrayList<>();
 
     // x y
     private static final LoopingSprite cursor = new QuestCursorSprite();
     private final DungeonMap map;
-    private final DungeonTheme theme;
     private boolean drawAvatar = true;
     private boolean drawCursor = true;
     private boolean completed = false;
@@ -39,13 +43,19 @@ public class RuinsDungeon implements Serializable {
                 levelSize = MyRandom.randInt(levelMinSize, levelMaxSize);
             } while (roomsTarget < levelSize*levelSize);
             roomsTarget -= levelSize*levelSize;
-            levels.add(new DungeonLevel(random, i == 0, levelSize));
+            levels.add(new DungeonLevel(random, i == 0, levelSize, makeDungeonTheme(i)));
             System.out.println(" Level " + i + " is " + levelSize + "x" + levelSize);
         }
         System.out.println(" Level " + i + " is the final level");
-        levels.add(new FinalDungeonLevel(random));
+        levels.add(new FinalDungeonLevel(random, makeDungeonTheme(i)));
         this.map = new DungeonMap(this);
-        this.theme = MyRandom.sample(ALL_DUNGEON_THEMES);
+    }
+
+    private static DungeonTheme makeDungeonTheme(int i) {
+        if (i < 2) {
+            return MyRandom.sample(ALL_BRICK_THEMES);
+        }
+        return MyRandom.sample(ALL_CAVE_THEMES);
     }
 
     public RuinsDungeon() {
@@ -53,8 +63,8 @@ public class RuinsDungeon implements Serializable {
     }
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
-        drawRoomBackgrounds(model, currentPosition, currentLevel, this.theme);
-        drawRoomObjects(model, currentPosition, matrix, this.theme);
+        drawRoomBackgrounds(model, currentPosition, currentLevel);
+        drawRoomObjects(model, currentLevel, matrix);
         if (drawAvatar) {
             drawAvatar(model, currentPosition, currentLevel);
         }
@@ -75,10 +85,11 @@ public class RuinsDungeon implements Serializable {
         return result;
     }
 
-    private void drawRoomBackgrounds(Model model, Point currentPosition, int currentLevel, DungeonTheme theme) {
+    private void drawRoomBackgrounds(Model model, Point currentPosition, int currentLevel) {
         int minX = (currentPosition.x / 2) * 2;
         int minY = (currentPosition.y / 2) * 2;
         DungeonRoom[][] rooms = getLevel(currentLevel).getRooms();
+        DungeonTheme theme = getLevel(currentLevel).getTheme();
         for (int y = minY; y < minY+2 && y < rooms.length; ++y) {
             for (int x = minX; x < minX+2 && x < rooms.length; ++x) {
                 if (rooms[x][y] != null) {
@@ -104,7 +115,8 @@ public class RuinsDungeon implements Serializable {
         }
     }
 
-    private void drawRoomObjects(Model model, Point currentPosition, SteppingMatrix<DungeonObject> matrix, DungeonTheme theme) {
+    private void drawRoomObjects(Model model, int currentLevel, SteppingMatrix<DungeonObject> matrix) {
+        DungeonTheme theme = getLevel(currentLevel).getTheme();
         for (int row = 0; row < matrix.getRows(); ++row) {
             for (int col = 0; col < matrix.getColumns(); ++col) {
                 if (matrix.getElementAt(col, row) != null) {

@@ -7,7 +7,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.WitchKingEnemy;
 import model.items.spells.DispelSpell;
-import model.ruins.DungeonMonster;
+import model.ruins.objects.DungeonMonster;
 import model.ruins.DungeonRoom;
 import model.ruins.FinalDungeonLevel;
 import model.ruins.RuinsDungeon;
