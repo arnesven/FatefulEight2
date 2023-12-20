@@ -53,4 +53,9 @@ public class EnchantressEnemy extends Enemy {
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
     }
+
+    @Override
+    public String getDeathSound() {
+        return "female_scream";
+    }
 }

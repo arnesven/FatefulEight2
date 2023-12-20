@@ -9,7 +9,7 @@ import model.enemies.behaviors.KnockDownAttackBehavior;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class HalflingMartialArtist extends Enemy {
+public class HalflingMartialArtist extends HumanoidEnemy {
 
     private static final Sprite SPRITE = Classes.None.getAvatar(Race.HALFLING, new BungoDarkwood());;
 

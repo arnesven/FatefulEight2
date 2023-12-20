@@ -7,7 +7,7 @@ import model.combat.NoCombatLoot;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class BlackKnightEnemy extends Enemy {
+public class BlackKnightEnemy extends HumanoidEnemy {
     private static Sprite avatar = Classes.BKN.getAvatar(Race.SOUTHERN_HUMAN, null);
 
     public BlackKnightEnemy(char enemyGroup) {

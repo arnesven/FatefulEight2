@@ -3,8 +3,6 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
-import model.races.NorthernHuman;
 import model.races.Race;
 import util.MyRandom;
 import view.MyColors;
@@ -13,7 +11,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class MuggerEnemy extends Enemy {
+public class MuggerEnemy extends HumanoidEnemy {
 
     private static List<Sprite> SPRITES = List.of(new MuggerSprite(Race.NORTHERN_HUMAN),
             new MuggerSprite(Race.DARK_ELF), new MuggerSprite(Race.HALF_ORC),

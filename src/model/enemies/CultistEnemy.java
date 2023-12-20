@@ -9,7 +9,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class CultistEnemy extends Enemy {
+public class CultistEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new CultistEnemySprite();
 
     public CultistEnemy(char a) {

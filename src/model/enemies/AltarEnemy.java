@@ -22,4 +22,9 @@ public abstract class AltarEnemy extends Enemy {
         return new Sprite32x32(name, "enemies.png", num,
                 MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.RED, MyColors.TAN);
     }
+
+    @Override
+    public String getDeathSound() {
+        return "daemon_death";
+    }
 }

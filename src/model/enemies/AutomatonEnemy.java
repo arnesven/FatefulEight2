@@ -42,6 +42,11 @@ public class AutomatonEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return "lever";
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new AutomatonLoot();
     }

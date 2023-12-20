@@ -45,6 +45,11 @@ public class QuadSpiritEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return "undead_death";
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new FinalBossCombatLoot(model);
     }

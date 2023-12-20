@@ -26,6 +26,11 @@ public abstract class GoblinEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return null;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
     }

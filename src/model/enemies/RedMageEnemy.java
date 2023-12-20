@@ -4,13 +4,12 @@ import model.Model;
 import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
 import model.enemies.behaviors.MagicRangedAttackBehavior;
-import model.enemies.behaviors.MixedAttackBehavior;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class RedMageEnemy extends Enemy {
+public class RedMageEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new RedMageSprite();
 
     public RedMageEnemy(char a) {

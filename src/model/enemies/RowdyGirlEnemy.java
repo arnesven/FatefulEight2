@@ -24,6 +24,11 @@ public class RowdyGirlEnemy extends RowdyEnemyEnemy {
         return sprite;
     }
 
+    @Override
+    public String getDeathSound() {
+        return "female_scream";
+    }
+
     private static class RowdyGirlSprite extends LoopingSprite {
 
         public RowdyGirlSprite(MyColors color) {

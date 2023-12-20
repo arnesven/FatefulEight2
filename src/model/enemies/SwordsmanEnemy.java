@@ -9,7 +9,7 @@ import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
-public class SwordsmanEnemy extends Enemy {
+public class SwordsmanEnemy extends HumanoidEnemy {
     private final Sprite sprite;
 
     public SwordsmanEnemy(char a, Race race) {

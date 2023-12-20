@@ -1,23 +1,16 @@
 package model.states.events;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.enemies.BearEnemy;
 import model.enemies.Enemy;
-import model.enemies.SoldierEnemy;
-import model.map.FieldsHex;
-import model.map.SeaHex;
-import model.map.WoodsHex;
+import model.enemies.HumanoidEnemy;
 import model.races.Race;
 import model.states.DailyEventState;
-import model.states.RunAwayState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
-import view.subviews.ShipCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +41,7 @@ public class PirateShipEvent extends DailyEventState {
         return result;
     }
 
-    private static class PirateEnemy extends Enemy {
+    private static class PirateEnemy extends HumanoidEnemy {
         private final int colorNum;
         private final Sprite[] SPRITES = new PirateEnemySprite[]{
             new PirateEnemySprite(MyColors.DARK_RED), new PirateEnemySprite(MyColors.DARK_BLUE),

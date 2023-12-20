@@ -8,7 +8,7 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import view.sprites.Sprite;
 
-public class TournamentEnemy extends Enemy {
+public class TournamentEnemy extends HumanoidEnemy {
     private GameCharacter innerChar = null;
 
     public TournamentEnemy(GameCharacter basedOnChar) {

@@ -5,11 +5,10 @@ import model.characters.LonnieLiebgott;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class NomadEnemy extends Enemy {
+public class NomadEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = Classes.AMZ.getAvatar(Race.NORTHERN_HUMAN, new LonnieLiebgott());
 
     public NomadEnemy(char enemyGroup, String name) {

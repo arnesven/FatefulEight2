@@ -4,16 +4,17 @@ import model.Model;
 import model.combat.CombatLoot;
 import model.combat.MonsterCombatLoot;
 import model.combat.StandardCombatLoot;
+import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public class SnowyBeastEnemy extends Enemy {
+public class SnowyBeastEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new Sprite32x32("snowybeast", "enemies.png", 0x4F,
             MyColors.BLACK, MyColors.WHITE, MyColors.CYAN, MyColors.LIGHT_BLUE);
 
     public SnowyBeastEnemy(char enemyGroup) {
-        super(enemyGroup, "Snowy Beast");
+        super(enemyGroup, "Snowy Beast", RAMPAGING, new MeleeAttackBehavior());
     }
 
     @Override

@@ -26,6 +26,11 @@ public class LizardmanEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return "orc_death";
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

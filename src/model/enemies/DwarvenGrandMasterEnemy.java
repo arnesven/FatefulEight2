@@ -8,7 +8,7 @@ import model.combat.NoCombatLoot;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class DwarvenGrandMasterEnemy extends Enemy {
+public class DwarvenGrandMasterEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = Classes.PAL.getAvatar(Race.DWARF, new TorhildAmbershard());;
 
     public DwarvenGrandMasterEnemy(char a) {

@@ -37,6 +37,11 @@ public class TrollEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return "frogman_death";
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
     }

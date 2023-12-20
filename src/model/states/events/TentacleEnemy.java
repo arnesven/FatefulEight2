@@ -38,6 +38,11 @@ public class TentacleEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return null;
+    }
+
+    @Override
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
     }

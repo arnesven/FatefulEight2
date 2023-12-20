@@ -8,7 +8,7 @@ import model.combat.NoCombatLoot;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class InterloperEnemy extends Enemy {
+public class InterloperEnemy extends HumanoidEnemy {
     private static Sprite avatar = Classes.BRD.getAvatar(Race.NORTHERN_HUMAN, new DefaultAppearance());
 
     public InterloperEnemy(char a) {

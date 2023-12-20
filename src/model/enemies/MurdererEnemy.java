@@ -7,7 +7,7 @@ import model.combat.PersonCombatLoot;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class MurdererEnemy extends Enemy {
+public class MurdererEnemy extends HumanoidEnemy {
     private static Sprite avatar = Classes.ASN.getAvatar(Race.DWARF, null);
 
     public MurdererEnemy(char a) {

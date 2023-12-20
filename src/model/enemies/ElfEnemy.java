@@ -3,14 +3,13 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
 import model.enemies.behaviors.RangedAttackBehavior;
 import model.races.Race;
 import view.sprites.ElfEnemySprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class ElfEnemy extends Enemy {
+public class ElfEnemy extends HumanoidEnemy {
     private static final LoopingSprite elfSprite = new ElfEnemySprite(Race.WOOD_ELF.getColor());
 
     public ElfEnemy(char a) {

@@ -35,4 +35,9 @@ public abstract class BeastEnemy extends Enemy {
         }
         return false;
     }
+
+    @Override
+    public String getDeathSound() {
+        return "beast_death";
+    }
 }

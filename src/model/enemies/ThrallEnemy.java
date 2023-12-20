@@ -12,7 +12,7 @@ import view.sprites.Sprite;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ThrallEnemy extends Enemy {
+public class ThrallEnemy extends HumanoidEnemy {
 
     private static final Map<Race, Sprite> maleSprites = makeThrallSprites(0xD4);
     private static final Map<Race, Sprite> femaleSprites = makeThrallSprites(0xD8);

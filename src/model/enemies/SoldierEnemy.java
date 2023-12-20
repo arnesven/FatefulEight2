@@ -3,12 +3,11 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
 import view.MyColors;
 import view.sprites.SoldierSprite;
 import view.sprites.Sprite;
 
-public class SoldierEnemy extends Enemy {
+public class SoldierEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new SoldierSprite(MyColors.GRAY_RED);
 
     public SoldierEnemy(char a) {

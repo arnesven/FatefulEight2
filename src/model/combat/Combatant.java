@@ -57,6 +57,8 @@ public abstract class Combatant implements Serializable {
 
     public abstract int getWidth();
 
+    public abstract String getDeathSound();
+
     public boolean getsCombatTurn() {
         return !isDead() && !Condition.disablesCombatTurn(conditions);
     }
@@ -185,4 +187,5 @@ public abstract class Combatant implements Serializable {
     public List<Condition> getConditions() {
         return conditions;
     }
+
 }

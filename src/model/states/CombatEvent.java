@@ -11,6 +11,7 @@ import model.classes.SkillCheckResult;
 import model.enemies.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import sound.SoundEffects;
 import sprites.CombatSpeechBubble;
 import util.MyLists;
 import util.MyPair;
@@ -371,6 +372,9 @@ public class CombatEvent extends DailyEventState {
         if (target.getHP() <= 0) {
             RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();
             if (killAnimation != null) {
+                if (target.getDeathSound() != null) {
+                    SoundEffects.playSound(target.getDeathSound());
+                }
                 subView.addSpecialEffect(target, killAnimation);
             }
             destroyEnemy(getModel(), (Enemy)target, damager);

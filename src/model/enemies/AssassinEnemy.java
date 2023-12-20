@@ -9,7 +9,7 @@ import util.MyRandom;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
-public class AssassinEnemy extends Enemy {
+public class AssassinEnemy extends HumanoidEnemy {
     private final AvatarSprite sprite;
 
     public AssassinEnemy(char a) {

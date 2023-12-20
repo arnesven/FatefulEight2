@@ -362,6 +362,14 @@ public class GameCharacter extends Combatant {
         return 1;
     }
 
+    @Override
+    public String getDeathSound() {
+        if (getGender()) {
+            return "female_scream";
+        }
+        return "male_scream";
+    }
+
     public List<CombatAction> getCombatActions(Model model, Combatant target, CombatEvent combatEvent) {
         List<CombatAction> result = new ArrayList<>();
         if (canAttackInCombat() && target.canBeAttackedBy(this)) {

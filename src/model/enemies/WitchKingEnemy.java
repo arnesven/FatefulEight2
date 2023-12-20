@@ -9,7 +9,7 @@ import model.enemies.behaviors.MagicMeleeAttackBehavior;
 import model.races.Race;
 import view.sprites.Sprite;
 
-public class WitchKingEnemy extends Enemy {
+public class WitchKingEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = Classes.WITCH_KING.getAvatar(Race.WITCH_KING, new WitchKingAppearance());
 
     public WitchKingEnemy(char enemyGroup) {

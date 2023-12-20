@@ -29,4 +29,9 @@ public abstract class FrogmanEnemy extends Enemy {
     public CombatLoot getLoot(Model model) {
         return new FrogmanLoot(model);
     }
+
+    @Override
+    public String getDeathSound() {
+        return "frogman_death";
+    }
 }

@@ -41,4 +41,9 @@ public class FaeryEnemy extends Enemy {
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
     }
+
+    @Override
+    public String getDeathSound() {
+        return "squeek";
+    }
 }

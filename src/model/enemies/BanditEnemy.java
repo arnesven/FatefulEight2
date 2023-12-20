@@ -3,14 +3,13 @@ package model.enemies;
 import model.Model;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
 import model.races.Race;
 import util.MyRandom;
 import view.sprites.BanditSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class BanditEnemy extends Enemy {
+public class BanditEnemy extends HumanoidEnemy {
 
     private static final LoopingSprite humanSprite = new BanditSprite(Race.NORTHERN_HUMAN.getColor());
     private static final LoopingSprite halfOrcSprite = new BanditSprite(Race.HALF_ORC.getColor());

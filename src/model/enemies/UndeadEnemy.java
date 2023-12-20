@@ -6,4 +6,9 @@ public abstract class UndeadEnemy extends Enemy {
     public UndeadEnemy(char enemyGroup, String name, EnemyAttackBehavior behavior) {
         super(enemyGroup, name, behavior);
     }
+
+    @Override
+    public String getDeathSound() {
+        return "undead_death";
+    }
 }

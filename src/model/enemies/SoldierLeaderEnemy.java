@@ -7,7 +7,7 @@ import view.MyColors;
 import view.sprites.SoldierSprite;
 import view.sprites.Sprite;
 
-public class SoldierLeaderEnemy extends Enemy {
+public class SoldierLeaderEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new SoldierSprite(MyColors.LIGHT_BLUE);
 
     public SoldierLeaderEnemy(char a) {

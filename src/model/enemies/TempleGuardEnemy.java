@@ -8,9 +8,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-import java.util.List;
-
-public class TempleGuardEnemy extends Enemy {
+public class TempleGuardEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new TempleGuardSprite();
 
     public TempleGuardEnemy(char a) {

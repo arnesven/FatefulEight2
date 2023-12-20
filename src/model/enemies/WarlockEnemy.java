@@ -9,7 +9,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class WarlockEnemy extends Enemy {
+public class WarlockEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new WarlockEnemySprite();
 
     public WarlockEnemy(char a) {

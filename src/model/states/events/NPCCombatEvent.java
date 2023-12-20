@@ -111,6 +111,11 @@ public class NPCCombatEvent extends CombatEvent {
         }
 
         @Override
+        public String getDeathSound() {
+            return chara.getDeathSound();
+        }
+
+        @Override
         protected Sprite getSprite() {
             return chara.getAvatarSprite();
         }

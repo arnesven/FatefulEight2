@@ -8,7 +8,7 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class ElvenGuardEnemy extends Enemy {
+public class ElvenGuardEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new ElvenGuardSprite();
 
     public ElvenGuardEnemy(char a) {

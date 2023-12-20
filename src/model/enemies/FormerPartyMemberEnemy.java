@@ -50,6 +50,11 @@ public class FormerPartyMemberEnemy extends Enemy {
     }
 
     @Override
+    public String getDeathSound() {
+        return basedOn.getDeathSound();
+    }
+
+    @Override
     public int getDamageReduction() {
         int ap = basedOn.getAP();
         return (int)Math.ceil(ap / 4.0);

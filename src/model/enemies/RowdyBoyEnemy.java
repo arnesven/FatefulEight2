@@ -1,10 +1,7 @@
 package model.enemies;
 
-import model.Model;
 import model.characters.appearance.HairStyle;
 import model.characters.appearance.SwimAttire;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
 import model.races.Race;
 import util.MyRandom;
 import view.MyColors;
@@ -18,6 +15,11 @@ public class RowdyBoyEnemy extends RowdyEnemyEnemy {
     public RowdyBoyEnemy(char a) {
         super(a, "Rowdy Boy");
         sprite = new RowdyBoySprite(SwimAttire.randomSwimSuitColor());
+    }
+
+    @Override
+    public String getDeathSound() {
+        return "male_scream";
     }
 
     @Override

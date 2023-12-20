@@ -6,7 +6,7 @@ import model.combat.PersonCombatLoot;
 import view.sprites.HermitSprite;
 import view.sprites.Sprite;
 
-public class HermitEnemy extends Enemy {
+public class HermitEnemy extends HumanoidEnemy {
     private static final Sprite SPRITE = new HermitSprite();
 
     public HermitEnemy(char a) {
