@@ -2,6 +2,8 @@ package model.map;
 
 import model.Model;
 import model.states.DailyEventState;
+import model.states.GameState;
+import model.states.events.EveningAtSeaState;
 import model.states.events.NoEventState;
 import view.sprites.Sprite;
 import view.subviews.CombatTheme;
@@ -77,5 +79,10 @@ public class SeaHex extends WorldHex {
     @Override
     public CombatTheme getCombatTheme() {
         return new ShipCombatTheme();
+    }
+
+    @Override
+    public GameState getEveningState(Model model, boolean freeLodging, boolean freeRations) {
+        return new EveningAtSeaState(model);
     }
 }

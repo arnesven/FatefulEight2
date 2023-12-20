@@ -39,14 +39,20 @@ public abstract class DailyEventState extends GameState {
         if (model.getParty().isWipedOut()) {
             return new GameOverState(model);
         }
-        if (haveFledCombat()) {
-            return new RunAwayState(model);
+        if (allowCheckForFlee()) {
+            if (haveFledCombat()) {
+                return new RunAwayState(model);
+            }
         }
         if (MyRandom.rollD10() <= model.getParty().getPartyMembers().size() - 4) {
             return WorldHex.generatePartyEvent(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
         return getEveningState(model);
+    }
+
+    protected boolean allowCheckForFlee() {
+        return true;
     }
 
     protected GameState getEveningState(Model model) {

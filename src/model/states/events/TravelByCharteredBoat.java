@@ -27,6 +27,11 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
     }
 
     @Override
+    protected boolean allowCheckForFlee() {
+        return false;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return TravelBySeaState.SHIP_AVATAR;
     }
