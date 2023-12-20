@@ -10,25 +10,14 @@ import view.subviews.CastleSubView;
 import view.subviews.TownSubView;
 
 public class CampOutsideOfTownNode extends DailyActionNode {
-    private static final Sprite SPRITE1 = new Sprite32x32("travel", "world_foreground.png", 0x52,
-            TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
-    private static final Sprite SPRITE2 = new Sprite32x32("travel", "world_foreground.png", 0x52,
-            CastleSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
-    private static final Sprite SPRITE3 = new Sprite32x32("travel", "world_foreground.png", 0x52,
-            TownSubView.GROUND_COLOR_NIGHT, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
     private final boolean freeRations;
     private final Sprite sprite;
 
     public CampOutsideOfTownNode(boolean freeRations, MyColors color, String text) {
         super(text);
         this.freeRations = freeRations;
-        if (color == TownSubView.GROUND_COLOR) {
-            sprite = SPRITE1;
-        } else if (color == TownSubView.GROUND_COLOR_NIGHT) {
-            sprite = SPRITE3;
-        } else {
-            sprite = SPRITE2;
-        }
+        sprite = new Sprite32x32("travel", "world_foreground.png", 0x52,
+                color, TownSubView.PATH_COLOR, MyColors.DARK_GREEN, MyColors.YELLOW);
     }
 
     @Override
