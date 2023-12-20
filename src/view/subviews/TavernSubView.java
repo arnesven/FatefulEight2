@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.races.Race;
 import model.states.dailyaction.*;
 import util.MyRandom;
@@ -83,8 +84,13 @@ public class TavernSubView extends DailyActionSubView {
                 } else if (row == 7) {
                     model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
                 } else {
-                    model.getScreenHandler().put(p.x, p.y,
-                            GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+                    Sprite spr;
+                    if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+                        spr = GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                    } else {
+                        spr = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                    }
+                    model.getScreenHandler().put(p.x, p.y, spr);
                 }
             }
         }
