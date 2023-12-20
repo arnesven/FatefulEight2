@@ -47,4 +47,9 @@ public abstract class WandWeapon extends Weapon {
     public int getWeight() {
         return 200;
     }
+
+    @Override
+    public String getAttackSound() {
+        return "wand";
+    }
 }

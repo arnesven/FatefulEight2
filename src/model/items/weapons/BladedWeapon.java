@@ -53,4 +53,9 @@ public abstract class BladedWeapon extends Weapon {
     public int getWeight() {
         return isTwoHanded() ? 3000 : 1000;
     }
+
+    @Override
+    public String getAttackSound() {
+        return "blade";
+    }
 }

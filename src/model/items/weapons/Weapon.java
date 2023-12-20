@@ -165,4 +165,8 @@ public abstract class Weapon extends EquipableItem {
                                  Combatant target, int damage, int critical) {
 
     }
+
+    public String getAttackSound() {
+        return "default_attack";
+    }
 }

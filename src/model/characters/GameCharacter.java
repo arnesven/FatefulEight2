@@ -27,6 +27,8 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
 import model.states.CombatEvent;
+import sound.SoundEffects;
+import sound.SoundManager;
 import sprites.CombatSpeechBubble;
 import util.MyPair;
 import util.MyRandom;
@@ -219,6 +221,7 @@ public class GameCharacter extends Combatant {
                 damageColor = DamageValueEffect.CRITICAL_DAMAGE;
             }
             combatEvent.addFloatyDamage(target, damage, damageColor);
+            SoundEffects.playSound(equipment.getWeapon().getAttackSound());
         } else {
             combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
         }
