@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
@@ -15,12 +16,14 @@ import java.util.Random;
 
 public class TownSubView extends DailyActionSubView {
     public static final MyColors GROUND_COLOR = MyColors.GREEN;
+    public static final MyColors GROUND_COLOR_NIGHT = MyColors.DARK_GREEN;
     public static final MyColors PATH_COLOR = MyColors.DARK_GRAY;
     public static final MyColors STREET_COLOR = MyColors.GRAY;
     public static final Sprite STREET = new Sprite32x32("streetground", "world_foreground.png", 0x02, GROUND_COLOR, PATH_COLOR, MyColors.TAN);
+    private final Sprite street;
     private static final Sprite STREET_INNER = new Sprite32x32("streetground", "world_foreground.png", 0x02, STREET_COLOR, PATH_COLOR, MyColors.TAN);
-    private static final Sprite WATER = new DockSprite(0xA6);
-    private static final Sprite DOCK = new DockSprite(0xB6);
+    private final Sprite waterSprite;
+    private final Sprite dockSprite;
     public static final Sprite[] TOWN_HOUSES = new Sprite[]{
             new Sprite32x32("townhouse", "world_foreground.png", 0x43,
                     MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.CYAN),
@@ -38,6 +41,15 @@ public class TownSubView extends DailyActionSubView {
         super(state, matrix);
         this.isCoastal = isCoastal;
         this.townName = townName;
+        street = new Sprite32x32("streetground", "world_foreground.png", 0x02,
+                state.isEvening() ? GROUND_COLOR_NIGHT : GROUND_COLOR, PATH_COLOR, MyColors.TAN);
+        if (state.isEvening()) {
+            waterSprite = new DockSprite(0xA6, MyColors.DARK_BLUE, MyColors.BLUE);
+            dockSprite = new DockSprite(0xB6, MyColors.DARK_BLUE, MyColors.BLUE);
+        } else {
+            waterSprite = new DockSprite(0xA6, MyColors.LIGHT_BLUE, MyColors.CYAN);
+            dockSprite = new DockSprite(0xB6, MyColors.LIGHT_BLUE, MyColors.CYAN);
+        }
     }
 
     @Override
@@ -74,9 +86,9 @@ public class TownSubView extends DailyActionSubView {
     private void drawDocks(Model model) {
         for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {
             Point p = convertToScreen(new Point(col, 0));
-            model.getScreenHandler().put(p.x, p.y, DOCK);
+            model.getScreenHandler().put(p.x, p.y, dockSprite);
             p.y -= 2;
-            model.getScreenHandler().put(p.x, p.y, WATER);
+            model.getScreenHandler().put(p.x, p.y, waterSprite);
         }
     }
 
@@ -97,24 +109,29 @@ public class TownSubView extends DailyActionSubView {
                 Point p = convertToScreen(new Point(col, row));
                 if (col == TownDailyActionState.TOWN_MATRIX_COLUMNS-1
                         || row == TownDailyActionState.TOWN_MATRIX_ROWS-1) {
-                    model.getScreenHandler().put(p.x, p.y,
-                            GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+                    Sprite spr;
+                    if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+                        spr = GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                    } else {
+                        spr = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                    }
+                    model.getScreenHandler().put(p.x, p.y, spr);
                 } else if (1 <= col && col <= 5 && 2 <= row && row <= 6) {
                     model.getScreenHandler().put(p.x, p.y, STREET_INNER);
                 } else {
-                    model.getScreenHandler().put(p.x, p.y, STREET);
+                    model.getScreenHandler().put(p.x, p.y, street);
                 }
             }
         }
     }
 
     private static class DockSprite extends LoopingSprite {
-        public DockSprite(int num) {
+        public DockSprite(int num, MyColors color1, MyColors color2) {
             super("docksprite"+num, "world_foreground.png", num, 32, 32);
             setFrames(4);
             setDelay(32);
-            setColor1(MyColors.LIGHT_BLUE);
-            setColor2(MyColors.CYAN);
+            setColor1(color1);
+            setColor2(color2);
             setColor3(MyColors.BROWN);
             setColor4(MyColors.DARK_GRAY);
         }

@@ -2,9 +2,11 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.map.HexLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
+import view.MyColors;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownSubView;
 
@@ -22,9 +24,13 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 4, new StayHereNode());
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
         super.addNode(3, 3, new TownHallNode());
-        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, TownSubView.GROUND_COLOR, "Make camp on the outskirts of town"));
-        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(TownSubView.GROUND_COLOR));
-        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode(TownSubView.GROUND_COLOR));
+        MyColors groundColor = TownSubView.GROUND_COLOR;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            groundColor = TownSubView.GROUND_COLOR_NIGHT;
+        }
+        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, groundColor, "Make camp on the outskirts of town"));
+        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(groundColor));
+        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode(groundColor));
         addNode(7, 2, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
         if (isCoastal && !urbanLocation.noBoat()) {

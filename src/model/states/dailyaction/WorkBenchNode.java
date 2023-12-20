@@ -14,12 +14,16 @@ public class WorkBenchNode extends DailyActionNode {
             TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
     private static final Sprite SPRITE2 = new Sprite32x32("workbenchcastle", "world_foreground.png", 0x71,
             CastleSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
+    private static final Sprite SPRITE3 = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
+            TownSubView.GROUND_COLOR_NIGHT, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
     private final Sprite sprite;
 
     public WorkBenchNode(MyColors groundColor) {
         super("Work Bench");
         if (groundColor == TownSubView.GROUND_COLOR) {
             sprite = SPRITE1;
+        } else if (groundColor == TownSubView.GROUND_COLOR_NIGHT) {
+            sprite = SPRITE3;
         } else {
             sprite = SPRITE2;
         }

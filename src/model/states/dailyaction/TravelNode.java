@@ -14,12 +14,16 @@ class TravelNode extends DailyActionNode {
             TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private static final Sprite SPRITE2 = new Sprite32x32("travel", "world_foreground.png", 0x32,
             CastleSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+    private static final Sprite SPRITE3 = new Sprite32x32("travel", "world_foreground.png", 0x32,
+            TownSubView.GROUND_COLOR_NIGHT, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
     private final Sprite sprite;
 
     public TravelNode(MyColors color) {
         super("Travel");
         if (color == TownSubView.GROUND_COLOR) {
             sprite = SPRITE1;
+        } else if (color == TownSubView.GROUND_COLOR_NIGHT) {
+            sprite = SPRITE3;
         } else {
             sprite = SPRITE2;
         }
