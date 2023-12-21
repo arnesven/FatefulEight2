@@ -96,9 +96,18 @@ public class TownSubView extends DailyActionSubView {
         Random random = new Random(8);
         for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {
             Point p = convertToScreen(new Point(col, 0));
-            model.getScreenHandler().put(p.x, p.y, GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+            Sprite spr1;
+            Sprite spr2;
+            if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+                spr1 = GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.darkGrassSprites.length)];
+                spr2 = GrassCombatTheme.darkGrassSprites[random.nextInt(GrassCombatTheme.darkGrassSprites.length)];
+            } else {
+                spr1 = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+                spr2 = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
+            }
+            model.getScreenHandler().put(p.x, p.y, spr1);
             p.y -= 2;
-            model.getScreenHandler().put(p.x, p.y, GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
+            model.getScreenHandler().put(p.x, p.y, spr2);
         }
     }
 

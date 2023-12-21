@@ -1,9 +1,12 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.races.Race;
 import model.states.DailyEventState;
+import view.subviews.PortraitSubView;
 
 public class LoveLetterEvent extends DailyEventState {
     public LoveLetterEvent(Model model) {
@@ -28,7 +31,8 @@ public class LoveLetterEvent extends DailyEventState {
         if (yesNoInput()) {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 10 - rollBonus);
             if (result) {
-                showRandomPortrait(model, Classes.ART, "Doug");
+                CharacterAppearance dougAppearance = PortraitSubView.makeRandomPortrait(Classes.ART, Race.ALL, false);
+                showExplicitPortrait(model, dougAppearance, "Doug");
                 println("You finally find a carpenter named Doug who admits to writing the letter.");
                 portraitSay("I must have dropped it while returning from the market this morning!");
                 int reward = 15 - rollBonus * 4;
@@ -47,7 +51,8 @@ public class LoveLetterEvent extends DailyEventState {
         } else {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.SeekInfo, 8);
             if (result) {
-                showRandomPortrait(model, Classes.NOB, "Maggie");
+                CharacterAppearance maggieAppearance = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.ALL, true);
+                showExplicitPortrait(model, maggieAppearance, "Maggie");
                 println("You finally find a nobleman's daughter named Maggie. She isn't expecting a letter but " +
                         "after reading it she turns bright pink and admits to being the intended recipient.");
                 portraitSay("Please let me reward you. If not for you, I would have never received this and my poor " +
