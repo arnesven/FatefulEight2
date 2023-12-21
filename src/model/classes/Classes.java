@@ -22,6 +22,10 @@ public interface Classes {
     CharacterClass WIZ = new WizardClass();
     CharacterClass WIT = new WitchClass();
     CharacterClass None = new NoClass();
+
+    // Prestige Classes:
+    CharacterClass NINJA = new NinjaClass(); // TODO: Develop this and use this ?
+
     CharacterClass[] allClasses = new CharacterClass[]{None,
             AMZ, ART, ASN, BBN, BRD, BKN, CAP, FOR, DRU, MAG,
             MAR, MIN, NOB, PAL, PRI, SOR, SPY, THF, WIZ, WIT};
