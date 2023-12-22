@@ -12,8 +12,8 @@ public class CaptainClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.GRAY;
     private static final MyColors SECONDARY_COLOR = MyColors.DARK_GRAY;
 
-    protected CaptainClass() {
-        super("Captain", "C", 8, 5, true, 16,
+    protected CaptainClass(String className, String shortName) {
+        super(className, shortName, 8, 5, true, 16,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 4),
                         new WeightedSkill(Skill.Bows, 2),
@@ -26,6 +26,10 @@ public class CaptainClass extends CharacterClass {
                         new WeightedSkill(Skill.Security, 2),
                         new WeightedSkill(Skill.Survival, 3)
                 });
+    }
+
+    protected CaptainClass() {
+        this("Captain", "C");
     }
 
     @Override

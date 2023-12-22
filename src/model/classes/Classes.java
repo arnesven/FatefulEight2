@@ -24,7 +24,8 @@ public interface Classes {
     CharacterClass None = new NoClass();
 
     // Prestige Classes:
-    CharacterClass NINJA = new NinjaClass(); // TODO: Develop this and use this ?
+    CharacterClass NINJA = new NinjaClass(); // TODO: Develop this and use these ?
+    CharacterClass SAMURAI = new SamuraiClass();
 
     CharacterClass[] allClasses = new CharacterClass[]{None,
             AMZ, ART, ASN, BBN, BRD, BKN, CAP, FOR, DRU, MAG,
