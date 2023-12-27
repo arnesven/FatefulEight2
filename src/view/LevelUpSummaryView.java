@@ -25,6 +25,9 @@ public class LevelUpSummaryView extends SelectableListMenu {
         this.willBe.setLevel(levler.getLevel()+1);
         this.content = new ArrayList<>();
         this.content.add(new BeforeAndAfterLine<>("Health Points", levler.getMaxHP(), willBe.getMaxHP()));
+        if (levler.getMaxSP() < willBe.getMaxSP()) {
+            this.content.add(new BeforeAndAfterLine<>("Stamina Points", levler.getMaxSP(), willBe.getMaxSP()));
+        }
         this.content.add(new BeforeAndAfterLine<>("", 0, 0));
         for (Skill s : Skill.values()) {
             if (willBe.getRankForSkill(s) != levler.getRankForSkill(s)) {
