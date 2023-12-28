@@ -32,6 +32,7 @@ public class CatInATreeEvent extends DarkDeedsEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        println("");
         portraitSay("Come down Quincy. Come down... Oh, excuse me sir. Would you mind helping me?");
         leaderSay("What's the problem then?");
         portraitSay("My cat, Quincy. He won't come down. I think he chased a squirrel up there, " +

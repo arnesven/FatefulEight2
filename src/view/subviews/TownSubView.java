@@ -20,10 +20,16 @@ public class TownSubView extends DailyActionSubView {
     public static final MyColors PATH_COLOR = MyColors.DARK_GRAY;
     public static final MyColors STREET_COLOR = MyColors.GRAY;
     public static final Sprite STREET = new Sprite32x32("streetground", "world_foreground.png", 0x02, GROUND_COLOR, PATH_COLOR, MyColors.TAN);
-    private final Sprite street;
     private static final Sprite STREET_INNER = new Sprite32x32("streetground", "world_foreground.png", 0x02, STREET_COLOR, PATH_COLOR, MyColors.TAN);
-    private final Sprite waterSprite;
-    private final Sprite dockSprite;
+    private static final Sprite WATER_DAY = new DockSprite(0xA6, MyColors.LIGHT_BLUE, MyColors.CYAN);
+    private static final Sprite WATER_EVENING = new DockSprite(0xA6, MyColors.DARK_BLUE, MyColors.BLUE);
+    private static final Sprite DOCK_DAY = new DockSprite(0xB6, MyColors.LIGHT_BLUE, MyColors.CYAN);
+    private static final Sprite DOCK_EVENING = new DockSprite(0xB6, MyColors.DARK_BLUE, MyColors.BLUE);
+    private static final Sprite STREET_DAY = new Sprite32x32("streetground", "world_foreground.png", 0x02,
+            GROUND_COLOR, PATH_COLOR, MyColors.TAN);
+    private static final Sprite STREET_EVENING = new Sprite32x32("streetground", "world_foreground.png", 0x02,
+            GROUND_COLOR_NIGHT, PATH_COLOR, MyColors.TAN);
+
     public static final Sprite[] TOWN_HOUSES = new Sprite[]{
             new Sprite32x32("townhouse", "world_foreground.png", 0x43,
                     MyColors.YELLOW, PATH_COLOR, MyColors.BROWN, MyColors.CYAN),
@@ -41,15 +47,6 @@ public class TownSubView extends DailyActionSubView {
         super(state, matrix);
         this.isCoastal = isCoastal;
         this.townName = townName;
-        street = new Sprite32x32("streetground", "world_foreground.png", 0x02,
-                state.isEvening() ? GROUND_COLOR_NIGHT : GROUND_COLOR, PATH_COLOR, MyColors.TAN);
-        if (state.isEvening()) {
-            waterSprite = new DockSprite(0xA6, MyColors.DARK_BLUE, MyColors.BLUE);
-            dockSprite = new DockSprite(0xB6, MyColors.DARK_BLUE, MyColors.BLUE);
-        } else {
-            waterSprite = new DockSprite(0xA6, MyColors.LIGHT_BLUE, MyColors.CYAN);
-            dockSprite = new DockSprite(0xB6, MyColors.LIGHT_BLUE, MyColors.CYAN);
-        }
     }
 
     @Override
@@ -84,6 +81,15 @@ public class TownSubView extends DailyActionSubView {
     }
 
     private void drawDocks(Model model) {
+        Sprite waterSprite;
+        Sprite dockSprite;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            waterSprite = WATER_EVENING;
+            dockSprite = DOCK_EVENING;
+        } else {
+            waterSprite = WATER_DAY;
+            dockSprite = DOCK_DAY;
+        }
         for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {
             Point p = convertToScreen(new Point(col, 0));
             model.getScreenHandler().put(p.x, p.y, dockSprite);
@@ -112,6 +118,11 @@ public class TownSubView extends DailyActionSubView {
     }
 
     private void drawStreet(Model model) {
+        Sprite street = STREET_DAY;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            street = STREET_EVENING;
+        }
+
         Random random = new Random(1234);
         for (int row = 1; row < TownDailyActionState.TOWN_MATRIX_ROWS; ++row) {
             for (int col = 0; col < TownDailyActionState.TOWN_MATRIX_COLUMNS; ++col) {

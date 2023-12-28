@@ -24,13 +24,11 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 4, new StayHereNode());
         super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
         super.addNode(3, 3, new TownHallNode());
-        MyColors groundColor = TownSubView.GROUND_COLOR;
-        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
-            groundColor = TownSubView.GROUND_COLOR_NIGHT;
-        }
-        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, groundColor, "Make camp on the outskirts of town"));
-        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(groundColor));
-        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y, new TravelNode(groundColor));
+        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, model,
+                TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT, "Make camp on the outskirts of town"));
+        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
+        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y,
+                new TravelNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
         addNode(7, 2, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
         if (isCoastal && !urbanLocation.noBoat()) {

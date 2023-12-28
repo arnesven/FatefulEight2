@@ -21,13 +21,11 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 4, new StayHereNode());
         super.addNode(location.getTavernPosition().x, location.getTavernPosition().y, new TavernNode(freeLodge));
         super.addNode(3, 2, new GoToCastleActionNode(location));
-        MyColors groundColor = CastleSubView.GROUND_COLOR;
-        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
-            groundColor = CastleSubView.GROUND_COLOR_NIGHT;
-        }
-        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, groundColor, "Camp outside the castle walls"));
-        super.addNode(location.getTravelNodePosition().x, location.getTravelNodePosition().y, new TravelNode(groundColor));
-        super.addNode(6, 6, new WorkBenchNode(groundColor));
+        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, model, CastleSubView.GROUND_COLOR,
+                CastleSubView.GROUND_COLOR_NIGHT, "Camp outside the castle walls"));
+        super.addNode(location.getTravelNodePosition().x, location.getTravelNodePosition().y,
+                new TravelNode(model, CastleSubView.GROUND_COLOR, CastleSubView.GROUND_COLOR_NIGHT));
+        super.addNode(6, 6, new WorkBenchNode(model, CastleSubView.GROUND_COLOR, CastleSubView.GROUND_COLOR_NIGHT));
         addNode(4, 6, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
         for (GeneralShopNode shop : location.getShops(model)) {

@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.GameState;
 import model.states.TravelState;
 import view.MyColors;
@@ -10,12 +11,17 @@ import view.subviews.CastleSubView;
 import view.subviews.TownSubView;
 
 class TravelNode extends DailyActionNode {
-    private final Sprite sprite;
+    private final Sprite daySprite;
+    private final Sprite32x32 nightSprite;
+    private final Model model;
 
-    public TravelNode(MyColors color) {
+    public TravelNode(Model model, MyColors dayColor, MyColors nightColor) {
         super("Travel");
-        sprite = new Sprite32x32("travel", "world_foreground.png", 0x32,
-                color, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+        this.model = model;
+        daySprite = new Sprite32x32("travel", "world_foreground.png", 0x32,
+                dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
+        nightSprite = new Sprite32x32("travel", "world_foreground.png", 0x32,
+                nightColor, TownSubView.PATH_COLOR, MyColors.DARK_BROWN, MyColors.LIGHT_YELLOW);
     }
 
     @Override
@@ -26,7 +32,10 @@ class TravelNode extends DailyActionNode {
 
     @Override
     public Sprite getBackgroundSprite() {
-        return sprite;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            return nightSprite;
+        }
+        return daySprite;
     }
 
     @Override

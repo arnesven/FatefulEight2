@@ -10,12 +10,17 @@ import view.subviews.CastleSubView;
 import view.subviews.TownSubView;
 
 public class WorkBenchNode extends DailyActionNode {
-    private final Sprite sprite;
+    private final Sprite daySprite;
+    private final Model model;
+    private final Sprite32x32 nightSprite;
 
-    public WorkBenchNode(MyColors groundColor) {
+    public WorkBenchNode(Model model, MyColors dayColor, MyColors nightColor) {
         super("Work Bench");
-        sprite = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
-                groundColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
+        this.model = model;
+        daySprite = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
+                dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
+        nightSprite = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
+                nightColor, TownSubView.PATH_COLOR, MyColors.DARK_BROWN, MyColors.TAN);
     }
 
     @Override
@@ -25,7 +30,10 @@ public class WorkBenchNode extends DailyActionNode {
 
     @Override
     public Sprite getBackgroundSprite() {
-        return sprite;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            return nightSprite;
+        }
+        return daySprite;
     }
 
     @Override
