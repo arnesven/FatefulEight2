@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.TimeOfDay;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TavernDailyActionState;
@@ -17,10 +18,11 @@ public class CastleSubView extends DailyActionSubView {
 
     public static final MyColors GROUND_COLOR = MyColors.TAN;
     public static final MyColors GROUND_COLOR_NIGHT = MyColors.DARK_BROWN;
-    private final Sprite over_gate;
-    private final Sprite over_wall;
+    private final Sprite[] gateDay;
+    private final Sprite[] gateNight;
     private static List<Point> townPoints;
-    private final Sprite[][] rows;
+    private final Sprite[][] rowsDay;
+    private final Sprite[][] rowsNight;
 
     private static final Map<String, Sprite> castleSprites = new HashMap<>();
 
@@ -30,10 +32,33 @@ public class CastleSubView extends DailyActionSubView {
         super(advancedDailyActionState, matrix);
         this.placeName = placeName;
 
-        MyColors groundColor = GROUND_COLOR;
-        if (advancedDailyActionState.isEvening()) {
-            groundColor = GROUND_COLOR_NIGHT;
+
+        rowsDay = makeRows(color, GROUND_COLOR);
+        rowsNight = makeRows(color, GROUND_COLOR_NIGHT);
+        gateDay = makeGate(GROUND_COLOR);
+        gateNight = makeGate(GROUND_COLOR_NIGHT);
+
+
+        townPoints = new ArrayList<>();
+        for (int x = 1; x < 7; ++x) {
+            for (int y = 1; y < 7; ++y) {
+                if (!( 1 < x && x < 5 && y < 3) && x != 3) {
+                    townPoints.add(new Point(x, y));
+                }
+            }
         }
+    }
+
+    private Sprite[] makeGate(MyColors groundColor) {
+        return new Sprite[]{
+                new Sprite32x32("castleGate", "world_foreground.png", 0x79,
+                        MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, groundColor),
+                new Sprite32x32("castleGate", "world_foreground.png", 0x78,
+                        MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, groundColor)
+        };
+    }
+
+    private Sprite[][] makeRows(MyColors color, MyColors groundColor) {
         Sprite ground = new Sprite32x32("castleGround", "world_foreground.png", 0x02,
                 groundColor, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY);
         Sprite groundNoPath = new Sprite32x32("castleGroundNoPath", "world_foreground.png", 0x72,
@@ -58,12 +83,7 @@ public class CastleSubView extends DailyActionSubView {
                 MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, groundColor);
         Sprite gate = new Sprite32x32("castleGate", "world_foreground.png", 0x49,
                 MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, groundColor);
-        over_gate = new Sprite32x32("castleGate", "world_foreground.png", 0x79,
-                MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, groundColor);
-        over_wall = new Sprite32x32("castleGate", "world_foreground.png", 0x78,
-                MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, groundColor);
-
-        rows = new Sprite[][]{
+        Sprite[][] rows = new Sprite[][]{
                 new Sprite[]{groundNoPath, groundNoPath, makeSprite(0x08, color), makeSprite(0x09, color), makeSprite(0xA, color), groundNoPath, groundNoPath, groundNoPath},
                 new Sprite[]{towerUL, horiWall, makeSprite(0x18, color), makeSprite(0x19, color), makeSprite(0x1A, color), horiWall, horiWall, towerUR},
                 new Sprite[]{vertiWall, ground, makeSprite(0x28, color), makeSprite(0x29, color), makeSprite(0x2A, color), ground, ground, vertiWall},
@@ -75,14 +95,7 @@ public class CastleSubView extends DailyActionSubView {
                 new Sprite[]{towerLL, horiWall, horiWall, gate, horiWall, horiWall, horiWall, towerLR},
                 new Sprite[]{ground, ground, ground, ground, ground, ground, ground, ground},
         };
-        townPoints = new ArrayList<>();
-        for (int x = 1; x < 7; ++x) {
-            for (int y = 1; y < 7; ++y) {
-                if (!( 1 < x && x < 5 && y < 3) && x != 3) {
-                    townPoints.add(new Point(x, y));
-                }
-            }
-        }
+        return rows;
     }
 
     private Sprite makeSprite(int i, MyColors color) {
@@ -98,6 +111,14 @@ public class CastleSubView extends DailyActionSubView {
 
     @Override
     protected void drawBackground(Model model) {
+        Sprite[][] rows = rowsDay;
+        Sprite over_wall = gateDay[1];
+        Sprite over_gate = gateDay[0];
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            rows = rowsNight;
+            over_wall = gateNight[1];
+            over_gate = gateNight[0];
+        }
         for (int row = 0; row < rows.length; ++row ) {
             for (int i = 0; i < rows[0].length; ++i) {
                 Point p = convertToScreen(new Point(i, row-1));
@@ -107,6 +128,7 @@ public class CastleSubView extends DailyActionSubView {
                 model.getScreenHandler().put(p.x, p.y, rows[row][i]);
             }
         }
+
         Point p = convertToScreen(new Point(2, 7));
         model.getScreenHandler().register(over_wall.getName(), p, over_wall, 4);
         p = convertToScreen(new Point(3, 7));

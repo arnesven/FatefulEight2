@@ -72,7 +72,7 @@ public class LockedDoor extends DungeonDoor {
             state.print("You may try to break down the door. It will consume a character's stamina and there is " +
                     "a chance your weapon will break. Do wish to try to break down the door? (Y/N) ");
         } else {
-            state.print("Do wish to try to break down the door? (Y/N)");
+            state.print("Do wish to try to break down the door? (Y/N) ");
         }
         if (state.yesNoInput()) {
             state.println("Who should try to break down the door.");
@@ -82,7 +82,7 @@ public class LockedDoor extends DungeonDoor {
             int damage = performer.getEquipment().getWeapon().getDamage(result.getModifiedRoll(), performer);
             state.println(performer.getName() + " did " + damage + " damage to the door.");
             if (MyRandom.rollD10() == 1) {
-                state.println("The" + performer.getEquipment().getWeapon().getName() + " broke!");
+                state.println("The " + performer.getEquipment().getWeapon().getName() + " broke!");
                 performer.getEquipment().setWeapon(new UnarmedCombatWeapon());
             }
             hp -= damage;

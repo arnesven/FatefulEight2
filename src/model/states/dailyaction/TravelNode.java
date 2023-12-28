@@ -21,7 +21,7 @@ class TravelNode extends DailyActionNode {
         daySprite = new Sprite32x32("travel", "world_foreground.png", 0x32,
                 dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
         nightSprite = new Sprite32x32("travel", "world_foreground.png", 0x32,
-                nightColor, TownSubView.PATH_COLOR, MyColors.DARK_BROWN, MyColors.LIGHT_YELLOW);
+                nightColor, TownSubView.PATH_COLOR, MyColors.BLACK, MyColors.LIGHT_YELLOW);
     }
 
     @Override

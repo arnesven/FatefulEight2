@@ -20,7 +20,7 @@ public class WorkBenchNode extends DailyActionNode {
         daySprite = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
                 dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
         nightSprite = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
-                nightColor, TownSubView.PATH_COLOR, MyColors.DARK_BROWN, MyColors.TAN);
+                nightColor, TownSubView.PATH_COLOR, MyColors.BLACK, MyColors.TAN);
     }
 
     @Override

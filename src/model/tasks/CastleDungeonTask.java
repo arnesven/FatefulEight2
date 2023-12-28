@@ -20,7 +20,7 @@ public class CastleDungeonTask extends SummonTask {
     @Override
     protected void doEvent(Model model) {
         printQuote(location.getLordName(), "I'm afraid an evil presence has settled in the depths of my dungeons. " +
-                "My relative went down there to check what was going on and I haven't seen him for, uh, weeks." +
+                "My relative went down there to check what was going on and I haven't seen him for, uh, weeks. " +
                 "I've been looking for some strong, brave adventuring types to root it out. Can you help me?");
         print("Do you wish to descend into the dungeon now? (Y/N) ");
         if (yesNoInput()) {
