@@ -48,7 +48,7 @@ public class ElfEvent extends DailyEventState {
             }.doEvent(model);
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.CAP, Race.DARK_ELF, "Swordsman");
-            print(" swordsman who brags about his exploits and the gold he has made. Do you wish to challenge the swordsman? ");
+            print(" swordsman who brags about his exploits and the gold he has made. Do you wish to challenge the swordsman? (Y/N) ");
             if (yesNoInput()) {
                 List<Enemy> list = new ArrayList<>();
                 list.add(new SwordsmanEnemy('A', Race.DARK_ELF));

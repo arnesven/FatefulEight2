@@ -186,6 +186,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             }
         }
         runCombat(enemies);
+        possiblyGetHorsesAfterCombat(victimChar.getFirstName().toLowerCase(),
+                getVictimCompanions(getModel()).size() - 2);
         int numberOfDead = 0;
         for (Enemy e : enemies) {
             if (e.isDead()) {
