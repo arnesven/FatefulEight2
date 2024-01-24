@@ -1,6 +1,8 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
+import model.classes.Skill;
 import model.horses.Horse;
 import model.states.GameState;
 import util.MyRandom;
@@ -15,6 +17,8 @@ import java.util.List;
 public class TalkToBartenderNode extends DailyActionNode {
     private static final Sprite STOOL = new Sprite32x32("barstool", "world_foreground.png", 0x55,
             MyColors.GRAY, MyColors.DARK_RED, MyColors.DARK_GREEN, MyColors.CYAN);
+
+    private boolean workDone = false;
 
     public TalkToBartenderNode() {
         super("Talk to bartender");
@@ -41,10 +45,13 @@ public class TalkToBartenderNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (workDone) {
+            model.setTimeOfDay(TimeOfDay.EVENING);
+        }
+    }
 
-    private static class TalkToBartenderState extends GameState {
-
+    private class TalkToBartenderState extends GameState {
         public TalkToBartenderState(Model model) {
             super(model);
         }
@@ -53,6 +60,9 @@ public class TalkToBartenderNode extends DailyActionNode {
         public GameState run(Model model) {
             List<String> options = new ArrayList<>(List.of("Get Advice", "Buy Rations"));
             boolean buyHorse = model.getParty().getHorseHandler().getAvailableHorse(model) != null;
+            if (!model.getTimeOfDay().equals(TimeOfDay.EVENING)) {
+                options.add("Ask For Work");
+            }
             if (buyHorse) {
                 options.add("Buy Horse");
             }
@@ -72,10 +82,80 @@ public class TalkToBartenderNode extends DailyActionNode {
                 new SellHorseState(model).run(model);
             } else if (options.get(selected).contains("Buy Obols")) {
                 buyObols(model);
+            } else if (options.get(selected).contains("Ask For Work")) {
+                askForWork(model);
             } else {
                 sellObols(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
+        }
+
+        private void askForWork(Model model) {
+            leaderSay("Uhm, are there any chores you need done around here?");
+            if (model.getSettings().getMiscFlags().containsKey("innworkdone") &&
+                    model.getSettings().getMiscFlags().get("innworkdone")) {
+                printQuote("Bartender", "Sorry, not at the moment.");
+                return;
+            }
+            workDone = true;
+            model.getSettings().getMiscFlags().put("innworkdone", true);
+            int dieRoll = MyRandom.rollD6();
+            if (dieRoll < 3) {
+                printQuote("Bartender", "We do have an enormous amount of dishes that need washing. Won't pay much though.");
+                leaderSay("I'll do it.");
+                println("You spend the rest of the day cleaning up in the kitchen.");
+                printQuote("Bartender", "Good work. Here's your pay.");
+                model.getParty().addToGold(Math.min(4, model.getParty().size()));
+                println("You got " + model.getParty().size() + " gold.");
+            } else if (dieRoll < 5) {
+                printQuote("Bartender", "The stable needs cleaning. Make it tidy in there and I'll pay you.");
+                leaderSay("I'll do it.");
+                println("You spend the rest of the day cleaning up the filthy stables.");
+                boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 5);
+                if (success) {
+                    printQuote("Bartender", "Wow! I'm sure the ponies will be please. Good work. Here's your pay.");
+                    model.getParty().addToGold(5);
+                    println("You got 5 gold.");
+                } else {
+                    printQuote("Bartender", "What's this? This place is even messier " +
+                            "than it was before? I won't pay for such shoddy work!");
+                    leaderSay("Rats...");
+                }
+            } else if (dieRoll < 6) {
+                printQuote("Bartender", "The previous owner of this place left the books in complete disarray. " +
+                        "Can you have a look at them and set them straight?.");
+                leaderSay("I'll do it.");
+                println("You spend the rest of the day trying to make sense of the bartender's economical situation.");
+                boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Logic, 6);
+                if (success) {
+                    println("You finally manage to understand the system of symbols and numbers, then transcribe them into " +
+                            "notes which are more generally understandable.");
+                    printQuote("Bartender", "Oh, now I understand. Thank you for clearing this up. Good work. Here's your pay.");
+                    model.getParty().addToGold(6);
+                    println("You got 6 gold.");
+                } else {
+                    println("Despite your best efforts, the ledgers and papers are completely beyond your understand. " +
+                            "After many hours you are forced to admit that you aren't getting anywhere.");
+                    printQuote("Bartender", "That's a shame. Well, at least you tried. Here's something for your troubles.");
+                    model.getParty().addToGold(2);
+                    println("You got 2 gold.");
+                }
+            } else {
+                printQuote("Bartender", "The knives in the kitchen are very blunt. Could you sharpen them for me?");
+                leaderSay("I'll do it.");
+                println("You spend the rest of the day sharpening all the knives in the kitchen.");
+                boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Blades, 6);
+                if (success) {
+                    printQuote("Bartender", "Excellent. You've saved me a trip to a town to have this done." +
+                            " Here's your pay.");
+                    model.getParty().addToGold(8);
+                    println("You got 8 gold.");
+                } else {
+                    printQuote("Bartender", "... These knives are blunter than a sledgehammer. " +
+                            "I completely overestimated your ability." +
+                            "I won't pay for such shoddy work!");
+                }
+            }
         }
 
         private void getAdvice(Model model) {

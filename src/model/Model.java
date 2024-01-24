@@ -292,6 +292,7 @@ public class Model {
         gameData.party.setRecruitmentPersistence(null);
         gameData.party.getHorseHandler().newAvailableHorse();
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
+        gameData.settings.getMiscFlags().put("innworkdone", false);
     }
 
     public void saveToFile(String filename) {
