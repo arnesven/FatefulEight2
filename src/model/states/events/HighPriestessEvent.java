@@ -48,6 +48,7 @@ public class HighPriestessEvent extends DailyEventState {
             int res = multipleOptionArrowMenu(model, 30, 20,
                     List.of("Visit Priest", "Visit Paladin", "Chanting Session", "Cleansing Ritual", "Meditation", "Tour of Temple"));
             events.get(res).doTheEvent(model);
+            setFledCombat(events.get(res).haveFledCombat());
         }
     }
 
