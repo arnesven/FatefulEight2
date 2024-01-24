@@ -656,7 +656,7 @@ public class GameCharacter extends Combatant {
             }
             addToHP(-1 * damage);
             if (pair.second) {
-                reductionString = ", " + LogView.WHITE_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
+                reductionString = ", " + LogView.YELLOW_COLOR + "Critical Hit" + LogView.DEFAULT_COLOR + reductionString;
             }
             combatEvent.println(enemy.getName() + " deals " + damage + " damage to " + getFirstName() + reductionString + ".");
             combatEvent.addFloatyDamage(this, damage, critical ? DamageValueEffect.CRITICAL_DAMAGE : DamageValueEffect.STANDARD_DAMAGE);

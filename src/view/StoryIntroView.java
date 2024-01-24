@@ -24,7 +24,7 @@ public class StoryIntroView extends GameView implements Animation {
             "here in years but the place looks much the same. It's a busy meeting place for adventurers, " +
             "merchants, travelers, explorers or anybody else who needs a warm meal and a cozy bed for the night.\n\n" +
             "The place is almost full but you spot your friend. He's got a little table in the back. You make " +
-            "your way across the room and manage to get eye contact with the inn-keeper, signaling that you want " +
+            "your way across the room and manage to get eye contact with the innkeeper, signaling that you want " +
             "drink and food.",
 
             "You sit down. \"Good to see you.\" You say.\n" +
@@ -37,7 +37,7 @@ public class StoryIntroView extends GameView implements Animation {
             "big round table at the center of the room. \"But they do pay well!\"\n" +
             "\"Must've just come back from a quest or some such.\" Your friend remarks.\n" +
             "The rowdy group bursts into song, and several other patrons join in. When the song is done, " +
-            "the leader of the group announces: \"Next round is on us Bolero's Company!\"\n" +
+            "the leader of the group announces: \"Next round is on us, Bolero's Company!\"\n" +
             "Cheers fill the room, then more singing follows.",
 
             "\"Oh, to be an adventurer!\" Your friend blurts after finishing his third ale. " +

@@ -152,7 +152,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                     println("You got 8 gold.");
                 } else {
                     printQuote("Bartender", "... These knives are blunter than a sledgehammer. " +
-                            "I completely overestimated your ability." +
+                            "I completely overestimated your ability. " +
                             "I won't pay for such shoddy work!");
                 }
             }
