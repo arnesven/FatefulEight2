@@ -10,6 +10,8 @@ import model.classes.Classes;
 import model.combat.CaveTheme;
 import model.combat.CombatLoot;
 import model.enemies.Enemy;
+import model.horses.Horse;
+import model.horses.HorseHandler;
 import model.items.potions.Potion;
 import model.items.potions.RevivingElixir;
 import model.map.WorldHex;
@@ -302,5 +304,23 @@ public abstract class DailyEventState extends GameState {
     protected GameCharacter makeRandomCharacter() {
         int level = (int)Math.ceil(GameState.calculateAverageLevel(getModel()));
         return makeRandomCharacter(level);
+    }
+
+    protected void possiblyGetHorsesAfterCombat(String enemy, int mostNumberOfHorses) {
+        if (!haveFledCombat()) {
+            int numberOfHorses = MyRandom.randInt(mostNumberOfHorses+1);
+            if (numberOfHorses > 0) {
+                if (numberOfHorses == 1) {
+                    println("The " + enemy + " had a horse which you happily take over ownership of.");
+                } else {
+                    println("The " + enemy + " had some horses which you happily take over ownership of.");
+                }
+                for (int i = numberOfHorses; i > 0; ++i) {
+                    Horse horse = HorseHandler.generateHorse();
+                    getModel().getParty().getHorseHandler().addHorse(horse);
+                    println("The party got a " + horse.getName() + ".");
+                }
+            }
+        }
     }
 }

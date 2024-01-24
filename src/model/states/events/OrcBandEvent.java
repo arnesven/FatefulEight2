@@ -66,5 +66,6 @@ public class OrcBandEvent extends DailyEventState {
         } else {
             runCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         }
+        possiblyGetHorsesAfterCombat("orcs", 4);
     }
 }

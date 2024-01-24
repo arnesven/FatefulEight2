@@ -32,6 +32,7 @@ public class BlackKnightEvent extends RiverEvent {
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
             runCombat(List.of(new BlackKnightEnemy('A')));
+            possiblyGetHorsesAfterCombat("Black Knight", 1);
             CollapsingTransition.transition(model, RiverEvent.subView);
             if (!super.haveFledCombat()) {
                 portraitSay("You have proven a worthy adversary.");

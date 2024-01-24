@@ -53,6 +53,7 @@ public class ElfEvent extends DailyEventState {
                 List<Enemy> list = new ArrayList<>();
                 list.add(new SwordsmanEnemy('A', Race.DARK_ELF));
                 runCombat(list);
+                possiblyGetHorsesAfterCombat("elf", 1);
             }
         } else if (dieRoll <= 9) {
             CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.DARK_ELF);

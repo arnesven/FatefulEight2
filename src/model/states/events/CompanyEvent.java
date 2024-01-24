@@ -55,6 +55,7 @@ public class CompanyEvent extends DailyEventState {
             enemies.add(new SoldierLeaderEnemy('B'));
             enemies.add(new SoldierLeaderEnemy('B'));
             runCombat(enemies);
+            possiblyGetHorsesAfterCombat("soldiers", soldiers);
         }
     }
 }

@@ -82,6 +82,7 @@ public class NomadCampEvent extends DailyEventState {
                     }
                 }
                 runCombat(enemies);
+                possiblyGetHorsesAfterCombat("nomads", 7);
                 return;
             } else {
                 model.getParty().partyMemberSay(model, model.getParty().getLeader(),

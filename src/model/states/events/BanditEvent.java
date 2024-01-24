@@ -5,6 +5,8 @@ import model.classes.Classes;
 import model.enemies.BanditArcherEnemy;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
+import model.horses.Horse;
+import model.horses.HorseHandler;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -40,6 +42,7 @@ public class BanditEvent extends DailyEventState {
         } else {
             portraitSay("You refuse? Hey, lads, we need to teach this lot some manners!");
             runCombat(generateBanditEnemies(model));
+            possiblyGetHorsesAfterCombat("bandits", 3);
         }
     }
 

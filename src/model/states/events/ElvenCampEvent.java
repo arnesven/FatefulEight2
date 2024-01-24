@@ -54,10 +54,12 @@ public class ElvenCampEvent extends DailyEventState {
             } else {
                 println("The elves attack you!");
                 runCombat(setupCombatWithElves(model));
+                possiblyGetHorsesAfterCombat("elves", 3);
             }
         } else {
             println("You have apparently committed some kind of transgression and angered the elves. They attack you!");
             runCombat(setupCombatWithElves(model));
+            possiblyGetHorsesAfterCombat("elves", 3);
         }
     }
 

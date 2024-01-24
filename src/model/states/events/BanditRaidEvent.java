@@ -20,6 +20,7 @@ public class BanditRaidEvent extends DailyEventState {
         if (!haveFledCombat()) {
             new GuestEvent(model).doEvent(model);
         }
+        possiblyGetHorsesAfterCombat("bandits", 5);
     }
 
     @Override
