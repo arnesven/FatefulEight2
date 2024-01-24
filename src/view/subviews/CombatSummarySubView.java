@@ -26,23 +26,23 @@ public class CombatSummarySubView extends SubView {
     protected void drawArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX,
                 blueBlock);
-
+        int xOffset = X_OFFSET + 2;
         BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + enemies,
-                X_OFFSET+3, Y_OFFSET+3, MyColors.WHITE, MyColors.BLUE);
+                xOffset, Y_OFFSET+3, MyColors.WHITE, MyColors.BLUE);
         BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + fledEnemies,
-                X_OFFSET+3, Y_OFFSET+4, MyColors.WHITE, MyColors.BLUE);
+                xOffset, Y_OFFSET+4, MyColors.WHITE, MyColors.BLUE);
         int row = Y_OFFSET+6;
 
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.isDead()) {
                 BorderFrame.drawString(model.getScreenHandler(), gc.getFullName() + " was slain",
-                        X_OFFSET+3, row-1, MyColors.RED, MyColors.BLUE);
+                        xOffset, row-1, MyColors.RED, MyColors.BLUE);
                 row++;
             }
         }
         row += 2;
         BorderFrame.drawString(model.getScreenHandler(), "Loot: ",
-                X_OFFSET+3, row++, MyColors.WHITE, MyColors.BLUE);
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
         int gold = 0;
         int rations = 0;
         int ingredients = 0;
@@ -50,8 +50,12 @@ public class CombatSummarySubView extends SubView {
         int obols = 0;
         for (CombatLoot l : loot) {
             if (!l.getText().equals("")) {
-                BorderFrame.drawString(model.getScreenHandler(), l.getText(), X_OFFSET+3, row++,
-                        MyColors.WHITE, MyColors.BLUE);
+                String text = l.getText();
+                String[] parts = text.split("\\n");
+                for (int i = 0; i < parts.length; ++i) {
+                    BorderFrame.drawString(model.getScreenHandler(), parts[i], X_OFFSET + 3, row++,
+                            MyColors.WHITE, MyColors.BLUE);
+                }
             }
             gold += l.getGold();
             rations += l.getRations();
@@ -61,27 +65,27 @@ public class CombatSummarySubView extends SubView {
         }
 
         if (gold > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), gold + " Gold", X_OFFSET+3, row++,
+            BorderFrame.drawString(model.getScreenHandler(), gold + " Gold", xOffset, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
 
         if (rations > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), rations + " Rations", X_OFFSET+3, row++,
+            BorderFrame.drawString(model.getScreenHandler(), rations + " Rations", xOffset, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
 
         if (ingredients > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), ingredients + " Ingredients", X_OFFSET+3, row++,
+            BorderFrame.drawString(model.getScreenHandler(), ingredients + " Ingredients", xOffset, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
 
         if (materials > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), materials + " Materials", X_OFFSET+3, row++,
+            BorderFrame.drawString(model.getScreenHandler(), materials + " Materials", xOffset, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
 
         if (obols > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), materials + " Obols", X_OFFSET+3, row++,
+            BorderFrame.drawString(model.getScreenHandler(), materials + " Obols", xOffset, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
     }
