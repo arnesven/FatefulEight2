@@ -196,7 +196,9 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         }
         if (numberOfDead < enemies.size()) {
             println("Some of your enemies have escaped and reported your crime to the local authorities.");
-            addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
+            if (numberOfDead > 0) {
+                addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
+            }
             if (isAggressor) {
                 addToNotoriety(getModel(), this, enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
             }

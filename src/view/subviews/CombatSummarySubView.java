@@ -53,7 +53,7 @@ public class CombatSummarySubView extends SubView {
                 String text = l.getText();
                 String[] parts = text.split("\\n");
                 for (int i = 0; i < parts.length; ++i) {
-                    BorderFrame.drawString(model.getScreenHandler(), parts[i], X_OFFSET + 3, row++,
+                    BorderFrame.drawString(model.getScreenHandler(), parts[i], xOffset, row++,
                             MyColors.WHITE, MyColors.BLUE);
                 }
             }
