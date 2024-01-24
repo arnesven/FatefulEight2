@@ -494,7 +494,11 @@ public class CombatEvent extends DailyEventState {
         if (found == null) {
             return false;
         }
-        return MyRandom.rollD10() + 5 < found.second.getSneakValue();
+        if (MyRandom.rollD10() + 5 < found.second.getSneakValue()) {
+            System.out.println(randomTarget.getName() + " avoided attack by sneaking!");
+            return true;
+        }
+        return false;
     }
 
     public boolean isEligibleForSneakAttack(GameCharacter performer) {
