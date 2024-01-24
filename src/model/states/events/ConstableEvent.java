@@ -71,7 +71,7 @@ public class ConstableEvent extends DailyEventState {
         } else {
             wordToDescribe = "a bit odd.";
         }
-        if (sum >= 3) {
+        if (sum >= 1) {
             portraitSay("Hmm, you fellows look " + wordToDescribe + " You can go about your business.");
             return;
         } else {
