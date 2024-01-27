@@ -86,6 +86,7 @@ public class CombatEvent extends DailyEventState {
         AnimationManager.synchAnimations();
         model.setInCombat(true);
         setFormation(model);
+        combatStats.startCombat(enemies, participants, allies);
         while (true) {
             System.out.println("Combat Round " + roundCounter);
             doCombatRound(model);
@@ -114,6 +115,7 @@ public class CombatEvent extends DailyEventState {
             println("You are victorious in battle!");
             combatLoot = combatStats.generateCombatLoot(model);
             combatLoot.addAll(extraLoot);
+            combatStats.calculateStatistics(roundCounter-1);
             StripedTransition.transition(model, new CombatSummarySubView(combatStats, combatLoot));
         }
 

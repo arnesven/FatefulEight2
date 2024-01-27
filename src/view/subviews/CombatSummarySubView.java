@@ -18,7 +18,6 @@ public class CombatSummarySubView extends SubView {
 
     public CombatSummarySubView(CombatStatistics combatStats, List<CombatLoot> combatLoots) {
         this.combatStats = combatStats;
-        combatStats.calculateStatistics();
         this.loot = combatLoots;
     }
 
@@ -28,29 +27,15 @@ public class CombatSummarySubView extends SubView {
                 blueBlock);
         int xOffset = X_OFFSET + 2;
         int row = Y_OFFSET+2;
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + combatStats.getKilledEnemies(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + combatStats.getFledEnemies(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Max Damage: " + combatStats.getMaximumDamage() +
-                        " (" + combatStats.getMaxDamager() + ")",
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Accuracy: " + combatStats.getAccuracy() + "%",
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "MVP: " + combatStats.getMVP(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
 
-
-
+        row = printStatistics(model, xOffset, row);
         row += 2;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.isDead()) {
-                BorderFrame.drawString(model.getScreenHandler(), gc.getFullName() + " was slain",
-                        xOffset, row-1, MyColors.RED, MyColors.BLUE);
-                row++;
-            }
-        }
+        row = printSlainPartyMembers(model, xOffset, row);
         row += 2;
+        row = printLoot(model, xOffset, row);
+    }
+
+    private int printLoot(Model model, int xOffset, int row) {
         BorderFrame.drawString(model.getScreenHandler(), "Loot: ",
                 xOffset, row++, MyColors.WHITE, MyColors.BLUE);
         int gold = 0;
@@ -98,6 +83,44 @@ public class CombatSummarySubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(), materials + " Obols", xOffset, row++,
                     MyColors.WHITE, MyColors.BLUE);
         }
+        return row;
+    }
+
+    private int printSlainPartyMembers(Model model, int xOffset, int row) {
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc.isDead()) {
+                BorderFrame.drawString(model.getScreenHandler(), gc.getFullName() + " was slain",
+                        xOffset, row-1, MyColors.RED, MyColors.BLUE);
+                row++;
+            }
+        }
+        return row;
+    }
+
+    private int printStatistics(Model model, int xOffset, int row) {
+        BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + combatStats.getKilledEnemies(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + combatStats.getFledEnemies(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        row++;
+        BorderFrame.drawString(model.getScreenHandler(), "Max Damage Dealt: " + combatStats.getMaximumDamage() +
+                        " (" + combatStats.getMaxDamager() + ")",
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Total Damage Dealt: " + combatStats.getTotalDamage() ,
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Average Damage Dealt: " + String.format("%1.1f", combatStats.getAverageDamage()),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Accuracy: " + combatStats.getAccuracy() + "%",
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        row++;
+        BorderFrame.drawString(model.getScreenHandler(), "Round Par: " + combatStats.getRoundPar(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Rounds: " + combatStats.getRoundsTakenWithBird(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        row++;
+        BorderFrame.drawString(model.getScreenHandler(), "MVP: " + combatStats.getMVP(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        return row;
     }
 
     @Override

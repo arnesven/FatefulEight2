@@ -1,10 +1,13 @@
 package model.states;
 
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.combat.CombatLoot;
+import model.combat.Combatant;
 import model.enemies.Enemy;
 import util.MyLists;
+import util.MyUnaryIntFunction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,17 +23,31 @@ public class CombatStatistics {
     private int killedEnemies = 0;
     private String mvp = "";
     private int accuracy = 0;
-    private int numberOfHits = 0;
     private int nonMisses = 0;
+    private int effectiveness = 0;
+    private int expectedRounds = 1;
+    private int totalRounds;
+    private int totalDamage = 0;
+    private List<Integer> hits = new ArrayList<>();
+    private double avgDamage = 0.0;
 
     public CombatStatistics() {
         destroyedEnemies = new HashMap<>();
     }
 
-    public void calculateStatistics() {
+    public void startCombat(List<Enemy> enemies, List<GameCharacter> participants, List<GameCharacter> allies) {
+        double totalEnemyHP = MyLists.intAccumulate(enemies, Combatant::getMaxHP);
+        double expectedDamageOutputPerRound = MyLists.doubleAccumulate(participants, GameCharacter::calcAverageDamage);
+        expectedDamageOutputPerRound += MyLists.doubleAccumulate(allies, GameCharacter::calcAverageDamage);
+        expectedRounds = (int)(Math.ceil(totalEnemyHP / expectedDamageOutputPerRound));
+    }
+
+    public void calculateStatistics(int actualRounds) {
         killedEnemies = sumUp();
         findMVP();
-        accuracy = (int)(Math.round((double)nonMisses * 100.0 / (double) numberOfHits));
+        accuracy = (int)(Math.round((double)nonMisses * 100.0 / (double) hits.size()));
+        totalRounds = actualRounds;
+        avgDamage = ((double)MyLists.intAccumulate(hits, integer -> integer)) / (double) hits.size();
     }
 
     public int getKilledEnemies() {
@@ -50,7 +67,8 @@ public class CombatStatistics {
     }
 
     public void damageDealt(int damage, GameCharacter damager) {
-        numberOfHits++;
+        hits.add(damage);
+        totalDamage += damage;
         if (damage > 0) {
             nonMisses++;
         }
@@ -114,5 +132,44 @@ public class CombatStatistics {
 
     public int getAccuracy() {
         return accuracy;
+    }
+
+    public int getRoundPar() {
+        return expectedRounds;
+    }
+
+    public String getRoundsTakenWithBird() {
+        return totalRounds + " (" + getBird(totalRounds - expectedRounds) + ")";
+    }
+
+    private String getBird(int i) {
+        switch (i) {
+            case -4:
+                return "Condor";
+            case -3:
+                return "Albatross";
+            case -2:
+                return "Eagle";
+            case -1:
+                return "Birdie";
+            case 0:
+                return "Par";
+            case 1:
+                return "Bogey";
+            case 2:
+                return "Double Bogey";
+            case 3:
+                return "Triple Bogey";
+            default:
+                return "Disaster";
+        }
+    }
+
+    public int getTotalDamage() {
+        return totalDamage;
+    }
+
+    public double getAverageDamage() {
+        return avgDamage;
     }
 }
