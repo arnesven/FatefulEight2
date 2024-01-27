@@ -26,6 +26,7 @@ import java.util.*;
 
 public class CombatEvent extends DailyEventState {
 
+    private final CombatStatistics combatStats;
     private List<GameCharacter> participants;
     private List<Enemy> enemies = new ArrayList<>();
     private List<Combatant> initiativeOrder;
@@ -33,7 +34,7 @@ public class CombatEvent extends DailyEventState {
     private CombatSubView subView;
     private CombatMatrix combatMatrix;
     private Combatant currentCombatant;
-    private Map<GameCharacter, List<Enemy>> destroyedEnemies;
+    private final Map<GameCharacter, List<Enemy>> destroyedEnemies;
     private boolean selectingFormation;
     private List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
@@ -43,13 +44,12 @@ public class CombatEvent extends DailyEventState {
     private Combatant selectedTarget;
     private List<GameCharacter> allies = new ArrayList<>();
     private boolean isAmbush;
-    private int fledEnemies = 0;
     private int timeLimit = Integer.MAX_VALUE;
     private int roundCounter = 1;
     private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
     private final Set<GameCharacter> blockSneakAttack = new HashSet<>();
-    private List<CombatLoot> extraLoot = new ArrayList<>();
-    private List<Combatant> delayedCombatants = new ArrayList<>();
+    private final List<CombatLoot> extraLoot = new ArrayList<>();
+    private final List<Combatant> delayedCombatants = new ArrayList<>();
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -67,6 +67,7 @@ public class CombatEvent extends DailyEventState {
         this.fleeingEnabled = fleeingEnabled;
         this.isAmbush = isAmbush;
         this.sneakAttackers = new ArrayList<>();
+        combatStats = new CombatStatistics();
     }
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {
@@ -114,7 +115,7 @@ public class CombatEvent extends DailyEventState {
         } else {
             println("You are victorious in battle!");
             combatLoot = generateCombatLoot(model, destroyedEnemies);
-            StripedTransition.transition(model, new CombatSummarySubView(model, sumUp(destroyedEnemies), fledEnemies, combatLoot));
+            StripedTransition.transition(model, new CombatSummarySubView(model, combatStats, combatLoot));
         }
 
         print("Press enter to continue.");
@@ -335,6 +336,7 @@ public class CombatEvent extends DailyEventState {
             }
             destroyedEnemies.get(killer).add(enemy);
         }
+        combatStats.increaseKilledEnemies();
         enemy.doUponDeath(model, this, killer);
         for (GameCharacter gc : participants) {
             if (!gc.isDead()) {
@@ -449,7 +451,7 @@ public class CombatEvent extends DailyEventState {
     public void retreatEnemy(Combatant target) {
         enemies.remove(target);
         combatMatrix.remove(target);
-        fledEnemies++;
+        combatStats.increaseFledEnemies();
     }
 
     public void setTimeLimit(int timeLimit) {

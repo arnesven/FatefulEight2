@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.CombatLoot;
 import model.enemies.Enemy;
+import model.states.CombatStatistics;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
@@ -16,9 +17,9 @@ public class CombatSummarySubView extends SubView {
     private final List<CombatLoot> loot;
     private final int fledEnemies;
 
-    public CombatSummarySubView(Model model, int killedEnemies, int fledEnemies, List<CombatLoot> combatLoots) {
-        this.enemies = killedEnemies;
-        this.fledEnemies = fledEnemies;
+    public CombatSummarySubView(Model model, CombatStatistics combatStats, List<CombatLoot> combatLoots) {
+        this.enemies = combatStats.getKilledEnemies();
+        this.fledEnemies = combatStats.getFledEnemies();
         this.loot = combatLoots;
     }
 
