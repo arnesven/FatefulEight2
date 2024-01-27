@@ -35,6 +35,12 @@ public class CombatSummarySubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), "Max Damage: " + combatStats.getMaximumDamage() +
                         " (" + combatStats.getMaxDamager() + ")",
                 xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Accuracy: " + combatStats.getAccuracy() + "%",
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "MVP: " + combatStats.getMVP(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+
+
 
         row += 2;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {

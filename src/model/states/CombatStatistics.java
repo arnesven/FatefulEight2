@@ -18,9 +18,19 @@ public class CombatStatistics {
     private int maxDamage = 0;
     private String maxDamager = "";
     private int killedEnemies = 0;
+    private String mvp = "";
+    private int accuracy = 0;
+    private int numberOfHits = 0;
+    private int nonMisses = 0;
 
     public CombatStatistics() {
         destroyedEnemies = new HashMap<>();
+    }
+
+    public void calculateStatistics() {
+        killedEnemies = sumUp();
+        findMVP();
+        accuracy = (int)(Math.round((double)nonMisses * 100.0 / (double) numberOfHits));
     }
 
     public int getKilledEnemies() {
@@ -40,6 +50,10 @@ public class CombatStatistics {
     }
 
     public void damageDealt(int damage, GameCharacter damager) {
+        numberOfHits++;
+        if (damage > 0) {
+            nonMisses++;
+        }
         if (damage > maxDamage) {
             maxDamage = damage;
             maxDamager = damager.getFirstName();
@@ -50,13 +64,19 @@ public class CombatStatistics {
         return maxDamager;
     }
 
-    private int sumUp(Map<GameCharacter, List<Enemy>> destroyedEnemies) {
+    private int sumUp() {
         return MyLists.intAccumulate(new ArrayList<>(destroyedEnemies.keySet()),
                 (GameCharacter gc) -> destroyedEnemies.get(gc).size());
     }
 
-    public void calculateStatistics() {
-        killedEnemies = sumUp(destroyedEnemies);
+    private void findMVP() {
+        int mostKills = 0;
+        for (GameCharacter gc : destroyedEnemies.keySet()) {
+            if (getKillsFor(gc) > mostKills) {
+                mvp = gc.getFullName();
+                mostKills = getKillsFor(gc);
+            }
+        }
     }
 
     public void registerCharacterKill(GameCharacter killer, Enemy enemy) {
@@ -86,5 +106,13 @@ public class CombatStatistics {
             }
         }
         return loot;
+    }
+
+    public String getMVP() {
+        return mvp;
+    }
+
+    public int getAccuracy() {
+        return accuracy;
     }
 }
