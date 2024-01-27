@@ -34,7 +34,6 @@ public class CombatEvent extends DailyEventState {
     private CombatSubView subView;
     private CombatMatrix combatMatrix;
     private Combatant currentCombatant;
-    private final Map<GameCharacter, List<Enemy>> destroyedEnemies;
     private boolean selectingFormation;
     private List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
@@ -62,7 +61,6 @@ public class CombatEvent extends DailyEventState {
         this.participants.addAll(model.getParty().getFrontRow());
         this.participants.addAll(model.getParty().getBackRow());
         setInitiativeOrder(model);
-        destroyedEnemies = new HashMap<>();
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.fleeingEnabled = fleeingEnabled;
         this.isAmbush = isAmbush;
@@ -114,8 +112,9 @@ public class CombatEvent extends DailyEventState {
             print("Combat has been interrupted. ");
         } else {
             println("You are victorious in battle!");
-            combatLoot = generateCombatLoot(model, destroyedEnemies);
-            StripedTransition.transition(model, new CombatSummarySubView(model, combatStats, combatLoot));
+            combatLoot = combatStats.generateCombatLoot(model);
+            combatLoot.addAll(extraLoot);
+            StripedTransition.transition(model, new CombatSummarySubView(combatStats, combatLoot));
         }
 
         print("Press enter to continue.");
@@ -134,27 +133,6 @@ public class CombatEvent extends DailyEventState {
 
     protected void removeCombatConditions(Model model) {
         MyLists.forEach(model.getParty().getPartyMembers(), Combatant::removeCombatConditions);
-    }
-
-    private List<CombatLoot> generateCombatLoot(Model model, Map<GameCharacter, List<Enemy>> destroyedEnemies) {
-        System.out.println("Generating combat loot");
-        List<CombatLoot> loot = new ArrayList<>();
-        for (GameCharacter gc : destroyedEnemies.keySet()) {
-            System.out.println(gc.getName() + " has killed " + destroyedEnemies.get(gc).size() + " enemies");
-            for (Enemy e : destroyedEnemies.get(gc)) {
-                CombatLoot l = e.getLoot(model);
-                System.out.println("  The " + e.getName() + "'s loot is " + l.getText() +
-                        ", " + l.getGold() + " gold, " + l.getRations() + " rations.");
-                loot.add(l);
-            }
-        }
-        loot.addAll(extraLoot);
-        return loot;
-    }
-
-    private int sumUp(Map<GameCharacter, List<Enemy>> destroyedEnemies) {
-        return MyLists.intAccumulate(new ArrayList<>(destroyedEnemies.keySet()),
-                (GameCharacter gc) -> destroyedEnemies.get(gc).size());
     }
 
     private void setFormation(Model model) {
@@ -331,18 +309,15 @@ public class CombatEvent extends DailyEventState {
         combatMatrix.remove(enemy);
         if (killer != null) {
             System.out.println("Killer is " + killer.getName());
-            if (!destroyedEnemies.containsKey(killer)) {
-                destroyedEnemies.put(killer, new ArrayList<>());
-            }
-            destroyedEnemies.get(killer).add(enemy);
+            combatStats.registerCharacterKill(killer, enemy);
+
         }
-        combatStats.increaseKilledEnemies();
         enemy.doUponDeath(model, this, killer);
         for (GameCharacter gc : participants) {
             if (!gc.isDead()) {
                 model.getParty().giveXP(model, gc, 5);
                 if (gc == killer) {
-                    model.getParty().giveXP(model, gc, destroyedEnemies.get(killer).size()*5);
+                    model.getParty().giveXP(model, gc, combatStats.getKillsFor(killer)*5);
                 }
             }
         }
@@ -371,6 +346,7 @@ public class CombatEvent extends DailyEventState {
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
         target.takeCombatDamage(this, damage);
+        combatStats.damageDealt(damage, damager);
         if (target.getHP() <= 0) {
             RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();
             if (killAnimation != null) {

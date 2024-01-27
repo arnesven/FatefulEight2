@@ -1,4 +1,4 @@
-package view.subviews;
+ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -13,13 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 public class CombatSummarySubView extends SubView {
-    private final int enemies;
     private final List<CombatLoot> loot;
-    private final int fledEnemies;
+    private final CombatStatistics combatStats;
 
-    public CombatSummarySubView(Model model, CombatStatistics combatStats, List<CombatLoot> combatLoots) {
-        this.enemies = combatStats.getKilledEnemies();
-        this.fledEnemies = combatStats.getFledEnemies();
+    public CombatSummarySubView(CombatStatistics combatStats, List<CombatLoot> combatLoots) {
+        this.combatStats = combatStats;
+        combatStats.calculateStatistics();
         this.loot = combatLoots;
     }
 
@@ -28,12 +27,16 @@ public class CombatSummarySubView extends SubView {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX,
                 blueBlock);
         int xOffset = X_OFFSET + 2;
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + enemies,
-                xOffset, Y_OFFSET+3, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + fledEnemies,
-                xOffset, Y_OFFSET+4, MyColors.WHITE, MyColors.BLUE);
-        int row = Y_OFFSET+6;
+        int row = Y_OFFSET+2;
+        BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + combatStats.getKilledEnemies(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + combatStats.getFledEnemies(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Max Damage: " + combatStats.getMaximumDamage() +
+                        " (" + combatStats.getMaxDamager() + ")",
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
 
+        row += 2;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.isDead()) {
                 BorderFrame.drawString(model.getScreenHandler(), gc.getFullName() + " was slain",
