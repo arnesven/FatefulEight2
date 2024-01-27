@@ -30,6 +30,10 @@ public class CombatStatistics {
     private int totalDamage = 0;
     private List<Integer> hits = new ArrayList<>();
     private double avgDamage = 0.0;
+    private int totalEnemyDamage = 0;
+    private int maxEnemyDamage = 0;
+    private int avoidedDamage = 0;
+    private int reducedDamage = 0;
 
     public CombatStatistics() {
         destroyedEnemies = new HashMap<>();
@@ -143,6 +147,9 @@ public class CombatStatistics {
     }
 
     private String getBird(int i) {
+        if (i < -4) {
+            return "Extraordinary";
+        }
         switch (i) {
             case -4:
                 return "Condor";
@@ -171,5 +178,36 @@ public class CombatStatistics {
 
     public double getAverageDamage() {
         return avgDamage;
+    }
+
+    public void addEnemyDamage(int damage) {
+        totalEnemyDamage += damage;
+        if (damage > maxEnemyDamage) {
+            maxEnemyDamage = damage;
+        }
+    }
+
+    public int getMaxEnemyDamage() {
+        return maxEnemyDamage;
+    }
+
+    public int getTotalEnemyDamage() {
+        return totalEnemyDamage;
+    }
+
+    public int getAvoidedDamage() {
+        return avoidedDamage;
+    }
+
+    public void addToAvoidedDamage(int reduction) {
+        avoidedDamage++;
+    }
+
+    public void addToReduced(int reduction) {
+        reducedDamage++;
+    }
+
+    public int getReducedDamage() {
+        return reducedDamage;
     }
 }

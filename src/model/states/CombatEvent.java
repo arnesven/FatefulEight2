@@ -536,4 +536,8 @@ public class CombatEvent extends DailyEventState {
             println(performer.getName() + " delayed.");
         }
     }
+
+    public CombatStatistics getStatistics() {
+        return combatStats;
+    }
 }

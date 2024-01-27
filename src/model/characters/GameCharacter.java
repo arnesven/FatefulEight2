@@ -630,11 +630,15 @@ public class GameCharacter extends Combatant {
     public void getAttackedBy(Enemy enemy, Model model, CombatEvent combatEvent) {
         combatEvent.blockSneakAttackFor(this);
         combatEvent.addSpecialEffect(this, enemy.getStrikeEffect());
+        MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
+        int damage = pair.first;
+        boolean critical = pair.second;
         if (checkForEvade(enemy)) {
             combatEvent.addFloatyText(this, CombatSubView.EVADE_TEXT);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
             model.getTutorial().evading(model);
             RiposteCombatAction.doRiposte(combatEvent, this, enemy);
+            combatEvent.getStatistics().addToAvoidedDamage(damage);
             return;
         }
         if ((checkForBlock(enemy) && enemy.getAttackBehavior().isPhysicalAttack()) ||
@@ -642,10 +646,8 @@ public class GameCharacter extends Combatant {
             combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
+            combatEvent.getStatistics().addToAvoidedDamage(damage);
         } else {
-            MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
-            int damage = pair.first;
-            boolean critical = pair.second;
             String reductionString = "";
             if (enemy.getAttackBehavior().isPhysicalAttack()) {
                 int reduction = Math.min(damage, calculateDamageReduction());
@@ -653,6 +655,7 @@ public class GameCharacter extends Combatant {
                     reductionString = " (reduced by " + reduction + ")";
                 }
                 damage = damage - reduction;
+                combatEvent.getStatistics().addToReduced(reduction);
             }
             addToHP(-1 * damage);
             if (pair.second) {
@@ -663,6 +666,7 @@ public class GameCharacter extends Combatant {
             if (party != null) {
                 combatEvent.tookDamageTalk(this, damage);
             }
+            combatEvent.getStatistics().addEnemyDamage(damage);
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
     }

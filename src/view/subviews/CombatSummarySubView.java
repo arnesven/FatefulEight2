@@ -113,6 +113,16 @@ public class CombatSummarySubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), "Accuracy: " + combatStats.getAccuracy() + "%",
                 xOffset, row++, MyColors.WHITE, MyColors.BLUE);
         row++;
+        BorderFrame.drawString(model.getScreenHandler(), "Max Damage Taken: " + combatStats.getMaxEnemyDamage(),
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Total Damage Taken: " + combatStats.getTotalEnemyDamage() ,
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Damage Reduced: " + combatStats.getReducedDamage() ,
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        row++;
+        BorderFrame.drawString(model.getScreenHandler(), "Damage Avoided: " + combatStats.getAvoidedDamage() ,
+                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+        row++;
         BorderFrame.drawString(model.getScreenHandler(), "Round Par: " + combatStats.getRoundPar(),
                 xOffset, row++, MyColors.WHITE, MyColors.BLUE);
         BorderFrame.drawString(model.getScreenHandler(), "Rounds: " + combatStats.getRoundsTakenWithBird(),
