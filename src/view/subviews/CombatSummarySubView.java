@@ -5,16 +5,26 @@ import model.characters.GameCharacter;
 import model.combat.CombatLoot;
 import model.enemies.Enemy;
 import model.states.CombatStatistics;
+import util.Arithmetics;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
 
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CombatSummarySubView extends SubView {
-    private final List<CombatLoot> loot;
+import static view.party.SelectableListMenu.downScroll;
+import static view.party.SelectableListMenu.upScroll;
+
+ public class CombatSummarySubView extends SubView {
+    private static final MyPair<String, MyColors> NEW_LINE = new MyPair<>("", MyColors.WHITE);
+     private static final MyColors TITLE_COLOR = MyColors.LIGHT_GRAY;
+     private final List<CombatLoot> loot;
     private final CombatStatistics combatStats;
+    private int scrollShift = 0;
 
     public CombatSummarySubView(CombatStatistics combatStats, List<CombatLoot> combatLoots) {
         this.combatStats = combatStats;
@@ -25,19 +35,43 @@ public class CombatSummarySubView extends SubView {
     protected void drawArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX,
                 blueBlock);
-        int xOffset = X_OFFSET + 2;
-        int row = Y_OFFSET+2;
+        int row = Y_OFFSET;
 
-        row = printStatistics(model, xOffset, row);
-        row += 2;
-        row = printSlainPartyMembers(model, xOffset, row);
-        row += 2;
-        row = printLoot(model, xOffset, row);
+        List<MyPair<String, MyColors>> content = buildContents(model);
+        int viewHeight = Y_MAX - Y_OFFSET;
+        int maxI = Math.min(content.size(), viewHeight + scrollShift);
+        for (int i = scrollShift; i < maxI; i++) {
+            MyPair<String, MyColors> p = content.get(i);
+            int xOff = X_OFFSET;
+            if (p.second != TITLE_COLOR) {
+                xOff++;
+            }
+            BorderFrame.drawString(model.getScreenHandler(), p.first,
+                    xOff, row++, p.second, MyColors.BLUE);
+        }
+        if (content.size() >= viewHeight) {
+            if (scrollShift > 0) {
+                model.getScreenHandler().put(X_MAX - 1, Y_OFFSET, upScroll);
+            }
+            if (scrollShift < content.size() - viewHeight) {
+                model.getScreenHandler().put(X_MAX - 1, Y_MAX - 1, downScroll);
+            }
+        }
     }
 
-    private int printLoot(Model model, int xOffset, int row) {
-        BorderFrame.drawString(model.getScreenHandler(), "Loot: ",
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
+    private List<MyPair<String, MyColors>> buildContents(Model model) {
+        List<MyPair<String, MyColors>> result = new ArrayList<>();
+        result.addAll(printSlainPartyMembers(model));
+        result.addAll(printLoot());
+        result.add(NEW_LINE);
+        result.add(NEW_LINE);
+        result.addAll(printStatistics());
+        return result;
+    }
+
+    private List<MyPair<String, MyColors>> printLoot() {
+        List<MyPair<String, MyColors>> result = new ArrayList<>();
+        result.add(new MyPair<>("LOOT", TITLE_COLOR));
         int gold = 0;
         int rations = 0;
         int ingredients = 0;
@@ -48,8 +82,7 @@ public class CombatSummarySubView extends SubView {
                 String text = l.getText();
                 String[] parts = text.split("\\n");
                 for (int i = 0; i < parts.length; ++i) {
-                    BorderFrame.drawString(model.getScreenHandler(), parts[i], xOffset, row++,
-                            MyColors.WHITE, MyColors.BLUE);
+                    result.add(new MyPair<>(parts[i], MyColors.WHITE));
                 }
             }
             gold += l.getGold();
@@ -60,77 +93,68 @@ public class CombatSummarySubView extends SubView {
         }
 
         if (gold > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), gold + " Gold", xOffset, row++,
-                    MyColors.WHITE, MyColors.BLUE);
+            result.add(new MyPair<>(gold + " Gold", MyColors.WHITE));
         }
 
         if (rations > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), rations + " Rations", xOffset, row++,
-                    MyColors.WHITE, MyColors.BLUE);
+            result.add(new MyPair<>(rations + " Rations", MyColors.WHITE));
         }
 
         if (ingredients > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), ingredients + " Ingredients", xOffset, row++,
-                    MyColors.WHITE, MyColors.BLUE);
+            result.add(new MyPair<>(ingredients + " Ingredients", MyColors.WHITE));
         }
 
         if (materials > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), materials + " Materials", xOffset, row++,
-                    MyColors.WHITE, MyColors.BLUE);
+            result.add(new MyPair<>(materials + " Materials", MyColors.WHITE));
         }
 
         if (obols > 0) {
-            BorderFrame.drawString(model.getScreenHandler(), materials + " Obols", xOffset, row++,
-                    MyColors.WHITE, MyColors.BLUE);
+            result.add(new MyPair<>(obols + " Obols", MyColors.WHITE));
         }
-        return row;
+        return result;
     }
 
-    private int printSlainPartyMembers(Model model, int xOffset, int row) {
+    private List<MyPair<String, MyColors>> printSlainPartyMembers(Model model) {
+        List<MyPair<String, MyColors>> result = new ArrayList<>();
+        boolean added = false;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.isDead()) {
-                BorderFrame.drawString(model.getScreenHandler(), gc.getFullName() + " was slain",
-                        xOffset, row-1, MyColors.RED, MyColors.BLUE);
-                row++;
+                result.add(new MyPair<>(gc.getFullName() + " was slain", MyColors.RED));
+                added = true;
             }
         }
-        return row;
+        if (added) {
+            result.add(NEW_LINE);
+            result.add(NEW_LINE);
+        }
+        return result;
     }
 
-    private int printStatistics(Model model, int xOffset, int row) {
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Defeated: " + combatStats.getKilledEnemies(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Enemies Retreated: " + combatStats.getFledEnemies(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        row++;
-        BorderFrame.drawString(model.getScreenHandler(), "Max Damage Dealt: " + combatStats.getMaximumDamage() +
-                        " (" + combatStats.getMaxDamager() + ")",
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Total Damage Dealt: " + combatStats.getTotalDamage() ,
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Average Damage Dealt: " + String.format("%1.1f", combatStats.getAverageDamage()),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Accuracy: " + combatStats.getAccuracy() + "%",
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        row++;
-        BorderFrame.drawString(model.getScreenHandler(), "Max Damage Taken: " + combatStats.getMaxEnemyDamage(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Total Damage Taken: " + combatStats.getTotalEnemyDamage() ,
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Damage Reduced: " + combatStats.getReducedDamage() ,
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        row++;
-        BorderFrame.drawString(model.getScreenHandler(), "Damage Avoided: " + combatStats.getAvoidedDamage() ,
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        row++;
-        BorderFrame.drawString(model.getScreenHandler(), "Round Par: " + combatStats.getRoundPar(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Rounds: " + combatStats.getRoundsTakenWithBird(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        row++;
-        BorderFrame.drawString(model.getScreenHandler(), "MVP: " + combatStats.getMVP(),
-                xOffset, row++, MyColors.WHITE, MyColors.BLUE);
-        return row;
+    private List<MyPair<String, MyColors>> printStatistics() {
+        List<MyPair<String, MyColors>> result = new ArrayList<>();
+        result.add(new MyPair<>("STATISTICS", TITLE_COLOR));
+        result.add(new MyPair<>("Enemies Defeated: " + combatStats.getKilledEnemies(), MyColors.WHITE));
+        result.add(new MyPair<>("Enemies Retreated: " + combatStats.getFledEnemies(),
+                MyColors.WHITE));
+        result.add(NEW_LINE);
+        result.add(new MyPair<>("Max Damage Dealt: " + combatStats.getMaximumDamage() +
+                        " (" + combatStats.getMaxDamager() + ")", MyColors.WHITE));
+        result.add(new MyPair<>("Total Damage Dealt: " + combatStats.getTotalDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Average Damage Dealt: " + String.format("%1.1f", combatStats.getAverageDamage()),
+                MyColors.WHITE));
+        result.add(new MyPair<>("Accuracy: " + combatStats.getAccuracy() + "%", MyColors.WHITE));
+        result.add(NEW_LINE);
+        result.add(new MyPair<>("Max Damage Taken: " + combatStats.getMaxEnemyDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Total Damage Taken: " + combatStats.getTotalEnemyDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Damage Reduced: " + combatStats.getReducedDamage(), MyColors.WHITE));
+        result.add(NEW_LINE);
+        result.add(new MyPair<>("Damage Avoided: " + combatStats.getAvoidedDamage(), MyColors.WHITE));
+        result.add(NEW_LINE);
+        result.add(new MyPair<>("Round Par: " + combatStats.getRoundPar(), MyColors.WHITE));
+        result.add(new MyPair<>("Rounds: " + combatStats.getRoundsTakenWithBird(), MyColors.WHITE));
+        result.add(NEW_LINE);
+        result.add(new MyPair<>("MVP: " + combatStats.getMVP(), MyColors.WHITE));
+        return result;
     }
 
     @Override
@@ -141,5 +165,15 @@ public class CombatSummarySubView extends SubView {
     @Override
     protected String getTitleText(Model model) {
         return "COMBAT SUMMARY";
+    }
+
+    @Override
+    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            scrollShift = Math.max(scrollShift - 1, 0);
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            scrollShift++;
+        }
+        return super.handleKeyEvent(keyEvent, model);
     }
 }
