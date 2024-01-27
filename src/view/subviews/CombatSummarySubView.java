@@ -147,7 +147,6 @@ import static view.party.SelectableListMenu.upScroll;
         result.add(new MyPair<>("Max Damage Taken: " + combatStats.getMaxEnemyDamage(), MyColors.WHITE));
         result.add(new MyPair<>("Total Damage Taken: " + combatStats.getTotalEnemyDamage(), MyColors.WHITE));
         result.add(new MyPair<>("Damage Reduced: " + combatStats.getReducedDamage(), MyColors.WHITE));
-        result.add(NEW_LINE);
         result.add(new MyPair<>("Damage Avoided: " + combatStats.getAvoidedDamage(), MyColors.WHITE));
         result.add(NEW_LINE);
         result.add(new MyPair<>("Round Par: " + combatStats.getRoundPar(), MyColors.WHITE));
