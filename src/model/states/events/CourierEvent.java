@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.map.UrbanLocation;
@@ -8,6 +9,7 @@ import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,5 +60,7 @@ public class CourierEvent extends DailyEventState {
                 "You put the letter in your pocket and continue on your journey.");
         model.getParty().addSummon(destination);
         JournalEntry.printJournalUpdateMessage(model);
+        randomSayIfPersonality(PersonalityTrait.narcissistic, new ArrayList<>(),
+                "I'm not surprised that word of my magnificent has reached the people of " + destination.getPlaceName() + ".");
     }
 }

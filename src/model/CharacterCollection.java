@@ -35,10 +35,8 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new MialeeSeverinCharacter());
         add(new GameCharacter("Vzani", "Angler", HALFLING, BRD,
                 new VzaniAngler(), new CharacterClass[]{WIZ, MAG, PRI, THF}));
-        add(new GameCharacter("Miklos", "Autumntoft", HIGH_ELF, MAR,
-                new MiklosAutumntoft(), new CharacterClass[]{CAP, NOB, PAL, PRI}));
-        add(new GameCharacter("Thorbalt", "Ramcrown", DWARF, CAP,
-                new ThorbaltRamcrown(), new CharacterClass[]{ASN, CAP, MAG, BRD}));
+        add(new MiklosAutumntoftCharacter());
+        add(new ThorbaltRamcrownCharacter());
         add(new GameCharacter("Rolf", "Fryt", NORTHERN_HUMAN, PRI,
                 new RolfFryt(), new CharacterClass[]{PRI, MIN, SPY, WIT}));
         add(new WilliamYdrenwaldCharacter());
@@ -55,8 +53,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new StellaComptonCharacter());
         add(new EthelthaneVeldtCharacter());
         add(new HurinHammerfallCharacter());
-        add(new GameCharacter("Baz", "Ur-Ghan", HALF_ORC, AMZ,
-                new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR}));
+        add(new BazUrGhanCharacter());
         add(new VendelaGawainsCharacter());
         add(new EmilyFourhornCharacter());
         add(new IvanMcIntoshCharacter());

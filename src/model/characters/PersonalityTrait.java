@@ -8,6 +8,7 @@ public enum PersonalityTrait {
     irritable,
     generous,
     greedy,
+    narcissistic,
     prude,
     romantic,
     rude,
