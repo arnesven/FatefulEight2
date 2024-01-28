@@ -12,8 +12,7 @@ import static model.races.Race.*;
 public class CharacterCollection extends ArrayList<GameCharacter> {
     public CharacterCollection() {
         add(new KruskTalandroCharacter());
-        add(new GameCharacter("Audrey", "Puddle", HALFLING, SPY,
-                new AudreyPuddle(), new CharacterClass[]{BRD, SPY, AMZ, ART}));
+        add(new AudreyPuddleCharacter());
         add(new GameCharacter("Paddy", "Willowbrush", HALFLING, MIN,
                 new PaddyWillowbrush(), new CharacterClass[]{MIN, DRU, FOR, MAR}));
         add(new GameCharacter("Eldeth", "Markolak", DWARF, PRI,
@@ -25,16 +24,12 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new PuyetGrantham(), new CharacterClass[]{ART, ASN, FOR, MIN}));
         add(new GameCharacter("Torhild", "Ambershard", DWARF, WIT,
                 new TorhildAmbershard(), new CharacterClass[]{WIT, AMZ, MAR, SPY}));
-        add(new GameCharacter("Bungo", "Darkwood", HALFLING, BBN,
-                new BungoDarkwood(), new CharacterClass[]{BBN, CAP, NOB, PAL}));
-        add(new GameCharacter("Arielle", "Stormchapel", NORTHERN_HUMAN, THF,
-                new ArielleStormchapel(), new CharacterClass[]{THF, ASN, BBN, PAL}));
+        add(new BungoDarkwoodCharacter());
+        add(new ArielleStormchapelCharacter());
         add(new GameCharacter("Zhandra", "Merkatys", SOUTHERN_HUMAN, WIT,
                 new ZhandraMerkatys(), new CharacterClass[]{WIT, BBN, MAR, MIN}));
-        add(new GameCharacter("Lorfir", "Briarfell", WOOD_ELF, ART,
-                new LorfirBriarfell(), new CharacterClass[]{ART, AMZ, DRU, THF}));
-        add(new GameCharacter("Atalya", "Balefrost", HIGH_ELF, WIZ,
-                new AtalyaBalefrost(), new CharacterClass[]{WIZ, BKN, DRU, SOR}));
+        add(new LorfirBriarfellCharacter());
+        add(new AtalyaBalefrostCharacter());
         add(new GameCharacter("Denise", "Boyd", NORTHERN_HUMAN, ART,
                 new DeniseBoyd(), new CharacterClass[]{ART, BKN, CAP, NOB}));
         add(new GameCharacter("Gorga", "Bonecrag", HALF_ORC, BKN,
@@ -43,8 +38,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new LeodorSunshadow(), new CharacterClass[]{NOB, BKN, BRD, WIZ}));
         add(new GameCharacter("Mord", "Kroft", HALF_ORC, PAL,
                 new MordKroft(), new CharacterClass[]{PAL, BBN, CAP, MAR}));
-        add(new GameCharacter("Mialee", "Severin", DARK_ELF, WIT,
-                new MialeeSeverin(), new CharacterClass[]{WIT, SOR, SPY, THF}));
+        add(new MialeeSeverinCharacter());
         add(new GameCharacter("Vzani", "Angler", HALFLING, BRD,
                 new VzaniAngler(), new CharacterClass[]{WIZ, MAG, PRI, THF}));
         add(new GameCharacter("Miklos", "Autumntoft", HIGH_ELF, MAR,
@@ -53,15 +47,13 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new ThorbaltRamcrown(), new CharacterClass[]{ASN, CAP, MAG, BRD}));
         add(new GameCharacter("Rolf", "Fryt", NORTHERN_HUMAN, PRI,
                 new RolfFryt(), new CharacterClass[]{PRI, MIN, SPY, WIT}));
-        add(new GameCharacter("William", "Ydrenwald", NORTHERN_HUMAN, WIZ,
-                new WilliamYdrenwald(), new CharacterClass[]{WIZ, DRU, MAG, SOR}));
+        add(new WilliamYdrenwaldCharacter());
         add(new GameCharacter("Hazel", "Van Devries", SOUTHERN_HUMAN, NOB,
                 new HazelVanDevries(), new CharacterClass[]{NOB, ASN, MAG, THF}));
         add(new GameCharacter("Megar", "Evermead", DWARF, ART,
                 new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN}));
         add(new LonnieLiebgottCharacter());
-        add(new GameCharacter("Ribox", "Anari", WOOD_ELF, MIN,
-                new RiboxAnari(), new CharacterClass[]{MIN, BBN, PRI, NOB}));
+        add(new RiboxAnariCharacter());
         add(new GameCharacter("Liana", "Clearwater", WOOD_ELF, PAL,
                 new LianaClearwater(), new CharacterClass[]{PAL, CAP, WIZ, SPY}));
         add(new GameCharacter("Zephyra", "Firefist", DARK_ELF, FOR,
@@ -72,15 +64,12 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new FattyGoldenrod(), new CharacterClass[]{MIN, BBN, WIT, SOR}));
         add(new GameCharacter("Stella", "Compton", HALFLING, BKN,
                 new StellaCompton(), new CharacterClass[]{BKN, BRD, ASN, SPY}));
-        add(new GameCharacter("Ethelthane", "Veldt", DWARF, DRU,
-                new EthelthaneVeldt(), new CharacterClass[]{DRU, NOB, BRD, WIZ}));
-        add(new GameCharacter("Hurin", "Hammerfall", DWARF, ART,
-                new HurinHammerfall(), new CharacterClass[]{ART, PAL, THF, CAP}));
+        add(new EthelthaneVeldtCharacter());
+        add(new HurinHammerfallCharacter());
         add(new GameCharacter("Baz", "Ur-Ghan", HALF_ORC, AMZ,
                 new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR}));
         add(new VendelaGawainsCharacter());
-        add(new GameCharacter("Emily", "Fourhorn", NORTHERN_HUMAN, AMZ,
-                new EmilyFourhorn(), new CharacterClass[]{AMZ, BRD, SOR, MAR}));
+        add(new EmilyFourhornCharacter());
         add(new IvanMcIntoshCharacter());
         add(new GameCharacter("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
                 new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU}));

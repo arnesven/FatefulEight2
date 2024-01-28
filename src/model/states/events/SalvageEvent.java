@@ -1,10 +1,12 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalvageEvent extends DailyEventState {
@@ -27,6 +29,8 @@ public class SalvageEvent extends DailyEventState {
         boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 7);
         if (success) {
             println("You thoroughly search the wreckage and are happy to find that it isn't all trash.");
+            randomSayIfPersonality(PersonalityTrait.snobby, new ArrayList<>(),
+                    "Ugh... this type of work is beneath me.");
             int dieRoll = MyRandom.rollD10();
             if (dieRoll < 4) {
                 model.getParty().addToFood(5);

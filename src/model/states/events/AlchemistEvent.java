@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Item;
@@ -25,6 +26,8 @@ public class AlchemistEvent extends DailyEventState {
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
         leaderSay("Opening up a new shop?");
         portraitSay("Yes! Alchemy is in my blood and I've finally been able to follow my dreams of opening up a little apothecary.");
+        randomSayIfPersonality(PersonalityTrait.encouraging, new ArrayList<>(),
+                "That's fantastic, one should always pursue one's dreams!");
         model.getParty().randomPartyMemberSay(model, List.of("Can we see your wares?"));
         portraitSay("Uh, unfortunately it's still a bit of a mess inside. But actually, if you don't mind, I have " +
                 "chore that needs doing. Would you spread the word about my new shop?");
@@ -37,18 +40,20 @@ public class AlchemistEvent extends DailyEventState {
                         "You keep it up for a few hours. Afterwards, you return to Durok's shop.");
                portraitSay("There you are! I've had many customers since you left. Whatever you did, it worked. " +
                         "Please permit me to reward you!");
-                Potion potion = model.getItemDeck().getRandomPotion();
-                println("The party gains a " + potion.getName() + ".");
-                model.getParty().getInventory().add(potion);
+               Potion potion = model.getItemDeck().getRandomPotion();
+               println("The party gains a " + potion.getName() + ".");
+               model.getParty().getInventory().add(potion);
                portraitSay("I have lots of other potions, if you're interested. I'll give you a discount!");
-                waitForReturn();
-                alchemistShop(model, true);
+               waitForReturn();
+               alchemistShop(model, true);
             } else {
                 println("You go to the town square and start to randomly shout at people about Durok's new shop.");
                 model.getParty().randomPartyMemberSay(model, List.of("Nobody seems to care...",
                         "We're just scaring people away..."));
                 println("You keep trying for some time, but ultimately you realize you're not getting anybody's " +
                         "attention. Frustrated and ashamed you decide to abandon the effort and go on with your day.");
+                randomSayIfPersonality(PersonalityTrait.irritable, List.of(model.getParty().getLeader()),
+                        "Grrr... why won't people listen to us? So annoying!");
                 leaderSay("I'm sure Durok's business will take off once people get to know him.");
                 println("You return to Durok's shop, which is quiet.");
                 portraitSay("Oh, hello. Nice to see somebody in here. I wonder if people don't understand what " +

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.enemies.*;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -26,6 +27,8 @@ public class AltarEvent extends DailyEventState {
                 "victim dead but there are " +
                 "also some dead cultists scattered about the site.");
         model.getParty().randomPartyMemberSay(model, List.of("This does not look like it ended well."));
+        randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(),
+                "This place gives me the creeps. Let's get out of here right now!");
         int dieRoll = MyRandom.rollD10();
         List<Enemy> enemies = new ArrayList<>();
         if (dieRoll <= 3) {
