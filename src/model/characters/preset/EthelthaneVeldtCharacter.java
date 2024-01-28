@@ -13,5 +13,6 @@ public class EthelthaneVeldtCharacter extends model.characters.GameCharacter {
                 new EthelthaneVeldt(), new CharacterClass[]{DRU, NOB, BRD, WIZ});
         addToPersonality(PersonalityTrait.cowardly);
         addToPersonality(PersonalityTrait.forgiving);
+        addToPersonality(PersonalityTrait.calm);
     }
 }

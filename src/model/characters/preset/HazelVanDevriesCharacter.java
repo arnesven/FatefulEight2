@@ -12,5 +12,7 @@ public class HazelVanDevriesCharacter extends model.characters.GameCharacter {
         super("Hazel", "Van Devries", SOUTHERN_HUMAN, NOB,
                 new HazelVanDevries(), new CharacterClass[]{NOB, ASN, MAG, THF});
         addToPersonality(PersonalityTrait.rude);
+        addToPersonality(PersonalityTrait.mischievous);
+        addToPersonality(PersonalityTrait.romantic);
     }
 }

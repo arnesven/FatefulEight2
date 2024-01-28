@@ -13,5 +13,6 @@ public class GorgaBonecragCharacter extends model.characters.GameCharacter {
                 new GorgaBonecrag(), new CharacterClass[]{BKN, AMZ, SPY, WIZ});
         addToPersonality(PersonalityTrait.rude);
         addToPersonality(PersonalityTrait.cold);
+        addToPersonality(PersonalityTrait.irritable);
     }
 }

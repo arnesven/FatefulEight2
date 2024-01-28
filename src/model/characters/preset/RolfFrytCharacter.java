@@ -13,5 +13,6 @@ public class RolfFrytCharacter extends model.characters.GameCharacter {
                 new RolfFryt(), new CharacterClass[]{PRI, MIN, SPY, WIT});
         addToPersonality(PersonalityTrait.unkind);
         addToPersonality(PersonalityTrait.gluttonous);
+        addToPersonality(PersonalityTrait.snobby);
     }
 }

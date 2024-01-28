@@ -13,5 +13,6 @@ public class AtalyaBalefrostCharacter extends model.characters.GameCharacter {
                 new AtalyaBalefrost(), new CharacterClass[]{WIZ, BKN, DRU, SOR});
         addToPersonality(PersonalityTrait.cowardly);
         addToPersonality(PersonalityTrait.calm);
+        addToPersonality(PersonalityTrait.stingy);
     }
 }

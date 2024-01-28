@@ -14,5 +14,6 @@ public class WilliamYdrenwaldCharacter extends GameCharacter {
                 new WilliamYdrenwald(), new CharacterClass[]{WIZ, DRU, MAG, SOR});
         addToPersonality(PersonalityTrait.encouraging);
         addToPersonality(PersonalityTrait.intellectual);
+        addToPersonality(PersonalityTrait.benevolent);
     }
 }

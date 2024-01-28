@@ -13,5 +13,6 @@ public class JordynStrongCharacter extends model.characters.GameCharacter {
                 new JordynStrong(), new CharacterClass[]{AMZ, BRD, FOR, PRI});
         addToPersonality(PersonalityTrait.benevolent);
         addToPersonality(PersonalityTrait.forgiving);
+        addToPersonality(PersonalityTrait.diplomatic);
     }
 }

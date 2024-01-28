@@ -13,5 +13,6 @@ public class PaddyWillowbrushCharacter extends model.characters.GameCharacter {
                 new PaddyWillowbrush(), new CharacterClass[]{MIN, DRU, FOR, MAR});
         addToPersonality(PersonalityTrait.jovial);
         addToPersonality(PersonalityTrait.anxious);
+        addToPersonality(PersonalityTrait.calm);
     }
 }

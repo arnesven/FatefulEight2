@@ -11,6 +11,8 @@ public class TorhildAmbershardCharacter extends model.characters.GameCharacter {
         super("Torhild", "Ambershard", DWARF, WIT,
                 new TorhildAmbershard(), new CharacterClass[]{WIT, AMZ, MAR, SPY});
         addToPersonality(PersonalityTrait.benevolent);
+        addToPersonality(PersonalityTrait.intellectual);
+        addToPersonality(PersonalityTrait.mischievous);
     }
 
 }

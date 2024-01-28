@@ -13,5 +13,7 @@ public class BungoDarkwoodCharacter extends GameCharacter {
         super("Bungo", "Darkwood", HALFLING, BBN,
                 new BungoDarkwood(), new CharacterClass[]{BBN, CAP, NOB, PAL});
         addToPersonality(PersonalityTrait.snobby);
+        addToPersonality(PersonalityTrait.diplomatic);
+        addToPersonality(PersonalityTrait.critical);
     }
 }

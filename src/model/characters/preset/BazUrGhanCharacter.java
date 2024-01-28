@@ -13,5 +13,6 @@ public class BazUrGhanCharacter extends model.characters.GameCharacter {
                 new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR});
         addToPersonality(PersonalityTrait.narcissistic);
         addToPersonality(PersonalityTrait.gluttonous);
+        addToPersonality(PersonalityTrait.cowardly);
     }
 }

@@ -11,5 +11,7 @@ public class RiboxAnariCharacter extends model.characters.GameCharacter {
         super("Ribox", "Anari", WOOD_ELF, MIN,
                 new RiboxAnari(), new CharacterClass[]{MIN, BBN, PRI, NOB});
         addToPersonality(PersonalityTrait.irritable);
+        addToPersonality(PersonalityTrait.aggressive);
+        addToPersonality(PersonalityTrait.friendly);
     }
 }

@@ -14,5 +14,6 @@ public class DaraStormcloudCharacter extends GameCharacter {
                 new DaraStormcloud(), new CharacterClass[]{FOR, ASN, BRD, MAR});
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.critical);
+        addToPersonality(PersonalityTrait.narcissistic);
     }
 }

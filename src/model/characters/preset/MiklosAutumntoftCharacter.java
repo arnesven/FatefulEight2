@@ -11,5 +11,7 @@ public class MiklosAutumntoftCharacter extends model.characters.GameCharacter {
         super("Miklos", "Autumntoft", HIGH_ELF, MAR,
                 new MiklosAutumntoft(), new CharacterClass[]{CAP, NOB, PAL, PRI});
         addToPersonality(PersonalityTrait.narcissistic);
+        addToPersonality(PersonalityTrait.playful);
+        addToPersonality(PersonalityTrait.mischievous);
     }
 }

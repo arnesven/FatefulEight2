@@ -12,5 +12,7 @@ public class SebastianSmithCharacter extends model.characters.GameCharacter {
         super("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
                 new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU});
         addToPersonality(PersonalityTrait.aggressive);
+        addToPersonality(PersonalityTrait.mischievous);
+        addToPersonality(PersonalityTrait.intellectual);
     }
 }

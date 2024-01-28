@@ -12,5 +12,7 @@ public class FattyGoldenrodCharacter extends model.characters.GameCharacter {
         super("Fatty", "Goldenrod", HALFLING, MIN,
                 new FattyGoldenrod(), new CharacterClass[]{MIN, BBN, WIT, SOR});
         addToPersonality(PersonalityTrait.unkind);
+        addToPersonality(PersonalityTrait.rude);
+        addToPersonality(PersonalityTrait.cold);
     }
 }

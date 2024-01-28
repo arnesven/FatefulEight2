@@ -13,5 +13,6 @@ public class ThorbaltRamcrownCharacter extends model.characters.GameCharacter {
                 new ThorbaltRamcrown(), new CharacterClass[]{ASN, CAP, MAG, BRD});
         addToPersonality(PersonalityTrait.narcissistic);
         addToPersonality(PersonalityTrait.critical);
+        addToPersonality(PersonalityTrait.friendly);
     }
 }

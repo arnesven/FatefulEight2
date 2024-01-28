@@ -13,5 +13,6 @@ public class AudreyPuddleCharacter extends model.characters.GameCharacter {
                 new AudreyPuddle(), new CharacterClass[]{BRD, SPY, AMZ, ART});
         addToPersonality(PersonalityTrait.cowardly);
         addToPersonality(PersonalityTrait.playful);
+        addToPersonality(PersonalityTrait.encouraging);
     }
 }

@@ -14,5 +14,6 @@ public class IvanMcIntoshCharacter extends GameCharacter {
                 new IvanMcIntosh(), new CharacterClass[]{PRI, BKN, FOR, MIN});
         addToPersonality(PersonalityTrait.generous);
         addToPersonality(PersonalityTrait.forgiving);
+        addToPersonality(PersonalityTrait.calm);
     }
 }

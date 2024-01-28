@@ -13,5 +13,6 @@ public class VendelaGawainsCharacter extends model.characters.GameCharacter {
                 new VendelaGawains(), new CharacterClass[]{ASN, NOB, WIT, MAG});
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.anxious);
+        addToPersonality(PersonalityTrait.friendly);
     }
 }

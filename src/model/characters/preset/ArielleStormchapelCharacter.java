@@ -12,5 +12,7 @@ public class ArielleStormchapelCharacter extends model.characters.GameCharacter 
         super("Arielle", "Stormchapel", NORTHERN_HUMAN, THF,
                 new ArielleStormchapel(), new CharacterClass[]{THF, ASN, BBN, PAL});
         addToPersonality(PersonalityTrait.snobby);
+        addToPersonality(PersonalityTrait.jovial);
+        addToPersonality(PersonalityTrait.romantic);
     }
 }

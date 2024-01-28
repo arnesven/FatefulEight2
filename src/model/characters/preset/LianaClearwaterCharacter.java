@@ -12,5 +12,7 @@ public class LianaClearwaterCharacter extends model.characters.GameCharacter {
         super("Liana", "Clearwater", WOOD_ELF, PAL,
                 new LianaClearwater(), new CharacterClass[]{PAL, CAP, WIZ, SPY});
         addToPersonality(PersonalityTrait.encouraging);
+        addToPersonality(PersonalityTrait.diplomatic);
+        addToPersonality(PersonalityTrait.prude);
     }
 }

@@ -13,5 +13,6 @@ public class StellaComptonCharacter extends model.characters.GameCharacter {
                 new StellaCompton(), new CharacterClass[]{BKN, BRD, ASN, SPY});
         addToPersonality(PersonalityTrait.aggressive);
         addToPersonality(PersonalityTrait.romantic);
+        addToPersonality(PersonalityTrait.narcissistic);
     }
 }

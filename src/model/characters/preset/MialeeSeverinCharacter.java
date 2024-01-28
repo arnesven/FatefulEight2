@@ -13,5 +13,6 @@ public class MialeeSeverinCharacter extends model.characters.GameCharacter {
                 new MialeeSeverin(), new CharacterClass[]{WIT, SOR, SPY, THF});
         addToPersonality(PersonalityTrait.irritable);
         addToPersonality(PersonalityTrait.anxious);
+        addToPersonality(PersonalityTrait.unkind);
     }
 }

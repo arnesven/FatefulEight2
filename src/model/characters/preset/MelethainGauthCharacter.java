@@ -13,5 +13,6 @@ public class MelethainGauthCharacter extends model.characters.GameCharacter {
                 new MelethainGauth(), new CharacterClass[]{BBN, THF, ASN, MAR});
         addToPersonality(PersonalityTrait.aggressive);
         addToPersonality(PersonalityTrait.mischievous);
+        addToPersonality(PersonalityTrait.romantic);
     }
 }

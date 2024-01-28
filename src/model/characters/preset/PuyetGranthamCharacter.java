@@ -12,5 +12,7 @@ public class PuyetGranthamCharacter extends model.characters.GameCharacter {
         super("Puyet", "Grantham", HALF_ORC, ART,
                 new PuyetGrantham(), new CharacterClass[]{ART, ASN, FOR, MIN});
         addToPersonality(PersonalityTrait.stingy);
+        addToPersonality(PersonalityTrait.greedy);
+        addToPersonality(PersonalityTrait.friendly);
     }
 }
