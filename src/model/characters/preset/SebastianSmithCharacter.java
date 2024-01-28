@@ -1,0 +1,16 @@
+package model.characters.preset;
+
+import model.characters.PersonalityTrait;
+import model.classes.CharacterClass;
+
+import static model.classes.Classes.*;
+import static model.classes.Classes.DRU;
+import static model.races.Race.SOUTHERN_HUMAN;
+
+public class SebastianSmithCharacter extends model.characters.GameCharacter {
+    public SebastianSmithCharacter() {
+        super("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
+                new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU});
+        addToPersonality(PersonalityTrait.aggressive);
+    }
+}

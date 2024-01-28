@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.enemies.BanditArcherEnemy;
 import model.enemies.BanditEnemy;
@@ -31,6 +32,12 @@ public class BanditEvent extends DailyEventState {
         println("You encounter a few ruffians at the side of the road. They rudely block your path.");
         showRandomPortrait(model, Classes.BANDIT, race,"Bandit");
         portraitSay("There's a toll here. 20 gold. It's uh... a traveller's fee. Bring out your purse now, be a good chap!");
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.aggressive, new ArrayList<>(),
+                "That's a bunch of hogwash! How dare you try to scam us?");
+        if (!didSay) {
+            randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),
+                    "These guys look kind of mean. Maybe we should give them what they want.");
+        }
         if (model.getParty().getGold() < 20) {
             portraitSay("What, you don't have 20 gold? Well pay us what you have and you can pay us the rest next time you pass.");
         }
@@ -41,6 +48,8 @@ public class BanditEvent extends DailyEventState {
             println("You pay off the bandits and continue on your journey.");
         } else {
             portraitSay("You refuse? Hey, lads, we need to teach this lot some manners!");
+            randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()),
+                    "You think you can take us? Come on then!");
             runCombat(generateBanditEnemies(model));
             possiblyGetHorsesAfterCombat("bandits", 3);
         }

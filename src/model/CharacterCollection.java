@@ -15,8 +15,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new AudreyPuddleCharacter());
         add(new GameCharacter("Paddy", "Willowbrush", HALFLING, MIN,
                 new PaddyWillowbrush(), new CharacterClass[]{MIN, DRU, FOR, MAR}));
-        add(new GameCharacter("Eldeth", "Markolak", DWARF, PRI,
-                new EldethMarkolak(), new CharacterClass[]{PRI, BBN, FOR, SOR}));
+        add(new EldethMarkolakCharacter());
         add(new DaraStormcloudCharacter());
         add(new GameCharacter("Jordyn", "Strong", SOUTHERN_HUMAN, AMZ,
                 new JordynStrong(), new CharacterClass[]{AMZ, BRD, FOR, PRI}));
@@ -30,8 +29,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new ZhandraMerkatys(), new CharacterClass[]{WIT, BBN, MAR, MIN}));
         add(new LorfirBriarfellCharacter());
         add(new AtalyaBalefrostCharacter());
-        add(new GameCharacter("Denise", "Boyd", NORTHERN_HUMAN, ART,
-                new DeniseBoyd(), new CharacterClass[]{ART, BKN, CAP, NOB}));
+        add(new DeniseBoydCharacter());
         add(new GameCharacter("Gorga", "Bonecrag", HALF_ORC, BKN,
                 new GorgaBonecrag(), new CharacterClass[]{BKN, AMZ, SPY, WIZ}));
         add(new GameCharacter("Leodor", "Sunshadow", DARK_ELF, NOB,
@@ -54,16 +52,13 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN}));
         add(new LonnieLiebgottCharacter());
         add(new RiboxAnariCharacter());
-        add(new GameCharacter("Liana", "Clearwater", WOOD_ELF, PAL,
-                new LianaClearwater(), new CharacterClass[]{PAL, CAP, WIZ, SPY}));
-        add(new GameCharacter("Zephyra", "Firefist", DARK_ELF, FOR,
-                new ZephyreFirefist(), new CharacterClass[]{FOR, AMZ, DRU, MAG}));
+        add(new LianaClearwaterCharacter());
+        add(new ZephyreFirefistCharacter());
         add(new GameCharacter("Muldan", "Ebonclaw", DARK_ELF, PRI,
                 new MuldanEbonclaw(), new CharacterClass[]{PRI, NOB, BBN, SOR}));
         add(new GameCharacter("Fatty", "Goldenrod", HALFLING, MIN,
                 new FattyGoldenrod(), new CharacterClass[]{MIN, BBN, WIT, SOR}));
-        add(new GameCharacter("Stella", "Compton", HALFLING, BKN,
-                new StellaCompton(), new CharacterClass[]{BKN, BRD, ASN, SPY}));
+        add(new StellaComptonCharacter());
         add(new EthelthaneVeldtCharacter());
         add(new HurinHammerfallCharacter());
         add(new GameCharacter("Baz", "Ur-Ghan", HALF_ORC, AMZ,
@@ -71,13 +66,11 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new VendelaGawainsCharacter());
         add(new EmilyFourhornCharacter());
         add(new IvanMcIntoshCharacter());
-        add(new GameCharacter("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
-                new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU}));
+        add(new SebastianSmithCharacter());
         add(new JennaWildflowerCharacter());
         add(new GameCharacter("Alewyn", "Solethal", HIGH_ELF, ART,
                 new AlewynSolethal(), new CharacterClass[]{ART, WIT, AMZ, MAG}));
-        add(new GameCharacter("Melethain", "Gauth", HIGH_ELF, BBN,
-                new MelethainGauth(), new CharacterClass[]{BBN, THF, ASN, MAR}));
+        add(new MelethainGauthCharacter());
         System.out.println(size() + " characters loaded!");
     }
 }

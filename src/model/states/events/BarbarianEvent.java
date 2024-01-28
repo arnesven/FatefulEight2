@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -41,6 +42,8 @@ public class BarbarianEvent extends DarkDeedsEvent {
         println("Clad in bear fur, a few patches of leather armor and wielding an enormous axe, " +
                 "this barbarian seems to belong to a proud tribe. ");
         showExplicitPortrait(model, portrait, "Barbarian");
+        randomSayIfPersonality(PersonalityTrait.snobby, List.of(model.getParty().getLeader()),
+                "Does anybody know how to deal with this savage?");
         return true;
     }
 

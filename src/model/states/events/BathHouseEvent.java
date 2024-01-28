@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SwimAttire;
 import model.classes.CharacterClass;
@@ -109,6 +110,8 @@ public class BathHouseEvent extends DailyEventState {
         leaderSay("Oh!");
         portraitSay("The changing rooms are this way. You will find swimming attire inside.");
         leaderSay("... thank you.");
+        randomSayIfPersonality(PersonalityTrait.prude, List.of(model.getParty().getLeader()), "Eek! I don't want anybody " +
+                "ogling me!");
         println("You change into your swimming attire and leave your gear in the lockers.");
         for (GameCharacter gc : bathers) {
             gc.setSpecificClothing(new SwimAttire());
