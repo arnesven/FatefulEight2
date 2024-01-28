@@ -1,6 +1,9 @@
 package model.characters.appearance;
 
 import model.characters.*;
+import model.characters.preset.MordKroftHairStyle;
+import model.characters.preset.TorhildHairstyle;
+import model.characters.preset.VzaniHairStyle;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.*;

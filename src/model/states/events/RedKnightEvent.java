@@ -2,7 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.RedKnightCharacter;
+import model.characters.special.RedKnightCharacter;
 import model.enemies.RedKnightEnemy;
 import model.states.DailyEventState;
 import model.states.GameState;

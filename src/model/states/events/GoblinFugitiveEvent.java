@@ -2,7 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.GoblinCharacter;
+import model.characters.special.GoblinCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;

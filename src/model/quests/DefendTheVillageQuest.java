@@ -1,9 +1,7 @@
 package model.quests;
 
 import model.Model;
-import model.characters.DeniseBoyd;
 import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.BanditEnemy;

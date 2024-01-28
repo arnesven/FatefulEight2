@@ -1,9 +1,8 @@
 package model.enemies;
 
 import model.characters.GameCharacter;
-import model.characters.LonnieLiebgott;
+import model.characters.preset.LonnieLiebgott;
 import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.items.Equipment;
 import model.items.weapons.Dagger;

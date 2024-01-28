@@ -1,7 +1,7 @@
 package model.enemies;
 
 import model.Model;
-import model.characters.WitchKingAppearance;
+import model.characters.special.WitchKingAppearance;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;

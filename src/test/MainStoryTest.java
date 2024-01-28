@@ -2,7 +2,7 @@ package test;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.KruskTalandro;
+import model.characters.preset.KruskTalandro;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.journal.JournalEntry;

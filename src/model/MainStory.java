@@ -2,17 +2,13 @@ package model;
 
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
-import model.characters.KruskTalandro;
-import model.characters.WillisCharacter;
-import model.classes.CharacterClass;
-import model.classes.Classes;
+import model.characters.special.WillisCharacter;
 import model.journal.*;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.map.WorldHex;
 import model.quests.*;
-import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;

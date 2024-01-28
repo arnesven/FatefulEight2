@@ -2,9 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.MiklosAutumntoft;
 import model.characters.appearance.AdvancedAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.enemies.*;
 import model.items.Equipment;

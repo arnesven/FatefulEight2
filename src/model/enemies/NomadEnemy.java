@@ -1,7 +1,7 @@
 package model.enemies;
 
 import model.Model;
-import model.characters.LonnieLiebgott;
+import model.characters.preset.LonnieLiebgott;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.PersonCombatLoot;

@@ -46,7 +46,7 @@ import java.awt.Point;
 import java.util.*;
 
 public class GameCharacter extends Combatant {
-    private static MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
+    private static final MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
                                                         MyColors.LIGHT_BLUE, MyColors.BEIGE, MyColors.WHITE, MyColors.LIGHT_PINK, MyColors.LIGHT_YELLOW};
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
     private static final int MAX_SP = 2;

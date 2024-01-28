@@ -1,9 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.characters.WitchKingAppearance;
+import model.characters.special.WitchKingAppearance;
 import model.classes.Classes;
-import model.combat.BossCombatLoot;
 import model.combat.CombatLoot;
 import model.combat.StandardCombatLoot;
 import model.enemies.behaviors.MultiMagicRangedAttackBehavior;

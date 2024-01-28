@@ -1,7 +1,7 @@
 package model.enemies;
 
 import model.Model;
-import model.characters.TorhildAmbershard;
+import model.characters.preset.TorhildAmbershard;
 import model.classes.Classes;
 import model.combat.CombatLoot;
 import model.combat.NoCombatLoot;

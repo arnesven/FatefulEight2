@@ -1,7 +1,7 @@
 package model.quests;
 
 import model.Model;
-import model.characters.DeniseBoyd;
+import model.characters.preset.DeniseBoyd;
 import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;

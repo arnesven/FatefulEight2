@@ -2,7 +2,7 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.LonnieLiebgott;
+import model.characters.preset.LonnieLiebgott;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.Combatant;

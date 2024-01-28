@@ -2,7 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.WitchKingCharacter;
+import model.characters.special.WitchKingCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.WitchKingEnemy;

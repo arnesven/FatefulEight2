@@ -1,7 +1,7 @@
 package model.states.events;
 
 import model.Model;
-import model.characters.EnchantressCharacter;
+import model.characters.special.EnchantressCharacter;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -13,7 +13,6 @@ import model.items.spells.DispelSpell;
 import model.items.spells.MindControlSpell;
 import model.items.spells.Spell;
 import model.states.*;
-import util.MyLists;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;

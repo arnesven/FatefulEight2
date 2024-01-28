@@ -2,8 +2,7 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.LonnieLiebgott;
-import model.characters.appearance.CharacterAppearance;
+import model.characters.preset.LonnieLiebgott;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.Combatant;
@@ -11,7 +10,6 @@ import model.combat.SummonCondition;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.weapons.FamiliarWeapon;
-import model.items.weapons.ShortSword;
 import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;

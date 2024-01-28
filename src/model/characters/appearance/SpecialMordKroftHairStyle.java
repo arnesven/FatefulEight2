@@ -1,6 +1,6 @@
 package model.characters.appearance;
 
-import model.characters.MordKroftHairStyle;
+import model.characters.preset.MordKroftHairStyle;
 
 public class SpecialMordKroftHairStyle extends MordKroftHairStyle {
     public SpecialMordKroftHairStyle() {

@@ -1,6 +1,6 @@
 package model.enemies;
 
-import model.characters.*;
+import model.characters.preset.*;
 import model.classes.Classes;
 import model.races.Race;
 import util.MyRandom;

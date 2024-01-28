@@ -1,14 +1,12 @@
 package model.journal;
 
 import model.characters.GameCharacter;
-import model.characters.LonnieLiebgott;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.items.Equipment;
 import model.items.accessories.ComfyShoes;
 import model.items.clothing.LeatherArmor;
-import model.items.clothing.QuiltedArmor;
 import model.items.weapons.Katana;
 import model.races.Race;
 import view.MyColors;

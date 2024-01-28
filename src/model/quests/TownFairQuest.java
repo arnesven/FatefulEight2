@@ -2,18 +2,14 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.RolfFryt;
 import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.classes.MarksmanClass;
 import model.classes.Skill;
 import model.items.Equipment;
 import model.items.spells.FireworksSpell;
 import model.items.spells.Spell;
 import model.items.weapons.BowWeapon;
 import model.items.weapons.CompetitionBow;
-import model.items.weapons.ShortBow;
 import model.items.weapons.YewBow;
 import model.map.UrbanLocation;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;

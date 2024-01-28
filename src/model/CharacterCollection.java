@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.*;
+import model.characters.preset.*;
 import model.classes.CharacterClass;
 
 import java.util.ArrayList;
@@ -10,8 +11,7 @@ import static model.races.Race.*;
 
 public class CharacterCollection extends ArrayList<GameCharacter> {
     public CharacterCollection() {
-        add(new GameCharacter("Krusk", "Talandro", HALF_ORC, WIT,
-                new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR}));
+        add(new KruskTalandroCharacter());
         add(new GameCharacter("Audrey", "Puddle", HALFLING, SPY,
                 new AudreyPuddle(), new CharacterClass[]{BRD, SPY, AMZ, ART}));
         add(new GameCharacter("Paddy", "Willowbrush", HALFLING, MIN,
