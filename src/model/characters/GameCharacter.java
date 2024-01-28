@@ -70,6 +70,7 @@ public class GameCharacter extends Combatant {
     private Party party;
     private int xpGivenCounter = 0;
     private final Map<GameCharacter, Integer> attitudes = new HashMap<>();
+    private Personality personality;
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
                          CharacterClass[] classes, Equipment equipment) {
@@ -82,6 +83,7 @@ public class GameCharacter extends Combatant {
         this.equipment = equipment;
         deadAppearance = new SkeletonAppearance(appearance.getShoulders(), appearance.getGender());
         setClass(charClass);
+        personality = new Personality();
         super.setCurrentHp(getMaxHP());
     }
 
@@ -762,5 +764,13 @@ public class GameCharacter extends Combatant {
 
     public boolean isSpecialCharacter() {
         return charClass.isSpecialCharacter();
+    }
+
+    public boolean hasPersonality(PersonalityTrait trait) {
+        return personality.contains(trait);
+    }
+
+    protected void addToPersonality(PersonalityTrait trait) {
+        personality.add(trait);
     }
 }

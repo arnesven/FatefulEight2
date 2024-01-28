@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -43,6 +44,9 @@ public class BorrowedMoneyEvent extends DailyEventState {
                 portraitSay("Okay okay, here, take it. I was only gonna spend it on dice anyway.");
                 println("The party receives 15 gold!");
                 model.getParty().addToGold(15);
+                partyMemberSay(main, "Thank you.");
+                randomSayIfPersonality(PersonalityTrait.greedy, List.of(main),
+                        "That's it? What about the interest?");
             } else {
                 portraitSay("I don't know what you're talking about. Now please excuse me, I have somewhere I have to be.");
                 if (model.getParty().size() > 1) {

@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -21,6 +22,7 @@ import view.subviews.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class GameState {
 
@@ -253,5 +255,18 @@ public abstract class GameState {
 
     public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {
         return Math.max(1, model.getParty().partyStrength() / (enemy).getThreat());
+    }
+
+    protected boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {
+        List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
+        candidates.removeAll(model.getParty().getBench());
+        candidates.removeAll(excluding);
+        candidates.removeIf(gameCharacter -> !gameCharacter.hasPersonality(trait));
+        if (candidates.isEmpty()) {
+            return false;
+        }
+        GameCharacter speaker = MyRandom.sample(candidates);
+        partyMemberSay(speaker, line);
+        return true;
     }
 }

@@ -18,8 +18,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new PaddyWillowbrush(), new CharacterClass[]{MIN, DRU, FOR, MAR}));
         add(new GameCharacter("Eldeth", "Markolak", DWARF, PRI,
                 new EldethMarkolak(), new CharacterClass[]{PRI, BBN, FOR, SOR}));
-        add(new GameCharacter("Dara", "Stormcloud", WOOD_ELF, ASN,
-                new DaraStormcloud(), new CharacterClass[]{FOR, ASN, BRD, MAR}));
+        add(new DaraStormcloudCharacter());
         add(new GameCharacter("Jordyn", "Strong", SOUTHERN_HUMAN, AMZ,
                 new JordynStrong(), new CharacterClass[]{AMZ, BRD, FOR, PRI}));
         add(new GameCharacter("Puyet", "Grantham", HALF_ORC, ART,
@@ -60,8 +59,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new HazelVanDevries(), new CharacterClass[]{NOB, ASN, MAG, THF}));
         add(new GameCharacter("Megar", "Evermead", DWARF, ART,
                 new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN}));
-        add(new GameCharacter("Lonnie", "Liebgott", NORTHERN_HUMAN, MIN,
-                new LonnieLiebgott(), new CharacterClass[]{NOB, MIN, MAG, THF}));
+        add(new LonnieLiebgottCharacter());
         add(new GameCharacter("Ribox", "Anari", WOOD_ELF, MIN,
                 new RiboxAnari(), new CharacterClass[]{MIN, BBN, PRI, NOB}));
         add(new GameCharacter("Liana", "Clearwater", WOOD_ELF, PAL,
@@ -80,8 +78,7 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new HurinHammerfall(), new CharacterClass[]{ART, PAL, THF, CAP}));
         add(new GameCharacter("Baz", "Ur-Ghan", HALF_ORC, AMZ,
                 new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR}));
-        add(new GameCharacter("Vendela", "Gawains", HALF_ORC, ASN,
-                new VendelaGawains(), new CharacterClass[]{ASN, NOB, WIT, MAG}));
+        add(new VendelaGawainsCharacter());
         add(new GameCharacter("Emily", "Fourhorn", NORTHERN_HUMAN, AMZ,
                 new EmilyFourhorn(), new CharacterClass[]{AMZ, BRD, SOR, MAR}));
         add(new GameCharacter("Ivan", "McIntosh", NORTHERN_HUMAN, PRI,
