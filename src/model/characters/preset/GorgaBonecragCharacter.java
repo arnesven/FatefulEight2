@@ -12,5 +12,6 @@ public class GorgaBonecragCharacter extends model.characters.GameCharacter {
         super("Gorga", "Bonecrag", HALF_ORC, BKN,
                 new GorgaBonecrag(), new CharacterClass[]{BKN, AMZ, SPY, WIZ});
         addToPersonality(PersonalityTrait.rude);
+        addToPersonality(PersonalityTrait.cold);
     }
 }

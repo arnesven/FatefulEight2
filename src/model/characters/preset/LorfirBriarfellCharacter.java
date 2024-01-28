@@ -12,5 +12,6 @@ public class LorfirBriarfellCharacter extends model.characters.GameCharacter {
         super("Lorfir", "Briarfell", WOOD_ELF, ART,
                 new LorfirBriarfell(), new CharacterClass[]{ART, AMZ, DRU, THF});
         addToPersonality(PersonalityTrait.snobby);
+        addToPersonality(PersonalityTrait.cold);
     }
 }

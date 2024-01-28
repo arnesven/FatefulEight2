@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.enemies.*;
@@ -15,6 +16,7 @@ import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PaladinEvent extends DailyEventState {
@@ -34,6 +36,10 @@ public class PaladinEvent extends DailyEventState {
     protected void doEvent(Model model) {
         println("You suddenly hear distant screams. Faintly, you hear somebody calling for help.");
         model.getParty().randomPartyMemberSay(model, List.of("Sounds like somebody is in trouble."));
+        randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
+                "We must act.");
+        randomSayIfPersonality(PersonalityTrait.unkind, List.of(model.getParty().getLeader()),
+                "Not really our problem though, is it?");
         print("Investigate the screams? (Y/N) ");
         boolean gender = MyRandom.randInt(2) == 0;
         if (yesNoInput()) {
@@ -42,6 +48,12 @@ public class PaladinEvent extends DailyEventState {
             Enemy monster = MyRandom.sample(enemies);
             println("You follow the noise and come to a spot where a " + monster.getName() + " is about to pounce " +
                     "at a young " + (gender?"girl":"boy") + ".");
+            boolean didSay = randomSayIfPersonality(PersonalityTrait.cold, List.of(model.getParty().getLeader()),
+                    "Let's not interfere with nature...");
+            if (didSay) {
+                randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(),
+                        "You low life. Of course we must intervene!");
+            }
             print("Do you intervene? (Y/N) ");
             if (yesNoInput()) {
                 Race race = Race.randomRace();
@@ -72,6 +84,8 @@ public class PaladinEvent extends DailyEventState {
                         List.of("Better " + himOrHer(gender) + " than us",
                         "Can't stop the course of nature.",
                                 heOrSheCap(gender) + " probably had it coming..."));
+                randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
+                        "I feel really bad about this.");
             }
         } else {
             leaderSay("Probably just the wind...");

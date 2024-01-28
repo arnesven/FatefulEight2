@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -39,6 +40,10 @@ public class OrcishStrongholdEvent extends DailyEventState {
             boolean troll = MyRandom.randInt(2) == 0;
             assessStrongholdStrength(model, warriors, troll);
             model.getLog().waitForAnimationToFinish();
+            randomSayIfPersonality(PersonalityTrait.diplomatic, List.of(model.getParty().getLeader()),
+                    "Maybe we should try to approach them? Perhaps they would like to trade?");
+            randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),
+                    "Why take the risk in staying here any longer than we have to?");
             println("What do you do?");
             int choice = multipleOptionArrowMenu(model, 34, 18, List.of("Attack", "Approach", "Leave"));
             if (choice == 0) {

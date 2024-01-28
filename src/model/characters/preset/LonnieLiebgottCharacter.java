@@ -13,5 +13,6 @@ public class LonnieLiebgottCharacter extends model.characters.GameCharacter {
                 new LonnieLiebgott(), new CharacterClass[]{NOB, MIN, MAG, THF});
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.playful);
+        addToPersonality(PersonalityTrait.mischievous);
     }
 }

@@ -1,12 +1,15 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.races.Race;
 import model.states.DailyEventState;
 import view.subviews.PortraitSubView;
+
+import java.util.ArrayList;
 
 public class LoveLetterEvent extends DailyEventState {
     public LoveLetterEvent(Model model) {
@@ -26,6 +29,8 @@ public class LoveLetterEvent extends DailyEventState {
             println("This appears to be a love letter to somebody named Maggie. Although the content does not reveal " +
                     "the author directly, it is quite lengthy and contains a number of clues which should make tracking him or her down " +
                     "somewhat easier.");
+            boolean didSay = randomSayIfPersonality(PersonalityTrait.romantic, new ArrayList<>(), "A love letter? That just warms me up inside.");
+            didSay = didSay || randomSayIfPersonality(PersonalityTrait.cold, new ArrayList<>(), "Ugh, mushy stuff like this makes me sick.");
         }
         print("Do you try to return the letter to the sender (Y) or do you attempt to deliver it to Maggie (N)? ");
         if (yesNoInput()) {
@@ -39,6 +44,8 @@ public class LoveLetterEvent extends DailyEventState {
                 if (rollBonus != 0) {
                     println("Doug is visibly annoyed that you have opened the letter and read " +
                             "the contents but hands you a few coins for your trouble.");
+                    randomSayIfPersonality(PersonalityTrait.irritable, new ArrayList<>(),
+                            "Jeez, some people need to lighten up. It's only a letter.");
                 } else {
                     println("Doug thanks you profusely for finding the letter and rewards you with some gold.");
                 }
@@ -57,6 +64,7 @@ public class LoveLetterEvent extends DailyEventState {
                         "after reading it she turns bright pink and admits to being the intended recipient.");
                 portraitSay("Please let me reward you. If not for you, I would have never received this and my poor " +
                         "paramour would believe that I snubbed him.");
+                randomSayIfPersonality(PersonalityTrait.romantic, new ArrayList<>(), "Aaaw, how sweet!");
                 int reward = 10;
                 println("The party gains " + reward + " gold.");
                 model.getParty().addToGold(reward);

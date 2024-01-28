@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -32,6 +33,12 @@ public class QuicksandEvent extends DailyEventState {
         nonSinkers.removeAll(sinkers);
         model.getParty().partyMemberSay(model, MyRandom.sample(nonSinkers), "Uhm, " + sinkers.get(0).getFirstName() + ", you're sinking...");
         model.getParty().partyMemberSay(model, sinkers.get(0), "Oh no! It's quicksand. Help me!");
+        for (GameCharacter gc : nonSinkers) {
+            if (gc.hasPersonality(PersonalityTrait.calm)) {
+                partyMemberSay(gc, "Try to not panic. Just remain calm.");
+                break;
+            }
+        }
 
         List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Logic, 4);
         if (!failers.isEmpty()) {

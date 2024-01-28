@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -24,6 +25,8 @@ public class MushroomsEvent extends DailyEventState {
         println("A large patch of mushrooms cover the ground ahead. " +
                 "The party is hungry and they do look delicious, but are " +
                 "they edible?");
+        randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(),
+                "They look absolutely scrumptious!");
         print("Do you pick the mushrooms? (Y/N) ");
         if (yesNoInput()) {
             boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Survival, 10);

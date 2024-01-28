@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.SoldierEnemy;
@@ -9,6 +10,7 @@ import model.horses.HorseHandler;
 import model.states.DailyEventState;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RunAwayHorseEvent extends DailyEventState {
@@ -36,6 +38,8 @@ public class RunAwayHorseEvent extends DailyEventState {
                 boolean gender = MyRandom.flipCoin();
                 println("A " + (gender?"woman":"man") + " steps out of the brush and comes rushing toward you.");
                 portraitSay("You think you can just take someone's horse? What's the matter with you?");
+                randomSayIfPersonality(PersonalityTrait.diplomatic, new ArrayList<>(),
+                        "This is just a misunderstanding!");
                 boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 8);
                 if (result) {
                     println("You manage to calm the knight down and convince " + himOrHer(gender) +

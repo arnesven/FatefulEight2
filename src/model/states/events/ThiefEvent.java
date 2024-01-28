@@ -2,11 +2,13 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.DailyEventState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ThiefEvent extends DailyEventState {
@@ -34,6 +36,8 @@ public class ThiefEvent extends DailyEventState {
             if (yesNoInput()) {
                 leaderSay("Well, why didn't you say so. You're welcome to " +
                                 "spend the evening with us, we've got plenty of food and drink.");
+                randomSayIfPersonality(PersonalityTrait.generous, new ArrayList<>(),
+                        "You're probably very hungry. Eat as much as you like.");
                 model.getParty().addToFood(-1);
                 ChangeClassEvent change = new ChangeClassEvent(model, Classes.THF);
                 print("The thief is surprised by your sudden generosity and gladly joins you for the evening. " +
@@ -52,6 +56,13 @@ public class ThiefEvent extends DailyEventState {
             }
             println("The party loses " + lost + " gold.");
             model.getParty().addToGold(-lost);
+            boolean didSay = randomSayIfPersonality(PersonalityTrait.irritable, List.of(model.getParty().getLeader()),
+                    "Darn it! we need to keep a better eye on things.");
+            if (!didSay) {
+                randomSayIfPersonality(PersonalityTrait.critical, List.of(model.getParty().getLeader()),
+                        "Darn it! " + model.getParty().getLeader().getName() + ", you need to keep a better eye on things.");
+
+            }
         }
 
     }

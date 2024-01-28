@@ -12,6 +12,7 @@ public class DaraStormcloudCharacter extends GameCharacter {
     public DaraStormcloudCharacter() {
         super("Dara", "Stormcloud", WOOD_ELF, ASN,
                 new DaraStormcloud(), new CharacterClass[]{FOR, ASN, BRD, MAR});
-        super.addToPersonality(PersonalityTrait.greedy);
+        addToPersonality(PersonalityTrait.greedy);
+        addToPersonality(PersonalityTrait.critical);
     }
 }

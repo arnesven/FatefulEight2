@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -50,16 +51,29 @@ public class PartyCookingEvent extends DailyEventState {
                 int diff = cookQuality - roll;
                 if (diff > 0) {
                     println(gc.getFirstName() + " enjoyed the special meal.");
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("Yummy!", "Can I have some more?", "Ah, what lovely seasoning!<3",
-                                    "Perfection!<3", "So creamy!", "This is my favorite food."));
+                    if (gc.hasPersonality(PersonalityTrait.gluttonous)) {
+                        partyMemberSay(gc, "GIVE... ME... MORE!");
+                    } else {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("Yummy!", "Can I have some more?", "Ah, what lovely seasoning!<3",
+                                        "Perfection!<3", "So creamy!", "This is my favorite food."));
+                    }
                     gc.addToAttitude(cooker, diff);
                     cooker.addToAttitude(gc, diff/2);
                 } else {
                     println(gc.getFirstName() + " did not enjoy the special meal.");
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("Yuck!", "Uhm, I think I've had enough.", "Is this a hair?",
-                                    "This is still raw.", "Definitely overcooked.", "Not my favorite."));
+                    if (gc.hasPersonality(PersonalityTrait.unkind) ||
+                            gc.hasPersonality(PersonalityTrait.rude) ||
+                            gc.hasPersonality(PersonalityTrait.cold)) {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("Yuck!", "You are an awful cook", "Bloody terrible!",
+                                        "Did you follow a recipe, or did you just toss random things into the pot?",
+                                        "Are you trying to poison me?"));
+                    } else {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("Uhm, I think I've had enough.", "Is this a hair?",
+                                        "This is still raw.", "Definitely overcooked.", "Not my favorite."));
+                    }
                     gc.addToAttitude(cooker, diff/2);
                     cooker.addToAttitude(gc, diff/4);
                 }

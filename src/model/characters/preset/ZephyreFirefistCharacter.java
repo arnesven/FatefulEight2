@@ -12,5 +12,6 @@ public class ZephyreFirefistCharacter extends model.characters.GameCharacter {
         super("Zephyra", "Firefist", DARK_ELF, FOR,
                 new ZephyreFirefist(), new CharacterClass[]{FOR, AMZ, DRU, MAG});
         addToPersonality(PersonalityTrait.prude);
+        addToPersonality(PersonalityTrait.diplomatic);
     }
 }

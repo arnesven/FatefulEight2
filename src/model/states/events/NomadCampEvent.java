@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -42,6 +43,8 @@ public class NomadCampEvent extends DailyEventState {
         showRandomPortrait(model, cls, "Nomads");
         println("The party comes to a little community of tents and wagons. " +
                 "These nomads travel around the countryside, following game or herds.");
+        randomSayIfPersonality(PersonalityTrait.friendly, new ArrayList<>(), "We should approach them peacefully. " +
+                "If we befriend them, we may all benefit.");
         int bonus = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getCharClass().id() == Classes.BBN.id() ||
@@ -68,6 +71,10 @@ public class NomadCampEvent extends DailyEventState {
         boolean isWarriorClan = (roll < 3 || roll == 5 || roll == 8);
         if (attitude == Attitude.Hostile) {
             leaderSay("They seem pretty aggressive. Maybe we can find some common ground.");
+            randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()),
+                    "Or we can crack some skulls?");
+            randomSayIfPersonality(PersonalityTrait.diplomatic, List.of(model.getParty().getLeader()),
+                    "That sounds like a good idea. There must be some way of reasoning with them.");
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Persuade, 7);
             if (!success) {
                 didCombat = true;
@@ -93,6 +100,12 @@ public class NomadCampEvent extends DailyEventState {
         }
 
         if (roll % 3 == 0) {
+            println("The nomads offer to sell you a horse.");
+            BuyHorseState buyHorseState = new BuyHorseState(model, "Nomad");
+            buyHorseState.setPrice(model.getParty().getHorseHandler().getAvailableHorse(model).getCost() +
+                    MyRandom.randInt(-20, 10));
+            buyHorseState.run(model);
+
             print("The nomads agree to trade with you. Press enter to see their wares. ");
             waitForReturn();
             List<Item> items = new ArrayList<>();
@@ -112,12 +125,7 @@ public class NomadCampEvent extends DailyEventState {
             ShopState merchantShop = new ShopState(model, "nomad trader", items, prices);
             merchantShop.setSellingEnabled(false);
             merchantShop.run(model);
-        } else if (roll % 3 == 1) {
-            println("The nomads offer to sell you a horse.");
-            BuyHorseState buyHorseState = new BuyHorseState(model, "Nomad");
-            buyHorseState.setPrice(model.getParty().getHorseHandler().getAvailableHorse(model).getCost() +
-                    MyRandom.randInt(-20, 10));
-            buyHorseState.run(model);
+
         } else if (!isWarriorClan) {
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);
             print("The nomads offer to teach you in their ancestral worship");

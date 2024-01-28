@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.CaveTheme;
@@ -13,6 +14,7 @@ import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MineEvent extends DailyEventState {
@@ -42,6 +44,8 @@ public class MineEvent extends DailyEventState {
             }
         }
         if (bonus == 0) {
+            randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),
+                    "Are we really going down there?");
             model.getParty().randomPartyMemberSay(model,
                     List.of("Entering could be perilous, but could also yield rewards..."));
         }
@@ -52,6 +56,8 @@ public class MineEvent extends DailyEventState {
         }
         if (!model.isInCaveSystem()) {
             leaderSay("Bring out your torches, we're going down there.");
+            randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
+                    "Okay, but you first!");
         }
         int roll = MyRandom.rollD10() + bonus;
         int gold = 35;

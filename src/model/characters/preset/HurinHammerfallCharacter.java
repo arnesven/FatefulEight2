@@ -12,5 +12,6 @@ public class HurinHammerfallCharacter extends model.characters.GameCharacter {
         super("Hurin", "Hammerfall", DWARF, ART,
                 new HurinHammerfall(), new CharacterClass[]{ART, PAL, THF, CAP});
         addToPersonality(PersonalityTrait.encouraging);
+        addToPersonality(PersonalityTrait.friendly);
     }
 }

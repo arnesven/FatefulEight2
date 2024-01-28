@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.RandomAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -41,6 +42,12 @@ public class OrcRaidEvent extends DailyEventState {
                 "running into their houses, shutting doors and windows.");
         showRandomPortrait(model, Classes.CONSTABLE, "Militia");
         portraitSay("Orc Raid! Everybody, take up arms to defend our town!");
+        randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
+                "We must protect these innocent people!");
+        randomSayIfPersonality(PersonalityTrait.cold, List.of(model.getParty().getLeader()),
+                "Why should we stick our necks out for these people? Let's just get out of town while there's still time.");
+        randomSayIfPersonality(PersonalityTrait.calm, List.of(model.getParty().getLeader()),
+                "Let's just remain calm and try to keep our heads, okay?");
         print("Do you help to defend the town? (Y/N) ");
         if (yesNoInput()) {
             List<Enemy> enemies = new ArrayList<>();
@@ -63,8 +70,10 @@ public class OrcRaidEvent extends DailyEventState {
             println("You have fended off the orcish marauders. There is much confusion " +
                     "in the aftermath but there doesn't seem to be many injured or any damage to the town.");
             showRandomPortrait(model, Classes.CONSTABLE, "Militia");
-            portraitSay("Thank you for defending our town from those horrible beasts. " +
-                    "Please accept this equipment as a small token of our gratitude.");
+            portraitSay("Thank you for defending our town from those horrible beasts.");
+            randomSayIfPersonality(PersonalityTrait.narcissistic, new ArrayList<>(),
+                    "Oh it was nothing, I barely broke a sweat!");
+            portraitSay("Please accept this equipment as a small token of our gratitude.");
             int numberOfItems = MyRandom.randInt(3, 5);
             for (int i = 0; i < numberOfItems; ++i) {
                 Item it;

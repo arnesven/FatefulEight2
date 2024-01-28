@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -16,6 +17,7 @@ import model.states.GameState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoblemanEvent extends DarkDeedsEvent {
@@ -55,10 +57,13 @@ public class NoblemanEvent extends DarkDeedsEvent {
             int amount = Math.min(10 * model.getParty().size(), 50);
             model.getParty().addToGold(amount);
             state.println("The party receives " + amount + " gold from the noble.");
-            model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
-                    List.of("Much obliged.", "This extra coin will come in handy.", "It's for a worthy cause.",
-                            "A good deed.", "Perhaps we can pay you back one day...",
-                            "How very generous of you!3"));
+            boolean didSay = state.randomSayIfPersonality(PersonalityTrait.snobby, new ArrayList<>(), "We'll take it.");
+            if (!didSay) {
+                model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
+                        List.of("Much obliged.", "This extra coin will come in handy.", "It's for a worthy cause.",
+                                "A good deed.", "Perhaps we can pay you back one day...",
+                                "How very generous of you!3"));
+            }
             ChangeClassEvent change = new ChangeClassEvent(model, Classes.NOB);
             state.print("The noble also offers to inspire you to take on the high life, ");
             change.areYouInterested(model);
@@ -73,8 +78,12 @@ public class NoblemanEvent extends DarkDeedsEvent {
     protected void doEnding(Model model) {
         if (success) {
             println("You part ways with the nobleman.");
-            model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
-                    List.of("What a sucker...", "Such a nice person.", "We should hang out with noblemen more often."));
+            boolean didSay = randomSayIfPersonality(PersonalityTrait.unkind, List.of(model.getParty().getLeader()),
+                    "What a sucker...");
+            if (didSay) {
+                model.getParty().partyMemberSay(model, MyRandom.sample(model.getParty().getPartyMembers()),
+                        List.of("Such a nice person.", "We should hang out with noblemen more often."));
+            }
         } else {
             println("You part ways with the nobleman.");
         }

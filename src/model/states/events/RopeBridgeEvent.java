@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.GameOverState;
@@ -29,6 +30,8 @@ public class RopeBridgeEvent extends RiverEvent {
         if (model.getParty().hasHorses()) {
             println("Your horses cannot cross the rope bridge.");
         }
+        randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
+                "I've got a bad feeling about this.");
         print(" Do you try to cross? (Y/N) ");
         if (yesNoInput()) {
             model.getParty().getHorseHandler().abandonHorses(model);

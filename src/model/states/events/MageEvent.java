@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -46,6 +47,7 @@ public class MageEvent extends DarkDeedsEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
             println("The party encounters a mage who seems eager to discuss the more academic aspects of magic.");
+            randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(), "Finally some intellectual interaction.");
             showExplicitPortrait(model, appearance, "Mage");
         }
         return true;
@@ -75,6 +77,7 @@ public class MageEvent extends DarkDeedsEvent {
                     model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                             List.of("Uhm... 'Abracadabra'?", "Uhm... 'Hocus Pocus'?", "Uhm... 'Wingardium Leviosa'?"));
                     portraitSay("Hmph. Well we can't all be magical prodigies I suppose...");
+                    randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(), "Hah... you are hardly a prodigy.");
                 }
             } else {
                 leaderSay("Uhm... " + model.getParty().getInventory().getSpells().get(0).getName() + "?");

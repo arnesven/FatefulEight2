@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.enemies.Enemy;
@@ -32,7 +33,10 @@ public class WitchHutEvent extends DarkDeedsEvent {
         println("You find a small hut in a dank grove. Light emanates from " +
                 "the window. Inside a witch is stirring a cauldron and " +
                 "mumbling strange rhymes.");
-        model.getParty().randomPartyMemberSay(model, List.of("Is that an incantation or she just insane?"));
+        randomSayIfPersonality(PersonalityTrait.rude, new ArrayList<>(),
+                "Is that an incantation or she just insane?");
+        randomSayIfPersonality(PersonalityTrait.friendly, new ArrayList<>(),
+                "Excuse us madam...");
         return true;
     }
 

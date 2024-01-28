@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.map.UrbanLocation;
@@ -43,6 +44,11 @@ public class MayorEvent extends DailyEventState {
                 portraitSay("Safe journeys friend.");
             } else {
                 leaderSay("Don't even think about it. Hopefully one day somebody will do the same for me.");
+                boolean didSay = randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()),
+                        "What are you doing? Take the money?");
+                if (didSay) {
+                    leaderSay("I wouldn't dream of it!");
+                }
                 portraitSay("What an honourable sentiment! I wish more people were like you in this town. " +
                         "Please come visit me later. Here take this.");
                 println("The noble hands you a slip of paper, then excuses " + himOrHer(gender) + "self.");

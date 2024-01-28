@@ -11,5 +11,6 @@ public class ZhandraMerkatysCharacter extends model.characters.GameCharacter {
         super("Zhandra", "Merkatys", SOUTHERN_HUMAN, WIT,
                 new ZhandraMerkatys(), new CharacterClass[]{WIT, BBN, MAR, MIN});
         addToPersonality(PersonalityTrait.rude);
+        addToPersonality(PersonalityTrait.romantic);
     }
 }

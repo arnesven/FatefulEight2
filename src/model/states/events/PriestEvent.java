@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.enemies.CompanionEnemy;
@@ -13,6 +14,7 @@ import model.items.weapons.Scepter;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyRandom;
+import util.MyStrings;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
@@ -45,6 +47,12 @@ public class PriestEvent extends DarkDeedsEvent {
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         print("The priest offers to bless the members of the party - for a small 'donation'. ");
+        randomSayIfPersonality(PersonalityTrait.stingy, List.of(model.getParty().getLeader()),
+                MyStrings.capitalize(MyStrings.nthWord(BLESS_COST)) + " gold for a guy to wave his hands at you? What a rip off!");
+        randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
+                "This is a good way to spend money.");
+        randomSayIfPersonality(PersonalityTrait.generous, List.of(model.getParty().getLeader()),
+                "We can spare a few coins. Priests need to make a living too you know.");
         while (true) {
             if (model.getParty().getGold() < BLESS_COST) {
                 println("Unfortunately you cannot afford any more 'donations' right now.");

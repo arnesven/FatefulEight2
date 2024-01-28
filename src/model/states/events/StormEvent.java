@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import view.sprites.MiniPictureSprite;
@@ -26,7 +27,9 @@ public class StormEvent extends DailyEventState {
                 "Get ready to get wet.", "Well it could be worse."));
         println("Soon a strong torrent of rain is coming. The party " +
                 "is now severely impeded by the downpour and the strong wind.");
-        model.getParty().randomPartyMemberSay(model, List.of("It's worse.", "Why does this always happen to me?",
+        randomSayIfPersonality(PersonalityTrait.narcissistic, new ArrayList<>(),
+                "Why does this always happen to me?");
+        model.getParty().randomPartyMemberSay(model, List.of("It's worse.",
                 "Even my underwear is wet!", "Can we get a fire going?"));
         print("Do you seek shelter (Y) or trudge on through the storm (N)? ");
         if (yesNoInput()) {
@@ -36,6 +39,14 @@ public class StormEvent extends DailyEventState {
                         " You will have to spend the entire day tomorrow to try to find your way back" +
                         " to the path.");
                 model.mustStayInHex(true);
+            } else {
+                println("You soon find a little cave and set up camp. Out of the wind and with a warm fire going " +
+                        "the storm is only heard, not felt.");
+                leaderSay("Ah... shelter. Everybody hang your wet clothes up around the fire.");
+                randomSayIfPersonality(PersonalityTrait.prude, List.of(model.getParty().getLeader()),
+                        "I'm keeping my clothes on, thank you.");
+                randomSayIfPersonality(PersonalityTrait.romantic, new ArrayList<>(), "This is actually kind of cozy.");
+                randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(), "Let's tell ghost stories!");
             }
         } else {
             List<GameCharacter> toRemove = new ArrayList<>();

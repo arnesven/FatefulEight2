@@ -37,7 +37,7 @@ public class RapidsEvent extends RiverEvent {
         runAwayState.run(model);
     }
 
-    private class RapidsRunAwayState extends RunAwayState {
+    private static class RapidsRunAwayState extends RunAwayState {
         public RapidsRunAwayState(Model model) {
             super(model);
         }

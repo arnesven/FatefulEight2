@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.BardClass;
 import model.classes.MagicianClass;
 import model.classes.Skill;
@@ -80,20 +81,31 @@ public class PartyEntertainmentEvent extends DailyEventState {
                 int diff = entertainmentQuality - roll;
                 if (diff > 0) {
                     println(gc.getName() + " is entertained by the performance.");
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("Spectacular!", "Wonderful!", "Please, do more!",
-                                    "Encore!", "I love it!", "You are great!", "This was some high quality entertainment.",
-                                    "I like what I see.", "Good stuff!", "Satisfying."));
+                    if (gc.hasPersonality(PersonalityTrait.encouraging) || gc.hasPersonality(PersonalityTrait.friendly)) {
+                        model.getParty().partyMemberSay(model, gc,
+                        List.of("Spectacular!", "Wonderful!", "Please, do more!",
+                                "Encore!", "I love it!", "You are great!", "This was some high quality entertainment."));
+                    } else {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("I like what I see.", "Good stuff!", "Satisfying."));
+                    }
                     MyLists.forEach(entertainers, (GameCharacter ent) -> {
                         gc.addToAttitude(ent, diff);
                         ent.addToAttitude(gc, diff/2);
                     });
                 } else {
                     println(gc.getName() + " is not entertained by the performance.");
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("I've seen better.", "Mediocre.", "Please stop.",
-                                    "Meh.", "Can't say I love this", "Really?", "This was some low quality entertainment.",
-                                    "Not my cup of tea.", "Less than good.", "Not so great."));
+                    if (gc.hasPersonality(PersonalityTrait.critical) || gc.hasPersonality(PersonalityTrait.unkind)) {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("You are terrible at this.", "This was a poor show.",
+                                        "I feel Ill.", "This was like watching paint dry.",
+                                        "Really really bad."));
+                    } else {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("I've seen better.", "Mediocre.", "Please stop.",
+                                        "Meh.", "Can't say I love this", "Really?", "This was some low quality entertainment.",
+                                        "Not my cup of tea.", "Less than good.", "Not so great."));
+                    }
                     MyLists.forEach(entertainers, (GameCharacter ent) -> {
                         gc.addToAttitude(ent, diff/2);
                         ent.addToAttitude(gc, diff/4);

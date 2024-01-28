@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.combat.CaveTheme;
 import model.enemies.Enemy;
 import model.enemies.OctopusEnemy;
@@ -22,7 +23,8 @@ public class UndergroundLakeEvent extends DailyEventState {
     protected void doEvent(Model model) {
         println("The party discovers an underground lake.");
         leaderSay("This might be a good place to rest, and to fill up our water skins.");
-        model.getParty().randomPartyMemberSay(model, List.of("I don't know though... that lake gives me the creeps."));
+        randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
+                "I don't know though... that lake gives me the creeps.");
 
         do {
             List<String> optionList = List.of(

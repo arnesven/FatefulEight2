@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -37,6 +38,14 @@ public class MagicianEvent extends DarkDeedsEvent {
         portraitSay("Ladies and gentlemen, step right up! Come into my tent " +
                 "to see astounding thaumaturgy. Right before your very " +
                 "eyes, I will...");
+        randomSayIfPersonality(PersonalityTrait.critical, List.of(model.getParty().getLeader()),
+                "This guy's a hack. We should walk away.");
+        randomSayIfPersonality(PersonalityTrait.encouraging, List.of(model.getParty().getLeader()),
+                "We should watch the show, you know, to show support.");
+        randomSayIfPersonality(PersonalityTrait.playful, List.of(model.getParty().getLeader()),
+                "Oh goody! Magic tricks!");
+        randomSayIfPersonality(PersonalityTrait.stingy, List.of(model.getParty().getLeader()),
+                "I doubt this is worth paying for.");
         int cost = model.getParty().size();
         if (cost > model.getParty().getGold()) {
             println("Unfortunately, your purse is so light you cannot even afford to see the show, and you pass by" +

@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -43,6 +44,7 @@ public class WizardsAbodeEvent extends DarkDeedsEvent {
                 "with an enticing riddle. No visitor has been able to solve " +
                 "it for many years and he offers a beautiful golden trinket " +
                 "if the party can solve the riddle.");
+        randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(), "I just love riddles!3");
         boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Logic, 8);
         if (result) {
             admitted = true;

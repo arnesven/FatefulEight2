@@ -2,9 +2,11 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.enemies.FaeryEnemy;
 import model.states.DailyEventState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FaeriesEvent extends DailyEventState {
@@ -30,6 +32,7 @@ public class FaeriesEvent extends DailyEventState {
                 gc.addToHP(3);
                 gc.addToSP(1);
             }
+            randomSayIfPersonality(PersonalityTrait.calm, new ArrayList<>(), "So relaxing.");
         } else if (partyAlign < -1) {
             model.getParty().randomPartyMemberSay(model, List.of("Uh oh... They look pissed. What did we do?"));
             println("The faeries attack the party!");

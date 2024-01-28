@@ -12,5 +12,6 @@ public class MegarEvermeadCharacter extends model.characters.GameCharacter {
         super("Megar", "Evermead", DWARF, ART,
                 new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN});
         addToPersonality(PersonalityTrait.benevolent);
+        addToPersonality(PersonalityTrait.friendly);
     }
 }

@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.enemies.CompanionEnemy;
@@ -56,6 +57,10 @@ public class JesterEvent extends DarkDeedsEvent {
                 "and a human princess. The party feels much refreshed " +
                 "when going to bed tonight.");
         println("Each character recovers 1 SP.");
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.encouraging, new ArrayList<>(),
+                "That was magical! You should play for kings and queens!");
+        didSay = didSay || randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(),
+                "A bit derivative, if you ask me.");
         MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(1));
         print("The " + shortName + " is kind enough to offer to train you in the ways of being a Bard, ");
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.BRD);

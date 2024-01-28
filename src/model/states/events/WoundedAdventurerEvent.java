@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.items.Equipment;
 import model.states.DailyEventState;
@@ -42,6 +43,16 @@ public class WoundedAdventurerEvent extends DailyEventState {
         printQuote("Wounded Adventurer", "Water, please...");
         String still = "";
         do {
+            if (still.equals("")) {
+                boolean didSay = randomSayIfPersonality(PersonalityTrait.cold, List.of(model.getParty().getLeader()),
+                        "Honestly, I think " + heOrShe(gender) + "'s done for. Let's just leave " + himOrHer(gender) + ".");
+                if (didSay) {
+                    randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(),
+                            "What? We can't do that!");
+                }
+                randomSayIfPersonality(PersonalityTrait.generous, List.of(model.getParty().getLeader()),
+                        "We should at least leave some water and food.");
+            }
             print("The wounded adventurer is " + still + "too weak to travel. Do you stay here tomorrow and help " +
                     himOrHer(gender) + " recover? (Y/N) ");
             still = "still ";

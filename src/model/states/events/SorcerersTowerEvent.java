@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -35,12 +36,16 @@ public class SorcerersTowerEvent extends DarkDeedsEvent {
         println("A tall stone structure stands silently in front of the party. " +
                 "Within is a sorcerer who only accepts persons who are " +
                 "acquainted with magic.");
+        randomSayIfPersonality(PersonalityTrait.diplomatic, new ArrayList<>(),
+                "Open your tower Sorcerer! We have come a long way to meet with you!");
         boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.MagicAny, 7);
         if (success) {
             print("The sorcerer admits you into the tower.");
             return true;
         }
         println("The sorcerer sneers at your feeble attempts to impress him. The door to his tower remains firmly shut.");
+        randomSayIfPersonality(PersonalityTrait.irritable, new ArrayList<>(),
+                "That really sets my teeth on edge. Grrr...");
         return false;
     }
 

@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
@@ -21,11 +22,14 @@ public class OrcBandEvent extends DailyEventState {
                 "when they hear footsteps approaching, many footsteps. " +
                 "It's a whole band of orcs! It may be possible for the party " +
                 "to hide behind some bushes and remain undetected.");
+        randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()), "We're doomed!");
+        randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Come on. We can take them!");
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
             print("You stay hidden as the throng passes by. Do you wish to follow them? (Y/N) ");
             if (yesNoInput()) {
                 println("You follow the orcs for a bit.");
+                randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()), "This is not a good idea.");
                 int dieRoll = MyRandom.rollD10();
                 if (dieRoll < 3) {
                     new OrcishStrongholdEvent(model).doEvent(model);

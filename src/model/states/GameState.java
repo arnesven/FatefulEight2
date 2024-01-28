@@ -257,7 +257,7 @@ public abstract class GameState {
         return Math.max(1, model.getParty().partyStrength() / (enemy).getThreat());
     }
 
-    protected boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {
+    public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {
         List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
         candidates.removeAll(model.getParty().getBench());
         candidates.removeAll(excluding);

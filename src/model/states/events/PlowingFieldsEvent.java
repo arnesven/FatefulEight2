@@ -8,7 +8,6 @@ import model.states.DailyEventState;
 import java.util.List;
 
 public class PlowingFieldsEvent extends FieldsLaborEvent {
-    private boolean freeRations;
 
     public PlowingFieldsEvent(Model model) {
         super(model, "The farmer needs some help plowing his fields. Any help is much appreciated.",

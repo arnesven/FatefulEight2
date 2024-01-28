@@ -11,5 +11,6 @@ public class EmilyFourhornCharacter extends model.characters.GameCharacter {
         super("Emily", "Fourhorn", NORTHERN_HUMAN, AMZ,
                 new EmilyFourhorn(), new CharacterClass[]{AMZ, BRD, SOR, MAR});
         addToPersonality(PersonalityTrait.irritable);
+        addToPersonality(PersonalityTrait.intellectual);
     }
 }

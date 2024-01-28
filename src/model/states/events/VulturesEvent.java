@@ -2,11 +2,13 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.weapons.BowWeapon;
 import model.states.DailyEventState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VulturesEvent extends DailyEventState {
@@ -32,7 +34,8 @@ public class VulturesEvent extends DailyEventState {
             }
         }
         if (kills > 0) {
-            model.getParty().randomPartyMemberSay(model, List.of("Looks like meat is back on the menu folks!"));
+            randomSayIfPersonality(PersonalityTrait.jovial, new ArrayList<>(),
+                    "Looks like meat is back on the menu folks!");
             model.getParty().addToFood(kills * 5);
             println("The party gains " + (kills * 5) + " rations.");
         } else {

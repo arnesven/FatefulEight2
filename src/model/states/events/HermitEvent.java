@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.enemies.Enemy;
@@ -36,7 +37,8 @@ public class HermitEvent extends DarkDeedsEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        leaderSay("Hello there friend. Care to share our camp for the evening?");
+        randomSayIfPersonality(PersonalityTrait.friendly, new ArrayList<>(), "Hello there friend!");
+        leaderSay("Care to share our camp for the evening?");
         println("You sit down at your campfire and ask the hermit a few gentle questions.");
         int roll = MyRandom.rollD10();
         if (roll == 1) {

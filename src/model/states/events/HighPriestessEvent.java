@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -26,8 +27,14 @@ public class HighPriestessEvent extends DailyEventState {
                 "The High Priestess clearly has the hots for " + gc.getName() + ". She has invited " +
                 himOrHer(gc.getGender()) + " to a special tea " +
                 "ceremony.");
-        model.getParty().partyMemberSay(model, gc, List.of("Uhm, should I play along with this?"));
+        if (gc.hasPersonality(PersonalityTrait.narcissistic)) {
+            model.getParty().partyMemberSay(model, gc, List.of("Well, I guess it can't be helped. " +
+                    "I am a rather attractive person after all."));
+        } else {
+            model.getParty().partyMemberSay(model, gc, List.of("Uhm, should I play along with this?"));
+        }
         leaderSay("This must be handled delicately to not hurt anyone's feelings...");
+        randomSayIfPersonality(PersonalityTrait.romantic, List.of(model.getParty().getLeader()), "I find this rather romantic actually.");
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, gc, Skill.Entertain, 5, 20, 0);
         if (!result.isSuccessful()) {
             offended = true;

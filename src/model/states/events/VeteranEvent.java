@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -50,6 +51,8 @@ public class VeteranEvent extends DarkDeedsEvent {
 
         print("Will you hand over 3 rations? (Y/N) ");
         if (yesNoInput()) {
+            randomSayIfPersonality(PersonalityTrait.generous, new ArrayList<>(),
+                    "Take these rations. You look like you could need them.");
             model.getParty().addToFood(-3);
             printQuote("Veteran", "Much obliged kind sir.");
             printQuote("Veteran", "I've served in several units. First I belonged to " +

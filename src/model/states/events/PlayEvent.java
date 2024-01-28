@@ -2,11 +2,13 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayEvent extends DailyEventState {
@@ -17,9 +19,16 @@ public class PlayEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("There's apparently a play running in town. Everybody is talking about it. It is supposed to be pretty good.");
-        model.getParty().randomPartyMemberSay(model, List.of("Sounds fun, we should go!",
-                "Oh please spare me...", "Could be interesting.", "We rarely do something like this for ourselves, we should take this opportunity.",
-                "This sounds like a genuine waste of time."));
+        randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(),
+                "This sounds like a genuine waste of time.");
+        randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(),
+                "Oh please spare me...");
+        randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(),
+                "Could be interesting.");
+        randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(),
+                "Sounds fun, we should go!");
+        randomSayIfPersonality(PersonalityTrait.encouraging, new ArrayList<>(),
+                "We rarely do something like this for ourselves, we should take this opportunity.");
         print("The entrance fee is 1 gold per person.");
         int cost = model.getParty().size();
         if (model.getParty().getGold() < cost) {

@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -27,6 +28,9 @@ public class PartySalaryEvent extends DailyEventState {
                 "me to ask for an advance on my salary?");
         leaderSay("Hmm... How much were you thinking?");
         int amount = MyRandom.rollD10() + MyRandom.rollD10() + 7;
+        if (other.hasPersonality(PersonalityTrait.greedy)) {
+            amount *= 2;
+        }
         partyMemberSay(other, "Well, I was thinking " + amount + " gold.");
         print("Let " + other.getFirstName() + " have " + amount + " gold? (Y/N) ");
         if (yesNoInput()) {

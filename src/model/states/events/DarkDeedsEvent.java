@@ -114,7 +114,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         if (result.isSuccessful()) {
             result = thief.testSkill(Skill.Security,
                     PICK_POCKETING_BASE_SECURITY_DIFFICULTY + victimChar.getLevel());
-            println(thief.getFirstName() + " attempts to grap the " + victim +
+            println(thief.getFirstName() + " attempts to grab the " + victim +
                     "'s purse (Security " + result.asString() + ").");
             if (result.isSuccessful()) {
                 println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");

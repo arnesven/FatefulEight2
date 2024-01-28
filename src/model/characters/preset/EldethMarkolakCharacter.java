@@ -13,5 +13,6 @@ public class EldethMarkolakCharacter extends model.characters.GameCharacter {
                 new EldethMarkolak(), new CharacterClass[]{PRI, BBN, FOR, SOR});
         addToPersonality(PersonalityTrait.prude);
         addToPersonality(PersonalityTrait.gluttonous);
+        addToPersonality(PersonalityTrait.calm);
     }
 }

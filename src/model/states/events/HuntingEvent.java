@@ -59,7 +59,7 @@ public class HuntingEvent extends DailyEventState {
                 leaderSay("That's not a boar... that's a... BEAR!");
                 enemies.add(new BearEnemy('A'));
             } else {
-                leaderSay("Shhh... there... wild boar!");
+                leaderSay("Shhh... there... a wild boar!");
                 int noOfBoar = MyRandom.randInt(1, 3);
                 for (int i = 0; i < noOfBoar; ++i) {
                     enemies.add(new WildBoarEnemy('A'));

@@ -13,5 +13,6 @@ public class IvanMcIntoshCharacter extends GameCharacter {
         super("Ivan", "McIntosh", NORTHERN_HUMAN, PRI,
                 new IvanMcIntosh(), new CharacterClass[]{PRI, BKN, FOR, MIN});
         addToPersonality(PersonalityTrait.generous);
+        addToPersonality(PersonalityTrait.forgiving);
     }
 }

@@ -1,11 +1,13 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PegasusEvent extends AlternativeTravelEvent {
@@ -19,6 +21,7 @@ public class PegasusEvent extends AlternativeTravelEvent {
     protected boolean eventIntro(Model model) {
         println("A winged horse lands in front of the party. It seems to be " +
                 "willing to give them a ride.");
+        randomSayIfPersonality(PersonalityTrait.romantic, new ArrayList<>(), "This is like a dream. It's soooo beautiful!");
         if (model.getParty().size() > 3) {
             model.getParty().randomPartyMemberSay(model, List.of("But there's too many of us to fit on its back."));
             println("The pegasus shakes its head like it can understand you, then it flies away.");

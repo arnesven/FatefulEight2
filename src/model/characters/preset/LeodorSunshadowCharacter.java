@@ -12,5 +12,6 @@ public class LeodorSunshadowCharacter extends model.characters.GameCharacter {
         super("Leodor", "Sunshadow", DARK_ELF, NOB,
                 new LeodorSunshadow(), new CharacterClass[]{NOB, BKN, BRD, WIZ});
         addToPersonality(PersonalityTrait.unkind);
+        addToPersonality(PersonalityTrait.cold);
     }
 }

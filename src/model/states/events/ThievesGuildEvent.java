@@ -1,9 +1,9 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.items.Lockpick;
 import model.states.DailyEventState;
 
 import java.util.List;
@@ -35,6 +35,8 @@ public class ThievesGuildEvent extends DailyEventState {
         } else {
             portraitSay("You lot look like you're the right kind of scoundrels for " +
                     "this type of thing. Are you in?");
+            randomSayIfPersonality(PersonalityTrait.mischievous, List.of(model.getParty().getLeader()),
+                    "We're not gonna pass on this chance are we?");
             print("Are you? (Y/N) ");
             if (yesNoInput()) {
                 portraitSay("That's what I like to hear. Which part of the heist do you think " +

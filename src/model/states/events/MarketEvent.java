@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.items.Item;
@@ -14,6 +15,7 @@ import util.MyRandom;
 import view.subviews.PortraitSubView;
 import view.subviews.SubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MarketEvent extends DailyEventState {
@@ -24,6 +26,10 @@ public class MarketEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("Today is market day. The party casually browses the stands and booths.");
+        randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(),
+                "I wonder if they sell any special kinds of food here?");
+        randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(),
+                "Let's check out if they have any games!");
         if (!chooseAnEvent(model)) {
             println("You leave the market early.");
             return;

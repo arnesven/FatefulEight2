@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.actions.Loan;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.TournamentEnemy;
@@ -31,7 +32,11 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         }
         print("Which party member do you wish to enter into the tournament?");
         GameCharacter chosen = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-        partyMemberSay(chosen, "I'll enter the tournament.");
+        if (chosen.hasPersonality(PersonalityTrait.narcissistic)) {
+            partyMemberSay(chosen, "I'll grace this tournament with my presence.");
+        } else {
+            partyMemberSay(chosen, "I'll enter the tournament.");
+        }
         super.showOfficial();
         portraitSay("There needs to be a name on the entry. Do you wish to give your name, or just an alias?");
         if (chosen.getCharClass() == Classes.BKN) {

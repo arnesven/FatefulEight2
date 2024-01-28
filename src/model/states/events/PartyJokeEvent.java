@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -31,13 +32,19 @@ public class PartyJokeEvent extends DailyEventState {
         model.getParty().partyMemberSay(model, joker, JOKE_LIST);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc != joker) {
-                int diff = MyRandom.rollD10() - 5;
+                int diff = MyRandom.rollD10() - 5 + getBonus(joker);
                 if (diff >= 0) {
                     println(gc.getFirstName() + " enjoyed the joke.");
                     gc.addToAttitude(joker, diff);
                     joker.addToAttitude(gc, diff/2);
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("Hehehe", "Funny!", "That's good!"));
+                    if (getBonus(gc) > 0) {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("HAHAHAHAHA", "Hehehe, so funny... ouch, I'm getting a cramp.",
+                                        "Tell another one!"));
+                    } else {
+                        model.getParty().partyMemberSay(model, gc,
+                                List.of("Hehehe", "Funny!", "That's good!"));
+                    }
                 } else {
                     println(gc.getFirstName() + " didn't enjoy the joke.");
                     gc.addToAttitude(joker, diff);
@@ -47,5 +54,9 @@ public class PartyJokeEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         showPartyAttitudesSubView(model);
+    }
+
+    private int getBonus(GameCharacter gc) {
+        return gc.hasPersonality(PersonalityTrait.jovial) || gc.hasPersonality(PersonalityTrait.playful) ? 2 : 0;
     }
 }

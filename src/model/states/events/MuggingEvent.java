@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.combat.TownCombatTheme;
 import model.enemies.MuggerEnemy;
@@ -20,6 +21,7 @@ public class MuggingEvent extends DailyEventState {
         println("Some scruffy men approach the party as you cut through" +
                 " an alley.");
         printQuote("Thug", "Okay kid, hand it over!");
+        randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Forget about it, numb-skulls!");
         model.getParty().randomPartyMemberSay(model, List.of("Are we just gonna let these bozos take our stuff?"));
         print("Fight the muggers? (Y/N) ");
         if (yesNoInput()) {
@@ -35,6 +37,8 @@ public class MuggingEvent extends DailyEventState {
             println("The party hands over " + foodTaken + " rations and " + goldTaken + " gold.");
             model.getParty().addToFood(-foodTaken);
             model.getParty().addToGold(-goldTaken);
+            randomSayIfPersonality(PersonalityTrait.forgiving, List.of(model.getParty().getLeader()),
+                    "That was wise and mature of you. Why fight over such a small prize?");
         }
     }
 }

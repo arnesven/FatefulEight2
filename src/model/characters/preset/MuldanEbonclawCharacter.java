@@ -12,5 +12,6 @@ public class MuldanEbonclawCharacter extends model.characters.GameCharacter {
         super("Muldan", "Ebonclaw", DARK_ELF, PRI,
                 new MuldanEbonclaw(), new CharacterClass[]{PRI, NOB, BBN, SOR});
         addToPersonality(PersonalityTrait.stingy);
+        addToPersonality(PersonalityTrait.diplomatic);
     }
 }

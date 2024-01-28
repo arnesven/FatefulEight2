@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.enemies.BanditEnemy;
 import model.items.Item;
 import model.items.Prevalence;
@@ -45,6 +46,8 @@ public class HideoutEvent extends DailyEventState {
             leaderSay("What do you have in mind?");
             printQuote("Bandit Leader", "Well, you see, we've got this rare loot that we've boosted, but we're having trouble " +
                     "fencing it. You buy it from us, dirt cheap, then you can sell it!");
+            randomSayIfPersonality(PersonalityTrait.mischievous, new ArrayList<>(),
+                    "Buying stolen stuff? Sounds like a good deal.");
             if (model.getParty().getGold() < 10) {
                 leaderSay("We're a bit short on cash...");
                 reject();

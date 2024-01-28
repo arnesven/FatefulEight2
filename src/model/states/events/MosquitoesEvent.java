@@ -17,8 +17,8 @@ public class MosquitoesEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mosquitos"));
-        println("As large as a fists, and with an unquenchable thirst for blood. Such are the damned insects in this wretched " +
-        "place.");
+        println("As large as a fists, and with an unquenchable thirst for blood. " +
+                "Such are the damned insects in this wretched place.");
         leaderSay("How does any traveller deal with this pestilence?");
         boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Survival, 7);
         if (result) {

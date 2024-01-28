@@ -12,5 +12,6 @@ public class AlewynSolethalCharacter extends model.characters.GameCharacter {
         super("Alewyn", "Solethal", HIGH_ELF, ART,
                 new AlewynSolethal(), new CharacterClass[]{ART, WIT, AMZ, MAG});
         addToPersonality(PersonalityTrait.jovial);
+        addToPersonality(PersonalityTrait.diplomatic);
     }
 }

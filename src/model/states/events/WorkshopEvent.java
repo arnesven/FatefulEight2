@@ -2,11 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.items.designs.CraftingDesign;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import util.MyRandom;
+
+import java.util.List;
 
 public class WorkshopEvent extends DailyEventState {
     public WorkshopEvent(Model model) {
@@ -66,6 +69,7 @@ public class WorkshopEvent extends DailyEventState {
                 }
             }
             portraitSay("The order will cost " + cost + " gold.");
+            randomSayIfPersonality(PersonalityTrait.stingy, List.of(model.getParty().getLeader()), "That's ludicrous!");
             leaderSay("You can't be serious.");
             portraitSay("Was your request serious?");
             leaderSay("Don't you make 'normal stuff' too?");

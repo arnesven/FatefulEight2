@@ -12,5 +12,6 @@ public class MordKroftCharacter extends model.characters.GameCharacter {
         super("Mord", "Kroft", HALF_ORC, PAL,
                 new MordKroft(), new CharacterClass[]{PAL, BBN, CAP, MAR});
         addToPersonality(PersonalityTrait.jovial);
+        addToPersonality(PersonalityTrait.romantic);
     }
 }

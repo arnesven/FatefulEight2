@@ -1,11 +1,13 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
 import model.states.dailyaction.LodgingState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutpostEvent extends DailyEventState {
@@ -34,6 +36,8 @@ public class OutpostEvent extends DailyEventState {
         } else {
             println("You explain that you do not have any money. The proprietor seems to " +
                     "take pity on you and lets you stay at the outpost for free this time.");
+            randomSayIfPersonality(PersonalityTrait.stingy, new ArrayList<>(),
+                    "Hah.. and they say there's nothing like a free meal...");
             stayingAtInn = true;
         }
     }

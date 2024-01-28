@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
@@ -47,10 +48,14 @@ public class WagonTravelEvent extends DailyEventState {
                 leaderSay("Can you give us a ride?");
                 if (model.getParty().size() > 6) {
                     portraitSay("I'm sorry. I don't think my old horse here can pull all that extra weight.");
+                    randomSayIfPersonality(PersonalityTrait.unkind, List.of(model.getParty().getLeader()),
+                            "No, that creature looks feeble. Are you feeding it enough?");
                     leaderSay("Safe travels friend.");
                 } else {
                     portraitSay("Hmm, There's quite a few of you, it will tire my old horse out... " +
                             "But if you could give me some coins I can afford to give him some extra food tonight.");
+                    randomSayIfPersonality(PersonalityTrait.stingy, List.of(model.getParty().getLeader()),
+                            "What... come on. Just let us ride your cart!");
                     int cost = 5*(distance+1);
                     if (model.getParty().getGold() >= cost) {
                         print("Offer " + cost + " gold? (Y/N) ");

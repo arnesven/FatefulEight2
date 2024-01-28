@@ -1,9 +1,11 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.states.DailyEventState;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrchardEvent extends DailyEventState {
@@ -23,6 +25,8 @@ public class OrchardEvent extends DailyEventState {
         portraitSay("Don't worry! I have " +
                 "way more fruit than I can ever sell at the market. Take " +
                 "as much as you want!");
+        randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(), "We should take as many as we can carry!");
+        randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(), "It's only apples...");
         int gained = 5 * model.getParty().size();
         println("The party gains " + gained + " rations.");
         model.getParty().addToFood(gained);
