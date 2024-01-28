@@ -81,12 +81,10 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new VendelaGawainsCharacter());
         add(new GameCharacter("Emily", "Fourhorn", NORTHERN_HUMAN, AMZ,
                 new EmilyFourhorn(), new CharacterClass[]{AMZ, BRD, SOR, MAR}));
-        add(new GameCharacter("Ivan", "McIntosh", NORTHERN_HUMAN, PRI,
-                new IvanMcIntosh(), new CharacterClass[]{PRI, BKN, FOR, MIN}));
+        add(new IvanMcIntoshCharacter());
         add(new GameCharacter("Sebastian", "Smith", SOUTHERN_HUMAN, PAL,
                 new SebastianSmith(), new CharacterClass[]{PAL, BKN, CAP, DRU}));
-        add(new GameCharacter("Jenna", "Wildflower", SOUTHERN_HUMAN, THF,
-                new JennaWildflower(), new CharacterClass[]{THF, WIZ, SPY, ART}));
+        add(new JennaWildflowerCharacter());
         add(new GameCharacter("Alewyn", "Solethal", HIGH_ELF, ART,
                 new AlewynSolethal(), new CharacterClass[]{ART, WIT, AMZ, MAG}));
         add(new GameCharacter("Melethain", "Gauth", HIGH_ELF, BBN,

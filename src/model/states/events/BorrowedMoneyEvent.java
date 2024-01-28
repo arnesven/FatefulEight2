@@ -47,6 +47,8 @@ public class BorrowedMoneyEvent extends DailyEventState {
                 partyMemberSay(main, "Thank you.");
                 randomSayIfPersonality(PersonalityTrait.greedy, List.of(main),
                         "That's it? What about the interest?");
+                randomSayIfPersonality(PersonalityTrait.generous, List.of(main),
+                        "Oh, it was only 15 gold. Why bother with it?");
             } else {
                 portraitSay("I don't know what you're talking about. Now please excuse me, I have somewhere I have to be.");
                 if (model.getParty().size() > 1) {

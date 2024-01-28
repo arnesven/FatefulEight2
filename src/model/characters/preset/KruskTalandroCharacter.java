@@ -1,6 +1,7 @@
 package model.characters.preset;
 
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
 
 import static model.classes.Classes.*;
@@ -11,5 +12,6 @@ public class KruskTalandroCharacter extends GameCharacter {
     public KruskTalandroCharacter() {
         super("Krusk", "Talandro", HALF_ORC, WIT,
                 new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
+        addToPersonality(PersonalityTrait.generous);
     }
 }
