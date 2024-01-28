@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.*;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -37,8 +38,10 @@ public class CatInATreeEvent extends DarkDeedsEvent {
         leaderSay("What's the problem then?");
         portraitSay("My cat, Quincy. He won't come down. I think he chased a squirrel up there, " +
                 "and now he can't get down.");
-        model.getParty().randomPartyMemberSay(model, List.of("Oh bother...", "You gotto be kitten me!",
+        model.getParty().randomPartyMemberSay(model, List.of("Oh bother...", "You got to be kitten me!",
                 "What a CATastrophe!"));
+        randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
+                "We simply must help...");
         do {
             print("Climb the tree? (Y/N) ");
             if (yesNoInput()) {

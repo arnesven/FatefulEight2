@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -53,6 +54,8 @@ public class CharlatanEvent extends DailyEventState {
                         "single drop lands on your tongue you realize you've been cheated.");
                 leaderSay("This is cherry juice...");
                 model.getParty().randomPartyMemberSay(model, List.of("Expensive cherry juice."));
+                randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()),
+                        "When I get my hands on that guy...");
             } else {
                 leaderSay("I think we will pass on this one.");
             }

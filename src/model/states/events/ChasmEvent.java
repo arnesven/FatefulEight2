@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import model.states.EveningState;
@@ -23,9 +24,13 @@ public class ChasmEvent extends DailyEventState {
         println("A deep chasm lies in front of the party. There is a very " +
                 "narrow path and it will be difficult to traverse. Does the " +
                 "party dare?");
-        model.getParty().randomPartyMemberSay(model, List.of("This looks very difficult.",
-                "I think we should turn back.", "Are we really going to do this?",
-                "We've come so far. Going back will take so long..."));
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),
+                "Aaah! Did I mention I'm scared of heights?");
+        if (!didSay) {
+            model.getParty().randomPartyMemberSay(model, List.of("This looks very difficult.",
+                    "I think we should turn back.", "Are we really going to do this?",
+                    "We've come so far. Going back will take so long..."));
+        }
         if (model.getParty().hasHorses()) {
             println("Your horses cannot walk on the narrow path.");
         }

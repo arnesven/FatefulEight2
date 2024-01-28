@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
@@ -29,6 +30,9 @@ public class CompanyEvent extends DailyEventState {
                 "beer, but lack food and hope that you can share some " +
                 "of your rations. Later on, they get rowdy and want the " +
                 "party members to join in their degrading games.");
+
+        randomSayIfPersonality(PersonalityTrait.irritable, new ArrayList<>(),
+                "These are the most irritating bunch I've met in a while.");
 
         if (model.getParty().size() > 1) {
             GameCharacter gc1 = MyRandom.sample(model.getParty().getPartyMembers());

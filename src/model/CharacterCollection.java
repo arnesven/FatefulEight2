@@ -17,21 +17,17 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
                 new PaddyWillowbrush(), new CharacterClass[]{MIN, DRU, FOR, MAR}));
         add(new EldethMarkolakCharacter());
         add(new DaraStormcloudCharacter());
-        add(new GameCharacter("Jordyn", "Strong", SOUTHERN_HUMAN, AMZ,
-                new JordynStrong(), new CharacterClass[]{AMZ, BRD, FOR, PRI}));
+        add(new JordynStrongCharacter());
         add(new GameCharacter("Puyet", "Grantham", HALF_ORC, ART,
                 new PuyetGrantham(), new CharacterClass[]{ART, ASN, FOR, MIN}));
-        add(new GameCharacter("Torhild", "Ambershard", DWARF, WIT,
-                new TorhildAmbershard(), new CharacterClass[]{WIT, AMZ, MAR, SPY}));
+        add(new TorhildAmbershardCharacter());
         add(new BungoDarkwoodCharacter());
         add(new ArielleStormchapelCharacter());
-        add(new GameCharacter("Zhandra", "Merkatys", SOUTHERN_HUMAN, WIT,
-                new ZhandraMerkatys(), new CharacterClass[]{WIT, BBN, MAR, MIN}));
+        add(new ZhandraMerkatysCharacter());
         add(new LorfirBriarfellCharacter());
         add(new AtalyaBalefrostCharacter());
         add(new DeniseBoydCharacter());
-        add(new GameCharacter("Gorga", "Bonecrag", HALF_ORC, BKN,
-                new GorgaBonecrag(), new CharacterClass[]{BKN, AMZ, SPY, WIZ}));
+        add(new GorgaBonecragCharacter());
         add(new GameCharacter("Leodor", "Sunshadow", DARK_ELF, NOB,
                 new LeodorSunshadow(), new CharacterClass[]{NOB, BKN, BRD, WIZ}));
         add(new GameCharacter("Mord", "Kroft", HALF_ORC, PAL,
@@ -46,10 +42,8 @@ public class CharacterCollection extends ArrayList<GameCharacter> {
         add(new GameCharacter("Rolf", "Fryt", NORTHERN_HUMAN, PRI,
                 new RolfFryt(), new CharacterClass[]{PRI, MIN, SPY, WIT}));
         add(new WilliamYdrenwaldCharacter());
-        add(new GameCharacter("Hazel", "Van Devries", SOUTHERN_HUMAN, NOB,
-                new HazelVanDevries(), new CharacterClass[]{NOB, ASN, MAG, THF}));
-        add(new GameCharacter("Megar", "Evermead", DWARF, ART,
-                new MegarEvermead(), new CharacterClass[]{ART, BKN, PAL, MIN}));
+        add(new HazelVanDevriesCharacter());
+        add(new MegarEvermeadCharacter());
         add(new LonnieLiebgottCharacter());
         add(new RiboxAnariCharacter());
         add(new LianaClearwaterCharacter());

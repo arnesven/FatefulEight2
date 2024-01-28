@@ -2,6 +2,7 @@ package model.characters;
 
 public enum PersonalityTrait {
     aggressive,
+    benevolent,
     cowardly,
     encouraging,
     irritable,
@@ -9,5 +10,6 @@ public enum PersonalityTrait {
     greedy,
     prude,
     romantic,
+    rude,
     snobby,
 }

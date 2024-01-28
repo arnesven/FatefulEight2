@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -53,6 +54,8 @@ public class ConstableEvent extends DailyEventState {
         }
         portraitSay("We're looking for a " + perp + " in this area. You lot " +
                 "seen anything suspicious?");
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.rude, List.of(model.getParty().getLeader()),
+                "Stop hassling us! Don't you have a sweet roll to get back to?");
         model.getParty().randomPartyMemberSay(model, List.of("Nope, not a thing.", "No sir.",
                 "I don't know what you're talking about.", "I don't remember..."));
         portraitSay("You're not from around here are you?");
