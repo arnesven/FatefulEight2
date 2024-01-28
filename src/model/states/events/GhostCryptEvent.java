@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
 import model.states.DailyEventState;
@@ -17,6 +18,7 @@ public class GhostCryptEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("The party encounters some ghosts!");
+        randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(), "G-g-g-ghosts? Too scary!");
         List<Enemy> result = new ArrayList<>();
         int num = getSuggestedNumberOfEnemies(getModel(), new GhostEnemy('A'));
         for (int i = num; i > 0; --i) {

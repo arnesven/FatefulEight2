@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.characters.special.EnchantressCharacter;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -102,7 +103,10 @@ public class EnchantressEvent extends DailyEventState {
             portraitSay("Get out of my village. My spell obviously isn't working on you. You're probably too " +
                     "thick-headed for it to work. Just get out. I have a community to run.");
             leaderSay("Is that what you call this? A 'community'? Feels more like mass psychosis to me.");
-            model.getParty().partyMemberSay(model, other, "Or an orgy.");
+            boolean didSay = randomSayIfPersonality(PersonalityTrait.jovial, new ArrayList<>(), "Or an orgy.");
+            if (!didSay) {
+                model.getParty().partyMemberSay(model, other, "Or a cult.");
+            }
             portraitSay("Whatever. I guess I can't force you to leave, but don't disturb the villagers.");
             println("The enchantress walks away.");
         } else {

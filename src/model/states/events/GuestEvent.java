@@ -1,10 +1,13 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.states.DailyEventState;
 import view.subviews.PortraitSubView;
+
+import java.util.ArrayList;
 
 public class GuestEvent extends DailyEventState {
     private final CharacterAppearance appearance;
@@ -24,6 +27,11 @@ public class GuestEvent extends DailyEventState {
         println("The party is invited into the home of these farmers who " +
                 "gracefully offer a warm meal and the prospect of sleeping in " +
                 "the barn for the night.");
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(), "What an honor.");
+        if (!didSay) {
+            randomSayIfPersonality(PersonalityTrait.rude, new ArrayList<>(),
+                    "They have beds to offer, and yet they let us sleep in the barn like vagabonds!");
+        }
         model.getLog().waitForAnimationToFinish();
     }
 

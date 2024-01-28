@@ -1,9 +1,11 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.combat.PersonCombatLoot;
 import model.combat.StandardCombatLoot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeadBodyEvent extends RiverEvent {
@@ -40,8 +42,11 @@ public class DeadBodyEvent extends RiverEvent {
         }
         model.getParty().addToFood(5);
         println("The party finds " + bldr + ".");
-        model.getParty().randomPartyMemberSay(model, List.of("Hey, free stuff!",
-                "I'm sure it will come in handy.", "Ashes to ashes...",
-                "Rest in peace fellow adventurer."));
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.jovial, new ArrayList<>(), "Thanks buddy!");
+        if (!didSay) {
+            model.getParty().randomPartyMemberSay(model, List.of("Hey, free stuff!",
+                    "I'm sure it will come in handy.", "Ashes to ashes...",
+                    "Rest in peace fellow adventurer."));
+        }
     }
 }

@@ -12,5 +12,6 @@ public class VendelaGawainsCharacter extends model.characters.GameCharacter {
         super("Vendela", "Gawains", HALF_ORC, ASN,
                 new VendelaGawains(), new CharacterClass[]{ASN, NOB, WIT, MAG});
         addToPersonality(PersonalityTrait.greedy);
+        addToPersonality(PersonalityTrait.anxious);
     }
 }

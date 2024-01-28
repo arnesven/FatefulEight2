@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -54,6 +55,8 @@ public class GamblerEvent extends DailyEventState {
                         model.getParty().addToGold(2);
                     }
                     portraitSay("Wanna go again?");
+                    randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()),
+                            "Just think, we could win that gold!");
                     if (model.getParty().getGold() < 2) {
                         println("Unfortunately you cannot afford to continue the game. So you excuse yourself.");
                         break;

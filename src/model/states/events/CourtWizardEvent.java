@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.items.Item;
 import model.states.DailyEventState;
@@ -22,6 +23,8 @@ public class CourtWizardEvent extends DailyEventState {
         println("The court wizard has a few spells for sale.");
         portraitSay("I'm sorry if my prices aren't competitive. I don't have time to " +
                 "check the market value of spell books.");
+        randomSayIfPersonality(PersonalityTrait.stingy, new ArrayList<>(),
+                "You should. We won't buy anything overpriced because of your laziness.");
         List<Item> items = new ArrayList<>();
         items.add(model.getItemDeck().getRandomWand());
         items.add(model.getItemDeck().getRandomPotion());

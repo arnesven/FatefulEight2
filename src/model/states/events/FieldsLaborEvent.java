@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
@@ -53,24 +54,34 @@ public abstract class FieldsLaborEvent extends FarmerEvent {
         println("The party just made a mess of things " + sitch + ". The farmer is appalled by " +
                 "the party's inability to do even a simple job and angrily asks you to be " +
                 "on your way.");
-        model.getParty().randomPartyMemberSay(model,
-                List.of("I'm not one for manual labor anyway.",
-                        "Jeez, we were only trying to help...",
-                        "But I got my clothes dirty!#",
-                        "Come on people, let's get out of here.",
-                        "Well, this was a waste of time.",
-                        "Wow, he seemed pretty angry.",
-                        "I'm glad I wasn't born a farmer."));
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.snobby, new ArrayList<>(), "I'm not one for manual labor anyway.");
+        didSay = didSay || randomSayIfPersonality(PersonalityTrait.rude, new ArrayList<>(), "I'm glad I wasn't born a farmer.");
+        if (!didSay) {
+            model.getParty().randomPartyMemberSay(model,
+                    List.of("Jeez, we were only trying to help...",
+                            "But I got my clothes dirty!#",
+                            "Come on people, let's get out of here.",
+                            "Well, this was a waste of time.",
+                            "Wow, he seemed pretty angry."));
+        }
     }
 
     private void success(Model model) {
         println("The farmer thanks the party for the help and offers a small bag of coins (20 gold).");
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.generous, new ArrayList<>(),
+                "The peasants have a hard life. We should hardly ask them to pay us.");
+        if (!didSay) {
+            randomSayIfPersonality(PersonalityTrait.greedy, new ArrayList<>(), "A measly few coins for all that work?");
+        }
         model.getParty().addToGold(20);
         new GuestEvent(model, getPortrait()).doEvent(model);
         freeRations = true;
-        model.getParty().randomPartyMemberSay(model, List.of("Sweaty, but at we got paid.",
-                "No shame in rolling up your sleeves every once in a while.",
-                "A good days work."));
+        didSay = randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(),
+                "No shame in rolling up your sleeves every once in a while.");
+        if (didSay) {
+            model.getParty().randomPartyMemberSay(model, List.of("Sweaty, but at we got paid.",
+                    "A good days work."));
+        }
     }
 
 }

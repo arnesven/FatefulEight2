@@ -12,5 +12,6 @@ public class BazUrGhanCharacter extends model.characters.GameCharacter {
         super("Baz", "Ur-Ghan", HALF_ORC, AMZ,
                 new BazUrGhan(), new CharacterClass[]{AMZ, BRD, FOR, MAR});
         addToPersonality(PersonalityTrait.narcissistic);
+        addToPersonality(PersonalityTrait.gluttonous);
     }
 }

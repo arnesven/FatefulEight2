@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.items.Item;
 import model.states.DailyEventState;
@@ -9,6 +10,7 @@ import util.MyLists;
 import util.MyRandom;
 import view.GameView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DollyEvent extends DailyEventState {
@@ -23,8 +25,11 @@ public class DollyEvent extends DailyEventState {
         println("You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
                 "The child seems to be in some kind of distress. Apparently " + heOrShe(childGender) +
                 " has lost " + hisOrHer(childGender) + " dolly.");
-        model.getParty().randomPartyMemberSay(model, List.of("This really isn't any of our business.",
-                "Aw, poor child. Can we help?", "Typical kids...", "Hey kid, wanna see a magic trick?"));
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.benevolent, new ArrayList<>(), "Aw, poor child. Can we help?");
+        didSay = didSay || randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(), MyRandom.sample(List.of("Typical kids...",
+                "This really isn't any of our business.")));
+        didSay = didSay || randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(), "Hey kid, wanna see a magic trick?");
+
         print("Do you offer to look for the dolly? (Y/N) ");
         if (yesNoInput()) {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 10);

@@ -20,7 +20,7 @@ public class FarmersChildEvent extends FarmerEvent {
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
-        print("The farmer beggs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +
+        print("The farmer begs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +
                 (gender?"daughter":"son") + " as an apprentice adventurer. The kid seems" +
                 " ready to take on the world, but an apprentice may turn out to be a" +
                 "liability. Are you interested? (Y/N) ");
