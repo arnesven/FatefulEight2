@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.combat.CombinedLoot;
 import model.combat.StandardCombatLoot;
 import model.map.CaveHex;
@@ -8,6 +9,8 @@ import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.CollapsingTransition;
 import view.subviews.SubView;
+
+import java.util.List;
 
 public class CryptEvent extends DailyEventState {
 
@@ -21,7 +24,10 @@ public class CryptEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        print("The party encounters a crypt. Do you wish to enter it? (Y/N) ");
+        println("The party encounters a crypt.");
+        randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()), "Perhaps we should take a look inside?");
+        randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()), "Looks kind of spooky.");
+        print("Do you wish to enter it? (Y/N) ");
         if (!yesNoInput()) {
             return;
         }

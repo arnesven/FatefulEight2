@@ -26,10 +26,13 @@ public class OrcBandEvent extends DailyEventState {
         randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Come on. We can take them!");
         boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 5);
         if (result) {
+            randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()),
+                    "Maybe if we follow them, we can find a good spot to ambush them?");
             print("You stay hidden as the throng passes by. Do you wish to follow them? (Y/N) ");
             if (yesNoInput()) {
                 println("You follow the orcs for a bit.");
-                randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()), "This is not a good idea.");
+                randomSayIfPersonality(PersonalityTrait.anxious, List.of(model.getParty().getLeader()),
+                        "This is not a good idea.");
                 int dieRoll = MyRandom.rollD10();
                 if (dieRoll < 3) {
                     new OrcishStrongholdEvent(model).doEvent(model);

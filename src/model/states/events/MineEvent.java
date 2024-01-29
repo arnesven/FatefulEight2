@@ -46,6 +46,8 @@ public class MineEvent extends DailyEventState {
         if (bonus == 0) {
             randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()),
                     "Are we really going down there?");
+            randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()),
+                    "Sometimes you have to be a little bold.");
             model.getParty().randomPartyMemberSay(model,
                     List.of("Entering could be perilous, but could also yield rewards..."));
         }

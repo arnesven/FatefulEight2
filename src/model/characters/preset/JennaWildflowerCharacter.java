@@ -12,7 +12,7 @@ public class JennaWildflowerCharacter extends GameCharacter {
         super("Jenna", "Wildflower", SOUTHERN_HUMAN, THF,
                 new JennaWildflower(), new CharacterClass[]{THF, WIZ, SPY, ART});
         addToPersonality(PersonalityTrait.generous);
-        addToPersonality(PersonalityTrait.friendly);
+        addToPersonality(PersonalityTrait.brave);
         addToPersonality(PersonalityTrait.mischievous);
     }
 }
