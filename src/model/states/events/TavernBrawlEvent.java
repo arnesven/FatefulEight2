@@ -6,11 +6,14 @@ import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.CowardlyCondition;
+import model.combat.RowdyCondition;
 import model.enemies.BrotherhoodCronyEnemy;
 import model.enemies.Enemy;
 import model.map.HexLocation;
 import model.map.InnLocation;
 import model.map.UrbanLocation;
+import util.MyRandom;
 import view.subviews.CollapsingTransition;
 import view.subviews.ImageSubView;
 import view.subviews.MansionTheme;
@@ -131,7 +134,10 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
         main.unequipWeapon();
         model.getParty().getLeader().unequipWeapon();
 
-        List<Enemy> enemies = List.of(new Brawler(), new Brawler(), new Brawler());
+        List<Enemy> enemies = new ArrayList<>();
+        for (int i = MyRandom.randInt(3, 7); i > 0; --i) {
+            enemies.add(new Brawler());
+        }
         runCombat(enemies, new MansionTheme(), true);
         model.getParty().unbenchAll();
         println("You are kicked out of from the " + innOrTavern(model.getCurrentHex().getLocation()) + "!");
@@ -148,11 +154,12 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
         public Brawler() {
             super('B');
             setName("Brawler");
+            addCondition(new RowdyCondition());
         }
 
         @Override
         public int getDamage() {
-            return 2;
+            return MyRandom.randInt(1, 2);
         }
     }
 }
