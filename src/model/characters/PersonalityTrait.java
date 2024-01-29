@@ -1,5 +1,9 @@
 package model.characters;
 
+import model.Model;
+import model.states.events.PersonalityTraitEvent;
+import model.states.events.TavernBrawlEvent;
+
 public enum PersonalityTrait {
                  // Chars    Usages
     aggressive,  // 4        8
@@ -29,5 +33,15 @@ public enum PersonalityTrait {
     rude,        // 4        7
     snobby,      // 4        5
     stingy,      // 4        6
-    unkind,      // 4        8
+    unkind;      // 4        8
+
+    public PersonalityTraitEvent makeEvent(Model model, GameCharacter mainCharacter) {
+        switch (this) {
+            case aggressive:
+                return new TavernBrawlEvent(model, this, mainCharacter);
+            default:
+
+        }
+        return null;
+    }
 }

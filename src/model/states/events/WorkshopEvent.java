@@ -29,6 +29,8 @@ public class WorkshopEvent extends DailyEventState {
             int materials = MyRandom.randInt(5, 10);
             println("You found " + materials + " materials.");
             model.getParty().getInventory().addToMaterials(materials);
+            randomSayIfPersonality(PersonalityTrait.lawful, List.of(model.getParty().getLeader()),
+                    "Petty theft, that's what we're about now?");
             if (materials < 7) {
                 CraftingDesign design = model.getItemDeck().getRandomDesign();
                 println("You found " + design.getName() + "!");

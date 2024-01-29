@@ -365,6 +365,7 @@ public abstract class WorldHex {
     }
 
     public static DailyEventState generatePartyEvent(Model model) {
+
         return MyRandom.sample(List.of(
                 new RationsGoneBadEvent(model),
                 new PartyMemberArgument(model),
@@ -374,7 +375,8 @@ public abstract class WorldHex {
                 new PartyLowOnCashEvent(model),
                 new PartySalaryEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
-                new PartyMemberWantsToLeaveEvent(model)
+                new PartyMemberWantsToLeaveEvent(model),
+                new PersonalityEvent(model)
                 // TODO: Two Party members fall in love and want to settle down
         ));
     }
