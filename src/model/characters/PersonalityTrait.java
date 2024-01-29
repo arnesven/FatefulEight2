@@ -42,6 +42,46 @@ public enum PersonalityTrait {
                 return new TavernBrawlEvent(model, this, mainCharacter);
             case brave:
                 // return new BurningBuildingEvent(model, this, mainCharacter);
+            case prudish:
+                // return new HotSpringEvent(model, this, mainCharacter);
+            case lawful:
+                // return new MarshallEvent(model, this, mainCharacter); // which thief stole the thing?
+            case stingy:
+                // return new CantAffordThatThingEvent(model, this, mainCharacter);
+            case romantic:
+                // return new InfatuationEvent(model, this, mainCharacter);
+            case naive:
+                // return new ConfidenceWomanEvent(model, this, mainCharacter); // lured into bed... then robbed.
+            case diplomatic:
+                // return new FeudingFamiliesEvent(model, this, mainCharacter);
+            case cold:
+                // return new GraveyardEvent(model, this, mainCharacter); // Robbing the dead...
+            case calm:
+                // return new TidalWaterEvent(model, this, mainCharacter); // Water rising in a cave, keep calm?
+            case benevolent:
+                // return new RefugeeCampEvent(model, this, mainCharacter);
+            case playful:
+                // return new BallGameEvent(model, this, mainCharacter);
+            case gluttonous:
+                // return new OuthouseEvent(model, this, mainCharacter);
+            case jovial:
+                // return new OffendedWomanEvent(model, this, mainCharacter);
+            case anxious:
+                // return new BurySomeGoldEvent(model, this, mainCharacter);
+            case irritable:
+                // return new FanEvent(model, this, mainCharacter);
+            case snobby:
+                // return new DontWantToGetDirtyEvent(model, this, mainCharacter);
+            case rude:
+                // return new SlapInTheFaceEvent(model, this, mainCharacter);
+            case greedy:
+                // return new TreasureTroveEvent(model, this, mainCharacter); // push-your-luck infiltration style
+            case encouraging:
+                // return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
+            case intellectual:
+                // return new GuildHallEvent(model, this, mainCharacter);
+            case cowardly:
+                // return new NightmareEvent(model, this, mainCharacter);
             default:
 
         }
