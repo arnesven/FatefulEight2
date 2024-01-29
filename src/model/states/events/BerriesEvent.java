@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.PoisonCondition;
@@ -24,6 +25,9 @@ public class BerriesEvent extends DailyEventState {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Berries"));
         println("The party encounters a large thicket, rich with bright red berries.");
         model.getParty().randomPartyMemberSay(model, List.of("Those look yummy!"));
+        randomSayIfPersonality(PersonalityTrait.naive, List.of(model.getParty().getLeader()),
+                "I'm sure their not poisonous. They have a beautiful color. " +
+                        "How could something beautiful be poisonous?");
         print("Do you wish to pick the berries? (Y/N) ");
         if (!yesNoInput()) {
             return;

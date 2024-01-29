@@ -17,7 +17,6 @@ public class NoLodgingState extends EveningState {
         if (model.getSpellHandler().creatureComfortsCastToday(model)) {
             println("The party has received food and lodging.");
             model.getParty().lodging(0);
-            sayThanks(model);
         } else if (freeRations) {
             println("The party has received rations for free.");
             model.getParty().consumeRations(true);

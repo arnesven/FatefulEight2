@@ -3,12 +3,14 @@ package model.states.events;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import util.MyLists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HalflingVillage extends DailyEventState {
@@ -36,6 +38,8 @@ public class HalflingVillage extends DailyEventState {
         showRandomPortrait(model, Classes.None, Race.HALFLING, "Halfling Woman");
         portraitSay("Go away, we don't want any big-people trouble here!");
         model.getParty().randomPartyMemberSay(model, List.of("How rude."));
+        randomSayIfPersonality(PersonalityTrait.naive, new ArrayList<>(),
+                "Hello! Please come out! You can trust us, we're good people!");
     }
 
     private void foundVillage(Model model, GameCharacter halflingCharacter) {

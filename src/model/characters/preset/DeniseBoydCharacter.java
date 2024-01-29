@@ -11,7 +11,7 @@ public class DeniseBoydCharacter extends model.characters.GameCharacter {
     public DeniseBoydCharacter() {
         super("Denise", "Boyd", NORTHERN_HUMAN, ART,
                 new DeniseBoyd(), new CharacterClass[]{ART, BKN, CAP, NOB});
-        addToPersonality(PersonalityTrait.prude);
+        addToPersonality(PersonalityTrait.prudish);
         addToPersonality(PersonalityTrait.playful);
         addToPersonality(PersonalityTrait.friendly);
     }

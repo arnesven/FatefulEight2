@@ -5,11 +5,11 @@ public enum PersonalityTrait {
     aggressive,  // 4        8
     anxious,     // 3        6
     benevolent,  // 4        10
-    calm,        // 8        4
+    calm,        // 5        4
     cold,        // 4        5
     cowardly,    // 4        8
-    critical,    // 6        8
-    diplomatic,  // 6        4
+    critical,    // 5        8
+    diplomatic,  // 5        4
     encouraging, // 4        5
     forgiving,   // 4        3
     friendly,    // 8        4
@@ -17,12 +17,14 @@ public enum PersonalityTrait {
     irritable,   // 5        5
     intellectual,// 6        4
     jovial,      // 4        5
+    lawful,      // 3        4
     generous,    // 4        7
     greedy,      // 5        5
-    mischievous, // 7        2
-    narcissistic,// 5        5
+    mischievous, // 7        3
+    naive,       // 3        4
+    narcissistic,// 4        5
     playful,     // 5        7
-    prude,       // 4        3
+    prudish,     // 4        3
     romantic,    // 6        6
     rude,        // 4        7
     snobby,      // 4        5

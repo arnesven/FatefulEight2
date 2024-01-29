@@ -125,7 +125,7 @@ public abstract class RiverEvent extends DailyEventState {
             if (model.getParty().size() > 1) {
                 GameCharacter other = model.getParty().getRandomPartyMember(gc);
                 partyMemberSay(other, "You should really get out of those wet clothes!");
-                if (gc.hasPersonality(PersonalityTrait.prude)) {
+                if (gc.hasPersonality(PersonalityTrait.prudish)) {
                     partyMemberSay(gc, "No way... I'm not taking anything off.");
                 } else if (gc.hasPersonality(PersonalityTrait.rude)) {
                     partyMemberSay(gc, "Just mind your own business.");

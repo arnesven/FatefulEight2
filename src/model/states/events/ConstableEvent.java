@@ -12,6 +12,7 @@ import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConstableEvent extends DailyEventState {
@@ -100,8 +101,12 @@ public class ConstableEvent extends DailyEventState {
     }
 
     private void resistArrest(Model model) {
-        model.getParty().randomPartyMemberSay(model, List.of("I don't feel good about this.",
-                "Let's get him!", "Are we really doing this?", "We're in over our heads here..."));
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.lawful, new ArrayList<>(),
+                MyRandom.sample(List.of("Are we really doing this?", "This is wrong", "I don't feel good about this.")));
+        didSay = randomSayIfPersonality(PersonalityTrait.mischievous, new ArrayList<>(), "Let's get him!") || didSay;
+        if (!didSay) {
+            model.getParty().randomPartyMemberSay(model, List.of("We're in over our heads here..."));
+        }
         println("The party gets -1 reputation!");
         model.getParty().addToReputation(-1);
         runCombat(List.of(new ConstableEnemy('A')));

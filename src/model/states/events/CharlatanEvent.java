@@ -8,6 +8,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Lockpick;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.util.List;
 
@@ -27,9 +28,15 @@ public class CharlatanEvent extends DailyEventState {
         portraitSay("In fact, my famous draft will cure just about anything. And it tastes good too!");
         portraitSay("Only available here and now! For the incredible price of just 20 gold pieces, you may " +
                 "secure the remedy of your current malediction, or any future one.");
-        model.getParty().randomPartyMemberSay(model, List.of("This guy is shady.", "We should walk away from this.",
-                "If it's half as good as his boasting, we ought to buy it.", "Is this for real?", "I've heard stuff like this before",
-                "Sounds like a good deal!", "Quick, where's our money?"));
+        boolean didSay = randomSayIfPersonality(PersonalityTrait.naive, List.of(model.getParty().getLeader()),
+                MyRandom.sample(List.of("Sounds like a good deal!", "Quick, where's our money?")));
+        didSay = randomSayIfPersonality(PersonalityTrait.critical, List.of(),
+                MyRandom.sample(List.of("This guy is shady.", "We should walk away from this."))) || didSay;
+        if (!didSay) {
+            model.getParty().randomPartyMemberSay(model, List.of(
+                    "If it's half as good as his boasting, we ought to buy it.",
+                    "Is this for real?", "I've heard stuff like this before"));
+        }
         portraitSay("I guarantee it ladies and " +
                 "gentlemen, if your illnesses, sicknesses, wounds and aches won't disappear with this brew, I'll " +
                 "give you your money back.");

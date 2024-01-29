@@ -25,7 +25,6 @@ import view.subviews.SubView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class BathHouseEvent extends DailyEventState {
     private final boolean prudeGender;
@@ -110,7 +109,7 @@ public class BathHouseEvent extends DailyEventState {
         leaderSay("Oh!");
         portraitSay("The changing rooms are this way. You will find swimming attire inside.");
         leaderSay("... thank you.");
-        randomSayIfPersonality(PersonalityTrait.prude, List.of(model.getParty().getLeader()), "Eek! I don't want anybody " +
+        randomSayIfPersonality(PersonalityTrait.prudish, List.of(model.getParty().getLeader()), "Eek! I don't want anybody " +
                 "ogling me!");
         println("You change into your swimming attire and leave your gear in the lockers.");
         for (GameCharacter gc : bathers) {

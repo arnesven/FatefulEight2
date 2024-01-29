@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.actions.Loan;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CowardlyCondition;
@@ -126,6 +127,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
                 partyMemberSay(thief, MyRandom.sample(List.of("Child's play", "Easy when you know how.",
                         "Like taking candy from a baby.", heOrSheCap(victimChar.getGender()) + " never suspected a thing.",
                         "What can I say? I'm good.", "Easy money")));
+                randomSayIfPersonality(PersonalityTrait.lawful, List.of(getModel().getParty().getLeader()),
+                        "I feel dirty.");
                 return;
             }
         }
@@ -206,6 +209,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             println("Your crime has been witnessed and reported to the local authorities.");
             addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
         }
+        randomSayIfPersonality(PersonalityTrait.lawful, List.of(getModel().getParty().getLeader()),
+                "Is this what we are? Thugs who attack innocent people?");
         println("You continue on your journey.");
     }
 

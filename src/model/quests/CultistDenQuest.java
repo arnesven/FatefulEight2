@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -230,7 +231,9 @@ public class CultistDenQuest extends Quest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             state.leaderSay("Wow, these cultists sure have collected some loot!");
-            model.getParty().randomPartyMemberSay(model, List.of("Yeah, but I see a lot of worthless junk too..."));
+            state.randomSayIfPersonality(PersonalityTrait.naive, new ArrayList<>(),
+                    "This is our chance to get stinking rich!");
+            model.getParty().randomPartyMemberSay(model, List.of("But I see a lot of worthless junk too..."));
             state.print("There may be valuables in this room. Do you wish to attempt to search for loot? (Y/N) ");
             if (state.yesNoInput()) {
                 int maxTimes = model.getParty().size() * 4;
