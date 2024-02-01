@@ -73,16 +73,25 @@ public class PersonalityEvent extends DailyEventState {
 
     @Override
     protected boolean isFreeLodging() {
+        if (innerEvent == null) {
+            return false;
+        }
         return innerEvent.isFreeLodging();
     }
 
     @Override
     protected boolean isFreeRations() {
+        if (innerEvent == null) {
+            return false;
+        }
         return innerEvent.isFreeRations();
     }
 
     @Override
     public boolean haveFledCombat() {
+        if (innerEvent == null) {
+            return false;
+        }
         return innerEvent.haveFledCombat();
     }
 }

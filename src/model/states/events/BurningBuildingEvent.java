@@ -121,7 +121,7 @@ public class BurningBuildingEvent extends PersonalityTraitEvent {
         leaderSay("Let me just ask you. What were you thinking when you were running into the building?");
         partyMemberSay(main, "Thinking? I didn't think anything... I just did what I had to do.");
         model.getParty().addToReputation(1);
-        println("The party gains 1 reputation.");
+        println("The party gains 1 reputation!");
     }
 
     private void unsuccessful(Model model, GameCharacter main) {

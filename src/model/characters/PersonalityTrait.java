@@ -2,6 +2,7 @@ package model.characters;
 
 import model.Model;
 import model.states.events.BurningBuildingEvent;
+import model.states.events.HotSpringEvent;
 import model.states.events.PersonalityTraitEvent;
 import model.states.events.TavernBrawlEvent;
 
@@ -44,7 +45,7 @@ public enum PersonalityTrait {
             case brave:
                 return new BurningBuildingEvent(model, this, mainCharacter);
             case prudish:
-                // return new HotSpringEvent(model, this, mainCharacter);
+                return new HotSpringEvent(model, this, mainCharacter);
             case lawful:
                 // return new MarshallEvent(model, this, mainCharacter); // which thief stole the thing?
             case stingy:
@@ -83,6 +84,8 @@ public enum PersonalityTrait {
                 // return new GuildHallEvent(model, this, mainCharacter);
             case cowardly:
                 // return new NightmareEvent(model, this, mainCharacter);
+            case narcissistic:
+                // return new DoppelgangerEvent(model, this, mainCharacter);
             default:
 
         }
