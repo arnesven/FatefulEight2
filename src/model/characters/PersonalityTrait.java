@@ -1,6 +1,7 @@
 package model.characters;
 
 import model.Model;
+import model.states.events.BurningBuildingEvent;
 import model.states.events.PersonalityTraitEvent;
 import model.states.events.TavernBrawlEvent;
 
@@ -41,7 +42,7 @@ public enum PersonalityTrait {
             case aggressive:
                 return new TavernBrawlEvent(model, this, mainCharacter);
             case brave:
-                // return new BurningBuildingEvent(model, this, mainCharacter);
+                return new BurningBuildingEvent(model, this, mainCharacter);
             case prudish:
                 // return new HotSpringEvent(model, this, mainCharacter);
             case lawful:
