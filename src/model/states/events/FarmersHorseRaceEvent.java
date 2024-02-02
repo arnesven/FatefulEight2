@@ -76,7 +76,7 @@ public class FarmersHorseRaceEvent extends DailyEventState {
                     if (model.getParty().getPartyMembers().contains(farmerCharacter)) {
                         leaderSay("Welcome to the party kid.");
                         Horse farmersHorse = HorseHandler.generateHorse();
-                        println("The farmer " + boyOrGirl.toLowerCase() + " has brought a horse to the party, it is a " + horse.getName() + ".");
+                        println("The farmer " + boyOrGirl.toLowerCase() + " has brought a horse to the party, it is a " + farmersHorse.getName() + ".");
                         model.getParty().getHorseHandler().addHorse(farmersHorse);
                     } else {
                         leaderSay("On second thought... you probably need to stay with your pops for another year or two.");

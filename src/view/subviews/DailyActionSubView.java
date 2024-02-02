@@ -128,7 +128,7 @@ public abstract class DailyActionSubView extends AvatarSubView {
         for (int row = 1; row < 8; ++row) {
             for (int col = 0; col < 7; ++col) {
                 Point p = convertToScreen(new Point(col, row));
-                if ((col == 0 || col == 6) && row < 7) {
+                if ((col == 0 || col == 6) && row < 6) {
                     model.getScreenHandler().put(p.x, p.y, TavernSubView.SIDE_WALL);
                 } else if (1 < row && row < 6) {
                     model.getScreenHandler().put(p.x, p.y, TavernSubView.FLOOR);

@@ -224,15 +224,12 @@ public class EveningState extends GameState {
             if (maxBuy <= 0 || model.getParty().getGold() == 0) {
                 break;
             }
-            String sitch = "Your party can carry an additional ";
             int cost = (int) Math.ceil(maxBuy / 5.0);
             if (cost > model.getParty().getGold()) {
-                sitch = "You can afford to buy ";
                 maxBuy = model.getParty().getGold() * 5;
                 cost = model.getParty().getGold();
             }
             final int finalCost = cost;
-            state.print(sitch + maxBuy + " rations.");
             model.setSubView(new ArrowMenuSubView(model.getSubView(),
                     List.of("Buy 5", "Buy Max", "Done"), 32, 18, ArrowMenuSubView.NORTH_WEST) {
                 @Override

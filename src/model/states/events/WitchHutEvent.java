@@ -49,6 +49,7 @@ public class WitchHutEvent extends DarkDeedsEvent {
         ShopState shop = new ShopState(model, "witch", itemList,
                 new int[]{pot.getCost()/2, pot.getCost()/2, pot.getCost()/2});
         shop.setSellingEnabled(false);
+        print("Press enter to continue.");
         waitForReturn();
         shop.run(model);
         println("The witch also offers to reveal the dark secrets of witchcraft, ");

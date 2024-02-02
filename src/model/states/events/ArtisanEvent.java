@@ -77,6 +77,7 @@ public class ArtisanEvent extends DarkDeedsEvent {
         ShopState shop = new ShopState(model, "artisan", itemList,
                 new int[]{itemList.get(0).getCost()/2});
         shop.setSellingEnabled(false);
+        print("Press enter to continue.");
         waitForReturn();
         shop.run(model);
         println("The artisan also offers to educate you in the ways of his trade, ");

@@ -9,8 +9,7 @@ public class TutorialAlchemy extends HelpDialog {
             "brewed. The number of required ingredients is equal to half the potions " +
             "value.\n\n" +
             "Ingredients can be found in many locations in the world and can often be " +
-            "collected from defeated monsters. There is no limit to how many ingredients " +
-            "you may carry.\n\n" +
+            "collected from defeated monsters. \n\n" +
             "Keep a lookout for Potion Recipes. With recipes, you don't need a draft of " +
             "the potion you want to brew, and using a recipe consumes less ingredients " +
             "then you would normally (on third).";
