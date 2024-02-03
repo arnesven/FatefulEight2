@@ -36,6 +36,7 @@ public enum Skill implements Comparable<Skill> {
             new int[]{2, 3, 3, 4, 4, 5, 5, 5, 6}, // Weight 4
             new int[]{2, 3, 4, 5, 5, 6, 6, 6, 6}, // Weight 5
             new int[]{3, 4, 5, 5, 6, 7, 7, 7, 7}  // Weight 6
+            // level  1  2  3  4  5  6  7  8  9
     };
     private String name;
     private String description;

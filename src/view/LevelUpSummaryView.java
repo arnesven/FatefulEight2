@@ -28,6 +28,9 @@ public class LevelUpSummaryView extends SelectableListMenu {
         if (levler.getMaxSP() < willBe.getMaxSP()) {
             this.content.add(new BeforeAndAfterLine<>("Stamina Points", levler.getMaxSP(), willBe.getMaxSP()));
         }
+        if (levler.getSpeed() < willBe.getSpeed()) {
+            this.content.add(new BeforeAndAfterLine<>("Speed", levler.getSpeed(), willBe.getSpeed()));
+        }
         this.content.add(new BeforeAndAfterLine<>("", 0, 0));
         for (Skill s : Skill.values()) {
             if (willBe.getRankForSkill(s) != levler.getRankForSkill(s)) {

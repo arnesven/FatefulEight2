@@ -166,10 +166,13 @@ public class GameCharacter extends Combatant {
     }
 
     public int getSpeed() {
+        int levelBonus = Math.max(0, (level-2) / 3);
         int heavyClothing = equipment.getClothing().isHeavy() ? -2 : 0;
         int heavyAccessory = equipment.getAccessory() != null && equipment.getAccessory().isHeavy() ? -1 : 0;
         int quickened = hasCondition(QuickenedCondition.class) ? QuickeningSpell.SPEED_BONUS : 0;
-        return charClass.getSpeed() + race.getSpeedModifier() + equipment.getSpeedModifiers() + heavyClothing + heavyAccessory + quickened;
+        return charClass.getSpeed() + race.getSpeedModifier() + levelBonus +
+                equipment.getSpeedModifiers() + heavyClothing +
+                heavyAccessory + quickened;
     }
 
     @Override
