@@ -14,6 +14,7 @@ import model.items.Lockpick;
 import model.items.clothing.TemplarArmor;
 import model.items.spells.*;
 import model.items.weapons.Naginata;
+import model.items.weapons.ThrowingStars;
 import model.map.UrbanLocation;
 import model.races.Race;
 import model.states.GameState;

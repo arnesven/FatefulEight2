@@ -340,10 +340,16 @@ public class GameCharacter extends Combatant {
         } else {
             screenHandler.register("avatarfor" + getFullName(), new Point(xpos, ypos), avatarSprite);
             if (!(equipment.getWeapon() instanceof NaturalWeapon)) {
-                screenHandler.register("avatarweapon" + getFullName(), new Point(xpos, ypos), equipment.getWeapon().getOnAvatarSprite(this));
+                Sprite spr = equipment.getWeapon().getOnAvatarSprite(this);
+                if (spr != null) {
+                    screenHandler.register("avatarweapon" + getFullName(), new Point(xpos, ypos), spr);
+                }
             }
             if (equipment.getAccessory() instanceof ShieldItem) {
-                screenHandler.register("avatarshield" + getFullName(), new Point(xpos, ypos), ((ShieldItem)equipment.getAccessory()).getOnAvatarSprite(this));
+                Sprite spr = ((ShieldItem)equipment.getAccessory()).getOnAvatarSprite(this);
+                if (spr != null) {
+                    screenHandler.register("avatarshield" + getFullName(), new Point(xpos, ypos), spr);
+                }
             }
         }
     }

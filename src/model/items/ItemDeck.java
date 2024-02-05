@@ -259,6 +259,7 @@ public class ItemDeck extends ArrayList<Item> {
         allWeapons.addAll(allSpears());
         allWeapons.add(new Lute());
         allWeapons.add(new FishingPole());
+        allWeapons.add(new ThrowingStars());
         return allWeapons;
     }
 
