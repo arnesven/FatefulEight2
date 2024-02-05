@@ -264,7 +264,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<? extends Weapon> allSpears() {
         return List.of(new WoodenSpear(), new Spear(), new Javelins(), new Trident(),
-                new Glaive(), new Halberd(), new Pike(), new ShortSpear(), new BecDeCorbin());
+                new Glaive(), new Halberd(), new Pike(), new ShortSpear(), new BecDeCorbin(), new Naginata());
     }
 
     public static List<? extends Weapon> allBows() {

@@ -13,6 +13,7 @@ import model.items.Inventory;
 import model.items.Lockpick;
 import model.items.clothing.TemplarArmor;
 import model.items.spells.*;
+import model.items.weapons.Naginata;
 import model.map.UrbanLocation;
 import model.races.Race;
 import model.states.GameState;
