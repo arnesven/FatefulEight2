@@ -9,7 +9,7 @@ public class Naginata extends PolearmWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 12);
 
     public Naginata() {
-        super("Naginata", 26, new int[]{9,9,9,10,10});
+        super("Naginata", 36, new int[]{9,9,9,10,10});
     }
 
 

@@ -12,7 +12,7 @@ public class ThrowingStars extends Weapon {
     private static final Sprite SPRITE = new ItemSprite(8, 12);
 
     public ThrowingStars() {
-        super("Throwing Stars", 18, Skill.Acrobatics, new int[]{9, 11, 12, 12});
+        super("Throwing Stars", 22, Skill.Acrobatics, new int[]{9, 11, 12, 12});
     }
 
     @Override

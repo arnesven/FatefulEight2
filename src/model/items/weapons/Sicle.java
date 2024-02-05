@@ -9,7 +9,7 @@ public class Sicle extends AxeWeapon {
     private static final Sprite SPRITE = new ItemSprite(9, 12);
 
     public Sicle() {
-        super("Sicle", 17, new int[]{7, 8, 8}, false);
+        super("Sicle", 20, new int[]{7, 8, 8}, false);
     }
 
     @Override

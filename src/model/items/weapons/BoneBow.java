@@ -9,7 +9,7 @@ public class BoneBow extends BowWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(6, 7, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.BEIGE);
 
     public BoneBow() {
-        super("Bone Bow", 28, new int[]{8,9,11,12});
+        super("Bone Bow", 25, new int[]{8,9,11,12});
     }
 
     @Override
