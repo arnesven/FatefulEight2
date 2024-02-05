@@ -196,7 +196,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new FullPlateArmor(), new WarmCape(), new FancyJerkin(), new PilgrimsCloak(),
                 new MagesRobes(), new ShamansRobes(), new CultistsRobes(), new WarlocksRobes(),
                 new MesmersRobes(), new LeatherTunic(), new QuiltedArmor(), new FurArmor(), new Brigandine(),
-                new TemplarArmor());
+                new TemplarArmor(), new GlassArmor());
     }
 
     public static List<Spell> allSpells() {
