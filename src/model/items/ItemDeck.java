@@ -280,7 +280,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<? extends Weapon> allAxes() {
         return List.of(new Hatchet(), new ThrowingAxes(), new Pickaxe(), new RaidersAxe(), new BattleAxe(),
-                new Choppa(), new TwinHatchets(), new DoubleAxe(), new GreatAxe());
+                new Choppa(), new TwinHatchets(), new DoubleAxe(), new GreatAxe(), new Sicle());
     }
 
     public static List<? extends Weapon> allBluntWeapons() {
