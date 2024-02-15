@@ -29,4 +29,9 @@ public class ParalysisCondition extends Condition {
     public ConditionHelpDialog getHelpView(GameView view) {
         return new ConditionHelpDialog(view, this, HELP_TEXT);
     }
+
+    @Override
+    public boolean removeAtEndOfCombat() {
+        return true;
+    }
 }

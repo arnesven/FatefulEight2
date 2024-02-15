@@ -37,7 +37,7 @@ public abstract class GameState {
     public static final List<String> COMMON_LAST_NAMES = List.of("Wildfeather", "Cleareyes", "Al-Zaman",
             "Gerson", "Essex", "Overhill", "Sloch", "Petty", "Inderfelt", "Sharptooth", "Zeltic", "Hightower",
             "Edelweiss", "Eastwood", "Hardwater", "Azure", "Stormfist", "Samuelesen", "Haldic", "Brownwood",
-            "Stovious", "Jacksson", "Osorio", "McLaird", "Delamain");
+            "Stovious", "Jacksson", "Osorio", "McLaird", "Delamain", "Vogel", "Johanssen", "Grim");
     private static final List<String> girlFirstNames = new ArrayList<>(COMMON_GIRL_FIRST_NAMES);
     private static final List<String> boyFirstNames = new ArrayList<>(COMMON_BOY_FIRST_NAMES);
     private static final List<String> lastNames = new ArrayList<>(COMMON_LAST_NAMES);
