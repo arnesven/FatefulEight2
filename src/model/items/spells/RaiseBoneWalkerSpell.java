@@ -9,8 +9,13 @@ import model.combat.Combatant;
 import model.combat.SummonCondition;
 import model.items.Equipment;
 import model.items.Item;
+import model.items.accessories.GreatHelm;
 import model.items.accessories.SkullCap;
+import model.items.clothing.ChainMail;
+import model.items.clothing.LeatherArmor;
 import model.items.clothing.OutlawArmor;
+import model.items.weapons.BastardSword;
+import model.items.weapons.DaiKatana;
 import model.items.weapons.Longsword;
 import model.races.Race;
 import model.states.CombatEvent;
@@ -50,10 +55,31 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
             performer.removeCondition(SummonCondition.class);
         }
         GameCharacter boneWalker = new BoneWalkerAlly();
+        boneWalker.addToHP(-boneWalker.getMaxHP());
+        int mastery = getMasteryLevel(performer);
+        boneWalker.addToHP(7 + mastery * 4);
+        switch (mastery) {
+            case 2:
+                boneWalker.getEquipment().setWeapon(new BastardSword());
+            case 1:
+                boneWalker.getEquipment().setClothing(new LeatherArmor());
+                break;
+            case 4:
+                boneWalker.getEquipment().setWeapon(new DaiKatana());
+                boneWalker.getEquipment().setAccessory(new GreatHelm());
+            case 3:
+                boneWalker.getEquipment().setClothing(new ChainMail());
+            default:
+        }
         combat.addAllies(List.of(boneWalker));
         AnimationManager.synchAnimations();
         performer.addCondition(new SummonCondition(boneWalker));
         combat.addSpecialEffect(boneWalker, new SmokeBallAnimation());
+    }
+
+    @Override
+    protected boolean masteriesEnabled() {
+        return true;
     }
 
     @Override

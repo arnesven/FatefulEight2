@@ -8,7 +8,7 @@ import view.sprites.AvatarSprite;
 
 public class BoneWalkerClass extends SpecialCharacterClass {
     protected BoneWalkerClass() {
-        super("BoneWalker", "BoneWalker", 7, 3, true, 0, new WeightedSkill[]{
+        super("BoneWalker", "BoneWalker", 9999, 3, true, 0, new WeightedSkill[]{
                 new WeightedSkill(Skill.Blades, 6)
         });
     }
