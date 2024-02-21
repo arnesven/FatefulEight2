@@ -45,6 +45,11 @@ public class QuickeningSpell extends CombatSpell {
     }
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Grants the target +6 speed for 5 turns.";
     }

@@ -18,6 +18,11 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
     protected abstract Skill getBoostingSkill();
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         state.print("Who do you want to target with " + getName() + "? ");
         this.target = model.getParty().partyMemberInput(model, state, caster);

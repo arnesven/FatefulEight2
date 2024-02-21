@@ -30,6 +30,11 @@ public class ConjurePhantasmSpell extends CombatSpell {
     }
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     public Item copy() {
         return new ConjurePhantasmSpell();
     }

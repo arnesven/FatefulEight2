@@ -45,4 +45,9 @@ public class ShiningAegisSpell extends CombatSpell {
             combat.addSpecialEffect(target, new UpArrowAnimation());
         }
     }
+
+    @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
 }

@@ -47,6 +47,11 @@ public class WeakenSpell extends CombatSpell {
     }
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Weakens up to 4 enemies, reducing their damage for 4 turns.";
     }

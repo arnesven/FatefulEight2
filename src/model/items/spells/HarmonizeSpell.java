@@ -68,6 +68,11 @@ public class HarmonizeSpell extends CombatSpell {
         return new Integer[]{20, 50, 100, 200};
     }
 
+    @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
     private static final Sprite HMZ_SPRITE = CharSprite.make((char)(0xD5), MyColors.LIGHT_BLUE, MyColors.GREEN, MyColors.CYAN);
 
     private static class RetreatIfCalmAtEndOfRoundCondition extends Condition {

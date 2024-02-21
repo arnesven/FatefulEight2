@@ -49,6 +49,11 @@ public class SouthernCrossSpell extends ImmediateSpell {
     }
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "A powerful incantation that restores 5 HP of each party member (excluding the caster).";
     }

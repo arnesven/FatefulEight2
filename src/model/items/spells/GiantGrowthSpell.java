@@ -36,6 +36,11 @@ public class GiantGrowthSpell extends CombatSpell {
     }
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         target.addCondition(new GiantGrowthCondition(2 + getMasteryLevel(performer)));
         target.addToHP(2 + getMasteryLevel(performer));

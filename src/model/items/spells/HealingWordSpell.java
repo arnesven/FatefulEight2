@@ -51,6 +51,11 @@ public class HealingWordSpell extends CombatSpell {
     }
 
     @Override
+    protected boolean masteriesEnabled() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "A soothing incantation which restores 6 HP of a character.";
     }

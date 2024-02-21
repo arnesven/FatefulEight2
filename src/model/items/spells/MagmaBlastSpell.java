@@ -47,7 +47,11 @@ public class MagmaBlastSpell extends CombatSpell {
             combat.addSpecialEffect(e, new MagmaBlastEffectSprite());
             combat.doDamageToEnemy(e, damage, performer);
         }
+    }
 
+    @Override
+    protected boolean masteriesEnabled() {
+        return true;
     }
 
     @Override

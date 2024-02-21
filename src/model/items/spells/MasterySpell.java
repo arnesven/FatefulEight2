@@ -23,6 +23,9 @@ public abstract class MasterySpell extends Spell {
     }
 
     protected int getMasteryLevel(GameCharacter character) {
+        if (!masteriesEnabled()) {
+            throw new IllegalStateException("Masteries have not been enabled for this spell!");
+        }
         return character.getMasteries().getMasteryLevel(this);
     }
 
