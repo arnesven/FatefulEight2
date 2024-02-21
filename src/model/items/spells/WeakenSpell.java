@@ -41,7 +41,7 @@ public class WeakenSpell extends CombatSpell {
         combat.println(performer.getName() + " has weakened the enemy.");
         List<Enemy> targets = getTargets(combat, target, 4);
         for (Enemy e : targets) {
-            e.addCondition(new WeakenCondition());
+            e.addCondition(new WeakenCondition(3 + getMasteryLevel(performer)));
             combat.addSpecialEffect(e, new DownArrowAnimation());
         }
     }

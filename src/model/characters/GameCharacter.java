@@ -70,7 +70,8 @@ public class GameCharacter extends Combatant {
     private Party party;
     private int xpGivenCounter = 0;
     private final Map<GameCharacter, Integer> attitudes = new HashMap<>();
-    private Personality personality;
+    private final Personality personality;
+    private final SpellMasteries spellMasteries = new SpellMasteries();
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
                          CharacterClass[] classes, Equipment equipment) {
@@ -781,5 +782,9 @@ public class GameCharacter extends Combatant {
 
     protected void addToPersonality(PersonalityTrait trait) {
         personality.add(trait);
+    }
+
+    public SpellMasteries getMasteries() {
+        return spellMasteries;
     }
 }

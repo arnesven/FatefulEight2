@@ -53,11 +53,19 @@ public class HarmonizeSpell extends CombatSpell {
 
         BeastEnemy beast = (BeastEnemy) target;
         if (beast.reduceAggressiveness()) {
+            for (int i = 0; i < getMasteryLevel(performer); ++i) {
+                beast.reduceAggressiveness();
+            }
             combat.println(beast.getName() + " seems calmer.");
         } else {
             combat.println(beast.getName() + " doesn't seem much calmer.");
         }
         beast.addCondition(new RetreatIfCalmAtEndOfRoundCondition());
+    }
+
+    @Override
+    public Integer[] getThresholds() {
+        return new Integer[]{20, 50, 100, 200};
     }
 
     private static final Sprite HMZ_SPRITE = CharSprite.make((char)(0xD5), MyColors.LIGHT_BLUE, MyColors.GREEN, MyColors.CYAN);

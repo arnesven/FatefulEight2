@@ -2,7 +2,9 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialSpells extends HelpDialog {
+import java.util.List;
+
+public class TutorialSpells extends ExpandableHelpDialog {
     private static final String TEXT =
             "Spells are arcane scriptures which can be cast for beneficial effects. Anyone can " +
             "attempt to cast a spell but characters skilled in Spellcasting and the skill associated " +
@@ -21,5 +23,10 @@ public class TutorialSpells extends HelpDialog {
 
     public TutorialSpells(GameView view) {
         super(view, "Spells", TEXT);
+    }
+
+    @Override
+    protected List<HelpDialog> makeSubSections(GameView view) {
+        return List.of(new SpellMasteryHelpChapter(view, ""));
     }
 }

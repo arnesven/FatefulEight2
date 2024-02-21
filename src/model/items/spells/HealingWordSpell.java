@@ -38,7 +38,7 @@ public class HealingWordSpell extends CombatSpell {
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         int hpBefore = target.getHP();
-        target.addToHP(6);
+        target.addToHP(6 + getMasteryLevel(performer) * 2);
         int totalRecovered = target.getHP() - hpBefore;
         combat.println(target.getName() + " recovers " + totalRecovered + " HP!");
         combat.addSpecialEffect(target, new ShinyRingEffect());

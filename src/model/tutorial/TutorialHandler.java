@@ -2,7 +2,6 @@ package model.tutorial;
 
 import model.Model;
 import model.states.DailyEventState;
-import model.states.events.HorseRacingEvent;
 import model.states.events.PeskyCrowEvent;
 import view.help.*;
 
@@ -412,6 +411,13 @@ public class TutorialHandler implements Serializable {
         runOnce("fishing", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialFishing(model.getView()));
+        });
+    }
+
+    public void spellMasteries(Model model) {
+        runOnce("spellmasteries", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new SpellMasteryHelpChapter(model.getView(), ""));
         });
     }
 

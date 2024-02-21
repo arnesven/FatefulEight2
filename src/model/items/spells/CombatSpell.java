@@ -5,13 +5,14 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
+import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class CombatSpell extends Spell {
+public abstract class CombatSpell extends MasterySpell {
     private final boolean quest;
 
     public CombatSpell(String name, int cost, MyColors color, int difficulty, int hpCost, boolean canBeUsedInQuest) {

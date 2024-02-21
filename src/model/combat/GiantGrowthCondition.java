@@ -8,9 +8,11 @@ import view.sprites.Sprite;
 
 public class GiantGrowthCondition extends Condition {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.BEIGE, MyColors.BLACK, MyColors.CYAN);
+    private final int magnitude;
 
-    public GiantGrowthCondition() {
+    public GiantGrowthCondition(int magnitude) {
         super("Giant Growth", "GRW");
+        this.magnitude = magnitude;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class GiantGrowthCondition extends Condition {
 
     @Override
     public int getAttackBonus() {
-        return 2;
+        return magnitude;
     }
 
     @Override

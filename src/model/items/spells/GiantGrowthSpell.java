@@ -37,8 +37,8 @@ public class GiantGrowthSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        target.addCondition(new GiantGrowthCondition());
-        target.addToHP(2);
+        target.addCondition(new GiantGrowthCondition(2 + getMasteryLevel(performer)));
+        target.addToHP(2 + getMasteryLevel(performer));
         combat.addSpecialEffect(target, new UpArrowAnimation());
     }
 

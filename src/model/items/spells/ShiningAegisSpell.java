@@ -41,7 +41,7 @@ public class ShiningAegisSpell extends CombatSpell {
         if (target.hasCondition(ShiningAegisCondition.class)) {
             combat.println(getName() + " had no effect on " + target.getName() + ".");
         } else {
-            target.addCondition(new ShiningAegisCondition());
+            target.addCondition(new ShiningAegisCondition(5 + getMasteryLevel(performer)));
             combat.addSpecialEffect(target, new UpArrowAnimation());
         }
     }

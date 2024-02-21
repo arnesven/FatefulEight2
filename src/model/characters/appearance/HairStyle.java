@@ -74,7 +74,7 @@ public abstract class HairStyle implements Serializable {
             allHairStyles[24], allHairStyles[25],
             allHairStyles[26], allHairStyles[27],
             allHairStyles[30], allHairStyles[31],
-            allHairStyles[32], allHairStyles[33], 
+            allHairStyles[32], allHairStyles[33],
             allHairStyles[37], allHairStyles[38],
             allHairStyles[39], allHairStyles[40]};
 

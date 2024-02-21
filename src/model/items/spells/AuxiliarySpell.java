@@ -5,7 +5,7 @@ import model.characters.GameCharacter;
 import model.states.GameState;
 import view.MyColors;
 
-public abstract class AuxiliarySpell extends Spell {
+public abstract class AuxiliarySpell extends MasterySpell {
     public AuxiliarySpell(String name, int cost, MyColors color, int difficulty, int hpCost) {
         super(name, cost, color, difficulty, hpCost);
     }

@@ -9,9 +9,9 @@ import view.sprites.Sprite;
 public class ShiningAegisCondition extends Condition {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD1), MyColors.LIGHT_YELLOW, MyColors.WHITE, MyColors.CYAN);
 
-    public ShiningAegisCondition() {
+    public ShiningAegisCondition(int duration) {
         super("Shining Aegis", "AEG");
-        setDuration(5);
+        setDuration(duration);
     }
 
     @Override

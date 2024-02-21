@@ -46,7 +46,7 @@ public class ConjurePhantasmSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        List<Enemy> targets = getTargets(combat, target, 3);
+        List<Enemy> targets = getTargets(combat, target, 3 + getMasteryLevel(performer));
         for (Enemy e : targets) {
             combat.println(e.getName() + " has been paralyzed with fear!");
             e.addCondition(new TimedParalysisCondition());

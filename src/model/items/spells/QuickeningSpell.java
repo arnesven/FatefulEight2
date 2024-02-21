@@ -36,7 +36,7 @@ public class QuickeningSpell extends CombatSpell {
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         if (!target.hasCondition(QuickenedCondition.class)) {
-            target.addCondition(new QuickenedCondition());
+            target.addCondition(new QuickenedCondition(5 + getMasteryLevel(performer)*2));
             combat.println(target.getName() + " has sped up!");
             combat.addSpecialEffect(target, new UpArrowAnimation());
         } else {

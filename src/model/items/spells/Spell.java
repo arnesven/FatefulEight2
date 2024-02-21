@@ -79,12 +79,15 @@ public abstract class Spell extends Item {
         if (result.isSuccessful()) {
             state.println(getName() + " was successfully cast.");
             SoundEffects.playSpellSuccess();
+            successfullyCastHook(model, state, caster);
         } else {
             state.println(getName() + " failed.");
             SoundEffects.playSpellFail();
         }
         return result.isSuccessful();
     }
+
+    protected void successfullyCastHook(Model model, GameState state, GameCharacter caster) { }
 
     protected abstract int getExperience();
 

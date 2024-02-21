@@ -39,9 +39,9 @@ public class MagmaBlastSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        List<Enemy> targets = getTargets(combat, target, MyRandom.randInt(1, 3));
+        List<Enemy> targets = getTargets(combat, target, MyRandom.randInt(1, 3) + getMasteryLevel(performer));
         for (Enemy e : targets) {
-            int damage = MyRandom.randInt(7) + 1;
+            int damage = MyRandom.randInt(7) + 1 + getMasteryLevel(performer);
             combat.println(e.getName() + " was struck by the blast, took " + damage + " damage.");
             combat.addFloatyDamage(e, damage, DamageValueEffect.MAGICAL_DAMAGE);
             combat.addSpecialEffect(e, new MagmaBlastEffectSprite());
