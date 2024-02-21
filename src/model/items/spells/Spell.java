@@ -55,17 +55,6 @@ public abstract class Spell extends Item {
             health = Math.max(0, health - 2);
         }
         if (!isCastFromScroll) {
-            final boolean[] abort = {false};
-            YesNoMessageView confirmDialog = new YesNoMessageView(model.getView(),
-                    "WARNING: Casting " + getName() + " will kill " + caster.getFirstName() + "! Abort casting?") {
-                @Override
-                protected void doAction(Model model) {
-                    abort[0] = true;
-                }
-            };
-            if (abort[0]) {
-                return false;
-            }
             caster.addToHP(-health);
         }
         if (caster.isDead()) {
