@@ -208,6 +208,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new ConjurePhantasmSpell(),
                 new CreatureComfortsSpell(),
                 new EscapeSpell(),
+                // Teleport Spell
                 // WHITE
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
@@ -223,6 +224,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new BindDaemonSpell(),
                 new BurningWeaponSpell(),
                 new ErodeSpell(),
+                // Fire Wall Spell
                 // GREEN
                 new TransfigurationSpell(),
                 new AlchemySpell(),
@@ -238,6 +240,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new WeakenSpell(),
                 new DarkShroudSpell(),
                 new PoisonGasSpell()
+                // VampirismSpell (Leech Life)
                 );
     }
 
