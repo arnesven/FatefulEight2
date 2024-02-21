@@ -10,6 +10,7 @@ import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.horses.HorseHandler;
 import model.items.Inventory;
+import model.items.ItemDeck;
 import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
@@ -63,6 +64,9 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
+        for (Spell sp : ItemDeck.allSpells()) {
+            inventory.add(sp);
+        }
     }
 
     private LoopingSprite[] makeCursorSprites() {

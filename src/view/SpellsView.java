@@ -21,13 +21,14 @@ import java.util.Map;
 public class SpellsView extends SelectableListMenu {
     private static final int ROW_HEIGHT = 9;
     private static final int COLUMN_WIDTH = 20;
+    private static final int NUMBER_OF_ROWS = 4;
     private static AnimatedCharSprite arrowSprite = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
     private ItemTab[] tabNames;
     private int selectedTab = 0;
     private Map<MyColors, List<Spell>> spellMap = new HashMap<>();
 
     public SpellsView(GameView previous) {
-        super(previous, 44, 28);
+        super(previous, 44, 36);
         tabNames = makeTabs();
     }
 
@@ -103,7 +104,7 @@ public class SpellsView extends SelectableListMenu {
                 }
             });
             ++row;
-            if (row > 2) {
+            if (row > NUMBER_OF_ROWS-1) {
                 row = 0;
                 col++;
             }
@@ -124,7 +125,7 @@ public class SpellsView extends SelectableListMenu {
                 }
             });
             ++row;
-            if (row > 2) {
+            if (row > NUMBER_OF_ROWS-1) {
                 row = 0;
                 col++;
             }
