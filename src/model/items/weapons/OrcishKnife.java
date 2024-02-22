@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class OrcishKnife extends BladedWeapon {
+public class OrcishKnife extends SmallBladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 0);
 
     public OrcishKnife() {

@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Dagger extends BladedWeapon {
+public class Dagger extends SmallBladedWeapon {
     private static final Sprite SPRITE = new ItemSprite(1, 0);
 
     public Dagger() {

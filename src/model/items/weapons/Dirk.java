@@ -4,9 +4,9 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Dirk extends BladedWeapon {
+public class Dirk extends SmallBladedWeapon {
 
-    private static final Sprite SPRITE = new ItemSprite(0, 0);;
+    private static final Sprite SPRITE = new ItemSprite(0, 0);
 
     public Dirk() {
         super("Dirk", 5, new int[]{5, 12}, false, 1);
