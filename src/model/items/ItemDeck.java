@@ -239,8 +239,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new RaiseBoneWalkerSpell(),
                 new WeakenSpell(),
                 new DarkShroudSpell(),
-                new PoisonGasSpell()
-                // VampirismSpell (Leech Life)
+                new PoisonGasSpell(),
+                new VampirismSpell()
                 );
     }
 
