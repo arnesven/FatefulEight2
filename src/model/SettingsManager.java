@@ -4,6 +4,7 @@ import view.widget.TopText;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SettingsManager implements Serializable {
@@ -17,7 +18,8 @@ public class SettingsManager implements Serializable {
     private LogSpeed combatLogSpeed = LogSpeed.FAST;
     private boolean levelUpSummary = true;
     private boolean alwaysRide = false;
-    private Map<String, Boolean> miscFlags = new HashMap<>();
+    private final Map<String, Boolean> miscFlags = new HashMap<>();
+    private final Map<String, Integer> miscCounters = new HashMap<>();
 
     public SettingsManager() {
         miscFlags.put(TopText.GOLD_SETTINGS_FLAG, true);
@@ -101,4 +103,6 @@ public class SettingsManager implements Serializable {
     public Map<String, Boolean> getMiscFlags() {
         return miscFlags;
     }
+
+    public Map<String, Integer> getMiscCounters() { return miscCounters; }
 }

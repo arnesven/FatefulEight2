@@ -208,7 +208,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new ConjurePhantasmSpell(),
                 new CreatureComfortsSpell(),
                 new EscapeSpell(),
-                // Teleport Spell
+                new TeleportSpell(),
                 // WHITE
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
