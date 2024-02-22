@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.items.spells.TeleportSpell;
 import model.map.CastleLocation;
 import model.map.WorldHex;
 import model.states.DailyEventState;
@@ -88,12 +89,7 @@ public class CourtMageNode extends DailyActionNode {
                 CastleLocation destination = model.getWorld().getCastleByName(options.get(selected));
 
                 Point p = model.getWorld().getPositionForLocation(destination);
-                model.getParty().setPosition(p);
-                printAlert("Your party teleported to " + destination.getName() + "!");
-                MapSubView mapSubView = new MapSubView(model);
-                CollapsingTransition.transition(model, mapSubView);
-                println("Press enter to continue.");
-                waitForReturn();
+                TeleportSpell.teleportPartyToPosition(model, this, p);
                 didTeleport = true;
             } else {
                 leaderSay("Fascinating. I think we'll pass.");

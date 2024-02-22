@@ -10,6 +10,7 @@ import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.MapSubView;
 import view.subviews.SubView;
+import view.subviews.TeleportingTransition;
 
 import java.awt.*;
 
@@ -20,7 +21,7 @@ public class TeleportSpell extends ImmediateSpell {
     private static final String Y_KEY = "Teleport-Y";
 
     public TeleportSpell() {
-        super("Teleport", 46, MyColors.BLUE, 1, 0); // TODO: Difficulty 11, HP cost 4
+        super("Teleport", 46, MyColors.BLUE, 11, 4);
     }
 
     @Override
@@ -54,21 +55,26 @@ public class TeleportSpell extends ImmediateSpell {
         Integer markedY = model.getSettings().getMiscCounters().get(Y_KEY);
         if (markedX != null && markedY != null) {
             Point position = new Point(markedX, markedY);
-            state.print("Do you want to return to your previously marked location (Y) or " +
+            state.print("Do you want to return to your previously marked location (Y) or" +
                     " do you want to mark your current location (N)? ");
             if (state.yesNoInput()) {
-                model.getParty().setPosition(position);
-                state.printAlert("Your party teleported to a new location!");
-                SubView previousSubView = model.getSubView();
-                MapSubView mapSubView = new MapSubView(model);
-                CollapsingTransition.transition(model, mapSubView);
-                state.println("Press enter to continue.");
-                state.waitForReturn();
-                CollapsingTransition.transition(model, previousSubView);
+                teleportPartyToPosition(model, state, position);
                 return;
             }
         }
         markLocation(model, state, caster);
+    }
+
+    public static void teleportPartyToPosition(Model model, GameState state, Point position) {
+        SubView previousSubView = model.getSubView();
+        MapSubView mapSubView = new MapSubView(model);
+        CollapsingTransition.transition(model, mapSubView);
+        state.println("Preparing to teleport, press enter to continue.");
+        state.waitForReturn();
+        TeleportingTransition.transition(model, mapSubView, position);
+        state.println("Press enter to continue.");
+        state.waitForReturn();
+        CollapsingTransition.transition(model, previousSubView);
     }
 
     private void markLocation(Model model, GameState state, GameCharacter caster) {
