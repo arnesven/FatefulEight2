@@ -21,7 +21,7 @@ public class RiposteCombatAction extends StaminaCombatAbility {
     public static final int ACROBATICS_RANKS_REQUIREMENT = 3;
 
     public RiposteCombatAction() {
-        super("Riposte");
+        super("Riposte", false);
     }
 
     public static void doRiposte(CombatEvent combatEvent, GameCharacter gameCharacter, Enemy enemy) {

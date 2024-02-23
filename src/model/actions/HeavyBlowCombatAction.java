@@ -14,7 +14,7 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
     public static final int LABOR_RANKS_REQUIREMENT = 3;
 
     public HeavyBlowCombatAction() {
-        super("Heavy Blow");
+        super("Heavy Blow", true);
     }
 
     @Override

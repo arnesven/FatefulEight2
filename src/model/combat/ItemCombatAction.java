@@ -19,7 +19,7 @@ public class ItemCombatAction extends BasicCombatAction {
     private final Combatant target;
 
     public ItemCombatAction(Set<UsableItem> usableItems, Combatant target) {
-        super("Item", false);
+        super("Item", false, false);
         this.usableItems = usableItems;
         this.target = target;
     }
@@ -46,7 +46,7 @@ public class ItemCombatAction extends BasicCombatAction {
                     }
                 }
             } else if (target instanceof GameCharacter && item.canBeUsedOn(model, (GameCharacter) target)) {
-                res.add(new BasicCombatAction(item.getName(), false) {
+                res.add(new BasicCombatAction(item.getName(), false, false) {
                     @Override
                     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         GameCharacter character = (GameCharacter)target;
@@ -57,7 +57,7 @@ public class ItemCombatAction extends BasicCombatAction {
                     }
                 });
             } else if (target instanceof Enemy && item instanceof ThrowablePotion) {
-                res.add(new BasicCombatAction(item.getName(), true) {
+                res.add(new BasicCombatAction(item.getName(), true, false) {
                     @Override
                     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                         ThrowablePotion tp = (ThrowablePotion)item;

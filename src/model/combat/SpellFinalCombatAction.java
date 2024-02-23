@@ -14,7 +14,7 @@ public class SpellFinalCombatAction extends BasicCombatAction {
     private boolean cancelled = false;
 
     public SpellFinalCombatAction(CombatSpell spell) {
-        super(spell.getName(), false);
+        super(spell.getName(), false, false);
         this.spell = spell;
     }
 

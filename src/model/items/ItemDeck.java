@@ -209,6 +209,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new CreatureComfortsSpell(),
                 new EscapeSpell(),
                 new TeleportSpell(),
+                // new FacedancingSpell(), // Change appearance and lower notoriety
                 // WHITE
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
@@ -224,7 +225,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new BindDaemonSpell(),
                 new BurningWeaponSpell(),
                 new ErodeSpell(),
-                // Fire Wall Spell
+                new FireWallSpell(),
                 // GREEN
                 new TransfigurationSpell(),
                 new AlchemySpell(),

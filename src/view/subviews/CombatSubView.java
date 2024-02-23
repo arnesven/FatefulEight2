@@ -25,6 +25,7 @@ public class CombatSubView extends SubView {
     public static final int BLOCK_TEXT = 1;
     public static final int EVADE_TEXT = 0;
     public static final int MISS_TEXT = 2;
+    private static final Sprite FIREWALL_SPRITE = new FirewallSprite();
     private final CombatEvent combat;
     private final CombatMatrix combatMatrix;
     private final CombatTheme theme;
@@ -69,6 +70,7 @@ public class CombatSubView extends SubView {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
 
         drawCombatants(model);
+        drawFlameWall(model);
         drawInitiativeOrder(model);
         drawCursor(model);
     }
@@ -213,6 +215,18 @@ public class CombatSubView extends SubView {
             }
         }
         return combatMatrix.handleKeyEvent(keyEvent);
+    }
+
+
+    private void drawFlameWall(Model model) {
+        if (combat.hasFlameWall()) {
+            for (int x = 0; x < 8; ++x) {
+                Point point = new Point();
+                point.x = X_OFFSET + x * 4;
+                point.y = Y_OFFSET + 4 * 4;
+                model.getScreenHandler().register(FIREWALL_SPRITE.getName(), point, FIREWALL_SPRITE);
+            }
+        }
     }
 
 }

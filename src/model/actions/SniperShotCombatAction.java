@@ -12,7 +12,7 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
     public static final int PERCEPTION_RANKS_REQUIREMENT = 3;
 
     public SniperShotCombatAction() {
-        super("Sniper Shot");
+        super("Sniper Shot", false);
     }
 
     public static boolean canDoSniperShotAbility(GameCharacter performer) {

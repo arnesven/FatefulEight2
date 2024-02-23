@@ -17,7 +17,7 @@ public class SpellCombatAction extends BasicCombatAction {
     private final Combatant target;
 
     public SpellCombatAction(List<CombatSpell> combatSpells, Combatant target) {
-        super("Spell", false);
+        super("Spell", false, false);
         this.combatSpells = combatSpells;
         this.target = target;
     }

@@ -16,14 +16,23 @@ public abstract class CombatAction {
     public static final int FATIGUE_START_ROUND = 3;
     private final String name;
     private final boolean fatigue;
+    private final boolean isMeleeAttack;
 
-    public CombatAction(String name, boolean doesFatigue) {
+    public CombatAction(String name, boolean doesFatigue, boolean isMeleeAttack) {
         this.name = name;
         this.fatigue = doesFatigue;
+        this.isMeleeAttack = isMeleeAttack;
+    }
+
+    public CombatAction(String name, boolean doesFatigue) {
+        this(name, doesFatigue, false);
     }
 
     public void executeCombatAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         doAction(model, combat, performer, target);
+        if (isMeleeAttack) {
+            combat.checkFlameWallDamage(model, performer);
+        }
         checkFatigue(model, combat, performer);
     }
 

@@ -9,8 +9,8 @@ import model.states.CombatEvent;
 public abstract class StaminaCombatAbility extends CombatAction {
     private boolean takeAnotherAction = false;
 
-    public StaminaCombatAbility(String name) {
-        super(name, true);
+    public StaminaCombatAbility(String name, boolean isMeleeAttack) {
+        super(name, true, isMeleeAttack);
     }
 
     @Override

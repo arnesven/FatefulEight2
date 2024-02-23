@@ -59,8 +59,8 @@ public abstract class StartingCharacterView extends SelectableListMenu {
                 if (gc != null) {
                     gc.drawAppearance(model.getScreenHandler(), x + 6, y + 3);
                     BorderFrame.drawCentered(model.getScreenHandler(), gc.getRace().getQualifiedName(),
-                            y+11, MyColors.WHITE, MyColors.BLUE);
-                    CharacterCreationView.drawClassDetails(model, gc, x+1, y+15);
+                            y+10, MyColors.WHITE, MyColors.BLUE);
+                    CharacterCreationView.drawClassDetails(model, gc, x+1, y+14);
                 }
             }
         });
@@ -87,7 +87,7 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             content.add(new ListContent(xStart+3, yStart+3, getSelectedCharacter().getFullName()));
         }
 
-        content.add(new CarouselListContent(xStart+3, yStart+15, getSelectedCharacter().getCharClass().getFullName() +
+        content.add(new CarouselListContent(xStart+3, yStart+14, getSelectedCharacter().getCharClass().getFullName() +
                 " (" + getSelectedCharacter().getCharClass().getShortName() + ")") {
             @Override
             public void turnLeft(Model model) {

@@ -385,7 +385,7 @@ public class GameCharacter extends Combatant {
     public List<CombatAction> getCombatActions(Model model, Combatant target, CombatEvent combatEvent) {
         List<CombatAction> result = new ArrayList<>();
         if (canAttackInCombat() && target.canBeAttackedBy(this)) {
-            result.add(new BasicCombatAction("Attack", true) {
+            result.add(new BasicCombatAction("Attack", true, true) {
                 @Override
                 protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     performer.performAttack(model, combat, target);
@@ -393,7 +393,7 @@ public class GameCharacter extends Combatant {
             });
         }
         if (isLeader() && combatEvent.fleeingEnabled()) {
-            result.add(new BasicCombatAction("Flee", false) {
+            result.add(new BasicCombatAction("Flee", false, false) {
                 @Override
                 protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     performFleeFromBattle(model, combat);
@@ -421,7 +421,7 @@ public class GameCharacter extends Combatant {
         }
 
         if (combatEvent.canDelay(this)) {
-            result.add(new BasicCombatAction("Delay", false) {
+            result.add(new BasicCombatAction("Delay", false, false) {
                 @Override
                 protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     combat.delayCombatant(performer);
@@ -429,7 +429,7 @@ public class GameCharacter extends Combatant {
             });
         }
 
-        result.add(new BasicCombatAction("Pass", false) {
+        result.add(new BasicCombatAction("Pass", false, false) {
             @Override
             protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                 combat.println("");

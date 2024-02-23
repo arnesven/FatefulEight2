@@ -122,18 +122,15 @@ public abstract class Enemy extends Combatant {
     }
 
     public final void attack(Model model, GameCharacter target, CombatEvent combatEvent) {
-        if (model.getParty().getBackRow().contains(target)) {
+        boolean isRangedAttack = model.getParty().getBackRow().contains(target);
+        if (isRangedAttack) {
             combatEvent.print(getName() + " performs a ranged attack! ");
         }
         combatBehavior.performAttack(model, this, target, combatEvent);
         model.getTutorial().combatDamage(model);
-        if (target.isDead()) {
-            combatEvent.printAlert(target.getName() + " has been slain in combat!");
-            if (model.getParty().getPartyMembers().contains(target)) {
-                if (target.isLeader() && model.getParty().appointNewLeader()) {
-                    combatEvent.println(model.getParty().getLeader().getFullName() + " is now the new leader of the party.");
-                }
-            }
+        combatEvent.checkForDead(model, target);
+        if (!isRangedAttack) {
+            combatEvent.checkFlameWallDamage(model, this);
         }
     }
 

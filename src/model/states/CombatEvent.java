@@ -16,6 +16,7 @@ import sprites.CombatSpeechBubble;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
+import view.LogView;
 import view.MyColors;
 import view.sprites.AnimationManager;
 import view.sprites.DamageValueEffect;
@@ -49,6 +50,7 @@ public class CombatEvent extends DailyEventState {
     private final Set<GameCharacter> blockSneakAttack = new HashSet<>();
     private final List<CombatLoot> extraLoot = new ArrayList<>();
     private final List<Combatant> delayedCombatants = new ArrayList<>();
+    private MyPair<GameCharacter, Integer> flameWall = null;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -159,6 +161,9 @@ public class CombatEvent extends DailyEventState {
                     handleEnemyTurn(model, turnTaker);
                 }
             } else {
+                if (hasFlameWall() && flameWall.first == turnTaker) {
+                    removeFlameWall();
+                }
                 handleCharacterTurn(model, turnTaker);
             }
         }
@@ -539,5 +544,42 @@ public class CombatEvent extends DailyEventState {
 
     public CombatStatistics getStatistics() {
         return combatStats;
+    }
+
+    public void setFlameWall(GameCharacter performer, int masteryLevel) {
+        this.flameWall = new MyPair<>(performer, masteryLevel);
+    }
+
+    public void checkFlameWallDamage(Model model, Combatant target) {
+        if (hasFlameWall()) {
+            int damage = flameWall.second;
+            println(target.getName() + " takes " + damage + " damage from the fire wall!");
+            if (target instanceof Enemy) {
+                doDamageToEnemy(target, damage, flameWall.first);
+            } else {
+                target.addToHP(-1 * damage);
+                checkForDead(model, (GameCharacter) target);
+            }
+            addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
+        }
+    }
+
+    public void checkForDead(Model model, GameCharacter target) {
+        if (target.isDead()) {
+            printAlert(target.getName() + " has been slain in combat!");
+            if (model.getParty().getPartyMembers().contains(target)) {
+                if (target.isLeader() && model.getParty().appointNewLeader()) {
+                    println(model.getParty().getLeader().getFullName() + " is now the new leader of the party.");
+                }
+            }
+        }
+    }
+
+    private void removeFlameWall() {
+        flameWall = null;
+    }
+
+    public boolean hasFlameWall() {
+        return flameWall != null;
     }
 }
