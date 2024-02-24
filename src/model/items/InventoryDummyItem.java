@@ -6,11 +6,6 @@ public abstract class InventoryDummyItem extends Item {
     }
 
     @Override
-    public void addYourself(Inventory inventory) {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
     public Item copy() {
         throw new IllegalStateException("Should not be called!");
     }

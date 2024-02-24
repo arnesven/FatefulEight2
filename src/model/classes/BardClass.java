@@ -1,11 +1,17 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.ObolsDummyItem;
+import model.items.accessories.JestersHat;
 import model.items.weapons.Club;
 import model.items.Equipment;
+import model.items.weapons.Scepter;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.List;
 
 public class BardClass extends CharacterClass {
     protected BardClass() {
@@ -69,5 +75,10 @@ public class BardClass extends CharacterClass {
         return "Bards are said to have silver tongues, but they're more than just entertainers. " +
                 "Bards can handle social situations, spurious combat and the odd bit of skulduggery." +
                 "They can also function well as leaders. All things considers, bards are versatile characters. ";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Scepter(), new JestersHat(), new ObolsDummyItem(100));
     }
 }

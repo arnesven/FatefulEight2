@@ -1,11 +1,17 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.accessories.HeraldicShield;
+import model.items.clothing.RustyChestPlate;
 import model.items.weapons.Club;
 import model.items.Equipment;
+import model.items.weapons.Mace;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
+
+import java.util.List;
 
 public class BlackKnightClass extends CharacterClass {
     protected BlackKnightClass() {
@@ -110,5 +116,10 @@ public class BlackKnightClass extends CharacterClass {
         return "Not all knights are graceful heroes. Some betray their masters, are dishonorably discharged, or simply " +
                 "find their own selfish paths. Black Knights are fierce fighters who manage to stay agile even in heavy armor. " +
                 "What they lack in social skills they make up for in battle prowess and keen senses.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Mace(), new RustyChestPlate(), new HeraldicShield());
     }
 }

@@ -30,6 +30,8 @@ public class Inventory implements Serializable {
     private List<Scroll> scrolls = new ArrayList<>();
     private List<Item> specialItems = new ArrayList<>();
     private List<Item> fishes = new ArrayList<>();
+    private int gold = 30;
+    private int obols = 0;
     private int food = 10;
     private int ingredients = 0;
     private int materials = 0;
@@ -116,6 +118,14 @@ public class Inventory implements Serializable {
     public void setFood(int food) {
         this.food = food;
     }
+
+    public int getGold() { return gold; }
+
+    public void setGold(int amount) { gold = amount; }
+
+    public int getObols() { return obols; }
+
+    public void setObols(int amount) { obols = amount; }
 
     public int noOfsellableItems() {
         return getAllItems().size();

@@ -26,4 +26,9 @@ public class GoldDummyItem extends InventoryDummyItem {
     public int getWeight() {
         return 0;
     }
+
+    @Override
+    public void addYourself(Inventory inventory) {
+        inventory.setGold(inventory.getGold() + getCost());
+    }
 }

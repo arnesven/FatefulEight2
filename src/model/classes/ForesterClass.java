@@ -1,11 +1,19 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.horses.HorseItemAdapter;
+import model.horses.Pony;
+import model.horses.Prancer;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.weapons.BattleAxe;
 import model.items.weapons.Hatchet;
+import model.items.weapons.LongBow;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.List;
 
 public class ForesterClass extends CharacterClass {
     protected ForesterClass() {
@@ -73,5 +81,10 @@ public class ForesterClass extends CharacterClass {
         return "Foresters are the wardens of the forest. They are lumberjacks or rangers who feel most at home " +
                 "surrounded by tall trees and the musky scent of fir, pine or oak. They are light fighters, but often " +
                 "rugged and hardened by hard labor. They are good pathfinders and guids when trekking through the wilderness.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new BattleAxe(), new LongBow(), new HorseItemAdapter(new Prancer()), new HorseItemAdapter(new Pony()));
     }
 }

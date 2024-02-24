@@ -2,9 +2,13 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class NPCClass extends CharacterClass {
     protected NPCClass(String name) {
@@ -47,5 +51,10 @@ public abstract class NPCClass extends CharacterClass {
     @Override
     public String getHowToLearn() {
         return "Undefined";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return new ArrayList<>();
     }
 }

@@ -30,4 +30,9 @@ public class IngredientsDummyItem extends InventoryDummyItem {
     public int getWeight() {
         return amount * Inventory.WEIGHT_OF_INGREDIENTS;
     }
+
+    @Override
+    public void addYourself(Inventory inventory) {
+        inventory.addToIngredients(amount);
+    }
 }

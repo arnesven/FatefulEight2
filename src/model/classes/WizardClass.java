@@ -2,10 +2,14 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.spells.*;
 import model.items.weapons.OldWand;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.List;
 
 public class WizardClass extends CharacterClass {
     protected WizardClass() {
@@ -67,5 +71,10 @@ public class WizardClass extends CharacterClass {
         return "Wizards are the masters of magic. Apart from white magic, wizards are vastly knowledgeable about " +
                 "different types of magic. They are also highly intelligent, and are often academics or scholars. " +
                 "While not very apt as leaders, they have no difficulty handling social interactions.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new EntropicBoltSpell(), new EscapeSpell(), new QuickeningSpell(), new BlackPactSpell());
     }
 }

@@ -46,8 +46,6 @@ public class Party implements Serializable {
     private final Set<String> templeBannings = new HashSet<>();
     private Point position;
     private Point previousPosition;
-    private int gold = 30;
-    private int obols = 0;
     private int reputation = 0;
     private boolean onRoad = true;
     private final LoopingSprite[] cursorSprites;
@@ -142,7 +140,7 @@ public class Party implements Serializable {
     }
 
     public int getGold() {
-        return gold;
+        return inventory.getGold();
     }
 
     public int getReputation() {
@@ -246,7 +244,7 @@ public class Party implements Serializable {
     }
 
     public void addToGold(int cost) {
-        gold += cost;
+        inventory.setGold(inventory.getGold() + cost);
     }
 
     public int partyStrength() {
@@ -733,11 +731,11 @@ public class Party implements Serializable {
     }
 
     public int getObols() {
-        return obols;
+        return inventory.getObols();
     }
 
     public void setObols(int playerObols) {
-        obols = playerObols;
+        inventory.setObols(inventory.getObols() + playerObols);
     }
 
     public void addToNotoriety(int i) {

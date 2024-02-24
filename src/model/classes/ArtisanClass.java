@@ -2,11 +2,17 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.MaterialsDummyItem;
+import model.items.clothing.StuddedTunic;
 import model.items.weapons.Hatchet;
+import model.items.weapons.Longsword;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;
+
+import java.util.List;
 
 public class ArtisanClass extends CharacterClass {
     private static final MyColors APRON_COLOR = MyColors.BROWN;
@@ -33,6 +39,11 @@ public class ArtisanClass extends CharacterClass {
         return "Artisans are the crafters, tailors, cobblers, smiths and woodworkers of the world. " +
                 "Handy with tools, they have a keen eye for what will work, what's stylish and proper. " +
                 "Artisans are often well connected and are comfortable with social interaction.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Longsword(), new StuddedTunic(), new MaterialsDummyItem(15));
     }
 
     @Override

@@ -3,10 +3,16 @@ package model.classes;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.FoodDummyItem;
+import model.items.Item;
+import model.items.clothing.FurArmor;
+import model.items.weapons.GrandMaul;
 import model.items.weapons.Hatchet;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.List;
 
 public class BarbarianClass extends CharacterClass {
     private static final MyColors CLOTHING_COLOR = MyColors.BROWN;
@@ -83,5 +89,10 @@ public class BarbarianClass extends CharacterClass {
                 "They are heavy fighters who rely on raw power rather than finesse in battle. " +
                 "Barbarians rely on their toughness and instincts to survive in the wild and they rarely shy away from " +
                 "performing tasks requiring high levels of strength and fortitude.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new GrandMaul(), new FurArmor(), new FoodDummyItem(50));
     }
 }

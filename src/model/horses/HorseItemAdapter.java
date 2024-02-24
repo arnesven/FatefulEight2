@@ -57,4 +57,8 @@ public class HorseItemAdapter extends Item {
     public int getSpriteSize() {
         return 8;
     }
+
+    public Horse getHorse() {
+        return horse;
+    }
 }

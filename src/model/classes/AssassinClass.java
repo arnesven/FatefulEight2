@@ -1,14 +1,21 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.clothing.PilgrimsCloak;
+import model.items.spells.LevitateSpell;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
+import model.items.weapons.ThrowingKnives;
+import model.items.weapons.ThrowingStars;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.FaceAndClothesSprite;
 import view.sprites.ClothesSprite;
 import view.sprites.FaceAndClothesSpriteWithBack;
+
+import java.util.List;
 
 public class AssassinClass extends CharacterClass {
     private final MyColors clothingColor;
@@ -104,5 +111,10 @@ public class AssassinClass extends CharacterClass {
         return "Assassins are trained killers who use stealth and deception to get to, " +
                 "and eliminate their targets. They can climb smooth walls, pick complex locks and " +
                 "even cast the odd blue spell. In combat, assassins prefer blades and bows.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new ThrowingKnives(), new PilgrimsCloak(), new LevitateSpell());
     }
 }

@@ -1,11 +1,17 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.clothing.RustyChestPlate;
+import model.items.spells.TurnUndeadSpell;
 import model.items.weapons.Club;
 import model.items.Equipment;
+import model.items.weapons.Warhammer;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.List;
 
 public class PaladinClass extends CharacterClass {
 
@@ -68,5 +74,10 @@ public class PaladinClass extends CharacterClass {
         return "Paladins are noble knights and grand protectors of the Order of Light. They possess powerful " +
                 "combat skills, and are proficient with blades, blunt weapons and polearms. They are natural leaders " +
                 "and have a little affinity for white magic";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Warhammer(), new RustyChestPlate(), new TurnUndeadSpell());
     }
 }

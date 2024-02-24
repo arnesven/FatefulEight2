@@ -1,12 +1,19 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.accessories.EyeRing;
+import model.items.clothing.FancyJerkin;
+import model.items.clothing.PlainJerkin;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
+import model.items.weapons.LightCrossbow;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite8x8;
+
+import java.util.List;
 
 public class SpyClass extends CharacterClass {
     protected SpyClass() {
@@ -80,5 +87,10 @@ public class SpyClass extends CharacterClass {
         return "Spies are everywhere. Members of this class are often agile, perceptive, clever and " +
                 "masters of larceny. While very deft in the skills needed to acquire information, spies " +
                 "normally lack much combat ability and general fortitude.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new LightCrossbow(), new PlainJerkin(), new EyeRing());
     }
 }

@@ -2,11 +2,18 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.GoldDummyItem;
+import model.items.Item;
+import model.items.accessories.Crown;
+import model.items.weapons.Longsword;
+import model.items.weapons.Rapier;
 import model.items.weapons.TrainingBow;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.FaceAndClothesSpriteWithBack;
+
+import java.util.List;
 
 public class NobleClass extends CharacterClass {
     private static final MyColors CLOTHES_COLOR = MyColors.BLUE;
@@ -85,5 +92,10 @@ public class NobleClass extends CharacterClass {
                 "broadly in both martial skills and academics. From an early age they are instructed how to act during " +
                 "social gatherings and adult nobles are often able to mix negotiation, persuasion and intimidation " +
                 "to get what they want.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Rapier(), new Crown(), new GoldDummyItem(25));
     }
 }

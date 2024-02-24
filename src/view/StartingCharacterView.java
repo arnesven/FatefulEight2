@@ -100,7 +100,7 @@ public abstract class StartingCharacterView extends SelectableListMenu {
             }
         });
 
-        content.add(new SelectableListContent(xStart + 10, yStart+39, "DONE") {
+        content.add(new SelectableListContent(xStart + 11, yStart+39, "OK") {
             @Override
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);

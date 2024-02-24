@@ -1,11 +1,17 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.spells.DarkShroudSpell;
+import model.items.spells.PoisonGasSpell;
+import model.items.spells.TransfigurationSpell;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
+
+import java.util.List;
 
 public class WitchClass extends CharacterClass {
     protected WitchClass() {
@@ -66,5 +72,10 @@ public class WitchClass extends CharacterClass {
         return "Witches are magic users who focus on green and black magic. Witches " +
                 "can be devilishly clever and quite stealthy to boot. Most witches live alone and must therefore " +
                 "learn to protect themselves and live off the land.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new PoisonGasSpell(), new DarkShroudSpell(), new TransfigurationSpell());
     }
 }

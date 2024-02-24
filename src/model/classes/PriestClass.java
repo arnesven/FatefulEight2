@@ -1,12 +1,19 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.accessories.Circlet;
+import model.items.accessories.Tiara;
+import model.items.spells.HealingWordSpell;
+import model.items.spells.ShiningAegisSpell;
 import model.items.weapons.Club;
 import model.items.Equipment;
 import model.items.weapons.LongStaff;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.List;
 
 public class PriestClass extends CharacterClass {
     protected PriestClass() {
@@ -67,5 +74,10 @@ public class PriestClass extends CharacterClass {
         return "Priests are monks and healers, normally connected with a religion or faith. They are skilled practitioners " +
                 "of white magic and make good leaders. Priests excel in soft skills but are normally not opposed " +
                 "to doing manual work.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new HealingWordSpell(), new ShiningAegisSpell(), new Circlet());
     }
 }

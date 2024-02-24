@@ -26,6 +26,11 @@ public class MaterialsDummyItem extends InventoryDummyItem {
     }
 
     @Override
+    public void addYourself(Inventory inventory) {
+        inventory.addToMaterials(amount);
+    }
+
+    @Override
     public String getShoppingDetails() {
         return ", Raw materials with which you can craft various items.";
     }

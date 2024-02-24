@@ -2,11 +2,17 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.accessories.*;
+import model.items.clothing.RustyRingMail;
+import model.items.weapons.Longsword;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+
+import java.util.List;
 
 public class CaptainClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.GRAY;
@@ -84,5 +90,10 @@ public class CaptainClass extends CharacterClass {
     public String getDescription() {
         return "Captains are capable men-at-arms, weathered by life in the army. They are proficient with a variety of " +
                 "weapons and are good leaders. Captains are often trained strategists and exhibit fair survival skills.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Longsword(), new RustyRingMail(), new Helm());
     }
 }

@@ -29,4 +29,9 @@ public class FoodDummyItem extends InventoryDummyItem {
     public int getWeight() {
         return amount * Inventory.WEIGHT_OF_FOOD;
     }
+
+    @Override
+    public void addYourself(Inventory inventory) {
+        inventory.setFood(inventory.getFood() + amount);
+    }
 }

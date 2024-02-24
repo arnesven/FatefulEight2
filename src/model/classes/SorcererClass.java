@@ -1,12 +1,20 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Item;
+import model.items.spells.BurningWeaponSpell;
+import model.items.spells.EntropicBoltSpell;
+import model.items.spells.FireWallSpell;
+import model.items.spells.WeakenSpell;
 import model.items.weapons.Club;
 import model.items.Equipment;
+import model.items.weapons.MagesStaff;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+
+import java.util.List;
 
 public class SorcererClass extends CharacterClass {
     protected SorcererClass() {
@@ -76,5 +84,10 @@ public class SorcererClass extends CharacterClass {
         return "Sorcerers are mages who primarily delve into black and red magic. They tend to be more reckless " +
                 "than Wizards, and more ambitious in their designs than witches and magicians. Sorcerer's do not rule " +
                 "out violence as a solutions when the situation requires it.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new MagesStaff(), new FireWallSpell(), new WeakenSpell());
     }
 }

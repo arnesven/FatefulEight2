@@ -3,6 +3,10 @@ package model.classes;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.clothing.LeatherArmor;
+import model.items.spells.EntropicBoltSpell;
+import model.items.weapons.ShortSword;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
@@ -176,4 +180,6 @@ public abstract class CharacterClass implements Serializable {
     }
 
     public abstract String getDescription();
+
+    public abstract List<Item> getStartingItems();
 }

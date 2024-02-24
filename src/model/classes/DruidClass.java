@@ -1,11 +1,18 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.*;
+import model.items.spells.AlchemySpell;
+import model.items.spells.GiantGrowthSpell;
+import model.items.spells.SummonFamiliarSpell;
 import model.items.weapons.Club;
-import model.items.Equipment;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.ItemSprite;
+import view.sprites.Sprite;
+
+import java.util.List;
 
 public class DruidClass extends CharacterClass {
     protected DruidClass() {
@@ -84,5 +91,40 @@ public class DruidClass extends CharacterClass {
         return "Druids are nature mages who are highly attuned with Green Magic. They often live " +
                 "as hermits which require them to have good survival skills and fair combat abilities. " +
                 "Druids are often highly intelligent and can make good decisions as leaders.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new SummonFamiliarSpell(), new GiantGrowthSpell(), new AlchmyPackage());
+    }
+
+    private class AlchmyPackage extends InventoryDummyItem {
+        private final Sprite SPRITE = new ItemSprite(14, 7, MyColors.WHITE,
+                MyColors.LIGHT_GREEN, MyColors.CYAN);
+
+        public AlchmyPackage() {
+            super("Alchemy Package", 10);
+        }
+
+        @Override
+        protected Sprite getSprite() {
+            return SPRITE;
+        }
+
+        @Override
+        public int getWeight() {
+            return 0;
+        }
+
+        @Override
+        public void addYourself(Inventory inventory) {
+            inventory.add(new AlchemySpell());
+            inventory.addToIngredients(20);
+        }
+
+        @Override
+        public String getShoppingDetails() {
+            return "Alchemy Spell and 20 Ingredients.";
+        }
     }
 }

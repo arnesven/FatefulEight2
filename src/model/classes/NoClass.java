@@ -2,9 +2,13 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NoClass extends CharacterClass {
     protected NoClass() {
@@ -45,6 +49,11 @@ public class NoClass extends CharacterClass {
     @Override
     public String getDescription() {
         return "No Class";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return new ArrayList<>();
     }
 
     @Override

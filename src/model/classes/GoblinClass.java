@@ -2,12 +2,16 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
 import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.Glaive;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoblinClass extends SpecialCharacterClass {
     protected GoblinClass() {

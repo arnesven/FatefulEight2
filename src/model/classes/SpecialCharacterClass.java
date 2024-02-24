@@ -1,6 +1,10 @@
 package model.classes;
 
+import model.items.Item;
 import view.MyColors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class SpecialCharacterClass extends CharacterClass {
 
@@ -32,5 +36,10 @@ public abstract class SpecialCharacterClass extends CharacterClass {
     @Override
     public boolean isSpecialCharacter() {
         return true;
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return new ArrayList<>();
     }
 }

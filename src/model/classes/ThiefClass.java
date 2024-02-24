@@ -1,12 +1,25 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.items.Inventory;
+import model.items.InventoryDummyItem;
+import model.items.Item;
+import model.items.accessories.DeftGloves;
+import model.items.clothing.PlainJerkin;
+import model.items.clothing.StuddedJerkin;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
+import model.items.weapons.LongStaff;
+import model.items.weapons.Longsword;
+import model.items.weapons.TwinDaggers;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
+import view.sprites.ItemSprite;
+import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
+
+import java.util.List;
 
 public class ThiefClass extends CharacterClass {
     protected ThiefClass() {
@@ -96,5 +109,39 @@ public class ThiefClass extends CharacterClass {
                 "Thieves rely heavily on their senses and their dexterity to. Be it lifting purses, " +
                 "prying a safe open, or obtaining that rare prize, the thief uses all skills at her disposal " +
                 "to achieve success.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new TwinDaggers(), new StuddedJerkin(), new LarcenyKit());
+    }
+
+    private static class LarcenyKit extends InventoryDummyItem {
+        private final Sprite SPRITE = new ItemSprite(1, 0xA, MyColors.GRAY, MyColors.DARK_GRAY);
+
+        public LarcenyKit() {
+            super("Larceny Kit", 17);
+        }
+
+        @Override
+        protected Sprite getSprite() {
+            return SPRITE;
+        }
+
+        @Override
+        public int getWeight() {
+            return 0;
+        }
+
+        @Override
+        public void addYourself(Inventory inventory) {
+            inventory.add(new DeftGloves());
+            inventory.addToLockpicks(3);
+        }
+
+        @Override
+        public String getShoppingDetails() {
+            return "Deft Gloves and 3 Lockpicks.";
+        }
     }
 }

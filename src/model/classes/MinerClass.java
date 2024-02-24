@@ -1,12 +1,20 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.horses.HorseItemAdapter;
+import model.horses.Pony;
+import model.horses.Prancer;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.clothing.RustyRingMail;
 import model.items.weapons.Hatchet;
+import model.items.weapons.RustyPickaxe;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+
+import java.util.List;
 
 public class MinerClass extends CharacterClass {
     protected MinerClass() {
@@ -74,5 +82,11 @@ public class MinerClass extends CharacterClass {
     public String getDescription() {
         return "Miners are laborers who dig and hack in the earth after precious crystals and ore. " +
                 "They are proficient with heavy weapons like axes and hammers and have great fortitude.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new RustyPickaxe(), new RustyRingMail(),
+                new HorseItemAdapter(new Prancer()), new HorseItemAdapter(new Pony()));
     }
 }

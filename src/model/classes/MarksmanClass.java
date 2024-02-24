@@ -2,11 +2,18 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.clothing.LeatherTunic;
+import model.items.weapons.CommonCrossbow;
+import model.items.weapons.LightCrossbow;
+import model.items.weapons.LongBow;
 import model.items.weapons.TrainingBow;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.FaceAndClothesSpriteWithBack;
+
+import java.util.List;
 
 public class MarksmanClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.BROWN;
@@ -77,5 +84,10 @@ public class MarksmanClass extends CharacterClass {
     public String getDescription() {
         return "Marksmen are good archers and scouts. They have good survival skills, and are generally perceptive and stealthy." +
                 "Their basic combat training lets them have a basic proficiency of weapon types apart from the bow.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new LongBow(), new LightCrossbow(), new LeatherTunic());
     }
 }

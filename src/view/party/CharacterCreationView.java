@@ -474,7 +474,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         }, model);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP + 11, yStart + 41, "DONE") {
+                new SelectableListContent(xStart + COLUMN_SKIP + 12, yStart + 41, "OK") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setTimeToTransition(true);

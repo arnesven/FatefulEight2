@@ -21,6 +21,11 @@ public class LockpicksDummyItem extends InventoryDummyItem {
     }
 
     @Override
+    public void addYourself(Inventory inventory) {
+        inventory.addToLockpicks(amount);
+    }
+
+    @Override
     public String getShoppingDetails() {
         return Lockpick.DETAIL_STRING + ", Chance of breaking: " + Lockpick.BREAK_CHANCE_FAILURE +
                 "% on failure, " + Lockpick.BREAK_CHANCE_SUCCESS + "% during succeess.";

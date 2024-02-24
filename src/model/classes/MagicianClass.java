@@ -2,11 +2,17 @@ package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.spells.CreatureComfortsSpell;
+import model.items.spells.TransmuteSpell;
+import model.items.weapons.ClaspedOrb;
 import model.items.weapons.OldWand;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+
+import java.util.List;
 
 public class MagicianClass extends CharacterClass {
     protected MagicianClass() {
@@ -78,5 +84,10 @@ public class MagicianClass extends CharacterClass {
                 "the need arise, the can cast spells to protect themselves. They are often charismatic and do " +
                 "well in social contexts. It is not unheard of that magician also take jobs of the less " +
                 "reputable variety.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new ClaspedOrb(), new TransmuteSpell(), new CreatureComfortsSpell());
     }
 }

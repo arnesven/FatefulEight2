@@ -1,12 +1,20 @@
 package model.classes;
 
 import model.characters.appearance.CharacterAppearance;
+import model.horses.HorseItemAdapter;
+import model.horses.Pony;
+import model.horses.Prancer;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.clothing.FurArmor;
+import model.items.weapons.Javelins;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite8x8;
+
+import java.util.List;
 
 public class AmazonClass extends CharacterClass {
     protected AmazonClass() {
@@ -31,6 +39,11 @@ public class AmazonClass extends CharacterClass {
                 "more primitive forms of weapons. Amazons are light on their feet, " +
                 "brilliant trail blazers, excellent survivalists " +
                 "and possess a small affinity for green magic.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Javelins(), new FurArmor(), new HorseItemAdapter(new Prancer()), new HorseItemAdapter(new Pony()));
     }
 
     @Override
