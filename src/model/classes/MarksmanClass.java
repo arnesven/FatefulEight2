@@ -19,7 +19,7 @@ public class MarksmanClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.BROWN;
 
     protected MarksmanClass() {
-        super("Marksman", "MAR", 8, 6, false, 23,
+        super("Marksman", "MAR", 8, 6, false, 14,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Bows, 5),
                         new WeightedSkill(Skill.Endurance, 2),

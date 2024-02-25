@@ -19,7 +19,7 @@ public class PaladinClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.WHITE;
 
     protected PaladinClass() {
-        super("Paladin", "PAL", 10, 4, true, 16,
+        super("Paladin", "PAL", 10, 4, true, 22,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 4),
                         new WeightedSkill(Skill.BluntWeapons, 4),

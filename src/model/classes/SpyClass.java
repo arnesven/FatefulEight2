@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SpyClass extends CharacterClass {
     protected SpyClass() {
-        super("Spy", "SPY", 6, 5, false, 0,
+        super("Spy", "SPY", 6, 5, false, 16,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 2),
                         new WeightedSkill(Skill.Blades, 2),

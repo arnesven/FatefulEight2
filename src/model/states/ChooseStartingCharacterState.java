@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import model.horses.HorseItemAdapter;
+import model.items.HorseStartingItem;
 import model.items.InventoryDummyItem;
 import model.items.Item;
 import model.items.accessories.Accessory;
@@ -129,8 +130,8 @@ public class ChooseStartingCharacterState extends GameState {
             gc.getEquipment().setClothing((Clothing) startingItem);
         } else if (startingItem instanceof Accessory) {
             gc.getEquipment().setAccessory((Accessory) startingItem);
-        } else if (startingItem instanceof HorseItemAdapter) {
-            model.getParty().getHorseHandler().addHorse(((HorseItemAdapter) startingItem).getHorse());
+        } else if (startingItem instanceof HorseStartingItem) {
+            model.getParty().getHorseHandler().addHorse(((HorseStartingItem) startingItem).getHorse());
         } else {
             startingItem.addYourself(model.getParty().getInventory());
         }

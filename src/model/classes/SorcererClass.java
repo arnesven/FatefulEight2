@@ -18,7 +18,7 @@ import java.util.List;
 
 public class SorcererClass extends CharacterClass {
     protected SorcererClass() {
-        super("Sorcerer", "SOR", 8, 4, false, 32,
+        super("Sorcerer", "SOR", 8, 4, false, 28,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 2),
                         new WeightedSkill(Skill.BluntWeapons, 4),

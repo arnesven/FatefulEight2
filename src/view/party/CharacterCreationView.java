@@ -232,13 +232,10 @@ public class CharacterCreationView extends SelectableListMenu {
         Weapon w = lastCharacter.getCharClass().getStartingEquipment().getWeapon();
         if (w != null) {
             BorderFrame.drawString(model.getScreenHandler(),
-                    "Starting gear: ",
+                    "Default gear: ",
                     midX, ++row, MyColors.WHITE, MyColors.BLUE);
             BorderFrame.drawString(model.getScreenHandler(),
                     "  " + w.getName(),
-                    midX, ++row, MyColors.WHITE, MyColors.BLUE);
-            BorderFrame.drawString(model.getScreenHandler(),
-                    "  " + lastCharacter.getCharClass().getStartingGold() + " Extra Gold",
                     midX, ++row, MyColors.WHITE, MyColors.BLUE);
             row++;
         }

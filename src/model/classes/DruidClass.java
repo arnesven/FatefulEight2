@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DruidClass extends CharacterClass {
     protected DruidClass() {
-        super("Druid", "D", 6, 4, false, 20,
+        super("Druid", "D", 6, 4, false, 12,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 2),
                         new WeightedSkill(Skill.BluntWeapons, 4),

@@ -1,5 +1,6 @@
 package model.classes;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.horses.HorseItemAdapter;
 import model.horses.Pony;
@@ -13,11 +14,12 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ForesterClass extends CharacterClass {
     protected ForesterClass() {
-        super("Forester", "F", 10, 4, false, 0,
+        super("Forester", "F", 10, 4, false, 12,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 2),
                         new WeightedSkill(Skill.Axes, 5),
@@ -85,6 +87,8 @@ public class ForesterClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new BattleAxe(), new LongBow(), new HorseItemAdapter(new Prancer()), new HorseItemAdapter(new Pony()));
+        List<Item> list = new ArrayList<>(List.of(new BattleAxe(), new LongBow()));
+        list.addAll(CharacterClass.horseOrPony());
+        return list;
     }
 }

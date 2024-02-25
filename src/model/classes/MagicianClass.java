@@ -16,7 +16,7 @@ import java.util.List;
 
 public class MagicianClass extends CharacterClass {
     protected MagicianClass() {
-        super("Magician", "MAG", 7, 5, false, 5,
+        super("Magician", "MAG", 7, 5, false, 24,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 1),
                         new WeightedSkill(Skill.Entertain, 5),

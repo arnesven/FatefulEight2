@@ -14,11 +14,12 @@ import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.Sprite8x8;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AmazonClass extends CharacterClass {
     protected AmazonClass() {
-        super("Amazon", "AMZ", 7, 7, false, 22,
+        super("Amazon", "AMZ", 7, 7, false, 8,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 4),
                         new WeightedSkill(Skill.Bows, 4),
@@ -43,7 +44,9 @@ public class AmazonClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new Javelins(), new FurArmor(), new HorseItemAdapter(new Prancer()), new HorseItemAdapter(new Pony()));
+        List<Item> starting = new ArrayList<>(List.of(new Javelins(), new FurArmor()));
+        starting.addAll(CharacterClass.horseOrPony());
+        return starting;
     }
 
     @Override

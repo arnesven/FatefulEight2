@@ -19,7 +19,7 @@ public class ArtisanClass extends CharacterClass {
     private static final MyColors SHIRT_COLOR = MyColors.LIGHT_BLUE;
 
     protected ArtisanClass() {
-        super("Artisan", "ART", 7, 4, false, 0,
+        super("Artisan", "ART", 7, 4, false, 25,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Axes, 3),
                         new WeightedSkill(Skill.Blades, 3),

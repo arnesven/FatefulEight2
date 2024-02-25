@@ -15,7 +15,7 @@ import java.util.List;
 
 public class WitchClass extends CharacterClass {
     protected WitchClass() {
-        super("Witch", "WIT", 6, 5, false, 28,
+        super("Witch", "WIT", 6, 5, false, 18,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 2),
                         new WeightedSkill(Skill.Logic, 4),

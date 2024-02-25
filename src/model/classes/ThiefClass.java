@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ThiefClass extends CharacterClass {
     protected ThiefClass() {
-        super("Thief", "T", 6, 6, false, 0,
+        super("Thief", "T", 6, 6, false, 12,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 4),
                         new WeightedSkill(Skill.Blades, 3),

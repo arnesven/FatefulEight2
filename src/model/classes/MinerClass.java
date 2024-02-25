@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MinerClass extends CharacterClass {
     protected MinerClass() {
-        super("Miner", "MIN", 12, 3, true, 14,
+        super("Miner", "MIN", 12, 3, true, 10,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Axes, 5),
                         new WeightedSkill(Skill.BluntWeapons, 3),
@@ -86,7 +86,8 @@ public class MinerClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new RustyPickaxe(), new RustyRingMail(),
-                new HorseItemAdapter(new Prancer()), new HorseItemAdapter(new Pony()));
+        List<Item> list = List.of(new RustyPickaxe(), new RustyRingMail());
+        list.addAll(CharacterClass.horseOrPony());
+        return list;
     }
 }

@@ -12,9 +12,7 @@ import util.MyPair;
 import util.MyRandom;
 import view.subviews.RecruitSubView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class RecruitState extends GameState {
@@ -22,6 +20,7 @@ public class RecruitState extends GameState {
     private SteppingMatrix<GameCharacter> recruitMatrix;
     private List<GameCharacter> recruitables = new ArrayList<>();
     private MyPair<Integer, String> recruitResult;
+    private Map<GameCharacter, Integer> startingGoldMap;
     private boolean startingGold = true;
 
     public RecruitState(Model model) {
@@ -36,9 +35,19 @@ public class RecruitState extends GameState {
         }
         setRandomClasses(recruitables);
         setLevels(recruitables);
+        setGold(recruitables);
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         model.getParty().setRecruitmentPersistence(recruitables);
+    }
+
+    private void setGold(List<GameCharacter> recruitables) {
+        startingGoldMap = new HashMap<>();
+        for (GameCharacter gc : recruitables) {
+            int amount = Math.max(0, MyRandom.randInt(gc.getCharClass().getStartingGold()-10,
+                                                      gc.getCharClass().getStartingGold()-10));
+            startingGoldMap.put(gc, amount);
+        }
     }
 
     public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
@@ -111,7 +120,7 @@ public class RecruitState extends GameState {
             println("You recruited " + gc.getFullName() + "!");
             model.getParty().recruit(gc, model.getDay());
             model.getAllCharacters().remove(gc);
-            int amount = gc.getCharClass().getStartingGold();
+            int amount = startingGoldMap.get(gc);
             if (startingGold && amount != 0) {
                 model.getParty().addToGold(amount);
                 println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");

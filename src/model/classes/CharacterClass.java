@@ -2,7 +2,11 @@ package model.classes;
 
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.horses.HorseHandler;
+import model.horses.Pony;
+import model.horses.Prancer;
 import model.items.Equipment;
+import model.items.HorseStartingItem;
 import model.items.Item;
 import model.items.clothing.LeatherArmor;
 import model.items.spells.EntropicBoltSpell;
@@ -182,4 +186,8 @@ public abstract class CharacterClass implements Serializable {
     public abstract String getDescription();
 
     public abstract List<Item> getStartingItems();
+
+    protected static List<Item> horseOrPony() {
+        return List.of(new HorseStartingItem(new Prancer()), new HorseStartingItem(new Pony()));
+    }
 }

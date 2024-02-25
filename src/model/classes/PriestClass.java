@@ -17,7 +17,7 @@ import java.util.List;
 
 public class PriestClass extends CharacterClass {
     protected PriestClass() {
-        super("Priest", "PRI", 5, 3, false, 16,
+        super("Priest", "PRI", 5, 3, false, 15,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.BluntWeapons, 3),
                         new WeightedSkill(Skill.Entertain, 4),
