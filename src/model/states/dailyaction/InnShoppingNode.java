@@ -24,11 +24,6 @@ public class InnShoppingNode extends ShoppingNode {
     protected List<Item> makeInventory(Model model) {
         List<Item> inventory = new ArrayList<>(ShopState.makeGeneralShopInventory(model,
                 MyRandom.randInt(5, 9), MyRandom.randInt(4, 6), MyRandom.randInt(2)));
-        if (MyRandom.flipCoin()) {
-            inventory.add(new Lockpick());
-        }
-        inventory.add(model.getItemDeck().getRandomSpell());
-        inventory.add(model.getItemDeck().getRandomSpell());
         return inventory;
     }
 
@@ -43,8 +38,6 @@ public class InnShoppingNode extends ShoppingNode {
         for (int i = 0; i < inventory.size(); ++i) {
             prices[i] = inventory.get(i).getCost();
         }
-        prices[inventory.size()-1] = prices[inventory.size()-1] / 2;
-        prices[inventory.size()-2] = prices[inventory.size()-2] / 2;
         return prices;
     }
 

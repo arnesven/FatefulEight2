@@ -21,7 +21,9 @@ import view.PartyAttitudesDialog;
 import view.subviews.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 public abstract class GameState {
@@ -250,7 +252,12 @@ public abstract class GameState {
     }
 
     private static CharacterClass[] makeRandomClassSet(CharacterClass cls) {
-        return new CharacterClass[]{cls, randomClass(), randomClass(), randomClass()};
+        Set<CharacterClass> hashSet = new HashSet<>(List.of(cls));
+        while (hashSet.size() < 4) {
+            hashSet.add(randomClass());
+        }
+        List<CharacterClass> list = new ArrayList<>(hashSet);
+        return new CharacterClass[]{list.get(0), list.get(1), list.get(2), list.get(3)};
     }
 
     public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {

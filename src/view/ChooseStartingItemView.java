@@ -24,7 +24,7 @@ import java.util.Map;
 public class ChooseStartingItemView extends SelectableListMenu {
     private static final int ITEMS_Y_OFFSET = 6;
     private static final int VIEW_HEIGHT = 30;
-    private static final int ITEMS_PER_ROW = 6;
+    private static final int ITEMS_PER_ROW = 5;
     private static final int NO_OF_ITEMS_TO_PICK = 2;
     private final List<Item> items;
     private int selectedIndex = 0;
@@ -33,7 +33,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
 
 
     public ChooseStartingItemView(Model model, GameCharacter gc) {
-        super(model.getView(), 39, calculateHeight(gc));
+        super(model.getView(), 11 + ITEMS_PER_ROW * 5, calculateHeight(gc));
         this.items = getStartingItems(gc);
     }
 
@@ -82,7 +82,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
                         row += 5;
                     }
 
-                    Point position = new Point(xStart + itemX*6 + 3, row);
+                    Point position = new Point(xStart + itemX*6 + 5, row);
 
                     items.get(i).drawYourself(model.getScreenHandler(), position.x, position.y);
                     if (selectedItems.contains(items.get(i))) {
@@ -93,7 +93,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
                 int cursorX = selectedIndex % ITEMS_PER_ROW;
                 int cursorY = selectedIndex / ITEMS_PER_ROW;
                 model.getScreenHandler().register(cursor.getName(),
-                        new Point(xStart + cursorX*6 + 3, y + ITEMS_Y_OFFSET - 3 + cursorY * 5), cursor);
+                        new Point(xStart + cursorX*6 + 5, y + ITEMS_Y_OFFSET - 3 + cursorY * 5), cursor);
 
                 Item it = items.get(selectedIndex);
                 String text = it.getName() + ", " + it.getShoppingDetails() +
