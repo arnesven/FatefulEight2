@@ -22,7 +22,7 @@ public class SetClothingMenu extends SetEquipmentMenu {
 
     @Override
     protected boolean doAction(Model model, Item item, GameCharacter person) {
-        String errorString = Equipment.canEquip(model, item, person);
+        String errorString = Equipment.canEquip(item, person);
         if (!errorString.equals("")) {
             setInnerMenu(new SimpleMessageView(this, errorString), model);
             return false;

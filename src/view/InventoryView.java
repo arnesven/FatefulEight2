@@ -279,7 +279,7 @@ public class InventoryView extends SelectableListMenu {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         if (itemToEquip instanceof EquipableItem) {
-                            String errorMessage = Equipment.canEquip(model, itemToEquip, gc);
+                            String errorMessage = Equipment.canEquip(itemToEquip, gc);
                             if (errorMessage.equals("")) {
                                 ((EquipableItem) itemToEquip).equipYourself(gc);
                                 setTimeToTransition(true);

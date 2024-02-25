@@ -8,6 +8,7 @@ import model.items.Item;
 import model.items.weapons.Dagger;
 import util.Arithmetics;
 import util.MyStrings;
+import view.party.CharacterCreationView;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.CombatCursorSprite;
@@ -24,12 +25,15 @@ public class ChooseStartingItemView extends SelectableListMenu {
     private static final int ITEMS_Y_OFFSET = 6;
     private static final int VIEW_HEIGHT = 30;
     private static final int ITEMS_PER_ROW = 6;
+    private static final int NO_OF_ITEMS_TO_PICK = 2;
     private final List<Item> items;
     private int selectedIndex = 0;
     private boolean canceled = false;
+    private final List<Item> selectedItems = new ArrayList<>();
+
 
     public ChooseStartingItemView(Model model, GameCharacter gc) {
-        super(model.getView(), calculateWidth(gc), calculateHeight(gc));
+        super(model.getView(), 39, calculateHeight(gc));
         this.items = getStartingItems(gc);
     }
 
@@ -50,12 +54,8 @@ public class ChooseStartingItemView extends SelectableListMenu {
         return new ArrayList<>(itemMap.values());
     }
 
-    private static int calculateWidth(GameCharacter gc) {
-        return 9 + 6 * 5; //gc.getCharClass().getStartingItems().size();
-    }
-
-    public Item getSelectedItem() {
-        return items.get(selectedIndex);
+    public List<Item> getSelectedItems() {
+        return new ArrayList<>(selectedItems);
     }
 
     @Override
@@ -69,10 +69,10 @@ public class ChooseStartingItemView extends SelectableListMenu {
                 BorderFrame.drawCentered(model.getScreenHandler(), "STARTING GEAR", y + 1,
                         MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawCentered(model.getScreenHandler(),
-                        "Select one of the following", y + 3,
+                        "Use Space to select " + MyStrings.numberWord(NO_OF_ITEMS_TO_PICK) + " of the", y + 3,
                         MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawCentered(model.getScreenHandler(),
-                        "as your starting item.", y + 4,
+                        "following as your starting items.", y + 4,
                         MyColors.WHITE, MyColors.BLUE);
 
                 int row = y + ITEMS_Y_OFFSET - 5;
@@ -81,7 +81,13 @@ public class ChooseStartingItemView extends SelectableListMenu {
                     if (i % ITEMS_PER_ROW == 0) {
                         row += 5;
                     }
-                    items.get(i).drawYourself(model.getScreenHandler(), xStart + itemX*6 + 3, row);
+
+                    Point position = new Point(xStart + itemX*6 + 3, row);
+
+                    items.get(i).drawYourself(model.getScreenHandler(), position.x, position.y);
+                    if (selectedItems.contains(items.get(i))) {
+                        model.getScreenHandler().put(position.x+3, position.y+3, CharacterCreationView.CHECK_SPRITE);
+                    }
                 }
                 Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
                 int cursorX = selectedIndex % ITEMS_PER_ROW;
@@ -106,7 +112,18 @@ public class ChooseStartingItemView extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-        return List.of(makeOkButton(model, xStart + getWidth()/2 - 1, yStart + getHeight()-3, this),
+        return List.of(
+                new SelectableListContent(xStart + getWidth()/2 - 1, yStart + getHeight()-3, "OK") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        ChooseStartingItemView.this.setTimeToTransition(true);
+                    }
+
+                    @Override
+                    public boolean isEnabled(Model model) {
+                        return selectedItems.size() == NO_OF_ITEMS_TO_PICK;
+                    }
+                },
                 new SelectableListContent(xStart + getWidth()/2 - 3, yStart + getHeight()-2, "CANCEL") {
                     @Override
                     public void performAction(Model model, int x, int y) {
@@ -123,6 +140,14 @@ public class ChooseStartingItemView extends SelectableListMenu {
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
             selectedIndex = Arithmetics.decrementWithWrap(selectedIndex, items.size());
+            madeChanges();
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            Item currentItem = items.get(selectedIndex);
+            if (selectedItems.contains(currentItem)) {
+                selectedItems.remove(currentItem);
+            } else {
+                selectedItems.add(currentItem);
+            }
             madeChanges();
         }
     }

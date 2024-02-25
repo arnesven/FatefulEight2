@@ -4,6 +4,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.items.FoodDummyItem;
+import model.items.Inventory;
 import model.items.Item;
 import model.items.clothing.FurArmor;
 import model.items.weapons.GrandMaul;
@@ -93,6 +94,29 @@ public class BarbarianClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new GrandMaul(), new FurArmor(), new FoodDummyItem(50));
+        return List.of(new GrandMaul(), new FurArmor(), new SupplyPackage());
+    }
+
+    private static class SupplyPackage extends FoodDummyItem {
+        public SupplyPackage() {
+            super(50);
+        }
+
+        @Override
+        public String getName() {
+            return "Supplies";
+        }
+
+        @Override
+        public void addYourself(Inventory inventory) {
+            super.addYourself(inventory);
+            inventory.addToIngredients(10);
+            inventory.addToMaterials(10);
+        }
+
+        @Override
+        public String getShoppingDetails() {
+            return ", A package with 50 rations, 10 ingredients and 10 materials.";
+        }
     }
 }

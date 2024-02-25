@@ -41,7 +41,7 @@ public class Equipment implements Serializable {
         this.accessory = accessory;
     }
 
-    public static String canEquip(Model model, Item item, GameCharacter person) {
+    public static String canEquip(Item item, GameCharacter person) {
         if (item instanceof Clothing && !person.canChangeClothing()) {
             return person.getFirstName() + " cannot unequip clothing.";
         }
@@ -56,10 +56,10 @@ public class Equipment implements Serializable {
         if (item instanceof Weapon && ((Weapon) item).isTwoHanded()
                 && person.getEquipment().getAccessory() != null
                 && person.getEquipment().getAccessory().isOffHandItem()) {
-            return "Cannot equip a two-handed weapon while a shield is equipped.";
+            return "Cannot equip a two-handed weapon while an off-hand item is equipped.";
         }
         if (item instanceof ShieldItem && person.getEquipment().getWeapon().isTwoHanded()) {
-            return "Cannot equip a shield while a two-handed weapon is equipped.";
+            return "Cannot equip an off-hand item while a two-handed weapon is equipped.";
         }
         return "";
     }

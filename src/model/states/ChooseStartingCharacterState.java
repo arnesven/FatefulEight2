@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import model.horses.HorseItemAdapter;
+import model.items.Equipment;
 import model.items.HorseStartingItem;
 import model.items.InventoryDummyItem;
 import model.items.Item;
@@ -116,26 +117,36 @@ public class ChooseStartingCharacterState extends GameState {
         model.transitionToDialog(startingItemView);
         model.getLog().waitForAnimationToFinish();
         if (!startingItemView.didCancel()) {
-            addSelectedItem(model, gc, startingItemView.getSelectedItem().copy());
+            for (Item it : startingItemView.getSelectedItems()) {
+                addSelectedItem(model, gc, it.copy());
+            }
             return gc;
         }
         return null;
     }
 
     private void addSelectedItem(Model model, GameCharacter gc, Item startingItem) {
-        if (startingItem == null) {
-            System.out.println("Starting item is null!");
+        assert startingItem != null;
+        boolean canEquip = Equipment.canEquip(startingItem, gc).equals("");
+        if (canEquip) {
+            if (startingItem instanceof Weapon) {
+                gc.getEquipment().setWeapon((Weapon) startingItem);
+                return;
+            }
+            if (startingItem instanceof Clothing) {
+                gc.getEquipment().setClothing((Clothing) startingItem);
+                return;
+            }
+            if (startingItem instanceof Accessory) {
+                gc.getEquipment().setAccessory((Accessory) startingItem);
+                return;
+            }
         }
-        if (startingItem instanceof Weapon) {
-            gc.getEquipment().setWeapon((Weapon) startingItem);
-        } else if (startingItem instanceof Clothing) {
-            gc.getEquipment().setClothing((Clothing) startingItem);
-        } else if (startingItem instanceof Accessory) {
-            gc.getEquipment().setAccessory((Accessory) startingItem);
-        } else if (startingItem instanceof HorseStartingItem) {
+
+        if (startingItem instanceof HorseStartingItem) {
             model.getParty().getHorseHandler().addHorse(((HorseStartingItem) startingItem).getHorse());
-        } else {
-            startingItem.addYourself(model.getParty().getInventory());
+            return;
         }
+        startingItem.addYourself(model.getParty().getInventory());
     }
 }
