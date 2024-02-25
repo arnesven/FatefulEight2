@@ -23,6 +23,11 @@ public class GoldDummyItem extends InventoryDummyItem {
     }
 
     @Override
+    public Item copy() {
+        return new GoldDummyItem(getCost());
+    }
+
+    @Override
     public int getWeight() {
         return 0;
     }

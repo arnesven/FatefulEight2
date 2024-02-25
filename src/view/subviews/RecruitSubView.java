@@ -11,16 +11,19 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 public class RecruitSubView extends TopMenuSubView {
     private final SteppingMatrix<GameCharacter> matrix;
     private final RecruitState state;
+    private final Map<GameCharacter, Integer> startingGoldMap;
     private Point cursorPosition;
 
-    public RecruitSubView(RecruitState state, SteppingMatrix<GameCharacter> recruitMatrix) {
+    public RecruitSubView(RecruitState state, SteppingMatrix<GameCharacter> recruitMatrix, Map<GameCharacter, Integer> startingGoldMap) {
         super(2, new int[]{X_OFFSET + 2, X_OFFSET+13, X_OFFSET+24});
         this.state = state;
         this.matrix = recruitMatrix;
+        this.startingGoldMap = startingGoldMap;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class RecruitSubView extends TopMenuSubView {
                 startingGold = 0;
             }
             String text = String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),
-                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGold);
+                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGoldMap.get(gc));
             return text;
         }
         return "";

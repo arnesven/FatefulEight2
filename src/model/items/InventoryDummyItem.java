@@ -6,11 +6,6 @@ public abstract class InventoryDummyItem extends Item {
     }
 
     @Override
-    public Item copy() {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
     public String getSound() {
         throw new IllegalStateException("Should not be called!");
     }

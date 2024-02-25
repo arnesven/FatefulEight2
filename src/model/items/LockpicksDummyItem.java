@@ -30,4 +30,9 @@ public class LockpicksDummyItem extends InventoryDummyItem {
         return Lockpick.DETAIL_STRING + ", Chance of breaking: " + Lockpick.BREAK_CHANCE_FAILURE +
                 "% on failure, " + Lockpick.BREAK_CHANCE_SUCCESS + "% during succeess.";
     }
+
+    @Override
+    public Item copy() {
+        return new LockpicksDummyItem(amount);
+    }
 }

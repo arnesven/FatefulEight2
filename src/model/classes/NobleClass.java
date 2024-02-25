@@ -96,6 +96,6 @@ public class NobleClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new Rapier(), new Crown(), new GoldDummyItem(25));
+        return List.of(new Rapier(), new Crown(), new GoldDummyItem(20));
     }
 }

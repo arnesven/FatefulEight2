@@ -8,12 +8,14 @@ import model.items.Equipment;
 import model.items.Item;
 import model.items.clothing.RustyRingMail;
 import model.items.weapons.Hatchet;
+import model.items.weapons.Pickaxe;
 import model.items.weapons.RustyPickaxe;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MinerClass extends CharacterClass {
@@ -86,7 +88,7 @@ public class MinerClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        List<Item> list = List.of(new RustyPickaxe(), new RustyRingMail());
+        List<Item> list = new ArrayList<Item>(List.of(new Pickaxe(), new RustyRingMail()));
         list.addAll(CharacterClass.horseOrPony());
         return list;
     }

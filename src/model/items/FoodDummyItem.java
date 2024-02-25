@@ -26,6 +26,11 @@ public class FoodDummyItem extends InventoryDummyItem {
     }
 
     @Override
+    public Item copy() {
+        return new FoodDummyItem(amount);
+    }
+
+    @Override
     public int getWeight() {
         return amount * Inventory.WEIGHT_OF_FOOD;
     }

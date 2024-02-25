@@ -25,6 +25,11 @@ public class ObolsDummyItem extends InventoryDummyItem {
     }
 
     @Override
+    public Item copy() {
+        return new ObolsDummyItem(amount);
+    }
+
+    @Override
     public int getWeight() {
         return 0;
     }

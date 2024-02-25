@@ -39,6 +39,11 @@ public class HorseStartingItem extends InventoryDummyItem{
         return ", " + horse.getInfo();
     }
 
+    @Override
+    public Item copy() {
+        return new HorseStartingItem(horse.copy());
+    }
+
     public Horse getHorse() {
         return horse;
     }

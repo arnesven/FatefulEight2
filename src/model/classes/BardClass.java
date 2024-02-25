@@ -79,6 +79,6 @@ public class BardClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new Scepter(), new JestersHat(), new ObolsDummyItem(100));
+        return List.of(new Scepter(), new JestersHat(), new ObolsDummyItem(150));
     }
 }

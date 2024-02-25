@@ -124,7 +124,12 @@ public class DruidClass extends CharacterClass {
 
         @Override
         public String getShoppingDetails() {
-            return "Alchemy Spell and 20 Ingredients.";
+            return ", Alchemy Spell and 20 Ingredients.";
+        }
+
+        @Override
+        public Item copy() {
+            return new AlchmyPackage();
         }
     }
 }

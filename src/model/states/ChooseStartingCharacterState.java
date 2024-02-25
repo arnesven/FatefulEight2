@@ -61,8 +61,7 @@ public class ChooseStartingCharacterState extends GameState {
         }
         println("");
 
-        print(".You have selected your starting character: ");
-        addSelectedItem(model, gc, selectedStartingItem);
+        print("You have selected your starting character: ");
         model.getParty().add(gc);
         println(gc.getFullName() + " the " + gc.getRace().getName() + " " + gc.getCharClass().getFullName() + ".");
         return model.getCurrentHex().getDailyActionState(model);
@@ -117,13 +116,16 @@ public class ChooseStartingCharacterState extends GameState {
         model.transitionToDialog(startingItemView);
         model.getLog().waitForAnimationToFinish();
         if (!startingItemView.didCancel()) {
-            addSelectedItem(model, gc, startingItemView.getSelectedItem());
+            addSelectedItem(model, gc, startingItemView.getSelectedItem().copy());
             return gc;
         }
         return null;
     }
 
     private void addSelectedItem(Model model, GameCharacter gc, Item startingItem) {
+        if (startingItem == null) {
+            System.out.println("Starting item is null!");
+        }
         if (startingItem instanceof Weapon) {
             gc.getEquipment().setWeapon((Weapon) startingItem);
         } else if (startingItem instanceof Clothing) {

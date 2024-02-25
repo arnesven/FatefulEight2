@@ -34,4 +34,9 @@ public class MaterialsDummyItem extends InventoryDummyItem {
     public String getShoppingDetails() {
         return ", Raw materials with which you can craft various items.";
     }
+
+    @Override
+    public Item copy() {
+        return new MaterialsDummyItem(amount);
+    }
 }

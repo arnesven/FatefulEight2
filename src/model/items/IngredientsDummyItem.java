@@ -27,6 +27,11 @@ public class IngredientsDummyItem extends InventoryDummyItem {
     }
 
     @Override
+    public Item copy() {
+        return new IngredientsDummyItem(amount);
+    }
+
+    @Override
     public int getWeight() {
         return amount * Inventory.WEIGHT_OF_INGREDIENTS;
     }

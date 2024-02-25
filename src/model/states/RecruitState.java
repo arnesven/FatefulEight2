@@ -74,7 +74,7 @@ public class RecruitState extends GameState {
         model.getTutorial().recruit(model);
 
         if (recruitables.size() > 0) {
-            RecruitSubView subView = new RecruitSubView(this, recruitMatrix);
+            RecruitSubView subView = new RecruitSubView(this, recruitMatrix, startingGoldMap);
             model.setSubView(subView);
 
             do {

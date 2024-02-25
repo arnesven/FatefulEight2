@@ -2,6 +2,8 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.items.Item;
 import model.items.weapons.Dagger;
 import util.Arithmetics;
@@ -14,22 +16,42 @@ import view.sprites.Sprite;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChooseStartingItemView extends SelectableListMenu {
     private static final int ITEMS_Y_OFFSET = 6;
-    private static final int VIEW_HEIGHT = 24;
+    private static final int VIEW_HEIGHT = 30;
+    private static final int ITEMS_PER_ROW = 6;
     private final List<Item> items;
     private int selectedIndex = 0;
     private boolean canceled = false;
 
     public ChooseStartingItemView(Model model, GameCharacter gc) {
-        super(model.getView(), calculateWidth(gc), VIEW_HEIGHT);
-        this.items = new ArrayList<>(gc.getCharClass().getStartingItems());
+        super(model.getView(), calculateWidth(gc), calculateHeight(gc));
+        this.items = getStartingItems(gc);
+    }
+
+    private static int calculateHeight(GameCharacter gc) {
+        return ((getStartingItems(gc).size() - 1) / ITEMS_PER_ROW) * 5 + 26;
+    }
+
+    private static List<Item> getStartingItems(GameCharacter gc) {
+        Map<String, Item> itemMap = new HashMap<>();
+        for (int i = 0; i < gc.getClasses().length; ++i) {
+            CharacterClass cls = gc.getClasses()[i];
+            if (cls != Classes.None) {
+                for (Item it : cls.getStartingItems()) {
+                    itemMap.put(it.getName(), it);
+                }
+            }
+        }
+        return new ArrayList<>(itemMap.values());
     }
 
     private static int calculateWidth(GameCharacter gc) {
-        return 10 + 7 * gc.getCharClass().getStartingItems().size();
+        return 9 + 6 * 5; //gc.getCharClass().getStartingItems().size();
     }
 
     public Item getSelectedItem() {
@@ -53,18 +75,25 @@ public class ChooseStartingItemView extends SelectableListMenu {
                         "as your starting item.", y + 4,
                         MyColors.WHITE, MyColors.BLUE);
 
+                int row = y + ITEMS_Y_OFFSET - 5;
                 for (int i = 0; i < items.size(); ++i) {
-                    items.get(i).drawYourself(model.getScreenHandler(), xStart + i*7 + 6, y + ITEMS_Y_OFFSET);
+                    int itemX = i % ITEMS_PER_ROW;
+                    if (i % ITEMS_PER_ROW == 0) {
+                        row += 5;
+                    }
+                    items.get(i).drawYourself(model.getScreenHandler(), xStart + itemX*6 + 3, row);
                 }
                 Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+                int cursorX = selectedIndex % ITEMS_PER_ROW;
+                int cursorY = selectedIndex / ITEMS_PER_ROW;
                 model.getScreenHandler().register(cursor.getName(),
-                        new Point(xStart + selectedIndex*7 + 6, y + ITEMS_Y_OFFSET - 3), cursor);
+                        new Point(xStart + cursorX*6 + 3, y + ITEMS_Y_OFFSET - 3 + cursorY * 5), cursor);
 
                 Item it = items.get(selectedIndex);
                 String text = it.getName() + ", " + it.getShoppingDetails() +
                         ", Value: " + it.getCost();
                 String[] parts = text.split(", ");
-                int row = y + it.getSpriteSize() + ITEMS_Y_OFFSET + 1;
+                row += 6;
                 for (String s : parts) {
                     String[] innerParts = MyStrings.partition(s, 30);
                     for (String s2 : innerParts) {

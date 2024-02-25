@@ -139,7 +139,7 @@ public class CharacterCreationView extends SelectableListMenu {
             lastName = lastName.substring(0, lastName.indexOf("þ"));
         }
         return new GameCharacter(firstName, lastName, raceSet[selectedRace], classSet[selectedClass], makeAppearance(),
-                new CharacterClass[]{classSet[other1], classSet[other2], classSet[other3]});
+                new CharacterClass[]{classSet[selectedClass], classSet[other1], classSet[other2], classSet[other3]});
     }
 
 
