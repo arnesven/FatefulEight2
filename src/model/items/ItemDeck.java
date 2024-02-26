@@ -131,7 +131,9 @@ public class ItemDeck extends ArrayList<Item> {
                 new CraftingDesign(new Katana()),
                 new CraftingDesign(new Crown()),
                 new CraftingDesign(new Diadem()),
-                new CraftingDesign(new LuckyTalisman())
+                new CraftingDesign(new LuckyTalisman()),
+                new CraftingDesign(new GlassArmor()),
+                new CraftingDesign(new TemplarArmor())
                 );
     }
 

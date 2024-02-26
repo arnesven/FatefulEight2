@@ -41,6 +41,16 @@ public class RecruitState extends GameState {
         model.getParty().setRecruitmentPersistence(recruitables);
     }
 
+    public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
+        super(model);
+        recruitables.addAll(preSelectedRecruitables);
+        model.getParty().setRecruitmentPersistence(recruitables);
+        recruitMatrix = new SteppingMatrix<>(2, 3);
+        recruitMatrix.addElements(recruitables);
+        recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
+        setGold(preSelectedRecruitables);
+    }
+
     private void setGold(List<GameCharacter> recruitables) {
         startingGoldMap = new HashMap<>();
         for (GameCharacter gc : recruitables) {
@@ -49,16 +59,6 @@ public class RecruitState extends GameState {
             startingGoldMap.put(gc, amount);
         }
     }
-
-    public RecruitState(Model model, List<GameCharacter> preSelectedRecruitables) {
-        super(model);
-        recruitables.addAll(preSelectedRecruitables);
-        model.getParty().setRecruitmentPersistence(recruitables);
-        recruitMatrix = new SteppingMatrix<>(2, 3);
-        recruitMatrix.addElements(recruitables);
-        recruitResult = new MyPair<>(preSelectedRecruitables.size(), "");
-    }
-
 
     private void setLevels(List<GameCharacter> recruitables) {
         double partyLevel = MyLists.doubleAccumulate(getModel().getParty().getPartyMembers(),

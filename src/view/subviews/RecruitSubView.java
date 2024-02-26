@@ -85,12 +85,12 @@ public class RecruitSubView extends TopMenuSubView {
     protected String getUnderText(Model model) {
         if (matrix.getSelectedElement() != null) {
             GameCharacter gc = matrix.getSelectedElement();
-            int startingGold = gc.getCharClass().getStartingGold();
-            if (!state.isStartingGoldEnabled()) {
-                startingGold = 0;
+            int startingGold = 0;
+            if (startingGoldMap.containsKey(gc) && state.isStartingGoldEnabled()) {
+                startingGold = startingGoldMap.get(gc);
             }
             String text = String.format("%s, %s, %s %d, %s, %d gold", gc.getFullName(), gc.getRace().getName(),
-                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGoldMap.get(gc));
+                    gc.getCharClass().getShortName(), gc.getLevel(), gc.getOtherClasses(), startingGold);
             return text;
         }
         return "";
