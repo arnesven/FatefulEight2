@@ -61,6 +61,13 @@ public class SettingsView extends SelectableListMenu {
                 model.getSettings().toggleCombatLogSpeed();
             }
         });
+        y += 1;
+        result.add(new ListContent(xStart+2, y, "Movement Speed " + SettingsManager.logSpeedAsText(model.getSettings().getMovementSpeed())) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().toggleMovementSpeed();
+            }
+        });
 
         y += 2;
         result.add(new ListContent(xStart+2, y, "Tutorial " + (SettingsManager.tutorialEnabled(model)?"ON":"OFF")) {
@@ -70,7 +77,7 @@ public class SettingsView extends SelectableListMenu {
             }
         });
 
-        y += 2;
+        y += 1;
         result.add(new ListContent(xStart+2, y, "Level Up Summary " + (model.getSettings().levelUpSummaryEnabled()?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {
@@ -78,7 +85,7 @@ public class SettingsView extends SelectableListMenu {
             }
         });
 
-        y += 2;
+        y += 1;
         result.add(new ListContent(xStart+2, y, "Always Ride " + (model.getSettings().alwaysRide()?"ON":"OFF")) {
             @Override
             public void performAction(Model model, int x, int y) {

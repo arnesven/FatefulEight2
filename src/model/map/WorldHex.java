@@ -294,7 +294,6 @@ public abstract class WorldHex {
     }
 
     public RiverEvent generateRiverEvent(Model model) {
-        return new BlackKnightEvent(model); /*
         return MyRandom.sample(List.of(
                 new ShallowsEvent(model),
                 new ShallowsEvent(model),
@@ -313,7 +312,7 @@ public abstract class WorldHex {
                 new RaftOnRiverEvent(model),
                 new NoRiverCrossingEvent(model),
                 new NoRiverCrossingEvent(model)
-        ));*/
+        ));
     }
 
     public GameState getDailyActionState(Model model) {

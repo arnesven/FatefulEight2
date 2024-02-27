@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class SettingsManager implements Serializable {
 
+
+
     public enum LogSpeed {
         SLOWER, SLOW, FAST, FASTER
     }
@@ -16,6 +18,7 @@ public class SettingsManager implements Serializable {
     private boolean autosave = true;
     private LogSpeed logSpeed = LogSpeed.FAST;
     private LogSpeed combatLogSpeed = LogSpeed.FAST;
+    private LogSpeed movementSpeed = LogSpeed.SLOW;
     private boolean levelUpSummary = true;
     private boolean alwaysRide = false;
     private final Map<String, Boolean> miscFlags = new HashMap<>();
@@ -72,6 +75,10 @@ public class SettingsManager implements Serializable {
         combatLogSpeed = cycleSpeed(combatLogSpeed);
     }
 
+    public void toggleMovementSpeed() {
+        movementSpeed = cycleSpeed(movementSpeed);
+    }
+
     private LogSpeed cycleSpeed(LogSpeed logSpeed) {
         if (logSpeed == LogSpeed.FAST) {
             return LogSpeed.FASTER;
@@ -110,4 +117,8 @@ public class SettingsManager implements Serializable {
     }
 
     public Map<String, Integer> getMiscCounters() { return miscCounters; }
+
+    public LogSpeed getMovementSpeed() {
+        return movementSpeed;
+    }
 }
