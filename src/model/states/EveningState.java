@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Inventory;
-import model.quests.MainQuest;
 import model.quests.Quest;
 import util.MyLists;
 import util.MyRandom;
@@ -15,7 +14,6 @@ import view.subviews.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class EveningState extends GameState {
@@ -210,7 +208,7 @@ public class EveningState extends GameState {
             state.println("But you can't afford any.");
             return;
         }
-        int maxBuy = (model.getParty().getCarryingCapacity() - model.getParty().getInventory().getTotalWeight()) /
+        int maxBuy = (model.getParty().getCarryingCapacity() - model.getParty().getEncumbrance()) /
                 Inventory.WEIGHT_OF_FOOD;
         if (maxBuy <= 0) {
             state.println("You cannot carry anymore rations.");
@@ -219,7 +217,7 @@ public class EveningState extends GameState {
 
         final boolean[] done = {false};
         while (!done[0]) {
-            maxBuy = (model.getParty().getCarryingCapacity() - model.getParty().getInventory().getTotalWeight()) /
+            maxBuy = (model.getParty().getCarryingCapacity() - model.getParty().getEncumbrance()) /
                     Inventory.WEIGHT_OF_FOOD;
             if (maxBuy <= 0 || model.getParty().getGold() == 0) {
                 break;

@@ -216,6 +216,7 @@ public class Inventory implements Serializable {
         weightInGrams += (food * WEIGHT_OF_FOOD);
         weightInGrams += (materials * WEIGHT_OF_MATERIALS);
         weightInGrams += (ingredients * WEIGHT_OF_INGREDIENTS);
+        weightInGrams += (lockpicks * WEIGHT_OF_LOCKPICKS);
         return weightInGrams;
     }
 

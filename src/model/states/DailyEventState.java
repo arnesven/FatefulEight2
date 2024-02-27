@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.Party;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;

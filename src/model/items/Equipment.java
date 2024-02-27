@@ -173,4 +173,11 @@ public class Equipment implements Serializable {
     public boolean anyHeavy() {
         return clothing.isHeavy() || (accessory != null && accessory.isHeavy());
     }
+
+    public int getTotalWeight() {
+        int weaponWeight = weapon == null ? 0 : weapon.getWeight();
+        int clothingWeight = clothing == null ? 0 : clothing.getWeight();
+        int accessoryWeight = accessory == null ? 0 : accessory.getWeight();
+        return weaponWeight + clothingWeight + accessoryWeight;
+    }
 }

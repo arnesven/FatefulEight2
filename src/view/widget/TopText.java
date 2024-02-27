@@ -5,7 +5,6 @@ import model.states.DailyEventState;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.CharSprite;
-import view.sprites.Sprite;
 
 public class TopText {
     public static final String GOLD_SETTINGS_FLAG = "showGoldInTopBar";
@@ -91,9 +90,9 @@ public class TopText {
     }
 
     private int addWeight(Model model, int col) {
-        int weight = (int)Math.ceil(model.getParty().getInventory().getTotalWeight() / 1000.0);
+        int weight = (int)Math.ceil(model.getParty().getEncumbrance() / 1000.0);
         MyColors color = MyColors.WHITE;
-        if (model.getParty().getInventory().getTotalWeight() > model.getParty().getCarryingCapacity()) {
+        if (model.getParty().getEncumbrance() > model.getParty().getCarryingCapacity()) {
             color = MyColors.LIGHT_RED;
         }
         int width;

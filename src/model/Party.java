@@ -9,6 +9,7 @@ import model.classes.SkillCheckResult;
 import model.combat.CombatLoot;
 import model.combat.Combatant;
 import model.horses.HorseHandler;
+import model.items.Equipment;
 import model.items.Inventory;
 import model.items.ItemDeck;
 import model.items.Lockpick;
@@ -758,5 +759,11 @@ public class Party implements Serializable {
             Lockpick.checkForBreakage(model, state, success);
         }
         return success;
+    }
+
+    public int getEncumbrance() {
+        return inventory.getTotalWeight() +
+                MyLists.intAccumulate(MyLists.transform(partyMembers, GameCharacter::getEquipment),
+                        Equipment::getTotalWeight);
     }
 }

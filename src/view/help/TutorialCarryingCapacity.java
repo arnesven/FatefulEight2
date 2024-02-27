@@ -11,7 +11,7 @@ public class TutorialCarryingCapacity extends HelpDialog {
     private static final String TEXT = "Your party's carrying capacity " +
             "is how much your party members, and your horses can carry.\n\n" +
             "Each party member can carry an extra load (equipped items " +
-            "do not contribute to this limit), dependent on their race. Human " +
+            "do contribute to this limit), dependent on their race. Human " +
             "and elves can carry 20 kilograms. Halflings can carry 10, Half-Orcs 25 and Dwarves 30. " +
             "Each horses you have can carry 50 kilograms extra.\n\n" +
             "If your party has a greater load than what you can carry when you want to travel, you will be forced " +
