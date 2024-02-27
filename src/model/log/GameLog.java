@@ -55,12 +55,13 @@ public class GameLog {
     public synchronized void update(long timeSinceLast, Model model) {
         if (!isAnimationDone()) {
             this.elapsedTime += timeSinceLast;
-            if (this.elapsedTime > 2*getDelay(model)) {
+            long tempElapsed = elapsedTime;
+            long delay = getDelay(model);
+            while (tempElapsed > delay) {
                 takeOne(model);
-                takeOne(model);
-            } else if (this.elapsedTime > getDelay(model)) {
-                takeOne(model);
+                tempElapsed -= delay;
             }
+
 
         } else if (inputMode != null) {
             if (this.caretBlinkCount % 8 == 0) {
@@ -92,9 +93,11 @@ public class GameLog {
         }
         switch (speedToUse) {
             case FAST:
-                return 20;
-            case FASTER:
                 return 10;
+            case FASTER:
+                return 5;
+            case SLOW:
+                return 20;
             default:
                 return 40;
         }

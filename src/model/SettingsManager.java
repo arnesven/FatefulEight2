@@ -10,7 +10,7 @@ import java.util.Map;
 public class SettingsManager implements Serializable {
 
     public enum LogSpeed {
-        SLOW, FAST, FASTER
+        SLOWER, SLOW, FAST, FASTER
     }
 
     private boolean autosave = true;
@@ -57,8 +57,10 @@ public class SettingsManager implements Serializable {
                 return "FAST";
             case FASTER:
                 return "FASTER";
-            default:
+            case SLOW:
                 return "SLOW";
+            default:
+                return "SLOWER";
         }
     }
 
@@ -77,7 +79,10 @@ public class SettingsManager implements Serializable {
         if (logSpeed == LogSpeed.SLOW) {
             return LogSpeed.FAST;
         }
-        return LogSpeed.SLOW;
+        if (logSpeed == LogSpeed.SLOWER) {
+            return LogSpeed.SLOW;
+        }
+        return LogSpeed.SLOWER;
     }
 
     public static boolean tutorialEnabled(Model model) {
