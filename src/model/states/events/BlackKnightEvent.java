@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
+import view.subviews.RiverCombatTheme;
 import model.enemies.BlackKnightEnemy;
 import view.subviews.CollapsingTransition;
 
@@ -31,8 +32,7 @@ public class BlackKnightEvent extends RiverEvent {
         model.getParty().randomPartyMemberSay(model, List.of("I think we're going to have to fight him if we want to cross here."));
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
-            runCombat(List.of(new BlackKnightEnemy('A')));
-            possiblyGetHorsesAfterCombat("Black Knight", 1);
+            runCombat(List.of(new BlackKnightEnemy('A')), new RiverCombatTheme(), true);
             CollapsingTransition.transition(model, RiverEvent.subView);
             if (!super.haveFledCombat()) {
                 portraitSay("You have proven a worthy adversary.");

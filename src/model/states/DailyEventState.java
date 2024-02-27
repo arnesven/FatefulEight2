@@ -315,7 +315,7 @@ public abstract class DailyEventState extends GameState {
                 } else {
                     println("The " + enemy + " had some horses which you happily take over ownership of.");
                 }
-                for (int i = numberOfHorses; i > 0; ++i) {
+                for (int i = numberOfHorses; i > 0; --i) {
                     Horse horse = HorseHandler.generateHorse();
                     getModel().getParty().getHorseHandler().addHorse(horse);
                     println("The party got a " + horse.getName() + ".");
