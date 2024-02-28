@@ -59,7 +59,9 @@ public abstract class Spell extends Item {
         }
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
-            model.getParty().remove(caster, true, false, 0);
+            if (!model.isInCombat()) {
+                model.getParty().remove(caster, true, false, 0);
+            }
             return false;
         }
         int castingBonus = caster.getRankForSkill(Skill.SpellCasting);

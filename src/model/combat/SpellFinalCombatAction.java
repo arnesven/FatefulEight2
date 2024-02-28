@@ -21,12 +21,12 @@ public class SpellFinalCombatAction extends BasicCombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         if (spell.getHPCost() >= performer.getHP()) {
-            final boolean[] abort = {false};
+            final boolean[] abort = {true};
             YesNoMessageView confirmDialog = new YesNoMessageView(model.getView(),
-                    "WARNING: Casting " + getName() + " may kill " + performer.getFirstName() + "! Abort casting?") {
+                    "WARNING: Casting " + getName() + " may kill " + performer.getFirstName() + "! Cast anyway?") {
                 @Override
                 protected void doAction(Model model) {
-                    abort[0] = true;
+                    abort[0] = false;
                 }
             };
             model.transitionToDialog(confirmDialog);
