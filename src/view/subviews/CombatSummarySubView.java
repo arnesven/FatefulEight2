@@ -137,17 +137,17 @@ import static view.party.SelectableListMenu.upScroll;
         result.add(new MyPair<>("Enemies Retreated: " + combatStats.getFledEnemies(),
                 MyColors.WHITE));
         result.add(NEW_LINE);
-        result.add(new MyPair<>("Max Damage Dealt: " + combatStats.getMaximumDamage() +
+        result.add(new MyPair<>("Max Dmg Dealt: " + combatStats.getMaximumDamage() +
                         " (" + combatStats.getMaxDamager() + ")", MyColors.WHITE));
-        result.add(new MyPair<>("Total Damage Dealt: " + combatStats.getTotalDamage(), MyColors.WHITE));
-        result.add(new MyPair<>("Average Damage Dealt: " + String.format("%1.1f", combatStats.getAverageDamage()),
+        result.add(new MyPair<>("Total Dmg Dealt: " + combatStats.getTotalDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Avg Dmg Dealt: " + String.format("%1.1f", combatStats.getAverageDamage()),
                 MyColors.WHITE));
         result.add(new MyPair<>("Accuracy: " + combatStats.getAccuracy() + "%", MyColors.WHITE));
         result.add(NEW_LINE);
-        result.add(new MyPair<>("Max Damage Taken: " + combatStats.getMaxEnemyDamage(), MyColors.WHITE));
-        result.add(new MyPair<>("Total Damage Taken: " + combatStats.getTotalEnemyDamage(), MyColors.WHITE));
-        result.add(new MyPair<>("Damage Reduced: " + combatStats.getReducedDamage(), MyColors.WHITE));
-        result.add(new MyPair<>("Damage Avoided: " + combatStats.getAvoidedDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Max Dmg Taken: " + combatStats.getMaxEnemyDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Total Dmg Taken: " + combatStats.getTotalEnemyDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Dmg Reduced: " + combatStats.getReducedDamage(), MyColors.WHITE));
+        result.add(new MyPair<>("Dmg Avoided: " + combatStats.getAvoidedDamage(), MyColors.WHITE));
         result.add(NEW_LINE);
         result.add(new MyPair<>("Combat Par: " + combatStats.getRoundPar() + " Rounds", MyColors.WHITE));
         result.add(new MyPair<>("Rounds Taken: " + combatStats.getRoundsTakenWithBird(), MyColors.WHITE));

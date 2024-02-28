@@ -139,7 +139,7 @@ public class InventoryView extends SelectableListMenu {
                 break;
             }
         }
-        return result.substring(0, Math.min(result.length(), WIDTH - 25));
+        return result.substring(0, Math.min(result.length(), WIDTH - 26));
     }
 
     @Override

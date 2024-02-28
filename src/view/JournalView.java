@@ -31,9 +31,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
             UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(entry.getKey());
             questsAndTasks.add(new SummonEntry(model, urb, entry.getValue()));
         }
-        for (JournalEntry task : model.getMainStory().getMainStoryTasks(model)) {
-            questsAndTasks.add(task);
-        }
+        questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
         for (QuestDeck.LocationAndQuest locationAndQuest : model.getQuestDeck().getLocationsAndQuests()) {
             questsAndTasks.add(new QuestEntry(model, locationAndQuest.getLocation(),
                     locationAndQuest.getQuest(), locationAndQuest.getDay()));

@@ -12,34 +12,38 @@ public class QuestEntry implements JournalEntry {
     private boolean completed = false;
     private boolean success = false;
     private final int day;
-    private Quest quest;
+    private Quest quest = null;
     private HexLocation hexLocation;
 
     public QuestEntry(Model model, String location, String quest, int day) {
         this.day = day;
-        for (UrbanLocation urb : model.getWorld().getLordLocations()) {
-            if (((HexLocation) urb).getName().equals(location)) {
-                this.hexLocation = (HexLocation) urb;
-                break;
-            }
-        }
-        for (Quest q : QuestDeck.getAllQuests()) {
-            if (q.getName().equals(quest)) {
-                this.quest = q;
-            }
-        }
         for (Quest q : MainStory.getQuests()) {
             if (q.getName().equals(quest)) {
                 this.quest = q;
             }
         }
-        if (hexLocation != null) {
-            this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
-            if (completed) {
-                this.success = model.getQuestDeck().wasSuccessfulIn(hexLocation);
+        if (this.quest == null) {
+            for (Quest q : QuestDeck.getAllQuests()) {
+                if (q.getName().equals(quest)) {
+                    this.quest = q;
+
+                    break;
+                }
             }
-        } else {
-            this.completed = ((MainQuest)this.quest).isCompleted();
+            for (UrbanLocation urb : model.getWorld().getLordLocations()) {
+                if (((HexLocation) urb).getName().equals(location)) {
+                    this.hexLocation = (HexLocation) urb;
+                    break;
+                }
+            }
+            if (hexLocation != null) {
+                this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
+                if (completed) {
+                    this.success = model.getQuestDeck().wasSuccessfulIn(hexLocation);
+                }
+            }
+        } else { // Main Quest
+            this.completed = ((MainQuest)this.quest).isCompleted(model);
             this.success = true;
         }
     }

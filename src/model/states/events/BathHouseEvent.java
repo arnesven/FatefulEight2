@@ -94,7 +94,6 @@ public class BathHouseEvent extends DailyEventState {
             model.getParty().setLeader(groupB.get(0));
             println(model.getParty().getLeader().getName() + " has been temporarily set to the party leader.");
         }
-        model.getParty().setLeader(groupB.get(0));
     }
 
 

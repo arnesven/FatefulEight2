@@ -160,7 +160,7 @@ public class OtherPartyEvent extends DailyEventState {
                 println(gc.getFirstName() + " enjoyed the special meal.");
                 otherPartyMemberSay(gc,
                         MyRandom.sample(List.of("Yummy!", "Can I have some more?", "Ah, what lovely seasoning!<3",
-                                "Perfection!<3", "So creamy!", "This is my favorite food.")));
+                                "Perfection!3", "A splendid meal.", "So creamy!", "This is my favorite food.")));
                 attitudeMap.put(gc, attitudeMap.get(gc) + diff);
             } else {
                 println(gc.getFirstName() + " did not enjoy the special meal.");
