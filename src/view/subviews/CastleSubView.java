@@ -58,7 +58,7 @@ public class CastleSubView extends DailyActionSubView {
         };
     }
 
-    private Sprite[][] makeRows(MyColors color, MyColors groundColor) {
+    public static Sprite[][] makeRows(MyColors color, MyColors groundColor) {
         Sprite ground = new Sprite32x32("castleGround", "world_foreground.png", 0x02,
                 groundColor, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY);
         Sprite groundNoPath = new Sprite32x32("castleGroundNoPath", "world_foreground.png", 0x72,
@@ -98,7 +98,7 @@ public class CastleSubView extends DailyActionSubView {
         return rows;
     }
 
-    private Sprite makeSprite(int i, MyColors color) {
+    private static Sprite makeSprite(int i, MyColors color) {
         String key = color.name() + "x" + i;
         if (castleSprites.containsKey(key)) {
             return castleSprites.get(key);

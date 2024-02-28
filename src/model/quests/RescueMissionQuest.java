@@ -6,6 +6,7 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.combat.TownCombatTheme;
 import model.enemies.SoldierEnemy;
 import model.quests.scenes.CollaborativeLockpickingSubScene;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
@@ -16,8 +17,12 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.QuestState;
 import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.subviews.CastleSubView;
 import view.subviews.PortraitSubView;
 import view.subviews.QuestSubView;
+import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,6 +36,7 @@ public class RescueMissionQuest extends MainQuest {
     private SplitPartyJunction split;
     private QuestNode otherGroupCurrent = null;
     private QuestEdge otherGroupNext = null;
+    private List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
 
     public RescueMissionQuest() {
         super(QUEST_NAME, "", QuestDifficulty.MEDIUM,
@@ -161,7 +167,7 @@ public class RescueMissionQuest extends MainQuest {
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.GREEN;
+        return MyColors.TAN;
     }
 
     private static class RescueMissionStartingPoint extends QuestStartPointWithoutDecision {
@@ -413,5 +419,71 @@ public class RescueMissionQuest extends MainQuest {
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
         }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> backgrounds = new ArrayList<>();
+
+        for (int i = 1; i < TownCombatTheme.topRow.length; ++i) {
+            backgrounds.add(new QuestBackground(new Point(i, 0), TownCombatTheme.bottomRow[i], true));
+        }
+
+        Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.TAN);
+
+        for (int x = 1; x < 8; ++x) {
+            backgrounds.add(new QuestBackground(new Point(x, 1), TownCombatTheme.ground));
+            if (x > 1) {
+                backgrounds.add(new QuestBackground(new Point(x, 2), woods));
+            }
+        }
+
+        Sprite[][] fortSprites = CastleSubView.makeRows(MyColors.ORANGE, MyColors.TAN);
+
+        backgrounds.add(new QuestBackground(new Point(3, 3), fortSprites[1][0]));
+        for (int x = 4; x < 7; ++x) {
+            backgrounds.add(new QuestBackground(new Point(x, 3), fortSprites[1][1]));
+        }
+        backgrounds.add(new QuestBackground(new Point(7, 3), fortSprites[1][7]));
+
+        Sprite32x32 fortTop = new Sprite32x32("fortTop", "quest.png", 0x7B,
+                MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, MyColors.TAN);
+        for (int x = 4; x < 7; ++x) {
+            backgrounds.add(new QuestBackground(new Point(x, 4), fortTop));
+        }
+
+        Sprite32x32 fortMiddle = new Sprite32x32("fortMiddle", "quest.png", 0x77,
+                MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.GRAY, MyColors.TAN);
+        for (int y = 4; y < 6; ++y) {
+            backgrounds.add(new QuestBackground(new Point(3, y), fortSprites[2][0]));
+            backgrounds.add(new QuestBackground(new Point(7, y), fortSprites[2][0]));
+        }
+
+        for (int x = 4; x < 7; ++x) {
+            backgrounds.add(new QuestBackground(new Point(x, 5), fortMiddle));
+        }
+
+        backgrounds.add(new QuestBackground(new Point(3, 6), fortSprites[8][0]));
+        backgrounds.add(new QuestBackground(new Point(4, 6), fortSprites[3][2]));
+        backgrounds.add(new QuestBackground(new Point(5, 6), fortSprites[3][3]));
+        backgrounds.add(new QuestBackground(new Point(6, 6), fortSprites[3][4]));
+        backgrounds.add(new QuestBackground(new Point(7, 6), fortSprites[8][7]));
+
+
+        Sprite hills = new Sprite32x32("hills", "quest.png", 0x67,
+                MyColors.BLACK, MyColors.TAN, MyColors.TAN, MyColors.TAN);
+
+        for (int y = 5; y < 9; ++y) {
+            for (int x = 0; x < y - 4; ++x) {
+                backgrounds.add(new QuestBackground(new Point(x, y), hills));
+            }
+        }
+
+        return backgrounds;
     }
 }

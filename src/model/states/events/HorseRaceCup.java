@@ -34,8 +34,6 @@ public class HorseRaceCup extends TournamentEvent {
 
     @Override
     protected void doEvent(Model model) {
-        enterCup(model, false);
-
         print("The " + castle.getLordTitle() + " is hosting a horse racing cup today. " +
                 "Do you wish to attend? (Y/N) ");
         if (!yesNoInput()) {
