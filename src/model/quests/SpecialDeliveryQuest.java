@@ -4,15 +4,20 @@ import model.Model;
 import model.classes.Skill;
 import model.combat.TownCombatTheme;
 import model.enemies.*;
-import model.journal.StoryPart;
 import model.quests.scenes.*;
 import model.states.QuestState;
 import util.MyStrings;
 import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.widget.QuestBackground;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SpecialDeliveryQuest extends MainQuest {
     public static final String QUEST_NAME = "Special Delivery";
@@ -20,10 +25,12 @@ public class SpecialDeliveryQuest extends MainQuest {
             "Wary of the 'third party', you set out to deliver the special potion.";
     private static final String END_TEXT = "Having delivered the potion, you return to the witch. " +
             "In addition to the information you want she agrees to give you a portion of the payment of the potion.";
+    private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
     private boolean fightInTown;
 
     public SpecialDeliveryQuest() {
-        super("Special Delivery", "", QuestDifficulty.MEDIUM, 0, 175, 50, INTRO_TEXT, END_TEXT);
+        super("Special Delivery", "", QuestDifficulty.MEDIUM, 
+                0, 175, 50, INTRO_TEXT, END_TEXT);
         this.fightInTown = false;
     }
 
@@ -213,5 +220,57 @@ public class SpecialDeliveryQuest extends MainQuest {
         protected String getCombatDetails() {
             return countWord + " Brotherhood Thugs";
         }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> backgrounds = new ArrayList<>();
+
+        Sprite32x32 hut = new Sprite32x32("witchhut", "quest.png", 0x2F,
+                MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+        backgrounds.add(new QuestBackground(new Point(0, 0), hut, true));
+
+        Sprite woodsHalf = new Sprite32x32("woodsHalf", "quest.png", 0x3F,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+        for (int x = 1; x < 8; ++x) {
+            backgrounds.add(new QuestBackground(new Point(x, 0), woodsHalf, true));
+        }
+        Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+        for (int y = 0; y < 3; ++y) {
+            for (int x = y+2; x < 8; ++x) {
+                backgrounds.add(new QuestBackground(new Point(x, y), woods, false));
+            }
+        }
+
+
+        for (int i = 3; i < TownCombatTheme.topRow.length; ++i) {
+            backgrounds.add(new QuestBackground(new Point(i, 3), TownCombatTheme.topRow[i], false));
+            backgrounds.add(new QuestBackground(new Point(i, 4), TownCombatTheme.bottomRow[i], false));
+        }
+
+        Random random = new Random(4321);
+        for (int i = 3; i < 8; ++i) {
+            for (int j = 5; j < 9; ++j) {
+                int rnd = random.nextInt(16);
+                Sprite spriteToAdd;
+                if (i+j == rnd) {
+                    spriteToAdd = TownCombatTheme.ground2;
+                } else if (i+j+1 == rnd) {
+                    spriteToAdd = TownCombatTheme.ground3;
+                } else if (i+j+2 == rnd) {
+                    spriteToAdd = TownCombatTheme.ground4;
+                } else {
+                    spriteToAdd = TownCombatTheme.ground;
+                }
+                backgrounds.add(new QuestBackground(new Point(i, j), spriteToAdd, false));
+            }
+        }
+
+        return backgrounds;
     }
 }

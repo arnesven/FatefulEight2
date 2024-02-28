@@ -22,13 +22,13 @@ public class TownCombatTheme extends CombatTheme {
     public static final Sprite32x32[] bottomRow = new Sprite32x32[] {
             bottomYellow, bottomPink, bottomWhite, bottomPink,
             bottomYellow, bottomYellow, bottomPink, bottomWhite};
-    static final Sprite32x32 ground = new Sprite32x32("ground", "combat.png", 0x64,
+    public static final Sprite32x32 ground = new Sprite32x32("ground", "combat.png", 0x64,
             MyColors.GRAY, MyColors.DARK_GRAY, MyColors.TAN, MyColors.CYAN);
-    static final Sprite32x32 ground2 = new Sprite32x32("ground2", "combat.png", 0x65,
+    public static final Sprite32x32 ground2 = new Sprite32x32("ground2", "combat.png", 0x65,
             MyColors.GRAY, MyColors.DARK_GRAY, MyColors.TAN, MyColors.CYAN);
-    static final Sprite32x32 ground3 = new Sprite32x32("ground3", "combat.png", 0x66,
+    public static final Sprite32x32 ground3 = new Sprite32x32("ground3", "combat.png", 0x66,
             MyColors.GRAY, MyColors.DARK_GRAY, MyColors.TAN, MyColors.CYAN);
-    static final Sprite32x32 ground4 = new Sprite32x32("ground4", "combat.png", 0x67,
+    public static final Sprite32x32 ground4 = new Sprite32x32("ground4", "combat.png", 0x67,
             MyColors.GRAY, MyColors.DARK_GRAY, MyColors.TAN, MyColors.CYAN);
 
     @Override
