@@ -15,9 +15,14 @@ import model.states.QuestState;
 import model.states.RecruitState;
 import view.BorderFrame;
 import view.MyColors;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.subviews.GrassCombatTheme;
 import view.subviews.SplitPartySubView;
 import view.subviews.SubView;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +31,8 @@ public class VampiresLairQuest extends MainQuest {
     private static final String TEXT = "As you travel through the mountains you encounter Caid outside a door to an old crypt. " +
             "He asks you to accompany him inside to find the sister of his lord.";
     private static final String END_TEXT = "You've solved the mystery of the lord's missing sister. Caid compensates you.";
+    private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
+
 
     public VampiresLairQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 120, 0, TEXT, END_TEXT);
@@ -307,5 +314,51 @@ public class VampiresLairQuest extends MainQuest {
             state.printQuote("Caid", "Perhaps it's for the best. Goodbye friends, until our next meeting.");
             state.leaderSay("Bye Caid.");
         }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> list = new ArrayList<>();
+        list.add(new QuestBackground(new Point(0, 0), AbandonedMineQuest.ENTRANCE, true));
+        list.add(new QuestBackground(new Point(0, 1), GrassCombatTheme.grassSprites[0]));
+        list.add(new QuestBackground(new Point(0, 2), GrassCombatTheme.grassSprites[1]));
+        list.add(new QuestBackground(new Point(0, 3), GrassCombatTheme.grassSprites[2]));
+        Sprite CAVE_T = new Sprite32x32("minet", "quest.png", 0x5C, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+        Sprite CAVE_FLIPPED_T = new Sprite32x32("mineflippedt", "quest.png", 0x6D, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+        Sprite CAVE_LEFT_T = new Sprite32x32("mineleftt", "quest.png", 0x6C, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+        Sprite CAVE_RIGHT_T = new Sprite32x32("minerightt", "quest.png", 0x7C, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN);
+        list.add(new QuestBackground(new Point(1, 0), CAVE_T, false));
+        list.add(new QuestBackground(new Point(2, 0), AbandonedMineQuest.UR_CORNER, false));
+
+        list.add(new QuestBackground(new Point(1, 1), CAVE_LEFT_T, false));
+        list.add(new QuestBackground(new Point(2, 1), CAVE_FLIPPED_T, false));
+        list.add(new QuestBackground(new Point(3, 1), AbandonedMineQuest.UR_CORNER, false));
+
+        list.add(new QuestBackground(new Point(1, 2), AbandonedMineQuest.LL_CORNER, false));
+        list.add(new QuestBackground(new Point(2, 2), CAVE_T, false));
+        list.add(new QuestBackground(new Point(3, 2), CAVE_RIGHT_T, false));
+
+        list.add(new QuestBackground(new Point(2, 3), CAVE_LEFT_T, false));
+        list.add(new QuestBackground(new Point(3, 3), CAVE_FLIPPED_T, false));
+        list.add(new QuestBackground(new Point(4, 3), AbandonedMineQuest.UR_CORNER, false));
+
+        list.add(new QuestBackground(new Point(2, 4), AbandonedMineQuest.LL_CORNER, false));
+        list.add(new QuestBackground(new Point(3, 4), CAVE_T, false));
+        list.add(new QuestBackground(new Point(4, 4), CAVE_RIGHT_T, false));
+
+        list.add(new QuestBackground(new Point(3, 5), CAVE_LEFT_T, false));
+        list.add(new QuestBackground(new Point(4, 5), AbandonedMineQuest.LR_CORNER, false));
+
+        list.add(new QuestBackground(new Point(1, 6), AbandonedMineQuest.UL_CORNER, false));
+        list.add(new QuestBackground(new Point(2, 6), CAVE_T, false));
+        list.add(new QuestBackground(new Point(3, 6), AbandonedMineQuest.LR_CORNER, false));
+
+        list.add(new QuestBackground(new Point(1, 7), AbandonedMineQuest.LL_CORNER, false));
+        list.add(new QuestBackground(new Point(2, 7), AbandonedMineQuest.LR_CORNER, false));
+        return list;
     }
 }
