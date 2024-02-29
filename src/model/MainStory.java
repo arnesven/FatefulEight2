@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class MainStory implements Serializable {
 
-    // Main story breakdown:
+    // Main story breakdown: // TODO: Update this!
     //                   ___                            ___
     //   ___     _____> / 2 \ ____       ___     ____> / 4 \ ____      ___       ___
     //  / 1 \ __/       \_a_/     \____ / 3 \ __/      \_a_/     \___ / 5 \ ___ / 6 \
