@@ -11,6 +11,7 @@ import model.states.QuestState;
 import model.states.RecruitState;
 import view.BorderFrame;
 import view.MyColors;
+import view.widget.QuestBackground;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class HelpWillisQuest extends MainQuest {
             "But not everybody is cut out to be a library assistant.";
     private static final String ENDING_TEXT = "Willis is pays you for finding staff for the library.";
     private static final int RECRUITS_NEEDED = 4;
+    private static final List<QuestBackground> BACKGROUND_SPRITES = MurderMysteryQuest.makeBackground();
     private int recruited = 0;
 
     public HelpWillisQuest() {
@@ -35,16 +37,16 @@ public class HelpWillisQuest extends MainQuest {
 
     @Override
     public boolean drawTownOrCastleInBackground() {
-        return true;
+        return false;
     }
 
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Find and interview candidates", List.of(
-                new CollaborativeSkillCheckSubScene(1, 1, Skill.SeekInfo, 11, "We need to find more candidates."),
-                new SoloSkillCheckSubScene(1, 5, Skill.Persuade, 11, "Seems like we need to talk her into it."),
-                new PayGoldSubScene(2, 2, 3, "Let's just pay her up front for the job."),
-                new ConditionSubScene(4, 5) {
+                new CollaborativeSkillCheckSubScene(1, 2, Skill.SeekInfo, 11, "We need to find more candidates."),
+                new SoloSkillCheckSubScene(1, 6, Skill.Persuade, 11, "Seems like we need to talk her into it."),
+                new PayGoldSubScene(2, 4, 3, "Let's just pay her up front for the job."),
+                new ConditionSubScene(4, 6) {
                     @Override
                     public String getDescription() {
                         return recruited + "/" + RECRUITS_NEEDED + " hired.";
@@ -63,10 +65,15 @@ public class HelpWillisQuest extends MainQuest {
     }
 
     @Override
+    public QuestJunction getStartNode() {
+        return super.getStartNode();
+    }
+
+    @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        QuestDecisionPoint qdp = new QuestDecisionPoint(1, 2, List.of(new QuestEdge(scenes.get(0).get(1)),
+        QuestDecisionPoint qdp = new QuestDecisionPoint(1, 4, List.of(new QuestEdge(scenes.get(0).get(1)),
                 new QuestEdge(scenes.get(0).get(2))), "Ah, a good candidate. But how to convince her to take the job?");
-        StoryJunction recruitedJunc = new StoryJunction(2, 5, new QuestEdge(scenes.get(0).get(3))) {
+        StoryJunction recruitedJunc = new StoryJunction(2, 6, new QuestEdge(scenes.get(0).get(3))) {
             @Override
             protected void doAction(Model model, QuestState state) {
                 switch (recruited) {
@@ -92,9 +99,11 @@ public class HelpWillisQuest extends MainQuest {
                 recruited++;
             }
         };
-        SimpleJunction extraFail = new SimpleJunction(0, 5, new QuestEdge(getFailEndingNode(), QuestEdge.VERTICAL));
-        return List.of(new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(0).get(0)),
-                "First we need some find some candidates for work in the library."),
+        SimpleJunction extraFail = new SimpleJunction(0, 6, new QuestEdge(getFailEndingNode(), QuestEdge.VERTICAL));
+        QuestJunction start = new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(0).get(0)),
+                "First we need some find some candidates for work in the library.");
+        start.setRow(1);
+        return List.of(start,
                 qdp,
                 recruitedJunc, extraFail);
     }
@@ -115,7 +124,7 @@ public class HelpWillisQuest extends MainQuest {
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.BLACK;
+        return MyColors.GRAY;
     }
 
     @Override
@@ -169,5 +178,10 @@ public class HelpWillisQuest extends MainQuest {
                 portraitSay("Perhaps it's for the best.");
             }
         }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
     }
 }

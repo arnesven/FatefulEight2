@@ -215,6 +215,7 @@ public class CombatEvent extends DailyEventState {
             currentCombatant = pair.first;
             combatMatrix.moveSelectedToEnemy();
             pair.second.resolveSneakAttack(model, this);
+            model.getLog().waitForAnimationToFinish();
         }
         sneakAttackers.clear();
     }

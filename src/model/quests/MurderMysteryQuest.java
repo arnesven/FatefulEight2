@@ -116,7 +116,7 @@ public class MurderMysteryQuest extends Quest {
         return BACKGROUND_SPRITES;
     }
 
-    private static List<QuestBackground> makeBackground() {
+    public static List<QuestBackground> makeBackground() {
         List<QuestBackground> backgrounds = new ArrayList<>();
         for (int i = 0; i < TownCombatTheme.topRow.length; ++i) {
             backgrounds.add(new QuestBackground(new Point(i, 0), TownCombatTheme.topRow[i]));

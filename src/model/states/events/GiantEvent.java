@@ -26,7 +26,6 @@ public class GiantEvent extends DailyEventState {
             }
         }
         model.getLog().waitForAnimationToFinish();
-        model.getParty().getHorseHandler().someHorsesRunAway(model);
         setFledCombat(true);
     }
 }
