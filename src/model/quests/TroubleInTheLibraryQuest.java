@@ -21,26 +21,31 @@ import java.util.List;
 
 public class TroubleInTheLibraryQuest extends MainQuest {
 
+    private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackgroundSprites();
+
     private static MyColors BACKGROUND_COLOR = MyColors.BLACK;
     public static final String QUEST_NAME = "Trouble in the Library";
     private static final String INTRO_TEXT = "In search of invaluable information, the party has come to a large library. " +
             "Before anything can be learned however, you must first disable the magical automatons which have run amuck within.";
     private static final String ENDING_TEXT = "The automatons have been disabled, and the library can once again be visited by civilians.";
 
-    private static final Sprite32x32 RED_PATH_SPRITE = new Sprite32x32("redpath", "quest.png", 0x1C,
-            BACKGROUND_COLOR, BACKGROUND_COLOR, MyColors.RED, MyColors.BROWN);
-    private static final Sprite BLUE_PATH_SPRITE =  new Sprite32x32("greenpath", "quest.png", 0x1C,
-            BACKGROUND_COLOR, BACKGROUND_COLOR, MyColors.RED, MyColors.BROWN);
-    private static final Sprite GOLD_PATH_SPRITE = new Sprite32x32("greenpath", "quest.png", 0x1C,
-            BACKGROUND_COLOR, BACKGROUND_COLOR, MyColors.RED, MyColors.BROWN);
+    private static final Sprite32x32 RED_PATH_SPRITE = new Sprite32x32("redpath", "quest.png", 0x4D,
+            MyColors.RED, BACKGROUND_COLOR, MyColors.RED, MyColors.BROWN);
+    private static final Sprite BLUE_PATH_SPRITE =  new Sprite32x32("greenpath", "quest.png", 0x4D,
+            MyColors.LIGHT_BLUE, BACKGROUND_COLOR, MyColors.RED, MyColors.BROWN);
+    private static final Sprite GOLD_PATH_SPRITE = new Sprite32x32("greenpath", "quest.png", 0x5D,
+            BACKGROUND_COLOR, MyColors.GOLD, MyColors.RED, MyColors.BROWN);
     private static final Sprite BOTH_PATH_SPRITE = new Sprite32x32("greenpath", "quest.png", 0x1C,
-            BACKGROUND_COLOR, BACKGROUND_COLOR, MyColors.RED, MyColors.BROWN);
+            MyColors.LIGHT_BLUE, MyColors.GOLD, MyColors.RED, MyColors.BROWN);
 
     private QuestNode[][] nodeGrid;
     private List<MovingEnemyGroup> enemies;
     private List<List<Point>> enemyPaths;
     private ArrayList<QuestBackground> decorations;
     private int logicStep = 0;
+    private boolean redShowing = false;
+    private boolean blueShowing = false;
+    private boolean goldShowing = false;
 
     public TroubleInTheLibraryQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 0, 0, INTRO_TEXT, ENDING_TEXT);
@@ -92,18 +97,13 @@ public class TroubleInTheLibraryQuest extends MainQuest {
             protected void doAction(Model model, QuestState state) {
                 switch (logicStep) {
                     case 0:
-                        state.leaderSay("So you're telling me the red automatons move according to the red pattern?");
-                        RED_PATH_SPRITE.setColor1(MyColors.RED);
+                        showRedPath(model, state);
                         break;
                     case 1:
-                        state.leaderSay("So you're telling me the blue automatons move according to the blue pattern?");
-                        BLUE_PATH_SPRITE.setColor1(MyColors.LIGHT_BLUE);
-                        BOTH_PATH_SPRITE.setColor1(MyColors.LIGHT_BLUE);
+                        showBluePath(model, state);
                         break;
                     case 2:
-                        state.leaderSay("So you're telling me the gold automatons move according to the gold pattern?");
-                        GOLD_PATH_SPRITE.setColor2(MyColors.GOLD);
-                        BOTH_PATH_SPRITE.setColor2(MyColors.GOLD);
+                        showGoldPath(model, state);
                         break;
                     default:
                         state.leaderSay("They always move along those paths huh?");
@@ -200,6 +200,47 @@ public class TroubleInTheLibraryQuest extends MainQuest {
         return juncs;
     }
 
+    private void showGoldPath(Model model, QuestState state) {
+        if (goldShowing) {
+            return;
+        }
+        state.leaderSay("So you're telling me the gold automatons move according to the gold pattern?");
+        goldShowing = true;
+        for (Point p : enemyPaths.get(2)) {
+            if (enemyPaths.get(1).contains(p) && blueShowing) {
+                decorations.add(new QuestBackground(p, BOTH_PATH_SPRITE, false));
+            } else {
+                decorations.add(new QuestBackground(p, GOLD_PATH_SPRITE, false));
+            }
+        }
+    }
+
+    private void showBluePath(Model model, QuestState state) {
+        if (blueShowing) {
+            return;
+        }
+        state.leaderSay("So you're telling me the blue automatons move according to the blue pattern?");
+        blueShowing = true;
+        for (Point p : enemyPaths.get(1)) {
+            if (enemyPaths.get(2).contains(p) && goldShowing) {
+                decorations.add(new QuestBackground(p, BOTH_PATH_SPRITE, false));
+            } else {
+                decorations.add(new QuestBackground(p, BLUE_PATH_SPRITE, false));
+            }
+        }
+    }
+
+    private void showRedPath(Model model, QuestState state) {
+        if (redShowing) {
+            return;
+        }
+        redShowing = true;
+        state.leaderSay("So you're telling me the red automatons move according to the red pattern?");
+        for (Point p : enemyPaths.get(0)) {
+            decorations.add(new QuestBackground(p, RED_PATH_SPRITE, false));
+        }
+    }
+
     private void makePathsAndDecorations() {
         enemyPaths = new ArrayList<>();
         enemyPaths.add(List.of(
@@ -225,21 +266,16 @@ public class TroubleInTheLibraryQuest extends MainQuest {
                 new Point(2, 2), new Point(2, 1)));
 
         this.decorations = new ArrayList<>();
-        for (Point p : enemyPaths.get(0)) {
-            decorations.add(new QuestBackground(p, RED_PATH_SPRITE, false));
-        }
-        for (Point p : enemyPaths.get(1)) {
-            decorations.add(new QuestBackground(p, BLUE_PATH_SPRITE, false));
-        }
-        for (Point p : enemyPaths.get(2)) {
-            if (enemyPaths.get(1).contains(p)) {
-                decorations.add(new QuestBackground(p, BOTH_PATH_SPRITE, false));
-            } else {
-                decorations.add(new QuestBackground(p, GOLD_PATH_SPRITE, false));
-            }
-        }
     }
 
+    @Override
+    protected void resetQuest() {
+        super.resetQuest();
+        decorations = new ArrayList<>();
+        redShowing = false;
+        blueShowing = false;
+        goldShowing = false;
+    }
 
     private void makeEnemies() {
         enemies = new ArrayList<>();
@@ -310,7 +346,7 @@ public class TroubleInTheLibraryQuest extends MainQuest {
                 } else if (junc.getColumn() == 3) {
                     scenes.get(0).get(0).connectSuccess(junc);
                 }
-            } else if (junc.getRow() == 7) {
+            } else if (junc.getRow() == 0) {
                 if (junc.getColumn() == 2) {
                     scenes.get(2).get(0).connectFail(junc);
                 }
@@ -338,5 +374,45 @@ public class TroubleInTheLibraryQuest extends MainQuest {
     @Override
     public MainQuest copy() {
         return new TroubleInTheLibraryQuest();
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+    private static List<QuestBackground> makeBackgroundSprites() {
+        List<QuestBackground> backgrounds = new ArrayList<>();
+        Sprite32x32 entrance = new Sprite32x32("entrance", "quest.png", 0x41,
+                MyColors.DARK_GRAY, MyColors.TAN, MyColors.DARK_BROWN, MyColors.CYAN);
+        backgrounds.add(new QuestBackground(new Point(0, 0), entrance));
+        Sprite32x32 bookCase1 = new Sprite32x32("entrance", "quest.png", 0x3E,
+                MyColors.DARK_GRAY, MyColors.TAN, MyColors.DARK_BROWN, MyColors.BROWN);
+        Sprite32x32 bookCase2 = new Sprite32x32("entrance", "quest.png", 0x4E,
+                MyColors.DARK_GRAY, MyColors.TAN, MyColors.DARK_BROWN, MyColors.GRAY_RED);
+        Sprite32x32 bookCase3 = new Sprite32x32("entrance", "quest.png", 0x4F,
+                MyColors.DARK_GRAY, MyColors.TAN, MyColors.DARK_BROWN, MyColors.GRAY_RED);
+        backgrounds.add(new QuestBackground(new Point(1, 0), bookCase1));
+        backgrounds.add(new QuestBackground(new Point(2, 0), bookCase2));
+        backgrounds.add(new QuestBackground(new Point(3, 0), bookCase3));
+        backgrounds.add(new QuestBackground(new Point(4, 0), bookCase1));
+        backgrounds.add(new QuestBackground(new Point(5, 0), bookCase2));
+        backgrounds.add(new QuestBackground(new Point(6, 0), bookCase3));
+        backgrounds.add(new QuestBackground(new Point(7, 0), bookCase1));
+
+        Sprite32x32 floor = new Sprite32x32("libraryfloor", "dungeon.png", 0x00,
+                MyColors.DARK_GRAY, MyColors.CYAN, MyColors.PINK, MyColors.DARK_BROWN);
+        for (int y = 1; y < 9; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                if (y == 5 && (x == 3 || x == 4)) {
+                    backgrounds.add(new QuestBackground(new Point(x, y), bookCase2));
+                } else if (y == 8 && (x == 1 || x == 3 || x == 5 || x == 6)) {
+                    backgrounds.add(new QuestBackground(new Point(x, y), bookCase1));
+                } else {
+                    backgrounds.add(new QuestBackground(new Point(x, y), floor));
+                }
+            }
+        }
+        return backgrounds;
     }
 }
