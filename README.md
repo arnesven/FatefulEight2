@@ -18,5 +18,5 @@ Features:
 - Original soundtrack.
   
 
-Just download the jar and run it. At least Java 11 is required.
+Just download the latest release (FatefulEight2.jar) and run it. At least Java 11 is required.
 Enjoy!
