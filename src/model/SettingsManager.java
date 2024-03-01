@@ -8,16 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 public class SettingsManager implements Serializable {
-
-
-
+    
     public enum LogSpeed {
         SLOWER, SLOW, FAST, FASTER
     }
 
     private boolean autosave = true;
-    private LogSpeed logSpeed = LogSpeed.FAST;
-    private LogSpeed combatLogSpeed = LogSpeed.FAST;
+    private LogSpeed logSpeed = LogSpeed.SLOW;
+    private LogSpeed combatLogSpeed = LogSpeed.SLOW;
     private LogSpeed movementSpeed = LogSpeed.SLOW;
     private boolean levelUpSummary = true;
     private boolean alwaysRide = false;
