@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SettingsManager implements Serializable {
-    
+
     public enum LogSpeed {
         SLOWER, SLOW, FAST, FASTER
     }

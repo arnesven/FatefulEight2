@@ -65,6 +65,7 @@ public abstract class AdvancedDailyActionState extends GameState {
             model.getTutorial().start(model);
             String place = model.getCurrentHex().getPlaceName();
             print("You are " + place + ". ");
+            model.getTutorial().basicControls(model);
             if (!isEvening()) {
                 print("Please select your daily action.");
             } else {
