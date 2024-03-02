@@ -14,9 +14,13 @@ import model.quests.scenes.CombatSubScene;
 import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
+import view.sprites.PalisadeSprite;
+import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class OrcWarCampQuest extends MainQuest {
             "the camp and appraise the Orcs' intentions. Unfortunately the camp is well fortified " +
             "and you will have to make your way inside the fortifications to find the information you need.";
     private static final String ENDING_TEXT = "You've found the information you needed. It will be crucial in order to properly defend against these invaders.";
+    private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
+
     private List<Enemy> archers;
     private List<Enemy> otherEnemies;
 
@@ -140,7 +146,7 @@ public class OrcWarCampQuest extends MainQuest {
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.BLACK;
+        return MyColors.TAN;
     }
 
     @Override
@@ -328,5 +334,59 @@ public class OrcWarCampQuest extends MainQuest {
         protected String getCombatDetails() {
             return "Orc archers on the palisade wall";
         }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+    private static List<QuestBackground> makeBackground() {
+        List<QuestBackground> background = new ArrayList<>();
+        PalisadeSprite ulCorner = new PalisadeSprite(0x5E);
+        PalisadeSprite urCorner = new PalisadeSprite(0x5F);
+        PalisadeSprite llCorner = new PalisadeSprite(0x6E);
+        PalisadeSprite lrCorner = new PalisadeSprite(0x6F);
+
+        background.add(new QuestBackground(new Point(1, 1), ulCorner));
+        background.add(new QuestBackground(new Point(6, 1), urCorner));
+        background.add(new QuestBackground(new Point(1, 7), llCorner));
+        background.add(new QuestBackground(new Point(6, 7), lrCorner));
+
+        PalisadeSprite horizontalTop = new PalisadeSprite(0x8F);
+        background.add(new QuestBackground(new Point(2, 1), horizontalTop));
+        background.add(new QuestBackground(new Point(5, 1), horizontalTop));
+
+        PalisadeSprite gateLeft = new PalisadeSprite(0x7E);
+        PalisadeSprite gateRight = new PalisadeSprite(0x7F);
+        background.add(new QuestBackground(new Point(3, 1), gateLeft));
+        background.add(new QuestBackground(new Point(4, 1), gateRight));
+
+        PalisadeSprite verticalLeft = new PalisadeSprite(0x7D);
+        PalisadeSprite verticalRight = new PalisadeSprite(0x8D);
+        for (int y = 2; y < 7; ++y) {
+            background.add(new QuestBackground(new Point(1, y), verticalLeft));
+            background.add(new QuestBackground(new Point(6, y), verticalRight));
+        }
+
+        PalisadeSprite horizontalBottom = new PalisadeSprite(0x8E);
+        for (int x = 2; x < 6; ++x) {
+            background.add(new QuestBackground(new Point(x, 7), horizontalBottom));
+        }
+
+        Sprite32x32 tents = new Sprite32x32("tents", "quest.png", 0x8C,
+                MyColors.TAN, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.BLACK);
+
+        background.add(new QuestBackground(new Point(2, 2), tents));
+        background.add(new QuestBackground(new Point(5, 2), tents));
+        background.add(new QuestBackground(new Point(2, 3), tents));
+        background.add(new QuestBackground(new Point(5, 3), tents));
+        background.add(new QuestBackground(new Point(2, 5), tents));
+        background.add(new QuestBackground(new Point(5, 5), tents));
+        background.add(new QuestBackground(new Point(2, 6), tents));
+        background.add(new QuestBackground(new Point(3, 6), tents));
+        background.add(new QuestBackground(new Point(4, 6), tents));
+        background.add(new QuestBackground(new Point(5, 6), tents));
+        return background;
     }
 }
