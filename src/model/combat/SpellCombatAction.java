@@ -35,7 +35,7 @@ public class SpellCombatAction extends BasicCombatAction {
     @Override
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> res = new ArrayList<>();
-        for (CombatSpell spell : combatSpells) {
+        for (CombatSpell spell : combatSpells) { // TODO: Remove duplicates
             if (spell.canBeCastOn(model, target)) {
                 res.add(new SpellFinalCombatAction(spell));
             }

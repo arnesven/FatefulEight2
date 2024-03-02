@@ -267,6 +267,8 @@ public class RitualSubView extends SubView implements Animation {
                 return MyColors.LIGHT_RED;
             case WHITE:
                 return MyColors.LIGHT_YELLOW;
+            case PURPLE:
+                return MyColors.PINK;
             default:
                 throw new InputMismatchException("Bad input for color conversion: " + magicColor.name());
         }

@@ -17,9 +17,12 @@ import model.states.GameState;
 import model.states.ShopState;
 import model.states.dailyaction.TownDailyActionState;
 import model.states.events.AlternativeTravelEvent;
+import model.states.events.RitualEvent;
 import util.MyRandom;
+import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.ZeppelinSprite;
+import view.subviews.CombatTheme;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
@@ -68,7 +71,8 @@ public class ZeppelinStoryPart extends StoryPart {
             actions.add(new DailyAction("Visit Workshop", new VisitWorkshopEvent(model)));
         }
         if (zeppelinPos.x == hexPoint.x && zeppelinPos.y == hexPoint.y && step == BOUGHT) {
-            if (zeppelinFueled) {
+            boolean zepplinUpgraded = model.getSettings().getMiscFlags().containsKey("zeppelinUpgraded");
+            if (zeppelinFueled || zepplinUpgraded) {
                 actions.add(new DailyAction("Use Zeppelin", new FlyWithZeppelinEvent(model)));
             } else {
                 actions.add(new DailyAction("Refuel Zeppelin", new RefuelZeppelinState(model)));
@@ -388,6 +392,11 @@ public class ZeppelinStoryPart extends StoryPart {
         @Override
         public GameState run(Model model) {
             println("The engine of the zeppelin needs to be refueled in order to run.");
+
+            if (checkForRitual(model)) {
+                return model.getCurrentHex().getEveningState(model, false, false);
+            }
+
             Potion p = findFuelPotion(model.getParty().getInventory().getPotions());
             if (p == null) {
                 println("Unfortunately you do not have any zeppelin fuel.");
@@ -402,8 +411,100 @@ public class ZeppelinStoryPart extends StoryPart {
                     println("You step away from the zeppelin.");
                 }
             }
-            // TODO: If Willis is in the party, do ritual to make zeppelin permanently fueled.
             return model.getCurrentHex().getDailyActionState(model);
+        }
+
+        private boolean checkForRitual(Model model) {
+            GameCharacter willis = model.getMainStory().getWillisCharacter();
+            boolean willisInParty = model.getParty().getPartyMembers().contains(willis);
+
+            if (!willisInParty) {
+                return false;
+            }
+
+            String alreadyAskedKey = "upgradedZeppelinAsked";
+            boolean alreadyAsked = model.getSettings().getMiscFlags().containsKey(alreadyAskedKey);
+
+            partyMemberSay(willis, "What are you doing " + model.getParty().getLeader().getFirstName() + "?");
+            leaderSay("The Zeppelin is out of fuel...");
+            if (alreadyAsked) {
+                partyMemberSay(willis, "Should we try to perform the ritual to charge the zeppelin with magic?");
+            } else {
+                println("Willis comes over and looks at the strange machinery which propels the zeppelin.");
+                partyMemberSay(willis, "You know, I was thinking...");
+                leaderSay("Yes?");
+                partyMemberSay(willis, "It may be possible to charge the engine with magical power through an arcanistic ritual.");
+                leaderSay("I'm not sure I understand.");
+                partyMemberSay(willis, "This machine... it doesn't look quite different from my automatons. " +
+                        "Perhaps I could enchant it so that it never needed to be refueled?");
+                leaderSay("But didn't your automatons turn on you? I don't want this aircraft to take off all on its own.");
+                partyMemberSay(willis, "Well, I suppose there's always the risk of that. I'm just telling you we could give it a shot. What do you think?");
+                model.getSettings().getMiscFlags().put(alreadyAskedKey, true);
+            }
+            print("Do you want to? (Y/N) ");
+            if (!yesNoInput()) {
+                return false;
+            }
+
+            if (model.getParty().size() < 5) {
+                println("Unfortunately you do not have enough party members to perform the ritual at this time.");
+                return false;
+            }
+
+            ZeppelinRitual zeppelinRitual = new ZeppelinRitual(model, MyColors.PURPLE,
+                    model.getCurrentHex().getCombatTheme());
+            zeppelinRitual.run(model);
+            if (zeppelinRitual.ritualSucceeded()) {
+                model.getSettings().getMiscFlags().put("zeppelinUpgraded", true);
+                ZEPPELIN.setColor2(MyColors.GOLD);
+            }
+            return true;
+        }
+    }
+
+    private static class ZeppelinRitual extends RitualEvent {
+        private final CombatTheme theme;
+
+        public ZeppelinRitual(Model model, MyColors magicColor, CombatTheme combatTheme) {
+            super(model, magicColor);
+            this.theme = combatTheme;
+        }
+
+        @Override
+        protected CombatTheme getTheme() {
+            return theme;
+        }
+
+        @Override
+        protected boolean runEventIntro(Model model, List<GameCharacter> ritualists) {
+            ritualists.clear();
+            println("You need at least five participants to start the ritual.");
+            return true;
+        }
+
+        @Override
+        protected void runEventOutro(Model model, boolean success, int power) {
+            GameCharacter willis = model.getMainStory().getWillisCharacter();
+            if (success) {
+                partyMemberSay(willis, "There we are! I think we did it!");
+                leaderSay("Really. That was all we had to todo?");
+                partyMemberSay(willis, "I believe it was. Now we should be able to fly on indefinitely.");
+                leaderSay("Willis... that's amazing. You're amazing.");
+                println("Willis blushes and looks away.");
+                partyMemberSay(willis, "Awww... it was nothing...");
+            } else {
+                leaderSay("Did it work? Did we do it?");
+                partyMemberSay(willis, "No... I'm afraid not. Something must have gone wrong.");
+                leaderSay("Oh... that's too bad.");
+                partyMemberSay(willis, "Well... let me reflect a little upon this. Maybe we can try again later.");
+                leaderSay("Alright. Don't worry about it if you can't figure it out. No pressure.");
+                partyMemberSay(willis, "Thanks " + model.getParty().getLeader().getFirstName() + ".");
+            }
+        }
+
+        @Override
+        public Sprite getCenterSprite() {
+            return ZEPPELIN;
         }
     }
 }

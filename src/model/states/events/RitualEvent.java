@@ -144,7 +144,7 @@ public abstract class RitualEvent extends DailyEventState {
     }
 
     public boolean ritualSucceeded() {
-        if (beams.size() != ritualists.size()) {
+        if (beams.size() != ritualists.size() || ritualFailed()) {
             return false;
         }
         for (MyPair<GameCharacter, GameCharacter> beam : beams) {

@@ -94,6 +94,8 @@ public abstract class Spell extends Item {
                 return Skill.MagicGreen;
             case WHITE:
                 return Skill.MagicWhite;
+            case PURPLE:
+                return Skill.MagicAny;
             default:
                 throw new IllegalStateException("Unrecognized magic color " + color.toString());
         }
