@@ -72,6 +72,9 @@ public class ZeppelinStoryPart extends StoryPart {
         }
         if (zeppelinPos.x == hexPoint.x && zeppelinPos.y == hexPoint.y && step == BOUGHT) {
             boolean zepplinUpgraded = model.getSettings().getMiscFlags().containsKey("zeppelinUpgraded");
+            if (zepplinUpgraded) {
+                ZEPPELIN.setColor2(MyColors.GOLD);
+            }
             if (zeppelinFueled || zepplinUpgraded) {
                 actions.add(new DailyAction("Use Zeppelin", new FlyWithZeppelinEvent(model)));
             } else {
@@ -456,7 +459,6 @@ public class ZeppelinStoryPart extends StoryPart {
             zeppelinRitual.run(model);
             if (zeppelinRitual.ritualSucceeded()) {
                 model.getSettings().getMiscFlags().put("zeppelinUpgraded", true);
-                ZEPPELIN.setColor2(MyColors.GOLD);
             }
             return true;
         }

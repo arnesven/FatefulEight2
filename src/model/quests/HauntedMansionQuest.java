@@ -160,7 +160,7 @@ public class HauntedMansionQuest extends Quest {
             MyColors.DARK_GREEN, MyColors.DARK_BROWN, MyColors.YELLOW, MyColors.DARK_BLUE);
     private static final List<QuestBackground> BG_SPRITES = makeBackgroundSprites();
 
-    private static List<QuestBackground> makeBackgroundSprites() {
+    public static List<QuestBackground> makeBackgroundSprites() {
         Sprite[][] sprites = new Sprite[][]{
                 {sky2, sky2, sky2, sky2, sky3, sky3, sky4, sky3},
                 {sky1, topWinLeft, topWinRight, topWinLeft, topWinMid, topWinRight, topWinLeft, topWinRight},

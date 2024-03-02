@@ -51,7 +51,7 @@ public class AncientStrongholdQuest extends MainQuest {
     @Override
     protected void resetQuest() {
         super.resetQuest();
-        getSuccessEndingNode().move(6, 0);
+        getSuccessEndingNode().move(4, 0);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AncientStrongholdQuest extends MainQuest {
             subScenes.add(machines[i]);
         }
         return List.of(new QuestScene("Floors and Machines", subScenes),
-                new QuestScene("Final Scene", List.of(new FinalCombatSubScene(1, 0))));
+                new QuestScene("Final Scene", List.of(new FinalCombatSubScene(2, 0))));
     }
 
     @Override
@@ -232,6 +232,7 @@ public class AncientStrongholdQuest extends MainQuest {
             return "Combat H";
         }
     }
+
 
     private abstract class AncientMachinerySubScene extends QuestSubScene {
         private final QuestSubScene previous;
@@ -411,11 +412,43 @@ public class AncientStrongholdQuest extends MainQuest {
     }
 
     private static List<QuestBackground> makeBackgroundSprites() {
-        List<QuestBackground> controlPanels = new ArrayList<>();
+        List<QuestBackground> background = new ArrayList<>();
         for (int i = 0; i < AncientStrongholdModel.FLOORS; i++) {
-            controlPanels.add(new QuestBackground(new Point(3, 7-i), CONTROL_PANEL, false));
+            background.add(new QuestBackground(new Point(3, 7-i), CONTROL_PANEL, false));
         }
-        return controlPanels;
+        Sprite32x32 sky1 = new Sprite32x32("sky1", "quest.png", 0x08,
+                MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY, MyColors.DARK_BLUE);
+        Sprite32x32 sky2 = new Sprite32x32("sky2", "quest.png", 0x09,
+                MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY, MyColors.DARK_BLUE);
+        Sprite32x32 sky3 = new Sprite32x32("sky3", "quest.png", 0x0A,
+                MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY, MyColors.DARK_BLUE);
+        Sprite32x32 sky4 = new Sprite32x32("sky4", "quest.png", 0x0B,
+                MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.YELLOW, MyColors.DARK_BLUE);
+        background.add(new QuestBackground(new Point(1, 0), sky1));
+        background.add(new QuestBackground(new Point(6, 0), sky1));
+        for (int x = 0; x < 8; x += 7) {
+            background.add(new QuestBackground(new Point(x, 0), sky1));
+            background.add(new QuestBackground(new Point(x, 1), sky2));
+            background.add(new QuestBackground(new Point(x, 2), sky3));
+            if (x == 0) {
+                background.add(new QuestBackground(new Point(x, 3), sky4));
+            } else {
+                background.add(new QuestBackground(new Point(x, 3), sky3));
+            }
+            background.add(new QuestBackground(new Point(x, 4), sky3));
+            background.add(new QuestBackground(new Point(x, 5), sky2));
+            background.add(new QuestBackground(new Point(x, 6), sky1));
+        }
+
+        for (int i = 0; i < 6; ++i) {
+            background.add(new QuestBackground(new Point(1, i+1),
+                    new Sprite32x32("ancienttowerleft" + i, "quest.png", 0x90 + 0x10*i,
+                    MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.DARK_BLUE)));
+            background.add(new QuestBackground(new Point(6, i+1),
+                    new Sprite32x32("ancienttowerright" + i, "quest.png", 0x91 + 0x10*i,
+                            MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.BROWN, MyColors.DARK_BLUE)));
+        }
+        return background;
     }
 
     private static class FinalCombatSubScene extends CombatSubScene {
