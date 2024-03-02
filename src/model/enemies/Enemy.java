@@ -129,7 +129,7 @@ public abstract class Enemy extends Combatant {
         combatBehavior.performAttack(model, this, target, combatEvent);
         model.getTutorial().combatDamage(model);
         combatEvent.checkForDead(model, target);
-        if (!isRangedAttack) {
+        if (!getAttackBehavior().canAttackBackRow()) {
             combatEvent.checkFlameWallDamage(model, this);
         }
     }

@@ -18,6 +18,8 @@ import view.sprites.PalisadeSprite;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.GrassCombatTheme;
+import view.subviews.MountainCombatTheme;
+import view.subviews.PalisadeCombatTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -35,6 +37,7 @@ public class OrcWarCampQuest extends MainQuest {
 
     private List<Enemy> archers;
     private List<Enemy> otherEnemies;
+    private CombatTheme combatTheme = new PalisadeCombatTheme(true);
 
     public OrcWarCampQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 0, 0, INTRO_TEXT, ENDING_TEXT);
@@ -66,7 +69,7 @@ public class OrcWarCampQuest extends MainQuest {
 
     @Override
     public CombatTheme getCombatTheme() {
-        return new GrassCombatTheme();
+        return combatTheme;
     }
 
     @Override
@@ -275,6 +278,12 @@ public class OrcWarCampQuest extends MainQuest {
         }
 
         @Override
+        public QuestEdge run(Model model, QuestState state) {
+            combatTheme = new PalisadeCombatTheme(true);
+            return super.run(model, state);
+        }
+
+        @Override
         public List<Enemy> getEnemies() {
             List<Enemy> enemies = new ArrayList<>(otherEnemies);
             for (Enemy e : archers) {
@@ -321,6 +330,7 @@ public class OrcWarCampQuest extends MainQuest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
+            combatTheme = new PalisadeCombatTheme(false);
             QuestEdge toReturn =  super.run(model, state);
             if (toReturn == getSuccessEdge()) {
                 state.println("In spite of the archers furiously firing arrows at you, the party manages to climb the " +
