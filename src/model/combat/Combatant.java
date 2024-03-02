@@ -76,6 +76,7 @@ public abstract class Combatant implements Serializable {
             conditions.add(cond);
         } else {
             // TODO: Check if cond is a timed condition, add the time to the existing condition
+            // TODO: Particularly Defend...
         }
     }
 
