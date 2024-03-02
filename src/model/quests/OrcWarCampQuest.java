@@ -105,7 +105,7 @@ public class OrcWarCampQuest extends MainQuest {
                 state.leaderSay("This must be the chieftains hut.");
                 state.partyMemberSay(model.getParty().getRandomPartyMember(), "Look's like he's not home at the moment.");
                 state.print("You hurriedly rummage through a desk and quickly find what you are looking for. Papers with what appear to be orders. " +
-                        "Instructions for where this and other orc battalions are to be deployed and attack from.");
+                        "Instructions for where this and other orc battalions are to be deployed and attack from. ");
                 state.print("You also find a map depicting this part of the world. Curiously it has a location on it marked with the word 'Quad'. " +
                         "The location matches the one on your map, which you discovered with Willis in the library.");
                 state.leaderSay("Seems like these orcs are being manipulated by the Quad. " +

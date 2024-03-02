@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.map.HexLocation;
+import model.map.UrbanLocation;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -61,7 +62,9 @@ public class QuestSuccessfulNode extends QuestNode {
         } else {
             state.println(".");
         }
-        model.getQuestDeck().setSuccessfulIn(model.getCurrentHex().getLocation());
+        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
+            model.getQuestDeck().setSuccessfulIn(model.getCurrentHex().getLocation());
+        }
         reward.giveYourself(model);
         return new QuestEdge(this);
     }
