@@ -7,6 +7,7 @@ import model.items.FoodDummyItem;
 import model.items.Inventory;
 import model.items.Item;
 import model.items.clothing.FurArmor;
+import model.items.clothing.PrimitiveArmor;
 import model.items.weapons.GrandMaul;
 import model.items.weapons.Hatchet;
 import model.races.Race;
@@ -94,7 +95,7 @@ public class BarbarianClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new GrandMaul(), new FurArmor(), new SupplyPackage());
+        return List.of(new GrandMaul(), new PrimitiveArmor(), new SupplyPackage());
     }
 
     private static class SupplyPackage extends FoodDummyItem {

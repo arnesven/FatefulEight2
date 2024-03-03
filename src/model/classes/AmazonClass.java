@@ -7,6 +7,7 @@ import model.horses.Prancer;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.clothing.FurArmor;
+import model.items.clothing.PrimitiveArmor;
 import model.items.weapons.Javelins;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
@@ -44,7 +45,7 @@ public class AmazonClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        List<Item> starting = new ArrayList<>(List.of(new Javelins(), new FurArmor()));
+        List<Item> starting = new ArrayList<>(List.of(new Javelins(), new PrimitiveArmor()));
         starting.addAll(CharacterClass.horseOrPony());
         return starting;
     }
