@@ -2,14 +2,17 @@ package model.items.clothing;
 
 import model.items.Item;
 import model.items.Prevalence;
+import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class ChainMail extends HeavyArmorClothing {
-    private static final Sprite SPRITE = new ItemSprite(5, 2);
+public class PlateMailArmor extends HeavyArmorClothing {
 
-    public ChainMail() {
-        super("Chain Mail", 24, 3);
+    private static final Sprite SPRITE = new ItemSprite(11, 3,
+            MyColors.BROWN, MyColors.RED, MyColors.LIGHT_PINK);
+
+    public PlateMailArmor() {
+        super("Plate Mail Armor", 36, 4);
     }
 
     @Override
@@ -19,7 +22,7 @@ public class ChainMail extends HeavyArmorClothing {
 
     @Override
     public Item copy() {
-        return new ChainMail();
+        return new PlateMailArmor();
     }
 
     @Override

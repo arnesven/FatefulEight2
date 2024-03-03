@@ -13,6 +13,7 @@ import model.items.Equipment;
 import model.items.Inventory;
 import model.items.ItemDeck;
 import model.items.Lockpick;
+import model.items.clothing.PlateMailArmor;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.states.GameState;

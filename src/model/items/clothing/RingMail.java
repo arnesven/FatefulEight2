@@ -12,7 +12,7 @@ public class RingMail extends Clothing {
     private static final Sprite SPRITE = new ItemSprite(4, 2);
 
     public RingMail() {
-        super("Ring Mail", 26, 3, false);
+        super("Ring Mail", 22, 3, false);
     }
 
     @Override

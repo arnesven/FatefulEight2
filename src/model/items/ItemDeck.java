@@ -194,7 +194,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public static List<Clothing> allApparel() {
         return List.of(new StuddedTunic(), new StuddedJerkin(), new OutlawArmor(), new LeatherArmor(),
-                new RingMail(), new ChainMail(), new DragonArmor(), new ScaleArmor(), new BreastPlate(),
+                new RingMail(), new ChainMail(), new PlateMailArmor(), new DragonArmor(), new ScaleArmor(), new BreastPlate(),
                 new FullPlateArmor(), new WarmCape(), new FancyJerkin(), new PilgrimsCloak(),
                 new MagesRobes(), new ShamansRobes(), new CultistsRobes(), new WarlocksRobes(),
                 new MesmersRobes(), new LeatherTunic(), new QuiltedArmor(), new FurArmor(), new Brigandine(),
