@@ -9,8 +9,7 @@ import model.states.CombatEvent;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SpellCombatAction extends BasicCombatAction {
     private final List<CombatSpell> combatSpells;
@@ -35,9 +34,11 @@ public class SpellCombatAction extends BasicCombatAction {
     @Override
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> res = new ArrayList<>();
-        for (CombatSpell spell : combatSpells) { // TODO: Remove duplicates
-            if (spell.canBeCastOn(model, target)) {
+        Set<String> added = new HashSet<>();
+        for (CombatSpell spell : combatSpells) {
+            if (spell.canBeCastOn(model, target) && !added.contains(spell.getName())) {
                 res.add(new SpellFinalCombatAction(spell));
+                added.add(spell.getName());
             }
         }
         return res;
