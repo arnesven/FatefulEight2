@@ -110,7 +110,7 @@ public class CombatEvent extends DailyEventState {
         if (isWipedOut()) {
             print("You have been wiped out! ");
         } else if (partyFled) {
-            print("You have have fled battle. "); // TODO: Possible party members leave party
+            print("You have have fled battle. ");
         } else if (roundCounter > timeLimit) {
             print("Combat has been interrupted. ");
         } else {

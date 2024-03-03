@@ -34,6 +34,6 @@ public abstract class MasterySpell extends Spell {
     }
 
     public Integer[] getThresholds() {
-        return new Integer[]{10, 25, 50, 100}; // TODO: something more reasonable like 10, 25, 50, 100
+        return new Integer[]{10, 25, 50, 100};
     }
 }

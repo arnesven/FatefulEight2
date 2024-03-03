@@ -46,7 +46,7 @@ public class WarlocksDungeonQuest extends Quest {
 
     @Override
     public int getTimeLimitSeconds() {
-        return 10*60; // TODO: 10 minutes;
+        return 10*60;
     }
 
     @Override

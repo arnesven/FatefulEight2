@@ -155,7 +155,7 @@ public class GameLog {
     }
 
     public boolean inputReady() {
-        return inputMode.inputReady(this); // TODO: Got a nullptr execption here...
+        return inputMode.inputReady(this);
     }
 
     public synchronized String getInput() {

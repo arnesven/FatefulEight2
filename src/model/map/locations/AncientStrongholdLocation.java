@@ -103,7 +103,9 @@ public class AncientStrongholdLocation extends HexLocation {
                             "Sounds wise. I don't want to go in there, but I guess we have no choice.");
                 }
             } else {
-                // TODO: What happens if you enter an A. Stronghold that wasn't part of the main story?
+                println("The door to the stronghold is shut and tightly locked. " +
+                        "It seems like no pick could pick this lock.");
+                leaderSay("We're never getting in there...");
             }
         }
     }
