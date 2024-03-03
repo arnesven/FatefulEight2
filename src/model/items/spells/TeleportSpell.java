@@ -66,7 +66,6 @@ public class TeleportSpell extends ImmediateSpell {
     }
 
     public static void teleportPartyToPosition(Model model, GameState state, Point position) {
-        SubView previousSubView = model.getSubView();
         MapSubView mapSubView = new MapSubView(model);
         CollapsingTransition.transition(model, mapSubView);
         state.println("Preparing to teleport, press enter to continue.");
@@ -74,7 +73,7 @@ public class TeleportSpell extends ImmediateSpell {
         TeleportingTransition.transition(model, mapSubView, position);
         state.println("Press enter to continue.");
         state.waitForReturn();
-        CollapsingTransition.transition(model, previousSubView);
+        CollapsingTransition.transition(model, model.getCurrentHex().getImageSubView());
     }
 
     private void markLocation(Model model, GameState state, GameCharacter caster) {

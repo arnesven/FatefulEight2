@@ -5,8 +5,10 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.*;
 import model.items.special.PearlItem;
+import model.items.spells.TeleportSpell;
 import model.quests.scenes.CombatSubScene;
 import model.states.CombatEvent;
+import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -100,6 +102,20 @@ public class AncientStrongholdQuest extends MainQuest {
         scenes.get(0).get(1).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
 
         scenes.get(1).get(0).connectSuccess(getSuccessEndingNode());
+    }
+
+    @Override
+    public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
+        state.println("As you return to the elevator, you notice an antechamber. Inside is a large glowing portal.");
+        state.leaderSay("I wonder where this would take us?");
+        state.print("Do you step through the portal (Y/N)? ");
+        if (state.yesNoInput()) {
+            TeleportSpell.teleportPartyToPosition(model, state, model.getMainStory().getCampPosition());
+        }
+        state.leaderSay("Oh, we're back at the orc war camp. So that's how they managed to move those " +
+                "troops so quickly.");
+        return toReturn;
     }
 
     @Override
@@ -470,7 +486,7 @@ public class AncientStrongholdQuest extends MainQuest {
         public QuestEdge run(Model model, QuestState state) {
             state.println("You step out of the elevator and in to what feels like some kind of a lobby. Through a hallway you can see " +
                     "a light from the chamber within, and you hear voices.");
-            state.print("Do you enter the chamber and carefully and calmly (Y) or do you rush in with weapons drawn (N)?");
+            state.print("Do you enter the chamber and carefully and calmly (Y) or do you rush in with weapons drawn (N)? ");
             if (state.yesNoInput()) {
                 state.println("You slowly step into the chamber. There are lots of people here but also ghostly specters. " +
                         "Some of them notice you and start whispering to one another.");
