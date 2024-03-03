@@ -14,7 +14,7 @@ public class WarmCape extends Clothing {
     private final ItemSprite sprite;
 
     public WarmCape() {
-        super("Warm Cape", 14, 0, false);
+        super("Warm Cape", 12, 0, false);
         this.sprite = new ItemSprite(10, 2, MyColors.DARK_RED, MyColors.DARK_BROWN,
                 MyRandom.sample(List.of(MyColors.BEIGE, MyColors.TAN, MyColors.LIGHT_YELLOW)));
     }

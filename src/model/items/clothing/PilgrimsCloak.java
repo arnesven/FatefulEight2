@@ -13,7 +13,7 @@ public class PilgrimsCloak extends Clothing {
     private static final Sprite SPRITE = new ItemSprite(12, 2, MyColors.LIGHT_GRAY, MyColors.GRAY, MyColors.WHITE);
 
     public PilgrimsCloak() {
-        super("Pilgrim's Cloak", 20, 1, false);
+        super("Pilgrim's Cloak", 14, 1, false);
     }
 
     @Override

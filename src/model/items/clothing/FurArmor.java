@@ -18,7 +18,7 @@ public class FurArmor extends Clothing {
     private final Sprite sprite;
 
     public FurArmor() {
-        super("Fur Armor", 24, 3, false);
+        super("Fur Armor", 28, 3, false);
         if (MyRandom.flipCoin()) {
             this.sprite = SPRITE;
         } else {

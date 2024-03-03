@@ -14,7 +14,7 @@ public abstract class RobesClothing extends Clothing {
     private final Skill magicSkill;
 
     public RobesClothing(String name, Skill skill, int spriteNum, MyColors color2, MyColors color3, MyColors color4) {
-        super(name, 22, 1, false);
+        super(name, 16, 1, false);
         this.sprite = new ItemSprite(spriteNum, 2, color2, color3, color4);
         this.magicSkill = skill;
     }

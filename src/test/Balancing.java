@@ -2,16 +2,21 @@ package test;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.SkillBonus;
 import model.characters.preset.LonnieLiebgott;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.items.Item;
 import model.items.ItemDeck;
 import model.items.Prevalence;
+import model.items.clothing.Clothing;
+import model.items.clothing.LeatherArmor;
 import model.items.weapons.Longsword;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
+import util.MyPair;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,6 +83,17 @@ public class Balancing {
         return 2.0;
     }
 
+    private static double getLowerTolerance(Clothing c) {
+        return 2.0;
+    }
+
+    private static double getUpperTolerance(Clothing c) {
+        if (c.getPrevalence() == Prevalence.rare) {
+            return 8.0;
+        }
+        return 2.0;
+    }
+
     private static double calcTotalDamage(Weapon weapon) {
         double sum = 0;
         for (int i = 0; i < MAX_RANKS; ++i) {
@@ -89,5 +105,56 @@ public class Balancing {
             sum += testDummy.calcAverageDamage();
         }
         return sum;
+    }
+
+    public static void runClothingAnalysis(Model model) {
+        LeatherArmor leatherArmor = new LeatherArmor();
+
+        double baselineArmor = leatherArmor.getAP();
+        System.out.println("BASELINE: " + leatherArmor.getName());
+        System.out.println("      AP: " + baselineArmor + " AP");
+        double baselineCost = leatherArmor.getCost();
+        System.out.println("   Value: " + baselineCost);
+        System.out.println("   Ratio: " + baselineArmor / leatherArmor.getCost());
+
+        List<Clothing> clothing = new ArrayList<>(ItemDeck.allApparel());
+        clothing.sort(Comparator.comparing(Clothing::getName));
+        System.out.println("Name                 AP    cost  H/L ratio    suggested");
+        for (Clothing c : clothing) {
+            double clothingAP = c.getAP();
+            double ratio = clothingAP / c.getCost();
+            double suggest =  clothingAP * baselineCost / baselineArmor;
+            if (c.isHeavy()) {
+                suggest *= 0.75;
+            }
+            suggest += modifyForSkillBonuses(c);
+            suggest += modifyForSpeedBonuses(c);
+
+            String tableRow = String.format("%-20s %3.1f  %4d   %s  %2.6f   %2.2f", c.getName(), clothingAP, c.getCost(), c.isHeavy() ? "H" : "L", ratio, suggest);
+            double diff = suggest - c.getCost();
+            if (suggest < c.getCost() - getUpperTolerance(c)) {
+                System.err.println(tableRow + " TO EXPENSIVE? Diff: " + diff);
+            } else if (suggest > c.getCost() + getLowerTolerance(c)) {
+                System.err.println(tableRow + " TO CHEAP? Diff: " + diff);
+            } else {
+                System.out.println(tableRow);
+            }
+        }
+    }
+
+    private static double modifyForSpeedBonuses(Clothing c) {
+        return c.getSpeedModifier() * 4;
+    }
+
+    private static double modifyForSkillBonuses(Clothing c) {
+        double result = 0;
+        for (MyPair<Skill, Integer> sb : c.getSkillBonuses()) {
+            if (sb.second < 0) {
+                result += sb.second * 3.0;
+            } else {
+                result += sb.second * 5.0;
+            }
+        }
+        return result;
     }
 }

@@ -12,7 +12,7 @@ public class PlateMailArmor extends HeavyArmorClothing {
             MyColors.BROWN, MyColors.RED, MyColors.LIGHT_PINK);
 
     public PlateMailArmor() {
-        super("Plate Mail Armor", 36, 4);
+        super("Plate Mail Armor", 28, 4);
     }
 
     @Override

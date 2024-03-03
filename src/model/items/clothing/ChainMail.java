@@ -9,7 +9,7 @@ public class ChainMail extends HeavyArmorClothing {
     private static final Sprite SPRITE = new ItemSprite(5, 2);
 
     public ChainMail() {
-        super("Chain Mail", 24, 3);
+        super("Chain Mail", 20, 3);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class LeatherTunic extends Clothing {
     private static final Sprite SPRITE = new ItemSprite(15, 2, MyColors.DARK_RED, MyColors.GOLD);
 
     public LeatherTunic() {
-        super("Leather Tunic", 14, 1, false);
+        super("Leather Tunic", 10, 1, false);
     }
 
     @Override

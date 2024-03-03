@@ -8,7 +8,7 @@ public class BreastPlate extends SuperHeavyArmorClothing {
     private static final Sprite SPRITE = new ItemSprite(8, 2);
 
     public BreastPlate() {
-        super("Breast Plate", 46, 6);
+        super("Breast Plate", 40, 6);
     }
 
     @Override

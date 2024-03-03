@@ -10,7 +10,7 @@ public class DragonArmor extends HeavyArmorClothing {
     private static final Sprite SPRITE = new ItemSprite(6, 2, MyColors.GRAY_RED, MyColors.BEIGE);
 
     public DragonArmor() {
-        super("Dragon Armor", 38, 4);
+        super("Dragon Armor", 34, 4);
     }
 
     @Override

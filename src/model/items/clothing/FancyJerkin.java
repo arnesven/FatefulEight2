@@ -13,7 +13,7 @@ public class FancyJerkin extends Clothing {
     private static final Sprite SPRITE = new ItemSprite(11, 2, MyColors.DARK_GRAY, MyColors.BEIGE);
 
     public FancyJerkin() {
-        super("Fancy Jerkin", 18, 0, false);
+        super("Fancy Jerkin", 16, 0, false);
     }
 
     @Override

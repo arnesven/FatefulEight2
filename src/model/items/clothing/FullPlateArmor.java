@@ -13,7 +13,7 @@ public class FullPlateArmor extends SuperHeavyArmorClothing {
     private static final Sprite SPRITE = new ItemSprite(9, 2);
 
     public FullPlateArmor() {
-        super("Full Plate Armor", 50, 7);
+        super("Full Plate Armor", 42, 7);
     }
 
     @Override

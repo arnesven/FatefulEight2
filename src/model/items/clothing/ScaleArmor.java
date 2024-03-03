@@ -9,7 +9,7 @@ public class ScaleArmor extends SuperHeavyArmorClothing {
     private static final Sprite SPRITE = new ItemSprite(7, 2);
 
     public ScaleArmor() {
-        super("Scale Armor", 42, 5);
+        super("Scale Armor", 32, 5);
     }
 
     @Override
