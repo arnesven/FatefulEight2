@@ -75,8 +75,14 @@ public abstract class Combatant implements Serializable {
         if (!hasCondition(cond.getClass())) {
             conditions.add(cond);
         } else {
-            // TODO: Check if cond is a timed condition, add the time to the existing condition
-            // TODO: Particularly Defend...
+            for (Condition condition : conditions) {
+                if (condition.getName().equals(cond.getName())) {
+                    if (condition.hasDuration()) {
+                        condition.addToDuration(cond.getDuration());
+                    }
+                    break;
+                }
+            }
         }
     }
 
