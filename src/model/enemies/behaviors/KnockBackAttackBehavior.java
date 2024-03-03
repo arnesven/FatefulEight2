@@ -26,7 +26,7 @@ public class KnockBackAttackBehavior extends EnemyAttackBehavior {
             if (model.getParty().getFrontRow().contains(target)) {
                 combatEvent.toggleFormationFor(model, target);
                 combatEvent.println(target.getName() + " has been knocked back!");
-                // TODO: Trigger tutorial
+                model.getTutorial().enemyAttacks2(model);
             }
         }
     }

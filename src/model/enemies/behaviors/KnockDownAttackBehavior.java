@@ -25,8 +25,8 @@ public class KnockDownAttackBehavior extends EnemyAttackBehavior {
         super.performAttack(model, enemy, target, combatEvent);
         if (!target.isDead() && hpBefore > target.getHP() && MyRandom.rollD10() <= chance) {
             combatEvent.println(target.getName() + " has been knocked down by " + enemy.getName() + ".");
-            // TODO: trigger tutorial
             target.addCondition(new TimedParalysisCondition());
+            model.getTutorial().enemyAttacks2(model);
         }
     }
 

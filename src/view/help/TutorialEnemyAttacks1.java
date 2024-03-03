@@ -2,7 +2,7 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialEnemyAttacks extends SubChapterHelpDialog {
+public class TutorialEnemyAttacks1 extends SubChapterHelpDialog {
     private static final String TEXT =
             "Most enemies have regular attacks, but some have special attacks.\n\n" +
             "Magic attacks completely ignore armor " +
@@ -17,7 +17,7 @@ public class TutorialEnemyAttacks extends SubChapterHelpDialog {
             "Bleeding attacks can cause a character to become bleeding, which causes the character to suffer 1 damage " +
             "per combat round until healed in any way.";
 
-    public TutorialEnemyAttacks(GameView view) {
-        super(view, "Enemy Attacks", TEXT);
+    public TutorialEnemyAttacks1(GameView view) {
+        super(view, "Enemy Attacks I", TEXT);
     }
 }

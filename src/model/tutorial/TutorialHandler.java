@@ -289,9 +289,16 @@ public class TutorialHandler implements Serializable {
     }
 
     public void enemyAttacks(Model model) {
-        runOnce("enemyattacks", () -> {
+        runOnce("enemyattacks1", () -> {
             model.getLog().waitForAnimationToFinish();
-            model.transitionToDialog(new TutorialEnemyAttacks(model.getView()));
+            model.transitionToDialog(new TutorialEnemyAttacks1(model.getView()));
+        });
+    }
+
+    public void enemyAttacks2(Model model) {
+        runOnce("enemyattacks2", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialEnemyAttacks2(model.getView()));
         });
     }
 
