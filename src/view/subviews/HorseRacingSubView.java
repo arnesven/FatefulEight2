@@ -63,7 +63,7 @@ public class HorseRacingSubView extends SubView implements Animation {
 
     private int calcPosDiff(HorseRacer npc) {
         int totalDiff = (npc.getPosition().y + npc.getLap() * HorseRaceTrack.TRACK_LENGTH) -
-                (player.getPosition().y + player.getLap() * HorseRaceTrack.TRACK_LENGTH); // TODO : Still not right...
+                (player.getPosition().y + player.getLap() * HorseRaceTrack.TRACK_LENGTH);
         while (totalDiff > HorseRaceTrack.TRACK_LENGTH / 2) {
             totalDiff -= HorseRaceTrack.TRACK_LENGTH;
         }

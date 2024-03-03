@@ -148,7 +148,7 @@ public class MainStory implements Serializable {
             }
             result.add(new VisitTask("Town", townVisited));
             result.add(new VisitTask("Castle", castleVisited));
-            result.add(new VisitTask("Temple", templeVisited)); // TODO: Add some info on temples
+            result.add(new VisitTask("Temple", templeVisited))
             result.add(new RuinsEntry(model));
             return result;
         }
