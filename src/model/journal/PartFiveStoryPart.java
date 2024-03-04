@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.map.CastleLocation;
+import model.map.WorldBuilder;
 import model.map.locations.AncientStrongholdLocation;
 import model.quests.AncientStrongholdQuest;
 import model.quests.OrcWarCampQuest;
@@ -75,7 +76,7 @@ public class PartFiveStoryPart extends StoryPart {
         @Override
         public Point getPosition(Model model) {
             if (internalStep == 0) {
-                return null;
+                return WorldBuilder.getFortressPosition(model.getMainStory().getExpandDirection());
             }
             return model.getMainStory().getCastlePosition(model);
         }

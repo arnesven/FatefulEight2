@@ -120,7 +120,7 @@ public class WorldBuilder {
         Map<Point, HexContents> contents = new HashMap<>();
 
         addNorthernContents(contents);
-        addEvilTower(contents, 34, 1, EXPAND_NORTH);
+        addEvilTower(contents, getFortressPosition(EXPAND_NORTH), EXPAND_NORTH);
 
         addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);
         addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
@@ -168,7 +168,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 29, 17, 0, SOUTH_WEST);
         addRoadsAndRivers(contents, 30, 17, 0, SOUTH);
         addTemple(contents, 38, 17, "the Peaks");
-        addEvilTower(contents, 49, 17, EXPAND_EAST);
+        addEvilTower(contents, getFortressPosition(EXPAND_EAST), EXPAND_EAST);
 
         addRoadsAndRivers(contents, 14, 18, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 15, 18, 0, NORTH_WEST | NORTH | NORTH_EAST);
@@ -188,7 +188,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 23, 19, SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 24, 19, NORTH_WEST | SOUTH_EAST, 0);
         addInn(contents,26,19, "Crossroads Inn", NORTH_EAST | SOUTH_EAST | SOUTH | SOUTH_WEST, 0);
-        addEvilTower(contents, 2, 19, EXPAND_WEST);
+        addEvilTower(contents, getFortressPosition(EXPAND_WEST), EXPAND_WEST);
         addRoadsAndRivers(contents, 27, 19, SOUTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 29, 19, 0, NORTH);
         addRoadsAndRivers(contents, 31, 19, 0, NORTH | SOUTH_EAST | NORTH_EAST);
@@ -268,12 +268,27 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 28, 26, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 29, 26, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
-        addEvilTower(contents, 17, 37, EXPAND_SOUTH);
+        addEvilTower(contents, getFortressPosition(EXPAND_SOUTH), EXPAND_SOUTH);
 
         addEasternContents(contents);
         addSouthernContents(contents);
 
         return contents;
+    }
+
+    public static Point getFortressPosition(int expandDirection) {
+        switch (expandDirection) {
+            case EXPAND_NORTH:
+                return new Point(34, 1);
+            case EXPAND_EAST:
+                new Point(49, 17);
+            case EXPAND_SOUTH:
+                return new Point(17, 37);
+            case EXPAND_WEST:
+                return new Point(2, 19);
+            default:
+                return new Point(5, 5);
+        }
     }
 
     private static void addSouthernContents(Map<Point, HexContents> contents) {
@@ -407,8 +422,8 @@ public class WorldBuilder {
         contents.put(new Point(x, y), new HexContents(new RuinsLocation(ruinsName), roads, rivers));
     }
 
-    private static void addEvilTower(Map<Point, HexContents> contents, int x, int y, int expandDirection) {
-        contents.put(new Point(x, y), new HexContents(new AncientStrongholdLocation(expandDirection), 0, 0));
+    private static void addEvilTower(Map<Point, HexContents> contents, Point point, int expandDirection) {
+        contents.put(new Point(point.x, point.y), new HexContents(new AncientStrongholdLocation(expandDirection), 0, 0));
     }
 
     private static void addTemple(Map<Point, HexContents> contents, int x, int y, String templeName) {
