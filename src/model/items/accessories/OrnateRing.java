@@ -13,7 +13,7 @@ public class OrnateRing extends JewelryItem {
     private static final Sprite SPRITE = new ItemSprite(11, 7, MyColors.LIGHT_GRAY, MyColors.GRAY, MyColors.GOLD);
 
     public OrnateRing() {
-        super("Ornate Ring", 12);
+        super("Ornate Ring", 8);
     }
 
     @Override

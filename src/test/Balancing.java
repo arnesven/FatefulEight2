@@ -6,9 +6,12 @@ import model.characters.SkillBonus;
 import model.characters.preset.LonnieLiebgott;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.items.ArmorItem;
 import model.items.Item;
 import model.items.ItemDeck;
 import model.items.Prevalence;
+import model.items.accessories.Accessory;
+import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.Longsword;
@@ -16,6 +19,7 @@ import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
+import util.MyLists;
 import util.MyPair;
 
 import java.util.ArrayList;
@@ -72,23 +76,12 @@ public class Balancing {
 
     }
 
-    private static double getLowerTolerance(Weapon w) {
+    private static double getLowerTolerance(Item w) {
         return 2.0;
     }
 
-    private static double getUpperTolerance(Weapon w) {
+    private static double getUpperTolerance(Item w) {
         if (w.getPrevalence() == Prevalence.rare) {
-            return 8.0;
-        }
-        return 2.0;
-    }
-
-    private static double getLowerTolerance(Clothing c) {
-        return 2.0;
-    }
-
-    private static double getUpperTolerance(Clothing c) {
-        if (c.getPrevalence() == Prevalence.rare) {
             return 8.0;
         }
         return 2.0;
@@ -142,7 +135,7 @@ public class Balancing {
         }
     }
 
-    private static double modifyForSpeedBonuses(Clothing c) {
+    private static double modifyForSpeedBonuses(Item c) {
         return c.getSpeedModifier() * 4;
     }
 
@@ -156,5 +149,73 @@ public class Balancing {
             }
         }
         return result;
+    }
+
+    private static double modifyForSkillBonuses(Item c) {
+        double result = 0;
+        for (MyPair<Skill, Integer> sb : c.getSkillBonuses()) {
+            if (sb.second < 0) {
+                result += sb.second * 3.0;
+            } else {
+                result += sb.second * (sb.first == Skill.SpellCasting ? 16.0 : 8.0);
+            }
+        }
+        return result;
+    }
+
+    public static void runAccessoryAnalysis(Model model) {
+        LeatherArmor leatherArmor = new LeatherArmor();
+
+        double baselineArmor = leatherArmor.getAP();
+        System.out.println("BASELINE: " + leatherArmor.getName());
+        System.out.println("      AP: " + baselineArmor + " AP");
+        double baselineCost = leatherArmor.getCost();
+        System.out.println("   Value: " + baselineCost);
+        System.out.println("   Ratio: " + baselineArmor / leatherArmor.getCost());
+
+        List<Item> items = new ArrayList<>(ItemDeck.allItems());
+        items = MyLists.filter(items, (Item it) -> it instanceof Accessory);
+        items.sort(Comparator.comparing(Item::getName));
+        System.out.println("Name                 AP    cost  H/L ratio    suggested");
+        for (Item it : items) {
+            double itemAP = it instanceof ArmorItem ? ((ArmorItem) it).getAP() : 0;
+            double ratio = itemAP / it.getCost();
+            double suggest =  itemAP * baselineCost / baselineArmor;
+            if (it instanceof ArmorItem && ((ArmorItem) it).isHeavy()) {
+                suggest *= 0.75;
+            }
+            suggest += modifyForSkillBonuses(it);
+            suggest += modifyForSpeedBonuses(it);
+            suggest += modifyForHealthBonus(it);
+            suggest += modifyForSPBonus(it);
+            suggest += modifyForBlockValue(it);
+
+
+            String hvyString = it instanceof ArmorItem ? (((ArmorItem) it).isHeavy() ? "H" : "L") : "-";
+            String tableRow = String.format("%-20s %3.1f  %4d   %s  %2.6f   %2.2f", it.getName(), itemAP, it.getCost(), hvyString, ratio, suggest);
+            double diff = suggest - it.getCost();
+            if (suggest < it.getCost() - getUpperTolerance(it)) {
+                System.err.println(tableRow + " TO EXPENSIVE? Diff: " + diff);
+            } else if (suggest > it.getCost() + getLowerTolerance(it)) {
+                System.err.println(tableRow + " TO CHEAP? Diff: " + diff);
+            } else {
+                System.out.println(tableRow);
+            }
+        }
+    }
+
+    private static double modifyForBlockValue(Item it) {
+        if (!(it instanceof ShieldItem)) {
+            return 0;
+        }
+        return -6 + ((ShieldItem) it).getBlockChance() * 6;
+    }
+
+    private static double modifyForSPBonus(Item it) {
+        return it instanceof Accessory ? ((Accessory) it).getSPBonus() * 12 : 0;
+    }
+
+    private static double modifyForHealthBonus(Item it) {
+        return it instanceof Accessory ? ((Accessory) it).getHealthBonus() * 6 : 0;
     }
 }

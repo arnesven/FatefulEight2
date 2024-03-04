@@ -9,7 +9,7 @@ public class GoldRing extends JewelryItem {
     private static final Sprite SPRITE = new ItemSprite(5, 9, MyColors.GOLD, MyColors.LIGHT_BLUE);
 
     public GoldRing() {
-        super("Gold Ring", 18);
+        super("Gold Ring", 10);
     }
 
     @Override

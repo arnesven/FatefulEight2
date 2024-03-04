@@ -14,7 +14,7 @@ public class FancyGloves extends GlovesItem {
     private Sprite sprite;
 
     public FancyGloves() {
-        super("Fancy Gloves", 8);
+        super("Fancy Gloves", 14);
         int rand = MyRandom.randInt(3);
         if (rand == 0) {
             sprite = new ItemSprite(3, 0xA, MyColors.DARK_RED, MyColors.DARK_BROWN, MyColors.GOLD);

@@ -13,7 +13,7 @@ public class LeatherGloves extends GlovesItem {
     private static final Sprite SPRITE = new ItemSprite(2, 0xA, MyColors.BROWN, MyColors.DARK_BROWN);
 
     public LeatherGloves() {
-        super("Leather Gloves", 8);
+        super("Leather Gloves", 14);
     }
 
     @Override

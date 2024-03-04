@@ -23,7 +23,8 @@ public class Diadem extends HeadGearItem {
 
     @Override
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        return List.of(new MyPair<>(Skill.SpellCasting, 1));
+        return List.of(new MyPair<>(Skill.SpellCasting, 1),
+                new MyPair<>(Skill.Entertain, 1));
     }
 
     @Override

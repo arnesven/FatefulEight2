@@ -13,7 +13,7 @@ public class GoodShoes extends ShoesItem {
     private static final Sprite SPRITE = new ItemSprite(0, 0xA, MyColors.BROWN, MyColors.DARK_BROWN);
 
     public GoodShoes() {
-        super("Good Shoes", 4);
+        super("Good Shoes", 6);
     }
 
     @Override

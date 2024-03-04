@@ -13,7 +13,7 @@ public class SteelGauntlets extends GlovesItem {
     private static final Sprite SPRITE = new ItemSprite(5, 0xA, MyColors.LIGHT_GRAY, MyColors.DARK_GRAY);
 
     public SteelGauntlets() {
-        super("Steel Gauntlets", 20);
+        super("Steel Gauntlets", 12);
     }
 
     @Override

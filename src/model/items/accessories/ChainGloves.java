@@ -9,7 +9,7 @@ public class ChainGloves extends GlovesItem {
     private static final Sprite SPRITE = new ItemSprite(4, 0xA, MyColors.BROWN, MyColors.DARK_BROWN, MyColors.LIGHT_GRAY);
 
     public ChainGloves() {
-        super("Chain Gloves", 14);
+        super("Chain Gloves", 10);
     }
 
     @Override

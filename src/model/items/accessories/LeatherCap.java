@@ -10,7 +10,7 @@ public class LeatherCap extends HeadGearItem {
     private static final Sprite SPRITE = new ItemSprite(9, 10, MyColors.DARK_BROWN, MyColors.BROWN);
 
     public LeatherCap() {
-        super("Leather Cap", 14);
+        super("Leather Cap", 10);
     }
 
     @Override

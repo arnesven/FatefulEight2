@@ -95,7 +95,7 @@ public class ItemDeck extends ArrayList<Item> {
 
     public Item getRandomItem() { return getRandomItem(higherTierChance); }
 
-    private static Collection<? extends Item> allItems() {
+    public static Collection<? extends Item> allItems() {
         List<Item> allItems = new ArrayList<>();
         allItems.addAll(allWeapons());
         allItems.addAll(allApparel());

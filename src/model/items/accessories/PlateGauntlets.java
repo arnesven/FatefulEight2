@@ -13,7 +13,7 @@ public class PlateGauntlets extends GlovesItem {
     private static final Sprite SPRITE =  new ItemSprite(6, 0xA,MyColors.LIGHT_GRAY, MyColors.DARK_GRAY);
 
     public PlateGauntlets() {
-        super("Plate Gauntlets", 24);
+        super("Plate Gauntlets", 14);
     }
 
     @Override

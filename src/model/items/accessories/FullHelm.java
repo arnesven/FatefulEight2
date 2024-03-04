@@ -13,7 +13,7 @@ public class FullHelm extends HeadGearItem {
     private static final Sprite SPRITE = new ItemSprite(11, 9, MyColors.GOLD, MyColors.DARK_GRAY);
 
     public FullHelm() {
-        super("Full Helm", 22);
+        super("Full Helm", 20);
     }
 
     @Override

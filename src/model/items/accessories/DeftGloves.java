@@ -13,7 +13,7 @@ public class DeftGloves extends GlovesItem {
     private static final Sprite SPRITE = new ItemSprite(1, 0xA, MyColors.GRAY, MyColors.DARK_GRAY);
 
     public DeftGloves() {
-        super("Deft Gloves", 8);
+        super("Deft Gloves", 16);
     }
 
     @Override

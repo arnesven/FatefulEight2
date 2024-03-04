@@ -17,7 +17,7 @@ public class GreatHelm extends HeadGearItem {
     private Sprite sprite;
 
     public GreatHelm() {
-        super("Great Helm", 24);
+        super("Great Helm", 28);
         if (MyRandom.flipCoin()) {
             sprite = SPRITE;
         } else {

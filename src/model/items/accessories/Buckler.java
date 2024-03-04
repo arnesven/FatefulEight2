@@ -12,7 +12,7 @@ public class Buckler extends ShieldItem {
     private final Sprite sprite;
 
     public Buckler() {
-        super("Buckler", 16, false, 1);
+        super("Buckler", 10, false, 1);
         this.sprite = MyRandom.flipCoin() ? SPRITE : ALT_SPRITE;
     }
 

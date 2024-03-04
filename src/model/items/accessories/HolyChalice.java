@@ -21,7 +21,7 @@ public class HolyChalice extends ShieldItem {
 
 
     public HolyChalice() {
-        super("Holy Chalice", 56, false, 1);
+        super("Holy Chalice", 60, false, 1);
     }
 
     @Override

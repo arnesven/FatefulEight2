@@ -19,7 +19,7 @@ public class AnkhPendant extends JewelryItem {
 
     @Override
     public int getHealthBonus() {
-        return 2;
+        return 3;
     }
 
     @Override

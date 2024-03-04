@@ -13,7 +13,7 @@ public class JestersHat extends HeadGearItem {
     private static final Sprite SPRITE = new ItemSprite(10, 10, MyColors.DARK_PURPLE, MyColors.DARK_RED);
 
     public JestersHat() {
-        super("Jester's Hat", 10);
+        super("Jester's Hat", 16);
     }
 
     @Override

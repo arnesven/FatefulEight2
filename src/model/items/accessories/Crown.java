@@ -14,7 +14,7 @@ public class Crown extends HeadGearItem {
     private Sprite sprite;
 
     public Crown() {
-        super("Crown", 24);
+        super("Crown", 18);
         if (MyRandom.randInt(2) == 0) {
             sprite = new ItemSprite(12, 10, MyColors.GOLD, MyColors.DARK_RED);
         } else {

@@ -136,7 +136,7 @@ public class ThiefClass extends CharacterClass {
         @Override
         public void addYourself(Inventory inventory) {
             inventory.add(new DeftGloves());
-            inventory.addToLockpicks(3);
+            inventory.addToLockpicks(2);
         }
 
         @Override

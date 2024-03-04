@@ -10,7 +10,7 @@ public class ShinyAmulet extends JewelryItem {
     private static final Sprite SPRITE = new ItemSprite(0, 9, MyColors.YELLOW, MyColors.DARK_RED);
 
     public ShinyAmulet() {
-        super("Shiny Amulet", 14);
+        super("Shiny Amulet", 10);
     }
 
     @Override

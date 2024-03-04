@@ -10,7 +10,7 @@ public class SkullCap extends HeadGearItem {
     private static final Sprite SPRITE = new ItemSprite(13, 9, MyColors.LIGHT_GRAY, MyColors.GOLD);
 
     public SkullCap() {
-        super("Skull Cap", 12);
+        super("Skull Cap", 8);
     }
 
     @Override

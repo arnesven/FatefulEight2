@@ -13,7 +13,7 @@ public class PlatedBoots extends ShoesItem {
     private static final Sprite SPRITE = new ItemSprite(8, 10, MyColors.GRAY, MyColors.LIGHT_GRAY);
 
     public PlatedBoots() {
-        super("Plated Boots", 22);
+        super("Plated Boots", 14);
     }
 
     @Override
