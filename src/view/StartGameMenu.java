@@ -50,7 +50,7 @@ public class StartGameMenu extends GameView {
                 "" + arrows[3], xOffset + 2, controlsRow++,
                 MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(),
-                arrows[0] + "" + arrows[2] + "" + arrows[1] + " + Enter", xOffset, controlsRow++,
+                " " + arrows[0] + "" + arrows[2] + "" + arrows[1] + " + Enter", xOffset, controlsRow++,
                 MyColors.WHITE, MyColors.BLACK);
     }
 

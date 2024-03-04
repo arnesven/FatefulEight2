@@ -319,5 +319,10 @@ public class RescueMissionStoryPart extends StoryPart {
         public boolean isComplete() {
             return RescueMissionStoryPart.this.isCompleted();
         }
+
+        @Override
+        public Point getPosition(Model model) {
+            return model.getMainStory().getCastlePosition(model);
+        }
     }
 }

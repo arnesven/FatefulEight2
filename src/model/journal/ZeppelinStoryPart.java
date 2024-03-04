@@ -146,6 +146,11 @@ public class ZeppelinStoryPart extends StoryPart {
         public boolean isComplete() {
             return ZeppelinStoryPart.this.isCompleted();
         }
+
+        @Override
+        public Point getPosition(Model model) {
+            return model.getMainStory().getXelbiPosition();
+        }
     }
 
     private class VisitWorkshopEvent extends DailyEventState {

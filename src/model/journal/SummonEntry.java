@@ -2,9 +2,12 @@ package model.journal;
 
 import model.Model;
 import model.Summon;
+import model.map.HexLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.tasks.SummonTask;
+
+import java.awt.*;
 
 public class SummonEntry implements JournalEntry {
     private final UrbanLocation urb;
@@ -24,6 +27,11 @@ public class SummonEntry implements JournalEntry {
     @Override
     public boolean isTask() {
         return true;
+    }
+
+    @Override
+    public Point getPosition(Model model) {
+        return model.getWorld().getPositionForLocation((HexLocation) urb);
     }
 
     @Override

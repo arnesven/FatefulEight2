@@ -88,8 +88,11 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
     protected abstract int getNumberOfEntries();
 
     @Override
-    protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
+    protected final void specificHandleEvent(KeyEvent keyEvent, Model model) {
+        specificHandleEvent(keyEvent, model, index);
+    }
 
+    protected void specificHandleEvent(KeyEvent keyEvent, Model model, int index) {
     }
 
     @Override

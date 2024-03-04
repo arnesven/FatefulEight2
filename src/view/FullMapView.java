@@ -19,18 +19,27 @@ public class FullMapView extends GameView {
     private final GameView previousView;
     private TopText topText = new FullMapTopText();
 
-    public FullMapView(GameView previous) {
+    public FullMapView(GameView previous, Point startCursorPos) {
         super(true);
         this.previousView = previous;
+        cursorPos = startCursorPos;
+    }
+
+    public FullMapView(GameView previousView) {
+        this(previousView, null);
     }
 
     @Override
     public void transitionedTo(Model model) {
         model.getScreenHandler().clearAll();
+        ensureCursorPosSet(model);
+        update(model);
+    }
+
+    private void ensureCursorPosSet(Model model) {
         if (cursorPos == null) {
             cursorPos = new Point(model.getParty().getPosition());
         }
-        update(model);
     }
 
     @Override
@@ -45,6 +54,7 @@ public class FullMapView extends GameView {
 
     @Override
     protected void internalUpdate(Model model) {
+        ensureCursorPosSet(model);
         ScreenHandler screenHandler = model.getScreenHandler();
         BorderFrame.drawFrameTop(screenHandler);
         BorderFrame.drawFrameHorizontalLine(screenHandler, 48);

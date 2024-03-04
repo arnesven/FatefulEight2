@@ -6,7 +6,7 @@ import view.sprites.RunOnceAnimationSprite;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class ThrowingKnives extends BladedWeapon {
+public class ThrowingKnives extends SmallBladedWeapon {
     private static final Sprite SPRITE = new TwoHandedItemSprite(2, 0);
 
     public ThrowingKnives() {

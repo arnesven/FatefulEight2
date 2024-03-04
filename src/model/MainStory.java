@@ -332,4 +332,8 @@ public class MainStory implements Serializable {
     public void setCaidQuestDone(boolean caidQuestDone) {
         this.caidQuestDone = caidQuestDone;
     }
+
+    public Point getCastlePosition(Model model) {
+        return model.getWorld().getPositionForLocation(model.getWorld().getCastleByName(getCastleName()));
+    }
 }

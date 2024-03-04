@@ -1,5 +1,9 @@
 package model.journal;
 
+import model.Model;
+
+import java.awt.*;
+
 public class VisitTask extends MainStoryTask {
     private final boolean visited;
     private final String location;
@@ -18,5 +22,10 @@ public class VisitTask extends MainStoryTask {
     @Override
     public boolean isComplete() {
         return visited;
+    }
+
+    @Override
+    public Point getPosition(Model model) {
+        return null;
     }
 }

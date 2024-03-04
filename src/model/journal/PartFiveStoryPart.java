@@ -8,6 +8,7 @@ import model.quests.OrcWarCampQuest;
 import model.quests.Quest;
 import model.states.dailyaction.TownDailyActionState;
 
+import java.awt.*;
 import java.util.List;
 
 public class PartFiveStoryPart extends StoryPart {
@@ -69,6 +70,14 @@ public class PartFiveStoryPart extends StoryPart {
         @Override
         public boolean isComplete() {
             return PartFiveStoryPart.this.isCompleted();
+        }
+
+        @Override
+        public Point getPosition(Model model) {
+            if (internalStep == 0) {
+                return null;
+            }
+            return model.getMainStory().getCastlePosition(model);
         }
     }
 }

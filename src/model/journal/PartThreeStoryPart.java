@@ -114,6 +114,14 @@ public class PartThreeStoryPart extends StoryPart {
         public boolean isComplete() {
             return PartThreeStoryPart.this.isCompleted();
         }
+
+        @Override
+        public Point getPosition(Model model) {
+            if (internalStep == INITIAL_STEP) {
+                return model.getMainStory().getCastlePosition(model);
+            }
+            return model.getWorld().getPositionForLocation(model.getWorld().getTownByName(libraryTown));
+        }
     }
 
     private class VisitLibraryNode extends DailyActionNode {

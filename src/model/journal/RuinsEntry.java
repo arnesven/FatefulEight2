@@ -5,10 +5,11 @@ import model.map.RuinsLocation;
 import model.ruins.RuinsDungeon;
 import util.MyPair;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
-public class RuinsEntry implements JournalEntry {
+public class RuinsEntry extends PositionlessJournalEntry {
     private final ArrayList<MyPair<RuinsLocation, RuinsDungeon>> ruins;
     private boolean allCompleted;
 

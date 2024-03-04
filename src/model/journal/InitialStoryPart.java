@@ -14,6 +14,7 @@ import model.states.dailyaction.VisitEverixNode;
 import model.states.dailyaction.VisitUncleNode;
 import view.subviews.PortraitSubView;
 
+import java.awt.*;
 import java.util.List;
 
 public class InitialStoryPart extends StoryPart {
@@ -134,6 +135,11 @@ public class InitialStoryPart extends StoryPart {
         @Override
         public boolean isComplete() {
             return internalStep > ASK_EVERIX_STEP;
+        }
+
+        @Override
+        public Point getPosition(Model model) {
+            return model.getWorld().getPositionForLocation(model.getWorld().getTownByName(townName));
         }
     }
 }

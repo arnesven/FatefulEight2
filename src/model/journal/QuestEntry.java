@@ -8,6 +8,8 @@ import model.map.UrbanLocation;
 import model.quests.MainQuest;
 import model.quests.Quest;
 
+import java.awt.*;
+
 public class QuestEntry implements JournalEntry {
     private boolean completed = false;
     private boolean success = false;
@@ -26,16 +28,10 @@ public class QuestEntry implements JournalEntry {
             for (Quest q : QuestDeck.getAllQuests()) {
                 if (q.getName().equals(quest)) {
                     this.quest = q;
-
                     break;
                 }
             }
-            for (UrbanLocation urb : model.getWorld().getLordLocations()) {
-                if (((HexLocation) urb).getName().equals(location)) {
-                    this.hexLocation = (HexLocation) urb;
-                    break;
-                }
-            }
+            hexLocation = findLocation(model, location);
             if (hexLocation != null) {
                 this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
                 if (completed) {
@@ -48,9 +44,28 @@ public class QuestEntry implements JournalEntry {
         }
     }
 
+    private static HexLocation findLocation(Model model, String locationName) {
+        HexLocation location = null;
+        for (UrbanLocation urb : model.getWorld().getLordLocations()) {
+            if (((HexLocation) urb).getName().equals(locationName)) {
+                location = (HexLocation) urb;
+                break;
+            }
+        }
+        return location;
+    }
+
     @Override
     public boolean isTask() {
         return false;
+    }
+
+    @Override
+    public Point getPosition(Model model) {
+        if (hexLocation != null) {
+            return model.getWorld().getPositionForLocation(hexLocation);
+        }
+        return null;
     }
 
     @Override

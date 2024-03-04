@@ -121,6 +121,14 @@ public class PartFourStoryPart extends StoryPart {
         public boolean isComplete() {
             return PartFourStoryPart.this.isCompleted();
         }
+
+        @Override
+        public Point getPosition(Model model) {
+            if (step == TRAVEL_STEP) {
+                return campPoint;
+            }
+            return model.getMainStory().getCastlePosition(model);
+        }
     }
 
     private class PartFourEvent extends DailyEventState {

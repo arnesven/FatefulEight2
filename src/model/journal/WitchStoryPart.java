@@ -120,6 +120,11 @@ public class WitchStoryPart extends StoryPart {
         public boolean isComplete() {
             return WitchStoryPart.this.isCompleted();
         }
+
+        @Override
+        public Point getPosition(Model model) {
+            return model.getMainStory().getWitchPosition();
+        }
     }
 
     private class VisitWitchEvent extends DailyEventState {

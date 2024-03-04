@@ -7,6 +7,8 @@ import model.journal.*;
 import model.map.UrbanLocation;
 import util.MyStrings;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +20,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
     private static final int HEIGHT = 35;
     private static final int RIGHT_PANE_WIDTH = WIDTH/2;
     private ArrayList<JournalEntry> questsAndTasks;
+    private FullMapView nextView = null;
 
     public JournalView(GameView previous) {
         super(previous, WIDTH, HEIGHT, RIGHT_PANE_WIDTH);
@@ -26,6 +29,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
     @Override
     public void transitionedTo(Model model) {
         super.transitionedTo(model);
+        nextView = null;
         this.questsAndTasks = new ArrayList<>();
         for (Map.Entry<String, Summon> entry : model.getParty().getSummons().entrySet()) {
             UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(entry.getKey());
@@ -67,6 +71,10 @@ public class JournalView extends TwoPaneSelectableListMenu {
                 BorderFrame.drawString(model.getScreenHandler(), parts[row], x+1, y + row + 3,
                         textColor, MyColors.BLUE);
             }
+            if (je.getPosition(model) != null) {
+                BorderFrame.drawString(model.getScreenHandler(), "Press F3 to see in map.",
+                        x+1, y + parts.length + 5, textColor, MyColors.BLUE);
+            }
         }
     }
 
@@ -93,6 +101,9 @@ public class JournalView extends TwoPaneSelectableListMenu {
 
     @Override
     protected MyColors getEntryColor(int index) {
+        if (questsAndTasks.isEmpty()) {
+            return MyColors.WHITE;
+        }
         if (questsAndTasks.get(index).isComplete()) {
             return MyColors.GRAY;
         } else if (questsAndTasks.get(index).isFailed()) {
@@ -109,4 +120,22 @@ public class JournalView extends TwoPaneSelectableListMenu {
         return questsAndTasks.size();
     }
 
+    @Override
+    public void specificHandleEvent(KeyEvent keyEvent, Model model, int index) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
+            if (!questsAndTasks.isEmpty()) {
+                Point position = questsAndTasks.get(index).getPosition(model);
+                this.nextView = new FullMapView(this, position);
+                setTimeToTransition(true);
+            }
+        }
+    }
+
+    @Override
+    public GameView getNextView(Model model) {
+        if (nextView != null) {
+            return nextView;
+        }
+        return super.getNextView(model);
+    }
 }
