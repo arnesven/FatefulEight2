@@ -123,7 +123,7 @@ public class Party implements Serializable {
 
     public Point getLocationForPartyMember(int count) {
         int x = (count % 2) * (DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS);
-        int y = 2 + ((count - 1) / 2) * 11;
+        int y = 2 + (count / 2) * 11;
         return new Point(x, y);
     }
 

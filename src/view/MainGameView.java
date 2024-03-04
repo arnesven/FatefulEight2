@@ -38,8 +38,8 @@ public class MainGameView extends GameView {
             screenHandler.clearForeground();
             model.getParty().drawYourself(screenHandler);
             topText.drawYourself(model);
-            miniLog.drawYourself(model);
             model.getSubView().drawYourself(model);
+            miniLog.drawYourself(model);
         }
     }
 
@@ -51,8 +51,11 @@ public class MainGameView extends GameView {
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
-            setTimeToTransition(true);
-            nextView = new LogView(this);
+            miniLog.toggleSize();
+            if (!miniLog.isLarge()) {
+                setTimeToTransition(true);
+                nextView = new LogView(this);
+            }
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
             nextView = new MenuView(this);
