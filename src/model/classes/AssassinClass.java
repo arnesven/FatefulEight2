@@ -37,7 +37,7 @@ public class AssassinClass extends CharacterClass {
     }
 
     protected AssassinClass() {
-        this("Assasin", "ASN", MyColors.GRAY);
+        this("Assassin", "ASN", MyColors.GRAY);
     }
 
     @Override
