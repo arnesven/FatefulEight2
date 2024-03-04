@@ -24,8 +24,13 @@ public class CairnEvent extends DailyEventState {
         if (success) {
             CombatLoot loot = new StandardCombatLoot(model, 4);
             String lootText = loot.getText();
-            if (loot.equals("")) {
-                println("You brake the cairn but there was nothing of value inside it. Just some old bones and pottery shards.");
+            if (lootText.equals("")) {
+                if (loot.getGold() > 0) {
+                    println("As you brake the cairn, a few coins fall out.");
+                    println("You get " + loot.getGold() + " gold.");
+                } else {
+                    println("You brake the cairn but there was nothing of value inside it. Just some old bones and pottery shards.");
+                }
             } else {
                 println("You brake the cairn and find " + lootText.replaceAll("\n", ","));
             }
