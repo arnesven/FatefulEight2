@@ -57,8 +57,8 @@ public class BarbarianClass extends CharacterClass {
     public void manipulateAvatar(CharacterAppearance appearance, Race race) {
         super.finalizeLook(appearance);
         if (!race.isShort()) {
-            appearance.getNormalHair().shiftUpPx(appearance.getNormalHair().getUpShift() + 1);
-            appearance.getBackHairOnly().shiftUpPx(appearance.getBackHairOnly().getUpShift() + 1);
+            appearance.getNormalHair().shiftUpPx(2);
+            appearance.getBackHairOnly().shiftUpPx(2);
         }
     }
 

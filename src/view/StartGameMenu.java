@@ -40,7 +40,7 @@ public class StartGameMenu extends GameView {
         model.getScreenHandler().clearSpace(X_START-2, X_START-1, Y_START, row);
         model.getScreenHandler().put(X_START - 2, Y_START + cursorPos*2, ArrowSprites.RIGHT_BLACK);
 
-        int controlsRow = 41;
+        int controlsRow = 43;
         int xOffset = 64;
         BorderFrame.drawString(model.getScreenHandler(), "Controls", xOffset + 2, controlsRow++,
                 MyColors.WHITE, MyColors.BLACK);
@@ -50,7 +50,7 @@ public class StartGameMenu extends GameView {
                 "" + arrows[3], xOffset + 2, controlsRow++,
                 MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(),
-                arrows[0] + " " + arrows[2] + " " + arrows[2] + " + Enter", xOffset, controlsRow++,
+                arrows[0] + "" + arrows[2] + "" + arrows[1] + " + Enter", xOffset, controlsRow++,
                 MyColors.WHITE, MyColors.BLACK);
     }
 

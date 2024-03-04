@@ -566,11 +566,14 @@ public class GameCharacter extends Combatant {
     }
 
     public void setClass(CharacterClass newClass) {
+        if (newClass == charClass) { // No need to change anything.
+            return;
+        }
         if (charClass != null) {
             charClass.takeClothesOff(appearance);
         }
         this.charClass = newClass;
-        this.appearance.setClass(charClass);;
+        this.appearance.setClass(charClass);
         this.deadAppearance.setClass(charClass);
         this.avatarSprite = makeAvatarSprite();
         if (!newClass.canUseHeavyArmor()) {
