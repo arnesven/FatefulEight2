@@ -178,9 +178,11 @@ public class ShopState extends GameState {
             return false;
         }
         List<GameCharacter> candidates = MyLists.filter(model.getParty().getPartyMembers(), (GameCharacter gc) ->
-                        (it instanceof Weapon && gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon) ||
-                        (it instanceof Clothing && gc.getEquipment().getClothing() instanceof JustClothes) ||
-                        (it instanceof Accessory && gc.getEquipment().getAccessory() == null));
+                        ((it instanceof Weapon && gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon) ||
+                         (it instanceof Clothing && gc.getEquipment().getClothing() instanceof JustClothes) ||
+                         (it instanceof Accessory && gc.getEquipment().getAccessory() == null)) &&
+                        (Equipment.canEquip(it, gc).equals(""))
+                );
 
         if (candidates.isEmpty()) {
             return false;
