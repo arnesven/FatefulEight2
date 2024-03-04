@@ -9,7 +9,7 @@ public abstract class CombatLoot {
         party.addToFood(getRations());
         party.getInventory().addToMaterials(getMaterials());
         party.getInventory().addToIngredients(getIngredients());
-        party.setObols(party.getObols() + getObols());
+        party.addToObols(getObols());
         specificGiveYourself(party);
     }
 

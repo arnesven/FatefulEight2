@@ -198,7 +198,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                 }
             } while (true);
             print("You bought " + spend*10 + " obols.");
-            model.getParty().setObols(model.getParty().getObols() + spend*10);
+            model.getParty().addToObols(spend*10);
             println(" You now have " + model.getParty().getObols() + " obols.");
             model.getParty().addToGold(-spend);
         }
@@ -213,7 +213,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                     " of them off your hands and give you " + take + " gold.");
             print("Do you accept? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().setObols(model.getParty().getObols() - take*10);
+                model.getParty().addToObols(take*10);
                 model.getParty().addToGold(take);
                 println("You now have " + model.getParty().getObols() + " obols.");
             }

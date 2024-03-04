@@ -732,12 +732,12 @@ public class Party implements Serializable {
         this.seminarHeld = seminarHeld;
     }
 
-    public int getObols() {
-        return inventory.getObols();
+    public void addToObols(int obols) {
+        inventory.setObols(inventory.getObols() + obols);
     }
 
-    public void setObols(int playerObols) {
-        inventory.setObols(inventory.getObols() + playerObols);
+    public int getObols() {
+        return inventory.getObols();
     }
 
     public void addToNotoriety(int i) {

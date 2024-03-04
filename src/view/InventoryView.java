@@ -31,7 +31,7 @@ public class InventoryView extends SelectableListMenu {
 
     @Override
     protected void clearPreviousForeground(Model model, int xStart, int yStart) {
-        model.getScreenHandler().clearForeground(xStart, xStart + WIDTH, yStart, yStart + HEIGHT);
+        model.getScreenHandler().clearForeground(xStart, xStart + WIDTH, yStart-2, yStart + HEIGHT);
     }
 
     @Override

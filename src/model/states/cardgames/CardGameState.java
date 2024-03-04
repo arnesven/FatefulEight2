@@ -70,7 +70,7 @@ public class CardGameState extends GameState {
             cardGame.setup(this);
             waitForReturn();
             cardGame.playRound(model, this);
-            model.getParty().setObols(cardGame.getPlayerObols());
+            model.getParty().addToObols(cardGame.getPlayerObols());
             if (notEnoughObols(model)) {
                 println("You do not have the minimum amount of obols required (" + cardGame.getMaximumBet() + ") to play another round.");
                 print("Press enter to continue.");
