@@ -224,7 +224,7 @@ public class OtherPartyEvent extends DailyEventState {
             }
         }
 
-        if (unwilling.size() == otherPartyMembers.size()-1) {
+        if (unwilling.size() == otherPartyMembers.size()-1 && !unwilling.isEmpty()) {
             otherPartyMemberSay(unwilling.get(0), "No way " + leader.getFirstName() + ", not this time. " +
                     "We're not following you into another idiotic fight.");
             if (unwilling.size() > 1) {
@@ -439,6 +439,7 @@ public class OtherPartyEvent extends DailyEventState {
                 attitudeMap.put(leader, attitudeMap.get(leader) - 20);
                 RecruitState state = new RecruitState(model, List.of(who));
                 state.run(model);
+                model.setSubView(subView);
                 if (model.getParty().getPartyMembers().contains(who)) {
                     otherPartyMembers.remove(who);
                     subView.removeFromParty(who);
