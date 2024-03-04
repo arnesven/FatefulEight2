@@ -2,8 +2,15 @@ package model.states;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.characters.GameCharacter;
 import model.items.*;
+import model.items.accessories.Accessory;
+import model.items.clothing.Clothing;
+import model.items.clothing.JustClothes;
+import model.items.weapons.UnarmedCombatWeapon;
+import model.items.weapons.Weapon;
 import sound.SoundEffects;
+import util.MyLists;
 import view.SimpleMessageView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
@@ -126,7 +133,9 @@ public class ShopState extends GameState {
                     }
                     SoundEffects.playSound(it.getSound());
                     model.getTutorial().equipment(model);
-                    sellItems.addElementLast(it);
+                    if (!checkForImmediateEquip(model, it, xPos, yPos)) {
+                        sellItems.addElementLast(it);
+                    }
                     if (buyItems.getElementList().isEmpty()) {
                         if (!sellingEnabled || sellItems.getElementList().isEmpty()) {
                             break;
@@ -162,6 +171,43 @@ public class ShopState extends GameState {
             }
         }
         return new EveningState(model);
+    }
+
+    private boolean checkForImmediateEquip(Model model, Item it, int xPos, int yPos) {
+        if (!(it instanceof EquipableItem)) {
+            return false;
+        }
+        List<GameCharacter> candidates = MyLists.filter(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                        (it instanceof Weapon && gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon) ||
+                        (it instanceof Clothing && gc.getEquipment().getClothing() instanceof JustClothes) ||
+                        (it instanceof Accessory && gc.getEquipment().getAccessory() == null));
+
+        if (candidates.isEmpty()) {
+            return false;
+        }
+        print("Equip immediately? ");
+        List<String> options = MyLists.transform(candidates, GameCharacter::getFirstName);
+        options.add("Cancel");
+
+        final GameCharacter[] didAction = new GameCharacter[]{null};
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, xPos, yPos, ArrowMenuSubView.NORTH_WEST) {
+            @Override
+            protected void enterPressed(Model model, int cursorPos) {
+                if (cursorPos < candidates.size()) {
+                    ((EquipableItem) it).equipYourself(candidates.get(cursorPos));
+                    didAction[0] = candidates.get(cursorPos);
+                }
+                model.setSubView(getPrevious());
+            }
+        });
+        waitForReturnSilently();
+        if (didAction[0] != null) {
+            println(it.getName() + " was equipped by " + didAction[0].getName() + ".");
+            return true;
+        }
+
+        println(it.getName() + " was put into inventory.");
+        return false;
     }
 
     public boolean maySell(Model model) {
