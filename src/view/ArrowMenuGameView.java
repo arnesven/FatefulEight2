@@ -39,7 +39,7 @@ public abstract class ArrowMenuGameView extends GameView {
 
     @Override
     public void transitionedTo(Model model) {
-        model.getScreenHandler().clearForeground(xStart-2, xStart+width, yStart-2, yStart + height);
+        model.getScreenHandler().clearForeground(xStart, xStart+width, yStart, yStart + height);
         BorderFrame.drawFrame(model.getScreenHandler(), xStart, yStart, width, height,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
         setTimeToTransition(false);

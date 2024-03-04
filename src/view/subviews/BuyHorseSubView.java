@@ -35,8 +35,8 @@ public class BuyHorseSubView extends SubView {
         int frameHeight = 15;
         model.getScreenHandler().clearSpace(frameStartX, frameStartX+frameWidth,
                 frameStartY-2, frameStartY+frameHeight);
-        model.getScreenHandler().clearForeground(frameStartX-2, frameStartX+frameWidth,
-                frameStartY-2, frameStartY+frameHeight);
+        model.getScreenHandler().clearForeground(frameStartX, frameStartX+frameWidth,
+                frameStartY, frameStartY+frameHeight);
         BorderFrame.drawFrame(model.getScreenHandler(), frameStartX, frameStartY,
                 frameWidth, frameHeight, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
 

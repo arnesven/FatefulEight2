@@ -26,8 +26,8 @@ public class LodgingSummarySubView extends SubView {
         int frameHeight = lodgingBreakdown.size() + 4;
         model.getScreenHandler().clearSpace(frameStartX, frameStartX+frameWidth,
                 frameStartY-2, frameStartY+frameHeight);
-        model.getScreenHandler().clearForeground(frameStartX-2, frameStartX+frameWidth,
-                frameStartY-2, frameStartY+frameHeight);
+        model.getScreenHandler().clearForeground(frameStartX, frameStartX+frameWidth,
+                frameStartY, frameStartY+frameHeight);
         BorderFrame.drawFrame(model.getScreenHandler(), frameStartX, frameStartY,
                 frameWidth, frameHeight, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
         BorderFrame.drawCentered(model.getScreenHandler(), "Party Tab", frameStartY+1, MyColors.WHITE, MyColors.BLUE);

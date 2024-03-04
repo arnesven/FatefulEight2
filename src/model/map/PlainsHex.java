@@ -58,7 +58,7 @@ public class PlainsHex extends WorldHex {
 
     @Override
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
-        return DailyActionMenu.LOWER_RIGHT_CORNER;
+        return DailyActionMenu.UPPER_LEFT_CORNER;
     }
 
     @Override

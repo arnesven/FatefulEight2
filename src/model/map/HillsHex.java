@@ -65,7 +65,7 @@ public class HillsHex extends WorldHex {
 
     @Override
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
-        return DailyActionMenu.LOWER_LEFT_CORNER;
+        return DailyActionMenu.UPPER_LEFT_CORNER;
     }
 
     @Override

@@ -116,7 +116,7 @@ public class CaveHex extends WorldHex {
     }
 
     public MyPair<Point, Integer> getDailyActionMenuPositionAndAnchor() {
-        return DailyActionMenu.LOWER_LEFT_CORNER;
+        return DailyActionMenu.UPPER_RIGHT_CORNER;
     }
 
     @Override

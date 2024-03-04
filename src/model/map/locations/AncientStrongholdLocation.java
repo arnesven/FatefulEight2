@@ -53,7 +53,7 @@ public class AncientStrongholdLocation extends HexLocation {
 
     @Override
     public MyPair<Point, Integer> getDailyActionMenuAnchor() {
-        return DailyActionMenu.LOWER_RIGHT_CORNER;
+        return DailyActionMenu.UPPER_LEFT_CORNER;
     }
 
     @Override

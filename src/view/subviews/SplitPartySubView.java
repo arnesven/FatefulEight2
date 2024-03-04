@@ -41,7 +41,7 @@ public class SplitPartySubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         previous.drawArea(model);
-        model.getScreenHandler().clearForeground(X_FRAME_START-2, X_FRAME_START + FRAME_WIDTH,
+        model.getScreenHandler().clearForeground(X_FRAME_START, X_FRAME_START + FRAME_WIDTH,
                                                  Y_FRAME_START, Y_FRAME_START + FRAME_HEIGHT);
         BorderFrame.drawFrame(model.getScreenHandler(), X_FRAME_START, Y_FRAME_START, FRAME_WIDTH, FRAME_HEIGHT,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);

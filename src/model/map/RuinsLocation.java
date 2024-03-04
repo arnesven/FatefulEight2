@@ -60,7 +60,7 @@ public class RuinsLocation extends HexLocation {
 
     @Override
     public MyPair<Point, Integer> getDailyActionMenuAnchor() {
-        return DailyActionMenu.LOWER_LEFT_CORNER;
+        return DailyActionMenu.UPPER_RIGHT_CORNER;
     }
 
     @Override

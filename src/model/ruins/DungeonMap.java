@@ -36,7 +36,7 @@ public class DungeonMap implements Serializable {
         int yOff = 8 - rooms[0].length/2;
         Point clearStart = convertToScreen(xOff-1, yOff-1);
         Point clearEnd = convertToScreen(xOff + rooms.length+1, yOff + rooms[0].length+1);
-        model.getScreenHandler().clearForeground(clearStart.x-2, clearEnd.x, clearStart.y-2, clearEnd.y);
+        model.getScreenHandler().clearForeground(clearStart.x, clearEnd.x, clearStart.y, clearEnd.y);
         drawBordersAndRooms(model, xOff, yOff, rooms, partyPosition);
 
         Point currentPos = convertToScreen(xOff + partyPosition.x, yOff + partyPosition.y);

@@ -116,8 +116,10 @@ public class ScreenHandler {
         for (ForegroundObject obj : foregroundSprites) {
             int x = obj.position.x;
             int y = obj.position.y;
-            if (xStart <= x && x <= xEnd) {
-                if (yStart <= y && y <= yEnd) {
+            int xx = x + obj.sprite.getWidth()/8;
+            int yy = y + obj.sprite.getHeight()/8;
+            if ((xStart <= x && x <= xEnd) || (xStart < xx && xx < xEnd)) {
+                if (yStart <= y && y <= yEnd || (yStart < yy && yy < yEnd)) {
                     toRemove.add(obj);
                 }
             }
