@@ -34,6 +34,7 @@ public class WorkshopEvent extends DailyEventState {
             if (materials < 7) {
                 CraftingDesign design = model.getItemDeck().getRandomDesign();
                 println("You found " + design.getName() + "!");
+                design.addYourself(model.getParty().getInventory());
             }
         } else {
             showRandomPortrait(model, Classes.ART, "Tinkerer");

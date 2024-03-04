@@ -465,10 +465,10 @@ public class Party implements Serializable {
                     SkillCheckResult assistResult = gc.testSkill(skill, getCollaborativeDifficulty(performer, gc));
                     if (assistResult.isSuccessful()) {
                         giveXP(model, gc, 5);
-                        event.println(gc.getName() + " helps out (" + assistResult.asString() + ").");
+                        event.println(gc.getFirstName() + " helps out (" + assistResult.asString() + ").");
                         bonus++;
                     } else {
-                        event.println(gc.getName() + " fumbles (" + assistResult.asString() + ").");
+                        event.println(gc.getFirstName() + " fumbles (" + assistResult.asString() + ").");
                     }
                 }
             }
