@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.states.GameState;
 import util.MyLists;
 import util.MyRandom;
@@ -96,9 +97,19 @@ public class TalkToPartyNode extends DailyActionNode {
 
         private void bribePartyMember(GameCharacter target, int bribe) {
             target.addToAttitude(getModel().getParty().getLeader(), bribe/2);
-            partyMemberSay(target, MyRandom.sample(List.of("Much appreciated!", "Thank you!",
-                    "How kind!", "I deserved this.", "My fair share, I'm sure.",
-                    "My wage? Okay.")));
+            if (target.hasPersonality(PersonalityTrait.rude)) {
+                partyMemberSay(target, MyRandom.sample(List.of("It's about time!", "Finally, some appreciation.")));
+            } else if (target.hasPersonality(PersonalityTrait.greedy)) {
+                partyMemberSay(target, MyRandom.sample(List.of(bribe + " gold, that's it? Pitiful.", "More please!",
+                        "I think " + (bribe * 2) + " would have been more suitable!")));
+            } else if (target.hasPersonality(PersonalityTrait.generous)) {
+                partyMemberSay(target, MyRandom.sample(List.of("Are you sure we can afford this?",
+                        "Somebody else probably needs this more than me.")));
+            } else{
+                partyMemberSay(target, MyRandom.sample(List.of("Much appreciated!", "Thank you!",
+                        "How kind!", "I deserved this.", "My fair share, I'm sure.",
+                        "My wage? Okay.")));
+            }
             getModel().getParty().addToGold(-bribe);
         }
     }
