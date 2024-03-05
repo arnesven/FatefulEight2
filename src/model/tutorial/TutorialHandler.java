@@ -435,6 +435,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void gameLog(Model model) {
+        runOnce("gamelog", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialGameLog(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
