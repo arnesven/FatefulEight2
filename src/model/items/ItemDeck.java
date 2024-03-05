@@ -228,6 +228,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new BurningWeaponSpell(),
                 new ErodeSpell(),
                 new FireWallSpell(),
+                new ChainLightningSpell(),
                 // GREEN
                 new TransfigurationSpell(),
                 new AlchemySpell(),

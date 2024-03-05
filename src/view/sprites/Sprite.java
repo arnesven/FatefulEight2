@@ -161,7 +161,7 @@ public class Sprite implements Serializable {
             double locationX = img.getWidth() / 2;
             double locationY = img.getHeight() / 2;
             AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
-            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
             for (int n = 0; n < maxFrames; ++n) {
                 g2d.drawImage(op.filter(img, null), n * img.getWidth(), downShift, null);
             }

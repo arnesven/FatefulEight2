@@ -16,6 +16,7 @@ import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,6 +174,30 @@ public class CombatSubView extends SubView {
         if (combatMatrix.getElementList().contains(target)) {
             Point point = convertToScreen(combatMatrix.getPositionFor(target), target);
             addOngoingEffect(new MyPair<>(point, sprite));
+        }
+    }
+
+    public synchronized void addSpecialEffectsBetween(Combatant from, Combatant to, RunOnceAnimationSprite sprite) {
+        if (combatMatrix.getElementList().contains(from) && combatMatrix.getElementList().contains(to)) {
+            Point fromPoint = convertToScreen(combatMatrix.getPositionFor(from), from);
+            Point toPoint = convertToScreen(combatMatrix.getPositionFor(to), to);
+
+            double angle = Math.toDegrees(Math.atan2(fromPoint.y - toPoint.y, fromPoint.x - toPoint.x));
+            System.out.println("Rotation angle " + angle);
+            angle += 90.0;
+            while (angle < 0.0) {
+                angle += 360.0;
+            }
+            sprite.setRotation(angle);
+
+            double distance = toPoint.distance(fromPoint);
+            Point diff = new Point(toPoint.x - fromPoint.x, toPoint.y - fromPoint.y);
+            Point2D.Double delta = new Point2D.Double(diff.x / (distance / 4), diff.y / (distance / 4));
+            for (int i = 0; i < (int)(distance / 4); i++) {
+                int finalX = (int)(fromPoint.x + i * delta.x + delta.x / 2);
+                int finalY = (int)(fromPoint.y + i * delta.y + delta.y / 2);
+                addOngoingEffect(new MyPair<>(new Point(finalX, finalY), sprite));
+            }
         }
     }
 

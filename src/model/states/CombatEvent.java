@@ -311,6 +311,10 @@ public class CombatEvent extends DailyEventState {
         subView.addSpecialEffect(target, sprite);
     }
 
+    public synchronized void addSpecialEffectsBetween(Combatant from, Combatant to, RunOnceAnimationSprite sprite) {
+        subView.addSpecialEffectsBetween(from, to, sprite);
+    }
+
     public void destroyEnemy(Model model, Enemy enemy, GameCharacter killer) {
         System.out.println("Destroying enemy " + enemy.getName());
         enemies.remove(enemy);

@@ -11,7 +11,7 @@ import view.sprites.Sprite;
 
 public class FireWallSpell extends CombatSpell {
 
-    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
     public FireWallSpell() {
         super("Fire Wall", 28, MyColors.RED, 9, 3, false);

@@ -7,7 +7,7 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class FireworksSpell extends QuestSpell {
-    private static final Sprite SPRITE = new ItemSprite(11, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new ItemSprite(1, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
     public FireworksSpell() {
         super("Fireworks", 20, MyColors.RED, 9, 2);

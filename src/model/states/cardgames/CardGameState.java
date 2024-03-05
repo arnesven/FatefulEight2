@@ -70,6 +70,7 @@ public class CardGameState extends GameState {
             cardGame.setup(this);
             waitForReturn();
             cardGame.playRound(model, this);
+            synchObols(model, cardGame.getPlayerObols());
             model.getParty().addToObols(cardGame.getPlayerObols());
             if (notEnoughObols(model)) {
                 println("You do not have the minimum amount of obols required (" + cardGame.getMaximumBet() + ") to play another round.");
@@ -80,8 +81,14 @@ public class CardGameState extends GameState {
                 print("Do you wish to play another round? (Y/N) ");
             }
         } while (yesNoInput());
+        synchObols(model, cardGame.getPlayerObols());
         cardGame.removePlayer();
         println("You leave the card game.");
+    }
+
+    private void synchObols(Model model, int playerObols) {
+        model.getParty().addToObols(-model.getParty().getObols());
+        model.getParty().addToObols(playerObols);
     }
 
     public void addHandAnimation(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut, boolean coin) {
