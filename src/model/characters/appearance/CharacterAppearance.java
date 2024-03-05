@@ -19,7 +19,7 @@ public abstract class CharacterAppearance implements Serializable {
     private static Sprite noHairSprite = new Sprite32x32("nohair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private final Race race;
-    private final MyColors hairColor;
+    private MyColors hairColor;
     private MyColors mascaraColor;
     private MyColors lipColor;
     private final boolean femaleGender;
@@ -208,6 +208,9 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
+        if (grid == null) {
+            refresh();
+        }
         drawYourself(screenHandler, col, row, 0, grid[0].length-1);
     }
 
@@ -380,5 +383,9 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void setNeck(TorsoNeck neck) {
         this.neck = neck;
+    }
+
+    public void setHairColor(MyColors color) {
+        this.hairColor = color;
     }
 }

@@ -127,7 +127,8 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new HorseRaceCup(model, this),
                     new FriendEvent(model),
                     new BathHouseEvent(model),
-                    new PsychicRitual(model)
+                    new PsychicRitual(model),
+                    new BarbershopEvent(model)
             ));
         }
         return new NoEventState(model);

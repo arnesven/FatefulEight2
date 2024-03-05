@@ -381,7 +381,8 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedNeck = Arithmetics.incrementWithWrap(selectedNeck, neckSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 25, "Hair #" + (selectedHairStyle + 1)) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 25,
+                        hairStyleSet[selectedHairStyle].getDescription()) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedHairStyle = Arithmetics.decrementWithWrap(selectedHairStyle, hairStyleSet.length);

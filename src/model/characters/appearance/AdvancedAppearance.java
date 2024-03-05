@@ -12,7 +12,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     private final int mouth;
     private final int nose;
     private final CharacterEyes eyes;
-    private final HairStyle hairStyle;
+    private HairStyle hairStyle;
     private final Beard beard;
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
@@ -259,5 +259,13 @@ public class AdvancedAppearance extends CharacterAppearance {
     @Override
     protected PortraitSprite getRightEar(MyColors hairColor) {
         return new FaceSpriteWithHair(ears[1], hairColor);
+    }
+
+    public void setHairStyle(HairStyle newHairStyle) {
+        this.hairStyle = newHairStyle;
+    }
+
+    public HairStyle getHairStyle() {
+        return hairStyle;
     }
 }

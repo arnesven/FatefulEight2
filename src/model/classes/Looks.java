@@ -10,7 +10,7 @@ import view.sprites.*;
 import java.time.temporal.Temporal;
 
 public abstract class Looks {
-    protected static void putOnTunic(CharacterAppearance characterAppearance, MyColors color) {
+    public static void putOnTunic(CharacterAppearance characterAppearance, MyColors color) {
         Race race = characterAppearance.getRace();
         Shoulders shoulders = characterAppearance.getShoulders();
         TorsoNeck neck = characterAppearance.getNeck();
@@ -26,7 +26,7 @@ public abstract class Looks {
         });
     }
 
-    protected static void putOnLooseShirt(CharacterAppearance characterAppearance, MyColors color) {
+    public static void putOnLooseShirt(CharacterAppearance characterAppearance, MyColors color) {
         Shoulders shoulders = characterAppearance.getShoulders();
         Race race = characterAppearance.getRace();
         TorsoNeck neck = characterAppearance.getNeck();
@@ -41,7 +41,7 @@ public abstract class Looks {
         });
     }
 
-    protected static void putOnRobe(CharacterAppearance characterAppearance, MyColors color, MyColors detailColor) {
+    public static void putOnRobe(CharacterAppearance characterAppearance, MyColors color, MyColors detailColor) {
         Shoulders shoulders = characterAppearance.getShoulders();
         Race race = characterAppearance.getRace();
         TorsoNeck neck = characterAppearance.getNeck();
@@ -56,7 +56,7 @@ public abstract class Looks {
         });
     }
 
-    protected static void putOnFancyRobe(CharacterAppearance characterAppearance, MyColors color, MyColors detailColor) {
+    public static void putOnFancyRobe(CharacterAppearance characterAppearance, MyColors color, MyColors detailColor) {
         Shoulders shoulders = characterAppearance.getShoulders();
         Race race = characterAppearance.getRace();
         TorsoNeck neck = characterAppearance.getNeck();
@@ -71,7 +71,7 @@ public abstract class Looks {
         });
     }
 
-    protected static void putOnHood(CharacterAppearance characterAppearance, MyColors color) {
+    public static void putOnHood(CharacterAppearance characterAppearance, MyColors color) {
         characterAppearance.removeOuterHair();
         characterAppearance.setRow(1, new PortraitSprite[]{
                 new PortraitFrameSprite(PortraitFrameSprite.LEFT), new FilledBlockSprite(MyColors.BLACK),
@@ -101,7 +101,7 @@ public abstract class Looks {
         characterAppearance.setSprite(4, 6, new ClothesSprite(0x81, color));
     }
 
-    protected static void putOnArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors underShirtColor) {
+    public static void putOnArmor(CharacterAppearance characterAppearance, MyColors armorColor, MyColors underShirtColor) {
         // Left pauldron
         characterAppearance.getShoulders().putOnLeftPauldron(characterAppearance, armorColor, underShirtColor);
         characterAppearance.setSprite(2, 6, new ClothesSprite(0x52, underShirtColor, armorColor));
@@ -121,7 +121,7 @@ public abstract class Looks {
         characterAppearance.getShoulders().putOnRightPauldron(characterAppearance, armorColor, underShirtColor);
     }
 
-    protected static void putOnPointyHat(CharacterAppearance characterAppearance, MyColors hatColor,
+    public static void putOnPointyHat(CharacterAppearance characterAppearance, MyColors hatColor,
                                          MyColors beltColor, MyColors buckleColor) {
         characterAppearance.removeOuterHair();
         characterAppearance.setSprite(2, 0, new ClothesSprite(0x90, hatColor));
@@ -139,7 +139,7 @@ public abstract class Looks {
         });
     }
 
-    protected static void putOnCap(CharacterAppearance appearance, MyColors color) {
+    public static void putOnCap(CharacterAppearance appearance, MyColors color) {
         appearance.removeOuterHair();
         appearance.setSprite(2, 1, new FaceAndClothesSpriteWithBack(0xE4, appearance.getHairColor(), color, MyColors.BEIGE));
         appearance.setSprite(3, 1, new FaceAndClothesSpriteWithBack(0xE5, appearance.getHairColor(), color, MyColors.BEIGE));
@@ -160,7 +160,7 @@ public abstract class Looks {
         }
     }
 
-    protected static void finalizeCap(CharacterAppearance appearance) {
+    public static void finalizeCap(CharacterAppearance appearance) {
         if (appearance.hairInForehead()) {
             for (int x = 2; x <= 4; ++x) {
                 appearance.getSprite(x, 2).setColor1(appearance.getHairColor());
@@ -210,7 +210,7 @@ public abstract class Looks {
         characterAppearance.setSprite(4, 6, new ClothesSprite(0xA8, armorColor, shirtColor));
     }
 
-    protected static void putOnFarmersHat(CharacterAppearance characterAppearance, MyColors hatColor) {
+    public static void putOnFarmersHat(CharacterAppearance characterAppearance, MyColors hatColor) {
         characterAppearance.removeOuterHair();
         for (int x = 0; x < 7; ++x) {
             characterAppearance.setSprite(x, 1, new ClothesSprite(0xD0 + x, hatColor));

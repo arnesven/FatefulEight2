@@ -4,6 +4,7 @@ import model.actions.AbilityCombatAction;
 import model.actions.BasicCombatAction;
 import model.actions.DefendCombatAction;
 import model.actions.RiposteCombatAction;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.PortraitClothing;
 import model.characters.appearance.SkeletonAppearance;
 import model.combat.*;
@@ -60,8 +61,8 @@ public class GameCharacter extends Combatant {
     private final CharacterClass[] classes;
     private AvatarSprite avatarSprite;
     private CharacterClass charClass;
-    private final CharacterAppearance appearance;
-    private final SkeletonAppearance deadAppearance;
+    private CharacterAppearance appearance;
+    private SkeletonAppearance deadAppearance;
     private int level;
     private Equipment equipment;
     private final Map<Skill, SkillBonus> temporarySkillBonuses = new HashMap<>();
@@ -789,5 +790,11 @@ public class GameCharacter extends Combatant {
 
     public SpellMasteries getMasteries() {
         return spellMasteries;
+    }
+
+    public void setAppearance(CharacterAppearance appearance) {
+        this.appearance = appearance;
+        deadAppearance = new SkeletonAppearance(appearance.getShoulders(), appearance.getGender());
+        setClass(charClass);
     }
 }

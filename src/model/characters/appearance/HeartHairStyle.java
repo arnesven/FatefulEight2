@@ -5,8 +5,8 @@ public class HeartHairStyle extends HairStyle {
     private final int avatarSprite;
     private final int avatarBack;
 
-    public HeartHairStyle(HairStyle innerHairStyle, boolean hairInBack, boolean longInBack) {
-        super(false, true, hairInBack, longInBack);
+    public HeartHairStyle(HairStyle innerHairStyle, boolean hairInBack, boolean longInBack, String description) {
+        super(false, true, hairInBack, longInBack, description);
         this.innerHairStyle = innerHairStyle;
         this.avatarSprite = longInBack ? 0x05 : 0x15;
         this.avatarBack = longInBack ? 0x02 : 0x12;

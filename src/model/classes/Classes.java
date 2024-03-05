@@ -1,5 +1,11 @@
 package model.classes;
 
+import model.classes.normal.*;
+import model.classes.npcs.*;
+import model.classes.prestige.NinjaClass;
+import model.classes.prestige.SamuraiClass;
+import model.classes.special.*;
+
 public interface Classes {
     CharacterClass AMZ = new AmazonClass();
     CharacterClass ART = new ArtisanClass();
@@ -44,6 +50,7 @@ public interface Classes {
     CharacterClass OFFICIAL = new OfficialNPCClass();
     CharacterClass BAKER = new BakerNPCClass();
     CharacterClass HERMIT = new HermitNPCClass();
+    CharacterClass BARBER = new BarberNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();

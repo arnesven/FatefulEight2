@@ -4,7 +4,7 @@ import model.characters.preset.MordKroftHairStyle;
 
 public class SpecialMordKroftHairStyle extends MordKroftHairStyle {
     public SpecialMordKroftHairStyle() {
-        super(0xC, true, true, true, true);
+        super(0xC, true, true, true, true, "Samurai");
     }
 
     @Override

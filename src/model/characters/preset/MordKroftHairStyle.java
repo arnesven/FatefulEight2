@@ -6,14 +6,14 @@ import model.characters.appearance.TopKnotHairStyle;
 import view.MyColors;
 
 public class MordKroftHairStyle extends HairStyle3x2 {
-    private TopKnotHairStyle topKnotHairStyle = new TopKnotHairStyle(MyColors.WHITE, false);
+    private TopKnotHairStyle topKnotHairStyle = new TopKnotHairStyle(MyColors.WHITE, false, "Top Knot/Bald");
 
-    public MordKroftHairStyle(int num, boolean forehead, boolean onTop, boolean inBack, boolean longInBack) {
-        super(num, forehead, onTop, inBack, longInBack, 0x00, 0x00);
+    public MordKroftHairStyle(int num, boolean forehead, boolean onTop, boolean inBack, boolean longInBack, String description) {
+        super(num, forehead, onTop, inBack, longInBack, 0x00, 0x00, description);
     }
 
-    public MordKroftHairStyle() {
-        this(9, true, true, false, false);
+    public MordKroftHairStyle(String description) {
+        this(9, true, true, false, false, description);
     }
 
     @Override

@@ -38,8 +38,11 @@ public class GuideEvent extends DailyEventState {
                 new PriestEvent(model),
                 new CourtWizardEvent(model),
                 new ArmoryEvent(model),
-                new JesterEvent(model));
-        int result = multipleOptionArrowMenu(model, 30, 12, List.of("Master-at-arms", "Smith", "Archer", "Some Nobles", "Priest", "Court Wizard", "Armory", "Jester"));
+                new JesterEvent(model),
+                new BarbershopEvent(model));
+        int result = multipleOptionArrowMenu(model, 30, 12,
+                List.of("Master-at-arms", "Smith", "Archer", "Some Nobles",
+                        "Priest", "Court Wizard", "Armory", "Jester", "Barber"));
         events.get(result).doTheEvent(model);
 
     }

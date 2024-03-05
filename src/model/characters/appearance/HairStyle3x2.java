@@ -5,15 +5,16 @@ public class HairStyle3x2 extends HairStyle {
     private final int avatarBack;
     private int[][] hair;
 
-    public HairStyle3x2(int num, boolean inForehead, boolean onTop, boolean inBack, boolean longInBack, int avatarNormal, int avatarBack) {
-        super(inForehead, onTop, inBack, longInBack);
+    public HairStyle3x2(int num, boolean inForehead, boolean onTop, boolean inBack, boolean longInBack,
+                        int avatarNormal, int avatarBack, String description) {
+        super(inForehead, onTop, inBack, longInBack, description);
         hair = set3x2HairStyleFrom(num);
         this.avatarNormal = avatarNormal;
         this.avatarBack = avatarBack;
     }
 
-    public HairStyle3x2(int num, boolean inForehead, int avatarNormal) {
-        this(num, inForehead, true, false, true, avatarNormal, 0x00);
+    public HairStyle3x2(int num, boolean inForehead, int avatarNormal, String description) {
+        this(num, inForehead, true, false, true, avatarNormal, 0x00, description);
     }
 
     public int getForeheadLeft() {

@@ -5,12 +5,13 @@ import model.characters.appearance.HairStyle3x2;
 import view.sprites.FaceSpriteWithHair;
 
 public class FemaleLongHairStyle extends HairStyle3x2 {
-    public FemaleLongHairStyle() {
-        super(0x7D, true, true, true, true, 0x01, 0x02);
+    public FemaleLongHairStyle(String description) {
+        super(0x7D, true, true, true, true,
+                0x01, 0x02, description);
     }
 
-    public FemaleLongHairStyle(int num, int avatarNormal) {
-        super(num, true, true, true, true, avatarNormal, 0x02);
+    public FemaleLongHairStyle(int num, int avatarNormal, String description) {
+        super(num, true, true, true, true, avatarNormal, 0x02, description);
     }
 
     @Override

@@ -11,6 +11,6 @@ public class MegarEvermead extends AdvancedAppearance {
     public MegarEvermead() {
         super(Race.DWARF, false, MyColors.WHITE,
                 4, 9, new CharacterEyes(6,7),
-                new TopKnotHairStyle(MyColors.GRAY, true), new BigAndLongBeard(MyColors.GRAY));
+                new TopKnotHairStyle(MyColors.GRAY, true, "Megar"), new BigAndLongBeard(MyColors.GRAY));
     }
 }

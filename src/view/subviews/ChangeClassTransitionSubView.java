@@ -73,8 +73,8 @@ public class ChangeClassTransitionSubView extends SubView implements Animation {
         return stage == STAGE_MAX;
     }
 
-    public static void transition(Model model, ChangeClassSubView subView, GameCharacter gc, GameCharacter wouldBe) {
-        ChangeClassTransitionSubView transition = new ChangeClassTransitionSubView(subView, gc, subView.getWouldBe(gc));
+    public static void transition(Model model, SubView subView, GameCharacter gc, GameCharacter wouldBe) {
+        ChangeClassTransitionSubView transition = new ChangeClassTransitionSubView(subView, gc, wouldBe);
         model.setSubView(transition);
         SoundEffects.playSound("classchange");
         while (!transition.animationDone()) {

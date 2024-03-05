@@ -8,9 +8,10 @@ public class TopKnotHairStyle extends BaldHairStyle {
     private final MyColors bandColor;
     private final boolean onBald;
 
-    public TopKnotHairStyle(MyColors color, boolean onBald) {
+    public TopKnotHairStyle(MyColors color, boolean onBald, String description) {
         this.bandColor = color;
         this.onBald = onBald;
+        super.setDescription(description);
     }
 
     @Override

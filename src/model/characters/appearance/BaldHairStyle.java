@@ -3,7 +3,7 @@ package model.characters.appearance;
 public class BaldHairStyle extends HairStyle {
 
     public BaldHairStyle() {
-        super(false, false, false, false);
+        super(false, false, false, false, "Bald");
     }
 
     @Override

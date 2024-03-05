@@ -11,8 +11,8 @@ public class ExplicitHairStyle extends HairStyle {
     private final int avatarBackHair;
 
     public ExplicitHairStyle(boolean inForehead, int left, int center, int right, int topLeft, int top, int topRight,
-                             int avatarNormalHair, int avatarBackHair) {
-        super(inForehead);
+                             int avatarNormalHair, int avatarBackHair, String description) {
+        super(inForehead, description);
         this.left = left;
         this.center = center;
         this.right = right;

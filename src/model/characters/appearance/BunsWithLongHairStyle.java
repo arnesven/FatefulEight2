@@ -4,9 +4,10 @@ public class BunsWithLongHairStyle extends BunsHairStyle {
 
     private final HairStyle femaleLongHairStyle;
 
-    public BunsWithLongHairStyle(HairStyle inner, boolean longInBack) {
+    public BunsWithLongHairStyle(HairStyle inner, boolean longInBack, String description) {
         super(true, longInBack, inner.getBackHairOnly());
         this.femaleLongHairStyle = inner;
+        setDescription(description);
     }
 
     @Override

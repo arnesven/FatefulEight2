@@ -12,7 +12,8 @@ public class HazelVanDevries extends AdvancedAppearance {
 
     public HazelVanDevries() {
         super(Race.SOUTHERN_HUMAN, true, MyColors.DARK_BROWN,
-                3, 2, new CharacterEyes(0xA, 0xB), new HairStyle3x2(9, true, 0x10), null);
+                3, 2, new CharacterEyes(0xA, 0xB),
+                new HairStyle3x2(9, true, 0x10, "Hazel"), null);
         setMascaraColor(MyColors.BLACK);
     }
 

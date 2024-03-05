@@ -2,7 +2,7 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.BardClass;
+import model.classes.normal.BardClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.CombatAction;
