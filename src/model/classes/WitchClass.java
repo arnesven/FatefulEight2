@@ -32,7 +32,7 @@ public class WitchClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnPointyHat(characterAppearance, MyColors.DARK_GRAY);
+        Looks.putOnPointyHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_BROWN, MyColors.GOLD);
         Looks.putOnTunic(characterAppearance, MyColors.DARK_GRAY);
     }
 

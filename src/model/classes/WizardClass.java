@@ -31,7 +31,7 @@ public class WizardClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnPointyHat(characterAppearance, MyColors.BLUE);
+        Looks.putOnPointyHat(characterAppearance, MyColors.BLUE, MyColors.DARK_BLUE, MyColors.DARK_BLUE);
         Looks.putOnRobe(characterAppearance, MyColors.BLUE, MyColors.LIGHT_BLUE);
     }
 

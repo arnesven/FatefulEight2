@@ -121,15 +121,16 @@ public abstract class Looks {
         characterAppearance.getShoulders().putOnRightPauldron(characterAppearance, armorColor, underShirtColor);
     }
 
-    protected static void putOnPointyHat(CharacterAppearance characterAppearance, MyColors hatColor) {
+    protected static void putOnPointyHat(CharacterAppearance characterAppearance, MyColors hatColor,
+                                         MyColors beltColor, MyColors buckleColor) {
         characterAppearance.removeOuterHair();
         characterAppearance.setSprite(2, 0, new ClothesSprite(0x90, hatColor));
         characterAppearance.setSprite(3, 0, new ClothesSprite(0x91, hatColor));
         characterAppearance.setSprite(4, 0, new ClothesSprite(0x92, hatColor));
         characterAppearance.setSprite(1, 1, new ClothesSprite(0xA0, hatColor));
-        characterAppearance.setSprite(2, 1, new ClothesSprite(0xA1, hatColor));
-        characterAppearance.setSprite(3, 1, new ClothesSprite(0xA2, hatColor));
-        characterAppearance.setSprite(4, 1, new ClothesSprite(0xA3, hatColor));
+        characterAppearance.setSprite(2, 1, new ClothesSprite(0xA1, hatColor, beltColor, buckleColor));
+        characterAppearance.setSprite(3, 1, new ClothesSprite(0xA2, hatColor, beltColor, buckleColor));
+        characterAppearance.setSprite(4, 1, new ClothesSprite(0xA3, hatColor, beltColor, buckleColor));
         characterAppearance.setSprite(5, 1, new ClothesSprite(0xA4, hatColor));
         characterAppearance.setRow(2, new PortraitSprite[]{
                 new ClothesSprite(0xB0, hatColor), new ClothesSprite(0xB1, hatColor),
@@ -218,7 +219,7 @@ public abstract class Looks {
     }
 
     public static void putOnMerchantHat(CharacterAppearance characterAppearance, MyColors hatColor, MyColors detailColor) {
-        putOnPointyHat(characterAppearance, hatColor);
+        putOnPointyHat(characterAppearance, hatColor, MyColors.DARK_GRAY, MyColors.GOLD);
         characterAppearance.setSprite(2, 1, new ClothesSprite(0xF0, hatColor, detailColor));
     }
 

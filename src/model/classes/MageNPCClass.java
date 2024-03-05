@@ -12,7 +12,7 @@ public class MageNPCClass extends NPCClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnPointyHat(characterAppearance, MyColors.RED);
+        Looks.putOnPointyHat(characterAppearance, MyColors.RED, MyColors.DARK_RED, MyColors.DARK_RED);
         Looks.putOnRobe(characterAppearance, MyColors.RED, MyColors.LIGHT_RED);
     }
 

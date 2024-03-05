@@ -10,7 +10,7 @@ public class AlchemistNPCClass extends NPCClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnPointyHat(characterAppearance, MyColors.DARK_GREEN);
+        Looks.putOnPointyHat(characterAppearance, MyColors.DARK_GREEN, MyColors.BLACK, MyColors.GOLD);
         Looks.putOnTunic(characterAppearance, MyColors.DARK_GREEN);
     }
 }
