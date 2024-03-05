@@ -20,6 +20,7 @@ import model.items.accessories.Accessory;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
+import model.items.spells.BoneArmorCondition;
 import model.items.spells.CombatSpell;
 import model.items.spells.QuickenedCondition;
 import model.items.spells.QuickeningSpell;
@@ -290,8 +291,8 @@ public class GameCharacter extends Combatant {
 
     public int getAP() {
         int bonus = 0;
-        if (hasCondition(ShiningAegisCondition.class)) {
-            bonus += ((ShiningAegisCondition)getCondition(ShiningAegisCondition.class)).getArmorBonus();
+        for (Condition cond : getConditions()) {
+            bonus += cond.getArmorBonus();
         }
         return equipment.getTotalAP() + bonus;
     }

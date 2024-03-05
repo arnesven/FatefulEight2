@@ -13,7 +13,7 @@ public class ShiningAegisSpell extends CombatSpell {
     private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
 
     public ShiningAegisSpell() {
-        super("Shining Aegis", 12, MyColors.WHITE, 9, 1);
+        super("Shining Aegis", 12, MyColors.WHITE, 8, 1);
     }
 
     @Override

@@ -9,6 +9,7 @@ import model.items.potions.StrengthPotion;
 import model.items.potions.WitsPotion;
 import model.items.spells.BlackPactCondition;
 import model.items.spells.BlackPactSpell;
+import model.items.spells.BoneArmorCondition;
 import model.items.spells.QuickenedCondition;
 import model.states.events.EnchantressEvent;
 import view.GameView;
@@ -32,6 +33,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
         return List.of(
                 new BlackPactCondition().getHelpView(view),
                 new BleedingCondition().getHelpView(view),
+                new BoneArmorCondition(0).getHelpView(view),
                 new BurningCondition(null).getHelpView(view),
                 new BurningWeaponCondition().getHelpView(view),
                 new CharismaPotion().getCondition().getHelpView(view),

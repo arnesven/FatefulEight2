@@ -17,6 +17,7 @@ public class CombatActionMenu extends ArrowMenuSubView {
     private final int x;
     private final int y;
     private final CombatSubView combatSubView;
+    private boolean inverter = false;
 
     public CombatActionMenu(SubView subView, List<CombatAction> actions, List<String> labels, int x, int y, int anchor,
                             CombatEvent combatEvent, Combatant target, CombatSubView combatSubView) {
@@ -28,6 +29,9 @@ public class CombatActionMenu extends ArrowMenuSubView {
         this.x = x;
         this.y = y;
         this.combatSubView = combatSubView;
+        if (anchor == DailyActionMenu.SOUTH_WEST) {
+            inverter = true;
+        }
     }
 
     private static List<String> addExit(List<String> labels) {
@@ -41,7 +45,11 @@ public class CombatActionMenu extends ArrowMenuSubView {
             CombatAction selectedAction = actions.get(cursorPos);
             if (selectedAction.hasInnerMenu()) {
                 List<CombatAction> innerActions = selectedAction.getInnerActions(model);
-                model.setSubView(new CombatActionMenu(this, innerActions, toStringList(innerActions), x+2, y+cursorPos*2,
+                int newY = y+cursorPos*2;
+                if (inverter) {
+                    newY = y - (actions.size()-cursorPos)*2 - 2;
+                }
+                model.setSubView(new CombatActionMenu(this, innerActions, toStringList(innerActions), x+2, newY,
                         NORTH_WEST, combatEvent, target, combatSubView));
             } else {
                 combatEvent.unblock(selectedAction, target);

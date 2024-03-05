@@ -238,7 +238,7 @@ public class CombatSubView extends SubView {
                 int y = point.y;
                 if (combatant instanceof Enemy) {
                     anchor = DailyActionMenu.SOUTH_WEST;
-                    y = point.y - 4;
+                    y = point.y + 4;
                 }
                 CombatActionMenu menu = new CombatActionMenu(model.getSubView(), combatActions, CombatActionMenu.toStringList(combatActions),
                         point.x + 3, y, anchor, combat, combatant, this);

@@ -13,7 +13,7 @@ public abstract class ArrowMenuSubView extends SubView {
     public static final int SOUTH_WEST = 2;
     public static final int SOUTH_EAST = 3;
 
-    private ArrowMenuGameView arrowMenuGameView;
+    private final ArrowMenuGameView arrowMenuGameView;
     private final SubView previous;
 
     public ArrowMenuSubView(SubView previous, List<String> labels, int xPos, int yPos, int anchor) {

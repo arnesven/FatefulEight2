@@ -86,4 +86,6 @@ public abstract class Condition implements Serializable {
 
     public abstract ConditionHelpDialog getHelpView(GameView view);
 
+    public int getArmorBonus() { return 0; }
+
 }
