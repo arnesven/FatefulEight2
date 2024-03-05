@@ -7,6 +7,7 @@ import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
+import model.states.DailyEventState;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyRandom;
@@ -233,8 +234,14 @@ public class CombatSubView extends SubView {
                 if (combatant instanceof GameCharacter) {
                     combatActions.removeIf((CombatAction ca) -> ca.getName().equals("Attack"));
                 }
+                int anchor = DailyActionMenu.NORTH_WEST;
+                int y = point.y;
+                if (combatant instanceof Enemy) {
+                    anchor = DailyActionMenu.SOUTH_WEST;
+                    y = point.y - 4;
+                }
                 CombatActionMenu menu = new CombatActionMenu(model.getSubView(), combatActions, CombatActionMenu.toStringList(combatActions),
-                        point.x + 3, point.y, DailyActionMenu.NORTH_WEST, combat, combatant, this);
+                        point.x + 3, y, anchor, combat, combatant, this);
                 model.setSubView(menu);
                 return true;
             }
