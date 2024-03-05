@@ -7,7 +7,6 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import sound.SoundEffects;
-import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.*;

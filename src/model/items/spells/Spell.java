@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
+import model.states.DailyEventState;
 import model.states.GameState;
 import sound.SoundEffects;
 import view.*;
@@ -59,7 +60,7 @@ public abstract class Spell extends Item {
         }
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");
-            if (!model.isInCombat()) {
+            if (!model.isInCombat() && !DailyEventState.didResurrect(model, state, caster)) {
                 model.getParty().remove(caster, true, false, 0);
             }
             return false;
