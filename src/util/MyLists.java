@@ -2,6 +2,7 @@ package util;
 
 
 import model.characters.GameCharacter;
+import model.items.spells.Spell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +78,16 @@ public class MyLists {
             }
         }
         return null;
+    }
+
+    public static <E> int maximum(List<E> source, MyUnaryIntFunction<E> fun) {
+        int max = 0;
+        for (E e : source) {
+            int val = fun.apply(e);
+            if (val > max) {
+                max = val;
+            }
+        }
+        return max;
     }
 }

@@ -102,6 +102,25 @@ public abstract class Spell extends Item {
         }
     }
 
+    public static MyColors getColorForSkill(Skill skill) {
+        switch (skill) {
+            case MagicBlack:
+                return MyColors.BLACK;
+            case MagicBlue:
+                return MyColors.BLUE;
+            case MagicRed:
+                return MyColors.RED;
+            case MagicGreen:
+                return MyColors.GREEN;
+            case MagicWhite:
+                return MyColors.WHITE;
+            case MagicAny:
+                return MyColors.PURPLE;
+            default:
+                throw new IllegalStateException("Unrecognized magic skill " + skill.getName());
+        }
+    }
+
     public Skill getSkill() {
         return getSkillForColor(color);
     }
