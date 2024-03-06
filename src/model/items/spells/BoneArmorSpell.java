@@ -41,19 +41,17 @@ public class BoneArmorSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (target.hasCondition(BoneArmorCondition.class)) {
-            combat.println(getName() + " has no effect on " + target.getName());
+        if (performer.hasCondition(BoneArmorCondition.class)) {
+            combat.println(getName() + " has no effect on " + performer.getName());
         } else {
-            target.addCondition(new BoneArmorCondition(getMasteryLevel(performer) + 4));
-            if (target instanceof GameCharacter) {
-                ((GameCharacter) target).setSpecificClothing(new BoneArmorClothing());
-            }
+            performer.addCondition(new BoneArmorCondition(getMasteryLevel(performer) + 4));
+            performer.setSpecificClothing(new BoneArmorClothing());
         }
     }
 
     @Override
     public String getDescription() {
-        return "Summons a protective suit of armor of bone for the remainder of combat.";
+        return "Provides the caster with a suit of armor of bone for the remainder of combat.";
     }
 
 
@@ -104,7 +102,7 @@ public class BoneArmorSpell extends CombatSpell {
 
         @Override
         public boolean hasSpecialAvatar() {
-            return false;
+            return false; // TODO: Make avatar for bone armor.
         }
 
         @Override
