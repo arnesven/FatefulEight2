@@ -27,21 +27,21 @@ import java.util.*;
 public class CombatEvent extends DailyEventState {
 
     private final CombatStatistics combatStats;
-    private List<GameCharacter> participants;
-    private List<Enemy> enemies = new ArrayList<>();
+    private final List<GameCharacter> participants;
+    private final List<Enemy> enemies = new ArrayList<>();
     private List<Combatant> initiativeOrder;
     private int currentInit = 0;
-    private CombatSubView subView;
-    private CombatMatrix combatMatrix;
+    private final CombatSubView subView;
+    private final CombatMatrix combatMatrix;
     private Combatant currentCombatant;
     private boolean selectingFormation;
-    private List<GameCharacter> backMovers = new ArrayList<>();
+    private final List<GameCharacter> backMovers = new ArrayList<>();
     private boolean partyFled = false;
     private boolean fleeingEnabled;
     private boolean blockCombat = false;
     private CombatAction selectedCombatAction = null;
     private Combatant selectedTarget;
-    private List<GameCharacter> allies = new ArrayList<>();
+    private final List<GameCharacter> allies = new ArrayList<>();
     private boolean isAmbush;
     private int timeLimit = Integer.MAX_VALUE;
     private int roundCounter = 1;
@@ -61,7 +61,7 @@ public class CombatEvent extends DailyEventState {
         this.participants = new ArrayList<>();
         this.participants.addAll(model.getParty().getFrontRow());
         this.participants.addAll(model.getParty().getBackRow());
-        setInitiativeOrder(model);
+        setInitiativeOrder();
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.fleeingEnabled = fleeingEnabled;
         this.isAmbush = isAmbush;
@@ -83,11 +83,40 @@ public class CombatEvent extends DailyEventState {
         if (isAmbush) {
             model.getTutorial().ambush(model);
         }
-        setInitiativeOrder(model);
+        setInitiativeOrder();
         AnimationManager.synchAnimations();
         model.setInCombat(true);
         setFormation(model);
         combatStats.startCombat(enemies, participants, allies);
+        runCombatLoop(model);
+        model.getLog().waitForAnimationToFinish();
+        handleLootAndSummary(model);
+        removeKilledPartyMembers(model, partyFled);
+        removeCombatConditions(model);
+        model.setGameOver(model.getParty().isWipedOut());
+        model.playMainSong(); // TODO: Song is dependent on location...
+        model.setInCombat(false);
+    }
+
+    private void setInitiativeOrder() {
+        currentInit = 0;
+        initiativeOrder = new ArrayList<>();
+        initiativeOrder.addAll(participants);
+        initiativeOrder.addAll(allies);
+        Map<Character, Enemy> groupMap = new HashMap<>();
+        for (Enemy e : enemies) {
+            if (!groupMap.containsKey(e.getEnemyGroup())) {
+                groupMap.put(e.getEnemyGroup(), e);
+            }
+        }
+        for (Character c : groupMap.keySet()) {
+            initiativeOrder.add(groupMap.get(c));
+        }
+        Collections.shuffle(initiativeOrder);
+        Collections.sort(initiativeOrder, (c1, c2) -> c2.getSpeed() - c1.getSpeed());
+    }
+
+    private void runCombatLoop(Model model) {
         while (true) {
             System.out.println("Combat Round " + roundCounter);
             doCombatRound(model);
@@ -96,15 +125,16 @@ public class CombatEvent extends DailyEventState {
             if (combatDone(model)) {
                 break;
             }
-            setInitiativeOrder(model);
+            setInitiativeOrder();
             if (!checkForOverrun(model)) {
                 setFormation(model);
                 checkForOpportunityAttacks(model);
             }
             triggerConditions(model);
         }
-        model.getLog().waitForAnimationToFinish();
+    }
 
+    private void handleLootAndSummary(Model model) {
         List<CombatLoot> combatLoot = null;
         if (isWipedOut()) {
             print("You have been wiped out! ");
@@ -125,13 +155,6 @@ public class CombatEvent extends DailyEventState {
         if (combatLoot != null) {
             model.getParty().giveCombatLoot(combatLoot);
         }
-
-        removeKilledPartyMembers(model, partyFled);
-        removeCombatConditions(model);
-
-        model.setGameOver(model.getParty().isWipedOut());
-        model.playMainSong(); // TODO: Song is dependent on location...
-        model.setInCombat(false);
     }
 
     protected void removeCombatConditions(Model model) {
@@ -249,29 +272,6 @@ public class CombatEvent extends DailyEventState {
                 addFloatyDamage(backMover, 1, DamageValueEffect.STANDARD_DAMAGE);
             }
         }
-    }
-
-    private void setInitiativeOrder(Model model) {
-        currentInit = 0;
-        initiativeOrder = new ArrayList<>();
-        initiativeOrder.addAll(participants);
-        initiativeOrder.addAll(allies);
-        Map<Character, Enemy> groupMap = new HashMap<>();
-        for (Enemy e : enemies) {
-            if (!groupMap.containsKey(e.getEnemyGroup())) {
-                groupMap.put(e.getEnemyGroup(), e);
-            }
-        }
-        for (Character c : groupMap.keySet()) {
-            initiativeOrder.add(groupMap.get(c));
-        }
-        Collections.shuffle(initiativeOrder);
-        Collections.sort(initiativeOrder, new Comparator<Combatant>() {
-            @Override
-            public int compare(Combatant c1, Combatant c2) {
-                return c2.getSpeed() - c1.getSpeed();
-            }
-        });
     }
 
     private boolean combatDone(Model model) {
