@@ -88,7 +88,7 @@ public class AbilityCombatAction extends CombatAction {
     public static List<PassiveCombatAction> getPassiveCombatActions(GameCharacter gc) {
         List<PassiveCombatAction> list = new ArrayList<>();
         if (QuickCastPassiveCombatAction.canDoAbility(gc)) {
-            list.add(new QuickCastPassiveCombatAction());
+            list.add(QuickCastPassiveCombatAction.getInstance());
         }
         return list;
     }

@@ -442,6 +442,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void quickCasting(Model model) {
+        runOnce("quickcast", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialQuickCasting(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

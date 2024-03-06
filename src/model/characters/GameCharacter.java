@@ -180,14 +180,14 @@ public class GameCharacter extends Combatant {
         super.addToHP(i);
     }
 
-    private boolean canAttackInCombat() {
+    public boolean canAttackInCombat() {
         if (party == null) {
             return true;
         }
         return !party.getBackRow().contains(this) || mayAttackFromBackRow();
     }
 
-    private void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
+    public void performAttack(Model model, CombatEvent combatEvent, Combatant target) {
         model.getTutorial().combatAttacks(model);
         for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
             if (target.isDead()) {
@@ -233,25 +233,6 @@ public class GameCharacter extends Combatant {
         combatEvent.doDamageToEnemy(target, damage, this);
         equipment.getWeapon().didOneAttackWith(combatEvent, this, target, damage, crit);
         combatEvent.blockSneakAttackFor(this);
-    }
-
-    private void performFleeFromBattle(Model model, CombatEvent combatEvent) {
-        if (model.getParty().size() > 1) {
-            SkillCheckResult result = testSkill(Skill.Leadership, 3 + model.getParty().size());
-            combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
-            if (result.isSuccessful()) {
-                combatEvent.setPartyFled(true);
-            }
-        } else {
-            int d10 = MyRandom.rollD10();
-            combatEvent.print("Trying to escape from combat (D10 roll=" + d10 + ")");
-            if (d10 >= 5) {
-                combatEvent.println(" >=5, SUCCESS.");
-                combatEvent.setPartyFled(true);
-            } else {
-                combatEvent.println(" <5 FAIL. Can't get away!");
-            }
-        }
     }
 
 
@@ -379,62 +360,6 @@ public class GameCharacter extends Combatant {
             return "female_scream";
         }
         return "male_scream";
-    }
-
-    public List<CombatAction> getCombatActions(Model model, Combatant target, CombatEvent combatEvent) {
-        List<CombatAction> result = new ArrayList<>();
-        if (canAttackInCombat() && target.canBeAttackedBy(this)) {
-            result.add(new BasicCombatAction("Attack", true, true) {
-                @Override
-                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    performer.performAttack(model, combat, target);
-                }
-            });
-        }
-        if (isLeader() && combatEvent.fleeingEnabled()) {
-            result.add(new BasicCombatAction("Flee", false, false) {
-                @Override
-                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    performFleeFromBattle(model, combat);
-                }
-            });
-        }
-
-        if (model.getParty().getPartyMembers().contains(this)) {
-            Set<UsableItem> usableItems = new HashSet<>();
-            usableItems.addAll(model.getParty().getInventory().getPotions());
-            usableItems.addAll(model.getParty().getInventory().getCombatScrolls());
-            if (usableItems.size() > 0) {
-                result.add(new ItemCombatAction(usableItems, target));
-            }
-
-            List<CombatSpell> combatSpells = model.getParty().getInventory().getCombatSpells();
-            if (!combatSpells.isEmpty()) {
-                result.add(new SpellCombatAction(combatSpells, target));
-            }
-
-            AbilityCombatAction abilities = new AbilityCombatAction(this, target);
-            if (abilities.getInnerActions(model).size() > 0 ) {
-                result.add(abilities);
-            }
-        }
-
-        if (combatEvent.canDelay(this)) {
-            result.add(new BasicCombatAction("Delay", false, false) {
-                @Override
-                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    combat.delayCombatant(performer);
-                }
-            });
-        }
-
-        result.add(new BasicCombatAction("Pass", false, false) {
-            @Override
-            protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                combat.println("");
-            }
-        });
-        return result;
     }
 
     public AvatarSprite getAvatarSprite() {

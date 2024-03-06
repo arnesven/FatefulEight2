@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.actions.CombatAction;
 import model.characters.GameCharacter;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
@@ -36,12 +37,12 @@ public class NPCCombatEvent extends CombatEvent {
         round = 1;
         while (!endOfCombat(fighter1)) {
             waitForReturnSilently();
-            fighter1.getCombatActions(model, fighter2, this).get(0).executeCombatAction(model, this, fighter1, fighter2);
+            CombatAction.getCombatActions(model, fighter1, fighter2, this).get(0).executeCombatAction(model, this, fighter1, fighter2);
             waitForReturnSilently();
             if (endOfCombat(fighter2)) {
                 return;
             }
-            fighter2.getCombatActions(model, fighter1, this).get(0).executeCombatAction(model, this, fighter2, fighter1);
+            CombatAction.getCombatActions(model, fighter2, fighter1, this).get(0).executeCombatAction(model, this, fighter2, fighter1);
             round++;
         }
         fighter1.removeCombatConditions();

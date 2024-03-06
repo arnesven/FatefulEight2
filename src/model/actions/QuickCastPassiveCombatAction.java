@@ -9,7 +9,16 @@ import view.help.HelpDialog;
 public class QuickCastPassiveCombatAction extends PassiveCombatAction {
     public static final int MINIMUM_RANKS_REQUIRED = 3;
 
-    public QuickCastPassiveCombatAction() {
+    private static QuickCastPassiveCombatAction instance = null;
+
+    public static QuickCastPassiveCombatAction getInstance() {
+        if (instance == null) {
+            instance = new QuickCastPassiveCombatAction();
+        }
+        return instance;
+    }
+
+    private QuickCastPassiveCombatAction() {
         super("Quick Casting");
     }
 

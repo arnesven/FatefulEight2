@@ -1,5 +1,7 @@
 package model.states;
 
+import model.actions.AbilityCombatAction;
+import model.actions.QuickCastPassiveCombatAction;
 import model.actions.SneakAttackCombatAction;
 import model.actions.CombatAction;
 import model.combat.loot.CombatLoot;
@@ -50,6 +52,7 @@ public class CombatEvent extends DailyEventState {
     private final List<CombatLoot> extraLoot = new ArrayList<>();
     private final List<Combatant> delayedCombatants = new ArrayList<>();
     private MyPair<GameCharacter, Integer> flameWall = null;
+    private boolean inQuickCast = false;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
         super(model);
@@ -88,6 +91,7 @@ public class CombatEvent extends DailyEventState {
         model.setInCombat(true);
         setFormation(model);
         combatStats.startCombat(enemies, participants, allies);
+        runQuickCastTurns(model);
         runCombatLoop(model);
         model.getLog().waitForAnimationToFinish();
         handleLootAndSummary(model);
@@ -96,6 +100,17 @@ public class CombatEvent extends DailyEventState {
         model.setGameOver(model.getParty().isWipedOut());
         model.playMainSong(); // TODO: Song is dependent on location...
         model.setInCombat(false);
+    }
+
+    private void runQuickCastTurns(Model model) {
+        MyLists.forEach(
+                MyLists.filter(
+                        MyLists.transform(
+                                MyLists.filter(initiativeOrder, (Combatant c) -> c instanceof GameCharacter &&
+                                                                model.getParty().getPartyMembers().contains(c)),
+                                (Combatant c) -> (GameCharacter)c),
+                        (GameCharacter gc) -> AbilityCombatAction.getPassiveCombatActions(gc).contains(QuickCastPassiveCombatAction.getInstance())),
+                (GameCharacter gc) -> handleCharacterTurn(model, gc, true));
     }
 
     private void setInitiativeOrder() {
@@ -186,7 +201,7 @@ public class CombatEvent extends DailyEventState {
                 if (hasFlameWall() && flameWall.first == turnTaker) {
                     removeFlameWall();
                 }
-                handleCharacterTurn(model, turnTaker);
+                handleCharacterTurn(model, turnTaker, false);
             }
         }
         if (!combatDone(model)) {
@@ -207,7 +222,8 @@ public class CombatEvent extends DailyEventState {
         }
     }
 
-    private void handleCharacterTurn(Model model, Combatant turnTaker) {
+    private void handleCharacterTurn(Model model, Combatant turnTaker, boolean isQuickCast) {
+        inQuickCast = isQuickCast;
         currentCombatant = turnTaker;
         combatMatrix.moveSelectedToEnemy();
         GameCharacter character = (GameCharacter) turnTaker;
@@ -216,8 +232,12 @@ public class CombatEvent extends DailyEventState {
                 println(character.getName() + " turn was skipped.");
             }
         } else {
-            print(character.getFirstName() + "'s turn. ");
-            model.getTutorial().combatActions(model);
+            print(character.getFirstName() + "'s " + (isQuickCast?"Quick Cast ":"") + "turn. ");
+            if (isQuickCast) {
+                model.getTutorial().quickCasting(model);
+            } else {
+                model.getTutorial().combatActions(model);
+            }
             do {
                 waitToProceed();
                 selectedCombatAction.executeCombatAction(model, this, character, selectedTarget);
@@ -229,7 +249,10 @@ public class CombatEvent extends DailyEventState {
             selectedCombatAction = null;
             selectedTarget = null;
         }
-        character.decreaseTimedConditions(model, this);
+        if (!isQuickCast) {
+            character.decreaseTimedConditions(model, this);
+        }
+        inQuickCast = false;
     }
 
     private void handleSneakAttacks(Model model) {
@@ -585,5 +608,9 @@ public class CombatEvent extends DailyEventState {
 
     public boolean hasFlameWall() {
         return flameWall != null;
+    }
+
+    public boolean isInQuickCast() {
+        return inQuickCast;
     }
 }

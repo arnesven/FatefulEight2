@@ -228,7 +228,8 @@ public class CombatSubView extends SubView {
         if (!combat.playerHasSelectedAction()) {
             if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER && combat.getCurrentCombatant() instanceof GameCharacter) {
                 Point point = convertToScreen(combatMatrix.getPositionFor(combatant), combatant);
-                List<CombatAction> combatActions = ((GameCharacter) combat.getCurrentCombatant()).getCombatActions(model, combatant, combat);
+                List<CombatAction> combatActions = CombatAction.getCombatActions(model,
+                        (GameCharacter)combat.getCurrentCombatant(), combatant, combat);
                 if (combatant instanceof GameCharacter) {
                     combatActions.removeIf((CombatAction ca) -> ca.getName().equals("Attack"));
                 }
