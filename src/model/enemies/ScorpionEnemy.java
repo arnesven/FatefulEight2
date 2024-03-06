@@ -1,10 +1,9 @@
 package model.enemies;
 
 import model.Model;
-import model.characters.GameCharacter;
-import model.combat.*;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.PoisonAttackBehavior;
-import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

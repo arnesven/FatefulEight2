@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.NoCombatLoot;
 
 public class OrcishBrawlerEnemy extends OrcWarrior {
     public OrcishBrawlerEnemy(char a) {

@@ -1,9 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.StandardCombatLoot;
-import model.enemies.behaviors.MixedAttackBehavior;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.StandardCombatLoot;
 import model.enemies.behaviors.MultiMagicAttackBehavior;
 import util.MyRandom;
 import view.MyColors;

@@ -1,14 +1,9 @@
 package model.enemies;
 
 import model.Model;
-import model.characters.GameCharacter;
-import model.combat.CombatLoot;
-import model.combat.MonsterCombatLoot;
-import model.combat.ParalysisCondition;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.ParalysisAttackBehavior;
-import model.states.CombatEvent;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;

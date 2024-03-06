@@ -2,8 +2,8 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
-import model.combat.CombinedLoot;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.CombinedLoot;
+import model.combat.loot.StandardCombatLoot;
 import model.map.CaveHex;
 import model.states.DailyEventState;
 import util.MyRandom;

@@ -1,12 +1,10 @@
 package model.quests;
 
 import model.Model;
-import model.QuestDeck;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.TownCombatTheme;
-import model.enemies.BanditEnemy;
+import view.subviews.TownCombatTheme;
 import model.enemies.MurdererEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
@@ -15,7 +13,6 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import model.states.QuestState;
 import view.MyColors;
-import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;

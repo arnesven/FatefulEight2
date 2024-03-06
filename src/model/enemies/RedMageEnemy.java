@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.BossCombatLoot;
-import model.combat.CombatLoot;
+import model.combat.loot.BossCombatLoot;
+import model.combat.loot.CombatLoot;
 import model.enemies.behaviors.MagicRangedAttackBehavior;
 import model.races.Race;
 import view.MyColors;

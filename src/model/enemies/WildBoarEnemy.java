@@ -1,14 +1,11 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.RationsCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.RationsCombatLoot;
 import model.enemies.behaviors.KnockBackAttackBehavior;
-import view.sprites.BearSprite;
 import view.sprites.Sprite;
 import view.sprites.WildBoarSprite;
-
-import java.awt.*;
 
 public class WildBoarEnemy extends BigBeastEnemy {
     private static Sprite sprite = new WildBoarSprite("wildboar", "enemies.png", 0x20);

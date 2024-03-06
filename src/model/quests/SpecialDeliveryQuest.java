@@ -2,7 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.classes.Skill;
-import model.combat.TownCombatTheme;
+import view.subviews.TownCombatTheme;
 import model.enemies.*;
 import model.quests.scenes.*;
 import model.states.QuestState;

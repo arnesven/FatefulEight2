@@ -2,7 +2,7 @@ package model.ruins.objects;
 
 import model.Model;
 import model.classes.Skill;
-import model.combat.CaveTheme;
+import view.subviews.CaveTheme;
 import model.enemies.*;
 import model.items.potions.Potion;
 import model.items.potions.SleepingPotion;

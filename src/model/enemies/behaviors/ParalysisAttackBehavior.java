@@ -2,7 +2,7 @@ package model.enemies.behaviors;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.ParalysisCondition;
+import model.combat.conditions.ParalysisCondition;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyRandom;

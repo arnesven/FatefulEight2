@@ -1,7 +1,7 @@
 package view.help;
 
 import model.Model;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import view.GameView;
 import view.party.DrawableObject;
 import view.sprites.Sprite;

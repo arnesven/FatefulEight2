@@ -2,8 +2,8 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Skill;
-import model.combat.CombatLoot;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.StandardCombatLoot;
 import model.states.DailyEventState;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;

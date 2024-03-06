@@ -6,7 +6,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.TownCombatTheme;
+import view.subviews.TownCombatTheme;
 import model.enemies.InterloperEnemy;
 import model.items.spells.FireworksSpell;
 import model.items.spells.Spell;

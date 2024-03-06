@@ -2,8 +2,8 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
-import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.PersonCombatLoot;
+import model.combat.loot.StandardCombatLoot;
 
 import java.util.ArrayList;
 import java.util.List;

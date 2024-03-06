@@ -3,7 +3,7 @@ package model.enemies;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
+import model.combat.loot.CombatLoot;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;

@@ -4,16 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
-import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialSneakAttack;
-import view.sprites.CharSprite;
-import view.sprites.Sprite;
 
 public class SneakAttackCombatAction extends CombatAction {
     private Combatant target;

@@ -3,7 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.ErodeCondition;
+import model.combat.conditions.ErodeCondition;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;

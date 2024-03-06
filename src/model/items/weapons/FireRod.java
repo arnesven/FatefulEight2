@@ -2,7 +2,7 @@ package model.items.weapons;
 
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.BurningCondition;
+import model.combat.conditions.BurningCondition;
 import model.combat.Combatant;
 import model.items.Item;
 import model.items.Prevalence;

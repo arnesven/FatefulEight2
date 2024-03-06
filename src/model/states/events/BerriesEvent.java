@@ -5,7 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.PoisonCondition;
+import model.combat.conditions.PoisonCondition;
 import model.states.DailyEventState;
 import util.MyRandom;
 import view.sprites.MiniPictureSprite;

@@ -2,7 +2,7 @@ package view.party;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import view.MyColors;
 
 import java.awt.*;

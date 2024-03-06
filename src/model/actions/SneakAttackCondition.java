@@ -1,6 +1,6 @@
 package model.actions;
 
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;

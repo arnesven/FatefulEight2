@@ -2,10 +2,9 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.TownCombatTheme;
+import view.subviews.TownCombatTheme;
 import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
-import model.enemies.GoblinSpearman;
 import model.states.DailyEventState;
 import model.states.GameState;
 import util.MyRandom;

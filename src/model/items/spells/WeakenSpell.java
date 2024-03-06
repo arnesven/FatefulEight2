@@ -3,7 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.WeakenCondition;
+import model.combat.conditions.WeakenCondition;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;

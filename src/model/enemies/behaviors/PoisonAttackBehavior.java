@@ -2,7 +2,7 @@ package model.enemies.behaviors;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.PoisonCondition;
+import model.combat.conditions.PoisonCondition;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyRandom;

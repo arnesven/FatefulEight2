@@ -3,12 +3,11 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.GiantGrowthCondition;
+import model.combat.conditions.GiantGrowthCondition;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
 

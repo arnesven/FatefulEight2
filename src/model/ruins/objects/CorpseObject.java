@@ -1,8 +1,8 @@
 package model.ruins.objects;
 
 import model.Model;
-import model.combat.CombinedLoot;
-import model.combat.PersonCombatLoot;
+import model.combat.loot.CombinedLoot;
+import model.combat.loot.PersonCombatLoot;
 import model.ruins.DungeonRoom;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;

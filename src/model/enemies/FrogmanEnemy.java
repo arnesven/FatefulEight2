@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.FrogmanLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.FrogmanLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
 
 public abstract class FrogmanEnemy extends Enemy {

@@ -4,7 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.weapons.BladedWeapon;
 import model.items.weapons.PolearmWeapon;

@@ -1,10 +1,10 @@
 package model.ruins.objects;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.CombinedLoot;
-import model.combat.MonsterCombatLoot;
-import model.combat.PersonCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.CombinedLoot;
+import model.combat.loot.MonsterCombatLoot;
+import model.combat.loot.PersonCombatLoot;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;

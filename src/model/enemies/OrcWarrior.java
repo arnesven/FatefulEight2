@@ -1,10 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.PersonCombatLoot;
-import model.combat.StandardCombatLoot;
-import model.races.Race;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.PersonCombatLoot;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;

@@ -5,7 +5,8 @@ import model.actions.AbilityCombatAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
-import model.combat.CombatAction;
+import model.actions.CombatAction;
+import model.actions.PassiveCombatAction;
 import model.enemies.Enemy;
 import model.enemies.SkeletonEnemy;
 import model.items.Equipment;
@@ -37,8 +38,16 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
         GameCharacter other = makeDummyCharacter();
         addAbilityEntries(model, new AbilityCombatAction(gc, other), result);
         addAbilityEntries(model, new AbilityCombatAction(gc, gc), result);
+        addPassiveAbilities(gc, result);
         result.addAll(gc.getMasteries().getAbilityList());
         return result;
+    }
+
+    private static void addPassiveAbilities(GameCharacter gc, List<String> result) {
+        for (PassiveCombatAction passive : AbilityCombatAction.getPassiveCombatActions(gc)) {
+            result.add(passive.getName());
+            abilityDictionary.put(passive.getName(), passive);
+        }
     }
 
     private static void addAbilityEntries(Model model, AbilityCombatAction abilityCombatAction, List<String> result) {

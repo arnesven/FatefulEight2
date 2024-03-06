@@ -2,21 +2,17 @@ package model.combat;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.BleedingCondition;
+import model.combat.conditions.Condition;
 import model.states.CombatEvent;
-import model.states.DailyEventState;
 import model.states.GameState;
-import view.MyColors;
 import view.ScreenHandler;
-import view.sprites.CharSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public abstract class Combatant implements Serializable {
     private int currentHp;

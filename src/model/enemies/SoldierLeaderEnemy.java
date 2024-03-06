@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.RandomMoneyCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.RandomMoneyCombatLoot;
 import view.MyColors;
 import view.sprites.SoldierSprite;
 import view.sprites.Sprite;

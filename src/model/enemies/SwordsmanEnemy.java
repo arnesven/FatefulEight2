@@ -2,8 +2,8 @@ package model.enemies;
 
 import model.Model;
 import model.characters.appearance.DefaultAppearance;
-import model.combat.CombatLoot;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.StandardCombatLoot;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;

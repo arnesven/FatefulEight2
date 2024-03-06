@@ -1,11 +1,9 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.MonsterCombatLoot;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.BleedAttackBehavior;
-import model.enemies.behaviors.MeleeAttackBehavior;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

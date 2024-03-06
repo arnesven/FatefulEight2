@@ -1,8 +1,8 @@
 package model.states.events;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.PersonCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.PersonCombatLoot;
 import model.enemies.Enemy;
 import model.enemies.HumanoidEnemy;
 import model.races.Race;

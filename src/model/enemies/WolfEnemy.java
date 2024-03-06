@@ -1,14 +1,10 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.MonsterCombatLoot;
-import model.combat.RandomMoneyCombatLoot;
-import model.combat.RationsCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.BleedAttackBehavior;
-import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.Sprite;
-import view.sprites.WildBoarSprite;
 import view.sprites.WolfSprite;
 
 public class WolfEnemy extends BigBeastEnemy {

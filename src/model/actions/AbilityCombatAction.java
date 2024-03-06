@@ -3,7 +3,6 @@ package model.actions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.items.weapons.*;
@@ -86,4 +85,11 @@ public class AbilityCombatAction extends CombatAction {
         return list;
     }
 
+    public static List<PassiveCombatAction> getPassiveCombatActions(GameCharacter gc) {
+        List<PassiveCombatAction> list = new ArrayList<>();
+        if (QuickCastPassiveCombatAction.canDoAbility(gc)) {
+            list.add(new QuickCastPassiveCombatAction());
+        }
+        return list;
+    }
 }

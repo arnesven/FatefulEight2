@@ -2,8 +2,8 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
-import model.combat.PersonCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.PersonCombatLoot;
 import model.enemies.behaviors.MixedAttackBehavior;
 import model.races.Race;
 import model.states.CombatEvent;

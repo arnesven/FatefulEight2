@@ -1,7 +1,6 @@
 package model.actions;
 
 import model.Model;
-import model.combat.CombatAction;
 import view.help.HelpDialog;
 import view.help.TutorialCombatActionsDialog;
 

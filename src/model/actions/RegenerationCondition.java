@@ -2,7 +2,7 @@ package model.actions;
 
 import model.Model;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.states.CombatEvent;
 import model.states.GameState;
 import view.GameView;

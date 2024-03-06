@@ -1,12 +1,9 @@
 package model.states.events;
 
 import model.Model;
-import model.combat.WastelandCombatTheme;
 import model.enemies.*;
-import model.states.DailyEventState;
 import util.MyRandom;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WastelandMonsterEvent extends RoamingMonsterEvent {

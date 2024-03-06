@@ -1,7 +1,7 @@
 package model.map;
 
 import model.Model;
-import model.combat.WastelandCombatTheme;
+import view.subviews.WastelandCombatTheme;
 import model.map.locations.WatelandLocation;
 import model.states.DailyEventState;
 import model.states.events.*;

@@ -1,14 +1,11 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.RationsCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.RationsCombatLoot;
 import model.enemies.behaviors.KnockDownAttackBehavior;
-import model.enemies.behaviors.MeleeAttackBehavior;
 import view.sprites.BearSprite;
 import view.sprites.Sprite;
-
-import java.awt.*;
 
 public class BearEnemy extends BigBeastEnemy {
 

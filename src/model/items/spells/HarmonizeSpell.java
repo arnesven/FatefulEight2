@@ -3,7 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.enemies.BeastEnemy;
 import model.enemies.Enemy;
 import model.items.Item;
@@ -14,7 +14,6 @@ import view.MyColors;
 import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class HarmonizeSpell extends CombatSpell {

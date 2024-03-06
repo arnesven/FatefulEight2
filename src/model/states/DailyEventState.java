@@ -1,15 +1,13 @@
 package model.states;
 
 import model.Model;
-import model.Party;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
-import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.combat.CaveTheme;
-import model.combat.CombatLoot;
+import view.subviews.CaveTheme;
+import model.combat.loot.CombatLoot;
 import model.enemies.Enemy;
 import model.horses.Horse;
 import model.horses.HorseHandler;

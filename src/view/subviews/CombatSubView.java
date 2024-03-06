@@ -2,15 +2,13 @@ package view.subviews;
 
 import model.*;
 import model.characters.GameCharacter;
-import model.combat.CombatAction;
+import model.actions.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
-import model.states.DailyEventState;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
-import util.MyRandom;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;

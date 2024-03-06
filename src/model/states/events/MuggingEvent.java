@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
-import model.combat.TownCombatTheme;
 import model.enemies.MuggerEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;

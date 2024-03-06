@@ -2,7 +2,7 @@ package model.items.spells;
 
 import model.Model;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.states.GameState;
 import view.GameView;
 import view.MyColors;

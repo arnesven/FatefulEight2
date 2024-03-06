@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.items.weapons.StaffWeapon;

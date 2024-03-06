@@ -3,7 +3,6 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.CombatLoot;
 import model.enemies.*;
 import model.items.spells.FireworksSpell;
 import model.items.spells.Spell;

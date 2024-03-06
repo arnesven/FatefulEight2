@@ -2,19 +2,15 @@
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
-import model.enemies.Enemy;
+import model.combat.loot.CombatLoot;
 import model.states.CombatStatistics;
-import util.Arithmetics;
 import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.FilledBlockSprite;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static view.party.SelectableListMenu.downScroll;
 import static view.party.SelectableListMenu.upScroll;

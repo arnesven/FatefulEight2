@@ -1,13 +1,11 @@
 package model.states;
 
 import model.Model;
-import model.Party;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
+import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import util.MyLists;
-import util.MyUnaryIntFunction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

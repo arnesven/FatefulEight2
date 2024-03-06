@@ -2,7 +2,6 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.states.CombatEvent;
 import util.MyRandom;

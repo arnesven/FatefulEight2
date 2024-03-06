@@ -3,9 +3,8 @@ package model.states.dailyaction;
 import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
-import model.combat.PoisonCondition;
+import model.combat.conditions.PoisonCondition;
 import model.states.EveningState;
-import model.states.GameState;
 
 import java.util.List;
 

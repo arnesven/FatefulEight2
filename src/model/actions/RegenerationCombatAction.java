@@ -4,16 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.CombatAction;
 import model.combat.Combatant;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
-import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialRegenerate;
-import view.sprites.CharSprite;
-import view.sprites.Sprite;
 
 public class RegenerationCombatAction extends CombatAction {
     public static final int REQUIRED_RANKS = 2;

@@ -2,7 +2,7 @@ package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.ParalysisCondition;
+import model.combat.conditions.ParalysisCondition;
 import model.items.Item;
 import model.items.Prevalence;
 import view.MyColors;

@@ -2,12 +2,11 @@ package model.items.spells;
 
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
-import view.sprites.CombatSpellSprite;
 import view.sprites.Sprite;
 
 public class BoneArmorCondition extends Condition {

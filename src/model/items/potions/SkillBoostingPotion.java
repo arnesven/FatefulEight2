@@ -4,9 +4,8 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.states.GameState;
-import view.sprites.Sprite;
 
 public abstract class SkillBoostingPotion extends Potion {
 

@@ -2,8 +2,8 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
-import model.combat.MonsterCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.MixedAttackBehavior;
 import model.states.CombatEvent;
 import model.states.events.TentacleEnemy;

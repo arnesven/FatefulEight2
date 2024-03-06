@@ -2,7 +2,7 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.BurningWeaponCondition;
+import model.combat.conditions.BurningWeaponCondition;
 import model.combat.Combatant;
 import model.items.Item;
 import model.items.weapons.UnarmedCombatWeapon;

@@ -2,12 +2,9 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.TownCombatTheme;
-import model.items.accessories.ShieldItem;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
 import view.MyColors;
-import view.sprites.Animation;
 
 import java.awt.event.KeyEvent;
 

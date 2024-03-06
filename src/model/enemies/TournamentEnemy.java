@@ -2,8 +2,8 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.NoCombatLoot;
 import model.states.CombatEvent;
 import model.states.GameState;
 import view.sprites.Sprite;

@@ -1,14 +1,12 @@
 package model.states.events;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.MonsterCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.MonsterCombatLoot;
 import model.enemies.Enemy;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
-
-import java.util.List;
 
 public class TentacleEnemy extends Enemy {
     private static final Sprite SPRITE = new TentacleSprite();

@@ -3,7 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.ShiningAegisCondition;
+import model.combat.conditions.ShiningAegisCondition;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;

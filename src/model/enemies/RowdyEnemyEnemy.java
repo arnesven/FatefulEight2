@@ -1,9 +1,9 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
-import model.combat.RowdyCondition;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.NoCombatLoot;
+import model.combat.conditions.RowdyCondition;
 
 public abstract class RowdyEnemyEnemy extends Enemy {
     public RowdyEnemyEnemy(char enemyGroup, String name) {

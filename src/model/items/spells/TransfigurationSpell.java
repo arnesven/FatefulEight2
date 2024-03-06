@@ -3,13 +3,12 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.TransfiguredCondition;
+import model.combat.conditions.TransfiguredCondition;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
 

@@ -5,7 +5,7 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.StandardCombatLoot;
+import model.combat.loot.StandardCombatLoot;
 import model.enemies.CultistEnemy;
 import model.enemies.CultistLeaderEnemy;
 import model.enemies.ElderDaemonEnemy;

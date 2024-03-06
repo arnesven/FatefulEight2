@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.NoCombatLoot;
 
 public class ElvenGladiatorEnemy extends ElfEnemy {
     public ElvenGladiatorEnemy(char a) {

@@ -2,7 +2,7 @@ package model.items.potions;
 
 import model.classes.Skill;
 import model.combat.Combatant;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.items.Item;
 import view.GameView;
 import view.MyColors;

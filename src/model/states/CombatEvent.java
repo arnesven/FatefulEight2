@@ -1,8 +1,8 @@
 package model.states;
 
 import model.actions.SneakAttackCombatAction;
-import model.combat.CombatAction;
-import model.combat.CombatLoot;
+import model.actions.CombatAction;
+import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
 import model.characters.GameCharacter;
@@ -16,7 +16,6 @@ import sprites.CombatSpeechBubble;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
-import view.LogView;
 import view.MyColors;
 import view.sprites.AnimationManager;
 import view.sprites.DamageValueEffect;

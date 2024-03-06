@@ -1,6 +1,6 @@
 package view.help;
 
-import model.combat.CombatAction;
+import model.actions.CombatAction;
 import view.GameView;
 
 public class TutorialFatigue extends SubChapterHelpDialog {

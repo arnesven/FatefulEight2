@@ -2,7 +2,7 @@ package model.enemies;
 
 import model.Model;
 import model.Party;
-import model.combat.CombatLoot;
+import model.combat.loot.CombatLoot;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;

@@ -5,7 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.CaveTheme;
+import view.subviews.CaveTheme;
 import model.enemies.Enemy;
 import model.items.weapons.RustyPickaxe;
 import model.races.Race;
@@ -14,7 +14,6 @@ import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MineEvent extends DailyEventState {

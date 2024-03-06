@@ -6,7 +6,7 @@ import model.characters.preset.LonnieLiebgott;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.Combatant;
-import model.combat.SummonCondition;
+import model.combat.conditions.SummonCondition;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.weapons.FamiliarWeapon;

@@ -2,14 +2,12 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
-import model.combat.CaveTheme;
+import view.subviews.CaveTheme;
 import model.enemies.Enemy;
 import model.enemies.OctopusEnemy;
 import model.states.DailyEventState;
 import util.MyRandom;
-import view.subviews.ArrowMenuSubView;
 
-import java.awt.*;
 import java.util.List;
 
 public class UndergroundLakeEvent extends DailyEventState {

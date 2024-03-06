@@ -1,13 +1,12 @@
 package model.states.events;
 
 import model.Model;
-import model.actions.Loan;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.CowardlyCondition;
-import model.combat.RoutedCondition;
+import model.combat.conditions.CowardlyCondition;
+import model.combat.conditions.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;

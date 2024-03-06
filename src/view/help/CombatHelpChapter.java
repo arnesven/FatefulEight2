@@ -1,6 +1,7 @@
 package view.help;
 
 import model.tutorial.TutorialCombatAttacks;
+import model.tutorial.TutorialQuickCasting;
 import view.GameView;
 
 import java.util.List;
@@ -61,6 +62,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                     new TutorialFairyHeal(null),
                     new TutorialHeavyBlow(null),
                     new TutorialMagicMissile(null),
+                    new TutorialQuickCasting(null),
                     new TutorialCombatResting(null),
                     new TutorialRegenerate(null),
                     new TutorialRiposte(null),

@@ -3,7 +3,7 @@ package model.items.potions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.TimedParalysisCondition;
+import model.combat.conditions.TimedParalysisCondition;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;

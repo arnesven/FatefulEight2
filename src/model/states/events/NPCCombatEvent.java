@@ -2,9 +2,9 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.CombatLoot;
+import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
-import model.combat.NoCombatLoot;
+import model.combat.loot.NoCombatLoot;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;

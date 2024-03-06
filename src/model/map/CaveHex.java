@@ -2,10 +2,9 @@ package model.map;
 
 import model.Model;
 import model.actions.*;
-import model.combat.CaveTheme;
+import view.subviews.CaveTheme;
 import model.map.locations.Stalagmites;
 import model.states.DailyEventState;
-import model.states.GameState;
 import model.states.TravelState;
 import model.states.events.*;
 import util.MyPair;

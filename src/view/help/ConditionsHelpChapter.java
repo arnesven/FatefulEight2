@@ -2,13 +2,12 @@ package view.help;
 
 
 import model.actions.*;
-import model.combat.*;
+import model.combat.conditions.*;
 import model.items.potions.CharismaPotion;
 import model.items.potions.DexterityPotion;
 import model.items.potions.StrengthPotion;
 import model.items.potions.WitsPotion;
 import model.items.spells.BlackPactCondition;
-import model.items.spells.BlackPactSpell;
 import model.items.spells.BoneArmorCondition;
 import model.items.spells.QuickenedCondition;
 import model.states.events.EnchantressEvent;

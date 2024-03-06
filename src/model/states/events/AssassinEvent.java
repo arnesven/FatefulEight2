@@ -3,7 +3,7 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.TownCombatTheme;
+import view.subviews.TownCombatTheme;
 import model.enemies.AssassinEnemy;
 import model.states.DailyEventState;
 

@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.RationsCombatLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.RationsCombatLoot;
 import model.enemies.behaviors.PoisonAttackBehavior;
 import view.sprites.Sprite;
 import view.sprites.ViperSprite;

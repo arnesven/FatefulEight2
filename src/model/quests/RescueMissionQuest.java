@@ -6,7 +6,7 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.combat.TownCombatTheme;
+import view.subviews.TownCombatTheme;
 import model.enemies.SoldierEnemy;
 import model.quests.scenes.CollaborativeLockpickingSubScene;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;

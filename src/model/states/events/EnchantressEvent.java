@@ -6,7 +6,7 @@ import model.characters.special.EnchantressCharacter;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.Condition;
+import model.combat.conditions.Condition;
 import model.enemies.EnchantressEnemy;
 import model.enemies.Enemy;
 import model.items.Item;

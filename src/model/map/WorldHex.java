@@ -3,7 +3,7 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
-import model.combat.TownCombatTheme;
+import view.subviews.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
 import model.states.*;

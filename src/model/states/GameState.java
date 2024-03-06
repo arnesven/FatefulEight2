@@ -1,15 +1,11 @@
 package model.states;
 
 import model.Model;
-import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
-import model.combat.Condition;
-import model.combat.PoisonCondition;
-import model.enemies.ElfEnemy;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
 import model.races.Race;
@@ -24,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public abstract class GameState {
 

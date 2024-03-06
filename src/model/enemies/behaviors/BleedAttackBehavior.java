@@ -2,8 +2,7 @@ package model.enemies.behaviors;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.combat.BleedingCondition;
-import model.combat.PoisonCondition;
+import model.combat.conditions.BleedingCondition;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyRandom;

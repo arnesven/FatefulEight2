@@ -3,18 +3,15 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
-import model.combat.ParalysisCondition;
-import model.combat.TimedParalysisCondition;
+import model.combat.conditions.TimedParalysisCondition;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ConjurePhantasmSpell extends CombatSpell {

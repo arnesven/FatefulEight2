@@ -1,7 +1,7 @@
 package model.quests;
 
 import model.Party;
-import model.combat.CombatLoot;
+import model.combat.loot.CombatLoot;
 import model.enemies.*;
 import model.items.special.PearlItem;
 import util.MyPair;

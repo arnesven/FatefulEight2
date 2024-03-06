@@ -1,10 +1,7 @@
 package model.enemies;
 
-import model.Model;
 import model.characters.appearance.HairStyle;
 import model.characters.appearance.SwimAttire;
-import model.combat.CombatLoot;
-import model.combat.NoCombatLoot;
 import model.races.Race;
 import util.MyRandom;
 import view.MyColors;

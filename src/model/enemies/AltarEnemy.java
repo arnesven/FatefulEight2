@@ -1,8 +1,8 @@
 package model.enemies;
 
 import model.Model;
-import model.combat.CombatLoot;
-import model.combat.DemonicLoot;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.DemonicLoot;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
