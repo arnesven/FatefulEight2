@@ -72,8 +72,8 @@ public class BarbershopEvent extends DailyEventState {
         ChangeClassTransitionSubView.transition(model, subView, gc, charCopy);
         gc.setAppearance(subView.getFinalAppearance());
 
-        println(gc.getName() + " got a new haircut!");
-        waitForReturnSilently();
+        print(gc.getName() + " got a new haircut! Press enter to continue.");
+        waitForReturn();
         gc.removeSpecificClothing();
 
         portraitSay("Please come again soon!");
