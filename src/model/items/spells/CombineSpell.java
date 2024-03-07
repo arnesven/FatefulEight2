@@ -57,6 +57,11 @@ public class CombineSpell extends AuxiliarySpell {
     }
 
     @Override
+    public Integer[] getThresholds() {
+        return new Integer[]{3, 6, 9, 12};
+    }
+
+    @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         state.println(caster.getName() + " is preparing to cast " + getName() + ".");
         List<Spell> uniqueSpells = findUniqueSpells(model);
@@ -161,13 +166,24 @@ public class CombineSpell extends AuxiliarySpell {
         @Override
         public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
             for (Spell sp : innerSpells) {
-                if (!(sp instanceof CombatSpell)) {
-                    combat.println(sp.getName() + " is not a combat spell, it is skipped.");
-                } else if (!((CombatSpell) sp).canBeCastOn(model, target)) {
-                    combat.println(target.getName() + " cannot be targeted by " + sp.getName() + ", it is skipped.");
+                if (sp instanceof CombatSpell) {
+                    applyCombatSpellIfAble(model, combat, performer, target, (CombatSpell)sp);
                 } else {
-                    ((CombatSpell) sp).applyCombatEffect(model, combat, performer, target);
+                    if (sp instanceof AuxiliarySpell && ((AuxiliarySpell) sp).canBeCastInCombat()) {
+                        applyCombatSpellIfAble(model, combat, performer, target,
+                                ((AuxiliarySpell) sp).getCombatSpell());
+                    } else {
+                        combat.println(sp.getName() + " failed.");
+                    }
                 }
+            }
+        }
+
+        private void applyCombatSpellIfAble(Model model, CombatEvent combat, GameCharacter performer, Combatant target, CombatSpell csp) {
+            if (!csp.canBeCastOn(model, target)) {
+                combat.println(target.getName() + " cannot be targeted by " + csp.getName() + ", it is skipped.");
+            } else {
+                csp.applyCombatEffect(model, combat, performer, target);
             }
         }
 
