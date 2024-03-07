@@ -7,8 +7,12 @@ import view.party.CharacterCreationView;
 
 public class EthelthaneVeldt extends AdvancedAppearance {
     public EthelthaneVeldt() {
-        super(Race.DWARF, true, MyColors.BROWN, CharacterCreationView.mouthSet[11],
-                CharacterCreationView.noseSet[11], CharacterEyes.allEyes[0], HairStyle.allHairStyles[20], Beard.allBeards[12]);
+        super(Race.DWARF, true, MyColors.BROWN,
+                CharacterCreationView.mouthSet[11],
+                CharacterCreationView.noseSet[11],
+                CharacterEyes.allEyes[0],
+                new SpecialMordKroftHairStyle(),
+                Beard.allBeards[12]);
         setFaceDetail(new GlassesDetail());
         setDetailColor(MyColors.CYAN);
     }

@@ -3,6 +3,7 @@ package model.characters.appearance;
 import java.io.Serializable;
 
 public class CharacterEyes implements Serializable {
+    // DO NOT CHANGE THE ORDER OF allEyes, IT WILL AFFECT PRESET CHARACTERS
     public static CharacterEyes[] allEyes = new CharacterEyes[]{
             new CharacterEyes(1), new CharacterEyes(0), new CharacterEyes(2, 3),
             new CharacterEyes(4, 5), new CharacterEyes(6, 7), new CharacterEyes(8, 9),

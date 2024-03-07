@@ -36,6 +36,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private boolean gender = true;
     private static final Race[] raceSet = Race.allRaces;
     private static final CharacterEyes[] eyeSet = CharacterEyes.allEyes;
+    // DO NOT CHANGE THE ORDER OF noseSet or mouthSet, IT WILL AFFECT PRESET CHARACTERS
     public static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC, 0xD, 0xE, 0xF};
     public static final Integer[] mouthSet = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
     private static final Beard[] beardSet = Beard.allBeards;
