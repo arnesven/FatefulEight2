@@ -126,7 +126,7 @@ public class TutorialHandler implements Serializable {
     public void quests(Model model) {
         runOnce("quests", () -> {
             model.getLog().waitForAnimationToFinish();
-            model.transitionToDialog(new TutorialQuests(model.getView()));
+            model.transitionToDialog(new TutorialGoingOnQuests(model.getView()));
         });
     }
 
@@ -446,6 +446,13 @@ public class TutorialHandler implements Serializable {
         runOnce("quickcast", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialQuickCasting(model.getView()));
+        });
+    }
+
+    public void questOffers(Model model) {
+        runOnce("questoffers", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialQuestOffers(model.getView()));
         });
     }
 

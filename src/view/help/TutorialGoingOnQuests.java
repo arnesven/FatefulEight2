@@ -2,13 +2,8 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialQuests extends HelpDialog {
+public class TutorialGoingOnQuests extends SubChapterHelpDialog {
     private static final String text =
-            "Quests are encountered in towns and castles. Quests are the main way of getting " +
-            "Party Reputation. Each evening you spend at a town " +
-            "or castle, you will be offered a random quest. If you accept, the party will " +
-            "set out on the quest the following day. Only one quest can be accepted per " +
-            "town or castle.\n\n" +
             "During quests, the leader will make decisions about which paths to take. At " +
             "decision points, the leader must pass a Leadership 6 check. If the check fails " +
             "one of the options is chosen for the party instead.\n\n" +
@@ -19,7 +14,8 @@ public class TutorialQuests extends HelpDialog {
             "When a quest is successfully completed rewards usually include increased " +
             "party reputation, gold and or experience points for the party members.";
 
-    public TutorialQuests(GameView view) {
-        super(view, "Quests", text);
+    public TutorialGoingOnQuests(GameView view) {
+        super(view, "Going on Quests", text);
+        setLevel(1);
     }
 }

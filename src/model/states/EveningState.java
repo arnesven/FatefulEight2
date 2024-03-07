@@ -151,18 +151,41 @@ public class EveningState extends GameState {
         List<Quest> quests = new ArrayList<>();
         model.getMainStory().addQuests(model, quests);
         if (model.getCurrentHex().givesQuests()) {
-            if (quests.size() == 0 &&
-                    !model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-                randomQuests(model, quests);
+            if (!model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
+                int mainQuests = quests.size();
+                addHeldQuests(model, quests);
+                addRandomQuests(model, quests, mainQuests);
             }
             if (quests.size() == 0) {
                 println("The party has not been offered any quests.");
             }
         }
-        if (quests.size() == 0) {
-            return;
+        if (quests.size() > 0) {
+            offerQuests(model, quests);
         }
+    }
 
+    private void addHeldQuests(Model model, List<Quest> quests) {
+        quests.addAll(model.getParty().getHeldQuests(model));
+    }
+
+    private void addRandomQuests(Model model, List<Quest> quests, int mainQuests) {
+        int numQuests = MyRandom.randInt(0, Math.max(0, 4 + mainQuests - quests.size()));
+        for (int i = numQuests; i > 0; --i) {
+            Quest q;
+            int tries = 0;
+            do {
+                q = model.getQuestDeck().getRandomQuest();
+                if (tries++ > 1000) {
+                    System.err.println("Abandoned getting random quests, tried 100 times");
+                    return;
+                }
+            } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
+            quests.add(q);
+        }
+    }
+
+    private void offerQuests(Model model, List<Quest> quests) {
         println("The party has been offered " + MyStrings.numberWord(quests.size()) +
                 " quest" + (quests.size() > 1?"s":"") + ".");
         print("Will you go tomorrow? ");
@@ -171,12 +194,13 @@ public class EveningState extends GameState {
         SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
         model.setSubView(subView);
         do {
+            model.getTutorial().questOffers(model);
             waitForReturnSilently();
             Point cursor = subView.getCursorPoint();
             if (subView.didSelectQuest()) {
+                Quest q = subView.getSelectedQuest();
                 int selectedOption = multipleOptionArrowMenu(model, cursor.x, cursor.y, List.of("Accept", "Hold", "Back"));
                 if (selectedOption == 0) {
-                    Quest q = subView.getSelectedQuest();
                     if (q.arePrerequisitesMet(model)) {
                         this.goOnQuest = q;
                         println("You have accepted quest '" + q.getName() + "'!");
@@ -188,32 +212,18 @@ public class EveningState extends GameState {
                         println(q.getPrerequisites(model));
                     }
                 } else if (selectedOption == 1){
-                    // DO HOLD
+                    if (q.canBeHeld()) {
+                        model.getParty().holdQuest(q);
+                        println("Quest will be held as long as you remain in your current location.");
+                    } else {
+                        println("That quest cannot be held.");
+                    }
                 }
             } else {
-                println("You rejected the quest" + (quests.size() > 1 ? "s" : "") + ".");
                 done = true;
             }
-            model.setSubView(previous);
         } while (!done);
-    }
-
-    private void randomQuests(Model model, List<Quest> quests) {
-        int numQuests = 2;
-        int dieRoll = MyRandom.rollD10();
-        if (dieRoll == 1) {
-            return;
-        } else if (dieRoll < 6) {
-            numQuests = 1;
-        }
-        numQuests = 5; // TODO: Remove
-        while (quests.size() < numQuests) {
-            Quest q;
-            do {
-                q = model.getQuestDeck().getRandomQuest();
-            } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
-            quests.add(q);
-        }
+        model.setSubView(previous);
     }
 
     public static void buyRations(Model model, GameState state) {

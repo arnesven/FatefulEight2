@@ -15,15 +15,11 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class SelectQuestSubView extends SubView {
-    private static final int LIST_START_Y = 12;
-    private final SubView previous;
+    private static final int LIST_START_Y = 13;
     private final List<Quest> quests;
-    private static final int WIDTH = 35;
-    private static final int HEIGHT = 14;
     private int index;
 
     public SelectQuestSubView(SubView previous, List<Quest> quests) {
-        this.previous = previous;
         this.quests = quests;
         this.index = quests.size();
     }
@@ -64,11 +60,18 @@ public class SelectQuestSubView extends SubView {
                 MyColors.WHITE, MyColors.BLUE);
         for (Quest q : quests) {
             BorderFrame.drawString(model.getScreenHandler(), q.getName(),
-                    X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 2 + (y++),
+                    X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 1 + y,
                     MyColors.WHITE, MyColors.BLUE);
+
+            if (model.getParty().questIsHeld(q)) {
+                BorderFrame.drawString(model.getScreenHandler(), "HELD",
+                        X_OFFSET+24, Y_OFFSET + LIST_START_Y + 1 + y,
+                        MyColors.ORANGE, MyColors.BLUE);
+            }
+            y++;
         }
-        BorderFrame.drawString(model.getScreenHandler(), "DON'T GO ON QUEST",
-                X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 2 + (y++),
+        BorderFrame.drawString(model.getScreenHandler(), "DON'T GO",
+                X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 1 + (y++),
                 MyColors.WHITE, MyColors.BLUE);
     }
 

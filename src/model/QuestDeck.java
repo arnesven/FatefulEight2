@@ -92,6 +92,15 @@ public class QuestDeck implements Serializable {
         return QUESTS;
     }
 
+    public Quest getQuestByName(String key) {
+        for (Quest q : QUESTS) {
+            if (q.getName().equals(key)) {
+                return q;
+            }
+        }
+        throw new IllegalStateException("No such quest found: " + key);
+    }
+
     public static class LocationAndQuest extends MyPair<String, String> {
         private int day;
 

@@ -14,6 +14,7 @@ import model.items.Inventory;
 import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
+import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
@@ -44,6 +45,7 @@ public class Party implements Serializable {
     private final List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
     private final Map<String, Summon> summons = new HashMap<>();
     private final Set<String> templeBannings = new HashSet<>();
+    private final Set<String> heldQuests = new HashSet<>();
     private Point position;
     private Point previousPosition;
     private int reputation = 0;
@@ -136,6 +138,9 @@ public class Party implements Serializable {
     }
 
     public void setPosition(Point newPosition) {
+        if (!newPosition.equals(previousPosition)) {
+            heldQuests.clear();
+        }
         this.previousPosition = new Point(position);
         this.position = new Point(newPosition);
     }
@@ -766,5 +771,21 @@ public class Party implements Serializable {
         return inventory.getTotalWeight() +
                 MyLists.intAccumulate(MyLists.transform(partyMembers, GameCharacter::getEquipment),
                         Equipment::getTotalWeight);
+    }
+
+    public void holdQuest(Quest q) {
+        heldQuests.add(q.getName());
+    }
+
+    public boolean questIsHeld(Quest q) {
+        return heldQuests.contains(q.getName());
+    }
+
+    public List<Quest> getHeldQuests(Model model) {
+        List<Quest> result = new ArrayList<>();
+        for (String key : heldQuests) {
+            result.add(model.getQuestDeck().getQuestByName(key));
+        }
+        return result;
     }
 }

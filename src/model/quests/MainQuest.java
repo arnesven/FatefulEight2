@@ -60,4 +60,9 @@ public abstract class MainQuest extends Quest {
         state.println("The party receives a Crimson Pearl.");
         model.getParty().getInventory().addItem(new CrimsonPearl());
     }
+
+    @Override
+    public boolean canBeHeld() {
+        return false;
+    }
 }

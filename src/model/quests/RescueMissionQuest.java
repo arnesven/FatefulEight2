@@ -32,7 +32,6 @@ public class RescueMissionQuest extends MainQuest {
     public static final String QUEST_NAME = "Rescue Mission";
     private static final String TEXT = "The party sets out to find Caid.";
     private static final String ENDING = "You return to the castle to receive your payment.";
-    private final AdvancedAppearance caidAppearance;
     private SplitPartyJunction split;
     private QuestNode otherGroupCurrent = null;
     private QuestEdge otherGroupNext = null;
@@ -41,7 +40,6 @@ public class RescueMissionQuest extends MainQuest {
     public RescueMissionQuest() {
         super(QUEST_NAME, "", QuestDifficulty.MEDIUM,
                 1, 175, 0, TEXT, ENDING);
-        this.caidAppearance = PortraitSubView.makeRandomPortrait(Classes.CAP, Race.ALL, false);
     }
 
     @Override

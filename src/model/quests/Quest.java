@@ -192,4 +192,8 @@ public abstract class Quest {
     public String getPrerequisites(Model model) {
         return null;
     }
+
+    public boolean canBeHeld() {
+        return true;
+    }
 }
