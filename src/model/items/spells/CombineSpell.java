@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Set;
 
 public class CombineSpell extends AuxiliarySpell {
+
+    private static final String COMBINE_COMBAT_SPELL_NAME = "COMBO";
     private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
     private List<Spell> combinedResult = null;
 
@@ -52,16 +54,6 @@ public class CombineSpell extends AuxiliarySpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
-        return true;
-    }
-
-    @Override
-    public Integer[] getThresholds() {
-        return new Integer[]{3, 6, 9, 12};
-    }
-
-    @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         state.println(caster.getName() + " is preparing to cast " + getName() + ".");
         List<Spell> uniqueSpells = findUniqueSpells(model);
@@ -75,7 +67,8 @@ public class CombineSpell extends AuxiliarySpell {
         }
 
         SubView oldSubview = model.getSubView();
-        CombineSpellSubView combineSubView = new CombineSpellSubView(2 + getMasteryLevel(caster), uniqueSpells);
+        int masteryLevel = caster.getMasteries().getMasteryLevel(COMBINE_COMBAT_SPELL_NAME);
+        CombineSpellSubView combineSubView = new CombineSpellSubView(2 + masteryLevel, uniqueSpells);
         model.setSubView(combineSubView);
         do {
             state.waitForReturnSilently();
@@ -144,8 +137,13 @@ public class CombineSpell extends AuxiliarySpell {
         private final List<Spell> innerSpells;
 
         public CombineCombatSpell(Skill magicSkill, int difficulty, int hpCost, List<Spell> innerSpells) {
-            super("Combo", 0, CombineSpell.getColorForSkill(magicSkill), difficulty, hpCost);
+            super(COMBINE_COMBAT_SPELL_NAME, 0, CombineSpell.getColorForSkill(magicSkill), difficulty, hpCost);
             this.innerSpells = innerSpells;
+        }
+
+        @Override
+        protected boolean masteriesEnabled() {
+            return true;
         }
 
         @Override

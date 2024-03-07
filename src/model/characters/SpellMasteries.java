@@ -41,10 +41,14 @@ public class SpellMasteries implements Serializable {
         return false;
     }
 
-    public int getMasteryLevel(MasterySpell masterySpell) {
-        if (masteries.containsKey(masterySpell.getName())) {
-            return masteries.get(masterySpell.getName()).first;
+    public int getMasteryLevel(String spellName) {
+        if (masteries.containsKey(spellName)) {
+            return masteries.get(spellName).first;
         }
         return 0;
+    }
+
+    public int getMasteryLevel(MasterySpell masterySpell) {
+        return getMasteryLevel(masterySpell.getName());
     }
 }

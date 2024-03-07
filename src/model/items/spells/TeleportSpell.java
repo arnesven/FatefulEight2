@@ -15,7 +15,7 @@ import view.subviews.TeleportingTransition;
 import java.awt.*;
 
 public class TeleportSpell extends ImmediateSpell {
-
+    // TODO: Make teleport handle cave/overworld correctly
     private static final Sprite SPRITE = new ItemSprite(2, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
     private static final String X_KEY = "Teleport-X";
     private static final String Y_KEY = "Teleport-Y";
