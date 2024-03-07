@@ -238,6 +238,9 @@ public class Model {
         while (!spellHandler.isEmpty()) {
             MyPair<Spell, GameCharacter> spellAndChar = spellHandler.getCastSpell();
             spellAndChar.first.castYourself(this, state, spellAndChar.second);
+            state.print("If you want to cast another non-combat spell, do so from the spell or inventory view. " +
+                    "Press enter to continue. ");
+            state.waitForReturn();
         }
     }
 

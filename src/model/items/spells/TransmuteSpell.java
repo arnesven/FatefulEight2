@@ -23,7 +23,7 @@ public class TransmuteSpell extends ImmediateSpell {
     private int amount;
 
     public TransmuteSpell() {
-        super("Transmute", 18, MyColors.WHITE, 8, 0);
+        super("Transmute", 18, MyColors.WHITE, 8, 1);
     }
 
     @Override
