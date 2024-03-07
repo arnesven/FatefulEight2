@@ -3,15 +3,19 @@ package view.subviews;
 import model.Model;
 import model.quests.Quest;
 import model.quests.QuestDifficulty;
+import util.Arithmetics;
 import util.MyStrings;
 import view.BorderFrame;
 import view.MyColors;
+import view.sprites.ArrowSprites;
 import view.widget.TopText;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class SelectQuestSubView extends SubView {
+    private static final int LIST_START_Y = 12;
     private final SubView previous;
     private final List<Quest> quests;
     private static final int WIDTH = 35;
@@ -26,57 +30,46 @@ public class SelectQuestSubView extends SubView {
 
     @Override
     protected void drawArea(Model model) {
-        previous.drawArea(model);
-        int xStart = X_OFFSET + (X_MAX - X_OFFSET - WIDTH) / 2 - 1;
-        int yStart = Y_OFFSET + 14;
-        if (quests.size() > 1) {
-            yStart = Y_OFFSET + 5;
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+LIST_START_Y-1, blackBlock);
+        model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+LIST_START_Y, Y_MAX, blueBlock);
+        if (index < quests.size()) {
+            drawSelectedQuest(model);
         }
-        int index = 0;
-        for (Quest quest : quests) {
-            BorderFrame.drawFrame(model.getScreenHandler(),
-                    xStart, yStart-1, WIDTH, HEIGHT,
-                    MyColors.BLACK, MyColors.WHITE, MyColors.BLACK, true);
-            BorderFrame.drawString(model.getScreenHandler(), quest.getName(), xStart + 2, yStart, MyColors.WHITE, MyColors.BLACK);
-            drawProvider(model, xStart+1, yStart, quest);
-
-            drawDifficulty(model, quest.getName().length() + xStart + 2, yStart, quest);
-            drawRewards(model, xStart+2, yStart, quest);
-            drawDetails(model, xStart+2, yStart, quest);
-            drawAcceptButton(model, xStart+2, yStart+1, index);
-            yStart += 14;
-            index++;
-        }
-
-        drawRejectButton(model, yStart);
+        drawQuestList(model);
+        drawCursor(model);
     }
 
-    private void drawRejectButton(Model model, int yStart) {
-        MyColors fgColor = MyColors.YELLOW;
-        MyColors bgColor = MyColors.BLACK;
-        if (index == quests.size()) {
-            fgColor = MyColors.BLACK;
-            bgColor = MyColors.WHITE;
+    private void drawSelectedQuest(Model model) {
+        Quest quest = quests.get(index);
+        int xStart = X_OFFSET;
+        int yStart = Y_OFFSET;
+        BorderFrame.drawString(model.getScreenHandler(), quest.getName(), xStart, yStart,
+                MyColors.WHITE, MyColors.BLACK);
+        drawProvider(model, xStart, yStart, quest);
 
-        }
-        int x = X_OFFSET+8;
-        int y = yStart-1;
-        BorderFrame.drawFrame(model.getScreenHandler(), x, y, 13, 4,
-                MyColors.BLACK, MyColors.WHITE, MyColors.BLACK, true);
-        BorderFrame.drawString(model.getScreenHandler(), "REJECT ALL", x+2, y+2, fgColor, bgColor);
-
+        drawDifficulty(model, quest.getName().length() + xStart + 2, yStart, quest);
+        drawRewards(model, xStart, yStart, quest);
+        drawDetails(model, xStart, yStart, quest);
     }
 
-    private void drawAcceptButton(Model model, int xStart, int yStart, int index) {
-        MyColors fgColor = MyColors.YELLOW;
-        MyColors bgColor = MyColors.BLACK;
-        if (this.index == index) {
-            fgColor = MyColors.BLACK;
-            bgColor = MyColors.WHITE;
+    private void drawCursor(Model model) {
+        model.getScreenHandler().put(X_OFFSET, Y_OFFSET + LIST_START_Y + index + 2,
+                ArrowSprites.MOVING_RIGHT_BLUE);
+    }
 
+    private void drawQuestList(Model model) {
+        int y = 0;
+        BorderFrame.drawString(model.getScreenHandler(), "QUESTS",
+                X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 1 + (y++),
+                MyColors.WHITE, MyColors.BLUE);
+        for (Quest q : quests) {
+            BorderFrame.drawString(model.getScreenHandler(), q.getName(),
+                    X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 2 + (y++),
+                    MyColors.WHITE, MyColors.BLUE);
         }
-        BorderFrame.drawString(model.getScreenHandler(), "ACCEPT", xStart + 11,
-                yStart + 9, fgColor, bgColor);
+        BorderFrame.drawString(model.getScreenHandler(), "DON'T GO ON QUEST",
+                X_OFFSET + 1, Y_OFFSET + LIST_START_Y + 2 + (y++),
+                MyColors.WHITE, MyColors.BLUE);
     }
 
     private void drawDetails(Model model, int xStart, int yStart, Quest quest) {
@@ -84,13 +77,13 @@ public class SelectQuestSubView extends SubView {
         for (String detail : quest.getDetails()) {
             String toPrint = detail.replace("(", "").replace(")", "");
             BorderFrame.drawString(model.getScreenHandler(), detail,
-                    xStart + 18, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
+                    xStart + 17, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
         }
     }
 
     private void drawRewards(Model model, int xStart, int yStart, Quest quest) {
         int row = 2;
-        BorderFrame.drawString(model.getScreenHandler(), "Rewards", xStart + 10, yStart + row++, MyColors.WHITE, MyColors.BLACK);
+        BorderFrame.drawString(model.getScreenHandler(), "Reward", xStart + 10, yStart + row++, MyColors.WHITE, MyColors.BLACK);
         if (quest.getReward().getReputation() != 0) {
             int rep = quest.getReward().getReputation();
             BorderFrame.drawString(model.getScreenHandler(), "  " + MyStrings.withPlus(rep),
@@ -137,23 +130,21 @@ public class SelectQuestSubView extends SubView {
 
     @Override
     protected String getTitleText(Model model) {
-        return "EVENING - QUEST OFFERED";
+        return "EVENING - QUESTS";
     }
 
-    public boolean didAcceptQuest() {
+    public boolean didSelectQuest() {
         return index != quests.size();
     }
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            index = (index + 1) % (quests.size()+1);
+            index = Arithmetics.incrementWithWrap(index, quests.size()+1);
             return true;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            index = index - 1;
-            if (index < 0) {
-                index = quests.size(); // number of quests.
-            }
+            index = Arithmetics.decrementWithWrap(index, quests.size()+1);
+            return true;
         }
         return false;
     }
@@ -163,5 +154,9 @@ public class SelectQuestSubView extends SubView {
             return null;
         }
         return quests.get(index);
+    }
+
+    public Point getCursorPoint() {
+        return new Point(X_OFFSET+4, Y_OFFSET + LIST_START_Y + index);
     }
 }

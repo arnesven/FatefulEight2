@@ -8,6 +8,7 @@ public interface ArrowSprites {
     Sprite LEFT = CharSprite.make(0xB1, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE);
     Sprite RIGHT_BLACK = CharSprite.make(0xB0, MyColors.BLACK, MyColors.WHITE, MyColors.BLACK);
     Sprite RIGHT_BLACK_BLINK = new BlinkingRightArrow();
+    AnimatedCharSprite MOVING_RIGHT_BLUE = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
 
     class BlinkingRightArrow extends LoopingSprite {
 

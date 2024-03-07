@@ -9,6 +9,7 @@ import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.AnimatedCharSprite;
+import view.sprites.ArrowSprites;
 import view.sprites.MovingRightArrow;
 import view.widget.ItemTab;
 
@@ -22,7 +23,7 @@ public class SpellsView extends SelectableListMenu {
     private static final int ROW_HEIGHT = 9;
     private static final int COLUMN_WIDTH = 20;
     private static final int NUMBER_OF_ROWS = 4;
-    private static AnimatedCharSprite arrowSprite = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
+
     private ItemTab[] tabNames;
     private int selectedTab = 0;
     private Map<MyColors, List<Spell>> spellMap = new HashMap<>();
@@ -38,7 +39,7 @@ public class SpellsView extends SelectableListMenu {
         for (int i = 0; i < tabNames.length; ++i) {
             print(model.getScreenHandler(), x+offset, y+1, " " + tabNames[i].getName() + " ");
             if (selectedTab == i) {
-                model.getScreenHandler().put(x+offset, y+1, arrowSprite);
+                model.getScreenHandler().put(x+offset, y+1, ArrowSprites.MOVING_RIGHT_BLUE);
             }
             offset += tabNames[i].getName().length() + 2;
         }

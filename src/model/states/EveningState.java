@@ -12,6 +12,7 @@ import view.LogView;
 import view.help.HalfTimeDialog;
 import view.subviews.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -162,25 +163,32 @@ public class EveningState extends GameState {
             return;
         }
 
-        println("The party has been offered " + MyStrings.numberWord(quests.size()) + " quest" + (quests.size() > 1?"s":"") + ".");
+        println("The party has been offered " + MyStrings.numberWord(quests.size()) +
+                " quest" + (quests.size() > 1?"s":"") + ".");
         print("Will you go tomorrow? ");
         boolean done = false;
+        SubView previous = model.getSubView();
+        SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
+        model.setSubView(subView);
         do {
-            SubView previous = model.getSubView();
-            SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
-            model.setSubView(subView);
-            waitForReturn();
-            if (subView.didAcceptQuest()) {
-                Quest q = subView.getSelectedQuest();
-                if (q.arePrerequisitesMet(model)) {
-                    this.goOnQuest = q;
-                    println("You have accepted quest '" + q.getName() + "'!");
-                    if (model.getCurrentHex().getLocation() != null) {
-                        model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
+            waitForReturnSilently();
+            Point cursor = subView.getCursorPoint();
+            if (subView.didSelectQuest()) {
+                int selectedOption = multipleOptionArrowMenu(model, cursor.x, cursor.y, List.of("Accept", "Hold", "Back"));
+                if (selectedOption == 0) {
+                    Quest q = subView.getSelectedQuest();
+                    if (q.arePrerequisitesMet(model)) {
+                        this.goOnQuest = q;
+                        println("You have accepted quest '" + q.getName() + "'!");
+                        if (model.getCurrentHex().getLocation() != null) {
+                            model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
+                        }
+                        done = true;
+                    } else {
+                        println(q.getPrerequisites(model));
                     }
-                    done = true;
-                } else {
-                    println(q.getPrerequisites(model));
+                } else if (selectedOption == 1){
+                    // DO HOLD
                 }
             } else {
                 println("You rejected the quest" + (quests.size() > 1 ? "s" : "") + ".");
@@ -198,6 +206,7 @@ public class EveningState extends GameState {
         } else if (dieRoll < 6) {
             numQuests = 1;
         }
+        numQuests = 5; // TODO: Remove
         while (quests.size() < numQuests) {
             Quest q;
             do {
