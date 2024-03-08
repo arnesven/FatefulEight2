@@ -11,10 +11,6 @@ public class TutorialSpells extends ExpandableHelpDialog {
             "with the color of the Spell will be much more likely to successfully cast it. " +
             "In addition to passing a skill check, a spell caster must also suffer damage equal to the " +
             "Casting Cost of that spell.\n\n" +
-            "Red spells are focused on destruction and combat. Green spells are focused on nature " +
-            "and transfiguration. White spells are focused on healing, light and holy power. Black " +
-            "spells revolve around death, darkness and decay. Blue spells are usually focused " +
-            "on illusion, altering reality or meta-magic.\n\n" +
             "Spells come in two varieties, combat spells and non-combat spells:\n" +
             "Combat spells can be cast in combat and are either straight-out attacks " +
             "or have some other negative or positive effect on the target.\n\n" +
@@ -27,6 +23,8 @@ public class TutorialSpells extends ExpandableHelpDialog {
 
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
-        return List.of(new SpellMasteryHelpChapter(view, ""));
+        return List.of(
+                new SpellColorsHelpChapter(view),
+                new SpellMasteryHelpChapter(view, ""));
     }
 }
