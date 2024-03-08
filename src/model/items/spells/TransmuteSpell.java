@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransmuteSpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
     private static List<TransmuteAction> transmuteTable = makeTransmuteTable();
     private TransmuteAction selectedSource;
     private MyPair<String, Double> selectedTarget;
     private int amount;
 
     public TransmuteSpell() {
-        super("Transmute", 18, MyColors.WHITE, 8, 1);
+        super("Transmute", 18, COLORLESS, 8, 1);
     }
 
     @Override

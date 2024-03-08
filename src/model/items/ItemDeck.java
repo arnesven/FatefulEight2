@@ -204,7 +204,6 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<Spell> allSpells() {
         return List.of(
                 // BLUE
-                new DispelSpell(),
                 new LevitateSpell(),
                 new MindControlSpell(),
                 new ConjurePhantasmSpell(),
@@ -219,8 +218,6 @@ public class ItemDeck extends ArrayList<Item> {
                 new HealingWordSpell(),
                 new SouthernCrossSpell(),
                 new AuraOfAllureSpell(),
-                new TransmuteSpell(),
-                new CombineSpell(),
                 // RED
                 new FireworksSpell(),
                 new MagmaBlastSpell(),
@@ -247,7 +244,11 @@ public class ItemDeck extends ArrayList<Item> {
                 new DarkShroudSpell(),
                 new PoisonGasSpell(),
                 new VampirismSpell(),
-                new BoneArmorSpell()
+                new BoneArmorSpell(),
+                // COLORLESS
+                new DispelSpell(),
+                new TransmuteSpell(),
+                new CombineSpell()
                 );
     }
 

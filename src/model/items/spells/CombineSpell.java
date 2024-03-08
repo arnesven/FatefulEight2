@@ -23,11 +23,11 @@ import java.util.Set;
 public class CombineSpell extends AuxiliarySpell {
 
     private static final String COMBINE_COMBAT_SPELL_NAME = "COMBO";
-    private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
     private List<Spell> combinedResult = null;
 
     public CombineSpell() {
-        super("Combine", 68, MyColors.WHITE, 5, 0);
+        super("Combine", 68, COLORLESS, 5, 0);
     }
 
     public static int getResultingHealthCost(List<Spell> combined) {

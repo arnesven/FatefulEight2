@@ -29,7 +29,7 @@ public class SpellsView extends SelectableListMenu {
     private Map<MyColors, List<Spell>> spellMap = new HashMap<>();
 
     public SpellsView(GameView previous) {
-        super(previous, 44, 36);
+        super(previous, 50, 36);
         tabNames = makeTabs();
     }
 
@@ -43,7 +43,7 @@ public class SpellsView extends SelectableListMenu {
             }
             offset += tabNames[i].getName().length() + 2;
         }
-        print(model.getScreenHandler(), x+1, y+2, "___________________________________________");
+        print(model.getScreenHandler(), x+1, y+2, "_________________________________________________");
 
     }
 
@@ -176,10 +176,16 @@ public class SpellsView extends SelectableListMenu {
                         return spellMap.get(MyColors.GREEN);
                     }
                 },
-                new ItemTab("Black") {
+                new ItemTab("Black|") {
                     @Override
                     public List<? extends Item> getItems(Model model) {
                         return spellMap.get(MyColors.BLACK);
+                    }
+                },
+                new ItemTab("None  ") {
+                    @Override
+                    public List<? extends Item> getItems(Model model) {
+                        return spellMap.get(Spell.COLORLESS);
                     }
                 }};
     }

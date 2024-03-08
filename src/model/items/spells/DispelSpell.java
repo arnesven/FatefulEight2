@@ -6,10 +6,10 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class DispelSpell extends QuestSpell {
-    private static final Sprite SPRITE = new ItemSprite(14, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new ItemSprite(14, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
 
     public DispelSpell() {
-        super("Dispel", 12, MyColors.BLUE, 9, 1);
+        super("Dispel", 12, COLORLESS, 9, 1);
     }
 
     @Override

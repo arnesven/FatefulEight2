@@ -12,7 +12,8 @@ import sound.SoundEffects;
 import view.*;
 
 public abstract class Spell extends Item {
-    public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK};
+    public static final MyColors COLORLESS = MyColors.PURPLE;
+    public static final MyColors[] spellColors = new MyColors[]{MyColors.WHITE, MyColors.RED, MyColors.BLUE, MyColors.GREEN, MyColors.BLACK, COLORLESS};
     private final MyColors color;
     private final int difficulty;
     private final int hpCost;
@@ -84,6 +85,9 @@ public abstract class Spell extends Item {
     protected abstract int getExperience();
 
     public static Skill getSkillForColor(MyColors color) {
+        if (color == COLORLESS) {
+            return Skill.MagicAny;
+        }
         switch (color) {
             case BLACK:
                 return Skill.MagicBlack;
@@ -95,8 +99,6 @@ public abstract class Spell extends Item {
                 return Skill.MagicGreen;
             case WHITE:
                 return Skill.MagicWhite;
-            case PURPLE:
-                return Skill.MagicAny;
             default:
                 throw new IllegalStateException("Unrecognized magic color " + color.toString());
         }
@@ -115,7 +117,7 @@ public abstract class Spell extends Item {
             case MagicWhite:
                 return MyColors.WHITE;
             case MagicAny:
-                return MyColors.PURPLE;
+                return COLORLESS;
             default:
                 throw new IllegalStateException("Unrecognized magic skill " + skill.getName());
         }
