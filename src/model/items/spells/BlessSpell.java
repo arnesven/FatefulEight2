@@ -47,7 +47,13 @@ public class BlessSpell extends ImmediateSpell {
         if (target.hasCondition(BlessedCondition.class)) {
             state.println(getName() + " has no effect on " + target.getName() + ".");
         } else {
-            target.addCondition(new BlessedCondition(model.getDay() + DURATION_DAYS + getMasteryLevel(caster)));
+            applyBlessing(model, state, DURATION_DAYS + getMasteryLevel(caster), target);
+        }
+    }
+
+    public static void applyBlessing(Model model, GameState state, int durationDays, GameCharacter target) {
+        if (!target.hasCondition(BlessedCondition.class)) {
+            target.addCondition(new BlessedCondition(model.getDay() + durationDays));
             target.addToSP(1);
             state.println(target.getName() + " was blessed, " + DailyEventState.hisOrHer(target.getGender()) +
                     " maximum Stamina Points is increased.");
