@@ -21,18 +21,25 @@ public class TeleportingTransition extends TransitionView {
     private static final int STEPS_START = (Y_MAX - Y_OFFSET) * 2;
     private final Point position;
     private final int randomSeed;
+    private final boolean inCaves;
     private boolean flipped = false;
 
-    public TeleportingTransition(SubView fromView, SubView toView, String title, int stepsStart, Point position) {
+    public TeleportingTransition(SubView fromView, SubView toView, String title, int stepsStart, Point position, boolean inCaves) {
         super(fromView, toView, title, stepsStart);
         this.position = position;
         randomSeed = MyRandom.randInt(100000);
+        this.inCaves = inCaves;
     }
 
     @Override
     protected void drawAnimation(Model model, int steps) {
         if (steps == 0) {
             model.getParty().setPosition(position);
+            if (inCaves) {
+                model.enterCaveSystem();
+            } else {
+                model.exitCaveSystem();
+            }
             this.flipped = true;
         }
 
@@ -59,9 +66,9 @@ public class TeleportingTransition extends TransitionView {
         return steps >= STEPS_START;
     }
 
-    public static void transition(Model model, SubView nextSubView, Point position) {
+    public static void transition(Model model, SubView nextSubView, Point position, boolean inCaves) {
         TransitionView spiral = new TeleportingTransition(model.getSubView(), nextSubView,
-                nextSubView.getTitleText(model), STEPS_START, position);
+                nextSubView.getTitleText(model), STEPS_START, position, inCaves);
         model.setSubView(spiral);
         spiral.waitToBeOver();
         model.setSubView(nextSubView);

@@ -89,7 +89,7 @@ public class CourtMageNode extends DailyActionNode {
                 CastleLocation destination = model.getWorld().getCastleByName(options.get(selected));
 
                 Point p = model.getWorld().getPositionForLocation(destination);
-                TeleportSpell.teleportPartyToPosition(model, this, p);
+                TeleportSpell.teleportPartyToPosition(model, this, p, false);
                 didTeleport = true;
             } else {
                 leaderSay("Fascinating. I think we'll pass.");

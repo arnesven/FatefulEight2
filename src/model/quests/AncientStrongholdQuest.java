@@ -111,7 +111,7 @@ public class AncientStrongholdQuest extends MainQuest {
         state.leaderSay("I wonder where this would take us?");
         state.print("Do you step through the portal (Y/N)? ");
         if (state.yesNoInput()) {
-            TeleportSpell.teleportPartyToPosition(model, state, model.getMainStory().getCampPosition());
+            TeleportSpell.teleportPartyToPosition(model, state, model.getMainStory().getCampPosition(), false);
         }
         state.leaderSay("Oh, we're back at the orc war camp. So that's how they managed to move those " +
                 "troops so quickly.");
