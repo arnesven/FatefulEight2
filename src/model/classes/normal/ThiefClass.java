@@ -34,10 +34,10 @@ public class ThiefClass extends CharacterClass {
                         new WeightedSkill(Skill.Entertain, 2),
                         new WeightedSkill(Skill.Logic, 3),
                         new WeightedSkill(Skill.Perception, 5),
-                        new WeightedSkill(Skill.Persuade, 4),
+                        new WeightedSkill(Skill.Persuade, 3),
                         new WeightedSkill(Skill.Search, 5),
                         new WeightedSkill(Skill.Security, 5),
-                        new WeightedSkill(Skill.SeekInfo, 4),
+                        new WeightedSkill(Skill.SeekInfo, 3),
                         new WeightedSkill(Skill.Sneak, 5)
                 });
     }

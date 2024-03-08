@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.SkillBonus;
 import model.characters.preset.LonnieLiebgott;
+import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.ArmorItem;
@@ -22,10 +23,7 @@ import model.races.Race;
 import util.MyLists;
 import util.MyPair;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Balancing {
     private static final int MAX_RANKS = 8;
@@ -217,5 +215,44 @@ public class Balancing {
 
     private static double modifyForHealthBonus(Item it) {
         return it instanceof Accessory ? ((Accessory) it).getHealthBonus() * 6 : 0;
+    }
+
+    public static void runClassesAnalysis(Model model) {
+        CharacterClass baselineClass = Classes.BBN;
+
+        int baselineScore = calcClassScore(baselineClass);
+        System.out.println("Name                 Score  Diff");
+        List<CharacterClass> classes = new ArrayList<>(Arrays.asList(Classes.allClasses));
+        classes.add(Classes.GOBLIN);
+        classes.add(Classes.WITCH_KING);
+        classes.add(Classes.ENCHANTRESS);
+        classes.add(Classes.RED_KNIGHT);
+        classes.add(Classes.ARCANIST);
+        classes.add(Classes.SWORD_MASTER);
+
+        for (CharacterClass cls : classes) {
+            int score = calcClassScore(cls);
+            int diff = score - baselineScore;
+            String tableRow = String.format("%-20s %4d %4d", cls.getFullName(), score, diff);
+            if (diff < -5) {
+                System.err.println(tableRow + " TO WEAK?");
+            } else if (diff > 5) {
+                System.err.println(tableRow + " TO POWERFUL?");
+            } else {
+                System.out.println(tableRow);
+            }
+        }
+    }
+
+    private static int calcClassScore(CharacterClass charClass) {
+        int sum = 0;
+        for (Skill s : charClass.getSkills()) {
+            sum += charClass.getWeightForSkill(s);
+        }
+        sum += charClass.getHP();
+        sum += charClass.getSpeed() / 2;
+        sum += charClass.getStartingGold() / 3;
+        sum += charClass.canUseHeavyArmor() ? 8 : 0;
+        return sum;
     }
 }

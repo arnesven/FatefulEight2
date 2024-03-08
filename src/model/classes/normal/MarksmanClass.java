@@ -24,8 +24,9 @@ public class MarksmanClass extends CharacterClass {
     public MarksmanClass() {
         super("Marksman", "MAR", 8, 6, false, 14,
                 new WeightedSkill[]{
+                        new WeightedSkill(Skill.Acrobatics, 3),
                         new WeightedSkill(Skill.Bows, 5),
-                        new WeightedSkill(Skill.Endurance, 2),
+                        new WeightedSkill(Skill.Endurance, 3),
                         new WeightedSkill(Skill.Leadership, 2),
                         new WeightedSkill(Skill.Perception, 5),
                         new WeightedSkill(Skill.Polearms, 2),

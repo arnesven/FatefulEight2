@@ -22,9 +22,9 @@ public class PaladinClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.WHITE;
 
     public PaladinClass() {
-        super("Paladin", "PAL", 10, 4, true, 22,
+        super("Paladin", "PAL", 10, 4, true, 20,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Blades, 4),
+                        new WeightedSkill(Skill.Blades, 3),
                         new WeightedSkill(Skill.BluntWeapons, 4),
                         new WeightedSkill(Skill.Endurance, 3),
                         new WeightedSkill(Skill.Labor, 1),
@@ -32,7 +32,7 @@ public class PaladinClass extends CharacterClass {
                         new WeightedSkill(Skill.MagicWhite, 3),
                         new WeightedSkill(Skill.Perception, 2),
                         new WeightedSkill(Skill.Polearms, 4),
-                        new WeightedSkill(Skill.Survival, 2)
+                        new WeightedSkill(Skill.Survival, 1)
                 });
     }
 

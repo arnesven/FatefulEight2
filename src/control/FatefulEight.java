@@ -70,6 +70,7 @@ public class FatefulEight extends JFrame {
         //Balancing.runWeaponValueAnalysis(model);
         //Balancing.runClothingAnalysis(model);
         //Balancing.runAccessoryAnalysis(model);
+        //Balancing.runClassesAnalysis(model);
         model.runGameScript();
     }
 
