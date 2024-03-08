@@ -35,6 +35,14 @@ public class BarbershopEvent extends DailyEventState {
         portraitSay("The cost is " + MyStrings.numberWord(COST) +
                 " gold, I guarantee you it's worth it! And dare I say, you look like you could need it!");
         randomSayIfPersonality(PersonalityTrait.narcissistic, new ArrayList<>(), "Hey, that's rude!");
+        if (COST > model.getParty().getGold()) {
+            leaderSay("Sorry, can't afford it...");
+            portraitSay("That's unfortunate. I'm afraid I can't give you a discount today. " +
+                    "Times are tough enough as they are.");
+            leaderSay("I understand.");
+            portraitSay("Goodbye sir.");
+            return;
+        }
         print("Let the barber cut your hair? (Y/N) ");
         if (!yesNoInput()) {
             leaderSay("I think we'll pass on it today.");
