@@ -48,7 +48,8 @@ public class GameCharacter extends Combatant {
     private static final MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
                                                         MyColors.LIGHT_BLUE, MyColors.BEIGE, MyColors.WHITE, MyColors.LIGHT_PINK, MyColors.LIGHT_YELLOW};
     private static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GRAY;
-    private static final int MAX_SP = 2;
+    private static final int MAX_ATTITUDE = 40;
+    private static final int MIN_ATTITUDE = -40;
     private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1000, 1400,
                                                     2000, 2500, 3000, 3500, 4000, 4500, 5000};
     private static final int NO_DIFFICULTY = Integer.MAX_VALUE;
@@ -680,7 +681,8 @@ public class GameCharacter extends Combatant {
         if (!attitudes.containsKey(target)) {
             attitudes.put(target, 0);
         }
-        attitudes.put(target, attitudes.get(target) + i);
+        int result = Math.max(MIN_ATTITUDE, Math.min(MAX_ATTITUDE, attitudes.get(target) + i));
+        attitudes.put(target, result);
     }
 
     public int getCharacterStrength() {
