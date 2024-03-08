@@ -7,6 +7,7 @@ import model.classes.Skill;
 import model.items.Item;
 import model.items.accessories.Circlet;
 import model.items.accessories.Tiara;
+import model.items.spells.BlessSpell;
 import model.items.spells.HealingWordSpell;
 import model.items.spells.ShiningAegisSpell;
 import model.items.weapons.Club;
@@ -81,6 +82,6 @@ public class PriestClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new HealingWordSpell(), new ShiningAegisSpell(), new Circlet());
+        return List.of(new HealingWordSpell(), new BlessSpell(), new Circlet());
     }
 }

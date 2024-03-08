@@ -46,7 +46,7 @@ public class PriestEvent extends DarkDeedsEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        print("The priest offers to bless the members of the party - for a small 'donation'. ");
+        print("The priest offers to heal the members of the party - for a small 'donation'. ");
         randomSayIfPersonality(PersonalityTrait.stingy, List.of(model.getParty().getLeader()),
                 MyStrings.capitalize(MyStrings.nthWord(BLESS_COST)) + " gold for a guy to wave his hands at you? What a rip off!");
         randomSayIfPersonality(PersonalityTrait.benevolent, List.of(model.getParty().getLeader()),
@@ -58,10 +58,10 @@ public class PriestEvent extends DarkDeedsEvent {
                 println("Unfortunately you cannot afford any more 'donations' right now.");
                 break;
             }
-            print("Would you like to pay " + BLESS_COST + " gold to bless a party member? (Y/N) ");
+            print("Would you like to pay " + BLESS_COST + " gold to heal a party member? (Y/N) ");
             if (yesNoInput()) {
                 GameCharacter gc = model.getParty().partyMemberInput(model, this, null);
-                println("The priest blesses " + gc.getName() + ".");
+                println("The priest heals " + gc.getName() + ".");
                 gc.addToHP(1000);
                 gc.addToSP(1000);
                 model.getParty().addToGold(-BLESS_COST);

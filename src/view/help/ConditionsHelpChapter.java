@@ -32,6 +32,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
         return List.of(
                 new BlackPactCondition().getHelpView(view),
                 new BleedingCondition().getHelpView(view),
+                new BlessedCondition(0).getHelpView(view),
                 new BoneArmorCondition(0).getHelpView(view),
                 new BurningCondition(null).getHelpView(view),
                 new BurningWeaponCondition().getHelpView(view),

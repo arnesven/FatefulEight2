@@ -10,10 +10,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.conditions.Condition;
-import model.combat.conditions.GiantGrowthCondition;
-import model.combat.conditions.InvisibilityCondition;
-import model.combat.conditions.WardCondition;
+import model.combat.conditions.*;
 import model.enemies.Enemy;
 import model.items.*;
 import model.items.accessories.Accessory;
@@ -400,7 +397,8 @@ public class GameCharacter extends Combatant {
         if (equipment.getAccessory() != null) {
             equipmentBonus = equipment.getAccessory().getSPBonus();
         }
-        return 2 + levelBonus + equipmentBonus;
+        int blessedBonus = hasCondition(BlessedCondition.class) ? 1 : 0;
+        return 2 + levelBonus + equipmentBonus + blessedBonus;
     }
 
     public Equipment getEquipment() {
