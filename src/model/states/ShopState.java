@@ -82,9 +82,11 @@ public class ShopState extends GameState {
             int topCommand = subView.getTopIndex();
             if (topCommand == 2) {
                 break;
-            } else if ((topCommand == 1 && showingBuyItems && !sellItems.getElementList().isEmpty()) ||
-                    (topCommand == 0 && !showingBuyItems && !buyItems.getElementList().isEmpty())) {
-                toggleBuySell(model);
+            } else if (topCommand == 1 || topCommand == 0) {
+                if ((topCommand == 1 && showingBuyItems && !sellItems.getElementList().isEmpty()) ||
+                        (topCommand == 0 && !showingBuyItems && !buyItems.getElementList().isEmpty())) {
+                    toggleBuySell(model);
+                }
                 continue;
             }
 
@@ -202,6 +204,12 @@ public class ShopState extends GameState {
         waitForReturnSilently();
         if (didAction[0] != null) {
             println(it.getName() + " was equipped by " + didAction[0].getName() + ".");
+            for (Item it2 : model.getParty().getInventory().getAllItems()) {
+                if (!sellItems.getElementList().contains(it2)) {
+                    sellItems.addElementLast(it2);
+                    break;
+                }
+            }
             return true;
         }
 
