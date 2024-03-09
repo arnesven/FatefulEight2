@@ -55,7 +55,7 @@ public class RecruitState extends GameState {
         startingGoldMap = new HashMap<>();
         for (GameCharacter gc : recruitables) {
             int amount = Math.max(0, MyRandom.randInt(gc.getCharClass().getStartingGold()-10,
-                                                      gc.getCharClass().getStartingGold()-10));
+                                                      gc.getCharClass().getStartingGold()+10));
             startingGoldMap.put(gc, amount);
         }
     }
