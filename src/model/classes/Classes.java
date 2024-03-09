@@ -61,6 +61,7 @@ public interface Classes {
     CharacterClass FAMILIAR = new FamiliarClass();
     CharacterClass SWORD_MASTER = new SwordMasterClass();
     CharacterClass ARCANIST = new ArcanistClass();
+    CharacterClass TREE_HERDER = new TreeHerderClass();
 
     CharacterClass[] NO_OTHER_CLASSES = Classes.NO_OTHER_CLASSES;
 }

@@ -236,7 +236,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new GiantGrowthSpell(),
                 new SummonFamiliarSpell(),
                 new QuickeningSpell(),
-                // SummonTreeHerderSpell
+                new SummonTreeHerderSpell(),
                 // BLACK
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),

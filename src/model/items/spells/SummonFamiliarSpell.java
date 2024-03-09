@@ -19,11 +19,11 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class SummonFamiliarSpell extends CombatSpell {
+public class SummonFamiliarSpell extends SummonCombatSpell {
     private static final Sprite SPRITE = new CombatSpellSprite(11, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
 
     public SummonFamiliarSpell() {
-        super("Summon Familiar", 14, MyColors.GREEN, 7, 1, false);
+        super("Summon Familiar", 14, MyColors.GREEN, 7, 1);
     }
 
     @Override
@@ -37,23 +37,8 @@ public class SummonFamiliarSpell extends CombatSpell {
     }
 
     @Override
-    public boolean canBeCastOn(Model model, Combatant target) {
-        return target instanceof GameCharacter;
-    }
-
-    @Override
-    public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (performer.hasCondition(SummonCondition.class)) {
-            SummonCondition sumCond = (SummonCondition) performer.getCondition(SummonCondition.class);
-            GameCharacter gc = sumCond.getSummon();
-            combat.removeAlly(gc);
-            performer.removeCondition(SummonCondition.class);
-            combat.println("Your summon has been replaced.");
-        }
-        GameCharacter familiar = new FamiliarAlly();
-        combat.addAllies(List.of(familiar));
-        performer.addCondition(new SummonCondition(familiar));
-        combat.addSpecialEffect(familiar, new SmokeBallAnimation());
+    protected GameCharacter makeSummon(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+        return new FamiliarAlly();
     }
 
     @Override

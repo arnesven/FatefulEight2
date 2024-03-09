@@ -12,7 +12,7 @@ import view.sprites.UpArrowAnimation;
 
 public class QuickeningSpell extends CombatSpell {
     public static final int SPEED_BONUS = 6;
-    private static final Sprite SPRITE = new CombatSpellSprite(2, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
+    private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
 
     public QuickeningSpell() {
         super("Quickening", 14, MyColors.GREEN, 7, 0, false);

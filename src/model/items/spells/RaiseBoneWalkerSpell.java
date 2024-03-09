@@ -24,7 +24,7 @@ import view.sprites.*;
 
 import java.util.List;
 
-public class RaiseBoneWalkerSpell extends CombatSpell {
+public class RaiseBoneWalkerSpell extends SummonCombatSpell {
     private static final Sprite SPRITE = new CombatSpellSprite(9, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public RaiseBoneWalkerSpell() {
@@ -42,18 +42,7 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
     }
 
     @Override
-    public boolean canBeCastOn(Model model, Combatant target) {
-        return target instanceof GameCharacter;
-    }
-
-    @Override
-    public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (performer.hasCondition(SummonCondition.class)) {
-            SummonCondition sumCond = (SummonCondition) performer.getCondition(SummonCondition.class);
-            GameCharacter gc = sumCond.getSummon();
-            combat.removeAlly(gc);
-            performer.removeCondition(SummonCondition.class);
-        }
+    protected GameCharacter makeSummon(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         GameCharacter boneWalker = new BoneWalkerAlly();
         boneWalker.addToHP(-boneWalker.getMaxHP());
         int mastery = getMasteryLevel(performer);
@@ -71,10 +60,7 @@ public class RaiseBoneWalkerSpell extends CombatSpell {
                 boneWalker.getEquipment().setClothing(new ChainMail());
             default:
         }
-        combat.addAllies(List.of(boneWalker));
-        AnimationManager.synchAnimations();
-        performer.addCondition(new SummonCondition(boneWalker));
-        combat.addSpecialEffect(boneWalker, new SmokeBallAnimation());
+        return boneWalker;
     }
 
     @Override
