@@ -21,6 +21,11 @@ public class QuickenedCondition extends Condition {
     }
 
     @Override
+    public boolean removeAtEndOfCombat() {
+        return true;
+    }
+
+    @Override
     public Sprite getSymbol() {
         return CONDITION_SPRITE;
     }
