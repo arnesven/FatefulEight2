@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -10,6 +11,7 @@ import model.enemies.ConstableEnemy;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
+import util.MyStrings;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
@@ -19,10 +21,12 @@ public class ConstableEvent extends DailyEventState {
     private final String perp;
     private final Integer sentence;
     private final boolean withIntro;
+    private final AdvancedAppearance app;
     private boolean runAway = false;
 
     public ConstableEvent(Model model, boolean withIntro) {
         super(model);
+        this.app = PortraitSubView.makeRandomPortrait(Classes.CONSTABLE);
         if (withIntro) {
             List<String> perpList = List.of("troublemaker", "thief", "bandit", "saboteur", "spy", "murderer");
             List<Integer> sentenceList = List.of(1, 2, 3, 5, 7, 10);
@@ -42,7 +46,6 @@ public class ConstableEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.CONSTABLE);
         showExplicitPortrait(model, app, "Constable");
         boolean gender = app.getGender();
         if (withIntro) {
@@ -53,6 +56,20 @@ public class ConstableEvent extends DailyEventState {
                 return;
             }
         }
+        if (constableAssess(model, "constable", false)) {
+            return;
+        }
+        print("The constable is attempting to arrest you. You could fight the " +
+                "constable, but doing so will give you a -1 penalty to your reputation. Do you resist arrest? (Y/N) ");
+        if (yesNoInput()) {
+            resistArrest(model);
+        } else {
+            goToJail(model);
+        }
+    }
+
+    public boolean constableAssess(Model model, String lawMan, boolean canBeBribed) {
+        showExplicitPortrait(model, app, MyStrings.capitalize(lawMan));
         portraitSay("We're looking for a " + perp + " in this area. You lot " +
                 "seen anything suspicious?");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.rude, List.of(model.getParty().getLeader()),
@@ -60,7 +77,7 @@ public class ConstableEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("Nope, not a thing.", "No sir.",
                 "I don't know what you're talking about.", "I don't remember..."));
         portraitSay("You're not from around here are you?");
-        println("The constable squints and carefully looks at the party members...");
+        println("The " + lawMan + " squints and carefully looks at the party members...");
         int sum = calculatePartyAlignment(model, this);
         sum += model.getParty().getReputation() - model.getParty().getNotoriety() / 10;
         String wordToDescribe = null;
@@ -77,27 +94,63 @@ public class ConstableEvent extends DailyEventState {
         }
         if (sum >= 1) {
             portraitSay("Hmm, you fellows look " + wordToDescribe + " You can go about your business.");
-            return;
-        } else {
-            portraitSay("Hmm, you fellows look " + wordToDescribe + " You should come with me for questioning.");
+            return true;
         }
+        portraitSay("Hmm, you fellows look " + wordToDescribe + " You should come with me for questioning.");
+        if (canBeBribed && model.getParty().getGold() > 0) {
+            int selected = multipleOptionArrowMenu(model, 24, 25, List.of("Attempt bribe", "Attempt persuade"));
+            if (selected == 0) {
+                return attemptBribe(model, lawMan);
+            }
+        }
+        return attemptPersuade(model, lawMan, sum);
+    }
+
+    private boolean attemptBribe(Model model, String lawMan) {
+        int amount = 0;
+        do {
+            try {
+                print("How large bribe would you like to present to the " + lawMan + "? ");
+                amount = Integer.parseInt(lineInput());
+                if (amount > model.getParty().getGold() || amount < 1) {
+                    println("Please enter a valid amount.");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException nfe) {
+                println("Please enter a valid amount.");
+            }
+        } while (true);
+        String coinString = "these coins";
+        if (amount == 1) {
+            coinString = "this coin";
+        }
+        leaderSay(MyStrings.capitalize(lawMan) + "... I think you dropped " + coinString + " on the ground...");
+        int x = model.getParty().getNotoriety() - amount;
+        if (MyRandom.rollD10() < x) {
+            portraitSay("What's this? A bribe? Don't you know bribing a " + lawMan + " is against the law!");
+            DarkDeedsEvent.addToNotoriety(model, this, 5);
+            return false;
+        }
+        portraitSay("What now? Oh, I see. How kind of you to return " + coinString + " to me. Perhaps " +
+                    "I can let you off with a warning this time.");
+        leaderSay("Much appreciated " + lawMan + ".");
+        return true;
+    }
+
+    private boolean attemptPersuade(Model model, String lawMan, int sum) {
         model.getParty().randomPartyMemberSay(model, List.of("Hang on a second!",
                 "I think there's been some kind of misunderstanding.", "Wait just a minute.",
                 "Please, sir. Hear us out."));
         boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 6-sum);
         if (result) {
-            println("You manage to convince the constable you are completely innocent.");
+            println("You manage to convince the " + lawMan + " you are completely innocent.");
             portraitSay("Hmm, well... Stay out of trouble!");
             model.getParty().randomPartyMemberSay(model, List.of("Phew... close one."));
-        } else {
-            print("The constable is unconvinced and is attempting to arrest you. You could fight the " +
-                    "constable, but doing so will give you a -1 penalty to your reputation. Do you resist arrest? (Y/N) ");
-            if (yesNoInput()) {
-                resistArrest(model);
-            } else {
-                goToJail(model);
-            }
+            return true;
         }
+        println("The " + lawMan + " seems unconvinced by your story.");
+        return false;
     }
 
     private void resistArrest(Model model) {
@@ -112,10 +165,11 @@ public class ConstableEvent extends DailyEventState {
         runCombat(List.of(new ConstableEnemy('A')));
     }
 
-    private void goToJail(Model model) {
+    public void goToJail(Model model) {
         println("You come along to the courthouse where a council promptly charges you and convicts you of being a " + perp + ".");
         leaderSay("But I'm innocent!");
-        printQuote("Clerk", "You can either pay a fine of " + getFine() + " gold or spend " + getJailTime() +
+        showRandomPortrait(model, Classes.OFFICIAL, "Clerk");
+        portraitSay("You can either pay a fine of " + getFine() + " gold or spend " + getJailTime() +
                 " days in the town jail.");
         if (getFine() > model.getParty().getGold()) {
             spendTimeInJail(model);

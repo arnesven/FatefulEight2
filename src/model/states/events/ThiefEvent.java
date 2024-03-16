@@ -7,6 +7,7 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.DailyEventState;
+import util.MyPair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +69,13 @@ public class ThiefEvent extends DailyEventState {
     }
 
     private boolean spotThief(Model model) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            SkillCheckResult result = gc.testSkill(Skill.Perception, 8);
-            if (result.isSuccessful()) {
-                println(gc.getName() + " spots the stranger trying to snatch your purse. (Perception " + result.asString() + ")");
-                model.getParty().partyMemberSay(model, gc, "Hey, there! THIEF!");
-                return true;
-            }
+        MyPair<SkillCheckResult, GameCharacter> resultAndSpotter = doPassiveSkillCheck(Skill.Perception, 8);
+        if (resultAndSpotter.first.isSuccessful()) {
+            GameCharacter gc = resultAndSpotter.second;
+            println(gc.getName() + " spots the stranger trying to snatch your purse. (Perception " +
+                    resultAndSpotter.first.asString() + ")");
+            model.getParty().partyMemberSay(model, gc, "Hey, there! THIEF!");
+            return true;
         }
         return false;
     }

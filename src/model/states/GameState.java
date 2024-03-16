@@ -6,6 +6,8 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
 import model.races.Race;
@@ -270,5 +272,16 @@ public abstract class GameState {
         GameCharacter speaker = MyRandom.sample(candidates);
         partyMemberSay(speaker, line);
         return true;
+    }
+
+    protected MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty) {
+        SkillCheckResult result = null;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            result = gc.testSkill(skill, difficulty);
+            if (result.isSuccessful()) {
+                return new MyPair<>(result, gc);
+            }
+        }
+        return new MyPair<>(result, null);
     }
 }

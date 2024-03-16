@@ -232,6 +232,7 @@ public abstract class WorldHex {
             events.add(new BrokenWagonEvent(model));
             events.add(new RunAwayHorseEvent(model));
             events.add(new OtherPartyEvent(model));
+            events.add(new MountedPatrolEvent(model));
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
