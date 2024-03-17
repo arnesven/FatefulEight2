@@ -26,7 +26,8 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 3, new TownHallNode());
         super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, model,
                 TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT, "Make camp on the outskirts of town"));
-        super.addNode(4, TOWN_MATRIX_ROWS-1, new WorkBenchNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
+        super.addNode(2, TOWN_MATRIX_ROWS-1, new WorkBenchNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
+        super.addNode(4, TOWN_MATRIX_ROWS-1, new StableNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
         super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y,
                 new TravelNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
         addNode(7, 2, new SaveGameNode());

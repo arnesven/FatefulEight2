@@ -28,7 +28,7 @@ public class SellHorseState extends GameState {
             print("Are you sure you want to sell the " + horse.getName() + " for " + horse.getCost()/2 + " gold? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().getHorseHandler().sellHorse(model, horse);
-                printQuote("Bartender", "We'll take care of " + himOrHer(MyRandom.flipCoin()) +
+                printQuote("Bartender", "We'll take care of " + himOrHer(horse.getGender()) +
                         " from now on then.");
             }
         }

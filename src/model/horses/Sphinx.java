@@ -1,6 +1,7 @@
 package model.horses;
 
 import view.MyColors;
+import view.sprites.HorseSprite;
 import view.sprites.Sprite;
 
 public class Sphinx extends Steed {

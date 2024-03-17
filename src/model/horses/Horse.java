@@ -1,6 +1,8 @@
 package model.horses;
 
+import util.MyRandom;
 import view.MyColors;
+import view.sprites.HorseSprite;
 import view.sprites.Sprite;
 
 import java.io.Serializable;
@@ -11,12 +13,14 @@ public abstract class Horse implements Serializable {
     private final MyColors avatarColor;
     private int cost;
     private String type;
+    private boolean gender;
 
     public Horse(String type, String name, int cost, MyColors avatarColor) {
         this.type = type;
         this.name = name;
         this.cost = cost;
         this.avatarColor = avatarColor;
+        this.gender = MyRandom.flipCoin();
     }
 
     public static Sprite getBackgroundSprite() {
@@ -45,13 +49,8 @@ public abstract class Horse implements Serializable {
         return avatarColor;
     }
 
-    protected static class HorseSprite extends Sprite {
-        public HorseSprite(int col, int row, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
-            super("horse", "horses.png", col, row, 64, 64);
-            setColor1(color1);
-            setColor2(color2);
-            setColor3(color3);
-            setColor4(color4);
-        }
+    public boolean getGender() {
+        return gender;
     }
+
 }
