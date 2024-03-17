@@ -64,7 +64,6 @@ public class Party implements Serializable {
     public Party() {
         position = new Point(26, 19);
         cursorSprites = makeCursorSprites();
-        addToGold(9999);
     }
 
     private LoopingSprite[] makeCursorSprites() {
