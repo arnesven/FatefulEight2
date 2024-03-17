@@ -21,7 +21,7 @@ public class SelectQuestSubView extends SubView {
 
     public SelectQuestSubView(SubView previous, List<Quest> quests) {
         this.quests = quests;
-        this.index = quests.size();
+        this.index = 0;
     }
 
     @Override

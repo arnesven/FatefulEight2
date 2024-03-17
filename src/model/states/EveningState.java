@@ -151,11 +151,9 @@ public class EveningState extends GameState {
         List<Quest> quests = new ArrayList<>();
         model.getMainStory().addQuests(model, quests);
         if (model.getCurrentHex().givesQuests()) {
-            if (!model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-                int mainQuests = quests.size();
-                addHeldQuests(model, quests);
-                addRandomQuests(model, quests, mainQuests);
-            }
+            int mainQuests = quests.size();
+            addHeldQuests(model, quests);
+            addRandomQuests(model, quests, mainQuests);
             if (quests.size() == 0) {
                 println("The party has not been offered any quests.");
             }
@@ -170,7 +168,13 @@ public class EveningState extends GameState {
     }
 
     private void addRandomQuests(Model model, List<Quest> quests, int mainQuests) {
-        int numQuests = MyRandom.randInt(0, Math.max(0, 4 + mainQuests - quests.size()));
+        int baseNumberOfQuests = 4;
+        if (model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
+            if (model.getQuestDeck().wasSuccessfulIn(model.getCurrentHex().getLocation())) {
+                baseNumberOfQuests = 1;
+            }
+        }
+        int numQuests = MyRandom.randInt(0, Math.max(0, baseNumberOfQuests + mainQuests - quests.size()));
         for (int i = numQuests; i > 0; --i) {
             Quest q;
             int tries = 0;
