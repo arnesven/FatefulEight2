@@ -263,4 +263,8 @@ public class RecruitState extends GameState {
     public boolean isStartingGoldEnabled() {
         return this.startingGold;
     }
+
+    public void goToDismiss(Model model) {
+        dismiss(model);
+    }
 }
