@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.states.dailyaction.FlagPoleNode;
 import util.MyPair;
 import view.DrawingArea;
 import view.ScreenHandler;
@@ -98,11 +99,8 @@ public class World implements Serializable {
         if (hex.getLocation() == null || !(hex.getLocation() instanceof UrbanLocation)) {
             return HexLocation.FLAG_NONE;
         }
-        if (model.getQuestDeck().hasFlagIn(hex.getLocation())) {
-            if (model.getQuestDeck().wasSuccessfulIn(hex.getLocation())) {
-                return HexLocation.FLAG_SUCCESS;
-            }
-            return HexLocation.FLAG_FAILURE;
+        if (FlagPoleNode.showSuccessFlag(model, (UrbanLocation) hex.getLocation())) {
+            return HexLocation.FLAG_SUCCESS;
         }
         return HexLocation.FLAG_NONE;
     }

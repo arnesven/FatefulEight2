@@ -37,13 +37,12 @@ public class FlagPoleNode extends DailyActionNode {
         Point p2 = new Point(p);
         p2.y -= 4;
         model.getScreenHandler().register(POLE_UPPER.getName(), p2, POLE_UPPER);
-        if (showSuccessFlag(model)) {
+        if (showSuccessFlag(model, ((UrbanLocation)model.getCurrentHex().getLocation()))) {
             model.getScreenHandler().register(POLE_UPPER.getName(), p2, SUCCESS_FLAG);
         }
     }
 
-    private boolean showSuccessFlag(Model model) {
-        UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
+    public static boolean showSuccessFlag(Model model, UrbanLocation location) {
         if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             return model.getParty().getSummons().get(location.getPlaceName()).getStep() == Summon.COMPLETE;
         }
@@ -57,7 +56,7 @@ public class FlagPoleNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (showSuccessFlag(model)) {
+        if (showSuccessFlag(model, ((UrbanLocation)model.getCurrentHex().getLocation()))) {
             state.println("You have gained the favor of the lord here.");
         } else {
             state.println("You have not gained the lord's favor yet.");
