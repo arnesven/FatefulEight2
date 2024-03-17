@@ -40,14 +40,14 @@ public class TravelState extends GameState {
             spriteToUse = model.getParty().getLeader().getAvatarSprite();
         }
 
-        GameState state = travelOneStep(model, mapSubView);
+        GameState state = travelOneStep(model, mapSubView, true);
         if (state != null) {
             return state;
         }
         if (riding) {
             mapSubView = new MapSubView(model);
             CollapsingTransition.transition(model, mapSubView);
-            state = travelOneStep(model, mapSubView);
+            state = travelOneStep(model, mapSubView, false);
             model.getWorld().setAlternativeAvatar(null);
             if (state != null) {
                 return state;
@@ -131,8 +131,17 @@ public class TravelState extends GameState {
         return false;
     }
 
-    private GameState travelOneStep(Model model, MapSubView mapSubView) {
+    private GameState travelOneStep(Model model, MapSubView mapSubView, boolean cancelEnabled) {
         Point selectedDir = selectDirection(model, mapSubView);
+        if (selectedDir.x == 0 && selectedDir.y == 0) {
+            if (cancelEnabled) {
+                println("Travel canceled.");
+                return model.getCurrentHex().getDailyActionState(model);
+            } else {
+                setCurrentTerrainSubview(model);
+                return null;
+            }
+        }
         Point newPosition = new Point(model.getParty().getPosition());
         model.getWorld().move(newPosition, selectedDir.x, selectedDir.y);
 
@@ -195,11 +204,9 @@ public class TravelState extends GameState {
 
     protected Point selectDirection(Model model, MapSubView mapSubView) {
         Point selectedDir;
-        do {
-            print("Please select an adjacent hex to travel to: ");
-            waitForReturn();
-            selectedDir = mapSubView.getSelectedDirection();
-        } while (selectedDir.x == 0 && selectedDir.y == 0);
+        print("Please select an adjacent hex to travel to: ");
+        waitForReturn();
+        selectedDir = mapSubView.getSelectedDirection();
         return selectedDir;
     }
 }

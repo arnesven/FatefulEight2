@@ -26,9 +26,9 @@ public class StableNode extends DailyActionNode {
         super("Stables");
         this.model = model;
         daySprite = new Sprite32x32("stablestown", "world_foreground.png", 0xAA,
-                dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
+                dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.ORANGE);
         nightSprite = new Sprite32x32("stablestown", "world_foreground.png", 0xAA,
-                nightColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);
+                nightColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.ORANGE);
         this.horses = makeHorses();
     }
 
@@ -59,5 +59,9 @@ public class StableNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        if (state.isMorning()) {
+            model.setTimeOfDay(TimeOfDay.MIDDAY);
+        }
+    }
 }
