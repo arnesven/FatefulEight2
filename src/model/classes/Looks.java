@@ -219,8 +219,8 @@ public abstract class Looks {
     }
 
     public static void putOnMerchantHat(CharacterAppearance characterAppearance, MyColors hatColor, MyColors detailColor) {
-        putOnPointyHat(characterAppearance, hatColor, MyColors.DARK_GRAY, MyColors.GOLD);
-        characterAppearance.setSprite(2, 1, new ClothesSprite(0xF0, hatColor, detailColor));
+        putOnPointyHat(characterAppearance, hatColor, hatColor, hatColor);
+        characterAppearance.setSprite(2, 1, new ClothesSprite(0xF0, hatColor, hatColor, detailColor));
     }
 
     public static void putOnMask(CharacterAppearance characterAppearance, MyColors clothingColor) {

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AttributesHelpChapter extends ExpandableHelpDialog {
     private static final String TEXT = "Each character has five attributes; Health Points (HP), Stamina Points (SP), " +
-            "Armor Points (AP), Experience Points (XP) and Speed.\n\n This attributes are always displayed by the " +
+            "Armor Points (AP), Experience Points (XP) and Speed.\n\nThese attributes are always displayed by the " +
             "character's name and portrait in the main game view, but also in the Party menu.";
     private static final String ARMOR_TEXT = "A character's Armor Points (AP) are based on what equipment the character " +
             "currently has equipped. High levels of AP will protect the character more often and from higher levels of incoming damage." +
