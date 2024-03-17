@@ -34,7 +34,7 @@ public class StableNode extends DailyActionNode {
 
     private List<Horse> makeHorses() {
         List<Horse> result = new ArrayList<>();
-        int numberOfHorses = 12; // MyRandom.randInt(2, 6);
+        int numberOfHorses = MyRandom.randInt(1, 3) + MyRandom.randInt(1, 4);
         for (int i = numberOfHorses; i > 0; --i) {
             result.add(HorseHandler.generateHorse());
         }

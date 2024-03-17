@@ -17,11 +17,13 @@ import java.util.List;
 public class TalkToBartenderNode extends DailyActionNode {
     private static final Sprite STOOL = new Sprite32x32("barstool", "world_foreground.png", 0x55,
             MyColors.GRAY, MyColors.DARK_RED, MyColors.DARK_GREEN, MyColors.CYAN);
+    private final boolean inTown;
 
     private boolean workDone = false;
 
-    public TalkToBartenderNode() {
+    public TalkToBartenderNode(boolean inTown) {
         super("Talk to bartender");
+        this.inTown = inTown;
     }
 
     @Override
@@ -63,10 +65,10 @@ public class TalkToBartenderNode extends DailyActionNode {
             if (!model.getTimeOfDay().equals(TimeOfDay.EVENING)) {
                 options.add("Ask For Work");
             }
-            if (buyHorse) {
+            if (buyHorse && !inTown) {
                 options.add("Buy Horse");
             }
-            if (model.getParty().getHorseHandler().size() > 0) {
+            if (model.getParty().getHorseHandler().size() > 0 && !inTown) {
                 options.add("Sell Horse");
             }
             options.add("Buy Obols");
@@ -74,7 +76,7 @@ public class TalkToBartenderNode extends DailyActionNode {
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
             if (selected == 0) {
                 getAdvice(model);
-            } else if (selected == 1){
+            } else if (selected == 1) {
                 new BuyRationsState(model).run(model);
             } else if (options.get(selected).contains("Buy Horse")) {
                 new BuyHorseState(model, "Bartender").run(model);
@@ -107,7 +109,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                 printQuote("Bartender", "Good work. Here's your pay.");
                 model.getParty().addToGold(Math.min(4, model.getParty().size()));
                 println("You got " + model.getParty().size() + " gold.");
-            } else if (dieRoll < 5) {
+            } else if (dieRoll < 5 && !inTown) {
                 printQuote("Bartender", "The stable needs cleaning. Make it tidy in there and I'll pay you.");
                 leaderSay("I'll do it.");
                 println("You spend the rest of the day cleaning up the filthy stables.");
