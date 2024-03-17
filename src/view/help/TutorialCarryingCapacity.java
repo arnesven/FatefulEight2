@@ -1,6 +1,7 @@
 package view.help;
 
 import model.Model;
+import model.races.Race;
 import view.GameView;
 import view.party.DrawableObject;
 import view.widget.TopText;
@@ -12,7 +13,10 @@ public class TutorialCarryingCapacity extends HelpDialog {
             "is how much your party members, and your horses can carry.\n\n" +
             "Each party member can carry an extra load (equipped items " +
             "do contribute to this limit), dependent on their race. Human " +
-            "and elves can carry 20 kilograms. Halflings can carry 10, Half-Orcs 25 and Dwarves 30. " +
+            "and elves can carry " + Race.HIGH_ELF.getCarryingCapacity() +
+            " kilograms. Halflings can carry " + Race.HALFLING.getCarryingCapacity() +
+            ", Half-Orcs " + Race.HALF_ORC.getCarryingCapacity() +
+            " and Dwarves " + Race.DWARF.getCarryingCapacity() + ". " +
             "Each horses you have can carry 50 kilograms extra.\n\n" +
             "If your party has a greater load than what you can carry when you want to travel, you will be forced " +
             "to abandon items or resources before being able to venture forth.\n\n" +

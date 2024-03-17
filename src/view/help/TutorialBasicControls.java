@@ -3,7 +3,8 @@ package view.help;
 import view.GameView;
 
 public class TutorialBasicControls extends HelpDialog {
-    private static final String TEXT = "You can use the arrow keys and Enter to control the game." +
+    private static final String TEXT =
+            "You can use the arrow keys and Enter to control the game. " +
             "In some situations you may need the Y and N keys, as well as the space bar. " +
             "Scrolling is sometimes done with the PgUp and PgDn keys.\n\n" +
             "Pressing Alt and Enter will toggle full screen mode.\n\n" +

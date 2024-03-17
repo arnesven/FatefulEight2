@@ -61,7 +61,26 @@ public class Equipment implements Serializable {
         if (item instanceof ShieldItem && person.getEquipment().getWeapon().isTwoHanded()) {
             return "Cannot equip an off-hand item while a two-handed weapon is equipped.";
         }
+
+        int weaponWeight = person.getEquipment().getWeapon().getWeight();
+        int clothesWeight = person.getEquipment().getClothing().getWeight();
+        int carryCap = person.getRace().getCarryingCapacity() * 1000;
+        if (((item instanceof Weapon) &&
+                (item.getWeight() + clothesWeight + weightOfAccessory(person) > carryCap)) ||
+            ((item instanceof Clothing) &&
+                (item.getWeight() + weaponWeight + weightOfAccessory(person) > carryCap)) ||
+            ((item instanceof Accessory) &&
+                (item.getWeight() + weaponWeight + clothesWeight > carryCap))) {
+            return "The total weight of equipped items would exceed the character's carrying capacity.";
+        }
         return "";
+    }
+
+    private static int weightOfAccessory(GameCharacter person) {
+        if (person.getEquipment().getAccessory() == null) {
+            return 0;
+        }
+        return person.getEquipment().getAccessory().getWeight();
     }
 
     public Weapon getWeapon() {
