@@ -776,6 +776,10 @@ public class Party implements Serializable {
         heldQuests.add(q.getName());
     }
 
+    public void stopHoldingQuest(Quest q) {
+        heldQuests.remove(q.getName());
+    }
+
     public boolean questIsHeld(Quest q) {
         return heldQuests.contains(q.getName());
     }

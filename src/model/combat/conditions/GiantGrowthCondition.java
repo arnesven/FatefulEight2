@@ -1,5 +1,6 @@
 package model.combat.conditions;
 
+import model.combat.Combatant;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -18,6 +19,13 @@ public class GiantGrowthCondition extends Condition {
     @Override
     public boolean removeAtEndOfCombat() {
         return true;
+    }
+
+    @Override
+    public void wasRemoved(Combatant combatant) {
+        if (combatant.getHP() > combatant.getMaxHP()) {
+            combatant.addToHP(combatant.getMaxHP() - combatant.getHP());
+        }
     }
 
     @Override

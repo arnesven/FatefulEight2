@@ -203,7 +203,11 @@ public class EveningState extends GameState {
             Point cursor = subView.getCursorPoint();
             if (subView.didSelectQuest()) {
                 Quest q = subView.getSelectedQuest();
-                int selectedOption = multipleOptionArrowMenu(model, cursor.x, cursor.y, List.of("Accept", "Hold", "Back"));
+                List<String> options = new ArrayList<>(List.of("Accept", "Hold", "Back"));
+                if (model.getParty().questIsHeld(q)) {
+                    options.set(1, "Stop Holding");
+                }
+                int selectedOption = multipleOptionArrowMenu(model, cursor.x, cursor.y, options);
                 if (selectedOption == 0) {
                     if (q.arePrerequisitesMet(model)) {
                         this.goOnQuest = q;
@@ -216,11 +220,15 @@ public class EveningState extends GameState {
                         println(q.getPrerequisites(model));
                     }
                 } else if (selectedOption == 1){
-                    if (q.canBeHeld()) {
-                        model.getParty().holdQuest(q);
-                        println("Quest will be held as long as you remain in your current location.");
+                    if (model.getParty().questIsHeld(q)) {
+                        model.getParty().stopHoldingQuest(q);
                     } else {
-                        println("That quest cannot be held.");
+                        if (q.canBeHeld()) {
+                            model.getParty().holdQuest(q);
+                            println("Quest will be held as long as you remain in your current location.");
+                        } else {
+                            println("That quest cannot be held.");
+                        }
                     }
                 }
             } else {

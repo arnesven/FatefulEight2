@@ -87,7 +87,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         if (getModel().getParty().size() > 1) {
             options.add("Steal from " + victim);
         }
-        int chosen = multipleOptionArrowMenu(getModel(), 24, 26, options);
+        int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
         if (chosen == 0) {
             return false;
         }
