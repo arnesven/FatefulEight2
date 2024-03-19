@@ -59,6 +59,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new SummonCondition(null).getHelpView(view),
                 new WardCondition().getHelpView(view),
                 new WeakenCondition().getHelpView(view),
+                new WerewolfFormCondition(null).getHelpView(view),
                 new WitsPotion().getCondition().getHelpView(view)
         );
     }

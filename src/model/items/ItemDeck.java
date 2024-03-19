@@ -235,8 +235,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new CallOfTheWildSpell(),
                 new GiantGrowthSpell(),
                 new SummonFamiliarSpell(),
-                new QuickeningSpell(),
                 new SummonTreeHerderSpell(),
+                new WerewolfFormSpell(),
                 // BLACK
                 new GazeOfDeathSpell(),
                 new BlackPactSpell(),
@@ -249,7 +249,8 @@ public class ItemDeck extends ArrayList<Item> {
                 // COLORLESS
                 new DispelSpell(),
                 new TransmuteSpell(),
-                new CombineSpell()
+                new CombineSpell(),
+                new QuickeningSpell()
                 );
     }
 

@@ -51,10 +51,10 @@ public class GoblinKingQuest extends Quest {
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(new QuestScene("Final Battle", List.of(
-                new TimedCombatScene(3, 2, 0, List.of(new GoblinKingEnemy('A')), "Goblin King and Guards"),
-                new TimedCombatScene(2, 4, 1, List.of(new GoblinSpearman('B')), "Reinforcements"),
+                new TimedGoblinCombatSubScene(3, 2, 0, List.of(new GoblinKingEnemy('A')), "Goblin King and Guards"),
+                new TimedGoblinCombatSubScene(2, 4, 1, List.of(new GoblinSpearman('B')), "Reinforcements"),
                 new AbozDeadConditionSubScene(4, 5),
-                new TimedCombatScene(5, 3, 2, List.of(new GoblinSpearman('B')), "More Reinforcements")
+                new TimedGoblinCombatSubScene(5, 3, 2, List.of(new GoblinSpearman('B')), "More Reinforcements")
         )));
     }
 
@@ -87,11 +87,11 @@ public class GoblinKingQuest extends Quest {
         return DECORATIONS;
     }
 
-    private class TimedCombatScene extends CombatSubScene {
+    private class TimedGoblinCombatSubScene extends CombatSubScene {
         private final String details;
         private final int wave;
 
-        public TimedCombatScene(int col, int row, int wave, List<Enemy> toShow, String details) {
+        public TimedGoblinCombatSubScene(int col, int row, int wave, List<Enemy> toShow, String details) {
             super(col, row, toShow);
             setTimeLimit(2);
             this.wave = wave;

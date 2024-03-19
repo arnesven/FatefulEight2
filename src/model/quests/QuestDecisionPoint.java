@@ -63,7 +63,7 @@ public class QuestDecisionPoint extends QuestJunction {
         }
 
         if (model.getParty().size() - model.getParty().getBench().size() == 1) {
-            state.println("(Since you are alone in your party you automatically succeed a the decision point).");
+            state.println("(Since you are alone in your party you automatically succeed at the decision point).");
         } else {
             if (leadershipTestFailed(model, state)) {
                 return getConnection(defaultConnectionIndex);

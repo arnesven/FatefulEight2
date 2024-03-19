@@ -336,7 +336,16 @@ public class GameCharacter extends Combatant {
     @Override
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
         if (!hasCondition(InvisibilityCondition.class)) {
-            drawAvatar(screenHandler, xpos, ypos);
+            if (hasCondition(WerewolfFormCondition.class)) {
+                AvatarSprite werewolfAvatar = ((WerewolfFormCondition)getCondition(WerewolfFormCondition.class)).getAvatar();
+                if (isDead()) {
+                    screenHandler.register("wwavatarfor" + getFullName() + "dead", new Point(xpos, ypos), werewolfAvatar.getDead());
+                } else {
+                    screenHandler.register("wwavatarfor" + getFullName(), new Point(xpos, ypos), werewolfAvatar);
+                }
+            } else {
+                drawAvatar(screenHandler, xpos, ypos);
+            }
         }
         screenHandler.register(getName() + "inittoken", new Point(xpos+3, ypos+3), initiativeSymbol);
         drawConditions(screenHandler, xpos, ypos);
