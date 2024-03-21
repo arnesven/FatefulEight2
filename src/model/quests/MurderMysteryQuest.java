@@ -1,17 +1,12 @@
 package model.quests;
 
-import model.Model;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.quests.scenes.*;
 import view.subviews.TownCombatTheme;
 import model.enemies.MurdererEnemy;
-import model.quests.scenes.CollaborativeSkillCheckSubScene;
-import model.quests.scenes.CollectiveSkillCheckSubScene;
-import model.quests.scenes.CombatSubScene;
-import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
-import model.states.QuestState;
 import view.MyColors;
 import view.subviews.CombatTheme;
 import view.subviews.PortraitSubView;
@@ -21,7 +16,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MurderMysteryQuest extends Quest {
+public class MurderMysteryQuest extends Quest implements CountingQuest {
     private static final CharacterAppearance PORTRAIT =  PortraitSubView.makeRandomPortrait(Classes.CONSTABLE, Race.ALL);;
     private static final String INTRO = "The local authorities need help solving " +
             "this one. The victim was found in an alley, gutted and with mysterious marks " +
@@ -36,6 +31,22 @@ public class MurderMysteryQuest extends Quest {
     }
 
     @Override
+    protected void resetQuest() {
+        super.resetQuest();
+        questSuccesses = 0;
+    }
+
+    @Override
+    public void addToCount(int x) {
+        questSuccesses += x;
+    }
+
+    @Override
+    public int getCount() {
+        return questSuccesses;
+    }
+
+    @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
     }
@@ -44,21 +55,29 @@ public class MurderMysteryQuest extends Quest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Crime Scene", List.of(
-                        new CountingSubScene(new SoloSkillCheckSubScene(6, 2, Skill.Perception, 11,
+                        new CountingSubScene(this, new SoloSkillCheckSubScene(6, 2, Skill.Perception, 11,
                         "Can anybody see any clues?")),
-                        new CountingSubScene(new CollaborativeSkillCheckSubScene(5, 1, Skill.Search, 11,
+                        new CountingSubScene(this, new CollaborativeSkillCheckSubScene(5, 1, Skill.Search, 11,
                         "Maybe we can find some clues if we snoop around a bit.")))),
                 new QuestScene("Interview Residents", List.of(
-                        new CountingSubScene(new CollectiveSkillCheckSubScene(1, 3, Skill.SeekInfo, 5,
+                        new CountingSubScene(this, new CollectiveSkillCheckSubScene(1, 3, Skill.SeekInfo, 5,
                                 "Okay, spread out and let's start knocking on some doors. Somebody must have seen something.")),
-                        new CountingSubScene(new CollaborativeSkillCheckSubScene(3, 4, Skill.SeekInfo, 10,
+                        new CountingSubScene(this, new CollaborativeSkillCheckSubScene(3, 4, Skill.SeekInfo, 10,
                                 "Let's interview some witnesses together.")))),
                 new QuestScene("Corner Club", List.of(
                         new SoloSkillCheckSubScene(2, 6, Skill.Persuade, 13, "Can somebody sweet talk the doorman?"),
                         new PayGoldSubScene(1, 6, 10, "Looks like we're going to have to grease some palms to get into the Corner Club."),
-                        new CountingSubScene(new CollaborativeSkillCheckSubScene(2, 7, Skill.SeekInfo, 10, "Okay, we're in. Now let's ask around.")))),
+                        new CountingSubScene(this, new CollaborativeSkillCheckSubScene(2, 7, Skill.SeekInfo, 10, "Okay, we're in. Now let's ask around.")))),
                 new QuestScene("Confront Killer", List.of(
-                        new CountCheckSubScene(3, 7),
+                        new CountCheckSubScene(this, 3, 7, 2, 3) {
+                            protected String getFailText() {
+                                return "Unfortunately you do not have enough clues to find the killer. (" + questSuccesses + "/3 *).";
+                            }
+
+                            protected String getSuccessText() {
+                                return "You have gathered enough clues to track down the killer. (" + questSuccesses + "/3 *).";
+                            }
+                        },
                         new KillerCombatSubScene(5, 7)))
                 );
     }
@@ -125,71 +144,6 @@ public class MurderMysteryQuest extends Quest {
     @Override
     public CombatTheme getCombatTheme() {
         return new TownCombatTheme();
-    }
-
-    private class CountingSubScene extends QuestSubScene {
-        private final QuestSubScene inner;
-
-        public CountingSubScene(QuestSubScene inner) {
-            super(inner.getColumn(), inner.getRow());
-            this.inner = inner;
-        }
-
-        @Override
-        public void drawYourself(Model model, int xPos, int yPos) {
-            inner.drawYourself(model, xPos, yPos);
-        }
-
-        @Override
-        public String getDescription() {
-            return "*" + inner.getDescription();
-        }
-
-        @Override
-        public QuestEdge run(Model model, QuestState state) {
-            QuestEdge innerResult = inner.run(model, state);
-            if (innerResult == inner.getSuccessEdge()) {
-                questSuccesses = questSuccesses + 1;
-            }
-            return getSuccessEdge();
-        }
-
-        @Override
-        public void connectSuccess(QuestNode questNode, boolean align) {
-            super.connectSuccess(questNode, align);
-            inner.connectSuccess(questNode, align);
-        }
-
-        @Override
-        protected MyColors getSuccessEdgeColor() {
-            return MyColors.WHITE;
-        }
-
-        @Override
-        public String getDetailedDescription() {
-            return inner.getDetailedDescription();
-        }
-    }
-
-    private class CountCheckSubScene extends ConditionSubScene {
-        public CountCheckSubScene(int col, int row) {
-            super(col, row);
-        }
-
-        @Override
-        public String getDescription() {
-            return "Two out of three * successful?";
-        }
-
-        @Override
-        public QuestEdge run(Model model, QuestState state) {
-            if (questSuccesses >= 2) {
-                state.println("You have gathered enough clues to track down the killer. (" + questSuccesses + "/3 *).");
-                return getSuccessEdge();
-            }
-            state.println("Unfortunately you do not have enough clues to find the killer. (" + questSuccesses + "/3 *).");
-            return getFailEdge();
-        }
     }
 
     private static class KillerCombatSubScene extends CombatSubScene {

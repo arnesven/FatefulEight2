@@ -44,7 +44,9 @@ public class QuestDeck implements Serializable {
                 new ForestTrollQuest(),
                 new GoblinTunnelsQuest(),
                 new ElvenHighCouncilQuest(),
-                new WerewolfQuest()
+                new WerewolfQuest(),
+                new MagicSeminarQuest()
+                // PrisonBreakQuest
         );
     }
 

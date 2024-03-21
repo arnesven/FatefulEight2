@@ -51,6 +51,7 @@ public interface Classes {
     CharacterClass BAKER = new BakerNPCClass();
     CharacterClass HERMIT = new HermitNPCClass();
     CharacterClass BARBER = new BarberNPCClass();
+    CharacterClass PROFESSOR = new ProfessorNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
