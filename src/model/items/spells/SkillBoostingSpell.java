@@ -9,7 +9,7 @@ import view.MyColors;
 
 public abstract class SkillBoostingSpell extends AuxiliarySpell {
 
-    private GameCharacter target;
+    private GameCharacter target = null;
 
     public SkillBoostingSpell(String name, int cost, MyColors color, int difficulty, int hpCost) {
         super(name, cost, color, difficulty, hpCost);
@@ -31,6 +31,9 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
 
     @Override
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
+        if (target == null) {
+            target = caster;
+        }
         state.println(target.getName() + " " + getBoostingSkill().getName() + " temporarily raised.");
         target.addTemporaryBonus(getBoostingSkill(), getBoostAmount() + getMasteryLevel(caster), false);
     }
