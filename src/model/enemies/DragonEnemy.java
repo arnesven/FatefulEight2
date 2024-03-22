@@ -14,6 +14,7 @@ import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +83,11 @@ public abstract class DragonEnemy extends BeastEnemy {
     }
 
     public abstract Equipment getTamedEquipment();
+
+    @Override
+    public Point getCursorShift() {
+        return new Point(1, 1);
+    }
 
     private static class DragonLoot extends StandardCombatLoot {
         public DragonLoot(Model model) {

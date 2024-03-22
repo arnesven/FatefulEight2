@@ -74,7 +74,9 @@ public class LogView extends GameView {
                 if (SPECIAL_CHARS.contains(substr)) {
                     colorToUse = getColorForSpecialChar(s.charAt(i));
                 } else if (logStartIndex <= cutOff) {
-                    BorderFrame.drawString(model.getScreenHandler(), substr, col++, row, colorToUse);
+                    if (!substr.equals("\n")) {
+                        BorderFrame.drawString(model.getScreenHandler(), substr, col++, row, colorToUse);
+                    }
                 }
             }
 

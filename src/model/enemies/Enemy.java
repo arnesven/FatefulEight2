@@ -55,7 +55,7 @@ public abstract class Enemy extends Combatant {
         int offsetX = getWidth()*4-1;
         int offsetY = getHeight()*4-1;
         screenHandler.register(spr.getName() + enemyGroup, new Point(xpos+offsetX, ypos+offsetY),
-                CharSprite.make((char)(enemyGroup - 0x40 + 0x06), MyColors.BLACK, MyColors.WHITE, MyColors.CYAN));
+                CharSprite.make((char)(enemyGroup - 0x40 + 0x09), MyColors.BLACK, MyColors.WHITE, MyColors.CYAN));
         drawConditions(screenHandler, xpos, ypos+offsetY);
     }
 
