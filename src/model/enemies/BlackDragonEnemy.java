@@ -9,7 +9,7 @@ import view.MyColors;
 public class BlackDragonEnemy extends DragonEnemy {
     public BlackDragonEnemy(char a) {
         super(a, "Black Dragon", 4, 3, new MultiMagicAttackBehavior(2),
-                new MyColors[]{MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.GRAY, MyColors.LIGHT_GRAY});
+                new MyColors[]{MyColors.BLACK, MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_RED});
     }
 
     @Override

@@ -1,7 +1,7 @@
 package model.states.events;
 
 import model.Model;
-import model.enemies.CrowEnemy;
+import model.enemies.*;
 import model.states.DailyEventState;
 
 import java.util.List;

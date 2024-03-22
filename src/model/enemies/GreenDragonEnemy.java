@@ -9,7 +9,7 @@ import view.MyColors;
 public class GreenDragonEnemy extends DragonEnemy {
     public GreenDragonEnemy(char a) {
         super(a, "Green Dragon", 5, 4, new MagicMeleeAttackBehavior(),
-                new MyColors[]{MyColors.DARK_GRAY, MyColors.GREEN, MyColors.DARK_GREEN, MyColors.GOLD});
+                new MyColors[]{MyColors.DARK_GREEN, MyColors.GREEN, MyColors.LIGHT_GREEN, MyColors.GRAY});
         reduceAggressiveness();
     }
 
