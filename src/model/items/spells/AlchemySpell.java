@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AlchemySpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new ItemSprite(10, 8, MyColors.BEIGE, MyColors.GREEN);
+    private static final Sprite SPRITE = new ItemSprite(10, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
     private Potion selectedPotion;
     private int ingredientCost = 0;
     private boolean distill = false;

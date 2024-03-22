@@ -8,11 +8,12 @@ import model.enemies.UndeadEnemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.sprites.CombatSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class TurnUndeadSpell extends CombatSpell {
-    private static final Sprite SPRITE = new ItemSprite(4, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
+    private static final Sprite SPRITE = new CombatSpellSprite(4, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public TurnUndeadSpell() {
         super("Turn Undead", 20, MyColors.WHITE, 10, 1, true);

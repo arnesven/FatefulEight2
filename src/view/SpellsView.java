@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class SpellsView extends SelectableListMenu {
     private static final int ROW_HEIGHT = 9;
-    private static final int COLUMN_WIDTH = 20;
+    private static final int COLUMN_WIDTH = 23;
     private static final int NUMBER_OF_ROWS = 4;
 
     private ItemTab[] tabNames;
@@ -29,7 +29,7 @@ public class SpellsView extends SelectableListMenu {
     private Map<MyColors, List<Spell>> spellMap = new HashMap<>();
 
     public SpellsView(GameView previous) {
-        super(previous, 50, 36);
+        super(previous, 50, 37);
         tabNames = makeTabs();
     }
 
@@ -99,7 +99,7 @@ public class SpellsView extends SelectableListMenu {
                     print(model.getScreenHandler(), x, y+4, ""+sp.getDifficulty());
                     BorderFrame.drawString(model.getScreenHandler(), ""+sp.getHPCost(), x+3, y+4, MyColors.RED, MyColors.BLUE);
                     int i = 1;
-                    for (String s : MyStrings.partition(sp.getDescription(), 16)) {
+                    for (String s : MyStrings.partition(sp.getDescription(), COLUMN_WIDTH-4)) {
                         print(model.getScreenHandler(),x + 5, y + (i++), s);
                     }
                 }

@@ -12,7 +12,7 @@ import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
 
 public class WardSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(5, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
+    private static final Sprite SPRITE = new CombatSpellSprite(5, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public WardSpell() {
         super("Ward", 12, MyColors.WHITE, 8, 0, false);

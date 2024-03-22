@@ -10,7 +10,7 @@ import view.MyColors;
 import view.sprites.*;
 
 public class ShiningAegisSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.GOLD);
+    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public ShiningAegisSpell() {
         super("Shining Aegis", 12, MyColors.WHITE, 8, 1);

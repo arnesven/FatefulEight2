@@ -13,6 +13,7 @@ import model.enemies.DragonEnemy;
 import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
+import model.items.ItemDeck;
 import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
