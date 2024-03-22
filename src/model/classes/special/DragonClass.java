@@ -9,10 +9,13 @@ import view.MyColors;
 import view.sprites.AvatarSprite;
 
 public class DragonClass extends SpecialCharacterClass {
+    private final DragonEnemy dragon;
+
     public DragonClass(DragonEnemy dragon) {
-        super("Dragon", "DGN", dragon.getMaxHP(),
+        super("Dragon", "DGN", dragon.getMaxHP() - 1,
                 dragon.getSpeed(), false, 0,
-                new WeightedSkill[]{new WeightedSkill(Skill.Bows, 5)});
+                new WeightedSkill[]{new WeightedSkill(Skill.UnarmedCombat, 5)});
+        this.dragon = dragon;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class DragonClass extends SpecialCharacterClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         AvatarSprite spr = new AvatarSprite(race, 0xE7, MyColors.BEIGE, MyColors.GRAY, appearance.getNormalHair());
-        spr.setColor3(MyColors.RED);
+        spr.setColor3(dragon.getColorSet()[1]);
         return spr;
     }
 

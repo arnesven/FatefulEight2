@@ -4,7 +4,10 @@ import model.Model;
 import model.classes.Skill;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
+import model.enemies.behaviors.EnemyAttackBehavior;
 import model.enemies.behaviors.MultiMagicAttackBehavior;
+import model.items.Equipment;
+import model.items.weapons.Weapon;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -14,32 +17,43 @@ import view.sprites.Sprite32x32;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DragonEnemy extends BeastEnemy {
-    private static final Sprite SPRITE = new DragonSprite();
-    private static final Sprite INVENTORY_SPRITE = new DragonInventorySprite();
+public abstract class DragonEnemy extends BeastEnemy {
+    private final int speed;
+    private final int damage;
+    private final DragonSprite sprite;
+    private final DragonInventorySprite inventorySprite;
+    private final MyColors[] colorSet;
 
-    public DragonEnemy(char a) {
-        super(a, "Dragon", RAMPAGING, new MultiMagicAttackBehavior(4));
+    public DragonEnemy(char a, String name, int speed, int damage, EnemyAttackBehavior attackBehavior,
+                       MyColors[] colorSet) {
+        super(a, name, RAMPAGING, attackBehavior);
+        this.speed = speed;
+        this.damage = damage;
+        this.sprite = new DragonSprite(colorSet);
+        this.inventorySprite = new DragonInventorySprite(colorSet);
+        this.colorSet = colorSet;
     }
 
     @Override
     public int getMaxHP() {
-        return 20;
+        return getDragonMaxHp();
     }
+
+    protected abstract int getDragonMaxHp();
 
     @Override
     public int getSpeed() {
-        return 6;
+        return speed;
     }
 
     @Override
     protected Sprite getSprite() {
-        return SPRITE;
+        return sprite;
     }
 
     @Override
     public int getDamage() {
-        return 4;
+        return damage;
     }
 
     @Override
@@ -57,13 +71,17 @@ public class DragonEnemy extends BeastEnemy {
         return new DragonLoot(model);
     }
 
-    public Skill getMagicSkill() {
-        return Skill.MagicRed;
-    }
+    public abstract Skill getMagicSkill();
 
     public Sprite getInventorySprite() {
-        return INVENTORY_SPRITE;
+        return inventorySprite;
     }
+
+    public MyColors[] getColorSet() {
+        return colorSet;
+    }
+
+    public abstract Equipment getTamedEquipment();
 
     private static class DragonLoot extends StandardCombatLoot {
         public DragonLoot(Model model) {
@@ -71,25 +89,42 @@ public class DragonEnemy extends BeastEnemy {
         }
     }
 
-    private static class DragonSprite extends LoopingSprite {
-        public DragonSprite() {
+    protected static class DragonSprite extends LoopingSprite {
+        public DragonSprite(MyColors[] colors) {
             super("dragon", "enemies.png", 0x32, 64, 64, new ArrayList<>());
-            setColor1(MyColors.DARK_BROWN);
-            setColor2(MyColors.RED);
-            setColor3(MyColors.DARK_RED);
-            setColor4(MyColors.GOLD);
+            setColor1(colors[0]);
+            setColor2(colors[1]);
+            setColor3(colors[2]);
+            setColor4(colors[3]);
             setFrames(3);
         }
     }
 
-    private static class DragonInventorySprite extends Sprite {
-        public DragonInventorySprite() {
+    protected static class DragonInventorySprite extends Sprite {
+        public DragonInventorySprite(MyColors[] colors) {
             super("dragon_inventory", "enemies.png",
                     2, 3, 64, 64);
-            setColor1(MyColors.DARK_BROWN);
-            setColor2(MyColors.RED);
-            setColor3(MyColors.DARK_RED);
-            setColor4(MyColors.GOLD);
+            setColor1(colors[0]);
+            setColor2(colors[1]);
+            setColor3(colors[2]);
+            setColor4(colors[3]);
         }
     }
+
+    public static DragonEnemy generateDragon(char a) {
+        int dieRoll = MyRandom.rollD6();
+        if (dieRoll < 2) {
+            return new IceDragonEnemy(a);
+        } else if (dieRoll < 3) {
+            return new BlackDragonEnemy(a);
+        } else if (dieRoll < 4) {
+            return new GreenDragonEnemy(a);
+        } else if (dieRoll < 5) {
+            return new BoneDragonEnemy(a);
+        } else if (dieRoll < 6) {
+            return new ElderDragonEnemy(a);
+        }
+        return new RedDragonEnemy(a);
+    }
+
 }

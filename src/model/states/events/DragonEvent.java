@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.enemies.DragonEnemy;
+import model.enemies.RedDragonEnemy;
 import model.states.DailyEventState;
 import view.subviews.MountainCombatTheme;
 
@@ -21,7 +22,7 @@ public class DragonEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("DRAGON!!!"));
         randomSayIfPersonality(PersonalityTrait.brave, new ArrayList<>(), "To me everybody! " +
                 "Don't let your hearts falter, we can do this!");
-        runCombat(List.of(new DragonEnemy('A')));
+        runCombat(List.of(new RedDragonEnemy('A')));
     }
 
 }

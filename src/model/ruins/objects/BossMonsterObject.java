@@ -26,7 +26,7 @@ public class BossMonsterObject extends DungeonMonster {
                 return new DoomMageEnemy('A');
             case 7:
             case 8:
-                return new DragonEnemy('A');
+                return DragonEnemy.generateDragon('A');
             default:
                 return new VampireLordEnemy('A');
         }
