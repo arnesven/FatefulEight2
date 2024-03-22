@@ -3,11 +3,13 @@ package model;
 import model.actions.DailyAction;
 import model.actions.Loan;
 import model.characters.GameCharacter;
+import model.characters.TamedDragonCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
+import model.enemies.DragonEnemy;
 import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
@@ -60,6 +62,7 @@ public class Party implements Serializable {
     private boolean seminarHeld = false;
     private int notoriety = 0;
     private int carryingCapInKilos = 0;
+    private static Map<GameCharacter, TamedDragonCharacter> tamedDragons = new HashMap<>();
 
     public Party() {
         position = new Point(26, 19);
@@ -615,6 +618,9 @@ public class Party implements Serializable {
         backRow.remove(gc);
         bench.remove(gc);
         carryingCapInKilos -= gc.getRace().getCarryingCapacity();
+        if (tamedDragons.get(gc) != null) {
+            tamedDragons.remove(gc);
+        }
         return amount;
     }
 
@@ -790,5 +796,9 @@ public class Party implements Serializable {
             result.add(model.getQuestDeck().getQuestByName(key));
         }
         return result;
+    }
+
+    public Map<GameCharacter, TamedDragonCharacter> getTamedDragons() {
+        return tamedDragons;
     }
 }

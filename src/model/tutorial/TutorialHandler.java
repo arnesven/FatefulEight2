@@ -1,5 +1,6 @@
 package model.tutorial;
 
+import view.help.TutorialDragonTaming;
 import model.Model;
 import model.states.DailyEventState;
 import model.states.events.PeskyCrowEvent;
@@ -453,6 +454,13 @@ public class TutorialHandler implements Serializable {
         runOnce("questoffers", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialQuestOffers(model.getView()));
+        });
+    }
+
+    public void dragonTaming(Model model) {
+        runOnce("dragontaming", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialDragonTaming(model.getView()));
         });
     }
 

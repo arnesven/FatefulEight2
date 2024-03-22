@@ -1,6 +1,7 @@
 package model.enemies;
 
 import model.Model;
+import model.classes.Skill;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
 import model.enemies.behaviors.MultiMagicAttackBehavior;
@@ -8,11 +9,14 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DragonEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new DragonSprite();
+    private static final Sprite INVENTORY_SPRITE = new DragonInventorySprite();
 
     public DragonEnemy(char a) {
         super(a, "Dragon", RAMPAGING, new MultiMagicAttackBehavior(4));
@@ -53,6 +57,14 @@ public class DragonEnemy extends BeastEnemy {
         return new DragonLoot(model);
     }
 
+    public Skill getMagicSkill() {
+        return Skill.MagicRed;
+    }
+
+    public Sprite getInventorySprite() {
+        return INVENTORY_SPRITE;
+    }
+
     private static class DragonLoot extends StandardCombatLoot {
         public DragonLoot(Model model) {
             super(model, MyRandom.randInt(15, 25));
@@ -67,6 +79,17 @@ public class DragonEnemy extends BeastEnemy {
             setColor3(MyColors.DARK_RED);
             setColor4(MyColors.GOLD);
             setFrames(3);
+        }
+    }
+
+    private static class DragonInventorySprite extends Sprite {
+        public DragonInventorySprite() {
+            super("dragon_inventory", "enemies.png",
+                    2, 3, 64, 64);
+            setColor1(MyColors.DARK_BROWN);
+            setColor2(MyColors.RED);
+            setColor3(MyColors.DARK_RED);
+            setColor4(MyColors.GOLD);
         }
     }
 }

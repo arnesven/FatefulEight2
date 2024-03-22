@@ -19,14 +19,16 @@ public class WerewolfFormCondition extends Condition {
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD7), MyColors.PURPLE, MyColors.BLACK, MyColors.CYAN);
     private final RegenerationCondition regenCondition;
-    private final AvatarSprite avatar;
+    private AvatarSprite avatar;
 
-    public WerewolfFormCondition(GameCharacter basedOn) {
+    public WerewolfFormCondition(GameCharacter basedOn, int regen) {
         super("Werewolf Form", "WWF");
         setDuration(WerewolfFormSpell.TURNS);
-        this.regenCondition = new RegenerationCondition(999);
-        this.avatar = new AvatarSprite(basedOn.getRace(), 0xD7,
-                MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, CharacterAppearance.noHair());
+        this.regenCondition = new RegenerationCondition(999, regen);
+        if (basedOn != null) {
+            this.avatar = new AvatarSprite(basedOn.getRace(), 0xD7,
+                    MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, CharacterAppearance.noHair());
+        }
     }
 
     @Override

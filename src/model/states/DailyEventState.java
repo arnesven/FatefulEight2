@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.characters.TamedDragonCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;

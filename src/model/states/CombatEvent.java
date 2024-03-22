@@ -4,6 +4,7 @@ import model.actions.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.actions.SneakAttackCombatAction;
 import model.actions.CombatAction;
+import model.characters.TamedDragonCharacter;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -80,6 +81,7 @@ public class CombatEvent extends DailyEventState {
     protected void doEvent(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
         StripedTransition.transition(model, subView);
+        addAllies(new ArrayList<>(model.getParty().getTamedDragons().values()));
         if (allies.size() > 0) {
             model.getTutorial().allies(model);
         }
@@ -96,6 +98,7 @@ public class CombatEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         handleLootAndSummary(model);
         removeKilledPartyMembers(model, partyFled);
+        removedKilledTamedDragons(model);
         removeCombatConditions(model);
         model.setGameOver(model.getParty().isWipedOut());
         model.playMainSong(); // TODO: Song is dependent on location...
@@ -612,5 +615,13 @@ public class CombatEvent extends DailyEventState {
 
     public boolean isInQuickCast() {
         return inQuickCast;
+    }
+
+    private void removedKilledTamedDragons(Model model) {
+        for (GameCharacter master : new ArrayList<>(model.getParty().getTamedDragons().keySet())) {
+            if (model.getParty().getTamedDragons().get(master).isDead()) {
+                model.getParty().getTamedDragons().remove(master);
+            }
+        }
     }
 }

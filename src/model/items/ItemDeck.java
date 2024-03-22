@@ -250,7 +250,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new DispelSpell(),
                 new TransmuteSpell(),
                 new CombineSpell(),
-                new QuickeningSpell()
+                new QuickeningSpell(),
+                new DragonTamingSpell()
                 );
     }
 

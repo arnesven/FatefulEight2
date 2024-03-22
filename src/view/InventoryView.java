@@ -3,6 +3,7 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.*;
+import model.items.spells.DragonTamingSpell;
 import model.items.spells.Spell;
 import sound.SoundEffects;
 import util.Arithmetics;
@@ -204,10 +205,12 @@ public class InventoryView extends SelectableListMenu {
                         return result;
                     }
                 },
-                new ItemTab("Horses") {
+                new ItemTab("Mounts") {
                     @Override
                     public List<? extends Item> getItems(Model model) {
-                        return model.getParty().getHorseHandler().getHorsesAsItems();
+                        List<Item> mounts = new ArrayList<>(model.getParty().getHorseHandler().getHorsesAsItems());
+                        mounts.addAll(DragonTamingSpell.tamedDragonsAsItems(model));
+                        return mounts;
                     }
                 },
                 new ItemTab("Other           ") {

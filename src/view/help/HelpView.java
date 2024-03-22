@@ -32,6 +32,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
             new ConditionsHelpChapter(null),
             new TutorialCrafting(null),
             new TutorialDailyActions(null),
+            new TutorialDragonTaming(null),
             new TutorialDungeons(null),
             new TutorialEveningDialog(null),
             new TutorialEquipmentDialog(null),
@@ -69,7 +70,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
 
     @Override
     protected String getHeading() {
-        return "Help Sections";
+        return "Help Sections      ";
     }
 
     @Override

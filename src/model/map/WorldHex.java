@@ -168,6 +168,9 @@ public abstract class WorldHex {
         actions = new ArrayList<>();
         if (model.getTimeOfDay() == TimeOfDay.MORNING) {
             actions.add(new DailyAction("Travel", new TravelState(model)));
+            if (canFly(model)) {
+                actions.add(new DailyAction("Fly on Dragon", new FlyWithDragonState(model)));
+            }
         }
         actions.add(new StayInHexAction(model));
         if (hexLocation != null && hexLocation.hasDailyActions()) {
@@ -183,6 +186,11 @@ public abstract class WorldHex {
             actions.add(new GetOnRoadAction(model));
         }
         return actions;
+    }
+
+    private boolean canFly(Model model) {
+        int numberOfTamedDragons = model.getParty().getTamedDragons().values().size();
+        return numberOfTamedDragons * 4 >= model.getParty().size();
     }
 
     public String getPlaceName() {

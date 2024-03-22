@@ -15,10 +15,16 @@ import view.sprites.Sprite;
 public class RegenerationCondition extends Condition {
 
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.LIGHT_GREEN, MyColors.BLACK, MyColors.GREEN);
+    private final int magnitude;
 
-    public RegenerationCondition(int duration) {
+    public RegenerationCondition(int duration, int magnitude) {
         super("Regeneration", "RGN");
         setDuration(duration + 1);
+        this.magnitude = magnitude;
+    }
+
+    public RegenerationCondition(int duration) {
+        this(duration, 1);
     }
 
     @Override
@@ -34,8 +40,8 @@ public class RegenerationCondition extends Condition {
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         if (comb.getHP() < comb.getMaxHP() && !comb.isDead()) {
-            state.println(comb.getName() + " regenerates 1 Health Point.");
-            comb.addToHP(1);
+            state.println(comb.getName() + " regenerates " + magnitude + " Health Point" + (magnitude > 1 ? "s":"") + ".");
+            comb.addToHP(magnitude);
             if (state instanceof CombatEvent) {
                 ((CombatEvent) state).addFloatyDamage(comb, 1, DamageValueEffect.HEALING);
             }

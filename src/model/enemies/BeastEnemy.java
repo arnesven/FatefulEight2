@@ -22,8 +22,8 @@ public abstract class BeastEnemy extends Enemy {
     @Override
     public void takeCombatDamage(CombatEvent combatEvent, int damage) {
         super.takeCombatDamage(combatEvent, damage);
-        if (aggro < HOSTILE && !isDead()) {
-            aggro++;
+        if (aggro < RAMPAGING && !isDead()) {
+            increaseAggressiveness();
             combatEvent.println(getName() + " got angrier.");
         }
     }
@@ -31,6 +31,14 @@ public abstract class BeastEnemy extends Enemy {
     public boolean reduceAggressiveness() {
         if (aggro > DOCILE) {
             aggro--;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean increaseAggressiveness() {
+        if (aggro < RAMPAGING) {
+            aggro++;
             return true;
         }
         return false;
