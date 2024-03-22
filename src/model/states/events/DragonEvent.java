@@ -22,7 +22,7 @@ public class DragonEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("DRAGON!!!"));
         randomSayIfPersonality(PersonalityTrait.brave, new ArrayList<>(), "To me everybody! " +
                 "Don't let your hearts falter, we can do this!");
-        runCombat(List.of(new RedDragonEnemy('A')));
+        runCombat(List.of(DragonEnemy.generateDragon('A')));
     }
 
 }
