@@ -168,6 +168,7 @@ public abstract class Quest {
         state.print("Press enter to continue.");
         state.waitForReturn();
         QuestState.setCurrentTerrainSubview(model);
+        model.getParty().stopHoldingQuest(state.getQuest());
         model.setTimeOfDay(TimeOfDay.EVENING);
         adjustAttitudes(model, questWasSuccess);
         return model.getCurrentHex().getEveningState(model, false, false);
