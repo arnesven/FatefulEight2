@@ -9,7 +9,7 @@ import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 public class TrollEnemy extends Enemy {
-    private static final Sprite SPRITE = new TrollEnemySprite();
+    private static final Sprite SPRITE = new TrollEnemySprite(MyColors.LIGHT_GRAY, MyColors.BEIGE);
 
     public TrollEnemy(char a) {
         super(a, "Troll", new MultiAttackBehavior(2));
@@ -45,13 +45,13 @@ public class TrollEnemy extends Enemy {
         return new PersonCombatLoot(model);
     }
 
-    private static class TrollEnemySprite extends LoopingSprite {
-        public TrollEnemySprite() {
+    protected static class TrollEnemySprite extends LoopingSprite {
+        public TrollEnemySprite(MyColors color2, MyColors color4) {
             super("trollenemy", "enemies.png", 0x40, 32, 32);
             setColor1(MyColors.BLACK);
-            setColor2(MyColors.LIGHT_GRAY);
+            setColor2(color2);
             setColor3(MyColors.BROWN);
-            setColor4(MyColors.BEIGE);
+            setColor4(color4);
             setFrames(4);
         }
     }

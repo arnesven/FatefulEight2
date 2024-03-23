@@ -41,7 +41,7 @@ public class QuestDeck implements Serializable {
                 new WarlocksDungeonQuest(),
                 new MurderMysteryQuest(),
                 new CultistDenQuest(),
-                new ForestTrollQuest(),
+                new SwampOgreQuest(),
                 new GoblinTunnelsQuest(),
                 new ElvenHighCouncilQuest(),
                 new WerewolfQuest(),

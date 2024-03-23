@@ -5,9 +5,8 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import model.enemies.OlegTrollEnemy;
+import model.enemies.OlegOgreEnemy;
 import model.enemies.PetSpiderEnemy;
-import model.enemies.SpiderEnemy;
 import model.items.spells.ErodeSpell;
 import model.items.spells.HarmonizeSpell;
 import model.items.spells.Spell;
@@ -27,9 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class ForestTrollQuest extends Quest {
-    private static final String INTRO = "Albedan the mage has been taken prisoner by a Oleg, a troll in the Dank\n" +
-            "Forest. The party sets out to rescue Albedan but the sleeping troll is a " +
+public class SwampOgreQuest extends Quest {
+    private static final String INTRO = "Albedan the mage has been taken prisoner by a Oleg, an ogre in the Dank\n" +
+            "Swamp. The party sets out to rescue Albedan but the sleeping ogre is a " +
             "formidable foe, can it be circumvented?";
     private static final String ENDING = "Albedan is ecstatic over your rescue and pays you well for your assistance.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MAGE, Race.HIGH_ELF);
@@ -38,8 +37,8 @@ public class ForestTrollQuest extends Quest {
 
     private static final List<QuestBackground> BACKGROUND = makeBackgroundSprites();
 
-    public ForestTrollQuest() {
-        super("Forest Troll", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, ENDING);
+    public SwampOgreQuest() {
+        super("Swamp Ogre", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, ENDING);
         getScenes().get(2).get(0).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
@@ -64,12 +63,12 @@ public class ForestTrollQuest extends Quest {
     @Override
     protected List<QuestScene> buildScenes() {
         return List.of(
-                new QuestScene("Through the Woods", List.of(
+                new QuestScene("Through the Swamp", List.of(
                         new CollaborativeSkillCheckSubScene(1, 1, Skill.Survival, 10,
-                        "First we must traverse the Dank Forest. Anybody know the way?"))),
+                        "First we must traverse the Dank Swamp. Anybody know the way?"))),
                 new QuestScene("Oleg's Stench", List.of(
                         new CollectiveSkillCheckSubScene(2, 2, Skill.Endurance, 3,
-                                "Good Golly, what is that unearthly smell? Troll sweat? Yuck!"))),
+                                "Good Golly, what is that unearthly smell? Ogre sweat? Yuck!"))),
                 new QuestScene("Oleg's Pet Spider", List.of(
                         new CollectiveSkillCheckSubScene(4, 3, Skill.Sneak, 3,
                                 "Watch it! That's a fierce looking arachnid right there. Let's not disturb it."),
@@ -91,7 +90,7 @@ public class ForestTrollQuest extends Quest {
                 new QuestEdge(scenes.get(3).get(0), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(3).get(1), QuestEdge.VERTICAL),
                 new QuestEdge(scenes.get(3).get(2), QuestEdge.VERTICAL)),
-                "Oh no, That troll has got Albedan locked up in a cage!");
+                "Oh no, That ogre has got Albedan locked up in a cage!");
         return List.of(start, cage);
     }
 
@@ -139,7 +138,6 @@ public class ForestTrollQuest extends Quest {
 
     private static List<QuestBackground> makeBackgroundSprites() {
         List<QuestBackground> result = new ArrayList<>();
-        Random rand = new Random(1234);
         for (int y = 0; y < 9; ++y) {
             for (int x = 0; x < 8; ++x) {
                 result.add(new QuestBackground(new Point(x, y), woods, true));
@@ -162,12 +160,12 @@ public class ForestTrollQuest extends Quest {
 
     private static class CombatOlegSubScene extends CombatSubScene {
         public CombatOlegSubScene(int col, int row) {
-            super(col, row, List.of(new OlegTrollEnemy('A')));
+            super(col, row, List.of(new OlegOgreEnemy('A')));
         }
 
         @Override
         protected String getCombatDetails() {
-            return "Oleg the Troll";
+            return "Oleg the ogre";
         }
     }
 }
