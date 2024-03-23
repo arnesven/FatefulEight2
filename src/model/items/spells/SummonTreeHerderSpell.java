@@ -57,7 +57,7 @@ public class SummonTreeHerderSpell extends SummonCombatSpell {
     private static class TreeHerderAlly extends GameCharacter {
         public TreeHerderAlly() {
             super("Tree Herder", "", Race.WOOD_ELF, Classes.TREE_HERDER,
-                    new LonnieLiebgott(), Classes.NO_OTHER_CLASSES, new Equipment(new GrandMaul(), new PlateMailArmor(), null));
+                    new LonnieLiebgott(), Classes.NO_OTHER_CLASSES, new Equipment(new GrandMaul(), new LeatherArmor(), null));
         }
     }
 }
