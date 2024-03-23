@@ -162,7 +162,7 @@ public class DefendTheVillageQuest extends Quest {
         }
     }
 
-    private static List<QuestBackground> makeBackgroundSprites() {
+    public static List<QuestBackground> makeBackgroundSprites() {
         List<QuestBackground> result = new ArrayList<>();
         Random rand = new Random(1234);
         for (int row = 1; row < 9; ++row) {
