@@ -102,11 +102,11 @@ public abstract class CharacterAppearance implements Serializable {
         setRaceSkinColor(race);
     }
 
-    private MyColors getLipColor() {
+    protected MyColors getLipColor() {
         return lipColor;
     }
 
-    private MyColors getMascaraColor() {
+    protected MyColors getMascaraColor() {
         return mascaraColor;
     }
 
