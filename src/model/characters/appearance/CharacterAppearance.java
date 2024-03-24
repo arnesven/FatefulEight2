@@ -1,5 +1,6 @@
 package model.characters.appearance;
 
+import control.FatefulEight;
 import model.classes.CharacterClass;
 import model.races.Race;
 import model.races.Shoulders;
@@ -204,6 +205,9 @@ public abstract class CharacterAppearance implements Serializable {
                     screenHandler.put(col + x, row + y, grid[x][y]);
                 }
             }
+        }
+        if (FatefulEight.inDebugMode()) {
+            screenHandler.put(col, row, femaleGender ? CharSprite.FEMALE : CharSprite.MALE);
         }
     }
 

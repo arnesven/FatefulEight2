@@ -9,6 +9,8 @@ import java.util.Map;
 public class CharSprite extends Sprite8x8 {
 
     private static Map<String, CharSprite> cache = new HashMap<>();
+    public static final Sprite FEMALE = make(0x83, MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.PINK);
+    public static final Sprite MALE = make(0x82, MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.CYAN);
 
     public static CharSprite make(char letter, MyColors color1) {
         return make(letter, color1, MyColors.CYAN, MyColors.BLACK);

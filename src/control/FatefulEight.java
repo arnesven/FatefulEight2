@@ -19,6 +19,7 @@ public class FatefulEight extends JFrame {
     public static final boolean TEST_MODE = false;
     private static final int TIMER_DELAY_MS = 20;
     public static String version = "1.383";
+    private static boolean debug = false;
     private DrawingArea drawingArea;
     public static boolean inFullScreenMode = false;
     private Deque<KeyEvent> keyboardEvents = new LinkedList<>();
@@ -59,6 +60,9 @@ public class FatefulEight extends JFrame {
     }
 
     public static void main(String[] args) {
+        if (args.length == 1 && args[0].equals("--debug")) {
+            debug = true;
+        }
         for (int i = 240; i < 256; ++i) {
             System.out.print((char)i + " ");
         }
@@ -72,6 +76,10 @@ public class FatefulEight extends JFrame {
         //Balancing.runAccessoryAnalysis(model);
         //Balancing.runClassesAnalysis(model);
         model.runGameScript();
+    }
+
+    public static boolean inDebugMode() {
+        return debug;
     }
 
     private void checkKeyboardInput(Model model) {
