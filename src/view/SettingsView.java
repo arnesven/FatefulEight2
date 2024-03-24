@@ -92,6 +92,13 @@ public class SettingsView extends SelectableListMenu {
                 model.getSettings().toggleAlwaysRide();
             }
         });
+//        y += 1;
+//        result.add(new ListContent(xStart+2, y, "Hide Spells in Sell " + (model.getSettings().hideSpellsInSell()?"ON":"OFF")) {
+//            @Override
+//            public void performAction(Model model, int x, int y) {
+//                model.getSettings().toggleHideSpellsInSell();
+//            }
+//        });
 
         y += 2;
         result.add(new ListContent(xStart+2, y++, "Top Bar Contents:"));

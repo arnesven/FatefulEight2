@@ -25,9 +25,7 @@ public class TutorialClassesDialog extends ExpandableHelpDialog {
     protected List<HelpDialog> makeSubSections(GameView view) {
         List<HelpDialog> subsections = new ArrayList<>();
         for (CharacterClass characterClass : Classes.allClasses) {
-            if (characterClass != Classes.None) {
-                subsections.add(new SpecificClassHelpDialog(view, characterClass));
-            }
+            subsections.add(new SpecificClassHelpDialog(view, characterClass));
         }
         return subsections;
     }

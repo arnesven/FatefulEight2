@@ -77,6 +77,7 @@ public class Scroll extends UsableItem {
         map.put(MyColors.BLUE,  new ItemSprite(12, 5, MyColors.BLUE, MyColors.BEIGE));
         map.put(MyColors.RED,  new ItemSprite(13, 5, MyColors.RED, MyColors.BEIGE));
         map.put(MyColors.BLACK,  new ItemSprite(14, 5, MyColors.BLACK, MyColors.BEIGE));
+        map.put(Spell.COLORLESS, new ItemSprite(15, 5, MyColors.BROWN, MyColors.BEIGE));
         return map;
     }
 
