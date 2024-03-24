@@ -3,7 +3,10 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.items.Item;
+import model.items.spells.Spell;
 import model.states.ShopState;
+import util.MyLists;
+import view.party.CharacterCreationView;
 import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
@@ -22,7 +25,8 @@ public class ShopSubView extends TopMenuSubView {
     private final ShopState state;
     private SteppingMatrix<Item> matrix;
     private boolean isBuying;
-    private Sprite crossSprite = new Sprite32x32("crosssprite", "combat.png", 0x00, MyColors.BLACK, MyColors.CYAN, MyColors.RED);
+    private static final Sprite crossSprite = new Sprite32x32("crosssprite", "combat.png", 0x00, MyColors.BLACK, MyColors.CYAN, MyColors.RED);
+    private static final Sprite CHECK_SPRITE = new Sprite32x32("checksprite", "items.png", 0xCD, MyColors.WHITE, MyColors.GREEN, MyColors.BROWN);
     private boolean overflow = false;
 
     public ShopSubView(SteppingMatrix<Item> items, boolean isBuying, String seller,
@@ -53,6 +57,10 @@ public class ShopSubView extends TopMenuSubView {
                 int yPos = Y_OFFSET + row * 4 + 2;
                 if (it != null) {
                     it.drawYourself(model.getScreenHandler(), xPos, yPos);
+                    if (isBuying && it instanceof Spell && hasSpell(model, (Spell)it)) {
+                        model.getScreenHandler().register("alreadyhas", new Point(xPos, yPos),
+                                CHECK_SPRITE);
+                    }
                     if ((isBuying && priceMap.get(it) > model.getParty().getGold())) {
                         model.getScreenHandler().register("crossedout", new Point(xPos, yPos), crossSprite);
                     }
@@ -68,6 +76,11 @@ public class ShopSubView extends TopMenuSubView {
             BorderFrame.drawString(model.getScreenHandler(),"All items not shown",  xPos, yPos,
                     MyColors.RED, MyColors.BLACK);
         }
+    }
+
+    private boolean hasSpell(Model model, Spell it) {
+        return MyLists.find(model.getParty().getInventory().getSpells(),
+                (Spell sp) -> sp.getName().equals(it.getName())) != null;
     }
 
     @Override
