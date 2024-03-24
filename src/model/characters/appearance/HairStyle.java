@@ -25,8 +25,10 @@ public abstract class HairStyle implements Serializable {
             MyColors.ORANGE, MyColors.PEACH
     };
 
+
     public static HairStyle[] allHairStyles = new HairStyle[]{
-            new BaldHairStyle(), new FemaleLongHairStyle("Long #1"),
+            new BaldHairStyle(),
+            new FemaleLongHairStyle("Long #1"),
             new FemaleLongHairStyle(0x9, 0x03, "Long #2"),
             new FemaleLongHairStyle(0x164, 0x04, "Long #3"),
             new FemaleLongHairStyle(0xA7, 0x05, "Long #4"),
@@ -74,23 +76,26 @@ public abstract class HairStyle implements Serializable {
             allHairStyles[2], allHairStyles[3],
             allHairStyles[4], allHairStyles[5],
             allHairStyles[6], allHairStyles[7],
-            allHairStyles[9], allHairStyles[11],
-            allHairStyles[12], allHairStyles[15], allHairStyles[19],
-            allHairStyles[20], allHairStyles[23],
-            allHairStyles[24], allHairStyles[25],
-            allHairStyles[26], allHairStyles[27],
-            allHairStyles[30], allHairStyles[31],
+            allHairStyles[8],
+            allHairStyles[9], allHairStyles[11], allHairStyles[13],
+            allHairStyles[14], allHairStyles[17], allHairStyles[18],
+            allHairStyles[21], allHairStyles[22], allHairStyles[25],
+            allHairStyles[26], allHairStyles[27], allHairStyles[28],
+            allHairStyles[29],
             allHairStyles[32], allHairStyles[33],
-            allHairStyles[37], allHairStyles[38],
+            allHairStyles[34], allHairStyles[35],
             allHairStyles[39], allHairStyles[40]};
 
     public static HairStyle[] maleHairStyles = new HairStyle[]{
             allHairStyles[0], allHairStyles[8], allHairStyles[10],
-            allHairStyles[13], allHairStyles[14], allHairStyles[16],
-            allHairStyles[17], allHairStyles[18], allHairStyles[19],
-            allHairStyles[21], allHairStyles[22], allHairStyles[28],
-            allHairStyles[29], allHairStyles[34], allHairStyles[35],
-            allHairStyles[36], allHairStyles[41]};
+            allHairStyles[11], allHairStyles[12],
+            allHairStyles[13], allHairStyles[14], allHairStyles[15],
+            allHairStyles[16], allHairStyles[18], allHairStyles[19],
+            allHairStyles[20], allHairStyles[21], allHairStyles[22],
+            allHairStyles[23], allHairStyles[24], allHairStyles[25],
+            allHairStyles[30], allHairStyles[31],
+            allHairStyles[36], allHairStyles[37], allHairStyles[38],
+            allHairStyles[41]};
 
     private final boolean onTop;
     private final boolean inForehead;
