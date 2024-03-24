@@ -1,8 +1,7 @@
 package view;
 
+import control.FatefulEight;
 import model.Model;
-import model.map.World;
-import view.help.SpecificClassHelpDialog;
 import view.help.SpecificTerrainHelpDialog;
 import view.widget.FullMapTopText;
 import view.widget.TopText;
@@ -101,13 +100,15 @@ public class FullMapView extends GameView {
             return true;
         }
 
-//        if (keyEvent.getKeyCode() == KeyEvent.VK_F8) {
-//            model.getParty().setPosition(cursorPos);
-//            model.transitionToDialog(new SimpleMessageView(model.getView(), "You have teleported to " + cursorPos.x + ", " + cursorPos.y + "!"));
-//        } else if (keyEvent.getKeyCode() == KeyEvent.VK_F9) {
-//            model.cycleWorldState();
-//            madeChanges();
-//        }
+        if (FatefulEight.inDebugMode()) {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_F8) {
+                model.getParty().setPosition(cursorPos);
+                model.transitionToDialog(new SimpleMessageView(model.getView(), "You have teleported to " + cursorPos.x + ", " + cursorPos.y + "!"));
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F9) {
+                model.cycleWorldState();
+                madeChanges();
+            }
+        }
 
         return false;
     }
