@@ -728,5 +728,6 @@ public class GameCharacter extends Combatant {
         this.appearance = appearance;
         deadAppearance = new SkeletonAppearance(appearance.getShoulders(), appearance.getGender());
         setClass(charClass);
+        avatarSprite = makeAvatarSprite();
     }
 }

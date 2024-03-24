@@ -174,6 +174,8 @@ public class AdvancedAppearance extends CharacterAppearance {
     public CharacterAppearance copy() {
         AdvancedAppearance app = new AdvancedAppearance(super.getRace(), super.isFemale(), getHairColor(), mouth, nose, eyes, hairStyle, beard);
         app.setFaceDetail(detail);
+//        app.setLipColor(getLipColor()); // TODO: Make lip color and mascara copy over
+//        app.setMascaraColor(getMascaraColor());
         return app;
     }
 

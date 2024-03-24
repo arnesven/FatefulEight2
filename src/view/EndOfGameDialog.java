@@ -40,7 +40,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     @Override
     public void transitionedTo(Model model) {
         super.transitionedTo(model);
-        if (model.getParty().getReputation() == 6) {
+        if (model.getParty().getReputation() == Model.REP_TO_WIN) {
             title = "congratulations!";
             text = REPUTATION_TEXT;
         } else {

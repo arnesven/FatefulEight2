@@ -157,13 +157,14 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                 leaderSay("At least we didn't lose " + chosen.getFirstName() +
                         "... Let's focus on the tasks before us instead.");
             }
-            if (sponsored) {
-                handleSponsorWhenLost(model);
-            }
+            handleSponsorWhenLost(model);
         }
     }
 
     private void handleSponsorWhenLost(Model model) {
+        if (!sponsored) {
+            return;
+        }
         println("You turn away from the tournament grounds and start back toward the castle when the mysterious stranger " +
                 "suddenly pops up as out of nowhere.");
         showSponsor();

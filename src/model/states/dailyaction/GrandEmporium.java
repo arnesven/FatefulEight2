@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.items.Item;
+import model.items.Lockpick;
 import model.items.Prevalence;
 import util.MyRandom;
 import view.MyColors;
@@ -27,6 +28,9 @@ public class GrandEmporium extends GeneralShopNode {
         AccessoryShopNode asn = new AccessoryShopNode(model, 0, 0);
         result.addAll(asn.makeInventory(model));
         result.addAll(model.getItemDeck().draw(MyRandom.randInt(10, 20), Prevalence.unspecified));
+        for (int i = MyRandom.randInt(0, 2); i > 0; --i) {
+            result.add(new Lockpick());
+        }
         Collections.sort(result);
         return result;
     }
