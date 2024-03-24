@@ -37,8 +37,11 @@ public class JournalView extends TwoPaneSelectableListMenu {
         }
         questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
         for (QuestDeck.LocationAndQuest locationAndQuest : model.getQuestDeck().getLocationsAndQuests()) {
-            questsAndTasks.add(new QuestEntry(model, locationAndQuest.getLocation(),
-                    locationAndQuest.getQuest(), locationAndQuest.getDay()));
+            QuestEntry entry = new QuestEntry(model, locationAndQuest.getLocation(),
+                    locationAndQuest.getQuest(), locationAndQuest.getDay());
+            if (entry.isValid()) {
+                questsAndTasks.add(entry);
+            }
         }
         Collections.sort(questsAndTasks, new Comparator<JournalEntry>() {
             @Override

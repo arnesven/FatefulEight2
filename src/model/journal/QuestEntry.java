@@ -11,6 +11,7 @@ import model.quests.Quest;
 import java.awt.*;
 
 public class QuestEntry implements JournalEntry {
+    private boolean invalid = false;
     private boolean completed = false;
     private boolean success = false;
     private final int day;
@@ -31,6 +32,7 @@ public class QuestEntry implements JournalEntry {
                     break;
                 }
             }
+
             hexLocation = findLocation(model, location);
             if (hexLocation != null) {
                 this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
@@ -41,6 +43,11 @@ public class QuestEntry implements JournalEntry {
         } else { // Main Quest
             this.completed = ((MainQuest)this.quest).isCompleted(model);
             this.success = true;
+        }
+
+        if (this.quest == null) {
+            this.invalid = true;
+            System.err.println("Quest still null! Could not find matching '" + quest + "'");
         }
     }
 
@@ -103,5 +110,9 @@ public class QuestEntry implements JournalEntry {
     @Override
     public boolean isFailed() {
         return completed && !success;
+    }
+
+    public boolean isValid() {
+        return !invalid;
     }
 }

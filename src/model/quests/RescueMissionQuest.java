@@ -50,8 +50,15 @@ public class RescueMissionQuest extends MainQuest {
         return null;
     }
 
-    private GameCharacter getSecondaryLeader(Model model) {
-        return split.getNonLeaderGroup(model.getParty().getLeader()).get(0);
+    private GameCharacter getSecondaryLeader(Model model) throws NoSouchGroupException {
+        assert split != null;
+        assert model.getParty().getLeader() != null;
+        assert split.getNonLeaderGroup(model.getParty().getLeader()) != null;
+        List<GameCharacter> group = split.getNonLeaderGroup(model.getParty().getLeader());
+        if (group == null) {
+            throw new NoSouchGroupException();
+        }
+        return group.get(0);
     }
 
     @Override
@@ -186,7 +193,11 @@ public class RescueMissionQuest extends MainQuest {
         state.waitForReturn();
         model.getParty().unbenchAll();
         model.getParty().benchPartyMembers(split.getLeaderGroup(model.getParty().getLeader()));
-        GameCharacter otherLeader = getSecondaryLeader(model);
+        GameCharacter otherLeader = null;
+        try {
+            otherLeader = getSecondaryLeader(model);
+        } catch (NoSouchGroupException e) {
+        }
 
         QuestNode from = otherGroupCurrent;
         QuestEdge target = otherGroupNext;
@@ -258,9 +269,13 @@ public class RescueMissionQuest extends MainQuest {
         public void drawYourself(Model model, int xPos, int yPos) {
             inner.drawYourself(model, xPos, yPos);
             if (isSecondaryPath()) {
-                GameCharacter otherLeader = getSecondaryLeader(model);
-                model.getScreenHandler().register(otherLeader.getAvatarSprite().getName(), new Point(xPos, yPos),
-                        otherLeader.getAvatarSprite(), 3);
+                GameCharacter otherLeader = null;
+                try {
+                    otherLeader = getSecondaryLeader(model);
+                    model.getScreenHandler().register(otherLeader.getAvatarSprite().getName(), new Point(xPos, yPos),
+                            otherLeader.getAvatarSprite(), 3);
+                } catch (NoSouchGroupException e) {
+                }
             }
         }
 
@@ -319,9 +334,14 @@ public class RescueMissionQuest extends MainQuest {
         public void drawYourself(Model model, int xPos, int yPos) {
             super.drawYourself(model, xPos, yPos);
             if (otherGroupCurrent == this) {
-                GameCharacter otherLeader = getSecondaryLeader(model);
-                model.getScreenHandler().register(otherLeader.getAvatarSprite().getName(), new Point(xPos, yPos),
-                        otherLeader.getAvatarSprite(), 3);
+                GameCharacter otherLeader = null;
+                try {
+                    otherLeader = getSecondaryLeader(model);
+                    model.getScreenHandler().register(otherLeader.getAvatarSprite().getName(), new Point(xPos, yPos),
+                            otherLeader.getAvatarSprite(), 3);
+                } catch (NoSouchGroupException e) {
+
+                }
             }
         }
 
@@ -483,5 +503,8 @@ public class RescueMissionQuest extends MainQuest {
         }
 
         return backgrounds;
+    }
+
+    private class NoSouchGroupException extends Throwable {
     }
 }
