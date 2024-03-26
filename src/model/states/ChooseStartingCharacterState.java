@@ -1,5 +1,6 @@
 package model.states;
 
+import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.horses.HorseItemAdapter;
@@ -16,6 +17,7 @@ import view.help.TutorialStartDialog;
 import view.party.CharacterCreationView;
 import view.subviews.ArrowMenuSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseStartingCharacterState extends GameState {
@@ -31,10 +33,14 @@ public class ChooseStartingCharacterState extends GameState {
         GameCharacter gc;
         Item selectedStartingItem = null;
         while (true) {
-            int choice = multipleOptionArrowMenu(model, 30, 16, List.of("Choose Preset",
+            List<String> options = new ArrayList<>(List.of("Choose Preset",
                     "Random Preset",
                     "Generate",
                     "Create Custom"));
+            if (FatefulEight.inDebugMode()) {
+                options.add("Full Party");
+            }
+            int choice = multipleOptionArrowMenu(model, 30, 16, options);
 
             if (choice == 3) {
                 gc = characterCreation(model);
@@ -53,8 +59,13 @@ public class ChooseStartingCharacterState extends GameState {
                     model.getAllCharacters().remove(gc);
                     break;
                 }
-            } else { // generate
+            } else if (choice == 2) {
                 gc = generateCharacter(model);
+                if (gc != null) {
+                    break;
+                }
+            } else {
+                gc = fullPartySelect(model);
                 if (gc != null) {
                     break;
                 }
@@ -66,6 +77,26 @@ public class ChooseStartingCharacterState extends GameState {
         model.getParty().add(gc);
         println(gc.getFullName() + " the " + gc.getRace().getName() + " " + gc.getCharClass().getFullName() + ".");
         return model.getCurrentHex().getDailyActionState(model);
+    }
+
+    private GameCharacter fullPartySelect(Model model) {
+        FullPartySelectView view = new FullPartySelectView(model);
+        model.transitionToDialog(view);
+        print(" ");
+        model.getLog().waitForAnimationToFinish();
+        if (view.didCancel()) {
+            return null;
+        }
+        List<GameCharacter> gcs = view.getCharacters();
+        if (gcs.isEmpty()) {
+            return null;
+        }
+        for (int i = 0; i < gcs.size()-1; ++i) {
+            model.getAllCharacters().remove(gcs.get(i));
+            model.getParty().add(gcs.get(i));
+        }
+        model.getAllCharacters().remove(gcs.get(gcs.size()-1));
+        return gcs.get(gcs.size()-1);
     }
 
     private GameCharacter generateCharacter(Model model) {
