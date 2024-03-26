@@ -298,6 +298,10 @@ public class Model {
         gameData.settings.getMiscFlags().put("innworkdone", false);
     }
 
+    public void setDay(int day) {
+        gameData.day = day;
+    }
+
     public void saveToFile(String filename) {
         try {
             gameData.logContent = log.getContents();

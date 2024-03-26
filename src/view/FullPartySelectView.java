@@ -2,7 +2,10 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.horses.Pony;
+import model.horses.Regal;
 import model.items.Equipment;
+import model.items.HorseStartingItem;
 import model.items.Item;
 import model.items.ItemDeck;
 import model.items.accessories.Accessory;
@@ -11,12 +14,10 @@ import model.items.weapons.Weapon;
 import util.Arithmetics;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
-import view.party.SetEquipmentMenu;
 import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.AccessibleObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,16 +27,32 @@ import static view.party.CharacterCreationView.NOT_OK_SPRITE;
 
 public class FullPartySelectView extends SelectableListMenu {
     private static final int ROWS_PER_CHAR = 6;
+    private static final int COLUMN_SKIP = 36;
+    private static final int MAX_GOLD = 100000;
+    private static final int INVENTORY_TAB = 9;
+    private static final int INVENTORY_VSKIP = 10;
+    private static final int MAX_NOTORIETY = 1000;
     private final int maxCharacters;
     private final Model model;
-    private int[] selectedCharacters;
+    private final int[] selectedCharacters;
     private boolean canceled = false;
     private final int[] levels;
     private static final int MAX_LEVEL = 12;
     private final Equipment[] equipments;
+    private int startingGold = 20;
+    private int startingObols = 0;
+    private int startingFood = 10;
+    private int startingMaterials = 0;
+    private int startingIngredients = 0;
+    private int startingLockpicks = 0;
+    private int startingRep = 0;
+    private int startingNotoriety = 0;
+    private int expandDirection = 0;
+    private int startingDay = 1;
+    private List<Item> otherItems = new ArrayList<>();
 
     public FullPartySelectView(Model model) {
-        super(model.getView(), DrawingArea.WINDOW_COLUMNS-1, DrawingArea.WINDOW_ROWS-1);
+        super(model.getView(), 56, DrawingArea.WINDOW_ROWS-1);
         this.model = model;
         this.maxCharacters = model.getAllCharacters().size();
         this.selectedCharacters = new int[]{maxCharacters, maxCharacters, maxCharacters, maxCharacters,
@@ -62,7 +79,7 @@ public class FullPartySelectView extends SelectableListMenu {
                         GameCharacter gc = getSelectedCharacter(i);
                         Sprite spr = gc.getAvatarSprite();
                         model.getScreenHandler().register(spr.getName(), new Point(x+1, y+1), spr);
-                        BorderFrame.drawString(model.getScreenHandler(), String.format("%02d HP, SPEED %d", gc.getMaxHP(), gc.getSpeed()),
+                        BorderFrame.drawString(model.getScreenHandler(), String.format("%s, %02d HP, SPEED %d", gc.getRace().getName(), gc.getMaxHP(), gc.getSpeed()),
                                 x+11, y+1, MyColors.LIGHT_GRAY, MyColors.BLUE);
                         Equipment eq = equipments[i-1];
                         BorderFrame.drawString(model.getScreenHandler(), eq.getWeapon().getName(), x+11, y+2, MyColors.LIGHT_GRAY, MyColors.BLUE);
@@ -73,6 +90,33 @@ public class FullPartySelectView extends SelectableListMenu {
                     }
                     y += ROWS_PER_CHAR;
                 }
+
+                y = yStart + 2;
+                BorderFrame.drawString(model.getScreenHandler(), "Party ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Rep: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Notoriety: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                y++;
+                BorderFrame.drawString(model.getScreenHandler(), "World ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Day: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Expanded: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+
+
+                y = yStart+INVENTORY_VSKIP;
+                BorderFrame.drawString(model.getScreenHandler(), "Inventory ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                y++;
+                BorderFrame.drawString(model.getScreenHandler(), "Gold: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Obols: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Food: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Ingrs: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Mtrls: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Picks: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                y++;
+                BorderFrame.drawString(model.getScreenHandler(), "Other: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+
+                for (Item it : otherItems) {
+                    BorderFrame.drawString(model.getScreenHandler(), it.getName(), x + COLUMN_SKIP, y++, MyColors.LIGHT_GRAY, MyColors.BLUE);
+                }
+
                 drawChecksNotOk(model, x);
             }
         });
@@ -162,7 +206,142 @@ public class FullPartySelectView extends SelectableListMenu {
                 }
             });
         }
-        content.add(new SelectableListContent(xStart + DrawingArea.WINDOW_COLUMNS/2-2, yStart+DrawingArea.WINDOW_ROWS-3, "OK") {
+        int partyRow = yStart + 3;
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 4, partyRow++, String.format("%3d", startingRep)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingRep = Arithmetics.decrementWithWrap(startingRep, 11);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingRep = Arithmetics.incrementWithWrap(startingRep, 11);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 4, partyRow++, String.format("%3d", startingNotoriety)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingNotoriety = Arithmetics.decrementWithWrap(startingNotoriety, MAX_NOTORIETY);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingNotoriety = Arithmetics.incrementWithWrap(startingNotoriety, MAX_NOTORIETY);
+            }
+        });
+        partyRow += 2;
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 3, partyRow++, String.format("%3d", startingDay) ) {
+            @Override
+            public void turnLeft(Model model) {
+                startingDay = Arithmetics.decrementWithWrap(startingDay, 101);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingDay = Arithmetics.incrementWithWrap(startingDay, 101);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 3, partyRow++, worldStateToString(expandDirection) ) {
+            @Override
+            public void turnLeft(Model model) {
+                expandDirection = Arithmetics.decrementWithWrap(expandDirection, 0x10);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                expandDirection = Arithmetics.incrementWithWrap(expandDirection, 0x10);
+            }
+        });
+        int inventoryRow = yStart + INVENTORY_VSKIP + 2;
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingGold)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingGold = Arithmetics.decrementWithWrap(startingGold, MAX_GOLD);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingGold = Arithmetics.incrementWithWrap(startingGold, MAX_GOLD);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingObols)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingObols = Arithmetics.decrementWithWrap(startingObols, MAX_GOLD);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingObols = Arithmetics.incrementWithWrap(startingObols, MAX_GOLD);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingFood)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingFood = Arithmetics.decrementWithWrap(startingFood, MAX_GOLD);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingFood = Arithmetics.incrementWithWrap(startingFood, MAX_GOLD);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingIngredients)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingIngredients = Arithmetics.decrementWithWrap(startingIngredients, MAX_GOLD);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingIngredients = Arithmetics.incrementWithWrap(startingIngredients, MAX_GOLD);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingMaterials)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingMaterials = Arithmetics.decrementWithWrap(startingMaterials, MAX_GOLD);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingMaterials = Arithmetics.incrementWithWrap(startingMaterials, MAX_GOLD);
+            }
+        });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingLockpicks)) {
+            @Override
+            public void turnLeft(Model model) {
+                startingLockpicks = Arithmetics.decrementWithWrap(startingLockpicks, MAX_GOLD);
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                startingLockpicks = Arithmetics.incrementWithWrap(startingLockpicks, MAX_GOLD);
+            }
+        });
+        inventoryRow++;
+        content.add(new SelectableListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, "ADD") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                setInnerMenu(new SelectItemList(FullPartySelectView.this) {
+                    @Override
+                    protected List<? extends Item> getItems() {
+                        List<Item> result = new ArrayList<>();
+                        result.addAll(ItemDeck.allSpells());
+                        result.addAll(ItemDeck.allPotions());
+                        result.add(new HorseStartingItem(new Regal()));
+                        result.add(new HorseStartingItem(new Pony()));
+                        return result;
+                    }
+
+                    @Override
+                    protected void selectItem(Item w) {
+                        otherItems.add(w);
+                    }
+                }, model);
+            }
+        });
+        content.add(new SelectableListContent(xStart + COLUMN_SKIP + 10 - 2, yStart+DrawingArea.WINDOW_ROWS-3, "OK") {
             @Override
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);
@@ -173,7 +352,7 @@ public class FullPartySelectView extends SelectableListMenu {
                 return characterSelectionOk();
             }
         });
-        content.add(new SelectableListContent(xStart + DrawingArea.WINDOW_COLUMNS/2-4, yStart+DrawingArea.WINDOW_ROWS-2, "CANCEL") {
+        content.add(new SelectableListContent(xStart + COLUMN_SKIP + 10 - 4, yStart+DrawingArea.WINDOW_ROWS-2, "CANCEL") {
             @Override
             public void performAction(Model model, int x, int y) {
                 FullPartySelectView.this.canceled = true;
@@ -181,6 +360,19 @@ public class FullPartySelectView extends SelectableListMenu {
             }
         });
         return content;
+    }
+
+    private String worldStateToString(int expandDirections) {
+        String[] dirStrings = {
+                "----", "---E", "--S-", "--SE",
+                "-W--", "-W-E", "-WS-", "-WSE",
+                "N---", "N--E", "N-S-", "N-SE",
+                "NW--", "NW-E", "NWS-", "NWSE"
+        };
+        if (expandDirections >= dirStrings.length) {
+            return "????";
+        }
+        return dirStrings[expandDirections];
     }
 
     private String levelOrNA(int i) {
@@ -269,6 +461,26 @@ public class FullPartySelectView extends SelectableListMenu {
         return canceled;
     }
 
+    public void miscSetup(Model model) {
+        model.getParty().addToGold(startingGold - model.getParty().getGold());
+        model.getParty().addToObols(startingObols - model.getParty().getObols());
+        model.getParty().addToFood(startingFood - model.getParty().getFood());
+        model.getParty().getInventory().addToIngredients(startingIngredients - model.getParty().getInventory().getIngredients());
+        model.getParty().getInventory().addToMaterials(startingMaterials - model.getParty().getInventory().getMaterials());
+        model.getParty().getInventory().addToLockpicks(startingLockpicks - model.getParty().getInventory().getLockpicks());
+        for (Item it : otherItems) {
+            if (it instanceof HorseStartingItem) {
+                model.getParty().getHorseHandler().addHorse(((HorseStartingItem) it).getHorse());
+            } else {
+                it.addYourself(model.getParty().getInventory());
+            }
+        }
+        model.getParty().addToReputation(startingRep - model.getParty().getReputation());
+        model.getParty().addToNotoriety(startingNotoriety - model.getParty().getNotoriety());
+        model.getWorld().setCurrentState(expandDirection);
+        model.setDay(startingDay);
+    }
+
     private static class SetAllEquipmentMenu extends SelectableListMenu {
         private final Equipment equipment;
 
@@ -298,7 +510,7 @@ public class FullPartySelectView extends SelectableListMenu {
                     new SelectableListContent(xStart + 2, yStart+2, equipment.getWeapon().getName()) {
                         @Override
                         public void performAction(Model model, int x, int y) {
-                            setInnerMenu(new SelectItemList(SetAllEquipmentMenu.this, equipment) {
+                            setInnerMenu(new SelectItemList(SetAllEquipmentMenu.this) {
                                 @Override
                                 protected List<? extends Item> getItems() {
                                     return ItemDeck.allWeapons();
@@ -314,7 +526,7 @@ public class FullPartySelectView extends SelectableListMenu {
                     new SelectableListContent(xStart + 2, yStart+3, equipment.getClothing().getName()) {
                         @Override
                         public void performAction(Model model, int x, int y) {
-                            setInnerMenu(new SelectItemList(SetAllEquipmentMenu.this, equipment) {
+                            setInnerMenu(new SelectItemList(SetAllEquipmentMenu.this) {
                                 @Override
                                 protected List<? extends Item> getItems() {
                                     return ItemDeck.allApparel();
@@ -330,7 +542,7 @@ public class FullPartySelectView extends SelectableListMenu {
                     new SelectableListContent(xStart + 2, yStart+4, equipment.getAccessory()==null?"NO ACCESSORY":equipment.getAccessory().getName()) {
                         @Override
                         public void performAction(Model model, int x, int y) {
-                            setInnerMenu(new SelectItemList(SetAllEquipmentMenu.this, equipment) {
+                            setInnerMenu(new SelectItemList(SetAllEquipmentMenu.this) {
                                 @Override
                                 protected List<? extends Item> getItems() {
                                     List<Accessory> result = new ArrayList<>();
@@ -361,52 +573,51 @@ public class FullPartySelectView extends SelectableListMenu {
         protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
 
         }
+    }
 
-        private static abstract class SelectItemList extends SelectableListMenu {
-            private final Equipment equipment;
+    private static abstract class SelectItemList extends SelectableListMenu {
 
-            public SelectItemList(GameView previous, Equipment equipment) {
-                super(previous, 18, 20);
-                this.equipment = equipment;
+        public SelectItemList(GameView previous) {
+            super(previous, 24, 20);
+        }
+
+        @Override
+        public void transitionedFrom(Model model) {
+
+        }
+
+        @Override
+        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
+            List<ListContent> result = new ArrayList<>();
+            int row=yStart+1;
+            List<Item> items = new ArrayList<>(getItems());
+            Collections.sort(items, Comparator.comparing(Item::getName));
+            for (Item w : items) {
+                result.add(new SelectableListContent(xStart + 1, row, w.getName()) {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        selectItem(w.copy());
+                        setTimeToTransition(true);
+                    }
+                });
+                row++;
             }
+            return result;
+        }
 
-            @Override
-            public void transitionedFrom(Model model) {
+        protected abstract List<? extends Item> getItems();
 
-            }
+        protected abstract void selectItem(Item w);
 
-            @Override
-            protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-                return new ArrayList<>();
-            }
+        @Override
+        protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
 
-            @Override
-            protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-                List<ListContent> result = new ArrayList<>();
-                int row=yStart+1;
-                List<Item> items = new ArrayList<>(getItems());
-                Collections.sort(items, Comparator.comparing(Item::getName));
-                for (Item w : items) {
-                    result.add(new SelectableListContent(xStart + 1, row, w.getName()) {
-                        @Override
-                        public void performAction(Model model, int x, int y) {
-                            selectItem(w);
-                            setTimeToTransition(true);
-                        }
-                    });
-                    row++;
-                }
-                return result;
-            }
-
-            protected abstract List<? extends Item> getItems();
-
-            protected abstract void selectItem(Item w);
-
-            @Override
-            protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-
-            }
         }
     }
+
 }

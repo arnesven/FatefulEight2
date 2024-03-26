@@ -113,7 +113,7 @@ public class ItemDeck extends ArrayList<Item> {
         return allItems;
     }
 
-    private static List<CraftingDesign> allCraftingDesigns() {
+    public static List<CraftingDesign> allCraftingDesigns() {
         return List.of(
                 new CraftingDesign(new GreatHelm()),
                 new CraftingDesign(new SpikedShield()),

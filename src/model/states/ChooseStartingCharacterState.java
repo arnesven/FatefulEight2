@@ -96,6 +96,7 @@ public class ChooseStartingCharacterState extends GameState {
             model.getParty().add(gcs.get(i));
         }
         model.getAllCharacters().remove(gcs.get(gcs.size()-1));
+        view.miscSetup(model);
         return gcs.get(gcs.size()-1);
     }
 
