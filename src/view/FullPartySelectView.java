@@ -52,7 +52,7 @@ public class FullPartySelectView extends SelectableListMenu {
     private List<Item> otherItems = new ArrayList<>();
 
     public FullPartySelectView(Model model) {
-        super(model.getView(), 56, DrawingArea.WINDOW_ROWS-1);
+        super(model.getView(), 58, DrawingArea.WINDOW_ROWS-1);
         this.model = model;
         this.maxCharacters = model.getAllCharacters().size();
         this.selectedCharacters = new int[]{maxCharacters, maxCharacters, maxCharacters, maxCharacters,
@@ -103,14 +103,12 @@ public class FullPartySelectView extends SelectableListMenu {
 
                 y = yStart+INVENTORY_VSKIP;
                 BorderFrame.drawString(model.getScreenHandler(), "Inventory ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
-                y++;
                 BorderFrame.drawString(model.getScreenHandler(), "Gold: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Obols: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Food: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Ingrs: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Mtrls: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Picks: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
-                y++;
                 BorderFrame.drawString(model.getScreenHandler(), "Other: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
 
                 for (Item it : otherItems) {
@@ -252,7 +250,7 @@ public class FullPartySelectView extends SelectableListMenu {
                 expandDirection = Arithmetics.incrementWithWrap(expandDirection, 0x10);
             }
         });
-        int inventoryRow = yStart + INVENTORY_VSKIP + 2;
+        int inventoryRow = yStart + INVENTORY_VSKIP + 1;
         content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, String.format("%5d", startingGold)) {
             @Override
             public void turnLeft(Model model) {
@@ -319,8 +317,7 @@ public class FullPartySelectView extends SelectableListMenu {
                 startingLockpicks = Arithmetics.incrementWithWrap(startingLockpicks, MAX_GOLD);
             }
         });
-        inventoryRow++;
-        content.add(new SelectableListContent(xStart + COLUMN_SKIP + INVENTORY_TAB, inventoryRow++, "ADD") {
+        content.add(new SelectableListContent(xStart + COLUMN_SKIP + INVENTORY_TAB-1, inventoryRow, "ADD") {
             @Override
             public void performAction(Model model, int x, int y) {
                 setInnerMenu(new SelectItemList(FullPartySelectView.this) {
@@ -339,6 +336,17 @@ public class FullPartySelectView extends SelectableListMenu {
                         otherItems.add(w);
                     }
                 }, model);
+            }
+        });
+        content.add(new SelectableListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 3, inventoryRow++, "REMOVE") {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                otherItems.remove(otherItems.size()-1);
+            }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return !otherItems.isEmpty();
             }
         });
         content.add(new SelectableListContent(xStart + COLUMN_SKIP + 10 - 2, yStart+DrawingArea.WINDOW_ROWS-3, "OK") {
