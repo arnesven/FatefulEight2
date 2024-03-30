@@ -20,6 +20,8 @@ import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
+import model.travellers.Traveller;
+import model.travellers.TravellerCollection;
 import sound.SoundEffects;
 import util.MyLists;
 import view.sprites.CombatCursorSprite;
@@ -64,6 +66,7 @@ public class Party implements Serializable {
     private int notoriety = 0;
     private int carryingCapInKilos = 0;
     private static Map<GameCharacter, TamedDragonCharacter> tamedDragons = new HashMap<>();
+    private TravellerCollection travellers = new TravellerCollection();
 
     public Party() {
         position = new Point(26, 19);
@@ -801,5 +804,17 @@ public class Party implements Serializable {
 
     public Map<GameCharacter, TamedDragonCharacter> getTamedDragons() {
         return tamedDragons;
+    }
+
+    public boolean hasTravellers() {
+        return false;
+    }
+
+    public void addTraveller(Traveller traveller) {
+        travellers.add(traveller);
+    }
+
+    public List<Traveller> getActiveTravellers() {
+        return travellers.getActiveTravellers();
     }
 }

@@ -24,6 +24,9 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
         addNode(6, 1, new LodgingNode(freeLodging));
         addNode(2, 3, new TalkToBartenderNode(inTown));
         addNode(5, 5, new TalkToPartyNode());
+        if (!model.getParty().hasTravellers()) {
+            addNode(2, 2, new TravellerNode(model));
+        }
         if (inTown) {
             Point doorPos = getDoorPosition();
             addNode(doorPos.x, doorPos.y, new ExitTavernNode());
@@ -36,7 +39,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(1, 8, new CampOutsideOfTownNode(false, model,
                     TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT, "Make camp outside."));
             addNode(4, 2, new InnShoppingNode(model));
-            addNode(2, 1, new SaveGameNode());
+            addNode(6, 3, new SaveGameNode());
         }
     }
 
