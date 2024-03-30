@@ -218,6 +218,19 @@ public class World implements Serializable {
         throw new IllegalArgumentException("No town found for \"" + placeName + "\"");
     }
 
+    public HexLocation getLocationByName(String name) {
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() != null) {
+                   if (hexes[x][y].getLocation().getName().equals(name)) {
+                       return hexes[x][y].getLocation();
+                   }
+                }
+            }
+        }
+        throw new IllegalArgumentException("No hex location found for \"" + name + "\"");
+    }
+
     public Point getPositionForHex(WorldHex hex) {
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {

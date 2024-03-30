@@ -5,6 +5,7 @@ import model.QuestDeck;
 import model.Summon;
 import model.journal.*;
 import model.map.UrbanLocation;
+import model.travellers.Traveller;
 import util.MyStrings;
 
 import java.awt.*;
@@ -42,6 +43,12 @@ public class JournalView extends TwoPaneSelectableListMenu {
             if (entry.isValid()) {
                 questsAndTasks.add(entry);
             }
+        }
+        for (Traveller t : model.getParty().getActiveTravellers()) {
+            questsAndTasks.add(t.getJournalEntry(model, true));
+        }
+        for (Traveller t : model.getParty().getCompletedTravellers()) {
+            questsAndTasks.add(t.getJournalEntry(model, false));
         }
         Collections.sort(questsAndTasks, new Comparator<JournalEntry>() {
             @Override

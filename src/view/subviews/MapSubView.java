@@ -4,6 +4,9 @@ import model.Model;
 import model.SteppingMatrix;
 import model.map.Direction;
 import model.map.World;
+import model.travellers.Traveller;
+import view.BorderFrame;
+import view.MyColors;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -59,6 +62,35 @@ public class MapSubView extends AvatarSubView {
         }
         worldToDraw.drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
                     MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, avatarEnabled);
+        drawTravellers(model);
+    }
+
+    private void drawTravellers(Model model) {
+        int count = 0;
+        for (Traveller t : model.getParty().getActiveTravellers()) {
+            if (count == 1) {
+                BorderFrame.drawString(model.getScreenHandler(), t.getName() + ":",
+                        X_OFFSET, Y_MAX - count, MyColors.WHITE, MyColors.BLACK);
+            } else {
+                BorderFrame.drawString(model.getScreenHandler(), t.getName() + ":",
+                        X_MAX-t.getName().length()-3, Y_MAX - count, MyColors.WHITE, MyColors.BLACK);
+            }
+            int days = t.getRemainingDays(model);
+            MyColors color = MyColors.WHITE;
+            if (days < 1) {
+                color = MyColors.LIGHT_RED;
+            } else if (days < 6) {
+                color = MyColors.YELLOW;
+            }
+            if (count == 1) {
+                BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", days),
+                        X_OFFSET + t.getName().length() + 1, Y_MAX - count, color, MyColors.BLACK);
+            } else {
+                BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", days),
+                        X_MAX - 2, Y_MAX - count, color, MyColors.BLACK);
+            }
+            count++;
+        }
     }
 
     protected Point getSelectedDestination(Model model) {

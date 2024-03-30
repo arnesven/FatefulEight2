@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import control.FatefulEight;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
@@ -53,13 +54,15 @@ public class TravellerNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (model.getParty().size() == 1 && DailyEventState.calculateAverageLevel(model) < 2.0) {
-            traveller.refuseLowLevel(state);
-            return false;
-        }
-        if (model.getParty().getNotoriety() > 10) {
-            traveller.refuseNotoriety(state);
-            return false;
+        if (!FatefulEight.inDebugMode()) { // TODO: Remove
+            if (model.getParty().size() == 1 && DailyEventState.calculateAverageLevel(model) < 2.0) {
+                traveller.refuseLowLevel(state);
+                return false;
+            }
+            if (model.getParty().getNotoriety() > 10) {
+                traveller.refuseNotoriety(state);
+                return false;
+            }
         }
         if (model.getParty().getActiveTravellers().contains(traveller)) {
             traveller.printReady(state);
@@ -77,7 +80,7 @@ public class TravellerNode extends DailyActionNode {
         int time = MyRandom.randInt(points.size(), points.size()*2);
         int reward = MyRandom.randInt(points.size()/2, points.size()*2) +
                 MyRandom.randInt(points.size()/2, points.size()*2);
-        return new Traveller("Traveller", appearance, loc, 10, reward);
+        return new Traveller("Traveller", appearance, loc, time, reward);
     }
 
     @Override

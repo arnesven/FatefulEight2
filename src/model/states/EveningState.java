@@ -4,7 +4,9 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Inventory;
+import model.map.HexLocation;
 import model.quests.Quest;
+import model.travellers.Traveller;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
@@ -49,6 +51,7 @@ public class EveningState extends GameState {
             model.transitionToDialog(new HalfTimeDialog(model.getView()));
         }
         checkForLeaderChange(model);
+        checkTravellers(model);
         super.stepToNextDay(model);
         return nextState(model);
     }
@@ -390,4 +393,18 @@ public class EveningState extends GameState {
     private boolean hasEnoughFood(Model model) {
         return model.getParty().getFood() >= model.getParty().size();
     }
+
+    private void checkTravellers(Model model) {
+        for (Traveller t : new ArrayList<>(model.getParty().getActiveTravellers())) {
+            HexLocation loc = t.getDestinationLocation(model);
+            if (model.getWorld().getPositionForLocation(loc).equals(model.getParty().getPosition())) {
+                t.complete(model, this);
+            } else if (t.getRemainingDays(model) == 0) {
+                t.complain(model, this);
+            } else if (t.getRemainingDays(model) == -9) {
+                t.abandon(model, this);
+            }
+        }
+    }
+
 }

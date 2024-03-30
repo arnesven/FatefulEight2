@@ -806,15 +806,23 @@ public class Party implements Serializable {
         return tamedDragons;
     }
 
-    public boolean hasTravellers() {
-        return false;
-    }
-
     public void addTraveller(Traveller traveller) {
         travellers.add(traveller);
     }
 
     public List<Traveller> getActiveTravellers() {
         return travellers.getActiveTravellers();
+    }
+
+    public void completeTraveller(Traveller traveller) {
+        travellers.completeTraveller(traveller);
+    }
+
+    public List<Traveller> getCompletedTravellers() {
+        return travellers.getCompletedTravellers();
+    }
+
+    public void abandonTraveller(Traveller traveller) {
+        travellers.abandonTraveller(traveller);
     }
 }
