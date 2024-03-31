@@ -2,6 +2,7 @@ package model.travellers;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
 import model.map.HexLocation;
 import model.races.Race;
@@ -17,18 +18,19 @@ import java.util.List;
 public class Traveller implements Serializable {
 
     private final String name;
-    private final AdvancedAppearance appearance;
+    private final CharacterAppearance appearance;
     private final String destination;
     private final int time;
     private final int gold;
     private int acceptedOnDay = 0;
 
-    public Traveller(String name, AdvancedAppearance appearance, HexLocation destination, int time, int gold) {
+    public Traveller(String name, CharacterAppearance appearance, HexLocation destination, int distance) {
         this.name = name;
         this.appearance = appearance;
         this.destination = destination.getName();
-        this.time = time;
-        this.gold = gold;
+        this.time = MyRandom.randInt(distance-1, (int)(distance*1.5));
+        this.gold = MyRandom.randInt(distance/2, distance*2) +
+                MyRandom.randInt(distance/2, distance*2);
     }
 
     public String getAcceptString() {

@@ -78,10 +78,7 @@ public class TravellerNode extends DailyActionNode {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> points = model.getWorld().shortestPathToNearestTownOrCastle(rank);
         HexLocation loc = model.getWorld().getHex(points.get(points.size()-1)).getLocation();
-        int time = MyRandom.randInt(points.size()-1, (int)(points.size()*1.5));
-        int reward = MyRandom.randInt(points.size()/2, points.size()*2) +
-                MyRandom.randInt(points.size()/2, points.size()*2);
-        return new Traveller("Traveller", appearance, loc, time, reward);
+        return new Traveller("Traveller", appearance, loc, points.size());
     }
 
     @Override

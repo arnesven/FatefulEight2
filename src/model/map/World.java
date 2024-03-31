@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.states.dailyaction.FlagPoleNode;
+import util.MyLists;
 import util.MyPair;
 import view.DrawingArea;
 import view.ScreenHandler;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.util.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class World implements Serializable {
 
@@ -349,14 +351,10 @@ public class World implements Serializable {
         }
     }
 
-    public List<Point> shortestPathToNearestTownOrCastle() {
-        return shortestPathToNearestTownOrCastle(0);
-    }
-
-    public List<Point> shortestPathToNearestTownOrCastle(int rank) {
+    public List<Point> generalShortestPath(int rank, Predicate<WorldHex> pred) {
         List<MyPair<Integer, Point>> candidates = new ArrayList<>();
         for (WorldHex hex : landNodes.keySet()) {
-            if (hex.getLocation() != null && hex.getLocation() instanceof UrbanLocation) {
+            if (pred.test(hex)) {
                 candidates.add(new MyPair<>(landNodes.get(hex), getPositionForHex(hex)));
             }
         }
@@ -381,6 +379,20 @@ public class World implements Serializable {
             }
         }
         return path;
+    }
+
+    public List<Point> shortestPathToNearestTownOrCastle(int rank) {
+        return generalShortestPath(rank,
+                (WorldHex hex) -> hex.getLocation() != null && hex.getLocation() instanceof UrbanLocation);
+    }
+
+    public List<Point> shortestPathToNearestTownOrCastle() {
+        return shortestPathToNearestTownOrCastle(0);
+    }
+
+    public List<Point> shortestPathToNearestRuins() {
+        return generalShortestPath(0,
+                (WorldHex hex) -> hex.getLocation() != null && hex.getLocation() instanceof RuinsLocation);
     }
 
     public List<RuinsLocation> getRuinsLocations() {

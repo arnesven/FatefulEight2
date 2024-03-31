@@ -8,10 +8,10 @@ import model.travellers.TravellerCollection;
 import util.MyStrings;
 
 public class AcceptTravellerState extends GameState {
-    private final AdvancedDailyActionState previousState;
+    private final GameState previousState;
     private final Traveller traveller;
 
-    public AcceptTravellerState(Model model, AdvancedDailyActionState state, Traveller traveller) {
+    public AcceptTravellerState(Model model, GameState state, Traveller traveller) {
         super(model);
         this.previousState = state;
         this.traveller = traveller;

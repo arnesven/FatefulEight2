@@ -70,10 +70,10 @@ public class MapSubView extends AvatarSubView {
         for (Traveller t : model.getParty().getActiveTravellers()) {
             if (count == 1) {
                 BorderFrame.drawString(model.getScreenHandler(), t.getName() + ":",
-                        X_OFFSET, Y_MAX - count, MyColors.WHITE, MyColors.BLACK);
+                        X_OFFSET, Y_MAX, MyColors.WHITE, MyColors.BLACK);
             } else {
                 BorderFrame.drawString(model.getScreenHandler(), t.getName() + ":",
-                        X_MAX-t.getName().length()-3, Y_MAX - count, MyColors.WHITE, MyColors.BLACK);
+                        X_MAX-t.getName().length()-3, Y_MAX, MyColors.WHITE, MyColors.BLACK);
             }
             int days = t.getRemainingDays(model);
             MyColors color = MyColors.WHITE;
@@ -84,10 +84,10 @@ public class MapSubView extends AvatarSubView {
             }
             if (count == 1) {
                 BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", days),
-                        X_OFFSET + t.getName().length() + 1, Y_MAX - count, color, MyColors.BLACK);
+                        X_OFFSET + t.getName().length() + 1, Y_MAX, color, MyColors.BLACK);
             } else {
                 BorderFrame.drawString(model.getScreenHandler(), String.format("%2d", days),
-                        X_MAX - 2, Y_MAX - count, color, MyColors.BLACK);
+                        X_MAX - 2, Y_MAX, color, MyColors.BLACK);
             }
             count++;
         }
