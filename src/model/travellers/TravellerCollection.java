@@ -32,4 +32,8 @@ public class TravellerCollection implements Serializable {
         activeTravellers.remove(traveller);
         abandonedTravellers.add(traveller);
     }
+
+    public List<Traveller> getAbandonedTravellers() {
+        return abandonedTravellers;
+    }
 }

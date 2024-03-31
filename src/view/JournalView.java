@@ -45,21 +45,21 @@ public class JournalView extends TwoPaneSelectableListMenu {
             }
         }
         for (Traveller t : model.getParty().getActiveTravellers()) {
-            questsAndTasks.add(t.getJournalEntry(model, true));
+            questsAndTasks.add(t.getJournalEntry(model, true, false));
         }
         for (Traveller t : model.getParty().getCompletedTravellers()) {
-            questsAndTasks.add(t.getJournalEntry(model, false));
+            questsAndTasks.add(t.getJournalEntry(model, false, true));
         }
-        Collections.sort(questsAndTasks, new Comparator<JournalEntry>() {
-            @Override
-            public int compare(JournalEntry j1, JournalEntry j2) {
-                if (j1.isComplete() == j2.isComplete()) {
-                    return j1.getName().compareTo(j2.getName());
-                }
-                int i1 = j1.isComplete() ? 1 : 0;
-                int i2 = j2.isComplete() ? 1 : 0;
-                return i1 - i2;
+        for (Traveller t : model.getParty().getAbandonedTravellers()) {
+            questsAndTasks.add(t.getJournalEntry(model, false, false));
+        }
+        Collections.sort(questsAndTasks, (j1, j2) -> {
+            if (j1.isComplete() == j2.isComplete()) {
+                return j1.getName().compareTo(j2.getName());
             }
+            int i1 = j1.isComplete() ? 1 : 0;
+            int i2 = j2.isComplete() ? 1 : 0;
+            return i1 - i2;
         });
     }
 

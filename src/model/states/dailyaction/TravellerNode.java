@@ -55,13 +55,15 @@ public class TravellerNode extends DailyActionNode {
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         model.getTutorial().travellers(model);
-        if (model.getParty().size() == 1 && DailyEventState.calculateAverageLevel(model) < 2.0) {
-            traveller.refuseLowLevel(state);
-            return false;
-        }
-        if (model.getParty().getNotoriety() > 10) {
-            traveller.refuseNotoriety(state);
-            return false;
+        if (!FatefulEight.inDebugMode()) {
+            if (model.getParty().size() == 1 && DailyEventState.calculateAverageLevel(model) < 2.0) {
+                traveller.refuseLowLevel(state);
+                return false;
+            }
+            if (model.getParty().getNotoriety() > 10) {
+                traveller.refuseNotoriety(state);
+                return false;
+            }
         }
         if (model.getParty().getActiveTravellers().contains(traveller)) {
             traveller.printReady(state);
@@ -76,7 +78,7 @@ public class TravellerNode extends DailyActionNode {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> points = model.getWorld().shortestPathToNearestTownOrCastle(rank);
         HexLocation loc = model.getWorld().getHex(points.get(points.size()-1)).getLocation();
-        int time = MyRandom.randInt(points.size(), points.size()*2);
+        int time = MyRandom.randInt(points.size()-1, (int)(points.size()*1.5));
         int reward = MyRandom.randInt(points.size()/2, points.size()*2) +
                 MyRandom.randInt(points.size()/2, points.size()*2);
         return new Traveller("Traveller", appearance, loc, time, reward);

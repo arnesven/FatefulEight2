@@ -401,7 +401,7 @@ public class EveningState extends GameState {
                 t.complete(model, this);
             } else if (t.getRemainingDays(model) == 0) {
                 t.complain(model, this);
-            } else if (t.getRemainingDays(model) == -9) {
+            } else if (t.getRemainingDays(model) == -4) {
                 t.abandon(model, this);
             }
         }

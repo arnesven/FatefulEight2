@@ -825,4 +825,8 @@ public class Party implements Serializable {
     public void abandonTraveller(Traveller traveller) {
         travellers.abandonTraveller(traveller);
     }
+
+    public List<Traveller> getAbandonedTravellers() {
+        return travellers.getAbandonedTravellers();
+    }
 }

@@ -105,40 +105,61 @@ public class Traveller implements Serializable {
         state.printQuote(name, "I'm fed up with you. I'm going to " + destination + " on my own.");
         state.println(name + " stomps off. You are no longer escorting " + name + ".");
         model.getParty().abandonTraveller(this);
+        model.getParty().addToReputation(-1);
+        state.printAlert("Your reputation has decreased.");
     }
 
-    public JournalEntry getJournalEntry(Model model, boolean active) {
-        return new JournalEntry() {
-            @Override
-            public String getName() {
-                return "Escort " + name;
-            }
+    public JournalEntry getJournalEntry(Model model, boolean active, boolean completed) {
+        return new TravellerJournalEntry(model, active, completed);
+    }
 
-            @Override
-            public String getText() {
-                return "You have accepted to escort " + name + " to " + destination + " within " + time + " days. " +
+    private class TravellerJournalEntry implements JournalEntry {
+
+        private final String text;
+        private final boolean complete;
+        private final boolean failed;
+
+        public TravellerJournalEntry(Model model, boolean active, boolean completed) {
+            if (active) {
+                this.text =  "You have accepted to escort " + name + " to " + destination + " within " + time + " days. " +
                         "You were promised " + gold + " gold.\n\nThere are " + getRemainingDays(model) + " days remaining.";
+            } else if (completed) {
+                this.text = "You escorted " + name + " to " + destination + ".";
+            } else { // Abandon
+                this.text = "You failed to escort " + name + " to " + destination + ".";
             }
+            this.complete = !active && completed;
+            this.failed = !active && !completed;
+        }
 
-            @Override
-            public boolean isComplete() {
-                return !active;
-            }
+        @Override
+        public String getName() {
+            return "Escort " + name;
+        }
 
-            @Override
-            public boolean isFailed() {
-                return false;
-            }
+        @Override
+        public String getText() {
+            return text;
+        }
 
-            @Override
-            public boolean isTask() {
-                return true;
-            }
+        @Override
+        public boolean isComplete() {
+            return complete;
+        }
 
-            @Override
-            public Point getPosition(Model model) {
-                return model.getWorld().getPositionForLocation(getDestinationLocation(model));
-            }
-        };
+        @Override
+        public boolean isFailed() {
+            return failed;
+        }
+
+        @Override
+        public boolean isTask() {
+            return true;
+        }
+
+        @Override
+        public Point getPosition(Model model) {
+            return model.getWorld().getPositionForLocation(getDestinationLocation(model));
+        }
     }
 }
