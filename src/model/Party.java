@@ -117,7 +117,7 @@ public class Party implements Serializable {
         }
         List<MyPair<Point, TimedAnimationSprite>> toRemove = new ArrayList<>();
         for (SpeakingAnimation speakAni : new ArrayList<>(speakingAnimations)) {
-            speakAni.handle(screenHandler);
+            speakAni.drawYourself(screenHandler);
             if (speakAni.isDone()) {
                 speakAni.unregister();
                 speakingAnimations.remove(speakAni);
@@ -314,7 +314,7 @@ public class Party implements Serializable {
         p.x += 3;
         p.y += 2;
         speakingAnimations.removeIf((SpeakingAnimation sp) -> sp.isInLocation(p));
-        speakingAnimations.add(new SpeakingAnimation(pair.first, p, text.length(), gc));
+        speakingAnimations.add(new SpeakingAnimation(pair.first, p, text.length(), gc.getAppearance()));
     }
 
     public void partyMemberSay(Model model, GameCharacter gc, List<String> alternatives) {

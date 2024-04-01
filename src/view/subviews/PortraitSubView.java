@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.Model;
+import model.SpeakingAnimation;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.races.Race;
@@ -22,7 +23,7 @@ public class PortraitSubView extends SubView {
     private final SubView previous;
     private final CharacterAppearance appearance;
     private final String portraitName;
-    private CalloutSprite callout = null;
+    private SpeakingAnimation speakingAnimation = null;
 
     public PortraitSubView(SubView subView, CharacterClass cls, Race race, String portraitName) {
         this.previous = subView;
@@ -132,10 +133,11 @@ public class PortraitSubView extends SubView {
         } else {
             BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         }
-        if (callout != null) {
-            model.getScreenHandler().register(callout.getName()+"portrait", new Point(40, 12), callout);
-            if (callout.isDone()) {
-                callout = null;
+        if (speakingAnimation != null) {
+            speakingAnimation.drawYourself(model.getScreenHandler());
+            if (speakingAnimation.isDone()) {
+                speakingAnimation.unregister();
+                speakingAnimation = null;
             }
         }
     }
@@ -158,7 +160,7 @@ public class PortraitSubView extends SubView {
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(portraitName, pair.second);
-        callout = new CalloutSprite(pair.first);
+        speakingAnimation = new SpeakingAnimation(pair.first, new Point(39, 12), line.length(), appearance);
     }
 
     public boolean getPortraitGender() {

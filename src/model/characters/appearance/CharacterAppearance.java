@@ -27,7 +27,7 @@ public abstract class CharacterAppearance implements Serializable {
     private Shoulders shoulders;
     private final TorsoChest chest;
     private TorsoNeck neck;
-
+    private boolean showFacialHair = true;
     private PortraitSprite[][] grid;
 
     public CharacterAppearance(Race race, boolean femaleGender, MyColors hairColor) {
@@ -224,8 +224,10 @@ public abstract class CharacterAppearance implements Serializable {
         setRaceSkinColor(race);
         charClass.manipulateAvatar(this, race);
         charClass.finalizeLook(this);
+        showFacialHair = false;
         if (charClass.showFacialHair()) {
             applyFacialHair(race, charClass.coversEars());
+            showFacialHair = true;
         }
         if (charClass.showDetail()) {
             applyDetail(race, charClass.coversEars());
@@ -395,5 +397,9 @@ public abstract class CharacterAppearance implements Serializable {
 
     public boolean hasTuskMouth() {
         return getMouth() == 0x57;
+    }
+
+    public boolean showFacialHair() {
+        return showFacialHair;
     }
 }

@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.Party;
+import model.SpeakingAnimation;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import util.MyPair;
@@ -24,7 +25,7 @@ public class OtherPartySubView extends TopMenuSubView {
     private final GameCharacter leader;
     private final HashMap<GameCharacter, Integer> attitudes;
     private Set<GameCharacter> infoRevealed = new HashSet<>();
-    private List<MyPair<GameCharacter, CalloutSprite>> callouts = new ArrayList<>();
+    private List<MyPair<GameCharacter, SpeakingAnimation>> speakingAnimations = new ArrayList<>();
 
     public OtherPartySubView(List<GameCharacter> characters,
                              GameCharacter leader,
@@ -90,13 +91,14 @@ public class OtherPartySubView extends TopMenuSubView {
                 }
             }
         }
-        callouts.removeIf((MyPair<GameCharacter, CalloutSprite> pair) -> pair.second.isDone());
-        for (MyPair<GameCharacter, CalloutSprite> pair : callouts) {
+        for (MyPair<GameCharacter, SpeakingAnimation> pair : new ArrayList<>(speakingAnimations)) {
             if (matrix.getElementList().contains(pair.first)) {
-                Point p = matrix.getPositionFor(pair.first);
-                int xPos = X_OFFSET + p.x * 8 + 7;
-                int yPos = Y_OFFSET + p.y * 8 + 3;
-                model.getScreenHandler().register(pair.second.getName(), new Point(xPos, yPos), pair.second);
+                if (pair.second.isDone()) {
+                    pair.second.unregister();
+                    speakingAnimations.remove(pair);
+                } else {
+                    pair.second.drawYourself(model.getScreenHandler());
+                }
             }
         }
     }
@@ -154,7 +156,10 @@ public class OtherPartySubView extends TopMenuSubView {
 
     public String addCallout(GameCharacter gc, String s) {
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(s);
-        this.callouts.add(new MyPair<>(gc, new CalloutSprite(pair.first)));
+        Point p = matrix.getPositionFor(gc);
+        int xPos = X_OFFSET + p.x * 8 + 7;
+        int yPos = Y_OFFSET + p.y * 8 + 3;
+        this.speakingAnimations.add(new MyPair<>(gc, new SpeakingAnimation(pair.first, new Point(xPos, yPos), s.length(), gc.getAppearance())));
         return pair.second;
     }
 }

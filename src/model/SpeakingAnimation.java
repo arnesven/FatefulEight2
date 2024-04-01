@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
 import view.ScreenHandler;
 import view.sprites.AnimationManager;
 import view.sprites.CalloutSprite;
@@ -15,18 +16,18 @@ public class SpeakingAnimation implements Serializable {
     private final TimedAnimationSprite callout;
     private final MouthMovementSprite mouthAnimation;
 
-    public SpeakingAnimation(int calloutNum, Point location, int textLength, GameCharacter gc) {
+    public SpeakingAnimation(int calloutNum, Point location, int textLength, CharacterAppearance app) {
         this.location = location;
         callout = new CalloutSprite(calloutNum, textLength);
-        if (gc.getCharClass().showFacialHair()) {
-            mouthAnimation = new MouthMovementSprite(textLength, gc.getRace().getColor(),
-                    gc.getAppearance().getLipColor(), gc.getAppearance().hasTuskMouth());
+        if (app.showFacialHair()) {
+            mouthAnimation = new MouthMovementSprite(textLength, app.getRace().getColor(),
+                    app.getLipColor(), app.hasTuskMouth());
         } else {
             mouthAnimation = null;
         }
     }
 
-    public void handle(ScreenHandler screenHandler) {
+    public void drawYourself(ScreenHandler screenHandler) {
         if (!callout.isDone()) {
             screenHandler.register(callout.getName(), location, callout, 2);
         }
