@@ -102,7 +102,7 @@ public abstract class CharacterAppearance implements Serializable {
         setRaceSkinColor(race);
     }
 
-    protected MyColors getLipColor() {
+    public MyColors getLipColor() {
         return lipColor;
     }
 
@@ -391,5 +391,9 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void setHairColor(MyColors color) {
         this.hairColor = color;
+    }
+
+    public boolean hasTuskMouth() {
+        return getMouth() == 0x57;
     }
 }

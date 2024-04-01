@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 public class TimedAnimationSprite extends Sprite32x32 implements Animation {
 
     private final int steps;
-    private int count;
+    private int count = 0;
 
     public TimedAnimationSprite(String name, String mapPath, int num, int steps, MyColors color1, MyColors color2, MyColors color3) {
         super(name, mapPath, num, color1, color2, color3);
