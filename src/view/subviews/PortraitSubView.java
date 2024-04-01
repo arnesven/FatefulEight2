@@ -125,6 +125,7 @@ public class PortraitSubView extends SubView {
                 PORTRAIT_FRAME_WIDTH, PORTRAIT_FRAME_HEIGHT, MyColors.BLACK, MyColors.GRAY, MyColors.BLACK, true);
         if (appearance != null) {
             appearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
+            partyAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION);
         } else {
             silhouetteAppearance.drawYourself(model.getScreenHandler(), X_OFFSET + 12, Y_OFFSET + 9);
         }
@@ -135,7 +136,6 @@ public class PortraitSubView extends SubView {
         } else {
             BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         }
-        partyAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION);
         partyAnimations.drawSpeakAnimations(model.getScreenHandler());
     }
 

@@ -22,8 +22,7 @@ public class PartyAnimations implements Serializable {
             return;
         }
         if (MyRandom.randInt(BLINK_RATE) == 0 || blinking.containsKey(app)) {
-            screenHandler.register("blinkleft", new Point(p.x+2, p.y+6), app.getBlinkLeft());
-            screenHandler.register("blinkright", new Point(p.x+4, p.y+6), app.getBlinkRight());
+            app.drawBlink(screenHandler, p.x+3, p.y+6);
             if (blinking.containsKey(app)) {
                 int step = blinking.get(app);
                 step--;

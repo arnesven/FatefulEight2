@@ -3,8 +3,10 @@ package model.characters.appearance;
 import model.classes.CharacterClass;
 import model.races.Race;
 import view.MyColors;
+import view.ScreenHandler;
 import view.sprites.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -270,4 +272,13 @@ public class AdvancedAppearance extends CharacterAppearance {
     public HairStyle getHairStyle() {
         return hairStyle;
     }
+
+    public void drawBlink(ScreenHandler screenHandler, int x, int y) {
+        if (detail instanceof EyePatchDetail) {
+            screenHandler.register("blinkright", new Point(x+1, y), getBlinkRight());
+        } else {
+            super.drawBlink(screenHandler, x, y);
+        }
+    }
+
 }

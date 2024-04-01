@@ -9,6 +9,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -414,11 +415,16 @@ public abstract class CharacterAppearance implements Serializable {
                                                 MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE));
     }
 
-    public Sprite getBlinkLeft() {
+    protected Sprite getBlinkLeft() {
         return blinkSprites.first;
     }
 
-    public Sprite getBlinkRight() {
+    protected Sprite getBlinkRight() {
         return blinkSprites.second;
+    }
+
+    public void drawBlink(ScreenHandler screenHandler, int x, int y) {
+        screenHandler.register("blinkleft", new Point(x-1, y), blinkSprites.first);
+        screenHandler.register("blinkright", new Point(x+1, y), blinkSprites.second);
     }
 }
