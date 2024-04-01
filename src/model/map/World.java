@@ -400,6 +400,11 @@ public class World implements Serializable {
                 (WorldHex hex) -> hex.getLocation() != null && hex.getLocation() instanceof TempleLocation);
     }
 
+    public List<Point> shortestPathToNearestInn() {
+        return generalShortestPath(0,
+                (WorldHex hex) -> hex.getLocation() != null && hex.getLocation() instanceof InnLocation);
+    }
+
     public List<RuinsLocation> getRuinsLocations() {
         List<RuinsLocation> result = new ArrayList<>();
         for (int y = 0; y < hexes[0].length; ++y) {
