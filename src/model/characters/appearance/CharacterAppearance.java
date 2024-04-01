@@ -4,6 +4,7 @@ import control.FatefulEight;
 import model.classes.CharacterClass;
 import model.races.Race;
 import model.races.Shoulders;
+import util.MyPair;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;
@@ -20,6 +21,7 @@ public abstract class CharacterAppearance implements Serializable {
     private static Sprite noHairSprite = new Sprite32x32("nohair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private final Race race;
+    private MyPair<Sprite8x8, Sprite8x8> blinkSprites;
     private MyColors hairColor;
     private MyColors mascaraColor;
     private MyColors lipColor;
@@ -34,6 +36,7 @@ public abstract class CharacterAppearance implements Serializable {
         this.hairColor = hairColor;
         this.race = race;
         this.mascaraColor = race.getColor();
+        setBlinkSprites();
         this.lipColor = race.getMouthDefaultColor();
         this.femaleGender = femaleGender;
         shoulders = race.makeShoulders(femaleGender);
@@ -373,6 +376,7 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void setMascaraColor(MyColors myColors) {
         this.mascaraColor = myColors;
+        setBlinkSprites();
     }
 
     public void setLipColor(MyColors myColors) {
@@ -401,5 +405,20 @@ public abstract class CharacterAppearance implements Serializable {
 
     public boolean showFacialHair() {
         return showFacialHair;
+    }
+
+    private void setBlinkSprites() {
+        this.blinkSprites = new MyPair<>(new Sprite8x8("blinkleft", "mouth.png", 0x20,
+                                        MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE),
+                                        new Sprite8x8("blinkright", "mouth.png", 0x21,
+                                                MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE));
+    }
+
+    public Sprite getBlinkLeft() {
+        return blinkSprites.first;
+    }
+
+    public Sprite getBlinkRight() {
+        return blinkSprites.second;
     }
 }

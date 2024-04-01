@@ -45,7 +45,7 @@ public class Party implements Serializable {
     private final List<GameCharacter> frontRow = new ArrayList<>();
     private final List<GameCharacter> backRow = new ArrayList<>();
     private final List<GameCharacter> bench = new ArrayList<>();
-    private final List<SpeakingAnimation> speakingAnimations = new ArrayList<>();
+    private final PartyAnimations partyAnimations = new PartyAnimations();
     private final Map<String, Summon> summons = new HashMap<>();
     private final Set<String> templeBannings = new HashSet<>();
     private final Set<String> heldQuests = new HashSet<>();
@@ -114,15 +114,9 @@ public class Party implements Serializable {
             Point p = getLocationForPartyMember(count);
             gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
             count++;
+            partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
         }
-        List<MyPair<Point, TimedAnimationSprite>> toRemove = new ArrayList<>();
-        for (SpeakingAnimation speakAni : new ArrayList<>(speakingAnimations)) {
-            speakAni.drawYourself(screenHandler);
-            if (speakAni.isDone()) {
-                speakAni.unregister();
-                speakingAnimations.remove(speakAni);
-            }
-        }
+        partyAnimations.drawSpeakAnimations(screenHandler);
     }
 
     public Point getLocationForPartyMember(int count) {
@@ -311,10 +305,8 @@ public class Party implements Serializable {
                 "\"\n" + LogView.DEFAULT_COLOR);
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
-        p.x += 3;
-        p.y += 2;
-        speakingAnimations.removeIf((SpeakingAnimation sp) -> sp.isInLocation(p));
-        speakingAnimations.add(new SpeakingAnimation(pair.first, p, text.length(), gc.getAppearance()));
+        partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance());
+
     }
 
     public void partyMemberSay(Model model, GameCharacter gc, List<String> alternatives) {

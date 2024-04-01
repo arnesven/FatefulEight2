@@ -1,9 +1,6 @@
 package view.subviews;
 
-import model.Model;
-import model.Party;
-import model.SpeakingAnimation;
-import model.SteppingMatrix;
+import model.*;
 import model.characters.GameCharacter;
 import util.MyPair;
 import view.BorderFrame;
@@ -25,7 +22,7 @@ public class OtherPartySubView extends TopMenuSubView {
     private final GameCharacter leader;
     private final HashMap<GameCharacter, Integer> attitudes;
     private Set<GameCharacter> infoRevealed = new HashSet<>();
-    private List<MyPair<GameCharacter, SpeakingAnimation>> speakingAnimations = new ArrayList<>();
+    private final PartyAnimations partyAnis = new PartyAnimations();
 
     public OtherPartySubView(List<GameCharacter> characters,
                              GameCharacter leader,
@@ -83,6 +80,7 @@ public class OtherPartySubView extends TopMenuSubView {
                     model.getScreenHandler().register("attitude", new Point(xPos, yPos),
                             PartyAttitudesDialog.getSymbolForAttitude(attitudes.get(matrix.getElementAt(c, r))));
                     model.getScreenHandler().register("attitudeCover", new Point(xPos, yPos), ATTITUDE_COVER);
+                    partyAnis.drawBlink(model.getScreenHandler(), matrix.getElementAt(c, r).getAppearance(), new Point(xPos, yPos-3));
                 }
                 if (matrix.getElementAt(c, r) == leader) {
                     String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
@@ -91,16 +89,7 @@ public class OtherPartySubView extends TopMenuSubView {
                 }
             }
         }
-        for (MyPair<GameCharacter, SpeakingAnimation> pair : new ArrayList<>(speakingAnimations)) {
-            if (matrix.getElementList().contains(pair.first)) {
-                if (pair.second.isDone()) {
-                    pair.second.unregister();
-                    speakingAnimations.remove(pair);
-                } else {
-                    pair.second.drawYourself(model.getScreenHandler());
-                }
-            }
-        }
+        partyAnis.drawSpeakAnimations(model.getScreenHandler());
     }
 
     @Override
@@ -159,7 +148,7 @@ public class OtherPartySubView extends TopMenuSubView {
         Point p = matrix.getPositionFor(gc);
         int xPos = X_OFFSET + p.x * 8 + 7;
         int yPos = Y_OFFSET + p.y * 8 + 3;
-        this.speakingAnimations.add(new MyPair<>(gc, new SpeakingAnimation(pair.first, new Point(xPos, yPos), s.length(), gc.getAppearance())));
+        partyAnis.addSpeakAnimation(pair.first, new Point(xPos-3, yPos-2), s.length(), gc.getAppearance());
         return pair.second;
     }
 }

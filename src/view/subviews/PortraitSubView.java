@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.Model;
+import model.PartyAnimations;
 import model.SpeakingAnimation;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
@@ -20,10 +21,11 @@ public class PortraitSubView extends SubView {
     private static final CharacterAppearance silhouetteAppearance = new SilhouetteAppearance();
     public static final int PORTRAIT_FRAME_WIDTH = 16;
     public static final int PORTRAIT_FRAME_HEIGHT = 13;
+    private static final Point CHAR_LOCATION = new Point(36, 10);
     private final SubView previous;
     private final CharacterAppearance appearance;
     private final String portraitName;
-    private SpeakingAnimation speakingAnimation = null;
+    private final PartyAnimations partyAnimations = new PartyAnimations();
 
     public PortraitSubView(SubView subView, CharacterClass cls, Race race, String portraitName) {
         this.previous = subView;
@@ -133,13 +135,8 @@ public class PortraitSubView extends SubView {
         } else {
             BorderFrame.drawCentered(model.getScreenHandler(), portraitName, Y_OFFSET + 17, MyColors.LIGHT_GRAY, MyColors.BLACK);
         }
-        if (speakingAnimation != null) {
-            speakingAnimation.drawYourself(model.getScreenHandler());
-            if (speakingAnimation.isDone()) {
-                speakingAnimation.unregister();
-                speakingAnimation = null;
-            }
-        }
+        partyAnimations.drawBlink(model.getScreenHandler(), appearance, CHAR_LOCATION);
+        partyAnimations.drawSpeakAnimations(model.getScreenHandler());
     }
 
     @Override
@@ -160,7 +157,7 @@ public class PortraitSubView extends SubView {
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(portraitName, pair.second);
-        speakingAnimation = new SpeakingAnimation(pair.first, new Point(39, 12), line.length(), appearance);
+        partyAnimations.addSpeakAnimation(pair.first, CHAR_LOCATION, line.length(), appearance);
     }
 
     public boolean getPortraitGender() {
