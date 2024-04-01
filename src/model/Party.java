@@ -342,6 +342,8 @@ public class Party implements Serializable {
                     "My skills are improving!^",
                     "Just look at me now!^",
                     "Advancement!^",
+                    "I've grown, I'm sure of it.",
+                    "Marvelous.",
                     "I think I'm getting the hang of this.^",
                     "I'm good, there's just no denying it.^"));
             SoundEffects.playSound("levelup");
