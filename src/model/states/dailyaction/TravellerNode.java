@@ -74,7 +74,9 @@ public class TravellerNode extends DailyActionNode {
 
     public static Traveller makeRandomTraveller(Model model, int howManyNearest) {
         AdvancedAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.None);
-        int rank = MyRandom.randInt(0, howManyNearest);
+        int minRank = model.getCurrentHex().getLocation() != null &&
+                model.getCurrentHex().getLocation() instanceof UrbanLocation ? 1 : 0;
+        int rank = MyRandom.randInt(minRank, howManyNearest);
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> points = model.getWorld().shortestPathToNearestTownOrCastle(rank);
         HexLocation loc = model.getWorld().getHex(points.get(points.size()-1)).getLocation();
