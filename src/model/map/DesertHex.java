@@ -53,7 +53,8 @@ public class DesertHex extends WorldHex {
                     new DehydrationEvent(model),
                     new RedKnightEvent(model),
                     new DehydrationEvent(model),
-                    new DehydrationEvent(model)
+                    new DehydrationEvent(model),
+                    new LostExplorerEvent(model)
             ));
         } else if (getLocation() instanceof HillsLocation) {
             return HillsHex.generateHillsEvent(model);

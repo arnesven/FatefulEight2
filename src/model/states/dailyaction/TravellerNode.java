@@ -80,7 +80,7 @@ public class TravellerNode extends DailyActionNode {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> points = model.getWorld().shortestPathToNearestTownOrCastle(rank);
         HexLocation loc = model.getWorld().getHex(points.get(points.size()-1)).getLocation();
-        return new Traveller("Traveller", appearance, loc, points.size());
+        return new Traveller("Traveller", appearance, loc, points.size(), 0);
     }
 
     @Override

@@ -66,7 +66,8 @@ public class SwampHex extends WorldHex {
                     new SwampRaftEvent(model),
                     new SwampRaftEvent(model),
                     new SwampRaftEvent(model),
-                    new CryptEvent(model)
+                    new CryptEvent(model),
+                    new LostExplorerEvent(model)
             ));
         }
         return new NoEventState(model);

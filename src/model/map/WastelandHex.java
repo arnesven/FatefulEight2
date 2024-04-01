@@ -43,7 +43,8 @@ public class WastelandHex extends WorldHex {
                 new DehydrationEvent(model),
                 new OrcBandEvent(model),
                 new VulturesEvent(model),
-                new NoEventState(model)
+                new NoEventState(model),
+                new LostExplorerEvent(model)
         ));
     }
 

@@ -24,13 +24,13 @@ public class Traveller implements Serializable {
     private final int gold;
     private int acceptedOnDay = 0;
 
-    public Traveller(String name, CharacterAppearance appearance, HexLocation destination, int distance) {
+    public Traveller(String name, CharacterAppearance appearance, HexLocation destination, int distance, int extraReward) {
         this.name = name;
         this.appearance = appearance;
         this.destination = destination.getName();
         this.time = MyRandom.randInt(distance-1, (int)(distance*1.5));
         this.gold = MyRandom.randInt(distance/2, distance*2) +
-                MyRandom.randInt(distance/2, distance*2);
+                MyRandom.randInt(distance/2, distance*2) + extraReward;
     }
 
     public String getAcceptString() {
