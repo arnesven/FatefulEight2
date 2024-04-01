@@ -11,6 +11,7 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.MyLists;
+import util.MyRandom;
 import view.SimpleMessageView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
@@ -203,7 +204,15 @@ public class ShopState extends GameState {
         });
         waitForReturnSilently();
         if (didAction[0] != null) {
-            println(it.getName() + " was equipped by " + didAction[0].getName() + ".");
+            if (MyRandom.flipCoin()) {
+                println(it.getName() + " was equipped by " + didAction[0].getName() + ".");
+            } else {
+                println("");
+                partyMemberSay(didAction[0], MyRandom.sample(List.of("For me? Okay.", "I'll take care of it.",
+                        "New equipment, good.", "A fine item from the looks of it.", "This should come in handy.",
+                        "I'll take that.", "I'll make good use of this.", "I've been looking for something like that.",
+                        "Perfect!", "Thank you.", "I appreciate that.", "Alright, I'll use that.")));
+            }
             for (Item it2 : model.getParty().getInventory().getAllItems()) {
                 if (!sellItems.getElementList().contains(it2)) {
                     sellItems.addElementLast(it2);

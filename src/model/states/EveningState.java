@@ -106,6 +106,12 @@ public class EveningState extends GameState {
             } else {
                 leaderSay("I refuse.");
             }
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (gc != model.getParty().getLeader() && gc.getAttitude(model.getParty().getLeader()) < 0) {
+                    gc.addToAttitude(model.getParty().getLeader(), -3);
+                }
+            }
+            println(dissidents.get(0).getName() + " has been affronted.");
         }
     }
 
@@ -339,7 +345,9 @@ public class EveningState extends GameState {
                         "Who's been using my sleeping bag?",
                         "Tomorrow's another day.",
                         "I'm about to fall asleep.",
+                        "Bedtime. At least for me.",
                         "These rations are a bit stale.",
+                        "It's been an alright day I suppose.",
                         "I wish we would stay at a tavern.",
                         "Yaaawn!", "Good night everybody."));
             }
