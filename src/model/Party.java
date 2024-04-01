@@ -9,11 +9,9 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
-import model.enemies.DragonEnemy;
 import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
-import model.items.ItemDeck;
 import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
@@ -22,7 +20,6 @@ import model.states.GameState;
 import model.states.SpellCastException;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;
-import org.ietf.jgss.Oid;
 import sound.SoundEffects;
 import util.MyLists;
 import view.sprites.CombatCursorSprite;
@@ -48,8 +45,7 @@ public class Party implements Serializable {
     private final List<GameCharacter> frontRow = new ArrayList<>();
     private final List<GameCharacter> backRow = new ArrayList<>();
     private final List<GameCharacter> bench = new ArrayList<>();
-    private final List<MyPair<Point, TimedAnimationSprite>> callouts = new ArrayList<>();
-    private final List<MyPair<Point, MouthMovementSprite>> mouthAnimations = new ArrayList<>();
+    private final List<SpeakingAnimation> speakingAnimations = new ArrayList<>();
     private final Map<String, Summon> summons = new HashMap<>();
     private final Set<String> templeBannings = new HashSet<>();
     private final Set<String> heldQuests = new HashSet<>();
@@ -119,29 +115,13 @@ public class Party implements Serializable {
             gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
             count++;
         }
-        {
-            List<MyPair<Point, TimedAnimationSprite>> toRemove = new ArrayList<>();
-            for (MyPair<Point, TimedAnimationSprite> p : callouts) {
-                if (!p.second.isDone()) {
-                    screenHandler.register(p.second.getName(), p.first, p.second, 2);
-                } else {
-                    toRemove.add(p);
-                    AnimationManager.unregister(p.second);
-                }
+        List<MyPair<Point, TimedAnimationSprite>> toRemove = new ArrayList<>();
+        for (SpeakingAnimation speakAni : new ArrayList<>(speakingAnimations)) {
+            speakAni.handle(screenHandler);
+            if (speakAni.isDone()) {
+                speakAni.unregister();
+                speakingAnimations.remove(speakAni);
             }
-            callouts.removeAll(toRemove);
-        }
-        {
-            List<MyPair<Point, MouthMovementSprite>> toRemove = new ArrayList<>();
-            for (MyPair<Point, MouthMovementSprite> p : mouthAnimations) {
-                if (!p.second.isDone()) {
-                    screenHandler.register(p.second.getName(), p.first, p.second, 2);
-                } else {
-                    toRemove.add(p);
-                    AnimationManager.unregister(p.second);
-                }
-            }
-            mouthAnimations.removeAll(toRemove);
         }
     }
 
@@ -333,22 +313,8 @@ public class Party implements Serializable {
         Point p = getLocationForPartyMember(index);
         p.x += 3;
         p.y += 2;
-        CalloutSprite spr = new CalloutSprite(pair.first);
-        addCallout(p, spr, text.length(), gc);
-
-    }
-
-    private synchronized void addCallout(Point p, CalloutSprite spr, int textLength, GameCharacter gc) {
-        callouts.removeIf((MyPair<Point, TimedAnimationSprite> pa) -> pa.first.x == p.x && pa.first.y == p.y);
-        callouts.add(new MyPair<>(p, spr));
-        if (gc.getCharClass().showFacialHair()) {
-            Point p2 = new Point(p.x, p.y);
-            p2.y += 5;
-            MouthMovementSprite sprite = new MouthMovementSprite(textLength, gc.getRace().getColor(),
-                    gc.getAppearance().getLipColor(), gc.getAppearance().hasTuskMouth());
-            mouthAnimations.removeIf((MyPair<Point, MouthMovementSprite> pa) -> pa.first.x == p2.x && pa.first.y == p2.y);
-            mouthAnimations.add(new MyPair<>(p2, sprite));
-        }
+        speakingAnimations.removeIf((SpeakingAnimation sp) -> sp.isInLocation(p));
+        speakingAnimations.add(new SpeakingAnimation(pair.first, p, text.length(), gc));
     }
 
     public void partyMemberSay(Model model, GameCharacter gc, List<String> alternatives) {

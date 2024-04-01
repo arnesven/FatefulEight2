@@ -5,8 +5,12 @@ import view.MyColors;
 
 public class CalloutSprite extends TimedAnimationSprite {
 
+    public CalloutSprite(int num, int textLength) {
+        super("callout"+num, "callouts.png", num, textLength*2, MyColors.BLACK, MyColors.WHITE, MyColors.RED);
+    }
+
     public CalloutSprite(int num) {
-        super("callout"+num, "callouts.png", num, 300, MyColors.BLACK, MyColors.WHITE, MyColors.RED);
+        this(num, 300);
     }
 
     public static MyPair<Integer, String> getSpriteNumForText(String text) {
