@@ -4,6 +4,7 @@ import model.Model;
 import model.states.dailyaction.FlagPoleNode;
 import util.MyLists;
 import util.MyPair;
+import util.MyRandom;
 import view.DrawingArea;
 import view.ScreenHandler;
 import view.sprites.Sprite;
@@ -449,6 +450,19 @@ public class World implements Serializable {
             }
         }
         throw new IllegalArgumentException("No position found for argument " + location);
+    }
+
+    public List<Point> shortestPathToPoint(Point first) {
+        return generalShortestPath(0, worldHex -> {
+            Point p = getPositionForHex(worldHex);
+            return p.x == first.x && p.y == first.y;
+        });
+    }
+
+    public Point getRandomPositionWithinBounds() {
+        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
+        return new Point(MyRandom.randInt(bounds.x, bounds.x+bounds.width-1),
+                MyRandom.randInt(bounds.y, bounds.y+bounds.height-1));
     }
 
     private static class Interval {

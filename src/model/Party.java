@@ -15,9 +15,12 @@ import model.items.Inventory;
 import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
+import model.map.WorldBuilder;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
+import model.tasks.DeliverParcelTask;
+import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;
 import sound.SoundEffects;
@@ -65,9 +68,10 @@ public class Party implements Serializable {
     private int carryingCapInKilos = 0;
     private static Map<GameCharacter, TamedDragonCharacter> tamedDragons = new HashMap<>();
     private TravellerCollection travellers = new TravellerCollection();
+    private List<DestinationTask> destinationTasks = new ArrayList<>();
 
     public Party() {
-        position = new Point(26, 19);
+        position = WorldBuilder.CROSSROADS_IN_POSITION;
         cursorSprites = makeCursorSprites();
     }
 
@@ -815,4 +819,10 @@ public class Party implements Serializable {
     public List<Traveller> getAbandonedTravellers() {
         return travellers.getAbandonedTravellers();
     }
+
+    public void addDestinationTask(DestinationTask destinationTask) {
+        destinationTasks.add(destinationTask);
+    }
+
+    public List<DestinationTask> getDestinationTasks() { return destinationTasks; }
 }

@@ -208,6 +208,8 @@ public abstract class GameState {
 
     protected String iveOrWeve() { return model.getParty().size() == 1 ? "I've":"we've"; }
 
+    protected String myOrOur() { return model.getParty().size() == 1 ? "my":"our"; }
+
     protected void showPartyAttitudesSubView(Model model) {
         model.setSubView(new PartyAttitudesDialog(model));
         model.getTutorial().attitudes(model);

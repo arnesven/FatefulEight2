@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.horses.HorseHandler;
 import model.races.Race;
+import model.states.AcceptDeliveryEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.*;
@@ -129,7 +130,8 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new BathHouseEvent(model),
                     new PsychicRitual(model),
                     new BarbershopEvent(model),
-                    new TroubadourEvent(model)
+                    new TroubadourEvent(model),
+                    new AcceptDeliveryEvent(model)
             ));
         }
         return new NoEventState(model);

@@ -5,6 +5,7 @@ import model.QuestDeck;
 import model.Summon;
 import model.journal.*;
 import model.map.UrbanLocation;
+import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import util.MyStrings;
 
@@ -32,11 +33,26 @@ public class JournalView extends TwoPaneSelectableListMenu {
         super.transitionedTo(model);
         nextView = null;
         this.questsAndTasks = new ArrayList<>();
-        for (Map.Entry<String, Summon> entry : model.getParty().getSummons().entrySet()) {
-            UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(entry.getKey());
-            questsAndTasks.add(new SummonEntry(model, urb, entry.getValue()));
-        }
+        addSummons(model);
         questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
+        addGenericQuests(model);
+        addTravellers(model);
+        addDestinationTasks(model);
+        sortQuestsAndTasks();
+    }
+
+    private void addDestinationTasks(Model model) {
+        for (DestinationTask dt : model.getParty().getDestinationTasks()) {
+            if (!dt.isFailed(model)) {
+                questsAndTasks.add(dt.getJournalEntry(model));
+            } else {
+                questsAndTasks.add(dt.getFailedJournalEntry(model));
+            }
+        }
+    }
+
+
+    private void addGenericQuests(Model model) {
         for (QuestDeck.LocationAndQuest locationAndQuest : model.getQuestDeck().getLocationsAndQuests()) {
             QuestEntry entry = new QuestEntry(model, locationAndQuest.getLocation(),
                     locationAndQuest.getQuest(), locationAndQuest.getDay());
@@ -44,6 +60,9 @@ public class JournalView extends TwoPaneSelectableListMenu {
                 questsAndTasks.add(entry);
             }
         }
+    }
+
+    private void addTravellers(Model model) {
         for (Traveller t : model.getParty().getActiveTravellers()) {
             questsAndTasks.add(t.getJournalEntry(model, true, false));
         }
@@ -53,6 +72,16 @@ public class JournalView extends TwoPaneSelectableListMenu {
         for (Traveller t : model.getParty().getAbandonedTravellers()) {
             questsAndTasks.add(t.getJournalEntry(model, false, false));
         }
+    }
+
+    private void addSummons(Model model) {
+        for (Map.Entry<String, Summon> entry : model.getParty().getSummons().entrySet()) {
+            UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(entry.getKey());
+            questsAndTasks.add(new SummonEntry(model, urb, entry.getValue()));
+        }
+    }
+
+    private void sortQuestsAndTasks() {
         Collections.sort(questsAndTasks, (j1, j2) -> {
             if (j1.isComplete() == j2.isComplete()) {
                 return j1.getName().compareTo(j2.getName());

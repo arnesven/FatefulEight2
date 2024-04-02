@@ -3,6 +3,7 @@ package model.items;
 import model.items.accessories.*;
 import model.items.clothing.Clothing;
 import model.items.designs.CraftingDesign;
+import model.items.parcels.Parcel;
 import model.items.potions.Potion;
 import model.items.special.PearlItem;
 import model.items.spells.AuxiliarySpell;
@@ -31,6 +32,7 @@ public class Inventory implements Serializable {
     private final List<Scroll> scrolls = new ArrayList<>();
     private final List<Item> specialItems = new ArrayList<>();
     private final List<Item> fishes = new ArrayList<>();
+    private final List<Parcel> parcels = new ArrayList<>();
     private int gold = STARTING_GOLD;
     private int obols = 0;
     private int food = 10;
@@ -67,6 +69,8 @@ public class Inventory implements Serializable {
     }
 
     public void add(Fish fish) { fishes.add(fish); }
+
+    public void add(Parcel parcel) { parcels.add(parcel); }
 
     public List<Weapon> getWeapons() {
         return weapons;
@@ -230,5 +234,9 @@ public class Inventory implements Serializable {
 
     public List<Item> getFish() {
         return fishes;
+    }
+
+    public List<Parcel> getParcels() {
+        return parcels;
     }
 }

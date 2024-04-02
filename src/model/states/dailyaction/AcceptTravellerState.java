@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
+import model.journal.JournalEntry;
 import model.states.GameState;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;
@@ -28,6 +29,7 @@ public class AcceptTravellerState extends GameState {
             print("Do you accept to take the traveller to the destination? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().addTraveller(traveller);
+                JournalEntry.printJournalUpdateMessage(model);
                 traveller.accept(model.getDay());
                 traveller.printReady(this);
             }

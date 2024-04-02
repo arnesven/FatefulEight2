@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
+import model.tasks.DestinationTask;
 import view.subviews.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
@@ -170,6 +171,11 @@ public abstract class WorldHex {
             actions.add(new DailyAction("Travel", new TravelState(model)));
             if (canFly(model)) {
                 actions.add(new DailyAction("Fly on Dragon", new FlyWithDragonState(model)));
+            }
+            for (DestinationTask dt : model.getParty().getDestinationTasks()) {
+                if (dt.givesDailyAction(model)) {
+                    actions.add(dt.getDailyAction(model));
+                }
             }
         }
         actions.add(new StayInHexAction(model));

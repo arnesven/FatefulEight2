@@ -99,6 +99,7 @@ public class Traveller implements Serializable {
         }
         state.println("You part ways with " + name + ".");
         model.getParty().completeTraveller(this);
+        JournalEntry.printJournalUpdateMessage(model);
     }
 
 
@@ -109,6 +110,7 @@ public class Traveller implements Serializable {
         model.getParty().abandonTraveller(this);
         model.getParty().addToReputation(-1);
         state.printAlert("Your reputation has decreased.");
+        JournalEntry.printJournalUpdateMessage(model);
     }
 
     public JournalEntry getJournalEntry(Model model, boolean active, boolean completed) {

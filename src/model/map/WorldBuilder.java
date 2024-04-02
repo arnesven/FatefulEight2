@@ -10,6 +10,7 @@ import static model.map.Direction.*;
 
 public class WorldBuilder {
 
+    public static final Point CROSSROADS_IN_POSITION = new Point(26, 19);
     public static final int WORLD_WIDTH = 53;
     public static final int WORLD_HEIGHT = 38;
     private static final int EXTRA_WIDTH = 14;
@@ -187,7 +188,8 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 22, 19, SOUTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 23, 19, SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 24, 19, NORTH_WEST | SOUTH_EAST, 0);
-        addInn(contents,26,19, "Crossroads Inn", NORTH_EAST | SOUTH_EAST | SOUTH | SOUTH_WEST, 0);
+        addInn(contents,CROSSROADS_IN_POSITION.x, CROSSROADS_IN_POSITION.y,
+                "Crossroads Inn", NORTH_EAST | SOUTH_EAST | SOUTH | SOUTH_WEST, 0);
         addEvilTower(contents, getFortressPosition(EXPAND_WEST), EXPAND_WEST);
         addRoadsAndRivers(contents, 27, 19, SOUTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 29, 19, 0, NORTH);

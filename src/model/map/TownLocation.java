@@ -117,7 +117,8 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new FriendEvent(model),
                     new BathHouseEvent(model),
                     new BarbershopEvent(model),
-                    new TroubadourEvent(model)
+                    new TroubadourEvent(model),
+                    new AcceptDeliveryEvent(model)
             ));
         }
         return new NoEventState(model);

@@ -220,6 +220,7 @@ public class InventoryView extends SelectableListMenu {
                         addResources(model, result);
                         result.addAll(model.getParty().getInventory().getPearls());
                         result.addAll(model.getParty().getInventory().getFish());
+                        result.addAll(model.getParty().getInventory().getParcels());
                         return result;
                     }
                 }};

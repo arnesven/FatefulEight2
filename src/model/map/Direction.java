@@ -48,6 +48,24 @@ public class Direction {
         throw new IllegalStateException("Illegal direction " + dir + ".");
     }
 
+    public static String longNameForDirection(int dir) {
+        switch (dir) {
+            case NORTH:
+                return "north";
+            case NORTH_EAST:
+                return "north east";
+            case SOUTH_EAST:
+                return "south east";
+            case SOUTH:
+                return "south";
+            case SOUTH_WEST:
+                return "south west";
+            case NORTH_WEST:
+                return "north west";
+        }
+        throw new IllegalStateException("Illegal direction " + dir + ".");
+    }
+
     public static int directionForName(String directionName) {
         if (directionName.equals("SE")) {
             return SOUTH_EAST;

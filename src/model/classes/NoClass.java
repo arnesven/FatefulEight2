@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.items.Item;
 import model.races.Race;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 
@@ -18,7 +19,8 @@ public class NoClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnLooseShirt(characterAppearance, MyColors.BEIGE);
+        Looks.putOnLooseShirt(characterAppearance, MyRandom.sample(List.of(MyColors.BEIGE,
+                MyColors.LIGHT_GREEN, MyColors.LIGHT_BLUE, MyColors.LIGHT_RED, MyColors.GRAY)));
     }
 
     @Override

@@ -37,8 +37,10 @@ public class FlagPoleNode extends DailyActionNode {
         Point p2 = new Point(p);
         p2.y -= 4;
         model.getScreenHandler().register(POLE_UPPER.getName(), p2, POLE_UPPER);
-        if (showSuccessFlag(model, ((UrbanLocation)model.getCurrentHex().getLocation()))) {
-            model.getScreenHandler().register(POLE_UPPER.getName(), p2, SUCCESS_FLAG);
+        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
+            if (showSuccessFlag(model, ((UrbanLocation) model.getCurrentHex().getLocation()))) {
+                model.getScreenHandler().register(POLE_UPPER.getName(), p2, SUCCESS_FLAG);
+            }
         }
     }
 
