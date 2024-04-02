@@ -28,8 +28,11 @@ public class GoblinClass extends SpecialCharacterClass {
     }
 
     @Override
-    public void putClothesOn(CharacterAppearance characterAppearance) {
+    public void putClothesOn(CharacterAppearance characterAppearance) { }
 
+    @Override
+    public boolean showFacialHair() {
+        return false;
     }
 
     @Override
