@@ -73,7 +73,8 @@ public class CaveHex extends WorldHex {
                 new MushroomsEvent(model),
                 new GoblinFugitiveEvent(model),
                 new ChestEvent(model),
-                new BanishDaemonRitualEvent(model)
+                new BanishDaemonRitualEvent(model),
+                new FindTreasureMapEvent(model)
         ));
         if (canHaveExit()) {
             events.addAll(List.of(new ExitCaveEvent(model), new ExitCaveEvent(model), new ExitCaveEvent(model)));

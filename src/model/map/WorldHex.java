@@ -4,6 +4,7 @@ import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
 import model.tasks.DestinationTask;
+import util.MyLists;
 import view.subviews.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
@@ -24,7 +25,9 @@ import view.sprites.HexSprite;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class WorldHex {
 
@@ -191,7 +194,9 @@ public abstract class WorldHex {
         } else if (hasRoad()) {
             actions.add(new GetOnRoadAction(model));
         }
-        return actions;
+
+        // Uniqueify
+        return MyLists.uniqueify(actions, DailyAction::getName);
     }
 
     private boolean canFly(Model model) {

@@ -33,6 +33,7 @@ public class Inventory implements Serializable {
     private final List<Item> specialItems = new ArrayList<>();
     private final List<Item> fishes = new ArrayList<>();
     private final List<Parcel> parcels = new ArrayList<>();
+    private final List<BookItem> books = new ArrayList<>();
     private int gold = STARTING_GOLD;
     private int obols = 0;
     private int food = 10;
@@ -71,6 +72,8 @@ public class Inventory implements Serializable {
     public void add(Fish fish) { fishes.add(fish); }
 
     public void add(Parcel parcel) { parcels.add(parcel); }
+
+    public void add(BookItem book) { books.add(book); }
 
     public List<Weapon> getWeapons() {
         return weapons;
@@ -163,6 +166,7 @@ public class Inventory implements Serializable {
         sets.add(fishes);
         sets.add(specialItems);
         sets.add(parcels);
+        sets.add(books);
         return sets;
     }
 
@@ -240,5 +244,9 @@ public class Inventory implements Serializable {
 
     public List<Parcel> getParcels() {
         return parcels;
+    }
+
+    public List<BookItem> getBooks() {
+        return books;
     }
 }

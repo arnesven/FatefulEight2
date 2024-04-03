@@ -178,15 +178,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
 
     private Destination makeRandomDestination(Model model) {
         System.out.println("Making random destination!");
-        Point position;
-        do {
-            position = model.getWorld().getRandomPositionWithinBounds();
-            WorldHex hex = model.getWorld().getHex(position);
-            HexLocation loc = hex.getLocation();
-            if (!(hex instanceof SeaHex) && (loc == null || loc.isDecoration())) {
-                break;
-            }
-        } while (true);
+        Point position = randomPositionWithoutLocation(model);
         System.out.println("Position: (" + position.x + ", " + position.y + ")");
         String dwelling = MyRandom.sample(List.of(
                 "hut", "house", "cottage", "lodge", "tower",
@@ -234,6 +226,19 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
         System.out.println("Long: " + description.toString());
         System.out.println("Short: " + shortDescription);
         return new Destination(position, description.toString(), shortDescription);
+    }
+
+    public static Point randomPositionWithoutLocation(Model model) {
+        Point position;
+        do {
+            position = model.getWorld().getRandomPositionWithinBounds();
+            WorldHex hex = model.getWorld().getHex(position);
+            HexLocation loc = hex.getLocation();
+            if (!(hex instanceof SeaHex) && (loc == null || loc.isDecoration())) {
+                break;
+            }
+        } while (true);
+        return position;
     }
 
 }

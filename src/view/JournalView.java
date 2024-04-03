@@ -46,7 +46,10 @@ public class JournalView extends TwoPaneSelectableListMenu {
             if (!dt.isFailed(model)) {
                 questsAndTasks.add(dt.getJournalEntry(model));
             } else {
-                questsAndTasks.add(dt.getFailedJournalEntry(model));
+                JournalEntry je = dt.getFailedJournalEntry(model);
+                if (je != null) {
+                    questsAndTasks.add(je);
+                }
             }
         }
     }

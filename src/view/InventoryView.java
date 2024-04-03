@@ -202,6 +202,7 @@ public class InventoryView extends SelectableListMenu {
                         List<Item> result = new ArrayList<>(model.getParty().getInventory().getRecipes());
                         result.addAll(model.getParty().getInventory().getCraftingDesigns());
                         result.addAll(model.getParty().getInventory().getScrolls());
+                        result.addAll(model.getParty().getInventory().getBooks());
                         return result;
                     }
                 },

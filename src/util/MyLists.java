@@ -1,11 +1,14 @@
 package util;
 
 
+import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.items.spells.Spell;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -89,5 +92,13 @@ public class MyLists {
             }
         }
         return max;
+    }
+
+    public static <E> List<E> uniqueify(List<E> listOfEs, MyStringFunction<E> fun) {
+        Map<String, E> map = new HashMap<>();
+        for (E e : listOfEs) {
+            map.put(fun.getString(e), e);
+        }
+        return new ArrayList<E>(map.values());
     }
 }
