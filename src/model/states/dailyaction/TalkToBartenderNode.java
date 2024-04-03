@@ -215,7 +215,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                     " of them off your hands and give you " + take + " gold.");
             print("Do you accept? (Y/N) ");
             if (yesNoInput()) {
-                model.getParty().addToObols(take*10);
+                model.getParty().addToObols(-take*10);
                 model.getParty().addToGold(take);
                 println("You now have " + model.getParty().getObols() + " obols.");
             }

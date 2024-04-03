@@ -54,6 +54,7 @@ public abstract class Parcel extends UsableItem {
 
     public static Parcel makeRandomParcel() {
         return MyRandom.sample(List.of(new LetterParcel(), new PackageParcel(),
-                new SackParcel(), new ChestParcel(), new BagParcel()));
+                new SackParcel(), new ChestParcel(), new BagParcel(),
+                new BoxParcel()));
     }
 }
