@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Inventory;
 import model.items.Item;
+import model.items.MysteriousMap;
 import model.items.UsableItem;
 import util.MyRandom;
 
@@ -31,7 +32,11 @@ public abstract class Parcel extends UsableItem {
         model.getParty().addToNotoriety(getNotoriety());
         Item inner = getInnerItem();
         if (inner == null) {
-            return "The " + getName().toLowerCase() + " contained nothing but some uninteresting pieces of parchment.";
+            if (MyRandom.randInt(50) != 0) {
+                return "The " + getName().toLowerCase() +
+                        " contained nothing but some uninteresting pieces of parchment.";
+            }
+            inner = new MysteriousMap(model);
         }
         inner.addYourself(model.getParty().getInventory());
         return "The " + getName().toLowerCase() + " contained " + inner.getName() + ".";

@@ -7,6 +7,7 @@ import model.classes.SkillCheckResult;
 import model.items.BookItem;
 import model.items.MysteriousMap;
 import model.states.DailyEventState;
+import model.states.GameState;
 import util.MyPair;
 
 public class FindTreasureMapEvent extends DailyEventState {
@@ -19,13 +20,17 @@ public class FindTreasureMapEvent extends DailyEventState {
         if (!hasTreasureMap(model) && spotMap(model)) {
             println("You find a piece of parchment on the ground.");
             leaderSay("A treasure map?");
-            println("You got a Mysterious Map!");
-            MysteriousMap map = new MysteriousMap(model);
-            model.getParty().getInventory().add(map);
-            model.getParty().addDestinationTask(map.getDestinationTask());
+            getMysteriousMap(model, this);
         } else {
             new NoEventState(model).doTheEvent(model);
         }
+    }
+
+    public static void getMysteriousMap(Model model, GameState state) {
+        state.println("You got a Mysterious Map!");
+        MysteriousMap map = new MysteriousMap(model);
+        model.getParty().getInventory().add(map);
+        model.getParty().addDestinationTask(map.getDestinationTask());
     }
 
     private boolean hasTreasureMap(Model model) {

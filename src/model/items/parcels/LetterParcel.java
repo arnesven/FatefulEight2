@@ -1,6 +1,8 @@
 package model.items.parcels;
 
 import model.items.Item;
+import model.items.MysteriousMap;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
