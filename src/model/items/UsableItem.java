@@ -21,4 +21,8 @@ public abstract class UsableItem extends Item {
     public String getUsageVerb() {
         return "Use";
     }
+
+    public boolean removeAfterUse() {
+        return true;
+    }
 }

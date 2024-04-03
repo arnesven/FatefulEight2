@@ -1,7 +1,6 @@
 package model.items.parcels;
 
-import model.items.Inventory;
-import model.items.Item;
+import model.items.*;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.ItemSprite;
@@ -54,5 +53,16 @@ public class SackParcel extends Parcel {
     @Override
     public String getSound() {
         return null;
+    }
+
+    @Override
+    protected Item getInnerItem() {
+        if (contents == FOOD) {
+            return new FoodDummyItem(amount);
+        }
+        if (contents == INGREDIENTS) {
+            return new IngredientsDummyItem(amount);
+        }
+        return new MaterialsDummyItem(amount);
     }
 }

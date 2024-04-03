@@ -301,7 +301,9 @@ public class InventoryView extends SelectableListMenu {
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);
-                                model.getParty().getInventory().remove(itemToEquip);
+                                if (((UsableItem)itemToEquip).removeAfterUse()) {
+                                    model.getParty().getInventory().remove(itemToEquip);
+                                }
                                 checkForSelectedRowReset(model);
                                 InventoryView.this.checkForSelectedRowReset(model);
                                 if (!message.equals("")) {

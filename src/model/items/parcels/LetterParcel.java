@@ -36,4 +36,9 @@ public class LetterParcel extends Parcel {
     public String getSound() {
         return null;
     }
+
+    @Override
+    protected Item getInnerItem() {
+        return null;
+    }
 }

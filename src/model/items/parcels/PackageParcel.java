@@ -15,7 +15,7 @@ public class PackageParcel extends Parcel {
     private final Item innerItem;
 
     public PackageParcel() {
-        super("Package", 2.0);
+        super("Package", 3.0);
         this.innerItem = makeRandomItem();
     }
 
@@ -48,5 +48,10 @@ public class PackageParcel extends Parcel {
     @Override
     public String getSound() {
         return null;
+    }
+
+    @Override
+    protected Item getInnerItem() {
+        return innerItem;
     }
 }

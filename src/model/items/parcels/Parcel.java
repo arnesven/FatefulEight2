@@ -1,12 +1,15 @@
 package model.items.parcels;
 
+import model.Model;
+import model.characters.GameCharacter;
 import model.items.Inventory;
 import model.items.Item;
+import model.items.UsableItem;
 import util.MyRandom;
 
 import java.util.List;
 
-public abstract class Parcel extends Item {
+public abstract class Parcel extends UsableItem {
     private final double multiplier;
 
     public Parcel(String name, double multiplier) {
@@ -19,11 +22,35 @@ public abstract class Parcel extends Item {
         inventory.getParcels().add(this);
     }
 
-    public static Parcel makeRandomParcel() {
-        return MyRandom.sample(List.of(new LetterParcel(), new PackageParcel(), new SackParcel())); // TODO: Add chest, bag, sack
-    }
-
     public double getDeliveryGoldMultiplier() {
         return multiplier;
+    }
+
+    @Override
+    public String useYourself(Model model, GameCharacter gc) {
+        Item inner = getInnerItem();
+        if (inner == null) {
+            return "The " + getName().toLowerCase() + " contained nothing but some uninteresting pieces of parchment.";
+        }
+        inner.addYourself(model.getParty().getInventory());
+        return "The " + getName().toLowerCase() + " contained " + inner.getName() + ".";
+    }
+
+    protected abstract Item getInnerItem();
+
+    @Override
+    public boolean canBeUsedOn(Model model, GameCharacter target) {
+        return model.getParty().getPartyMembers().contains(target);
+    }
+
+    @Override
+    public String getUsageVerb() {
+        return "Open";
+    }
+
+
+    public static Parcel makeRandomParcel() {
+        return MyRandom.sample(List.of(new LetterParcel(), new PackageParcel(),
+                new SackParcel(), new ChestParcel(), new BagParcel()));
     }
 }
