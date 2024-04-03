@@ -70,4 +70,12 @@ public class ChestParcel extends Parcel {
         model.getParty().getInventory().remove(this);
         return gc.getFirstName() + " unlocked the chest. " + super.useYourself(model, gc);
     }
+
+    @Override
+    protected int getNotoriety() {
+        if (containsPaper) {
+            return 1;
+        }
+        return level*5;
+    }
 }

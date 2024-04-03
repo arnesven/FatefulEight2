@@ -38,6 +38,11 @@ public class LetterParcel extends Parcel {
     }
 
     @Override
+    protected int getNotoriety() {
+        return 1;
+    }
+
+    @Override
     protected Item getInnerItem() {
         return null;
     }

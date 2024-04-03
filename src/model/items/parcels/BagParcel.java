@@ -52,6 +52,11 @@ public class BagParcel extends Parcel {
     }
 
     @Override
+    protected int getNotoriety() {
+        return 5;
+    }
+
+    @Override
     protected Item getInnerItem() {
         if (amount == 0) {
             return potion;

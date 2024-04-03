@@ -51,6 +51,11 @@ public class PackageParcel extends Parcel {
     }
 
     @Override
+    protected int getNotoriety() {
+        return 5;
+    }
+
+    @Override
     protected Item getInnerItem() {
         return innerItem;
     }

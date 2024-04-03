@@ -90,7 +90,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
                 "and I'm not sure I'm up for the trek into the wilds. You would be compensated of course. Are you interested?");
         leaderSay("Where do you want it delivered?");
         portraitSay("It's to my " + recipient.first + ". " + heOrSheCap(recipient.second) +
-                " lives " + destination.longDescription + ". You can't miss it. " + heOrSheCap(recipient.second) + " will pay you " +
+                " lives in " + destination.longDescription + ". You can't miss it. " + heOrSheCap(recipient.second) + " will pay you " +
                 promisedGold + " gold for it.");
         print("Do you accept to make the delivery? (Y/N) ");
         if (yesNoInput()) {
@@ -164,7 +164,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
             shortDescription = "a " + dwelling + " by the side of the road";
         } else {
             String inThe = " in the ";
-            if (hex instanceof TundraHex) {
+            if (hex instanceof TundraHex || hex instanceof PlainsHex) {
                 inThe = " on the ";
             }
             description.append(inThe).append(hex.getTerrainName());

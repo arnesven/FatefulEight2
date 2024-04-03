@@ -28,6 +28,7 @@ public abstract class Parcel extends UsableItem {
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {
+        model.getParty().addToNotoriety(getNotoriety());
         Item inner = getInnerItem();
         if (inner == null) {
             return "The " + getName().toLowerCase() + " contained nothing but some uninteresting pieces of parchment.";
@@ -35,6 +36,8 @@ public abstract class Parcel extends UsableItem {
         inner.addYourself(model.getParty().getInventory());
         return "The " + getName().toLowerCase() + " contained " + inner.getName() + ".";
     }
+
+    protected abstract int getNotoriety();
 
     protected abstract Item getInnerItem();
 
