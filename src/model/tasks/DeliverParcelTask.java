@@ -18,13 +18,15 @@ public class DeliverParcelTask extends DestinationTask {
     private final String recipient;
     private final Boolean recipientGender;
     private final int promisedGold;
+    private final String sender;
     private boolean completed;
     private final String shortDescription;
     private final Race recipientRace;
 
-    public DeliverParcelTask(Parcel parcel, Point point, String longDescription, String shortDescription,
+    public DeliverParcelTask(String sender, Parcel parcel, Point point, String longDescription, String shortDescription,
                              String recipient, Race race, Boolean gender, int promisedGold) {
         super(point, longDescription);
+        this.sender = sender;
         this.parcel = parcel;
         this.shortDescription = shortDescription;
         this.recipient = recipient;
@@ -76,10 +78,10 @@ public class DeliverParcelTask extends DestinationTask {
             @Override
             public String getText() {
                 if (completed) {
-                    return "You delivered a " + parcel.getName().toLowerCase() + " to somebody's " +
+                    return "You delivered a " + parcel.getName().toLowerCase() + " to " + sender + "'s " +
                             recipient + " in exchange for " + promisedGold + " gold.";
                 }
-                return "You have agreed to deliver a " + parcel.getName().toLowerCase() + " to somebody's " +
+                return "You have agreed to deliver a " + parcel.getName().toLowerCase() + " to " + sender + "'s " +
                         recipient + " in exchange for " + promisedGold + " gold. This person lives " +
                         getDestinationDescription() + ".";
 
@@ -120,7 +122,7 @@ public class DeliverParcelTask extends DestinationTask {
 
             @Override
             public String getText() {
-                return "You had agreed to deliver a " + parcel.getName().toLowerCase() + " to somebody's " +
+                return "You had agreed to deliver a " + parcel.getName().toLowerCase() + " to " + sender + "'s " +
                         recipient + ", but you have lost it somewhere along the way.";
             }
 
@@ -159,5 +161,9 @@ public class DeliverParcelTask extends DestinationTask {
         model.getLog().addAnimated("The party received " + promisedGold + " gold.\n");
         completed = true;
         JournalEntry.printJournalUpdateMessage(model);
+    }
+
+    public String getSender() {
+        return sender;
     }
 }

@@ -12,6 +12,7 @@ import model.items.parcels.Parcel;
 import model.items.weapons.Club;
 import model.journal.JournalEntry;
 import model.map.*;
+import model.races.Race;
 import model.states.events.DarkDeedsEvent;
 import model.states.events.NoEventState;
 import model.tasks.DeliverParcelTask;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AcceptDeliveryEvent extends DarkDeedsEvent {
+
     private static class Destination {
         Point position;
         String longDescription;
@@ -56,9 +58,20 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
     private Destination destination;
     private MyPair<String, Boolean> recipient;
     private int promisedGold;
+    private final String sender;
+    private final boolean isTrueEvent;
 
     public AcceptDeliveryEvent(Model model) {
         super(model, "Talk to", 5);
+        this.sender = "Somebody";
+        this.isTrueEvent = true;
+    }
+
+    public AcceptDeliveryEvent(Model model, String sender) {
+        super(model, "UNUSED", 0);
+        this.sender = sender;
+        this.isTrueEvent = false;
+        setUpDeliveryData(model);
     }
 
     @Override
@@ -71,36 +84,52 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
         CharacterAppearance app = PortraitSubView.makeRandomPortrait(Classes.None);
         this.commoner = new GameCharacter("Commoner", "", app.getRace(), Classes.None, app,
                                             Classes.NO_OTHER_CLASSES, new Equipment(new Club()));
+        setUpDeliveryData(model);
+        showExplicitPortrait(model, commoner.getAppearance(), commoner.getName());
+        return true;
+    }
+
+    private void setUpDeliveryData(Model model) {
         this.parcel = Parcel.makeRandomParcel();
         this.destination = makeRandomDestination(model);
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
         List<Point> pathToDestination = model.getWorld().shortestPathToPoint(destination.position);
         this.promisedGold = (int)(pathToDestination.size() * parcel.getDeliveryGoldMultiplier());
         this.recipient = MyRandom.sample(recipiants);
-        showExplicitPortrait(model, commoner.getAppearance(), commoner.getName());
-        return true;
+    }
+
+    private void senderSpeak(String text) {
+        if (isTrueEvent) {
+            portraitSay(text);
+        } else {
+            printQuote(sender, text);
+        }
     }
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        portraitSay("Hey you! I've heard about you! You're " +
-                (model.getParty().size()>1?"those adventurers":"that adventurer") + " people are talking about. " +
-                "Are you getting on the road soon? I have a " + parcel.getName().toLowerCase() + " I would like you " +
+        senderSpeak("Hey you! I've heard about you! You're " +
+                (model.getParty().size()>1?"those adventurers":"that adventurer") + " people are talking about.");
+        return offerDeliveryTask(model);
+    }
+
+    public boolean offerDeliveryTask(Model model) {
+        senderSpeak("Are you getting on the road soon? I have a " + parcel.getName().toLowerCase() + " I would like you " +
                 "to deliver. I would do it myself, but the destination is kind of remote, " +
                 "and I'm not sure I'm up for the trek into the wilds. You would be compensated of course. Are you interested?");
         leaderSay("Where do you want it delivered?");
-        portraitSay("It's to my " + recipient.first + ". " + heOrSheCap(recipient.second) +
+        senderSpeak("It's to my " + recipient.first + ". " + heOrSheCap(recipient.second) +
                 " lives in " + destination.longDescription + ". You can't miss it. " + heOrSheCap(recipient.second) + " will pay you " +
                 promisedGold + " gold for it.");
         print("Do you accept to make the delivery? (Y/N) ");
         if (yesNoInput()) {
-            portraitSay(MyRandom.sample(List.of("Great", "Fantastic", "Good", "Perfect")) + "! Here's the " +
+            senderSpeak(MyRandom.sample(List.of("Great", "Fantastic", "Good", "Perfect")) + "! Here's the " +
                     parcel.getName().toLowerCase() + ". Give my regards to my " + recipient.first + " when you see " +
                     himOrHer(recipient.second) + ".");
             model.getParty().getInventory().add(parcel);
             println("You received a " + parcel.getName().toLowerCase() + ".");
-            model.getParty().addDestinationTask(new DeliverParcelTask(parcel, destination.position,
-                    destination.longDescription, destination.shortDescription, recipient.first, commoner.getRace(),
+            model.getParty().addDestinationTask(new DeliverParcelTask(sender, parcel, destination.position,
+                    destination.longDescription, destination.shortDescription, recipient.first, getSenderRace(),
                     recipient.second, promisedGold));
             JournalEntry.printJournalUpdateMessage(model);
             return false;
@@ -116,12 +145,19 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
                     "I'm afraid we don't have time for that.",
                     "You'll have to find someone else to deliver it.")));
         }
-        portraitSay(MyRandom.sample(List.of(
+        senderSpeak(MyRandom.sample(List.of(
                 "That's too bad, " + heOrShe(recipient.second) + " will be so disappointed.",
                 "Okay, I'm sure I'll find somebody else.",
                 "And I heard you were reliable...",
                 "Aww... come on...")));
         return true;
+    }
+
+    private Race getSenderRace() {
+        if (isTrueEvent) {
+            return commoner.getRace();
+        }
+        return Race.randomRace();
     }
 
     @Override
@@ -194,6 +230,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
             description.append(" ").append(directionName).append(" of the ").append(loc.getName());
         }
 
+        System.out.println("Position: (" + position.x + ", " + position.y + ")");
         System.out.println("Long: " + description.toString());
         System.out.println("Short: " + shortDescription);
         return new Destination(position, description.toString(), shortDescription);

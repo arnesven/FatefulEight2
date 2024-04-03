@@ -21,7 +21,9 @@ public class FullMapView extends GameView {
     public FullMapView(GameView previous, Point startCursorPos) {
         super(true);
         this.previousView = previous;
-        cursorPos = startCursorPos;
+        if (startCursorPos != null) {
+            cursorPos = new Point(startCursorPos.x, startCursorPos.y);
+        }
     }
 
     public FullMapView(GameView previousView) {

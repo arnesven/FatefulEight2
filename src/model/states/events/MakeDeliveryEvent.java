@@ -25,7 +25,8 @@ public class MakeDeliveryEvent extends DarkDeedsEvent {
         super(model, "Talk to", MyRandom.randInt(10));
         this.deliverTask = deliverParcelTask;
         CharacterAppearance portrait = deliverTask.makePortrait();
-        this.recipientCharacter = new GameCharacter("Somebody's " + deliverTask.getRecipient(), "", portrait.getRace(),
+        this.recipientCharacter = new GameCharacter(deliverParcelTask.getSender() + "'s " +
+                deliverTask.getRecipient(), "", portrait.getRace(),
                 Classes.None, portrait, Classes.NO_OTHER_CLASSES);
     }
 
@@ -34,7 +35,7 @@ public class MakeDeliveryEvent extends DarkDeedsEvent {
         println(deliverTask.getDeliveryString());
 
         showExplicitPortrait(model, recipientCharacter.getAppearance(),
-                "Somebody's " + deliverTask.getRecipient());
+                deliverTask.getSender() + "'s " + deliverTask.getRecipient());
         return true;
     }
 
