@@ -43,11 +43,11 @@ public class Summon implements Serializable {
             return new CastleDungeonTask(this, model, location);
         }
         List<SummonTask> allTasks = makeAllTasks(this, model, location);
-        if (usedTasks.size() == allTasks.size()) {
-            throw new IllegalStateException("All tasks used up!");
-        }
         if (summonTask != -1) {
             return allTasks.get(summonTask);
+        }
+        if (usedTasks.size() == allTasks.size()) {
+            throw new IllegalStateException("All tasks used up!");
         }
         SummonTask task;
         do {
