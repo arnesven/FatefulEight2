@@ -90,6 +90,7 @@ public class HungryTrollQuest extends Quest {
                     int lost = model.getParty().getFood() / 3;
                     state.println("You have lost " + lost + " rations.");
                     state.leaderSay("Hey! That's our food!");
+                    model.getParty().addToFood(-lost);
                 } else {
                     state.println("Fortunately, it did not contain anything too important.");
                     state.partyMemberSay(model.getParty().getRandomPartyMember(), "Hey, those were my spare clothes!");
@@ -114,10 +115,11 @@ public class HungryTrollQuest extends Quest {
                     model.getParty().addToGold(-horse.getCost()/2);
                     state.leaderSay("Hey! That poor " + horse.getType() + "!");
                 } else {
-                    state.print("The troll has eaten another one of your backpacks.");
+                    state.print("The troll has eaten another one of your backpacks. ");
                     if (model.getParty().getFood() > 10) {
                         int lost = model.getParty().getFood() / 2;
                         state.println("You have lost " + lost + " rations.");
+                        model.getParty().addToFood(-lost);
                     } else {
                         state.println("Fortunately, it did not contain anything too important.");
                         state.partyMemberSay(model.getParty().getRandomPartyMember(), "Hey, the cooking stuff was in there!");
