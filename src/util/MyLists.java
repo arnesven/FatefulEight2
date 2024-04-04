@@ -84,7 +84,7 @@ public class MyLists {
     }
 
     public static <E> int maximum(List<E> source, MyUnaryIntFunction<E> fun) {
-        int max = 0;
+        int max = Integer.MIN_VALUE;
         for (E e : source) {
             int val = fun.apply(e);
             if (val > max) {
@@ -92,6 +92,10 @@ public class MyLists {
             }
         }
         return max;
+    }
+
+    public static <E> int minimum(List<E> source, MyUnaryIntFunction<E> fun) {
+        return -1 * maximum(source, e -> -1 * fun.apply(e));
     }
 
     public static <E> List<E> uniqueify(List<E> listOfEs, MyStringFunction<E> fun) {

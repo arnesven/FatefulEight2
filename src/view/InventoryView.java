@@ -299,6 +299,9 @@ public class InventoryView extends SelectableListMenu {
                         } else if (itemToEquip instanceof Scroll) {
                             setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
                                     ((Scroll) itemToEquip).castFromMenu(model, gc)), model);
+                        } else if (itemToEquip instanceof MysteriousMap) {
+                            setTimeToTransition(true);
+                            model.transitionToDialog(new TreasureMapView(InventoryView.this, (MysteriousMap) itemToEquip, model));
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);

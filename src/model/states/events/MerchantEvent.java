@@ -11,6 +11,7 @@ import model.enemies.Enemy;
 import model.enemies.ServantEnemy;
 import model.items.Equipment;
 import model.items.Item;
+import model.items.MysteriousMap;
 import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.ShortSword;
 import model.states.ShopState;
@@ -40,6 +41,7 @@ public class MerchantEvent extends DarkDeedsEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.items = new ArrayList<>();
         items.addAll(model.getItemDeck().draw(6));
+        items.add(new MysteriousMap(model));
         if (withIntro) {
             println("The party encounters a large wagon with tons of wares stacked upon it. " +
                     "Beside it stands a plump character in fancy clothing.");
@@ -56,7 +58,8 @@ public class MerchantEvent extends DarkDeedsEvent {
         ShopState merchantShop = new ShopState(model, "merchant", items,
                 new int[]{items.get(0).getCost()/2, items.get(1).getCost()/2,
                         items.get(2).getCost()-2, items.get(3).getCost()-2,
-                        items.get(4).getCost()+10, items.get(5).getCost()+10});
+                        items.get(4).getCost()+10, items.get(5).getCost()+10,
+                        items.get(6).getCost()});
         merchantShop.run(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, apperance, "Merchant");

@@ -76,7 +76,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        if (model.getParty().getReputation() < 1 && !FatefulEight.inDebugMode()) {
+        if (model.getParty().getReputation() < 1) {
             new NoEventState(model).doTheEvent(model);
             return false;
         }

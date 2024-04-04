@@ -4,8 +4,8 @@ import view.MyColors;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 
-public class WatelandLocation extends DecorativeHexLocation {
-    public WatelandLocation() {
+public class WastelandLocation extends DecorativeHexLocation {
+    public WastelandLocation() {
         super("wastelandlocation");
     }
 

@@ -1,5 +1,6 @@
 package model.states.events;
 
+import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -17,7 +18,7 @@ public class FindTreasureMapEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        if (!hasTreasureMap(model) && spotMap(model)) {
+        if ((!hasTreasureMap(model) && spotMap(model))) {
             println("You find a piece of parchment on the ground.");
             leaderSay("A treasure map?");
             getMysteriousMap(model, this);

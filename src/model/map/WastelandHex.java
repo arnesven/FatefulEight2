@@ -2,7 +2,7 @@ package model.map;
 
 import model.Model;
 import view.subviews.WastelandCombatTheme;
-import model.map.locations.WatelandLocation;
+import model.map.locations.WastelandLocation;
 import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyRandom;
@@ -23,7 +23,7 @@ public class WastelandHex extends WorldHex {
     }
 
     public WastelandHex(int roads, int rivers, int state) {
-        this(roads, rivers, new WatelandLocation(), state);
+        this(roads, rivers, new WastelandLocation(), state);
     }
 
     @Override
