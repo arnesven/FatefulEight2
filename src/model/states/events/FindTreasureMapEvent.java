@@ -1,6 +1,5 @@
 package model.states.events;
 
-import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;

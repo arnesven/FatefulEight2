@@ -128,7 +128,7 @@ public class Traveller implements Serializable {
                 this.text =  "You have accepted to escort " + name + " to " + destination + " within " + time + " days. " +
                         "You were promised " + gold + " gold.\n\nThere are " + getRemainingDays(model) + " days remaining.";
             } else if (completed) {
-                this.text = "You escorted " + name + " to " + destination + ".";
+                this.text = "You escorted " + name + " to " + destination + ".\n\nCompleted";
             } else { // Abandon
                 this.text = "You failed to escort " + name + " to " + destination + ".";
             }

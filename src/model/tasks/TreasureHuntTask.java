@@ -57,6 +57,9 @@ public class TreasureHuntTask extends DestinationTask {
 
         @Override
         public String getText() {
+            if (completed) {
+                return "You used the strange map to find the treasure.\n\nCompleted";
+            }
             return "You have come upon a strange map. You suspect that it may lead to treasure, " +
                     "but it may just be a wild goose chase.\n\n" +
                     "You can read the map from the Inventory Menu.";
@@ -79,6 +82,9 @@ public class TreasureHuntTask extends DestinationTask {
 
         @Override
         public Point getPosition(Model model) {
+            if (completed) {
+                return map.getLocation();
+            }
             return null;
         }
     }
