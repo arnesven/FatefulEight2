@@ -4,7 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.items.BookItem;
+import model.items.ReadableItem;
 import model.items.MysteriousMap;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -34,7 +34,7 @@ public class FindTreasureMapEvent extends DailyEventState {
     }
 
     private boolean hasTreasureMap(Model model) {
-        for (BookItem b : model.getParty().getInventory().getBooks()) {
+        for (ReadableItem b : model.getParty().getInventory().getBooks()) {
             if (b instanceof MysteriousMap) {
                 return true;
             }

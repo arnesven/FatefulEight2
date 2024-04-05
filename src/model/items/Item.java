@@ -6,6 +6,8 @@ import model.enemies.Enemy;
 import model.states.CombatEvent;
 import util.MyPair;
 import view.AnalyzeDialog;
+import view.GameView;
+import view.InventoryView;
 import view.ScreenHandler;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -117,5 +119,13 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public boolean canBeUsedFromMenu() {
         return false;
+    }
+
+    public boolean opensViewFromInventoryMenu() {
+        return false;
+    }
+
+    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, Item itemToEquip) {
+        return null;
     }
 }

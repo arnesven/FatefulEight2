@@ -7,14 +7,17 @@ import model.states.AcceptDeliveryEvent;
 import model.tasks.DestinationTask;
 import model.tasks.TreasureHuntTask;
 import util.MyRandom;
+import view.GameView;
+import view.InventoryView;
 import view.MyColors;
+import view.TreasureMapView;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
 import java.util.List;
 
-public class MysteriousMap extends BookItem {
+public class MysteriousMap extends ReadableItem {
     private static final Sprite SPRITE = new ItemSprite(6, 13, MyColors.BEIGE, MyColors.DARK_BROWN);
     private final Point location;
     private final List<Point> path;
@@ -104,5 +107,15 @@ public class MysteriousMap extends BookItem {
 
     public List<Point> getPath() {
         return path;
+    }
+
+    @Override
+    public boolean opensViewFromInventoryMenu() {
+        return true;
+    }
+
+    @Override
+    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, Item itemToEquip) {
+        return new TreasureMapView(inventoryView, (MysteriousMap) itemToEquip, model);
     }
 }

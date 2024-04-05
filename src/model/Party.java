@@ -13,14 +13,14 @@ import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
-import model.items.parcels.*;
+import model.items.MysteriousMap;
+import model.items.books.BookItem;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
-import model.tasks.DeliverParcelTask;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;
@@ -74,6 +74,7 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_IN_POSITION;
         cursorSprites = makeCursorSprites();
+        inventory.add(new BookItem());
     }
 
     private LoopingSprite[] makeCursorSprites() {

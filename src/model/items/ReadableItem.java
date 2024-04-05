@@ -2,10 +2,13 @@ package model.items;
 
 import model.Model;
 import model.characters.GameCharacter;
+import view.MyColors;
+import view.sprites.ItemSprite;
+import view.sprites.Sprite;
 
-public abstract class BookItem extends UsableItem {
+public abstract class ReadableItem extends UsableItem {
 
-    public BookItem(String name, int cost) {
+    public ReadableItem(String name, int cost) {
         super(name, cost);
     }
 

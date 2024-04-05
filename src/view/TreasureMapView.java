@@ -141,7 +141,7 @@ public class TreasureMapView extends GameView {
         @Override
         protected void drawKeyTexts(Model model) {
             BorderFrame.drawString(model.getScreenHandler(),
-                    "space=center " +
+                    "SPACE=center " +
                     ARROW_STRING +
                     "=pan ESC=exit", 50, 0, MyColors.WHITE);
         }
