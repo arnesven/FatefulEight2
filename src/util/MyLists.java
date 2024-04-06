@@ -1,10 +1,5 @@
 package util;
 
-
-import model.actions.DailyAction;
-import model.characters.GameCharacter;
-import model.items.spells.Spell;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,5 +99,14 @@ public class MyLists {
             map.put(fun.getString(e), e);
         }
         return new ArrayList<E>(map.values());
+    }
+
+    public static <E> List<E> take(List<E> lines, int amount) {
+        List<E> result = new ArrayList<>();
+        for (int i = 0; i < amount && !lines.isEmpty(); ++i) {
+            result.add(lines.get(0));
+            lines.remove(0);
+        }
+        return result;
     }
 }

@@ -3,12 +3,16 @@ package view;
 import model.Model;
 import model.items.books.BookItem;
 import sound.SoundEffects;
+import util.MyLists;
+import util.MyStrings;
 import util.MyUnaryIntFunction;
 import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
 import view.widget.TopText;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.event.KeyEvent;
 
@@ -16,6 +20,8 @@ public class ReadBookView extends GameView {
     private static final int BOOK_WIDTH = 28;
     private static final int BOOK_HEIGHT = 35;
     private static final MyColors PAGE_COLOR = MyColors.BEIGE;
+    private static final int PARTITION_WIDTH = BOOK_WIDTH-1;
+    private static final int LINES_PER_PAGE = BOOK_HEIGHT - 4;
     private final InventoryView previous;
     private final BookItem book;
     private TopText topText;
@@ -41,8 +47,43 @@ public class ReadBookView extends GameView {
                 book.getCoverColor(), book.getCoverColor());
         singlePageSprites = makeBookSprites(book.getCoverColor(), PAGE_COLOR, book.getCoverColor(), PAGE_COLOR);
         multiplePagesSprites = makeBookSprites(book.getCoverColor(), PAGE_COLOR, PAGE_COLOR, MyColors.GRAY);
-        // TODO: Set content from book contents
+
+        makeContentsFromBook(book);
+    }
+
+    private void makeContentsFromBook(BookItem book) {
+        List<List<String>> result = new ArrayList<>();
+
+        List<String> firstPage = new ArrayList<>();
+        addNewLines(firstPage, 10);
+        addCentered(firstPage, MyStrings.partitionWithLineBreaks(book.getTitle(), PARTITION_WIDTH));
+        addNewLines(firstPage, 1);
+        addCentered(firstPage, MyStrings.partitionWithLineBreaks(book.getAuthor(), PARTITION_WIDTH));
+        result.add(firstPage);
+
+        String[] rest = MyStrings.partitionWithLineBreaks(book.getTextContent(), PARTITION_WIDTH);
+        List<String> lines = new ArrayList<>(Arrays.asList(rest));
+        while (!lines.isEmpty()) {
+            List<String> page = MyLists.take(lines, LINES_PER_PAGE);
+            result.add(page);
+        }
+
+
+        content = result;
         maxPagePair = (content.size() + 1) / 2 + 1;
+    }
+
+    private void addCentered(List<String> firstPage, String[] text) {
+        for (String s : text) {
+            int padding = Math.max(0, (PARTITION_WIDTH - s.length()) / 2 - 1);
+            firstPage.add(String.format("%" + (padding + s.length()) + "s", s));
+        }
+    }
+
+    private void addNewLines(List<String> firstPage, int amount) {
+        for (int i = 0; i < amount; ++i) {
+            firstPage.add("");
+        }
     }
 
 
@@ -84,6 +125,9 @@ public class ReadBookView extends GameView {
         int yOff = getYOffset() + 2;
         for (int y = 0; y < strings.size(); ++y) {
             String line = strings.get(y);
+            if (line.length() > 0 && line.charAt(line.length()-1) == ' ') {
+                line = line.substring(0, line.length()-1);
+            }
             BorderFrame.drawString(screenHandler, line, xOff, yOff + y, MyColors.BLACK, PAGE_COLOR);
         }
     }

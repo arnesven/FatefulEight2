@@ -15,11 +15,31 @@ public class BookItem extends ReadableItem {
 
     private final MyColors coverColor;
     private final Sprite sprite;
+    private final String author;
+    private String title;
+    private String textContent;
 
     public BookItem() {
         super("Test Book", 25);
         this.coverColor = MyColors.DARK_BLUE;
         this.sprite = makeBookSprite(coverColor);
+        title = "How to Train Your Dragon";
+        author = "Rastigan Veld";
+
+        textContent =
+                "Each combat round, characters take one combat action on their turn. Use the " +
+                        "arrow keys to select targets during combat.\n\n" +
+                        "Attack: The character uses their equipped weapon to attack the selected enemy. " +
+                        "Only ranged weapons can attack from the back row.\n\n" +
+                        "Item: Use an item from your inventory on the selected target.\n\n" +
+                        "Spell: Cast a Combat Spell on the selected target.\n\n" +
+                        "Flee: The party leader can announce a retreat from battle. If there is only " +
+                        "one character in your party, this has a 60% chance of success. Otherwise the " +
+                        "leader must succeed in a Leadership test where the difficulty is 3 + the number " +
+                        "of party members.\n\n" +
+                        "Delay: Postpone your action until later in the round.\n\n" +
+                        "Ability: Use one of the character's combat abilities.\n\n" +
+                        "Pass: Do nothing in combat.";
     }
 
     @Override
@@ -68,5 +88,17 @@ public class BookItem extends ReadableItem {
 
     public MyColors getCoverColor() {
         return coverColor;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getTextContent() {
+        return textContent;
     }
 }
