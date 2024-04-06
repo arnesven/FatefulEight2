@@ -5,9 +5,9 @@ import view.GameView;
 import java.util.List;
 
 public class DragonsHelpChapter extends ExpandableHelpDialog {
-    private static final String TEXT =
+    public static final String TEXT =
             "Dragons occur naturally in many locations and come in different varieties.\n\n" +
-            "Green Dragons are the least hostile but our still dangerous considering their attacks are " +
+            "Green Dragons are the least hostile but are still dangerous considering their attacks are " +
             "powerful and do magical damage.\n\n" +
             "Red Dragons are quick and aggressive. They can attack many targets at once with " +
             "ranged magical attacks.\n\n" +

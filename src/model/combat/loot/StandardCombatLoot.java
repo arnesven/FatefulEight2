@@ -3,6 +3,7 @@ package model.combat.loot;
 import model.Model;
 import model.Party;
 import model.items.Item;
+import model.items.MysteriousMap;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -24,7 +25,11 @@ public class StandardCombatLoot extends CombatLoot {
             gold++;
         }
         if (dieRoll >= 10) {
-            items.add(model.getItemDeck().getRandomItem(0.5));
+            if (MyRandom.randInt(100) == 0) {
+                items.add(new MysteriousMap(model));
+            } else {
+                items.add(model.getItemDeck().getRandomItem(0.5));
+            }
         }
     }
 

@@ -262,6 +262,9 @@ public class ShopState extends GameState {
         shopInventory.addAll(model.getItemDeck().draw(commons, Prevalence.common, 0.0));
         shopInventory.addAll(model.getItemDeck().draw(uncommons, Prevalence.uncommon, 0.0));
         shopInventory.addAll(model.getItemDeck().draw(rares, Prevalence.rare, 0.0));
+        if (MyRandom.randInt(100) < 2) {
+            shopInventory.addAll(model.getItemDeck().draw(1, Prevalence.veryRare, 0.0));
+        }
         Collections.sort(shopInventory);
         return shopInventory;
     }

@@ -1,6 +1,7 @@
 package model.items;
 
 import model.items.accessories.*;
+import model.items.books.HowToTameYourDragonBook;
 import model.items.clothing.*;
 import model.items.designs.CraftingDesign;
 import model.items.potions.*;
@@ -110,6 +111,7 @@ public class ItemDeck extends ArrayList<Item> {
         allItems.addAll(allPotionRecipes());
         allItems.addAll(allScrolls());
         allItems.add(new Lockpick());
+        allItems.addAll(allBooks());
         return allItems;
     }
 
@@ -262,6 +264,11 @@ public class ItemDeck extends ArrayList<Item> {
             result.add(new Scroll(sp));
         }
         return result;
+    }
+
+
+    private static Collection<? extends Item> allBooks() {
+        return List.of(new HowToTameYourDragonBook());
     }
 
     public static List<Weapon> allWeapons() {

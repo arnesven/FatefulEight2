@@ -57,7 +57,7 @@ public class ReadBookView extends GameView {
         List<String> firstPage = new ArrayList<>();
         addNewLines(firstPage, 10);
         addCentered(firstPage, MyStrings.partitionWithLineBreaks(book.getTitle(), PARTITION_WIDTH));
-        addNewLines(firstPage, 1);
+        addNewLines(firstPage, 2);
         addCentered(firstPage, MyStrings.partitionWithLineBreaks(book.getAuthor(), PARTITION_WIDTH));
         result.add(firstPage);
 
