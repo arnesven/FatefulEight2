@@ -1,6 +1,7 @@
 package model.items;
 
 import model.items.accessories.*;
+import model.items.books.BookItem;
 import model.items.books.HowToTameYourDragonBook;
 import model.items.books.QuadMachineryBook;
 import model.items.clothing.*;
@@ -268,9 +269,14 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
 
-    private static Collection<? extends Item> allBooks() {
+    private static Collection<BookItem> allBooks() {
         return List.of(new HowToTameYourDragonBook(),
                 new QuadMachineryBook());
+        // TODO: Treasure Hunter's Handbook (useful)
+        // TODO: Book of Poetry (useless)
+        // TODO: The Finer Points of Alchemy (useless)
+        // TODO: Grave Robber's Handbook (useful tips for dungeons)
+        // TODO: Common Maritime Routes (useful)
     }
 
     public static List<Weapon> allWeapons() {
