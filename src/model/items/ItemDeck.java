@@ -2,6 +2,7 @@ package model.items;
 
 import model.items.accessories.*;
 import model.items.books.HowToTameYourDragonBook;
+import model.items.books.QuadMachineryBook;
 import model.items.clothing.*;
 import model.items.designs.CraftingDesign;
 import model.items.potions.*;
@@ -268,7 +269,8 @@ public class ItemDeck extends ArrayList<Item> {
 
 
     private static Collection<? extends Item> allBooks() {
-        return List.of(new HowToTameYourDragonBook());
+        return List.of(new HowToTameYourDragonBook(),
+                new QuadMachineryBook());
     }
 
     public static List<Weapon> allWeapons() {
