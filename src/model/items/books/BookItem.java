@@ -12,6 +12,9 @@ import view.ReadBookView;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class BookItem extends ReadableItem {
 
     private final MyColors coverColor;
@@ -45,7 +48,7 @@ public abstract class BookItem extends ReadableItem {
     }
 
     protected static Sprite makeBookSprite(MyColors coverColor) {
-        return new ItemSprite(7, 13, MyColors.GRAY, coverColor, MyColors.GOLD);
+        return new ItemSprite(7, 13, MyColors.DARK_GRAY, coverColor, MyColors.GOLD);
     }
 
     @Override
@@ -87,5 +90,9 @@ public abstract class BookItem extends ReadableItem {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.veryRare;
+    }
+
+    public Map<String, Sprite> getFigures() {
+        return new HashMap<>();
     }
 }

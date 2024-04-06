@@ -4,6 +4,7 @@ import model.Model;
 import model.items.books.BookItem;
 import sound.SoundEffects;
 import util.MyLists;
+import util.MyPair;
 import util.MyStrings;
 import util.MyUnaryIntFunction;
 import view.sprites.Sprite;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.awt.event.KeyEvent;
+import java.util.Map;
 
 public class ReadBookView extends GameView {
     private static final int BOOK_WIDTH = 28;
@@ -36,6 +38,7 @@ public class ReadBookView extends GameView {
             List.of("Second page stuff"),
             List.of("Lorem ipsum lorem upsum", " ipsum Lorem", "long line", "greedy"),
             List.of("This is page 4"));
+    private Map<String, Sprite> figures;
 
     public ReadBookView(Model model, InventoryView inventoryView, BookItem book) {
         super(true);
@@ -71,6 +74,7 @@ public class ReadBookView extends GameView {
 
         content = result;
         maxPagePair = (content.size() + 1) / 2 + 1;
+        this.figures = book.getFigures();
     }
 
     private void addCentered(List<String> firstPage, String[] text) {
@@ -125,10 +129,20 @@ public class ReadBookView extends GameView {
         int yOff = getYOffset() + 2;
         for (int y = 0; y < strings.size(); ++y) {
             String line = strings.get(y);
-            if (line.length() > 0 && line.charAt(line.length()-1) == ' ') {
-                line = line.substring(0, line.length()-1);
+            if (line.startsWith("<fig ")) {
+                String key = line.replace("<fig ", "").replace(">", "");
+                Sprite spr = figures.get(key);
+                if (spr == null) {
+                    throw new IllegalArgumentException("No figure for key: " + key);
+                }
+                int shift = (PARTITION_WIDTH - (spr.getWidth() / 8)) / 2 - 1;
+                screenHandler.register(spr.getName(), new Point(xOff + shift, yOff + y), spr);
+            } else {
+                if (line.length() > 0 && line.charAt(line.length() - 1) == ' ') {
+                    line = line.substring(0, line.length() - 1);
+                }
+                BorderFrame.drawString(screenHandler, line, xOff, yOff + y, MyColors.BLACK, PAGE_COLOR);
             }
-            BorderFrame.drawString(screenHandler, line, xOff, yOff + y, MyColors.BLACK, PAGE_COLOR);
         }
     }
 
