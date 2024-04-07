@@ -15,11 +15,17 @@ import java.util.List;
 
 public class TreasureMapView extends GameView {
     private static final Sprite[] DIRECTION_SPRITES = makeDirectionSprites(3);
-    private static final Sprite[] RIVER_SPRITES = makeDirectionSprites(4);
+    public static final Sprite[] RIVER_SPRITES = makeDirectionSprites(4);
     private static final Sprite[][] MAP_SPRITES = makeMapSprites();
+    public static final Sprite TOWN_SPRITE = new TreasureMapSprite(3, 0);
+    public static final Sprite WOODS_SPRITE = new TreasureMapSprite(3, 1);
+    public static final Sprite HILLS_SPRITE = new TreasureMapSprite(3, 2);
+    public static final Sprite MOUNTAIN_SPRITES = new TreasureMapSprite(4, 0);
+    public static final Sprite SWAMP_SPRITE = new TreasureMapSprite(4, 2);
+    public static final Sprite WASTELAND_SPRITE = new TreasureMapSprite(5, 2);
     private static final Sprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
     private static final List<String> DIRECTION_SHORTS = List.of("SE", "S", "SW", "NW", "N", "NE");
-    private static final Sprite FINAL_SPOT_SPRITE = new TreasureMapSprite(4, 1);
+    public static final Sprite FINAL_SPOT_SPRITE = new TreasureMapSprite(4, 1);
 
     private final GameView previous;
     private TopText topText;
@@ -148,6 +154,8 @@ public class TreasureMapView extends GameView {
     }
 
     private static class MapContent {
+
+
         private final Point position;
         private final WorldHex hex;
         private final boolean finalSpot;
@@ -162,17 +170,17 @@ public class TreasureMapView extends GameView {
             HexLocation loc = hex.getLocation();
             if (loc != null) {
                 if (loc instanceof TownLocation || loc instanceof CastleLocation) {
-                    sprite = new TreasureMapSprite(3, 0);
+                    sprite = TOWN_SPRITE;
                 } else if (loc instanceof WoodsLocation || loc instanceof DeepWoodsLocation || loc instanceof JungleLocation) {
-                    sprite = new TreasureMapSprite(3, 1);
+                    sprite = WOODS_SPRITE;
                 } else if (loc instanceof HillsLocation) {
-                    sprite = new TreasureMapSprite(3, 2);
+                    sprite = HILLS_SPRITE;
                 } else if (loc instanceof MountainLocation) {
-                    sprite = new TreasureMapSprite(4, 0);
+                    sprite = MOUNTAIN_SPRITES;
                 } else if (loc instanceof SwampLocation) {
-                    sprite = new TreasureMapSprite(4, 2);
+                    sprite = SWAMP_SPRITE;
                 } else if (loc instanceof WastelandLocation) {
-                    sprite = new TreasureMapSprite(5, 2);
+                    sprite = WASTELAND_SPRITE;
                 }
             }
         }

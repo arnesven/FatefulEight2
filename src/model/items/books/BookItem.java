@@ -48,7 +48,11 @@ public abstract class BookItem extends ReadableItem {
     }
 
     protected static Sprite makeBookSprite(MyColors coverColor) {
-        return new ItemSprite(7, 13, MyColors.DARK_GRAY, coverColor, MyColors.GOLD);
+        MyColors bookMarkColor = MyColors.GOLD;
+        if (coverColor == MyColors.GOLD) {
+            bookMarkColor = MyColors.DARK_RED;
+        }
+        return new ItemSprite(7, 13, MyColors.DARK_GRAY, coverColor, bookMarkColor);
     }
 
     @Override

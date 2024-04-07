@@ -17,6 +17,7 @@ import model.items.MysteriousMap;
 import model.items.books.BookItem;
 import model.items.books.HowToTameYourDragonBook;
 import model.items.books.QuadMachineryBook;
+import model.items.books.TreasureHuntersHandbook;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
@@ -76,8 +77,9 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_IN_POSITION;
         cursorSprites = makeCursorSprites();
-        // inventory.add(new HowToTameYourDragonBook());
-        // inventory.add(new QuadMachineryBook());
+//        inventory.add(new HowToTameYourDragonBook());
+//        inventory.add(new QuadMachineryBook());
+//        inventory.add(new TreasureHuntersHandbook());
     }
 
     private LoopingSprite[] makeCursorSprites() {

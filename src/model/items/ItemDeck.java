@@ -4,6 +4,7 @@ import model.items.accessories.*;
 import model.items.books.BookItem;
 import model.items.books.HowToTameYourDragonBook;
 import model.items.books.QuadMachineryBook;
+import model.items.books.TreasureHuntersHandbook;
 import model.items.clothing.*;
 import model.items.designs.CraftingDesign;
 import model.items.potions.*;
@@ -271,12 +272,18 @@ public class ItemDeck extends ArrayList<Item> {
 
     private static Collection<BookItem> allBooks() {
         return List.of(new HowToTameYourDragonBook(),
-                new QuadMachineryBook());
+                new QuadMachineryBook(),
+                new TreasureHuntersHandbook());
         // TODO: Treasure Hunter's Handbook (useful)
         // TODO: Book of Poetry (useless)
         // TODO: The Finer Points of Alchemy (useless)
         // TODO: Grave Robber's Handbook (useful tips for dungeons)
         // TODO: Common Maritime Routes (useful)
+        // TODO: On the Origins of Elves (useless)
+        // TODO: On the Tenacity of Dwarves (useless)
+        // TODO: On the Peculiarities of Half-Orcs (useless)
+        // TODO: On the Ingenuity of Halflings (useless)
+        // TODO: Horse Racing 101
     }
 
     public static List<Weapon> allWeapons() {
