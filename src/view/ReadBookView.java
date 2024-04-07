@@ -22,7 +22,7 @@ public class ReadBookView extends GameView {
     private static final int BOOK_WIDTH = 28;
     private static final int BOOK_HEIGHT = 35;
     private static final MyColors PAGE_COLOR = MyColors.BEIGE;
-    private static final int PARTITION_WIDTH = BOOK_WIDTH-1;
+    private static final int PARTITION_WIDTH = BOOK_WIDTH-2;
     private static final int LINES_PER_PAGE = BOOK_HEIGHT - 4;
     private final InventoryView previous;
     private final BookItem book;
