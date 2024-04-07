@@ -77,9 +77,6 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_IN_POSITION;
         cursorSprites = makeCursorSprites();
-//        inventory.add(new HowToTameYourDragonBook());
-//        inventory.add(new QuadMachineryBook());
-//        inventory.add(new TreasureHuntersHandbook());
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -125,7 +122,9 @@ public class Party implements Serializable {
             Point p = getLocationForPartyMember(count);
             gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
             count++;
-            partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
+            if (!gc.isDead()) {
+                partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
+            }
         }
         partyAnimations.drawSpeakAnimations(screenHandler);
     }
@@ -316,8 +315,9 @@ public class Party implements Serializable {
                 "\"\n" + LogView.DEFAULT_COLOR);
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
-        partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance());
-
+        if (!gc.isDead()) {
+            partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance());
+        }
     }
 
     public void partyMemberSay(Model model, GameCharacter gc, List<String> alternatives) {

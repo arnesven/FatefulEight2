@@ -1,6 +1,5 @@
 package model;
 
-import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import view.ScreenHandler;
 import view.sprites.AnimationManager;
