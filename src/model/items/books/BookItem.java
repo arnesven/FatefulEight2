@@ -44,7 +44,7 @@ public abstract class BookItem extends ReadableItem {
 
     @Override
     public String getShoppingDetails() {
-        return "A book about ...";
+        return "A with the title '" + title + "'";
     }
 
     protected static Sprite makeBookSprite(MyColors coverColor) {

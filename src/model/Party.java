@@ -122,7 +122,7 @@ public class Party implements Serializable {
             Point p = getLocationForPartyMember(count);
             gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
             count++;
-            if (!gc.isDead()) {
+            if (!gc.isDead() && !bench.contains(gc)) {
                 partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
             }
         }
@@ -315,7 +315,7 @@ public class Party implements Serializable {
                 "\"\n" + LogView.DEFAULT_COLOR);
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
-        if (!gc.isDead()) {
+        if (!gc.isDead() && !bench.contains(gc)) {
             partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance());
         }
     }

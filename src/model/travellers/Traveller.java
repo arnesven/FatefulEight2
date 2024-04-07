@@ -1,6 +1,7 @@
 package model.travellers;
 
 import model.Model;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
@@ -96,6 +97,11 @@ public class Traveller implements Serializable {
                     "Now there will be consequences and I'm afraid I won't be able to pay you the full amount I promised.");
             state.println("The party receives " + (gold/2) + " gold.");
             model.getParty().addToGold((gold/2));
+        }
+        if (model.getParty().getLeader().hasPersonality(PersonalityTrait.rude)) {
+            state.leaderSay("Smell you later traveller!");
+        } else {
+            state.leaderSay("It was nice travelling with you.");
         }
         state.println("You part ways with " + name + ".");
         model.getParty().completeTraveller(this);
