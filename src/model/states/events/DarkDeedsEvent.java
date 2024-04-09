@@ -1,5 +1,6 @@
 package model.states.events;
 
+import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -14,10 +15,15 @@ import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.tasks.BountyDestinationTask;
+import model.tasks.DestinationTask;
+import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public abstract class DarkDeedsEvent extends DailyEventState {
     public static final int PICK_POCKETING_NOTORIETY = 5;
@@ -87,6 +93,9 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         if (getModel().getParty().size() > 1) {
             options.add("Steal from " + victim);
         }
+        if (hasBountyTasks(getModel())) {
+            options.add("Ask about bounties");
+        }
         int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
         if (chosen == 0) {
             return false;
@@ -94,8 +103,11 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         if (chosen == 1) {
             attack(victimChar, companions, strat, true);
         }
-        if (chosen == 2) {
+        if (options.get(chosen).contains("Steal")) {
             attemptPickPocket(victim, victimChar, stealMoney, companions, strat);
+        }
+        if (options.get(chosen).contains("bounties")) {
+            askAboutBounties(getModel(), victimChar);
         }
         return true;
     }
@@ -261,11 +273,73 @@ public abstract class DarkDeedsEvent extends DailyEventState {
     public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
         if (model.getParty().getNotoriety() > 0) {
             if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
-                if (MyRandom.rollD10() > 5) {
+                if (MyRandom.rollD10() < Math.min(5, model.getParty().getNotoriety() / 10) && !FatefulEight.inDebugMode()) {
                     return new ConstableEvent(model);
                 }
             }
         }
         return null;
+    }
+
+    private void askAboutBounties(Model model, GameCharacter victimChar) {
+        BountyDestinationTask task = null;
+        for (DestinationTask dt : model.getParty().getDestinationTasks()) {
+            if (dt instanceof BountyDestinationTask) {
+                if (((BountyDestinationTask)dt).canGetClue()) {
+                    task = (BountyDestinationTask)dt;
+
+                }
+            }
+        }
+        if (task == null) {
+            return;
+        }
+        MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(
+                model, this, Skill.SeekInfo, 8);
+        if (!pair.first) {
+            partyMemberSay(pair.second, "Uh... do you know " + task.getBountyName() + "?");
+            portraitSay("I'm afraid I don't.");
+            return;
+        }
+        boolean bountyGender = task.getBountyPortrait().getGender();
+        String wanted = heOrSheCap(bountyGender) + " is wanted in " + task.getTurnInTown() + ".";
+        boolean shown = false;
+        if (MyRandom.flipCoin()) {
+            println("You show the wanted poster of " + task.getBountyName() + " to " + victimChar.getFirstName() + ".");
+            partyMemberSay(pair.second,"Have you ever seen this person? " + wanted);
+            shown = true;
+        } else {
+            partyMemberSay(pair.second,
+                    "Have you heard of a bandit called '" + task.getBountyName() + "'? " + wanted);
+        }
+        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
+        List<Point> path = model.getWorld().shortestPathToPoint(task.getPosition());
+        if (path.size() > 16) {
+            portraitSay("I'm sorry but I don't know at all who you are talking about.");
+            leaderSay("Darn. I guess " + heOrShe(bountyGender) + " could be hiding anywhere. " +
+                    "Maybe even in different kingdom.");
+        } else if (path.size() > 7) {
+            String reply = shown ? heOrShe(bountyGender) + " looks familiar, but I can't " +
+                    "tell you where I've seen " + himOrHer(bountyGender) :
+                    "The name sounds familiar, but I can't tell you where I've heard it";
+            portraitSay("Hmm... " + reply + ".");
+            leaderSay("Perhaps we're getting close?");
+        } else {
+            portraitSay("Yes, I know " + himOrHer(bountyGender) + "! " +
+                    heOrSheCap(bountyGender) + " is hiding out in " + task.getClue() + ".");
+            task.askForClue();
+            leaderSay("Thank you. You have been most helpful.");
+        }
+    }
+
+    private boolean hasBountyTasks(Model model) {
+        for (DestinationTask dt : model.getParty().getDestinationTasks()) {
+            if (dt instanceof BountyDestinationTask) {
+                if (((BountyDestinationTask)dt).canGetClue()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

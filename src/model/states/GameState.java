@@ -229,6 +229,10 @@ public abstract class GameState {
         return MyRandom.sample(COMMON_BOY_FIRST_NAMES);
     }
 
+    public static String randomLastName() {
+        return MyRandom.sample(lastNames);
+    }
+
     public static GameCharacter makeRandomCharacter(int level) {
         CharacterClass cls = randomClass();
         Race race = Race.randomRace();

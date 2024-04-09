@@ -33,8 +33,8 @@ public class ChangeClassTransitionSubView extends SubView implements Animation {
         inner.drawArea(model);
         Point p = model.getParty().getLocationForPartyMember(model.getParty().getPartyMembers().indexOf(pastCharacter));
         p.y = p.y + 3;
-        futureCharacter.getAppearance().drawYourself(model.getScreenHandler(), p.x, p.y, STAGE_MAX-stage, STAGE_MAX);
-        pastCharacter.getAppearance().drawYourself(model.getScreenHandler(), p.x, p.y, 0, STAGE_MAX-stage-1);
+        futureCharacter.getAppearance().drawYourself(model.getScreenHandler(), p.x, p.y, STAGE_MAX-stage, STAGE_MAX,0, 7);
+        pastCharacter.getAppearance().drawYourself(model.getScreenHandler(), p.x, p.y, 0, STAGE_MAX-stage-1, 0, 7);
 
         model.getScreenHandler().put(p.x, p.y+STAGE_MAX-stage, LEFT_SPRITE);
         for (int x = 1; x < 6; ++x) {

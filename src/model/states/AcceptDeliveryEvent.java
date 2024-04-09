@@ -1,6 +1,5 @@
 package model.states;
 
-import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -16,7 +15,7 @@ import model.races.Race;
 import model.states.events.DarkDeedsEvent;
 import model.states.events.NoEventState;
 import model.tasks.DeliverParcelTask;
-import model.tasks.DestinationTask;
+import model.tasks.Destination;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -26,17 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AcceptDeliveryEvent extends DarkDeedsEvent {
-
-    private static class Destination {
-        Point position;
-        String longDescription;
-        String shortDescription;
-        public Destination(Point p, String longD, String shortD) {
-            this.position = p;
-            this.longDescription = longD;
-            this.shortDescription = shortD;
-        }
-    }
 
     private static final List<MyPair<String, Boolean>> recipiants = List.of(
             new MyPair<>("father", false),
@@ -93,7 +81,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
         this.parcel = Parcel.makeRandomParcel();
         this.destination = makeRandomDestination(model);
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
-        List<Point> pathToDestination = model.getWorld().shortestPathToPoint(destination.position);
+        List<Point> pathToDestination = model.getWorld().shortestPathToPoint(destination.getPosition());
         this.promisedGold = (int)(pathToDestination.size() * parcel.getDeliveryGoldMultiplier());
         this.recipient = MyRandom.sample(recipiants);
     }
@@ -119,7 +107,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
                 "and I'm not sure I'm up for the trek into the wilds. You would be compensated of course. Are you interested?");
         leaderSay("Where do you want it delivered?");
         senderSpeak("It's to my " + recipient.first + ". " + heOrSheCap(recipient.second) +
-                " lives in " + destination.longDescription + ". You can't miss it. " + heOrSheCap(recipient.second) + " will pay you " +
+                " lives in " + destination.getLongDescription() + ". You can't miss it. " + heOrSheCap(recipient.second) + " will pay you " +
                 promisedGold + " gold for it.");
         print("Do you accept to make the delivery? (Y/N) ");
         if (yesNoInput()) {
@@ -128,8 +116,8 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
                     himOrHer(recipient.second) + ".");
             model.getParty().getInventory().add(parcel);
             println("You received a " + parcel.getName().toLowerCase() + ".");
-            model.getParty().addDestinationTask(new DeliverParcelTask(sender, parcel, destination.position,
-                    destination.longDescription, destination.shortDescription, recipient.first, getSenderRace(),
+            model.getParty().addDestinationTask(new DeliverParcelTask(sender, parcel, destination.getPosition(),
+                    destination.getLongDescription(), destination.getShortDescription(), recipient.first, getSenderRace(),
                     recipient.second, promisedGold));
             JournalEntry.printJournalUpdateMessage(model);
             return false;
@@ -176,7 +164,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
     }
 
 
-    private Destination makeRandomDestination(Model model) {
+    public static Destination makeRandomDestination(Model model) {
         System.out.println("Making random destination!");
         Point position = randomPositionWithoutLocation(model);
         System.out.println("Position: (" + position.x + ", " + position.y + ")");

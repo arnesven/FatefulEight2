@@ -4,6 +4,7 @@ import control.FatefulEight;
 import model.classes.CharacterClass;
 import model.races.Race;
 import model.races.Shoulders;
+import model.races.SkeletonRace;
 import util.MyPair;
 import view.MyColors;
 import view.ScreenHandler;
@@ -21,7 +22,7 @@ public abstract class CharacterAppearance implements Serializable {
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private static Sprite noHairSprite = new Sprite32x32("nohair", "hair.png",0x0,
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
-    private final Race race;
+    private Race race;
     private MyPair<Sprite8x8, Sprite8x8> blinkSprites;
     private MyColors hairColor;
     private MyColors mascaraColor;
@@ -199,12 +200,12 @@ public abstract class CharacterAppearance implements Serializable {
         }
     }
 
-    public void drawYourself(ScreenHandler screenHandler, int col, int row, int fromRow, int toRow) {
+    public void drawYourself(ScreenHandler screenHandler, int col, int row, int fromRow, int toRow, int fromColumn, int toColumn) {
         if (grid == null) {
             refresh();
         }
         for (int y = fromRow; y <= toRow; ++y) {
-            for (int x = 0; x < grid.length; ++x) {
+            for (int x = fromColumn; x < toColumn; ++x) {
                 if (grid[x][y] != null) {
                     screenHandler.put(col + x, row + y, grid[x][y]);
                 }
@@ -219,7 +220,7 @@ public abstract class CharacterAppearance implements Serializable {
         if (grid == null) {
             refresh();
         }
-        drawYourself(screenHandler, col, row, 0, grid[0].length-1);
+        drawYourself(screenHandler, col, row, 0, grid[0].length-1, 0, grid.length);
     }
 
     public void setClass(CharacterClass charClass) {
@@ -426,5 +427,9 @@ public abstract class CharacterAppearance implements Serializable {
     public void drawBlink(ScreenHandler screenHandler, int x, int y) {
         screenHandler.register("blinkleft", new Point(x-1, y), blinkSprites.first);
         screenHandler.register("blinkright", new Point(x+1, y), blinkSprites.second);
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 }

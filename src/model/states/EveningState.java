@@ -6,6 +6,8 @@ import model.classes.Skill;
 import model.items.Inventory;
 import model.map.HexLocation;
 import model.quests.Quest;
+import model.tasks.BountyDestinationTask;
+import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import util.MyLists;
 import util.MyRandom;
@@ -51,6 +53,7 @@ public class EveningState extends GameState {
             model.transitionToDialog(new HalfTimeDialog(model.getView()));
         }
         checkForLeaderChange(model);
+        checkBounties(model);
         checkTravellers(model);
         super.stepToNextDay(model);
         return nextState(model);
@@ -411,6 +414,15 @@ public class EveningState extends GameState {
                 t.complain(model, this);
             } else if (t.getRemainingDays(model) == -4) {
                 t.abandon(model, this);
+            }
+        }
+    }
+
+
+    private void checkBounties(Model model) {
+        for (DestinationTask dt : model.getParty().getDestinationTasks()) {
+            if (dt instanceof BountyDestinationTask) {
+                ((BountyDestinationTask)dt).turnInIfAble(model, this);
             }
         }
     }
