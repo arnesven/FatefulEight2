@@ -62,6 +62,7 @@ public class SneakAttackCombatAction extends CombatAction {
                 target = MyRandom.sample(combatEvent.getEnemies());
                 combatEvent.println("so " + target.getName() + " is targeted instead.");
             }
+            model.getLog().waitForAnimationToFinish();
             performer.doOneAttack(combatEvent, target, true, 0, 10);
             performer.removeCondition(SneakAttackCondition.class);
         }
