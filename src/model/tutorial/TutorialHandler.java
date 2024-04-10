@@ -471,6 +471,20 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void bounties(Model model) {
+        runOnce("bounties", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialBounties(model.getView()));
+        });
+    }
+
+    public void deliveries(Model model) {
+        runOnce("deliveries", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialDeliveries(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BountyDestinationTask extends DestinationTask {
+    public static final int SHORT_RANGE = 8;
+    public static final int LONG_RANGE = 15;
+    public static final int SEEK_INFO_DIFFICULTY = 8;
     private static final int LOOKING_FOR_BOUNTY = 0;
     private static final int GOT_CLUE = 1;
     private static final int BOUNTY_KILLED = 2;
@@ -114,6 +117,7 @@ public class BountyDestinationTask extends DestinationTask {
         UrbanLocation urb = (UrbanLocation) model.getCurrentHex().getLocation();
         if (urb.getPlaceName().equals(getTurnInTown())) {
             this.state = TURNED_IN;
+            JournalEntry.printJournalUpdateMessage(model);
             state.println("You visit the constabulary and turn in the bounty for " + getBountyName() + "!");
             state.println("The party gains " + bounty.getReward() + " gold.");
             model.getParty().addToGold(bounty.getReward());

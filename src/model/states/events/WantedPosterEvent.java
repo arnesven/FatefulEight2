@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.journal.JournalEntry;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
 import model.races.AllRaces;
@@ -102,7 +103,9 @@ public class WantedPosterEvent extends DailyEventState {
         }
         print("Do you take the poster? (Y/N) ");
         if (yesNoInput()) {
+            model.getTutorial().bounties(model);
             model.getParty().addDestinationTask(new BountyDestinationTask(bounty));
+            JournalEntry.printJournalUpdateMessage(model);
             leaderSay("We'll have to ask around a bit to find " + himOrHer(bounty.getGender()) + ".");
         } else {
             leaderSay("But why risk it? We've got other prospects. Moving on!");

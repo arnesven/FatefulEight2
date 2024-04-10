@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.enemies.Enemy;
+import model.journal.JournalEntry;
 import model.states.DailyEventState;
 import model.tasks.BountyDestinationTask;
 import util.MyRandom;
@@ -54,6 +55,7 @@ public class FindBountyEvent extends DailyEventState {
         if (enemies.get(0).isDead() ) {
             setCurrentTerrainSubview(model);
             task.setBountyKilled();
+            JournalEntry.printJournalUpdateMessage(model);
             leaderSay("Well, it did say 'dead or alive'. Now we just need to head back to " +
                     task.getTurnInTown() + " to collect our payment.");
         }

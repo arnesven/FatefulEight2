@@ -295,7 +295,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             return;
         }
         MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(
-                model, this, Skill.SeekInfo, 8);
+                model, this, Skill.SeekInfo, BountyDestinationTask.SEEK_INFO_DIFFICULTY);
         if (!pair.first) {
             partyMemberSay(pair.second, "Uh... do you know " + task.getBountyName() + "?");
             portraitSay("I'm afraid I don't.");
@@ -314,11 +314,11 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         }
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
         List<Point> path = model.getWorld().shortestPathToPoint(task.getPosition());
-        if (path.size() > 16) {
+        if (path.size() > BountyDestinationTask.LONG_RANGE) {
             portraitSay("I'm sorry but I don't know at all who you are talking about.");
             leaderSay("Darn. I guess " + heOrShe(bountyGender) + " could be hiding anywhere. " +
                     "Maybe even in different kingdom.");
-        } else if (path.size() > 7) {
+        } else if (path.size() >= BountyDestinationTask.SHORT_RANGE) {
             String reply = shown ? heOrShe(bountyGender) + " looks familiar, but I can't " +
                     "tell you where I've seen " + himOrHer(bountyGender) :
                     "The name sounds familiar, but I can't tell you where I've heard it";

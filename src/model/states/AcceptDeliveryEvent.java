@@ -105,6 +105,7 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
         senderSpeak("Are you getting on the road soon? I have a " + parcel.getName().toLowerCase() + " I would like you " +
                 "to deliver. I would do it myself, but the destination is kind of remote, " +
                 "and I'm not sure I'm up for the trek into the wilds. You would be compensated of course. Are you interested?");
+        model.getTutorial().deliveries(model);
         leaderSay("Where do you want it delivered?");
         senderSpeak("It's to my " + recipient.first + ". " + heOrSheCap(recipient.second) +
                 " lives in " + destination.getLongDescription() + ". You can't miss it. " + heOrSheCap(recipient.second) + " will pay you " +

@@ -8,6 +8,7 @@ import model.classes.Classes;
 import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
 import model.items.weapons.*;
+import model.journal.JournalEntry;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.tasks.DeliverParcelTask;
@@ -53,6 +54,7 @@ public class MakeDeliveryEvent extends DarkDeedsEvent {
         portraitSay("Oh, yes, I've been expecting this! Thank you.");
         portraitSay("Let me find my purse so I can pay you.");
         deliverTask.receivePayment(model);
+        JournalEntry.printJournalUpdateMessage(model);
         return true;
     }
 
