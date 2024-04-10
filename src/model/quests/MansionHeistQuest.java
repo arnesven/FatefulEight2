@@ -11,13 +11,17 @@ import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.quests.scenes.*;
 import model.races.Race;
+import model.states.GameState;
 import model.states.QuestState;
+import model.states.events.DarkDeedsEvent;
+import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.subviews.CombatTheme;
 import view.subviews.MansionTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
+import view.widget.TopText;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -43,12 +47,29 @@ public class MansionHeistQuest extends Quest {
     private static final Sprite32x32 outdoorWall = new Sprite32x32("outdoorWall", "quest.png", 0x35,
             MyColors.DARK_GRAY, MyColors.DARK_GREEN, MyColors.DARK_BROWN, MyColors.CYAN);
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.THF, Race.ALL);
+    private static final int NOTORIETY_REWARD = 40;
     private static List<QuestBackground> bgSprites = makeBackground();
 
     private static final String endText = "You return to your contact and deliver the contents of Lady Golbrads safe.";
 
     public MansionHeistQuest() {
-        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM, -1, 175, text, endText);
+        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM, 0, 175, text, endText);
+    }
+
+    @Override
+    public void drawSpecialReward(Model model, int x, int y) {
+        super.drawSpecialReward(model, x, y);
+        model.getScreenHandler().put(x, y, TopText.NOTORIETY_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), NOTORIETY_REWARD+"", x+2, y, MyColors.RED, MyColors.BLACK);
+    }
+
+    @Override
+    public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
+        GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
+        if (questWasSuccess) {
+            DarkDeedsEvent.addToNotoriety(model, state, NOTORIETY_REWARD);
+        }
+        return toReturn;
     }
 
     @Override

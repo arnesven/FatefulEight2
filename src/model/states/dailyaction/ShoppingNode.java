@@ -8,6 +8,7 @@ import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.ShopState;
+import model.states.events.DarkDeedsEvent;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.SignSprite;
@@ -52,14 +53,14 @@ public abstract class ShoppingNode extends DailyActionNode {
                     state.leaderSay("Now let's try not to be spotted on our way out.");
                     result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
                     if (!result) {
-                        state.printAlert("Your crime has been witnessed, your notoriety has increased!");
-                        model.getParty().addToNotoriety(bounty * 10);
+                        state.printAlert("Your crime has been witnessed.");
+                        DarkDeedsEvent.addToNotoriety(model, state, bounty * 10);
                     }
                 } else {
                     result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
                     if (!result) {
-                        state.printAlert("Your crime has been witnessed, your notoriety has increased!");
-                        model.getParty().addToNotoriety(10);
+                        state.printAlert("Your crime has been witnessed.");
+                        DarkDeedsEvent.addToNotoriety(model, state, 10);
                     }
                 }
             }

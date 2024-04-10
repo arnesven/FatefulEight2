@@ -8,6 +8,7 @@ import model.map.UrbanLocation;
 import model.ruins.objects.DungeonChest;
 import model.states.GameState;
 import model.states.events.ChestEvent;
+import model.states.events.DarkDeedsEvent;
 import model.states.events.SilentNoEventState;
 import view.sprites.Sprite;
 
@@ -109,7 +110,7 @@ public class LordTreasuryNode extends DailyActionNode {
                 leaderSay("Thank you. I'll be on my way then...");
             } else {
                 printQuote(location.getLordName(), "You don't fool me thief. Now get out.");
-                model.getParty().addToNotoriety(10);
+                DarkDeedsEvent.addToNotoriety(model, this, 10);
                 printAlert("Your notoriety has increased!");
             }
         }
@@ -129,8 +130,8 @@ public class LordTreasuryNode extends DailyActionNode {
             leaderSay("And make sure not to be spotted on our way out.");
             boolean result = model.getParty().doCollectiveSkillCheck(model, this, Skill.Sneak, 4);
             if (!result) {
-                model.getParty().addToNotoriety(40);
-                printAlert("Your crime has been witnessed, your notoriety has increased!");
+                printAlert("Your crime has been witnessed.");
+                DarkDeedsEvent.addToNotoriety(model, this, 40);
             }
         }
     }
