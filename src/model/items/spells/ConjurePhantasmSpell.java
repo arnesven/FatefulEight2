@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.combat.conditions.TimedParalysisCondition;
+import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
@@ -50,9 +51,11 @@ public class ConjurePhantasmSpell extends CombatSpell {
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         List<Enemy> targets = getTargets(combat, target, 3 + getMasteryLevel(performer));
         for (Enemy e : targets) {
-            combat.println(e.getName() + " has been paralyzed with fear!");
-            e.addCondition(new TimedParalysisCondition());
-            combat.addSpecialEffect(e, new PhantasmEffect());
+            if (!(e instanceof AutomatonEnemy)) { // TODO: Change to something like "isFearless"
+                combat.println(e.getName() + " has been paralyzed with fear!");
+                e.addCondition(new TimedParalysisCondition());
+                combat.addSpecialEffect(e, new PhantasmEffect());
+            }
         }
     }
 

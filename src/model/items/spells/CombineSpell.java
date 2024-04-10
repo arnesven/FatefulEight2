@@ -128,6 +128,9 @@ public class CombineSpell extends AuxiliarySpell {
 
     @Override
     public CombatSpell getCombatSpell() {
+        if (combinedResult == null) { // Combine cannot be cast until configured outside of combat
+            return null;
+        }
         MyPair<Skill, Integer> skillAndInteger = getResultingSkill(combinedResult);
         return new CombineCombatSpell(skillAndInteger.first, skillAndInteger.second, getResultingHealthCost(combinedResult), combinedResult);
     }
