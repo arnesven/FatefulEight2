@@ -1,6 +1,7 @@
 package model.journal;
 
 import model.Model;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.map.CastleLocation;
@@ -264,12 +265,20 @@ public class PartThreeStoryPart extends StoryPart {
                     portraitSay("Oh, okay... bye.");
                 } else {
                     leaderSay("It will go quickly if we all help out.");
+                    int count = 0;
                     do {
                         boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 14);
                         if (success) {
                             break;
                         }
                         portraitSay("Thanks for helping out. It looks like there's still much more work to be done though.");
+                        count++;
+                        if (count == 3) {
+                            leaderSay("I think that's all we have time for today though. We'll have to continue tomorrow.");
+                            portraitSay("You're probably right. We all had better get some rest.");
+                            model.setTimeOfDay(TimeOfDay.EVENING);
+                            return;
+                        }
                         print("Continue cleaning? (Y/N) ");
                         if (!yesNoInput()) {
                             leaderSay("We've got better things to do. See you later Willis.");

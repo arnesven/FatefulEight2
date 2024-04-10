@@ -4,12 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.items.HigherTierItem;
-import model.items.Item;
-import model.items.PotionRecipe;
+import model.items.*;
+import model.items.books.BookItem;
 import model.items.clothing.JustClothes;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
+import model.items.special.PearlItem;
 import model.items.spells.Spell;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.DailyActionState;
@@ -46,6 +46,7 @@ public class CraftItemState extends GameState {
         }
         model.getTutorial().crafting(model);
         List<Item> allItems = getAllItems(model);
+        allItems.removeIf((Item it) -> it instanceof BookItem || it instanceof Scroll);
         if (allItems.isEmpty()) {
             println("You cannot craft since you do not have any items.");
             return new DailyActionState(model);
@@ -135,7 +136,8 @@ public class CraftItemState extends GameState {
     private List<Item> getAllItems(Model model) {
         List<Item> allItems = new ArrayList<>();
         allItems.addAll(model.getParty().getInventory().getAllItems());
-        allItems.removeIf((Item it ) -> it instanceof Spell || it instanceof Potion || it instanceof PotionRecipe);
+        allItems.removeIf((Item it ) -> it instanceof Spell ||
+                it instanceof Potion || it instanceof PotionRecipe || it instanceof PearlItem);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (!(gc.getEquipment().getWeapon() instanceof UnarmedCombatWeapon)) {
                 allItems.add(gc.getEquipment().getWeapon());
@@ -146,6 +148,9 @@ public class CraftItemState extends GameState {
             if (gc.getEquipment().getAccessory() != null) {
                 allItems.add(gc.getEquipment().getAccessory());
             }
+        }
+        if (model.getParty().getInventory().getLockpicks() > 0) {
+            allItems.add(new Lockpick());
         }
         return allItems;
     }
