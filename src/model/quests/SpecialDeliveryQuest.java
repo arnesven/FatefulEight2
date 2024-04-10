@@ -44,7 +44,7 @@ public class SpecialDeliveryQuest extends MainQuest {
 
     @Override
     protected List<QuestScene> buildScenes() {
-        return List.of(
+        return List.of( // TODO: Add scene where you analyze the potion or drink it yourself.
                 new QuestScene("Spot ambushers", List.of(
                     new SoloSkillCheckSubScene(2, 0, Skill.Perception, 9,
                         "One of us needs to keep a look out for this 'third party', whoever they may be."))),

@@ -275,12 +275,12 @@ public class ItemDeck extends ArrayList<Item> {
                 new SeaTravelBook());
         // TODO: The Finer Points of Alchemy (useless)
         // TODO: Grave Robber's Handbook (useful tips for dungeons)
-        // TODO: Common Maritime Routes (useful)
         // TODO: On the Origins of Elves (useless)
         // TODO: On the Tenacity of Dwarves (useless)
         // TODO: On the Peculiarities of Half-Orcs (useless)
         // TODO: On the Ingenuity of Halflings (useless)
         // TODO: Horse Racing 101
+        // TODO: Runny Card Game for Dummies
     }
 
     public static List<Weapon> allWeapons() {
