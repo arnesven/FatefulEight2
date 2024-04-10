@@ -271,9 +271,8 @@ public class ItemDeck extends ArrayList<Item> {
         return List.of(new HowToTameYourDragonBook(),
                 new QuadMachineryBook(),
                 new TreasureHuntersHandbook(),
-                new PoetryBookOne());
-        // TODO: Treasure Hunter's Handbook (useful)
-        // TODO: Book of Poetry (useless)
+                new PoetryBookOne(),
+                new SeaTravelBook());
         // TODO: The Finer Points of Alchemy (useless)
         // TODO: Grave Robber's Handbook (useful tips for dungeons)
         // TODO: Common Maritime Routes (useful)

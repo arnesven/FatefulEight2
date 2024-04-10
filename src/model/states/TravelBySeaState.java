@@ -120,6 +120,7 @@ public class TravelBySeaState extends GameState {
         TownLocation upper = model.getWorld().getTownByName("Upper Theln");
         TownLocation noShip = null;
 
+        // OBS: If you update these tables, don't forget to update the corresponding BookItem.
         SeaTravelTable table = null;
         if (currentLocation == durham) {
             table = new SeaTravelTable(
