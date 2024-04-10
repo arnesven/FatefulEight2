@@ -13,7 +13,7 @@ public class KruskTalandroCharacter extends GameCharacter {
         super("Krusk", "Talandro", HALF_ORC, WIT,
                 new KruskTalandro(), new CharacterClass[]{WIT, DRU, MAG, SOR});
         addToPersonality(PersonalityTrait.generous);
-        addToPersonality(PersonalityTrait.critical);
+        addToPersonality(PersonalityTrait.lawful);
         addToPersonality(PersonalityTrait.intellectual);
     }
 }

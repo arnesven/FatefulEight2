@@ -12,6 +12,6 @@ public class VzaniAnglerCharacter extends model.characters.GameCharacter {
                 new VzaniAngler(), new CharacterClass[]{WIZ, MAG, PRI, THF});
         addToPersonality(PersonalityTrait.stingy);
         addToPersonality(PersonalityTrait.calm);
-        addToPersonality(PersonalityTrait.lawful);
+        addToPersonality(PersonalityTrait.critical);
     }
 }

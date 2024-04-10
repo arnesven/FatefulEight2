@@ -30,7 +30,7 @@ public class HelpWillisQuest extends MainQuest {
 
     @Override
     public void drawSpecialReward(Model model, int x, int y) {
-        y++;
+        y += 2;
         BorderFrame.drawString(model.getScreenHandler(), "Recruit", x, y++, MyColors.WHITE, MyColors.BLACK);
         BorderFrame.drawString(model.getScreenHandler(), "Willis", x, y++, MyColors.WHITE, MyColors.BLACK);
     }

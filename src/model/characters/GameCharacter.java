@@ -145,7 +145,7 @@ public class GameCharacter extends Combatant {
     }
 
     private MyColors getStaminaColor() {
-        return getSP() == 0 ? MyColors.YELLOW : (getSP() == getMaxSP() ? MyColors.GREEN : DEFAULT_TEXT_COLOR);
+        return getSP() == 0 ? MyColors.YELLOW : (getSP() >= getMaxSP() ? MyColors.GREEN : DEFAULT_TEXT_COLOR);
     }
 
     public void drawAppearance(ScreenHandler screenHandler, int col, int row) {

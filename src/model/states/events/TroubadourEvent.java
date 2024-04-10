@@ -32,7 +32,7 @@ public class TroubadourEvent extends MeetTravellerEvent {
 
     @Override
     protected List<Point> getPathToDestination(Model model) {
-        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), false);
+        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
         return model.getWorld().shortestPathToNearestInn();
     }
 }

@@ -283,6 +283,7 @@ public class PartThreeStoryPart extends StoryPart {
                         if (!yesNoInput()) {
                             leaderSay("We've got better things to do. See you later Willis.");
                             portraitSay("Oh, okay... bye.");
+                            model.setTimeOfDay(TimeOfDay.EVENING);
                             return;
                         }
                     } while (true);

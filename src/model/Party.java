@@ -135,6 +135,7 @@ public class Party implements Serializable {
     }
 
     public void move(Model model, int dx, int dy) {
+        heldQuests.clear();
         this.previousPosition = new Point(position);
         model.getWorld().move(position, dx, dy);
     }

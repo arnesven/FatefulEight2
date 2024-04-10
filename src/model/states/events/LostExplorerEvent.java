@@ -43,6 +43,6 @@ public class LostExplorerEvent extends MeetTravellerEvent {
     @Override
     protected List<Point> getPathToDestination(Model model) {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
-        return model.getWorld().shortestPathToNearestTownOrCastle(MyRandom.randInt(0));
+        return model.getWorld().shortestPathToNearestTownOrCastle(0);
     }
 }
