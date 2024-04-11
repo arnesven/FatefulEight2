@@ -11,4 +11,9 @@ public abstract class UndeadEnemy extends Enemy {
     public String getDeathSound() {
         return "undead_death";
     }
+
+    @Override
+    public boolean isFearless() {
+        return true;
+    }
 }

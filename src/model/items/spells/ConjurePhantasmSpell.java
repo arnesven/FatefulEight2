@@ -51,10 +51,12 @@ public class ConjurePhantasmSpell extends CombatSpell {
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         List<Enemy> targets = getTargets(combat, target, 3 + getMasteryLevel(performer));
         for (Enemy e : targets) {
-            if (!(e instanceof AutomatonEnemy)) { // TODO: Change to something like "isFearless"
+            if (!e.isFearless()) {
                 combat.println(e.getName() + " has been paralyzed with fear!");
                 e.addCondition(new TimedParalysisCondition());
                 combat.addSpecialEffect(e, new PhantasmEffect());
+            } else {
+                combat.println(this.getName() + " has no effect on " + e.getName() + ".");
             }
         }
     }

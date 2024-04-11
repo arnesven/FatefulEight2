@@ -110,9 +110,7 @@ public class HungryTrollQuest extends Quest {
                 if (model.getParty().hasHorses()) {
                     Horse horse = model.getParty().getHorseHandler().get(0);
                     state.println("The troll has eaten one of your horses.");
-                    // TODO: Replace with call to "remove horse" in horseHandler (breaks save)
-                    model.getParty().getHorseHandler().sellHorse(model, horse);
-                    model.getParty().addToGold(-horse.getCost()/2);
+                    model.getParty().getHorseHandler().removeHorse(horse);
                     state.leaderSay("Hey! That poor " + horse.getType() + "!");
                 } else {
                     state.print("The troll has eaten another one of your backpacks. ");

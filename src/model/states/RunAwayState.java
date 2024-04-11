@@ -48,8 +48,8 @@ public class RunAwayState extends TravelState {
     }
 
     @Override
-    protected void checkForOverEncumberance(Model model) {
-        // Skip this when running away
+    protected boolean checkForOverEncumberance(Model model) {
+        return true;
     }
 
     @Override

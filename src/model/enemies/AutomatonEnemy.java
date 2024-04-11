@@ -51,6 +51,11 @@ public class AutomatonEnemy extends Enemy {
         return new AutomatonLoot();
     }
 
+    @Override
+    public boolean isFearless() {
+        return true;
+    }
+
     private static class AutomatonSprite extends LoopingSprite {
         public AutomatonSprite(MyColors color) {
             super("automaton", "enemies.png", 0x98, 32);

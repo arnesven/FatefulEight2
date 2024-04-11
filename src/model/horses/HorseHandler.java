@@ -94,7 +94,7 @@ public class HorseHandler extends ArrayList<Horse> {
         model.getParty().addToGold(horse.getCost()/2);
     }
 
-    private void removeHorse(Horse horse) {
+    public void removeHorse(Horse horse) {
         remove(horse);
         if (horse instanceof Pony) {
             ponies--;

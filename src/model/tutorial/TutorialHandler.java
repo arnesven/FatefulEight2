@@ -436,7 +436,7 @@ public class TutorialHandler implements Serializable {
         });
     }
 
-    public void gameLog(Model model) { // TODO: Change name of method to experience
+    public void attributes(Model model) {
         runOnce("experience", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new AttributesHelpChapter(model.getView()));

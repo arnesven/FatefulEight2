@@ -30,7 +30,10 @@ public class TravelState extends GameState {
         CollapsingTransition.transition(model, mapSubView);
         model.getTutorial().travel(model);
 
-        checkForOverEncumberance(model);
+        if (!checkForOverEncumberance(model)) {
+            println("Travel canceled.");
+            return model.getCurrentHex().getDailyActionState(model);
+        }
 
         boolean riding = checkForRiding(model);
         if (riding) {
@@ -56,16 +59,19 @@ public class TravelState extends GameState {
         return nextState(model);
     }
 
-    protected void checkForOverEncumberance(Model model) {
+    protected boolean checkForOverEncumberance(Model model) {
         while (model.getParty().getEncumbrance() > model.getParty().getCarryingCapacity()) {
             model.getTutorial().carryingCapacity(model);
             println("Your party is currently carrying to much to be able to travel. You must abandon " +
                     "items, food or other resources before you can travel.");
-            showThrowAwayMenu(model);
+            if (showThrowAwayMenu(model)) {
+                break;
+            }
         }
+        return model.getParty().getEncumbrance() <= model.getParty().getCarryingCapacity();
     }
 
-    private void showThrowAwayMenu(Model model) {
+    private boolean showThrowAwayMenu(Model model) {
         List<String> options = new ArrayList<>();
         int chosen;
         do {
@@ -82,22 +88,33 @@ public class TravelState extends GameState {
             if (materials > 0) {
                 options.add("Materials (" + (Inventory.WEIGHT_OF_MATERIALS * materials) / 1000.0 + ")");
             }
+            int lockpicks = model.getParty().getInventory().getLockpicks();
+            if (lockpicks > 0) {
+                options.add("Lockpicks (" + (Inventory.WEIGHT_OF_LOCKPICKS*lockpicks) / 1000.0 + ")");
+            }
             for (Item it : model.getParty().getInventory().getAllItems()) {
                 options.add(it.getName() + " (" + (it.getWeight() / 1000.0) + ")");
             }
             options.add("Cancel");
             chosen = multipleOptionArrowMenu(model, 24, 4, options);
             if (options.get(chosen).contains("Food")) {
-                println("You threw away 1 ration.");
-                model.getParty().addToFood(-1);
+                int x = howManyToThrowAway(model, model.getParty().getFood());
+                println("You threw away " + x + " ration" + (x == 1 ? "":"s") + ".");
+                model.getParty().addToFood(-x);
             } else if (options.get(chosen).contains("Ingredients")) {
-                println("You threw away 1 ingredient.");
-                model.getParty().getInventory().addToIngredients(-1);
+                int x = howManyToThrowAway(model, model.getParty().getInventory().getIngredients());
+                println("You threw away " + x + " ingredient" + (x == 1 ? "":"s") + ".");
+                model.getParty().getInventory().addToIngredients(-x);
             } else if (options.get(chosen).contains("Materials")) {
-                println("You threw away 1 material."); // TODO: Add so that you can throw away multiple
-                model.getParty().getInventory().addToMaterials(-1);
+                int x = howManyToThrowAway(model, model.getParty().getInventory().getMaterials());
+                println("You threw away " + x + " ingredient" + (x == 1 ? "" : "s") + ".");
+                model.getParty().getInventory().addToMaterials(-x);
+            } else if (options.get(chosen).contains("Lockpicks")) {
+                int x = howManyToThrowAway(model, model.getParty().getInventory().getLockpicks());
+                println("You threw away " + x + " lockpick" + (x == 1 ? "" : "s") + ".");
+                model.getParty().getInventory().addToLockpicks(-x);
             } else if (chosen == options.size()-1) {
-                break;
+                return true;
             } else {
                 Item itemToThrowAway = null;
                 for (Item it : model.getParty().getInventory().getAllItems()) {
@@ -113,6 +130,26 @@ public class TravelState extends GameState {
                 }
             }
         } while (options.size() != 1);
+        return false;
+    }
+
+    private int howManyToThrowAway(Model model, int food) {
+        int x = 0;
+        do {
+            print("How many do you want to throw away? ");
+            try {
+                String line = lineInput();
+                x = Integer.parseInt(line);
+                if (x >= 0 && x <= food) {
+                    break;
+                } else {
+                    println("Enter an integer between 0 and " + food + ".");
+                }
+            } catch (NumberFormatException nfe) {
+                println("Enter an integer between 0 and " + food + ".");
+            }
+        } while (true);
+        return x;
     }
 
     protected boolean checkForRiding(Model model) {

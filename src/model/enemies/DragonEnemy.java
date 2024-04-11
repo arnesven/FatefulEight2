@@ -85,6 +85,11 @@ public abstract class DragonEnemy extends BeastEnemy {
     public abstract Equipment getTamedEquipment();
 
     @Override
+    public boolean isFearless() {
+        return true;
+    }
+
+    @Override
     public Point getCursorShift() {
         return new Point(1, 1);
     }
