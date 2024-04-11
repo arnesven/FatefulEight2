@@ -50,6 +50,11 @@ public class NoblemanEvent extends DarkDeedsEvent {
         return true;
     }
 
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I belong to the nobility, but that doesn't mean I look down on people.";
+    }
+
     public static boolean tryToGetGold(Model model, GameState state) {
         boolean success = model.getParty().doSoloSkillCheck(model, state, Skill.Entertain, 8);
         if (success) {

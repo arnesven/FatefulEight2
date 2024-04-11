@@ -58,6 +58,11 @@ public class ArcherEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm an archer. I love sending arrows straight into the bullseye!";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Archer", "", appearance.getRace(), Classes.MAR,
                 appearance, Classes.NO_OTHER_CLASSES, new Equipment(new CompositeBow(), new StuddedJerkin(), new EmeraldRing()));

@@ -31,6 +31,11 @@ public class HalflingEvent extends DailyEventState {
                     println("The half-ling completely ignores the party.");
                     return true;
                 }
+
+                @Override
+                protected String getVictimSelfTalk() {
+                    return "Just a farmer, minding my own business.";
+                }
             }.doEvent(model);
         } else if (dieRoll <= 7) {
             print(" nobleman. ");

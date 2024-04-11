@@ -29,6 +29,11 @@ public abstract class FarmerEvent extends DarkDeedsEvent {
         return true;
     }
 
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a farmer. Just trying to work my fields and make a living.";
+    }
+
     protected AdvancedAppearance getPortrait() {
         return portrait;
     }

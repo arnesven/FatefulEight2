@@ -11,6 +11,7 @@ import model.combat.conditions.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
+import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.states.DailyEventState;
@@ -24,6 +25,7 @@ import util.MyStrings;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class DarkDeedsEvent extends DailyEventState {
     public static final int PICK_POCKETING_NOTORIETY = 5;
@@ -67,6 +69,8 @@ public abstract class DarkDeedsEvent extends DailyEventState {
 
     protected abstract boolean doIntroAndContinueWithEvent(Model model);
     protected abstract boolean doMainEventAndShowDarkDeeds(Model model);
+    protected abstract String getVictimSelfTalk();
+
     protected void doEnding(Model model) {
         println("You part ways with the " + getVictimCharacter(model).getName().toLowerCase() + ".");
     }
@@ -83,33 +87,34 @@ public abstract class DarkDeedsEvent extends DailyEventState {
             println(makeCompanionString(companions) + ".");
 
         }
-        println("How would you like to interact with the " + victim + "?");
-        List<String> options = new ArrayList<>(List.of("Attack " + victim));
-        if (withInteract) {
-            options.add(0, this.interactText + " " + victim);
-        } else {
-            options.add(0, "Leave " + victim);
+        while (true) {
+            println("How would you like to interact with the " + victim + "?");
+            List<String> options = new ArrayList<>(List.of("Attack " + victim));
+            if (withInteract) {
+                options.add(0, this.interactText + " " + victim);
+            } else {
+                options.add(0, "Leave " + victim);
+            }
+            if (getModel().getParty().size() > 1) {
+                options.add("Steal from " + victim);
+            }
+            options.add("Make Inquiry");
+            int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
+            if (chosen == 0) {
+                return false;
+            }
+            if (chosen == 1) {
+                attack(victimChar, companions, strat, true);
+                return true;
+            }
+            if (options.get(chosen).contains("Steal")) {
+                attemptPickPocket(victim, victimChar, stealMoney, companions, strat);
+                return true;
+            }
+            if (options.get(chosen).contains("Make Inquiry")) {
+                makeInquiry(getModel(), victim, victimChar);
+            }
         }
-        if (getModel().getParty().size() > 1) {
-            options.add("Steal from " + victim);
-        }
-        if (hasBountyTasks(getModel())) {
-            options.add("Ask about bounties");
-        }
-        int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
-        if (chosen == 0) {
-            return false;
-        }
-        if (chosen == 1) {
-            attack(victimChar, companions, strat, true);
-        }
-        if (options.get(chosen).contains("Steal")) {
-            attemptPickPocket(victim, victimChar, stealMoney, companions, strat);
-        }
-        if (options.get(chosen).contains("bounties")) {
-            askAboutBounties(getModel(), victimChar);
-        }
-        return true;
     }
 
     private void attemptPickPocket(String victim, GameCharacter victimChar, int stealMoney,
@@ -342,4 +347,59 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         }
         return false;
     }
+
+    private void makeInquiry(Model model, String victim, GameCharacter victimChar) {
+        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
+        List<Point> path = model.getWorld().generalShortestPath(0,
+                worldHex -> worldHex.getLocation() != null &&
+                        worldHex.getLocation() instanceof CastleLocation);
+        CastleLocation nearestCastle = (CastleLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
+        while (true) {
+            List<String> options = new ArrayList<>(List.of(
+                    "Ask about " + himOrHer(victimChar.getGender()),
+                    "Ask about region",
+                    "Ask about news"));
+            Map<String, MyPair<String, String>> specificTopics = makeSpecificTopics(model);
+            for (String s : specificTopics.keySet()) {
+                options.add("Ask about " + s);
+            }
+            if (hasBountyTasks(getModel())) {
+                options.add("Ask about bounties");
+            }
+            options.add("Cancel");
+            int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
+            if (chosen == 0) {
+                leaderSay(MyRandom.sample(List.of("Tell me about yourself.", "Who are you?",
+                        "What do you do?", "I'm wondering about you. What's your story?")));
+                portraitSay(getVictimSelfTalk());
+            } else if (options.get(chosen).contains("bounties")) {
+                askAboutBounties(getModel(), victimChar);
+            } else if (options.get(chosen).contains("Cancel")) {
+                break;
+            } else if (options.get(chosen).contains("news")) {
+                leaderSay("Got any news to share?");
+                portraitSay(MyRandom.sample(List.of(
+                        "I've heard " + nearestCastle.getLordName() + " is planning to host an archery contest soon.",
+                        "I've heard " + nearestCastle.getLordName() + " is planning to host a melee tournament soon.",
+                        "I've heard " + nearestCastle.getLordName() + " is planning a horse racing cup soon.")));
+            } else if (options.get(chosen).contains("region")) {
+                leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
+                        "What kingdom is this?", "What can you tell me about these lands?")));
+
+                String kingdom = nearestCastle.getPlaceName().replace("Castle ", "").replace(" Castle", "");
+                portraitSay("This is the kingdom of " + kingdom + ". " +
+                        nearestCastle.getLordName() + " rules these lands.");
+            } else {
+                String key = options.get(chosen).replace("Ask about ", "");
+                MyPair<String, String> queryAndResponse = specificTopics.get(key);
+                leaderSay(queryAndResponse.first);
+                portraitSay(queryAndResponse.second);
+            }
+        }
+    }
+
+    protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
+        return new HashMap<>();
+    }
+
 }

@@ -11,11 +11,13 @@ import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.clothing.MesmersRobes;
 import model.states.DailyEventState;
+import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MagicianEvent extends DarkDeedsEvent {
     private AdvancedAppearance portrait;
@@ -67,6 +69,11 @@ public class MagicianEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a magician. Yes, I happen to be self-taught. So what?";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Magician", "", portrait.getRace(), Classes.MAG, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(model.getItemDeck().getRandomWand(), new MesmersRobes(),
@@ -89,5 +96,12 @@ public class MagicianEvent extends DarkDeedsEvent {
     @Override
     protected ProvokedStrategy getProvokedStrategy() {
         return ProvokedStrategy.FIGHT_IF_ADVANTAGE;
+    }
+
+    @Override
+    protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
+        return Map.of("show", new MyPair<>("Tell me about your magic show.",
+                "My show? Oh it's spectacular, if I say so myself. Genuine, grade-A magic. " +
+                        "I hope you enjoy it."));
     }
 }

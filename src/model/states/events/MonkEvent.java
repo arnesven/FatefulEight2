@@ -40,4 +40,9 @@ public class MonkEvent extends MeetTravellerEvent {
         List<Point> path = model.getWorld().shortestPathToNearestTemple();
         return path;
     }
+
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a monk. I spend most of my time at the temple, praying and doing chores.";
+    }
 }

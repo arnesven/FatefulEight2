@@ -32,6 +32,11 @@ public class LostExplorerEvent extends MeetTravellerEvent {
         return super.doMainEventAndShowDarkDeeds(model);
     }
 
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm an explorer gathering information for map makers.";
+    }
+
     private static GameCharacter makeLostExplorer() {
         CharacterAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER);
         GameCharacter explorer = new GameCharacter("Explorer", "", appearance.getRace(), Classes.TRAVELLER, appearance,

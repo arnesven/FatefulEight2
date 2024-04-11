@@ -35,4 +35,9 @@ public class LumberMillEvent extends SimpleDarkDeedsEvent {
         this.freeLodge = true;
         return true;
     }
+
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a lumber jack. I cut down trees and turn them into planks.";
+    }
 }

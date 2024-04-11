@@ -58,6 +58,11 @@ public class SmithEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a blacksmith. I manufacture or improve things from iron and steel.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Smith", "", portrait.getRace(), Classes.ART, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(new Warhammer(), new LeatherArmor(), null));

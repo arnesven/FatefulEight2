@@ -44,6 +44,11 @@ public class AmazonEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a native warrior of these lands.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Amazon", "", portrait.getRace(), Classes.AMZ, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(new Spear(), new FurArmor(), model.getItemDeck().getRandomShoes()));

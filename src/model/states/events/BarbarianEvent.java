@@ -69,6 +69,11 @@ public class BarbarianEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a tribesman, a hunter, a warrior, all in one.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         Weapon weapon = MyRandom.sample(List.of(new BastardSword(), new GreatAxe(), new GrandMaul()));
         GameCharacter barb = new GameCharacter("Barbarian", "", race, Classes.BBN, portrait,

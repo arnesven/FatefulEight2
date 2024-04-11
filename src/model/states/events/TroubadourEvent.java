@@ -31,6 +31,12 @@ public class TroubadourEvent extends MeetTravellerEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a troubadour. I sing and entertain for payment, but I like to look at " +
+                "it as just being myself, and occasionally I get generous donations.";
+    }
+
+    @Override
     protected List<Point> getPathToDestination(Model model) {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
         return model.getWorld().shortestPathToNearestInn();

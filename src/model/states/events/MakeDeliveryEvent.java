@@ -59,6 +59,11 @@ public class MakeDeliveryEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm just a commoner. I take work where I can find it.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return recipientCharacter;
     }

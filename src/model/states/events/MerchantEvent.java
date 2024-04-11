@@ -67,6 +67,11 @@ public class MerchantEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a merchant. I buy and sell things. It sounds simple, but it can be hard to run a business.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter merchant = new GameCharacter("Merchant", "", apperance.getRace(), Classes.MERCHANT, apperance,
                 Classes.NO_OTHER_CLASSES, new Equipment(new ShortSword(), new PilgrimsCloak(), null));

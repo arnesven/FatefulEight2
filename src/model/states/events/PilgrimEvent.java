@@ -41,4 +41,9 @@ public class PilgrimEvent extends MeetTravellerEvent {
         List<Point> path = model.getWorld().shortestPathToNearestRuins();
         return path;
     }
+
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a pilgrim. I travel the world to visit spiritual sites.";
+    }
 }

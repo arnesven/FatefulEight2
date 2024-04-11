@@ -14,11 +14,13 @@ import model.items.clothing.LeatherArmor;
 import model.items.weapons.Pickaxe;
 import model.races.Race;
 import model.states.DailyEventState;
+import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MinerEvent extends DarkDeedsEvent {
     private final Race race;
@@ -56,6 +58,11 @@ public class MinerEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a miner by trade. I work in the mine.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Miner", "", app.getRace(), Classes.MIN, app,
                 Classes.NO_OTHER_CLASSES,
@@ -77,5 +84,12 @@ public class MinerEvent extends DarkDeedsEvent {
     @Override
     protected ProvokedStrategy getProvokedStrategy() {
         return ProvokedStrategy.FIGHT_TO_DEATH;
+    }
+
+    @Override
+    protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
+        return Map.of("mine", new MyPair<>("Can you tell me where the nearest mine is?",
+                "You think I'll give up my secrets that easily? Get real. However, mines are pretty " +
+                        "common actually. Look for them in hills and mountain areas."));
     }
 }

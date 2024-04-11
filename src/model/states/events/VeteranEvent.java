@@ -74,6 +74,11 @@ public class VeteranEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a veteran of war. I made some bad choices in life, but somehow I'm still around.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Veteran", "", app.getRace(), Classes.None, app,
                 Classes.NO_OTHER_CLASSES, new Equipment(new Longsword()));

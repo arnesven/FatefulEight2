@@ -71,6 +71,11 @@ public class JesterEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a jester at the castle. I entertain the nobility. Wanna hear a joke?";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         Weapon weapon = MyRandom.sample(List.of(new MorningStar(), new Warhammer(), new Club(), new Scepter(), new Flail()));
         GameCharacter gc = new GameCharacter(fullName, "", race, Classes.BRD, portrait,

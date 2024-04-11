@@ -45,6 +45,11 @@ public class ElfEvent extends DailyEventState {
                     changeClass(model, Classes.SPY, "The agent offers to train you in the ways of spycraft, ");
                     return true;
                 }
+
+                @Override
+                protected String getVictimSelfTalk() {
+                    return "Me? Oh, I'm just a passerby...";
+                }
             }.doEvent(model);
         } else if (dieRoll <= 6) {
             showRandomPortrait(model, Classes.CAP, Race.DARK_ELF, "Swordsman");
@@ -110,6 +115,11 @@ public class ElfEvent extends DailyEventState {
                 protected boolean doMainEventAndShowDarkDeeds(Model model) {
                     new PaladinEvent(model).changeClass(model);
                     return true;
+                }
+
+                @Override
+                protected String getVictimSelfTalk() {
+                    return "I'm a paladin, a knight of a sacred order.";
                 }
             };
         } else {

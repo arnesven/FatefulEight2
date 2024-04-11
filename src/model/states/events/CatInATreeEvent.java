@@ -72,6 +72,11 @@ public class CatInATreeEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm just an old woman. Won't you help me out?";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return new GameCharacter("Old Woman", "", portrait.getRace(), Classes.None, portrait,
                 Classes.NO_OTHER_CLASSES);

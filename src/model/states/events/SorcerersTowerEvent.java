@@ -66,6 +66,11 @@ public class SorcerersTowerEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a sorcerer. Now please, I am quite busy.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Sorcerer", "", portrait.getRace(), Classes.SOR, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(new MorningStar(), new MagesRobes(), model.getItemDeck().getRandomJewelry()));

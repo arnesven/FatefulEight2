@@ -81,6 +81,11 @@ public class PriestEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm what you call a holy man. But I consider myself more humble than that.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Priest", "", portrait.getRace(), Classes.PRI, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(new Scepter(), new PilgrimsCloak(), new LargeShield()));

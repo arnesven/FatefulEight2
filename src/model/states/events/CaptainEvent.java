@@ -48,6 +48,11 @@ public class CaptainEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a captain here. I train the militia and keep the townspeople safe.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         Weapon weapon = MyRandom.sample(List.of(new Longsword(), new Spear(), new Estoc(), new Glaive(), new LongBow()));
         Clothing armor = MyRandom.sample(List.of(new ChainMail(), new BreastPlate(), new LeatherArmor()));

@@ -61,6 +61,11 @@ public class WitchHutEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a witch. I brew potions and handle other 'special' magical requests.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Witch", "", portrait.getRace(), Classes.WIT, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(new SkullWand(), new CultistsRobes(), model.getItemDeck().getRandomJewelry()));

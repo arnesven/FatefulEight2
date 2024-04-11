@@ -63,6 +63,11 @@ public class WizardsAbodeEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a wizard. I love all things magical.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Wizard", "", portrait.getRace(), Classes.WIZ, portrait,
                 Classes.NO_OTHER_CLASSES, new Equipment(new PineWand(), new MesmersRobes(), model.getItemDeck().getRandomJewelry()));

@@ -101,6 +101,11 @@ public class MageEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a trained magic user. I'm educated in magical types and spell casting.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Mage", "", appearance.getRace(), Classes.MAGE, appearance,
                 Classes.NO_OTHER_CLASSES, new Equipment(new MagesStaff(), new MagesRobes(),

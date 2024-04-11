@@ -101,6 +101,11 @@ public class AcceptDeliveryEvent extends DarkDeedsEvent {
         return offerDeliveryTask(model);
     }
 
+    @Override
+    protected String getVictimSelfTalk() {
+        return "I'm just a commoner. I take work where I can find it.";
+    }
+
     public boolean offerDeliveryTask(Model model) {
         senderSpeak("Are you getting on the road soon? I have a " + parcel.getName().toLowerCase() + " I would like you " +
                 "to deliver. I would do it myself, but the destination is kind of remote, " +

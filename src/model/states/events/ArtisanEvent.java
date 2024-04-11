@@ -87,6 +87,11 @@ public class ArtisanEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "I'm a skilled artisan. I make things from cloth or finer metals.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter(subType, "", portrait.getRace(), Classes.ART, portrait,
                 Classes.NO_OTHER_CLASSES,

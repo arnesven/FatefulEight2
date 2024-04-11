@@ -38,6 +38,11 @@ public class HalfOrcEvent extends DailyEventState {
                     showExplicitPortrait(model, getPortrait(), "Forester");
                     return true;
                 }
+
+                @Override
+                protected String getVictimSelfTalk() {
+                    return "I'm a forester, a lumberjack and a ranger.";
+                }
             }.doEvent(model);
         } else if (dieRoll <= 9) {
             println(" a bandit!");

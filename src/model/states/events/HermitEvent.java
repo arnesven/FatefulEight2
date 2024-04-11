@@ -64,6 +64,11 @@ public class HermitEvent extends DarkDeedsEvent {
     }
 
     @Override
+    protected String getVictimSelfTalk() {
+        return "Me? I'm... just me.";
+    }
+
+    @Override
     protected GameCharacter getVictimCharacter(Model model) {
         return new GameCharacter("Hermit", "", portrait.getRace(), Classes.HERMIT, portrait,
                 Classes.NO_OTHER_CLASSES);
