@@ -332,6 +332,7 @@ public abstract class WorldHex {
                 new BoatsEvent(model),
                 new BoatsEvent(model),
                 new RaftOnRiverEvent(model),
+                new FishermanEvent(model),
                 new NoRiverCrossingEvent(model),
                 new NoRiverCrossingEvent(model)
         ));
