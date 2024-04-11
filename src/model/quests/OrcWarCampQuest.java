@@ -82,7 +82,7 @@ public class OrcWarCampQuest extends MainQuest {
         StoryJunction afterFight = new StoryJunction(3, 5, new QuestEdge(getSuccessEndingNode(), QuestEdge.VERTICAL)) {
             @Override
             protected void doAction(Model model, QuestState state) {
-                state.println("On the corpse of the orc chieftain you find some written papers. Orders it looks like." +
+                state.println("On the corpse of the orc chieftain you find some written papers. Orders it looks like. " +
                         "The paper is not signed but it clearly indicate where this and other orc battalions are to be deployed and attack from.");
                 state.leaderSay("This tells us all we need to know.");
                 state.partyMemberSay(model.getParty().getRandomPartyMember(), "Too bad we don't know who wrote it.");

@@ -84,7 +84,7 @@ public class TrainingState extends GameState {
             println(performer.getName() + " gains " + EXPERIENCE[level] + " experience.");
         } else {
             model.getParty().partyMemberSay(model, performer,
-                    List.of("Aaw!#", "Oh no!#", "Shoot#!", "Phooey!#", "Darn it!#"));
+                    List.of("Aaw!#", "Oh no!#", "Shoot!#", "Phooey!#", "Darn it!#"));
         }
     }
 
