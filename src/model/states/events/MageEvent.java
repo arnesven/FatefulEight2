@@ -27,7 +27,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MageEvent extends DarkDeedsEvent {
+public class MageEvent extends MagicExpertDarkDeedsEvent {
     private final boolean withIntro;
     private final CharacterAppearance appearance;
 

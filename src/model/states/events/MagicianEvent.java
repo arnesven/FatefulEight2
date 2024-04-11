@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MagicianEvent extends DarkDeedsEvent {
+public class MagicianEvent extends MagicExpertDarkDeedsEvent {
     private AdvancedAppearance portrait;
 
     public MagicianEvent(Model model) {

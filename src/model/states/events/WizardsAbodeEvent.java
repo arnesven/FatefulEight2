@@ -19,7 +19,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WizardsAbodeEvent extends DarkDeedsEvent {
+public class WizardsAbodeEvent extends MagicExpertDarkDeedsEvent {
     private boolean admitted;
     private AdvancedAppearance portrait;
 

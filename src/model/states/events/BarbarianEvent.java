@@ -23,7 +23,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarbarianEvent extends DarkDeedsEvent {
+public class BarbarianEvent extends CombatExpertDarkDeedsEvent {
     private Race race;
     private AdvancedAppearance portrait;
 

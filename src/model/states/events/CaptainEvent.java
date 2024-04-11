@@ -18,7 +18,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CaptainEvent extends DarkDeedsEvent {
+public class CaptainEvent extends CombatExpertDarkDeedsEvent {
     private AdvancedAppearance portrait;
 
     public CaptainEvent(Model model) {

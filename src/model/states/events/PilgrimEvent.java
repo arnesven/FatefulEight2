@@ -14,12 +14,14 @@ import model.map.HexLocation;
 import model.states.DailyEventState;
 import model.states.dailyaction.AcceptTravellerState;
 import model.travellers.Traveller;
+import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PilgrimEvent extends MeetTravellerEvent {
     public PilgrimEvent(Model model) {
@@ -45,5 +47,13 @@ public class PilgrimEvent extends MeetTravellerEvent {
     @Override
     protected String getVictimSelfTalk() {
         return "I'm a pilgrim. I travel the world to visit spiritual sites.";
+    }
+
+    @Override
+    protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
+        return Map.of("ruins", new MyPair<>("What's so special about those ruins?",
+                "The ruins? They're spectacular. Apart from being remnants from a bygone age, " +
+                        "their usually filled with treasures. But beware, the ones I've poked my nose into " +
+                        "were also addled with monsters."));
     }
 }

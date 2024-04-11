@@ -16,7 +16,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmazonEvent extends DarkDeedsEvent {
+public class AmazonEvent extends CombatExpertDarkDeedsEvent {
     private AdvancedAppearance portrait;
 
     public AmazonEvent(Model model) {

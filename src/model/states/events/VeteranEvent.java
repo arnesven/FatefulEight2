@@ -16,7 +16,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VeteranEvent extends DarkDeedsEvent {
+public class VeteranEvent extends CombatExpertDarkDeedsEvent {
     private final boolean withIntro;
     private CharacterAppearance app;
 

@@ -19,7 +19,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WitchHutEvent extends DarkDeedsEvent {
+public class WitchHutEvent extends MagicExpertDarkDeedsEvent {
     private AdvancedAppearance portrait;
 
     public WitchHutEvent(Model model) {

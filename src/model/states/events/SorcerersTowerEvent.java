@@ -22,7 +22,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SorcerersTowerEvent extends DarkDeedsEvent {
+public class SorcerersTowerEvent extends MagicExpertDarkDeedsEvent {
     private AdvancedAppearance portrait;
 
     public SorcerersTowerEvent(Model model) {
