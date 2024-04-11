@@ -135,6 +135,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                     "'s purse (Security " + result.asString() + ").");
             if (result.isSuccessful()) {
                 println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");
+                getModel().getParty().addToGold(stealMoney);
                 leaderSay("Please excuse us " + victim + ", we have pressing matters to attend.");
                 portraitSay(MyRandom.sample(List.of("Oh... alright.", "I see, goodbye.",
                         "Safe travels.", "I understand, farewell")));

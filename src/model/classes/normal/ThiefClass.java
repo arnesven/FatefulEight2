@@ -144,7 +144,7 @@ public class ThiefClass extends CharacterClass {
 
         @Override
         public String getShoppingDetails() {
-            return ", Deft Gloves and 3 Lockpicks.";
+            return ", Deft Gloves and 2 Lockpicks.";
         }
 
         @Override
