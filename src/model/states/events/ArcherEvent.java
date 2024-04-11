@@ -9,7 +9,6 @@ import model.items.Equipment;
 import model.items.accessories.EmeraldRing;
 import model.items.clothing.StuddedJerkin;
 import model.items.weapons.CompositeBow;
-import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -17,7 +16,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArcherEvent extends DarkDeedsEvent {
+public class ArcherEvent extends GeneralInteractionEvent {
     private final boolean withIntro;
     private final CharacterAppearance appearance;
 

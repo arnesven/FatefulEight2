@@ -7,7 +7,7 @@ import util.MyRandom;
 import java.util.List;
 import java.util.Map;
 
-public abstract class MagicExpertDarkDeedsEvent extends DarkDeedsEvent {
+public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteractionEvent {
     private static final List<String> SPELL_TIPS = List.of(
             "Chain Lightning is excellent for taking out many weak opponents.",
             "Disabling enemies with Conjure Phantasm can be a life saver in many situations.",
@@ -18,7 +18,7 @@ public abstract class MagicExpertDarkDeedsEvent extends DarkDeedsEvent {
             "Southern Cross is a powerful healing spell, but you can only use it under the right conditions."
     );
 
-    public MagicExpertDarkDeedsEvent(Model model, String interactText, int stealMoney) {
+    public MagicExpertGeneralInteractionEvent(Model model, String interactText, int stealMoney) {
         super(model, interactText, stealMoney);
     }
 

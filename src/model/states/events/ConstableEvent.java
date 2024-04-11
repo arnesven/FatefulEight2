@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.ConstableEnemy;
@@ -129,7 +128,7 @@ public class ConstableEvent extends DailyEventState {
         int x = model.getParty().getNotoriety() - amount;
         if (MyRandom.rollD10() < x) {
             portraitSay("What's this? A bribe? Don't you know bribing a " + lawMan + " is against the law!");
-            DarkDeedsEvent.addToNotoriety(model, this, 5);
+            GeneralInteractionEvent.addToNotoriety(model, this, 5);
             return false;
         }
         portraitSay("What now? Oh, I see. How kind of you to return " + coinString + " to me. Perhaps " +

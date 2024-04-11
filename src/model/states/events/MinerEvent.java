@@ -3,8 +3,6 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
@@ -13,7 +11,6 @@ import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.Pickaxe;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -22,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MinerEvent extends DarkDeedsEvent {
+public class MinerEvent extends GeneralInteractionEvent {
     private final Race race;
     private boolean withIntro;
     private AdvancedAppearance app;

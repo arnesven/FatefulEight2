@@ -12,7 +12,7 @@ import model.items.weapons.Club;
 import model.journal.JournalEntry;
 import model.map.*;
 import model.races.Race;
-import model.states.events.DarkDeedsEvent;
+import model.states.events.GeneralInteractionEvent;
 import model.states.events.NoEventState;
 import model.tasks.DeliverParcelTask;
 import model.tasks.Destination;
@@ -24,7 +24,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AcceptDeliveryEvent extends DarkDeedsEvent {
+public class AcceptDeliveryEvent extends GeneralInteractionEvent {
 
     private static final List<MyPair<String, Boolean>> recipiants = List.of(
             new MyPair<>("father", false),

@@ -7,7 +7,6 @@ import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.SwordsmanEnemy;
 import model.races.Race;
-import model.races.WoodElf;
 import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -38,7 +37,7 @@ public class ElfEvent extends DailyEventState {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 3) {
             println("n agent of a powerful organization");
-            new SimpleDarkDeedsEvent(model, Classes.SPY, Race.DARK_ELF, "Agent",
+            new SimpleGeneralInteractionEvent(model, Classes.SPY, Race.DARK_ELF, "Agent",
                     "n agent of a powerful organization") {
                 @Override
                 protected boolean doMainEventAndShowDarkDeeds(Model model) {
@@ -110,7 +109,7 @@ public class ElfEvent extends DailyEventState {
             courier.setRace(Race.HIGH_ELF);
             courier.doEvent(model);
         } else if (dieRoll <= 9) {
-            new SimpleDarkDeedsEvent(model, Classes.PAL, Race.HIGH_ELF, "Paladin", " a paladin.") {
+            new SimpleGeneralInteractionEvent(model, Classes.PAL, Race.HIGH_ELF, "Paladin", " a paladin.") {
                 @Override
                 protected boolean doMainEventAndShowDarkDeeds(Model model) {
                     new PaladinEvent(model).changeClass(model);

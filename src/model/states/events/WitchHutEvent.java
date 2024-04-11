@@ -11,7 +11,6 @@ import model.items.Item;
 import model.items.clothing.CultistsRobes;
 import model.items.potions.Potion;
 import model.items.weapons.SkullWand;
-import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -19,7 +18,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WitchHutEvent extends MagicExpertDarkDeedsEvent {
+public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public WitchHutEvent(Model model) {

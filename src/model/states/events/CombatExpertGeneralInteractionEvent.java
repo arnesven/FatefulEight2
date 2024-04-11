@@ -7,7 +7,7 @@ import util.MyRandom;
 import java.util.List;
 import java.util.Map;
 
-public abstract class CombatExpertDarkDeedsEvent extends DarkDeedsEvent {
+public abstract class CombatExpertGeneralInteractionEvent extends GeneralInteractionEvent {
     private static final List<String> COMBAT_TIPS = List.of(
             "Keep your tough guys in front, and your more vulnerable types in the back.",
             "Be sure to take full advantage of all your combat abilities.",
@@ -20,7 +20,7 @@ public abstract class CombatExpertDarkDeedsEvent extends DarkDeedsEvent {
             "Know your enemies! Opponents with ranged attacks can be dangerous if you have exposed fighters in the back row.",
             "Know your enemies! Magic attacks can be devastating if you come unprepared.");
 
-    public CombatExpertDarkDeedsEvent(Model model, String interactText, int stealMoney) {
+    public CombatExpertGeneralInteractionEvent(Model model, String interactText, int stealMoney) {
         super(model, interactText, stealMoney);
     }
 

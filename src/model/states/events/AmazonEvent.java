@@ -9,14 +9,13 @@ import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.clothing.FurArmor;
 import model.items.weapons.Spear;
-import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmazonEvent extends CombatExpertDarkDeedsEvent {
+public class AmazonEvent extends CombatExpertGeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public AmazonEvent(Model model) {

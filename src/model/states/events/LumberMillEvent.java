@@ -3,9 +3,8 @@ package model.states.events;
 import model.Model;
 import model.classes.Classes;
 import model.races.Race;
-import model.states.DailyEventState;
 
-public class LumberMillEvent extends SimpleDarkDeedsEvent {
+public class LumberMillEvent extends SimpleGeneralInteractionEvent {
 
     private final ChangeClassEvent changeClassEvent;
     private boolean freeLodge = false;

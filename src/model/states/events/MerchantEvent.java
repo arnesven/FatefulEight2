@@ -21,7 +21,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MerchantEvent extends DarkDeedsEvent {
+public class MerchantEvent extends GeneralInteractionEvent {
     private final boolean withIntro;
     private final CharacterAppearance apperance;
     private ArrayList<Item> items;

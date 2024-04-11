@@ -1,15 +1,10 @@
 package model.states.events;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.races.Race;
 import model.states.DailyEventState;
-import model.states.RecruitState;
 import util.MyRandom;
-
-import java.util.Collections;
-import java.util.List;
 
 public class HalflingEvent extends DailyEventState {
     public HalflingEvent(Model model) {
@@ -25,7 +20,7 @@ public class HalflingEvent extends DailyEventState {
             ThiefEvent thief = new ThiefEvent(model, false);
             thief.doEvent(model);
         } else if (dieRoll <= 6) {
-            new SimpleDarkDeedsEvent(model, Classes.FARMER, Race.HALFLING, "Farmer", " farmer.") {
+            new SimpleGeneralInteractionEvent(model, Classes.FARMER, Race.HALFLING, "Farmer", " farmer.") {
                 @Override
                 protected boolean doMainEventAndShowDarkDeeds(Model model) {
                     println("The half-ling completely ignores the party.");

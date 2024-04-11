@@ -9,8 +9,6 @@ import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
 import model.items.weapons.*;
 import model.journal.JournalEntry;
-import model.states.DailyEventState;
-import model.states.GameState;
 import model.tasks.DeliverParcelTask;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -18,7 +16,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MakeDeliveryEvent extends DarkDeedsEvent {
+public class MakeDeliveryEvent extends GeneralInteractionEvent {
     private final DeliverParcelTask deliverTask;
     private final GameCharacter recipientCharacter;
 

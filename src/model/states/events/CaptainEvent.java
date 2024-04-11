@@ -11,14 +11,13 @@ import model.items.clothing.ChainMail;
 import model.items.clothing.Clothing;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.*;
-import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CaptainEvent extends CombatExpertDarkDeedsEvent {
+public class CaptainEvent extends CombatExpertGeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public CaptainEvent(Model model) {

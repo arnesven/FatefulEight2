@@ -25,9 +25,7 @@ import view.sprites.HexSprite;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class WorldHex {
 
@@ -70,7 +68,7 @@ public abstract class WorldHex {
         if (eventToReturn != null) {
             return eventToReturn;
         }
-        eventToReturn = DarkDeedsEvent.generateEvent(model, this);
+        eventToReturn = GeneralInteractionEvent.generateEvent(model, this);
         if (eventToReturn != null) {
             return eventToReturn;
         }

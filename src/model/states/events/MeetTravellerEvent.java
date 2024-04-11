@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MeetTravellerEvent extends DarkDeedsEvent {
+public abstract class MeetTravellerEvent extends GeneralInteractionEvent {
     private final GameCharacter traveller;
     private final ProvokedStrategy provokedStrategy;
     private final int extraReward;

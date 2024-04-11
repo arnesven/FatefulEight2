@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class DarkDeedsEvent extends DailyEventState {
+public abstract class GeneralInteractionEvent extends DailyEventState {
     public static final int PICK_POCKETING_NOTORIETY = 5;
     public static final int MURDER_NOTORIETY = 50;
     public static final int PICK_POCKETING_BASE_SNEAK_DIFFICULTY = 7;
@@ -42,7 +42,7 @@ public abstract class DarkDeedsEvent extends DailyEventState {
         FIGHT_TO_DEATH
     }
 
-    public DarkDeedsEvent(Model model, String interactText, int stealMoney) {
+    public GeneralInteractionEvent(Model model, String interactText, int stealMoney) {
         super(model);
         this.interactText = interactText;
         this.stealMoney = stealMoney;

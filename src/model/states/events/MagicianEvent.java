@@ -10,7 +10,6 @@ import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.clothing.MesmersRobes;
-import model.states.DailyEventState;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MagicianEvent extends MagicExpertDarkDeedsEvent {
+public class MagicianEvent extends MagicExpertGeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public MagicianEvent(Model model) {

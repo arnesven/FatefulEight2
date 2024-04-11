@@ -10,16 +10,14 @@ import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.clothing.MesmersRobes;
 import model.items.weapons.PineWand;
-import model.items.weapons.YewWand;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WizardsAbodeEvent extends MagicExpertDarkDeedsEvent {
+public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
     private boolean admitted;
     private AdvancedAppearance portrait;
 

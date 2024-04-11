@@ -11,7 +11,6 @@ import model.items.Item;
 import model.items.clothing.HeavyArmorClothing;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.*;
-import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -19,7 +18,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmithEvent extends DarkDeedsEvent {
+public class SmithEvent extends GeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public SmithEvent(Model model) {

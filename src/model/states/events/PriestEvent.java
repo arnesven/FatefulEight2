@@ -11,8 +11,6 @@ import model.items.Equipment;
 import model.items.accessories.LargeShield;
 import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.Scepter;
-import model.races.Race;
-import model.states.DailyEventState;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.PortraitSubView;
@@ -20,7 +18,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriestEvent extends DarkDeedsEvent {
+public class PriestEvent extends GeneralInteractionEvent {
     private static final int BLESS_COST = 2;
     private final boolean withIntro;
     private final CharacterAppearance portrait;

@@ -14,14 +14,14 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SimpleDarkDeedsEvent extends DarkDeedsEvent{
+public abstract class SimpleGeneralInteractionEvent extends GeneralInteractionEvent {
     private final CharacterClass charClass;
     private final Race race;
     private final String name;
     private final String introText;
     private AdvancedAppearance portrait;
 
-    public SimpleDarkDeedsEvent(Model model, CharacterClass cls, Race race, String name, String introText) {
+    public SimpleGeneralInteractionEvent(Model model, CharacterClass cls, Race race, String name, String introText) {
         super(model, "Talk to", MyRandom.randInt(5, 30));
         this.charClass = cls;
         this.race = race;

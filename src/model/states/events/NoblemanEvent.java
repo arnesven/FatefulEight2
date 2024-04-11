@@ -20,7 +20,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoblemanEvent extends DarkDeedsEvent {
+public class NoblemanEvent extends GeneralInteractionEvent {
     private final Race race;
     private AdvancedAppearance portrait;
     private boolean success;

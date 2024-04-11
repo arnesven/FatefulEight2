@@ -7,14 +7,12 @@ import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.ApprenticeEnemy;
-import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.clothing.MagesRobes;
 import model.items.weapons.MorningStar;
 import model.items.weapons.OldWand;
-import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -22,7 +20,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SorcerersTowerEvent extends MagicExpertDarkDeedsEvent {
+public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public SorcerersTowerEvent(Model model) {

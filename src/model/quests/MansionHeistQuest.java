@@ -13,7 +13,7 @@ import model.quests.scenes.*;
 import model.races.Race;
 import model.states.GameState;
 import model.states.QuestState;
-import model.states.events.DarkDeedsEvent;
+import model.states.events.GeneralInteractionEvent;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -67,7 +67,7 @@ public class MansionHeistQuest extends Quest {
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
         if (questWasSuccess) {
-            DarkDeedsEvent.addToNotoriety(model, state, NOTORIETY_REWARD);
+            GeneralInteractionEvent.addToNotoriety(model, state, NOTORIETY_REWARD);
         }
         return toReturn;
     }

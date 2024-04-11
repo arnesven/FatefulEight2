@@ -8,16 +8,14 @@ import model.classes.Classes;
 import model.enemies.Enemy;
 import model.enemies.HermitEnemy;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
-import view.subviews.MountainCombatTheme;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HermitEvent extends DarkDeedsEvent {
+public class HermitEvent extends GeneralInteractionEvent {
     private CharacterAppearance portrait;
 
     public HermitEvent(Model model) {

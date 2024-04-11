@@ -14,7 +14,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FarmerEvent extends DarkDeedsEvent {
+public abstract class FarmerEvent extends GeneralInteractionEvent {
     private AdvancedAppearance portrait;
 
     public FarmerEvent(Model model) {

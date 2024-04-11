@@ -12,7 +12,6 @@ import model.items.Equipment;
 import model.items.clothing.FancyJerkin;
 import model.items.weapons.*;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -20,7 +19,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JesterEvent extends DarkDeedsEvent {
+public class JesterEvent extends GeneralInteractionEvent {
     private final String fullName;
     private final String shortName;
     private Race race;

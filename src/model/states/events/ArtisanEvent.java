@@ -20,7 +20,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtisanEvent extends DarkDeedsEvent {
+public class ArtisanEvent extends GeneralInteractionEvent {
     private final boolean withIntro;
     private ArrayList<Item> itemList;
     private AdvancedAppearance portrait;

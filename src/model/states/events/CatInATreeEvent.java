@@ -16,7 +16,7 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CatInATreeEvent extends DarkDeedsEvent {
+public class CatInATreeEvent extends GeneralInteractionEvent {
     private CharacterAppearance portrait;
 
     public CatInATreeEvent(Model model) {

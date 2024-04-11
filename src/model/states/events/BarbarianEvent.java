@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -16,14 +15,13 @@ import model.items.weapons.GrandMaul;
 import model.items.weapons.GreatAxe;
 import model.items.weapons.Weapon;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarbarianEvent extends CombatExpertDarkDeedsEvent {
+public class BarbarianEvent extends CombatExpertGeneralInteractionEvent {
     private Race race;
     private AdvancedAppearance portrait;
 
