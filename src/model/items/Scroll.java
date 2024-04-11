@@ -110,4 +110,14 @@ public class Scroll extends UsableItem {
     public int getWeight() {
         return 0;
     }
+
+    @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
 }

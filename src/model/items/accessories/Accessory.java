@@ -93,4 +93,14 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public boolean isOffHandItem() {
         return false;
     }
+
+    @Override
+    public boolean isCraftable() {
+        return true;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
 }

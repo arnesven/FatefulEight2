@@ -170,4 +170,14 @@ public abstract class Spell extends Item {
     public int getWeight() {
         return 300;
     }
+
+    @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
 }

@@ -74,7 +74,7 @@ public class CombatStatistics {
         if (damage > 0) {
             nonMisses++;
         }
-        if (damage > maxDamage) {
+        if (damage > maxDamage && damager != null) {
             maxDamage = damage;
             maxDamager = damager.getFirstName();
         }

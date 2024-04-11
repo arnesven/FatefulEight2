@@ -42,6 +42,7 @@ public class ShopState extends GameState {
         buyItems.addElements(itemsForSale);
         List<Item> itemsToSell = new ArrayList<>();
         itemsToSell.addAll(model.getParty().getInventory().getAllItems());
+        itemsToSell.removeIf((Item it) -> !it.isSellable());
         if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
             itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
             warnAboutManyItems = true;

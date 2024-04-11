@@ -29,6 +29,16 @@ public class Lockpick extends Item {
     }
 
     @Override
+    public boolean isCraftable() {
+        return true;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         inventory.addToLockpicks(1);
     }

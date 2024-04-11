@@ -21,6 +21,11 @@ public class ThrowingStars extends Weapon {
     }
 
     @Override
+    public boolean isRangedAttack() {
+        return true;
+    }
+
+    @Override
     public int getCriticalTarget() {
         return 9;
     }
@@ -33,6 +38,16 @@ public class ThrowingStars extends Weapon {
     @Override
     public int getWeight() {
         return 100;
+    }
+
+    @Override
+    public boolean isCraftable() {
+        return true;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
     }
 
     @Override

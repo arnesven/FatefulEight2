@@ -34,6 +34,16 @@ public class HorseItemAdapter extends Item {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         throw new IllegalStateException("Should not add horse to inventory.");
     }

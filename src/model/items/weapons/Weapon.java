@@ -25,6 +25,16 @@ public abstract class Weapon extends EquipableItem {
         this.damageTable = damageTable;
     }
 
+    @Override
+    public boolean isCraftable() {
+        return true;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
     public int getDamage(int modifiedRoll, GameCharacter damager) {
         int dmg = 0;
         int[] tableToUse = getDamageTable();

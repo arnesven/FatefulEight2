@@ -37,6 +37,16 @@ public class CraftingDesign extends WeightlessItem {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         inventory.add(this);
     }

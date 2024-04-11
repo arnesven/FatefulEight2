@@ -10,6 +10,16 @@ public abstract class NaturalWeapon extends Weapon {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return EMPTY_ITEM_SPRITE;
     }

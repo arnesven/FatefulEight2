@@ -22,6 +22,15 @@ public abstract class PearlItem extends WeightlessItem {
         return "";
     }
 
+    @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
 
     @Override
     public String getSound() {

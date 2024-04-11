@@ -30,6 +30,16 @@ public abstract class Clothing extends EquipableItem implements ArmorItem {
     }
 
     @Override
+    public boolean isCraftable() {
+        return true;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         inventory.add(this);
     }

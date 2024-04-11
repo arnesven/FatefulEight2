@@ -32,6 +32,16 @@ public class MysteriousMap extends ReadableItem {
         }
     }
 
+    @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
+
     private void addInversion(Model model, List<Point> path) {
         int index = MyRandom.randInt(path.size()-1);
         Point first = path.get(index);

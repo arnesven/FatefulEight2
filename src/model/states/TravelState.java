@@ -94,7 +94,7 @@ public class TravelState extends GameState {
                 println("You threw away 1 ingredient.");
                 model.getParty().getInventory().addToIngredients(-1);
             } else if (options.get(chosen).contains("Materials")) {
-                println("You threw away 1 material.");
+                println("You threw away 1 material."); // TODO: Add so that you can throw away multiple
                 model.getParty().getInventory().addToMaterials(-1);
             } else if (chosen == options.size()-1) {
                 break;

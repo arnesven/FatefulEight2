@@ -42,6 +42,8 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     protected abstract Sprite getSprite();
     public abstract int getWeight();
+    public abstract boolean isCraftable();
+    public abstract boolean isSellable();
 
     public int getSpeedModifier() {
         return 0;

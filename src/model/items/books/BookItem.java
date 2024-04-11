@@ -33,6 +33,16 @@ public abstract class BookItem extends ReadableItem {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
+    @Override
     protected Sprite getSprite() {
         return sprite;
     }

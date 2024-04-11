@@ -35,6 +35,16 @@ public class TamedDragonItemAdapter extends Item {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         throw new IllegalStateException("Should not be added to inventory");
     }

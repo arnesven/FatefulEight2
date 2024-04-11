@@ -494,7 +494,7 @@ public class ZeppelinStoryPart extends StoryPart {
             GameCharacter willis = model.getMainStory().getWillisCharacter();
             if (success) {
                 partyMemberSay(willis, "There we are! I think we did it!");
-                leaderSay("Really. That was all we had to todo?");
+                leaderSay("Really. That was all we had to to do?");
                 partyMemberSay(willis, "I believe it was. Now we should be able to fly on indefinitely.");
                 leaderSay("Willis... that's amazing. You're amazing.");
                 println("Willis blushes and looks away.");

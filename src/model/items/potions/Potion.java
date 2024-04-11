@@ -10,6 +10,16 @@ public abstract class Potion extends UsableItem {
         super(name, cost);
     }
 
+    @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
     static String getPotionPrefixForHigherTier(int tier) {
         switch (tier) {
             case 1:

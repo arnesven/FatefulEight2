@@ -19,6 +19,16 @@ public abstract class Fish extends UsableItem {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return true;
+    }
+
+    @Override
     public int getWeight() {
         return weight;
     }

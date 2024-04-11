@@ -19,6 +19,16 @@ public abstract class Parcel extends UsableItem {
     }
 
     @Override
+    public boolean isCraftable() {
+        return false;
+    }
+
+    @Override
+    public boolean isSellable() {
+        return false;
+    }
+
+    @Override
     public void addYourself(Inventory inventory) {
         inventory.getParcels().add(this);
     }
