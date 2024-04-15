@@ -3,6 +3,7 @@ package model.items;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.items.spells.Spell;
 
 public abstract class UsableItem extends Item {
     public UsableItem(String name, int cost) {

@@ -13,19 +13,14 @@ import java.util.Map;
 public class Scroll extends UsableItem {
 
     private static Map<MyColors, Sprite> spriteMap = makeSpriteMap();
-    private static int num = 1;
     private final Spell spell;
     private final Sprite sprite;
 
     public Scroll(Spell innerSpell) {
-        super("Scroll #" + makeId(), (int)(innerSpell.getCost() * 1.5));
+        super("Scroll '" + makeAbbreviation(innerSpell.getName()) + "'", (int)(innerSpell.getCost() * 1.5));
         this.spell = innerSpell;
         spell.setCastFromScroll(true);
         this.sprite = spriteMap.get(innerSpell.getColor());
-    }
-
-    private static int makeId() {
-        return num++;
     }
 
     @Override

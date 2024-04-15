@@ -14,16 +14,11 @@ public class CraftingDesign extends WeightlessItem {
     private static final Sprite ARMOR_SPRITE = new ItemSprite(6, 5, MyColors.WHITE, MyColors.BEIGE);
     private static final Sprite WEAPON_SPRITE = new ItemSprite(7, 5, MyColors.WHITE, MyColors.BEIGE);
     private static final Sprite ACCESSORY_SPRITE = new ItemSprite(8, 5, MyColors.WHITE, MyColors.BEIGE);
-    private static int id = 1;
     private final Item craftable;
 
     public CraftingDesign(Item craftable) {
-        super("Design #" + makeId(), 10);
+        super("Design '" + makeAbbreviation(craftable.getName()) + "'", 10);
         this.craftable = craftable;
-    }
-
-    private static int makeId() {
-        return id++;
     }
 
     @Override

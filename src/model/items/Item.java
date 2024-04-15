@@ -3,6 +3,7 @@ package model.items;
 import model.Model;
 import model.classes.Skill;
 import model.enemies.Enemy;
+import model.items.spells.Spell;
 import model.states.CombatEvent;
 import util.MyPair;
 import view.AnalyzeDialog;
@@ -129,5 +130,13 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, Item itemToEquip) {
         return null;
+    }
+
+    protected static String makeAbbreviation(String str) {
+        StringBuilder bldr = new StringBuilder();
+        bldr.append(str.charAt(0));
+        bldr.append(str.charAt(1));
+        bldr.append(str.charAt(str.length()-1));
+        return bldr.toString().toUpperCase();
     }
 }

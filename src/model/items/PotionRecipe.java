@@ -7,15 +7,12 @@ import view.sprites.Sprite;
 
 public class PotionRecipe extends WeightlessItem {
     private static final Sprite SPRITE = new ItemSprite(9, 5, MyColors.WHITE, MyColors.BEIGE);
-    private static int num = 1;
     private final Potion brewable;
 
     public PotionRecipe(Potion brewable) {
-        super("Recipe #" + makeId(), 10);
+        super("Recipe '" + makeAbbreviation(brewable.getName()) + "'", 10);
         this.brewable = brewable;
     }
-
-    private static int makeId() { return num++; }
 
     @Override
     protected Sprite getSprite() {
