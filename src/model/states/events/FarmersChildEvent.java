@@ -32,6 +32,7 @@ public class FarmersChildEvent extends FarmerEvent {
             list.get(0).setEquipment(new Equipment());
             RecruitState recruitState = new RecruitState(model, list);
             recruitState.run(model);
+            setCurrentTerrainSubview(model);
         }
         new GuestEvent(model, getPortrait()).doEvent(model);
         return true;
