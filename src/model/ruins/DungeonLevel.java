@@ -25,16 +25,33 @@ public class DungeonLevel implements Serializable {
     private final Random random;
     private final int levelSize;
     private final DungeonTheme theme;
+    private final MonsterFactory monsterFactory;
+    private final double chestPrevalence;
+    private final double leverPrevalence;
+    private final double corpsePrevalence;
+    private final double monsterPrevalence;
+    private final double lockedDoorPrevalence;
+    private final double trapPrevalence;
 
     private DungeonRoom[][] rooms;
     private Point startingPoint;
     private Point descentPoint;
 
 
-    public DungeonLevel(Random random, boolean firstLevel, int levelSize, DungeonTheme theme) {
+    public DungeonLevel(Random random, boolean firstLevel, int levelSize, DungeonTheme theme,
+                        MonsterFactory monsterFactory, double chestPrevalence, double leverPrevalence,
+                        double corpsePrevalence, double monsterPrevalence, double lockedDoorPrevalence,
+                        double trapPrevalence) {
         this.random = random;
         this.levelSize = levelSize;
         this.theme = theme;
+        this.monsterFactory = monsterFactory;
+        this.chestPrevalence = chestPrevalence;
+        this.leverPrevalence = leverPrevalence;
+        this.corpsePrevalence = corpsePrevalence;
+        this.monsterPrevalence = monsterPrevalence;
+        this.lockedDoorPrevalence = lockedDoorPrevalence;
+        this.trapPrevalence = trapPrevalence;
         while (true) {
             rooms = new DungeonRoom[levelSize][levelSize];
             if (buildRandomLevel(firstLevel)) {
@@ -43,6 +60,12 @@ public class DungeonLevel implements Serializable {
                 System.err.println("Unsuccessfully built dungeon level");
             }
         }
+    }
+
+    public DungeonLevel(Random random, boolean firstLevel, int levelSize, DungeonTheme theme,
+                        MonsterFactory monsterFactory) {
+        this(random, firstLevel, levelSize, theme, monsterFactory, CHEST_PREVALENCE, LEVER_PREVALENCE,
+                CORPSE_PREVALENCE, MONSTER_PREVALENCE, LOCKED_DOOR_PREVALENCE, TRAP_PREVALENCE);
     }
 
     protected boolean buildRandomLevel(boolean firstLevel) {
@@ -104,9 +127,9 @@ public class DungeonLevel implements Serializable {
             if (room.getCardinality() > 1) {
                 if (startingRoom != room && endingRoom != room) {
                     double roll = random.nextDouble();
-                    if (roll < MONSTER_PREVALENCE) {
-                        room.addObject(DungeonMonster.makeRandomEnemies(random));
-                    } else if (roll < MONSTER_PREVALENCE + TRAP_PREVALENCE) {
+                    if (roll < monsterPrevalence) {
+                        room.addObject(monsterFactory.makeRandomEnemies(random));
+                    } else if (roll < monsterPrevalence + trapPrevalence) {
                         DungeonTrap.makeTrap(room, random);
                     }
                 }
@@ -118,13 +141,13 @@ public class DungeonLevel implements Serializable {
         for (DungeonRoom room : visitedRooms) {
             if (room.getCardinality() == 1) {
                 double roll = random.nextDouble();
-                if (roll < CHEST_PREVALENCE) {
+                if (roll < chestPrevalence) {
                     room.addObject(new DungeonChest(random));
-                } else if (roll < CHEST_PREVALENCE + LEVER_PREVALENCE) {
+                } else if (roll < chestPrevalence + leverPrevalence) {
                     LeverObject lever = new LeverObject(random);
                     room.addObject(lever);
                     getRoom(descentPoint).connectLeverToDoor(lever);
-                } else if (roll < CHEST_PREVALENCE + LEVER_PREVALENCE + CORPSE_PREVALENCE) {
+                } else if (roll < chestPrevalence + leverPrevalence + corpsePrevalence) {
                     room.addObject(new CorpseObject());
                 }
             }
@@ -164,7 +187,7 @@ public class DungeonLevel implements Serializable {
                 DungeonRoom newRoom = rooms[newPoint.x][newPoint.y];
                 if (newRoom != null && !visitedRooms.contains(newRoom)) {
                     DungeonRoomConnection doorType = DungeonRoomConnection.OPEN;
-                    if (random.nextDouble() < LOCKED_DOOR_PREVALENCE) {
+                    if (random.nextDouble() < lockedDoorPrevalence) {
                         doorType = DungeonRoomConnection.LOCKED;
                     }
                     cardinalityCount++;

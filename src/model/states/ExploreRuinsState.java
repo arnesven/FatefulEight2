@@ -6,9 +6,7 @@ import model.TimeOfDay;
 import model.ruins.*;
 import model.ruins.objects.DungeonObject;
 import util.MyPair;
-import view.subviews.CollapsingTransition;
-import view.subviews.RuinsSubView;
-import view.subviews.SubView;
+import view.subviews.*;
 
 import java.awt.*;
 import java.util.List;
@@ -209,5 +207,13 @@ public class ExploreRuinsState extends GameState {
 
     public boolean isMapView() {
         return this.mapView;
+    }
+
+    public CombatTheme getCombatTheme() {
+        CombatTheme theme = new CaveTheme();
+        if (getCurrentLevel() < DungeonMaker.NUMBER_OF_UPPER_LEVELS) {
+            theme = new DungeonTheme();
+        }
+        return theme;
     }
 }
