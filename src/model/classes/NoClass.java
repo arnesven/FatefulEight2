@@ -19,8 +19,7 @@ public class NoClass extends CharacterClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnLooseShirt(characterAppearance, MyRandom.sample(List.of(MyColors.BEIGE,
-                MyColors.LIGHT_GREEN, MyColors.LIGHT_BLUE, MyColors.LIGHT_RED, MyColors.GRAY)));
+        Looks.putOnLooseShirt(characterAppearance, MyColors.BEIGE);
     }
 
     @Override
