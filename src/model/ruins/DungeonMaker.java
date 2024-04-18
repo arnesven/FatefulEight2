@@ -58,7 +58,7 @@ public class DungeonMaker {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         levels.add(new DungeonLevel(random, true, size, new GardenDungeonTheme(), new GardenMonsterFactory(),
-                0.2, 0.1, 0.0, 0.2, 0.0, 0.05));
+                0.2, 0.35, 0.0, 0.2, 0.0, 0.05));
         levels.add(new FinalDungeonLevel(random, new RedRuinsTheme()));
         return levels;
     }

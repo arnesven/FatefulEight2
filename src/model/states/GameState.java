@@ -233,9 +233,8 @@ public abstract class GameState {
         return MyRandom.sample(lastNames);
     }
 
-    public static GameCharacter makeRandomCharacter(int level) {
+    public static GameCharacter makeRandomCharacter(int level, Race race) {
         CharacterClass cls = randomClass();
-        Race race = Race.randomRace();
         boolean gender = MyRandom.flipCoin();
         AdvancedAppearance portrait = PortraitSubView.makeRandomPortrait(cls, race, gender);
         String firstName = randomFirstName(gender);
@@ -244,6 +243,10 @@ public abstract class GameState {
                 makeRandomClassSet(cls));
         gc.setLevel(level);
         return gc;
+    }
+
+    public static GameCharacter makeRandomCharacter(int level) {
+        return makeRandomCharacter(level, Race.randomRace());
     }
 
     private static CharacterClass randomClass() {
