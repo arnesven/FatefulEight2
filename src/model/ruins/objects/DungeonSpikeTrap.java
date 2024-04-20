@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
 
-public class DungeonTrap extends CenterDungeonObject {
+public class DungeonSpikeTrap extends CenterDungeonObject {
     private static final Sprite32x32 SPRITE = new Sprite32x32("spikes1", "dungeon.png", 0x53,
             MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.PINK, MyColors.DARK_GRAY);
     private static final Sprite32x32 HORI_PATH = new Sprite32x32("spikes2", "dungeon.png", 0x54,
@@ -62,13 +62,13 @@ public class DungeonTrap extends CenterDungeonObject {
         }
     }
 
-    public static void makeTrap(DungeonRoom room, Random random) {
+    public static void makeSpikeTrap(DungeonRoom room, Random random) {
         room.clearDecorations();
         room.addDecoration(new RoomDecoration(RoomDecoration.UPPER_LEFT, 4));
         room.addDecoration(new RoomDecoration(RoomDecoration.LOWER_LEFT, 4));
         room.addDecoration(new RoomDecoration(RoomDecoration.UPPER_RIGHT, 4));
         room.addDecoration(new RoomDecoration(RoomDecoration.LOWER_RIGHT, 4));
-        room.addObject(new DungeonTrap());
+        room.addObject(new DungeonSpikeTrap());
     }
 
     @Override

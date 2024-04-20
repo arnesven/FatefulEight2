@@ -267,7 +267,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
 
-    private static Collection<BookItem> allBooks() {
+    public static Collection<BookItem> allBooks() {
         return List.of(new HowToTameYourDragonBook(),
                 new QuadMachineryBook(),
                 new TreasureHuntersHandbook(),

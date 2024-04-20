@@ -55,7 +55,7 @@ public class DungeonLevelConfig implements Serializable {
         if (roll < MONSTER_PREVALENCE) {
             room.addObject(monsterFactory.makeRandomEnemies(random));
         } else if (roll < MONSTER_PREVALENCE + TRAP_PREVALENCE) {
-            DungeonTrap.makeTrap(room, random);
+            DungeonSpikeTrap.makeSpikeTrap(room, random);
         }
     }
 

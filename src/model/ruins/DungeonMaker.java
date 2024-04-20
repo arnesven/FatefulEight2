@@ -61,4 +61,16 @@ public class DungeonMaker {
         levels.add(new FinalDungeonLevel(random, new RedRuinsTheme()));
         return levels;
     }
+
+    public static List<DungeonLevel> makeTallSpireDungeon() {
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        DungeonLevelConfig config = new TallSpireDungeonConfig();
+        levels.add(new FinalDungeonLevel(random, config.getTheme()));
+        for (int i = 0; i < 1; i++) { // TODO many levels, like 10...
+            levels.add(new DungeonLevel(random, false, 3, config));
+        }
+        levels.add(new FinalDungeonLevel(random, config.getTheme()));
+        return levels;
+    }
 }

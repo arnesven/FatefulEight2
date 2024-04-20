@@ -16,6 +16,7 @@ public class FinalDungeonLevel extends DungeonLevel {
     public void setFinalRoom(DungeonRoom room) {
         setRoom(0, 0, room);
         setStartingPoint(new Point(0, 0));
+        setDescentPoint(new Point(0, 0));
         getRoom(getStartingPoint()).setConnection(0, new StairsUp(new Point(1, 0)));
     }
 

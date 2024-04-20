@@ -2,10 +2,11 @@ package model.ruins.objects;
 
 import model.enemies.*;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
-public class MonsterFactory {
+public class MonsterFactory implements Serializable {
 
     private static final double SLEEP_CHANCE = 0.6667;
 

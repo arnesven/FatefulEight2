@@ -183,7 +183,7 @@ public class DungeonRoom implements Serializable {
         for (DungeonObject objs : otherObjects) {
             if (objs instanceof LeverObject) {
                 return 0xF5;
-            } else if (objs instanceof DungeonTrap) {
+            } else if (objs instanceof DungeonSpikeTrap) {
                 return 0xF6;
             } else if (objs instanceof DungeonMonster) {
                 return 0xF7;

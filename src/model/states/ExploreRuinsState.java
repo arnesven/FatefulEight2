@@ -153,12 +153,28 @@ public class ExploreRuinsState extends GameState {
         return currentLevel;
     }
 
-    public void descend() {
+    public void ascendOrDescend(boolean downWard) {
+        Point relPos = getCurrentRoom().getRelativeAvatarPosition();
+        if (!relPos.equals(new Point(0, 0))) {
+            generalMoveAnimation(relPos.x*4, relPos.y*4, 0, 0);
+        }
         generalMoveAnimation(0, 0, 0, -4);
-        currentLevel++;
-        changeLevel(true);
+        currentLevel += downWard ? 1 : -1;
+        changeLevel(downWard);
         generalMoveAnimation(0, -4, 0,0);
+        relPos = getCurrentRoom().getRelativeAvatarPosition();
+        if (!relPos.equals(new Point(0, 0))) {
+            generalMoveAnimation(0, 0, relPos.x*4, relPos.y*4);
+        }
         getCurrentRoom().entryTrigger(getModel(), this);
+    }
+
+    public void descend() {
+        ascendOrDescend(true);
+    }
+
+    public void ascend() {
+        ascendOrDescend(false);
     }
 
     private void generalMoveAnimation(int fromX, int fromY, int toX, int toY) {
@@ -174,13 +190,7 @@ public class ExploreRuinsState extends GameState {
         dungeon.setCursorEnabled(true);
     }
 
-    public void ascend() {
-        generalMoveAnimation(0, 0, 0, -4);
-        currentLevel--;
-        changeLevel(false);
-        generalMoveAnimation(0, -4, 0, 0);
-        getCurrentRoom().entryTrigger(getModel(), this);
-    }
+
 
     private void changeLevel(boolean down) {
         if (down) {
@@ -215,5 +225,20 @@ public class ExploreRuinsState extends GameState {
             theme = new DungeonTheme();
         }
         return theme;
+    }
+
+    protected void setCurrentLevelAndPosition(int level, Point position) {
+        currentLevel = level;
+        this.partyPosition = position;
+    }
+
+    public String getCurrentRoomInfo() {
+        return "Level " + (getCurrentLevel()+1) + ", Room " + (getPartyPosition().x+1) + "-" + (getPartyPosition().y+1);
+    }
+
+    public void movePartyToRoom(Model model, int level, Point p) {
+        this.currentLevel = level;
+        this.partyPosition = p;
+        populateMatrix();
     }
 }

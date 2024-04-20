@@ -232,6 +232,9 @@ public class DungeonLevel implements Serializable {
         this.startingPoint = startingPoint;
     }
 
+    protected void setDescentPoint(Point descentPoint) {
+        this.descentPoint = descentPoint;
+    }
 
     public List<DungeonRoom> getRoomList() {
         List<DungeonRoom> roomList = new ArrayList<>();

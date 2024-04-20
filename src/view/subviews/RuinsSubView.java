@@ -22,8 +22,7 @@ public class RuinsSubView extends AvatarSubView {
 
     @Override
     protected void specificDrawArea(Model model) {
-        BorderFrame.drawString(model.getScreenHandler(),
-                "Level " + (state.getCurrentLevel()+1) + ", Room " + (state.getPartyPosition().x+1) + "-" + (state.getPartyPosition().y+1),
+        BorderFrame.drawString(model.getScreenHandler(), state.getCurrentRoomInfo(),
                 X_OFFSET + 2, Y_OFFSET + 2, MyColors.WHITE);
         state.getDungeon().drawYourself(model, state.getPartyPosition(), state.getCurrentLevel(), matrix);
         if (state.isMapView()) {

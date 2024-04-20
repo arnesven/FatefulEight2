@@ -37,6 +37,7 @@ public class HillsHex extends WorldHex {
 
 
     public static DailyEventState generateHillsEvent(Model model) {
+        return new TallSpireEvent(model); /*
         if (MyRandom.rollD10() >= 5) {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
@@ -55,12 +56,13 @@ public class HillsHex extends WorldHex {
                     new AbandonedShackEvent(model),
                     new GoblinFugitiveEvent(model),
                     new HuntingEvent(model),
+                    new TallSpireEvent(model),
                     new CaveEvent(model),
                     new CaveEvent(model),
                     new CaveEvent(model)
             ));
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     @Override
