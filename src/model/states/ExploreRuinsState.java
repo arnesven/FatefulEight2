@@ -69,9 +69,11 @@ public class ExploreRuinsState extends GameState {
         for (MyPair<DungeonObject, Point> pair : objects) {
             matrix.addElement(pair.second.x, pair.second.y, pair.first);
         }
-        if (currentLevel < dungeon.getNumberOfLevels() - 1) {
-            matrix.addElement(3, 7, new ExitDungeonIcon());
+        if (dungeon.getLevel(getCurrentLevel()).showMapIcon()) {
             matrix.addElement(2, 7, new DungeonMapIcon());
+        }
+        if (dungeon.getLevel(getCurrentLevel()).showExitIcon()) {
+            matrix.addElement(3, 7, new ExitDungeonIcon());
         }
     }
 

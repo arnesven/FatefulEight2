@@ -67,7 +67,8 @@ public class DungeonMaker {
         Random random = new Random();
         DungeonLevelConfig config = new TallSpireDungeonConfig();
         levels.add(new FinalDungeonLevel(random, config.getTheme()));
-        for (int i = 0; i < 1; i++) { // TODO many levels, like 10...
+        int maxLevels = MyRandom.randInt(8, 13);
+        for (int i = 0; i < maxLevels; i++) {
             levels.add(new DungeonLevel(random, false, 3, config));
         }
         levels.add(new FinalDungeonLevel(random, config.getTheme()));

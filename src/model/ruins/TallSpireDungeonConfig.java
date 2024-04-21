@@ -1,12 +1,10 @@
 package model.ruins;
 
-import model.ruins.objects.DungeonChest;
-import model.ruins.objects.DungeonPitfallTrap;
-import model.ruins.objects.DungeonSpikeTrap;
-import model.ruins.objects.MonsterFactory;
+import model.ruins.objects.*;
 import model.ruins.themes.GrayBrickTheme;
 
 import java.util.Random;
+import java.util.Set;
 
 public class TallSpireDungeonConfig extends DungeonLevelConfig {
 
@@ -23,6 +21,26 @@ public class TallSpireDungeonConfig extends DungeonLevelConfig {
         if (roll < CHEST_PREVALENCE) {
             room.addObject(new DungeonChest(random));
         }
+    }
+
+    @Override
+    public void addContent(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
+        super.addContent(dungeonLevel, visitedRooms, random);
+        addWindows(dungeonLevel, visitedRooms, random);
+    }
+
+    private void addWindows(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
+        DungeonRoom startingRoom = dungeonLevel.getRoom(dungeonLevel.getStartingPoint());
+        DungeonRoom endingRoom = dungeonLevel.getRoom(dungeonLevel.getDescentPoint());
+        DungeonRoom[][] matrix = dungeonLevel.getRooms();
+        for (int x = 0; x < matrix.length; ++x) {
+            DungeonRoom room = matrix[x][0];
+            if (room != null && room != startingRoom && room != endingRoom) {
+                room.addDecoration(new LargeWindow(1, 0, false));
+                room.addDecoration(new LargeWindow(2, 0, false));
+            }
+        }
+
     }
 
     protected void addJunctionObject(DungeonRoom room, Random random, MonsterFactory monsterFactory) {

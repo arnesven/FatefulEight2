@@ -42,7 +42,7 @@ public class TallSpireEvent extends DailyEventState {
 
             DungeonRoom finalRoom = new RiddleRoom();
             FinalDungeonLevel firstLevel = (FinalDungeonLevel)dungeon.getLevel(0);
-            firstLevel.setFinalRoom(finalRoom);
+            firstLevel.setFinalRoom(finalRoom, false);
 
             ExploreRuinsState explore = new ExploreTallSpireState(model, dungeon);
             explore.run(model);
@@ -68,6 +68,9 @@ public class TallSpireEvent extends DailyEventState {
             if (floor == 0) {
                 return "Ground Floor";
             }
+            if (getCurrentLevel() == 0) {
+                return "";
+            }
             return "Floor " + floor + ", Room " + (getPartyPosition().x+1) + "-" + (getPartyPosition().y+1);
         }
     }
@@ -76,6 +79,10 @@ public class TallSpireEvent extends DailyEventState {
         public TallSpireEntryRoom() {
             super(5, 5);
             addObject(new TallSpireExit());
+            addDecoration(new LargeWindow(4, 0, true));
+            for (int x = 0; x < 8; ++x) {
+                addDecoration(new GrassBackground(x, 7, true));
+            }
         }
 
         @Override
@@ -103,6 +110,28 @@ public class TallSpireEvent extends DailyEventState {
         public RiddleRoom() {
             super(5, 5);
             addObject(new RiddlerObject());
+            addDecoration(new LargeWindow(3, 0));
+            addDecoration(new LargeWindow(4, 0));
+            addDecoration(new LargeWindow(5, 0));
+
+            for (int y = 0; y < 7; ++y) {
+                addDecoration(new SkyBackground(0, y, true));
+                addDecoration(new SkyBackground(6, y, false));
+            }
+            for (int x = 0; x < 8; ++x) {
+                if (x == 1) {
+                    addDecoration(new StairsRondel(x, -1, true));
+                } else if (x == 2) {
+                    addDecoration(new StairsRondel(x, -1, false));
+                } else {
+                    addDecoration(new SkyBackground(x, -1, true));
+                }
+                if (0 < x && x < 7) {
+                    addDecoration(new FullWallDecoration(x, 7));
+                } else {
+                    addDecoration(new GrassBackground(x, 7, true));
+                }
+            }
         }
 
         @Override
@@ -222,7 +251,8 @@ public class TallSpireEvent extends DailyEventState {
             exploreRuinsState.waitForReturnSilently();
             exploreRuinsState.leaderSay(
                     MyRandom.sample(List.of("Uhm, I think it's ", "It must be ",
-                            "I am sure it is", "I'm positive it is")) + optionList.get(selectedAction[0]) + ".");
+                            "I am sure it is ", "I'm positive it is ")) +
+                            optionList.get(selectedAction[0]) + ".");
             return selectedAction[0];
         }
 

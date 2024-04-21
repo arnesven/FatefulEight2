@@ -251,4 +251,12 @@ public class DungeonLevel implements Serializable {
     public DungeonTheme getTheme() {
         return config.getTheme();
     }
+
+    public boolean showMapIcon() {
+        return true;
+    }
+
+    public boolean showExitIcon() {
+        return true;
+    }
 }
