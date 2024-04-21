@@ -29,7 +29,7 @@ public class ExitDungeonIcon extends DungeonObject {
 
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
-        state.print("Are you sure you want to exit the ruins? (Y/N) ");
+        state.print("Are you sure you want to exit the " + state.getDungeonType().toLowerCase() + "? (Y/N) ");
         if (state.yesNoInput()) {
             state.setDungeonExited(true);
         }

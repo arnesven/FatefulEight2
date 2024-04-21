@@ -241,4 +241,8 @@ public class ExploreRuinsState extends GameState {
         this.partyPosition = p;
         populateMatrix();
     }
+
+    public String getDungeonType() {
+        return dungeonType;
+    }
 }

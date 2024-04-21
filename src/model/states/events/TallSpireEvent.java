@@ -3,6 +3,9 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.items.ItemDeck;
+import model.items.spells.Spell;
+import model.items.books.BookItem;
 import model.map.UrbanLocation;
 import model.ruins.*;
 import model.ruins.objects.*;
@@ -11,6 +14,8 @@ import model.states.DailyEventState;
 import model.states.ExploreRuinsState;
 import util.MyLists;
 import util.MyRandom;
+import util.MyStrings;
+import view.MyColors;
 import view.sprites.HermitSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
@@ -127,7 +132,7 @@ public class TallSpireEvent extends DailyEventState {
             exploreRuinsState.leaderSay("Well, now we're here. What now?");
             exploreRuinsState.printQuote("Recluse", "Now you must be tested.");
             exploreRuinsState.leaderSay("Tested? In what way?");
-            exploreRuinsState.printQuote("Recluse", "With a riddle of course. If you can answer it correctly " +
+            exploreRuinsState.printQuote("Recluse", "With a question of course. If you can answer it correctly " +
                     "I will grant you the thing you seek most of all.");
             exploreRuinsState.leaderSay("Fine.");
             exploreRuinsState.printQuote("Recluse", "But I must warn you. Should you answer incorrectly, " +
@@ -135,7 +140,7 @@ public class TallSpireEvent extends DailyEventState {
             exploreRuinsState.leaderSay("That seems rather harsh. Let me think about this.");
             exploreRuinsState.print("Do you accept the hermit's challenge? (Y/N) ");
             if (exploreRuinsState.yesNoInput()) {
-                exploreRuinsState.leaderSay("Alright, I will answer your riddle.");
+                exploreRuinsState.leaderSay("Alright, I will answer your question.");
                 if (generateRiddle(model, exploreRuinsState)) {
                     exploreRuinsState.printQuote("Recluse", "Yes, you are correct!");
                     exploreRuinsState.printQuote("Recluse", "What a joyous day this is. I shall send my pigeons far " +
@@ -165,8 +170,33 @@ public class TallSpireEvent extends DailyEventState {
         }
 
         private boolean generateRiddle(Model model, ExploreRuinsState exploreRuinsState) {
-            // TODO: generate Book author question
-            return generateLordQuestion(model, exploreRuinsState);
+            int dieRol = MyRandom.rollD6();
+            if (dieRol < 3) {
+                return generateLordQuestion(model, exploreRuinsState);
+            }
+            if (dieRol < 5) {
+                return generateSpellQuestion(model, exploreRuinsState);
+            }
+            return generateBookQuestion(model, exploreRuinsState);
+        }
+
+        private boolean generateBookQuestion(Model model, ExploreRuinsState exploreRuinsState) {
+            List<BookItem> books = new ArrayList<>(ItemDeck.allBooks());
+            books.removeIf((BookItem b) -> b.getAuthor().length() > 30);
+            int target = MyRandom.randInt(books.size());
+            exploreRuinsState.printQuote("Recluse", "Who wrote '" + books.get(target).getTitle() + "'?");
+            List<String> optionList = MyLists.transform(books, (BookItem::getAuthor));
+            return target == askQuestion(model, exploreRuinsState, optionList);
+        }
+
+        private boolean generateSpellQuestion(Model model, ExploreRuinsState exploreRuinsState) {
+            Spell targetSpell = MyRandom.sample(ItemDeck.allSpells());
+            List<MyColors> spellColors = new ArrayList<>(List.of(MyColors.WHITE, MyColors.BLUE, MyColors.GREEN,
+                    MyColors.RED, MyColors.BLACK, Spell.COLORLESS));
+            int target = spellColors.indexOf(targetSpell.getColor());
+            exploreRuinsState.printQuote("Recluse", "What color is the spell " + targetSpell.getName() + "?");
+            List<String> optionList = MyLists.transform(spellColors, (MyColors c) -> MyStrings.capitalize(c.toString()));
+            return target == askQuestion(model, exploreRuinsState, optionList);
         }
 
         private boolean generateLordQuestion(Model model, ExploreRuinsState exploreRuinsState) {
@@ -176,8 +206,7 @@ public class TallSpireEvent extends DailyEventState {
             int target = MyRandom.randInt(4);
             exploreRuinsState.printQuote("Recluse", "Who is the lord in " + lordLocations.get(target).getPlaceName() + "?");
             List<String> optionList = MyLists.transform(lordLocations, UrbanLocation::getLordName);
-            int answer = askQuestion(model, exploreRuinsState, optionList);
-            return answer == target;
+            return target == askQuestion(model, exploreRuinsState, optionList);
         }
 
         private int askQuestion(Model model, ExploreRuinsState exploreRuinsState, List<String> optionList) {
