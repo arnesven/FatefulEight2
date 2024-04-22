@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TravelByCharteredBoat extends AlternativeTravelEvent {
+    private static final String VISITED_FAITH_ISLAND_KEY = "visitedfaithisland";
     private boolean endAtSea = false;
 
     public TravelByCharteredBoat(Model model) {
@@ -63,7 +64,8 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
         DailyEventState event = null;
         if (checkForPirateEvent(model)) {
             event = new PirateShipEvent(model);
-            // TODO: Check for storm
+        } else if (checkForStormEvent(model)) {
+            event = new StormAtSeaEvent(model);
         } else if (checkForSeaMonsterEvent(model)) {
             event = new SeaMonsterEvent(model);
         }
@@ -85,6 +87,16 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
             }
         } else {
             println("You wash ashore on an island.");
+            if (model.getSettings().getMiscFlags().get(VISITED_FAITH_ISLAND_KEY) == null) {
+                leaderSay("Where are we?");
+                if (model.getParty().size() > 1) {
+                    GameCharacter gc = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                    partyMemberSay(gc, "Well, we'd better make camp here anyway.");
+                }
+                model.getSettings().getMiscFlags().put(VISITED_FAITH_ISLAND_KEY, true);
+            } else {
+                leaderSay("Looks like we're back on Faith Island again.");
+            }
             model.getParty().setPosition(WorldBuilder.FAITH_ISLAND_POSITION);
         }
         return model.getCurrentHex().getEveningState(model, false, false);
@@ -95,6 +107,11 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
             return MyRandom.rollD10() < 5;
         }
         return MyRandom.rollD10() == 1;
+    }
+
+    private boolean checkForStormEvent(Model model) {
+        int target = model.getSettings().getMiscFlags().get(VISITED_FAITH_ISLAND_KEY) == null ? 2 : 1;
+        return MyRandom.rollD10() <= target;
     }
 
     private boolean checkForSeaMonsterEvent(Model model) {
