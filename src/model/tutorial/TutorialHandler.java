@@ -485,6 +485,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void monastery(Model model) {
+        runOnce("monastery", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new MonasteryHelpDialog(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

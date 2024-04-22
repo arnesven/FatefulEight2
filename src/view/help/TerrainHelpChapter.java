@@ -24,6 +24,7 @@ public class TerrainHelpChapter extends ExpandableHelpDialog {
                 new SpecificTerrainHelpDialog(view, new FieldsHex(0, 0, 0), false),
                 new InnHelpDialog(view),
                 new SpecificTerrainHelpDialog(view, new JungleHex(0, 0, 0), false),
+                new MonasteryHelpDialog(view),
                 new SpecificTerrainHelpDialog(view, new PlainsHex(0, 0, null, 0), false),
                 new RiverTerrainHelpDialog(view),
                 new RoadsTerrainHelpDialog(view),

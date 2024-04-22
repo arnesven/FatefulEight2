@@ -45,7 +45,11 @@ public class TravelBySeaState extends GameState {
 
     private void travelTo(Model model, TownLocation first) {
         didTravel = true;
-        MapSubView mapSubView = new SeaTravelMapSubView(model, first);
+        travelBySea(model, ship, this);
+    }
+
+    public static void travelBySea(Model model, MyPair<TownLocation, Integer> ship, GameState state) {
+        MapSubView mapSubView = new SeaTravelMapSubView(model, ship.first);
         CollapsingTransition.transition(model, mapSubView);
         Point newPosition = model.getWorld().getPositionForHex(ship.first.getHex());
 
@@ -69,9 +73,9 @@ public class TravelBySeaState extends GameState {
 
 
         model.getCurrentHex().travelFrom(model);
-        stepToNextDay(model);
-        println("The party spends the day on the ship traveling to the " + first.getName());
-        stepToNextDay(model);
+        state.stepToNextDay(model);
+        state.println("The party spends the day on the ship traveling to the " + ship.first.getName());
+        state.stepToNextDay(model);
         System.out.println("TravelBySeaState: after step to next day.");
         model.getParty().setPosition(newPosition);
         System.out.println("TravelBySeaState: after set Position.");

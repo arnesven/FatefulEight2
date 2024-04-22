@@ -41,9 +41,9 @@ public class WorldBuilder {
             "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtssXXXXxxXxXXX",
             "stppptssppppbbspbbhpspsssppwbwhfpMhwbfssssXXXXXXXXXXX",
             "pppppsspppppssssspppsssssssphwhpMMhhbsssssssXXXXXXxXX",
-            "ssppppsssppsshpsssssssssssshhhphhMhwwwwbssssXXXXxxxXX",
-            "ssspppsssssshhhhhsssssssppfspwwpphpwwwMMXXXXXXXXXXXXX",
-            "spppsspppsphhphhhppfhpwwwfwppMMwMffwwhpXXXXxxXXbXpxxX",
+            "ssppppsssppsshpsssssssppssshhhphhMhwwwwbssssXXXXxxxXX",
+            "ssspppsssssshhhhhsssssssssfspwwpphpwwwMMXXXXXXXXXXXXX",
+            "spppsspppsphhphhhppfhpwswfwppMMwMffwwhpXXXXxxXXbXpxxX",
             "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMXddXXXXxXXdDDd",
             "sspppffppssspppphpfwwhpppwpphpppMMdwddddXdDDDXXMXXXDd",
             "ssppfMMpppsspppphffwwwwpwwphhhfhfdddddddDddXXXMbXXXXX",
@@ -152,6 +152,7 @@ public class WorldBuilder {
 
 
         addTown(contents, 14, 15, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
+        addMonastery(contents, 23, 15);
         addRoadsAndRivers(contents,28, 15, SOUTH | NORTH, 0);
 
         addRoadsAndRivers(contents, 15, 16, NORTH_WEST | SOUTH_EAST, 0);
@@ -430,6 +431,11 @@ public class WorldBuilder {
 
     private static void addTemple(Map<Point, HexContents> contents, int x, int y, String templeName) {
         contents.put(new Point(x, y), new HexContents(new TempleLocation(templeName), 0, 0));
+    }
+
+    private static void addMonastery(Map<Point, HexContents> contents, int x, int y) {
+        contents.put(new Point(x-1, 15), new HexContents(new GrassCorner(), 0, 0));
+        contents.put(new Point(x, y), new HexContents(new MonasteryLocation(), 0, 0));
     }
 
     private static void addCastle(Map<Point, HexContents> contents, int x, int y, CastleLocation castle, int roads, int rivers) {
