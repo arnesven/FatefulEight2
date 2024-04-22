@@ -5,6 +5,7 @@ import model.QuestDeck;
 import model.Summon;
 import model.journal.*;
 import model.map.UrbanLocation;
+import model.states.events.VisitMonasteryEvent;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import util.MyStrings;
@@ -35,6 +36,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
         this.questsAndTasks = new ArrayList<>();
         addSummons(model);
         questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
+        addMonasteryTask(model);
         addGenericQuests(model);
         addTravellers(model);
         addDestinationTasks(model);
@@ -179,5 +181,12 @@ public class JournalView extends TwoPaneSelectableListMenu {
             return nextView;
         }
         return super.getNextView(model);
+    }
+
+
+    private void addMonasteryTask(Model model) {
+        if (VisitMonasteryEvent.hasVisited(model)) {
+            questsAndTasks.add(new DonateAtMonasteryTask(model));
+        }
     }
 }

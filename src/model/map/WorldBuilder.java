@@ -12,6 +12,7 @@ public class WorldBuilder {
 
     public static final Point CROSSROADS_INN_POSITION = new Point(26, 19);
     public static final Point FAITH_ISLAND_POSITION = new Point(22, 15);
+    public static final Point MONASTERY_POSITION = new Point(FAITH_ISLAND_POSITION.x + 1, FAITH_ISLAND_POSITION.y);
     public static final int WORLD_WIDTH = 53;
     public static final int WORLD_HEIGHT = 38;
     private static final int EXTRA_WIDTH = 14;
@@ -436,8 +437,7 @@ public class WorldBuilder {
 
     private static void addMonastery(Map<Point, HexContents> contents) {
         contents.put(FAITH_ISLAND_POSITION, new HexContents(new GrassCorner(), 0, 0));
-        Point monasteryPosition = new Point(FAITH_ISLAND_POSITION.x + 1, FAITH_ISLAND_POSITION.y);
-        contents.put(monasteryPosition, new HexContents(new MonasteryLocation(), 0, 0));
+        contents.put(MONASTERY_POSITION, new HexContents(new MonasteryLocation(), 0, 0));
     }
 
     private static void addCastle(Map<Point, HexContents> contents, int x, int y, CastleLocation castle, int roads, int rivers) {

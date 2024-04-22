@@ -1,5 +1,7 @@
 package view.help;
 
+import model.states.events.MonumentEvent;
+import model.states.events.VisitMonasteryEvent;
 import view.GameView;
 
 public class MonasteryHelpDialog extends SubChapterHelpDialog {
@@ -9,7 +11,8 @@ public class MonasteryHelpDialog extends SubChapterHelpDialog {
             "The monks want to make the Monastery into a safe haven for all lost travelers. Unfortunately " +
             "the once marvelous monastery has been reduced to a ruin by the tooth of time. They gladly accept " +
             "donations to once restore it to its former glory.\n\n" +
-            "For every 1000 gold you donate to the Sixth Order Monks your reputation will increase by one.";
+            "For every " + VisitMonasteryEvent.GOLD_PER_REP + " gold you donate to the Sixth Order " +
+                    "Monks your reputation will increase by one.";
 
     public MonasteryHelpDialog(GameView view) {
         super(view, "Monastery", TEXT);

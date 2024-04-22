@@ -16,16 +16,33 @@ import java.util.List;
 public class VisitMonasteryEvent extends DailyEventState {
     private static final String FIRST_TIME_KEY = "firstTimeAtMonastery";
     private static final String PREVIOUS_DONATION_KEY = "previousDonation";
+    private static final String PREVIOUS_REP_INCREASES = "previousRepIncreases";
+    public static final int GOLD_PER_REP = 1000;
     private boolean didLeave = false;
 
     public VisitMonasteryEvent(Model model) {
         super(model);
     }
 
+    public static boolean hasVisited(Model model) {
+        return model.getSettings().getMiscFlags().get(FIRST_TIME_KEY) != null;
+    }
+
+    public static int getDonatedAmount(Model model) {
+        Integer prevDon = model.getSettings().getMiscCounters().get(PREVIOUS_DONATION_KEY);
+        if (prevDon == null) {
+            return 0;
+        }
+        Integer prevRep = model.getSettings().getMiscCounters().get(PREVIOUS_REP_INCREASES);
+        if (prevRep == null) {
+            prevRep = 0;
+        }
+        return prevDon + prevRep * GOLD_PER_REP;
+    }
+
     @Override
     protected void doEvent(Model model) {
-        boolean firstTime = model.getSettings().getMiscFlags().get(FIRST_TIME_KEY) == null;
-        if (firstTime) {
+        if (!hasVisited(model)) {
             println("As you walk up a hill on this island you see a huge structure towering in front of you.");
             leaderSay("A castle? No... wait, it looks like a monastery.");
             randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(),
@@ -107,7 +124,7 @@ public class VisitMonasteryEvent extends DailyEventState {
         } else {
             leaderSay("I would like to donate " + amount + " gold.");
             String reaction = "good.";
-            if (amount >= 1000) {
+            if (amount >= GOLD_PER_REP) {
                 reaction = "wonderful!";
             } else if (amount >= 300) {
                 reaction = "great!";
@@ -123,13 +140,21 @@ public class VisitMonasteryEvent extends DailyEventState {
 
             int donation = prev + amount;
 
-            int repIncreases = donation / 1000;
+            int repIncreases = donation / GOLD_PER_REP;
             if (repIncreases > 0) {
-                portraitSay("People far and wide will hear of your generosity!");
+                portraitSay("You have given so much to our cause. " +
+                        "People far and wide will hear of your generosity!");
                 println("Your reputation has increased by " + repIncreases + "!");
                 model.getParty().addToReputation(repIncreases);
-                donation -= repIncreases * 1000;
+                donation -= repIncreases * GOLD_PER_REP;
                 leaderSay("I'm just glad we could help.");
+                
+                Integer previousIncreases = model.getSettings().getMiscCounters().get(PREVIOUS_REP_INCREASES);
+                if (previousIncreases == null) {
+                    previousIncreases = 0;
+                }
+                previousIncreases += repIncreases;
+                model.getSettings().getMiscCounters().put(PREVIOUS_REP_INCREASES, previousIncreases);
             }
             model.getSettings().getMiscCounters().put(PREVIOUS_DONATION_KEY, donation);
         }
