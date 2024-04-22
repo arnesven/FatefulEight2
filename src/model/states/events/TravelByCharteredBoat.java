@@ -63,6 +63,7 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
         DailyEventState event = null;
         if (checkForPirateEvent(model)) {
             event = new PirateShipEvent(model);
+            // TODO: Check for storm
         } else if (checkForSeaMonsterEvent(model)) {
             event = new SeaMonsterEvent(model);
         }
@@ -77,9 +78,14 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
 
     private GameState setAdrift(Model model) {
         println("Your party escapes onto makeshift rafts and are set adrift on the surf.");
-        MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(-100));
-        while (model.getCurrentHex() instanceof SeaHex) {
-            new DriftingAtSeaState(model).run(model);
+        if (WorldBuilder.isInExtendedRegion(model.getParty().getPosition())) {
+            MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(-100));
+            while (model.getCurrentHex() instanceof SeaHex) {
+                new DriftingAtSeaState(model).run(model);
+            }
+        } else {
+            println("You wash ashore on an island.");
+            model.getParty().setPosition(WorldBuilder.FAITH_ISLAND_POSITION);
         }
         return model.getCurrentHex().getEveningState(model, false, false);
     }

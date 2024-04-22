@@ -70,7 +70,7 @@ public class Party implements Serializable {
     private List<DestinationTask> destinationTasks = new ArrayList<>();
 
     public Party() {
-        position = WorldBuilder.CROSSROADS_IN_POSITION;
+        position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
     }
 

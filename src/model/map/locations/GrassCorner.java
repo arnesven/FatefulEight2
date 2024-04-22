@@ -6,11 +6,16 @@ import view.MyColors;
 import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
+import view.subviews.ImageSubView;
+import view.subviews.SubView;
 
 public class GrassCorner extends HexLocation {
 
+    private final ImageSubView subView;
+
     public GrassCorner() {
-        super("Grass Corner");
+        super("Island");
+        subView = new ImageSubView("island", "ISLAND", "You are on an island...", true);
     }
 
     @Override
@@ -25,11 +30,16 @@ public class GrassCorner extends HexLocation {
 
     @Override
     public boolean isDecoration() {
-        return true;
+        return false;
     }
 
     @Override
     public HelpDialog getHelpDialog(GameView view) {
-        return null;
+        return new HelpDialog(view, "Island", "An island...");
+    }
+
+    @Override
+    public SubView getImageSubView() {
+        return subView;
     }
 }
