@@ -197,6 +197,9 @@ public class Party implements Serializable {
     }
 
     public Sprite getInitiativeSymbol(Combatant combatant) {
+        if (combatant == leader) {
+            return CharSprite.make((char)0x84, MyColors.WHITE, getColorForPartyMember(combatant), MyColors.BLACK);
+        }
         return CharSprite.make((char)0x00, MyColors.WHITE, getColorForPartyMember(combatant), MyColors.BLACK);
     }
 
