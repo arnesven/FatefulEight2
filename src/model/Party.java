@@ -369,15 +369,14 @@ public class Party implements Serializable {
     }
 
     private GameCharacter findBestPerformer(Skill skill, List<GameCharacter> performers) {
-        int most = -1;
-        GameCharacter best = null;
-        for (GameCharacter gc : performers) {
-            if (gc.getRankForSkill(skill) > most && !getBench().contains(gc)) {
-                best = gc;
-                most = gc.getRankForSkill(skill);
-            }
-        }
-        return best;
+        List<GameCharacter> notBench = new ArrayList<>(performers);
+        notBench.removeAll(getBench());
+        notBench.sort((c1, c2) -> {
+            int left = 100 * c1.getRankForSkill(skill) + c1.getSP();
+            int right = 100 * c2.getRankForSkill(skill) + c2.getSP();
+            return right - left;
+        });
+        return notBench.get(0);
     }
 
     private GameCharacter findBestPerformer(Skill skill) {

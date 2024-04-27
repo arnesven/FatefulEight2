@@ -290,7 +290,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     private void askAboutBounties(Model model, GameCharacter victimChar) {
         BountyDestinationTask task = null;
         for (DestinationTask dt : model.getParty().getDestinationTasks()) {
-            if (dt instanceof BountyDestinationTask) {
+            if (dt instanceof BountyDestinationTask) { // TODO: Handle multiple bounty tasks
                 if (((BountyDestinationTask)dt).canGetClue()) {
                     task = (BountyDestinationTask)dt;
 
