@@ -18,6 +18,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
@@ -25,6 +26,7 @@ import util.MyStrings;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class GeneralInteractionEvent extends DailyEventState {
@@ -288,53 +290,51 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     }
 
     private void askAboutBounties(Model model, GameCharacter victimChar) {
-        BountyDestinationTask task = null;
-        for (DestinationTask dt : model.getParty().getDestinationTasks()) {
-            if (dt instanceof BountyDestinationTask) { // TODO: Handle multiple bounty tasks
-                if (((BountyDestinationTask)dt).canGetClue()) {
-                    task = (BountyDestinationTask)dt;
-
-                }
+        List<BountyDestinationTask> tasks = MyLists.transform(
+                MyLists.filter(model.getParty().getDestinationTasks(),
+                destinationTask -> destinationTask instanceof BountyDestinationTask &&
+                        ((BountyDestinationTask) destinationTask).canGetClue()),
+                destinationTask -> (BountyDestinationTask) destinationTask);
+        if (tasks.isEmpty()) {
+            return;
+        }
+        for (BountyDestinationTask task : tasks) {
+            MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(
+                    model, this, Skill.SeekInfo, BountyDestinationTask.SEEK_INFO_DIFFICULTY);
+            if (!pair.first) {
+                partyMemberSay(pair.second, "Uh... do you know " + task.getBountyName() + "?");
+                portraitSay("I'm afraid I don't.");
+                continue;
             }
-        }
-        if (task == null) {
-            return;
-        }
-        MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(
-                model, this, Skill.SeekInfo, BountyDestinationTask.SEEK_INFO_DIFFICULTY);
-        if (!pair.first) {
-            partyMemberSay(pair.second, "Uh... do you know " + task.getBountyName() + "?");
-            portraitSay("I'm afraid I don't.");
-            return;
-        }
-        boolean bountyGender = task.getBountyPortrait().getGender();
-        String wanted = heOrSheCap(bountyGender) + " is wanted in " + task.getTurnInTown() + ".";
-        boolean shown = false;
-        if (MyRandom.flipCoin()) {
-            println("You show the wanted poster of " + task.getBountyName() + " to " + victimChar.getFirstName() + ".");
-            partyMemberSay(pair.second,"Have you ever seen this person? " + wanted);
-            shown = true;
-        } else {
-            partyMemberSay(pair.second,
-                    "Have you heard of a bandit called '" + task.getBountyName() + "'? " + wanted);
-        }
-        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
-        List<Point> path = model.getWorld().shortestPathToPoint(task.getPosition());
-        if (path.size() > BountyDestinationTask.LONG_RANGE) {
-            portraitSay("I'm sorry but I don't know at all who you are talking about.");
-            leaderSay("Darn. I guess " + heOrShe(bountyGender) + " could be hiding anywhere. " +
-                    "Maybe even in different kingdom.");
-        } else if (path.size() >= BountyDestinationTask.SHORT_RANGE) {
-            String reply = shown ? heOrShe(bountyGender) + " looks familiar, but I can't " +
-                    "tell you where I've seen " + himOrHer(bountyGender) :
-                    "The name sounds familiar, but I can't tell you where I've heard it";
-            portraitSay("Hmm... " + reply + ".");
-            leaderSay("Perhaps we're getting close?");
-        } else {
-            portraitSay("Yes, I know " + himOrHer(bountyGender) + "! " +
-                    heOrSheCap(bountyGender) + " is hiding out in " + task.getClue() + ".");
-            task.askForClue();
-            leaderSay("Thank you. You have been most helpful.");
+            boolean bountyGender = task.getBountyPortrait().getGender();
+            String wanted = heOrSheCap(bountyGender) + " is wanted in " + task.getTurnInTown() + ".";
+            boolean shown = false;
+            if (MyRandom.flipCoin()) {
+                println("You show the wanted poster of " + task.getBountyName() + " to " + victimChar.getFirstName() + ".");
+                partyMemberSay(pair.second, "Have you ever seen this person? " + wanted);
+                shown = true;
+            } else {
+                partyMemberSay(pair.second,
+                        "Have you heard of a bandit called '" + task.getBountyName() + "'? " + wanted);
+            }
+            model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
+            List<Point> path = model.getWorld().shortestPathToPoint(task.getPosition());
+            if (path.size() > BountyDestinationTask.LONG_RANGE) {
+                portraitSay("I'm sorry but I don't know at all who you are talking about.");
+                leaderSay("Darn. I guess " + heOrShe(bountyGender) + " could be hiding anywhere. " +
+                        "Maybe even in different kingdom.");
+            } else if (path.size() >= BountyDestinationTask.SHORT_RANGE) {
+                String reply = shown ? heOrShe(bountyGender) + " looks familiar, but I can't " +
+                        "tell you where I've seen " + himOrHer(bountyGender) :
+                        "The name sounds familiar, but I can't tell you where I've heard it";
+                portraitSay("Hmm... " + reply + ".");
+                leaderSay("Perhaps we're getting close?");
+            } else {
+                portraitSay("Yes, I know " + himOrHer(bountyGender) + "! " +
+                        heOrSheCap(bountyGender) + " is hiding out in " + task.getClue() + ".");
+                task.askForClue();
+                leaderSay("Thank you. You have been most helpful.");
+            }
         }
     }
 
