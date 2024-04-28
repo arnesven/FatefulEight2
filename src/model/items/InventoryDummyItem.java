@@ -7,7 +7,7 @@ public abstract class InventoryDummyItem extends Item {
 
     @Override
     public String getSound() {
-        throw new IllegalStateException("Should not be called!");
+        return "";
     }
 
     @Override

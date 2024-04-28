@@ -21,7 +21,7 @@ public class FoodDummyItem extends InventoryDummyItem {
 
     @Override
     public String getShoppingDetails() {
-        return ", Rations which can be consumed by the members of your party. Each party " +
+        return ", Each party " +
                 "member consumes 1 ration per day unless they are fed in any other way.";
     }
 

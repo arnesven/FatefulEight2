@@ -6,8 +6,6 @@ import model.characters.GameCharacter;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
-import model.items.clothing.JustClothes;
-import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.MyLists;
@@ -40,9 +38,7 @@ public class ShopState extends GameState {
         sellItems = new SteppingMatrix<>(8, 8);
         this.seller = seller;
         buyItems.addElements(itemsForSale);
-        List<Item> itemsToSell = new ArrayList<>();
-        itemsToSell.addAll(model.getParty().getInventory().getAllItems());
-        itemsToSell.removeIf((Item it) -> !it.isSellable());
+        List<Item> itemsToSell = getSellableItems(model);
         if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
             itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
             warnAboutManyItems = true;
@@ -50,6 +46,13 @@ public class ShopState extends GameState {
         sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
         this.subView = new ShopSubView(buyItems, true, seller, prices, this);
+    }
+
+    public List<Item> getSellableItems(Model model) {
+        List<Item> itemsToSell = new ArrayList<>();
+        itemsToSell.addAll(model.getParty().getInventory().getAllItems());
+        itemsToSell.removeIf((Item it) -> !it.isSellable());
+        return itemsToSell;
     }
 
     public static void pressToEnterShop(DailyEventState state) {
@@ -122,59 +125,78 @@ public class ShopState extends GameState {
             waitForReturnSilently();
             if (selectedAction[0] == 'B') {
                 Item it = buyItems.getSelectedElement();
-                int cost = prices.get(it);
-                if (cost > model.getParty().getGold()) {
-                    println("You cannot afford that.");
-                } else {
-                    buyItems.remove(it);
-                    itemsForSale.remove(it);
-                    model.getParty().getInventory().addItem(it);
-                    model.getParty().addToGold(-1 * cost);
-                    if (cost > 0) {
-                        println("You bought " + it.getName() + " for " + cost + " gold.");
-                    } else {
-                        println("You received " + it.getName() + ".");
-                    }
-                    SoundEffects.playSound(it.getSound());
-                    model.getTutorial().equipment(model);
-                    if (!checkForImmediateEquip(model, it, xPos, yPos)) {
-                        sellItems.addElementLast(it);
-                    }
-                    if (buyItems.getElementList().isEmpty()) {
-                        if (!sellingEnabled || sellItems.getElementList().isEmpty()) {
-                            break;
-                        } else {
-                            toggleBuySell(model);
-                        }
-                    }
-                    if (mayOnlyBuyOne) {
-                        break;
-                    }
+                if (purchaseItem(model, it, xPos, yPos)) {
+                    break;
                 }
             } else if (selectedAction[0] == 'S' && sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
                 Item it = sellItems.getSelectedElement();
-                if (!isCurrentlyEquipped(model, it)) {
-                    sellItems.remove(it);
-                    int money = it.getCost() / 2;
-                    model.getParty().addToGold(money);
-                    model.getParty().getInventory().remove(it);
-                    println("You sold " + it.getName() + " for " + money + " gold.");
-                    SoundEffects.sellItem();
-                    if (model.getParty().getInventory().noOfsellableItems() == 0) {
-                        if (buyItems.getElementList().isEmpty()) {
-                            break;
-                        } else {
-                            toggleBuySell(model);
-                        }
-                    }
-                } else {
-                    println("You cannot sell an item that is currently equipped.");
+                if (sellThisItem(model, it)){
+                    break;
                 }
             } else if (selectedAction[0] == 'A') {
                 model.transitionToDialog(matrixToUse.getSelectedElement().getAnalysisDialog(model));
             }
         }
         return new EveningState(model);
+    }
+
+    protected boolean purchaseItem(Model model, Item it, int xPos, int yPos) {
+        int cost = prices.get(it);
+        if (cost > model.getParty().getGold()) {
+            println("You cannot afford that.");
+        } else {
+            if (it instanceof InventoryDummyItem) {
+                model.getParty().getInventory().addItem(it.copy());
+            } else {
+                buyItems.remove(it);
+                itemsForSale.remove(it);
+                model.getParty().getInventory().addItem(it);
+            }
+
+            model.getParty().addToGold(-1 * cost);
+            if (cost > 0) {
+                println("You bought " + it.getName() + " for " + cost + " gold.");
+            } else {
+                println("You received " + it.getName() + ".");
+            }
+            SoundEffects.playSound(it.getSound());
+            model.getTutorial().equipment(model);
+            if (!checkForImmediateEquip(model, it, xPos, yPos) && !(it instanceof InventoryDummyItem)) {
+                sellItems.addElementLast(it);
+            }
+            if (buyItems.getElementList().isEmpty()) {
+                if (!sellingEnabled || sellItems.getElementList().isEmpty()) {
+                    return true;
+                } else {
+                    toggleBuySell(model);
+                }
+            }
+            if (mayOnlyBuyOne) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean sellThisItem(Model model, Item it) {
+        if (!isCurrentlyEquipped(model, it)) {
+            sellItems.remove(it);
+            int money = it.getCost() / 2;
+            model.getParty().addToGold(money);
+            model.getParty().getInventory().remove(it);
+            println("You sold " + it.getName() + " for " + money + " gold.");
+            SoundEffects.sellItem();
+            if (model.getParty().getInventory().noOfsellableItems() == 0) {
+                if (buyItems.getElementList().isEmpty()) {
+                    return true;
+                } else {
+                    toggleBuySell(model);
+                }
+            }
+        } else {
+            println("You cannot sell an item that is currently equipped.");
+        }
+        return false;
     }
 
     private boolean checkForImmediateEquip(Model model, Item it, int xPos, int yPos) {

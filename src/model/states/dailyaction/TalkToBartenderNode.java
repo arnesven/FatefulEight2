@@ -3,9 +3,9 @@ package model.states.dailyaction;
 import model.Model;
 import model.TimeOfDay;
 import model.classes.Skill;
-import model.horses.Horse;
 import model.states.AcceptDeliveryEvent;
 import model.states.GameState;
+import model.states.TradeWithBartenderState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -61,7 +61,7 @@ public class TalkToBartenderNode extends DailyActionNode {
 
         @Override
         public GameState run(Model model) {
-            List<String> options = new ArrayList<>(List.of("Get Advice", "Buy Rations"));
+            List<String> options = new ArrayList<>(List.of("Get Advice", "Trade"));
             boolean buyHorse = model.getParty().getHorseHandler().getAvailableHorse(model) != null;
             if (!model.getTimeOfDay().equals(TimeOfDay.EVENING)) {
                 options.add("Ask For Work");
@@ -72,23 +72,17 @@ public class TalkToBartenderNode extends DailyActionNode {
             if (model.getParty().getHorseHandler().size() > 0 && !inTown) {
                 options.add("Sell Horse");
             }
-            options.add("Buy Obols");
-            options.add("Sell Obols");
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
             if (selected == 0) {
                 getAdvice(model);
             } else if (selected == 1) {
-                new BuyRationsState(model).run(model);
+                new TradeWithBartenderState(model).run(model);
             } else if (options.get(selected).contains("Buy Horse")) {
                 new BuyHorseState(model, "Bartender").run(model);
             } else if (options.get(selected).contains("Sell Horse")) {
                 new SellHorseState(model).run(model);
-            } else if (options.get(selected).contains("Buy Obols")) {
-                buyObols(model);
-            } else if (options.get(selected).contains("Ask For Work")) {
-                askForWork(model);
             } else {
-                sellObols(model);
+                askForWork(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }
@@ -205,45 +199,5 @@ public class TalkToBartenderNode extends DailyActionNode {
             printQuote("Bartender", line);
         }
 
-        private void buyObols(Model model) {
-            println("You have " + model.getParty().getObols() + " obols.");
-            model.getTutorial().obols(model);
-            int spend = 0;
-            do {
-                print("You get 10 obols for each gold. How much would you like to spend? ");
-                try {
-                    spend = Integer.parseInt(lineInput());
-                    if (spend < 0) {
-                        println("You cannot spend negative gold.");
-                    } else if (spend > model.getParty().getGold()) {
-                        println("You cannot afford that.");
-                    } else {
-                        break;
-                    }
-                } catch (NumberFormatException nfe) {
-                    println("Please enter an integer.");
-                }
-            } while (true);
-            print("You bought " + spend*10 + " obols.");
-            model.getParty().addToObols(spend*10);
-            println(" You now have " + model.getParty().getObols() + " obols.");
-            model.getParty().addToGold(-spend);
-        }
-
-        private void sellObols(Model model) {
-            int take = model.getParty().getObols() / 10;
-            if (take == 0) {
-                printQuote("Bartender", "Sorry, I only take 10 obols at a time.");
-                return;
-            }
-            printQuote("Bartender", "Want to cash in some obols? I can take " + take*10 +
-                    " of them off your hands and give you " + take + " gold.");
-            print("Do you accept? (Y/N) ");
-            if (yesNoInput()) {
-                model.getParty().addToObols(-take*10);
-                model.getParty().addToGold(take);
-                println("You now have " + model.getParty().getObols() + " obols.");
-            }
-        }
     }
 }

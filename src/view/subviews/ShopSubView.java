@@ -106,8 +106,7 @@ public class ShopSubView extends TopMenuSubView {
     private void checkSellIntegrity(Model model) {
         boolean integrityOk = true;
         overflow = false;
-        List<Item> sellableItems = model.getParty().getInventory().getAllItems();
-        sellableItems.removeIf((Item it) -> !it.isSellable());
+        List<Item> sellableItems = state.getSellableItems(model);
         if (sellableItems.size() > matrix.getColumns()*matrix.getRows()) {
             sellableItems = sellableItems.subList(0, matrix.getColumns()*matrix.getRows());
             overflow = true;
