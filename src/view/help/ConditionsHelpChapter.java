@@ -46,6 +46,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new GiantGrowthCondition(2).getHelpView(view),
                 new InspireCombatAction().getCondition().getHelpView(view),
                 new InvisibilityCondition(3).getHelpView(view),
+                new IntoxicatedCondition().getHelpView(view),
                 new CurseCombatAction().getPainCondition().getHelpView(view),
                 new ParalysisCondition().getHelpView(view),
                 new PoisonCondition().getHelpView(view),
