@@ -139,4 +139,8 @@ public abstract class Item implements Serializable, Comparable<Item> {
         bldr.append(str.charAt(str.length()-1));
         return bldr.toString().toUpperCase();
     }
+
+    public int getSellValue() {
+        return getCost() / 2;
+    }
 }

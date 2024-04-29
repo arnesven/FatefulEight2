@@ -38,4 +38,9 @@ public class ObolsDummyItem extends InventoryDummyItem {
     public void addYourself(Inventory inventory) {
         inventory.setObols(inventory.getObols() + amount);
     }
+
+    @Override
+    public int getSellValue() {
+        return getCost();
+    }
 }

@@ -4,6 +4,7 @@ import model.Model;
 import model.items.FoodDummyItem;
 import model.items.Item;
 import model.items.ObolsDummyItem;
+import view.subviews.ArrowMenuSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,10 @@ public class TradeWithBartenderState extends ShopState {
             refreshObols();
             return false;
         }
+        if (it instanceof FoodDummyItem) {
+            EveningState.buyRations(model, this);
+            return false;
+        }
         return super.purchaseItem(model, it, xPos, yPos);
     }
 
@@ -78,24 +83,30 @@ public class TradeWithBartenderState extends ShopState {
     private void buyObols(Model model) {
         model.getTutorial().obols(model);
         int spend = 0;
+        printQuote("Bartender", "Wanna buy Obols? You get 10 obols for each gold.");
+        int[] selected = new int[1];
         do {
-            printQuote("Bartender", "Wanna buy Obols? You get 10 obols for each gold. How much would you like to spend? ");
-            try {
-                spend = Integer.parseInt(lineInput());
-                if (spend < 0) {
-                    println("You cannot spend negative gold.");
-                } else if (spend > model.getParty().getGold()) {
-                    println("You cannot afford that.");
-                } else {
-                    break;
+            model.setSubView(new ArrowMenuSubView(model.getSubView(),
+                    List.of("Buy 10", "Buy 50", "Done"), 24, 10, ArrowMenuSubView.NORTH_WEST) {
+                @Override
+                protected void enterPressed(Model model, int cursorPos) {
+                    selected[0] = cursorPos;
+                    model.setSubView(getPrevious());
                 }
-            } catch (NumberFormatException nfe) {
-                println("Please enter an integer.");
+            });
+            waitForReturnSilently();
+            if (selected[0] == 0) {
+                internalBuyObols(model, 1);
+            } else if (selected[0] == 1) {
+                internalBuyObols(model, 5);
             }
-        } while (true);
-        print("You bought " + spend*10 + " obols.");
-        model.getParty().addToObols(spend*10);
+        } while (selected[0] != 2);
+    }
+
+    private void internalBuyObols(Model model, int amount) {
+        model.getParty().addToGold(-amount);
+        model.getParty().addToObols(amount * 10);
+        print("You bought " + amount + " obols.");
         println(" You now have " + model.getParty().getObols() + " obols.");
-        model.getParty().addToGold(-spend);
     }
 }

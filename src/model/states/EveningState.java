@@ -280,7 +280,7 @@ public class EveningState extends GameState {
             final int finalCost = cost;
             state.print(sitch + maxBuy + " rations.");
             model.setSubView(new ArrowMenuSubView(model.getSubView(),
-                    List.of("Buy 5", "Buy Max", "Done"), 32, 18, ArrowMenuSubView.NORTH_WEST) {
+                    List.of("Buy 5", "Buy Max", "Done"), 28, 10, ArrowMenuSubView.NORTH_WEST) {
                 @Override
                 protected void enterPressed(Model model, int cursorPos) {
                     if (cursorPos == 0) {

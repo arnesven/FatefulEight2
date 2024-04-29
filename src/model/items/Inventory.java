@@ -135,10 +135,6 @@ public class Inventory implements Serializable {
 
     public void setObols(int amount) { obols = amount; }
 
-    public int noOfsellableItems() {
-        return getAllItems().size();
-    }
-
     public List<Spell> getSpells() {
         List<Spell> sp = new ArrayList<>();
         sp.addAll(spells);

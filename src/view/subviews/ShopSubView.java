@@ -152,7 +152,7 @@ public class ShopSubView extends TopMenuSubView {
             if (isBuying) {
                 cost = priceMap.get(it);
             } else {
-                cost /= 2;
+                cost = it.getSellValue();
             }
             return it.getName() + " " + cost + " gold, " +
                     it.getWeight() / 1000.0 + " kg" +

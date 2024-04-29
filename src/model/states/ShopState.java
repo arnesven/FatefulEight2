@@ -88,7 +88,7 @@ public class ShopState extends GameState {
             if (topCommand == 2) {
                 break;
             } else if (topCommand == 1 || topCommand == 0) {
-                if ((topCommand == 1 && showingBuyItems && !sellItems.getElementList().isEmpty()) ||
+                if ((topCommand == 1 && showingBuyItems && maySell(model)) ||
                         (topCommand == 0 && !showingBuyItems && !buyItems.getElementList().isEmpty())) {
                     toggleBuySell(model);
                 }
@@ -128,7 +128,7 @@ public class ShopState extends GameState {
                 if (purchaseItem(model, it, xPos, yPos)) {
                     break;
                 }
-            } else if (selectedAction[0] == 'S' && sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0) {
+            } else if (selectedAction[0] == 'S' && maySell(model)) {
                 Item it = sellItems.getSelectedElement();
                 if (sellThisItem(model, it)){
                     break;
@@ -186,7 +186,7 @@ public class ShopState extends GameState {
             model.getParty().getInventory().remove(it);
             println("You sold " + it.getName() + " for " + money + " gold.");
             SoundEffects.sellItem();
-            if (model.getParty().getInventory().noOfsellableItems() == 0) {
+            if (getSellableItems(model).size() == 0) {
                 if (buyItems.getElementList().isEmpty()) {
                     return true;
                 } else {
@@ -250,7 +250,7 @@ public class ShopState extends GameState {
     }
 
     public boolean maySell(Model model) {
-        return sellingEnabled && model.getParty().getInventory().noOfsellableItems() > 0;
+        return sellingEnabled && getSellableItems(model).size() > 0;
     }
 
     private boolean isCurrentlyEquipped(Model model, Item it) {
