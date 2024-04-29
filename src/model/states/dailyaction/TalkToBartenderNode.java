@@ -3,6 +3,11 @@ package model.states.dailyaction;
 import model.Model;
 import model.TimeOfDay;
 import model.classes.Skill;
+import model.items.FoodDummyItem;
+import model.items.Item;
+import model.items.ObolsDummyItem;
+import model.items.potions.BeerPotion;
+import model.items.potions.WinePotion;
 import model.states.AcceptDeliveryEvent;
 import model.states.GameState;
 import model.states.TradeWithBartenderState;
@@ -21,10 +26,19 @@ public class TalkToBartenderNode extends DailyActionNode {
     private final boolean inTown;
 
     private boolean workDone = false;
+    private List<Item> itemsForSale;
 
     public TalkToBartenderNode(boolean inTown) {
         super("Talk to bartender");
         this.inTown = inTown;
+        itemsForSale = new ArrayList<>(List.of(new ObolsDummyItem(10),
+                new FoodDummyItem(5)));
+        for (int i = MyRandom.randInt(4); i > 0; --i) {
+            itemsForSale.add(new BeerPotion());
+        }
+        for (int i = MyRandom.randInt(3); i > 0; --i) {
+            itemsForSale.add(new WinePotion());
+        }
     }
 
     @Override
@@ -76,7 +90,7 @@ public class TalkToBartenderNode extends DailyActionNode {
             if (selected == 0) {
                 getAdvice(model);
             } else if (selected == 1) {
-                new TradeWithBartenderState(model).run(model);
+                new TradeWithBartenderState(model, itemsForSale).run(model);
             } else if (options.get(selected).contains("Buy Horse")) {
                 new BuyHorseState(model, "Bartender").run(model);
             } else if (options.get(selected).contains("Sell Horse")) {

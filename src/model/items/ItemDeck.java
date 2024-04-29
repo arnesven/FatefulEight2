@@ -142,7 +142,8 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<Potion> allPotions() {
         return List.of(new HealthPotion(), new StaminaPotion(), new RejuvenationPotion(), new AntiParalysisPotion(),
                 new AntidotePotion(), new UnstablePotion(), new RevivingElixir(), new SleepingPotion(),
-                new StrengthPotion(), new DexterityPotion(), new WitsPotion(), new CharismaPotion());
+                new StrengthPotion(), new DexterityPotion(), new WitsPotion(), new CharismaPotion(),
+                new BeerPotion(), new WinePotion());
     }
 
     public static List<PotionRecipe> allPotionRecipes() {

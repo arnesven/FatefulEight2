@@ -6,29 +6,28 @@ import model.items.Item;
 import model.items.ObolsDummyItem;
 import view.subviews.ArrowMenuSubView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TradeWithBartenderState extends ShopState {
     private ObolsDummyItem sellableObols = null;
 
-    public TradeWithBartenderState(Model model) {
-        super(model, "Bartender", makeStock(), makeStockPrices());
+    public TradeWithBartenderState(Model model, List<Item> items) {
+        super(model, "Bartender", items, makePrices(items));
         refreshObols();
+    }
+
+    private static int[] makePrices(List<Item> items) {
+        int[] prices = new int[items.size()];
+        prices[0] = 1;
+        prices[1] = 1;
+        for (int i = 2; i < items.size(); ++i) {
+            prices[i] = items.get(i).getCost();
+        }
+        return prices;
     }
 
     private void refreshObols() {
         this.sellableObols = new ObolsDummyItem(getModel().getParty().getInventory().getObols());
-    }
-
-    private static int[] makeStockPrices() {
-        return new int[]{1, 1};
-    }
-
-    private static List<Item> makeStock() {
-        List<Item> stock = new ArrayList<>(List.of(new ObolsDummyItem(10),
-                new FoodDummyItem(5)));
-        return stock;
     }
 
     @Override
