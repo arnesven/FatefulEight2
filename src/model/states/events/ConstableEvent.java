@@ -84,7 +84,7 @@ public class ConstableEvent extends DailyEventState {
             wordToDescribe = "downright evil!";
         } else if (sum <= -2) {
             wordToDescribe = "like you're up to no good.";
-        } else if (sum < 2) {
+        } else if (sum <= 0) {
             wordToDescribe = "rather suspicious.";
         } else if (sum >= 3) {
             wordToDescribe = "like good-natured souls.";

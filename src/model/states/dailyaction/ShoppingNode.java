@@ -39,34 +39,38 @@ public abstract class ShoppingNode extends DailyActionNode {
         if (state.isEvening() && supportsBreakIn()) {
             state.print("The shop is closed. Do you want to try to break in? (Y/N) ");
             if (state.yesNoInput()) {
-                boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
-                if (result) {
-                    state.leaderSay("Okay, we're inside. Now let's gather up the booty!");
-                    int bounty = 0;
-                    for (Item it : shopInventory) {
-                        state.println("You stole " + it.getName() + ".");
-                        it.addYourself(model.getParty().getInventory());
-                        bounty++;
-                    }
-                    setOutOfBusiness(model);
-                    state.leaderSay("Now let's try not to be spotted on our way out.");
-                    result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
-                    if (!result) {
-                        state.printAlert("Your crime has been witnessed.");
-                        GeneralInteractionEvent.addToNotoriety(model, state, bounty * 10);
-                    }
-                } else {
-                    result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
-                    if (!result) {
-                        state.printAlert("Your crime has been witnessed.");
-                        GeneralInteractionEvent.addToNotoriety(model, state, 10);
-                    }
-                }
+                breakIntoShop(model, state);
             }
             triedBreakIn = true;
             return model.getCurrentHex().getEveningState(model, false, false);
         }
         return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory));
+    }
+
+    private void breakIntoShop(Model model, AdvancedDailyActionState state) {
+        boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
+        if (result) {
+            state.leaderSay("Okay, we're inside. Now let's gather up the booty!");
+            int bounty = 0;
+            for (Item it : shopInventory) {
+                state.println("You stole " + it.getName() + ".");
+                it.addYourself(model.getParty().getInventory());
+                bounty++;
+            }
+            setOutOfBusiness(model);
+            state.leaderSay("Now let's try not to be spotted on our way out.");
+            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
+            if (!result) {
+                state.printAlert("Your crime has been witnessed.");
+                GeneralInteractionEvent.addToNotoriety(model, state, bounty * 10);
+            }
+        } else {
+            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
+            if (!result) {
+                state.printAlert("Your crime has been witnessed.");
+                GeneralInteractionEvent.addToNotoriety(model, state, 10);
+            }
+        }
     }
 
     protected boolean supportsBreakIn() {
