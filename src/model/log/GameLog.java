@@ -187,10 +187,13 @@ public class GameLog {
         return inputMode != null;
     }
 
-    public void keyTyped(KeyEvent key, Model model) {
+    public synchronized void keyTyped(KeyEvent key, Model model) {
         inputMode.handle(key);
         if (inputMode.inputReady(this)) {
             caret = ' ';
+            while (!animationBuffer.isEmpty()) {
+                takeOne(model);
+            }
             model.madeChanges();
         }
     }
