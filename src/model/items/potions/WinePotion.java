@@ -22,7 +22,7 @@ public class WinePotion extends IntoxicatingPotion {
 
     @Override
     public Item copy() {
-        return null;
+        return new WinePotion();
     }
 
     @Override
