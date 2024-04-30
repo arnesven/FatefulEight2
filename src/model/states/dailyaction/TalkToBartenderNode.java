@@ -151,7 +151,7 @@ public class TalkToBartenderNode extends DailyActionNode {
 
         private void helpWithBooks(Model model) {
             printQuote("Bartender", "The previous owner of this place left the books in complete disarray. " +
-                    "Can you have a look at them and set them straight?.");
+                    "Can you have a look at them and set them straight?");
             leaderSay("I'll do it.");
             println("You spend the rest of the day trying to make sense of the bartender's economical situation.");
             boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Logic, 6);

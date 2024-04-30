@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.items.Item;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
+import model.states.EveningState;
 import model.states.GameState;
 import model.states.ShopState;
 import model.states.events.GeneralInteractionEvent;
@@ -13,6 +14,9 @@ import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.CollapsingTransition;
+import view.subviews.StealingSubView;
+import view.subviews.SubView;
 import view.subviews.TownSubView;
 
 import java.awt.*;
@@ -48,14 +52,29 @@ public abstract class ShoppingNode extends DailyActionNode {
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {
+        // TODO: Offer to split party?
         boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
         if (result) {
             state.leaderSay("Okay, we're inside. Now let's gather up the booty!");
+            SubView oldSubView = model.getSubView();
+            StealingSubView newSubView = new StealingSubView(shopInventory);
+            CollapsingTransition.transition(model, newSubView);
             int bounty = 0;
-            for (Item it : shopInventory) {
-                state.println("You stole " + it.getName() + ".");
-                it.addYourself(model.getParty().getInventory());
-                bounty++;
+            while (true) {
+                state.waitForReturnSilently();
+                if (newSubView.getTopIndex() == 0) {
+                    break;
+                }
+                if (model.getParty().getEncumbrance() > model.getParty().getCarryingCapacity()) { // TODO: Only party members, and only those who break into shop.
+                    state.print("You cannot carry any more loot!");
+                } else {
+                    Item it = newSubView.getSelectedItem();
+                    state.println("You stole " + it.getName() + ".");
+                    it.addYourself(model.getParty().getInventory());
+                    newSubView.removeItem(it);
+                    bounty++;
+                    newSubView.setBounty(bounty);
+                }
             }
             setOutOfBusiness(model);
             state.leaderSay("Now let's try not to be spotted on our way out.");
@@ -64,6 +83,7 @@ public abstract class ShoppingNode extends DailyActionNode {
                 state.printAlert("Your crime has been witnessed.");
                 GeneralInteractionEvent.addToNotoriety(model, state, bounty * 10);
             }
+            CollapsingTransition.transition(model, oldSubView);
         } else {
             result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
             if (!result) {

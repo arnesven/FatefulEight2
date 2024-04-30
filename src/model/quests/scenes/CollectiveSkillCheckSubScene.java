@@ -43,4 +43,14 @@ public class CollectiveSkillCheckSubScene extends SkillQuestSubScene {
         }
         return getSkill().getName() + " " + diffStr;
     }
+
+    public static String getDifficultyString(int difficulty) {
+        if (difficulty > 4) {
+            return "HARD";
+        }
+        if (difficulty > 2) {
+            return "MEDIUM";
+        }
+        return "EASY";
+    }
 }
