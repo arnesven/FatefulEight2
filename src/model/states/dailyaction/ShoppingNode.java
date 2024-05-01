@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.TimeOfDay;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
 import model.map.HexLocation;
@@ -10,16 +11,17 @@ import model.states.EveningState;
 import model.states.GameState;
 import model.states.ShopState;
 import model.states.events.GeneralInteractionEvent;
+import util.MyLists;
+import util.MyRandom;
+import util.MyUnaryIntFunction;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CollapsingTransition;
-import view.subviews.StealingSubView;
-import view.subviews.SubView;
-import view.subviews.TownSubView;
+import view.subviews.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ShoppingNode extends DailyActionNode {
@@ -40,7 +42,7 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        if (state.isEvening() && supportsBreakIn()) {
+        if (state.isEvening() && supportsBreakIn()) { // TODO: How to prevent the same shop to be broken into over and over?
             state.print("The shop is closed. Do you want to try to break in? (Y/N) ");
             if (state.yesNoInput()) {
                 breakIntoShop(model, state);
@@ -52,12 +54,25 @@ public abstract class ShoppingNode extends DailyActionNode {
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {
-        // TODO: Offer to split party?
+        state.print("Which party members should participate in the break in (group B)? ");
+        List<GameCharacter> groupA = new ArrayList<>(model.getParty().getPartyMembers());
+        List<GameCharacter> groupB = new ArrayList<>();
+        SplitPartySubView split = new SplitPartySubView(model.getSubView(), groupA, groupB);
+        model.setSubView(split);
+        state.waitForReturnSilently();
+        if (groupB.isEmpty()) {
+            state.println("Break in cancelled.");
+            return;
+        }
+        model.getParty().benchPartyMembers(groupA);
         boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
+        int weightLimit = MyLists.intAccumulate(groupB,
+                character -> character.getRace().getCarryingCapacity()*1000 - character.getEquipment().getTotalWeight());
+        int accumulatedWeight = 0;
         if (result) {
             state.leaderSay("Okay, we're inside. Now let's gather up the booty!");
             SubView oldSubView = model.getSubView();
-            StealingSubView newSubView = new StealingSubView(shopInventory);
+            StealingSubView newSubView = new StealingSubView(shopInventory, weightLimit);
             CollapsingTransition.transition(model, newSubView);
             int bounty = 0;
             while (true) {
@@ -65,18 +80,21 @@ public abstract class ShoppingNode extends DailyActionNode {
                 if (newSubView.getTopIndex() == 0) {
                     break;
                 }
-                if (model.getParty().getEncumbrance() > model.getParty().getCarryingCapacity()) { // TODO: Only party members, and only those who break into shop.
-                    state.print("You cannot carry any more loot!");
+                if (accumulatedWeight >= weightLimit) {
+                    state.println("You cannot carry any more loot!");
                 } else {
                     Item it = newSubView.getSelectedItem();
                     state.println("You stole " + it.getName() + ".");
                     it.addYourself(model.getParty().getInventory());
                     newSubView.removeItem(it);
                     bounty++;
-                    newSubView.setBounty(bounty);
+                    accumulatedWeight += it.getWeight();
+                    newSubView.setBountyAndWeight(bounty, accumulatedWeight);
                 }
             }
-            setOutOfBusiness(model);
+            if (MyRandom.rollD10() < bounty) {
+                setOutOfBusiness(model);
+            }
             state.leaderSay("Now let's try not to be spotted on our way out.");
             result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
             if (!result) {
@@ -91,6 +109,7 @@ public abstract class ShoppingNode extends DailyActionNode {
                 GeneralInteractionEvent.addToNotoriety(model, state, 10);
             }
         }
+        model.getParty().unbenchAll();
     }
 
     protected boolean supportsBreakIn() {

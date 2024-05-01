@@ -15,11 +15,14 @@ import java.util.List;
 
 public class StealingSubView extends TopMenuSubView {
     private final SteppingMatrix<Item> matrix;
-    private int bounty;
+    private final int weightLimit;
+    private int bounty = 0;
+    private int weight = 0;
 
-    public StealingSubView(List<Item> shopInventory) {
-        super(5, new int[]{X_OFFSET + 12});
+    public StealingSubView(List<Item> shopInventory, int weightLimit) {
+        super(5, new int[]{X_OFFSET + 2});
         this.matrix = new SteppingMatrix<Item>(8, 8);
+        this.weightLimit = weightLimit;
         matrix.addElements(shopInventory);
     }
 
@@ -53,6 +56,40 @@ public class StealingSubView extends TopMenuSubView {
 
     @Override
     protected void drawInnerArea(Model model) {
+        drawItems(model);
+        drawSneakDifficulty(model);
+        drawWeightLimit(model);
+    }
+
+    private void drawWeightLimit(Model model) {
+        double weightD = weight / 1000.0;
+        double limitD = weightLimit / 1000.0;
+        String weightString = String.format("Weight %.1f/%.1f", weightD, limitD);
+        MyColors color;
+        if (weight >= weightLimit) {
+            color = MyColors.RED;
+        } else {
+            color = MyColors.WHITE;
+        }
+        BorderFrame.drawString(model.getScreenHandler(), String.format("%20s", weightString), X_OFFSET+12,
+                Y_OFFSET+1, color, MyColors.BLACK);
+    }
+
+    private void drawSneakDifficulty(Model model) {
+        String difficulty = CollectiveSkillCheckSubScene.getDifficultyString(bounty / 2);
+        MyColors color = MyColors.GREEN;
+        if (difficulty.equals("HARD")) {
+            color = MyColors.RED;
+        } else if (difficulty.equals("MEDIUM")) {
+            color = MyColors.YELLOW;
+        }
+        BorderFrame.drawString(model.getScreenHandler(), "Sneak", X_OFFSET,
+                Y_OFFSET+1, MyColors.WHITE, MyColors.BLACK);
+        BorderFrame.drawString(model.getScreenHandler(), difficulty, X_OFFSET+6,
+                Y_OFFSET+1, color, MyColors.BLACK);
+    }
+
+    private void drawItems(Model model) {
         for (int row = 0; row < matrix.getRows(); ++row) {
             for (int col = 0; col < matrix.getColumns(); ++col) {
                 Item it = matrix.getElementAt(col, row);
@@ -65,18 +102,6 @@ public class StealingSubView extends TopMenuSubView {
                 }
             }
         }
-
-        String difficulty = CollectiveSkillCheckSubScene.getDifficultyString(bounty / 2);
-        MyColors color = MyColors.GREEN;
-        if (difficulty.equals("HARD")) {
-            color = MyColors.RED;
-        } else if (difficulty.equals("MEDIUM")) {
-            color = MyColors.YELLOW;
-        }
-        BorderFrame.drawString(model.getScreenHandler(), "Escape - Collective Sneak", X_OFFSET,
-                Y_OFFSET+1, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), difficulty, X_OFFSET+26,
-                Y_OFFSET+1, color, MyColors.BLACK);
     }
 
     @Override
@@ -86,7 +111,7 @@ public class StealingSubView extends TopMenuSubView {
 
     @Override
     protected String getTitle(int i) {
-        return "DONE";
+        return "ESCAPE";
     }
 
     @Override
@@ -108,7 +133,8 @@ public class StealingSubView extends TopMenuSubView {
         matrix.remove(it);
     }
 
-    public void setBounty(int bounty) {
+    public void setBountyAndWeight(int bounty, int weight) {
         this.bounty = bounty;
+        this.weight = weight;
     }
 }
