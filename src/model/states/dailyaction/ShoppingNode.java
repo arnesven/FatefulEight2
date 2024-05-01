@@ -48,12 +48,13 @@ public abstract class ShoppingNode extends DailyActionNode {
                 breakIntoShop(model, state);
             }
             triedBreakIn = true;
-            return model.getCurrentHex().getEveningState(model, false, false);
+            return state;
         }
         return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory));
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {
+        // TODO: Tutorial break-ins
         state.print("Which party members should participate in the break in (group B)? ");
         List<GameCharacter> groupA = new ArrayList<>(model.getParty().getPartyMembers());
         List<GameCharacter> groupB = new ArrayList<>();
@@ -71,6 +72,11 @@ public abstract class ShoppingNode extends DailyActionNode {
         int accumulatedWeight = 0;
         if (result) {
             state.leaderSay("Okay, we're inside. Now let's gather up the booty!");
+            if (shopInventory.isEmpty()) {
+                state.partyMemberSay(groupB.get(0), "What, there's nothing here? Aaw... what a waste of time. Let's get out of here.");
+                model.getParty().unbenchAll();
+                return;
+            }
             SubView oldSubView = model.getSubView();
             StealingSubView newSubView = new StealingSubView(shopInventory, weightLimit);
             CollapsingTransition.transition(model, newSubView);
@@ -85,6 +91,7 @@ public abstract class ShoppingNode extends DailyActionNode {
                 } else {
                     Item it = newSubView.getSelectedItem();
                     state.println("You stole " + it.getName() + ".");
+                    shopInventory.remove(it);
                     it.addYourself(model.getParty().getInventory());
                     newSubView.removeItem(it);
                     bounty++;
@@ -93,9 +100,10 @@ public abstract class ShoppingNode extends DailyActionNode {
                 }
             }
             if (MyRandom.rollD10() < bounty) {
+                state.println("The " + getName() + " has gone out of business!");
                 setOutOfBusiness(model);
             }
-            state.leaderSay("Now let's try not to be spotted on our way out.");
+            state.partyMemberSay(groupB.get(0), "Now let's try not to be spotted on our way out.");
             result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
             if (!result) {
                 state.printAlert("Your crime has been witnessed.");
