@@ -54,18 +54,24 @@ public abstract class ShoppingNode extends DailyActionNode {
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {
-        // TODO: Tutorial break-ins
-        state.print("Which party members should participate in the break in (group B)? ");
-        List<GameCharacter> groupA = new ArrayList<>(model.getParty().getPartyMembers());
-        List<GameCharacter> groupB = new ArrayList<>();
-        SplitPartySubView split = new SplitPartySubView(model.getSubView(), groupA, groupB);
-        model.setSubView(split);
-        state.waitForReturnSilently();
-        if (groupB.isEmpty()) {
-            state.println("Break in cancelled.");
-            return;
+        List<GameCharacter> groupB = null;
+        if (model.getParty().size() > 1) {
+            state.print("Which party members should participate in the burglary (group B)? ");
+            List<GameCharacter> groupA = new ArrayList<>(model.getParty().getPartyMembers());
+            groupB = new ArrayList<>();
+            SplitPartySubView split = new SplitPartySubView(model.getSubView(), groupA, groupB);
+            model.setSubView(split);
+            model.getTutorial().burglary(model);
+            state.waitForReturnSilently();
+            if (groupB.isEmpty()) {
+                state.println("Burglary cancelled.");
+                return;
+            }
+            model.getParty().benchPartyMembers(groupA);
+        } else {
+            model.getTutorial().burglary(model);
+            groupB = new ArrayList<>(model.getParty().getPartyMembers());
         }
-        model.getParty().benchPartyMembers(groupA);
         boolean result = model.getParty().doSoloLockpickCheck(model, state, getShopSecurity());
         int weightLimit = MyLists.intAccumulate(groupB,
                 character -> character.getRace().getCarryingCapacity()*1000 - character.getEquipment().getTotalWeight());
@@ -83,7 +89,7 @@ public abstract class ShoppingNode extends DailyActionNode {
             int bounty = 0;
             while (true) {
                 state.waitForReturnSilently();
-                if (newSubView.getTopIndex() == 0) {
+                if (newSubView.getTopIndex() == 0 || shopInventory.isEmpty()) {
                     break;
                 }
                 if (accumulatedWeight >= weightLimit) {
@@ -99,19 +105,19 @@ public abstract class ShoppingNode extends DailyActionNode {
                     newSubView.setBountyAndWeight(bounty, accumulatedWeight);
                 }
             }
-            if (MyRandom.rollD10() < bounty) {
-                state.println("The " + getName() + " has gone out of business!");
-                setOutOfBusiness(model);
-            }
             state.partyMemberSay(groupB.get(0), "Now let's try not to be spotted on our way out.");
-            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, bounty/2);
+            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, Math.max(1, bounty/2));
             if (!result) {
                 state.printAlert("Your crime has been witnessed.");
                 GeneralInteractionEvent.addToNotoriety(model, state, bounty * 10);
             }
             CollapsingTransition.transition(model, oldSubView);
+            if (MyRandom.rollD10() < bounty - 1) {
+                state.println("The " + getName() + " has gone out of business!");
+                setOutOfBusiness(model);
+            }
         } else {
-            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 3);
+            result = model.getParty().doCollectiveSkillCheck(model, state, Skill.Sneak, 2);
             if (!result) {
                 state.printAlert("Your crime has been witnessed.");
                 GeneralInteractionEvent.addToNotoriety(model, state, 10);

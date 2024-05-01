@@ -492,6 +492,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void burglary(Model model) {
+        runOnce("burglary", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialBurglary(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
