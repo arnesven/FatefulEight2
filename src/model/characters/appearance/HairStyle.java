@@ -39,7 +39,7 @@ public abstract class HairStyle implements Serializable {
             new HeartHairStyle(new ShortFemaleHair("Short #1"), true, false, "Short #4"),
             new HairStyle3x2(0x9, true, 0x10, "Neat"),
             new PuyetHairStyle(),
-            new HairStyle3x2(0x167, true, true, false, false, 0x08, 0x00, "Boy Cut"),
+            new BoyCutHairStyle(),
             new HairStyle3x2(0x164, true, true, true, true, 0x09, 0x07, "Combed/Long"),
             new HairStyle3x2(0x164, true, true, true, false, 0x19, 0x00, "Combed/Short"),
             new HairStyle3x2(0x9D, false, 0x18, "Mohawk"),

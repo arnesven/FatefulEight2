@@ -1,10 +1,7 @@
 package model.characters;
 
 import model.Model;
-import model.states.events.BurningBuildingEvent;
-import model.states.events.HotSpringEvent;
-import model.states.events.PersonalityTraitEvent;
-import model.states.events.TavernBrawlEvent;
+import model.states.events.*;
 
 public enum PersonalityTrait {
                  // Chars    Usages
@@ -51,7 +48,7 @@ public enum PersonalityTrait {
             case stingy:
                 // return new CantAffordThatThingEvent(model, this, mainCharacter);
             case romantic:
-                // return new InfatuationEvent(model, this, mainCharacter);
+                return new DeadlyLoverEvent(model, this, mainCharacter);
             case naive:
                 // return new ConfidenceWomanEvent(model, this, mainCharacter); // lured into bed... then robbed.
             case diplomatic:

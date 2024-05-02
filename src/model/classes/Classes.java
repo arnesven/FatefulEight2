@@ -66,4 +66,5 @@ public interface Classes {
     CharacterClass TREE_HERDER = new TreeHerderClass();
 
     CharacterClass[] NO_OTHER_CLASSES = Classes.NO_OTHER_CLASSES;
+    CharacterClass BEAUTY = new BeautyNPCClass();
 }

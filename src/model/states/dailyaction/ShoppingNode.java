@@ -42,7 +42,7 @@ public abstract class ShoppingNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        if (state.isEvening() && supportsBreakIn()) { // TODO: How to prevent the same shop to be broken into over and over?
+        if (state.isEvening() && supportsBreakIn()) {
             state.print("The shop is closed. Do you want to try to break in? (Y/N) ");
             if (state.yesNoInput()) {
                 breakIntoShop(model, state);
