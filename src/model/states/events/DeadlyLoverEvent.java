@@ -206,6 +206,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         }
         if (!main.isDead()) {
             partyMemberSay(main, "I guess I'm just a hopeless romantic.");
+            main.removeSpecificClothing();
         }
     }
 

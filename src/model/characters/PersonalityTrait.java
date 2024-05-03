@@ -50,7 +50,7 @@ public enum PersonalityTrait {
             case romantic:
                 return new DeadlyLoverEvent(model, this, mainCharacter);
             case naive:
-                // return new ConfidenceWomanEvent(model, this, mainCharacter); // lured into bed... then robbed.
+                // return ?
             case diplomatic:
                 // return new FeudingFamiliesEvent(model, this, mainCharacter);
             case cold:
