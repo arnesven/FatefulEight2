@@ -78,7 +78,7 @@ public class BakeryEvent extends DailyEventState {
             portraitSay("Excellent work today! I think my apprentices could learn a thing or two from you! Here's your salary.");
         }
 
-        int money = points * 2;
+        int money = points;
         println("The party receives " + money + " gold.");
         model.getParty().addToGold(money);
         println("You say goodbye to the baker and Freddy.");
