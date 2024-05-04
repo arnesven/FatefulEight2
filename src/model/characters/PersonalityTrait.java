@@ -66,7 +66,7 @@ public enum PersonalityTrait {
             case jovial:
                 // return new OffendedWomanEvent(model, this, mainCharacter);
             case anxious:
-                // return new BurySomeGoldEvent(model, this, mainCharacter);
+                return new BurySomeGoldEvent(model, this, mainCharacter);
             case irritable:
                 // return new FanEvent(model, this, mainCharacter);
             case snobby:
