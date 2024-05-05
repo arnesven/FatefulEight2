@@ -176,6 +176,7 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
     private void doRobberCombat(Model model, int buriedAmount) {
         runCombat(List.of(new BanditEnemy('B'), new BanditArcherEnemy('A'), new BanditArcherEnemy('A'),
                 new BanditArcherEnemy('A'), new BanditEnemy('B'), new BanditLeaderEnemy('C')));
+        possiblyGetHorsesAfterCombat("Robbers", 6);
         setCurrentTerrainSubview(model);
     }
 }

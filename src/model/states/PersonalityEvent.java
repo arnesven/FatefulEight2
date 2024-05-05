@@ -5,11 +5,13 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.states.events.NoEventState;
 import model.states.events.PersonalityTraitEvent;
+import util.MyLists;
 import util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class PersonalityEvent extends DailyEventState {
     private static final String KEY_PREFIX = "PersonalityEvent-";
@@ -17,42 +19,30 @@ public class PersonalityEvent extends DailyEventState {
 
     public PersonalityEvent(Model model) {
         super(model);
-        PersonalityTrait trait = null;
         System.out.println("Generating Personality Event.");
-        for (int i = 0; i < 1000; ++i) {
-            PersonalityTrait tmp = MyRandom.sample(List.of(PersonalityTrait.values()));
-            System.out.println("Trait " + tmp.toString());
-            if (!model.getSettings().getMiscFlags().containsKey(KEY_PREFIX + tmp.toString())) {
-                trait = tmp;
-                break;
-            } else {
-                System.out.println("...already used.");
-            }
-        }
-
-        if (trait != null) {
-            List<GameCharacter> chars = new ArrayList<>(model.getParty().getPartyMembers());
-            Collections.shuffle(chars);
-            GameCharacter mainCharacter = null;
-            for (GameCharacter gc : chars) {
-                System.out.println("Character " + gc.getName());
-                if (model.getParty().getLeader() != gc && gc.hasPersonality(trait) &&
-                        !alreadyDonePersonalityEventFor(model, gc)) {
-                    mainCharacter = gc;
-                    break;
-                } else {
-                    System.out.println("Does not have trait " + trait.toString() + ", is leader, " +
-                            "or have already done personality trait for that character.");
+        List<GameCharacter> candidates = MyLists.filter(model.getParty().getPartyMembers(),
+                gc -> !gc.isLeader() && !alreadyDonePersonalityEventFor(model, gc));
+        Collections.shuffle(candidates);
+        System.out.println("Candidates: " + candidates.size());
+        while (!candidates.isEmpty()) {
+            GameCharacter gc = candidates.remove(0);
+            for (PersonalityTrait pt : PersonalityTrait.values()) {
+                if (gc.hasPersonality(pt) && !alreadyUsedTrait(model, pt)) {
+                    PersonalityTraitEvent event = pt.makeEvent(model, gc);
+                    if (event != null && event.isApplicable(model)) {
+                        innerEvent = event;
+                        break;
+                    }
                 }
             }
-            if (mainCharacter != null) {
-                this.innerEvent = trait.makeEvent(model, mainCharacter);
-            } else {
-                System.out.println("No eligible character found.");
-            }
-        } else {
-            System.out.println("No personality trait found.");
         }
+        if (innerEvent == null) {
+            System.out.println("No event generated.");
+        }
+    }
+
+    private boolean alreadyUsedTrait(Model model, PersonalityTrait pt) {
+        return model.getSettings().getMiscFlags().containsKey(KEY_PREFIX + pt.toString());
     }
 
     private boolean alreadyDonePersonalityEventFor(Model model, GameCharacter gc) {
