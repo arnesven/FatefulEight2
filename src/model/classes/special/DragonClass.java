@@ -23,7 +23,7 @@ public class DragonClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        AvatarSprite spr = new AvatarSprite(race, 0xE7, MyColors.BEIGE, MyColors.GRAY, appearance.getNormalHair());
+        AvatarSprite spr = new AvatarSprite(race, 0x170, MyColors.BEIGE, MyColors.GRAY, appearance.getNormalHair());
         spr.setColor3(dragon.getColorSet()[1]);
         return spr;
     }

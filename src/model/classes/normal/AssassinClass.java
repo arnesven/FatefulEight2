@@ -58,7 +58,7 @@ public class AssassinClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x60, clothingColor, CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0xC0, clothingColor, CharacterAppearance.noHair());
     }
 
     @Override

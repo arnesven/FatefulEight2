@@ -14,7 +14,7 @@ public class SwordsmanEnemy extends HumanoidEnemy {
 
     public SwordsmanEnemy(char a, Race race) {
         super(a, "Swordsman");
-        sprite = new AvatarSprite(race, 0x07, MyColors.GRAY_RED, new DefaultAppearance().getNormalHair());
+        sprite = new AvatarSprite(race, 0x08, MyColors.GRAY_RED, new DefaultAppearance().getNormalHair());
     }
 
     @Override

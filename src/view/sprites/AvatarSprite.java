@@ -7,6 +7,11 @@ import java.util.List;
 
 public class AvatarSprite extends LoopingSprite {
 
+    private final Race race;
+    private final MyColors color2;
+    private final MyColors color4;
+    private final Sprite hairSprite;
+    private final int num;
     private Sprite32x32 deadSprite;
     private int currentFrame = 0;
     private int count = 0;
@@ -14,6 +19,11 @@ public class AvatarSprite extends LoopingSprite {
 
     public AvatarSprite(Race race, int num, MyColors color2, MyColors color4, Sprite hairSprite) {
         super("partymarker", "avatars.png", num+(race.isShort()?4:0), 32, 32, List.of(hairSprite));
+        this.race = race;
+        this.num = num;
+        this.color2 = color2;
+        this.color4 = color4;
+        this.hairSprite = hairSprite;
         setFrames(4);
         setColor1(MyColors.BLACK);
         setColor2(color2);
@@ -41,5 +51,9 @@ public class AvatarSprite extends LoopingSprite {
             default:
                 return currentFrame;
         }
+    }
+
+    public Sprite getUpwardVariant() {
+        return new AvatarSprite(race, num+0x10, color2, color4, hairSprite);
     }
 }

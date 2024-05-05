@@ -20,7 +20,7 @@ public class TreeHerderClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        AvatarSprite spr = new AvatarSprite(race, 0xE0, MyColors.GRAY_RED, MyColors.DARK_GREEN, appearance.getNormalHair());
+        AvatarSprite spr = new AvatarSprite(race, 0x164, MyColors.GRAY_RED, MyColors.DARK_GREEN, appearance.getNormalHair());
         spr.setColor3(MyColors.BROWN);
         return spr;
     }

@@ -42,7 +42,7 @@ public class DruidClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x70, MyColors.DARK_GREEN, appearance.getFacialOnly());
+        return new AvatarSprite(race, 0xE0, MyColors.DARK_GREEN, appearance.getFacialOnly());
     }
 
     @Override

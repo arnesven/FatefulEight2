@@ -4,6 +4,7 @@ import model.Model;
 import model.SettingsManager;
 import view.sprites.Animation;
 import view.sprites.AnimationManager;
+import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
@@ -59,7 +60,7 @@ public abstract class AvatarSubView extends SubView {
         private double steps;
         private final Point from;
         private final Point to;
-        private final Sprite sprite;
+        private Sprite sprite;
         private final Point2D.Double shift;
         private final Point2D.Double diff;
         private boolean done = false;
@@ -74,6 +75,9 @@ public abstract class AvatarSubView extends SubView {
             this.diff = new Point2D.Double((to.x - from.x) / steps, (to.y - from.y) / steps);
             AnimationManager.registerPausable(this);
             this.lastDistance = Double.MAX_VALUE;
+            if (diff.y < 0 && sprite instanceof AvatarSprite) {
+                sprite = ((AvatarSprite)sprite).getUpwardVariant();
+            }
         }
 
         private double getFactorForSpeed(SettingsManager.LogSpeed movementSpeed) {

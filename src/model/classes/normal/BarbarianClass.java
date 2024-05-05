@@ -43,7 +43,7 @@ public class BarbarianClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x80, CLOTHING_COLOR, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x100, CLOTHING_COLOR, appearance.getNormalHair());
     }
 
     @Override

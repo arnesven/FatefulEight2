@@ -33,7 +33,7 @@ public class ArcanistClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x27, MyColors.LIGHT_PINK, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x48, MyColors.LIGHT_PINK, appearance.getNormalHair());
     }
 
     @Override

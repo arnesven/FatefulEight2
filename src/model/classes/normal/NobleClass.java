@@ -60,7 +60,7 @@ public class NobleClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race,0x50, CLOTHES_COLOR, DETAIL_COLOR, appearance.getBackHairOnly());
+        return new AvatarSprite(race,0xA0, CLOTHES_COLOR, DETAIL_COLOR, appearance.getBackHairOnly());
     }
 
     @Override

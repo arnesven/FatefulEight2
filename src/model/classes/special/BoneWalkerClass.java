@@ -21,7 +21,7 @@ public class BoneWalkerClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x90, MyColors.PINK, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x120, MyColors.PINK, appearance.getNormalHair());
     }
 
     @Override

@@ -41,7 +41,7 @@ public class BardClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x30, MyColors.PURPLE, appearance.getBackHairOnly());
+        return new AvatarSprite(race, 0x60, MyColors.PURPLE, appearance.getBackHairOnly());
     }
 
     @Override
