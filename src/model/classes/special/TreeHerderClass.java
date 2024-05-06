@@ -1,5 +1,6 @@
 package model.classes.special;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
 import model.items.Equipment;
@@ -20,7 +21,8 @@ public class TreeHerderClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        AvatarSprite spr = new AvatarSprite(race, 0x164, MyColors.GRAY_RED, MyColors.DARK_GREEN, appearance.getNormalHair());
+        AvatarSprite spr = new AvatarSprite(race, 0x164, MyColors.GRAY_RED, MyColors.DARK_GREEN,
+                appearance.getNormalHair(), CharacterAppearance.noHair());
         spr.setColor3(MyColors.BROWN);
         return spr;
     }

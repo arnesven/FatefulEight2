@@ -61,7 +61,7 @@ public class AmazonClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x28, MyColors.BROWN, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x28, MyColors.BROWN, appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override

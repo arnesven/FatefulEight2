@@ -4,8 +4,9 @@ public class HairStyle5x2 extends HairStyle3x2 {
     private final int num;
     private static final int FRAME_TOP = 0x10F;
 
-    public HairStyle5x2(int num, boolean inBack, boolean longInBack, int avatarNormal, int avatarBack, String description) {
-        super(num + 0x01, true, true, inBack, longInBack, avatarNormal, avatarBack, description);
+    public HairStyle5x2(int num, boolean inBack, boolean longInBack, int avatarNormal,
+                        int avatarBack, int avatarFullBack, int avatarHalfBack, String description) {
+        super(num + 0x01, true, true, inBack, longInBack, avatarNormal, avatarBack, avatarFullBack, avatarHalfBack, description);
         this.num = num;
     }
 

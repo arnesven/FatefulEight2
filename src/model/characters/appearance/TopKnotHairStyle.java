@@ -26,4 +26,9 @@ public class TopKnotHairStyle extends BaldHairStyle {
     public int getNormalHair() {
         return 0x21;
     }
+
+    @Override
+    public int getFullBackHair() {
+        return 0x59;
+    }
 }

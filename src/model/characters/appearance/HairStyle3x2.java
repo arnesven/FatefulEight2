@@ -3,18 +3,22 @@ package model.characters.appearance;
 public class HairStyle3x2 extends HairStyle {
     private final int avatarNormal;
     private final int avatarBack;
+    private final int avatarFullBack;
+    private final int avatarHalfBack;
     private int[][] hair;
 
     public HairStyle3x2(int num, boolean inForehead, boolean onTop, boolean inBack, boolean longInBack,
-                        int avatarNormal, int avatarBack, String description) {
+                        int avatarNormal, int avatarBack, int avatarFullBack, int avatarHalfBack, String description) {
         super(inForehead, onTop, inBack, longInBack, description);
         hair = set3x2HairStyleFrom(num);
         this.avatarNormal = avatarNormal;
         this.avatarBack = avatarBack;
+        this.avatarFullBack = avatarFullBack;
+        this.avatarHalfBack = avatarHalfBack;
     }
 
-    public HairStyle3x2(int num, boolean inForehead, int avatarNormal, String description) {
-        this(num, inForehead, true, false, true, avatarNormal, 0x00, description);
+    public HairStyle3x2(int num, boolean inForehead, int avatarNormal, int avatarFullBack, int avatarHalfBack, String description) {
+        this(num, inForehead, true, false, true, avatarNormal, 0x00, avatarFullBack, avatarHalfBack, description);
     }
 
     public int getForeheadLeft() {
@@ -51,6 +55,15 @@ public class HairStyle3x2 extends HairStyle {
         return avatarBack;
     }
 
+    @Override
+    public int getFullBackHair() {
+        return avatarFullBack;
+    }
+
+    @Override
+    public int getHalfBackHair() {
+        return avatarHalfBack;
+    }
 
     private static int[][] set3x2HairStyleFrom(int i) {
         int result[][] = new int[3][2];

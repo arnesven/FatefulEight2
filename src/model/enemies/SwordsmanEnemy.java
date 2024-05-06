@@ -1,6 +1,7 @@
 package model.enemies;
 
 import model.Model;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.DefaultAppearance;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
@@ -14,7 +15,8 @@ public class SwordsmanEnemy extends HumanoidEnemy {
 
     public SwordsmanEnemy(char a, Race race) {
         super(a, "Swordsman");
-        sprite = new AvatarSprite(race, 0x08, MyColors.GRAY_RED, new DefaultAppearance().getNormalHair());
+        sprite = new AvatarSprite(race, 0x08, MyColors.GRAY_RED,
+                new DefaultAppearance().getNormalHair(), CharacterAppearance.noHair());
     }
 
     @Override

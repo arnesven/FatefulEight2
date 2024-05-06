@@ -21,7 +21,7 @@ public class FamiliarClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x160, MyColors.BROWN, MyColors.DARK_BROWN, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x160, MyColors.BROWN, MyColors.DARK_BROWN, appearance.getNormalHair(), CharacterAppearance.noHair());
     }
 
     @Override

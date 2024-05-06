@@ -18,6 +18,8 @@ public class AdvancedAppearance extends CharacterAppearance {
     private final Beard beard;
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
+    private Sprite32x32 avatarFullBackHair;
+    private Sprite32x32 avatarHalfBackHair;
     private Sprite avatarFacial;
     private FaceDetail detail = FaceDetail.NO_FACE_DETAIL;
     private boolean raceSpecificEars = true;
@@ -48,9 +50,15 @@ public class AdvancedAppearance extends CharacterAppearance {
                 getHairColor(), beardSprite);
         this.avatarBackHair =  new Sprite32x32("avatarBackHair"+hair.toString(), "hair.png", hairStyle.getBackHairOnly(),
                 getHairColor(), beardSprite);
+        this.avatarHalfBackHair = new Sprite32x32("avatarHalfBackHair"+hair.toString(), "hair.png", hairStyle.getHalfBackHair(),
+                getHairColor(), MyColors.BEIGE, MyColors.BROWN);
+        this.avatarFullBackHair = new Sprite32x32("avatarFullBackHair"+hair.toString(), "hair.png", hairStyle.getFullBackHair(),
+                getHairColor(), MyColors.BEIGE, MyColors.BROWN);
         if (race.isShort()) {
             avatarNormalHair.shiftUpPx(-2);
             avatarBackHair.shiftUpPx(-2);
+            avatarFullBackHair.shiftUpPx(-2);
+            avatarHalfBackHair.shiftUpPx(-2);
         }
     }
 
@@ -215,6 +223,16 @@ public class AdvancedAppearance extends CharacterAppearance {
     @Override
     public Sprite getBackHairOnly() {
         return avatarBackHair;
+    }
+
+    @Override
+    public Sprite getFullBackHair() {
+        return avatarFullBackHair;
+    }
+
+    @Override
+    public Sprite getHalfBackHair() {
+        return avatarHalfBackHair;
     }
 
     @Override

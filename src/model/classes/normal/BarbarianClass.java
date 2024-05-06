@@ -43,7 +43,7 @@ public class BarbarianClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x100, CLOTHING_COLOR, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x100, CLOTHING_COLOR, appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override
@@ -62,6 +62,8 @@ public class BarbarianClass extends CharacterClass {
         if (!race.isShort()) {
             appearance.getNormalHair().shiftUpPx(2);
             appearance.getBackHairOnly().shiftUpPx(2);
+            appearance.getFullBackHair().shiftUpPx(2);
+            appearance.getHalfBackHair().shiftUpPx(2);
         }
     }
 

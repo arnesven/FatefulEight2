@@ -1,5 +1,6 @@
 package view.sprites;
 
+import model.characters.appearance.CharacterAppearance;
 import model.races.Race;
 import view.MyColors;
 
@@ -11,19 +12,21 @@ public class AvatarSprite extends LoopingSprite {
     private final MyColors color2;
     private final MyColors color4;
     private final Sprite hairSprite;
+    private final Sprite hairFromBack;
     private final int num;
     private Sprite32x32 deadSprite;
     private int currentFrame = 0;
     private int count = 0;
     private int delay = 16;
 
-    public AvatarSprite(Race race, int num, MyColors color2, MyColors color4, Sprite hairSprite) {
+    public AvatarSprite(Race race, int num, MyColors color2, MyColors color4, Sprite hairSprite, Sprite hairFromBack) {
         super("partymarker", "avatars.png", num+(race.isShort()?4:0), 32, 32, List.of(hairSprite));
         this.race = race;
         this.num = num;
         this.color2 = color2;
         this.color4 = color4;
         this.hairSprite = hairSprite;
+        this.hairFromBack = hairFromBack;
         setFrames(4);
         setColor1(MyColors.BLACK);
         setColor2(color2);
@@ -33,8 +36,8 @@ public class AvatarSprite extends LoopingSprite {
         deadSprite.setColor4(color4);
     }
 
-    public AvatarSprite(Race race, int num, MyColors color2, Sprite hairSprite) {
-        this(race, num, color2, color2, hairSprite);
+    public AvatarSprite(Race race, int num, MyColors color2, Sprite hairSprite, Sprite hairFromBack) {
+        this(race, num, color2, color2, hairSprite, hairFromBack);
     }
 
     public Sprite getDead() {
@@ -53,7 +56,7 @@ public class AvatarSprite extends LoopingSprite {
         }
     }
 
-    public Sprite getUpwardVariant() {
-        return new AvatarSprite(race, num+0x10, color2, color4, hairSprite);
+    public Sprite getAvatarBack() {
+        return new AvatarSprite(race, num+0x10, color2, color4, hairFromBack, CharacterAppearance.noHair());
     }
 }

@@ -4,12 +4,16 @@ public class HeartHairStyle extends HairStyle {
     private final HairStyle innerHairStyle;
     private final int avatarSprite;
     private final int avatarBack;
+    private final int avatarFullBack;
+    private final int avatarHalfBack;
 
     public HeartHairStyle(HairStyle innerHairStyle, boolean hairInBack, boolean longInBack, String description) {
         super(false, true, hairInBack, longInBack, description);
         this.innerHairStyle = innerHairStyle;
         this.avatarSprite = longInBack ? 0x05 : 0x15;
         this.avatarBack = longInBack ? 0x02 : 0x12;
+        this.avatarFullBack = innerHairStyle.getFullBackHair();
+        this.avatarHalfBack = innerHairStyle.getHalfBackHair();
     }
 
     @Override
@@ -62,5 +66,15 @@ public class HeartHairStyle extends HairStyle {
     @Override
     public int getBackHairOnly() {
         return avatarBack;
+    }
+
+    @Override
+    public int getFullBackHair() {
+        return avatarFullBack;
+    }
+
+    @Override
+    public int getHalfBackHair() {
+        return avatarHalfBack;
     }
 }

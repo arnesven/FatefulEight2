@@ -34,6 +34,16 @@ public class BaldHairStyle extends HairStyle {
     }
 
     @Override
+    public int getFullBackHair() {
+        return 0x0;
+    }
+
+    @Override
+    public int getHalfBackHair() {
+        return 0x0;
+    }
+
+    @Override
     public int getHeadTop() {
         return 0xFE;
     }

@@ -42,7 +42,7 @@ public class RedKnightClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x80, MyColors.DARK_RED, CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0x80, MyColors.DARK_RED, CharacterAppearance.noHair(), CharacterAppearance.noHair());
     }
 
     @Override

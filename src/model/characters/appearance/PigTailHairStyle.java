@@ -4,7 +4,8 @@ import view.sprites.FaceSpriteWithHair;
 
 public class PigTailHairStyle extends HairStyle3x2 {
     public PigTailHairStyle(int num, boolean inForehead, int normalAvatar, String description) {
-        super(num, inForehead, true, false, false, normalAvatar, 0x36, description);
+        super(num, inForehead, true, false, false,
+                normalAvatar, 0x36, 0x51, 0x52, description);
     }
 
     @Override

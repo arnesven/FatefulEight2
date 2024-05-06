@@ -9,7 +9,6 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.Optional;
 
 public abstract class AvatarSubView extends SubView {
     private MovementAnimation movementAnimation;
@@ -76,7 +75,7 @@ public abstract class AvatarSubView extends SubView {
             AnimationManager.registerPausable(this);
             this.lastDistance = Double.MAX_VALUE;
             if (diff.y < 0 && sprite instanceof AvatarSprite) {
-                sprite = ((AvatarSprite)sprite).getUpwardVariant();
+                sprite = ((AvatarSprite)sprite).getAvatarBack();
             }
         }
 

@@ -37,22 +37,22 @@ public abstract class HairStyle implements Serializable {
             new ShortFemaleHair(0x164, 0x13, "Short #2"),
             new ShortFemaleHair(0xA7, 0x15, "Short #3"),
             new HeartHairStyle(new ShortFemaleHair("Short #1"), true, false, "Short #4"),
-            new HairStyle3x2(0x9, true, 0x10, "Neat"),
+            new HairStyle3x2(0x9, true, 0x10, 0x32, 0x00, "Neat"),
             new PuyetHairStyle(),
             new BoyCutHairStyle(),
-            new HairStyle3x2(0x164, true, true, true, true, 0x09, 0x07, "Combed/Long"),
-            new HairStyle3x2(0x164, true, true, true, false, 0x19, 0x00, "Combed/Short"),
-            new HairStyle3x2(0x9D, false, 0x18, "Mohawk"),
-            new HairStyle3x2(0xC, false, 0x17, "Monk"),
-            new HairStyle3x2(0xC, false, true, true, true, 0x27, 0x07, "Monk/Long"),
-            new ExplicitHairStyle(true, 0x04, 0xEF, 0x14, 0x05, 0xFC, 0x15, 0x10, 0x00, "Flat"),
-            new ExplicitHairStyle(false, 0x02, 0xFF, 0x12, 0x03, 0xFD, 0x13, 0x20, 0x00, "Receeding"),
+            new HairStyle3x2(0x164, true, true, true, true, 0x09, 0x07, 0x56, 0x57, "Combed/Long"),
+            new HairStyle3x2(0x164, true, true, true, false, 0x19, 0x00, 0x32, 0x0, "Combed/Short"),
+            new HairStyle3x2(0x9D, false, 0x18, 0x18, 0x0, "Mohawk"),
+            new HairStyle3x2(0xC, false, 0x17, 0x32, 0x0, "Monk"),
+            new HairStyle3x2(0xC, false, true, true, true, 0x27, 0x07, 0x33, 0x34, "Monk/Long"),
+            new ExplicitHairStyle(true, 0x04, 0xEF, 0x14, 0x05, 0xFC, 0x15, 0x10, 0x00, 0x32, 0x00, "Flat"),
+            new ExplicitHairStyle(false, 0x02, 0xFF, 0x12, 0x03, 0xFD, 0x13, 0x20, 0x00, 0x53, 0x00, "Receeding"),
             new TopKnotHairStyle(MyColors.BEIGE, true, "Top Knot/Bald"),
             new MordKroftHairStyle("Top Knot/Flat"),
             new SpecialMordKroftHairStyle(),
-            new HairStyle3x2(6, false, 0x16, "Priest"),
-            new HairStyle3x2(0xA7, false, true, false, false, 0x24, 0x00, "Rough"),
-            new HairStyle3x2(0xA7, false, true, true, true, 0x05, 0x07, "Rough/Long"),
+            new HairStyle3x2(6, false, 0x16, 0x16, 0x00, "Priest"),
+            new HairStyle3x2(0xA7, false, true, false, false, 0x24, 0x00, 0x32, 0x0, "Rough"),
+            new HairStyle3x2(0xA7, false, true, true, true, 0x05, 0x07, 0x33, 0x34, "Rough/Long"),
             new TorhildHairstyle(),
             new PigTailHairStyle(0x9, true, 0x26, "Braids/Flat"),
             new PigTailHairStyle(0xC, true, 0x37, "Braids/Priest"),
@@ -159,6 +159,10 @@ public abstract class HairStyle implements Serializable {
     public abstract int getNormalHair();
 
     public abstract int getBackHairOnly();
+
+    public abstract int getFullBackHair();
+
+    public abstract int getHalfBackHair();
 
     public static MyColors randomHairColor() {
         return HairStyle.npcHairColors[MyRandom.randInt(HairStyle.npcHairColors.length)];

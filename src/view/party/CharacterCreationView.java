@@ -8,7 +8,6 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.items.weapons.Weapon;
 import model.races.Race;
-import model.races.Shoulders;
 import util.Arithmetics;
 import util.MyPair;
 import util.MyRandom;
@@ -76,6 +75,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private boolean showSkeleton = false;
     private CharacterAppearance lastAppearance;
     private GameCharacter lastCharacter;
+    private Sprite avatarBack = null;
     private boolean canceled = false;
 
     public CharacterCreationView(GameView previous) {
@@ -85,6 +85,7 @@ public class CharacterCreationView extends SelectableListMenu {
         }
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
+        avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
     }
 
     @Override
@@ -147,6 +148,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private void rebuildAppearance() {
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
+        avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
         Sprite.resetCallCount();
     }
 
@@ -168,8 +170,11 @@ public class CharacterCreationView extends SelectableListMenu {
                 BorderFrame.drawCentered(model.getScreenHandler(), title, y++, MyColors.WHITE, MyColors.BLUE);
                 lastAppearance.drawYourself(model.getScreenHandler(), x+COLUMN_SKIP+17, y+2);
                 model.getScreenHandler().register(lastCharacter.getAvatarSprite().getName(),
-                        new Point(x+COLUMN_SKIP+26, y+3),
+                        new Point(x+COLUMN_SKIP+24, y+3),
                         lastCharacter.getAvatarSprite());
+                model.getScreenHandler().register(avatarBack.getName(),
+                        new Point(x+COLUMN_SKIP+28, y+3),
+                        avatarBack);
                 y++;
                 String[] labels = new String[]{"First Name", "", "Last Name", "", "", "",
                         "Gender", "", "Race", "", "", "",

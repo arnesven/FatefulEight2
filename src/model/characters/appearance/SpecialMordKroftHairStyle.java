@@ -16,4 +16,14 @@ public class SpecialMordKroftHairStyle extends MordKroftHairStyle {
     public int getBackHairOnly() {
         return 0x07;
     }
+
+    @Override
+    public int getFullBackHair() {
+        return 0x33;
+    }
+
+    @Override
+    public int getHalfBackHair() {
+        return 0x34;
+    }
 }

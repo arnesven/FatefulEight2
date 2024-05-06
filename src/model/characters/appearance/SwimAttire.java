@@ -47,9 +47,9 @@ public class SwimAttire implements PortraitClothing {
     @Override
     public AvatarSprite makeAvatar(Race race, CharacterAppearance appearance) {
         if (!appearance.getGender()) {
-            return new AvatarSprite(race, 0x180, swimsuitColor, appearance.getNormalHair());
+            return new AvatarSprite(race, 0x180, swimsuitColor, appearance.getNormalHair(), appearance.getFullBackHair());
         }
-        return new AvatarSprite(race, 0x188, swimsuitColor, appearance.getNormalHair());
+        return new AvatarSprite(race, 0x188, swimsuitColor, appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     public static MyColors randomSwimSuitColor() {

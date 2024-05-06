@@ -41,7 +41,7 @@ public class BlackKnightClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x80, MyColors.DARK_GRAY, CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0x80, MyColors.DARK_GRAY, CharacterAppearance.noHair(), CharacterAppearance.noHair());
     }
 
     @Override

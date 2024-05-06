@@ -214,7 +214,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         MyColors hairColor = MyRandom.sample(List.of(MyColors.DARK_GRAY, MyColors.DARK_RED, MyColors.RED,
                 MyColors.ORANGE, MyColors.GOLD, MyColors.LIGHT_YELLOW));
         HairStyle hair = MyRandom.sample(List.of(
-                new HairStyle3x2(0x164, true, true, true, true, 0x09, 0x07, "Combed/Long"),
+                new HairStyle3x2(0x164, true, true, true, true, 0x09, 0x07, 0x33, 0x34, "Combed/Long"),
                 new FemaleLongHairStyle(0x9, 0x03, "Long #2"),
                 new ShortFemaleHair(0x164, 0x13, "Short #2")
         ));
