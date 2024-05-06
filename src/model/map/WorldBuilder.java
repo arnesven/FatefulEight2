@@ -40,11 +40,11 @@ public class WorldBuilder {
             "ssttttttWWuTuWWWTTTtttssssttTTtttTTTttttttstttttttttt",
             "ssssstttttTuWuTuTuttttsssttttTtTuTTTTTtttsstWuWuuWWuu",
             "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWXXWWW",
-            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtssXXXXxxXxXXX",
+            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtsstXXXxxXxXXX",
             "stppptssppppbbspbbhpspsssppwbwhfpMhwbfssssXXXXXXXXXXX",
             "pppppsspppppssssspppsssssssphwhpMMhhbsssssssXXXXXXxXX",
             "ssppppsssppsshpsssssssppssshhhphhMhwwwwbssssXXXXxxxXX",
-            "ssspppsssssshhhhhsssssssssfspwwpphpwwwMMXXXXXXXXXXXXX",
+            "ssspppsssssshhhhhsssssssssfspwwpphpwwwMMXXXXdXXXXXXXX",
             "spppsspppsphhphhhppfhpwswfwppMMwMffwwhpXXXXxxXXbXpxxX",
             "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMXddXXXXxXXdDDd",
             "sspppffppssspppphpfwwhpppwpphpppMMdwddddXdDDDXXMXXXDd",
@@ -61,10 +61,10 @@ public class WorldBuilder {
             "ssssssssssssssssssssssssssssssMhMwwwwswwsssssssssssss",
             "dssssssssssdddssssssssssssssMMhMhwhwhwwwsssssssssssss",
             "jdsssddddddjjjdddssssddssssMhhwwhjjwhwwwdddssssssssdd",
-            "jjdddjjjjjjjjjjjjdpddjjJJjjJJjjjjwjjwjjjjjjddddsdddjj",
+            "jjdddjjjjjjjjjpjjdpddjjJJjjJJjjjjwjjwjjjjjjddddsdddjj",
             "jjjjjjjjjjjjjjjjbjjbbJJJJJjjjbjjjjjwjjjjjjjddddsdjjjj",
             "jjjjjjjjjjjjjbjbjjjjjjjbJjjbjjjjbjjjjjjjjjdsssssdjjjj",
-            "jjjjjjjjjjjjjjdddjjbbjjjbJJjjbbjjjjbjjjjjdsssssssdjjj",
+            "jjjjjjjjjjjjjjdddjjbbjjjbJJjpbbjjjjbjjjjjdsssssssdjjj",
             "jjjjjjjjjjjjjdssbpjjjbbbbbbbJjjjjbjjjjjjjjjdssssssdjj",
     };
 
@@ -124,6 +124,8 @@ public class WorldBuilder {
 
         addNorthernContents(contents);
         addEvilTower(contents, getFortressPosition(EXPAND_NORTH), EXPAND_NORTH);
+        addTomb(contents, 19, 5, "Haarfagre", 0, 0);
+        addTomb(contents, 35, 8, "Vorhundren", 0, 0);
 
         addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);
         addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
@@ -140,6 +142,9 @@ public class WorldBuilder {
 
         addTown(contents, 32, 12, new UrnTownTown(), NORTH | SOUTH, 0);
         addRoadsAndRivers(contents,36, 12, SOUTH_WEST | NORTH, 0);
+        addTomb(contents, 42, 12, "Kzinric", 0, SOUTH | SOUTH_EAST | NORTH_EAST | NORTH);
+        addRoadsAndRivers(contents, 43, 12, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 43, 13, 0, NORTH_WEST);
 
         addCastle(contents, 15, 13, new BogdownCastle(), 0, 0);
         addRuins(contents, 19, 13, "Urh", 0, 0);
@@ -152,7 +157,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,27, 14, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,28, 14, NORTH_WEST | SOUTH, 0);
 
-
+        addTomb(contents, 3, 15, "King Miron", 0, 0);
         addTown(contents, 14, 15, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
         addMonastery(contents);
         addRoadsAndRivers(contents,28, 15, SOUTH | NORTH, 0);
@@ -161,6 +166,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 16, 16, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 28, 16, SOUTH | NORTH, SOUTH_WEST | SOUTH | NORTH_WEST);
         addTown(contents, 34, 16, new AshtonshireTown(), 0, 0);
+        addTomb(contents, 44, 16, "Shakma", 0, 0);
 
         addRoadsAndRivers(contents, 14, 17, 0, SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 15, 17, 0, SOUTH);
@@ -174,6 +180,7 @@ public class WorldBuilder {
         addTemple(contents, 38, 17, "the Peaks");
         addEvilTower(contents, getFortressPosition(EXPAND_EAST), EXPAND_EAST);
 
+        addRoadsAndRivers(contents, 13, 18, 0, SOUTH_EAST);
         addRoadsAndRivers(contents, 14, 18, 0, NORTH_WEST | NORTH);
         addRoadsAndRivers(contents, 15, 18, 0, NORTH_WEST | NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 16, 18, 0, NORTH | NORTH_EAST);
@@ -233,6 +240,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 22, SOUTH_EAST | NORTH_WEST, 0);
         addRoadsAndRivers(contents, 38, 22, SOUTH | NORTH_WEST, 0);
 
+        addTomb(contents, 4, 23, "Catriona", 0, 0);
         addRoadsAndRivers(contents, 17, 23, 0, NORTH_WEST);
         addRoadsAndRivers(contents, 18, 23, NORTH | SOUTH_WEST, 0);
         addRoadsAndRivers(contents, 21, 23, 0, NORTH | NORTH_EAST);
@@ -275,6 +283,9 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 26, NORTH_WEST | NORTH_EAST, 0);
         addEvilTower(contents, getFortressPosition(EXPAND_SOUTH), EXPAND_SOUTH);
 
+        addTomb(contents, 28, 36, "Uzoctl", 0, 0);
+        addTomb(contents, 14, 33, "Xalardium", SOUTH_EAST, 0);
+
         addEasternContents(contents);
         addSouthernContents(contents);
 
@@ -286,7 +297,7 @@ public class WorldBuilder {
             case EXPAND_NORTH:
                 return new Point(34, 1);
             case EXPAND_EAST:
-                new Point(49, 17);
+                return new Point(49, 17);
             case EXPAND_SOUTH:
                 return new Point(17, 37);
             case EXPAND_WEST:
@@ -425,6 +436,10 @@ public class WorldBuilder {
 
     private static void addRuins(Map<Point, HexContents> contents, int x, int y, String ruinsName, int roads, int rivers) {
         contents.put(new Point(x, y), new HexContents(new RuinsLocation(ruinsName), roads, rivers));
+    }
+
+    private static void addTomb(Map<Point, HexContents> contents, int x, int y, String tombName, int roads, int rivers) {
+        contents.put(new Point(x, y), new HexContents(new TombLocation(tombName), roads, rivers));
     }
 
     private static void addEvilTower(Map<Point, HexContents> contents, Point point, int expandDirection) {

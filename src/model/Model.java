@@ -403,6 +403,10 @@ public class Model {
         return gameData.dungeons.containsKey(ruinsName);
     }
 
+    public void visitDungeon(String ruinsName, RuinsDungeon dungeon) {
+        gameData.dungeons.put(ruinsName, dungeon);
+    }
+
     public void showHallOfFame() {
         gameView = new HallOfFameView(this);
     }

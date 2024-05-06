@@ -485,7 +485,7 @@ public class FullPartySelectView extends SelectableListMenu {
         }
         model.getParty().addToReputation(startingRep - model.getParty().getReputation());
         model.getParty().addToNotoriety(startingNotoriety - model.getParty().getNotoriety());
-        model.getWorld().setCurrentState(expandDirection);
+        model.setWorldState(expandDirection);
         model.setDay(startingDay);
     }
 
