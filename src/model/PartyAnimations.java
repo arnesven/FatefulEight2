@@ -33,7 +33,7 @@ public class PartyAnimations implements Serializable {
             }
         } else {
             if (!speakingAnimations.containsKey(app) && MyRandom.randInt(CHANGE_LOOK_LONG_DIRECTION) == 0) {
-                lookers.put(app, false);
+                lookers.put(app, MyRandom.flipCoin());
             }
         }
 
