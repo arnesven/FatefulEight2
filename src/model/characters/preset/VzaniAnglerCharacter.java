@@ -8,7 +8,7 @@ import static model.races.Race.HALFLING;
 
 public class VzaniAnglerCharacter extends model.characters.GameCharacter {
     public VzaniAnglerCharacter() {
-        super("Vzani", "Angler", HALFLING, BRD,
+        super("Vzani", "Angler", HALFLING, PRI,
                 new VzaniAngler(), new CharacterClass[]{WIZ, MAG, PRI, THF});
         addToPersonality(PersonalityTrait.stingy);
         addToPersonality(PersonalityTrait.calm);

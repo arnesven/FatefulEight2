@@ -505,6 +505,7 @@ public class GameCharacter extends Combatant {
             charClass.takeClothesOff(appearance);
         }
         this.charClass = newClass;
+        this.appearance.reset(); // Fix hair sprites.
         this.appearance.setClass(charClass);
         this.deadAppearance.setClass(charClass);
         this.avatarSprite = makeAvatarSprite();
