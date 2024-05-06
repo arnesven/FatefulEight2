@@ -15,7 +15,7 @@ import java.util.function.Predicate;
 
 public class PersonalityEvent extends DailyEventState {
     private static final String KEY_PREFIX = "PersonalityEvent-";
-    private PersonalityTraitEvent innerEvent;
+    private PersonalityTraitEvent innerEvent = null;
 
     public PersonalityEvent(Model model) {
         super(model);
@@ -24,14 +24,17 @@ public class PersonalityEvent extends DailyEventState {
                 gc -> !gc.isLeader() && !alreadyDonePersonalityEventFor(model, gc));
         Collections.shuffle(candidates);
         System.out.println("Candidates: " + candidates.size());
-        while (!candidates.isEmpty()) {
+        while (!candidates.isEmpty() && innerEvent == null) {
             GameCharacter gc = candidates.remove(0);
             for (PersonalityTrait pt : PersonalityTrait.values()) {
                 if (gc.hasPersonality(pt) && !alreadyUsedTrait(model, pt)) {
+                    System.out.println(gc.getName() + " has trait " + pt.toString() + " and it is unused.");
                     PersonalityTraitEvent event = pt.makeEvent(model, gc);
                     if (event != null && event.isApplicable(model)) {
                         innerEvent = event;
                         break;
+                    } else {
+                        System.out.println("No event for this trait or event not applicable.");
                     }
                 }
             }

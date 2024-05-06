@@ -20,7 +20,7 @@ public class AvatarSprite extends LoopingSprite {
     private int delay = 16;
 
     public AvatarSprite(Race race, int num, MyColors color2, MyColors color4, Sprite hairSprite, Sprite hairFromBack) {
-        super("partymarker", "avatars.png", num+(race.isShort()?4:0), 32, 32, List.of(hairSprite));
+        super("avatar"+num+race.getName(), "avatars.png", num+(race.isShort()?4:0), 32, 32, List.of(hairSprite));
         this.race = race;
         this.num = num;
         this.color2 = color2;

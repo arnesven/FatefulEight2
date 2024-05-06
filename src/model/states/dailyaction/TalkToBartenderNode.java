@@ -102,7 +102,9 @@ public class TalkToBartenderNode extends DailyActionNode {
         }
 
         private void askForWork(Model model) {
-            leaderSay("Uhm, are there any chores you need done around here?");
+            leaderSay(MyRandom.sample(List.of("Uhm, are there any chores you need done around here?",
+                    "Got any work for me?", "I need work, can I do something for you?",
+                    "Hey, can you give me a job?")));
             if (model.getSettings().getMiscFlags().containsKey("innworkdone") &&
                     model.getSettings().getMiscFlags().get("innworkdone")) {
                 printQuote("Bartender", "Sorry, not at the moment.");

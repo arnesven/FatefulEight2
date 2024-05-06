@@ -10,7 +10,7 @@ public class TutorialGoingOnQuests extends SubChapterHelpDialog {
             "Quest can either be successful or failed. A quest is successful if the party can " +
             "successfully perform all the tasks required to reach the green star node. A quest " +
             "is failed if the party reaches the red X node.\n\n" +
-            "Normally, you cannot flee from combat during quests, so be very careful.\n\n" +
+            "You cannot always flee from combat during quests, so be very careful.\n\n" +
             "When a quest is successfully completed rewards usually include increased " +
             "party reputation, gold and or experience points for the party members.";
 

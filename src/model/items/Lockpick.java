@@ -10,7 +10,7 @@ import view.sprites.Sprite;
 public class Lockpick extends Item {
     public static final Sprite SPRITE = new ItemSprite(11, 11, MyColors.LIGHT_GRAY, MyColors.BEIGE);
     public static final String DETAIL_STRING = ", Greatly reduces the difficulty of picking locks.";
-    private static final int SECURITY_DIFFICULTY_REDUCTION = 4;
+    public static final int SECURITY_DIFFICULTY_REDUCTION = 4;
     public static final int BREAK_CHANCE_SUCCESS = 10;
     public static final int BREAK_CHANCE_FAILURE = 70;
 

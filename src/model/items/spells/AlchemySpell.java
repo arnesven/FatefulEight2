@@ -51,12 +51,14 @@ public class AlchemySpell extends ImmediateSpell {
         for (Potion p : model.getParty().getInventory().getPotions()) {
             int cost = p.getCost() / 2;
             if (cost <= model.getParty().getInventory().getIngredients() || distill) {
-                setOfPotions.add(p.getName() + " (" + p.getCost() / 2 + ")");
+                setOfPotions.add(nameAndStandardBrewingCost(p));
             }
         }
         if (!distill) {
             for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
-                setOfPotions.add(recipe.getBrewable().getName() + " (" + recipe.getBrewable().getCost() / 3 + ")");
+                Potion p = recipe.getBrewable();
+                setOfPotions.remove(nameAndStandardBrewingCost(p));
+                setOfPotions.add(p.getName() + " (" + recipe.getBrewable().getCost() / 3 + ")");
             }
         }
         if (setOfPotions.isEmpty()) {
@@ -94,6 +96,10 @@ public class AlchemySpell extends ImmediateSpell {
             return false;
         }
         return true;
+    }
+
+    private String nameAndStandardBrewingCost(Potion p) {
+        return p.getName() + " (" + p.getCost() / 2 + ")";
     }
 
     @Override

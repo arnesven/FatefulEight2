@@ -53,11 +53,11 @@ public class TavernSubView extends DailyActionSubView {
         super(state, matrix);
         this.inTown = inTown;
         colorGuys = new Sprite32x32[]{
-                new Sprite32x32("colorguy1", "avatars.png", 0x87,
+                new Sprite32x32("colorguy1", "avatars.png", 0x108,
                         MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor()),
-                new Sprite32x32("colorguy2", "avatars.png", 0x87,
+                new Sprite32x32("colorguy2", "avatars.png", 0x108,
                         MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor()),
-                new Sprite32x32("colorguy3", "avatars.png", 0x87,
+                new Sprite32x32("colorguy3", "avatars.png", 0x108,
                         MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor())
         };
         do {
