@@ -28,11 +28,11 @@ public abstract class GameState {
     public static final List<String> COMMON_GIRL_FIRST_NAMES = List.of("Bella", "Steffi", "Ronya", "Felixa",
             "Ipona", "Esmeralda", "Gemma", "Petra", "Sinorin", "Adalia", "Cormona", "Sheila", "Dora",
             "Visenna", "Lara", "Gueniviere", "Cally", "Tessa", "Mandy", "Bianca", "Miranda",
-            "Helga", "Goldy", "Emma", "Carly", "Jessica");
+            "Helga", "Goldy", "Emma", "Carly", "Jessica", "Mary", "Diana");
     public static final List<String> COMMON_BOY_FIRST_NAMES = List.of("Golbert", "Voldo", "Maxim", "Nestor",
             "Karg", "Tobert", "Roger", "Sammy", "Oleg", "Trevor", "Quellic", "Ben", "Ivan", "Feodor", "Stig",
             "Ralbert", "Rastigan", "Enoch", "Roy", "Georgi", "Leonard", "Albert", "Stanley", "Johnny", "Horace",
-            "Derric", "Felix", "Igor", "Marcus", "Stig", "Hubert");
+            "Derric", "Felix", "Igor", "Marcus", "Stig", "Hubert", "Eskil", "Ivan", "Chen");
     public static final List<String> COMMON_LAST_NAMES = List.of("Wildfeather", "Cleareyes", "Al-Zaman",
             "Gerson", "Essex", "Overhill", "Sloch", "Petty", "Inderfelt", "Sharptooth", "Zeltic", "Hightower",
             "Edelweiss", "Eastwood", "Hardwater", "Azure", "Stormfist", "Samuelesen", "Haldic", "Brownwood",
