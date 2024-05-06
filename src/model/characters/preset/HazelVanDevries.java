@@ -1,9 +1,6 @@
 package model.characters.preset;
 
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.CharacterEyes;
-import model.characters.appearance.HairStyle3x2;
+import model.characters.appearance.*;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
@@ -12,7 +9,7 @@ public class HazelVanDevries extends AdvancedAppearance {
 
     public HazelVanDevries() {
         super(Race.SOUTHERN_HUMAN, true, MyColors.DARK_BROWN,
-                3, 2, new CharacterEyes(0xA, 0xB),
+                3, 2, new SmallEyesWithBangsRight(),
                 new HairStyle3x2(9, true, 0x10, 0x32, 0x0, "Hazel"), null);
         setMascaraColor(MyColors.BLACK);
     }

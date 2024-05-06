@@ -4,6 +4,7 @@ import model.races.Race;
 import model.races.Shoulders;
 import model.races.SkeletonRace;
 import view.MyColors;
+import view.ScreenHandler;
 
 public class SkeletonAppearance extends AdvancedAppearance {
 
@@ -59,4 +60,10 @@ public class SkeletonAppearance extends AdvancedAppearance {
 
     @Override
     public void applyDetail(Race race, boolean coversEars) { }
+
+    @Override
+    public void drawBlink(ScreenHandler screenHandler, int x, int y) { }
+
+    @Override
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
 }

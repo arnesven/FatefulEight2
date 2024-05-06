@@ -24,6 +24,8 @@ public abstract class CharacterAppearance implements Serializable {
             MyColors.BLACK, MyColors.GOLD, MyColors.CYAN);
     private Race race;
     private MyPair<Sprite8x8, Sprite8x8> blinkSprites;
+    private MyPair<Sprite8x8, Sprite8x8> lookLeft;
+    private MyPair<Sprite8x8, Sprite8x8> lookRight;
     private MyColors hairColor;
     private MyColors mascaraColor;
     private MyColors lipColor;
@@ -417,11 +419,25 @@ public abstract class CharacterAppearance implements Serializable {
         return showFacialHair;
     }
 
-    private void setBlinkSprites() {
+    protected void setBlinkSprites() {
         this.blinkSprites = new MyPair<>(new Sprite8x8("blinkleft", "mouth.png", 0x20,
                                         MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE),
                                         new Sprite8x8("blinkright", "mouth.png", 0x21,
                                                 MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE));
+        int lookLeft = 0x22 + getLookIndex() * 4;
+        int lookRight = 0x23 + getLookIndex() * 4;
+        this.lookLeft = new MyPair<>(new Sprite8x8("lookleftleft", "mouth.png", lookLeft,
+                MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE),
+                new Sprite8x8("lookleftright", "mouth.png", lookRight,
+                        MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE));
+        this.lookRight = new MyPair<>(new Sprite8x8("lookrightleft", "mouth.png", lookLeft+2,
+                MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE),
+                new Sprite8x8("lookrightright", "mouth.png", lookRight+2,
+                        MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE));
+    }
+
+    protected int getLookIndex() {
+        return 0;
     }
 
     protected Sprite getBlinkLeft() {
@@ -439,5 +455,15 @@ public abstract class CharacterAppearance implements Serializable {
 
     public void setRace(Race race) {
         this.race = race;
+    }
+
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) {
+        if (left) {
+            screenHandler.register("lookLeftleft", new Point(x - 1, y), lookLeft.first);
+            screenHandler.register("lookLeftRight", new Point(x + 1, y), lookLeft.second);
+        } else {
+            screenHandler.register("lookRightleft", new Point(x - 1, y), lookRight.first);
+            screenHandler.register("lookRightRight", new Point(x + 1, y), lookRight.second);
+        }
     }
 }

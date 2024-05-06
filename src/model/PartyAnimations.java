@@ -1,6 +1,5 @@
 package model;
 
-import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import util.MyRandom;
 import view.ScreenHandler;
@@ -9,18 +8,41 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PartyAnimations implements Serializable {
     private static final int BLINK_RATE = 350;
-    private final List<SpeakingAnimation> speakingAnimations = new ArrayList<>();
-    private Map<CharacterAppearance, Integer> blinking = new HashMap<>();
+    private static final int CHANGE_LOOK_LONG_DIRECTION = 800;
+    private static final int CHANGE_LOOK_SHORT_DURATION = 400;
+    private final Map<CharacterAppearance, SpeakingAnimation> speakingAnimations = new HashMap<>();
+    private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
+    private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
 
     public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
         if (!app.showFacialHair()) {
             return;
         }
+        handleLook(screenHandler, app, p);
+        handleBlink(screenHandler, app, p);
+    }
+
+    private void handleLook(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
+        if (lookers.containsKey(app)) {
+            if (MyRandom.randInt(CHANGE_LOOK_SHORT_DURATION) == 0) {
+                lookers.remove(app);
+            }
+        } else {
+            if (!speakingAnimations.containsKey(app) && MyRandom.randInt(CHANGE_LOOK_LONG_DIRECTION) == 0) {
+                lookers.put(app, false);
+            }
+        }
+
+        if (lookers.containsKey(app)) {
+            app.drawDrawLook(screenHandler, lookers.get(app), p.x+3, p.y+6);
+        }
+    }
+
+    private void handleBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
         if (MyRandom.randInt(BLINK_RATE) == 0 || blinking.containsKey(app)) {
             app.drawBlink(screenHandler, p.x+3, p.y+6);
             if (blinking.containsKey(app)) {
@@ -38,20 +60,22 @@ public class PartyAnimations implements Serializable {
     }
 
     public void drawSpeakAnimations(ScreenHandler screenHandler) {
-        for (SpeakingAnimation speakAni : new ArrayList<>(speakingAnimations)) {
+        for (CharacterAppearance app : new ArrayList<>(speakingAnimations.keySet())) {
+            SpeakingAnimation speakAni = speakingAnimations.get(app);
             speakAni.drawYourself(screenHandler);
             if (speakAni.isDone()) {
                 speakAni.unregister();
-                speakingAnimations.remove(speakAni);
+                speakingAnimations.remove(app);
             }
         }
     }
 
     public void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance) {
+        lookers.remove(appearance);
         Point p = new Point(pOrig.x, pOrig.y);
         p.x += 3;
         p.y += 2;
-        speakingAnimations.removeIf((SpeakingAnimation sp) -> sp.isInLocation(p));
-        speakingAnimations.add(new SpeakingAnimation(calloutNum, p, length, appearance));
+        speakingAnimations.remove(appearance);
+        speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance));
     }
 }

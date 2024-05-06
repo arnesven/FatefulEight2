@@ -1,6 +1,5 @@
 package model.characters.appearance;
 
-import model.classes.CharacterClass;
 import model.races.Race;
 import view.MyColors;
 import view.ScreenHandler;
@@ -35,6 +34,7 @@ public class AdvancedAppearance extends CharacterAppearance {
         this.hairStyle = hair;
         this.beard = beard;
         makeAvatarHairSprites(hair, race);
+        setBlinkSprites();
     }
 
     private void makeAvatarHairSprites(HairStyle hair, Race race) {
@@ -238,6 +238,14 @@ public class AdvancedAppearance extends CharacterAppearance {
     @Override
     public Sprite getFacialOnly() {
         return avatarFacial;
+    }
+
+    @Override
+    protected int getLookIndex() {
+        if (eyes != null) {
+            return eyes.getLookIndex();
+        }
+        return 0;
     }
 
     @Override

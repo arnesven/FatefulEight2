@@ -1,15 +1,12 @@
 package model.characters.preset;
 
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.CharacterEyes;
-import model.characters.appearance.HairStyle3x2;
+import model.characters.appearance.*;
 import model.races.Race;
 import view.MyColors;
 
 public class GorgaBonecrag extends AdvancedAppearance {
     public GorgaBonecrag() {
-        super(Race.HALF_ORC, true, MyColors.DARK_GRAY, 7, 8, new CharacterEyes(1),
+        super(Race.HALF_ORC, true, MyColors.DARK_GRAY, 7, 8, new NormalSmallEyes(),
                 new HairStyle3x2(0x9D, false, 0x18, 0x18, 0x0, "Gorga"), null);
         setMascaraColor(MyColors.CYAN);
     }

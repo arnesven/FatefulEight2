@@ -219,7 +219,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
                 new ShortFemaleHair(0x164, 0x13, "Short #2")
         ));
         AdvancedAppearance app = new AdvancedAppearance(race, true, hairColor,
-                1, 0xB, new CharacterEyes(2, 3),
+                1, 0xB, new SmallEyesWithBangs(),
                 hair, new Beard(0xB, 0x00, false));
         app.setMascaraColor(MyRandom.sample(List.of(MyColors.BLUE, MyColors.LIGHT_RED, MyColors.DARK_GREEN)));
         app.setLipColor(MyRandom.sample(List.of(MyColors.PURPLE, MyColors.RED, MyColors.DARK_RED, MyColors.LIGHT_RED)));
@@ -244,7 +244,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
                 new Beard(0xE, 0x00, false)
         ));
         AdvancedAppearance app = new AdvancedAppearance(race, false, hairColor,
-                0, 0xE, new CharacterEyes(1),
+                0, 0xE, new NormalSmallEyes(),
                 hair, beard);
         app.setClass(Classes.BEAUTY);
         return app;

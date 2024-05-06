@@ -3,6 +3,7 @@ package model.characters.special;
 import model.characters.appearance.*;
 import model.races.Race;
 import view.MyColors;
+import view.ScreenHandler;
 import view.party.CharacterCreationView;
 
 public class WitchKingAppearance extends AdvancedAppearance {
@@ -19,7 +20,10 @@ public class WitchKingAppearance extends AdvancedAppearance {
 
     private static class WitchKingEyes extends CharacterEyes {
         public WitchKingEyes() {
-            super(-0x20 + 0x1F);
+            super(-0x20 + 0x1F, "", 0);
         }
     }
+
+    @Override
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
 }

@@ -9,7 +9,7 @@ import view.sprites.PortraitSprite;
 public class MialeeSeverin extends AdvancedAppearance {
     public MialeeSeverin() {
         super(Race.DARK_ELF, true, MyColors.BROWN,
-                2, 3, new CharacterEyes(2, 3),
+                2, 3, new SmallEyesWithBangs(),
                 new ExplicitHairStyle(true, 0x04, 0xEF, 0x14, 0x05, 0xFC, 0x15, 0x10, 0x00, 0x32, 0x0,"Mialee"),
                 new Beard(2, 0x00));
         setLipColor(MyColors.DARK_BLUE);

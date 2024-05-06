@@ -109,7 +109,7 @@ public class Inventory implements Serializable {
 
     public List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
-        for (Collection<? extends Item> itemSet : getItemSets()) {
+        for (Collection<? extends Item> itemSet : new HashSet<>(getItemSets())) {
             items.addAll(itemSet);
         }
         return items;

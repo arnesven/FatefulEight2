@@ -57,4 +57,10 @@ public class GoblinCharacter extends CharacterAppearance {
             setColor4(MyColors.TAN);
         }
     }
+
+    @Override
+    public void drawBlink(ScreenHandler screenHandler, int x, int y) { }
+
+    @Override
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
 }
