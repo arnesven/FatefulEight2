@@ -1,5 +1,6 @@
 package model.map;
 
+import model.Model;
 import model.map.objects.MapObject;
 import util.MyRandom;
 import view.ScreenHandler;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 public class CaveSystem extends World {
+    private static final String VISITED_KEY = "caveHexVisited";
     private static List<Integer> tunnels =
             List.of(Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
                     Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST);
@@ -73,21 +75,27 @@ public class CaveSystem extends World {
     }
 
     @Override
-    protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
+    protected void drawHex(Model model, int x, int y, int screenX, int screenY,
                            Point partyPosition, int mapYRange, int yOffset, int flag, List<MapObject> mapObjects) {
         boolean isPartyPos = (x == partyPosition.x && y == partyPosition.y);
         List<Point> list = Direction.getDxDyDirections(partyPosition);
         Point diff = new Point(x - partyPosition.x, y - partyPosition.y);
-        boolean isAdjacent = list.contains(diff);
+        boolean isAdjacent = list.contains(diff) && model.isInCaveSystem();
+        boolean hasTunnel = isAdjacent &&
+                getHex(partyPosition).getRoadInDirection(Direction.getDirectionForDxDy(partyPosition, diff));
 
-        if (isAdjacent) {
-            if (!getHex(partyPosition).getRoadInDirection(Direction.getDirectionForDxDy(partyPosition, diff))) {
-                return;
-            }
-        } else if (!isPartyPos) {
-            return;
+        if (isPartyPos || previouslyVisited(model, x, y) || hasTunnel) {
+            super.drawHex(model, x, y, screenX, screenY, partyPosition,
+                    mapYRange, yOffset, HexLocation.FLAG_NONE, mapObjects);
         }
-        super.drawHex(screenHandler, x, y, screenX, screenY, partyPosition,
-                mapYRange, yOffset, HexLocation.FLAG_NONE, mapObjects);
+    }
+
+    private boolean previouslyVisited(Model model, int x, int y) {
+        return model.getSettings().getMiscFlags().containsKey(VISITED_KEY + x + "-" + y);
+    }
+
+
+    public static void visitPosition(Model model, Point position) {
+        model.getSettings().getMiscFlags().put(VISITED_KEY + position.x + "-" + position.y, true);
     }
 }

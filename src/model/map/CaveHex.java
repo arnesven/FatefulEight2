@@ -58,6 +58,12 @@ public class CaveHex extends WorldHex {
     }
 
     @Override
+    public void travelTo(Model model) {
+        super.travelTo(model);
+        CaveSystem.visitPosition(model, model.getParty().getPosition());
+    }
+
+    @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         List<DailyEventState> events = new ArrayList<>(List.of(
                 new BatsEvent(model),

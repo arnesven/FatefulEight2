@@ -77,7 +77,7 @@ public class World implements Serializable {
                 int y_extra = 2 * (1 - (x % 2));
                 int screenY = yOffset - 2 + 4 * row + y_extra;
 
-                drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, getFlagFor(model, hexes[x][y]),
+                drawHex(model, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, getFlagFor(model, hexes[x][y]),
                         model.getMapObjects(new Point(x, y)));
                 if (x == partyPosition.x && y == partyPosition.y &&
                         model.getParty().getLeader() != null && avatarEnabled) {
@@ -109,8 +109,9 @@ public class World implements Serializable {
         return HexLocation.FLAG_NONE;
     }
 
-    protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
+    protected void drawHex(Model model, int x, int y, int screenX, int screenY,
                            Point partyPosition, int mapYRange, int yOffset, int flag, List<MapObject> mapObjects) {
+        ScreenHandler screenHandler = model.getScreenHandler();
         if (hexes[x][y] != null) {
             int mask = 0x0000000F - currentState;
 

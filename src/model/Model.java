@@ -401,6 +401,7 @@ public class Model {
         if (markOnMap) {
             addUnderworldEntranceAtCurrentPosition();
         }
+        CaveSystem.visitPosition(this, getParty().getPosition());
     }
 
     public void exitCaveSystem(boolean markOnMap) {
