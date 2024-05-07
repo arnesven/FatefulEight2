@@ -2,6 +2,8 @@ package view;
 
 import control.FatefulEight;
 import model.Model;
+import model.map.CaveSystem;
+import model.map.World;
 import view.help.SpecificTerrainHelpDialog;
 import view.widget.FullMapTopText;
 import view.widget.TopText;
@@ -17,6 +19,7 @@ public class FullMapView extends GameView {
     private Point cursorPos = null;
     private final GameView previousView;
     private TopText topText = new FullMapTopText();
+    private World worldToDraw;
 
     public FullMapView(GameView previous, Point startCursorPos) {
         super(true);
@@ -32,6 +35,11 @@ public class FullMapView extends GameView {
 
     @Override
     public void transitionedTo(Model model) {
+        if (model.isInCaveSystem()) {
+            worldToDraw = model.getCaveSystem();
+        } else {
+            worldToDraw = model.getWorld();
+        }
         model.getScreenHandler().clearAll();
         ensureCursorPosSet(model);
         update(model);
@@ -61,10 +69,15 @@ public class FullMapView extends GameView {
         BorderFrame.drawFrameHorizontalLine(screenHandler, 48);
         topText.drawYourself(model);
         screenHandler.clearForeground();
-        model.getWorld().drawYourself(model, cursorPos, model.getParty().getPosition(),
+        worldToDraw.drawYourself(model, cursorPos, model.getParty().getPosition(),
                 MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, null, true);
         screenHandler.clearSpace(0, 80,49, 50);
-        BorderFrame.drawString(screenHandler, model.getHexInfo(cursorPos), 0, 49, MyColors.WHITE);
+        if (worldToDraw == model.getWorld()) {
+            BorderFrame.drawString(screenHandler, model.getHexInfo(cursorPos), 0, 49, MyColors.WHITE);
+        } else {
+            BorderFrame.drawString(screenHandler, "(" + cursorPos.x + "," + cursorPos.y + ") ",
+                    0, 49, MyColors.WHITE);
+        }
     }
 
     @Override
@@ -79,7 +92,14 @@ public class FullMapView extends GameView {
                 setTimeToTransition(true);
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
                 model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(),
-                        model.getWorld().getHex(cursorPos), model.getMapObjects(cursorPos), true));
+                        worldToDraw.getHex(cursorPos), model.getMapObjects(cursorPos), true));
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F4) {
+                if (worldToDraw == model.getWorld()) {
+                    worldToDraw = model.getCaveSystem();
+                } else {
+                    worldToDraw = model.getWorld();
+                }
+                madeChanges();
             }
         }
     }
