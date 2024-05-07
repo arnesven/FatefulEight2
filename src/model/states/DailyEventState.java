@@ -200,7 +200,7 @@ public abstract class DailyEventState extends GameState {
         for (int i = 1; i < path.size(); ++i) {
             Point destination = path.get(i);
             if (i == path.size()-1) {
-                model.exitCaveSystem();
+                model.exitCaveSystem(false);
             }
             mapSubView.addMovementAnimation(
                     model.getParty().getLeader().getAvatarSprite(),

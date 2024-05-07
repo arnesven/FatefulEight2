@@ -10,6 +10,6 @@ public class EnterCavesAction extends DailyAction {
 
     @Override
     public void runPreHook(Model model) {
-        model.enterCaveSystem();
+        model.enterCaveSystem(false);
     }
 }

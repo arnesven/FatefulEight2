@@ -16,7 +16,7 @@ public class ExitCaveEvent extends DailyEventState {
                 "Daylight! We can get out here!", "An exit, finally.", "Looks like there's an exit here."));
         print("Exit the caves? (Y/N) ");
         if (yesNoInput()) {
-            model.exitCaveSystem();
+            model.exitCaveSystem(true);
         }
     }
 }

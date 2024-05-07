@@ -1,5 +1,6 @@
 package model.map;
 
+import model.map.objects.MapObject;
 import util.MyRandom;
 import view.ScreenHandler;
 
@@ -73,7 +74,7 @@ public class CaveSystem extends World {
 
     @Override
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
-                           Point partyPosition, int mapYRange, int yOffset, int flag) {
+                           Point partyPosition, int mapYRange, int yOffset, int flag, List<MapObject> mapObjects) {
         boolean isPartyPos = (x == partyPosition.x && y == partyPosition.y);
         List<Point> list = Direction.getDxDyDirections(partyPosition);
         Point diff = new Point(x - partyPosition.x, y - partyPosition.y);
@@ -86,6 +87,7 @@ public class CaveSystem extends World {
         } else if (!isPartyPos) {
             return;
         }
-        super.drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, HexLocation.FLAG_NONE);
+        super.drawHex(screenHandler, x, y, screenX, screenY, partyPosition,
+                mapYRange, yOffset, HexLocation.FLAG_NONE, mapObjects);
     }
 }

@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.map.objects.MapObject;
 import model.states.dailyaction.FlagPoleNode;
 import util.MyLists;
 import util.MyPair;
@@ -76,8 +77,8 @@ public class World implements Serializable {
                 int y_extra = 2 * (1 - (x % 2));
                 int screenY = yOffset - 2 + 4 * row + y_extra;
 
-                drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, getFlagFor(model, hexes[x][y]));
-
+                drawHex(screenHandler, x, y, screenX, screenY, partyPosition, mapYRange, yOffset, getFlagFor(model, hexes[x][y]),
+                        model.getMapObjects(new Point(x, y)));
                 if (x == partyPosition.x && y == partyPosition.y &&
                         model.getParty().getLeader() != null && avatarEnabled) {
                     Sprite avatar = model.getParty().getLeader().getAvatarSprite();
@@ -109,17 +110,20 @@ public class World implements Serializable {
     }
 
     protected void drawHex(ScreenHandler screenHandler, int x, int y, int screenX, int screenY,
-                           Point partyPosition, int mapYRange, int yOffset, int flag) {
+                           Point partyPosition, int mapYRange, int yOffset, int flag, List<MapObject> mapObjects) {
         if (hexes[x][y] != null) {
             int mask = 0x0000000F - currentState;
 
             if ((hexes[x][y].getState() & mask) == 0 ) {
                 if (screenY == yOffset - 2) {
                     hexes[x][y].drawLowerHalf(screenHandler, screenX, screenY);
+                    MyLists.forEach(mapObjects, (MapObject mo) -> mo.drawLowerHalf(screenHandler, screenX, screenY+2));
                 } else if (screenY == yOffset - 2 + 4 * (mapYRange - 1) + 2) {
                     hexes[x][y].drawUpperHalf(screenHandler, screenX, screenY, flag);
+                    MyLists.forEach(mapObjects, (MapObject mo) -> mo.drawUpperHalf(screenHandler, screenX, screenY));
                 } else {
                     hexes[x][y].drawYourself(screenHandler, screenX, screenY, flag);
+                    MyLists.forEach(mapObjects, (MapObject mo) -> mo.drawYourself(screenHandler, screenX, screenY));
                 }
             }
         }

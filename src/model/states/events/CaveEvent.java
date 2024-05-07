@@ -20,7 +20,7 @@ public class CaveEvent extends DailyEventState {
         print("Enter the caves? (Y/N) ");
         if (yesNoInput()) {
             model.getParty().getHorseHandler().abandonHorses(model);
-            model.enterCaveSystem();
+            model.enterCaveSystem(true);
         }
     }
 }

@@ -78,7 +78,8 @@ public class FullMapView extends GameView {
             if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 setTimeToTransition(true);
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
-                model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(), model.getWorld().getHex(cursorPos), true));
+                model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(),
+                        model.getWorld().getHex(cursorPos), model.getMapObjects(cursorPos), true));
             }
         }
     }

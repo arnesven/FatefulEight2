@@ -133,7 +133,7 @@ public class MineEvent extends DailyEventState {
         } else if (!enteredFromSurface) {
             print("Do you want to exit to the surface? (Y/N) ");
             if (yesNoInput()) {
-                model.exitCaveSystem();
+                model.exitCaveSystem(true);
             } else {
                 println("The party returns to the caves.");
             }

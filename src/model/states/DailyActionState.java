@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.actions.DailyAction;
+import util.MyLists;
 import util.MyPair;
 import view.DrawingArea;
 import view.subviews.CollapsingTransition;
@@ -44,6 +45,7 @@ public class DailyActionState extends GameState {
 
     private DailyAction selectDailyAction(Model model) {
         List<DailyAction> actions = model.getDailyActions();
+        MyLists.uniqueify(actions, DailyAction::getName);
         List<String> actionNames = new ArrayList<>();
         for (DailyAction da : actions) {
             actionNames.add(da.getName());

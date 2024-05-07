@@ -6,7 +6,7 @@ import view.MyColors;
 public class CalloutSprite extends TimedAnimationSprite {
 
     public CalloutSprite(int num, int textLength) {
-        super("callout"+num, "callouts.png", num, textLength*3, MyColors.BLACK, MyColors.WHITE, MyColors.RED);
+        super("callout"+num, "callouts.png", num, Math.max(textLength*3, 30), MyColors.BLACK, MyColors.WHITE, MyColors.RED);
     }
 
     public CalloutSprite(int num) {

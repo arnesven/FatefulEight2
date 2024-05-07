@@ -10,6 +10,8 @@ import model.items.ItemDeck;
 import model.items.spells.Spell;
 import model.log.GameLog;
 import model.map.*;
+import model.map.objects.MapObject;
+import model.map.objects.UnderworldEntrance;
 import model.races.Race;
 import model.ruins.RuinsDungeon;
 import model.states.*;
@@ -31,7 +33,6 @@ import view.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
@@ -187,8 +188,15 @@ public class Model {
     }
 
     public String getHexInfo(Point position) {
+        List<MapObject> mapObjects = getMapObjects(position);
+        StringBuilder bldr = new StringBuilder();
+        for (MapObject mobj : mapObjects) {
+            bldr.append(", ");
+            bldr.append(mobj.getDescription());
+        }
+        String mapObjectExtra = bldr.toString();
         return "(" + position.x + "," + position.y + ") " +
-                getWorld().getHex(position).getDescription() + gameData.mainStory.getHexInfo(position);
+                getWorld().getHex(position).getDescription() + gameData.mainStory.getHexInfo(position) + mapObjectExtra;
     }
 
     public void handleKeyEvent(KeyEvent event) {
@@ -200,7 +208,13 @@ public class Model {
             gameData.mustStayInHex = false;
             return List.of(new StayInHexAction(this));
         }
-        return getParty().getDailyAction(this);
+        List<DailyAction> result = getParty().getDailyAction(this);
+        for (MapObject obj : gameData.mapObjects) {
+            if (obj.getPosition().equals(getParty().getPosition())) {
+                result.addAll(obj.getDailyActions(this));
+            }
+        }
+        return result;
     }
 
     public boolean gameExited() {
@@ -376,12 +390,24 @@ public class Model {
         return new HallOfFameData();
     }
 
-    public void enterCaveSystem() {
-        gameData.inUnderworld = true;
+    private void addUnderworldEntranceAtCurrentPosition() {
+        gameData.mapObjects.removeIf((MapObject mo) -> mo instanceof UnderworldEntrance &&
+                mo.getPosition().equals(getParty().getPosition()));
+        gameData.mapObjects.add(new UnderworldEntrance(new Point(getParty().getPosition())));
     }
 
-    public void exitCaveSystem() {
+    public void enterCaveSystem(boolean markOnMap) {
+        gameData.inUnderworld = true;
+        if (markOnMap) {
+            addUnderworldEntranceAtCurrentPosition();
+        }
+    }
+
+    public void exitCaveSystem(boolean markOnMap) {
         gameData.inUnderworld = false;
+        if (markOnMap) {
+            addUnderworldEntranceAtCurrentPosition();
+        }
     }
 
     public CaveSystem getCaveSystem() {
@@ -472,5 +498,9 @@ public class Model {
 
     public void showSpritePreviewer() {
         this.gameView = new SpritePreviewerView(gameView);
+    }
+
+    public List<MapObject> getMapObjects(Point position) {
+        return MyLists.filter(gameData.mapObjects, (MapObject mo) -> mo.getPosition().equals(position));
     }
 }

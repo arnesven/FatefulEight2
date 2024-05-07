@@ -193,9 +193,7 @@ public abstract class WorldHex {
         } else if (hasRoad()) {
             actions.add(new GetOnRoadAction(model));
         }
-
-        // Uniqueify
-        return MyLists.uniqueify(actions, DailyAction::getName);
+        return actions;
     }
 
     private boolean canFly(Model model) {

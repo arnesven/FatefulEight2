@@ -36,9 +36,9 @@ public class TeleportingTransition extends TransitionView {
         if (steps == 0) {
             model.getParty().setPosition(position);
             if (inCaves) {
-                model.enterCaveSystem();
+                model.enterCaveSystem(false);
             } else {
-                model.exitCaveSystem();
+                model.exitCaveSystem(false);
             }
             this.flipped = true;
         }

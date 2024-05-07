@@ -10,6 +10,6 @@ public class ExitCavesAction extends DailyAction {
 
     @Override
     public void runPreHook(Model model) {
-        model.exitCaveSystem();
+        model.exitCaveSystem(false);
     }
 }

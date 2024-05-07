@@ -3,11 +3,13 @@ package model;
 import model.characters.appearance.CharacterAppearance;
 import model.items.ItemDeck;
 import model.map.WorldBuilder;
+import model.map.objects.MapObject;
 import model.ruins.RuinsDungeon;
 import model.tutorial.TutorialHandler;
 import util.MyRandom;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,4 +32,5 @@ public class GameData implements Serializable {
     public MainStory mainStory = new MainStory();
     public Map<String, CharacterAppearance> lordPortraits = new HashMap<>();
     public int worldState = WorldBuilder.ORIGINAL;
+    public List<MapObject> mapObjects = new ArrayList<>();
 }
