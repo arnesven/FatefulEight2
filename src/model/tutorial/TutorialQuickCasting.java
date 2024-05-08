@@ -13,5 +13,6 @@ public class TutorialQuickCasting extends SubChapterHelpDialog {
 
     public TutorialQuickCasting(GameView view) {
         super(view, "Quick Casting", TEXT);
+        setLevel(2);
     }
 }
