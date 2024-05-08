@@ -382,7 +382,11 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(MyRandom.sample(List.of(
                         "I've heard " + nearestCastle.getLordName() + " is planning to host an archery contest soon.",
                         "I've heard " + nearestCastle.getLordName() + " is planning to host a melee tournament soon.",
-                        "I've heard " + nearestCastle.getLordName() + " is planning a horse racing cup soon.")));
+                        "I've heard " + nearestCastle.getLordName() + " is planning a horse racing cup soon.",
+                        "Orcish raids seem to have become more common lately. Watch yourself friend.",
+                        "Ever been to the Isle of Faith? The monks are restoring the monastery there.",
+                        "I've heard there are communities of dwarves that live down in caves. I wonder what that's like.",
+                        "Ships travel regularly between most coastal towns. Why walk when you can sail?")));
             } else if (options.get(chosen).contains("region")) {
                 leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
                         "What kingdom is this?", "What can you tell me about these lands?")));

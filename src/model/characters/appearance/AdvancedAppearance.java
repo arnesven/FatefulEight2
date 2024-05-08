@@ -307,4 +307,10 @@ public class AdvancedAppearance extends CharacterAppearance {
         }
     }
 
+    @Override
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) {
+        if (!(detail instanceof EyePatchDetail)) {
+            super.drawDrawLook(screenHandler, left, x, y);
+        }
+    }
 }

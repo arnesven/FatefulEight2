@@ -83,7 +83,7 @@ public class MysteriousMap extends ReadableItem {
 
     @Override
     public String getShoppingDetails() {
-        return "A curious map. Does it lead to treasure?";
+        return ", A curious map. Does it lead to treasure?";
     }
 
     @Override

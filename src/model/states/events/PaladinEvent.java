@@ -13,6 +13,7 @@ import model.items.weapons.Warhammer;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
+import model.states.RecruitState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -76,7 +77,16 @@ public class PaladinEvent extends DailyEventState {
                     println("The paladin helps the " + (gender?"girl":"boy") + " up and dusts " + himOrHer(gender) +
                             " off. Then he faces you.");
                     portraitSay("Good teamwork friend! We who can must protect those in need.");
-                    changeClass(model);
+                    if (getPartyAlignment(model) > 1 && model.getParty().getNotoriety() >= 0) {
+                        portraitSay("I've been looking for a purpose for some time. You people seem to " +
+                                "have the right attitude. Need an extra hand?");
+                        GameCharacter paladin2 = new GameCharacter(randomFirstName(paladin.getGender()), randomLastName(),
+                                paladin.getRace(), Classes.PAL, portrait, makeRandomClassSet(Classes.PAL), paladin.getEquipment());
+                        paladin2.setLevel((int)Math.ceil(calculateAverageLevel(model)));
+                        new RecruitState(model, List.of(paladin2));
+                    } else {
+                        changeClass(model);
+                    }
                     println("You part ways with the paladin.");
                 }
             } else {

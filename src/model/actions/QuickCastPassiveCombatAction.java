@@ -7,7 +7,7 @@ import model.tutorial.TutorialQuickCasting;
 import view.help.HelpDialog;
 
 public class QuickCastPassiveCombatAction extends PassiveCombatAction {
-    public static final int MINIMUM_RANKS_REQUIRED = 3;
+    public static final int MINIMUM_RANKS_REQUIRED = 4;
 
     private static QuickCastPassiveCombatAction instance = null;
 
