@@ -10,6 +10,7 @@ import model.items.Item;
 import model.items.ItemDeck;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
+import model.items.potions.HealthPotion;
 import model.items.weapons.Weapon;
 import util.Arithmetics;
 import view.party.DrawableObject;

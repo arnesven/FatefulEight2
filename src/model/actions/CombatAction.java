@@ -89,7 +89,7 @@ public abstract class CombatAction {
     public static List<CombatAction> getCombatActions(Model model, GameCharacter character, Combatant target, CombatEvent combatEvent) {
         List<CombatAction> result = new ArrayList<>();
         if (character.canAttackInCombat() && target.canBeAttackedBy(character) && !combatEvent.isInQuickCast()) {
-            result.add(new BasicCombatAction("Attack", true, true) {
+            result.add(new BasicCombatAction("Attack", true, !character.getEquipment().getWeapon().isRangedAttack()) {
                 @Override
                 protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
                     performer.performAttack(model, combat, target);

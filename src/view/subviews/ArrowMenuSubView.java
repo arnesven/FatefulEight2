@@ -37,6 +37,9 @@ public abstract class ArrowMenuSubView extends SubView {
             yStart -= height;
         }
 
+        yStart = Math.max(0, yStart);
+        xStart = Math.max(0, xStart);
+
         arrowMenuGameView = new ArrowMenuGameView(false, xStart, yStart, width, height, labels) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
