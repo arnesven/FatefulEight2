@@ -273,10 +273,11 @@ public class ItemDeck extends ArrayList<Item> {
                 new QuadMachineryBook(),
                 new TreasureHuntersHandbook(),
                 new PoetryBookOne(),
-                new SeaTravelBook());
+                new SeaTravelBook(),
+                new ElfOriginBook());
+        // TODO: Advanced Archery
         // TODO: The Finer Points of Alchemy (useless)
         // TODO: Grave Robber's Handbook (useful tips for dungeons)
-        // TODO: On the Origins of Elves (useless)
         // TODO: On the Tenacity of Dwarves (useless)
         // TODO: On the Peculiarities of Half-Orcs (useless)
         // TODO: On the Ingenuity of Halflings (useless)

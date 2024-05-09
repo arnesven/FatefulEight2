@@ -13,6 +13,7 @@ import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
+import model.items.books.ElfOriginBook;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
