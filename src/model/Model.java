@@ -100,9 +100,7 @@ public class Model {
             return (GameData) ois.readObject();
         } catch (FileNotFoundException fnfe) {
             throw fnfe;
-        } catch (IOException e) {
-            throw new CorruptSaveFileException();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new CorruptSaveFileException();
         }
     }
