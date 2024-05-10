@@ -197,6 +197,9 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
                 new GangsterEnemy('A', beauty.getRace(), new FormerPartyMemberLoot(main)),
                 new GangsterEnemy('A',  model), new GangsterEnemy('A',  model)),
                 new MansionTheme(), true);
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         setCurrentTerrainSubview(model);
         if (haveFledCombat()) {
             println("The party escapes the tavern and quickly gets out of town.");

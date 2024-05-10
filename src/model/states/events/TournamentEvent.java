@@ -266,6 +266,9 @@ public class TournamentEvent extends DailyEventState {
         if (model.getParty().getPartyMembers().contains(fighterB)) {
             return runRealCombat(model, fighterB, fighterA);
         }
+        if (model.getParty().isWipedOut()) {
+            return null;
+        }
 
         println("You sit down on one of the benches overlooking the fighting pit.");
         announcerStartOfCombat(fighterA, fighterB);
@@ -292,6 +295,9 @@ public class TournamentEvent extends DailyEventState {
         runCombat(enemies);
         if (!oldLeader.isDead()) {
             model.getParty().setLeader(oldLeader);
+        }
+        if (model.getParty().isWipedOut()) {
+            return null;
         }
         npcFighter.addToHP(-(enemies.get(0).getMaxHP() - enemies.get(0).getHP()));
         setCurrentTerrainSubview(model);

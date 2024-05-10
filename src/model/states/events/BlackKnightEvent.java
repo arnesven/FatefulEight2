@@ -33,6 +33,9 @@ public class BlackKnightEvent extends RiverEvent {
         print("Do you fight the black knight? (Y/N) ");
         if (yesNoInput()) {
             runCombat(List.of(new BlackKnightEnemy('A')), new RiverCombatTheme(), true);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             CollapsingTransition.transition(model, RiverEvent.subView);
             if (!super.haveFledCombat()) {
                 portraitSay("You have proven a worthy adversary.");

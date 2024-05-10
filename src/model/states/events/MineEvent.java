@@ -127,7 +127,9 @@ public class MineEvent extends DailyEventState {
                     println("The mine is just abandoned and contains nothing of interest.");
                 }
         }
-        model.setGameOver(model.getParty().isWipedOut());
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         if (!model.isInCaveSystem()) {
             println("The party exits the mine.");
         } else if (!enteredFromSurface) {

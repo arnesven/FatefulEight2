@@ -138,6 +138,9 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
             enemies.add(new Brawler());
         }
         runCombat(enemies, new MansionTheme(), true);
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         model.getParty().unbenchAll();
         println("You are kicked out of from the " + innOrTavern(model.getCurrentHex().getLocation()) + "!");
     }

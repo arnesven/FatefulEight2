@@ -72,9 +72,7 @@ public class MountedPatrolEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>(List.of(new MountedEnemy(new SoldierEnemy('A')),
                 new MountedEnemy(new SoldierEnemy('A')), new MountedEnemy(new SoldierEnemy('A'))));
         runCombat(enemies);
-        if (!haveFledCombat()) {
-            possiblyGetHorsesAfterCombat("knights", 3);
-        }
+        possiblyGetHorsesAfterCombat("knights", 3);
     }
 
     private void doMountedMarshalsEvent(Model model) {
@@ -105,9 +103,7 @@ public class MountedPatrolEvent extends DailyEventState {
             List<Enemy> enemies = new ArrayList<>(List.of(new MountedEnemy(new ConstableEnemy('C')),
                     new MountedEnemy(new ConstableEnemy('C')), new MountedEnemy(new ConstableEnemy('C'))));
             runCombat(enemies);
-            if (!haveFledCombat()) {
-                possiblyGetHorsesAfterCombat("marshals", 3);
-            }
+            possiblyGetHorsesAfterCombat("marshals", 3);
         } else {
             goToJailInNearestTown(model, constableEvent);
         }
@@ -147,9 +143,7 @@ public class MountedPatrolEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>(List.of(generateMountedBandit(),
                 generateMountedBandit(), generateMountedBandit()));
         runCombat(enemies);
-        if (!haveFledCombat()) {
-            possiblyGetHorsesAfterCombat("bandits", 3);
-        }
+        possiblyGetHorsesAfterCombat("bandits", 3);
     }
 
     private Enemy generateMountedBandit() {

@@ -53,6 +53,9 @@ public class BetOnTournamentEvent extends TournamentEvent  {
             GameCharacter fighterB = fighters.remove(fighters.size() - 1);
             GameCharacter fighterA = fighters.remove(fighters.size() - 1);
             GameCharacter winner = performOneFight(model, fighterA, fighterB);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             winners.add(0, winner);
             List<GameCharacter> current = new ArrayList<>(fighters);
             current.addAll(winners);

@@ -78,6 +78,9 @@ public class GhostTownEvent extends DailyEventState {
             enemy.add(new GhostEnemy('A'));
         }
         runCombat(enemy, new TownCombatTheme(), true);
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         model.getParty().randomPartyMemberSay(model, List.of("That was kind of freaky...",
                 "That was scary.", "G-g-g-g ghosts!", "Yikes! This is literally a ghost town.",
                 "I'm not scared...", "We must have disturbed those spirits.",

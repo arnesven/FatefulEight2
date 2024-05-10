@@ -366,6 +366,9 @@ public class EnchantressEvent extends DailyEventState {
     private boolean attackEnchantress(Model model, GameCharacter other) {
         Enemy e = new EnchantressEnemy('A');
         runCombat(List.of(e), new MansionTheme(), true);
+        if (model.getParty().isWipedOut()) {
+            return true;
+        }
         setCurrentTerrainSubview(model);
         if (e.isDead()) {
             println("The Enchantress lay slain.");

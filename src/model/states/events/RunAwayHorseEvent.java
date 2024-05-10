@@ -50,6 +50,9 @@ public class RunAwayHorseEvent extends DailyEventState {
                     println("Your attempts to calm down the knight have just made " + himOrHer(gender) + " angrier. " +
                             heOrSheCap(gender) + " attacks you!");
                     runCombat(List.of(new SoldierEnemy('A')));
+                    if (model.getParty().isWipedOut()) {
+                        return;
+                    }
                     if (!haveFledCombat()) {
                         println("The knight lay slain on the ground. Unfortunately, " + hisOrHer(gender) +
                                 " mount has run away while you were fighting.");

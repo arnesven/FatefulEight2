@@ -190,6 +190,9 @@ public class BoatsEvent extends RiverEvent {
             println("a scary looking spider!");
             runCombat(List.of(new SpiderEnemy('A')), new GrassCombatTheme(), true);
         }
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         showRiverSubView(model);
         println("The separated group has joined with the rest of the party again.");
         model.getParty().unbenchAll();

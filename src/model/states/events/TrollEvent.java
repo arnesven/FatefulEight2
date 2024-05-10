@@ -25,6 +25,9 @@ public class TrollEvent extends DailyEventState {
             randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()),
                     "Yes! Finally some action!");
             runCombat(List.of(new TrollEnemy('A')));
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             if (!haveFledCombat()) {
                 println("The watch tower does indeed provide a good resting place this evening.");
                 println("Each character recovers 1 extra HP.");

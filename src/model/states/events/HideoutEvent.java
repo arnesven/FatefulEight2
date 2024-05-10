@@ -94,6 +94,9 @@ public class HideoutEvent extends DailyEventState {
     private void attackBandits(Model model) {
         runCombat(List.of(new BanditEnemy('A'), new BanditEnemy('A'), new BanditEnemy('A'),
                 new BanditEnemy('A'), new BanditEnemy('B', "Bandit Leader", 8)));
+        if (haveFledCombat() || model.getParty().isWipedOut()) {
+            return;
+        }
         println("After defeating the bandits, the party discovers a secret passage.");
         secretPassage(model);
     }

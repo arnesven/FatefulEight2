@@ -208,6 +208,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             }
         }
         runCombat(enemies);
+        if (getModel().getParty().isWipedOut()) {
+            return;
+        }
         possiblyGetHorsesAfterCombat(victimChar.getFirstName().toLowerCase(),
                 getVictimCompanions(getModel()).size() - 2);
         int numberOfDead = 0;

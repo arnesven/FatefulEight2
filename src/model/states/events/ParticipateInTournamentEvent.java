@@ -86,6 +86,9 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                         "fighting pits and take your seats again.");
             }
             GameCharacter winner = performOneFight(model, fighterA, fighterB);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             model.getParty().unbenchAll();
             winners.add(0, winner);
             losers.add(fighterB == winner ? fighterA : fighterB);
@@ -120,6 +123,9 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
                         "fighting pits and take your seats again.");
             }
             GameCharacter winner = performOneFight(model, fighterA, fighterB);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             model.getParty().unbenchAll();
             winners.add(0, winner);
             losers.add(fighterB == winner ? fighterA : fighterB);
@@ -141,6 +147,9 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         doLongBreak(model, winners, losers, fighters, chosen);
         announcerSay("We are about ready to start the semi-finals! Please take your seats.");
         GameCharacter winner = performOneFight(model, fighters.get(0), fighters.get(1));
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         model.getParty().unbenchAll();
         announcerSay("That means we have a winner ladies and gentlemen... It's " + winner.getName() + "!");
         if (winner == chosen) {

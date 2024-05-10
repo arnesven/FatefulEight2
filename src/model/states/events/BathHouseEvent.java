@@ -150,6 +150,9 @@ public class BathHouseEvent extends DailyEventState {
         } else {
             List<Enemy> rowdyBunch = makeRowdyBunch(gender);
             runCombat(rowdyBunch, new MansionTheme(), false);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             setCurrentTerrainSubview(model);
             if (allDead(groupB)) {
                 return;

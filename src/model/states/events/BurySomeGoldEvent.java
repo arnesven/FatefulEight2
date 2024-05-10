@@ -119,6 +119,9 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
                         leaderSay("Okay, that's it. You're dead!");
                         portraitSay("Come on then maggot!");
                         doRobberCombat(model, buriedAmount);
+                        if (model.getParty().isWipedOut()) {
+                            return;
+                        }
                     } else {
                         leaderSay("Fine, take it.");
                         int amountLost = (model.getParty().getGold() / 20) * 20;
@@ -139,6 +142,9 @@ public class BurySomeGoldEvent extends PersonalityTraitEvent {
                 leaderSay("Over my dead body scum.");
                 portraitSay("That can be arranged fool.");
                 doRobberCombat(model, buriedAmount);
+                if (model.getParty().isWipedOut()) {
+                    return;
+                }
             }
         }
 

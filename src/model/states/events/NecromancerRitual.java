@@ -102,6 +102,9 @@ public class NecromancerRitual extends RitualEvent {
             enemies.add(new UndeadLordEnemy('A'));
             Collections.shuffle(enemies);
             runCombat(enemies, getTheme(), true);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             if (!haveFledCombat()) {
                 CollapsingTransition.transition(model, introSubView);
                 println("With the necromancer and their undead lord vanquished you help yourselves to the " +

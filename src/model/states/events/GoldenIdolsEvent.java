@@ -44,6 +44,9 @@ public class GoldenIdolsEvent extends DailyEventState {
             }
             model.getParty().banFromTemple(model.getCurrentHex().getLocation().getName());
             runCombat(guards);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             println("You have been banned from " + model.getCurrentHex().getLocation().getName() + ".");
         }
     }

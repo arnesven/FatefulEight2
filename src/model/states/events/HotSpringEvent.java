@@ -203,6 +203,9 @@ public class HotSpringEvent extends PersonalityTraitEvent {
         println("Less than a minute later the bear spots " + main.getFirstName() + ".");
         println("It roars loudly, then pounces on " + main.getFirstName() + "!");
         runCombat(List.of(new BearEnemy('B')));
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         setCurrentTerrainSubview(model);
         if (haveFledCombat()) {
             println("With the bear slain, " + main.getFirstName() + " returns to the rest of the party.");

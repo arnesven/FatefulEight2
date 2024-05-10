@@ -259,6 +259,9 @@ public class OtherPartyEvent extends DailyEventState {
             }
         }
         runCombat(enemies);
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
         CollapsingTransition.transition(model, subView);
         if (unwilling.size() > 0) {
             otherPartyMemberSay(unwilling.get(0), "Good riddance. But what do we do now?");

@@ -66,6 +66,9 @@ public class UndergroundLakeEvent extends DailyEventState {
             leaderSay("It's coming right for us. Get ready to fight!");
             List<Enemy> enemies = OctopusEnemy.makeEnemyList();
             runCombat(enemies, new CaveTheme(), false);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             model.getParty().randomPartyMemberSay(model, List.of("Phew... what a fight."));
         } else {
             println("There are ripples on the dark water, but the large cavern is silent and cold.");

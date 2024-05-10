@@ -94,7 +94,7 @@ public class RedKnightEvent extends DailyEventState {
         leaderSay("Alright Red Knight, we shall fight, but I'm telling you now, " +
                 "go easy on us, and we'll go easy on you.");
         runCombat(List.of(new RedKnightEnemy('A')));
-        if (haveFledCombat()) {
+        if (haveFledCombat() || model.getParty().isWipedOut()) {
             return;
         }
         setCurrentTerrainSubview(model);

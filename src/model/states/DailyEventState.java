@@ -307,7 +307,7 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void possiblyGetHorsesAfterCombat(String enemy, int mostNumberOfHorses) {
-        if (!haveFledCombat()) {
+        if (!haveFledCombat() && !getModel().getParty().isWipedOut()) {
             int numberOfHorses = MyRandom.randInt(mostNumberOfHorses+1);
             if (numberOfHorses > 0) {
                 if (numberOfHorses == 1) {

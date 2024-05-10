@@ -41,6 +41,9 @@ public class TempleGuardsEvent extends DailyEventState {
         print("Do you obey the guards and leave the temple? (Y/N) ");
         if (!yesNoInput()) {
             runCombat(List.of(new TempleGuardEnemy('A'), new TempleGuardEnemy('A'), new TempleGuardEnemy('A')));
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             String templeName = model.getCurrentHex().getLocation().getName();
             if (!model.getParty().isBannedFromTemple(templeName)) {
                 println("You have been banned from " + templeName + ".");
