@@ -26,6 +26,6 @@ public class SoloLockpickingSubScene extends SoloSkillCheckSubScene{
 
     @Override
     public String getDescription() {
-        return super.getDescription() + "/" + getDifficulty()+Lockpick.SECURITY_DIFFICULTY_REDUCTION;
+        return super.getDescription() + "/" + (getDifficulty()+Lockpick.SECURITY_DIFFICULTY_REDUCTION);
     }
 }

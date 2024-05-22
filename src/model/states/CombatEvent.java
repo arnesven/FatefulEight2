@@ -194,6 +194,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private void doCombatRound(Model model) {
+        subView.displayRound(roundCounter);
         for ( ; currentInit < initiativeOrder.size() && !combatDone(model) ; currentInit++) {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {

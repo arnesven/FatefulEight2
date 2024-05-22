@@ -7,6 +7,7 @@ import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
+import view.BorderFrame;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import view.MyColors;
@@ -31,6 +32,8 @@ public class CombatSubView extends SubView {
     private final CombatTheme theme;
     public static final Sprite INITIATIVE_MARKER = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
     public static final Sprite CURRENT_MARKER = new QuestCursorSprite();
+    private int roundCounter = 0;
+    private int roundCounterAnimationCountDown = 0;
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
@@ -72,7 +75,16 @@ public class CombatSubView extends SubView {
         drawCombatants(model);
         drawFlameWall(model);
         drawInitiativeOrder(model);
+        drawRoundCounter(model);
         drawCursor(model);
+    }
+
+    private void drawRoundCounter(Model model) {
+        if (roundCounterAnimationCountDown > 0) {
+            BorderFrame.drawCentered(model.getScreenHandler(), "ROUND " + roundCounter,
+                    Y_OFFSET  + (Y_MAX - Y_OFFSET) / 2, MyColors.WHITE, MyColors.BLACK);
+            roundCounterAnimationCountDown--;
+        }
     }
 
     private void drawCursor(Model model) {
@@ -260,4 +272,8 @@ public class CombatSubView extends SubView {
         }
     }
 
+    public void displayRound(int roundCounter) {
+        this.roundCounter = roundCounter;
+        this.roundCounterAnimationCountDown = 300;
+    }
 }
