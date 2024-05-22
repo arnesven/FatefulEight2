@@ -98,9 +98,9 @@ public class MansionHeistQuest extends Quest {
                                         new CollectiveSkillCheckSubScene(5,4, Skill.Sneak, 5,
                                                 "Let's just quietly pass this lot."))),
                         new QuestScene("Crack Safe",
-                                List.of(new SoloLockpickingSubScene(2, 7, 10,
+                                List.of(new SoloLockpickingSubScene(2, 7, 9,
                                         "That lock needs to be picked."),
-                                        new CollaborativeSkillCheckSubScene(3, 7, Skill.Labor, 10,
+                                        new CollaborativeSkillCheckSubScene(3, 7, Skill.Labor, 11,
                                                 "If we work together, we can probably pry the safe open."),
                                         new CollaborativeSkillCheckSubScene(4, 7, Skill.Search, 12,
                                                 "Wait a minute, Lady Golbrad probably keeps the key to the safe somewhere around here. Let's look for it."))));
