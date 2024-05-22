@@ -11,6 +11,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
+import view.subviews.ShipCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class PirateShipEvent extends DailyEventState {
         print("Press enter to continue.");
         waitForReturn();
         List<Enemy> enemies = makePirateEnemies(model);
-        runCombat(enemies);
+        runCombat(enemies, new ShipCombatTheme(), true);
     }
 
     private List<Enemy> makePirateEnemies(Model model) {

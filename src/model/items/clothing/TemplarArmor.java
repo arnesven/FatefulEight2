@@ -20,7 +20,7 @@ public class TemplarArmor extends HeavyArmorClothing {
 
     @Override
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        return List.of(new MyPair<>(Skill.SeekInfo, 2));
+        return List.of(new MyPair<>(Skill.SeekInfo, 1));
     }
 
     @Override
