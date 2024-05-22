@@ -284,7 +284,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
         if (model.getParty().getNotoriety() > 0) {
             if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
-                if (MyRandom.rollD10() < Math.min(5, model.getParty().getNotoriety() / 10) && !FatefulEight.inDebugMode()) {
+                if (MyRandom.rollD10() < Math.min(5, model.getParty().getNotoriety() / 10)) {
                     return new ConstableEvent(model);
                 }
             }
