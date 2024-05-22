@@ -15,7 +15,7 @@ public class CharacterEyes implements Serializable {
             new BaggySmallEyes(),
             new ElfinEyes(),
             new CharacterEyes(0x1A5, 0x1A6, "", 0),
-            new CharacterEyes(0x1A7, 0x1A8, "", 1)};
+            new CharacterEyes(0x1A7, 0x1A8, "", 2)};
 
     private final int eye;
     private final boolean symmetric;
