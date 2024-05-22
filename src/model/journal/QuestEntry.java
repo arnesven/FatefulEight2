@@ -35,9 +35,10 @@ public class QuestEntry implements JournalEntry {
 
             hexLocation = findLocation(model, location);
             if (hexLocation != null) {
-                this.completed = model.getQuestDeck().hasFlagIn(hexLocation);
+                this.completed = model.getQuestDeck().wasSuccess(model, this.quest) ||
+                        model.getQuestDeck().wasFailure(model, this.quest);
                 if (completed) {
-                    this.success = model.getQuestDeck().wasSuccessfulIn(hexLocation);
+                    this.success = model.getQuestDeck().wasSuccess(model, this.quest);
                 }
             }
         } else { // Main Quest

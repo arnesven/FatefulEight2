@@ -1,6 +1,7 @@
 package model;
 
 import model.map.HexLocation;
+import model.map.UrbanLocation;
 import model.quests.*;
 import util.MyPair;
 import util.MyRandom;
@@ -15,7 +16,7 @@ public class QuestDeck implements Serializable {
     private final Set<LocationAndQuest> locationsAndQuests = new HashSet<>();
     private final Set<String> acceptedQuests = new HashSet<>();
     private final Set<String> questLocations = new HashSet<>();
-    private final Map<String, Boolean> flagLocations = new HashMap<>();
+    private final Map<String, Boolean> successLocations = new HashMap<>();
 
     public Quest getRandomQuest() {
         return MyRandom.sample(QUESTS);
@@ -65,24 +66,33 @@ public class QuestDeck implements Serializable {
         return acceptedQuests.contains(quest.getName());
     }
 
-    public boolean wasSuccessfulIn(HexLocation location) {
-        return flagLocations.get(location.getName());
+    public boolean wasSuccess(Model model, Quest quest) {
+        Boolean succ = model.getSettings().getMiscFlags().get("QUEST_SUCCESS-"+quest.getName());
+        if (succ == null) {
+            return false;
+        }
+        return succ;
     }
 
-    public boolean hasFlagIn(HexLocation location) {
-        return flagLocations.containsKey(location.getName());
+    public void setSuccessfulIn(Model model, Quest quest, HexLocation location) {
+        model.getSettings().getMiscFlags().put("QUEST_SUCCESS-" + quest.getName(), true);
+        successLocations.put(location.getName(), true);
     }
 
-    public void setSuccessfulIn(HexLocation location) {
-        flagLocations.put(location.getName(), true);
+    public void setFailure(Model model, Quest quest) {
+        model.getSettings().getMiscFlags().put("QUEST_SUCCESS-" + quest.getName(), false);
     }
 
-    public void setFailureIn(HexLocation location) {
-        flagLocations.put(location.getName(), false);
+    public boolean wasFailure(Model model, Quest quest) {
+        Boolean succ = model.getSettings().getMiscFlags().get("QUEST_SUCCESS-"+quest.getName());
+        if (succ == null) {
+            return false;
+        }
+        return !succ;
     }
 
     public void unsetFailureIn(HexLocation location) {
-        flagLocations.remove(location.getName());
+        //flagLocations.remove(location.getName());
         acceptedQuests.remove(location.getName());
         questLocations.remove(location.getName());
         locationsAndQuests.removeIf((LocationAndQuest loc) -> loc.getLocation().equals(location.getName()));
@@ -103,6 +113,10 @@ public class QuestDeck implements Serializable {
             }
         }
         throw new IllegalStateException("No such quest found: " + key);
+    }
+
+    public boolean hadSuccessIn(HexLocation location) {
+        return successLocations.containsKey(location.getName());
     }
 
     public static class LocationAndQuest extends MyPair<String, String> {

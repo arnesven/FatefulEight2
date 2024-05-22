@@ -39,7 +39,7 @@ public class QuestFailNode extends QuestNode {
     public QuestEdge run(Model model, QuestState state) {
         state.println("You have failed the quest!");
         if (model.getCurrentHex().getLocation() != null) {
-            model.getQuestDeck().setFailureIn(model.getCurrentHex().getLocation());
+            model.getQuestDeck().setFailure(model, state.getQuest());
         }
         return new QuestEdge(this);
     }

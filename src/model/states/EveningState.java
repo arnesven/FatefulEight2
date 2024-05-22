@@ -182,7 +182,7 @@ public class EveningState extends GameState {
     private void addRandomQuests(Model model, List<Quest> quests, int mainQuests) {
         int baseNumberOfQuests = 4;
         if (model.getQuestDeck().alreadyDone(model.getCurrentHex().getLocation())) {
-            if (model.getQuestDeck().wasSuccessfulIn(model.getCurrentHex().getLocation())) {
+            if (model.getQuestDeck().hadSuccessIn(model.getCurrentHex().getLocation())) {
                 baseNumberOfQuests = 1;
             }
         }
