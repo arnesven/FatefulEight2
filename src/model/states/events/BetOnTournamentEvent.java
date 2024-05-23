@@ -94,7 +94,8 @@ public class BetOnTournamentEvent extends TournamentEvent  {
             println("The party gains " + winnings + " gold!");
             model.getParty().addToGold(winnings);
         } else {
-            println(model.getParty().getLeader() + " looks at the betting tickets.");
+            println(model.getParty().getLeader().getName() +
+                    " looks at the betting tickets.");
             leaderSay("Well, we didn't win. Perhaps we should have paid more attention to the fighters.");
             GameCharacter rando = model.getParty().getRandomPartyMember();
             partyMemberSay(rando, "Or we were just unlucky.");
