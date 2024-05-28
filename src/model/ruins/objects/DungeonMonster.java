@@ -84,6 +84,7 @@ public class DungeonMonster extends CenterDungeonObject {
             exploreRuinsState.setDungeonExited(true);
         } else {
             exploreRuinsState.getCurrentRoom().removeObject(this);
+            exploreRuinsState.addDefeatedMonster(this);
         }
     }
 

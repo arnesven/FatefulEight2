@@ -1,15 +1,22 @@
 package model.states;
 
 import model.Model;
+import model.Party;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.ruins.*;
+import model.ruins.objects.DungeonMonster;
 import model.ruins.objects.DungeonObject;
+import model.ruins.objects.StairsDown;
+import model.ruins.objects.StairsUp;
 import util.MyPair;
 import view.subviews.*;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ExploreRuinsState extends GameState {
 
@@ -21,6 +28,10 @@ public class ExploreRuinsState extends GameState {
     private RuinsSubView subView;
     private boolean dungeonExited = false;
     private boolean mapView = false;
+    private List<DungeonMonster> defeatedMonsters = new ArrayList<>();
+    private Set<DungeonRoom> visitedRooms = new HashSet<>();
+    private Set<DungeonLevel> visitedLevels = new HashSet<>();
+    private Set<Integer> mapsFound = new HashSet<>();
 
     public ExploreRuinsState(Model model, String ruinsName, String dungeonType) {
         super(model);
@@ -36,7 +47,9 @@ public class ExploreRuinsState extends GameState {
         this.dungeon = dungeon;
         currentLevel = 0;
         partyPosition = dungeon.getLevel(currentLevel).getStartingPoint();
-        dungeon.getLevel(currentLevel).getRoom(partyPosition).setRevealedOnMap(true);
+        DungeonRoom firstRoom = dungeon.getLevel(currentLevel).getRoom(partyPosition);
+        firstRoom.setRevealedOnMap(true);
+        visitRoom(firstRoom);
         this.dungeonType = dungeonType;
     }
 
@@ -61,6 +74,10 @@ public class ExploreRuinsState extends GameState {
             matrix.getSelectedElement().doAction(model, this);
             populateMatrix();
         } while (!dungeonExited);
+        model.setSubView(new DungeonStatsSubView(dungeon, dungeonType, visitedRooms.size(),
+                visitedLevels.size(), defeatedMonsters.size(), mapsFound.size()));
+        print("Press enter to continue.");
+        waitForReturn();
     }
 
     private void populateMatrix() {
@@ -201,6 +218,21 @@ public class ExploreRuinsState extends GameState {
             partyPosition = dungeon.getLevel(currentLevel).getDescentPoint();
         }
         populateMatrix();
+        DungeonRoom[][] roomsMatrix = dungeon.getLevel(currentLevel).getRooms();
+        for (int x = 0; x < roomsMatrix.length; ++x) {
+            for (int y = 0; y < roomsMatrix[0].length; ++y) {
+                if (roomsMatrix[x][y] != null) {
+                    for (DungeonObject dobj : roomsMatrix[x][y].getObjects()) {
+                        if (dobj instanceof StairsDown) {
+                            System.out.println("Stairs down at x=" + x + ", y=" + y);
+                        }
+                        if (dobj instanceof StairsUp) {
+                            System.out.println("Stairs up at x=" + x + ", y=" + y);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void moveCharacterToCenterAnimation(Model model, Point where) {
@@ -246,5 +278,23 @@ public class ExploreRuinsState extends GameState {
 
     public String getDungeonType() {
         return dungeonType;
+    }
+
+    public void addDefeatedMonster(DungeonMonster dungeonMonster) {
+        defeatedMonsters.add(dungeonMonster);
+    }
+
+    public void visitRoom(DungeonRoom dungeonRoom) {
+        visitedRooms.add(dungeonRoom);
+        for (int i = 0; i < dungeon.getNumberOfLevels(); ++i) {
+            if (dungeon.getLevel(i).getRoomList().contains(dungeonRoom)) {
+                visitedLevels.add(dungeon.getLevel(i));
+                break;
+            }
+        }
+    }
+
+    public void mapsFound(int currentLevel) {
+        this.mapsFound.add(currentLevel);
     }
 }

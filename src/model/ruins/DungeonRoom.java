@@ -106,6 +106,7 @@ public class DungeonRoom implements Serializable {
 
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
         revealedOnMap = true;
+        exploreRuinsState.visitRoom(this);
         List<DungeonObject> objs = new ArrayList<>();
         objs.addAll(otherObjects);
         for (DungeonObject obj : objs) {

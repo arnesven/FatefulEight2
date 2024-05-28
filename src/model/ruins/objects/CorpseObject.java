@@ -59,6 +59,7 @@ public class CorpseObject extends CenterDungeonObject {
                 }
             } else {
                 state.println("You found a map of these ruins!");
+                state.mapsFound(state.getCurrentLevel());
                 for (int i = 0; i <= state.getCurrentLevel(); ++i) {
                     for (DungeonRoom room : state.getDungeon().getLevel(i).getRoomList()) {
                         room.setRevealedOnMap(true);
