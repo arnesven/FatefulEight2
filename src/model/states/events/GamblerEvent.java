@@ -11,12 +11,13 @@ import java.util.List;
 
 public class GamblerEvent extends DailyEventState {
 
+    private static final int COST_TO_PLAY = 5;
     private int potSize;
     private ConstableEvent innerEvent;
 
     public GamblerEvent(Model model) {
         super(model);
-        potSize = MyRandom.randInt(36)*2 + 2;
+        potSize = MyRandom.randInt(54)*2 + 10;
     }
 
     @Override
@@ -26,18 +27,18 @@ public class GamblerEvent extends DailyEventState {
                 "meander over and look what the commotion is about.");
         model.getParty().randomPartyMemberSay(model, List.of("Dice... I should've guessed"));
         showRandomPortrait(model, Classes.THF, Race.ALL, "Gambler");
-        portraitSay("Hey newcomer, it's two gold to roll the dice. Want in?");
-        if (model.getParty().getGold() < 2) {
+        portraitSay("Hey newcomer, it's five obols to roll the dice. Want in?");
+        if (model.getParty().getObols() < COST_TO_PLAY) {
             leaderSay("We don't have the coin, or the time for this.");
         } else {
             print("Do you want to play dice? (Y/N) ");
             if (yesNoInput()) {
-                println("You hand the gambler 2 gold.");
-                model.getParty().addToGold(-2);
+                println("You hand the gambler " + COST_TO_PLAY + " obols.");
+                model.getParty().addToObols(-COST_TO_PLAY);
                 portraitSay("It's simple. You roll two dice and add them together. On eight or more, you get your money back. " +
                         "Otherwise your money goes into the pot. On double sixes, you win the pot.");
                 leaderSay("How big is the pot?");
-                portraitSay("Looks like we're up to " + potSize + " gold now. Who knows, maybe you'll get lucky?");
+                portraitSay("Looks like we're up to " + potSize + " obols now. Who knows, maybe you'll get lucky?");
                 while (true) {
                     println("The gambler hands you the dice.");
                     int die1 = MyRandom.randInt(1, 6);
@@ -46,18 +47,25 @@ public class GamblerEvent extends DailyEventState {
                     if (die1 == 6 && die2 == 6) {
                         leaderSay("Jackpot!");
                         portraitSay("You lucky bastard...#");
+                        leaderSay("Pay up man, I won that pot fair and square.");
+                        println("Looks around nervously as to assess his options.");
+                        leaderSay("Fine! Take it... I was getting bored of this game anyway.");
+                        model.getParty().addToObols(potSize);
+                        println("The party gains " + potSize + " obols.");
+                        println("The crowd then disperses and the gambler stomps off.");
+                        return;
                     } else if (die1 + die2 < 8) {
                         potSize += 2;
-                        portraitSay("Bad luck newcomer. But hey, now the pot is even bigger. " + potSize + " gold!");
+                        portraitSay("Bad luck newcomer. But hey, now the pot is even bigger. " + potSize + " obols!");
                     } else {
                         portraitSay("Good roll! Here's your money back newcomer.");
-                        println("The party receives 2 gold.");
-                        model.getParty().addToGold(2);
+                        println("The party receives " + COST_TO_PLAY + " obols.");
+                        model.getParty().addToObols(COST_TO_PLAY);
                     }
                     portraitSay("Wanna go again?");
                     randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()),
-                            "Just think, we could win that gold!");
-                    if (model.getParty().getGold() < 2) {
+                            "Just think, we could win those obols!");
+                    if (model.getParty().getObols() < COST_TO_PLAY) {
                         println("Unfortunately you cannot afford to continue the game. So you excuse yourself.");
                         break;
                     }
@@ -65,8 +73,8 @@ public class GamblerEvent extends DailyEventState {
                     if (!yesNoInput()) {
                         break;
                     } else {
-                        println("You hand the gambler 2 gold.");
-                        model.getParty().addToGold(-2);
+                        println("You hand the gambler " + COST_TO_PLAY + " obols.");
+                        model.getParty().addToObols(-COST_TO_PLAY);
                         if (MyRandom.rollD10() == 1) {
                             println("The gambler is about to hand you the dice when somebody shouts 'constable!'. The gambler " +
                                     "quickly scoops up the pot and bounds away down the street and the crowd disperses.");
