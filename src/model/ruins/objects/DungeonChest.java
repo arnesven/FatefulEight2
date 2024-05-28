@@ -76,8 +76,7 @@ public class DungeonChest extends CenterDungeonObject {
                 alreadyTried = true;
                 boolean didUnlock = model.getParty().doSoloLockpickCheck(model, state, MyRandom.randInt(5, 7));
                 if (didUnlock) {
-                    isLocked = false;
-                    SoundEffects.playUnlock();
+                    unlockYourself();
                 }
             }
         }
@@ -87,7 +86,7 @@ public class DungeonChest extends CenterDungeonObject {
         }
 
         if (!opened) {
-            opened = true;
+            openYourself();
             CombinedLoot combinedLoot = new CombinedLoot();
             for (int i = 0; i < loots; ++i) {
                 CombatLoot loot = null;
@@ -104,5 +103,18 @@ public class DungeonChest extends CenterDungeonObject {
         } else {
             state.println("You've already opened the chest.");
         }
+    }
+
+    public void openYourself() {
+        opened = true;
+    }
+
+    public void unlockYourself() {
+        isLocked = false;
+        SoundEffects.playUnlock();
+    }
+
+    public boolean isOpen() {
+        return opened;
     }
 }

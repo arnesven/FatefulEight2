@@ -124,17 +124,22 @@ public abstract class DailyActionSubView extends AvatarSubView {
     }
 
     protected void drawSmallRoom(Model model, Sprite lowerWallSprite) {
+        drawRoom(model, 0, 7, 1, 6, lowerWallSprite);
+    }
+
+
+    public static void drawRoom(Model model, int colStart, int colEnd, int rowStart, int rowEnd, Sprite lowerWallSprite) {
         Random random = new Random(4312);
-        for (int row = 1; row < 8; ++row) {
-            for (int col = 0; col < 7; ++col) {
+        for (int row = rowStart; row < rowEnd+2; ++row) {
+            for (int col = colStart; col < colEnd; ++col) {
                 Point p = convertToScreen(new Point(col, row));
-                if ((col == 0 || col == 6) && row < 6) {
+                if ((col == colStart || col == colEnd-1) && row < rowEnd) {
                     model.getScreenHandler().put(p.x, p.y, TavernSubView.SIDE_WALL);
-                } else if (1 < row && row < 6) {
+                } else if (rowStart < row && row < rowEnd) {
                     model.getScreenHandler().put(p.x, p.y, TavernSubView.FLOOR);
-                } else if (row == 1) {
+                } else if (row == rowStart) {
                     model.getScreenHandler().put(p.x, p.y, TavernSubView.WALL);
-                } else if (row == 6) {
+                } else if (row == rowEnd) {
                     model.getScreenHandler().put(p.x, p.y, lowerWallSprite);
                 } else {
                     model.getScreenHandler().put(p.x, p.y,

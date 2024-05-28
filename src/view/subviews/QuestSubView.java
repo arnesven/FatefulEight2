@@ -156,14 +156,14 @@ public class QuestSubView extends AvatarSubView {
         avatarEnabled = b;
     }
 
-    public static void animateAvatarAlongEdge(QuestState state, Point from, QuestEdge edge, Sprite avatarSprite) {
+    public static void animateAvatarAlongEdge(AvatarSubView subView, Point from, QuestEdge edge, Sprite avatarSprite) {
         Point to = edge.getNode().getPosition();
         int dx = to.x - from.x;
         int dy = to.y - from.y;
         if (dx == 0 || dy == 0) {
-            state.getSubView().addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(to));
-            state.getSubView().waitForAnimation();
-            state.getSubView().removeMovementAnimation();
+            subView.addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(to));
+            subView.waitForAnimation();
+            subView.removeMovementAnimation();
         } else {
             Point mid;
             if (edge.getAlignment()) {
@@ -171,13 +171,17 @@ public class QuestSubView extends AvatarSubView {
             } else {
                 mid = new Point(from.x, to.y);
             }
-            state.getSubView().addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(mid));
-            state.getSubView().waitForAnimation();
-            state.getSubView().removeMovementAnimation();
-            state.getSubView().addMovementAnimation(avatarSprite, convertToScreen(mid), convertToScreen(to));
-            state.getSubView().waitForAnimation();
-            state.getSubView().removeMovementAnimation();
+            subView.addMovementAnimation(avatarSprite, convertToScreen(from), convertToScreen(mid));
+            subView.waitForAnimation();
+            subView.removeMovementAnimation();
+            subView.addMovementAnimation(avatarSprite, convertToScreen(mid), convertToScreen(to));
+            subView.waitForAnimation();
+            subView.removeMovementAnimation();
         }
+    }
+    
+    public static void animateAvatarAlongEdge(QuestState state, Point from, QuestEdge edge, Sprite avatarSprite) {
+        animateAvatarAlongEdge(state.getSubView(), from, edge, avatarSprite);
     }
 
     public void animateMovement(Model model, Point from, QuestEdge edge) {

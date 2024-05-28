@@ -3,9 +3,7 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
-import model.characters.PersonalityTrait;
 import model.tasks.DestinationTask;
-import util.MyLists;
 import view.subviews.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
@@ -229,6 +227,8 @@ public abstract class WorldHex {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
+        return new LottoHouseEvent(model);
+        /*
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8) {
             List<DailyEventState> events = new ArrayList<>();
@@ -251,11 +251,12 @@ public abstract class WorldHex {
             events.add(new MountedPatrolEvent(model));
             events.add(new PilgrimEvent(model));
             events.add(new MonkEvent(model));
+            events.add(new LotteryHouse(model));
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     public void travelTo(Model model) {
