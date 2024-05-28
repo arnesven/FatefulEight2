@@ -396,6 +396,7 @@ public class Model {
 
     public void enterCaveSystem(boolean markOnMap) {
         gameData.inUnderworld = true;
+        gameData.party.setOnRoad(false);
         if (markOnMap) {
             addUnderworldEntranceAtCurrentPosition();
         }

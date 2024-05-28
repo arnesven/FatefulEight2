@@ -130,6 +130,14 @@ public class FullMapView extends GameView {
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_F9) {
                 model.cycleWorldState();
                 madeChanges();
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F10) {
+                if (!model.isInCaveSystem()) {
+                    model.transitionToDialog(new SimpleMessageView(model.getView(), "You have moved into the cave system."));
+                    model.enterCaveSystem(false);
+                } else {
+                    model.transitionToDialog(new SimpleMessageView(model.getView(), "You have moved into the overworld."));
+                    model.exitCaveSystem(false);
+                }
             }
         }
 

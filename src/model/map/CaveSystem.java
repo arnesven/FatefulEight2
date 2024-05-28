@@ -2,19 +2,21 @@ package model.map;
 
 import model.Model;
 import model.map.objects.MapObject;
-import util.MyRandom;
-import view.ScreenHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static model.map.Direction.NORTH;
+import static model.map.Direction.SOUTH;
+
 public class CaveSystem extends World {
     private static final String VISITED_KEY = "caveHexVisited";
+    private static final Point FORTRESS_POSITION = new Point(26, 19);
     private static List<Integer> tunnels =
-            List.of(Direction.NORTH_WEST, Direction.NORTH, Direction.NORTH_EAST,
-                    Direction.SOUTH_EAST, Direction.SOUTH, Direction.SOUTH_WEST);
+            List.of(Direction.NORTH_WEST, NORTH, Direction.NORTH_EAST,
+                    Direction.SOUTH_EAST, SOUTH, Direction.SOUTH_WEST);
 
     public CaveSystem(World overWorld, int seed) {
         super(makeHexes(overWorld, seed));
@@ -27,7 +29,9 @@ public class CaveSystem extends World {
         for (int y = 0; y < WorldBuilder.WORLD_HEIGHT; ++y) {
             for (int x = 0; x < WorldBuilder.WORLD_WIDTH; ++x) {
                 int state = WorldBuilder.getStateForXY(x, y);
-                if (noExit(overWorld.getHex(new Point(x, y)))) {
+                if (FORTRESS_POSITION.x == x && FORTRESS_POSITION.y == y) {
+                    hexes[x][y] = new FortressCaveHex(state);
+                } else if (noExit(overWorld.getHex(new Point(x, y)))) {
                     hexes[x][y] = new CaveHexWithoutExit(Direction.NONE, state);
                 } else {
                     hexes[x][y] = new CaveHex(Direction.NONE, state);
@@ -51,13 +55,16 @@ public class CaveSystem extends World {
     private static void makeTunnels(WorldHex[][] hexes, Random random) {
         for (int y = 0; y < WorldBuilder.WORLD_HEIGHT; ++y) {
             for (int x = 0; x < WorldBuilder.WORLD_WIDTH; ++x) {
-                if (!(hexes[x][y] instanceof SolidRockHex)) {
+                if (hexes[x][y] instanceof FortressCaveHex) {
+                    hexes[x][y].setRoads(SOUTH | hexes[x][y].getRoads());
+                    hexes[x][y+1].setRoads(NORTH | hexes[x][y+1].getRoads());
+                } else {
                     List<Point> dirs = new ArrayList<>(Direction.getDxDyDirections(new Point(x, y)));
                     for (int i = 0; i < random.nextInt(2) + 2; ++i) {
                         Point randDir = dirs.remove(random.nextInt(dirs.size()));
                         int otherX = x + randDir.x;
                         int otherY = y + randDir.y;
-                        if (coordinatesOK(otherX, otherY) && !(hexes[otherX][otherY] instanceof SolidRockHex)) {
+                        if (coordinatesOK(otherX, otherY) && !(hexes[otherX][otherY] instanceof FortressCaveHex)) {
                             int tunnel = Direction.getDirectionForDxDy(new Point(x, y), randDir);
                             hexes[x][y].setRoads(tunnel | hexes[x][y].getRoads());
                             int opTunnel = Direction.opposite(Direction.getDirectionForDxDy(new Point(x, y), randDir));
@@ -67,7 +74,6 @@ public class CaveSystem extends World {
                 }
             }
         }
-
     }
 
     private static boolean coordinatesOK(int otherX, int otherY) {

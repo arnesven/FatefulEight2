@@ -27,15 +27,19 @@ public class CaveHex extends WorldHex {
         super(color, roads, 0x0, randomLocation(), state);
     }
 
+    public CaveHex(int roads, int state, HexLocation location) {
+        super(GROUND_COLOR, roads, 0, location, state);
+    }
+
+    public CaveHex(int roads, int state) {
+        this(roads, GROUND_COLOR, state);
+    }
+
     private static HexLocation randomLocation() {
         if (random.nextInt(3) == 0) {
             return new Stalagmites();
         }
         return null;
-    }
-
-    public CaveHex(int roads, int state) {
-        this(roads, GROUND_COLOR, state);
     }
 
     public static void setRandom(Random rnd) {
