@@ -31,10 +31,14 @@ public abstract class SkillBoostingPotion extends Potion {
     public String useYourself(Model model, GameCharacter gc) {
         gc.addCondition(getBoostCondition());
         for (Skill s : skills) {
-            gc.addTemporaryBonus(s, 2, true);
+            gc.addTemporaryBonus(s, getBoostAmount(), true);
         }
 
         return gc.getName() + " has gained a " + getBoostCondition().getName() + ".";
+    }
+
+    public int getBoostAmount() {
+        return 2;
     }
 
     @Override
