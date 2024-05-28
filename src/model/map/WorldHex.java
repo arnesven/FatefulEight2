@@ -249,7 +249,7 @@ public abstract class WorldHex {
             events.add(new MountedPatrolEvent(model));
             events.add(new PilgrimEvent(model));
             events.add(new MonkEvent(model));
-            events.add(new LotteryHouse(model));
+            events.add(new LottoHouseEvent(model));
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
