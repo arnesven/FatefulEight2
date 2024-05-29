@@ -123,6 +123,7 @@ public class Party implements Serializable {
             }
         }
         partyAnimations.drawSpeakAnimations(screenHandler);
+        partyAnimations.drawDieRollAnimations(screenHandler);
     }
 
     public Point getLocationForPartyMember(int count) {
@@ -831,4 +832,10 @@ public class Party implements Serializable {
     }
 
     public List<DestinationTask> getDestinationTasks() { return destinationTasks; }
+
+    public void addDieRollAnimation(GameCharacter character, int unmodifiedRoll) {
+        Point position = getLocationForPartyMember(partyMembers.indexOf(character));
+        position.translate(1, 8);
+        partyAnimations.addDieRollAnimation(position, unmodifiedRoll);
+    }
 }

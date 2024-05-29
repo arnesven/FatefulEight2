@@ -2,6 +2,8 @@ package model;
 
 import model.characters.appearance.CharacterAppearance;
 import util.MyRandom;
+import view.sprites.AnimationManager;
+import view.sprites.DieRollAnimation;
 import view.ScreenHandler;
 
 import java.awt.*;
@@ -17,6 +19,7 @@ public class PartyAnimations implements Serializable {
     private final Map<CharacterAppearance, SpeakingAnimation> speakingAnimations = new HashMap<>();
     private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
     private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
+    private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
 
     public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
         if (!app.showFacialHair()) {
@@ -77,5 +80,20 @@ public class PartyAnimations implements Serializable {
         p.y += 2;
         speakingAnimations.remove(appearance);
         speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance));
+    }
+
+    public void addDieRollAnimation(Point location, int unmodifiedRoll) {
+        dieRollAnimations.put(location, new DieRollAnimation(unmodifiedRoll));
+    }
+
+    public void drawDieRollAnimations(ScreenHandler screenHandler) {
+        for (Point p : new ArrayList<>(dieRollAnimations.keySet())) {
+            DieRollAnimation spr = dieRollAnimations.get(p);
+            screenHandler.register(spr.getName(), p, spr, 3, spr.getXShift(), spr.getYShift());
+            if (spr.isDone()) {
+                AnimationManager.unregister(spr);
+                dieRollAnimations.remove(p);
+            }
+        }
     }
 }

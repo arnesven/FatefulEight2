@@ -386,15 +386,19 @@ public class GameCharacter extends Combatant {
     }
 
     public SkillCheckResult testSkill(Skill skill, int difficulty, int bonus) {
-        return new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty, bonus);
+        SkillCheckResult result = new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty, bonus);
+        if (party != null) {
+            party.addDieRollAnimation(this, result.getUnmodifiedRoll());
+        }
+        return result;
     }
 
     public SkillCheckResult testSkill(Skill skill, int difficulty) {
-        return new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty);
+        return testSkill(skill, difficulty, 0);
     }
 
     public SkillCheckResult testSkill(Skill skill) {
-        return new SkillCheckResult(getRankAndRemoveTempBonus(skill));
+        return testSkill(skill, Integer.MAX_VALUE, 0);
     }
 
     public int getMaxSP() {

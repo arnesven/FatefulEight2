@@ -18,14 +18,6 @@ public class SkillCheckResult {
         modifiedRoll = roll + rank + extraBonus;
     }
 
-    public SkillCheckResult(int rank, int difficulty) {
-        this(rank, difficulty, 0);
-    }
-
-    public SkillCheckResult(int rank) {
-        this(rank, Integer.MAX_VALUE, 0);
-    }
-
     public int getModifiedRoll() {
         return modifiedRoll;
     }
@@ -52,5 +44,9 @@ public class SkillCheckResult {
 
     public boolean isCritical(int critLevel) {
         return roll >= 10;
+    }
+
+    public int getUnmodifiedRoll() {
+        return roll;
     }
 }
