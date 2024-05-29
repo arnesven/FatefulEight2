@@ -17,7 +17,6 @@ import model.items.accessories.Accessory;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
-import model.items.spells.CombatSpell;
 import model.items.spells.QuickenedCondition;
 import model.items.spells.QuickeningSpell;
 import model.items.weapons.NaturalWeapon;
@@ -50,7 +49,6 @@ public class GameCharacter extends Combatant {
     private static final int MIN_ATTITUDE = -40;
     private static final int[] XP_LEVELS = new int[]{0, 100, 250, 450, 700, 1000, 1400,
                                                     2000, 2500, 3000, 3500, 4000, 4500, 5000};
-    private static final int NO_DIFFICULTY = Integer.MAX_VALUE;
 
     private final String firstName;
     private final String lastName;
@@ -202,7 +200,8 @@ public class GameCharacter extends Combatant {
     public void doOneAttack(Model model, CombatEvent combatEvent, Combatant target, boolean sneakAttack, int extraDamage, int crit) {
         combatEvent.print(getFirstName() + " attacks " + target.getName());
         int bonus = getAttackBonusesFromConditions();
-        SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
+        SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this),
+                SkillCheckResult.NO_DIFFICULTY, bonus);
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
         if (extraDamage > 0) {
@@ -416,7 +415,7 @@ public class GameCharacter extends Combatant {
     }
 
     public SkillCheckResult testSkill(Model model, Skill skill) {
-        return testSkill(model, skill, Integer.MAX_VALUE, 0);
+        return testSkill(model, skill, SkillCheckResult.NO_DIFFICULTY, 0);
     }
 
     public int getMaxSP() {

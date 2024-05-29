@@ -178,7 +178,7 @@ public class HorseRacingSubView extends SubView implements Animation {
         AnimationManager.registerPausable(this);
         animationStarted = true;
         for (HorseRacer racer : allRacers) {
-            SkillCheckResult result = racer.getCharacter().testSkillHidden(Skill.Survival, Integer.MAX_VALUE, 0);
+            SkillCheckResult result = racer.getCharacter().testSkillHidden(Skill.Survival, SkillCheckResult.NO_DIFFICULTY, 0);
             racer.setSpeed(getStartSpeedFromSkillResult(result.getModifiedRoll()));
         }
     }

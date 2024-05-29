@@ -4,6 +4,7 @@ import util.MyRandom;
 
 public class SkillCheckResult {
 
+    public static final int NO_DIFFICULTY = Integer.MAX_VALUE;
     private final int roll;
     private final int modifiedRoll;
     private final int rank;
@@ -24,7 +25,7 @@ public class SkillCheckResult {
 
     public String asString() {
         String extra = "";
-        if (difficulty != Integer.MAX_VALUE) {
+        if (difficulty != NO_DIFFICULTY) {
             if (isSuccessful()) {
                 extra = " >=" + difficulty + " SUCCESS";
             } else {
@@ -51,7 +52,7 @@ public class SkillCheckResult {
     }
 
     public boolean isFailure() {
-        if (difficulty == Integer.MAX_VALUE) {
+        if (difficulty == NO_DIFFICULTY) {
             return false;
         }
         return !isSuccessful();

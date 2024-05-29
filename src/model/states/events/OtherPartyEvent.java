@@ -114,7 +114,7 @@ public class OtherPartyEvent extends DailyEventState {
             println(entertainer.getFirstName() + " has offered to tell a grand tale for the party.");
         }
 
-        int entertainmentQuality = entertainer.testSkill(model, Skill.Entertain, Integer.MAX_VALUE, 0).getModifiedRoll();
+        int entertainmentQuality = entertainer.testSkill(model, Skill.Entertain).getModifiedRoll();
         if (entertainer.getSP() > 0) {
             entertainer.addToSP(-1);
             println(entertainer.getName() + " exhausts 1 Stamina Point while entertaining the party.");
@@ -148,7 +148,7 @@ public class OtherPartyEvent extends DailyEventState {
         print("Who should prepare the special meal for everybody?");
         GameCharacter cooker = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         model.getParty().addToFood(-otherPartyMembers.size());
-        int cookQuality = cooker.testSkill(model, Skill.Survival, Integer.MAX_VALUE, 0).getModifiedRoll() + 3;
+        int cookQuality = cooker.testSkill(model, Skill.Survival).getModifiedRoll() + 3;
         if (cooker.getSP() > 0) {
             cooker.addToSP(-1);
             println(cooker.getFirstName() + " exhausts 1 Stamina Point while cooking the special meal.");

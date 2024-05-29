@@ -153,7 +153,7 @@ public class ArcheryState extends GameState {
         print(shooter.getFirstName() + " fires the arrow! ");
         SkillCheckResult skillCheckResult;
         do {
-            skillCheckResult = shooter.testSkill(model, Skill.Bows, Integer.MAX_VALUE, 0);
+            skillCheckResult = shooter.testSkill(model, Skill.Bows);
             println("Roll of " + skillCheckResult.asString() + ".");
             if (shooter.getSP() == 0) {
                 break;
@@ -180,7 +180,7 @@ public class ArcheryState extends GameState {
                     print(npc.getName() + " takes another shot. ");
                 }
                 getModel().getLog().waitForAnimationToFinish();
-                int skillRoll = npc.testSkillHidden(Skill.Bows, Integer.MAX_VALUE, 0).getModifiedRoll();
+                int skillRoll = npc.testSkillHidden(Skill.Bows, SkillCheckResult.NO_DIFFICULTY, 0).getModifiedRoll();
 
                 int power = 0;
                 int weaponPower = npc.getEquipment().getWeapon().getDamageTable().length;
