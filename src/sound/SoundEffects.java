@@ -85,6 +85,6 @@ public class SoundEffects {
     }
 
     public static void successSkill() {
-        play("success");
+        ClientSoundManager.playSoundLowVolume("success");
     }
 }

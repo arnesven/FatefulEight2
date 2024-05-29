@@ -17,6 +17,11 @@ public class ClientSoundManager extends SoundManager {
         sjl.play();
     }
 
+    public static void playSoundLowVolume(String key) {
+        SoundJLayer sjl = new SoundJLayer(getSoundResource(key, true));
+        sjl.play();
+    }
+
     private static ClientSound getSoundResource(String key, boolean background) {
         if (!loadedSounds.keySet().contains(key)) {
             loadSoundResource(key, background);
