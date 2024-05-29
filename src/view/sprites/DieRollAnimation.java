@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class DieRollAnimation extends RunOnceAnimationSprite {
 
+    private static final int MAX_SHIFT = 55;
     private final int number;
     private final Sprite16x16 stillFrame;
     private int stillFrameCount = 0;
@@ -20,7 +21,7 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
         stillFrame.setColor2(MyColors.WHITE);
         stillFrame.setColor3(MyColors.RED);
         this.number = faceNumber;
-        setAnimationDelay(10);
+        setAnimationDelay(8);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
     @Override
     public boolean isDone() {
         if (super.isDone()) {
-            return stillFrameCount > 200;
+            return stillFrameCount > 220;
         }
         return false;
     }
@@ -51,26 +52,13 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
 
     @Override
     public int getXShift() {
-        return xShift/4 * 2;
+        return xShift/3 * 2 - 4;
     }
 
     @Override
     public int getYShift() {
-        int amp = 0;
-        if (xShift < 30) {
-            amp = 8;
-        } else if (xShift < 60) {
-            amp = 4;
-        }
-
-        int base = xShift/6;
-        if (base % 4 == 1 || base % 4 == 3) {
-            return amp/2;
-        }
-        if (base % 4 == 2) {
-            return amp;
-        }
-        return 0;
+        double amplitude = (MAX_SHIFT - xShift) / 4.0;
+        return -(int)Math.abs(Math.cos(Math.toRadians(xShift*8))*amplitude);
     }
 
     public boolean blocksGame() {
