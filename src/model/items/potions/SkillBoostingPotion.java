@@ -15,7 +15,7 @@ public abstract class SkillBoostingPotion extends Potion {
     public SkillBoostingPotion(String name,Skill[] skills) {
         super(name, 24);
         this.skills = skills;
-        StringBuilder bldr = new StringBuilder(", for the rest of the day +2 to: ");
+        StringBuilder bldr = new StringBuilder(", for the rest of the day +" + getBoostAmount() + " to: ");
         for (Skill s : skills) {
             bldr.append(s.getName() + ", ");
         }
