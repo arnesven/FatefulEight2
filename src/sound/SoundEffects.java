@@ -79,4 +79,12 @@ public class SoundEffects {
     public static void playHitWood() {
         play("wood");
     }
+
+    public static void failedSkill() {
+        play("failure");
+    }
+
+    public static void successSkill() {
+        play("success");
+    }
 }

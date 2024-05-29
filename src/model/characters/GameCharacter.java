@@ -402,6 +402,11 @@ public class GameCharacter extends Combatant {
                     e.printStackTrace();
                 }
             }
+            if (result.isSuccessful()) {
+                SoundEffects.successSkill();
+            } else {
+                SoundEffects.failedSkill();
+            }
         }
         return result;
     }
