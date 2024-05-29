@@ -58,6 +58,11 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
     }
 
     @Override
+    protected boolean allowPartyEvent() {
+        return false;
+    }
+
+    @Override
     protected GameState getEveningState(Model model) {
         System.out.println("Getting evening state for travel by chartered boat");
         if (!endAtSea) {

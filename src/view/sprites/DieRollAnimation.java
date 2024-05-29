@@ -3,6 +3,7 @@ package view.sprites;
 import model.Model;
 import view.MyColors;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -11,6 +12,7 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
     private static final int MAX_SHIFT = 55;
     private final int number;
     private final Sprite16x16 stillFrame;
+    private RunOnceAnimationSprite sparkAnimation = null;
     private int stillFrameCount = 0;
     private int xShift = 0;
 
@@ -22,6 +24,7 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
         stillFrame.setColor3(MyColors.RED);
         this.number = faceNumber;
         setAnimationDelay(8);
+
     }
 
     @Override
@@ -47,7 +50,18 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
         if (!super.isDone()) {
             return super.getImage();
         }
-        return stillFrame.getImage();
+        return getCompoundedImage();
+    }
+
+    private BufferedImage getCompoundedImage() throws IOException {
+        BufferedImage img = stillFrame.internalGetImage();
+        BufferedImage toReturn = new BufferedImage(stillFrame.getWidth(), stillFrame.getHeight(), img.getType());
+        Graphics g = toReturn.getGraphics();
+        g.drawImage(img,0, 0, null);
+        if (sparkAnimation != null) {
+            g.drawImage(sparkAnimation.getImage(), 0, 0, null);
+        }
+        return toReturn;
     }
 
     @Override
@@ -63,5 +77,17 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
 
     public boolean blocksGame() {
         return !super.isDone();
+    }
+
+    public void startTwinkle() {
+        if (sparkAnimation == null && number == 10) {
+            sparkAnimation = new RunOnceAnimationSprite("dierollspark", "lotto.png",
+                    7, 2, 16, 16, 3, MyColors.LIGHT_YELLOW);
+        }
+    }
+
+    public void unregisterYourself() {
+        AnimationManager.unregister(this);
+        AnimationManager.unregister(sparkAnimation);
     }
 }

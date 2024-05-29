@@ -93,8 +93,10 @@ public class PartyAnimations implements Serializable {
             DieRollAnimation spr = dieRollAnimations.get(p);
             screenHandler.register(spr.getName(), p, spr, 3, spr.getXShift(), spr.getYShift());
             if (spr.isDone()) {
-                AnimationManager.unregister(spr);
+                spr.unregisterYourself();
                 dieRollAnimations.remove(p);
+            } else if (!spr.blocksGame()) {
+                spr.startTwinkle();
             }
         }
     }

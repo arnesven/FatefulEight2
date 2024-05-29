@@ -8,6 +8,10 @@ public class SoundEffects {
         ClientSoundManager.playSound(key);
     }
 
+    private static void playLowVolume(String key) {
+        ClientSoundManager.playSoundLowVolume(key);
+    }
+
     public static void menuDown() {
         play("menu_down");
     }
@@ -45,7 +49,7 @@ public class SoundEffects {
     }
 
     public static void gameSaved() {
-        play("save");
+        playLowVolume("save");
     }
 
     public static void preload(String key, boolean low) {
@@ -85,6 +89,6 @@ public class SoundEffects {
     }
 
     public static void successSkill() {
-        ClientSoundManager.playSoundLowVolume("success");
+        playLowVolume("success");
     }
 }
