@@ -54,11 +54,14 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
         if (!endAtSea) {
             println("You say farewell to the captain and the crew and disembark from the boat.");
         }
+        System.out.println("End at sea is " + endAtSea);
     }
 
     @Override
     protected GameState getEveningState(Model model) {
+        System.out.println("Getting evening state for travel by chartered boat");
         if (!endAtSea) {
+            System.out.println("Did not end at sea, calling super.");
             return super.getEveningState(model);
         }
         DailyEventState event = null;

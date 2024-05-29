@@ -32,8 +32,8 @@ public class CombatSubView extends SubView {
     private final CombatTheme theme;
     public static final Sprite INITIATIVE_MARKER = new MovingRightArrow(MyColors.WHITE, MyColors.BLACK);
     public static final Sprite CURRENT_MARKER = new QuestCursorSprite();
-    private int roundCounter = 0;
-    private int roundCounterAnimationCountDown = 0;
+    private int splashAnimationCountDown = 0;
+    private String splash = "";
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
@@ -80,10 +80,10 @@ public class CombatSubView extends SubView {
     }
 
     private void drawRoundCounter(Model model) {
-        if (roundCounterAnimationCountDown > 0) {
-            BorderFrame.drawCentered(model.getScreenHandler(), "ROUND " + roundCounter,
+        if (splashAnimationCountDown > 0) {
+            BorderFrame.drawCentered(model.getScreenHandler(), splash,
                     Y_OFFSET  + (Y_MAX - Y_OFFSET) / 2 + 2, MyColors.WHITE, MyColors.BLACK);
-            roundCounterAnimationCountDown--;
+            splashAnimationCountDown--;
         }
     }
 
@@ -272,8 +272,8 @@ public class CombatSubView extends SubView {
         }
     }
 
-    public void displayRound(int roundCounter) {
-        this.roundCounter = roundCounter;
-        this.roundCounterAnimationCountDown = 300;
+    public void displaySplashMessage(String splashMessage) {
+        this.splash = splashMessage;
+        this.splashAnimationCountDown = 300;
     }
 }

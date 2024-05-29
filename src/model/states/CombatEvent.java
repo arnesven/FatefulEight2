@@ -106,6 +106,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private void runQuickCastTurns(Model model) {
+        subView.displaySplashMessage("QUICK CAST");
         MyLists.forEach(
                 MyLists.filter(
                         MyLists.transform(
@@ -160,6 +161,7 @@ public class CombatEvent extends DailyEventState {
             print("You have have fled battle. ");
         } else if (roundCounter > timeLimit) {
             print("Combat has been interrupted. ");
+            subView.displaySplashMessage("INTERRUPT");
         } else {
             println("You are victorious in battle!");
             combatLoot = combatStats.generateCombatLoot(model);
@@ -183,6 +185,7 @@ public class CombatEvent extends DailyEventState {
         selectingFormation = true;
         backMovers.clear();
         combatMatrix.moveSelectedToParty();
+        subView.displaySplashMessage("FORMATION");
         print("Use SPACE to toggle a character's formation. Press enter when you are done.");
         getModel().getTutorial().combatFormation(getModel());
         waitForReturn();
@@ -194,7 +197,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private void doCombatRound(Model model) {
-        subView.displayRound(roundCounter);
+        subView.displaySplashMessage("ROUND " + roundCounter);
         for ( ; currentInit < initiativeOrder.size() && !combatDone(model) ; currentInit++) {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {
@@ -280,6 +283,7 @@ public class CombatEvent extends DailyEventState {
         List<GameCharacter> back = new ArrayList<>();
         back.addAll(model.getParty().getBackRow());
         if (!back.isEmpty() && frontRowIsOverrun(model)) {
+            subView.displaySplashMessage("OVERRUN!");
             printAlert("Party overrun by enemies! All characters in back row are moved to front.");
             model.getLog().waitForAnimationToFinish();
             MyLists.forEach(back, (GameCharacter gc) -> toggleFormationFor(model, gc));

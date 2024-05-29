@@ -188,7 +188,7 @@ public class CraftItemState extends GameState {
         println("The " + itemToSalvage.getName() + " was destroyed.");
         if (result.isSuccessful() && materialsGained > 0) {
             println(salvager.getFirstName() + " managed to salvage " + materialsGained +
-                    " material " + (materialsGained==1?"":"s") + " from the " + itemToSalvage.getName() + ".");
+                    " material" + (materialsGained==1?"":"s") + " from the " + itemToSalvage.getName() + ".");
             model.getParty().partyMemberSay(model, salvager, List.of("Why throw something away just because it's old?",
                     "We can probably use these materials for something.",
                     "These are good quality materials, let's save them for later.",
