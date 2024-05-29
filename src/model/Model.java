@@ -420,13 +420,17 @@ public class Model {
 
     public RuinsDungeon getDungeon(String ruinsName, boolean isRuins) {
         if (!hasVisitedDungeon(ruinsName)) {
-            gameData.dungeons.put(ruinsName, new RuinsDungeon(isRuins));
+            storeDungeon(ruinsName, new RuinsDungeon(isRuins));
         }
         return gameData.dungeons.get(ruinsName);
     }
 
     public boolean hasVisitedDungeon(String ruinsName) {
         return gameData.dungeons.containsKey(ruinsName);
+    }
+
+    public void storeDungeon(String dungeonName, RuinsDungeon dungeon) {
+        gameData.dungeons.put(dungeonName, dungeon);
     }
 
     public void visitDungeon(String ruinsName, RuinsDungeon dungeon) {

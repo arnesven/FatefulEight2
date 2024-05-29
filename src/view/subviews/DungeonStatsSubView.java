@@ -54,17 +54,17 @@ public class DungeonStatsSubView extends SubView {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX,
                 blueBlock);
         int row = Y_OFFSET;
-        BorderFrame.drawString(model.getScreenHandler(), "Dungeon Completed: " + String.format("%10s", dungeon.isCompleted()?"Yes":"No"),
+        BorderFrame.drawString(model.getScreenHandler(), "Dungeon Completed " + String.format("%10s", dungeon.isCompleted()?"Yes":"No"),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Levels Visited:    " + String.format("%10s", visitedLevels + "/" + showIfCompleted(dungeon.getNumberOfLevels())),
+        BorderFrame.drawString(model.getScreenHandler(), "Levels Visited    " + String.format("%10s", visitedLevels + "/" + showIfCompleted(dungeon.getNumberOfLevels())),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Rooms Visited:     " + String.format("%10s", visitedRooms + "/" + showIfCompleted(totalRooms)),
+        BorderFrame.drawString(model.getScreenHandler(), "Rooms Visited     " + String.format("%10s", visitedRooms + "/" + showIfCompleted(totalRooms)),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Monsters Defeated: " + String.format("%10s", defeatedMonsters + "/" + showIfCompleted(undefeatedMonsters+defeatedMonsters)),
+        BorderFrame.drawString(model.getScreenHandler(), "Monsters Defeated " + String.format("%10s", defeatedMonsters + "/" + showIfCompleted(undefeatedMonsters+defeatedMonsters)),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Chests Looted:     " + String.format("%10s", chestsOpened + "/" + showIfCompleted(chests)),
+        BorderFrame.drawString(model.getScreenHandler(), "Chests Looted     " + String.format("%10s", chestsOpened + "/" + showIfCompleted(chests)),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
-        BorderFrame.drawString(model.getScreenHandler(), "Maps Found:        " + String.format("%10s", mapsFound),
+        BorderFrame.drawString(model.getScreenHandler(), "Maps Found        " + String.format("%10s", mapsFound),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
     }
 
@@ -82,6 +82,6 @@ public class DungeonStatsSubView extends SubView {
 
     @Override
     protected String getTitleText(Model model) {
-        return dungeonType.toUpperCase() + " SUMMARY";
+        return "DUNGEON - SUMMARY";
     }
 }

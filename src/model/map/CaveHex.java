@@ -96,6 +96,9 @@ public class CaveHex extends WorldHex {
         List<DailyAction> actions;
         actions = new ArrayList<>();
         actions.add(new DailyAction("Travel", new TravelState(model)));
+        if (getLocation() != null && getLocation().hasDailyActions()) {
+            actions.addAll(getLocation().getDailyActions(model));
+        }
         actions.add(new StayInHexAction(model));
         return actions;
     }

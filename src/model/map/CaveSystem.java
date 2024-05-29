@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.map.objects.MapObject;
+import util.MyRandom;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import static model.map.Direction.SOUTH;
 
 public class CaveSystem extends World {
     private static final String VISITED_KEY = "caveHexVisited";
-    private static final Point FORTRESS_POSITION = new Point(26, 19);
     private static List<Integer> tunnels =
             List.of(Direction.NORTH_WEST, NORTH, Direction.NORTH_EAST,
                     Direction.SOUTH_EAST, SOUTH, Direction.SOUTH_WEST);
@@ -25,11 +25,17 @@ public class CaveSystem extends World {
     private static WorldHex[][] makeHexes(World overWorld, int seed) {
         Random random = new Random(seed);
         CaveHex.setRandom(random);
+        Rectangle worldBounds = WorldBuilder.getWorldBounds(overWorld.getCurrentState());
+        Point fortressPosition = new Point(
+                worldBounds.x + 1 + random.nextInt(worldBounds.width-1),
+                worldBounds.y + 1 + random.nextInt(worldBounds.height-1));
+        System.out.println("FatUE is at x=" + fortressPosition.x + ", y=" + fortressPosition.y);
+
         WorldHex[][] hexes = new WorldHex[WorldBuilder.WORLD_WIDTH][WorldBuilder.WORLD_HEIGHT];
         for (int y = 0; y < WorldBuilder.WORLD_HEIGHT; ++y) {
             for (int x = 0; x < WorldBuilder.WORLD_WIDTH; ++x) {
                 int state = WorldBuilder.getStateForXY(x, y);
-                if (FORTRESS_POSITION.x == x && FORTRESS_POSITION.y == y) {
+                if (fortressPosition.x == x && fortressPosition.y == y) {
                     hexes[x][y] = new FortressCaveHex(state);
                 } else if (noExit(overWorld.getHex(new Point(x, y)))) {
                     hexes[x][y] = new CaveHexWithoutExit(Direction.NONE, state);

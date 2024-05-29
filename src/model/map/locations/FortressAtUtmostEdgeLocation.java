@@ -1,16 +1,22 @@
 package model.map.locations;
 
+import model.Model;
+import model.actions.DailyAction;
 import model.map.CaveHex;
 import model.map.HexLocation;
+import model.states.DailyEventState;
+import model.states.dailyaction.ExploreFortressAtUtmostEdgeDailyAction;
+import model.states.events.FortressAtUtmostEdgeEvent;
 import view.GameView;
 import view.MyColors;
-import view.help.CastleHelpDialog;
 import view.help.FortressAtUtmostEdgeHelpDialog;
 import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
+
+import java.util.List;
 
 public class FortressAtUtmostEdgeLocation extends HexLocation {
     public static final String NAME = "Fortress at the Utmost Edge";
@@ -43,5 +49,20 @@ public class FortressAtUtmostEdgeLocation extends HexLocation {
     @Override
     public HelpDialog getHelpDialog(GameView view) {
         return new FortressAtUtmostEdgeHelpDialog(view);
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        return new FortressAtUtmostEdgeEvent(model);
+    }
+
+    @Override
+    public List<DailyAction> getDailyActions(Model model) {
+        return List.of(new ExploreFortressAtUtmostEdgeDailyAction(model, getName()));
+    }
+
+    @Override
+    public boolean hasDailyActions() {
+        return true;
     }
 }

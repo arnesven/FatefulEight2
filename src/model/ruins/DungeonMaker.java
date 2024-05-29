@@ -74,4 +74,8 @@ public class DungeonMaker {
         levels.add(new FinalDungeonLevel(random, config.getTheme()));
         return levels;
     }
+
+    public static List<DungeonLevel> makeFortressAtUtmostEdge() {
+        return makeRandomDungeon(MyRandom.randInt(450, 500), 5, 10, false);
+    }
 }

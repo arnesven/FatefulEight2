@@ -2,7 +2,6 @@ package view;
 
 import control.FatefulEight;
 import model.Model;
-import model.map.CaveSystem;
 import model.map.World;
 import view.help.SpecificTerrainHelpDialog;
 import view.widget.FullMapTopText;

@@ -196,6 +196,7 @@ public class TallSpireEvent extends DailyEventState {
             }
 
             exploreRuinsState.setDungeonExited(true);
+            exploreRuinsState.getDungeon().setCompleted(true);
         }
 
         private boolean generateRiddle(Model model, ExploreRuinsState exploreRuinsState) {
