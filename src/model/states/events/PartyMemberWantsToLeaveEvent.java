@@ -40,7 +40,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             int dislikes = 0;
             for (GameCharacter other : model.getParty().getPartyMembers()) {
-                if (other != gc && gc.getAttitude(other) <= 10) {
+                if (other != gc && gc.getAttitude(other) <= -10) {
                     dislikes++;
                 }
             }
@@ -69,7 +69,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
             showPartyAttitudesSubView(model);
         } else {
             leaderSay(potentialLeaver.getFirstName() + ", if you want to leave, I won't stand in your way.");
-            println(model.getParty ().getLeader() + " failed to persuade " + potentialLeaver.getName() +
+            println(model.getParty().getLeader().getFirstName() + " failed to persuade " + potentialLeaver.getName() +
                     " to stay in the party. (Persuade " + result.asString());
             wantsToLeave(model, potentialLeaver, false);
         }
@@ -99,7 +99,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
                     "I think my adventuring days are over.", "I'm fed up with you " + model.getParty().getLeader().getFirstName() + "."));
         }
         int goldDemanded = gc.getCharClass().getStartingGold() + gc.getLevel() * 5 + 5;
-        print(gc.getName() + " wants to leave the party and will return all equipped items, but demands " + goldDemanded + " gold as a wage.");
+        println(gc.getName() + " wants to leave the party and will return all equipped items, but demands " + goldDemanded + " gold as a wage.");
         List<String> options = new ArrayList<>(List.of("Don't pay wage, lose items", "Refuse to pay, demand items"));
         int offset = 0;
         if (model.getParty().getGold() >= goldDemanded) {
