@@ -49,4 +49,11 @@ public class SkillCheckResult {
     public int getUnmodifiedRoll() {
         return roll;
     }
+
+    public boolean isFailure() {
+        if (difficulty == Integer.MAX_VALUE) {
+            return false;
+        }
+        return !isSuccessful();
+    }
 }

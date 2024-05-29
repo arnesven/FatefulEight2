@@ -404,7 +404,7 @@ public class GameCharacter extends Combatant {
             }
             if (result.isSuccessful()) {
                 SoundEffects.successSkill();
-            } else {
+            } else if (result.isFailure()) {
                 SoundEffects.failedSkill();
             }
         }
