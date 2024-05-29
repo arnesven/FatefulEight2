@@ -12,7 +12,9 @@ public class TutorialScoringDialog extends HelpDialog {
             "Days Remaining...........10 each\n" +
             "Party Members.........20-30 each\n" +
             "Gold and Equipment...total value\n" +
-            "Spells..........25 per different\n";
+            "Spells..........25 per different\n" +
+            "Main Story Completed........2500\n" +
+            "FatUE Cleared...............2500\n";
 
     public TutorialScoringDialog(GameView previous) {
         super(previous, "Scoring", TEXT);

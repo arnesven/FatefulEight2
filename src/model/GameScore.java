@@ -3,6 +3,7 @@ package model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.spells.Spell;
+import model.map.locations.FortressAtUtmostEdgeLocation;
 import util.MyLists;
 
 import java.util.HashMap;
@@ -20,7 +21,13 @@ public class GameScore extends HashMap<String, Integer> {
         int totalGold = totalEquipmentValue(model);
         gs.put("Wealth", totalGold);
         gs.put("Spells Collected", spellsCollected(model) * 25);
+        gs.put("Main Story Completed", model.getMainStory().isCompleted(model)?2500:0);
+        gs.put("FatUE Cleared", isFatueCleared(model)?2500:0);
         return gs;
+    }
+
+    private static boolean isFatueCleared(Model model) {
+        return model.getDungeon(FortressAtUtmostEdgeLocation.NAME, false).isCompleted();
     }
 
     private static Integer spellsCollected(Model model) {

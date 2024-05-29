@@ -52,7 +52,7 @@ public class PartFiveStoryPart extends StoryPart {
 
     @Override
     protected boolean isCompleted() {
-        return false;
+        return internalStep > 0;
     }
 
     private class GoToAncientStrongholdEntry extends MainStoryTask {
