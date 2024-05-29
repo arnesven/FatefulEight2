@@ -21,7 +21,7 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
     public void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().heavyBlow(model);
         combat.println(performer.getFirstName() + " does a powerful swing!");
-        performer.doOneAttack(combat, target, false, 2, 10);
+        performer.doOneAttack(model, combat, target, false, 2, 10);
     }
 
     public static boolean canDoHeavyBlowAbility(GameCharacter performer) {

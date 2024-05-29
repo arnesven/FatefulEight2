@@ -45,7 +45,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
 
     private void addDestinationTasks(Model model) {
         for (DestinationTask dt : model.getParty().getDestinationTasks()) {
-            if (!dt.isFailed(model)) {
+            if (!dt.isCompleted() && !dt.isFailed(model)) {
                 questsAndTasks.add(dt.getJournalEntry(model));
             } else {
                 JournalEntry je = dt.getFailedJournalEntry(model);

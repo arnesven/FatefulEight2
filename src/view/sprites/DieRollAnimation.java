@@ -3,7 +3,6 @@ package view.sprites;
 import model.Model;
 import view.MyColors;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -16,10 +15,10 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
 
     public DieRollAnimation(int faceNumber) {
         super("dierollanimation", "lotto.png", 0, 2, 16, 16, 7, MyColors.DARK_GRAY);
-        setColor2(MyColors.BEIGE);
+        setColor2(MyColors.WHITE);
         stillFrame = new Sprite16x16("stillframedie"+faceNumber, "lotto.png", 0x10 + faceNumber - 1);
-        stillFrame.setColor2(MyColors.BEIGE);
-        stillFrame.setColor3(MyColors.BLACK);
+        stillFrame.setColor2(MyColors.WHITE);
+        stillFrame.setColor3(MyColors.RED);
         this.number = faceNumber;
         setAnimationDelay(10);
     }
@@ -72,5 +71,9 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
             return amp;
         }
         return 0;
+    }
+
+    public boolean blocksGame() {
+        return !super.isDone();
     }
 }

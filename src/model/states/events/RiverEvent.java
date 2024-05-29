@@ -109,7 +109,7 @@ public abstract class RiverEvent extends DailyEventState {
     public void fallIntoRiver(Model model, GameCharacter gc, String text) {
         SkillCheckResult result;
         do {
-            result = gc.testSkill(Skill.Endurance, 8);
+            result = gc.testSkill(model, Skill.Endurance, 8);
             println(gc.getName() + " " + text + " " + result.asString() + ".");
             if (gc.getSP() > 0) {
                 println("Using stamina to re-roll.");

@@ -78,7 +78,7 @@ public class ArcheryState extends GameState {
             }
             waitForReturn();
             targetSubView.setCursorEnabled(false);
-            int skillResult = fireArrowSkillCheck(shooter);
+            int skillResult = fireArrowSkillCheck(model, shooter);
             int error = 2 * Math.max(0, SHOT_DIFFICULTIES[targetDistance - 1] - skillResult);
             int xError = 0;
             int yError = 0;
@@ -149,11 +149,11 @@ public class ArcheryState extends GameState {
     }
 
 
-    private int fireArrowSkillCheck(GameCharacter shooter) {
+    private int fireArrowSkillCheck(Model model, GameCharacter shooter) {
         print(shooter.getFirstName() + " fires the arrow! ");
         SkillCheckResult skillCheckResult;
         do {
-            skillCheckResult = shooter.testSkill(Skill.Bows);
+            skillCheckResult = shooter.testSkill(model, Skill.Bows, Integer.MAX_VALUE, 0);
             println("Roll of " + skillCheckResult.asString() + ".");
             if (shooter.getSP() == 0) {
                 break;
@@ -180,7 +180,7 @@ public class ArcheryState extends GameState {
                     print(npc.getName() + " takes another shot. ");
                 }
                 getModel().getLog().waitForAnimationToFinish();
-                int skillRoll = npc.testSkill(Skill.Bows).getModifiedRoll();
+                int skillRoll = npc.testSkillHidden(Skill.Bows, Integer.MAX_VALUE, 0).getModifiedRoll();
 
                 int power = 0;
                 int weaponPower = npc.getEquipment().getWeapon().getDamageTable().length;

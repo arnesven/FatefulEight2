@@ -34,6 +34,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.AvatarSprite;
 import view.sprites.DamageValueEffect;
+import view.sprites.DieRollAnimation;
 import view.sprites.Sprite;
 import view.subviews.CombatSubView;
 import view.widget.HealthBar;
@@ -191,16 +192,17 @@ public class GameCharacter extends Combatant {
             if (target.isDead()) {
                 return;
             }
-            doOneAttack(combatEvent, target, false, 0, equipment.getWeapon().getCriticalTarget());
+            doOneAttack(model, combatEvent, target, false, 0, equipment.getWeapon().getCriticalTarget());
             if (i < equipment.getWeapon().getNumberOfAttacks() - 1) {
                 model.getLog().waitForAnimationToFinish();
             }
         }
     }
 
-    public void doOneAttack(CombatEvent combatEvent, Combatant target, boolean sneakAttack, int extraDamage, int crit) {
+    public void doOneAttack(Model model, CombatEvent combatEvent, Combatant target, boolean sneakAttack, int extraDamage, int crit) {
+        combatEvent.print(getFirstName() + " attacks " + target.getName());
         int bonus = getAttackBonusesFromConditions();
-        SkillCheckResult result = testSkill(equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
+        SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this), NO_DIFFICULTY, bonus);
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
         if (extraDamage > 0) {
@@ -216,7 +218,7 @@ public class GameCharacter extends Combatant {
             extraInfo += LogView.YELLOW_COLOR +  " x2 Critical Hit" + LogView.DEFAULT_COLOR;
         }
         extraInfo += ")";
-        combatEvent.println(getFirstName() + " attacks " + target.getName() + ", dealing " + damage + " damage." + extraInfo);
+        combatEvent.println(", dealing " + damage + " damage." + extraInfo);
         combatEvent.addSpecialEffect(target, equipment.getWeapon().getEffectSprite());
         if (damage > 0) {
             MyColors damageColor = DamageValueEffect.STANDARD_DAMAGE;
@@ -385,20 +387,31 @@ public class GameCharacter extends Combatant {
         return total;
     }
 
-    public SkillCheckResult testSkill(Skill skill, int difficulty, int bonus) {
+    public SkillCheckResult testSkillHidden(Skill skill, int difficulty, int bonus) {
+        return new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty, bonus);
+    }
+
+    public SkillCheckResult testSkill(Model model, Skill skill, int difficulty, int bonus) {
         SkillCheckResult result = new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty, bonus);
-        if (party != null) {
-            party.addDieRollAnimation(this, result.getUnmodifiedRoll());
+        if (party != null && model.getSettings().animateDieRollsEnabled()) {
+            DieRollAnimation die = party.addDieRollAnimation(this, result.getUnmodifiedRoll());
+            while (die.blocksGame()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return result;
     }
 
-    public SkillCheckResult testSkill(Skill skill, int difficulty) {
-        return testSkill(skill, difficulty, 0);
+    public SkillCheckResult testSkill(Model model, Skill skill, int difficulty) {
+        return testSkill(model, skill, difficulty, 0);
     }
 
-    public SkillCheckResult testSkill(Skill skill) {
-        return testSkill(skill, Integer.MAX_VALUE, 0);
+    public SkillCheckResult testSkill(Model model, Skill skill) {
+        return testSkill(model, skill, Integer.MAX_VALUE, 0);
     }
 
     public int getMaxSP() {
@@ -589,7 +602,7 @@ public class GameCharacter extends Combatant {
             combatEvent.addFloatyText(this, CombatSubView.EVADE_TEXT);
             combatEvent.println(getFirstName() + " evaded " + enemy.getName() + "'s attack! ");
             model.getTutorial().evading(model);
-            RiposteCombatAction.doRiposte(combatEvent, this, enemy);
+            RiposteCombatAction.doRiposte(model, combatEvent, this, enemy);
             combatEvent.getStatistics().addToAvoidedDamage(damage);
             return;
         }

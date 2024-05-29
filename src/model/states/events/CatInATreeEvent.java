@@ -48,7 +48,7 @@ public class CatInATreeEvent extends GeneralInteractionEvent {
                 MyPair<Boolean, GameCharacter> result = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.Acrobatics, 6);
                 if (result.first) {
                     println(result.second.getName() + " manages to climb the tree and retrieve Quincy the cat.");
-                    SkillCheckResult spotting = result.second.testSkill(Skill.Perception, 6);
+                    SkillCheckResult spotting = result.second.testSkillHidden(Skill.Perception, 6, 0);
                     if (spotting.isSuccessful()) {
                         println(result.second.getName() + " also spots a shiny trinket (Perception " + spotting.asString() + "). How did that get there?");
                         model.getParty().addToGold(15);

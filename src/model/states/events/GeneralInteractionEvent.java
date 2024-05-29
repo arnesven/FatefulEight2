@@ -125,13 +125,13 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         getModel().getTutorial().pickPocketing(getModel());
         GameCharacter thief = getModel().getParty().partyMemberInput(getModel(),
                 this, getModel().getParty().getPartyMember(0));
-        SkillCheckResult result = thief.testSkill(Skill.Sneak,
+        SkillCheckResult result = thief.testSkill(getModel(), Skill.Sneak,
                 PICK_POCKETING_BASE_SNEAK_DIFFICULTY + victimChar.getRankForSkill(Skill.Perception));
         GameCharacter decoy = getModel().getParty().getRandomPartyMember(thief);
         println("While " + decoy.getFirstName() + " distracts " + victim + ", " + thief.getFirstName() +
                 " sneaks around from the back (Sneak " + result.asString() + ").");
         if (result.isSuccessful()) {
-            result = thief.testSkill(Skill.Security,
+            result = thief.testSkill(getModel(), Skill.Security,
                     PICK_POCKETING_BASE_SECURITY_DIFFICULTY + victimChar.getLevel());
             println(thief.getFirstName() + " attempts to grab the " + victim +
                     "'s purse (Security " + result.asString() + ").");

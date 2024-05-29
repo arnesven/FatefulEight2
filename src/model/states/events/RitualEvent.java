@@ -280,7 +280,7 @@ public abstract class RitualEvent extends DailyEventState {
             result = model.getParty().doSkillCheckWithReRoll(model, this, turnTaker, primeMagicSkill,
                     CAST_BEAM_DIFFICULTY, 10, turnTaker.getRankForSkill(Skill.SpellCasting));
         } else {
-            result = turnTaker.testSkill(primeMagicSkill, CAST_BEAM_DIFFICULTY, turnTaker.getRankForSkill(Skill.SpellCasting));
+            result = turnTaker.testSkill(model, primeMagicSkill, CAST_BEAM_DIFFICULTY, turnTaker.getRankForSkill(Skill.SpellCasting));
             println(primeMagicSkill.getName() + " " + result.asString() + ".");
         }
         model.getLog().waitForAnimationToFinish();
@@ -319,7 +319,7 @@ public abstract class RitualEvent extends DailyEventState {
             result2 = model.getParty().doSkillCheckWithReRoll(model, this, receiver, Skill.MagicAny,
                     RECEIVE_BEAM_DIFFICULTY, 0, 0);
         } else {
-            result2 = receiver.testSkill(Skill.MagicAny, RECEIVE_BEAM_DIFFICULTY);
+            result2 = receiver.testSkill(model, Skill.MagicAny, RECEIVE_BEAM_DIFFICULTY);
             println(Skill.MagicAny.getName() + " " + result2.asString() + ".");
         }
         model.getLog().waitForAnimationToFinish();

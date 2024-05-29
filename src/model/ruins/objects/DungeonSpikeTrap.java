@@ -48,7 +48,7 @@ public class DungeonSpikeTrap extends CenterDungeonObject {
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
         for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
-            SkillCheckResult result = gc.testSkill(Skill.Acrobatics, 3);
+            SkillCheckResult result = gc.testSkillHidden(Skill.Acrobatics, 3, 0);
             if (!result.isSuccessful()) {
                 exploreRuinsState.println(gc.getName() + " got injured from the trap! (Acrobatics " + result.asString() + ")");
                 gc.addToHP(-1);

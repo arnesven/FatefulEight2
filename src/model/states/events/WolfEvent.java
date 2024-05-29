@@ -44,7 +44,7 @@ public class WolfEvent extends DailyEventState {
 
     private boolean canSneak(Model model) {
         if (model.getParty().size() == 1) {
-            SkillCheckResult result = model.getParty().getPartyMember(0).testSkill(Skill.Sneak, 6);
+            SkillCheckResult result = model.getParty().getPartyMember(0).testSkill(model, Skill.Sneak, 6);
             println("You quickly try to find a place to hide. (Sneak " + result.asString() + ")");
             if (result.isSuccessful()) {
                 println("Fortunately you find a little cranny to hide in and the wolves pass by.");

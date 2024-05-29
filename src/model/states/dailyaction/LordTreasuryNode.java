@@ -100,7 +100,7 @@ public class LordTreasuryNode extends DailyActionNode {
         private void lordIsOutraged(Model model) {
             printQuote(location.getLordName(), "Stop! What do you think you're doing?");
             leaderSay("Uhm, I was just looking for the restroom?");
-            SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Persuade, 7);
+            SkillCheckResult result = model.getParty().getLeader().testSkill(model, Skill.Persuade, 7);
 
             println(model.getParty().getLeader().getName() + " attempts to persuade " +
                     location.getLordName() + ", Persuade " + result.asString() + ".");

@@ -19,7 +19,7 @@ public class PartyCookingEvent extends DailyEventState {
     protected void doEvent(Model model) {
         List<GameCharacter> cooks = new ArrayList<>();
         for (GameCharacter chara : model.getParty().getPartyMembers()) {
-            if (chara.testSkill(Skill.Survival, 10).isSuccessful()) {
+            if (chara.testSkillHidden(Skill.Survival, 10, 0).isSuccessful()) {
                 cooks.add(chara);
             }
         }
@@ -36,7 +36,7 @@ public class PartyCookingEvent extends DailyEventState {
             return;
         }
 
-        int cookQuality = cooker.testSkill(Skill.Survival).getModifiedRoll() + 3;
+        int cookQuality = cooker.testSkill(model, Skill.Survival).getModifiedRoll() + 3;
         if (cooker.getSP() > 0) {
             cooker.addToSP(-1);
             println(cooker.getFirstName() + " exhausts 1 Stamina Point while cooking the special meal.");

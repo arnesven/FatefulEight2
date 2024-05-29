@@ -47,7 +47,7 @@ public class CharlatanEvent extends DailyEventState {
             if (yesNoInput()) {
                 model.getParty().addToGold(-20);
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    SkillCheckResult result = gc.testSkill(Skill.MagicGreen, 10);
+                    SkillCheckResult result = gc.testSkillHidden(Skill.MagicGreen, 10, 0);
                     if (result.isSuccessful()) {
                         charlatanFoundOut(model, gc, result);
                         return;

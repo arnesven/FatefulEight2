@@ -78,7 +78,7 @@ public class LockedDoor extends DungeonDoor {
             state.println("Who should try to break down the door.");
             GameCharacter performer = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
             performer.addToSP(-1);
-            SkillCheckResult result = performer.testSkill(performer.getEquipment().getWeapon().getSkillToUse(performer));
+            SkillCheckResult result = performer.testSkill(model, performer.getEquipment().getWeapon().getSkillToUse(performer));
             int damage = performer.getEquipment().getWeapon().getDamage(result.getModifiedRoll(), performer);
             state.println(performer.getName() + " did " + damage + " damage to the door.");
             if (MyRandom.rollD10() == 1) {

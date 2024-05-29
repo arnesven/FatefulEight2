@@ -21,7 +21,7 @@ public class ChestEvent extends DailyEventState {
         SkillCheckResult result = null;
         GameCharacter performer = null;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            result = gc.testSkill(Skill.Perception, 7);
+            result = gc.testSkillHidden(Skill.Perception, 7, 0);
             if (result.isSuccessful()) {
                 performer = gc;
                 break;

@@ -28,7 +28,7 @@ public class RegenerationCombatAction extends CombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().regenerate(model);
-        SkillCheckResult result = performer.testSkill(SKILL_TO_USE);
+        SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE);
         combat.println(performer.getFirstName() + " attempts Regenerate on " + target.getName() + ", " +
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
         if (result.getModifiedRoll() < DIFFICULTY || target.hasCondition(RegenerationCondition.class)) {

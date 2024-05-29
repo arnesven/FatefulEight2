@@ -470,7 +470,7 @@ public class Party implements Serializable {
         for (GameCharacter gc : performers) {
             if (!bench.contains(gc)) {
                 if (gc != performer) {
-                    SkillCheckResult assistResult = gc.testSkill(skill, getCollaborativeDifficulty(performer, gc));
+                    SkillCheckResult assistResult = gc.testSkill(model, skill, getCollaborativeDifficulty(performer, gc));
                     if (assistResult.isSuccessful()) {
                         giveXP(model, gc, 5);
                         event.println(gc.getFirstName() + " helps out (" + assistResult.asString() + ").");
@@ -559,7 +559,7 @@ public class Party implements Serializable {
     public SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {
         SkillCheckResult result;
         do {
-            result = performer.testSkill(skill, difficulty, bonus);
+            result = performer.testSkill(model, skill, difficulty, bonus);
             event.println(performer.getFirstName() + " performs " + skill.getName() + " " + result.asString());
             if (result.isSuccessful()) {
                 if (exp > 0) {
@@ -833,9 +833,9 @@ public class Party implements Serializable {
 
     public List<DestinationTask> getDestinationTasks() { return destinationTasks; }
 
-    public void addDieRollAnimation(GameCharacter character, int unmodifiedRoll) {
+    public DieRollAnimation addDieRollAnimation(GameCharacter character, int unmodifiedRoll) {
         Point position = getLocationForPartyMember(partyMembers.indexOf(character));
         position.translate(1, 8);
-        partyAnimations.addDieRollAnimation(position, unmodifiedRoll);
+        return partyAnimations.addDieRollAnimation(position, unmodifiedRoll);
     }
 }

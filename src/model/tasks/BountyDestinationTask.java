@@ -126,6 +126,11 @@ public class BountyDestinationTask extends DestinationTask {
         }
     }
 
+    @Override
+    public boolean isCompleted() {
+        return state == TURNED_IN;
+    }
+
     public boolean canGetClue() {
         return this.state == LOOKING_FOR_BOUNTY;
     }
@@ -167,7 +172,7 @@ public class BountyDestinationTask extends DestinationTask {
 
         @Override
         public boolean isComplete() {
-            return state == TURNED_IN;
+            return BountyDestinationTask.this.isCompleted();
         }
 
         @Override

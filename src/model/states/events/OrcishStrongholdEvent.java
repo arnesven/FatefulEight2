@@ -156,7 +156,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
             }
             if (spotted < warriors) {
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    SkillCheckResult result = gc.testSkill(Skill.Logic, 8);
+                    SkillCheckResult result = gc.testSkillHidden(Skill.Logic, 8, 0);
                     if (result.isSuccessful()) {
                         println(gc.getFirstName() + " tests Logic " + result.asString() + ".");
                         model.getParty().partyMemberSay(model, gc, "Hmm. Based on the smoke coming from those chimneys " +

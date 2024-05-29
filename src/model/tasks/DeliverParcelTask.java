@@ -52,6 +52,11 @@ public class DeliverParcelTask extends DestinationTask {
     }
 
     @Override
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    @Override
     public DailyAction getDailyAction(Model model) {
         return new DailyAction("Deliver " + parcel.getName(),
                 new MakeDeliveryEvent(model, this));

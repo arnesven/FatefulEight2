@@ -43,6 +43,11 @@ public class TreasureHuntTask extends DestinationTask {
         return !isFailed(model) && !completed;
     }
 
+    @Override
+    public boolean isCompleted() {
+        return completed;
+    }
+
     public void complete(Model model) {
         completed = true;
         model.getParty().getInventory().remove(map);

@@ -114,7 +114,7 @@ public class OtherPartyEvent extends DailyEventState {
             println(entertainer.getFirstName() + " has offered to tell a grand tale for the party.");
         }
 
-        int entertainmentQuality = entertainer.testSkill(Skill.Entertain).getModifiedRoll();
+        int entertainmentQuality = entertainer.testSkill(model, Skill.Entertain, Integer.MAX_VALUE, 0).getModifiedRoll();
         if (entertainer.getSP() > 0) {
             entertainer.addToSP(-1);
             println(entertainer.getName() + " exhausts 1 Stamina Point while entertaining the party.");
@@ -148,7 +148,7 @@ public class OtherPartyEvent extends DailyEventState {
         print("Who should prepare the special meal for everybody?");
         GameCharacter cooker = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
         model.getParty().addToFood(-otherPartyMembers.size());
-        int cookQuality = cooker.testSkill(Skill.Survival).getModifiedRoll() + 3;
+        int cookQuality = cooker.testSkill(model, Skill.Survival, Integer.MAX_VALUE, 0).getModifiedRoll() + 3;
         if (cooker.getSP() > 0) {
             cooker.addToSP(-1);
             println(cooker.getFirstName() + " exhausts 1 Stamina Point while cooking the special meal.");
@@ -366,7 +366,7 @@ public class OtherPartyEvent extends DailyEventState {
             } else {
                 int averageLevelDiff = (int)Math.round(Math.abs(calculateAverageLevel(model) - otherPartyLevel));
                 int baseDifficulty = 12 - (int)Math.round(attitudeMap.get(leader) / 5.0) + averageLevelDiff * 2;
-                SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Persuade, baseDifficulty);
+                SkillCheckResult result = model.getParty().getLeader().testSkill(model, Skill.Persuade, baseDifficulty);
                 println(model.getParty().getLeader().getName() + " attempts to persuade " + leader.getName() + " to merge " +
                         "the parties (Persuade " + result.asString() + ").");
                 if (result.isSuccessful()) {
@@ -438,7 +438,7 @@ public class OtherPartyEvent extends DailyEventState {
                     "Wanna come and work for me instead?", "Do you want to join my party instead?")));
             int baseDifficulty = 11 + attitudeTowardLeaderMap.get(who) * 3 -
                     ((int)Math.round(attitudeMap.get(who) / 5.0));
-            SkillCheckResult result = model.getParty().getLeader().testSkill(Skill.Persuade, baseDifficulty);
+            SkillCheckResult result = model.getParty().getLeader().testSkill(model, Skill.Persuade, baseDifficulty);
             println(model.getParty().getLeader().getName() + " attempts to persuade " + who.getName() + " to join the " +
                     "party (Persuade " + result.asString() + ").");
             if (result.isSuccessful()) {

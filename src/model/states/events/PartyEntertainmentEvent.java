@@ -23,7 +23,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
     protected void doEvent(Model model) {
         List<GameCharacter> entertainers = new ArrayList<>();
         for (GameCharacter chara : model.getParty().getPartyMembers()) {
-            if (chara.testSkill(Skill.Entertain, 10).isSuccessful()) {
+            if (chara.testSkillHidden(Skill.Entertain, 10, 0).isSuccessful()) {
                 entertainers.add(chara);
             }
             if (entertainers.size() == model.getParty().size()-1) {
@@ -65,7 +65,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
 
         int entertainmentQuality = 0;
         for (GameCharacter gc : entertainers) {
-            entertainmentQuality += gc.testSkill(Skill.Entertain).getModifiedRoll();
+            entertainmentQuality += gc.testSkill(model, Skill.Entertain).getModifiedRoll();
             if (gc.getSP() > 0) {
                 gc.addToSP(-1);
                 println(gc.getName() + " exhausts 1 Stamina Point while entertaining the party.");

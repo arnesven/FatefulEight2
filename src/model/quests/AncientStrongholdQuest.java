@@ -181,7 +181,7 @@ public class AncientStrongholdQuest extends MainQuest {
                 }
             } else if (!pearlsFound) {
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    if (gc.testSkill(Skill.Perception, 8).isSuccessful()) {
+                    if (gc.testSkillHidden(Skill.Perception, 8, 0).isSuccessful()) {
                         state.println("You spot some pearls on the floor and pick them up.");
                         for (int i = 0; i < 3; ++i) {
                             PearlItem pearl = makeRandomPearl();

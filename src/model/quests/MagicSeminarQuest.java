@@ -53,6 +53,7 @@ public class MagicSeminarQuest extends Quest implements CountingQuest {
             int extraGold = (count - 6) * 25;
             state.println("Inspired by your phenomenal performance, the students give you some extra tips after the seminar.");
             state.println("The party gains " + extraGold + " gold!");
+            model.getParty().addToGold(extraGold);
         }
         return super.endOfQuest(model, state, questWasSuccess);
     }

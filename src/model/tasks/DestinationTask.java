@@ -33,4 +33,6 @@ public abstract class DestinationTask implements Serializable {
     public abstract boolean isFailed(Model model);
 
     public abstract boolean givesDailyAction(Model model);
+
+    public abstract boolean isCompleted();
 }

@@ -57,7 +57,7 @@ public class DungeonPitfallTrap extends CenterDungeonObject {
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
         for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
             if (!model.getParty().getBench().contains(gc)) {
-                SkillCheckResult result = gc.testSkill(Skill.Acrobatics, 2);
+                SkillCheckResult result = gc.testSkillHidden(Skill.Acrobatics, 2, 0);
                 if (!result.isSuccessful()) {
                     exploreRuinsState.partyMemberSay(gc, MyRandom.sample(List.of("I'm slipping, aaaah!", "I'm falling!",
                             "Help!", "Waaaagh!", "Woaaah!")));

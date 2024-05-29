@@ -55,7 +55,7 @@ public abstract class CombatAction {
                     }
                 }
             } else if (combat.getCurrentRound() >= FATIGUE_START_ROUND) {
-                SkillCheckResult result = performer.testSkill(Skill.Endurance, performer.getAP());
+                SkillCheckResult result = performer.testSkill(model, Skill.Endurance, performer.getAP());
                 if (!result.isSuccessful()) {
                     model.getTutorial().fatigue(model);
                     combat.println(performer.getFirstName() + " has been fatigue due to wearing heavy armor (Endurance " +
@@ -144,7 +144,7 @@ public abstract class CombatAction {
 
     private static void performFleeFromBattle(Model model, CombatEvent combatEvent, GameCharacter character) {
         if (model.getParty().size() > 1) {
-            SkillCheckResult result = character.testSkill(Skill.Leadership, 3 + model.getParty().size());
+            SkillCheckResult result = character.testSkill(model, Skill.Leadership, 3 + model.getParty().size());
             combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
             if (result.isSuccessful()) {
                 combatEvent.setPartyFled(true);

@@ -21,6 +21,7 @@ public class SettingsManager implements Serializable {
     private boolean alwaysRide = false;
     private final Map<String, Boolean> miscFlags = new HashMap<>();
     private final Map<String, Integer> miscCounters = new HashMap<>();
+    private boolean animateDieRolls = true;
 
     public SettingsManager() {
         miscFlags.put(TopText.GOLD_SETTINGS_FLAG, true);
@@ -118,5 +119,13 @@ public class SettingsManager implements Serializable {
 
     public LogSpeed getMovementSpeed() {
         return movementSpeed;
+    }
+
+    public boolean animateDieRollsEnabled() {
+        return animateDieRolls;
+    }
+
+    public void toggleAnimateDieRolls() {
+        animateDieRolls = !animateDieRolls;
     }
 }

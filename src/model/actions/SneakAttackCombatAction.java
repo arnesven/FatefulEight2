@@ -37,7 +37,7 @@ public class SneakAttackCombatAction extends CombatAction {
         model.getTutorial().sneakAttack(model);
         if (combat.isEligibleForSneakAttack(performer)) {
             this.performer = performer;
-            SkillCheckResult result = performer.testSkill(Skill.Sneak);
+            SkillCheckResult result = performer.testSkill(model, Skill.Sneak);
             this.sneakValue = result.getModifiedRoll();
             this.target = target;
             combat.addSneakAttacker(performer, this);
@@ -63,7 +63,7 @@ public class SneakAttackCombatAction extends CombatAction {
                 combatEvent.println("so " + target.getName() + " is targeted instead.");
             }
             model.getLog().waitForAnimationToFinish();
-            performer.doOneAttack(combatEvent, target, true, 0, 10);
+            performer.doOneAttack(model, combatEvent, target, true, 0, 10);
             performer.removeCondition(SneakAttackCondition.class);
         }
     }

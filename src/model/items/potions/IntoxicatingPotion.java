@@ -30,7 +30,7 @@ public abstract class IntoxicatingPotion extends Potion {
         int hpBefore = gc.getHP();
         gc.addToHP(HEALING_AMOUNT);
         String message = gc.getName() + " recovers " + (gc.getHP() - hpBefore) + " health.";
-        if (!gc.testSkill(Skill.Endurance, 5).isSuccessful()) {
+        if (!gc.testSkillHidden(Skill.Endurance, 5, 0).isSuccessful()) {
             if (gc.hasCondition(IntoxicatedCondition.class)) {
                 if (gc.getSP() == 0) {
                     if (gc.getHP() < 2) {

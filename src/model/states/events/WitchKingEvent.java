@@ -120,7 +120,7 @@ public class WitchKingEvent extends DailyEventState {
             model.getParty().randomPartyMemberSay(model, List.of("Wait a minute, is this guy asleep?"));
             model.getParty().randomPartyMemberSay(model, List.of("Looks like he's in some kind of a trance..."));
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                SkillCheckResult result = gc.testSkill(Skill.SpellCasting, 10);
+                SkillCheckResult result = gc.testSkillHidden(Skill.SpellCasting, 10, 0);
                 if (result.isSuccessful()) {
                     exploreRuinsState.println(gc.getName() + " detects a powerful enchantment. (Spellcasting " + result.asString() + ")");
                     model.getParty().partyMemberSay(model, gc, "He's under the effects of an enchantment. A binding spell of black magic.");

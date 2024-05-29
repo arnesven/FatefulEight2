@@ -287,7 +287,7 @@ public abstract class GameState {
     protected MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty) {
         SkillCheckResult result = null;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            result = gc.testSkill(skill, difficulty);
+            result = gc.testSkillHidden(skill, difficulty, 0);
             if (result.isSuccessful()) {
                 return new MyPair<>(result, gc);
             }

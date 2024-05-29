@@ -82,7 +82,7 @@ public class CombatSubView extends SubView {
     private void drawRoundCounter(Model model) {
         if (roundCounterAnimationCountDown > 0) {
             BorderFrame.drawCentered(model.getScreenHandler(), "ROUND " + roundCounter,
-                    Y_OFFSET  + (Y_MAX - Y_OFFSET) / 2, MyColors.WHITE, MyColors.BLACK);
+                    Y_OFFSET  + (Y_MAX - Y_OFFSET) / 2 + 2, MyColors.WHITE, MyColors.BLACK);
             roundCounterAnimationCountDown--;
         }
     }

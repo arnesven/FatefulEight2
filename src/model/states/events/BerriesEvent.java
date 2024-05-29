@@ -45,7 +45,7 @@ public class BerriesEvent extends DailyEventState {
                     survivalist = gc;
                 }
             }
-            SkillCheckResult result = survivalist.testSkill(Skill.Survival, 6);
+            SkillCheckResult result = survivalist.testSkillHidden(Skill.Survival, 6, 0);
             if (result.isSuccessful()) {
                 println(survivalist.getName() + "'s survival instinct kicks in. (Survival " + result.asString() + ")");
                 model.getParty().partyMemberSay(model, survivalist, List.of("Wait! Those are poisonous!"));

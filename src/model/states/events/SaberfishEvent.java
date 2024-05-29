@@ -28,7 +28,7 @@ public class SaberfishEvent extends RiverEvent {
         model.getParty().randomPartyMemberSay(model, List.of("Ouch!#", "Damn fishies!#", "Stop eating me!#",
                 "I though fish were vegetarians.", "Hey! that hurt..."));
         GameCharacter gc = MyRandom.sample(model.getParty().getPartyMembers());
-        SkillCheckResult result = gc.testSkill(Skill.Survival, 10);
+        SkillCheckResult result = gc.testSkillHidden(Skill.Survival, 10, 0);
         if (result.isSuccessful()) {
             println(gc.getName() + " manages to catch some of the fish! (Survival " + result.asString() + ")");
             model.getParty().addToFood(MyRandom.randInt(2,5));

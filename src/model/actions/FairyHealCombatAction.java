@@ -28,7 +28,7 @@ public class FairyHealCombatAction extends CombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().fairyHeal(model);
-        SkillCheckResult result = performer.testSkill(SKILL_TO_USE);
+        SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE);
         combat.println(performer.getFirstName() + " attempts Fairy Heal on " + target.getName() + ", " +
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
         if (result.getModifiedRoll() < DIFFICULTY) {

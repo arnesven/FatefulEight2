@@ -57,7 +57,7 @@ public class ShootBallsState extends GameState {
 
     private void shoot(Model model, ShootBallsSubView subView) {
         subView.stopAnimation();
-        SkillCheckResult result = shooter.testSkill(Skill.Bows);
+        SkillCheckResult result = shooter.testSkill(model, Skill.Bows);
         println(shooter.getName() + " fires an arrow (" + result.asString() + ")!");
         Point aim = subView.getAim();
         int errorMag = Math.max(0, DIFFICULTY - result.getModifiedRoll());

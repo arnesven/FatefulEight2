@@ -82,8 +82,10 @@ public class PartyAnimations implements Serializable {
         speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance));
     }
 
-    public void addDieRollAnimation(Point location, int unmodifiedRoll) {
-        dieRollAnimations.put(location, new DieRollAnimation(unmodifiedRoll));
+    public DieRollAnimation addDieRollAnimation(Point location, int unmodifiedRoll) {
+        DieRollAnimation animation = new DieRollAnimation(unmodifiedRoll);
+        dieRollAnimations.put(location, animation);
+        return animation;
     }
 
     public void drawDieRollAnimations(ScreenHandler screenHandler) {

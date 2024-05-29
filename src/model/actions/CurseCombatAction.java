@@ -50,7 +50,7 @@ public class CurseCombatAction extends CombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().curseAbility(model);
-        SkillCheckResult result = performer.testSkill(SKILL_TO_USE);
+        SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE);
         combat.println(performer.getFirstName() + " attempts Curse on " + target.getName() + ", " +
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
         if (result.getModifiedRoll() < DIFFICULTY) {

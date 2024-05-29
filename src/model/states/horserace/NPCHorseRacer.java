@@ -26,7 +26,7 @@ public class NPCHorseRacer extends HorseRacer {
 
     @Override
     protected void autoJump() {
-        if (getCharacter().testSkill(Skill.Survival, 4).isSuccessful()) {
+        if (getCharacter().testSkillHidden(Skill.Survival, 4, 0).isSuccessful()) {
             possiblyJump();
         }
     }
