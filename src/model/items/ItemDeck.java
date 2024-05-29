@@ -214,6 +214,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new EscapeSpell(),
                 new TeleportSpell(),
                 new FaceDancingSpell(),
+                new OpeningSpell(),
                 // WHITE
                 new TurnUndeadSpell(),
                 new ShiningAegisSpell(),
