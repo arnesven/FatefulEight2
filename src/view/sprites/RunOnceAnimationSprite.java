@@ -16,7 +16,7 @@ public class RunOnceAnimationSprite extends Sprite implements Animation {
         super(name, map, col, row, width, height);
         setFrames(frames);
         setColor1(color);
-        AnimationManager.register(this);
+        AnimationManager.registerPausable(this);
     }
 
     @Override
