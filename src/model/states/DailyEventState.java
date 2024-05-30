@@ -46,7 +46,7 @@ public abstract class DailyEventState extends GameState {
                 return new RunAwayState(model);
             }
         }
-        if (MyRandom.rollD10() <= model.getParty().getPartyMembers().size() - 4 && allowPartyEvent()) {
+        if (MyRandom.rollD10() <= model.getParty().getPartyMembers().size() - 5 && allowPartyEvent()) {
             return WorldHex.generatePartyEvent(model);
         }
         model.setTimeOfDay(TimeOfDay.EVENING);
