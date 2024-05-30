@@ -64,7 +64,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
             leaderSay(potentialLeaver.getFirstName() + ", you are a great asset to this company. We need you. " +
                     "Just ignore the others for the time being. And... I'll talk to them. Okay?");
             partyMemberSay(potentialLeaver, "I... alright. I'll stay.");
-            println(model.getParty().getLeader() + " has managed to persuade " + potentialLeaver.getName() +
+            println(model.getParty().getLeader().getName() + " has managed to persuade " + potentialLeaver.getName() +
                     " to stay for now (Persuade " + result.asString());
             showPartyAttitudesSubView(model);
         } else {

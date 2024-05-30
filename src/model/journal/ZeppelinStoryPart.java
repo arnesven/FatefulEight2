@@ -39,7 +39,7 @@ public class ZeppelinStoryPart extends StoryPart {
     private int step = INITIAL_STEP;
     private Point workshopPos;
     private Point zeppelinPos;
-    private CharacterAppearance xelbiAppearance = PortraitSubView.makeRandomPortrait(Classes.ART, Race.DWARF);
+    private CharacterAppearance xelbiAppearance = PortraitSubView.makeRandomPortrait(Classes.ART, Race.DWARF, false);
     private int stockDay;
     private boolean zeppelinFueled = true;
     private boolean inAnimation = false;

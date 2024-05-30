@@ -89,6 +89,6 @@ public class SoundEffects {
     }
 
     public static void successSkill() {
-        playLowVolume("success");
+        play("success");
     }
 }

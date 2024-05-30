@@ -48,6 +48,7 @@ public class VampirismSpell extends CombatSpell {
         }
         int damage = 4 + getMasteryLevel(performer) * 3;
         combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
+        combat.doDamageToEnemy(target, damage, performer);
         SkillCheckResult result = performer.testSkill(model, Skill.MagicBlack);
         combat.println(performer.getName() + " tests " + Skill.MagicBlack.getName() + " to determine how much " +
                 "health points can be absorbed, " + result.asString() + " (of 12).");
