@@ -1,12 +1,12 @@
 package sound;
 
 public class ClientSound {
-    private final boolean lowVolume;
+    private final float lowVolume;
     private byte[] bytes;
 
-    public ClientSound(byte[] bytes, boolean lowVolume) {
+    public ClientSound(byte[] bytes, float volume) {
         this.bytes = bytes;
-        this.lowVolume = lowVolume;
+        this.lowVolume = volume;
     }
 
     public byte[] getBytes() {
@@ -18,6 +18,6 @@ public class ClientSound {
     }
 
     public float getVolume() {
-        return lowVolume?BackgroundMusic.VOLUME:SoundEffects.VOLUME;
+        return lowVolume;
     }
 }

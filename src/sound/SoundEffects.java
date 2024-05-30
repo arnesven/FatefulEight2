@@ -8,8 +8,8 @@ public class SoundEffects {
         ClientSoundManager.playSound(key);
     }
 
-    private static void playLowVolume(String key) {
-        ClientSoundManager.playSoundLowVolume(key);
+    private static void playWithVolume(String key, Volume vol) {
+        ClientSoundManager.playSoundWithVolume(key, vol);
     }
 
     public static void menuDown() {
@@ -49,11 +49,11 @@ public class SoundEffects {
     }
 
     public static void gameSaved() {
-        playLowVolume("save");
+        playWithVolume("save", Volume.LOW);
     }
 
     public static void preload(String key, boolean low) {
-        ClientSoundManager.loadSoundResource(key, low);
+        ClientSoundManager.loadSoundResource(key, low ? Volume.LOWEST : Volume.HIGH);
     }
 
     public static void playBoom() {
@@ -89,6 +89,6 @@ public class SoundEffects {
     }
 
     public static void successSkill() {
-        play("success");
+        playWithVolume("success", Volume.MEDIUM);
     }
 }
