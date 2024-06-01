@@ -1,7 +1,8 @@
-package model.states;
+package model.states.fatue;
 
 import model.Model;
 import model.ruins.*;
+import model.states.ExploreRuinsState;
 
 public class ExploreFortressAtUtmostEdgeState extends ExploreRuinsState {
     public ExploreFortressAtUtmostEdgeState(Model model, String name) {

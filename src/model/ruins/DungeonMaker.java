@@ -4,6 +4,7 @@ import model.ruins.objects.GardenMonsterFactory;
 import model.ruins.objects.MonsterFactory;
 import model.ruins.themes.*;
 import util.MyRandom;
+import view.MyColors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +78,14 @@ public class DungeonMaker {
 
     public static List<DungeonLevel> makeFortressAtUtmostEdge() {
         return makeRandomDungeon(MyRandom.randInt(450, 500), 5, 10, false);
+    }
+
+    public static List<DungeonLevel> makeWestWingDungeon() {
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        DungeonTheme theme = new RuinsTheme(MyColors.GOLD, MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.BLACK);
+        levels.add(new DungeonLevel(random, true, 3, theme, new MonsterFactory()));
+        levels.add(new FinalDungeonLevel(random, theme));
+        return levels;
     }
 }

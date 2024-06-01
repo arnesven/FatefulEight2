@@ -105,10 +105,10 @@ public abstract class AdvancedDailyActionState extends GameState {
         print("You are " + place + ". ");
         model.getTutorial().basicControls(model);
         if (!isEvening()) {
-            print("Please select your daily action.");
+            println("Please select your daily action.");
             firstTimeDayTime = false;
         } else {
-            print("Please select how you will spend the evening.");
+            println("Please select how you will spend the evening.");
             firstTimeEvening = false;
         }
     }

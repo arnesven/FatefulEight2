@@ -2,8 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.actions.DailyAction;
-import model.states.ExploreFortressAtUtmostEdgeState;
-import model.states.FortressAtUtmostEdgeState;
+import model.states.fatue.FortressAtUtmostEdgeState;
 
 public class ExploreFortressAtUtmostEdgeDailyAction extends DailyAction {
     public ExploreFortressAtUtmostEdgeDailyAction(Model model) {
