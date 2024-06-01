@@ -19,6 +19,8 @@ public abstract class AdvancedDailyActionState extends GameState {
     private DailyActionSubView subView;
     private Point currentPosition;
     private SteppingMatrix<DailyActionNode> matrix;
+    private boolean firstTimeEvening = true;
+    private boolean firstTimeDayTime = true;
 
     public AdvancedDailyActionState(Model model) {
         super(model);
@@ -63,16 +65,9 @@ public abstract class AdvancedDailyActionState extends GameState {
                 CollapsingTransition.transition(model, subView);
             }
             model.getTutorial().start(model);
-            String place = model.getCurrentHex().getPlaceName();
-            print("You are " + place + ". ");
-            model.getTutorial().basicControls(model);
-            if (!isEvening()) {
-                print("Please select your daily action.");
-            } else {
-                print("Please select how you will spend the evening.");
-            }
+            printPrompt(model);
             model.getTutorial().theInn(model);
-            waitForReturn();
+            waitForReturnSilently();
             daily = matrix.getSelectedElement();
             if (daily.canBeDoneRightNow(this, model)) {
                 Point destination = new Point(matrix.getSelectedPoint());
@@ -94,6 +89,28 @@ public abstract class AdvancedDailyActionState extends GameState {
         }
 
         return daily.getDailyAction(model, this);
+    }
+
+    private void printPrompt(Model model) {
+        if (isEvening()) {
+            if (!firstTimeEvening) {
+                return;
+            }
+        } else {
+            if (!firstTimeDayTime) {
+                return;
+            }
+        }
+        String place = model.getCurrentHex().getPlaceName();
+        print("You are " + place + ". ");
+        model.getTutorial().basicControls(model);
+        if (!isEvening()) {
+            print("Please select your daily action.");
+            firstTimeDayTime = false;
+        } else {
+            print("Please select how you will spend the evening.");
+            firstTimeEvening = false;
+        }
     }
 
     public Point getCurrentPosition() {
