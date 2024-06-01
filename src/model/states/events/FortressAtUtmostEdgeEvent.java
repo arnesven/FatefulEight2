@@ -3,11 +3,13 @@ package model.states.events;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.map.locations.FortressAtUtmostEdgeLocation;
 import model.ruins.DungeonMaker;
 import model.ruins.FinalDungeonLevel;
 import model.ruins.RuinsDungeon;
 import model.states.DailyEventState;
 import model.states.ExploreRuinsState;
+import model.states.GameState;
 import model.states.dailyaction.ExploreFortressAtUtmostEdgeDailyAction;
 
 public class FortressAtUtmostEdgeEvent extends DailyEventState {
@@ -28,7 +30,8 @@ public class FortressAtUtmostEdgeEvent extends DailyEventState {
             leaderSay("Looks... foreboding. Better not disturb this place.");
         } else {
             leaderSay("Looks exciting. Let's head inside.");
-            DailyAction action = new ExploreFortressAtUtmostEdgeDailyAction(model, model.getCurrentHex().getLocation().getName());
+            model.getSettings().getMiscFlags().put(FortressAtUtmostEdgeLocation.HAS_VISITED, true);
+            DailyAction action = new ExploreFortressAtUtmostEdgeDailyAction(model);
             action.getState().run(model);
         }
     }

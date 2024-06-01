@@ -16,12 +16,14 @@ import view.sprites.Sprite;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FortressAtUtmostEdgeLocation extends HexLocation {
     public static final String NAME = "Fortress at the Utmost Edge";
     private static final SubView IMAGE_SUB_VIEW = new ImageSubView("fatue", "FORTRESS AT THE UTMOST EDGE",
             "You have arrived at the Fortress at the Utmost Edge...");
+    public static final String HAS_VISITED = "hasVisitedFatue";
 
     public FortressAtUtmostEdgeLocation() {
         super(NAME);
@@ -58,7 +60,10 @@ public class FortressAtUtmostEdgeLocation extends HexLocation {
 
     @Override
     public List<DailyAction> getDailyActions(Model model) {
-        return List.of(new ExploreFortressAtUtmostEdgeDailyAction(model, getName()));
+        if (model.getSettings().getMiscFlags().get(HAS_VISITED) != null) {
+            return List.of(new ExploreFortressAtUtmostEdgeDailyAction(model));
+        }
+        return new ArrayList<>();
     }
 
     @Override
