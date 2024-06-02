@@ -1,10 +1,18 @@
 package model.states.fatue;
 
 import model.Model;
-import model.ruins.DungeonMaker;
-import model.ruins.FinalDungeonLevel;
-import model.ruins.RuinsDungeon;
+import model.ruins.*;
+import model.ruins.objects.FatueKeyObject;
+import model.ruins.objects.MinesOfMiseryMonsterFactory;
+import model.ruins.objects.MonsterFactory;
+import model.ruins.themes.DungeonTheme;
+import model.ruins.themes.GrayCaveTheme;
 import model.states.dailyaction.AdvancedDailyActionState;
+import view.MyColors;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class MinesOfMiseryNode extends FatueDungeonNode {
     public MinesOfMiseryNode() {
@@ -23,9 +31,25 @@ class MinesOfMiseryNode extends FatueDungeonNode {
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
-        RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeMinesOfMiseryDungeon(model));
-        FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels() - 1);
+        return new RuinsDungeon(makeMinesOfMiseryDungeon(model));
+    }
+
+    public static List<DungeonLevel> makeMinesOfMiseryDungeon(Model model) {
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        DungeonTheme theme = new GrayCaveTheme();
+        MonsterFactory monsterFactory = new MinesOfMiseryMonsterFactory(model);
+        KeySpawningDungeonLevelConfig keySpawningConfig =
+                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(MyColors.DARK_RED));
+        DungeonLevel level = null;
+        do {
+            level = new DungeonLevel(random, true, 12, keySpawningConfig);
+            System.err.println("Key did not spawn in mines of misery, trying again.");
+        } while (!keySpawningConfig.isKeySpawned());
+        levels.add(level);
+        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, theme);
         finalLevel.setFinalRoom(new FatueStaffRoom());
-        return dungeon;
+        levels.add(finalLevel);
+        return levels;
     }
 }

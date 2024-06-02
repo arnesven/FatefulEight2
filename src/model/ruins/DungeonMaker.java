@@ -78,43 +78,4 @@ public class DungeonMaker {
         levels.add(new FinalDungeonLevel(random, config.getTheme()));
         return levels;
     }
-
-    public static List<DungeonLevel> makeFortressAtUtmostEdge() {
-        return makeRandomDungeon(MyRandom.randInt(450, 500), 5, 10, false);
-    }
-
-    public static List<DungeonLevel> makeWestWingDungeon(Model model) {
-        List<DungeonLevel> levels = new ArrayList<>();
-        Random random = new Random();
-        DungeonTheme theme = new RuinsTheme(MyColors.GOLD, MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.BLACK);
-        MonsterFactory monsterFactory = new WestWingMonsterFactory(model);
-        levels.add(new DungeonLevel(random, true, 8, theme, monsterFactory));
-        KeySpawningDungeonLevelConfig keySpawningConfig =
-                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(MyColors.GOLD));
-        DungeonLevel level2 = null;
-        do {
-            level2 = new DungeonLevel(random, false, 8, keySpawningConfig);
-            System.err.println("Key did not spawn in west wing level 2, trying again.");
-        } while (!keySpawningConfig.isKeySpawned());
-        levels.add(level2);
-        levels.add(new FinalDungeonLevel(random, theme));
-        return levels;
-    }
-
-    public static List<DungeonLevel> makeMinesOfMiseryDungeon(Model model) {
-        List<DungeonLevel> levels = new ArrayList<>();
-        Random random = new Random();
-        DungeonTheme theme = new GrayCaveTheme();
-        MonsterFactory monsterFactory = new MinesOfMiseryMonsterFactory(model);
-        KeySpawningDungeonLevelConfig keySpawningConfig =
-                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(MyColors.DARK_RED));
-        DungeonLevel level = null;
-        do {
-            level = new DungeonLevel(random, true, 12, keySpawningConfig);
-            System.err.println("Key did not spawn in mines of misery, trying again.");
-        } while (!keySpawningConfig.isKeySpawned());
-        levels.add(level);
-        levels.add(new FinalDungeonLevel(random, theme));
-        return levels;
-    }
 }

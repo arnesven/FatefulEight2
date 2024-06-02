@@ -66,7 +66,11 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
         for (int i = 0; i < keys.size(); i++) {
             Sprite spr = KEY_SPRITE_MAP.get(keys.get(i));
             assert spr != null;
-            model.getScreenHandler().register(spr.getName(), convertToScreen(new Point(0, i)), spr);
+            Point pos = new Point(0, i);
+            if (i > 3) {
+                pos = new Point(i-1, 0);
+            }
+            model.getScreenHandler().register(spr.getName(), convertToScreen(pos), spr);
         }
     }
 

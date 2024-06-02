@@ -1,10 +1,18 @@
 package model.states.fatue;
 
 import model.Model;
-import model.ruins.DungeonMaker;
-import model.ruins.FinalDungeonLevel;
-import model.ruins.RuinsDungeon;
+import model.ruins.*;
+import model.ruins.objects.FatueKeyObject;
+import model.ruins.objects.MonsterFactory;
+import model.ruins.objects.WestWingMonsterFactory;
+import model.ruins.themes.DungeonTheme;
+import model.ruins.themes.RuinsTheme;
 import model.states.dailyaction.AdvancedDailyActionState;
+import view.MyColors;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 class WestWingNode extends FatueDungeonNode {
     public WestWingNode() {
@@ -22,9 +30,26 @@ class WestWingNode extends FatueDungeonNode {
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
-        RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeWestWingDungeon(model));
-        FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels() - 1);
-        finalLevel.setFinalRoom(new FatueStaffRoom());
-        return dungeon;
+        return new RuinsDungeon(makeWestWingDungeon(model));
+    }
+
+    public static List<DungeonLevel> makeWestWingDungeon(Model model) {
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        DungeonTheme theme = new RuinsTheme(MyColors.GOLD, MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.BLACK);
+        MonsterFactory monsterFactory = new WestWingMonsterFactory(model);
+        levels.add(new DungeonLevel(random, true, 8, theme, monsterFactory));
+        KeySpawningDungeonLevelConfig keySpawningConfig =
+                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(MyColors.GOLD));
+        DungeonLevel level2 = null;
+        do {
+            level2 = new DungeonLevel(random, false, 8, keySpawningConfig);
+            System.err.println("Key did not spawn in west wing level 2, trying again.");
+        } while (!keySpawningConfig.isKeySpawned());
+        levels.add(level2);
+        FinalDungeonLevel finalDungeonLevel = new FinalDungeonLevel(random, theme);
+        finalDungeonLevel.setFinalRoom(new FatueStaffRoom());
+        levels.add(finalDungeonLevel);
+        return levels;
     }
 }
