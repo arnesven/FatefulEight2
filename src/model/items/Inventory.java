@@ -167,6 +167,7 @@ public class Inventory implements Serializable {
         sets.add(specialItems);
         sets.add(parcels);
         sets.add(books);
+        sets.add(storyItems);
         return sets;
     }
 

@@ -2,23 +2,16 @@ package model.states.fatue;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.items.special.FatueKeyItem;
 import model.items.special.PieceOfStaffItem;
 import model.items.special.StoryItem;
-import model.ruins.DungeonMaker;
-import model.ruins.FinalDungeonLevel;
-import model.ruins.RuinsDungeon;
-import model.states.ExploreRuinsState;
 import model.states.GameState;
-import model.states.NoLodgingState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import util.MyLists;
 import util.MyStrings;
 import view.MyColors;
-import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.FortressAtUtmostEdgeSubView;
 
@@ -35,7 +28,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         addNode(7, 8, new LeaveFatueNode());
         addNode(CASTLE_PROPER_POSITION.x, CASTLE_PROPER_POSITION.y, new EnterCastleProperNode());
         addNode(1, 6, new WestWingNode());
-//        addNode(2, 8, new FatueDungeonNode("Enter Mines of Misery"));
+        addNode(2, 8, new MinesOfMiseryNode());
 //        addNode(5, 5, new FatueDungeonNode("Enter East Wing"));
 //        addNode(6, 6, new FatueDungeonNode("Enter South Garden"));
 //        addNode(3, 4, new FatueDungeonNode("Enter Courtyard Garden"));
@@ -48,9 +41,13 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         return CASTLE_PROPER_POSITION;
     }
 
+    protected static Point getStartingPoint() {
+        return STARTING_POINT;
+    }
+
     @Override
     protected Point getStartingPosition() {
-        return STARTING_POINT;
+        return getStartingPoint();
     }
 
     @Override
@@ -77,44 +74,6 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
     public List<MyColors> getKeysColoected(Model model) {
         return MyLists.transform(MyLists.filter(model.getParty().getInventory().getStoryItems(),
                 (StoryItem st) -> st instanceof FatueKeyItem), (StoryItem st) -> ((FatueKeyItem)st).getColor());
-    }
-
-    private abstract static class FatueDailyActionNode extends DailyActionNode {
-        public FatueDailyActionNode(String name) {
-            super(name);
-        }
-
-        @Override
-        public Sprite getBackgroundSprite() {
-            return null;
-        }
-
-        @Override
-        public void drawYourself(Model model, Point p) { }
-    }
-
-    private static class LeaveFatueNode extends FatueDailyActionNode {
-        public LeaveFatueNode() {
-            super("Leave Fortress at the Ultimate Edge");
-        }
-
-        @Override
-        public boolean exitsCurrentLocale() {
-            return true;
-        }
-
-        @Override
-        public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-            return new NoLodgingState(model, false);
-        }
-
-        @Override
-        public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-            return true;
-        }
-
-        @Override
-        public void setTimeOfDay(Model model, AdvancedDailyActionState state) { model.setTimeOfDay(TimeOfDay.EVENING); }
     }
 
 
@@ -184,58 +143,4 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
     }
 
 
-    private abstract class FatueDungeonNode extends FatueDailyActionNode {
-        private final String name;
-
-        public FatueDungeonNode(String name) {
-            super("Enter " + name);
-            this.name = name;
-        }
-
-        protected abstract RuinsDungeon makeDungeon(Model model);
-
-        @Override
-        public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
-
-        @Override
-        public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-            return !getCurrentPosition().equals(STARTING_POINT);
-        }
-
-        @Override
-        public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-            RuinsDungeon dungeon;
-            String key = "F.A.T.U.E - " + name;
-            if (model.hasVisitedDungeon(key)) {
-                dungeon = model.getDungeon(key, false);
-            } else {
-                dungeon = makeDungeon(model);
-                model.storeDungeon(key, dungeon);
-            }
-            return new ExploreRuinsState(model, dungeon, key);
-        }
-    }
-
-    private class WestWingNode extends FatueDungeonNode {
-        public WestWingNode() {
-            super("West Wing");
-        }
-
-        @Override
-        public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-            if (!super.canBeDoneRightNow(state, model)) {
-                return false;
-            }
-            print("This passage leads to a dilapidated wing of the fortress. Would you like to explore it? (Y/N) ");
-            return yesNoInput();
-        }
-
-        @Override
-        protected RuinsDungeon makeDungeon(Model model) {
-            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeWestWingDungeon(model));
-            FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels() - 1);
-            finalLevel.setFinalRoom(new FatueStaffRoom());
-            return dungeon;
-        }
-    }
 }

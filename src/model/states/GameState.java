@@ -268,7 +268,7 @@ public abstract class GameState {
     }
 
     public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {
-        return Math.max(1, model.getParty().partyStrength() / (enemy).getThreat());
+        return Math.min(24, Math.max(1, model.getParty().partyStrength() / (enemy).getThreat()));
     }
 
     public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {

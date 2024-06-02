@@ -17,10 +17,13 @@ public class FatueKeyObject extends CenterDungeonObject {
 
     public FatueKeyObject(MyColors color) {
         this.sprite = new Sprite32x32("fatuekeygold", "fatue_plan.png", 0x38,
-                MyColors.BLACK, color, MyColors.YELLOW);
+                MyColors.BLACK, color, getHighlightColor(color));
     }
 
     public static MyColors getHighlightColor(MyColors color) {
+        if (color == MyColors.DARK_RED) {
+            return MyColors.RED;
+        }
         return MyColors.YELLOW;
     }
 

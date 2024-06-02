@@ -131,6 +131,8 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
         Map<MyColors, Sprite32x32> map = new HashMap<>();
         map.put(MyColors.GOLD, new Sprite32x32("fatuekeygold", "fatue_plan.png", 0x38,
                 MyColors.DARK_GRAY, MyColors.GOLD, MyColors.YELLOW));
+        map.put(MyColors.DARK_RED, new Sprite32x32("fatuekeyred", "fatue_plan.png", 0x38,
+                MyColors.DARK_GRAY, MyColors.DARK_RED, MyColors.RED));
         return map;
     }
 }
