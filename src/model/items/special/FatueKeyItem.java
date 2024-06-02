@@ -14,7 +14,7 @@ public class FatueKeyItem extends StoryItem {
     private final ItemSprite sprite;
 
     public FatueKeyItem(MyColors color) {
-        super(MyStrings.capitalize(color.name()) + " Key", 0);
+        super(MyStrings.capitalize(color.name()).replace("_", " ") + " Key", 0);
         this.color = color;
         this.sprite = new ItemSprite(11, 13, FatueKeyObject.getHighlightColor(color), color, MyColors.DARK_GRAY);
     }

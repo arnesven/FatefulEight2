@@ -9,6 +9,8 @@ import model.ruins.themes.DungeonTheme;
 import model.ruins.themes.GrayCaveTheme;
 import model.states.dailyaction.AdvancedDailyActionState;
 import view.MyColors;
+import view.subviews.CaveTheme;
+import view.subviews.CombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,22 +18,18 @@ import java.util.Random;
 
 class MinesOfMiseryNode extends FatueDungeonNode {
     public MinesOfMiseryNode() {
-        super("Mines of Misery");
-    }
-
-    @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (!super.canBeDoneRightNow(state, model)) {
-            return false;
-        }
-        state.print("These narrow and treacherous steps lead down to the dank mines below the fortress. " +
-                "Would you like to explore them? (Y/N) ");
-        return state.yesNoInput();
+        super("Mines of Misery", true,"These narrow and treacherous steps " +
+                "lead down to the dank mines below the fortress. Would you like to explore them?");
     }
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
         return new RuinsDungeon(makeMinesOfMiseryDungeon(model));
+    }
+
+    @Override
+    protected CombatTheme getCombatTheme() {
+        return new CaveTheme();
     }
 
     public static List<DungeonLevel> makeMinesOfMiseryDungeon(Model model) {

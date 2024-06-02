@@ -14,15 +14,25 @@ import java.awt.*;
 public class FatueKeyObject extends CenterDungeonObject {
 
     private final Sprite32x32 sprite;
+    private final boolean completesDungeon;
+    private final MyColors color;
 
-    public FatueKeyObject(MyColors color) {
+    public FatueKeyObject(MyColors color, boolean completesDungeon) {
         this.sprite = new Sprite32x32("fatuekeygold", "fatue_plan.png", 0x38,
                 MyColors.BLACK, color, getHighlightColor(color));
+        this.color = color;
+        this.completesDungeon = completesDungeon;
+    }
+
+    public FatueKeyObject(MyColors color) {
+        this(color, false);
     }
 
     public static MyColors getHighlightColor(MyColors color) {
         if (color == MyColors.DARK_RED) {
             return MyColors.RED;
+        } else if (color == MyColors.DARK_GREEN) {
+            return MyColors.GREEN;
         }
         return MyColors.YELLOW;
     }
@@ -41,8 +51,14 @@ public class FatueKeyObject extends CenterDungeonObject {
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
         state.getCurrentRoom().removeObject(this);
-        model.getParty().getInventory().add(new FatueKeyItem(MyColors.GOLD));
+        model.getParty().getInventory().add(new FatueKeyItem(color));
         state.println("You got a key. Now to find the lock...");
+        if (completesDungeon) {
+            state.setDungeonExited(true);
+            state.getDungeon().setCompleted(true);
+            state.println("Dungeon completed. Press enter to continue.");
+            state.waitForReturnSilently();
+        }
     }
 
     @Override

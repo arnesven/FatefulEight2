@@ -9,6 +9,7 @@ import model.ruins.themes.DungeonTheme;
 import model.ruins.themes.RuinsTheme;
 import model.states.dailyaction.AdvancedDailyActionState;
 import view.MyColors;
+import view.subviews.CombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,21 +17,18 @@ import java.util.Random;
 
 class WestWingNode extends FatueDungeonNode {
     public WestWingNode() {
-        super("West Wing");
-    }
-
-    @Override
-    public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        if (!super.canBeDoneRightNow(state, model)) {
-            return false;
-        }
-        state.print("This passage leads to a dilapidated wing of the fortress. Would you like to explore it? (Y/N) ");
-        return state.yesNoInput();
+        super("West Wing", true,"This passage leads to a dilapidated wing " +
+                "of the fortress. Would you like to explore it?");
     }
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
         return new RuinsDungeon(makeWestWingDungeon(model));
+    }
+
+    @Override
+    protected CombatTheme getCombatTheme() {
+        return new view.subviews.DungeonTheme();
     }
 
     public static List<DungeonLevel> makeWestWingDungeon(Model model) {
