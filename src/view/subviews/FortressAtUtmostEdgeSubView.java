@@ -3,13 +3,18 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.map.CaveHex;
+import model.ruins.objects.FatueKeyObject;
 import model.states.fatue.FortressAtUtmostEdgeState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
+import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
     private static final Sprite32x32[][] backgroundSprites = makeFatueSprites();
@@ -19,6 +24,8 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
             "stafftop", "fatue_plan.png", 0x08, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.DARK_RED, MyColors.CYAN);
     private static final Sprite32x32 STAFF_PIECE_MIDDLE = new Sprite32x32("staffmiddle", "fatue_plan.png", 0x18,
             MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.DARK_RED, MyColors.BEIGE);
+    private static final Map<MyColors, Sprite32x32> KEY_SPRITE_MAP = makeKeySpriteMap();
+
     private final FortressAtUtmostEdgeState state;
 
     public FortressAtUtmostEdgeSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix) {
@@ -34,6 +41,11 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
                 model.getScreenHandler().put(p.x, p.y, backgroundSprites[x][y]);
             }
         }
+        drawStaff(model);
+        drawKeys(model);
+    }
+
+    private void drawStaff(Model model) {
         int pieces = state.getNumberOfPiecesOfStaffFound(model);
         if (pieces > 0) {
             model.getScreenHandler().register(STAFF_PIECE_BOTTOM.getName(),
@@ -46,6 +58,15 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
         if (pieces > 6) {
             model.getScreenHandler().register(STAFF_PIECE_TOP.getName(),
                     convertToScreen(new Point(7, 0)), STAFF_PIECE_TOP);
+        }
+    }
+
+    private void drawKeys(Model model) {
+        List<MyColors> keys = state.getKeysColoected(model);
+        for (int i = 0; i < keys.size(); i++) {
+            Sprite spr = KEY_SPRITE_MAP.get(keys.get(i));
+            assert spr != null;
+            model.getScreenHandler().register(spr.getName(), convertToScreen(new Point(0, i)), spr);
         }
     }
 
@@ -105,10 +126,11 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
         }
     }
 
-    private static class StaffPieceSprite extends Sprite32x32 {
-        public StaffPieceSprite(int part) {
-            super("staffpiecepart"+part, "fatue_plan.png", 0x10*part, MyColors.DARK_GRAY,
-                    MyColors.GOLD, MyColors.DARK_RED, MyColors.BROWN);
-        }
+
+    private static Map<MyColors, Sprite32x32> makeKeySpriteMap() {
+        Map<MyColors, Sprite32x32> map = new HashMap<>();
+        map.put(MyColors.GOLD, new Sprite32x32("fatuekeygold", "fatue_plan.png", 0x38,
+                MyColors.DARK_GRAY, MyColors.GOLD, MyColors.YELLOW));
+        return map;
     }
 }

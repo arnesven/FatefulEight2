@@ -1,7 +1,9 @@
 package model.ruins;
 
-import model.ruins.objects.GardenMonsterFactory;
+import model.Model;
+import model.ruins.objects.FatueKeyObject;
 import model.ruins.objects.MonsterFactory;
+import model.ruins.objects.WestWingMonsterFactory;
 import model.ruins.themes.*;
 import util.MyRandom;
 import view.MyColors;
@@ -80,11 +82,20 @@ public class DungeonMaker {
         return makeRandomDungeon(MyRandom.randInt(450, 500), 5, 10, false);
     }
 
-    public static List<DungeonLevel> makeWestWingDungeon() {
+    public static List<DungeonLevel> makeWestWingDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         DungeonTheme theme = new RuinsTheme(MyColors.GOLD, MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.BLACK);
-        levels.add(new DungeonLevel(random, true, 3, theme, new MonsterFactory()));
+        MonsterFactory monsterFactory = new WestWingMonsterFactory(model);
+        levels.add(new DungeonLevel(random, true, 8, theme, monsterFactory));
+        KeySpawningDungeonLevelConfig keySpawningConfig =
+                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(MyColors.GOLD));
+        DungeonLevel level2 = null;
+        do {
+            level2 = new DungeonLevel(random, true, 8, keySpawningConfig);
+            System.err.println("Key did not spawn in west wing level 2, trying again.");
+        } while (!keySpawningConfig.isKeySpawned());
+        levels.add(level2);
         levels.add(new FinalDungeonLevel(random, theme));
         return levels;
     }

@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.items.special.FatueKeyItem;
 import model.items.special.PieceOfStaffItem;
 import model.items.special.StoryItem;
 import model.ruins.DungeonMaker;
@@ -16,11 +17,13 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import util.MyLists;
 import util.MyStrings;
+import view.MyColors;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.FortressAtUtmostEdgeSubView;
 
 import java.awt.*;
+import java.util.List;
 
 public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
     private static final Point STARTING_POINT = new Point(7, 8);
@@ -69,6 +72,11 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
     public int getNumberOfPiecesOfStaffFound(Model model) {
         return MyLists.filter(model.getParty().getInventory().getStoryItems(),
                 (StoryItem st) -> st instanceof PieceOfStaffItem).size();
+    }
+
+    public List<MyColors> getKeysColoected(Model model) {
+        return MyLists.transform(MyLists.filter(model.getParty().getInventory().getStoryItems(),
+                (StoryItem st) -> st instanceof FatueKeyItem), (StoryItem st) -> ((FatueKeyItem)st).getColor());
     }
 
     private abstract static class FatueDailyActionNode extends DailyActionNode {
@@ -224,7 +232,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
 
         @Override
         protected RuinsDungeon makeDungeon(Model model) {
-            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeWestWingDungeon());
+            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeWestWingDungeon(model));
             FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels() - 1);
             finalLevel.setFinalRoom(new FatueStaffRoom());
             return dungeon;
