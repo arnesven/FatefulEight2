@@ -47,7 +47,7 @@ public class WitchKingEvent extends DailyEventState {
             showExplicitPortrait(model, witchKingChar.getAppearance(), "Witch King");
             portraitSay("Thanks again for removing that awful spell. You have no idea how long I've been trapped in there.");
             leaderSay("Would you mind explaining who you are?");
-            portraitSay("I am... you know, I've quite forgotten my name.");
+            portraitSay("I am... my name is... Hmmm... You know, I've quite forgotten my name.");
             leaderSay("I'm sorry...");
             portraitSay("But you can call me the Witch King. I distinctly remember being both a witch and a king.");
             portraitSay("Or at least, I was a king, before my brother trapped me in that stronghold back there.");
