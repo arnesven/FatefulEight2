@@ -255,7 +255,11 @@ public abstract class GameState implements GameStateConstants {
     }
 
     public static int getSuggestedNumberOfEnemies(Model model, Enemy enemy) {
-        return Math.min(24, Math.max(1, model.getParty().partyStrength() / (enemy).getThreat()));
+        int max = 24;
+        if (enemy.getWidth() > 1) {
+            max = max / enemy.getWidth();
+        }
+        return Math.min(max, Math.max(1, model.getParty().partyStrength() / (enemy).getThreat()));
     }
 
     public boolean randomSayIfPersonality(PersonalityTrait trait, List<GameCharacter> excluding, String line) {

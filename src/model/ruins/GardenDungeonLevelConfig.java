@@ -14,10 +14,13 @@ public class GardenDungeonLevelConfig extends DungeonLevelConfig {
     private static final double LOCKED_DOOR_PREVALENCE = 0.0;
     private static final double CAMPFIRE_PREVALENCE = 0.2;
 
-    public GardenDungeonLevelConfig() {
-        super(new GardenDungeonTheme(), new GardenMonsterFactory());
+    public GardenDungeonLevelConfig(MonsterFactory monsterFactory) {
+        super(new GardenDungeonTheme(), monsterFactory);
     }
 
+    public GardenDungeonLevelConfig() {
+        this(new GardenMonsterFactory());
+    }
 
     protected void addJunctionObject(DungeonRoom room, Random random, MonsterFactory monsterFactory) {
         double roll = random.nextDouble();

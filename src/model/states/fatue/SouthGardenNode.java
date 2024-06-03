@@ -2,6 +2,7 @@ package model.states.fatue;
 
 import model.Model;
 import model.ruins.*;
+import model.ruins.objects.FatueGardenMonsterFactory;
 import model.ruins.objects.FatueKeyObject;
 import model.ruins.themes.GreenRuinsTheme;
 import view.MyColors;
@@ -20,7 +21,7 @@ public class SouthGardenNode extends FatueDungeonNode {
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
-        return new RuinsDungeon(makeGardenDungeon(9));
+        return new RuinsDungeon(makeGardenDungeon(model, 9));
     }
 
     @Override
@@ -28,10 +29,10 @@ public class SouthGardenNode extends FatueDungeonNode {
         return new GrassCombatTheme(); // TODO: Make garden combat theme
     }
 
-    public static List<DungeonLevel> makeGardenDungeon(int size) {
+    public static List<DungeonLevel> makeGardenDungeon(Model model, int size) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new DungeonLevel(random, false, size, new GardenDungeonLevelConfig()));
+        levels.add(new DungeonLevel(random, false, size, new GardenDungeonLevelConfig(new FatueGardenMonsterFactory(model))));
         FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, new GreenRuinsTheme());
         finalLevel.setFinalRoom(new JadeKeyRoom());
         levels.add(finalLevel);
