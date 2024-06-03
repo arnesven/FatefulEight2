@@ -23,21 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class GameState {
+public abstract class GameState implements GameStateConstants {
 
-    public static final List<String> COMMON_GIRL_FIRST_NAMES = List.of("Bella", "Steffi", "Ronya", "Felixa",
-            "Ipona", "Esmeralda", "Gemma", "Petra", "Sinorin", "Adalia", "Cormona", "Sheila", "Dora",
-            "Visenna", "Lara", "Gueniviere", "Cally", "Tessa", "Mandy", "Bianca", "Miranda",
-            "Helga", "Goldy", "Emma", "Carly", "Jessica", "Mary", "Diana");
-    public static final List<String> COMMON_BOY_FIRST_NAMES = List.of("Golbert", "Voldo", "Maxim", "Nestor",
-            "Karg", "Tobert", "Roger", "Sammy", "Oleg", "Trevor", "Quellic", "Ben", "Ivan", "Feodor", "Stig",
-            "Ralbert", "Rastigan", "Enoch", "Roy", "Georgi", "Leonard", "Albert", "Stanley", "Johnny", "Horace",
-            "Derric", "Felix", "Igor", "Marcus", "Stig", "Hubert", "Eskil", "Ivan", "Chen");
-    public static final List<String> COMMON_LAST_NAMES = List.of("Wildfeather", "Cleareyes", "Al-Zaman",
-            "Gerson", "Essex", "Overhill", "Sloch", "Petty", "Inderfelt", "Sharptooth", "Zeltic", "Hightower",
-            "Edelweiss", "Eastwood", "Hardwater", "Azure", "Stormfist", "Samuelesen", "Haldic", "Brownwood",
-            "Stovious", "Jacksson", "Osorio", "McLaird", "Delamain", "Vogel", "Johanssen", "Grim", "Sjanic",
-            "McDougal");
     private static final List<String> girlFirstNames = new ArrayList<>(COMMON_GIRL_FIRST_NAMES);
     private static final List<String> boyFirstNames = new ArrayList<>(COMMON_BOY_FIRST_NAMES);
     private static final List<String> lastNames = new ArrayList<>(COMMON_LAST_NAMES);
