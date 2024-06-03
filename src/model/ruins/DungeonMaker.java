@@ -1,13 +1,8 @@
 package model.ruins;
 
-import model.Model;
-import model.ruins.objects.FatueKeyObject;
-import model.ruins.objects.MinesOfMiseryMonsterFactory;
 import model.ruins.objects.MonsterFactory;
-import model.ruins.objects.WestWingMonsterFactory;
 import model.ruins.themes.*;
 import util.MyRandom;
-import view.MyColors;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,13 +1,11 @@
 package model.items.special;
 
 import model.items.Item;
-import model.items.weapons.Weapon;
 import model.ruins.objects.FatueKeyObject;
 import util.MyStrings;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 public class FatueKeyItem extends StoryItem {
     private final MyColors color;

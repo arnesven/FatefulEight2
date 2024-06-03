@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class DungeonLevelConfig implements Serializable {
 
-    private final DungeonTheme theme;
+    private DungeonTheme theme;
     private final MonsterFactory monsterFactory;
 
     private static final double CHEST_PREVALENCE = 0.4;
@@ -79,5 +79,9 @@ public class DungeonLevelConfig implements Serializable {
 
     public DungeonTheme getTheme() {
         return theme;
+    }
+
+    public void setTheme(DungeonTheme theme) {
+        this.theme = theme;
     }
 }

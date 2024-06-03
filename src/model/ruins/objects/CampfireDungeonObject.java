@@ -21,7 +21,7 @@ public class CampfireDungeonObject extends CenterDungeonObject {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE);
+        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override

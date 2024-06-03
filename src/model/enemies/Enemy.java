@@ -147,7 +147,11 @@ public abstract class Enemy extends Combatant {
     }
 
     public int getThreat() {
-        return 5 + getMaxHP() + getDamage() + getSpeed() / 3 + getDamageReduction() * 3;
+        int damageMultiplier = 1;
+        if (!(getAttackBehavior() instanceof MeleeAttackBehavior)) {
+            damageMultiplier = 2;
+        }
+        return 5 + getMaxHP() + (damageMultiplier * getDamage()) + getSpeed() / 3 + getDamageReduction() * 3;
     }
 
     public abstract CombatLoot getLoot(Model model);
