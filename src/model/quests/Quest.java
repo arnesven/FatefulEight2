@@ -1,22 +1,17 @@
 package model.quests;
 
 import model.Model;
-import model.Party;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
 import model.states.QuestState;
-import util.MyPair;
 import view.MyColors;
-import view.sprites.Sprite;
-import view.subviews.CombatTheme;
-import view.subviews.DungeonTheme;
+import view.combat.CombatTheme;
+import view.combat.DungeonTheme;
 import view.widget.QuestBackground;
 
-import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,8 +1,9 @@
-package view.subviews;
+package view.combat;
 
 import model.Model;
 import model.map.SeaHex;
 import view.MyColors;
+import view.combat.CombatTheme;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite32x32;
 

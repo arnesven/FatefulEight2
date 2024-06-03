@@ -17,8 +17,8 @@ import view.sprites.BanditSprite;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 

@@ -16,10 +16,8 @@ import model.states.QuestState;
 import view.MyColors;
 import view.sprites.PalisadeSprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
-import view.subviews.MountainCombatTheme;
-import view.subviews.PalisadeCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.PalisadeCombatTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;

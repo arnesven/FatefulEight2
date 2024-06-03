@@ -3,14 +3,9 @@ package model.states.events;
 import model.Model;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.enemies.WolfEnemy;
-import model.log.GameLog;
-import model.states.CombatEvent;
 import model.states.DailyEventState;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

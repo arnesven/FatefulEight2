@@ -7,7 +7,6 @@ import model.states.DailyEventState;
 import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
-import view.subviews.MountainCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

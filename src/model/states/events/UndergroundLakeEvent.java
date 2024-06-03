@@ -2,7 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
-import view.subviews.CaveTheme;
+import view.combat.CaveTheme;
 import model.enemies.Enemy;
 import model.enemies.OctopusEnemy;
 import model.states.DailyEventState;

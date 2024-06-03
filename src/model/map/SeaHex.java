@@ -6,12 +6,11 @@ import model.states.GameState;
 import model.states.events.EveningAtSeaState;
 import model.states.events.NoEventState;
 import view.sprites.Sprite;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.ImageSubView;
-import view.subviews.ShipCombatTheme;
+import view.combat.ShipCombatTheme;
 import view.subviews.SubView;
 import view.MyColors;
-import view.sprites.HexSprite;
 import view.sprites.SeaHexSprite;
 
 public class SeaHex extends WorldHex {

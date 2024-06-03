@@ -1,7 +1,6 @@
 package model.states.events;
 
 import model.Model;
-import model.Party;
 import model.characters.FemaleLongHairStyle;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -26,7 +25,7 @@ import util.MyStrings;
 import view.MyColors;
 import view.subviews.CollapsingTransition;
 import view.subviews.ImageSubView;
-import view.subviews.MansionTheme;
+import view.combat.MansionTheme;
 import view.subviews.SubView;
 
 import java.util.List;

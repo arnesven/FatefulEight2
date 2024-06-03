@@ -4,13 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.MansionTheme;
+import view.combat.CombatTheme;
+import view.combat.MansionTheme;
 
 import java.util.List;
 

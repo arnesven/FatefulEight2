@@ -2,7 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import view.subviews.TownCombatTheme;
+import view.combat.TownCombatTheme;
 import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
 import model.states.DailyEventState;

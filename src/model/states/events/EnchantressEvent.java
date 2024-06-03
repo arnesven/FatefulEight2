@@ -20,7 +20,7 @@ import view.MyColors;
 import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
-import view.subviews.MansionTheme;
+import view.combat.MansionTheme;
 
 import java.util.ArrayList;
 import java.util.List;

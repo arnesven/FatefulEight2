@@ -2,7 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
-import view.subviews.RiverCombatTheme;
+import view.combat.RiverCombatTheme;
 import model.enemies.BlackKnightEnemy;
 import view.subviews.CollapsingTransition;
 

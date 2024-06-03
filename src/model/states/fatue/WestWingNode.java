@@ -7,9 +7,8 @@ import model.ruins.objects.MonsterFactory;
 import model.ruins.objects.WestWingMonsterFactory;
 import model.ruins.themes.DungeonTheme;
 import model.ruins.themes.RuinsTheme;
-import model.states.dailyaction.AdvancedDailyActionState;
 import view.MyColors;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ class WestWingNode extends FatueDungeonNode {
 
     @Override
     protected CombatTheme getCombatTheme() {
-        return new view.subviews.DungeonTheme();
+        return new view.combat.DungeonTheme();
     }
 
     public static List<DungeonLevel> makeWestWingDungeon(Model model) {

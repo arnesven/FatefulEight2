@@ -3,9 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.enemies.DragonEnemy;
-import model.enemies.RedDragonEnemy;
 import model.states.DailyEventState;
-import view.subviews.MountainCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

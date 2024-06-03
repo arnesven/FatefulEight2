@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.enemies.ScorpionEnemy;
 import model.states.DailyEventState;
-import view.subviews.DesertCombatTheme;
 
 import java.util.List;
 

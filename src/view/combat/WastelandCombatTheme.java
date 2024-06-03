@@ -1,7 +1,7 @@
-package view.subviews;
+package view.combat;
 
 import view.MyColors;
-import view.subviews.MountainCombatTheme;
+import view.combat.MountainCombatTheme;
 
 public class WastelandCombatTheme extends MountainCombatTheme {
     public WastelandCombatTheme() {

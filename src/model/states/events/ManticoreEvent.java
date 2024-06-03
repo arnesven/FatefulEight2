@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.PersonalityTrait;
 import model.enemies.ManticoreEnemy;
 import model.states.DailyEventState;
-import view.subviews.DesertCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

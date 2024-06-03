@@ -1,7 +1,6 @@
 package model.quests;
 
 import model.Model;
-import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -14,8 +13,8 @@ import model.races.AllRaces;
 import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 

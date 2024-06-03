@@ -17,7 +17,7 @@ import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.GrassCombatTheme;
+import view.combat.GrassCombatTheme;
 import view.subviews.SplitPartySubView;
 import view.subviews.SubView;
 import view.widget.QuestBackground;

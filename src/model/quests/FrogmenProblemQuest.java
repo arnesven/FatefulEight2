@@ -8,7 +8,6 @@ import model.enemies.FrogmanLeaderEnemy;
 import model.enemies.FrogmanScoutEnemy;
 import model.enemies.FrogmanShamanEnemy;
 import model.items.spells.HarmonizeSpell;
-import model.items.spells.MindControlSpell;
 import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
@@ -17,8 +16,8 @@ import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;

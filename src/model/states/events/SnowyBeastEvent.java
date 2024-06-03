@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.enemies.SnowyBeastEnemy;
 import model.states.DailyEventState;
-import view.subviews.TundraCombatTheme;
 
 import java.util.List;
 

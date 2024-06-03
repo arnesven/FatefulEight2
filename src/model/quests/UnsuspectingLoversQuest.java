@@ -6,7 +6,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import view.subviews.TownCombatTheme;
+import view.combat.TownCombatTheme;
 import model.enemies.InterloperEnemy;
 import model.items.spells.FireworksSpell;
 import model.items.spells.Spell;
@@ -18,7 +18,7 @@ import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.TownSubView;
 import view.widget.QuestBackground;
 

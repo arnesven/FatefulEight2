@@ -2,17 +2,16 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.events.RitualEvent;
 import util.Arithmetics;
 import util.MyPair;
 import view.MyColors;
+import view.combat.CombatTheme;
 import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 

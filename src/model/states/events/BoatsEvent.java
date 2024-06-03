@@ -9,7 +9,7 @@ import model.enemies.*;
 import util.MyRandom;
 import view.subviews.BoatPlacementSubView;
 import view.subviews.CollapsingTransition;
-import view.subviews.GrassCombatTheme;
+import view.combat.GrassCombatTheme;
 
 import java.util.Collections;
 import java.util.Comparator;

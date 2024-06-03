@@ -4,11 +4,11 @@ import model.Model;
 import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyRandom;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
-import view.subviews.TundraCombatTheme;
+import view.combat.TundraCombatTheme;
 
 import java.awt.*;
 import java.util.List;

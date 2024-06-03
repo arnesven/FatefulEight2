@@ -7,6 +7,7 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.TownDailyActionState;
 import view.MyColors;
+import view.combat.GrassCombatTheme;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

@@ -1,4 +1,4 @@
-package view.subviews;
+package view.combat;
 
 import model.Model;
 import view.MyColors;

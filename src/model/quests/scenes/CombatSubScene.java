@@ -2,10 +2,8 @@ package model.quests.scenes;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
 import model.quests.QuestEdge;
-import model.quests.QuestNode;
 import model.quests.QuestSubScene;
 import model.states.CombatEvent;
 import model.states.GameState;
@@ -14,10 +12,8 @@ import model.states.SpellCastException;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.MyColors;
-import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.DungeonTheme;
 
 import java.awt.*;
 import java.util.ArrayList;

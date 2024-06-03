@@ -11,7 +11,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
-import view.subviews.ShipCombatTheme;
+import view.combat.ShipCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

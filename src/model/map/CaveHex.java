@@ -2,7 +2,8 @@ package model.map;
 
 import model.Model;
 import model.actions.*;
-import view.subviews.CaveTheme;
+import view.combat.CombatTheme;
+import view.combat.CaveTheme;
 import model.map.locations.Stalagmites;
 import model.states.DailyEventState;
 import model.states.TravelState;

@@ -5,7 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
 import model.classes.Skill;
-import view.subviews.CaveTheme;
+import view.combat.CaveTheme;
 import model.enemies.Enemy;
 import model.items.weapons.RustyPickaxe;
 import model.races.Race;

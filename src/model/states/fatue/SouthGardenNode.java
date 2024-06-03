@@ -6,8 +6,8 @@ import model.ruins.objects.FatueGardenMonsterFactory;
 import model.ruins.objects.FatueKeyObject;
 import model.ruins.themes.GreenRuinsTheme;
 import view.MyColors;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.GardenCombatTheme;
+import view.combat.CombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class SouthGardenNode extends FatueDungeonNode {
 
     @Override
     protected CombatTheme getCombatTheme() {
-        return new GrassCombatTheme(); // TODO: Make garden combat theme
+        return new GardenCombatTheme();
     }
 
     public static List<DungeonLevel> makeGardenDungeon(Model model, int size) {

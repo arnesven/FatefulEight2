@@ -15,9 +15,9 @@ import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
-import view.subviews.MansionTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
+import view.combat.MansionTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;

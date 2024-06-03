@@ -2,7 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.classes.Skill;
-import view.subviews.TownCombatTheme;
+import view.combat.TownCombatTheme;
 import model.enemies.*;
 import model.quests.scenes.*;
 import model.states.QuestState;
@@ -10,8 +10,8 @@ import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.widget.QuestBackground;
 
 import java.awt.*;

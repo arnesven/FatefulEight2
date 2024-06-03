@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
 import view.MyColors;
+import view.combat.TownCombatTheme;
 
 import java.awt.event.KeyEvent;
 

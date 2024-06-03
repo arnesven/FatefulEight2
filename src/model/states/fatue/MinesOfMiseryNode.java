@@ -7,10 +7,9 @@ import model.ruins.objects.MinesOfMiseryMonsterFactory;
 import model.ruins.objects.MonsterFactory;
 import model.ruins.themes.DungeonTheme;
 import model.ruins.themes.GrayCaveTheme;
-import model.states.dailyaction.AdvancedDailyActionState;
 import view.MyColors;
-import view.subviews.CaveTheme;
-import view.subviews.CombatTheme;
+import view.combat.CaveTheme;
+import view.combat.CombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

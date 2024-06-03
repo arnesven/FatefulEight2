@@ -15,6 +15,10 @@ import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.FindBountyEvent;
 import util.MyRandom;
+import view.combat.CaveTheme;
+import view.combat.CombatTheme;
+import view.combat.DungeonTheme;
+import view.combat.MansionTheme;
 import view.subviews.*;
 
 import java.awt.*;

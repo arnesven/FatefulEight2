@@ -8,6 +8,7 @@ import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
 import view.BorderFrame;
+import view.combat.CombatTheme;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import view.MyColors;

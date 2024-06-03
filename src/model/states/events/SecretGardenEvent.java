@@ -3,12 +3,9 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
-import model.characters.appearance.AdvancedAppearance;
-import model.classes.CharacterClass;
 import model.combat.conditions.BlessedCondition;
 import model.combat.conditions.PoisonCondition;
 import model.enemies.ElfEnemy;
-import model.enemies.Enemy;
 import model.enemies.FaeryEnemy;
 import model.items.Equipment;
 import model.items.HigherTierClothing;
@@ -29,7 +26,6 @@ import model.ruins.RuinsDungeon;
 import model.ruins.objects.CenterDungeonObject;
 import model.ruins.objects.DungeonChest;
 import model.ruins.objects.DungeonMonster;
-import model.ruins.objects.DungeonObject;
 import model.states.DailyEventState;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
@@ -37,6 +33,10 @@ import model.states.RecruitState;
 import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
+import view.combat.CombatTheme;
+import view.combat.DungeonTheme;
+import view.combat.GardenCombatTheme;
+import view.combat.GrassCombatTheme;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.subviews.*;
@@ -104,7 +104,7 @@ public class SecretGardenEvent extends DailyEventState {
             if (getCurrentLevel() == 1) {
                 return new DungeonTheme();
             }
-            return new GrassCombatTheme(); // TODO: Dark Woods combat theme.
+            return new GardenCombatTheme();
         }
 
         @Override

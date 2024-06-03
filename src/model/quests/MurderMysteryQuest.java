@@ -4,11 +4,11 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.quests.scenes.*;
-import view.subviews.TownCombatTheme;
+import view.combat.TownCombatTheme;
 import model.enemies.MurdererEnemy;
 import model.races.Race;
 import view.MyColors;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 

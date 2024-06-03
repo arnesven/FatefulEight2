@@ -19,7 +19,7 @@ import view.MyColors;
 import view.sprites.HermitSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class TallSpireEvent extends DailyEventState {
 
         @Override
         public CombatTheme getCombatTheme() {
-            return new view.subviews.DungeonTheme();
+            return new view.combat.DungeonTheme();
         }
 
         public String getCurrentRoomInfo() {

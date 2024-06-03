@@ -7,8 +7,7 @@ import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
-import view.subviews.CollapsingTransition;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.QuestSubView;
 import view.subviews.SnakeTransition;
 

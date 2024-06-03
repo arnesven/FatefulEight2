@@ -1,7 +1,8 @@
-package view.subviews;
+package view.combat;
 
 import model.Model;
 import view.MyColors;
+import view.combat.MountainCombatTheme;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 

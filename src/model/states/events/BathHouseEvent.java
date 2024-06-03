@@ -18,7 +18,7 @@ import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyLists;
 import util.MyRandom;
-import view.subviews.MansionTheme;
+import view.combat.MansionTheme;
 import view.subviews.PortraitSubView;
 import view.subviews.SplitPartySubView;
 import view.subviews.SubView;

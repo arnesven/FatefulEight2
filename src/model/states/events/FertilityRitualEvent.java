@@ -3,13 +3,12 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Classes;
-import model.classes.Skill;
 import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 
 import java.util.List;
 

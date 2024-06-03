@@ -18,8 +18,8 @@ import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
-import view.subviews.CombatTheme;
-import view.subviews.DungeonTheme;
+import view.combat.CombatTheme;
+import view.combat.DungeonTheme;
 import view.subviews.SubView;
 
 import java.util.ArrayList;

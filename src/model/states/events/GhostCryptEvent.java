@@ -5,7 +5,7 @@ import model.characters.PersonalityTrait;
 import model.enemies.Enemy;
 import model.enemies.GhostEnemy;
 import model.states.DailyEventState;
-import view.subviews.DungeonTheme;
+import view.combat.DungeonTheme;
 
 import java.util.ArrayList;
 import java.util.List;

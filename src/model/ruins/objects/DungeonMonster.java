@@ -2,12 +2,9 @@ package model.ruins.objects;
 
 import model.Model;
 import model.classes.Skill;
-import model.ruins.DungeonMaker;
-import view.subviews.CaveTheme;
 import model.enemies.*;
 import model.items.potions.Potion;
 import model.items.potions.SleepingPotion;
-import model.ruins.RuinsDungeon;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
 import view.MyColors;
@@ -15,13 +12,10 @@ import view.sprites.Animation;
 import view.sprites.LoopingSprite;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
-import view.subviews.CombatTheme;
-import view.subviews.DungeonTheme;
 import view.subviews.StripedTransition;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Random;
 
 public class DungeonMonster extends CenterDungeonObject {
     private static final Sprite SLEEP_ANIMATION = new SleepAnimationSprite();

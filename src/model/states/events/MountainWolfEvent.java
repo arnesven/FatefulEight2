@@ -3,10 +3,6 @@ package model.states.events;
 import model.Model;
 import model.enemies.Enemy;
 import model.enemies.MountainWolfEnemy;
-import model.enemies.WolfEnemy;
-import model.states.DailyEventState;
-import view.subviews.CombatTheme;
-import view.subviews.MountainCombatTheme;
 
 public class MountainWolfEvent extends WolfEvent {
     public MountainWolfEvent(Model model) {

@@ -11,12 +11,11 @@ import model.enemies.OrcWarrior;
 import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
-import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 

@@ -5,7 +5,7 @@ import model.ruins.RuinsDungeon;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 
 abstract class FatueDungeonNode extends FatueDailyActionNode {
     private final String name;

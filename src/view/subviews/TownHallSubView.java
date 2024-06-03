@@ -5,8 +5,8 @@ import model.SteppingMatrix;
 import model.races.Race;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.RecruitNode;
 import view.MyColors;
+import view.combat.GrassCombatTheme;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 

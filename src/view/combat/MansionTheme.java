@@ -1,7 +1,8 @@
-package view.subviews;
+package view.combat;
 
 import model.Model;
 import view.MyColors;
+import view.combat.CombatTheme;
 import view.sprites.Sprite32x32;
 
 public class MansionTheme extends CombatTheme {

@@ -5,12 +5,11 @@ import model.characters.GameCharacter;
 import model.classes.Classes;
 import model.enemies.FiendEnemy;
 import model.races.Race;
-import model.states.DailyEventState;
 import util.MyStrings;
 import view.MyColors;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 
 import java.util.List;
 

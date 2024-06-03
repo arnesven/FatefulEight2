@@ -2,10 +2,8 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Skill;
-import model.classes.SkillCheckResult;
 import model.enemies.BearEnemy;
 import model.states.DailyEventState;
-import view.subviews.TundraCombatTheme;
 
 import java.util.List;
 

@@ -5,6 +5,8 @@ import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyPair;
 import util.MyRandom;
+import view.combat.CombatTheme;
+import view.combat.MountainCombatTheme;
 import view.subviews.*;
 import view.MyColors;
 

@@ -1,7 +1,6 @@
 package model.states;
 
 import model.Model;
-import model.Party;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.ruins.*;
@@ -10,6 +9,9 @@ import model.ruins.objects.DungeonObject;
 import model.ruins.objects.StairsDown;
 import model.ruins.objects.StairsUp;
 import util.MyPair;
+import view.combat.CaveTheme;
+import view.combat.CombatTheme;
+import view.combat.DungeonTheme;
 import view.subviews.*;
 
 import java.awt.*;

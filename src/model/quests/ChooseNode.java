@@ -2,14 +2,13 @@ package model.quests;
 
 import model.Model;
 import model.enemies.Enemy;
-import model.quests.*;
 import model.states.CombatEvent;
 import model.states.QuestState;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite32x32;
-import view.subviews.MansionTheme;
+import view.combat.MansionTheme;
 
 import java.awt.*;
 import java.util.ArrayList;

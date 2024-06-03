@@ -2,11 +2,10 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
-import view.subviews.TownCombatTheme;
+import view.combat.TownCombatTheme;
 import model.enemies.SoldierEnemy;
 import model.quests.scenes.CollaborativeLockpickingSubScene;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;

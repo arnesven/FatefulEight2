@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.states.events.BoatsEvent;
+import view.combat.GrassCombatTheme;
 import view.sprites.CombatCursorSprite;
 import view.MyColors;
 import view.sprites.BoatSprite;

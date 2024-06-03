@@ -22,7 +22,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.ZeppelinSprite;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;

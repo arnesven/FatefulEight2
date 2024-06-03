@@ -1,10 +1,9 @@
-package view.subviews;
+package view.combat;
 
 import model.Model;
 import view.MyColors;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.DungeonTheme;
+import view.combat.CombatTheme;
 
 import java.util.Random;
 

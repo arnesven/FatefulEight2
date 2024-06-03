@@ -15,7 +15,7 @@ import model.map.UrbanLocation;
 import util.MyRandom;
 import view.subviews.CollapsingTransition;
 import view.subviews.ImageSubView;
-import view.subviews.MansionTheme;
+import view.combat.MansionTheme;
 
 import java.util.ArrayList;
 import java.util.List;

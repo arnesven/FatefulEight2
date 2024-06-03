@@ -1,11 +1,11 @@
-package view.subviews;
+package view.combat;
 
 import model.Model;
 import model.map.CaveHex;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 
 import java.util.Random;
 

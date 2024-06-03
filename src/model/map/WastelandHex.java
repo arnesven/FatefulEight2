@@ -1,13 +1,13 @@
 package model.map;
 
 import model.Model;
-import view.subviews.WastelandCombatTheme;
+import view.combat.WastelandCombatTheme;
 import model.map.locations.WastelandLocation;
 import model.states.DailyEventState;
 import model.states.events.*;
 import util.MyRandom;
 import view.MyColors;
-import view.subviews.CombatTheme;
+import view.combat.CombatTheme;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 

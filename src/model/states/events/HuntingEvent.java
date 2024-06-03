@@ -11,7 +11,7 @@ import model.items.Item;
 import model.items.weapons.BowWeapon;
 import model.states.DailyEventState;
 import util.MyRandom;
-import view.subviews.GrassCombatTheme;
+import view.combat.GrassCombatTheme;
 
 import java.util.ArrayList;
 import java.util.List;

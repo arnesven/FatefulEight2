@@ -2,10 +2,9 @@ package model.states.events;
 
 import model.Model;
 import model.enemies.Enemy;
-import model.enemies.GhostEnemy;
 import model.enemies.SkeletonEnemy;
 import model.states.DailyEventState;
-import view.subviews.DungeonTheme;
+import view.combat.DungeonTheme;
 
 import java.util.ArrayList;
 import java.util.List;

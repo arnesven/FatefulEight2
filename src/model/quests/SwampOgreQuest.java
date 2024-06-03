@@ -16,15 +16,14 @@ import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
-import view.subviews.CombatTheme;
-import view.subviews.GrassCombatTheme;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class SwampOgreQuest extends Quest {
     private static final String INTRO = "Albedan the mage has been taken prisoner by a Oleg, an ogre in the Dank\n" +
