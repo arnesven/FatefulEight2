@@ -25,6 +25,8 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
     private static final Sprite32x32 STAFF_PIECE_MIDDLE = new Sprite32x32("staffmiddle", "fatue_plan.png", 0x18,
             MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, MyColors.DARK_RED, MyColors.BEIGE);
     private static final Map<MyColors, Sprite32x32> KEY_SPRITE_MAP = makeKeySpriteMap();
+    private static final Sprite KEY_CONTOUR_SPRITE = new Sprite32x32("keycontour", "fatue_plan.png", 0x48,
+            MyColors.BLACK, MyColors.WHITE, MyColors.BROWN);
 
     private final FortressAtUtmostEdgeState state;
 
@@ -62,15 +64,18 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
     }
 
     private void drawKeys(Model model) {
+        for (int i = 0; i < FortressAtUtmostEdgeState.MAX_KEYS ; ++i) {
+            Point pos = convertToScreen(new Point(i+1, 0));
+            model.getScreenHandler().put(pos.x, pos.y-2, KEY_CONTOUR_SPRITE);
+        }
+
         List<MyColors> keys = state.getKeysColoected(model);
         for (int i = 0; i < keys.size(); i++) {
             Sprite spr = KEY_SPRITE_MAP.get(keys.get(i));
             assert spr != null;
-            Point pos = new Point(0, i);
-            if (i > 3) {
-                pos = new Point(i-1, 0);
-            }
-            model.getScreenHandler().register(spr.getName(), convertToScreen(pos), spr);
+            Point pos = convertToScreen(new Point(i+1, 0));
+            pos.translate(0, -2);
+            model.getScreenHandler().register(spr.getName(), pos, spr);
         }
     }
 

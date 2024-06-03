@@ -19,6 +19,7 @@ import java.awt.*;
 import java.util.List;
 
 public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
+    public static final int MAX_KEYS = 6;
     private static final Point STARTING_POINT = new Point(7, 8);
     private static final Point CASTLE_PROPER_POSITION = new Point(4, 5);
     private static final String FIRST_TIME_IN_CASTLE_PROPER = "firstTimeInCastleProper";

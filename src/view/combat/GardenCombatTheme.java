@@ -12,7 +12,7 @@ public class GardenCombatTheme extends CombatTheme {
     private static final Sprite treeUpperSprite = new Sprite32x32("gardenupper", "combat.png", 0x10, MyColors.DARK_GREEN, MyColors.DARK_GRAY, MyColors.BLACK);
     private static final Sprite treeLowerSprite = new Sprite32x32("gardenlower", "combat.png", 0x11, MyColors.TAN, MyColors.DARK_GRAY, MyColors.BLACK);
     private static final Sprite grassLineSprite = new Sprite32x32("gardenlower", "combat.png", 0x12, MyColors.DARK_GREEN, MyColors.DARK_GRAY, MyColors.GREEN);
-    private static final Sprite upperContour = new Sprite32x32("gardencontourupper", "combat.png", 0x20, MyColors.ORC_GREEN, MyColors.BLACK, MyColors.BLACK);
+    private static final Sprite upperContour = new Sprite32x32("gardencontourupper", "combat.png", 0x20, MyColors.DARK_GREEN, MyColors.BLACK, MyColors.BLACK);
     private static final Sprite lowerContour = new Sprite32x32("gardencontourlower", "combat.png", 0x21, MyColors.DARK_BROWN, MyColors.RED, MyColors.RED);
     public static Sprite[] darkGrassSprites = makeGroundSprites(MyColors.DARK_GREEN, MyColors.GREEN, GRASSY_ROW);
 
