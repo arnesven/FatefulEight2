@@ -22,12 +22,12 @@ public class MinesOfMiseryMonsterFactory extends MonsterFactory {
         int numberOfEnemies;
         switch (dieRoll) {
             case 0:
-                numberOfEnemies = Math.max(1, GameState.getSuggestedNumberOfEnemies(model, new GoblinSpearman('A')) - 1);
-                int numberOfSpearmen = random.nextInt(numberOfEnemies);
+                numberOfEnemies = Math.max(1, GameState.getSuggestedNumberOfEnemies(model, new GoblinSpearman('A')));
+                int numberOfSpearmen = random.nextInt(numberOfEnemies) - 1;
                 for (int i = 0; i < numberOfSpearmen; ++i) {
                     enemies.add(new GoblinSpearman('A'));
                 }
-                int numberOfAxemen = random.nextInt(numberOfEnemies - numberOfSpearmen);
+                int numberOfAxemen = random.nextInt(numberOfEnemies - numberOfSpearmen) - 1;
                 for (int i = 0; i < numberOfAxemen; ++i) {
                     enemies.add(new GoblinAxeWielder('B'));
                 }
