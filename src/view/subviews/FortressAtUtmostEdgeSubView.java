@@ -142,8 +142,10 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
                 MyColors.DARK_GRAY, MyColors.GOLD, FatueKeyObject.getHighlightColor(MyColors.GOLD)));
         map.put(MyColors.DARK_RED, new Sprite32x32("fatuekeyred", "fatue_plan.png", 0x38,
                 MyColors.DARK_GRAY, MyColors.DARK_RED, FatueKeyObject.getHighlightColor(MyColors.DARK_RED)));
-        map.put(MyColors.DARK_GREEN, new Sprite32x32("fatuekeyred", "fatue_plan.png", 0x38,
+        map.put(MyColors.DARK_GREEN, new Sprite32x32("fatuekeygreen", "fatue_plan.png", 0x38,
                 MyColors.DARK_GRAY, MyColors.DARK_GREEN, FatueKeyObject.getHighlightColor(MyColors.DARK_GREEN)));
+        map.put(MyColors.GRAY, new Sprite32x32("fatuekeygray", "fatue_plan.png", 0x38,
+                MyColors.DARK_GRAY, MyColors.GRAY, FatueKeyObject.getHighlightColor(MyColors.GRAY)));
         return map;
     }
 }

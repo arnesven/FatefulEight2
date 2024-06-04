@@ -5,7 +5,9 @@ import model.ruins.DungeonRoom;
 import model.ruins.objects.BlackWindow;
 import model.ruins.objects.DungeonPitfallTrap;
 import model.ruins.factories.MonsterFactory;
+import model.ruins.objects.FatueKeyObject;
 import model.ruins.themes.DungeonTheme;
+import view.MyColors;
 
 import java.util.Random;
 import java.util.Set;
@@ -14,9 +16,11 @@ public class PitfallDungeonConfig extends NoLeversDungeonConfig {
 
     private static final double MONSTER_PREVALENCE = 0.15;
     private static final double TRAP_PREVALENCE = 0.1;
+    private final KeySpawningDungeonLevelConfig keySpawner;
 
-    public PitfallDungeonConfig(DungeonTheme theme, MonsterFactory monsterFactory) {
+    public PitfallDungeonConfig(DungeonTheme theme, MonsterFactory monsterFactory, MyColors keyColor) {
         super(theme, monsterFactory);
+        this.keySpawner = new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(keyColor));
     }
 
     protected void addJunctionObject(DungeonRoom room, Random random, MonsterFactory monsterFactory) {
@@ -45,5 +49,20 @@ public class PitfallDungeonConfig extends NoLeversDungeonConfig {
             }
         }
 
+    }
+
+    @Override
+    protected void addDeadEndObject(DungeonLevel dungeonLevel, DungeonRoom room, Random random) {
+        if (!keySpawner.isKeySpawned()) {
+            keySpawner.addDeadEndObject(dungeonLevel, room, random);
+            if (keySpawner.isKeySpawned()) {
+                return; // key spawned in this room
+            }
+        }
+        super.addDeadEndObject(dungeonLevel, room, random);
+    }
+
+    public boolean keySpawned() {
+        return keySpawner.isKeySpawned();
     }
 }

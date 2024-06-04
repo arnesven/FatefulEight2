@@ -33,6 +33,8 @@ public class FatueKeyObject extends CenterDungeonObject {
             return MyColors.RED;
         } else if (color == MyColors.DARK_GREEN) {
             return MyColors.GREEN;
+        } else if (color == MyColors.GRAY) {
+            return MyColors.WHITE;
         }
         return MyColors.YELLOW;
     }

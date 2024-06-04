@@ -37,11 +37,14 @@ public class EastWingNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        DungeonLevelConfig config = new PitfallDungeonConfig(new PurpleRuinsTheme(), new UndeadMonsterFactory(model));
+        PitfallDungeonConfig config = new PitfallDungeonConfig(new PurpleRuinsTheme(), new UndeadMonsterFactory(model), MyColors.GRAY);
         levels.add(new FinalDungeonLevel(random, config.getTheme()));
-        levels.add(new DungeonLevel(random, false, 7, config));
-        config = new NoLeversDungeonConfig(new PurpleBrickTheme(), new UndeadMonsterFactory(model));
-        levels.add(new DungeonLevel(random, false, 7, config));
+        do {
+            levels.add(new DungeonLevel(random, false, 7, config));
+            System.err.println("Key not spawned in east wing, retrying");
+        } while (!config.keySpawned());
+        DungeonLevelConfig config2 = new NoLeversDungeonConfig(new PurpleBrickTheme(), new UndeadMonsterFactory(model));
+        levels.add(new DungeonLevel(random, false, 7, config2));
 
         RuinsDungeon dungeon = new RuinsDungeon(levels);
         DungeonLevel bottomLevel = dungeon.getLevel(dungeon.getNumberOfLevels()-1);
