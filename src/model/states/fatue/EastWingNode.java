@@ -21,31 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EastWingNode extends FatueDungeonNode {
-    private final FatueKeyItem requiredKey;
-
+public class EastWingNode extends KeyRequiredFatueDungeonNode {
     public EastWingNode() {
-        super("East Wing", false,
+        super("East Wing", false, MyColors.DARK_RED,
                 "This hallway leads to the rundown eastern wing. " +
                         "It's dark and quiet this way, do you want to continue?");
-        this.requiredKey = new FatueKeyItem(MyColors.DARK_RED);
     }
 
     @Override
-    protected boolean runPreHook(Model model, AdvancedDailyActionState state) {
-        state.println("You start down the hallway but soon encounter a locked door.");
-        if (FatueKeyItem.hasKey(model, requiredKey.getColor())) {
-            state.println("You use the " + requiredKey.getName() + " to unlock the door.");
-            return true;
-        }
-        if (model.getParty().size() > 1) {
-            state.leaderSay("Any chance to pick this lock?");
-            GameCharacter rando = model.getParty().getRandomPartyMember(model.getParty().getLeader());
-            state.partyMemberSay(rando, "No can do. That's a masterpiece lock. The only " +
-                    "thing that will open it is the proper key.");
-        }
-        state.println("You need the " + requiredKey.getName() + " to open the door.");
-        return false;
+    protected CombatTheme getCombatTheme() {
+        return new DungeonTheme();
     }
 
     @Override
@@ -69,10 +54,4 @@ public class EastWingNode extends FatueDungeonNode {
         firstLevel.setFinalRoom(staffRoom, false);
         return dungeon;
     }
-
-    @Override
-    protected CombatTheme getCombatTheme() {
-        return new DungeonTheme();
-    }
-
 }
