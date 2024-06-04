@@ -2,8 +2,9 @@ package model.states.fatue;
 
 import model.Model;
 import model.ruins.*;
+import model.ruins.configs.GardenDungeonLevelConfig;
 import model.ruins.objects.DousableFire;
-import model.ruins.objects.FatueGardenMonsterFactory;
+import model.ruins.factories.FatueGardenMonsterFactory;
 import model.ruins.objects.FatueSunDialObject;
 import model.ruins.themes.GardenDungeonTheme;
 import view.MyColors;

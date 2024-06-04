@@ -1,5 +1,9 @@
-package model.ruins;
+package model.ruins.configs;
 
+import model.ruins.DungeonLevel;
+import model.ruins.DungeonRoom;
+import model.ruins.factories.GardenMonsterFactory;
+import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.*;
 import model.ruins.themes.GardenDungeonTheme;
 

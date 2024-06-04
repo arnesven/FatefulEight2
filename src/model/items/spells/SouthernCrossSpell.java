@@ -2,6 +2,7 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.*;
 import model.items.Item;
 import model.states.GameState;
 import view.MyColors;
@@ -38,12 +39,17 @@ public class SouthernCrossSpell extends ImmediateSpell {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc != caster) {
                 int hpBefore = gc.getHP();
-                gc.addToHP(5 + getMasteryLevel(caster) * 2);
+                gc.addToHP(8 + getMasteryLevel(caster) * 2);
                 int totalRecovered = gc.getHP() - hpBefore;
                 state.println(gc.getName() + " recovers " + totalRecovered + " HP!");
                 model.getParty().partyMemberSay(model, gc,
                         List.of("Thank you so much!3", "Much obliged!3",
                                 "I really needed that!3", "Aah, I feel great!3"));
+                gc.removeCondition(PoisonCondition.class);
+                gc.removeCondition(BleedingCondition.class);
+                gc.removeCondition(BurningCondition.class);
+                gc.removeCondition(ParalysisCondition.class);
+                gc.removeCondition(IntoxicatedCondition.class);
             }
         }
     }
@@ -55,6 +61,6 @@ public class SouthernCrossSpell extends ImmediateSpell {
 
     @Override
     public String getDescription() {
-        return "A powerful incantation that restores 5 HP of each party member (excluding the caster).";
+        return "Restores 8 HP of each party member (excluding the caster) and removes negative conditions.";
     }
 }

@@ -1,6 +1,8 @@
-package model.ruins.objects;
+package model.ruins.factories;
 
 import model.enemies.*;
+import model.ruins.objects.DungeonMonster;
+import model.ruins.objects.DungeonObject;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,6 +1,6 @@
 package model.ruins;
 
-import model.ruins.objects.MonsterFactory;
+import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.StairsDown;
 import model.ruins.objects.StairsUp;
 import model.ruins.themes.DungeonTheme;

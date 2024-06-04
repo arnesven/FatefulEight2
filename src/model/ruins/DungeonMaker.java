@@ -1,6 +1,9 @@
 package model.ruins;
 
-import model.ruins.objects.MonsterFactory;
+import model.ruins.configs.DungeonLevelConfig;
+import model.ruins.configs.GardenDungeonLevelConfig;
+import model.ruins.configs.TallSpireDungeonConfig;
+import model.ruins.factories.MonsterFactory;
 import model.ruins.themes.*;
 import util.MyRandom;
 

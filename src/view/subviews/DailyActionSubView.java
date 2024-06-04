@@ -91,7 +91,10 @@ public abstract class DailyActionSubView extends AvatarSubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        return matrix.handleKeyEvent(keyEvent);
+        if (cursorEnabled) {
+            return matrix.handleKeyEvent(keyEvent);
+        }
+        return false;
     }
 
 

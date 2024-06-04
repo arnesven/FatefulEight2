@@ -77,6 +77,10 @@ public class LockedDoor extends DungeonDoor {
         if (state.yesNoInput()) {
             state.println("Who should try to break down the door.");
             GameCharacter performer = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
+            if (performer.getEquipment().getWeapon() instanceof UnarmedCombatWeapon) {
+                state.println("This character has nothing to break down the door with.");
+                return;
+            }
             performer.addToSP(-1);
             SkillCheckResult result = performer.testSkill(model, performer.getEquipment().getWeapon().getSkillToUse(performer));
             int damage = performer.getEquipment().getWeapon().getDamage(result.getModifiedRoll(), performer);

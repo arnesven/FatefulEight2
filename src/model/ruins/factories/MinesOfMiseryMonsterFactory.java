@@ -1,7 +1,8 @@
-package model.ruins.objects;
+package model.ruins.factories;
 
 import model.Model;
 import model.enemies.*;
+import model.ruins.objects.DungeonMonster;
 import model.states.GameState;
 
 import java.util.ArrayList;

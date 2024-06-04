@@ -1,7 +1,9 @@
 package model.items.special;
 
+import model.Model;
 import model.items.Item;
 import model.ruins.objects.FatueKeyObject;
+import util.MyLists;
 import util.MyStrings;
 import view.MyColors;
 import view.sprites.ItemSprite;
@@ -15,6 +17,11 @@ public class FatueKeyItem extends StoryItem {
         super(MyStrings.capitalize(color.name()).replace("_", " ") + " Key", 0);
         this.color = color;
         this.sprite = new ItemSprite(11, 13, FatueKeyObject.getHighlightColor(color), color, MyColors.DARK_GRAY);
+    }
+
+    public static boolean hasKey(Model model, MyColors color) {
+        return !MyLists.filter(model.getParty().getInventory().getStoryItems(),
+                (StoryItem si) -> si instanceof FatueKeyItem && ((FatueKeyItem) si).getColor() == color).isEmpty();
     }
 
     @Override

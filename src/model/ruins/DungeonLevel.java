@@ -1,5 +1,7 @@
 package model.ruins;
 
+import model.ruins.configs.DungeonLevelConfig;
+import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.*;
 import model.ruins.themes.DungeonTheme;
 

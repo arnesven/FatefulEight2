@@ -2,9 +2,10 @@ package model.states.fatue;
 
 import model.Model;
 import model.ruins.*;
+import model.ruins.configs.KeySpawningDungeonLevelConfig;
 import model.ruins.objects.FatueKeyObject;
-import model.ruins.objects.MonsterFactory;
-import model.ruins.objects.WestWingMonsterFactory;
+import model.ruins.factories.MonsterFactory;
+import model.ruins.factories.WestWingMonsterFactory;
 import model.ruins.themes.DungeonTheme;
 import model.ruins.themes.RuinsTheme;
 import view.MyColors;

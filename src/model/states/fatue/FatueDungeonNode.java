@@ -4,6 +4,7 @@ import model.Model;
 import model.ruins.RuinsDungeon;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
+import model.states.NullGameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import view.combat.CombatTheme;
 
@@ -20,12 +21,11 @@ abstract class FatueDungeonNode extends FatueDailyActionNode {
     }
 
     protected abstract RuinsDungeon makeDungeon(Model model);
-
+    protected boolean runPreHook(Model model, AdvancedDailyActionState state) { return true; }
     protected abstract CombatTheme getCombatTheme();
     
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
-    }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
 
     @Override
     public final boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
@@ -39,6 +39,9 @@ abstract class FatueDungeonNode extends FatueDailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        if (!runPreHook(model, state)) {
+            return new NullGameState();
+        }
         RuinsDungeon dungeon;
         String key = "F.A.T.U.E - " + name;
         if (model.hasVisitedDungeon(key)) {
@@ -60,8 +63,15 @@ abstract class FatueDungeonNode extends FatueDailyActionNode {
             this.isDownward = isDownward;
             if (!isDownward) {
                 super.setCurrentLevelAndPosition(dungeon.getNumberOfLevels()-1,
-                        dungeon.getLevel(dungeon.getNumberOfLevels()-1).getStartingPoint());
+                        dungeon.getLevel(dungeon.getNumberOfLevels()-1).getDescentPoint());
             }
+        }
+
+        @Override
+        public GameState run(Model model) {
+            GameState toReturn = super.run(model);
+            model.getParty().unbenchAll();
+            return toReturn;
         }
 
         @Override

@@ -1,7 +1,9 @@
-package model.ruins;
+package model.ruins.configs;
 
+import model.ruins.DungeonLevel;
+import model.ruins.DungeonRoom;
 import model.ruins.objects.FatueKeyObject;
-import model.ruins.objects.MonsterFactory;
+import model.ruins.factories.MonsterFactory;
 import model.ruins.themes.DungeonTheme;
 
 import java.util.Random;

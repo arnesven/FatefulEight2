@@ -38,7 +38,7 @@ public class LargeWindow extends PositionableRoomDecoration {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos, DungeonTheme theme) {
-        model.getScreenHandler().register(sprite.getName(), new Point(xPos, yPos), sprite);
+        model.getScreenHandler().register(getSprite(theme).getName(), new Point(xPos, yPos), getSprite(theme));
     }
 
     @Override
