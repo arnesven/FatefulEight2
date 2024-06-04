@@ -17,28 +17,26 @@ import java.util.List;
 import java.util.Random;
 
 class MinesOfMiseryNode extends FatueDungeonNode {
-    public MinesOfMiseryNode() {
+    private final MyColors givesKeyColor;
+
+    public MinesOfMiseryNode(MyColors givesKeyColor) {
         super("Mines of Misery", true,"These narrow and treacherous steps " +
                 "lead down to the dank mines below the fortress. Would you like to explore them?");
+        this.givesKeyColor = givesKeyColor;
     }
-
-    @Override
-    protected RuinsDungeon makeDungeon(Model model) {
-        return new RuinsDungeon(makeMinesOfMiseryDungeon(model));
-    }
-
     @Override
     protected CombatTheme getCombatTheme() {
         return new CaveTheme();
     }
 
-    public static List<DungeonLevel> makeMinesOfMiseryDungeon(Model model) {
+    @Override
+    protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         DungeonTheme theme = new GrayCaveTheme();
         MonsterFactory monsterFactory = new MinesOfMiseryMonsterFactory(model);
         KeySpawningDungeonLevelConfig keySpawningConfig =
-                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(MyColors.DARK_RED));
+                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(givesKeyColor));
         DungeonLevel level = null;
         do {
             level = new DungeonLevel(random, true, 12, keySpawningConfig);
@@ -48,6 +46,6 @@ class MinesOfMiseryNode extends FatueDungeonNode {
         FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, theme);
         finalLevel.setFinalRoom(new FatueStaffRoom());
         levels.add(finalLevel);
-        return levels;
+        return new RuinsDungeon(levels);
     }
 }

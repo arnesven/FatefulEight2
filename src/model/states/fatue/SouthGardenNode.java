@@ -16,14 +16,24 @@ import java.util.List;
 import java.util.Random;
 
 public class SouthGardenNode extends FatueDungeonNode {
-    public SouthGardenNode() {
+    private final MyColors givesKeyColor;
+
+    public SouthGardenNode(MyColors givesKeyColor) {
         super("South Garden", true,"This passage leads out into a " +
                 "smallish garden on the castle exterior. Would you like to explore it?");
+        this.givesKeyColor = givesKeyColor;
     }
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
-        return new RuinsDungeon(makeGardenDungeon(model, 9));
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        levels.add(new DungeonLevel(random, false, 9,
+                new GardenDungeonLevelConfig(new FatueGardenMonsterFactory(model))));
+        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, new GardenDungeonTheme());
+        finalLevel.setFinalRoom(new SundialRoom(givesKeyColor));
+        levels.add(finalLevel);
+        return new RuinsDungeon(levels);
     }
 
     @Override
@@ -31,21 +41,11 @@ public class SouthGardenNode extends FatueDungeonNode {
         return new GardenCombatTheme();
     }
 
-    public static List<DungeonLevel> makeGardenDungeon(Model model, int size) {
-        List<DungeonLevel> levels = new ArrayList<>();
-        Random random = new Random();
-        levels.add(new DungeonLevel(random, false, size, new GardenDungeonLevelConfig(new FatueGardenMonsterFactory(model))));
-        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, new GardenDungeonTheme());
-        finalLevel.setFinalRoom(new JadeKeyRoom());
-        levels.add(finalLevel);
-        return levels;
-    }
-
-    private static class JadeKeyRoom extends DungeonRoom {
+    private static class SundialRoom extends DungeonRoom {
         private List<DousableFire> fires = new ArrayList<>();
-        public JadeKeyRoom() {
+        public SundialRoom(MyColors givesKeyColor) {
             super(5, 5);
-            FatueSunDialObject sundial = new FatueSunDialObject(MyColors.DARK_GREEN);
+            FatueSunDialObject sundial = new FatueSunDialObject(givesKeyColor);
             addObject(sundial);
             DousableFire d1 = new DousableFire(5, 5, sundial);
             addObject(d1);

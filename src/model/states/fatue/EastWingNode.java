@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Random;
 
 public class EastWingNode extends KeyRequiredFatueDungeonNode {
-    public EastWingNode() {
-        super("East Wing", false, MyColors.DARK_RED,
+    public EastWingNode(MyColors requiresKeyColor) {
+        super("East Wing", false, requiresKeyColor,
                 "This hallway leads to the rundown eastern wing. " +
                         "It's dark and quiet this way, do you want to continue?");
     }

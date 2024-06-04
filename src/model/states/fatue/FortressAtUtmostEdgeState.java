@@ -29,10 +29,10 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         super(model);
         addNode(7, 8, new LeaveFatueNode());
         addNode(CASTLE_PROPER_POSITION.x, CASTLE_PROPER_POSITION.y, new EnterCastleProperNode());
-        addNode(1, 6, new WestWingNode());                        // Staff Piece, Gold Key, Puzzle
-        addNode(2, 8, new MinesOfMiseryNode());                   // Staff Piece, Red Key, Materials?
-        addNode(6, 6, new SouthGardenNode());                     // Jade Key, puzzle, Ingredients?
-        addNode(5, 5, new EastWingNode());                        // Requires Red Key, Staff Piece, Silver Key, Puzzle
+        addNode(1, 6, new WestWingNode(MyColors.GOLD));                        // Staff Piece, Gold Key, Puzzle
+        addNode(2, 8, new MinesOfMiseryNode(MyColors.DARK_RED));                   // Staff Piece, Red Key, Materials?
+        addNode(6, 6, new SouthGardenNode(MyColors.DARK_GREEN));                     // Jade Key, puzzle, Ingredients?
+        addNode(5, 5, new EastWingNode(MyColors.DARK_RED));                        // Requires Red Key, Staff Piece, Silver Key, Puzzle
 //        addNode(3, 4, new FatueDungeonNode("Enter Courtyard Garden"));   // Requires Gold Key, Staff Piece, Puzzle, Bronze Key
 //        addNode(1, 4, new FatueDungeonNode("Enter North Tower"));        // Requires Bronze and Azure Key, Staff Piece
 //        addNode(5, 3, new FatueDungeonNode("Enter East Tower"));         // Requires Jade Key, Staff Piece, Azure Key, Puzzle
