@@ -1,0 +1,49 @@
+package model.states.fatue;
+
+import model.Model;
+import model.ruins.DungeonLevel;
+import model.ruins.FinalDungeonLevel;
+import model.ruins.RuinsDungeon;
+import model.ruins.configs.CourtyardGardenDungeonLevelConfig;
+import model.ruins.factories.FatueGardenMonsterFactory;
+import model.ruins.themes.GardenDungeonTheme;
+import view.MyColors;
+import view.combat.CombatTheme;
+import view.combat.GardenCombatTheme;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class CourtyardGardenNode extends KeyRequiredFatueDungeonNode {
+    private final MyColors givesKeyColor;
+
+    public CourtyardGardenNode(MyColors gold, MyColors givesKeyColor) {
+        super("Courtyard Garden", true, gold,
+                "This passage leads to the dark and mysterious courtyard garden. Do you want to enter?");
+        this.givesKeyColor = givesKeyColor;
+    }
+
+    @Override
+    protected CombatTheme getCombatTheme() {
+        return new GardenCombatTheme();
+    }
+
+    @Override
+    protected RuinsDungeon makeDungeon(Model model) {
+        List<DungeonLevel> levels = new ArrayList<>();
+        Random random = new Random();
+        CourtyardGardenDungeonLevelConfig config = new CourtyardGardenDungeonLevelConfig(new FatueGardenMonsterFactory(model), givesKeyColor);
+        DungeonLevel level;
+        do {
+            level = new DungeonLevel(random, false, 11, config);
+            System.err.println("Key did not spawn for courtyard garden, retrying");
+        } while (!config.keySpawned());
+        levels.add(level);
+        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, new GardenDungeonTheme());
+        finalLevel.setFinalRoom(new FatueStaffRoom());
+        levels.add(finalLevel);
+        return new RuinsDungeon(levels);
+    }
+
+}

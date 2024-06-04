@@ -29,11 +29,11 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         super(model);
         addNode(7, 8, new LeaveFatueNode());
         addNode(CASTLE_PROPER_POSITION.x, CASTLE_PROPER_POSITION.y, new EnterCastleProperNode());
-        addNode(1, 6, new WestWingNode(MyColors.GOLD));                        // Staff Piece, Gold Key, Puzzle
-        addNode(2, 8, new MinesOfMiseryNode(MyColors.DARK_RED));                   // Staff Piece, Red Key, Materials?
-        addNode(6, 6, new SouthGardenNode(MyColors.DARK_GREEN));                     // Jade Key, puzzle, Ingredients?
-        addNode(5, 5, new EastWingNode(MyColors.DARK_RED));                        // Requires Red Key, Staff Piece, Silver Key, Puzzle
-//        addNode(3, 4, new FatueDungeonNode("Enter Courtyard Garden"));   // Requires Gold Key, Staff Piece, Puzzle, Bronze Key
+        addNode(1, 6, new WestWingNode(MyColors.GOLD));           // Staff Piece, Gold Key, Puzzle
+        addNode(2, 8, new MinesOfMiseryNode(MyColors.DARK_RED));  // Staff Piece, Red Key, Materials?
+        addNode(6, 6, new SouthGardenNode(MyColors.DARK_GREEN));  // Jade Key, puzzle, Ingredients?
+        addNode(5, 5, new EastWingNode(MyColors.DARK_RED));       // Requires Red Key, Staff Piece, Silver Key, Puzzle
+        addNode(3, 4, new CourtyardGardenNode(MyColors.GOLD, MyColors.BROWN));    // Requires Gold Key, Staff Piece, Puzzle, Bronze Key
 //        addNode(1, 4, new FatueDungeonNode("Enter North Tower"));        // Requires Bronze and Azure Key, Staff Piece
 //        addNode(5, 3, new FatueDungeonNode("Enter East Tower"));         // Requires Jade Key, Staff Piece, Azure Key, Puzzle
 //        addNode(4, 3, new FatueDungeonNode("Enter Keep"));               // Requires Silver Key, Staff Piece, Puzzle
@@ -93,6 +93,8 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
                 @Override
                 public GameState run(Model model) {
                     if (firstTimeInCastleProper(model)) {
+                        model.getParty().getInventory().add(new FatueKeyItem(MyColors.GOLD)); // TODO: Remove
+
                         model.getSettings().getMiscFlags().put(FIRST_TIME_IN_CASTLE_PROPER, false);
                         println("You pass through a menacing portcullis and enter what must be the main building of " +
                                 "the fortress. The roof of the structure must have caved at some point, because you can see all the way to the " +

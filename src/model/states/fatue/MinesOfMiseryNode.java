@@ -36,7 +36,7 @@ class MinesOfMiseryNode extends FatueDungeonNode {
         DungeonTheme theme = new GrayCaveTheme();
         MonsterFactory monsterFactory = new MinesOfMiseryMonsterFactory(model);
         KeySpawningDungeonLevelConfig keySpawningConfig =
-                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(givesKeyColor));
+                new KeySpawningDungeonLevelConfig(theme, monsterFactory, givesKeyColor, true);
         DungeonLevel level = null;
         do {
             level = new DungeonLevel(random, true, 12, keySpawningConfig);

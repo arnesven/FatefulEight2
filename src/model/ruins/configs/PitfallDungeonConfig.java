@@ -20,7 +20,7 @@ public class PitfallDungeonConfig extends NoLeversDungeonConfig {
 
     public PitfallDungeonConfig(DungeonTheme theme, MonsterFactory monsterFactory, MyColors keyColor) {
         super(theme, monsterFactory);
-        this.keySpawner = new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(keyColor));
+        this.keySpawner = new KeySpawningDungeonLevelConfig(theme, monsterFactory, keyColor, false);
     }
 
     protected void addJunctionObject(DungeonRoom room, Random random, MonsterFactory monsterFactory) {

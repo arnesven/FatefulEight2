@@ -37,7 +37,7 @@ class WestWingNode extends FatueDungeonNode {
         MonsterFactory monsterFactory = new WestWingMonsterFactory(model);
         levels.add(new DungeonLevel(random, true, 8, theme, monsterFactory));
         KeySpawningDungeonLevelConfig keySpawningConfig =
-                new KeySpawningDungeonLevelConfig(theme, monsterFactory, new FatueKeyObject(givesKeyColor));
+                new KeySpawningDungeonLevelConfig(theme, monsterFactory, givesKeyColor, true);
         DungeonLevel level2 = null;
         do {
             level2 = new DungeonLevel(random, false, 8, keySpawningConfig);
