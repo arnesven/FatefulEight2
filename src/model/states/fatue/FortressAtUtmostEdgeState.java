@@ -29,6 +29,9 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         super(model);
         addNode(7, 8, new LeaveFatueNode());
         addNode(CASTLE_PROPER_POSITION.x, CASTLE_PROPER_POSITION.y, new EnterCastleProperNode());
+
+        //Keys: Gold, Red (Dark red), Jade (Dark green), Silver (Gray), Bronze (Brown), Azure (Blue)
+
         addNode(1, 6, new WestWingNode(MyColors.GOLD));           // Staff Piece, Gold Key, Puzzle
         addNode(2, 8, new MinesOfMiseryNode(MyColors.DARK_RED));  // Staff Piece, Red Key, Materials?
         addNode(6, 6, new SouthGardenNode(MyColors.DARK_GREEN));  // Jade Key, puzzle, Ingredients?

@@ -14,9 +14,28 @@ public class FatueKeyItem extends StoryItem {
     private final ItemSprite sprite;
 
     public FatueKeyItem(MyColors color) {
-        super(MyStrings.capitalize(color.name()).replace("_", " ") + " Key", 0);
+        super(toName(color) + " Key", 0);
         this.color = color;
         this.sprite = new ItemSprite(11, 13, FatueKeyObject.getHighlightColor(color), color, MyColors.DARK_GRAY);
+    }
+
+    private static String toName(MyColors color) {
+        if (color == MyColors.GOLD) {
+            return "Gold";
+        }
+        if (color == MyColors.DARK_RED) {
+            return "Red";
+        }
+        if (color == MyColors.DARK_GREEN) {
+            return "Jade";
+        }
+        if (color == MyColors.GRAY) {
+            return "Silver";
+        }
+        if (color == MyColors.BROWN) {
+            return "Bronze";
+        }
+        return "Azure";
     }
 
     public static boolean hasKey(Model model, MyColors color) {
