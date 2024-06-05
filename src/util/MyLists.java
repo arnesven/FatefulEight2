@@ -1,5 +1,7 @@
 package util;
 
+import model.items.accessories.Accessory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,6 +108,16 @@ public class MyLists {
         for (int i = 0; i < amount && !lines.isEmpty(); ++i) {
             result.add(lines.get(0));
             lines.remove(0);
+        }
+        return result;
+    }
+
+    public static <E> List<E> toNullessList(E[] array) {
+        List<E> result = new ArrayList<>();
+        for (E e : array) {
+            if (e != null) {
+                result.add(e);
+            }
         }
         return result;
     }

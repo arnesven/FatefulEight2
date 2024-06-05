@@ -1,5 +1,5 @@
 package model.items;
 
 public enum Prevalence {
-    common, uncommon, rare, veryRare, unspecified;
+    common, uncommon, rare, veryRare, unspecified, unique;
 }

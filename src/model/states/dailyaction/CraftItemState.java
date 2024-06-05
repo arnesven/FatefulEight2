@@ -91,7 +91,7 @@ public class CraftItemState extends GameState {
             print(crafter.getName() + " is preparing to " + actionName + " an item. Press enter to continue.");
             waitForReturn();
         }
-        int difficulty = 4 + selectedItem.getCost() / 10;
+        int difficulty = Math.min(4 + selectedItem.getCost() / 10, 16);
         Skill[] steps = new Skill[]{Skill.Perception, Skill.Logic, Skill.Labor};
         boolean failure = false;
         for (Skill step : steps) {

@@ -116,12 +116,23 @@ public class InventoryView extends SelectableListMenu {
         int row = yStart+1;
         for (Item it : tabNames[selectedTab].getItems(model)) {
             if (it.canBeUsedFromMenu()) {
-                contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitle(it)) {
-                    @Override
-                    public void performAction(Model model, int x, int y) {
-                        setInnerMenu(new EquipItemMenu(InventoryView.this, x, y, it), model);
-                    }
-                });
+                if (it.hasDualUseInMenu()) {
+                    contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitle(it)) {
+                        @Override
+                        public void performAction(Model model, int x, int y) {
+                            setInnerMenu(new DualUseItemMenu(InventoryView.this, x, y,
+                                    it.getDualUseLabel(), it.getDualUseMenu(InventoryView.this, x, y),
+                                    new EquipItemMenu(InventoryView.this, x, y, it)), model);
+                        }
+                    });
+                } else {
+                    contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitle(it)) {
+                        @Override
+                        public void performAction(Model model, int x, int y) {
+                            setInnerMenu(new EquipItemMenu(InventoryView.this, x, y, it), model);
+                        }
+                    });
+                }
             } else {
                 contents.add(new ListContent(xStart + 1, row++, makeItemTitle(it)));
             }
@@ -331,6 +342,54 @@ public class InventoryView extends SelectableListMenu {
         @Override
         protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
 
+        }
+    }
+
+    private class DualUseItemMenu extends FixedPositionSelectableListMenu {
+        private final String dualUseLabel;
+        private final SelectableListMenu dualUseMenu;
+        private final EquipItemMenu equipItemMenu;
+
+        public DualUseItemMenu(SelectableListMenu selectableListContent, int x, int y,
+                               String dualUseLabel, SelectableListMenu dualUseMenu,
+                               EquipItemMenu equipItemMenu) {
+            super(selectableListContent, 12, 3, x, y);
+            this.dualUseLabel = dualUseLabel;
+            this.dualUseMenu = dualUseMenu;
+            this.equipItemMenu = equipItemMenu;
+        }
+
+        @Override
+        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
+            return List.of(
+                    new SelectableListContent(xStart + 1, yStart + 1, "Equip") {
+                        @Override
+                        public void performAction(Model model, int x, int y) {
+                            setInnerMenu(equipItemMenu, model);
+                        }
+                    },
+                    new SelectableListContent(xStart + 1, yStart + 2, dualUseLabel) {
+                        @Override
+                        public void performAction(Model model, int x, int y) {
+                            setInnerMenu(dualUseMenu, model);
+                        }
+                    });
+        }
+
+        @Override
+        protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
+
+        @Override
+        public void handleKeyEvent(KeyEvent keyEvent, Model model) {
+            super.handleKeyEvent(keyEvent, model);
+            if (equipItemMenu.timeToTransition()) {
+                setTimeToTransition(true);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.characters.special.WitchKingCharacter;
+import model.items.special.FashionableSash;
 import model.items.special.FatueKeyItem;
 import model.items.special.PieceOfStaffItem;
 import model.items.special.StoryItem;
@@ -97,6 +98,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
                 public GameState run(Model model) {
                     if (firstTimeInCastleProper(model)) {
                         model.getParty().getInventory().add(new FatueKeyItem(MyColors.GOLD)); // TODO: Remove
+                        model.getParty().getInventory().add(new FashionableSash()); // TODO: Add this unique item into one of the dungeons
 
                         model.getSettings().getMiscFlags().put(FIRST_TIME_IN_CASTLE_PROPER, false);
                         println("You pass through a menacing portcullis and enter what must be the main building of " +

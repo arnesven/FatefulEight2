@@ -10,6 +10,7 @@ import view.AnalyzeDialog;
 import view.GameView;
 import view.InventoryView;
 import view.ScreenHandler;
+import view.party.SelectableListMenu;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
@@ -122,6 +123,18 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public boolean canBeUsedFromMenu() {
         return false;
+    }
+
+    public boolean hasDualUseInMenu() {
+        return false;
+    }
+
+    public String getDualUseLabel() {
+        return null;
+    }
+
+    public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
+        return null;
     }
 
     public boolean opensViewFromInventoryMenu() {
