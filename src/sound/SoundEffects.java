@@ -91,4 +91,8 @@ public class SoundEffects {
     public static void successSkill() {
         playWithVolume("success", Volume.MEDIUM);
     }
+
+    public static void playBamf() {
+        playWithVolume("bamf", Volume.HIGHEST);
+    }
 }

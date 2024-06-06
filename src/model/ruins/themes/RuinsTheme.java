@@ -77,7 +77,7 @@ public class RuinsTheme implements DungeonTheme {
                 new Sprite32x32("vertidoor", "dungeon.png", 0xC4,
                         BASE_COLOR, brickColor, floorColor, wallColor),
                 new Sprite32x32("vertileverdoor", "dungeon.png", 0x24,
-                        BASE_COLOR, brickColor, floorColor, wallColor),
+                        MyColors.RED, brickColor, floorColor, wallColor),
                 new Sprite32x32("vertidoorlocked", "dungeon.png", 0xD4,
                         BASE_COLOR, brickColor, floorColor, wallColor),
                 new Sprite32x32("dooroverlay", "dungeon.png", 0xD3,

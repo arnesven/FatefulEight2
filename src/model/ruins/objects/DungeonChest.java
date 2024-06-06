@@ -87,22 +87,27 @@ public class DungeonChest extends CenterDungeonObject {
 
         if (!opened) {
             openYourself();
-            CombinedLoot combinedLoot = new CombinedLoot();
-            for (int i = 0; i < loots; ++i) {
-                CombatLoot loot = null;
-                if (MyRandom.randInt(2) == 0) {
-                    loot = new PersonCombatLoot(model);
-                } else {
-                    loot = new MonsterCombatLoot(model);
-                }
-                combinedLoot.add(loot);
-            }
-            combinedLoot.giveYourself(model.getParty());
-            state.println("The chest opens... You found " + combinedLoot.getText() + ".");
+            CombatLoot loot = getLoot(model);
+            loot.giveYourself(model.getParty());
+            state.println("The chest opens... You found " + loot.getText() + ".");
             SoundEffects.playSound("chestopen");
         } else {
             state.println("You've already opened the chest.");
         }
+    }
+
+    protected CombatLoot getLoot(Model model) {
+        CombinedLoot combinedLoot = new CombinedLoot();
+        for (int i = 0; i < loots; ++i) {
+            CombatLoot loot = null;
+            if (MyRandom.randInt(2) == 0) {
+                loot = new PersonCombatLoot(model);
+            } else {
+                loot = new MonsterCombatLoot(model);
+            }
+            combinedLoot.add(loot);
+        }
+        return combinedLoot;
     }
 
     public void openYourself() {
@@ -110,8 +115,12 @@ public class DungeonChest extends CenterDungeonObject {
     }
 
     public void unlockYourself() {
-        isLocked = false;
+        setLocked(false);
         SoundEffects.playUnlock();
+    }
+
+    protected void setLocked(boolean b) {
+        this.isLocked = b;
     }
 
     public boolean isOpen() {

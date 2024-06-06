@@ -7,6 +7,7 @@ import model.ruins.RuinsDungeon;
 import model.ruins.objects.DungeonChest;
 import model.ruins.objects.DungeonMonster;
 import model.ruins.objects.DungeonObject;
+import model.ruins.objects.HiddenChestObject;
 import view.BorderFrame;
 import view.MyColors;
 
@@ -16,6 +17,7 @@ public class DungeonStatsSubView extends SubView {
     private final int visitedRooms;
     private final int visitedLevels;
     private final int mapsFound;
+    private int hiddenChestsFound = 0;
     private int totalRooms = 0;
     private int undefeatedMonsters = 0;
     private final int defeatedMonsters;
@@ -36,7 +38,11 @@ public class DungeonStatsSubView extends SubView {
             for (DungeonRoom r : level.getRoomList()) {
                 totalRooms++;
                 for (DungeonObject dobj : r.getObjects()) {
-                    if (dobj instanceof DungeonChest) {
+                    if (dobj instanceof HiddenChestObject) {
+                        if (((DungeonChest) dobj).isOpen()) {
+                            hiddenChestsFound++;
+                        }
+                    } else if (dobj instanceof DungeonChest) {
                         if (((DungeonChest) dobj).isOpen()) {
                             chestsOpened++;
                         }
@@ -63,6 +69,8 @@ public class DungeonStatsSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), "Monsters Defeated " + String.format("%10s", defeatedMonsters + "/" + showIfCompleted(undefeatedMonsters+defeatedMonsters)),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
         BorderFrame.drawString(model.getScreenHandler(), "Chests Looted     " + String.format("%10s", chestsOpened + "/" + showIfCompleted(chests)),
+                X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
+        BorderFrame.drawString(model.getScreenHandler(), "Hidden Chests Found" + String.format("%9s", hiddenChestsFound + "/?"),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);
         BorderFrame.drawString(model.getScreenHandler(), "Maps Found        " + String.format("%10s", mapsFound),
                 X_OFFSET, row++, MyColors.WHITE, MyColors.BLUE);

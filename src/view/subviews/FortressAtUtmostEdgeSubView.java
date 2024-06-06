@@ -69,7 +69,7 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
             model.getScreenHandler().put(pos.x, pos.y-2, KEY_CONTOUR_SPRITE);
         }
 
-        List<MyColors> keys = state.getKeysColoected(model);
+        List<MyColors> keys = state.getKeysCollected(model);
         for (int i = 0; i < keys.size(); i++) {
             Sprite spr = KEY_SPRITE_MAP.get(keys.get(i));
             assert spr != null;

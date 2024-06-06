@@ -1,11 +1,13 @@
 package model.states.fatue;
 
 import model.Model;
+import model.items.special.FashionableSash;
 import model.ruins.*;
 import model.ruins.configs.KeySpawningDungeonLevelConfig;
 import model.ruins.objects.FatueKeyObject;
 import model.ruins.factories.MonsterFactory;
 import model.ruins.factories.WestWingMonsterFactory;
+import model.ruins.objects.HiddenChestObject;
 import model.ruins.themes.DungeonTheme;
 import model.ruins.themes.RuinsTheme;
 import view.MyColors;
@@ -36,13 +38,17 @@ class WestWingNode extends FatueDungeonNode {
         DungeonTheme theme = new RuinsTheme(MyColors.GOLD, MyColors.DARK_GRAY, MyColors.GRAY_RED, MyColors.BLACK);
         MonsterFactory monsterFactory = new WestWingMonsterFactory(model);
         levels.add(new DungeonLevel(random, true, 8, theme, monsterFactory));
-        KeySpawningDungeonLevelConfig keySpawningConfig =
-                new KeySpawningDungeonLevelConfig(theme, monsterFactory, givesKeyColor, true);
         DungeonLevel level2 = null;
         do {
+            KeySpawningDungeonLevelConfig keySpawningConfig =
+                    new KeySpawningDungeonLevelConfig(theme, monsterFactory, givesKeyColor, true);
+            keySpawningConfig.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33);
             level2 = new DungeonLevel(random, false, 8, keySpawningConfig);
             System.err.println("Key did not spawn in west wing level 2, trying again.");
-        } while (!keySpawningConfig.isKeySpawned());
+            if (keySpawningConfig.isKeySpawned()) {
+                break;
+            }
+        } while (true);
         levels.add(level2);
         FinalDungeonLevel finalDungeonLevel = new FinalDungeonLevel(random, theme);
         finalDungeonLevel.setFinalRoom(new FatueStaffRoom());
