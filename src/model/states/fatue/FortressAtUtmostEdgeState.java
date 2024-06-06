@@ -36,11 +36,11 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         addNode(1, 6, new WestWingNode(MyColors.GOLD));                           // Staff Piece, Gold Key, Puzzle
         addNode(2, 8, new MinesOfMiseryNode(MyColors.DARK_RED));                  // Staff Piece, Red Key, Materials?
         addNode(6, 6, new SouthGardenNode(MyColors.DARK_GREEN));                  // Jade Key, puzzle, Ingredients?
-        addNode(5, 5, new EastWingNode(MyColors.DARK_RED));                       // Requires Red Key, Staff Piece, Silver Key, Puzzle
+        addNode(5, 5, new EastWingNode(MyColors.DARK_RED, MyColors.GRAY));        // Requires Red Key, Staff Piece, Silver Key, Puzzle
         addNode(3, 4, new CourtyardGardenNode(MyColors.GOLD, MyColors.BROWN));    // Requires Gold Key, Staff Piece, Puzzle, Bronze Key
-//        addNode(1, 4, new FatueDungeonNode("Enter North Tower"));        // Requires Bronze and Azure Key, Staff Piece, Special Item
-//        addNode(5, 3, new FatueDungeonNode("Enter East Tower"));         // Requires Jade Key, Staff Piece, Azure Key, Puzzle, Special Item
-//        addNode(4, 3, new FatueDungeonNode("Enter Keep"));               // Requires Silver Key, Staff Piece, Puzzle, Special Item
+        addNode(5, 3, new EastTowerNode(MyColors.DARK_GREEN, MyColors.BLUE));     // Requires Jade Key, Staff Piece, Azure Key, Puzzle, Special Item
+        addNode(4, 3, new FatueKeepNode(MyColors.GRAY));                          // Requires Silver Key, Staff Piece, Puzzle, Special Item
+        addNode(1, 4, new NorthTowerNode(MyColors.BROWN, MyColors.BLUE));         // Requires Bronze and Azure Key, Staff Piece, Special Item
     }
 
     public static Point getCastleProperPosition() {

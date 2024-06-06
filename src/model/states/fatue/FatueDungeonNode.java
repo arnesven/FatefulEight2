@@ -64,6 +64,7 @@ abstract class FatueDungeonNode extends FatueDailyActionNode {
             if (!isDownward) {
                 super.setCurrentLevelAndPosition(dungeon.getNumberOfLevels()-1,
                         dungeon.getLevel(dungeon.getNumberOfLevels()-1).getDescentPoint());
+                dungeon.getLevel(getCurrentLevel()).getRoom(getPartyPosition()).setRevealedOnMap(true);
             }
         }
 

@@ -4,7 +4,6 @@ import model.ruins.DungeonLevel;
 import model.ruins.DungeonRoom;
 import model.ruins.objects.BlackWindow;
 import model.ruins.factories.MonsterFactory;
-import model.ruins.objects.FatueKeyObject;
 import model.ruins.themes.DungeonTheme;
 import view.MyColors;
 
@@ -16,11 +15,10 @@ public class PitfallDungeonConfig extends NoLeversDungeonConfig {
     private static final double MONSTER_PREVALENCE = 0.15;
     private static final double TRAP_PREVALENCE = 0.1;
 
-    public PitfallDungeonConfig(DungeonTheme theme, MonsterFactory monsterFactory, MyColors keyColor) {
+    public PitfallDungeonConfig(DungeonTheme theme, MonsterFactory monsterFactory) {
         super(theme, monsterFactory);
         setMonsterPrevalence(MONSTER_PREVALENCE);
         setPitfallTrapPrevalence(TRAP_PREVALENCE);
-        addRequiredDeadEndObject(new FatueKeyObject(keyColor), FatueKeyObject.PREVALENCE);
     }
 
     @Override
@@ -39,9 +37,5 @@ public class PitfallDungeonConfig extends NoLeversDungeonConfig {
             }
         }
 
-    }
-
-    public boolean keySpawned() {
-        return allRequiredObjectsPlaced();
     }
 }

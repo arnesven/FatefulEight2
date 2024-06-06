@@ -27,13 +27,19 @@ public class MinesOfMiseryMonsterFactory extends MonsterFactory {
                 for (int i = 0; i < numberOfSpearmen; ++i) {
                     enemies.add(new GoblinSpearman('A'));
                 }
-                int numberOfAxemen = random.nextInt(numberOfEnemies - numberOfSpearmen) - 1;
-                for (int i = 0; i < numberOfAxemen; ++i) {
-                    enemies.add(new GoblinAxeWielder('B'));
-                }
-                int numberOfBowmen = random.nextInt(numberOfSpearmen - numberOfAxemen);
-                for (int i = 0; i < numberOfBowmen; ++i) {
-                    enemies.add(new GoblinBowman('C'));
+                int remaining = numberOfEnemies - numberOfSpearmen;
+                if (remaining > 0) {
+                    int numberOfAxemen = random.nextInt(remaining) - 1;
+                    for (int i = 0; i < numberOfAxemen; ++i) {
+                        enemies.add(new GoblinAxeWielder('B'));
+                    }
+                    remaining = numberOfSpearmen - numberOfAxemen;
+                    if (remaining > 0) {
+                        int numberOfBowmen = random.nextInt(remaining);
+                        for (int i = 0; i < numberOfBowmen; ++i) {
+                            enemies.add(new GoblinBowman('C'));
+                        }
+                    }
                 }
                 break;
             case 1:

@@ -1,55 +1,57 @@
 package model.states.fatue;
 
 import model.Model;
-import model.ruins.*;
+import model.items.special.FashionableSash;
+import model.ruins.DungeonLevel;
+import model.ruins.DungeonRoom;
+import model.ruins.FinalDungeonLevel;
+import model.ruins.RuinsDungeon;
 import model.ruins.configs.DungeonLevelConfig;
-import model.ruins.configs.NoLeversDungeonConfig;
 import model.ruins.configs.PitfallDungeonConfig;
 import model.ruins.factories.UndeadMonsterFactory;
-import model.ruins.objects.*;
-import model.ruins.themes.PurpleBrickTheme;
-import model.ruins.themes.PurpleRuinsTheme;
+import model.ruins.objects.HiddenChestObject;
+import model.ruins.objects.StairsDown;
+import model.ruins.objects.TowerExit;
+import model.ruins.themes.BlueBrickTheme;
 import view.MyColors;
 import view.combat.CombatTheme;
-import view.combat.DungeonTheme;
+import view.combat.MansionTheme;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class EastWingNode extends KeyRequiredFatueDungeonNode {
-    private final MyColors givesKeyColor;
+public class FatueKeepNode extends KeyRequiredFatueDungeonNode {
+    private static final String PROMPT = "This way leads to the inner keep of the fortress. Do you want to enter it?";
 
-    public EastWingNode(MyColors requiresKeyColor, MyColors givesKeyColor) {
-        super("East Wing", false, requiresKeyColor,
-                "This hallway leads to the rundown eastern wing. " +
-                        "It's dark and quiet this way, do you want to continue?");
-        this.givesKeyColor = givesKeyColor;
+    public FatueKeepNode(MyColors requiresKey) {
+        super("Enter Keep", false, requiresKey, PROMPT);
     }
 
     @Override
     protected CombatTheme getCombatTheme() {
-        return new DungeonTheme();
+        return new MansionTheme();
     }
 
     @Override
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new FinalDungeonLevel(random, new PurpleRuinsTheme()));
+        levels.add(new FinalDungeonLevel(random, new BlueBrickTheme()));
         DungeonLevel level;
         do {
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new PurpleRuinsTheme(), new UndeadMonsterFactory(model));
-            config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory(model));
+            config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33); // TODO: Change to another item.
             level = new DungeonLevel(random, false, 7, config);
-            System.err.println("Key not spawned in east wing, retrying");
+            System.err.println("Hidden chest not spawned in north tower, retrying");
             if (config.allRequiredObjectsPlaced()) {
                 break;
             }
         } while (true);
         levels.add(level);
-        DungeonLevelConfig config2 = new NoLeversDungeonConfig(new PurpleBrickTheme(), new UndeadMonsterFactory(model));
+
+        DungeonLevelConfig config2 = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory(model));
         levels.add(new DungeonLevel(random, false, 7, config2));
 
         RuinsDungeon dungeon = new RuinsDungeon(levels);

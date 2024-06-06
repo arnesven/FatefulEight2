@@ -72,7 +72,6 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
         List<MyColors> keys = state.getKeysCollected(model);
         for (int i = 0; i < keys.size(); i++) {
             Sprite spr = KEY_SPRITE_MAP.get(keys.get(i));
-            assert spr != null;
             Point pos = convertToScreen(new Point(i+1, 0));
             pos.translate(0, -2);
             model.getScreenHandler().register(spr.getName(), pos, spr);
@@ -148,6 +147,8 @@ public class FortressAtUtmostEdgeSubView extends DailyActionSubView {
                 MyColors.DARK_GRAY, MyColors.GRAY, FatueKeyObject.getHighlightColor(MyColors.GRAY)));
         map.put(MyColors.BROWN, new Sprite32x32("fatuekeybrown", "fatue_plan.png", 0x38,
                 MyColors.DARK_GRAY, MyColors.BROWN, FatueKeyObject.getHighlightColor(MyColors.BROWN)));
+        map.put(MyColors.BLUE,  new Sprite32x32("fatuekeyblue", "fatue_plan.png", 0x38,
+                MyColors.DARK_GRAY, MyColors.BLUE, FatueKeyObject.getHighlightColor(MyColors.BLUE)));
         return map;
     }
 }
