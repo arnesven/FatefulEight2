@@ -28,9 +28,9 @@ public class SouthGardenNode extends FatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new DungeonLevel(random, false, 9,
-                new GardenDungeonLevelConfig(new FatueGardenMonsterFactory(model))));
-        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, new GardenDungeonTheme());
+        levels.add(new DungeonLevel(model, random, false, 9,
+                new GardenDungeonLevelConfig(new FatueGardenMonsterFactory())));
+        FinalDungeonLevel finalLevel = new FinalDungeonLevel(model, random, new GardenDungeonTheme());
         finalLevel.setFinalRoom(new SundialRoom(givesKeyColor));
         levels.add(finalLevel);
         return new RuinsDungeon(levels);

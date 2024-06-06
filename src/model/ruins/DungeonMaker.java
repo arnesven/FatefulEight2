@@ -1,5 +1,6 @@
 package model.ruins;
 
+import model.Model;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.GardenDungeonLevelConfig;
 import model.ruins.configs.TallSpireDungeonConfig;
@@ -24,7 +25,7 @@ public class DungeonMaker {
                     new BlueRuinsTheme(), new GreenRuinsTheme());
     public static final int NUMBER_OF_UPPER_LEVELS = 2;
 
-    public static List<DungeonLevel> makeRandomDungeon(int roomsTarget, int levelMinSize, int levelMaxSize, boolean isRuins) {
+    public static List<DungeonLevel> makeRandomDungeon(Model model, int roomsTarget, int levelMinSize, int levelMaxSize, boolean isRuins) {
         System.out.println("Creating a random dungeon...");
         Random random = new Random();
         List<DungeonLevel> levels = new ArrayList<>();
@@ -35,11 +36,11 @@ public class DungeonMaker {
                 levelSize = MyRandom.randInt(levelMinSize, levelMaxSize);
             } while (roomsTarget < levelSize*levelSize);
             roomsTarget -= levelSize*levelSize;
-            levels.add(new DungeonLevel(random, i == 0, levelSize, makeDungeonTheme(i, isRuins), new MonsterFactory()));
+            levels.add(new DungeonLevel(model, random, i == 0, levelSize, makeDungeonTheme(i, isRuins), new MonsterFactory()));
             System.out.println(" Level " + i + " is " + levelSize + "x" + levelSize);
         }
         System.out.println(" Level " + i + " is the final level");
-        levels.add(new FinalDungeonLevel(random, makeDungeonTheme(i, isRuins)));
+        levels.add(new FinalDungeonLevel(model, random, makeDungeonTheme(i, isRuins)));
         return levels;
     }
 
@@ -56,24 +57,24 @@ public class DungeonMaker {
         return MyRandom.sample(ALL_RUINS_THEMES);
     }
 
-    public static List<DungeonLevel> makeGardenDungeon(int size) {
+    public static List<DungeonLevel> makeGardenDungeon(Model model, int size) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new DungeonLevel(random, true, size, new GardenDungeonLevelConfig()));
-        levels.add(new FinalDungeonLevel(random, new RedRuinsTheme()));
+        levels.add(new DungeonLevel(model, random, true, size, new GardenDungeonLevelConfig()));
+        levels.add(new FinalDungeonLevel(model, random, new RedRuinsTheme()));
         return levels;
     }
 
-    public static List<DungeonLevel> makeTallSpireDungeon() {
+    public static List<DungeonLevel> makeTallSpireDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         DungeonLevelConfig config = new TallSpireDungeonConfig();
-        levels.add(new FinalDungeonLevel(random, config.getTheme()));
+        levels.add(new FinalDungeonLevel(model, random, config.getTheme()));
         int maxLevels = MyRandom.randInt(8, 13);
         for (int i = 0; i < maxLevels; i++) {
-            levels.add(new DungeonLevel(random, false, 3, config));
+            levels.add(new DungeonLevel(model, random, false, 3, config));
         }
-        levels.add(new FinalDungeonLevel(random, config.getTheme()));
+        levels.add(new FinalDungeonLevel(model, random, config.getTheme()));
         return levels;
     }
 }

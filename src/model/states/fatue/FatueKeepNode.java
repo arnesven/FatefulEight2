@@ -38,12 +38,12 @@ public class FatueKeepNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new FinalDungeonLevel(random, new BlueBrickTheme()));
+        levels.add(new FinalDungeonLevel(model, random, new BlueBrickTheme()));
         DungeonLevel level;
         do {
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory(model));
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33); // TODO: Change to another item.
-            level = new DungeonLevel(random, false, 7, config);
+            level = new DungeonLevel(model, random, false, 7, config);
             System.err.println("Hidden chest not spawned in north tower, retrying");
             if (config.allRequiredObjectsPlaced()) {
                 break;
@@ -51,8 +51,8 @@ public class FatueKeepNode extends KeyRequiredFatueDungeonNode {
         } while (true);
         levels.add(level);
 
-        DungeonLevelConfig config2 = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory(model));
-        levels.add(new DungeonLevel(random, false, 7, config2));
+        DungeonLevelConfig config2 = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory());
+        levels.add(new DungeonLevel(model, random, false, 7, config2));
 
         RuinsDungeon dungeon = new RuinsDungeon(levels);
         DungeonLevel bottomLevel = dungeon.getLevel(dungeon.getNumberOfLevels()-1);

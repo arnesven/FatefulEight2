@@ -60,7 +60,7 @@ public class SecretGardenEvent extends DailyEventState {
                 "You wonder what mysteries lurks within.");
         print("Do you enter the secret garden? (Y/N) ");
         if (yesNoInput()) {
-            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeGardenDungeon(8));
+            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeGardenDungeon(model, 8));
             FinalGardenRoom finalRoom = new FinalGardenRoom();
             FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels()-1);
             finalLevel.setFinalRoom(finalRoom);

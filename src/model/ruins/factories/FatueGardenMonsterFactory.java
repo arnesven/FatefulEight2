@@ -11,14 +11,8 @@ import java.util.Random;
 
 public class FatueGardenMonsterFactory extends MonsterFactory {
 
-    private final Model model;
-
-    public FatueGardenMonsterFactory(Model model) {
-        this.model = model;
-    }
-
     @Override
-    protected DungeonMonster spawnMonster(Random random) {
+    protected DungeonMonster spawnMonster(Model model, Random random) {
         int dieRoll = random.nextInt(6);
         int numberOfEnemies;
         List<Enemy> enemies = new ArrayList<>();

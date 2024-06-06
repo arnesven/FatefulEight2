@@ -35,7 +35,7 @@ public class WitchKingEvent extends DailyEventState {
         if (!yesNoInput()) {
             return;
         }
-        RuinsDungeon dungeon =  new RuinsDungeon(30, 3, 4, false);
+        RuinsDungeon dungeon =  new RuinsDungeon(model, 30, 3, 4, false);
         WitchKingChambersRoom witchKingRoom = new WitchKingChambersRoom();
         FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels()-1);
         finalLevel.setFinalRoom(witchKingRoom);

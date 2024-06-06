@@ -14,7 +14,7 @@ public class ExploreTombState extends ExploreRuinsState {
             return model.getDungeon(name, true);
         }
         RuinsDungeon dungeon = new RuinsDungeon(
-                DungeonMaker.makeRandomDungeon(300, 5, 12, true));
+                DungeonMaker.makeRandomDungeon(model, 300, 5, 12, true));
         model.visitDungeon(name, dungeon);
         return dungeon;
     }

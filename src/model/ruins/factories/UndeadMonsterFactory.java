@@ -10,13 +10,8 @@ import java.util.List;
 import java.util.Random;
 
 public class UndeadMonsterFactory extends MonsterFactory {
-    private final Model model;
 
-    public UndeadMonsterFactory(Model model) {
-        this.model = model;
-    }
-
-    protected DungeonMonster spawnMonster(Random random) {
+    protected DungeonMonster spawnMonster(Model model, Random random) {
         int dieRoll = random.nextInt(4);
         List<Enemy> enemies = new ArrayList<>();
         int numberOfEnemies;

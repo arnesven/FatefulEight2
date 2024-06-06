@@ -35,7 +35,7 @@ public class TallSpireEvent extends DailyEventState {
     protected void doEvent(Model model) {
         print("You come upon a very high spire. Do you want to enter? (Y/N) ");
         if (yesNoInput()) {
-            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeTallSpireDungeon());
+            RuinsDungeon dungeon = new RuinsDungeon(DungeonMaker.makeTallSpireDungeon(model));
             DungeonRoom entryRoom = new TallSpireEntryRoom();
             FinalDungeonLevel finalLevel = (FinalDungeonLevel) dungeon.getLevel(dungeon.getNumberOfLevels()-1);
             finalLevel.setFinalRoom(entryRoom);

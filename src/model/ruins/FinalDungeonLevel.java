@@ -1,5 +1,6 @@
 package model.ruins;
 
+import model.Model;
 import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.StairsDown;
 import model.ruins.objects.StairsUp;
@@ -9,8 +10,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class FinalDungeonLevel extends DungeonLevel {
-    public FinalDungeonLevel(Random random, DungeonTheme theme) {
-        super(random, false, 1, theme, new MonsterFactory());
+    public FinalDungeonLevel(Model model, Random random, DungeonTheme theme) {
+        super(model, random, false, 1, theme, new MonsterFactory());
         setFinalRoom(new BossRoom());
     }
 
@@ -30,7 +31,7 @@ public class FinalDungeonLevel extends DungeonLevel {
     }
 
     @Override
-    protected boolean buildRandomLevel(boolean firstLevel) { return true; }
+    protected boolean buildRandomLevel(Model model, boolean firstLevel) { return true; }
 
     @Override
     public boolean showExitIcon() {

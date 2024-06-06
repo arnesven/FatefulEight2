@@ -420,7 +420,7 @@ public class Model {
 
     public RuinsDungeon getDungeon(String ruinsName, boolean isRuins) {
         if (!hasVisitedDungeon(ruinsName)) {
-            storeDungeon(ruinsName, new RuinsDungeon(isRuins));
+            storeDungeon(ruinsName, new RuinsDungeon(this, isRuins));
         }
         return gameData.dungeons.get(ruinsName);
     }

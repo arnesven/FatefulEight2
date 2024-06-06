@@ -1,5 +1,6 @@
 package model.ruins.configs;
 
+import model.Model;
 import model.ruins.DungeonLevel;
 import model.ruins.DungeonRoom;
 import model.ruins.factories.MonsterFactory;
@@ -88,9 +89,9 @@ public class DungeonLevelConfig implements Serializable {
         this.pitfallTraps = v;
     }
 
-    public final void addContent(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
+    public final void addContent(Model model, DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
         addDeadEndRoomObjects(dungeonLevel, visitedRooms, random);
-        addJunctionRoomObjects(dungeonLevel, visitedRooms, random);
+        addJunctionRoomObjects(model, dungeonLevel, visitedRooms, random);
         addDecorations(dungeonLevel, visitedRooms, random, monsterFactory);
     }
 
@@ -101,14 +102,14 @@ public class DungeonLevelConfig implements Serializable {
 
     protected boolean deadEndRoomHook(DungeonRoom room, Random random, MonsterFactory monsterFactory) { return true; }
 
-    private void addJunctionRoomObjects(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
+    private void addJunctionRoomObjects(Model model, DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
         DungeonRoom startingRoom = dungeonLevel.getRoom(dungeonLevel.getStartingPoint());
         DungeonRoom endingRoom = dungeonLevel.getRoom(dungeonLevel.getDescentPoint());
         for (DungeonRoom room : visitedRooms) {
             if (room.getCardinality() > 1) {
                 if (startingRoom != room && endingRoom != room) {
                     if (junctionRoomHook(room, random, monsterFactory)) {
-                        addJunctionObject(room, random, monsterFactory);
+                        addJunctionObject(model, room, random, monsterFactory);
                     }
                     junctionRoomHook(room, random, monsterFactory);
                 }
@@ -126,10 +127,10 @@ public class DungeonLevelConfig implements Serializable {
         }
     }
 
-    protected final void addJunctionObject(DungeonRoom room, Random random, MonsterFactory monsterFactory) {
+    protected final void addJunctionObject(Model model, DungeonRoom room, Random random, MonsterFactory monsterFactory) {
         double roll = random.nextDouble();
         if (roll < monsters) {
-            room.addObject(monsterFactory.makeRandomEnemies(random));
+            room.addObject(monsterFactory.makeRandomEnemies(model, random));
         } else if (roll < monsters + spikeTraps) {
             DungeonSpikeTrap.makeSpikeTrap(room, random);
         } else if (roll < monsters + spikeTraps + pitfallTraps) {

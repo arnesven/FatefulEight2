@@ -34,16 +34,16 @@ class MinesOfMiseryNode extends FatueDungeonNode {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         DungeonTheme theme = new GrayCaveTheme();
-        MonsterFactory monsterFactory = new MinesOfMiseryMonsterFactory(model);
+        MonsterFactory monsterFactory = new MinesOfMiseryMonsterFactory();
         KeySpawningDungeonLevelConfig keySpawningConfig =
                 new KeySpawningDungeonLevelConfig(theme, monsterFactory, givesKeyColor, true);
         DungeonLevel level = null;
         do {
-            level = new DungeonLevel(random, true, 12, keySpawningConfig);
+            level = new DungeonLevel(model, random, true, 12, keySpawningConfig);
             System.err.println("Key did not spawn in mines of misery, trying again.");
         } while (!keySpawningConfig.isKeySpawned());
         levels.add(level);
-        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, theme);
+        FinalDungeonLevel finalLevel = new FinalDungeonLevel(model, random, theme);
         finalLevel.setFinalRoom(new FatueStaffRoom());
         levels.add(finalLevel);
         return new RuinsDungeon(levels);

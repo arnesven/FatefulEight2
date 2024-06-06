@@ -45,13 +45,13 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new FinalDungeonLevel(random, new GrayRuinsTheme()));
+        levels.add(new FinalDungeonLevel(model, random, new GrayRuinsTheme()));
         DungeonLevel level;
         do {
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new UndeadMonsterFactory(model));
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
             config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33); // TODO: Change to another item.
-            level = new DungeonLevel(random, false, 4, config);
+            level = new DungeonLevel(model, random, false, 4, config);
             System.err.println("Key not spawned in East tower, retrying");
             if (config.allRequiredObjectsPlaced()) {
                 break;
@@ -59,8 +59,8 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
         } while (true);
         levels.add(level);
         for (int i = 0; i < 6; i++) {
-            DungeonLevelConfig config2 = new PitfallDungeonConfig(new GrayBrickTheme(), new UndeadMonsterFactory(model));
-            levels.add(new DungeonLevel(random, false, 4, config2));
+            DungeonLevelConfig config2 = new PitfallDungeonConfig(new GrayBrickTheme(), new UndeadMonsterFactory());
+            levels.add(new DungeonLevel(model, random, false, 4, config2));
         }
 
         RuinsDungeon dungeon = new RuinsDungeon(levels);

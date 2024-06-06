@@ -37,20 +37,20 @@ public class EastWingNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new FinalDungeonLevel(random, new PurpleRuinsTheme()));
+        levels.add(new FinalDungeonLevel(model, random, new PurpleRuinsTheme()));
         DungeonLevel level;
         do {
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new PurpleRuinsTheme(), new UndeadMonsterFactory(model));
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new PurpleRuinsTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
-            level = new DungeonLevel(random, false, 7, config);
+            level = new DungeonLevel(model, random, false, 7, config);
             System.err.println("Key not spawned in east wing, retrying");
             if (config.allRequiredObjectsPlaced()) {
                 break;
             }
         } while (true);
         levels.add(level);
-        DungeonLevelConfig config2 = new NoLeversDungeonConfig(new PurpleBrickTheme(), new UndeadMonsterFactory(model));
-        levels.add(new DungeonLevel(random, false, 7, config2));
+        DungeonLevelConfig config2 = new NoLeversDungeonConfig(new PurpleBrickTheme(), new UndeadMonsterFactory());
+        levels.add(new DungeonLevel(model, random, false, 7, config2));
 
         RuinsDungeon dungeon = new RuinsDungeon(levels);
         DungeonLevel bottomLevel = dungeon.getLevel(dungeon.getNumberOfLevels()-1);

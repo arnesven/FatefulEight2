@@ -1,5 +1,6 @@
 package model.ruins;
 
+import model.Model;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.*;
@@ -27,13 +28,13 @@ public class DungeonLevel implements Serializable {
     private Point descentPoint;
 
 
-    public DungeonLevel(Random random, boolean firstLevel, int levelSize, DungeonLevelConfig dungeonLevelConfig) {
+    public DungeonLevel(Model model, Random random, boolean firstLevel, int levelSize, DungeonLevelConfig dungeonLevelConfig) {
         this.random = random;
         this.levelSize = levelSize;
         this.config = dungeonLevelConfig;
         while (true) {
             rooms = new DungeonRoom[levelSize][levelSize];
-            if (buildRandomLevel(firstLevel)) {
+            if (buildRandomLevel(model, firstLevel)) {
                 break;
             } else {
                 System.err.println("Unsuccessfully built dungeon level");
@@ -41,13 +42,13 @@ public class DungeonLevel implements Serializable {
         }
     }
 
-    public DungeonLevel(Random random, boolean firstLevel, int levelSize, DungeonTheme theme,
+    public DungeonLevel(Model model, Random random, boolean firstLevel, int levelSize, DungeonTheme theme,
                         MonsterFactory monsterFactory) {
-        this(random, firstLevel, levelSize,
+        this(model, random, firstLevel, levelSize,
                 new DungeonLevelConfig(theme, monsterFactory));
     }
 
-    protected boolean buildRandomLevel(boolean firstLevel) {
+    protected boolean buildRandomLevel(Model model, boolean firstLevel) {
         makeBasicLevelLayout();
         putInEntryAndExit(firstLevel);
         Set<DungeonRoom> visitedRooms = new HashSet<>();
@@ -58,7 +59,7 @@ public class DungeonLevel implements Serializable {
             System.err.println("No path fround from entry to exit!");
             return false;
         }
-        config.addContent(this, visitedRooms, random);
+        config.addContent(model, this, visitedRooms, random);
         addCrackedWalls();
         return true;
     }

@@ -29,12 +29,12 @@ public class RuinsDungeon implements Serializable {
         this.map = new DungeonMap(this);
     }
 
-    public RuinsDungeon(int roomsTarget, int levelMinSize, int levelMaxSize, boolean isRuins) {
-        this(DungeonMaker.makeRandomDungeon(roomsTarget, levelMinSize, levelMaxSize, isRuins));
+    public RuinsDungeon(Model model, int roomsTarget, int levelMinSize, int levelMaxSize, boolean isRuins) {
+        this(DungeonMaker.makeRandomDungeon(model, roomsTarget, levelMinSize, levelMaxSize, isRuins));
     }
 
-    public RuinsDungeon(boolean isRuins) {
-        this(120, 4, 8, isRuins);
+    public RuinsDungeon(Model model, boolean isRuins) {
+        this(model, 120, 4, 8, isRuins);
     }
 
     public void drawYourself(Model model, Point currentPosition, int currentLevel, SteppingMatrix<DungeonObject> matrix) {

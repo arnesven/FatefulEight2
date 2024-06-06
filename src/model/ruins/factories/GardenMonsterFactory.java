@@ -12,7 +12,7 @@ import java.util.Random;
 public class GardenMonsterFactory extends MonsterFactory {
 
     @Override
-    protected DungeonMonster spawnMonster(Random random) {
+    protected DungeonMonster spawnMonster(Model model, Random random) {
         int dieRoll = random.nextInt(8);
         switch (dieRoll) {
             case 0:

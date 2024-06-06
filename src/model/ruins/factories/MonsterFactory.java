@@ -1,5 +1,6 @@
 package model.ruins.factories;
 
+import model.Model;
 import model.enemies.*;
 import model.ruins.objects.DungeonMonster;
 import model.ruins.objects.DungeonObject;
@@ -12,15 +13,15 @@ public class MonsterFactory implements Serializable {
 
     private static final double SLEEP_CHANCE = 0.6667;
 
-    public final DungeonObject makeRandomEnemies(Random random) {
-        DungeonMonster monster = spawnMonster(random);
+    public final DungeonObject makeRandomEnemies(Model model, Random random) {
+        DungeonMonster monster = spawnMonster(model, random);
         if (random.nextDouble() < SLEEP_CHANCE) {
             monster.setSleeping(true);
         }
         return monster;
     }
 
-    protected DungeonMonster spawnMonster(Random random) {
+    protected DungeonMonster spawnMonster(Model model, Random random) {
         int dieRoll = random.nextInt(13);
         switch (dieRoll) {
             case 0:

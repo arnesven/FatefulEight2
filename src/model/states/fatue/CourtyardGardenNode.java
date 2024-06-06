@@ -33,14 +33,14 @@ public class CourtyardGardenNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        CourtyardGardenDungeonLevelConfig config = new CourtyardGardenDungeonLevelConfig(new FatueGardenMonsterFactory(model), givesKeyColor);
+        CourtyardGardenDungeonLevelConfig config = new CourtyardGardenDungeonLevelConfig(new FatueGardenMonsterFactory(), givesKeyColor);
         DungeonLevel level;
         do {
-            level = new DungeonLevel(random, false, 11, config);
+            level = new DungeonLevel(model, random, false, 11, config);
             System.err.println("Key did not spawn for courtyard garden, retrying");
         } while (!config.keySpawned());
         levels.add(level);
-        FinalDungeonLevel finalLevel = new FinalDungeonLevel(random, new GardenDungeonTheme());
+        FinalDungeonLevel finalLevel = new FinalDungeonLevel(model, random, new GardenDungeonTheme());
         finalLevel.setFinalRoom(new FatueStaffRoom());
         levels.add(finalLevel);
         return new RuinsDungeon(levels);

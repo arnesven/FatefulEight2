@@ -64,12 +64,12 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        levels.add(new FinalDungeonLevel(random, new RedBrickTheme()));
+        levels.add(new FinalDungeonLevel(model, random, new RedBrickTheme()));
         DungeonLevel level;
         do {
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory(model));
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33);
-            level = new DungeonLevel(random, false, 4, config);
+            level = new DungeonLevel(model, random, false, 4, config);
             System.err.println("Hidden chest not spawned in north tower, retrying");
             if (config.allRequiredObjectsPlaced()) {
                 break;
@@ -77,8 +77,8 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
         } while (true);
         levels.add(level);
         for (int i = 0; i < 8; i++) {
-            DungeonLevelConfig config2 = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory(model));
-            levels.add(new DungeonLevel(random, false, 4, config2));
+            DungeonLevelConfig config2 = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
+            levels.add(new DungeonLevel(model, random, false, 4, config2));
         }
 
         RuinsDungeon dungeon = new RuinsDungeon(levels);
