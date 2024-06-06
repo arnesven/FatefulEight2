@@ -13,6 +13,7 @@ import java.awt.*;
 
 public class FatueKeyObject extends CenterDungeonObject {
 
+    public static final double PREVALENCE = 0.33;
     private final Sprite32x32 sprite;
     private final boolean completesDungeon;
     private final MyColors color;

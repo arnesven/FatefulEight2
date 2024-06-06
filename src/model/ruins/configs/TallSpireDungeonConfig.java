@@ -14,25 +14,23 @@ public class TallSpireDungeonConfig extends DungeonLevelConfig {
     private static final double CHEST_PREVALENCE = 0.4;
     private static final double MONSTER_PREVALENCE = 0.1;
     private static final double TRAP_PREVALENCE = 0.2;
+    private static final double NO_LEVERS = 0.0;
+    private static final double NO_CORPSES = 0.0;
+    private static final double NO_SPIKE_TRAPS = 0.0;
+    private static final double NO_CAMPFIRES = 0.0;
 
     public TallSpireDungeonConfig() {
-        super(new GrayBrickTheme(), new MonsterFactory());
-    }
-
-    protected void addDeadEndObject(DungeonLevel dungeonLevel, DungeonRoom room, Random random) {
-        double roll = random.nextDouble();
-        if (roll < CHEST_PREVALENCE) {
-            room.addObject(new DungeonChest(random));
-        }
+        super(new GrayBrickTheme(), new MonsterFactory(),
+                CHEST_PREVALENCE, NO_LEVERS, NO_CORPSES, MONSTER_PREVALENCE,
+                LOCKED_DOOR_PREVALENCE, NO_SPIKE_TRAPS, TRAP_PREVALENCE, NO_CAMPFIRES);
     }
 
     @Override
-    public void addContent(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
-        super.addContent(dungeonLevel, visitedRooms, random);
-        addWindows(dungeonLevel, visitedRooms, random);
+    protected void addDecorations(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random, MonsterFactory monsterFactory) {
+        addWindows(dungeonLevel);
     }
 
-    private void addWindows(DungeonLevel dungeonLevel, Set<DungeonRoom> visitedRooms, Random random) {
+    private void addWindows(DungeonLevel dungeonLevel) {
         DungeonRoom startingRoom = dungeonLevel.getRoom(dungeonLevel.getStartingPoint());
         DungeonRoom endingRoom = dungeonLevel.getRoom(dungeonLevel.getDescentPoint());
         DungeonRoom[][] matrix = dungeonLevel.getRooms();
@@ -44,14 +42,5 @@ public class TallSpireDungeonConfig extends DungeonLevelConfig {
             }
         }
 
-    }
-
-    protected void addJunctionObject(DungeonRoom room, Random random, MonsterFactory monsterFactory) {
-        double roll = random.nextDouble();
-        if (roll < MONSTER_PREVALENCE) {
-            room.addObject(monsterFactory.makeRandomEnemies(random));
-        } else if (roll < MONSTER_PREVALENCE + TRAP_PREVALENCE) {
-            DungeonPitfallTrap.makePitfallTrap(room, random);
-        }
     }
 }
