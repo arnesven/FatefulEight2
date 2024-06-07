@@ -1,6 +1,5 @@
 package model.items;
 
-import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.Condition;
@@ -9,6 +8,7 @@ import model.items.accessories.Accessory;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
+import model.items.clothing.MytheriumArmor;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.states.CombatEvent;
@@ -203,5 +203,9 @@ public class Equipment implements Serializable {
 
     public boolean grantsConditionImmunity(Condition cond) {
         return clothing.grantsConditionImmunity(cond) || (accessory != null && accessory.grantsConditionImmunity(cond));
+    }
+
+    public boolean applyArmorToMagicAttacks() {
+        return clothing instanceof MytheriumArmor;
     }
 }

@@ -618,7 +618,7 @@ public class GameCharacter extends Combatant {
             combatEvent.getStatistics().addToAvoidedDamage(damage);
         } else {
             String reductionString = "";
-            if (enemy.getAttackBehavior().isPhysicalAttack()) {
+            if (enemy.getAttackBehavior().isPhysicalAttack() || equipment.applyArmorToMagicAttacks()) {
                 int reduction = Math.min(damage, calculateDamageReduction());
                 if (getAP() > 0) {
                     reductionString = " (reduced by " + reduction + ")";

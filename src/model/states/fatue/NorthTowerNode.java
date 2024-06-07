@@ -1,6 +1,7 @@
 package model.states.fatue;
 
 import model.Model;
+import model.items.clothing.MytheriumArmor;
 import model.items.special.FashionableSash;
 import model.items.special.FatueKeyItem;
 import model.ruins.DungeonLevel;
@@ -70,17 +71,28 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
             PitfallDungeonConfig config = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33);
             level = new DungeonLevel(model, random, false, 4, config);
-            System.err.println("Hidden chest not spawned in north tower, retrying");
+            System.err.println("Fashionable sash not spawned in north tower, retrying");
             if (config.allRequiredObjectsPlaced()) {
                 break;
             }
         } while (true);
         levels.add(level);
-        for (int i = 0; i < 8; i++) {
-            DungeonLevelConfig config2 = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
-            levels.add(new DungeonLevel(model, random, false, 4, config2));
-        }
 
+        List<DungeonLevel> inBetweenLevels;
+        do {
+            inBetweenLevels = new ArrayList<>();
+            DungeonLevelConfig config2 = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
+            config2.addRequiredDeadEndObject(new HiddenChestObject(new MytheriumArmor()), 0.33);
+            for (int i = 0; i < 8; i++) {
+                inBetweenLevels.add(new DungeonLevel(model, random, false, 4, config2));
+            }
+            if (config2.allRequiredObjectsPlaced()) {
+                break;
+            }
+            System.err.println("Mytherium armor not spawned. Retrying");
+        } while (true);
+
+        levels.addAll(inBetweenLevels);
         RuinsDungeon dungeon = new RuinsDungeon(levels);
         DungeonLevel bottomLevel = dungeon.getLevel(dungeon.getNumberOfLevels()-1);
         DungeonRoom entryRoom = bottomLevel.getRoom(bottomLevel.getDescentPoint());

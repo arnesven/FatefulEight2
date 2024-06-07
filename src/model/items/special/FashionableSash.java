@@ -30,7 +30,7 @@ public class FashionableSash extends Accessory implements SocketedItem {
     private List<MyPair<Skill, Integer>> skillBonuses = new ArrayList<>();
 
     public FashionableSash() {
-        super("Fashionable Sash", 180);
+        super("Fashionable Sash", 260);
     }
 
     @Override
