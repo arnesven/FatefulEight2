@@ -1,11 +1,14 @@
 package model.states.fatue;
 
 import model.Model;
+import model.items.accessories.GardeningGloves;
+import model.items.special.FashionableSash;
 import model.ruins.DungeonLevel;
 import model.ruins.FinalDungeonLevel;
 import model.ruins.RuinsDungeon;
 import model.ruins.configs.CourtyardGardenDungeonLevelConfig;
 import model.ruins.factories.FatueGardenMonsterFactory;
+import model.ruins.objects.HiddenChestObject;
 import model.ruins.themes.GardenDungeonTheme;
 import view.MyColors;
 import view.combat.CombatTheme;
@@ -33,12 +36,17 @@ public class CourtyardGardenNode extends KeyRequiredFatueDungeonNode {
     protected RuinsDungeon makeDungeon(Model model) {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
-        CourtyardGardenDungeonLevelConfig config = new CourtyardGardenDungeonLevelConfig(new FatueGardenMonsterFactory(), givesKeyColor);
+
         DungeonLevel level;
         do {
+            CourtyardGardenDungeonLevelConfig config = new CourtyardGardenDungeonLevelConfig(new FatueGardenMonsterFactory(), givesKeyColor);
+            config.addRequiredDeadEndObject(new HiddenChestObject(new GardeningGloves()), 0.33);
             level = new DungeonLevel(model, random, false, 11, config);
             System.err.println("Key did not spawn for courtyard garden, retrying");
-        } while (!config.keySpawned());
+            if (config.allRequiredObjectsPlaced()) {
+                break;
+            }
+        } while (true);
         levels.add(level);
         FinalDungeonLevel finalLevel = new FinalDungeonLevel(model, random, new GardenDungeonTheme());
         finalLevel.setFinalRoom(new FatueStaffRoom());

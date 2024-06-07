@@ -26,6 +26,11 @@ public class BootsOfMobility extends ShoesItem {
     }
 
     @Override
+    public String getExtraText() {
+        return "Grants the wearer immunity toward paralysis.";
+    }
+
+    @Override
     public int getSpeedModifier() {
         return 2;
     }
