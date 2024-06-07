@@ -97,10 +97,11 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
             new SingleItemCombatLoot(new SwordOfVigor()).giveYourself(model.getParty());
             new SingleItemCombatLoot(new LightningJavelins()).giveYourself(model.getParty());
             new SingleItemCombatLoot(new AxeOfDismemberment()).giveYourself(model.getParty());
+            // TODO: Flail of fear
+            // TODO: Bow of True Shot
             FortressAtUtmostEdgeState.setFatueCleared(model);
             println(LogView.GOLD_COLOR + "Congratulations! You have defeated the Ultimate " +
                     "Adversary in the Fortress at the Utmost Edge!" + LogView.DEFAULT_COLOR);
-            // TODO: Add some nice unique items for loot.
         }
     }
 
