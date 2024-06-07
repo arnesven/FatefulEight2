@@ -4,6 +4,7 @@ import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.spells.Spell;
 import model.map.locations.FortressAtUtmostEdgeLocation;
+import model.states.fatue.FortressAtUtmostEdgeState;
 import util.MyLists;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class GameScore extends HashMap<String, Integer> {
     }
 
     private static boolean isFatueCleared(Model model) {
-        return model.getDungeon(FortressAtUtmostEdgeLocation.NAME, false).isCompleted();
+        return FortressAtUtmostEdgeState.isCleared(model);
     }
 
     private static Integer spellsCollected(Model model) {

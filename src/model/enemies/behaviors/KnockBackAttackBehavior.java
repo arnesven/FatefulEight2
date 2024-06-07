@@ -7,10 +7,21 @@ import model.states.CombatEvent;
 import util.MyRandom;
 
 public class KnockBackAttackBehavior extends EnemyAttackBehavior {
+    private final int attacks;
     private int chance;
 
-    public KnockBackAttackBehavior(int chance) {
+    public KnockBackAttackBehavior(int chance, int attacks) {
         this.chance = chance;
+        this.attacks = attacks;
+    }
+
+    public KnockBackAttackBehavior(int chance) {
+        this(chance, 1);
+    }
+
+    @Override
+    public int numberOfAttacks() {
+        return attacks;
     }
 
     @Override

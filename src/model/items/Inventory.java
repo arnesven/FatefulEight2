@@ -6,6 +6,7 @@ import model.items.designs.CraftingDesign;
 import model.items.parcels.Parcel;
 import model.items.potions.Potion;
 import model.items.special.PearlItem;
+import model.items.special.PieceOfStaffItem;
 import model.items.special.StoryItem;
 import model.items.spells.AuxiliarySpell;
 import model.items.spells.CombatSpell;
