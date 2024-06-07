@@ -24,9 +24,13 @@ public class PoisonAttackBehavior extends EnemyAttackBehavior {
         int hpBefore = target.getHP();
         super.performAttack(model, enemy, target, combatEvent);
         if (hpBefore > target.getHP() && !target.isDead() && MyRandom.rollD10() <= chance) {
-            combatEvent.println(target.getName() + " has been poisoned!");
-            model.getTutorial().enemyAttacks(model);
             target.addCondition(new PoisonCondition());
+            if (target.hasCondition(PoisonCondition.class)) {
+                combatEvent.println(target.getName() + " has been poisoned!");
+                model.getTutorial().enemyAttacks(model);
+            } else {
+                combatEvent.println(target.getName() + " is unaffected by the poisonous attack.");
+            }
         }
     }
 
