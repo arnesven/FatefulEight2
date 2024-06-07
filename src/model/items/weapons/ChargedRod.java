@@ -1,5 +1,6 @@
 package model.items.weapons;
 
+import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -41,7 +42,7 @@ public class ChargedRod extends WandWeapon {
     }
 
     @Override
-    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         charge++;
         if (charge == 5) {
             charge = 0;

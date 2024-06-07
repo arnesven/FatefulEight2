@@ -1,5 +1,6 @@
 package model.items.weapons;
 
+import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -41,7 +42,7 @@ public class IceRod extends WandWeapon {
     }
 
     @Override
-    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         if (MyRandom.rollD10() >= 9 && !target.hasCondition(TimedParalysisCondition.class)) {
             target.addCondition(new FreezeCondition());
             combatEvent.println(target.getName() + " is paralyzed by the freezing cold!");

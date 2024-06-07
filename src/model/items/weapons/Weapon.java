@@ -171,7 +171,7 @@ public abstract class Weapon extends EquipableItem {
         return weaponClass.isAssignableFrom(this.getClass());
     }
 
-    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter,
+    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter,
                                  Combatant target, int damage, int critical) {
 
     }

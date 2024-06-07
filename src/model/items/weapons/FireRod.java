@@ -1,5 +1,6 @@
 package model.items.weapons;
 
+import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.BurningCondition;
@@ -41,7 +42,7 @@ public class FireRod extends WandWeapon {
     }
 
     @Override
-    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         if (MyRandom.rollD10() > 8 && !target.hasCondition(BurningCondition.class)) {
             combatEvent.println(target.getName() + " starts burning!");
             target.addCondition(new BurningCondition(gameCharacter));

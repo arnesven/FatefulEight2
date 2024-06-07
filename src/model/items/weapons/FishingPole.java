@@ -1,5 +1,6 @@
 package model.items.weapons;
 
+import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.items.Item;
@@ -39,7 +40,7 @@ public class FishingPole extends PolearmWeapon {
     }
 
     @Override
-    public void didOneAttackWith(CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         if (MyRandom.rollD10() > 8) {
             combatEvent.println("The fishing pole is broken!");
             combatEvent.partyMemberSay(gameCharacter, MyRandom.sample(List.of("Darn it!", "That's unfortunate.", "No! My fishing pole!")));
