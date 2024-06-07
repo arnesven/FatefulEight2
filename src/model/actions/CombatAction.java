@@ -57,10 +57,12 @@ public abstract class CombatAction {
             } else if (combat.getCurrentRound() >= FATIGUE_START_ROUND) {
                 SkillCheckResult result = performer.testSkill(model, Skill.Endurance, performer.getAP());
                 if (!result.isSuccessful()) {
-                    model.getTutorial().fatigue(model);
-                    combat.println(performer.getFirstName() + " has been fatigue due to wearing heavy armor (Endurance " +
-                            result.asString() + ")");
                     performer.addCondition(new FatigueCondition());
+                    if (performer.hasCondition(FatigueCondition.class)) {
+                        model.getTutorial().fatigue(model);
+                        combat.println(performer.getFirstName() + " has been fatigue due to wearing heavy armor (Endurance " +
+                                result.asString() + ")");
+                    }
                 }
             }
         }

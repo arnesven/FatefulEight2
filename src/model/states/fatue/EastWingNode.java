@@ -1,6 +1,7 @@
 package model.states.fatue;
 
 import model.Model;
+import model.items.accessories.CowlOfRegeneration;
 import model.ruins.*;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.NoLeversDungeonConfig;
@@ -42,6 +43,7 @@ public class EastWingNode extends KeyRequiredFatueDungeonNode {
         do {
             PitfallDungeonConfig config = new PitfallDungeonConfig(new PurpleRuinsTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
+            config.addRequiredDeadEndObject(new HiddenChestObject(new CowlOfRegeneration()), 0.33);
             level = new DungeonLevel(model, random, false, 7, config);
             System.err.println("Key not spawned in east wing, retrying");
             if (config.allRequiredObjectsPlaced()) {

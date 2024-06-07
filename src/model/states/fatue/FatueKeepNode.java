@@ -1,6 +1,7 @@
 package model.states.fatue;
 
 import model.Model;
+import model.items.accessories.RingOfZeal;
 import model.items.special.FashionableSash;
 import model.ruins.DungeonLevel;
 import model.ruins.DungeonRoom;
@@ -42,7 +43,7 @@ public class FatueKeepNode extends KeyRequiredFatueDungeonNode {
         DungeonLevel level;
         do {// TODO: Other monster factory, and puzzle
             PitfallDungeonConfig config = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory());
-            config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33); // TODO: Change to another item.
+            config.addRequiredDeadEndObject(new HiddenChestObject(new RingOfZeal()), 0.33);
             level = new DungeonLevel(model, random, false, 7, config);
             System.err.println("Hidden chest not spawned in north tower, retrying");
             if (config.allRequiredObjectsPlaced()) {

@@ -42,7 +42,6 @@ class WestWingNode extends FatueDungeonNode {
         do {
             KeySpawningDungeonLevelConfig keySpawningConfig =
                     new KeySpawningDungeonLevelConfig(theme, monsterFactory, givesKeyColor, true);
-            keySpawningConfig.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33);
             level2 = new DungeonLevel(model, random, false, 8, keySpawningConfig);
             System.err.println("Key did not spawn in west wing level 2, trying again.");
             if (keySpawningConfig.isKeySpawned()) {

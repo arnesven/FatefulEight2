@@ -26,9 +26,13 @@ public class BleedAttackBehavior extends EnemyAttackBehavior {
         int hpBefore = target.getHP();
         super.performAttack(model, enemy, target, combatEvent);
         if (hpBefore > target.getHP() && !target.isDead() && MyRandom.rollD10() <= chance) {
-            combatEvent.println(target.getName() + " is bleeding!");
-            model.getTutorial().enemyAttacks(model);
             target.addCondition(new BleedingCondition());
+            if (target.hasCondition(BleedingCondition.class)) {
+                combatEvent.println(target.getName() + " is bleeding!");
+                model.getTutorial().enemyAttacks(model);
+            } else {
+                combatEvent.println(target.getName() + " does not start bleeding from the attack.");
+            }
         }
     }
 
