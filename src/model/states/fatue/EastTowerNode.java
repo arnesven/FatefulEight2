@@ -47,7 +47,7 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
         Random random = new Random();
         levels.add(new FinalDungeonLevel(model, random, new GrayRuinsTheme()));
         DungeonLevel level;
-        do {
+        do { // TODO: Other monster factory, and puzzle
             PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
             config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33); // TODO: Change to another item.

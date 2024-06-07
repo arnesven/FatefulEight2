@@ -36,7 +36,7 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
 
     public NorthTowerNode(MyColors requiredKey1, MyColors requiredKey2) {
         super("North Tower", false, requiredKey1, PROMPT);
-        this.key1 = new FatueKeyItem(requiredKey1);
+        this.key1 = new FatueKeyItem(requiredKey1); // TODO: Other monster factory, and puzzle
         this.key2 = new FatueKeyItem(requiredKey2);
     }
 
