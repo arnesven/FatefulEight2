@@ -1,15 +1,17 @@
 package model.items.special;
 
+import model.Model;
 import model.classes.Skill;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.SocketedItem;
 import model.items.accessories.*;
 import model.items.spells.Spell;
 import util.MyLists;
 import util.MyPair;
 import view.GameView;
 import view.MyColors;
-import view.party.ConfigureFashionableSashMenu;
+import view.party.ConfigureSocketedItemMenu;
 import view.party.SelectableListMenu;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FashionableSash extends Accessory {
+public class FashionableSash extends Accessory implements SocketedItem {
     private static final Sprite SPRITE = new ItemSprite(12, 13, MyColors.DARK_GRAY, MyColors.RED, MyColors.ORANGE);
 
     private final Accessory[] innerItems = new Accessory[4];
@@ -115,7 +117,7 @@ public class FashionableSash extends Accessory {
 
     @Override
     public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
-        return new ConfigureFashionableSashMenu(innerView, this);
+        return new ConfigureSocketedItemMenu(innerView, this);
     }
 
     @Override
@@ -123,14 +125,40 @@ public class FashionableSash extends Accessory {
         return MyLists.any(itemsAsList, Accessory::isHeavy);
     }
 
+    @Override
+    public int getNumberOfSockets() {
+        return innerItems.length;
+    }
+
     public Accessory getInnerItem(int index) {
         return innerItems[index];
     }
 
-    public void setInnerItem(int index, Accessory accessory) {
-        innerItems[index] = accessory;
+    @Override
+    public void setInnerItem(int index, Item accessory) {
+        innerItems[index] = (Accessory) accessory;
         itemsAsList = MyLists.toNullessList(innerItems);
         updateSkillBonuses();
+    }
+
+    @Override
+    public String getSocketLabels() {
+        return "Feet    Head    Gloves  Jewelry";
+    }
+
+    @Override
+    public List<Item> getItemsForSlot(Model model, int index) {
+        List<Item> items = model.getParty().getInventory().getAllItems();
+        switch (index) {
+            case 0:
+                return MyLists.filter(items, (Item acc) -> acc instanceof ShoesItem);
+            case 1:
+                return MyLists.filter(items, (Item acc) -> acc instanceof HeadGearItem);
+            case 2:
+                return MyLists.filter(items, (Item acc) -> acc instanceof GlovesItem);
+            default:
+                return MyLists.filter(items, (Item acc) -> acc instanceof JewelryItem);
+        }
     }
 
     private void updateSkillBonuses() {

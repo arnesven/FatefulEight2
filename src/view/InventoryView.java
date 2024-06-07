@@ -80,7 +80,8 @@ public class InventoryView extends SelectableListMenu {
         BorderFrame.drawFrame(model.getScreenHandler(),
                 rightTabX, y, WIDTH - 22, HEIGHT - 4,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
-        if (tabNames[selectedTab].getItems(model).size() > 0) {
+        int numberOfItems = tabNames[selectedTab].getItems(model).size();
+        if (numberOfItems > 0 && getSelectedRow() < numberOfItems) {
             Item it = tabNames[selectedTab].getItems(model).get(getSelectedRow());
             it.drawYourself(model.getScreenHandler(), rightTabX + 11, y + 2);
             String text = it.getName() + ", " + it.getShoppingDetails() +

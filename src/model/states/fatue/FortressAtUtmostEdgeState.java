@@ -113,6 +113,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
                 @Override
                 public GameState run(Model model) {
                     if (firstTimeInCastleProper(model)) {
+                        model.getParty().getInventory().add(new FashionableSash());
                         discoverMural(model);
                     } else {
                         println("You are back in the grand hall with the mural and the curious stone door.");
