@@ -10,6 +10,7 @@ import model.enemies.Enemy;
 import model.enemies.RisenWarriorEnemy;
 import model.enemies.UltimateAdversaryEnemy;
 import model.items.spells.TeleportSpell;
+import model.items.weapons.AxeOfDismemberment;
 import model.items.weapons.LightningJavelins;
 import model.items.weapons.SwordOfVigor;
 import model.states.CombatEvent;
@@ -94,7 +95,8 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
             leaderSay("Let's get out of here before more of his minions come to life.");
             partyMemberSay(rando, "Wait... there's some stuff over here...");
             new SingleItemCombatLoot(new SwordOfVigor()).giveYourself(model.getParty());
-            new SingleItemCombatLoot(new LightningJavelins());
+            new SingleItemCombatLoot(new LightningJavelins()).giveYourself(model.getParty());
+            new SingleItemCombatLoot(new AxeOfDismemberment()).giveYourself(model.getParty());
             FortressAtUtmostEdgeState.setFatueCleared(model);
             println(LogView.GOLD_COLOR + "Congratulations! You have defeated the Ultimate " +
                     "Adversary in the Fortress at the Utmost Edge!" + LogView.DEFAULT_COLOR);
