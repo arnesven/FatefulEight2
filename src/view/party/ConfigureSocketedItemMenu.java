@@ -34,12 +34,13 @@ public class ConfigureSocketedItemMenu extends SelectableListMenu {
         result.add(new TextDecoration(socketedItem.getSocketLabels(),
                 xStart + 1, yStart + row++, MyColors.WHITE, MyColors.BLUE, true));
 
+        int xOffset = (4 - socketedItem.getNumberOfSockets()) * 4;
         int finalRow = row-1;
         result.add(new DrawableObject(xStart + 1, yStart+1) {
                        @Override
                        public void drawYourself(Model model, int x, int y) {
                            for (int col = 0; col < socketedItem.getNumberOfSockets(); ++col) {
-                               Point finalPosition = new Point(x + col * 8 + 1, y + finalRow);
+                               Point finalPosition = new Point(xOffset + x + col * 8 + 1, y + finalRow);
                                if (socketedItem.getInnerItem(col) != null) {
                                    socketedItem.getInnerItem(col).drawYourself(model.getScreenHandler(), finalPosition.x, finalPosition.y);
                                } else {
@@ -57,10 +58,11 @@ public class ConfigureSocketedItemMenu extends SelectableListMenu {
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
+        int xOffset = (4 - socketedItem.getNumberOfSockets()) * 4;
         List<ListContent> contents = new ArrayList<>();
         for (int col = 0; col < socketedItem.getNumberOfSockets(); ++col) {
             int finalCol = col;
-            contents.add(new SelectableListContent(xStart + 2 + finalCol * 8, yStart + 10, getLabel(socketedItem, finalCol)) {
+            contents.add(new SelectableListContent(xOffset + xStart + 2 + finalCol * 8, yStart + 10, getLabel(socketedItem, finalCol)) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     setInnerMenu(new SetItemMenu(ConfigureSocketedItemMenu.this, socketedItem, finalCol) {

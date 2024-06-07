@@ -82,6 +82,9 @@ public class AbilityCombatAction extends CombatAction {
         if (Lute.canDoAbility(performer, target)) {
             list.add(new BalladCombatAction());
         }
+        if (StaffOfDeimosItem.canDoAbility(performer, target)) {
+            list.add(StaffOfDeimosItem.makeCombatAbility(performer, target));
+        }
         return list;
     }
 

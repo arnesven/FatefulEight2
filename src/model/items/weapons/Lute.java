@@ -26,10 +26,7 @@ public class Lute extends Weapon {
     }
 
     public static boolean canDoAbility(GameCharacter performer, Combatant target) {
-        if (performer.getEquipment().getWeapon().isOfType(Lute.class)) {
-            return true;
-        }
-        return false;
+        return performer.getEquipment().getWeapon().isOfType(Lute.class);
     }
 
     @Override

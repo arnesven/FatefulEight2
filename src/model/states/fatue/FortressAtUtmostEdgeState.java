@@ -4,10 +4,13 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.characters.special.WitchKingCharacter;
+import model.items.special.CommonSash;
 import model.items.special.FashionableSash;
 import model.items.special.FatueKeyItem;
 import model.items.special.PieceOfStaffItem;
 import model.items.special.StoryItem;
+import model.items.spells.EntropicBoltSpell;
+import model.items.spells.SouthernCrossSpell;
 import model.items.weapons.StaffOfDeimosItem;
 import model.items.weapons.Weapon;
 import model.states.GameState;
@@ -113,7 +116,6 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
                 @Override
                 public GameState run(Model model) {
                     if (firstTimeInCastleProper(model)) {
-                        model.getParty().getInventory().add(new FashionableSash());
                         discoverMural(model);
                     } else {
                         println("You are back in the grand hall with the mural and the curious stone door.");
