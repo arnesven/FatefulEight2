@@ -68,6 +68,9 @@ public abstract class Combatant implements Serializable {
     }
 
     public void addCondition(Condition cond) {
+        if (hasConditionImmunity(cond)) {
+            return;
+        }
         if (!hasCondition(cond.getClass())) {
             conditions.add(cond);
         } else {
@@ -80,6 +83,10 @@ public abstract class Combatant implements Serializable {
                 }
             }
         }
+    }
+
+    protected boolean hasConditionImmunity(Condition cond) {
+        return false;
     }
 
     public boolean hasCondition(Class<? extends Condition> condition) {

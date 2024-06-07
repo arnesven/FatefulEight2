@@ -2,6 +2,7 @@ package model.items.special;
 
 import model.Model;
 import model.classes.Skill;
+import model.combat.conditions.Condition;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.SocketedItem;
@@ -176,5 +177,10 @@ public class FashionableSash extends Accessory implements SocketedItem {
                                           (Map.Entry<Skill, Integer> entry) ->
                                                   new MyPair<>(entry.getKey(), entry.getValue())),
                                       (MyPair<Skill, Integer> pair) -> pair.second != 0);
+    }
+
+    @Override
+    public boolean grantsConditionImmunity(Condition cond) {
+        return MyLists.any(itemsAsList, (Accessory acc) -> acc.grantsConditionImmunity(cond));
     }
 }

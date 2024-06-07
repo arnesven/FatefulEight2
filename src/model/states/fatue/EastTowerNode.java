@@ -1,6 +1,7 @@
 package model.states.fatue;
 
 import model.Model;
+import model.items.accessories.BootsOfMobility;
 import model.items.special.FashionableSash;
 import model.ruins.DungeonLevel;
 import model.ruins.DungeonRoom;
@@ -50,7 +51,7 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
         do { // TODO: Other monster factory, and puzzle
             PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
-            config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33); // TODO: Change to another item.
+            config.addRequiredDeadEndObject(new HiddenChestObject(new BootsOfMobility()), 0.33);
             level = new DungeonLevel(model, random, false, 4, config);
             System.err.println("Key not spawned in East tower, retrying");
             if (config.allRequiredObjectsPlaced()) {

@@ -10,7 +10,7 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class SuedeBoots extends ShoesItem {
-    private static final Sprite SPRITE = new ItemSprite(7, 10, MyColors.DARK_GREEN, MyColors.GREEN);
+    private static final Sprite SPRITE = new ItemSprite(7, 10, MyColors.DARK_GRAY, MyColors.GREEN, MyColors.DARK_GREEN);
 
     public SuedeBoots() {
         super("Suede Boots", 12);

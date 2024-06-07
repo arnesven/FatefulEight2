@@ -2,6 +2,7 @@ package model.items;
 
 import model.Model;
 import model.classes.Skill;
+import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
 import model.states.CombatEvent;
@@ -155,5 +156,9 @@ public abstract class Item implements Serializable, Comparable<Item> {
 
     public int getSellValue() {
         return getCost() / 2;
+    }
+
+    public boolean grantsConditionImmunity(Condition cond) {
+        return false;
     }
 }

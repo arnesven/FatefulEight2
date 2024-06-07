@@ -10,7 +10,7 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class LeatherBoots extends ShoesItem {
-    private static final Sprite SPRITE = new ItemSprite(7, 10,MyColors.DARK_BROWN, MyColors.BROWN);
+    private static final Sprite SPRITE = new ItemSprite(7, 10,MyColors.DARK_BROWN, MyColors.TAN, MyColors.BROWN);
 
     public LeatherBoots() {
         super("Leather Boots", 20);

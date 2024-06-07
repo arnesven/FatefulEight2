@@ -752,4 +752,9 @@ public class GameCharacter extends Combatant {
         setClass(charClass);
         avatarSprite = makeAvatarSprite();
     }
+
+    @Override
+    protected boolean hasConditionImmunity(Condition cond) {
+        return equipment.grantsConditionImmunity(cond);
+    }
 }

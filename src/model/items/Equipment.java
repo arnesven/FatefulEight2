@@ -3,6 +3,7 @@ package model.items;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.accessories.Accessory;
 import model.items.accessories.ShieldItem;
@@ -198,5 +199,9 @@ public class Equipment implements Serializable {
         int clothingWeight = clothing == null ? 0 : clothing.getWeight();
         int accessoryWeight = accessory == null ? 0 : accessory.getWeight();
         return weaponWeight + clothingWeight + accessoryWeight;
+    }
+
+    public boolean grantsConditionImmunity(Condition cond) {
+        return clothing.grantsConditionImmunity(cond) || (accessory != null && accessory.grantsConditionImmunity(cond));
     }
 }
