@@ -91,6 +91,7 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
             FortressAtUtmostEdgeState.setFatueCleared(model);
             println(LogView.GOLD_COLOR + "Congratulations! You have defeated the Ultimate " +
                     "Adversary in the Fortress at the Utmost Edge!" + LogView.DEFAULT_COLOR);
+            // TODO: Add some nice unique items for loot.
         }
     }
 

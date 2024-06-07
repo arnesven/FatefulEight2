@@ -37,7 +37,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        if (withIntro) {
+        if (withIntro) {// TODO: Can also improve item for a cost. Common items are cheaper to improve!
             print("The party encounters an artisan on the road. ");
         }
         print("This particular artisan is a");
