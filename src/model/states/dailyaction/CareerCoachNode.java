@@ -60,7 +60,7 @@ public class CareerCoachNode extends CareerOfficePersonNode {
                 leaderSay("Of course. Well if we recruit another " + className + " we may come back.");
                 coachSay("I'm looking forward to it!");
             } else {
-                coachSay("Wait a minute... you're a whole group of " + className + "! " +
+                coachSay("Wait a minute... you're a whole group of " + className + "s! " +
                         "Would you consider hosting a seminar on that line of work?");
                 leaderSay("What's in it for us?");
                 coachSay("We would pay you 120 gold!");
