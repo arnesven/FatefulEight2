@@ -76,12 +76,8 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     if (loading) {
-                        try {
-                            model.startGameFromSave(fileName);
-                        } catch (FileNotFoundException | CorruptSaveFileException e) {
-                            e.printStackTrace();
-                        }
-                        mainGameView = new MainGameView();
+                        model.prepareForStartGameFromSave(fileName);
+                        mainGameView = new LoadingGameView();
                     } else { // saving
                         if (data != null) {
                             model.transitionToDialog(new YesNoMessageView(SelectSaveSlotMenu.this, "Are you sure you want to overwrite this save?") {

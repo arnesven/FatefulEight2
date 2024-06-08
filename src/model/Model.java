@@ -55,6 +55,7 @@ public class Model {
     private boolean gameOver;
     private boolean gameStarted;
     private boolean inCombat;
+    private String gameStartFileName = null;
 
     public Model(ScreenHandler screenHandler) {
         this.screenHandler = screenHandler;
@@ -75,7 +76,12 @@ public class Model {
         inCombat = false;
     }
 
-    public void startGameFromSave(String filename) throws FileNotFoundException, CorruptSaveFileException {
+    public void prepareForStartGameFromSave(String fileName) {
+        gameStarted = true;
+        gameStartFileName = fileName;
+    }
+
+    public void startGameFromSave(String filename) {
         try {
             initialize();
             subView = new EmptySubView();
@@ -87,9 +93,10 @@ public class Model {
             log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
         } catch (FileNotFoundException | CorruptSaveFileException ex) {
-            throw ex;
+            ex.printStackTrace();
         }
-        gameStarted = true;
+        gameView = new MainGameView();
+        gameStartFileName = null;
         playMainSong();
     }
 
@@ -242,6 +249,9 @@ public class Model {
                     log.waitForAnimationToFinish();
                     transitionToDialog(new EndOfGameDialog(getView()));
                 }
+            }
+            if (gameStartFileName != null) {
+                startGameFromSave(gameStartFileName);
             }
         }
     }
@@ -506,5 +516,9 @@ public class Model {
 
     public List<MapObject> getMapObjects(Point position) {
         return MyLists.filter(gameData.mapObjects, (MapObject mo) -> mo.getPosition().equals(position));
+    }
+
+    public boolean isGameDataAvailable() {
+        return gameData != null;
     }
 }

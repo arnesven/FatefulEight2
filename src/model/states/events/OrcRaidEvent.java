@@ -67,6 +67,9 @@ public class OrcRaidEvent extends DailyEventState {
             if (combat.fled()) {
                 return;
             }
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
             println("You have fended off the orcish marauders. There is much confusion " +
                     "in the aftermath but there doesn't seem to be many injured or any damage to the town.");
             showRandomPortrait(model, Classes.CONSTABLE, "Militia");
