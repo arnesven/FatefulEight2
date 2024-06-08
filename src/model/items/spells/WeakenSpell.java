@@ -8,6 +8,7 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
+import view.sprites.CombatSpellSprite;
 import view.sprites.DownArrowAnimation;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -15,7 +16,7 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class WeakenSpell extends CombatSpell {
-    private static final Sprite SPRITE = new ItemSprite(12, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public WeakenSpell() {
         super("Weaken", 18, MyColors.BLACK, 9, 1);
