@@ -1,10 +1,12 @@
 package model.ruins;
 
 import model.Model;
+import model.items.Prevalence;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.GardenDungeonLevelConfig;
 import model.ruins.configs.TallSpireDungeonConfig;
 import model.ruins.factories.MonsterFactory;
+import model.ruins.objects.HiddenChestObject;
 import model.ruins.themes.*;
 import util.MyRandom;
 
@@ -36,7 +38,12 @@ public class DungeonMaker {
                 levelSize = MyRandom.randInt(levelMinSize, levelMaxSize);
             } while (roomsTarget < levelSize*levelSize);
             roomsTarget -= levelSize*levelSize;
-            levels.add(new DungeonLevel(model, random, i == 0, levelSize, makeDungeonTheme(i, isRuins), new MonsterFactory()));
+            DungeonLevelConfig config = new DungeonLevelConfig(makeDungeonTheme(i, isRuins), new MonsterFactory());
+            config.addRequiredDeadEndObject(new HiddenChestObject(model.getItemDeck().draw(1, Prevalence.rare).get(0)), 0.05);
+            if (config.allRequiredObjectsPlaced()) {
+                System.out.println("Hidden chest on level " + i + " got placed.");
+            }
+            levels.add(new DungeonLevel(model, random, i == 0, levelSize, config));
             System.out.println(" Level " + i + " is " + levelSize + "x" + levelSize);
         }
         System.out.println(" Level " + i + " is the final level");
