@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.map.locations.FortressAtUtmostEdgeLocation;
 import model.map.objects.MapObject;
 import util.MyRandom;
 
@@ -109,5 +110,17 @@ public class CaveSystem extends World {
 
     public static void visitPosition(Model model, Point position) {
         model.getSettings().getMiscFlags().put(VISITED_KEY + position.x + "-" + position.y, true);
+    }
+
+    public Point getFatuePosition() {
+        for (int y = 0; y < WorldBuilder.WORLD_HEIGHT; ++y) {
+            for (int x = 0; x < WorldBuilder.WORLD_WIDTH; ++x) {
+                WorldHex hex = getHex(new Point(x, y));
+                if (hex.getLocation() instanceof FortressAtUtmostEdgeLocation) {
+                    return new Point(x, y);
+                }
+            }
+        }
+        return null;
     }
 }

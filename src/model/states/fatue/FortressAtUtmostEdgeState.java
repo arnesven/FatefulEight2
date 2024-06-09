@@ -31,7 +31,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
     private static final Point STARTING_POINT = new Point(7, 8);
     private static final Point CASTLE_PROPER_POSITION = new Point(4, 5);
     private static final String FIRST_TIME_IN_CASTLE_PROPER = "firstTimeInCastleProper";
-    private static final int NUMBER_OF_PIECES = 7;
+    public static final int NUMBER_OF_PIECES = 7;
     private static final String CLEARED_KEY = "FATUE_CLEARED";
 
     public FortressAtUtmostEdgeState(Model model) {
@@ -91,7 +91,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         return new FortressAtUtmostEdgeSubView(this, matrix);
     }
 
-    public int getNumberOfPiecesOfStaffFound(Model model) {
+    public static int getNumberOfPiecesOfStaffFound(Model model) {
         if (hasStaff(model)) {
             return NUMBER_OF_PIECES;
         }
@@ -153,7 +153,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
     }
 
-    private boolean hasStaff(Model model) {
+    public static boolean hasStaff(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getEquipment().getWeapon() instanceof StaffOfDeimosItem) {
                 return true;
@@ -233,7 +233,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         }
     }
 
-    private boolean firstTimeInCastleProper(Model model) {
+    public static boolean firstTimeInCastleProper(Model model) {
         return !model.getSettings().getMiscFlags().containsKey(FIRST_TIME_IN_CASTLE_PROPER);
     }
 

@@ -11,6 +11,7 @@ import model.combat.conditions.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
+import model.journal.JournalEntry;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
@@ -18,6 +19,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
+import model.tasks.FatueDestinationTask;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -393,10 +395,11 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             } else if (options.get(chosen).contains("region")) {
                 leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
                         "What kingdom is this?", "What can you tell me about these lands?")));
-
-                String kingdom = nearestCastle.getPlaceName().replace("Castle ", "").replace(" Castle", "");
-                portraitSay("This is the kingdom of " + kingdom + ". " +
-                        nearestCastle.getLordName() + " rules these lands.");
+                if (!talkAboutFatue(model, nearestCastle)) {
+                    String kingdom = nearestCastle.getPlaceName().replace("Castle ", "").replace(" Castle", "");
+                    portraitSay("This is the kingdom of " + kingdom + ". " +
+                            nearestCastle.getLordName() + " rules these lands.");
+                }
             } else {
                 String key = options.get(chosen).replace("Ask about ", "");
                 MyPair<String, String> queryAndResponse = specificTopics.get(key);
@@ -404,6 +407,28 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(queryAndResponse.second);
             }
         }
+    }
+
+    protected boolean talkAboutFatue(Model model, CastleLocation nearestCastle) {
+        Point fatuePos = model.getCaveSystem().getFatuePosition();
+        model.getWorld().dijkstrasByLand(fatuePos, true);
+        List<Point> path = model.getWorld().generalShortestPath(0,
+                worldHex -> worldHex.getLocation() != null &&
+                        worldHex.getLocation() instanceof CastleLocation);
+        CastleLocation nearestCastle2 = (CastleLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
+        if (nearestCastle2 == nearestCastle) {
+            path = model.getWorld().shortestPathToNearestTownOrCastle();
+            Point townOrCastlePosition = path.get(path.size()-1);
+            UrbanLocation townOrCastle = (UrbanLocation) model.getWorld().getHex(townOrCastlePosition).getLocation();
+            portraitSay("I've heard there's a strange place in the caves around " + townOrCastle.getPlaceName() + ". " +
+                    "From what I've heard it's some kind of ruined fortress.");
+            if (!MyLists.any(model.getParty().getDestinationTasks(), (DestinationTask dt) -> dt instanceof FatueDestinationTask)) {
+                model.getParty().addDestinationTask(new FatueDestinationTask(townOrCastlePosition, townOrCastle));
+                JournalEntry.printJournalUpdateMessage(model);
+            }
+            return true;
+        }
+        return false;
     }
 
     protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
