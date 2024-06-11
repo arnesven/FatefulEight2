@@ -62,16 +62,11 @@ public abstract class WorldHex {
         if (tutorialEvent != null) {
             return tutorialEvent;
         }
+        DailyEventState conditionalEvent = conditionalEvent(model);
+        if (conditionalEvent != null) {
+            return conditionalEvent;
+        }
         DailyEventState eventToReturn;
-        eventToReturn = Loan.generateEvent(model, this);
-        if (eventToReturn != null) {
-            return eventToReturn;
-        }
-        eventToReturn = GeneralInteractionEvent.generateEvent(model, this);
-        if (eventToReturn != null) {
-            return eventToReturn;
-        }
-
         if (hexLocation != null && !hexLocation.isDecoration()) {
             eventToReturn = hexLocation.generateEvent(model);
         } else if (model.getParty().isOnRoad()) {
@@ -82,6 +77,19 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
+        return eventToReturn;
+    }
+
+    private DailyEventState conditionalEvent(Model model) {
+        DailyEventState eventToReturn = Loan.generateEvent(model, this);
+        if (eventToReturn != null) {
+            return eventToReturn;
+        }
+        eventToReturn = GeneralInteractionEvent.generateEvent(model, this);
+        if (eventToReturn != null) {
+            return eventToReturn;
+        }
+        eventToReturn = CaveSpelunkerEvent.generateEvent(model);
         return eventToReturn;
     }
 

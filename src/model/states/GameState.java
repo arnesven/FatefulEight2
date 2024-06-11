@@ -180,6 +180,10 @@ public abstract class GameState implements GameStateConstants {
         return gender ? "she" : "he";
     }
 
+    public static String manOrWoman(boolean gender) {
+        return gender ? "woman" : "man";
+    }
+
     public static String himOrHer(boolean gender) {
         return gender ? "her" : "him";
     }

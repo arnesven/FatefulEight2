@@ -18,6 +18,7 @@ import model.items.accessories.ComfyShoes;
 import model.items.accessories.Crown;
 import model.items.accessories.SwiftRing;
 import model.items.books.ElfOriginBook;
+import model.items.books.SpelunkersNotesBook;
 import model.items.special.FashionableSash;
 import model.items.spells.*;
 import model.map.UrbanLocation;
@@ -78,6 +79,7 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
+        inventory.add(new SpelunkersNotesBook());
     }
 
     private LoopingSprite[] makeCursorSprites() {

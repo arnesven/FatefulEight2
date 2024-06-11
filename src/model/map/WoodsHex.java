@@ -58,6 +58,7 @@ public class WoodsHex extends WorldHex {
             events.add(new FrogmenScoutsEvent(model));
             events.add(new ShrineEvent(model));
             events.add(new SecretGardenEvent(model));
+            // new RareBirdEvent(model),
             return MyRandom.sample(events);
         }
         return new NoEventState(model);
