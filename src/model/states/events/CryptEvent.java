@@ -39,11 +39,15 @@ public class CryptEvent extends DailyEventState {
         } else if (dieRol < 6) {
             innerEvent = new GhostCryptEvent(model);
             innerEvent.doTheEvent(model);
-            findLoot(model);
+            if (!innerEvent.haveFledCombat()) {
+                findLoot(model);
+            }
         } else if (dieRol < 8) {
             innerEvent = new SkeletonCryptEvent(model);
             innerEvent.doTheEvent(model);
-            findLoot(model);
+            if (!innerEvent.haveFledCombat()) {
+                findLoot(model);
+            }
         } else {
             println("The crypt appears to be empty, apart from some dusty old coffins.");
             givePartyLoots(model, 1, 3);
