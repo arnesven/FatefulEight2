@@ -11,6 +11,7 @@ import model.ruins.RuinsDungeon;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.NoLeversDungeonConfig;
 import model.ruins.configs.PitfallDungeonConfig;
+import model.ruins.factories.FatueTowerMonsterFactory;
 import model.ruins.factories.UndeadMonsterFactory;
 import model.ruins.objects.HiddenChestObject;
 import model.ruins.objects.StairsDown;
@@ -68,7 +69,7 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
         levels.add(new FinalDungeonLevel(model, random, new RedBrickTheme()));
         DungeonLevel level;
         do {
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new RedBrickTheme(), new FatueTowerMonsterFactory());
             config.addRequiredDeadEndObject(new HiddenChestObject(new FashionableSash()), 0.33);
             level = new DungeonLevel(model, random, false, 4, config);
             System.err.println("Fashionable sash not spawned in north tower, retrying");
@@ -81,7 +82,7 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
         List<DungeonLevel> inBetweenLevels;
         do {
             inBetweenLevels = new ArrayList<>();
-            DungeonLevelConfig config2 = new PitfallDungeonConfig(new RedBrickTheme(), new UndeadMonsterFactory());
+            DungeonLevelConfig config2 = new PitfallDungeonConfig(new RedBrickTheme(), new FatueTowerMonsterFactory());
             config2.addRequiredDeadEndObject(new HiddenChestObject(new MytheriumArmor()), 0.33);
             for (int i = 0; i < 8; i++) {
                 inBetweenLevels.add(new DungeonLevel(model, random, false, 4, config2));

@@ -9,6 +9,7 @@ import model.ruins.FinalDungeonLevel;
 import model.ruins.RuinsDungeon;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.PitfallDungeonConfig;
+import model.ruins.factories.FatueTowerMonsterFactory;
 import model.ruins.factories.UndeadMonsterFactory;
 import model.ruins.objects.FatueKeyObject;
 import model.ruins.objects.HiddenChestObject;
@@ -49,7 +50,7 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
         levels.add(new FinalDungeonLevel(model, random, new GrayRuinsTheme()));
         DungeonLevel level;
         do { // TODO: Other monster factory, and puzzle
-            PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new UndeadMonsterFactory());
+            PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new FatueTowerMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
             config.addRequiredDeadEndObject(new HiddenChestObject(new BootsOfMobility()), 0.33);
             level = new DungeonLevel(model, random, false, 4, config);
@@ -60,7 +61,7 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
         } while (true);
         levels.add(level);
         for (int i = 0; i < 6; i++) {
-            DungeonLevelConfig config2 = new PitfallDungeonConfig(new GrayBrickTheme(), new UndeadMonsterFactory());
+            DungeonLevelConfig config2 = new PitfallDungeonConfig(new GrayBrickTheme(), new FatueTowerMonsterFactory());
             levels.add(new DungeonLevel(model, random, false, 4, config2));
         }
 

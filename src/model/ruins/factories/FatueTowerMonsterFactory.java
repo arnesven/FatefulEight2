@@ -1,0 +1,44 @@
+package model.ruins.factories;
+
+import model.Model;
+import model.enemies.*;
+import model.ruins.objects.DungeonMonster;
+import model.states.GameState;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class FatueTowerMonsterFactory extends MonsterFactory {
+    protected DungeonMonster spawnMonster(Model model, Random random) {
+        int dieRoll = random.nextInt(4);
+        List<Enemy> enemies = new ArrayList<>();
+        int numberOfEnemies;
+        switch (dieRoll) {
+            case 0:
+                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new TrollEnemy('A'));
+                for (int i = 0; i < numberOfEnemies; ++i) {
+                    enemies.add(new TrollEnemy('A'));
+                }
+                break;
+            case 1:
+                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new FiendEnemy('A'));
+                for (int i = 0; i < numberOfEnemies; ++i) {
+                    enemies.add(new FiendEnemy('A'));
+                }
+                break;
+            case 2:
+                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new GhostEnemy('A'));
+                for (int i = 0; i < numberOfEnemies; ++i) {
+                    enemies.add(new GhostEnemy('A'));
+                }
+                break;
+            default:
+                numberOfEnemies = GameState.getSuggestedNumberOfEnemies(model, new DaemonEnemy('A'));
+                for (int i = 0; i < numberOfEnemies; ++i) {
+                    enemies.add(new DaemonEnemy('A'));
+                }
+        }
+        return new DungeonMonster(enemies);
+    }
+}
