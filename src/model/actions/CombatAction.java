@@ -55,7 +55,7 @@ public abstract class CombatAction {
                     }
                 }
             } else if (combat.getCurrentRound() >= FATIGUE_START_ROUND) {
-                SkillCheckResult result = performer.testSkill(model, Skill.Endurance, performer.getAP());
+                SkillCheckResult result = performer.testSkillHidden(Skill.Endurance, performer.getAP(), 0);
                 if (!result.isSuccessful()) {
                     performer.addCondition(new FatigueCondition());
                     if (performer.hasCondition(FatigueCondition.class)) {
