@@ -58,7 +58,7 @@ public enum PersonalityTrait {
             case calm:
                 // return new TidalWaterEvent(model, this, mainCharacter); // Water rising in a cave, keep calm?
             case benevolent:
-                // return new RefugeeCampEvent(model, this, mainCharacter);
+                return new SwordInTheStoneEvent(model, this, mainCharacter);
             case playful:
                 // return new BallGameEvent(model, this, mainCharacter);
             case gluttonous:
