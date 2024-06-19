@@ -132,7 +132,8 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new BarbershopEvent(model),
                     new TroubadourEvent(model),
                     new AcceptDeliveryEvent(model),
-                    new WantedPosterEvent(model)
+                    new WantedPosterEvent(model),
+                    new ArtisanEvent(model)
             ));
         }
         return new NoEventState(model);

@@ -3,10 +3,11 @@ package model.items.weapons;
 import model.classes.Skill;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.StartingItem;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class OldWand extends WandWeapon {
+public class OldWand extends WandWeapon implements StartingItem {
     private static final Sprite SPRITE = new ItemSprite(0, 6);
 
     public OldWand() {

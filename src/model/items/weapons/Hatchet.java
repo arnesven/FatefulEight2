@@ -1,11 +1,12 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.StartingItem;
 import util.MyRandom;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Hatchet extends AxeWeapon {
+public class Hatchet extends AxeWeapon implements StartingItem {
     private static final Sprite SPRITE = new ItemSprite(0, 5);
     private static final Sprite ALT_SPRITE = new ItemSprite(0, 11);
     private final Sprite sprite;

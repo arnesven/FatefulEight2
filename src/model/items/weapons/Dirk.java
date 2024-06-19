@@ -1,10 +1,11 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.StartingItem;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Dirk extends SmallBladedWeapon {
+public class Dirk extends SmallBladedWeapon implements StartingItem {
 
     private static final Sprite SPRITE = new ItemSprite(0, 0);
 

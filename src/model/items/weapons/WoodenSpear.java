@@ -1,10 +1,11 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.StartingItem;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class WoodenSpear extends PolearmWeapon {
+public class WoodenSpear extends PolearmWeapon implements StartingItem {
     private static final Sprite SPRITE = new TwoHandedItemSprite(0, 4);
 
     public WoodenSpear() {

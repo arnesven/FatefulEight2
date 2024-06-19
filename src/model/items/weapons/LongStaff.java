@@ -2,10 +2,11 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.StartingItem;
 import view.sprites.TwoHandedItemSprite;
 import view.sprites.Sprite;
 
-public class LongStaff extends StaffWeapon {
+public class LongStaff extends StaffWeapon implements StartingItem {
     private static final Sprite SPRITE = new TwoHandedItemSprite(1, 1);
 
     public LongStaff() {
