@@ -12,9 +12,9 @@ public class TutorialBounties extends HelpDialog {
             "so you will have to ask people you meet where the wanted " +
             "person can be found. Asking somebody about a bounty will require a successful Seek Info "
             + BountyDestinationTask.SEEK_INFO_DIFFICULTY + " skill check.\n\n"  +
-            "If you are far way from the wanted person's " +
+            "If you are far away from the wanted person's " +
             "hiding place (more than " + BountyDestinationTask.LONG_RANGE + " hexes) " +
-            "the person your asking will likely not know anything. If you " +
+            "the person will likely not know anything. If you " +
             "are close (between " + BountyDestinationTask.LONG_RANGE + " and " + BountyDestinationTask.SHORT_RANGE +
             " hexes) you may get an indication about it. If you are even closer than that, " +
             "you may get detailed directions to the wanted person's hideout.\n\n" +

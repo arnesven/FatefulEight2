@@ -90,7 +90,7 @@ public class WantedPosterEvent extends DailyEventState {
         leaderSay("Hmm... a bounty.");
         boolean didSay = randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(),
                 "I wouldn't pick a fight with " + himOrHer(bounty.getGender()) + ".");
-        if (didSay) {
+        if (didSay && !model.getParty().getLeader().hasPersonality(PersonalityTrait.cowardly)) {
             leaderSay("You say that just from looking at " + hisOrHer(bounty.getGender()) + " face?");
         }
         randomSayIfPersonality(PersonalityTrait.anxious, new ArrayList<>(),
