@@ -7,6 +7,7 @@ import model.items.potions.Potion;
 import model.items.potions.SleepingPotion;
 import model.states.CombatEvent;
 import model.states.ExploreRuinsState;
+import model.states.events.RareBirdEvent;
 import view.MyColors;
 import view.sprites.Animation;
 import view.sprites.LoopingSprite;
@@ -41,7 +42,11 @@ public class DungeonMonster extends CenterDungeonObject {
         if (isSleeping) {
             exploreRuinsState.print("The " + enemies.get(0).getName() + " hasn't notice you. Do you want to attempt to sneak past it? (Y/N) ");
             if (exploreRuinsState.yesNoInput()) {
-                boolean result = model.getParty().doCollectiveSkillCheck(model, exploreRuinsState, Skill.Sneak, 4);
+                int difficulty= 4;
+                if (RareBirdEvent.checkForSquawk(model, exploreRuinsState)) {
+                    difficulty = 10;
+                }
+                boolean result = model.getParty().doCollectiveSkillCheck(model, exploreRuinsState, Skill.Sneak, difficulty);
                 if (result) {
                     return;
                 }

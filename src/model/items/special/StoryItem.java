@@ -1,7 +1,9 @@
 package model.items.special;
 
+import model.Model;
 import model.items.Inventory;
 import model.items.Item;
+import model.journal.JournalEntry;
 
 public abstract class StoryItem extends Item {
     public StoryItem(String name, int cost) {

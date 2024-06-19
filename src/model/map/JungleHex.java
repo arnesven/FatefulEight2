@@ -32,7 +32,7 @@ public class JungleHex extends WorldHex {
                 new MosquitoesEvent(model),
                 new MushroomsEvent(model),
                 new AbandonedShackEvent(model),
-                // new RareBirdEvent(model),
+                new RareBirdEvent(model),
                 new NoEventState(model)
         ));
     }

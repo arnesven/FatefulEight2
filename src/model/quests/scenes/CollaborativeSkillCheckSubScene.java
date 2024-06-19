@@ -4,6 +4,7 @@ import model.Model;
 import model.classes.Skill;
 import model.states.GameState;
 import model.states.QuestState;
+import model.states.events.RareBirdEvent;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 
@@ -29,6 +30,9 @@ public class CollaborativeSkillCheckSubScene extends SkillQuestSubScene {
 
     @Override
     public boolean performSkillCheck(Model model, QuestState state, Skill skill, int difficulty) {
+        if (skill == Skill.Sneak && RareBirdEvent.checkForSquawk(model, state)) {
+            difficulty += 6;
+        }
         return model.getParty().doCollaborativeSkillCheck(model, state, skill, difficulty);
     }
 

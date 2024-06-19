@@ -24,6 +24,7 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.races.Race;
 import model.states.CombatEvent;
+import model.states.events.RareBirdEvent;
 import sound.SoundEffects;
 import util.MyPair;
 import util.MyRandom;

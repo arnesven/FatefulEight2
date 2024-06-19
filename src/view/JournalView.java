@@ -3,8 +3,10 @@ package view;
 import model.Model;
 import model.QuestDeck;
 import model.Summon;
+import model.items.special.StoryItem;
 import model.journal.*;
 import model.map.UrbanLocation;
+import model.states.events.RareBirdEvent;
 import model.states.events.VisitMonasteryEvent;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
@@ -37,6 +39,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
         addSummons(model);
         questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
         addMonasteryTask(model);
+        addRareBirdTask(model);
         addGenericQuests(model);
         addTravellers(model);
         addDestinationTasks(model);
@@ -187,6 +190,13 @@ public class JournalView extends TwoPaneSelectableListMenu {
     private void addMonasteryTask(Model model) {
         if (VisitMonasteryEvent.hasVisited(model)) {
             questsAndTasks.add(new DonateAtMonasteryTask(model));
+        }
+    }
+
+
+    private void addRareBirdTask(Model model) {
+        if (RareBirdEvent.hasStarted(model)) {
+            questsAndTasks.add(RareBirdEvent.makeJournalEntry(model));
         }
     }
 }
