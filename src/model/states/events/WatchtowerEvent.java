@@ -5,17 +5,22 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.states.DailyEventState;
 import util.MyLists;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WatchtowerEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x24);
+
     public WatchtowerEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Watchtower"));
         println("Up on a hill, an ancient watchtower sits silently and " +
             "resolutely. The party climbs the stone steps to find it " +
             "completely abandoned. However, there are majestic " +

@@ -6,16 +6,21 @@ import model.horses.Unicorn;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.List;
 
 public class UnicornEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x14);
+
     public UnicornEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Unicorn"));
         println("A shimmering horse-like creature approaches the party. " +
                 "A long spiraling horn protrudes from its forehead. It " +
                 "seems perfectly tame and gladly lets the party members " +
