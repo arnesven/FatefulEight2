@@ -55,7 +55,11 @@ public class Sprite implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected void finalize() {
+        SpriteCache.invalidate(this);
     }
 
     public static void resetCallCount() {

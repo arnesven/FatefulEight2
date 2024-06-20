@@ -7,6 +7,7 @@ import java.util.Map;
 public class SpriteCache {
 
     private static Map<Sprite, BufferedImage> map = new HashMap<>();
+    private static boolean warned = false;
 
     public static boolean has(Sprite sprite) {
         return map.containsKey(sprite);
@@ -25,9 +26,13 @@ public class SpriteCache {
     }
 
     public static void checkForClear() {
-        if (map.size() > 10000) {
-            System.out.println("Clearing sprite cache!");
-            map.clear();
+        if (map.size() >= 100 && map.size() % 100 == 0) {
+            if (!warned) {
+                System.out.println("Sprite cache size = " + map.size());
+                warned = true;
+            }
+        } else {
+            warned = false;
         }
     }
 }
