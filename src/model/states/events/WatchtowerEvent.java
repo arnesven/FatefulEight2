@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WatchtowerEvent extends DailyEventState {
-    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x24);
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x23);
 
     public WatchtowerEvent(Model model) {
         super(model);
