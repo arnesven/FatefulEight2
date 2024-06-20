@@ -12,7 +12,7 @@ import view.subviews.MiniPictureSubView;
 import java.util.List;
 
 public class UnicornEvent extends DailyEventState {
-    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x14);
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x13);
 
     public UnicornEvent(Model model) {
         super(model);
