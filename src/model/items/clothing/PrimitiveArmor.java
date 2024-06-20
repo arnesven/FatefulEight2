@@ -1,6 +1,8 @@
 package model.items.clothing;
 
-public class PrimitiveArmor extends FurArmor {
+import model.items.StartingItem;
+
+public class PrimitiveArmor extends FurArmor implements StartingItem {
     @Override
     public String getName() {
         return "Primitive Armor";

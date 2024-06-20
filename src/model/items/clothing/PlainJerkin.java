@@ -1,11 +1,12 @@
 package model.items.clothing;
 
 import model.classes.Skill;
+import model.items.StartingItem;
 import util.MyPair;
 
 import java.util.List;
 
-public class PlainJerkin extends FancyJerkin {
+public class PlainJerkin extends FancyJerkin implements StartingItem {
 
     @Override
     public String getName() {

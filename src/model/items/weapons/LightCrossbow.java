@@ -1,9 +1,10 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.StartingItem;
 import view.sprites.Sprite;
 
-public class LightCrossbow extends CrossbowWeapon {
+public class LightCrossbow extends CrossbowWeapon implements StartingItem {
 
     private static CommonCrossbow inner = new CommonCrossbow();
     private static ShortBow bow = new ShortBow();

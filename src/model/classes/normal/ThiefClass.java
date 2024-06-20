@@ -116,7 +116,7 @@ public class ThiefClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new TwinDaggers(), new StuddedJerkin(), new LarcenyKit());
+        return List.of(new TwinDaggers(), new PlainJerkin(), new LarcenyKit());
     }
 
     private static class LarcenyKit extends InventoryDummyItem {

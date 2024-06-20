@@ -1,11 +1,12 @@
 package model.items.clothing;
 
 import model.classes.Skill;
+import model.items.StartingItem;
 import util.MyPair;
 
 import java.util.List;
 
-public class RustyRingMail extends RingMail {
+public class RustyRingMail extends RingMail implements StartingItem {
 
     @Override
     public String getName() {

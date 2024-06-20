@@ -2,12 +2,13 @@ package model.items.clothing;
 
 import model.classes.Skill;
 import model.items.Item;
+import model.items.StartingItem;
 import util.MyPair;
 import view.sprites.Sprite;
 
 import java.util.List;
 
-public class RustyChestPlate extends Clothing {
+public class RustyChestPlate extends Clothing implements StartingItem {
 
     private BreastPlate breastPlate = new BreastPlate();
 

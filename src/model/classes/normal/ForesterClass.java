@@ -1,13 +1,9 @@
 package model.classes.normal;
 
-import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
-import model.horses.HorseItemAdapter;
-import model.horses.Pony;
-import model.horses.Prancer;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.weapons.BattleAxe;
