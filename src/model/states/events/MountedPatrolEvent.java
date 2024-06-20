@@ -10,6 +10,8 @@ import model.enemies.*;
 import model.states.DailyEventState;
 import util.MyPair;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
@@ -17,12 +19,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MountedPatrolEvent extends DailyEventState {
+
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x50);
+
     public MountedPatrolEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mounted Patrol"));
         println("You spot a mounted patrol up ahead. They approach you.");
         int dieRoll = MyRandom.rollD6();
         if (dieRoll < 3) {
