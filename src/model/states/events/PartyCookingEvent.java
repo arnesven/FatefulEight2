@@ -6,11 +6,15 @@ import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PartyCookingEvent extends DailyEventState {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x34);
+
     public PartyCookingEvent(Model model) {
         super(model);
     }
@@ -28,6 +32,7 @@ public class PartyCookingEvent extends DailyEventState {
             new NoEventState(model).doEvent(model);
             return;
         }
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "A Special Meal"));
         GameCharacter cooker = MyRandom.sample(cooks);
         println(cooker.getFirstName() + " has offered to prepare a special meal for the party, but it will require effort and extra rations.");
         print("Do you permit the special meal to be prepared? (Y/N) ");
