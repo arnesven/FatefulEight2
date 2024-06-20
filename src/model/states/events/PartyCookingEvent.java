@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PartyCookingEvent extends DailyEventState {
-    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x34);
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x33);
 
     public PartyCookingEvent(Model model) {
         super(model);
