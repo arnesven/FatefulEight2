@@ -23,8 +23,16 @@ public class CompanyEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        leaderSay("Hmm... That looks like a company of soldiers up ahead.");
+        print("Do you get get off the road? (Y/N) ");
+        if (yesNoInput()) {
+            model.getParty().setOnRoad(false);
+            println("You quickly scurry off before the company approaches.");
+            setFledCombat(true);
+            return;
+        }
         showRandomPortrait(model, Classes.CAP, "Soldiers");
-        println("The party encounters a large company of soldiers. They " +
+        println("It is indeed a large company of soldiers. They " +
                 "seem friendly and so you decide to share your " +
                 "evening with them. The company has an abundance of " +
                 "beer, but lack food and hope that you can share some " +
