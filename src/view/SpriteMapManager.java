@@ -14,14 +14,8 @@ import java.util.Map;
 /**
  * Created by erini02 on 24/04/16.
  */
-public class SpriteManager {
-    private static Map<String, Sprite> nameMap = new HashMap<>();
-    private static Map<String, BufferedImage> filemap = new HashMap<>();
-
-    public static void register(Sprite sprite) {
-        //System.out.println("New sprite! " + sprite.toString() + " " + sprite.getName());
-        nameMap.put(sprite.getName(), sprite);
-    }
+public class SpriteMapManager {
+    private static final Map<String, BufferedImage> filemap = new HashMap<>();
 
     public static BufferedImage getFile(String s) throws IOException {
         BufferedImage img = filemap.get(s);
@@ -41,10 +35,10 @@ public class SpriteManager {
                     } else if (s.contains("resources\\")) { // windows
                         path = s.replace("resources\\", "");
                     }
-                    is = SpriteManager.class.getClassLoader().getResourceAsStream(path);
+                    is = SpriteMapManager.class.getClassLoader().getResourceAsStream(path);
                     if (is == null) {
                         System.out.println("Trying with replaced slashes");
-                        is = SpriteManager.class.getClassLoader().getResourceAsStream(path.replaceAll("\\\\", "/"));
+                        is = SpriteMapManager.class.getClassLoader().getResourceAsStream(path.replaceAll("\\\\", "/"));
                     }
                 }
                 img = ImageIO.read(is);
@@ -55,18 +49,6 @@ public class SpriteManager {
             }
         }
         return img;
-    }
-
-    public static boolean isRegistered(Sprite sprite) {
-        return nameMap.containsValue(sprite);
-    }
-
-    public static boolean isRegistered(String key) {
-        return nameMap.containsKey(key);
-    }
-
-    public static Sprite getSprite(String key) {
-        return nameMap.get(key);
     }
 
     public static void unRegister(String mapName) {

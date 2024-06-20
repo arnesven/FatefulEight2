@@ -6,7 +6,7 @@ import util.MyPair;
 import view.BorderFrame;
 import view.GameView;
 import view.MyColors;
-import view.SpriteManager;
+import view.SpriteMapManager;
 import view.party.CharacterCreationView;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -115,7 +115,7 @@ public class SpritePreviewerView extends SelectableListMenu {
                 new SelectableListContent(xStart + 3, yStart + 5, "Reload Map") {
                     @Override
                     public void performAction(Model model, int x, int y) {
-                        SpriteManager.unRegister(getMapPathFromBuffer());
+                        SpriteMapManager.unRegister(getMapPathFromBuffer());
                         generateSprite();
                         madeChanges();
                     }

@@ -1,7 +1,7 @@
 package view.sprites;
 
 import view.MyColors;
-import view.SpriteManager;
+import view.SpriteMapManager;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -50,7 +50,6 @@ public class Sprite implements Serializable {
         this.resizeHeight = height;
         frames = 1;
         this.looping = isAnyLooping(layers);
-        SpriteManager.register(this);
         try {
             getImage();
         } catch (IOException e) {
@@ -72,23 +71,9 @@ public class Sprite implements Serializable {
         return false;
     }
 
-    private boolean allLooping() {
-        for (Sprite sp : layers) {
-            if (!isLooping()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public Sprite(Sprite other, String suffix) {
         this(other.name + suffix, other.mapPath, other.getColumn(), other.getRow(), other.getWidth(), other.getHeight(), other.getLayers());
     }
-
- //   public static Sprite blankSprite() {
- //       return new Sprite("dummy", "animal.png", 0, null);
-  //  }
-
 
     protected List<Sprite> getLayers() {
         return layers;
@@ -152,7 +137,7 @@ public class Sprite implements Serializable {
         BufferedImage result = new BufferedImage(width*maxFrames, height, BufferedImage.TYPE_INT_ARGB);
 
         Graphics g = result.getGraphics();
-        BufferedImage img = SpriteManager.getFile(makePath(new String[]{"resources", "sprites"}) + mapPath);
+        BufferedImage img = SpriteMapManager.getFile(makePath(new String[]{"resources", "sprites"}) + mapPath);
         img = img.getSubimage(column * width, row * height, width*frames, height);
 
         Graphics2D g2d = (Graphics2D) g;
@@ -285,7 +270,6 @@ public class Sprite implements Serializable {
 
     public void setRotation(double d) {
         rotation = d;
-        SpriteManager.register(this);
         try {
             getImage();
         } catch (IOException e) {
@@ -301,25 +285,8 @@ public class Sprite implements Serializable {
         this.frames = frames;
     }
 
-    public void setLooping(boolean b) {
-        this.looping = b;
-    }
-
     public boolean isLooping() {
         return looping;
-    }
-
-    public void registerYourself() {
-        SpriteManager.register(this);
-        try {
-            getImage();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean isRegistered() {
-        return SpriteManager.isRegistered(this);
     }
 
     public void setColumn(int i) {
@@ -342,6 +309,4 @@ public class Sprite implements Serializable {
     public void setName(String s) {
         this.name = s;
     }
-
-
 }

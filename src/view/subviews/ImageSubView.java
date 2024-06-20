@@ -2,7 +2,6 @@ package view.subviews;
 
 import model.Model;
 import view.MyColors;
-import view.SpriteManager;
 import view.sprites.Sprite;
 import view.sprites.SpriteCache;
 
