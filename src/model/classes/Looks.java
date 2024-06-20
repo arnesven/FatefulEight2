@@ -74,9 +74,9 @@ public abstract class Looks {
     public static void putOnHood(CharacterAppearance characterAppearance, MyColors color) {
         characterAppearance.removeOuterHair();
         characterAppearance.setRow(1, new PortraitSprite[]{
-                new PortraitFrameSprite(PortraitFrameSprite.LEFT), FilledBlockSprite.BLACK,
+                new PortraitFrameSprite(PortraitFrameSprite.LEFT), new FilledBlockSprite(MyColors.BLACK),
                 new HoodLeftTop(color, characterAppearance), new HoodTop(color, characterAppearance),
-                new HoodRightTop(color, characterAppearance), FilledBlockSprite.BLACK,
+                new HoodRightTop(color, characterAppearance), new FilledBlockSprite(MyColors.BLACK),
                 new PortraitFrameSprite(PortraitFrameSprite.RIGHT)
         });
         characterAppearance.setSprite(1, 2, new ClothesSprite(0x30, color));

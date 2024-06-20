@@ -9,7 +9,7 @@ import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
 
 public class MiniLog {
-    private static final Sprite FILLED_BLACK = FilledBlockSprite.BLACK;
+    private static final Sprite FILLED_BLACK = new FilledBlockSprite(MyColors.BLACK);
     private boolean large = false;
 
     public void drawYourself(Model model) {

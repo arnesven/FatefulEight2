@@ -23,7 +23,7 @@ public class TreasureMapView extends GameView {
     public static final Sprite MOUNTAIN_SPRITES = new TreasureMapSprite(4, 0);
     public static final Sprite SWAMP_SPRITE = new TreasureMapSprite(4, 2);
     public static final Sprite WASTELAND_SPRITE = new TreasureMapSprite(5, 2);
-    private static final Sprite blackBlock = FilledBlockSprite.BLACK;
+    private static final Sprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
     private static final List<String> DIRECTION_SHORTS = List.of("SE", "S", "SW", "NW", "N", "NE");
     public static final Sprite FINAL_SPOT_SPRITE = new TreasureMapSprite(4, 1);
 
