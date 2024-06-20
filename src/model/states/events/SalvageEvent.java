@@ -5,11 +5,13 @@ import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SalvageEvent extends DailyEventState {
+public abstract class SalvageEvent extends DailyEventState {
     private final String text;
     private final int amount;
 
@@ -19,8 +21,13 @@ public class SalvageEvent extends DailyEventState {
         this.amount = amount;
     }
 
+    protected abstract MiniPictureSprite getMinipicSprite();
+
+    protected abstract String getMinipicSubviewText();
+
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), getMinipicSprite(), getMinipicSubviewText()));
         println("The party encounters a" + text + ". It seems to be hastily abandoned and there are some crates " +
                 "and package scattered about.");
         model.getParty().randomPartyMemberSay(model, List.of("I wonder what happened here.", "What a mess.",
@@ -47,4 +54,5 @@ public class SalvageEvent extends DailyEventState {
             }
         }
     }
+
 }
