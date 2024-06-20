@@ -8,8 +8,13 @@ import model.items.weapons.CalixaberSword;
 import model.items.weapons.Weapon;
 import model.map.PlainsHex;
 import model.map.WoodsHex;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 public class SwordInTheStoneEvent extends PersonalityTraitEvent {
+
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x42);
+
     public SwordInTheStoneEvent(Model model, PersonalityTrait personalityTrait, GameCharacter mainCharacter) {
         super(model, personalityTrait, mainCharacter);
     }
@@ -21,6 +26,8 @@ public class SwordInTheStoneEvent extends PersonalityTraitEvent {
 
     @Override
     protected void doEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Sword in the Stone"));
+
         if (model.getCurrentHex() instanceof PlainsHex) {
             print("In the middle of a vast plain");
         } else {
