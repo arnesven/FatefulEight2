@@ -26,7 +26,7 @@ public class SpritePreviewerView extends SelectableListMenu {
     private MyColors[] colorSet = MyColors.values();
     private String[] backgroundSetNames = new String[]{"BLACK", "BLUE", "WHITE", "PINK"};
     private Sprite[] backgroundSet = new Sprite[]{
-            new FilledBlockSprite(MyColors.BLACK), new FilledBlockSprite(MyColors.BLUE), new FilledBlockSprite(MyColors.WHITE),
+            FilledBlockSprite.BLACK, FilledBlockSprite.BLACK, new FilledBlockSprite(MyColors.WHITE),
             new FilledBlockSprite(MyColors.PINK)};
 
     private int[] colors;

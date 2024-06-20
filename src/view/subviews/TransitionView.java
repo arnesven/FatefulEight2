@@ -14,7 +14,7 @@ public abstract class TransitionView extends SubView implements Animation {
     private final SubView toView;
     private boolean doingFrom;
     private int steps;
-    protected static final Sprite blackBlock = new FilledBlockSprite(MyColors.BLACK);
+    protected static final Sprite blackBlock = FilledBlockSprite.BLACK;
 
     public TransitionView(SubView fromView, SubView toView, String title, int stepsStart) {
         this.title = title;

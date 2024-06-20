@@ -6,8 +6,10 @@ import view.DrawingArea;
 import view.LogView;
 import view.MyColors;
 import view.sprites.FilledBlockSprite;
+import view.sprites.Sprite;
 
 public class MiniLog {
+    private static final Sprite FILLED_BLACK = FilledBlockSprite.BLACK;
     private boolean large = false;
 
     public void drawYourself(Model model) {
@@ -15,7 +17,7 @@ public class MiniLog {
             model.getScreenHandler().clearSpace(0, DrawingArea.WINDOW_COLUMNS,
                     getYStart(), DrawingArea.WINDOW_ROWS);
             model.getScreenHandler().fillSpace(0, DrawingArea.WINDOW_COLUMNS,
-                    getYStart(), DrawingArea.WINDOW_ROWS, new FilledBlockSprite(MyColors.BLACK));
+                    getYStart(), DrawingArea.WINDOW_ROWS, FILLED_BLACK);
             model.getScreenHandler().clearForeground(0, DrawingArea.WINDOW_COLUMNS,
                     getYStart(), DrawingArea.WINDOW_ROWS);
             LogView.drawLog(model, getTotalRows(), getYStart(), 0);

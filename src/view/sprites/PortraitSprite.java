@@ -14,7 +14,7 @@ public abstract class PortraitSprite extends Sprite8x8 {
     public static final PortraitSprite FRAME_LR_CORNER = new PortraitFrameSprite(PortraitFrameSprite.LR_CORNER);
     public static final PortraitSprite FRAME_LEFT = new PortraitFrameSprite(PortraitFrameSprite.LEFT);
     public static final PortraitSprite FRAME_RIGHT = new PortraitFrameSprite(PortraitFrameSprite.RIGHT);
-    public static final PortraitSprite BLACK_BLOCK = new FilledBlockSprite(MyColors.BLACK);
+    public static final PortraitSprite BLACK_BLOCK = FilledBlockSprite.BLACK;
 
     public PortraitSprite(String name, String mapPath, int number, List<Sprite> layers) {
         super(name, mapPath, number, layers);
