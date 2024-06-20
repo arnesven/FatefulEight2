@@ -501,18 +501,18 @@ public class Party implements Serializable {
     private int getCollaborativeDifficulty(GameCharacter mainPerformer, GameCharacter helper) {
         int attitude = helper.getAttitude(mainPerformer);
         if (attitude < -10) {
+            return 10;
+        }
+        if (attitude < -2) {
             return 9;
         }
-        if (attitude < -1) {
-            return 8;
-        }
-        if (attitude > 10) {
-            return 5;
-        }
-        if (attitude > 1) {
+        if (attitude > 14) {
             return 6;
         }
-        return 7;
+        if (attitude > 2) {
+            return 7;
+        }
+        return 8;
     }
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty) {
