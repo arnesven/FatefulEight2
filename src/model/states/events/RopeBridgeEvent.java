@@ -6,11 +6,14 @@ import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.GameOverState;
+import view.sprites.MiniPictureSprite;
+import view.subviews.MiniPictureSubView;
 
 import java.util.List;
 import java.util.Locale;
 
 public class RopeBridgeEvent extends RiverEvent {
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x52);
     private boolean walkAway = false;
 
     public RopeBridgeEvent(Model model) {
@@ -24,6 +27,7 @@ public class RopeBridgeEvent extends RiverEvent {
 
     @Override
     protected void doRiverEvent(Model model) {
+        model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Rope Bridge"));
         println("A bridge of rope and planks is hoisted over the river, " +
                 "it looks very old and worn. Crossing will obviously be " +
                 "perilous.");

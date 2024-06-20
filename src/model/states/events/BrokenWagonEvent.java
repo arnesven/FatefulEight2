@@ -9,7 +9,7 @@ import view.sprites.MiniPictureSprite;
 import java.util.List;
 
 public class BrokenWagonEvent extends SalvageEvent {
-    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x51);
+    private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x03);
 
     public BrokenWagonEvent(Model model) {
         super(model, " broken down wagon", 5);
