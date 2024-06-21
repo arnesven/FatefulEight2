@@ -14,6 +14,7 @@ import model.items.Item;
 import model.map.HexLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
+import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyLists;
@@ -149,7 +150,9 @@ public class BathHouseEvent extends DailyEventState {
             partyMemberSay(groupB.get(groupB.size()-1), "What a disappointment.");
         } else {
             List<Enemy> rowdyBunch = makeRowdyBunch(gender);
-            runCombat(rowdyBunch, new MansionTheme(), false);
+            CombatEvent combat = new CombatEvent(getModel(), rowdyBunch, new MansionTheme(), false, false);
+            combat.setTimeLimit(5);
+            combat.run(getModel());
             if (model.getParty().isWipedOut()) {
                 return;
             }
