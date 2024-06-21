@@ -156,15 +156,25 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         private final String itemType;
         private final MyColors shirtColor;
         private final MyColors apronColor;
+        private final ArrayList<Item> alreadyUpgraded;
 
         public ArtisanType(String name, String itemType, MyColors shirtColor, MyColors apronColor) {
             this.name = name;
             this.itemType = itemType;
             this.shirtColor = shirtColor;
             this.apronColor = apronColor;
+            this.alreadyUpgraded = new ArrayList<>();
         }
 
         public abstract Item getItem(Model model);
+
+        protected Item getItemForUpgrade(Equipment equipment) {
+            Item it = getApplicableItem(equipment);
+            if (alreadyUpgraded.contains(it)) {
+                return null;
+            }
+            return it;
+        }
 
         protected abstract Item getApplicableItem(Equipment equipment);
 
@@ -177,7 +187,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         }
 
         public boolean didImprove(Model model, ArtisanEvent artisanEvent, GameCharacter gc) {
-            Item it = getApplicableItem(gc.getEquipment());
+            Item it = getItemForUpgrade(gc.getEquipment());
             if (it == null) {
                 artisanEvent.println("That character does not have an item which the " + getName() + " can upgrade.");
                 return false;
@@ -221,6 +231,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
             } else {
                 upgraded = it.makeHigherTierCopy(1);
             }
+            alreadyUpgraded.add(upgraded);
             artisanEvent.println("The " + it.getName() + " was upgrade to " + upgraded.getName() + "!");
             if (gc.getEquipment().getWeapon() == it) {
                 gc.getEquipment().setWeapon((Weapon) upgraded);
