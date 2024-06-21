@@ -10,7 +10,8 @@ public class TutorialCombatResting extends SubChapterHelpDialog {
             "A character at full health recovers 1 Stamina Point. " +
             "A character at full stamina recovers 1 Health Point. " +
             "A character neither at full health nor full stamina recovers " +
-            "either 1 Health Point or 1 Stamina at equal probability.";
+            "either 1 Health Point or 1 Stamina at equal probability.\n\n" +
+            "Resting can also make a fatigued character recover.";
 
     public TutorialCombatResting(GameView view) {
         super(view, "Resting", TEXT);

@@ -2,7 +2,10 @@ package model.actions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.conditions.FatigueCondition;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.help.HelpDialog;
@@ -42,6 +45,13 @@ public class RestCombatAction extends CombatAction {
                 recoverHP(combat, performer);
             } else {
                 recoverSP(combat, performer);
+            }
+        }
+        if (performer.hasCondition(FatigueCondition.class)) {
+            SkillCheckResult result = performer.testSkillHidden(Skill.Endurance, performer.getAP(), 0);
+            if (result.isSuccessful()) {
+                combat.println(performer.getFirstName() + " has recovered from fatigue (Endurance " + result.asString() + ").");
+                performer.removeCondition(FatigueCondition.class);
             }
         }
     }
