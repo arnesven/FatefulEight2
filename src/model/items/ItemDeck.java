@@ -91,6 +91,9 @@ public class ItemDeck extends ArrayList<Item> {
 
     public CraftingDesign getRandomDesign() {return (CraftingDesign) MyRandom.sample(allCraftingDesigns()).copy(); }
 
+    public Item getRandomHeadgear() { return MyRandom.sample(allHeadGear()); }
+
+    public Item getRandomShield() { return MyRandom.sample(allShields()); }
 
     public Item getRandomItem(double higherTierChance) { return draw(1, higherTierChance).get(0); }
 

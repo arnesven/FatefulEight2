@@ -10,8 +10,7 @@ import model.enemies.ApprenticeEnemy;
 import model.enemies.Enemy;
 import model.enemies.ServantEnemy;
 import model.items.*;
-import model.items.accessories.Accessory;
-import model.items.accessories.ShoesItem;
+import model.items.accessories.*;
 import model.items.clothing.Clothing;
 import model.items.clothing.FancyJerkin;
 import model.items.clothing.JustClothes;
@@ -44,19 +43,21 @@ public class ArtisanEvent extends GeneralInteractionEvent {
             print("The party encounters an artisan. ");
         }
         print("This particular artisan is a");
-        int roll = MyRandom.rollD10();
         this.itemList = new ArrayList<>();
-        if (roll <= 2) {
-            subType = new Tailor();
-        } else if (roll <= 4) {
-            subType = new Smith();
-        } else if (roll <= 6) {
-            subType = new Jeweller();
-        } else if (roll <= 8) {
-            subType = new Cobbler();
-        } else if (roll <= 10) {
-            subType = new Enchanter();
-        }
+        subType = MyRandom.sample(List.of(
+                new Tailor(),
+                new Tailor(),
+                new Armorer(),
+                new Armorer(),
+                new Smith(),
+                new Smith(),
+                new Fletcher(),
+                new Jeweller(),
+                new Hatter(),
+                new Cobbler(),
+                new Carpenter(),
+                new Enchanter()));
+
         println(" an " + subType.getName().toLowerCase() + " and offers to sell you " +
                 subType.getItemType() + " at a discount.");
         itemList.add(subType.getItem(model));
@@ -277,7 +278,10 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            return equipment.getAccessory();
+            if (equipment.getAccessory() instanceof JewelryItem) {
+                return equipment.getAccessory();
+            }
+            return null;
         }
     }
 
@@ -314,6 +318,92 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         protected Item getApplicableItem(Equipment equipment) {
             if (equipment.getWeapon() instanceof WandWeapon) {
                 return equipment.getWeapon();
+            }
+            return null;
+        }
+    }
+
+    private static class Armorer extends ArtisanType {
+        public Armorer() {
+            super("Armorer", "a set of armor");
+        }
+
+        @Override
+        public Item getItem(Model model) {
+            do {
+                Clothing clothing = model.getItemDeck().getRandomApparel();
+                if (clothing.getAP() > 1) {
+                    return clothing;
+                }
+            } while (true);
+        }
+
+        @Override
+        protected Item getApplicableItem(Equipment equipment) {
+            if (equipment.getClothing().getAP() < 2) {
+                return null;
+            }
+            return equipment.getClothing();
+        }
+    }
+
+    private static class Fletcher extends ArtisanType {
+        public Fletcher() {
+            super("Fletcher", "a bow");
+        }
+
+        @Override
+        public Item getItem(Model model) {
+            do {
+                Weapon weapon = model.getItemDeck().getRandomWeapon();
+                if (weapon instanceof BowWeapon) {
+                    return weapon;
+                }
+            } while (true);
+        }
+
+        @Override
+        protected Item getApplicableItem(Equipment equipment) {
+            if (equipment.getWeapon() instanceof BowWeapon) {
+                return equipment.getWeapon();
+            }
+            return null;
+        }
+    }
+
+    private static class Hatter extends ArtisanType {
+        public Hatter() {
+            super("Hatter", "some head gear");
+        }
+
+        @Override
+        public Item getItem(Model model) {
+            return model.getItemDeck().getRandomHeadgear();
+        }
+
+        @Override
+        protected Item getApplicableItem(Equipment equipment) {
+            if (equipment.getAccessory() instanceof HeadGearItem) {
+                return equipment.getAccessory();
+            }
+            return equipment.getAccessory();
+        }
+    }
+
+    private static class Carpenter extends ArtisanType {
+        public Carpenter() {
+            super("carpenter", "a shield");
+        }
+
+        @Override
+        public Item getItem(Model model) {
+            return model.getItemDeck().getRandomShield();
+        }
+
+        @Override
+        protected Item getApplicableItem(Equipment equipment) {
+            if (equipment.getAccessory() instanceof ShieldItem) {
+                return equipment.getAccessory();
             }
             return null;
         }
