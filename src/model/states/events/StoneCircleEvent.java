@@ -15,9 +15,9 @@ public class StoneCircleEvent extends DailyEventState {
         print("In a wide field, the party encounters a ring of standing " +
                 "stones. In the middle lay one large slab which seems to be " +
                 "intended as an altar. A druid is there with a gathering of " +
-                "a few followers. She is just about to perform a nature " +
-                "ritual so you wait until the ceremony has concluded. " +
-                "Afterwards she offers teachings of druidism but asks for " +
+                "a few followers and is just about to perform a nature " +
+                "ritual. You wait until the ceremony has concluded. " +
+                "Afterwards the druid offers teachings of druidism but asks for " +
                 "some small compensation. ");
         model.getLog().waitForAnimationToFinish();
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);
