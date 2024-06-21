@@ -33,6 +33,11 @@ public class FatigueCondition extends Condition {
     public ConditionHelpDialog getHelpView(GameView view) {
         return new ConditionHelpDialog(view, this, "A condition indicating that this combatant is tired from " +
                 "fighting in too heavy armor. Fatigued combatants will lose Stamina Points, or Health Points if they perform " +
-                "extraneous actions in combat.");
+                "extraneous actions in combat.\n\nFatigued characters also suffer a -2 penalty to all attack rolls.");
+    }
+
+    @Override
+    public int getAttackBonus() {
+        return -2;
     }
 }

@@ -27,6 +27,7 @@ import view.sprites.RunOnceAnimationSprite;
 import view.subviews.*;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class CombatEvent extends DailyEventState {
 
@@ -280,10 +281,14 @@ public class CombatEvent extends DailyEventState {
         }
     }
 
+    private boolean anyAlive(List<GameCharacter> chars) {
+        return MyLists.any(chars, Predicate.not(GameCharacter::isDead));
+    }
+
     private boolean checkForOverrun(Model model) {
         List<GameCharacter> back = new ArrayList<>();
         back.addAll(model.getParty().getBackRow());
-        if (!back.isEmpty() && frontRowIsOverrun(model)) {
+        if (anyAlive(back) && frontRowIsOverrun(model)) {
             subView.displaySplashMessage("OVERRUN!");
             printAlert("Party overrun by enemies! All characters in back row are moved to front.");
             model.getLog().waitForAnimationToFinish();
