@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.classes.SpecificArtisanClass;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.SingleItemCombatLoot;
 import model.enemies.ApprenticeEnemy;
@@ -17,6 +18,7 @@ import model.items.clothing.JustClothes;
 import model.items.weapons.*;
 import model.states.ShopState;
 import util.MyRandom;
+import view.MyColors;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
@@ -61,7 +63,8 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         println(" an " + subType.getName().toLowerCase() + " and offers to sell you " +
                 subType.getItemType() + " at a discount.");
         itemList.add(subType.getItem(model));
-        this.portrait = PortraitSubView.makeRandomPortrait(Classes.ART);
+        this.portrait = PortraitSubView.makeRandomPortrait(
+                new SpecificArtisanClass(subType.getShirtColor(), subType.getApronColor()));
         showExplicitPortrait(model, portrait, subType.getName());
         return true;
     }
@@ -151,10 +154,14 @@ public class ArtisanEvent extends GeneralInteractionEvent {
     private abstract static class ArtisanType {
         private final String name;
         private final String itemType;
+        private final MyColors shirtColor;
+        private final MyColors apronColor;
 
-        public ArtisanType(String name, String itemType) {
+        public ArtisanType(String name, String itemType, MyColors shirtColor, MyColors apronColor) {
             this.name = name;
             this.itemType = itemType;
+            this.shirtColor = shirtColor;
+            this.apronColor = apronColor;
         }
 
         public abstract Item getItem(Model model);
@@ -225,11 +232,18 @@ public class ArtisanEvent extends GeneralInteractionEvent {
             return true;
         }
 
+        public MyColors getShirtColor() {
+            return shirtColor;
+        }
+
+        public MyColors getApronColor() {
+            return apronColor;
+        }
     }
 
     private static class Tailor extends ArtisanType {
         public Tailor() {
-            super("Tailor", "some apparel");
+            super("Tailor", "some apparel", MyColors.BLUE, MyColors.BROWN);
         }
 
         @Override
@@ -248,7 +262,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Smith extends ArtisanType {
         public Smith() {
-            super("Smith", "a weapon");
+            super("Smith", "a weapon", MyColors.DARK_GRAY, MyColors.BROWN);
         }
 
         @Override
@@ -268,7 +282,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Jeweller extends ArtisanType {
         public Jeweller() {
-            super("Jeweller", "an accessory");
+            super("Jeweller", "an accessory", MyColors.LIGHT_BLUE, MyColors.DARK_GRAY);
         }
 
         @Override
@@ -287,7 +301,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Cobbler extends ArtisanType {
         public Cobbler() {
-            super("Cobbler", "a pair of shoes");
+            super("Cobbler", "a pair of shoes", MyColors.BROWN, MyColors.DARK_GRAY);
         }
 
         @Override
@@ -306,7 +320,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Enchanter extends ArtisanType {
         public Enchanter() {
-            super("Enchanter", "a wand");
+            super("Enchanter", "a wand", MyColors.PURPLE, MyColors.DARK_RED);
         }
 
         @Override
@@ -325,7 +339,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Armorer extends ArtisanType {
         public Armorer() {
-            super("Armorer", "a set of armor");
+            super("Armorer", "a set of armor", MyColors.DARK_RED, MyColors.BROWN);
         }
 
         @Override
@@ -349,7 +363,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Fletcher extends ArtisanType {
         public Fletcher() {
-            super("Fletcher", "a bow");
+            super("Fletcher", "a bow", MyColors.LIGHT_GREEN, MyColors.BROWN);
         }
 
         @Override
@@ -373,7 +387,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Hatter extends ArtisanType {
         public Hatter() {
-            super("Hatter", "some head gear");
+            super("Hatter", "some head gear", MyColors.LIGHT_RED, MyColors.BROWN);
         }
 
         @Override
@@ -392,7 +406,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     private static class Carpenter extends ArtisanType {
         public Carpenter() {
-            super("carpenter", "a shield");
+            super("carpenter", "a shield", MyColors.LIGHT_YELLOW, MyColors.BROWN);
         }
 
         @Override
