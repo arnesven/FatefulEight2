@@ -10,6 +10,7 @@ import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
+import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
 
 public class ChargedRod extends WandWeapon {
@@ -44,11 +45,18 @@ public class ChargedRod extends WandWeapon {
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         charge++;
-        if (charge >= 5 && !target.isDead()) {
+        if (charge >= 5) {
             charge = 0;
-            combatEvent.println(target.getName() + " takes an additional " + (damage * 2) + " damage!");
-            combatEvent.doDamageToEnemy(target, damage*2, gameCharacter);
-            combatEvent.addFloatyDamage(target, damage*2, DamageValueEffect.MAGICAL_DAMAGE);
+            combatEvent.println("The charged rod released a huge blast!");
+            if (!target.isDead()) {
+                if (damage == 0) {
+                    damage = 1;
+                }
+                combatEvent.println(target.getName() + " takes an additional " + damage + " damage!");
+                combatEvent.addSpecialEffect(target, new SmokeBallAnimation());
+                combatEvent.doDamageToEnemy(target, damage, gameCharacter);
+                combatEvent.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
+            }
         }
     }
 }

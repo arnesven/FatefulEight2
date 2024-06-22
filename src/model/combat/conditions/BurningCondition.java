@@ -18,7 +18,7 @@ public class BurningCondition extends Condition {
     private final GameCharacter applier;
 
     public BurningCondition(GameCharacter applier) {
-        super("Burning", "BRN");
+        super("Burning", "BRN"); // TODO: Make an enemy which has this type of attack.
         setDuration(Integer.MAX_VALUE);
         this.applier = applier;
     }
