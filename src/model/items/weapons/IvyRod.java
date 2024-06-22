@@ -44,7 +44,7 @@ public class IvyRod extends WandWeapon {
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         PoisonGasSpell spell = new PoisonGasSpell();
-        if (MyRandom.rollD10() > 8) {
+        if (!target.isDead() && MyRandom.rollD10() > 8) {
             spell.addPoisonGasEffect(combatEvent, gameCharacter, target);
         }
     }

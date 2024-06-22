@@ -43,7 +43,7 @@ public class FireRod extends WandWeapon {
 
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-        if (MyRandom.rollD10() > 8 && !target.hasCondition(BurningCondition.class)) {
+        if (!target.isDead() && MyRandom.rollD10() > 8 && !target.hasCondition(BurningCondition.class)) {
             combatEvent.println(target.getName() + " starts burning!");
             target.addCondition(new BurningCondition(gameCharacter));
         }

@@ -44,7 +44,7 @@ public class ChargedRod extends WandWeapon {
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
         charge++;
-        if (charge == 5) {
+        if (charge >= 5 && !target.isDead()) {
             charge = 0;
             combatEvent.println(target.getName() + " takes an additional " + (damage * 2) + " damage!");
             combatEvent.doDamageToEnemy(target, damage*2, gameCharacter);

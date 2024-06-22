@@ -43,7 +43,7 @@ public class IceRod extends WandWeapon {
 
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-        if (MyRandom.rollD10() >= 9 && !target.hasCondition(TimedParalysisCondition.class)) {
+        if (!target.isDead() && MyRandom.rollD10() >= 9 && !target.hasCondition(TimedParalysisCondition.class)) {
             target.addCondition(new FreezeCondition());
             combatEvent.println(target.getName() + " is paralyzed by the freezing cold!");
         }

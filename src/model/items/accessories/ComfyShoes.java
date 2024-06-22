@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ComfyShoes extends ShoesItem {
 
-    private static final Sprite SPRITE =  new ItemSprite(0, 0xA, MyColors.BROWN, MyColors.TAN);
+    private static final Sprite SPRITE =  new ItemSprite(0, 0xA, MyColors.TAN, MyColors.DARK_GRAY);
 
     public ComfyShoes() {
         super("Comfy Shoes", 8);
