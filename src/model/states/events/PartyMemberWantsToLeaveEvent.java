@@ -123,16 +123,19 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
 
             if (separtists.isEmpty()) {
                 partyMemberSay(gc, "... Fine... here you go. But I'm out of here.");
+                model.getLog().waitForAnimationToFinish();
                 model.getParty().remove(gc, true, false, 0);
                 printAlert(gc.getName() + " has left the party!");
             } else {
                 partyMemberSay(gc, "Oh yeah? Well I'm not going to let you walk all over me! I'm leaving, and anyone else " +
                         "who's sick of " + model.getParty().getLeader().getFirstName() + " is welcome to join my new party.");
+                model.getLog().waitForAnimationToFinish();
                 model.getParty().remove(gc, false, false, 0);
                 printAlert(gc.getName() + " has left the party!");
                 for (GameCharacter s : separtists) {
                     model.getParty().partyMemberSay(model, s,
                             List.of("Me too.", "I'm leaving too.", "I'm out of here too.", "Yeah. I'm out."));
+                    model.getLog().waitForAnimationToFinish();
                     model.getParty().remove(s, false, false, 0);
                     printAlert(gc.getName() + " has left the party!");
                 }
@@ -152,5 +155,6 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
         model.getParty().partyMemberSay(model, gc,
                 List.of("See ya!", "Bye", "So long", "See you around I guess.", "Farewell",
                         "Until we meet again.", "I'm out of here."));
+        model.getLog().waitForAnimationToFinish();
     }
 }

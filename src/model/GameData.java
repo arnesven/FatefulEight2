@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.items.ItemDeck;
 import model.map.WorldBuilder;
 import model.map.objects.MapObject;
+import model.map.wars.WarHandler;
 import model.ruins.RuinsDungeon;
 import model.tutorial.TutorialHandler;
 import util.MyRandom;
@@ -33,4 +34,5 @@ public class GameData implements Serializable {
     public Map<String, CharacterAppearance> lordPortraits = new HashMap<>();
     public int worldState = WorldBuilder.ORIGINAL;
     public List<MapObject> mapObjects = new ArrayList<>();
+    public WarHandler warHandler = new WarHandler();
 }

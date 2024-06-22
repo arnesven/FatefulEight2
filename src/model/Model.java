@@ -12,6 +12,7 @@ import model.log.GameLog;
 import model.map.*;
 import model.map.objects.MapObject;
 import model.map.objects.UnderworldEntrance;
+import model.map.wars.WarHandler;
 import model.races.Race;
 import model.ruins.RuinsDungeon;
 import model.states.*;
@@ -318,6 +319,7 @@ public class Model {
         gameData.party.getHorseHandler().newAvailableHorse();
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
         gameData.settings.getMiscFlags().put("innworkdone", false);
+        gameData.warHandler.updateWars(this);
     }
 
     public void setDay(int day) {
@@ -520,5 +522,9 @@ public class Model {
 
     public boolean isGameDataAvailable() {
         return gameData != null;
+    }
+
+    public WarHandler getWarHandler() {
+        return gameData.warHandler;
     }
 }

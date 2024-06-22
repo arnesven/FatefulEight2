@@ -196,4 +196,8 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public Race getLordRace() {
         return lordRace;
     }
+
+    public static String placeNameToKingdom(String placeName) {
+        return "kingdom of " + placeName.replace("Castle ", "").replace(" Castle", "");
+    }
 }

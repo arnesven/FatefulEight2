@@ -15,6 +15,7 @@ import model.journal.JournalEntry;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
+import model.map.wars.KingdomWar;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.tasks.BountyDestinationTask;
@@ -383,22 +384,14 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             } else if (options.get(chosen).contains("Cancel")) {
                 break;
             } else if (options.get(chosen).contains("news")) {
-                leaderSay("Got any news to share?");
-                portraitSay(MyRandom.sample(List.of(
-                        "I've heard " + nearestCastle.getLordName() + " is planning to host an archery contest soon.",
-                        "I've heard " + nearestCastle.getLordName() + " is planning to host a melee tournament soon.",
-                        "I've heard " + nearestCastle.getLordName() + " is planning a horse racing cup soon.",
-                        "Orcish raids seem to have become more common lately. Watch yourself friend.",
-                        "Ever been to the Isle of Faith? The monks are restoring the monastery there.",
-                        "I've heard there are communities of dwarves that live down in caves. I wonder what that's like.",
-                        "Ships travel regularly between most coastal towns. Why walk when you can sail?")));
+                askAboutNews(getModel(), nearestCastle);
             } else if (options.get(chosen).contains("region")) {
                 leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
                         "What kingdom is this?", "What can you tell me about these lands?")));
+                String kingdom = CastleLocation.placeNameToKingdom(nearestCastle.getPlaceName());
+                portraitSay(MyRandom.sample(List.of("This is", "You are in")) + " the " + kingdom + ".");
                 if (!talkAboutFatue(model, nearestCastle)) {
-                    String kingdom = nearestCastle.getPlaceName().replace("Castle ", "").replace(" Castle", "");
-                    portraitSay("This is the kingdom of " + kingdom + ". " +
-                            nearestCastle.getLordName() + " rules these lands.");
+                   portraitSay(nearestCastle.getLordName() + " rules these lands.");
                 }
             } else {
                 String key = options.get(chosen).replace("Ask about ", "");
@@ -406,6 +399,42 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 leaderSay(queryAndResponse.first);
                 portraitSay(queryAndResponse.second);
             }
+        }
+    }
+
+    private void askAboutNews(Model model, CastleLocation nearestCastle) {
+        leaderSay("Got any news to share?");
+        List<KingdomWar> warsForThisKingdom = getModel().getWarHandler().getWarsForKingdom(nearestCastle);
+        if (!warsForThisKingdom.isEmpty()) {
+            KingdomWar warToTalkAbout = MyRandom.sample(warsForThisKingdom);
+            if (warToTalkAbout.isAggressor(nearestCastle)) {
+                String extra = MyRandom.sample(List.of("Best stay clear of any fighting, friend.",
+                        "Everybody must do their part I suppose.", "Glory to our homeland!",
+                        "I hope nobody expects me to fight."));
+                portraitSay("The " + nearestCastle.getLordTitle() + " of " + nearestCastle.getPlaceName() +
+                        " has declared war on " + CastleLocation.placeNameToKingdom(warToTalkAbout.getDefender()) +
+                        ". " + extra);
+            } else {
+                portraitSay(warToTalkAbout.getDefender() + " has declared war on this kingdom. Our " +
+                        nearestCastle.getLordTitle() + " has been mustering troops to defend our land!");
+            }
+        } else if (!getModel().getWarHandler().getWars().isEmpty() && MyRandom.flipCoin()) {
+            KingdomWar warToTalkAbout = MyRandom.sample(warsForThisKingdom);
+            String extra = MyRandom.sample(List.of("So much for diplomacy...", "It's apparently a very old feud.",
+                    "Who do you think will prevail?", "Such meaningless suffering.",
+                    "I try not to think of the horrific battles.", "At least the vultures will be pleased."));
+            portraitSay("I've heard " + CastleLocation.placeNameToKingdom(warToTalkAbout.getAggressor()) +
+                    " has declared war on " +
+                    CastleLocation.placeNameToKingdom(warToTalkAbout.getDefender()) + ". " + extra);
+        } else {
+            portraitSay(MyRandom.sample(List.of(
+                    "I've heard " + nearestCastle.getLordName() + " is planning to host an archery contest soon.",
+                    "I've heard " + nearestCastle.getLordName() + " is planning to host a melee tournament soon.",
+                    "I've heard " + nearestCastle.getLordName() + " is planning a horse racing cup soon.",
+                    "Orcish raids seem to have become more common lately. Watch yourself friend.",
+                    "Ever been to the Isle of Faith? The monks are restoring the monastery there.",
+                    "I've heard there are communities of dwarves that live down in caves. I wonder what that's like.",
+                    "Ships travel regularly between most coastal towns. Why walk when you can sail?")));
         }
     }
 
