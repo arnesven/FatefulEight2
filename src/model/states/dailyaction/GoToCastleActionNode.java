@@ -42,21 +42,42 @@ public class GoToCastleActionNode extends DailyActionNode {
         if (mainStoryEvent != null) {
             return  mainStoryEvent;
         } else if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
-            Summon summon = model.getParty().getSummons().get(location.getPlaceName());
-            if (summon.getStep() == Summon.ACCEPTED) {
-                state.printQuote("Guard", "Hey you! Stop right there! Where do you think you're going?");
-                state.leaderSay("Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
-                state.printQuote("Guard", "Do you have an invitation?");
-                state.leaderSay("Yes, it's right here...");
-                state.printQuote("Guard", "Very well, proceed inside.");
-                model.getLog().waitForAnimationToFinish();
-            } else {
-                state.println("You were admitted to the keep.");
-            }
-            admitted = true;
-            return new VisitCastleLordDailyActionNode(model, summon, location, false);
+            return askAboutInvitation(model, state, location);
+        } else if (!model.getWarHandler().getWarsForKingdom((CastleLocation) location).isEmpty()) {
+            return askAboutRecruit(model, state, location);
         }
         return new VisitCastleEvent(model);
+    }
+
+    private GameState askAboutRecruit(Model model, AdvancedDailyActionState state, UrbanLocation location) {
+        state.printQuote("Guard", "Hey there! Are you one of the recruits?");
+        state.print("Are you? (Y/N) ");
+        if (!state.yesNoInput()) {
+            state.print("You pretend like the Guard is talking to somebody else and continue toward the castle gate.");
+            return new VisitCastleEvent(model);
+        }
+        state.leaderSay("Uhm, yes... " + (model.getParty().size() > 1 ? "we are" : "I am") + ".");
+        state.printQuote("Guard", "Well you're late! Such tardiness won't be accepted in " +
+                "the future. Don't you know we're at war? Go straight through and into the main chamber. " +
+                "Talk to the commander. He'll introduce you to the drill sargent. He he, we'll make a soldier out of you.");
+        state.leaderSay("Sir, yes sir!");
+        return new VisitCastleLordDailyActionNode(model, null, location, false);
+    }
+
+    private GameState askAboutInvitation(Model model, AdvancedDailyActionState state, UrbanLocation location) {
+        Summon summon = model.getParty().getSummons().get(location.getPlaceName());
+        if (summon.getStep() == Summon.ACCEPTED) {
+            state.printQuote("Guard", "Hey you! Stop right there! Where do you think you're going?");
+            state.leaderSay("Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
+            state.printQuote("Guard", "Do you have an invitation?");
+            state.leaderSay("Yes, it's right here...");
+            state.printQuote("Guard", "Very well, proceed inside.");
+            model.getLog().waitForAnimationToFinish();
+        } else {
+            state.println("You were admitted to the keep.");
+        }
+        admitted = true;
+        return new VisitCastleLordDailyActionNode(model, summon, location, false);
     }
 
     private GameState handleCastleBreakIn(Model model, AdvancedDailyActionState state, UrbanLocation location) {
@@ -150,6 +171,7 @@ public class GoToCastleActionNode extends DailyActionNode {
             super(model, summon, location, breakIn);
             this.breakIn = breakIn;
             addNode(5, 3, new CourtMageNode((CastleLocation)location));
+            addNode(2, 3, new CommanderNode((CastleLocation)location));
             this.location = (CastleLocation)location;
         }
 

@@ -35,6 +35,7 @@ public class KeepSubView extends DailyActionSubView {
     private final boolean drawLord;
     private final Sprite32x32 lordSprite;
     private final Sprite32x32 courtMageSprite;
+    private final Sprite32x32 commanderSprite;
 
     public KeepSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                        boolean drawLord, CastleLocation location) {
@@ -44,6 +45,8 @@ public class KeepSubView extends DailyActionSubView {
                 MyColors.BLACK, MyColors.DARK_BLUE, location.getLordRace().getColor(), MyColors.PURPLE);
         this.courtMageSprite = new Sprite32x32("courtmage", "world_foreground.png",
                 0x89, MyColors.BLACK, MyColors.RED, location.getLordRace().getColor(), MyColors.CYAN);
+        this.commanderSprite = new Sprite32x32("commander", "world_foreground.png",
+                0xC5, MyColors.BLACK, MyColors.WHITE, location.getLordRace().getColor(), MyColors.RED);
     }
 
     @Override
@@ -76,6 +79,7 @@ public class KeepSubView extends DailyActionSubView {
         if (drawLord) {
             drawForeground(model, 4, 2, lordSprite);
             drawForeground(model, 6, 3, courtMageSprite);
+            drawForeground(model, 2, 2, commanderSprite);
         }
         drawForeground(model, 0, 1, PLANT);
         drawForeground(model, 0, 8, PLANT);

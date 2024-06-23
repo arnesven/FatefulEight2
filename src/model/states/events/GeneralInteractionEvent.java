@@ -415,7 +415,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                         " has declared war on " + CastleLocation.placeNameToKingdom(warToTalkAbout.getDefender()) +
                         ". " + extra);
             } else {
-                portraitSay(warToTalkAbout.getDefender() + " has declared war on this kingdom. Our " +
+                portraitSay(warToTalkAbout.getAggressor() + " has declared war on this kingdom. Our " +
                         nearestCastle.getLordTitle() + " has been mustering troops to defend our land!");
             }
         } else if (!getModel().getWarHandler().getWars().isEmpty() && MyRandom.flipCoin()) {

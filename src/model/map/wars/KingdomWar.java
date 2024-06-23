@@ -1,7 +1,9 @@
 package model.map.wars;
 
 import model.map.CastleLocation;
+import model.map.WorldBuilder;
 
+import java.awt.*;
 import java.io.Serializable;
 
 public class KingdomWar implements Serializable {
@@ -28,5 +30,12 @@ public class KingdomWar implements Serializable {
 
     public boolean isDefender(CastleLocation kingdom) {
         return defender.equals(kingdom.getPlaceName());
+    }
+
+    public Point getBattlePosition(CastleLocation castle) {
+        Point p = new Point(WorldBuilder.CROSSROADS_INN_POSITION);
+        p.x--;
+        p.y--;
+        return p;
     }
 }
