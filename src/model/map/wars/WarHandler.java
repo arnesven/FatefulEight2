@@ -5,17 +5,17 @@ import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import util.MyLists;
 import util.MyRandom;
+import view.MyColors;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class WarHandler implements Serializable {
     private final List<KingdomWar> currentWars = new ArrayList<>();
 
     private void startWar(CastleLocation loc1, CastleLocation loc2) {
-        currentWars.add(new KingdomWar(loc1.getPlaceName(), loc2.getPlaceName()));
+        currentWars.add(new KingdomWar(loc1.getPlaceName(), loc2.getPlaceName(),
+                loc1.getCastleColor(), loc2.getCastleColor()));
     }
 
     public List<KingdomWar> getWars() {

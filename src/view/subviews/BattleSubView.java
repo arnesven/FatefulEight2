@@ -2,13 +2,11 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.states.battle.BattleState;
-import model.states.battle.BattleTerrain;
-import model.states.battle.BattleUnit;
+import model.states.battle.*;
 import view.MyColors;
 import view.combat.CombatTheme;
-import view.party.DrawableObject;
 import view.sprites.CombatCursorSprite;
+import view.sprites.QuestCursorSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
@@ -20,12 +18,15 @@ public class BattleSubView extends SubView {
     private final SteppingMatrix<BattleTerrain> terrain;
     private final SteppingMatrix<Integer> grid;
     private final SteppingMatrix<BattleUnit> units;
+    private final BattleState state;
+    private BattleAction pendingBattleAction = null;
 
-    public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units) {
+    public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units, BattleState state) {
         this.terrain = terrain;
         this.units = units;
         groundSprites = CombatTheme.makeGroundSprites(MyColors.GREEN, MyColors.LIGHT_GREEN, 1);
         grid = makeGrid();
+        this.state = state;
     }
 
     @Override
@@ -40,9 +41,13 @@ public class BattleSubView extends SubView {
         for (int y = 0; y < units.getRows(); ++y) {
             for (int x = 0; x < units.getColumns(); ++x) {
                 if (units.getElementAt(x, y) != null) {
-                    BattleUnit loc = units.getElementAt(x, y);
+                    BattleUnit unit = units.getElementAt(x, y);
                     Point p = convertToScreen(x, y);
-                    loc.drawYourself(model.getScreenHandler(), p);
+                    if (pendingBattleAction != null && pendingBattleAction.getPerformer() == unit) {
+                        pendingBattleAction.drawUnit(model, state, p);
+                    } else {
+                        unit.drawYourself(model.getScreenHandler(), p, 2);
+                    }
                 }
             }
         }
@@ -85,7 +90,7 @@ public class BattleSubView extends SubView {
 
         BattleUnit unit = units.getElementAt(cursor.x, cursor.y);
         if (unit != null) {
-            String text = unit.getName() + " (" + unit.getCount() + ")";
+            String text = unit.getOrigin() + " " + unit.getName() + " (" + unit.getCount() + ")";
             if (terr != null) {
                 return text + " in " + terr.getName();
             }
@@ -105,6 +110,11 @@ public class BattleSubView extends SubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (pendingBattleAction != null) {
+            if (pendingBattleAction.handleKeyEvent(keyEvent, model, state)) {
+                return true;
+            }
+        }
         return grid.handleKeyEvent(keyEvent);
     }
 
@@ -114,5 +124,25 @@ public class BattleSubView extends SubView {
             grid.addElementLast(i);
         }
         return grid;
+    }
+
+    public BattleUnit getUnitUnderCursor() {
+        return units.getElementAt(grid.getSelectedPoint().x, grid.getSelectedPoint().y);
+    }
+
+    public void setPendingBattleAction(BattleAction action) {
+        this.pendingBattleAction = action;
+    }
+
+    public boolean handlePendingBattleAction(Model model, BattleState battleState) {
+        if (pendingBattleAction == null) {
+            return false;
+        }
+        pendingBattleAction.execute(model, battleState, pendingBattleAction.getPerformer());
+        return true;
+    }
+
+    public void cancelPending() {
+        pendingBattleAction = null;
     }
 }

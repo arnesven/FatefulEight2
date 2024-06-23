@@ -12,11 +12,13 @@ import java.awt.*;
 public class BattleDestinationTask extends DestinationTask {
     private final KingdomWar war;
     private final String givenBy;
+    private final boolean givenByAggressor;
 
     public BattleDestinationTask(KingdomWar war, CastleLocation castle) {
         super(war.getBattlePosition(castle), "Battle TODO");
         this.war = war;
         this.givenBy = castle.getPlaceName();
+        this.givenByAggressor = war.isAggressor(castle);
     }
 
     public boolean isForKingdom(CastleLocation castle) {
@@ -35,7 +37,7 @@ public class BattleDestinationTask extends DestinationTask {
 
     @Override
     public DailyAction getDailyAction(Model model) {
-        return new CommandOutpostDailyAction(model);
+        return new CommandOutpostDailyAction(model, war, givenByAggressor);
     }
 
     @Override

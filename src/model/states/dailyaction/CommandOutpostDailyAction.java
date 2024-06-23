@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.map.wars.KingdomWar;
 import model.states.DailyEventState;
 import model.states.battle.BattleState;
 import view.subviews.PortraitSubView;
@@ -11,16 +12,20 @@ import view.subviews.PortraitSubView;
 import java.util.List;
 
 public class CommandOutpostDailyAction extends DailyAction {
-    public CommandOutpostDailyAction(Model model) {
-        super("Visit Outpost", new CommandOutpostDailyEventState(model));
+    public CommandOutpostDailyAction(Model model, KingdomWar war, boolean givenByAggressor) {
+        super("Visit Outpost", new CommandOutpostDailyEventState(model, war, givenByAggressor));
     }
 
     private static class CommandOutpostDailyEventState extends DailyEventState {
 
         private final CharacterAppearance fieldGeneralAppearance = PortraitSubView.makeRandomPortrait(Classes.PAL);
+        private final KingdomWar war;
+        private final boolean givenByAggressor;
 
-        public CommandOutpostDailyEventState(Model model) {
+        public CommandOutpostDailyEventState(Model model, KingdomWar war, boolean givenByAggressor) {
             super(model);
+            this.war = war;
+            this.givenByAggressor = givenByAggressor;
         }
 
         @Override
@@ -43,7 +48,7 @@ public class CommandOutpostDailyAction extends DailyAction {
             // TODO: Implement joining a unit
             leaderSay("I think we'll stay with you. I'm sure we'll have some tactical insights we could share.");
             portraitSay("All right! Let's go give the enemy a taste of our zeal!");
-            BattleState battle = new BattleState(model);
+            BattleState battle = new BattleState(model, war, givenByAggressor);
             battle.run(model);
         }
     }
