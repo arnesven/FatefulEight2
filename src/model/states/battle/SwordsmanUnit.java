@@ -11,7 +11,7 @@ public class SwordsmanUnit extends BattleUnit {
     private final MyColors color;
 
     public SwordsmanUnit(int count, String origin, MyColors color) {
-        super("Swordsmen", count, 3, 8, origin);
+        super("Swordsmen", count, 3, 8, 5, origin);
         this.spritesSeven = makeSpriteSet(color, 0, 0);
         this.spritesFour = makeSpriteSet(color, 0, 4);
         this.spritesTwo = makeSpriteSet(color, 0, 8);
@@ -20,7 +20,9 @@ public class SwordsmanUnit extends BattleUnit {
 
     @Override
     public BattleUnit copy() {
-        return new SwordsmanUnit(getCount(), getOrigin(), color);
+        BattleUnit bu = new SwordsmanUnit(getCount(), getOrigin(), color);
+        bu.setMP(bu.getMP());
+        return bu;
     }
 
     @Override

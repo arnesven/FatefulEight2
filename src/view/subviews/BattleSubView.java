@@ -10,6 +10,8 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BattleSubView extends SubView {
 
@@ -19,6 +21,7 @@ public class BattleSubView extends SubView {
     private final SteppingMatrix<BattleUnit> units;
     private final BattleState state;
     private BattleAction pendingBattleAction = null;
+    private List<BattleUnit> unitsToShowMpFor = new ArrayList<>();
 
     public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units, BattleState state) {
         this.terrain = terrain;
@@ -42,10 +45,11 @@ public class BattleSubView extends SubView {
                 if (units.getElementAt(x, y) != null) {
                     BattleUnit unit = units.getElementAt(x, y);
                     Point p = convertToScreen(x, y);
+                    boolean withMovementPoints = unitsToShowMpFor.contains(unit);
                     if (pendingBattleAction != null && pendingBattleAction.getPerformer() == unit) {
-                        pendingBattleAction.drawUnit(model, state, p);
+                        pendingBattleAction.drawUnit(model, state, withMovementPoints, p);
                     } else {
-                        unit.drawYourself(model.getScreenHandler(), p, 2);
+                        unit.drawYourself(model.getScreenHandler(), p, withMovementPoints, 2);
                     }
                 }
             }
@@ -89,7 +93,7 @@ public class BattleSubView extends SubView {
 
         BattleUnit unit = units.getElementAt(cursor.x, cursor.y);
         if (unit != null) {
-            String text = unit.getOrigin() + " " + unit.getName() + " (" + unit.getCount() + ")";
+            String text = unit.getOrigin() + " " + unit.getName() + " (" + unit.getCount() + ") " + unit.getMP() + " MP left.";
             if (terr != null) {
                 return text + " in " + terr.getName();
             }
@@ -147,5 +151,9 @@ public class BattleSubView extends SubView {
 
     public void cancelPending() {
         pendingBattleAction = null;
+    }
+
+    public void showMovementPointsForUnits(List<BattleUnit> units) {
+        this.unitsToShowMpFor = units;
     }
 }

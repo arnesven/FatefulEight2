@@ -6,6 +6,7 @@ import model.map.wars.KingdomWar;
 import model.states.GameState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyLists;
 import view.subviews.BattleSubView;
 import view.subviews.StripedTransition;
 
@@ -71,6 +72,15 @@ public class BattleState extends GameState {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
         BattleSubView subView = new BattleSubView(terrain, units, this);
         StripedTransition.transition(model, subView); // TODO: Make new transition for this.
+
+        doPlayerTurn(model, subView, playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits());
+
+        return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    private void doPlayerTurn(Model model, BattleSubView subView, List<BattleUnit> units) {
+        MyLists.forEach(units, BattleUnit::refillMovementPoints);
+        subView.showMovementPointsForUnits(units);
         do {
             waitForReturnSilently();
             if (!subView.handlePendingBattleAction(model, this)) {
@@ -88,13 +98,11 @@ public class BattleState extends GameState {
             } else {
                 subView.cancelPending();
             }
-        } while (!battleIsOver());
-
-        return model.getCurrentHex().getEveningState(model, false, false);
+        } while (!turnIsOver(units));
     }
 
-    private boolean battleIsOver() {
-        return false;
+    private boolean turnIsOver(List<BattleUnit> units) {
+        return MyLists.all(units, (BattleUnit bu) -> bu.getMP() == 0);
     }
 
     public boolean canMoveInDirection(BattleUnit performer, BattleDirection direction) {
@@ -123,11 +131,13 @@ public class BattleState extends GameState {
         if (other == null) {
             print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
             if (yesNoInput()) {
+                performer.setMP(performer.getMP() - performer.getMoveCost());
                 moveUnitInDirection(performer, direction);
             }
         } else {
             print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
             if (yesNoInput()) {
+                performer.setMP(performer.getMP() - performer.getMoveCost());
                 performer.doAttackOn(model, this, other, direction);
             }
         }

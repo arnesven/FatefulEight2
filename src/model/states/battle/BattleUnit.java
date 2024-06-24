@@ -6,34 +6,47 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.sprites.Sprite8x8;
 
 import java.awt.*;
 import java.io.Serializable;
 
 public abstract class BattleUnit implements Serializable {
 
+    private static final Sprite8x8[] MP_SPRITES = makeMPSprites();
+    private static final int DEFAULT_MOVE_COST = 2;
+    private static final int DEFAULT_TURN_COST = 1;
     private final String name;
+    private final int maximumMP;
+    private int currentMP;
     private int count;
     private final String origin;
     private BattleDirection direction = BattleDirection.east;
     private final int combatSkillBonus;
     private final int defense;
 
-    public BattleUnit(String name, int count, int combatSkillBonus, int defense, String origin) {
+    public BattleUnit(String name, int count, int combatSkillBonus, int defense, int movementPoints, String origin) {
         this.name = name;
         this.count = count;
         this.combatSkillBonus = combatSkillBonus;
         this.defense = defense;
+        this.maximumMP = movementPoints;
         this.origin = origin;
+        this.currentMP = movementPoints;
     }
 
     public abstract BattleUnit copy();
 
     protected abstract Sprite[] getSprites();
 
-    public void drawYourself(ScreenHandler screenHandler, Point p, int prio) {
+    public void drawYourself(ScreenHandler screenHandler, Point p, boolean withMp, int prio) {
         Sprite spr = getSprites()[direction.value];
         screenHandler.register(spr.getName(), p, spr, prio);
+        if (withMp) {
+            Sprite mpSprite = MP_SPRITES[currentMP];
+            Point p2 = new Point(p.x + 3, p.y + 3);
+            screenHandler.register(mpSprite.getName(), p2, mpSprite, prio+1);
+        }
     }
 
     public String getName() {
@@ -126,5 +139,37 @@ public abstract class BattleUnit implements Serializable {
                     MyColors.BLACK, MyColors.GRAY, MyColors.LIGHT_GRAY, color);
         }
         return result;
+    }
+
+    public void refillMovementPoints() {
+        this.currentMP = maximumMP;
+    }
+
+
+    private static Sprite8x8[] makeMPSprites() {
+        Sprite8x8[] result = new Sprite8x8[16];
+        for (int i = 0; i < result.length; ++i) {
+            MyColors bgColor = i == 0 ? MyColors.LIGHT_RED : MyColors.LIGHT_GREEN;
+            Sprite8x8 spr = new Sprite8x8("mpsprite"+i, "battle_symbols.png", i,
+                    bgColor, bgColor, MyColors.BLACK, MyColors.GOLD);
+            result[i] = spr;
+        }
+        return result;
+    }
+
+    public int getMP() {
+        return currentMP;
+    }
+
+    protected void setMP(int mp) {
+        currentMP = mp;
+    }
+
+    public int getMoveCost() {
+        return DEFAULT_MOVE_COST;
+    }
+
+    public int getTurnCost() {
+        return DEFAULT_TURN_COST;
     }
 }
