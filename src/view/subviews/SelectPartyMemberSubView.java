@@ -31,7 +31,7 @@ public class SelectPartyMemberSubView extends SubView {
             }
         }
         if (preselected != null) {
-            matrix.setSelectedPoint(preselected);
+            matrix.setSelectedElement(preselected);
         }
     }
 

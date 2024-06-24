@@ -61,7 +61,7 @@ public class TrainingState extends GameState {
         inResolution = true;
         for (GameCharacter gc : matrix.getElementList()) {
             Point p = matrix.getPositionFor(gc);
-            matrix.setSelectedPoint(gc);
+            matrix.setSelectedElement(gc);
             if (p.y == matrix.getRows()-1) {
                 doTempleChores(model, gc);
             } else {
@@ -111,7 +111,7 @@ public class TrainingState extends GameState {
         } while (p.y != matrix.getRows()-1 && emptySlotInRow(p.y) == -1);
         int x = emptySlotInRow(p.y);
         matrix.addElement(x, p.y, gc);
-        matrix.setSelectedPoint(matrix.getElementAt(x, p.y));
+        matrix.setSelectedElement(matrix.getElementAt(x, p.y));
     }
 
     private int emptySlotInRow(int y) {

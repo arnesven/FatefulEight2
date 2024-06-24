@@ -20,7 +20,7 @@ public class SwordInTheStoneEvent extends PersonalityTraitEvent {
     }
 
     @Override
-    public boolean isApplicable(Model model) {
+    public boolean isApplicable(Model model) { // TODO: Not in urban location
         return model.getCurrentHex() instanceof PlainsHex || model.getCurrentHex() instanceof WoodsHex;
     }
 

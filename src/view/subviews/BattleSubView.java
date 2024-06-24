@@ -6,7 +6,6 @@ import model.states.battle.*;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.sprites.CombatCursorSprite;
-import view.sprites.QuestCursorSprite;
 import view.sprites.Sprite;
 
 import java.awt.*;
@@ -56,7 +55,7 @@ public class BattleSubView extends SubView {
     private void drawCursor(Model model) {
         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
         Point p = convertToScreen(grid.getSelectedPoint().x, grid.getSelectedPoint().y-1);
-        model.getScreenHandler().register("combatcursor", p, cursor, 2);
+        model.getScreenHandler().register("combatcursor", p, cursor, 5);
     }
 
     private void drawTerrain(Model model) {
@@ -123,6 +122,7 @@ public class BattleSubView extends SubView {
         for (int i = grid.getColumns() * grid.getRows(); i > 0; --i) {
             grid.addElementLast(i);
         }
+        grid.setSelectedElement(40);
         return grid;
     }
 
@@ -139,6 +139,9 @@ public class BattleSubView extends SubView {
             return false;
         }
         pendingBattleAction.execute(model, battleState, pendingBattleAction.getPerformer());
+        if (pendingBattleAction.getPerformer().getCount() > 0) {
+            grid.setSelectedPoint(units.getPositionFor(pendingBattleAction.getPerformer()));
+        }
         return true;
     }
 

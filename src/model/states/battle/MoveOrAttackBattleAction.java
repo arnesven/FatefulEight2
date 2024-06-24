@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class MoveOrAttackBattleAction extends BattleAction {
-    private BattleUnit.Direction direction = null;
+    private BattleDirection direction = null;
 
     public MoveOrAttackBattleAction(BattleUnit unit) {
         super(unit);
@@ -17,7 +17,7 @@ public class MoveOrAttackBattleAction extends BattleAction {
         if (this.direction == performer.getDirection()) {
             battleState.moveOrAttack(model, performer, this, direction);
         } else if (this.direction != null) {
-            battleState.print("Turn " + getPerformer().getName() + "? (Y/N)");
+            battleState.print("Turn " + getPerformer().getName() + "? (Y/N) ");
             if (battleState.yesNoInput()) {
                 performer.setDirection(this.direction);
             }
@@ -30,7 +30,7 @@ public class MoveOrAttackBattleAction extends BattleAction {
         if (this.direction == null) {
             super.drawUnit(model, state, p);
         } else if (this.direction == getPerformer().getDirection()) {
-            Point p2 = new Point(p.x + direction.dxdy.x*4, p.y + direction.dxdy.y*4);
+            Point p2 = new Point(p.x + direction.dxdy.x*2, p.y + direction.dxdy.y*2);
             super.drawUnit(model, state, p2);
         } else {
             BattleUnit copy = getPerformer().copy();
@@ -42,15 +42,15 @@ public class MoveOrAttackBattleAction extends BattleAction {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model, BattleState state) {
-        BattleUnit.Direction newDirection = null;
+        BattleDirection newDirection = null;
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            newDirection = BattleUnit.Direction.west;
+            newDirection = BattleDirection.west;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            newDirection = BattleUnit.Direction.east;
+            newDirection = BattleDirection.east;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            newDirection = BattleUnit.Direction.north;
+            newDirection = BattleDirection.north;
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            newDirection = BattleUnit.Direction.south;
+            newDirection = BattleDirection.south;
         }
         if (newDirection == null) {
             return false;

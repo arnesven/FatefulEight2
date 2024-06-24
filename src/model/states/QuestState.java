@@ -31,7 +31,7 @@ public class QuestState extends GameState {
         for (QuestNode node : quest.getAllNodes()) {
             matrix.addElement(node.getColumn(), node.getRow(), node);
         }
-        matrix.setSelectedPoint(quest.getStartNode());
+        matrix.setSelectedElement(quest.getStartNode());
         cursorEnabled = true;
         questSubView = new QuestSubView(this, quest, matrix);
     }
@@ -99,7 +99,7 @@ public class QuestState extends GameState {
     }
 
     public void setSelectedElement(QuestNode node) {
-        matrix.setSelectedPoint(node);
+        matrix.setSelectedElement(node);
     }
 
     public CombatTheme getCombatTheme() {

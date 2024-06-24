@@ -26,7 +26,7 @@ public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
     protected void drawFromDeckOrDiscard(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         CardGameObject deckOrDiscard = null;
         runnyCardGame.setCursorEnabled(true);
-        runnyCardGame.getMatrix().setSelectedPoint(runnyCardGame.getDeck());
+        runnyCardGame.getMatrix().setSelectedElement(runnyCardGame.getDeck());
         do {
             state.print("Draw a card from the deck or from the discard pile.");
             state.waitForReturn();
@@ -39,7 +39,7 @@ public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
     protected void discardFromHand(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
         CardGameObject cardToDiscard = null;
         runnyCardGame.setCursorEnabled(true);
-        runnyCardGame.getMatrix().setSelectedPoint(getCard(2));
+        runnyCardGame.getMatrix().setSelectedElement(getCard(2));
         do {
             state.print("Select a card from your hand to discard.");
             state.waitForReturn();

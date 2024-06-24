@@ -178,7 +178,7 @@ public abstract class CardGame {
         getMatrix().addElement(4, getMatrix().getRows()-2, button1);
         getMatrix().addElement(6, getMatrix().getRows()-2, button2);
         CardGameObject button = null;
-        getMatrix().setSelectedPoint(selected);
+        getMatrix().setSelectedElement(selected);
         setCursorEnabled(true);
         do {
             state.print(message);

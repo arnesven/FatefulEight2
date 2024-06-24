@@ -69,7 +69,7 @@ public class CombatMatrix extends SteppingMatrix<Combatant> {
         } else {
             fillFirstAvailable(FRONT_ROW_Y, combatant);
         }
-        setSelectedPoint(combatant);
+        setSelectedElement(combatant);
     }
 
     private void fillFirstAvailable(int row, GameCharacter combatant) {
@@ -95,7 +95,7 @@ public class CombatMatrix extends SteppingMatrix<Combatant> {
         }
         for (Combatant c : getElementList()) {
             if (c instanceof GameCharacter) {
-                setSelectedPoint(c);
+                setSelectedElement(c);
                 return;
             }
         }
@@ -107,7 +107,7 @@ public class CombatMatrix extends SteppingMatrix<Combatant> {
         }
         for (Combatant c : getElementList()) {
             if (c instanceof Enemy) {
-                setSelectedPoint(c);
+                setSelectedElement(c);
                 return;
             }
         }

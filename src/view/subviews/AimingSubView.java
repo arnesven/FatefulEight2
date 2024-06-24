@@ -2,7 +2,6 @@ package view.subviews;
 
 import model.Model;
 import model.SteppingMatrix;
-import util.Arithmetics;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -43,7 +42,7 @@ public abstract class AimingSubView extends SubView {
                 }
             }
         }
-        matrix.setSelectedPoint(-1);
+        matrix.setSelectedElement(-1);
     }
 
     @Override

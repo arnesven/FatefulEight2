@@ -9,8 +9,8 @@ import sound.ClientSoundManager;
 import view.subviews.BattleSubView;
 import view.subviews.StripedTransition;
 
-import javax.swing.text.Position;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BattleState extends GameState {
@@ -44,7 +44,7 @@ public class BattleState extends GameState {
         int col = 0;
         int row = BATTLE_GRID_HEIGHT-2;
         for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleUnit.Direction.north);
+            bu.setDirection(BattleDirection.north);
             units.addElement(col++, row, bu);
             if (col == BATTLE_GRID_WIDTH) {
                 col = 0;
@@ -57,7 +57,7 @@ public class BattleState extends GameState {
         int col = BATTLE_GRID_WIDTH-1;
         int row = 1;
         for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleUnit.Direction.south);
+            bu.setDirection(BattleDirection.south);
             units.addElement(col--, row, bu);
             if (col == -1) {
                 col = BATTLE_GRID_WIDTH-1;
@@ -97,41 +97,79 @@ public class BattleState extends GameState {
         return false;
     }
 
-    public boolean canMoveInDirection(BattleUnit performer, BattleUnit.Direction direction) {
+    public boolean canMoveInDirection(BattleUnit performer, BattleDirection direction) {
         Point pos = units.getPositionFor(performer);
-        if (direction == BattleUnit.Direction.east && pos.x == BATTLE_GRID_WIDTH-1) {
+        if (direction == BattleDirection.east && pos.x == BATTLE_GRID_WIDTH-1) {
             return false;
-        } else if (direction == BattleUnit.Direction.west && pos.x == 0) {
+        } else if (direction == BattleDirection.west && pos.x == 0) {
             return false;
-        } else if (direction == BattleUnit.Direction.north && pos.y == 0) {
+        } else if (direction == BattleDirection.north && pos.y == 0) {
             return false;
-        } else if (direction == BattleUnit.Direction.south && pos.y == BATTLE_GRID_HEIGHT-1) {
+        } else if (direction == BattleDirection.south && pos.y == BATTLE_GRID_HEIGHT-1) {
             return false;
         }
         BattleUnit other = getOtherUnitInDirection(performer, direction);
         return other == null || !other.getOrigin().equals(performer.getOrigin());
     }
 
-    private BattleUnit getOtherUnitInDirection(BattleUnit performer, BattleUnit.Direction direction) {
+    private BattleUnit getOtherUnitInDirection(BattleUnit performer, BattleDirection direction) {
         Point pos = units.getPositionFor(performer);
         Point toPos = new Point(pos.x + direction.dxdy.x, pos.y + direction.dxdy.y);
         return units.getElementAt(toPos.x, toPos.y);
     }
 
-    public void moveOrAttack(Model model, BattleUnit performer, BattleAction action, BattleUnit.Direction direction) {
+    public void moveOrAttack(Model model, BattleUnit performer, BattleAction action, BattleDirection direction) {
         BattleUnit other = getOtherUnitInDirection(performer, direction);
         if (other == null) {
             print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
             if (yesNoInput()) {
-                Point pos = units.getPositionFor(performer);
-                Point toPos = new Point(pos.x + direction.dxdy.x, pos.y + direction.dxdy.y);
-                units.remove(performer);
-                units.addElement(toPos.x, toPos.y, performer);
+                moveUnitInDirection(performer, direction);
             }
         } else {
-            print("Attack " + other.getOrigin() + " " + other.getName() + " with " + performer.getName() + "? (Y/N) ");
-            yesNoInput();
-            //TODO : Resolve attack
+            print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
+            if (yesNoInput()) {
+                performer.doAttackOn(model, this, other, direction);
+            }
+        }
+    }
+
+    public void moveUnitInDirection(BattleUnit performer, BattleDirection direction) {
+        Point pos = units.getPositionFor(performer);
+        Point toPos = new Point(pos.x + direction.dxdy.x, pos.y + direction.dxdy.y);
+        units.remove(performer);
+        units.addElement(toPos.x, toPos.y, performer);
+    }
+
+    public void removeUnit(BattleUnit unit) {
+        units.remove(unit);
+    }
+
+    public void retreatUnit(BattleUnit retreater, BattleDirection attackDirection) {
+        println("Defender has lost the fight and must retreat.");
+        List<BattleDirection> candidates =
+                new ArrayList<>(List.of(BattleDirection.east, BattleDirection.north,
+                        BattleDirection.south, BattleDirection.south));
+        candidates.remove(attackDirection);
+        candidates.remove(attackDirection.getOpposite());
+        candidates.add(attackDirection);
+        BattleDirection retreatDirection = null;
+        for (BattleDirection dir : candidates) {
+            if (canMoveInDirection(retreater, dir)) {
+                retreatDirection = dir;
+                break;
+            }
+        }
+
+        if (retreatDirection == null) {
+            println("Nowhere to retreat, unit is eliminated!");
+            retreater.wipeOut(this);
+        } else {
+            moveUnitInDirection(retreater, retreatDirection);
+            if (retreatDirection == attackDirection) {
+                retreater.setDirection(retreatDirection.getOpposite());
+            } else {
+                retreater.setDirection(retreatDirection);
+            }
         }
     }
 }

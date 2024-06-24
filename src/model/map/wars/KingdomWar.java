@@ -21,11 +21,14 @@ public class KingdomWar implements Serializable {
     public KingdomWar(String aggressor, String defender, MyColors aggressorColor, MyColors defenderColor) {
         this.aggressor = aggressor;
         this.defender = defender;
-        aggressorUnits = new ArrayList<>(List.of(
-                new SwordsmanUnit(10, CastleLocation.placeNameShort(aggressor), aggressorColor),
-                new SwordsmanUnit(8, CastleLocation.placeNameShort(aggressor), aggressorColor)));
-        defenderUnits = new ArrayList<>(List.of(new SwordsmanUnit(2, CastleLocation.placeNameShort(defender), defenderColor),
-                new SwordsmanUnit(3, CastleLocation.placeNameShort(defender), defenderColor)));
+        aggressorUnits = new ArrayList<>();
+        for (int i = 2; i <= 12; i +=2) {
+            aggressorUnits.add(new SwordsmanUnit(i, CastleLocation.placeNameShort(aggressor), aggressorColor));
+        }
+        defenderUnits = new ArrayList<>();
+        for (int i = 2; i <= 12; i +=2) {
+            defenderUnits.add(new SwordsmanUnit(i, CastleLocation.placeNameShort(defender), defenderColor));
+        }
     }
 
     public String getAggressor() {

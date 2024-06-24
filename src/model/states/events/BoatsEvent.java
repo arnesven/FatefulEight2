@@ -218,7 +218,7 @@ public class BoatsEvent extends RiverEvent {
         }
         while (!shore.isEmpty()) {
             GameCharacter guy = shore.get(0);
-            matrix.setSelectedPoint(guy);
+            matrix.setSelectedElement(guy);
             int times = MyRandom.randInt(99);
             for (int i = 0; i < times; ++i) {
                 internalShiftCharacter();
@@ -284,7 +284,7 @@ public class BoatsEvent extends RiverEvent {
             }
         }
         addCharactersToMatrix();
-        matrix.setSelectedPoint(gc);
+        matrix.setSelectedElement(gc);
     }
 
     private void addCharactersToMatrix() {

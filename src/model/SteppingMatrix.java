@@ -84,9 +84,13 @@ public class SteppingMatrix<T> {
         return selected; // invariant: should always point to a combatant
     }
 
-    public synchronized void setSelectedPoint(T elem) {
+    public synchronized void setSelectedElement(T elem) {
         Point p = getPositionFor(elem);
         selected = p;
+    }
+
+    public synchronized void setSelectedPoint(Point p) {
+        setSelectedElement(getElementAt(p.x, p.y));
     }
 
     public synchronized Point getPositionFor(T elem) {
