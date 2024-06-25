@@ -50,6 +50,9 @@ public class SteppingMatrix<T> {
         if (comb == null) {
             throw new IllegalStateException("Cannot add null to a stepping matrix");
         }
+        if (grid.get(col).get(row) != null) {
+            System.err.println("Warning, overwrite of element in stepping matrix!");
+        }
         grid.get(col).set(row, comb);
         if (selected == null || getSelectedElement() == null) {
             selected = new Point(col, row);

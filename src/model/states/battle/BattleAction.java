@@ -11,6 +11,7 @@ public abstract class BattleAction {
 
     public static final Sprite CURRENT_MARKER = new QuestCursorSprite();
     private final BattleUnit performer;
+    private boolean noPrompt = false;
 
     public BattleAction(BattleUnit unit) {
         this.performer = unit;
@@ -31,5 +32,13 @@ public abstract class BattleAction {
 
     protected void drawMarker(Model model, Point p) {
         model.getScreenHandler().register(CURRENT_MARKER.getName(), new Point(p.x, p.y), CURRENT_MARKER);
+    }
+
+    public boolean isNoPrompt() {
+        return noPrompt;
+    }
+
+    public void setNoPrompt(boolean b) {
+        noPrompt = b;
     }
 }

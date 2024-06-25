@@ -2,6 +2,7 @@ package model.states.battle;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.map.CastleLocation;
 import model.map.wars.KingdomWar;
 import model.states.GameState;
 import sound.BackgroundMusic;
@@ -21,6 +22,7 @@ public class BattleState extends GameState {
     private final SteppingMatrix<BattleUnit> units;
     private final boolean playingAggressor;
     private final KingdomWar war;
+    private final BattleAI opponentAI = new DumbBattleAI();
 
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
         super(model);
@@ -73,16 +75,56 @@ public class BattleState extends GameState {
         BattleSubView subView = new BattleSubView(terrain, units, this);
         StripedTransition.transition(model, subView); // TODO: Make new transition for this.
 
-        doPlayerTurn(model, subView, playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits());
+        List<BattleUnit> playerUnits = playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
+        List<BattleUnit> opponentUnits = playingAggressor ? war.getDefenderUnits() : war.getAggressorUnits();
+
+        boolean abandoned = false;
+        while (!(allVanquished(playerUnits) || allVanquished(opponentUnits))) {
+            println("Your turn.");
+            abandoned = !doPlayerTurn(model, subView, playerUnits);
+            if (abandoned || allVanquished(opponentUnits) || allVanquished(playerUnits)) {
+                break;
+            }
+            String sideName = CastleLocation.placeNameShort(playingAggressor ? war.getDefender() : war.getAggressor());
+            println(sideName + "'s turn.");
+            doAITurn(model, subView, opponentUnits);
+        }
+
+        if (abandoned) {
+            println("You abandoned the battle.");
+        } else if (allVanquished(opponentUnits)) {
+            println("You are victorious!");
+        } else {
+            println("You have been defeated in battle.");
+        }
 
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 
-    private void doPlayerTurn(Model model, BattleSubView subView, List<BattleUnit> units) {
+    private boolean allVanquished(List<BattleUnit> opponentUnits) {
+        return !MyLists.any(opponentUnits, (BattleUnit bu) -> units.getElementList().contains(bu));
+    }
+
+    private void doAITurn(Model model, BattleSubView subView, List<BattleUnit> opponentUnits) {
+        MyLists.forEach(opponentUnits, BattleUnit::refillMovementPoints);
+        subView.showMovementPointsForUnits(opponentUnits);
+        opponentAI.startTurn(model, subView, this, opponentUnits);
+        do {
+            opponentAI.activateUnit(model, subView, this);
+        } while (!opponentAI.isDone());
+    }
+
+    private boolean doPlayerTurn(Model model, BattleSubView subView, List<BattleUnit> units) {
         MyLists.forEach(units, BattleUnit::refillMovementPoints);
         subView.showMovementPointsForUnits(units);
         do {
             waitForReturnSilently();
+            if (subView.cursorIsOnQuit()) {
+                return false;
+            }
+            if (subView.cursorIsOnDone()) {
+                return true;
+            }
             if (!subView.handlePendingBattleAction(model, this)) {
                 BattleUnit unit = subView.getUnitUnderCursor();
                 if (unit != null) {
@@ -99,13 +141,15 @@ public class BattleState extends GameState {
                 subView.cancelPending();
             }
         } while (!turnIsOver(units));
+        return true;
     }
 
     private boolean turnIsOver(List<BattleUnit> units) {
-        return MyLists.all(units, (BattleUnit bu) -> bu.getMP() == 0);
+        return MyLists.all(units, (BattleUnit bu) -> bu.getMP() == 0) || allVanquished(units);
     }
 
-    public boolean canMoveInDirection(BattleUnit performer, BattleDirection direction) {
+    public boolean canMoveInDirection(BattleUnit performer, BattleDirection direction,
+                                      boolean allowMoveIntoEnemyUnit) {
         Point pos = units.getPositionFor(performer);
         if (direction == BattleDirection.east && pos.x == BATTLE_GRID_WIDTH-1) {
             return false;
@@ -117,7 +161,13 @@ public class BattleState extends GameState {
             return false;
         }
         BattleUnit other = getOtherUnitInDirection(performer, direction);
-        return other == null || !other.getOrigin().equals(performer.getOrigin());
+        if (other == null) {
+            return true;
+        }
+        if (!allowMoveIntoEnemyUnit) {
+            return false;
+        }
+        return !other.getOrigin().equals(performer.getOrigin());
     }
 
     private BattleUnit getOtherUnitInDirection(BattleUnit performer, BattleDirection direction) {
@@ -129,16 +179,25 @@ public class BattleState extends GameState {
     public void moveOrAttack(Model model, BattleUnit performer, BattleAction action, BattleDirection direction) {
         BattleUnit other = getOtherUnitInDirection(performer, direction);
         if (other == null) {
-            print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
-            if (yesNoInput()) {
+            if (!action.isNoPrompt()) {
+                print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
+            } else {
+                println(performer.getQualifiedName() + " moves " + direction.asText + ".");
+            }
+            if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getMoveCost());
                 moveUnitInDirection(performer, direction);
             }
         } else {
-            print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
-            if (yesNoInput()) {
+            if (!action.isNoPrompt()) {
+                print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
+            } else {
+                println(performer.getQualifiedName() + " attacks " + other.getQualifiedName() + "!");
+            }
+            if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getMoveCost());
                 performer.doAttackOn(model, this, other, direction);
+                performer.setMP(0);
             }
         }
     }
@@ -164,7 +223,7 @@ public class BattleState extends GameState {
         candidates.add(attackDirection);
         BattleDirection retreatDirection = null;
         for (BattleDirection dir : candidates) {
-            if (canMoveInDirection(retreater, dir)) {
+            if (canMoveInDirection(retreater, dir, false)) {
                 retreatDirection = dir;
                 break;
             }
@@ -181,5 +240,9 @@ public class BattleState extends GameState {
                 retreater.setDirection(retreatDirection);
             }
         }
+    }
+
+    public Point getPositionForUnit(BattleUnit activeUnit) {
+        return units.getPositionFor(activeUnit);
     }
 }

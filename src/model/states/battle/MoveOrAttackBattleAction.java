@@ -17,13 +17,18 @@ public class MoveOrAttackBattleAction extends BattleAction {
         if (this.direction == performer.getDirection()) {
             battleState.moveOrAttack(model, performer, this, direction);
         } else if (this.direction != null) {
-            battleState.print("Turn " + getPerformer().getName() + "? (Y/N) ");
-            if (battleState.yesNoInput()) {
+            if (!isNoPrompt()) {
+                battleState.print("Turn " + getPerformer().getName() + "? (Y/N) ");
+            }
+            if (isNoPrompt() || battleState.yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getTurnCost());
                 performer.setDirection(this.direction);
             }
         }
+    }
 
+    public boolean isValid() {
+        return this.direction != null;
     }
 
     @Override
@@ -56,8 +61,14 @@ public class MoveOrAttackBattleAction extends BattleAction {
         if (newDirection == null) {
             return false;
         }
+        setParameters(model, state, newDirection);
+        return true;
+    }
+
+    public void setParameters(Model model, BattleState state, BattleDirection newDirection) {
         if (getPerformer().getDirection() == newDirection) { // Move forward
-            if (state.canMoveInDirection(getPerformer(), newDirection) && getPerformer().getMP() >= getPerformer().getMoveCost()) {
+            if (state.canMoveInDirection(getPerformer(), newDirection, true) &&
+                    getPerformer().getMP() >= getPerformer().getMoveCost()) {
                 this.direction = newDirection;
             } else {
                 this.direction = null; // Out of bounds, or moving into friendly unit, or not enough MP for move.
@@ -69,6 +80,5 @@ public class MoveOrAttackBattleAction extends BattleAction {
         } else {
             this.direction = null; // Moving backward (illegal)
         }
-        return true;
     }
 }

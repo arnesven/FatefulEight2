@@ -7,6 +7,7 @@ import view.MyColors;
 import view.combat.CombatTheme;
 import view.sprites.CombatCursorSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x16;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,6 +16,8 @@ import java.util.List;
 
 public class BattleSubView extends SubView {
 
+    private static final Sprite32x16 DONE_BUTTON_SPRITE = makeButtonSprite(0);
+    private static final Sprite32x16 QUIT_BUTTON_SPRITE = makeButtonSprite(1);
     private final Sprite[] groundSprites;
     private final SteppingMatrix<BattleTerrain> terrain;
     private final SteppingMatrix<Integer> grid;
@@ -37,6 +40,13 @@ public class BattleSubView extends SubView {
         drawTerrain(model);
         drawUnits(model);
         drawCursor(model);
+        drawButtons(model);
+    }
+
+    private void drawButtons(Model model) {
+        Point p = convertToScreen(3, 9);
+        model.getScreenHandler().put(p.x, p.y, DONE_BUTTON_SPRITE);
+        model.getScreenHandler().put(p.x+4, p.y, QUIT_BUTTON_SPRITE);
     }
 
     private void drawUnits(Model model) {
@@ -89,11 +99,17 @@ public class BattleSubView extends SubView {
     @Override
     protected String getUnderText(Model model) {
         Point cursor = grid.getSelectedPoint();
+        if (cursorIsOnDone()) {
+            return "End your turn.";
+        }
+        if (cursorIsOnQuit()) {
+            return "Abandon the battle.";
+        }
         BattleTerrain terr = terrain.getElementAt(cursor.x, cursor.y);
 
         BattleUnit unit = units.getElementAt(cursor.x, cursor.y);
         if (unit != null) {
-            String text = unit.getOrigin() + " " + unit.getName() + " (" + unit.getCount() + ") " + unit.getMP() + " MP left.";
+            String text = unit.getOrigin() + " " + unit.getName() + " (" + unit.getCount() + ") " + unit.getMP() + " MP left,";
             if (terr != null) {
                 return text + " in " + terr.getName();
             }
@@ -122,11 +138,13 @@ public class BattleSubView extends SubView {
     }
 
     private static SteppingMatrix<Integer> makeGrid() {
-        SteppingMatrix<Integer> grid = new SteppingMatrix<>(BattleState.BATTLE_GRID_WIDTH, BattleState.BATTLE_GRID_HEIGHT);
-        for (int i = grid.getColumns() * grid.getRows(); i > 0; --i) {
+        SteppingMatrix<Integer> grid = new SteppingMatrix<>(BattleState.BATTLE_GRID_WIDTH, BattleState.BATTLE_GRID_HEIGHT+1);
+        for (int i = grid.getColumns() * (grid.getRows()-1); i > 0; --i) {
             grid.addElementLast(i);
         }
         grid.setSelectedElement(40);
+        grid.addElement(3, grid.getRows()-1, 0);
+        grid.addElement(4, grid.getRows()-1, -1);
         return grid;
     }
 
@@ -155,5 +173,22 @@ public class BattleSubView extends SubView {
 
     public void showMovementPointsForUnits(List<BattleUnit> units) {
         this.unitsToShowMpFor = units;
+    }
+
+
+    private static Sprite32x16 makeButtonSprite(int offset) {
+        Sprite32x16 result = new Sprite32x16("battledonebutton", "battle_symbols.png", 0x10 + offset);
+        result.setColor1(MyColors.WHITE);
+        result.setColor2(MyColors.WHITE);
+        result.setColor3(MyColors.BLUE);
+        return result;
+    }
+
+    public boolean cursorIsOnDone() {
+        return grid.getSelectedElement() == 0;
+    }
+
+    public boolean cursorIsOnQuit() {
+        return grid.getSelectedElement() == -1;
     }
 }
