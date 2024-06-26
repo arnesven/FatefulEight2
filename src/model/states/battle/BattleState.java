@@ -245,4 +245,8 @@ public class BattleState extends GameState {
     public Point getPositionForUnit(BattleUnit activeUnit) {
         return units.getPositionFor(activeUnit);
     }
+
+    public BattleTerrain getTerrainForPosition(Point pos) {
+        return terrain.getElementAt(pos.x, pos.y);
+    }
 }
