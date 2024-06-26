@@ -5,9 +5,7 @@ import model.SteppingMatrix;
 import model.states.battle.*;
 import view.MyColors;
 import view.combat.CombatTheme;
-import view.sprites.CombatCursorSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite32x16;
+import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,6 +16,7 @@ public class BattleSubView extends SubView {
 
     private static final Sprite32x16 DONE_BUTTON_SPRITE = makeButtonSprite(0);
     private static final Sprite32x16 QUIT_BUTTON_SPRITE = makeButtonSprite(1);
+    private LoopingSprite dustCloudSprite;
     private final Sprite[] groundSprites;
     private final SteppingMatrix<BattleTerrain> terrain;
     private final SteppingMatrix<Integer> grid;
@@ -25,6 +24,8 @@ public class BattleSubView extends SubView {
     private final BattleState state;
     private BattleAction pendingBattleAction = null;
     private List<BattleUnit> unitsToShowMpFor = new ArrayList<>();
+    private Point dustCloudAnimationPos = null;
+    private List<BattleUnit> unitsNotToDraw = new ArrayList<>();
 
     public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units, BattleState state) {
         this.terrain = terrain;
@@ -52,14 +53,21 @@ public class BattleSubView extends SubView {
     private void drawUnits(Model model) {
         for (int y = 0; y < units.getRows(); ++y) {
             for (int x = 0; x < units.getColumns(); ++x) {
+                boolean isDustCloudSpace = isDrawingDustCloud() && dustCloudAnimationPos.x == x && dustCloudAnimationPos.y == y;
+                if (isDustCloudSpace) {
+                    Point p = convertToScreen(dustCloudAnimationPos.x, dustCloudAnimationPos.y);
+                    model.getScreenHandler().register(dustCloudSprite.getName(), p, dustCloudSprite);
+                }
                 if (units.getElementAt(x, y) != null) {
                     BattleUnit unit = units.getElementAt(x, y);
-                    Point p = convertToScreen(x, y);
-                    boolean withMovementPoints = unitsToShowMpFor.contains(unit);
-                    if (pendingBattleAction != null && pendingBattleAction.getPerformer() == unit) {
-                        pendingBattleAction.drawUnit(model, state, withMovementPoints, p);
-                    } else {
-                        unit.drawYourself(model.getScreenHandler(), p, withMovementPoints, 2);
+                    if (!unitsNotToDraw.contains(unit)) {
+                        Point p = convertToScreen(x, y);
+                        boolean withMovementPoints = unitsToShowMpFor.contains(unit);
+                        if (pendingBattleAction != null && pendingBattleAction.getPerformer() == unit) {
+                            pendingBattleAction.drawUnit(model, state, withMovementPoints, p);
+                        } else {
+                            unit.drawYourself(model.getScreenHandler(), p, withMovementPoints, 2);
+                        }
                     }
                 }
             }
@@ -190,5 +198,26 @@ public class BattleSubView extends SubView {
 
     public boolean cursorIsOnQuit() {
         return grid.getSelectedElement() == -1;
+    }
+
+    public void startDustCloudAnimation(Point position, List<BattleUnit> unitsNotToDraw) {
+        dustCloudSprite = new LoopingSprite("dustcloud", "battle_symbols.png", 0x10, 32, 32);
+        dustCloudSprite.setFrames(4);
+        dustCloudSprite.setColor1(MyColors.GRAY);
+        dustCloudSprite.setColor2(MyColors.LIGHT_GRAY);
+        dustCloudSprite.setColor3(MyColors.BEIGE);
+        dustCloudSprite.setColor4(MyColors.WHITE);
+        this.dustCloudAnimationPos = position;
+        this.unitsNotToDraw = unitsNotToDraw;
+    }
+
+    public void removeDustCloudAnimation() {
+        AnimationManager.unregister(dustCloudSprite);
+        this.dustCloudAnimationPos = null;
+        this.unitsNotToDraw = new ArrayList<>();
+    }
+
+    private boolean isDrawingDustCloud() {
+        return this.dustCloudAnimationPos != null;
     }
 }

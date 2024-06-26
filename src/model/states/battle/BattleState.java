@@ -23,6 +23,7 @@ public class BattleState extends GameState {
     private final boolean playingAggressor;
     private final KingdomWar war;
     private final BattleAI opponentAI = new DumbBattleAI();
+    private BattleSubView subView;
 
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
         super(model);
@@ -72,7 +73,7 @@ public class BattleState extends GameState {
     @Override
     public GameState run(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
-        BattleSubView subView = new BattleSubView(terrain, units, this);
+        this.subView = new BattleSubView(terrain, units, this);
         StripedTransition.transition(model, subView); // TODO: Make new transition for this.
 
         List<BattleUnit> playerUnits = playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
@@ -196,7 +197,10 @@ public class BattleState extends GameState {
             }
             if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getMoveCost());
+                subView.startDustCloudAnimation(units.getPositionFor(other), List.of(performer, other));
                 performer.doAttackOn(model, this, other, direction);
+                model.getLog().waitForAnimationToFinish();
+                subView.removeDustCloudAnimation();
                 performer.setMP(0);
             }
         }
