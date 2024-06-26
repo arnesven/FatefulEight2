@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 public class MoveOrAttackBattleAction extends BattleAction {
     private BattleDirection direction = null;
+    private boolean isExecuting = false;
 
     public MoveOrAttackBattleAction(BattleUnit unit) {
         super(unit);
@@ -14,6 +15,7 @@ public class MoveOrAttackBattleAction extends BattleAction {
 
     @Override
     public void execute(Model model, BattleState battleState, BattleUnit performer) {
+        this.isExecuting = true;
         if (this.direction == performer.getDirection()) {
             battleState.moveOrAttack(model, performer, this, direction);
         } else if (this.direction != null) {
@@ -48,6 +50,9 @@ public class MoveOrAttackBattleAction extends BattleAction {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model, BattleState state) {
+        if (isExecuting) {
+            return false;
+        }
         BattleDirection newDirection = null;
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
             newDirection = BattleDirection.west;

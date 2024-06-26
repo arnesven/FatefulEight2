@@ -70,14 +70,25 @@ public abstract class BattleUnit implements Serializable {
     }
 
     public void doAttackOn(Model model, BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
-        battleState.println(getQualifiedName() + " attacks " + defender.getQualifiedName() + "!");
+        battleState.print(getQualifiedName() + " attacks " + defender.getQualifiedName());
+        int flankOrRearBonus = 0;
+        if (attackDirection == defender.getDirection()) {
+            flankOrRearBonus = 2;
+            battleState.println("- Rear attack! (+2 to attack)");
+        } else if (attackDirection == defender.getDirection().getOpposite()) {
+            battleState.println(".");
+        } else {
+            flankOrRearBonus = 1;
+            battleState.println("- Flank attack! (+1 to attack)");
+        }
+
         int hits = 0;
         for (int i = 0; i < getCount(); ++i) {
-            hits += doOneAttack(battleState, defender) ? 1 : 0;
+            hits += doOneAttack(battleState, defender, flankOrRearBonus) ? 1 : 0;
         }
         int counterHits = 0;
         for (int i = 0; i < defender.getCount(); ++i) {
-            counterHits += defender.doOneAttack(battleState, this) ? 1 : 0;
+            counterHits += defender.doOneAttack(battleState, this, 0) ? 1 : 0;
         }
         battleState.println("Attacker does " + hits + " hits, defender does " + counterHits + " hits.");
 
@@ -119,8 +130,8 @@ public abstract class BattleUnit implements Serializable {
         count = i;
     }
 
-    private boolean doOneAttack(BattleState battleState, BattleUnit defender) {
-        return MyRandom.rollD10() + combatSkillBonus >= defender.getDefense();
+    private boolean doOneAttack(BattleState battleState, BattleUnit defender, int flankOrRearBonus) {
+        return MyRandom.rollD10() + combatSkillBonus + flankOrRearBonus >= defender.getDefense();
     }
 
     public String getQualifiedName() {
