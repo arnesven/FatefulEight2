@@ -9,4 +9,9 @@ public class DenseWoodsBattleTerrain extends BattleTerrain {
     public DenseWoodsBattleTerrain() {
         super("Dense Woods", loc);
     }
+
+    @Override
+    public int getMoveCost() {
+        return BattleTerrain.ROUGH_TERRAIN_MOVE_COST;
+    }
 }

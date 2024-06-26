@@ -14,7 +14,6 @@ import java.io.Serializable;
 public abstract class BattleUnit implements Serializable {
 
     private static final Sprite8x8[] MP_SPRITES = makeMPSprites();
-    private static final int DEFAULT_MOVE_COST = 2;
     private static final int DEFAULT_TURN_COST = 1;
     private final String name;
     private final int maximumMP;
@@ -187,10 +186,6 @@ public abstract class BattleUnit implements Serializable {
 
     protected void setMP(int mp) {
         currentMP = mp;
-    }
-
-    public int getMoveCost() {
-        return DEFAULT_MOVE_COST;
     }
 
     public int getTurnCost() {

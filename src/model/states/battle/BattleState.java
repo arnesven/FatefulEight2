@@ -28,9 +28,11 @@ public class BattleState extends GameState {
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
         super(model);
         this.terrain = new SteppingMatrix<>(BATTLE_GRID_WIDTH, BATTLE_GRID_HEIGHT);
+        terrain.addElement(2, 5, new WaterBattleTerrain());
         terrain.addElement(3, 3, new WoodsBattleTerrain());
         terrain.addElement(4, 4, new HillsBattleTerrain());
         terrain.addElement(5, 5, new DenseWoodsBattleTerrain());
+        terrain.addElement(6, 4, new SwampBattleTerrain());
 
         this.units = new SteppingMatrix<>(BATTLE_GRID_WIDTH, BATTLE_GRID_HEIGHT);
         this.playingAggressor = actAsAggressor;
@@ -179,6 +181,7 @@ public class BattleState extends GameState {
 
     public void moveOrAttack(Model model, BattleUnit performer, BattleAction action, BattleDirection direction) {
         BattleUnit other = getOtherUnitInDirection(performer, direction);
+        int moveCost = MovePointCostForDestination(performer, direction);
         if (other == null) {
             if (!action.isNoPrompt()) {
                 print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
@@ -186,7 +189,7 @@ public class BattleState extends GameState {
                 println(performer.getQualifiedName() + " move " + direction.asText + ".");
             }
             if (action.isNoPrompt() || yesNoInput()) {
-                performer.setMP(performer.getMP() - performer.getMoveCost());
+                performer.setMP(performer.getMP() - moveCost);
                 moveUnitInDirection(performer, direction);
             }
         } else {
@@ -196,7 +199,7 @@ public class BattleState extends GameState {
                 println(performer.getQualifiedName() + " attack " + other.getQualifiedName() + "!");
             }
             if (action.isNoPrompt() || yesNoInput()) {
-                performer.setMP(performer.getMP() - performer.getMoveCost());
+                performer.setMP(performer.getMP() - moveCost);
                 subView.startDustCloudAnimation(units.getPositionFor(other), List.of(performer, other));
                 performer.doAttackOn(model, this, other, direction);
                 model.getLog().waitForAnimationToFinish();
@@ -252,5 +255,15 @@ public class BattleState extends GameState {
 
     public BattleTerrain getTerrainForPosition(Point pos) {
         return terrain.getElementAt(pos.x, pos.y);
+    }
+
+    public int MovePointCostForDestination(BattleUnit performer, BattleDirection newDirection) {
+        Point performerPos = new Point(units.getPositionFor(performer));
+        performerPos.translate(newDirection.dxdy.x, newDirection.dxdy.y);
+        BattleTerrain destinationTerrain = terrain.getElementAt(performerPos.x, performerPos.y);
+        if (destinationTerrain == null) {
+            return BattleTerrain.DEFAULT_MOVE_COST;
+        }
+        return destinationTerrain.getMoveCost();
     }
 }

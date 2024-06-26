@@ -73,7 +73,7 @@ public class MoveOrAttackBattleAction extends BattleAction {
     public void setParameters(Model model, BattleState state, BattleDirection newDirection) {
         if (getPerformer().getDirection() == newDirection) { // Move forward
             if (state.canMoveInDirection(getPerformer(), newDirection, true) &&
-                    getPerformer().getMP() >= getPerformer().getMoveCost()) {
+                    getPerformer().getMP() >= state.MovePointCostForDestination(getPerformer(), newDirection)) {
                 this.direction = newDirection;
             } else {
                 this.direction = null; // Out of bounds, or moving into friendly unit, or not enough MP for move.

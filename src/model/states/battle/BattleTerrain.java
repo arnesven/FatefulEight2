@@ -7,6 +7,9 @@ import java.awt.*;
 
 public abstract class BattleTerrain {
 
+    public static final int DEFAULT_MOVE_COST = 2;
+    protected static final int ROUGH_TERRAIN_MOVE_COST = 3;
+    protected static final int IMPASSIBLE_TERRAIN_MOVE_COST = Integer.MAX_VALUE;
     private final HexLocation loc;
     private final String name;
 
@@ -26,5 +29,9 @@ public abstract class BattleTerrain {
 
     public int checkForMeleeDefenseBonus(BattleState battleState, BattleUnit defender) {
         return 0;
+    }
+
+    public int getMoveCost() {
+        return DEFAULT_MOVE_COST;
     }
 }
