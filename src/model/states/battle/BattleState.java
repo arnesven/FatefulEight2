@@ -182,7 +182,7 @@ public class BattleState extends GameState {
             if (!action.isNoPrompt()) {
                 print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
             } else {
-                println(performer.getQualifiedName() + " moves " + direction.asText + ".");
+                println(performer.getQualifiedName() + " move " + direction.asText + ".");
             }
             if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getMoveCost());
@@ -192,7 +192,7 @@ public class BattleState extends GameState {
             if (!action.isNoPrompt()) {
                 print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
             } else {
-                println(performer.getQualifiedName() + " attacks " + other.getQualifiedName() + "!");
+                println(performer.getQualifiedName() + " attack " + other.getQualifiedName() + "!");
             }
             if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getMoveCost());

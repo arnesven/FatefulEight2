@@ -70,7 +70,7 @@ public abstract class BattleUnit implements Serializable {
     }
 
     public void doAttackOn(Model model, BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
-        battleState.print(getQualifiedName() + " attacks " + defender.getQualifiedName());
+        battleState.print(getQualifiedName() + " attack " + defender.getQualifiedName());
         int flankOrRearBonus = checkForFlankOrRear(battleState, defender, attackDirection);
         int highGroundBonus = checkForHighGroundBonus(battleState, defender);
 
@@ -113,9 +113,9 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private int checkForHighGroundBonus(BattleState battleState, BattleUnit defender) {
-        if (battleState.getTerrainForPosition(battleState.getPositionForUnit(defender)) instanceof HillsBattleTerrain) {
-            battleState.println("Defender has the high ground (+1 to defense).");
-            return 1;
+        BattleTerrain terrain = battleState.getTerrainForPosition(battleState.getPositionForUnit(defender));
+        if (terrain != null) {
+            return terrain.checkForMeleeDefenseBonus(battleState, defender);
         }
         return 0;
     }

@@ -23,4 +23,8 @@ public abstract class BattleTerrain {
     public String getName() {
         return name;
     }
+
+    public int checkForMeleeDefenseBonus(BattleState battleState, BattleUnit defender) {
+        return 0;
+    }
 }

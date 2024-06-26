@@ -9,4 +9,10 @@ public class HillsBattleTerrain extends BattleTerrain {
     public HillsBattleTerrain() {
         super("Hills", loc);
     }
+
+    @Override
+    public int checkForMeleeDefenseBonus(BattleState battleState, BattleUnit defender) {
+        battleState.println("Defender has the high ground (+1 to defense).");
+        return 1;
+    }
 }
