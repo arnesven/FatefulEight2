@@ -3,6 +3,7 @@ package model.map.wars;
 import model.map.CastleLocation;
 import model.map.WorldBuilder;
 import model.states.battle.BattleUnit;
+import model.states.battle.PikemenUnit;
 import model.states.battle.SwordsmanUnit;
 import view.MyColors;
 
@@ -25,9 +26,15 @@ public class KingdomWar implements Serializable {
         for (int i = 2; i <= 12; i +=2) {
             aggressorUnits.add(new SwordsmanUnit(i, CastleLocation.placeNameShort(aggressor), aggressorColor));
         }
+        for (int i = 2; i <= 12; i +=2) {
+            aggressorUnits.add(new PikemenUnit(i, CastleLocation.placeNameShort(aggressor), aggressorColor));
+        }
         defenderUnits = new ArrayList<>();
         for (int i = 2; i <= 12; i +=2) {
             defenderUnits.add(new SwordsmanUnit(i, CastleLocation.placeNameShort(defender), defenderColor));
+        }
+        for (int i = 2; i <= 12; i +=2) {
+            defenderUnits.add(new PikemenUnit(i, CastleLocation.placeNameShort(defender), defenderColor));
         }
     }
 

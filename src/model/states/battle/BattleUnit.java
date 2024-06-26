@@ -34,8 +34,6 @@ public abstract class BattleUnit implements Serializable {
         this.currentMP = movementPoints;
     }
 
-    public abstract BattleUnit copy();
-
     protected abstract Sprite[] getSprites();
 
     public void drawYourself(ScreenHandler screenHandler, Point p, boolean withMp, int prio) {
@@ -154,12 +152,12 @@ public abstract class BattleUnit implements Serializable {
         return defense;
     }
 
-    protected static Sprite[] makeSpriteSet(MyColors color, int row, int offset) {
+    protected static Sprite[] makeSpriteSet(int row, int offset, MyColors color1, MyColors color2, MyColors color3, MyColors color4) {
         Sprite[] result = new Sprite[4];
         for (int i = 0; i < result.length; ++i) {
             int num = 0x10 * row + i + offset;
             result[i] = new Sprite32x32("battleunit" + num, "battle.png", num,
-                    MyColors.BLACK, MyColors.GRAY, MyColors.LIGHT_GRAY, color);
+                    color1, color2, color3, color4);
         }
         return result;
     }
