@@ -93,10 +93,12 @@ public abstract class BattleUnit implements Serializable {
     }
 
     public void doAttackOn(Model model, BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
-        int flankOrRearBonus = checkForFlankOrRear(battleState, defender, attackDirection);
+        int attackBonus = checkForFlankOrRear(battleState, defender, attackDirection);
+        attackBonus += this.getSpecificVSAttackBonusWhenAttacking(battleState, defender);
+        int defenseBonus = defender.getSpecificVSDefenseBonusWhenDefending(battleState, this);
         int hits = 0;
         for (int i = 0; i < getCount(); ++i) {
-            hits += doOneAttack(battleState, defender, flankOrRearBonus, 0) ? 1 : 0;
+            hits += doOneAttack(battleState, defender, attackBonus, defenseBonus) ? 1 : 0;
         }
 
         int counterHits = 0;
@@ -128,6 +130,22 @@ public abstract class BattleUnit implements Serializable {
         }
     }
 
+    protected int getSpecificVSDefenseBonusWhenDefending(BattleState battleState, BattleUnit attacker) {
+        return 0;
+    }
+
+    protected int getSpecificVSAttackBonusWhenDefending(BattleState battleState, BattleUnit attacker) {
+        return 0;
+    }
+
+    protected int getSpecificVSAttackBonusWhenAttacking(BattleState battleState, BattleUnit defender) {
+        return 0;
+    }
+
+    protected int getSpecificVSDefenseBonusWhenAttacking(BattleState battleState, BattleUnit defender) {
+        return 0;
+    }
+
     protected boolean hasFirstStrike() {
         return false;
     }
@@ -141,10 +159,12 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private int defenderCounterAttack(BattleState battleState, BattleUnit defender) {
-        int highGroundBonus = checkForHighGroundBonus(battleState, defender);
+        int defenseBonus = checkForHighGroundBonus(battleState, defender);
+        defenseBonus += this.getSpecificVSDefenseBonusWhenAttacking(battleState, defender);
+        int attackBonus = defender.getSpecificVSAttackBonusWhenDefending(battleState, this);
         int counterHits = 0;
         for (int i = 0; i < defender.getCount(); ++i) {
-            counterHits += defender.doOneAttack(battleState, this, 0, highGroundBonus) ? 1 : 0;
+            counterHits += defender.doOneAttack(battleState, this, 0, defenseBonus) ? 1 : 0;
         }
         return counterHits;
     }
@@ -159,14 +179,13 @@ public abstract class BattleUnit implements Serializable {
 
     private int checkForFlankOrRear(BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
         if (attackDirection == defender.getDirection()) {
-            battleState.println("- Rear attack! (+2 to attack)");
+            battleState.println("Rear attack! (+2 to attack)");
             return 2;
         }
         if (attackDirection == defender.getDirection().getOpposite()) {
-            battleState.println(".");
             return 0;
         }
-        battleState.println("- Flank attack! (+1 to attack)");
+        battleState.println("Flank attack! (+1 to attack)");
         return 1;
     }
 

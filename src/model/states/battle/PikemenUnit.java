@@ -1,5 +1,6 @@
 package model.states.battle;
 
+import model.enemies.MountedEnemy;
 import view.MyColors;
 import view.sprites.Sprite;
 
@@ -29,5 +30,23 @@ public class PikemenUnit extends BattleUnit {
             return sprites;
         }
         return spritesMany;
+    }
+
+    @Override
+    protected int getSpecificVSAttackBonusWhenAttacking(BattleState battleState, BattleUnit defender) {
+        return bonusVSMounted(battleState, defender);
+    }
+
+    @Override
+    protected int getSpecificVSAttackBonusWhenDefending(BattleState battleState, BattleUnit attacker) {
+        return bonusVSMounted(battleState, attacker);
+    }
+
+    private int bonusVSMounted(BattleState battleState, BattleUnit defender) {
+        if (defender instanceof MountedBattleUnit) {
+            battleState.println(getName() + " get +2 attack bonus against mounted units.");
+            return 2;
+        }
+        return 0;
     }
 }

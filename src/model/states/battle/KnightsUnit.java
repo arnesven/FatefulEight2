@@ -3,7 +3,7 @@ package model.states.battle;
 import view.MyColors;
 import view.sprites.Sprite;
 
-public class KnightsUnit extends BattleUnit {
+public class KnightsUnit extends BattleUnit implements MountedBattleUnit {
     private final Sprite[] spritesFew;
     private final Sprite[] sprites;
 

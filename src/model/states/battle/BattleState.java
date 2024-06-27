@@ -185,8 +185,6 @@ public class BattleState extends GameState {
         if (other == null) {
             if (!action.isNoPrompt()) {
                 print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
-            } else {
-                println(performer.getQualifiedName() + " move " + direction.asText + ".");
             }
             if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - moveCost);
