@@ -185,6 +185,8 @@ public class BattleState extends GameState {
         if (other == null) {
             if (!action.isNoPrompt()) {
                 print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
+            } else {
+                delay(200);
             }
             if (action.isNoPrompt() || yesNoInput()) {
                 performer.setMP(performer.getMP() - moveCost);
@@ -204,6 +206,14 @@ public class BattleState extends GameState {
                 subView.removeDustCloudAnimation();
                 performer.setMP(0);
             }
+        }
+    }
+
+    private void delay(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
