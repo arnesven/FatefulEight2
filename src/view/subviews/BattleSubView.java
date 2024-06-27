@@ -9,6 +9,7 @@ import view.sprites.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,11 @@ public class BattleSubView extends SubView {
     private Point dustCloudAnimationPos = null;
     private List<BattleUnit> unitsNotToDraw = new ArrayList<>();
 
+    private Point2D.Double shootingPosition = null;
+    private Point2D.Double shootingTarget = null;
+    private Point2D.Double shootingDxDy = null;
+    private Sprite shootingSpriteToUse = null;
+
     public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units, BattleState state) {
         this.terrain = terrain;
         this.units = units;
@@ -44,6 +50,7 @@ public class BattleSubView extends SubView {
             drawCursor(model);
         }
         drawButtons(model);
+        drawShootingEffect(model);
     }
 
     private void drawButtons(Model model) {
@@ -225,6 +232,53 @@ public class BattleSubView extends SubView {
     }
 
     public void doRangedAttackAnimation(BattleUnit performer, Point targetPoint) {
-        // TODO
+        Point p = state.getPositionForUnit(performer);
+        Point from = convertToScreen(p.x, p.y);
+        this.shootingPosition = new Point2D.Double(from.x*8.0, from.y*8.0);
+        Point to = convertToScreen(targetPoint.x, targetPoint.y);
+        this.shootingTarget = new Point2D.Double(to.x*8, to.y*8);
+        double distance = shootingTarget.distance(shootingPosition);
+        this.shootingDxDy = new Point2D.Double(
+                (shootingTarget.x - shootingPosition.x) / distance,
+                (shootingTarget.y - shootingPosition.y) / distance);
+
+        this.shootingSpriteToUse = new Sprite32x32("shootingtouse", "battle_symbols.png", 0x21,
+                MyColors.BLACK, MyColors.DARK_RED, MyColors.WHITE);
+
+        double angle = Math.toDegrees(Math.atan2(from.y - to.y, from.x - to.x));
+        System.out.println("Rotation angle " + angle);
+        angle += 90.0;
+        while (angle < 0.0) { // TODO: Something wrong with the angles here...
+            angle += 360.0;
+        }
+        System.out.println("Setting rotation " + angle);
+        shootingSpriteToUse.setRotation(angle);
+
+    }
+
+    private void drawShootingEffect(Model model) {
+        if (shootingPosition == null) {
+            return;
+        }
+        double distance = shootingPosition.distance(shootingTarget);
+        if (distance < 16.0) {
+            shootingPosition = null;
+            shootingTarget = null;
+            shootingDxDy = null;
+            this.shootingSpriteToUse.setRotation(0);
+            this.shootingSpriteToUse = null;
+        } else {
+            double speed = 8.0;
+            shootingPosition = new Point2D.Double(
+                    shootingDxDy.x * speed + shootingPosition.x,
+                    shootingDxDy.y * speed + shootingPosition.y);
+
+            Point screenPosition = new Point((int)Math.floor(shootingPosition.x / 8.0),
+                                             (int)Math.floor(shootingPosition.y / 8.0));
+            int xShift = (int)shootingPosition.x % 8;
+            int yShift = (int)shootingPosition.y % 8;
+            model.getScreenHandler().register(shootingSpriteToUse.getName(), screenPosition,
+                    shootingSpriteToUse, 4, xShift, yShift);
+        }
     }
 }

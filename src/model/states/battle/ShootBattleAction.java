@@ -14,8 +14,8 @@ public class ShootBattleAction extends BattleAction {
 
     private static final Sprite32x32 RANGE_BOX = new Sprite32x32("rangebox", "battle_symbols.png",
             0x20, MyColors.RED, MyColors.DARK_RED, MyColors.WHITE);
-    private static final int LONG_RANGE = 5;
-    private static final int SHORT_RANGE = 3;
+    private static final int LONG_RANGE = 6;
+    private static final int SHORT_RANGE = 4;
     private final SteppingMatrix<Integer> grid;
     private static final Sprite CURSOR = new CombatCursorSprite(MyColors.RED);
 
