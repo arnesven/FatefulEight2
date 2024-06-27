@@ -10,6 +10,7 @@ import view.sprites.Sprite8x8;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.List;
 
 public abstract class BattleUnit implements Serializable {
 
@@ -193,8 +194,8 @@ public abstract class BattleUnit implements Serializable {
         count = i;
     }
 
-    private boolean doOneAttack(BattleState battleState, BattleUnit defender, int flankOrRearBonus, int defenseBonus) {
-        return MyRandom.rollD10() + combatSkillBonus + flankOrRearBonus >= defender.getDefense() + defenseBonus;
+    private boolean doOneAttack(BattleState battleState, BattleUnit defender, int attackBonus, int defenseBonus) {
+        return MyRandom.rollD10() + combatSkillBonus + attackBonus >= defender.getDefense() + defenseBonus;
     }
 
     private int getDefense() {
@@ -220,5 +221,23 @@ public abstract class BattleUnit implements Serializable {
             result[i] = spr;
         }
         return result;
+    }
+
+    public List<BattleAction> getBattleActions(BattleState battleState) {
+        return List.of(new MoveOrAttackBattleAction(this));
+    }
+
+    public void doRangedAttackOn(BattleState battleState, BattleUnit target) {
+        BattleTerrain terrain = battleState.getTerrainForPosition(battleState.getPositionForUnit(target));
+        int targetCoverBonus = 0;
+        if (terrain != null) {
+            targetCoverBonus = terrain.getCoverDefenseBonus(battleState);
+        }
+        int hits = 0;
+        for (int i = 0; i < getCount(); ++i) {
+            hits += doOneAttack(battleState, target, 0, targetCoverBonus) ? 1 : 0;
+        }
+        battleState.println("Ranged attack does " + hits + " hits.");
+        target.takeCasualties(battleState, hits);
     }
 }

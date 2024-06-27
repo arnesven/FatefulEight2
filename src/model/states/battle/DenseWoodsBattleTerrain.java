@@ -14,4 +14,10 @@ public class DenseWoodsBattleTerrain extends BattleTerrain {
     public int getMoveCost() {
         return BattleTerrain.ROUGH_TERRAIN_MOVE_COST;
     }
+
+    @Override
+    public int getCoverDefenseBonus(BattleState battleState) {
+        battleState.println("Target has cover (+3 to defense).");
+        return 3;
+    }
 }

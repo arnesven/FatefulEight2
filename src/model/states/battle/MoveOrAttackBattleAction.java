@@ -10,7 +10,7 @@ public class MoveOrAttackBattleAction extends BattleAction {
     private boolean isExecuting = false;
 
     public MoveOrAttackBattleAction(BattleUnit unit) {
-        super(unit);
+        super("Move/Attack", unit);
     }
 
     @Override

@@ -9,4 +9,10 @@ public class WoodsBattleTerrain extends BattleTerrain {
     public WoodsBattleTerrain() {
         super("Woods", loc);
     }
+
+    @Override
+    public int getCoverDefenseBonus(BattleState battleState) {
+        battleState.println("Defender has partial cover (+1 to defense).");
+        return 1;
+    }
 }

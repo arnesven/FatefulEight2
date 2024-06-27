@@ -40,7 +40,9 @@ public class BattleSubView extends SubView {
         drawGround(model);
         drawTerrain(model);
         drawUnits(model);
-        drawCursor(model);
+        if (pendingBattleAction == null) {
+            drawCursor(model);
+        }
         drawButtons(model);
     }
 
@@ -92,7 +94,7 @@ public class BattleSubView extends SubView {
         }
     }
 
-    private Point convertToScreen(int x, int y) {
+    public Point convertToScreen(int x, int y) {
         return new Point(X_OFFSET + x*4, Y_OFFSET + y*4);
     }
 
@@ -150,7 +152,7 @@ public class BattleSubView extends SubView {
         for (int i = grid.getColumns() * (grid.getRows()-1); i > 0; --i) {
             grid.addElementLast(i);
         }
-        grid.setSelectedElement(40);
+        grid.setSelectedElement(44);
         grid.addElement(3, grid.getRows()-1, 0);
         grid.addElement(4, grid.getRows()-1, -1);
         return grid;
@@ -220,5 +222,9 @@ public class BattleSubView extends SubView {
 
     private boolean isDrawingDustCloud() {
         return this.dustCloudAnimationPos != null;
+    }
+
+    public void doRangedAttackAnimation(BattleUnit performer, Point targetPoint) {
+        // TODO
     }
 }

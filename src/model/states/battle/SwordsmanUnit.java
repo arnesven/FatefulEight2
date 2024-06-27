@@ -9,7 +9,7 @@ public class SwordsmanUnit extends BattleUnit {
     private final Sprite[] spritesTwo;
 
     public SwordsmanUnit(int count, String origin, MyColors color) {
-        super("Swordsmen", count, 3, 8, 5, origin);
+        super("Swordsmen", count, 3, 8, 4, origin);
         this.spritesSeven = makeSpriteSet(0, 0, MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.WHITE, color);
         this.spritesFour = makeSpriteSet(0, 4, MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.WHITE, color);
         this.spritesTwo = makeSpriteSet(0, 8, MyColors.BLACK, MyColors.LIGHT_GRAY, MyColors.WHITE, color);

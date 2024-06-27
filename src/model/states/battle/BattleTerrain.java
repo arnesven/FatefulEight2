@@ -34,4 +34,8 @@ public abstract class BattleTerrain {
     public int getMoveCost() {
         return DEFAULT_MOVE_COST;
     }
+
+    public int getCoverDefenseBonus(BattleState battleState) {
+        return 0;
+    }
 }

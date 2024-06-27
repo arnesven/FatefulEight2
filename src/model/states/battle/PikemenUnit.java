@@ -1,6 +1,5 @@
 package model.states.battle;
 
-import model.enemies.MountedEnemy;
 import view.MyColors;
 import view.sprites.Sprite;
 
@@ -10,7 +9,7 @@ public class PikemenUnit extends BattleUnit {
     private final Sprite[] spritesMany;
 
     public PikemenUnit(int count, String origin, MyColors color) {
-        super("Pikemen", count, 1, 5, 6, origin);
+        super("Pikemen", count, 1, 5, 5, origin);
         if (color == MyColors.WHITE) {
             color = MyColors.GRAY;
         } else if (color == MyColors.YELLOW) {

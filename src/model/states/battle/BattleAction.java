@@ -11,10 +11,16 @@ public abstract class BattleAction {
 
     public static final Sprite CURRENT_MARKER = new QuestCursorSprite();
     private final BattleUnit performer;
+    private final String name;
     private boolean noPrompt = false;
 
-    public BattleAction(BattleUnit unit) {
+    public BattleAction(String name, BattleUnit unit) {
+        this.name = name;
         this.performer = unit;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public BattleUnit getPerformer() {

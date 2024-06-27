@@ -28,7 +28,8 @@ public class BattleState extends GameState {
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
         super(model);
         this.terrain = new SteppingMatrix<>(BATTLE_GRID_WIDTH, BATTLE_GRID_HEIGHT);
-        terrain.addElement(2, 5, new WaterBattleTerrain());
+        terrain.addElement(2, 2, new WaterBattleTerrain());
+        terrain.addElement(0, 6, new HillsBattleTerrain());
         terrain.addElement(3, 3, new WoodsBattleTerrain());
         terrain.addElement(4, 4, new HillsBattleTerrain());
         terrain.addElement(5, 5, new DenseWoodsBattleTerrain());
@@ -84,13 +85,13 @@ public class BattleState extends GameState {
         boolean abandoned = false;
         while (!(allVanquished(playerUnits) || allVanquished(opponentUnits))) {
             println("Your turn.");
-            abandoned = !doPlayerTurn(model, subView, playerUnits);
+            abandoned = !doPlayerTurn(model, playerUnits);
             if (abandoned || allVanquished(opponentUnits) || allVanquished(playerUnits)) {
                 break;
             }
             String sideName = CastleLocation.placeNameShort(playingAggressor ? war.getDefender() : war.getAggressor());
             println(sideName + "'s turn.");
-            doAITurn(model, subView, opponentUnits);
+            doAITurn(model, opponentUnits);
         }
 
         if (abandoned) {
@@ -108,7 +109,7 @@ public class BattleState extends GameState {
         return !MyLists.any(opponentUnits, (BattleUnit bu) -> units.getElementList().contains(bu));
     }
 
-    private void doAITurn(Model model, BattleSubView subView, List<BattleUnit> opponentUnits) {
+    private void doAITurn(Model model, List<BattleUnit> opponentUnits) {
         MyLists.forEach(opponentUnits, BattleUnit::refillMovementPoints);
         subView.showMovementPointsForUnits(opponentUnits);
         opponentAI.startTurn(model, subView, this, opponentUnits);
@@ -117,9 +118,9 @@ public class BattleState extends GameState {
         } while (!opponentAI.isDone());
     }
 
-    private boolean doPlayerTurn(Model model, BattleSubView subView, List<BattleUnit> units) {
-        MyLists.forEach(units, BattleUnit::refillMovementPoints);
-        subView.showMovementPointsForUnits(units);
+    private boolean doPlayerTurn(Model model, List<BattleUnit> playerUnits) {
+        MyLists.forEach(playerUnits, BattleUnit::refillMovementPoints);
+        subView.showMovementPointsForUnits(playerUnits);
         do {
             waitForReturnSilently();
             if (subView.cursorIsOnQuit()) {
@@ -130,10 +131,20 @@ public class BattleState extends GameState {
             }
             if (!subView.handlePendingBattleAction(model, this)) {
                 BattleUnit unit = subView.getUnitUnderCursor();
-                if (unit != null) {
-                    if ((playingAggressor && war.getAggressorUnits().contains(unit)) ||
-                            (!playingAggressor && war.getDefenderUnits().contains(unit))) {
-                        subView.setPendingBattleAction(new MoveOrAttackBattleAction(unit));
+                if (unit != null && unit.getMP() > 0) {
+                    if (playerUnits.contains(unit)) {
+                        List<BattleAction> listOfActions = unit.getBattleActions(this);
+                        BattleAction selectedBattleAction = null;
+                        if (listOfActions.size() > 1) {
+                            List<String> actionNames = MyLists.transform(listOfActions, BattleAction::getName);
+                            Point p = units.getPositionFor(unit);
+                            p = subView.convertToScreen(p.x, p.y);
+                            int selected = multipleOptionArrowMenu(model, p.x, p.y, actionNames);
+                            selectedBattleAction = listOfActions.get(selected);
+                        } else {
+                            selectedBattleAction = listOfActions.get(0);
+                        }
+                        subView.setPendingBattleAction(selectedBattleAction);
                     } else {
                         println("You cannot direct the enemy's unit.");
                     }
@@ -143,7 +154,7 @@ public class BattleState extends GameState {
             } else {
                 subView.cancelPending();
             }
-        } while (!turnIsOver(units));
+        } while (!turnIsOver(playerUnits));
         return true;
     }
 
@@ -199,7 +210,6 @@ public class BattleState extends GameState {
                 println(performer.getQualifiedName() + " attack " + other.getQualifiedName() + "!");
             }
             if (action.isNoPrompt() || yesNoInput()) {
-                performer.setMP(performer.getMP() - moveCost);
                 subView.startDustCloudAnimation(units.getPositionFor(other), List.of(performer, other));
                 performer.doAttackOn(model, this, other, direction);
                 model.getLog().waitForAnimationToFinish();
@@ -273,5 +283,30 @@ public class BattleState extends GameState {
             return BattleTerrain.DEFAULT_MOVE_COST;
         }
         return destinationTerrain.getMoveCost();
+    }
+
+    public BattleSubView getSubView() {
+        return subView;
+    }
+
+    public void rangedAttack(Model model, BattleUnit performer, BattleAction action, Point targetPoint) {
+        BattleUnit other = units.getElementAt(targetPoint.x, targetPoint.y);
+        if (other == null) {
+            return;
+        }
+        if (other.getOrigin().equals(performer.getOrigin())) {
+            println("You can't attack your own unit.");
+            return;
+        }
+        if (!action.isNoPrompt()) {
+            print("Make ranged attack on " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
+        } else {
+            println(performer.getQualifiedName() + " make a ranged attack on " + other.getQualifiedName() + "!");
+        }
+        if (action.isNoPrompt() || yesNoInput()) {
+            subView.doRangedAttackAnimation(performer, targetPoint);
+            performer.doRangedAttackOn(this, other);
+            performer.setMP(0);
+        }
     }
 }
