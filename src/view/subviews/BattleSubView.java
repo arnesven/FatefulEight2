@@ -203,6 +203,7 @@ public class BattleSubView extends SubView {
     public void startDustCloudAnimation(Point position, List<BattleUnit> unitsNotToDraw) {
         dustCloudSprite = new LoopingSprite("dustcloud", "battle_symbols.png", 0x10, 32, 32);
         dustCloudSprite.setFrames(4);
+        dustCloudSprite.setDelay(8);
         dustCloudSprite.setColor1(MyColors.GRAY);
         dustCloudSprite.setColor2(MyColors.LIGHT_GRAY);
         dustCloudSprite.setColor3(MyColors.BEIGE);

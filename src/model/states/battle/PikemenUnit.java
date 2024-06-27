@@ -15,9 +15,9 @@ public class PikemenUnit extends BattleUnit {
         } else if (color == MyColors.YELLOW) {
             color = MyColors.GOLD;
         }
-        this.spritesMany = makeSpriteSet(1, 0, MyColors.BLACK, MyColors.BEIGE, MyColors.PINK, color);
-        this.sprites = makeSpriteSet(1, 4, MyColors.BLACK, MyColors.BEIGE, MyColors.PINK, color);
-        this.spritesFew = makeSpriteSet(1, 8, MyColors.BLACK, MyColors.BEIGE, MyColors.PINK, color);
+        this.spritesMany = makeSpriteSet(1, 0, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
+        this.sprites = makeSpriteSet(1, 4, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
+        this.spritesFew = makeSpriteSet(1, 8, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
     }
 
     @Override

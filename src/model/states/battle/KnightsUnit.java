@@ -14,6 +14,11 @@ public class KnightsUnit extends BattleUnit {
     }
 
     @Override
+    protected boolean hasFirstStrike() {
+        return true;
+    }
+
+    @Override
     protected Sprite[] getSprites() {
         if (getCount() < 4) {
             return spritesFew;

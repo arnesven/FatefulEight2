@@ -36,6 +36,22 @@ public abstract class BattleUnit implements Serializable {
 
     protected abstract Sprite[] getSprites();
 
+    public void refillMovementPoints() {
+        this.currentMP = maximumMP;
+    }
+
+    public int getMP() {
+        return currentMP;
+    }
+
+    protected void setMP(int mp) {
+        currentMP = mp;
+    }
+
+    public int getTurnCost() {
+        return DEFAULT_TURN_COST;
+    }
+
     public void drawYourself(ScreenHandler screenHandler, Point p, boolean withMp, int prio) {
         Sprite spr = getSprites()[direction.value];
         screenHandler.register(spr.getName(), p, spr, prio);
@@ -48,6 +64,10 @@ public abstract class BattleUnit implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getQualifiedName() {
+        return getOrigin() + " " + getName();
     }
 
     public int getCount() {
@@ -66,36 +86,35 @@ public abstract class BattleUnit implements Serializable {
         return direction;
     }
 
-    public void doAttackOn(Model model, BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
-        battleState.print(getQualifiedName() + " attack " + defender.getQualifiedName());
-        int flankOrRearBonus = checkForFlankOrRear(battleState, defender, attackDirection);
-        int highGroundBonus = checkForHighGroundBonus(battleState, defender);
+    public void wipeOut(BattleState battleState) {
+        setCount(0);
+        battleState.removeUnit(this);
+        battleState.println(getQualifiedName() + " have been wiped out!");
+    }
 
+    public void doAttackOn(Model model, BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
+        int flankOrRearBonus = checkForFlankOrRear(battleState, defender, attackDirection);
         int hits = 0;
         for (int i = 0; i < getCount(); ++i) {
             hits += doOneAttack(battleState, defender, flankOrRearBonus, 0) ? 1 : 0;
         }
+
         int counterHits = 0;
-        for (int i = 0; i < defender.getCount(); ++i) {
-            counterHits += defender.doOneAttack(battleState, this, 0, highGroundBonus) ? 1 : 0;
-        }
-        battleState.println("Attacker does " + hits + " hits, defender does " + counterHits + " hits.");
-
-        boolean attackerWins = false;
-        if (defender.getCount() <= hits) {
-            defender.wipeOut(battleState);
-            attackerWins = true;
+        if (this.hasFirstStrike()) {
+            battleState.println("Attacker has First Strike, does " + hits + " hits.");
+            defender.takeCasualties(battleState, hits);
+            if (defender.getCount() > 0) {
+                counterHits = defenderCounterAttack(battleState, defender);
+            }
         } else {
-            defender.setCount(defender.getCount() - hits);
-            attackerWins = hits > counterHits;
+            counterHits = defenderCounterAttack(battleState, defender);
+            battleState.println("Attacker does " + hits + " hits, defender does " + counterHits + " hits.");
+            defender.takeCasualties(battleState, hits);
         }
 
-        if (getCount() <= counterHits) {
-            this.wipeOut(battleState);
-        } else {
-            setCount(getCount() - counterHits);
-        }
+        this.takeCasualties(battleState, counterHits);
 
+        boolean attackerWins = defender.getCount() == 0 || hits > counterHits;
         if (getCount() > 0) {
             if (attackerWins) {
                 if (defender.getCount() > 0) {
@@ -107,6 +126,27 @@ public abstract class BattleUnit implements Serializable {
                 defender.setDirection(attackDirection.getOpposite());
             }
         }
+    }
+
+    protected boolean hasFirstStrike() {
+        return false;
+    }
+
+    private void takeCasualties(BattleState battleState, int hits) {
+        if (getCount() <= hits) {
+            this.wipeOut(battleState);
+        } else {
+            setCount(getCount() - hits);
+        }
+    }
+
+    private int defenderCounterAttack(BattleState battleState, BattleUnit defender) {
+        int highGroundBonus = checkForHighGroundBonus(battleState, defender);
+        int counterHits = 0;
+        for (int i = 0; i < defender.getCount(); ++i) {
+            counterHits += defender.doOneAttack(battleState, this, 0, highGroundBonus) ? 1 : 0;
+        }
+        return counterHits;
     }
 
     private int checkForHighGroundBonus(BattleState battleState, BattleUnit defender) {
@@ -130,22 +170,12 @@ public abstract class BattleUnit implements Serializable {
         return 1;
     }
 
-    public void wipeOut(BattleState battleState) {
-        setCount(0);
-        battleState.removeUnit(this);
-        battleState.println(getQualifiedName() + " has been wiped out!");
-    }
-
     private void setCount(int i) {
         count = i;
     }
 
     private boolean doOneAttack(BattleState battleState, BattleUnit defender, int flankOrRearBonus, int defenseBonus) {
         return MyRandom.rollD10() + combatSkillBonus + flankOrRearBonus >= defender.getDefense() + defenseBonus;
-    }
-
-    public String getQualifiedName() {
-        return getOrigin() + " " + getName();
     }
 
     private int getDefense() {
@@ -162,11 +192,6 @@ public abstract class BattleUnit implements Serializable {
         return result;
     }
 
-    public void refillMovementPoints() {
-        this.currentMP = maximumMP;
-    }
-
-
     private static Sprite8x8[] makeMPSprites() {
         Sprite8x8[] result = new Sprite8x8[16];
         for (int i = 0; i < result.length; ++i) {
@@ -176,17 +201,5 @@ public abstract class BattleUnit implements Serializable {
             result[i] = spr;
         }
         return result;
-    }
-
-    public int getMP() {
-        return currentMP;
-    }
-
-    protected void setMP(int mp) {
-        currentMP = mp;
-    }
-
-    public int getTurnCost() {
-        return DEFAULT_TURN_COST;
     }
 }
