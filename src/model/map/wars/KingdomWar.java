@@ -22,15 +22,12 @@ public class KingdomWar implements Serializable {
         this.defender = defender;
         String aggressorName = CastleLocation.placeNameShort(aggressor);
         aggressorUnits = new ArrayList<>();
-        for (int i = 2; i <= 12; i +=4) {
-            aggressorUnits.add(new SwordsmanUnit(i, aggressorName, aggressorColor));
-        }
-        for (int i = 2; i <= 12; i +=4) {
-            aggressorUnits.add(new PikemenUnit(i, aggressorName, aggressorColor));
-        }
+        aggressorUnits.add(new SwordsmanUnit(10, aggressorName, aggressorColor));
         aggressorUnits.add(new KnightsUnit(4, aggressorName, aggressorColor));
-        aggressorUnits.add(new KnightsUnit(2, aggressorName, aggressorColor));
+        aggressorUnits.add(new PikemenUnit(12, aggressorName, aggressorColor));
         aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
+        aggressorUnits.add(new MilitiaUnit(16, aggressorName, aggressorColor));
+
 
         String defenderName = CastleLocation.placeNameShort(defender);
         defenderUnits = new ArrayList<>();

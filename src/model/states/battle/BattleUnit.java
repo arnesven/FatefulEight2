@@ -16,6 +16,7 @@ public abstract class BattleUnit implements Serializable {
 
     private static final Sprite8x8[] MP_SPRITES = makeMPSprites();
     private static final int DEFAULT_TURN_COST = 1;
+    protected static MyColors UNIFORM_COLOR = MyColors.BEIGE;
     private final String name;
     private final int maximumMP;
     private int currentMP;
@@ -123,12 +124,27 @@ public abstract class BattleUnit implements Serializable {
                 if (defender.getCount() > 0) {
                     battleState.retreatUnit(defender, attackDirection);
                 }
-                battleState.moveUnitInDirection(this, attackDirection);
+                if (!defender.checkForRout(battleState)) {
+                    battleState.moveUnitInDirection(this, attackDirection);
+                }
             } else {
                 battleState.println("Attacker has lost the fight and must retreat back to its original space.");
                 defender.setDirection(attackDirection.getOpposite());
             }
         }
+    }
+
+    private boolean checkForRout(BattleState battleState) {
+        if (hasLowMorale() && getCount() < 4) {
+            battleState.println(getQualifiedName() + " has been routed and flees the battlefield!");
+            battleState.removeUnit(this);
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean hasLowMorale() {
+        return false;
     }
 
     protected int getSpecificVSDefenseBonusWhenDefending(BattleState battleState, BattleUnit attacker) {
@@ -239,5 +255,14 @@ public abstract class BattleUnit implements Serializable {
         }
         battleState.println("Ranged attack does " + hits + " hits.");
         target.takeCasualties(battleState, hits);
+    }
+
+    protected static MyColors fixColor(MyColors color) {
+        if (color == MyColors.WHITE) {
+            return MyColors.GRAY;
+        } if (color == MyColors.YELLOW) {
+            return MyColors.GOLD;
+        }
+        return color;
     }
 }

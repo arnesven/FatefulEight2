@@ -12,14 +12,10 @@ public class ArchersUnit extends BattleUnit {
 
     public ArchersUnit(int count, String origin, MyColors color) {
         super("Archers", count, 0, 5, 5, origin);
-        if (color == MyColors.WHITE) {
-            color = MyColors.GRAY;
-        } else if (color == MyColors.YELLOW) {
-            color = MyColors.GOLD;
-        }
-        this.spritesSeven = makeSpriteSet(3, 0, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
-        this.spritesFour = makeSpriteSet(3, 4, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
-        this.spritesTwo = makeSpriteSet(3, 8, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
+        color = fixColor(color);
+        this.spritesSeven = makeSpriteSet(3, 0, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
+        this.spritesFour = makeSpriteSet(3, 4, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
+        this.spritesTwo = makeSpriteSet(3, 8, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
     }
 
     @Override

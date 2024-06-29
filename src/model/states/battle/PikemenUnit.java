@@ -9,15 +9,11 @@ public class PikemenUnit extends BattleUnit {
     private final Sprite[] spritesMany;
 
     public PikemenUnit(int count, String origin, MyColors color) {
-        super("Pikemen", count, 1, 5, 5, origin);
-        if (color == MyColors.WHITE) {
-            color = MyColors.GRAY;
-        } else if (color == MyColors.YELLOW) {
-            color = MyColors.GOLD;
-        }
-        this.spritesMany = makeSpriteSet(1, 0, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
-        this.sprites = makeSpriteSet(1, 4, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
-        this.spritesFew = makeSpriteSet(1, 8, MyColors.BLACK, MyColors.BEIGE, MyColors.PEACH, color);
+        super("Pikemen", count, 1, 6, 5, origin);
+        color = super.fixColor(color);
+        this.spritesMany = makeSpriteSet(1, 0, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
+        this.sprites = makeSpriteSet(1, 4, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
+        this.spritesFew = makeSpriteSet(1, 8, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
     }
 
     @Override
