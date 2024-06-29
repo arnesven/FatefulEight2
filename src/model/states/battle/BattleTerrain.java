@@ -38,4 +38,6 @@ public abstract class BattleTerrain {
     public int getCoverDefenseBonus(BattleState battleState) {
         return 0;
     }
+
+    public abstract String getHelpNote();
 }

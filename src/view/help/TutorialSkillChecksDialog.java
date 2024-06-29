@@ -22,7 +22,7 @@ public class TutorialSkillChecksDialog extends ExpandableHelpDialog {
             "the whole skill check is successful.";
 
     public TutorialSkillChecksDialog(GameView view) {
-        super(view, "Skill Checks", text);
+        super(view, "Skill Checks", text, false);
     }
 
     @Override

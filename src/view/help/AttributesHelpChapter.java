@@ -30,7 +30,7 @@ public class AttributesHelpChapter extends ExpandableHelpDialog {
             "Many weapons and other items affect a character's speed.";
 
     public AttributesHelpChapter(GameView view) {
-        super(view, "Attributes", TEXT);
+        super(view, "Attributes", TEXT, false);
     }
 
     @Override

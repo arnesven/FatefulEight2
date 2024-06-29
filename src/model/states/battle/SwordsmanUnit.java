@@ -1,6 +1,9 @@
 package model.states.battle;
 
+import view.GameView;
 import view.MyColors;
+import view.help.BattleUnitHelpDialog;
+import view.help.HelpDialog;
 import view.sprites.Sprite;
 
 public class SwordsmanUnit extends BattleUnit {
@@ -24,5 +27,11 @@ public class SwordsmanUnit extends BattleUnit {
             return spritesFour;
         }
         return spritesSeven;
+    }
+
+    @Override
+    public HelpDialog getHelpSection(GameView view) {
+        return new BattleUnitHelpDialog(view, this,
+                "Swordsmen units are heavily armed and armored fighters.");
     }
 }

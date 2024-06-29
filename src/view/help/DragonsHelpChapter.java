@@ -17,7 +17,7 @@ public class DragonsHelpChapter extends ExpandableHelpDialog {
             "Elder Dragons have hard armor and can knock down their opponents with forceful blows.";
 
     public DragonsHelpChapter(GameView view) {
-        super(view, "Dragons", TEXT);
+        super(view, "Dragons", TEXT, false);
     }
 
     @Override

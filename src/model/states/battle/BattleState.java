@@ -79,6 +79,8 @@ public class BattleState extends GameState {
         this.subView = new BattleSubView(terrain, units, this);
         StripedTransition.transition(model, subView); // TODO: Make new transition for this.
 
+        model.getTutorial().battles(model);
+
         List<BattleUnit> playerUnits = playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
         List<BattleUnit> opponentUnits = playingAggressor ? war.getDefenderUnits() : war.getAggressorUnits();
 

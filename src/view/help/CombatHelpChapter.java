@@ -1,7 +1,5 @@
 package view.help;
 
-import model.tutorial.TutorialCombatAttacks;
-import model.tutorial.TutorialQuickCasting;
 import view.GameView;
 
 import java.util.List;
@@ -17,7 +15,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
             "is constructed based on the combatants speed attributes.";
 
     public CombatHelpChapter(GameView view) {
-        super(view, "Combat", TEXT);
+        super(view, "Combat", TEXT, false);
     }
 
     @Override
@@ -44,12 +42,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                 "fulfill certain criteria.";
 
         public CombatAbilitiesChapter() {
-            super(null, "Abilities", ABILITIES_TEXT);
-        }
-
-        @Override
-        public String getTitle() {
-            return ((char)0x7D) + super.getTitle();
+            super(null, "Abilities", ABILITIES_TEXT, true);
         }
 
         @Override

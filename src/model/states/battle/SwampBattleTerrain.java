@@ -11,4 +11,9 @@ public class SwampBattleTerrain extends BattleTerrain {
     public int getMoveCost() {
         return ROUGH_TERRAIN_MOVE_COST;
     }
+
+    @Override
+    public String getHelpNote() {
+        return "";
+    }
 }

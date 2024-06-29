@@ -2,8 +2,10 @@ package model.states.battle;
 
 import model.Model;
 import util.MyRandom;
+import view.GameView;
 import view.MyColors;
 import view.ScreenHandler;
+import view.help.HelpDialog;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.sprites.Sprite8x8;
@@ -16,6 +18,9 @@ public abstract class BattleUnit implements Serializable {
 
     private static final Sprite8x8[] MP_SPRITES = makeMPSprites();
     private static final int DEFAULT_TURN_COST = 1;
+    public static final int ROUT_THRESHOLD = 4;
+    public static final int REAR_ATTACK_BONUS = 2;
+    public static final int FLANK_ATTACK_BONUS = 1;
     protected static MyColors UNIFORM_COLOR = MyColors.BEIGE;
     private final String name;
     private final int maximumMP;
@@ -97,7 +102,8 @@ public abstract class BattleUnit implements Serializable {
     public void doAttackOn(Model model, BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
         int attackBonus = checkForFlankOrRear(battleState, defender, attackDirection);
         attackBonus += this.getSpecificVSAttackBonusWhenAttacking(battleState, defender);
-        int defenseBonus = defender.getSpecificVSDefenseBonusWhenDefending(battleState, this);
+        int defenseBonus = checkForHighGroundBonus(battleState, defender) +
+                defender.getSpecificVSDefenseBonusWhenDefending(battleState, this);
         int hits = 0;
         for (int i = 0; i < getCount(); ++i) {
             hits += doOneAttack(battleState, defender, attackBonus, defenseBonus) ? 1 : 0;
@@ -135,7 +141,7 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private boolean checkForRout(BattleState battleState) {
-        if (hasLowMorale() && getCount() < 4) {
+        if (hasLowMorale() && getCount() < ROUT_THRESHOLD) {
             battleState.println(getQualifiedName() + " has been routed and flees the battlefield!");
             battleState.removeUnit(this);
             return true;
@@ -176,12 +182,12 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private int defenderCounterAttack(BattleState battleState, BattleUnit defender) {
-        int defenseBonus = checkForHighGroundBonus(battleState, defender);
+        int defenseBonus = checkForHighGroundBonus(battleState, this);
         defenseBonus += this.getSpecificVSDefenseBonusWhenAttacking(battleState, defender);
         int attackBonus = defender.getSpecificVSAttackBonusWhenDefending(battleState, this);
         int counterHits = 0;
         for (int i = 0; i < defender.getCount(); ++i) {
-            counterHits += defender.doOneAttack(battleState, this, 0, defenseBonus) ? 1 : 0;
+            counterHits += defender.doOneAttack(battleState, this, attackBonus, defenseBonus) ? 1 : 0;
         }
         return counterHits;
     }
@@ -196,13 +202,13 @@ public abstract class BattleUnit implements Serializable {
 
     private int checkForFlankOrRear(BattleState battleState, BattleUnit defender, BattleDirection attackDirection) {
         if (attackDirection == defender.getDirection()) {
-            battleState.println("Rear attack! (+2 to attack)");
+            battleState.println("Rear attack! (+" + REAR_ATTACK_BONUS + " to attack)");
             return 2;
         }
         if (attackDirection == defender.getDirection().getOpposite()) {
             return 0;
         }
-        battleState.println("Flank attack! (+1 to attack)");
+        battleState.println("Flank attack! (+" + FLANK_ATTACK_BONUS + " to attack)");
         return 1;
     }
 
@@ -264,5 +270,13 @@ public abstract class BattleUnit implements Serializable {
             return MyColors.GOLD;
         }
         return color;
+    }
+
+    public abstract HelpDialog getHelpSection(GameView view);
+
+    public String getStatsString() {
+        return "Movement Points: " + maximumMP + "\n" +
+               "Combat Skill:    " + combatSkillBonus + "\n" +
+               "Defense:         " + defense;
     }
 }

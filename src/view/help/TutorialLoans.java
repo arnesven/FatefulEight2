@@ -1,4 +1,4 @@
-package model.tutorial;
+package view.help;
 
 import model.actions.Loan;
 import view.GameView;

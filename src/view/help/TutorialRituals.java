@@ -21,7 +21,7 @@ public class TutorialRituals extends ExpandableHelpDialog {
             "If the number of participants ever drop below five, the ritual automatically fails.";
 
     public TutorialRituals(GameView view) {
-        super(view, "Rituals", TEXT);
+        super(view, "Rituals", TEXT, false);
     }
 
     @Override

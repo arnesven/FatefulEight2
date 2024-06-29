@@ -1,6 +1,9 @@
 package model.states.battle;
 
+import view.GameView;
 import view.MyColors;
+import view.help.BattleUnitHelpDialog;
+import view.help.HelpDialog;
 import view.sprites.Sprite;
 
 import java.util.List;
@@ -22,6 +25,14 @@ public class ArchersUnit extends BattleUnit {
     public List<BattleAction> getBattleActions(BattleState battleState) {
         return List.of(new MoveOrAttackBattleAction(this),
                 new ShootBattleAction(this, battleState));
+    }
+
+    @Override
+    public HelpDialog getHelpSection(GameView view) {
+        return new BattleUnitHelpDialog(view, this,
+                "Archers are trained marksmen, wielding bows and crossbows. " +
+                         "Archers can perform ranged attacks at a range of " + ShootBattleAction.SHORT_RANGE +
+                        " (" + ShootBattleAction.LONG_RANGE + " if standing on a hill).");
     }
 
     @Override

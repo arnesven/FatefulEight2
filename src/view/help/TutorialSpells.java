@@ -18,7 +18,7 @@ public class TutorialSpells extends ExpandableHelpDialog {
             "or other game phases. Non-combat spells are cast from the Inventory or Spell Menu.";
 
     public TutorialSpells(GameView view) {
-        super(view, "Spells", TEXT);
+        super(view, "Spells", TEXT, false);
     }
 
     @Override

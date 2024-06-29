@@ -1,4 +1,4 @@
-package model.tutorial;
+package view.help;
 
 import view.GameView;
 import view.help.SubChapterHelpDialog;

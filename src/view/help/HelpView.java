@@ -1,9 +1,6 @@
 package view.help;
 
 import model.Model;
-import model.tutorial.TutorialAlignment;
-import model.tutorial.TutorialLoans;
-import model.tutorial.TutorialTraining;
 import view.GameView;
 import view.TwoPaneSelectableListMenu;
 import view.party.DrawableObject;
@@ -26,6 +23,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
             new TutorialAlignment(null),
             new AttributesHelpChapter(null),
             new TutorialAttitudes(null),
+            new TutorialBattles(null),
             new TutorialBounties(null),
             new TutorialBurglary(null),
             new TutorialCarryingCapacity(null),

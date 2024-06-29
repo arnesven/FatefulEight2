@@ -1,6 +1,9 @@
 package model.states.battle;
 
+import view.GameView;
 import view.MyColors;
+import view.help.BattleUnitHelpDialog;
+import view.help.HelpDialog;
 import view.sprites.Sprite;
 
 public class PikemenUnit extends BattleUnit {
@@ -10,7 +13,7 @@ public class PikemenUnit extends BattleUnit {
 
     public PikemenUnit(int count, String origin, MyColors color) {
         super("Pikemen", count, 1, 6, 5, origin);
-        color = super.fixColor(color);
+        color = fixColor(color);
         this.spritesMany = makeSpriteSet(1, 0, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
         this.sprites = makeSpriteSet(1, 4, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
         this.spritesFew = makeSpriteSet(1, 8, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
@@ -43,5 +46,13 @@ public class PikemenUnit extends BattleUnit {
             return 2;
         }
         return 0;
+    }
+
+
+    @Override
+    public HelpDialog getHelpSection(GameView view) {
+        return new BattleUnitHelpDialog(view, this, "Pikemen are infantry wielding long spears. " +
+                "They are particularly efficient against mounted units and enjoys a +2 " +
+                "attack bonus when attacking or being attacked by them.");
     }
 }

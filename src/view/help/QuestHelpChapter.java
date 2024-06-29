@@ -11,7 +11,7 @@ public class QuestHelpChapter extends ExpandableHelpDialog {
             "way of earning some gold and experience points for your party.";
 
     public QuestHelpChapter(GameView view) {
-        super(view, "Quests", TEXT);
+        super(view, "Quests", TEXT, false);
     }
 
     @Override

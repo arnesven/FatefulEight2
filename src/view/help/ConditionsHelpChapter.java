@@ -24,7 +24,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
             "about which remove them.";
 
     public ConditionsHelpChapter(GameView view) {
-        super(view, "Conditions", TEXT);
+        super(view, "Conditions", TEXT, false);
     }
 
     @Override

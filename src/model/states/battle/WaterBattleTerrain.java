@@ -22,6 +22,11 @@ public class WaterBattleTerrain extends BattleTerrain {
         return BattleTerrain.IMPASSIBLE_TERRAIN_MOVE_COST;
     }
 
+    @Override
+    public String getHelpNote() {
+        return "";
+    }
+
     private static class LakeBattleHexLocation extends HexLocation {
         public LakeBattleHexLocation() {
             super("Battle-Water");

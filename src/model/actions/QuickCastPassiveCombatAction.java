@@ -3,7 +3,7 @@ package model.actions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.tutorial.TutorialQuickCasting;
+import view.help.TutorialQuickCasting;
 import view.help.HelpDialog;
 
 public class QuickCastPassiveCombatAction extends PassiveCombatAction {

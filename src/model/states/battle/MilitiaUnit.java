@@ -1,6 +1,9 @@
 package model.states.battle;
 
+import view.GameView;
 import view.MyColors;
+import view.help.BattleUnitHelpDialog;
+import view.help.HelpDialog;
 import view.sprites.Sprite;
 
 public class MilitiaUnit extends BattleUnit {
@@ -19,6 +22,14 @@ public class MilitiaUnit extends BattleUnit {
     @Override
     protected boolean hasLowMorale() {
         return true;
+    }
+
+    @Override
+    public HelpDialog getHelpSection(GameView view) {
+        return new BattleUnitHelpDialog(view, this,
+                "Militia units are general infantry units. They are normally lightly equipped and can " +
+                        "move quickly across the battlefield. They are normally less disciplined than other units and " +
+                        "will be routed if falling below four combatants.");
     }
 
     @Override

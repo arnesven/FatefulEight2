@@ -18,7 +18,7 @@ public class TutorialRaces extends ExpandableHelpDialog {
             "skills.";
 
     public TutorialRaces(GameView view) {
-        super(view, "Races", text);
+        super(view, "Races", text, false);
     }
 
     @Override

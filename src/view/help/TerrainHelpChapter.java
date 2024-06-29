@@ -12,7 +12,7 @@ public class TerrainHelpChapter extends ExpandableHelpDialog {
             "kind of random events.";
 
     public TerrainHelpChapter(GameView view) {
-        super(view, "Terrain", TEXT);
+        super(view, "Terrain", TEXT, false);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class TutorialCrafting extends ExpandableHelpDialog {
             "humanoid enemies. There is no limit to how many materials you can carry.";
 
     public TutorialCrafting(GameView view) {
-        super(view, "Crafting", TEXT);
+        super(view, "Crafting", TEXT, false);
     }
 
     @Override

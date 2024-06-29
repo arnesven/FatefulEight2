@@ -18,7 +18,7 @@ public class TutorialClassesDialog extends ExpandableHelpDialog {
             "get a chance to switch back soon!";
 
     public TutorialClassesDialog(GameView view) {
-        super(view, "Classes", text);
+        super(view, "Classes", text, false);
     }
 
     @Override
