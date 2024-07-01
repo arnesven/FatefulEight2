@@ -198,18 +198,14 @@ public class BattleState extends GameState {
         BattleUnit other = getOtherUnitInDirection(performer, direction);
         int moveCost = movePointCostForDestination(performer, direction);
         if (other == null) {
-            if (!action.isNoPrompt()) {
-                print("Move " + performer.getName() + " " + direction.asText + " (" + moveCost + " MP)? (Y/N) ");
-            } else {
+            if (action.isNoPrompt()) {
                 delay(200);
             }
-            if (action.isNoPrompt() || yesNoInput()) {
-                performer.setMP(performer.getMP() - moveCost);
-                moveUnitInDirection(performer, direction);
-            }
+            performer.setMP(performer.getMP() - moveCost);
+            moveUnitInDirection(performer, direction);
         } else {
             if (!action.isNoPrompt()) {
-                print("Attack " + other.getQualifiedName() + " with " + performer.getName() + " (all MP)? (Y/N) ");
+                print("Attack " + other.getQualifiedName() + " with " + performer.getName() + " (uses all remaining MP)? (Y/N) ");
             } else {
                 println(performer.getQualifiedName() + " attack " + other.getQualifiedName() + "!");
                 delay(200);
@@ -305,7 +301,7 @@ public class BattleState extends GameState {
             return;
         }
         if (!action.isNoPrompt()) {
-            print("Make ranged attack on " + other.getQualifiedName() + " with " + performer.getName() + " (all MP)? (Y/N) ");
+            print("Make ranged attack on " + other.getQualifiedName() + " with " + performer.getName() + " (uses all remaining MP)? (Y/N) ");
         } else {
             println(performer.getQualifiedName() + " make a ranged attack on " + other.getQualifiedName() + "!");
             delay(200);

@@ -20,15 +20,11 @@ public class MoveOrAttackBattleAction extends BattleAction {
         if (this.direction == performer.getDirection()) {
             battleState.moveOrAttack(model, performer, this, direction);
         } else if (this.direction != null) {
-            if (!isNoPrompt()) {
-                battleState.print("Turn " + getPerformer().getName() + " (1 MP)? (Y/N) ");
-            } else {
+            if (isNoPrompt()) {
                 battleState.delay(200);
             }
-            if (isNoPrompt() || battleState.yesNoInput()) {
-                performer.setMP(performer.getMP() - performer.getTurnCost());
-                performer.setDirection(this.direction);
-            }
+            performer.setMP(performer.getMP() - performer.getTurnCost());
+            performer.setDirection(this.direction);
         }
     }
 
