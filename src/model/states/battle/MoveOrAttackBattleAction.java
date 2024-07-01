@@ -21,6 +21,8 @@ public class MoveOrAttackBattleAction extends BattleAction {
         } else if (this.direction != null) {
             if (!isNoPrompt()) {
                 battleState.print("Turn " + getPerformer().getName() + "? (Y/N) ");
+            } else {
+                battleState.delay(200);
             }
             if (isNoPrompt() || battleState.yesNoInput()) {
                 performer.setMP(performer.getMP() - performer.getTurnCost());

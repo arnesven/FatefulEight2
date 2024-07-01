@@ -141,7 +141,7 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private boolean checkForRout(BattleState battleState) {
-        if (hasLowMorale() && getCount() < ROUT_THRESHOLD) {
+        if (hasLowMorale() && 0 < getCount() && getCount() < ROUT_THRESHOLD) {
             battleState.println(getQualifiedName() + " has been routed and flees the battlefield!");
             battleState.removeUnit(this);
             return true;

@@ -22,7 +22,7 @@ public class BattleState extends GameState {
     private final SteppingMatrix<BattleUnit> units;
     private final boolean playingAggressor;
     private final KingdomWar war;
-    private final BattleAI opponentAI = new DumbBattleAI();
+    private final BattleAI opponentAI = new ImprovedBattleAI();
     private BattleSubView subView;
 
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
@@ -210,6 +210,7 @@ public class BattleState extends GameState {
                 print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
             } else {
                 println(performer.getQualifiedName() + " attack " + other.getQualifiedName() + "!");
+                delay(200);
             }
             if (action.isNoPrompt() || yesNoInput()) {
                 subView.startDustCloudAnimation(units.getPositionFor(other), List.of(performer, other));
@@ -221,7 +222,7 @@ public class BattleState extends GameState {
         }
     }
 
-    private void delay(int millis) {
+    public void delay(int millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
@@ -310,5 +311,16 @@ public class BattleState extends GameState {
             performer.doRangedAttackOn(this, other);
             performer.setMP(0);
         }
+    }
+
+    public List<BattleUnit> getOpposingUnits(BattleUnit currentUnit) {
+        if (war.getAggressorUnits().contains(currentUnit)) {
+            return war.getDefenderUnits();
+        }
+        return war.getAggressorUnits();
+    }
+
+    public BattleUnit getUnitForPosition(Point current) {
+        return units.getElementAt(current.x, current.y);
     }
 }
