@@ -103,6 +103,8 @@ public class BattleState extends GameState {
         } else {
             println("You have been defeated in battle.");
         }
+        print("Press enter to continue.");
+        waitForReturn();
 
         return model.getCurrentHex().getEveningState(model, false, false);
     }
@@ -186,7 +188,7 @@ public class BattleState extends GameState {
         return !other.getOrigin().equals(performer.getOrigin());
     }
 
-    private BattleUnit getOtherUnitInDirection(BattleUnit performer, BattleDirection direction) {
+    public BattleUnit getOtherUnitInDirection(BattleUnit performer, BattleDirection direction) {
         Point pos = units.getPositionFor(performer);
         Point toPos = new Point(pos.x + direction.dxdy.x, pos.y + direction.dxdy.y);
         return units.getElementAt(toPos.x, toPos.y);
@@ -194,10 +196,10 @@ public class BattleState extends GameState {
 
     public void moveOrAttack(Model model, BattleUnit performer, BattleAction action, BattleDirection direction) {
         BattleUnit other = getOtherUnitInDirection(performer, direction);
-        int moveCost = MovePointCostForDestination(performer, direction);
+        int moveCost = movePointCostForDestination(performer, direction);
         if (other == null) {
             if (!action.isNoPrompt()) {
-                print("Move " + performer.getName() + " " + direction.asText + "? (Y/N) ");
+                print("Move " + performer.getName() + " " + direction.asText + " (" + moveCost + " MP)? (Y/N) ");
             } else {
                 delay(200);
             }
@@ -207,7 +209,7 @@ public class BattleState extends GameState {
             }
         } else {
             if (!action.isNoPrompt()) {
-                print("Attack " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
+                print("Attack " + other.getQualifiedName() + " with " + performer.getName() + " (all MP)? (Y/N) ");
             } else {
                 println(performer.getQualifiedName() + " attack " + other.getQualifiedName() + "!");
                 delay(200);
@@ -251,7 +253,8 @@ public class BattleState extends GameState {
         candidates.add(attackDirection);
         BattleDirection retreatDirection = null;
         for (BattleDirection dir : candidates) {
-            if (canMoveInDirection(retreater, dir, false)) {
+            if (canMoveInDirection(retreater, dir, false) &&
+                    movePointCostForDestination(retreater, dir) < BattleTerrain.IMPASSIBLE_TERRAIN_MOVE_COST) {
                 retreatDirection = dir;
                 break;
             }
@@ -278,7 +281,7 @@ public class BattleState extends GameState {
         return terrain.getElementAt(pos.x, pos.y);
     }
 
-    public int MovePointCostForDestination(BattleUnit performer, BattleDirection newDirection) {
+    public int movePointCostForDestination(BattleUnit performer, BattleDirection newDirection) {
         Point performerPos = new Point(units.getPositionFor(performer));
         performerPos.translate(newDirection.dxdy.x, newDirection.dxdy.y);
         BattleTerrain destinationTerrain = terrain.getElementAt(performerPos.x, performerPos.y);
@@ -302,7 +305,7 @@ public class BattleState extends GameState {
             return;
         }
         if (!action.isNoPrompt()) {
-            print("Make ranged attack on " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
+            print("Make ranged attack on " + other.getQualifiedName() + " with " + performer.getName() + " (all MP)? (Y/N) ");
         } else {
             println(performer.getQualifiedName() + " make a ranged attack on " + other.getQualifiedName() + "!");
             delay(200);

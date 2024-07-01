@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 public class MoveOrAttackBattleAction extends BattleAction {
     private BattleDirection direction = null;
+    private int mpCost = 0;
     private boolean isExecuting = false;
 
     public MoveOrAttackBattleAction(BattleUnit unit) {
@@ -20,7 +21,7 @@ public class MoveOrAttackBattleAction extends BattleAction {
             battleState.moveOrAttack(model, performer, this, direction);
         } else if (this.direction != null) {
             if (!isNoPrompt()) {
-                battleState.print("Turn " + getPerformer().getName() + "? (Y/N) ");
+                battleState.print("Turn " + getPerformer().getName() + " (1 MP)? (Y/N) ");
             } else {
                 battleState.delay(200);
             }
@@ -51,6 +52,11 @@ public class MoveOrAttackBattleAction extends BattleAction {
     }
 
     @Override
+    protected int getMpCost() {
+        return mpCost;
+    }
+
+    @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model, BattleState state) {
         if (isExecuting) {
             return false;
@@ -74,18 +80,27 @@ public class MoveOrAttackBattleAction extends BattleAction {
 
     public void setParameters(Model model, BattleState state, BattleDirection newDirection) {
         if (getPerformer().getDirection() == newDirection) { // Move forward
+            int mpCost = state.movePointCostForDestination(getPerformer(), newDirection);
             if (state.canMoveInDirection(getPerformer(), newDirection, true) &&
-                    getPerformer().getMP() >= state.MovePointCostForDestination(getPerformer(), newDirection)) {
+                    getPerformer().getMP() >= mpCost) {
                 this.direction = newDirection;
+                if (state.getOtherUnitInDirection(getPerformer(), direction) != null) { // is attack
+                    this.mpCost = getPerformer().getMP();
+                } else {
+                    this.mpCost = mpCost;
+                }
             } else {
                 this.direction = null; // Out of bounds, or moving into friendly unit, or not enough MP for move.
+                this.mpCost = 0;
             }
         } else if (!newDirection.isOpposite(getPerformer().getDirection())) { // Turning
             if (getPerformer().getMP() >= getPerformer().getTurnCost()) {
                 this.direction = newDirection;
+                this.mpCost = getPerformer().getTurnCost();
             }
         } else {
             this.direction = null; // Moving backward (illegal)
+            this.mpCost = 0;
         }
     }
 }

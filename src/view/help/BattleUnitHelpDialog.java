@@ -29,7 +29,7 @@ public class BattleUnitHelpDialog extends SubChapterHelpDialog {
         result.add(new DrawableObject(xStart, yStart) {
             @Override
             public void drawYourself(Model model, int x, int y) {
-                unit.drawYourself(model.getScreenHandler(), new Point(x+15, y+3), false, 2);
+                unit.drawYourself(model.getScreenHandler(), new Point(x+15, y+3), false, 2, 0);
             }
         });
 

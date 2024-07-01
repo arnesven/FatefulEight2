@@ -47,7 +47,8 @@ public class BattleDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return true;
+        CastleLocation castle = (CastleLocation) model.getWorld().getUrbanLocationByPlaceName(givenBy);
+        return model.getParty().getPosition().equals(war.getBattlePosition(castle));
     }
 
     @Override

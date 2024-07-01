@@ -75,7 +75,7 @@ public class BattleSubView extends SubView {
                         if (pendingBattleAction != null && pendingBattleAction.getPerformer() == unit) {
                             pendingBattleAction.drawUnit(model, state, withMovementPoints, p);
                         } else {
-                            unit.drawYourself(model.getScreenHandler(), p, withMovementPoints, 2);
+                            unit.drawYourself(model.getScreenHandler(), p, withMovementPoints, 2, unit.getMP());
                         }
                     }
                 }

@@ -59,6 +59,11 @@ public class ShootBattleAction extends BattleAction {
     }
 
     @Override
+    protected int getMpCost() {
+        return getPerformer().getMP();
+    }
+
+    @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model, BattleState state) {
         return grid.handleKeyEvent(keyEvent);
     }

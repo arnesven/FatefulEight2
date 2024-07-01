@@ -32,9 +32,11 @@ public abstract class BattleAction {
     public abstract boolean handleKeyEvent(KeyEvent keyEvent, Model model, BattleState state);
 
     public void drawUnit(Model model, BattleState state, boolean withMp, Point p) {
-        performer.drawYourself(model.getScreenHandler(), p, withMp, 3);
+        performer.drawYourself(model.getScreenHandler(), p, withMp, 3, performer.getMP() - getMpCost());
         drawMarker(model, p);
     }
+
+    protected abstract int getMpCost();
 
     protected void drawMarker(Model model, Point p) {
         model.getScreenHandler().register(CURRENT_MARKER.getName(), new Point(p.x, p.y), CURRENT_MARKER);

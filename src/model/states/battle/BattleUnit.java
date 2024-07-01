@@ -59,11 +59,11 @@ public abstract class BattleUnit implements Serializable {
         return DEFAULT_TURN_COST;
     }
 
-    public void drawYourself(ScreenHandler screenHandler, Point p, boolean withMp, int prio) {
+    public void drawYourself(ScreenHandler screenHandler, Point p, boolean withMp, int prio, int mpToUse) {
         Sprite spr = getSprites()[direction.value];
         screenHandler.register(spr.getName(), p, spr, prio);
         if (withMp) {
-            Sprite mpSprite = MP_SPRITES[currentMP];
+            Sprite mpSprite = MP_SPRITES[mpToUse];
             Point p2 = new Point(p.x + 3, p.y + 3);
             screenHandler.register(mpSprite.getName(), p2, mpSprite, prio+1);
         }
