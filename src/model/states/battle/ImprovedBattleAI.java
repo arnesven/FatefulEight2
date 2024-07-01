@@ -2,6 +2,7 @@ package model.states.battle;
 
 import model.Model;
 import model.map.Direction;
+import util.MyLists;
 import util.MyPair;
 import util.MyStrings;
 import view.subviews.BattleSubView;
@@ -32,6 +33,13 @@ public class ImprovedBattleAI extends BattleAI {
             return;
         }
 
+        if (isShootingUnit(battleState, currentUnit)) {
+            if (didShootAtTargetInRange(model, battleState, currentUnit)) {
+                currentUnits.remove(currentUnit);
+                return;
+            }
+        }
+
         List<List<MyPair<Integer, BattleDirection>>> distanceGrid = makeDistanceGrid(currentUnit, battleState);
         printGrid(distanceGrid, currentUnit);
 
@@ -47,6 +55,35 @@ public class ImprovedBattleAI extends BattleAI {
             System.out.println("No targets...");
             currentUnits.remove(currentUnit);
         }
+    }
+
+    private boolean didShootAtTargetInRange(Model model, BattleState battleState,
+                                            BattleUnit currentUnit) {
+        ShootBattleAction shootBattleAction = new SilentShootBattleAction(currentUnit, battleState);
+        List<BattleUnit> unitsInRange = shootBattleAction.getUnitsInRange(battleState);
+        unitsInRange.removeIf((BattleUnit bu) -> bu.getOrigin().equals(currentUnit.getOrigin()));
+        if (unitsInRange.isEmpty()) {
+            return false;
+        }
+        // Prefer closer units as they can pose threat.
+        Point pos = battleState.getPositionForUnit(currentUnit);
+        Collections.sort(unitsInRange, (b1, b2) -> {
+            double dist1 = battleState.getPositionForUnit(b1).distance(pos)*1000 - b1.getCount();
+            double dist2 = battleState.getPositionForUnit(b2).distance(pos)*1000 - b2.getCount();
+            return (int)Math.round(dist2 - dist1);
+        });
+        System.out.println("Shooting candidates:");
+        for (BattleUnit b : unitsInRange) {
+            System.out.println(b.getQualifiedName());
+        }
+        BattleUnit best = unitsInRange.get(0);
+        shootBattleAction.setSelectedPoint(battleState.getPositionForUnit(best));
+        shootBattleAction.execute(model, battleState, currentUnit);
+        return true;
+    }
+
+    private boolean isShootingUnit(BattleState state, BattleUnit currentUnit) {
+        return MyLists.any(currentUnit.getBattleActions(state), (BattleAction ba) -> ba instanceof ShootBattleAction);
     }
 
     private void executeStepsTowardTarget(Model model, BattleState battleState, List<BattleDirection> steps,
@@ -70,24 +107,6 @@ public class ImprovedBattleAI extends BattleAI {
             }
         } else {
             battleAction.execute(model, battleState, currentUnit);
-        }
-    }
-
-    private void printSteps(List<BattleDirection> steps) {
-        for (int i = steps.size()-1; i >= 0; --i) {
-            System.out.println(directionToString(steps.get(i)));
-        }
-    }
-
-    private void printRankings(List<BattleUnit> candidates, List<List<MyPair<Integer, BattleDirection>>> distanceGrid,
-                               BattleState battleState) {
-        System.out.println("Ranking: ");
-        for (BattleUnit bu : candidates) {
-            Point pos1 = battleState.getPositionForUnit(bu);
-            MyPair<Integer, BattleDirection> elem = distanceGrid.get(pos1.x).get(pos1.y);
-            int flankBonus = flankBonus(elem.second, bu.getDirection());
-            System.out.println(bu.getQualifiedName() + ", MP Cost: " + elem.first + ", " +
-                    (flankBonus == 2 ? "REAR ATTACK" : (flankBonus == 1) ? "Flank attack" : ""));
         }
     }
 
@@ -143,7 +162,6 @@ public class ImprovedBattleAI extends BattleAI {
             MyPair<Point, BattleDirection> currentPair = queue.remove(0);
             Point current = currentPair.first;
             BattleDirection direction = currentPair.second;
-            printGrid(grid, currentUnit);
 
             for (BattleDirection dir : DIRECTION_LIST) {
                 Point newPos = new Point(current.x + dir.dxdy.x, current.y + dir.dxdy.y);
@@ -245,5 +263,23 @@ public class ImprovedBattleAI extends BattleAI {
                 return "v";
         }
         return "Error";
+    }
+
+    private void printSteps(List<BattleDirection> steps) {
+        for (int i = steps.size()-1; i >= 0; --i) {
+            System.out.println(directionToString(steps.get(i)));
+        }
+    }
+
+    private void printRankings(List<BattleUnit> candidates, List<List<MyPair<Integer, BattleDirection>>> distanceGrid,
+                               BattleState battleState) {
+        System.out.println("Ranking: ");
+        for (BattleUnit bu : candidates) {
+            Point pos1 = battleState.getPositionForUnit(bu);
+            MyPair<Integer, BattleDirection> elem = distanceGrid.get(pos1.x).get(pos1.y);
+            int flankBonus = flankBonus(elem.second, bu.getDirection());
+            System.out.println(bu.getQualifiedName() + ", MP Cost: " + elem.first + ", " +
+                    (flankBonus == 2 ? "REAR ATTACK" : (flankBonus == 1) ? "Flank attack" : ""));
+        }
     }
 }

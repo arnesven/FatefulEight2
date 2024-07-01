@@ -305,6 +305,7 @@ public class BattleState extends GameState {
             print("Make ranged attack on " + other.getQualifiedName() + " with " + performer.getName() + "? (Y/N) ");
         } else {
             println(performer.getQualifiedName() + " make a ranged attack on " + other.getQualifiedName() + "!");
+            delay(200);
         }
         if (action.isNoPrompt() || yesNoInput()) {
             subView.doRangedAttackAnimation(performer, targetPoint);

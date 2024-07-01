@@ -22,24 +22,21 @@ public class KingdomWar implements Serializable {
         this.defender = defender;
         String aggressorName = CastleLocation.placeNameShort(aggressor);
         aggressorUnits = new ArrayList<>();
+        aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
         aggressorUnits.add(new SwordsmanUnit(10, aggressorName, aggressorColor));
         aggressorUnits.add(new KnightsUnit(4, aggressorName, aggressorColor));
         aggressorUnits.add(new PikemenUnit(12, aggressorName, aggressorColor));
         aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
         aggressorUnits.add(new MilitiaUnit(16, aggressorName, aggressorColor));
 
-
         String defenderName = CastleLocation.placeNameShort(defender);
         defenderUnits = new ArrayList<>();
-        for (int i = 2; i <= 12; i +=4) {
-            defenderUnits.add(new SwordsmanUnit(i, defenderName, defenderColor));
-        }
-        for (int i = 2; i <= 12; i +=4) {
-            defenderUnits.add(new PikemenUnit(i, defenderName, defenderColor));
-        }
-        defenderUnits.add(new KnightsUnit(4, defenderName, defenderColor));
-        defenderUnits.add(new KnightsUnit(2, defenderName, defenderColor));
         defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
+        defenderUnits.add(new SwordsmanUnit(10, defenderName, defenderColor));
+        defenderUnits.add(new KnightsUnit(4, defenderName, defenderColor));
+        defenderUnits.add(new PikemenUnit(12, defenderName, defenderColor));
+        defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
+        defenderUnits.add(new MilitiaUnit(16, defenderName, defenderColor));
     }
 
     public String getAggressor() {

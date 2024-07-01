@@ -9,6 +9,8 @@ import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShootBattleAction extends BattleAction {
 
@@ -59,5 +61,24 @@ public class ShootBattleAction extends BattleAction {
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model, BattleState state) {
         return grid.handleKeyEvent(keyEvent);
+    }
+
+    public List<BattleUnit> getUnitsInRange(BattleState state) {
+        List<BattleUnit> result = new ArrayList<>();
+        for (int y = 0; y < grid.getRows(); y++) {
+            for (int x = 0; x < grid.getColumns(); ++x) {
+                if (grid.getElementAt(x, y) != null) {
+                    BattleUnit unit = state.getUnitForPosition(new Point(x, y));
+                    if (unit != null && unit != getPerformer()) {
+                        result.add(unit);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public void setSelectedPoint(Point position) {
+        grid.setSelectedPoint(position);
     }
 }
