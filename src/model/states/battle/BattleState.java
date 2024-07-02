@@ -39,11 +39,11 @@ public class BattleState extends GameState {
         this.playingAggressor = actAsAggressor;
         this.war = war;
         if (actAsAggressor) {
-            placeUnitsSouth(war.getAggressorUnits());
-            placeUnitsNorth(war.getDefenderUnits());
-        } else {
             placeUnitsNorth(war.getAggressorUnits());
             placeUnitsSouth(war.getDefenderUnits());
+        } else {
+            placeUnitsSouth(war.getAggressorUnits());
+            placeUnitsNorth(war.getDefenderUnits());
         }
     }
 
