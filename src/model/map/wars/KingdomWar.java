@@ -4,6 +4,7 @@ import model.map.CastleLocation;
 import model.map.WorldBuilder;
 import model.states.battle.*;
 import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 
 import java.awt.*;
@@ -21,23 +22,19 @@ public class KingdomWar implements Serializable {
     public KingdomWar(String aggressor, String defender, MyColors aggressorColor, MyColors defenderColor) {
         this.aggressor = aggressor;
         this.defender = defender;
-        String aggressorName = CastleLocation.placeNameShort(aggressor);
-        aggressorUnits = new ArrayList<>();
-        aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
-//        aggressorUnits.add(new SwordsmanUnit(10, aggressorName, aggressorColor));
-//        aggressorUnits.add(new KnightsUnit(4, aggressorName, aggressorColor));
-//        aggressorUnits.add(new PikemenUnit(12, aggressorName, aggressorColor));
-//        aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
-//        aggressorUnits.add(new MilitiaUnit(16, aggressorName, aggressorColor));
+        aggressorUnits = makeInitialSetOfTroops(aggressor, aggressorColor);
+        defenderUnits = makeInitialSetOfTroops(defender, defenderColor);
+    }
 
-        String defenderName = CastleLocation.placeNameShort(defender);
-        defenderUnits = new ArrayList<>();
-        defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
-//        defenderUnits.add(new SwordsmanUnit(10, defenderName, defenderColor));
-//        defenderUnits.add(new KnightsUnit(4, defenderName, defenderColor));
-//        defenderUnits.add(new PikemenUnit(12, defenderName, defenderColor));
-//        defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
-//        defenderUnits.add(new MilitiaUnit(16, defenderName, defenderColor));
+    private List<BattleUnit> makeInitialSetOfTroops(String kingdom, MyColors color) {
+        List<BattleUnit> units = new ArrayList<>();
+        String name = CastleLocation.placeNameShort(kingdom);
+        aggressorUnits.add(new ArchersUnit(MyRandom.randInt(10, 16), name, color));
+        aggressorUnits.add(new SwordsmanUnit(MyRandom.randInt(8, 12), name, color));
+        aggressorUnits.add(new KnightsUnit(MyRandom.randInt(4, 7), name, color));
+        aggressorUnits.add(new PikemenUnit(MyRandom.randInt(10, 16), name, color));
+        aggressorUnits.add(new MilitiaUnit(MyRandom.randInt(14, 20), name, color));
+        return units;
     }
 
     public String getAggressor() {

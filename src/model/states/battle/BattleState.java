@@ -14,6 +14,7 @@ import view.subviews.StripedTransition;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BattleState extends GameState {
@@ -302,28 +303,40 @@ public class BattleState extends GameState {
     }
 
     private void placeUnitsSouth(List<BattleUnit> unitList) {
-        int col = 0;
-        int row = BATTLE_GRID_HEIGHT-2;
-        for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleDirection.north);
-            units.addElement(col++, row, bu);
-            if (col == BATTLE_GRID_WIDTH) {
-                col = 0;
-                row++;
-            }
-        }
+        placeUnits(unitList, makePositions(BATTLE_GRID_HEIGHT-2, +1));
     }
 
     private void placeUnitsNorth(List<BattleUnit> unitList) {
-        int col = BATTLE_GRID_WIDTH-1;
-        int row = 1;
+        placeUnits(unitList, makePositions(1, -1));
+    }
+
+    private void placeUnits(List<BattleUnit> unitList, List<Point> positions) {
         for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleDirection.south);
-            units.addElement(col--, row, bu);
-            if (col == -1) {
-                col = BATTLE_GRID_WIDTH-1;
-                row--;
+            bu.setDirection(BattleDirection.north);
+            if (positions.isEmpty()) {
+                System.err.println("Warning, to many battle units to place!");
+                break;
             }
+            Point toPlaceAt = positions.remove(0);
+            units.addElement(toPlaceAt.x, toPlaceAt.y, bu);
         }
+    }
+
+    private List<Point> makePositions(int rowStart, int toAdd) {
+        List<Point> positions1 = new ArrayList<>();
+        for (int i = 0; i < BATTLE_GRID_WIDTH; ++i) {
+            positions1.add(new Point(i, rowStart));
+        }
+        List<Point> positions2 = new ArrayList<>();
+        for (int i = 0; i < BATTLE_GRID_WIDTH; ++i) {
+            positions2.add(new Point(i, rowStart + toAdd));
+        }
+        Collections.shuffle(positions1);
+        Collections.shuffle(positions2);
+
+        List<Point> positions = new ArrayList<>();
+        positions.addAll(positions1);
+        positions.addAll(positions2);
+        return positions;
     }
 }
