@@ -10,13 +10,15 @@ public class PikemenUnit extends BattleUnit {
     private final Sprite[] spritesFew;
     private final Sprite[] sprites;
     private final Sprite[] spritesMany;
+    private final MyColors color;
 
     public PikemenUnit(int count, String origin, MyColors color) {
-        super("Pikemen", count, 1, 6, 5, origin);
+        super("Pikemen", count, 1, 6, 5, origin, 24, 4, 8);
         color = fixColor(color);
         this.spritesMany = makeSpriteSet(1, 0, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
         this.sprites = makeSpriteSet(1, 4, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
         this.spritesFew = makeSpriteSet(1, 8, MyColors.BLACK, BattleUnit.UNIFORM_COLOR, MyColors.PEACH, color);
+        this.color = color;
     }
 
     @Override
@@ -54,5 +56,10 @@ public class PikemenUnit extends BattleUnit {
         return new BattleUnitHelpDialog(view, this, "Pikemen are infantry wielding long spears. " +
                 "They are particularly efficient against mounted units and enjoys a +2 " +
                 "attack bonus when attacking or being attacked by them.");
+    }
+
+    @Override
+    protected BattleUnit copyYourself() {
+        return new PikemenUnit(getCount(), getOrigin(), color);
     }
 }

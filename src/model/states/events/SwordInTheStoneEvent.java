@@ -7,6 +7,7 @@ import model.items.Item;
 import model.items.weapons.CalixaberSword;
 import model.items.weapons.Weapon;
 import model.map.PlainsHex;
+import model.map.UrbanLocation;
 import model.map.WoodsHex;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
@@ -20,7 +21,10 @@ public class SwordInTheStoneEvent extends PersonalityTraitEvent {
     }
 
     @Override
-    public boolean isApplicable(Model model) { // TODO: Not in urban location
+    public boolean isApplicable(Model model) {
+        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
+            return false;
+        }
         return model.getCurrentHex() instanceof PlainsHex || model.getCurrentHex() instanceof WoodsHex;
     }
 

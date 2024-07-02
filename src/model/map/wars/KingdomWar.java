@@ -3,6 +3,7 @@ package model.map.wars;
 import model.map.CastleLocation;
 import model.map.WorldBuilder;
 import model.states.battle.*;
+import util.MyPair;
 import view.MyColors;
 
 import java.awt.*;
@@ -23,20 +24,20 @@ public class KingdomWar implements Serializable {
         String aggressorName = CastleLocation.placeNameShort(aggressor);
         aggressorUnits = new ArrayList<>();
         aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
-        aggressorUnits.add(new SwordsmanUnit(10, aggressorName, aggressorColor));
-        aggressorUnits.add(new KnightsUnit(4, aggressorName, aggressorColor));
-        aggressorUnits.add(new PikemenUnit(12, aggressorName, aggressorColor));
-        aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
-        aggressorUnits.add(new MilitiaUnit(16, aggressorName, aggressorColor));
+//        aggressorUnits.add(new SwordsmanUnit(10, aggressorName, aggressorColor));
+//        aggressorUnits.add(new KnightsUnit(4, aggressorName, aggressorColor));
+//        aggressorUnits.add(new PikemenUnit(12, aggressorName, aggressorColor));
+//        aggressorUnits.add(new ArchersUnit(6, aggressorName, aggressorColor));
+//        aggressorUnits.add(new MilitiaUnit(16, aggressorName, aggressorColor));
 
         String defenderName = CastleLocation.placeNameShort(defender);
         defenderUnits = new ArrayList<>();
         defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
-        defenderUnits.add(new SwordsmanUnit(10, defenderName, defenderColor));
-        defenderUnits.add(new KnightsUnit(4, defenderName, defenderColor));
-        defenderUnits.add(new PikemenUnit(12, defenderName, defenderColor));
-        defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
-        defenderUnits.add(new MilitiaUnit(16, defenderName, defenderColor));
+//        defenderUnits.add(new SwordsmanUnit(10, defenderName, defenderColor));
+//        defenderUnits.add(new KnightsUnit(4, defenderName, defenderColor));
+//        defenderUnits.add(new PikemenUnit(12, defenderName, defenderColor));
+//        defenderUnits.add(new ArchersUnit(6, defenderName, defenderColor));
+//        defenderUnits.add(new MilitiaUnit(16, defenderName, defenderColor));
     }
 
     public String getAggressor() {
@@ -68,5 +69,28 @@ public class KingdomWar implements Serializable {
 
     public List<BattleUnit> getDefenderUnits() {
         return defenderUnits;
+    }
+
+    public List<MyPair<Point, BattleTerrain>> getTerrains() {
+        return List.of(
+                new MyPair<>(new Point(2, 2), new WaterBattleTerrain()),
+                new MyPair<>(new Point(0, 6), new HillsBattleTerrain()),
+                new MyPair<>(new Point(3, 3), new WoodsBattleTerrain()),
+                new MyPair<>(new Point(4, 4), new HillsBattleTerrain()),
+                new MyPair<>(new Point(5, 5), new DenseWoodsBattleTerrain()),
+                new MyPair<>(new Point(6, 4), new SwampBattleTerrain())
+        );
+    }
+
+    public MyColors getGroundColor() {
+        return MyColors.GREEN;
+    }
+
+    public String getCurrentBattleName() {
+        return "at the Crossroads";
+    }
+
+    public void advance(boolean forAggressor) {
+        // TODO
     }
 }

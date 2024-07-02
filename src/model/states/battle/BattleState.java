@@ -8,6 +8,7 @@ import model.states.GameState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyLists;
+import util.MyPair;
 import view.subviews.BattleSubView;
 import view.subviews.StripedTransition;
 
@@ -24,16 +25,14 @@ public class BattleState extends GameState {
     private final KingdomWar war;
     private final BattleAI opponentAI = new ImprovedBattleAI();
     private BattleSubView subView;
+    private boolean wasVictorious = false;
 
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
         super(model);
         this.terrain = new SteppingMatrix<>(BATTLE_GRID_WIDTH, BATTLE_GRID_HEIGHT);
-        terrain.addElement(2, 2, new WaterBattleTerrain());
-        terrain.addElement(0, 6, new HillsBattleTerrain());
-        terrain.addElement(3, 3, new WoodsBattleTerrain());
-        terrain.addElement(4, 4, new HillsBattleTerrain());
-        terrain.addElement(5, 5, new DenseWoodsBattleTerrain());
-        terrain.addElement(6, 4, new SwampBattleTerrain());
+        for (MyPair<Point, BattleTerrain> terr : war.getTerrains()) {
+            terrain.addElement(terr.first.x, terr.first.y, terr.second);
+        }
 
         this.units = new SteppingMatrix<>(BATTLE_GRID_WIDTH, BATTLE_GRID_HEIGHT);
         this.playingAggressor = actAsAggressor;
@@ -47,40 +46,13 @@ public class BattleState extends GameState {
         }
     }
 
-    private void placeUnitsSouth(List<BattleUnit> unitList) {
-        int col = 0;
-        int row = BATTLE_GRID_HEIGHT-2;
-        for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleDirection.north);
-            units.addElement(col++, row, bu);
-            if (col == BATTLE_GRID_WIDTH) {
-                col = 0;
-                row++;
-            }
-        }
-    }
-
-    private void placeUnitsNorth(List<BattleUnit> unitList) {
-        int col = BATTLE_GRID_WIDTH-1;
-        int row = 1;
-        for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleDirection.south);
-            units.addElement(col--, row, bu);
-            if (col == -1) {
-                col = BATTLE_GRID_WIDTH-1;
-                row--;
-            }
-        }
-    }
-
     @Override
     public GameState run(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
-        this.subView = new BattleSubView(terrain, units, this);
+        this.subView = new BattleSubView(terrain, units, this, war.getGroundColor());
         StripedTransition.transition(model, subView); // TODO: Make new transition for this.
 
         model.getTutorial().battles(model);
-
         List<BattleUnit> playerUnits = playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
         List<BattleUnit> opponentUnits = playingAggressor ? war.getDefenderUnits() : war.getAggressorUnits();
 
@@ -100,6 +72,7 @@ public class BattleState extends GameState {
             println("You abandoned the battle.");
         } else if (allVanquished(opponentUnits)) {
             println("You are victorious!");
+            wasVictorious = true;
         } else {
             println("You have been defeated in battle.");
         }
@@ -107,6 +80,10 @@ public class BattleState extends GameState {
         waitForReturn();
 
         return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    public boolean wasVictorious() {
+        return wasVictorious;
     }
 
     private boolean allVanquished(List<BattleUnit> opponentUnits) {
@@ -322,5 +299,31 @@ public class BattleState extends GameState {
 
     public BattleUnit getUnitForPosition(Point current) {
         return units.getElementAt(current.x, current.y);
+    }
+
+    private void placeUnitsSouth(List<BattleUnit> unitList) {
+        int col = 0;
+        int row = BATTLE_GRID_HEIGHT-2;
+        for (BattleUnit bu : unitList) {
+            bu.setDirection(BattleDirection.north);
+            units.addElement(col++, row, bu);
+            if (col == BATTLE_GRID_WIDTH) {
+                col = 0;
+                row++;
+            }
+        }
+    }
+
+    private void placeUnitsNorth(List<BattleUnit> unitList) {
+        int col = BATTLE_GRID_WIDTH-1;
+        int row = 1;
+        for (BattleUnit bu : unitList) {
+            bu.setDirection(BattleDirection.south);
+            units.addElement(col--, row, bu);
+            if (col == -1) {
+                col = BATTLE_GRID_WIDTH-1;
+                row--;
+            }
+        }
     }
 }

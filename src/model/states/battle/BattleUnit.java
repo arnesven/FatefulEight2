@@ -30,8 +30,12 @@ public abstract class BattleUnit implements Serializable {
     private BattleDirection direction = BattleDirection.east;
     private final int combatSkillBonus;
     private final int defense;
+    private final int reinforceMinimum;
+    private final int reinforceMaximum;
+    private int maxUnitSize;
 
-    public BattleUnit(String name, int count, int combatSkillBonus, int defense, int movementPoints, String origin) {
+    public BattleUnit(String name, int count, int combatSkillBonus, int defense, int movementPoints, String origin,
+                      int maxUnitSize, int reinforceMinimum, int reinforceMaximum) {
         this.name = name;
         this.count = count;
         this.combatSkillBonus = combatSkillBonus;
@@ -39,6 +43,9 @@ public abstract class BattleUnit implements Serializable {
         this.maximumMP = movementPoints;
         this.origin = origin;
         this.currentMP = movementPoints;
+        this.maxUnitSize = maxUnitSize;
+        this.reinforceMaximum = reinforceMaximum;
+        this.reinforceMinimum = reinforceMinimum;
     }
 
     protected abstract Sprite[] getSprites();
@@ -212,7 +219,7 @@ public abstract class BattleUnit implements Serializable {
         return 1;
     }
 
-    private void setCount(int i) {
+    public void setCount(int i) {
         count = i;
     }
 
@@ -279,4 +286,20 @@ public abstract class BattleUnit implements Serializable {
                "Combat Skill:    " + combatSkillBonus + "\n" +
                "Defense:         " + defense;
     }
+
+    public int getReinforceCount() {
+        return MyRandom.randInt(reinforceMinimum, reinforceMaximum);
+    }
+
+    public int maximumUnitSize() {
+        return maxUnitSize;
+    }
+
+    public BattleUnit createNew(int count) {
+        BattleUnit copy = copyYourself();
+        copy.setCount(count);
+        return copy;
+    }
+
+    protected abstract BattleUnit copyYourself();
 }

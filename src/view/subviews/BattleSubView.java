@@ -33,10 +33,10 @@ public class BattleSubView extends SubView {
     private Point2D.Double shootingDxDy = null;
     private Sprite shootingSpriteToUse = null;
 
-    public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units, BattleState state) {
+    public BattleSubView(SteppingMatrix<BattleTerrain> terrain, SteppingMatrix<BattleUnit> units, BattleState state, MyColors groundColor) {
         this.terrain = terrain;
         this.units = units;
-        groundSprites = CombatTheme.makeGroundSprites(MyColors.GREEN, MyColors.LIGHT_GREEN, 1);
+        groundSprites = CombatTheme.makeGroundSprites(groundColor, MyColors.LIGHT_GREEN, 1);
         grid = makeGrid();
         this.state = state;
     }
