@@ -1,27 +1,42 @@
 package model.map.wars;
 
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.map.CastleLocation;
 import model.map.WorldBuilder;
 import model.states.battle.*;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
+import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class KingdomWar implements Serializable {
     private final String aggressor;
     private final String defender;
     private int stage = 0;
-    private List<BattleUnit> aggressorUnits;
-    private List<BattleUnit> defenderUnits;
+    private final List<BattleUnit> aggressorUnits;
+    private final List<BattleUnit> defenderUnits;
+    private final List<PitchedBattleSite> aggressorSites;
+    private final List<PitchedBattleSite> defenderSites;
+    private PitchedBattleSite currentSite;
+    private AdvancedAppearance generalAppearance;
 
-    public KingdomWar(String aggressor, String defender, MyColors aggressorColor, MyColors defenderColor) {
+    public KingdomWar(String aggressor, String defender, MyColors aggressorColor, MyColors defenderColor,
+                      List<PitchedBattleSite> aggressorSites, PitchedBattleSite initialSite,
+                      List<PitchedBattleSite> defenderSites) {
         this.aggressor = aggressor;
         this.defender = defender;
+        this.aggressorSites = aggressorSites;
+        Collections.reverse(aggressorSites);
+        this.defenderSites = defenderSites;
+        this.currentSite = initialSite;
         aggressorUnits = makeInitialSetOfTroops(aggressor, aggressorColor);
         defenderUnits = makeInitialSetOfTroops(defender, defenderColor);
     }
@@ -29,11 +44,11 @@ public class KingdomWar implements Serializable {
     private List<BattleUnit> makeInitialSetOfTroops(String kingdom, MyColors color) {
         List<BattleUnit> units = new ArrayList<>();
         String name = CastleLocation.placeNameShort(kingdom);
-        aggressorUnits.add(new ArchersUnit(MyRandom.randInt(10, 16), name, color));
-        aggressorUnits.add(new SwordsmanUnit(MyRandom.randInt(8, 12), name, color));
-        aggressorUnits.add(new KnightsUnit(MyRandom.randInt(4, 7), name, color));
-        aggressorUnits.add(new PikemenUnit(MyRandom.randInt(10, 16), name, color));
-        aggressorUnits.add(new MilitiaUnit(MyRandom.randInt(14, 20), name, color));
+        units.add(new ArchersUnit(MyRandom.randInt(10, 16), name, color));
+        units.add(new SwordsmanUnit(MyRandom.randInt(8, 12), name, color));
+        units.add(new KnightsUnit(MyRandom.randInt(4, 7), name, color));
+        units.add(new PikemenUnit(MyRandom.randInt(10, 16), name, color));
+        units.add(new MilitiaUnit(MyRandom.randInt(14, 20), name, color));
         return units;
     }
 
@@ -54,10 +69,7 @@ public class KingdomWar implements Serializable {
     }
 
     public Point getBattlePosition(CastleLocation castle) {
-        Point p = new Point(WorldBuilder.CROSSROADS_INN_POSITION);
-        p.x--;
-        p.y--;
-        return p;
+        return currentSite.position;
     }
 
     public List<BattleUnit> getAggressorUnits() {
@@ -80,14 +92,41 @@ public class KingdomWar implements Serializable {
     }
 
     public MyColors getGroundColor() {
-        return MyColors.GREEN;
+        return currentSite.groundColor;
     }
 
     public String getCurrentBattleName() {
-        return "at the Crossroads";
+        return currentSite.name;
     }
 
-    public void advance(boolean forAggressor) {
-        // TODO
+    /**
+     * Advances the war to the next battle site.
+     * @param forAggressor true if war advances away from agressor
+     * @return true if war is over
+     */
+    public boolean advance(boolean forAggressor) {
+        if (forAggressor) {
+            if (defenderSites.isEmpty()) {
+                return true;
+            }
+            currentSite = defenderSites.remove(0);
+        } else {
+            if (aggressorSites.isEmpty()) {
+                return true;
+            }
+            currentSite = aggressorSites.remove(0);
+        }
+        return false;
+    }
+
+    public boolean isInitialBattle() {
+        return defenderSites.size() == 2 && aggressorSites.size() == 2;
+    }
+
+    public CharacterAppearance getGeneralAppearance() {
+        if (generalAppearance == null) {
+            generalAppearance = PortraitSubView.makeRandomPortrait(Classes.PAL);
+        }
+        return generalAppearance;
     }
 }

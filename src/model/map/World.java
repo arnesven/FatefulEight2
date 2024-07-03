@@ -3,12 +3,14 @@ package model.map;
 import model.Model;
 import model.map.objects.MapObject;
 import model.states.dailyaction.FlagPoleNode;
+import model.tasks.DestinationTask;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.DrawingArea;
 import view.ScreenHandler;
 import view.sprites.Sprite;
+import view.sprites.SpriteQuestMarker;
 import view.subviews.SubView;
 
 import java.awt.*;
@@ -24,6 +26,7 @@ public class World implements Serializable {
     //  x   y
     private WorldHex[][] hexes;
     private ViewPointMarker cursor = new HexCursorMarker();
+    private static final Sprite DESTINATION_SPRITE = new SpriteQuestMarker();
     private Sprite alternativeAvatar = null;
     private int currentState;
 
@@ -93,9 +96,19 @@ public class World implements Serializable {
                         cursor.updateYourself(screenHandler, screenX, screenY);
                 }
                 model.getMainStory().drawMapObjects(model, x, y, screenX, screenY);
+                drawDestinationTasks(model, x, y, screenX, screenY);
                 col++;
             }
             row++;
+        }
+    }
+
+    private void drawDestinationTasks(Model model, int x, int y, int screenX, int screenY) {
+        for (DestinationTask dt : model.getParty().getDestinationTasks()) {
+            Point pos = dt.getPosition();
+            if (pos != null && pos.x == x && pos.y == y && !dt.isCompleted() && !dt.isFailed(model)) {
+                model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
+            }
         }
     }
 

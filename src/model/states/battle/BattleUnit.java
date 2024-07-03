@@ -122,6 +122,7 @@ public abstract class BattleUnit implements Serializable {
             defender.takeCasualties(battleState, hits);
             if (defender.getCount() > 0) {
                 counterHits = defenderCounterAttack(battleState, defender);
+                battleState.println("Defender does " + counterHits + " hits.");
             }
         } else {
             counterHits = defenderCounterAttack(battleState, defender);

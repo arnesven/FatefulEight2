@@ -159,7 +159,7 @@ public class BattleSubView extends SubView {
         for (int i = grid.getColumns() * (grid.getRows()-1); i > 0; --i) {
             grid.addElementLast(i);
         }
-        grid.setSelectedElement(27);
+        grid.setSelectedElement(59);
         grid.addElement(3, grid.getRows()-1, 0);
         grid.addElement(4, grid.getRows()-1, -1);
         return grid;

@@ -12,8 +12,10 @@ import java.awt.*;
 import java.util.List;
 
 public class ArdhCastle extends CastleLocation {
+    public static final String CASTLE_NAME = "Castle Ardh";
+
     public ArdhCastle() {
-        super("Castle Ardh", MyColors.BLUE, "Count Aldeck", Race.HIGH_ELF);
+        super(CASTLE_NAME, MyColors.BLUE, "Count Aldeck", Race.HIGH_ELF);
     }
 
     @Override

@@ -71,10 +71,12 @@ public class CommanderNode extends DailyActionNode {
             leaderSay("Oh my gosh. Is there anything we can do to help?");
             println("The commander looks seriously at the party.");
             commanderSay("I don't know... what are your skills?");
-            int choice = multipleOptionArrowMenu(model, 24, 26, List.of(
+            List<String> thingsToSay = List.of(
                     "We're pretty good fighters.",
                     "We're good with spells.",
-                    "We could help with tactics."));
+                    "We could help with tactics.");
+            int choice = multipleOptionArrowMenu(model, 24, 26, thingsToSay);
+            leaderSay(thingsToSay.get(choice));
             if (choice == 0) {
                 commanderSay("Well we'll need all the soldiers we can find.");
             } else if (choice == 1) {

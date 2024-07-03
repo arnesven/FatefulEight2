@@ -11,8 +11,10 @@ import view.MyColors;
 import java.util.List;
 
 public class SunblazeCastle extends CastleLocation {
+    public static final String CASTLE_NAME = "Sunblaze Castle";
+
     public SunblazeCastle() {
-        super("Sunblaze Castle", MyColors.YELLOW, "Prince Elozi", Race.SOUTHERN_HUMAN);
+        super(CASTLE_NAME, MyColors.YELLOW, "Prince Elozi", Race.SOUTHERN_HUMAN);
     }
 
     @Override

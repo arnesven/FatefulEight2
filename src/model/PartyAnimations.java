@@ -105,4 +105,11 @@ public class PartyAnimations implements Serializable {
             }
         }
     }
+
+    public void clearAnimations() {
+        dieRollAnimations.clear();
+        speakingAnimations.clear();
+        blinking.clear();
+        lookers.clear();
+    }
 }

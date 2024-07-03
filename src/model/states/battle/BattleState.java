@@ -303,16 +303,16 @@ public class BattleState extends GameState {
     }
 
     private void placeUnitsSouth(List<BattleUnit> unitList) {
-        placeUnits(unitList, makePositions(BATTLE_GRID_HEIGHT-2, +1));
+        placeUnits(unitList, makePositions(BATTLE_GRID_HEIGHT-2, +1), BattleDirection.north);
     }
 
     private void placeUnitsNorth(List<BattleUnit> unitList) {
-        placeUnits(unitList, makePositions(1, -1));
+        placeUnits(unitList, makePositions(1, -1), BattleDirection.south);
     }
 
-    private void placeUnits(List<BattleUnit> unitList, List<Point> positions) {
+    private void placeUnits(List<BattleUnit> unitList, List<Point> positions, BattleDirection facing) {
         for (BattleUnit bu : unitList) {
-            bu.setDirection(BattleDirection.north);
+            bu.setDirection(facing);
             if (positions.isEmpty()) {
                 System.err.println("Warning, to many battle units to place!");
                 break;

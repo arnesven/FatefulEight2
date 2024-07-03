@@ -844,4 +844,8 @@ public class Party implements Serializable {
         position.translate(1, 8);
         return partyAnimations.addDieRollAnimation(position, unmodifiedRoll);
     }
+
+    public void clearAnimations() {
+        partyAnimations.clearAnimations();
+    }
 }

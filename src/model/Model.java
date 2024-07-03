@@ -98,6 +98,7 @@ public class Model {
         }
         gameView = new MainGameView();
         gameStartFileName = null;
+        getParty().clearAnimations();
         playMainSong();
     }
 

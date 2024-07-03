@@ -13,8 +13,11 @@ import java.awt.*;
 import java.util.List;
 
 public class ArkvaleCastle extends CastleLocation {
+
+    public static final String CASTLE_NAME = "Arkvale Castle";
+
     public ArkvaleCastle() {
-        super("Arkvale Castle", MyColors.WHITE, "Queen Valstine", Race.NORTHERN_HUMAN);
+        super(CASTLE_NAME, MyColors.WHITE, "Queen Valstine", Race.NORTHERN_HUMAN);
     }
 
     @Override
