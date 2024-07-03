@@ -1,13 +1,12 @@
 package model.states.battle;
 
-import model.map.HexLocation;
 import model.map.HillsLocation;
+import view.MyColors;
 
 public class HillsBattleTerrain extends BattleTerrain {
-    private static final HexLocation loc = new HillsLocation();
 
-    public HillsBattleTerrain() {
-        super("Hills", loc);
+    public HillsBattleTerrain(MyColors hillColor) {
+        super("Hills", new HillsLocation(hillColor));
     }
 
     @Override

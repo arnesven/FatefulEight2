@@ -143,7 +143,9 @@ public abstract class BattleUnit implements Serializable {
                 }
             } else {
                 battleState.println("Attacker has lost the fight and must retreat back to its original space.");
-                defender.setDirection(attackDirection.getOpposite());
+                if (!checkForRout(battleState)) {
+                    defender.setDirection(attackDirection.getOpposite());
+                }
             }
         }
     }

@@ -40,8 +40,8 @@ public abstract class SalvageEvent extends DailyEventState {
                     "Ugh... this type of work is beneath me.");
             int dieRoll = MyRandom.rollD10();
             if (dieRoll < 4) {
-                model.getParty().addToFood(5);
-                println("The party finds 5 rations.");
+                model.getParty().addToFood(10);
+                println("The party finds 10 rations.");
             } else if (dieRoll < 7) {
                 model.getParty().getInventory().addToIngredients(5);
                 println("The party finds 5 ingredients.");

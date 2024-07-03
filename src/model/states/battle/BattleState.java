@@ -66,7 +66,7 @@ public class BattleState extends GameState {
             }
             String sideName = CastleLocation.placeNameShort(playingAggressor ? war.getDefender() : war.getAggressor());
             println(sideName + "'s turn.");
-            doAITurn(model, opponentUnits);
+            doAITurn(model, opponentUnits); // TODO: Implement opponent retreats from battle
         }
 
         if (abandoned) {

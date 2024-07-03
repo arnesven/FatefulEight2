@@ -69,7 +69,7 @@ public class KingdomWar implements Serializable {
     }
 
     public Point getBattlePosition(CastleLocation castle) {
-        return currentSite.position;
+        return currentSite.getPosition();
     }
 
     public List<BattleUnit> getAggressorUnits() {
@@ -81,22 +81,15 @@ public class KingdomWar implements Serializable {
     }
 
     public List<MyPair<Point, BattleTerrain>> getTerrains() {
-        return List.of(
-                new MyPair<>(new Point(2, 2), new WaterBattleTerrain()),
-                new MyPair<>(new Point(0, 6), new HillsBattleTerrain()),
-                new MyPair<>(new Point(3, 3), new WoodsBattleTerrain()),
-                new MyPair<>(new Point(4, 4), new HillsBattleTerrain()),
-                new MyPair<>(new Point(5, 5), new DenseWoodsBattleTerrain()),
-                new MyPair<>(new Point(6, 4), new SwampBattleTerrain())
-        );
+        return currentSite.getTerrain();
     }
 
     public MyColors getGroundColor() {
-        return currentSite.groundColor;
+        return currentSite.getGroundColor();
     }
 
     public String getCurrentBattleName() {
-        return currentSite.name;
+        return currentSite.getName();
     }
 
     /**

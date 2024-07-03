@@ -21,7 +21,7 @@ public class BattleTerrainChapter extends SubChapterHelpDialog{
             new DummyNoneTerrain(),
             new WoodsBattleTerrain(),
             new DenseWoodsBattleTerrain(),
-            new HillsBattleTerrain(),
+            new HillsBattleTerrain(MyColors.GREEN),
             new SwampBattleTerrain(),
             new WaterBattleTerrain());
     private static final Sprite GREEN_BLOCK = new FilledBlockSprite(MyColors.GREEN);

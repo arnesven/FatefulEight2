@@ -72,33 +72,33 @@ public class WarHandler implements Serializable {
 
     private static Map<String, Map<String, List<PitchedBattleSite>>> buildSiteMap() {
         Map<String, Map<String, List<PitchedBattleSite>>> siteMap = new HashMap<>();
-        PitchedBattleSite bog = new PitchedBattleSite(new Point(16, 13), MyColors.GREEN, "of " + BogdownCastle.CASTLE_NAME);
+        PitchedBattleSite bog = new SwampyBattleSite(new Point(16, 13), MyColors.GREEN, "of " + BogdownCastle.CASTLE_NAME);
         PitchedBattleSite ark = new PitchedBattleSite(new Point(35, 12), MyColors.WHITE, "of " + ArkvaleCastle.CASTLE_NAME);
         PitchedBattleSite sun = new PitchedBattleSite(new Point(16, 25), MyColors.YELLOW, "of " + SunblazeCastle.CASTLE_NAME);
         PitchedBattleSite ard = new PitchedBattleSite(new Point(35, 24), MyColors.GREEN, "of " + ArdhCastle.CASTLE_NAME);
 
-        PitchedBattleSite n1 = new PitchedBattleSite(new Point(19, 11), MyColors.WHITE, "of Mount Vormund");
-        PitchedBattleSite n2 = new PitchedBattleSite(new Point(26, 12), MyColors.GREEN, "of Paxton Woods");
+        PitchedBattleSite n1 = new HillyBattleSite(new Point(19, 11), MyColors.WHITE, "of Mount Vormund");
+        PitchedBattleSite n2 = new WoodedBattleSite(new Point(26, 12), MyColors.GREEN, "of Paxton Woods");
         PitchedBattleSite n3 = new PitchedBattleSite(new Point(31, 11), MyColors.WHITE, "of Urntown");
 
-        PitchedBattleSite w1 = new PitchedBattleSite(new Point(15, 17), MyColors.GREEN, "at Roukon River");
+        PitchedBattleSite w1 = new RiverBattleSite(new Point(15, 17), MyColors.GREEN, "at Roukon River");
         PitchedBattleSite w2 = new PitchedBattleSite(new Point(16, 21), MyColors.GREEN, "of Erinde Fields");
-        PitchedBattleSite w3 = new PitchedBattleSite(new Point(15, 24), MyColors.YELLOW, "of Zand");
+        PitchedBattleSite w3 = new SparselyHillyBattleSite(new Point(15, 24), MyColors.YELLOW, "of Zand");
 
         PitchedBattleSite x1 = new PitchedBattleSite(new Point(19, 14), MyColors.GREEN, "of Urh Plains");
-        PitchedBattleSite x2 = new PitchedBattleSite(new Point(25, 19), MyColors.GREEN, "at the Crossroads");
-        PitchedBattleSite x3 = new PitchedBattleSite(new Point(32, 20), MyColors.GREEN, "on the Thelnius");
+        PitchedBattleSite x2 = new WoodedBattleSite(new Point(25, 19), MyColors.GREEN, "at the Crossroads");
+        PitchedBattleSite x3 = new RiverBattleSite(new Point(32, 20), MyColors.GREEN, "on the Thelnius");
 
-        PitchedBattleSite y1 = new PitchedBattleSite(new Point(31, 17), MyColors.GREEN, "of Caleb's Clearing");
-        PitchedBattleSite y2 = new PitchedBattleSite(new Point(27, 20), MyColors.GREEN, "of Theln Hills");
-        PitchedBattleSite y3 = new PitchedBattleSite(new Point(22, 23), MyColors.GREEN, "of Lake Acker");
+        PitchedBattleSite y1 = new WoodedBattleSite(new Point(31, 17), MyColors.GREEN, "of Caleb's Clearing");
+        PitchedBattleSite y2 = new HillyBattleSite(new Point(27, 20), MyColors.GREEN, "of Theln Hills");
+        PitchedBattleSite y3 = new LakesideBattleSite(new Point(22, 23), MyColors.GREEN, "of Lake Acker");
 
-        PitchedBattleSite e1 = new PitchedBattleSite(new Point(36, 14), MyColors.GREEN, "of Arksea Swamp");
-        PitchedBattleSite e2 = new PitchedBattleSite(new Point(35, 18), MyColors.GREEN, "of Ashtonshire Woods");
-        PitchedBattleSite e3 = new PitchedBattleSite(new Point(37, 21), MyColors.YELLOW, "of Ronk Hills");
+        PitchedBattleSite e1 = new SwampyBattleSite(new Point(36, 14), MyColors.GREEN, "of Arksea Swamp");
+        PitchedBattleSite e2 = new WoodedBattleSite(new Point(35, 18), MyColors.GREEN, "of Ashtonshire Woods");
+        PitchedBattleSite e3 = new SparselyHillyBattleSite(new Point(37, 21), MyColors.YELLOW, "of Ronk Hills");
 
-        PitchedBattleSite s1 = new PitchedBattleSite(new Point(20, 25), MyColors.GREEN, "of Hunter's Hills");
-        PitchedBattleSite s2 = new PitchedBattleSite(new Point(26, 26), MyColors.YELLOW, "on Meadhome Beach");
+        PitchedBattleSite s1 = new HillyBattleSite(new Point(20, 25), MyColors.GREEN, "of Hunter's Hills");
+        PitchedBattleSite s2 = new LakesideBattleSite(new Point(26, 26), MyColors.YELLOW, "on Meadhome Beach");
         PitchedBattleSite s3 = new PitchedBattleSite(new Point(31, 25), MyColors.GREEN, "of Sheffield");
 
         String BOG = BogdownCastle.CASTLE_NAME;

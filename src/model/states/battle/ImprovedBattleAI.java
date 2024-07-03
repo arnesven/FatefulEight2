@@ -70,7 +70,7 @@ public class ImprovedBattleAI extends BattleAI {
         Collections.sort(unitsInRange, (b1, b2) -> {
             double dist1 = battleState.getPositionForUnit(b1).distance(pos)*1000 - b1.getCount();
             double dist2 = battleState.getPositionForUnit(b2).distance(pos)*1000 - b2.getCount();
-            return (int)Math.round(dist2 - dist1);
+            return (int)Math.round(dist1 - dist2);
         });
         System.out.println("Shooting candidates:");
         for (BattleUnit b : unitsInRange) {
