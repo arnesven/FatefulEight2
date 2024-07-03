@@ -9,6 +9,7 @@ import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyPair;
+import util.MyRandom;
 import view.subviews.BattleSubView;
 import view.subviews.StripedTransition;
 
@@ -27,6 +28,7 @@ public class BattleState extends GameState {
     private final BattleAI opponentAI = new ImprovedBattleAI();
     private BattleSubView subView;
     private boolean wasVictorious = false;
+    private int turnCount = 0;
 
     public BattleState(Model model, KingdomWar war, boolean actAsAggressor) {
         super(model);
@@ -58,10 +60,11 @@ public class BattleState extends GameState {
         List<BattleUnit> opponentUnits = playingAggressor ? war.getDefenderUnits() : war.getAggressorUnits();
 
         boolean abandoned = false;
-        while (!(allVanquished(playerUnits) || allVanquished(opponentUnits))) {
+        while (!battleIsOver(playerUnits, opponentUnits)) {
+            turnCount++;
             println("Your turn.");
             abandoned = !doPlayerTurn(model, playerUnits);
-            if (abandoned || allVanquished(opponentUnits) || allVanquished(playerUnits)) {
+            if (abandoned || battleIsOver(playerUnits, opponentUnits)) {
                 break;
             }
             String sideName = CastleLocation.placeNameShort(playingAggressor ? war.getDefender() : war.getAggressor());
@@ -81,6 +84,22 @@ public class BattleState extends GameState {
         waitForReturn();
 
         return model.getCurrentHex().getEveningState(model, false, false);
+    }
+
+    private boolean battleIsOver(List<BattleUnit> playerUnits, List<BattleUnit> opponentUnits) {
+        return allVanquished(playerUnits) || allVanquished(opponentUnits) || opponentRetreats(playerUnits, opponentUnits);
+    }
+
+    private boolean opponentRetreats(List<BattleUnit> playerUnits, List<BattleUnit> opponentUnits) {
+        if (turnCount > 2 && MyLists.intAccumulate(playerUnits, BattleUnit::getCount) >
+            MyLists.intAccumulate(opponentUnits, BattleUnit::getCount) * 3) {
+            if (MyRandom.flipCoin()) {
+                println("The enemy has retreated from battle!");
+                MyLists.forEach(opponentUnits, units::remove);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean wasVictorious() {

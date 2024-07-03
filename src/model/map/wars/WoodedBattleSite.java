@@ -11,9 +11,9 @@ public class WoodedBattleSite extends PitchedBattleSite {
     private static final String TERRAIN_STRING =
                     "#::#A:::" +
                     "#.::.:.#" +
-                    "#.##.:.#" +
-                    "#:.:...#" +
-                    "#.:..:.:" +
+                    "#.#:.:.#" +
+                    "#:.##..#" +
+                    "#.:##:.:" +
                     "#.:::##:" +
                     ":::..#.:" +
                     "#:.##:.:" +
