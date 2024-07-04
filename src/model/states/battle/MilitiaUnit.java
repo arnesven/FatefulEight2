@@ -35,6 +35,11 @@ public class MilitiaUnit extends BattleUnit {
     }
 
     @Override
+    public MyColors getColor() {
+        return color;
+    }
+
+    @Override
     protected BattleUnit copyYourself() {
         return new MilitiaUnit(getCount(), getOrigin(), color);
     }

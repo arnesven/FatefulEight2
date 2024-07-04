@@ -38,6 +38,11 @@ public class SwordsmanUnit extends BattleUnit {
     }
 
     @Override
+    public MyColors getColor() {
+        return color;
+    }
+
+    @Override
     protected BattleUnit copyYourself() {
         return new SwordsmanUnit(getCount(), getOrigin(), color);
     }

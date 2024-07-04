@@ -38,6 +38,11 @@ public class ArchersUnit extends BattleUnit {
     }
 
     @Override
+    public MyColors getColor() {
+        return color;
+    }
+
+    @Override
     protected BattleUnit copyYourself() {
         return new ArchersUnit(getCount(), getOrigin(), color);
     }

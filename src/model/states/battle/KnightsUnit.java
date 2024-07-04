@@ -30,6 +30,11 @@ public class KnightsUnit extends BattleUnit implements MountedBattleUnit {
     }
 
     @Override
+    public MyColors getColor() {
+        return color;
+    }
+
+    @Override
     protected BattleUnit copyYourself() {
         return new KnightsUnit(getCount(), getOrigin(), color);
     }

@@ -95,7 +95,11 @@ public class BattleState extends GameState {
             MyLists.intAccumulate(opponentUnits, BattleUnit::getCount) * 3) {
             if (MyRandom.flipCoin()) {
                 println("The enemy has retreated from battle!");
-                MyLists.forEach(opponentUnits, units::remove);
+                for (BattleUnit bu : opponentUnits) {
+                    if (units.getElementList().contains(bu)) {
+                        units.remove(bu);
+                    }
+                }
                 return true;
             }
         }
@@ -331,13 +335,15 @@ public class BattleState extends GameState {
 
     private void placeUnits(List<BattleUnit> unitList, List<Point> positions, BattleDirection facing) {
         for (BattleUnit bu : unitList) {
-            bu.setDirection(facing);
-            if (positions.isEmpty()) {
-                System.err.println("Warning, to many battle units to place!");
-                break;
+            if (bu.getCount() > 0) {
+                bu.setDirection(facing);
+                if (positions.isEmpty()) {
+                    System.err.println("Warning, to many battle units to place!");
+                    break;
+                }
+                Point toPlaceAt = positions.remove(0);
+                units.addElement(toPlaceAt.x, toPlaceAt.y, bu);
             }
-            Point toPlaceAt = positions.remove(0);
-            units.addElement(toPlaceAt.x, toPlaceAt.y, bu);
         }
     }
 

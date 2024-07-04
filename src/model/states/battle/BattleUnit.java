@@ -284,14 +284,16 @@ public abstract class BattleUnit implements Serializable {
 
     public abstract HelpDialog getHelpSection(GameView view);
 
+    public abstract MyColors getColor();
+
     public String getStatsString() {
         return "Movement Points: " + maximumMP + "\n" +
                "Combat Skill:    " + combatSkillBonus + "\n" +
                "Defense:         " + defense;
     }
 
-    public int getReinforceCount() {
-        return MyRandom.randInt(reinforceMinimum, reinforceMaximum);
+    public int getReinforceCount(int multiplier) {
+        return MyRandom.randInt(reinforceMinimum * multiplier, reinforceMaximum * multiplier);
     }
 
     public int maximumUnitSize() {
@@ -305,4 +307,12 @@ public abstract class BattleUnit implements Serializable {
     }
 
     protected abstract BattleUnit copyYourself();
+
+    public int getMinimumReinforcement() {
+        return reinforceMinimum;
+    }
+
+    public int getMaximumReinforcement() {
+        return reinforceMaximum;
+    }
 }

@@ -20,10 +20,12 @@ import model.states.battle.BattleUnit;
 import model.tasks.BattleDestinationTask;
 import util.MyLists;
 import util.MyRandom;
+import view.ChooseBattleReinforcementsView;
+import view.ChooseStartingItemView;
+import view.MyColors;
 import view.subviews.PortraitSubView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CommandOutpostDailyEventState extends DailyEventState {
 
@@ -112,12 +114,20 @@ public class CommandOutpostDailyEventState extends DailyEventState {
                 leaderSay("Splendid. We'll meet you on the front line then.");
                 portraitSay("Yes. But before you leave. I was wondering if you could offer some advice.");
                 leaderSay("About what?");
-                println("We may be able to bring up some reinforcements. Muster some more troops even. " +
+                portraitSay("We may be able to bring up some reinforcements. Muster some more troops even. " +
                         "But there is limited time and resources. I would love to hear your input on what kind of " +
-                        "units we should focus on.");
-                // TODO: Reinforcements dialog instead of generalReinforce for one side.
-                generalReinforce(war.getAggressorUnits());
-                generalReinforce(war.getDefenderUnits());
+                        "units we should prioritize.");
+                model.getLog().waitForAnimationToFinish();
+                List<BattleUnit> unitsToReinforce = givenByAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
+                ChooseBattleReinforcementsView reinforcementsView = new ChooseBattleReinforcementsView(model,
+                        unitsToReinforce, unitsToReinforce.get(0).getColor());
+                print(" ");
+                model.transitionToDialog(reinforcementsView);
+                model.getLog().waitForAnimationToFinish();
+
+                generalReinforce(war.getAggressorUnits(), reinforcementsView.getPriorityMap());
+                List<BattleUnit> otherUnits = givenByAggressor ? war.getDefenderUnits() : war.getAggressorUnits();
+                generalReinforce(otherUnits, null);
 
                 leaderSay("... That's my view of the situation.");
                 portraitSay("Thank you. Your insights are much appreciated. Now, then... Until we meet again friend.");
@@ -170,8 +180,8 @@ public class CommandOutpostDailyEventState extends DailyEventState {
                 giveNewTask(model);
                 portraitSay("Now make haste friend or we shall surely meet the same fate as many of our fallen comrades.");
                 leaderSay("Yes general. See you on the other side.");
-                generalReinforce(war.getAggressorUnits());
-                generalReinforce(war.getDefenderUnits());
+                generalReinforce(war.getAggressorUnits(), null);
+                generalReinforce(war.getDefenderUnits(), null);
             }
         }
 
@@ -179,6 +189,7 @@ public class CommandOutpostDailyEventState extends DailyEventState {
             model.getWarHandler().endWar(war);
         }
     }
+
 
     private void lootBattlefield(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
@@ -222,10 +233,18 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         JournalEntry.printJournalUpdateMessage(model);
     }
 
-    private void generalReinforce(List<BattleUnit> units) {
+    private void generalReinforce(List<BattleUnit> units, Map<String, Integer> priorityMap) {
+        System.out.println("Reinforcing. Before:");
+        printUnits(units);
+        List<BattleUnit> oldUnits = collapse(units);
         List<BattleUnit> newUnits = new ArrayList<>();
-        for (BattleUnit bu : units) {
-            int reinforceTotal = bu.getCount() + bu.getReinforceCount();
+        for (BattleUnit bu : oldUnits) {
+            int multiplier = 2;
+            if (priorityMap != null) {
+                multiplier = priorityMap.get(bu.getName()) + 1;
+            }
+
+            int reinforceTotal = bu.getCount() + bu.getReinforceCount(multiplier);
             if (reinforceTotal <= bu.maximumUnitSize()) {
                 bu.setCount(reinforceTotal);
                 newUnits.add(bu);
@@ -237,5 +256,28 @@ public class CommandOutpostDailyEventState extends DailyEventState {
 
         units.clear();
         units.addAll(newUnits);
+
+        System.out.println("         After:");
+        printUnits(units);
+        System.out.println(" ");
+    }
+
+    private void printUnits(List<BattleUnit> units) {
+        for (BattleUnit unit : units) {
+            System.out.printf("%-26s %3d%n", unit.getQualifiedName(), unit.getCount());
+        }
+    }
+
+    private List<BattleUnit> collapse(List<BattleUnit> units) {
+        Map<String, BattleUnit> map = new HashMap<>();
+        for (BattleUnit bu : units) {
+            if (map.containsKey(bu.getName())) {
+                BattleUnit prev = map.get(bu.getName());
+                map.get(bu.getName()).setCount(prev.getCount() + bu.getCount());
+            } else {
+                map.put(bu.getName(), bu);
+            }
+        }
+        return new ArrayList<>(map.values());
     }
 }

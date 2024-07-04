@@ -59,6 +59,11 @@ public class PikemenUnit extends BattleUnit {
     }
 
     @Override
+    public MyColors getColor() {
+        return color;
+    }
+
+    @Override
     protected BattleUnit copyYourself() {
         return new PikemenUnit(getCount(), getOrigin(), color);
     }
