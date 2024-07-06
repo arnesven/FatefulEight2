@@ -68,6 +68,7 @@ public class CommanderNode extends DailyActionNode {
                 line = "We've been invaded by the " + CastleLocation.placeNameToKingdom(war.getAggressor());
             }
             commanderSay("You don't know? " + line + "!");
+            model.getTutorial().kingdomWars(model);
             leaderSay("Oh my gosh. Is there anything we can do to help?");
             println("The commander looks seriously at the party.");
             commanderSay("I don't know... what are your skills?");

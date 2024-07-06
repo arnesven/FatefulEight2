@@ -418,6 +418,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(warToTalkAbout.getAggressor() + " has declared war on this kingdom. Our " +
                         nearestCastle.getLordTitle() + " has been mustering troops to defend our land!");
             }
+            model.getTutorial().kingdomWars(model);
         } else if (!getModel().getWarHandler().getWars().isEmpty() && MyRandom.flipCoin()) {
             KingdomWar warToTalkAbout = MyRandom.sample(warsForThisKingdom);
             String extra = MyRandom.sample(List.of("So much for diplomacy...", "It's apparently a very old feud.",
@@ -426,6 +427,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             portraitSay("I've heard " + CastleLocation.placeNameToKingdom(warToTalkAbout.getAggressor()) +
                     " has declared war on " +
                     CastleLocation.placeNameToKingdom(warToTalkAbout.getDefender()) + ". " + extra);
+            model.getTutorial().kingdomWars(model);
         } else {
             portraitSay(MyRandom.sample(List.of(
                     "I've heard " + nearestCastle.getLordName() + " is planning to host an archery contest soon.",

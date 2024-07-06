@@ -506,6 +506,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void kingdomWars(Model model) {
+        runOnce("wars", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialWars(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

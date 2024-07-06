@@ -60,7 +60,8 @@ public class HelpView extends TwoPaneSelectableListMenu {
             new TerrainHelpChapter(null),
             new TutorialTraining(null),
             new TutorialTravelDialog(null),
-            new TutorialTravellers(null)));
+            new TutorialTravellers(null),
+            new TutorialWars(null)));
     }
 
     @Override
