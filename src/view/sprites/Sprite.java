@@ -88,19 +88,10 @@ public class Sprite implements Serializable {
         this(name, mapPath, column, row, width, height, new ArrayList<>());
     }
 
-    // TODO: Remove this nasty ctor...
-    public Sprite(String name, String mapPath, int column, int row) {
-        this(name, mapPath, column, row, 128, 128);
-    }
-
     public Sprite(String name, String mapPath, int column, int row, int width, int height, int resizeW, int resizeH) {
         this(name, mapPath, column, row, width, height);
         this.resizeWidth = resizeW;
         this.resizeHeight = resizeH;
-    }
-
-    public Sprite(String name, String mapPath, int column) {
-        this(name, mapPath, column, 0);
     }
 
     public Sprite(String name, List<Sprite> list) {

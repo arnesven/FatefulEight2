@@ -287,6 +287,7 @@ public class ItemDeck extends ArrayList<Item> {
         // TODO: On the Ingenuity of Halflings (useless)
         // TODO: Horse Racing 101
         // TODO: Runny Card Game for Dummies
+        // TODO: Battle Tactics Basics
     }
 
     public static List<Weapon> allWeapons() {

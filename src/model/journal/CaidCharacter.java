@@ -22,7 +22,7 @@ public class CaidCharacter extends GameCharacter {
     private static class CaidAppearance extends AdvancedAppearance {
         public CaidAppearance() {
             super(Race.NORTHERN_HUMAN, false, MyColors.BEIGE, CharacterCreationView.mouthSet[4],
-                    CharacterCreationView.noseSet[5], CharacterEyes.allEyes[2], HairStyle.allHairStyles[23], // TODO: Fix Caid's hair
+                    CharacterCreationView.noseSet[5], CharacterEyes.allEyes[2], HairStyle.allHairStyles[23],
                     Beard.allBeards[22]);
             setFaceDetail(new HeadBandDetail());
             setDetailColor(MyColors.DARK_RED);

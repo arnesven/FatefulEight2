@@ -6,6 +6,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.preset.LonnieLiebgott;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.Equipment;
 import model.items.Item;
@@ -14,9 +15,7 @@ import model.items.accessories.HeraldicShield;
 import model.items.clothing.ChainMail;
 import model.items.clothing.LeatherArmor;
 import model.items.clothing.PlateMailArmor;
-import model.items.weapons.BastardSword;
-import model.items.weapons.DaiKatana;
-import model.items.weapons.GrandMaul;
+import model.items.weapons.*;
 import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;
@@ -56,8 +55,24 @@ public class SummonTreeHerderSpell extends SummonCombatSpell {
 
     private static class TreeHerderAlly extends GameCharacter {
         public TreeHerderAlly() {
-            super("Tree Herder", "", Race.WOOD_ELF, Classes.TREE_HERDER, // TODO: Change grand maul to a natural weapon
-                    new LonnieLiebgott(), Classes.NO_OTHER_CLASSES, new Equipment(new GrandMaul(), new LeatherArmor(), null));
+            super("Tree Herder", "", Race.WOOD_ELF, Classes.TREE_HERDER,
+                    new LonnieLiebgott(), Classes.NO_OTHER_CLASSES, new Equipment(new BigBranchArm(), new LeatherArmor(), null));
+        }
+
+        private static class BigBranchArm extends NaturalWeapon {
+            public BigBranchArm() {
+                super("Big Branch Arm", 0, Skill.BluntWeapons, new int[]{7,9,12,13,15});
+            }
+
+            @Override
+            public int getWeight() {
+                return 0;
+            }
+
+            @Override
+            public Item copy() {
+                return new BigBranchArm();
+            }
         }
     }
 }

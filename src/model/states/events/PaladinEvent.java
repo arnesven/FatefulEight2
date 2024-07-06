@@ -60,7 +60,7 @@ public class PaladinEvent extends DailyEventState {
                 Race race = Race.randomRace();
                 println("You are about to spring into combat when a tall fellow, clad in armor, rushes in to aid you!");
                 CombatEvent combat = new CombatEvent(model, List.of(monster));
-                this.portrait = PortraitSubView.makeRandomPortrait(Classes.PAL, Race.HIGH_ELF);
+                this.portrait = PortraitSubView.makeRandomPortrait(Classes.PAL, race);
                 GameCharacter paladin = new GameCharacter("Paladin", "", race, Classes.PAL, portrait,
                             Classes.NO_OTHER_CLASSES,
                             new Equipment(new Warhammer(), new ScaleArmor(), new SkullCap()));

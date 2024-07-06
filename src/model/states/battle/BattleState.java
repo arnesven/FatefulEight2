@@ -11,6 +11,7 @@ import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.BattleSubView;
+import view.subviews.SnakeTransition;
 import view.subviews.StripedTransition;
 
 import java.awt.*;
@@ -53,7 +54,7 @@ public class BattleState extends GameState {
     public GameState run(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
         this.subView = new BattleSubView(terrain, units, this, war.getGroundColor());
-        StripedTransition.transition(model, subView); // TODO: Make new transition for this.
+        SnakeTransition.transition(model, subView);
 
         model.getTutorial().battles(model);
         List<BattleUnit> playerUnits = playingAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
@@ -69,7 +70,7 @@ public class BattleState extends GameState {
             }
             String sideName = CastleLocation.placeNameShort(playingAggressor ? war.getDefender() : war.getAggressor());
             println(sideName + "'s turn.");
-            doAITurn(model, opponentUnits); // TODO: Implement opponent retreats from battle
+            doAITurn(model, opponentUnits);
         }
 
         if (abandoned) {
