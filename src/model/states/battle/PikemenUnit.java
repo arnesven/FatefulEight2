@@ -1,5 +1,10 @@
 package model.states.battle;
 
+import model.enemies.Enemy;
+import model.enemies.FormerPartyMemberEnemy;
+import model.enemies.SpearmanCharacter;
+import model.races.Race;
+import util.MyRandom;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -30,6 +35,12 @@ public class PikemenUnit extends BattleUnit {
             return sprites;
         }
         return spritesMany;
+    }
+
+    @Override
+    public Enemy makeEnemy() {
+        return new FormerPartyMemberEnemy(new SpearmanCharacter("Pikeman", "",
+                        MyRandom.sample(Race.getAllRaces())));
     }
 
     @Override

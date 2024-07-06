@@ -54,7 +54,16 @@ public class CombatMatrix extends SteppingMatrix<Combatant> {
     }
 
     public void addAllies(List<GameCharacter> allies) {
-        addCentered(FRONT_ROW_Y + 1, allies, allies.size());
+        List<GameCharacter> firstRow = allies;
+        List<GameCharacter> secondRow = new ArrayList<>();
+        if (allies.size() > 8) {
+            firstRow = allies.subList(0, 8);
+            secondRow = allies.subList(8, Math.min(16, allies.size()));
+        }
+        addCentered(FRONT_ROW_Y + 1, firstRow, firstRow.size());
+        if (!secondRow.isEmpty()) {
+            addCentered(FRONT_ROW_Y + 2, secondRow, secondRow.size());
+        }
     }
 
     public Combatant getCombatant(int col, int row) {

@@ -62,22 +62,36 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         leaderSay("Good. What can we help with?");
         portraitSay("Well, you can go join any unit you like. Or you can stay with me and direct the battle. " +
                 "Which would you prefer?");
-        int choice = multipleOptionArrowMenu(model, 26, 26, List.of("Join a unit", "Direct the battle",
-                "Skip the battle"));
+        int choice = multipleOptionArrowMenu(model, 24, 26, List.of("Join a unit", "Direct the battle"));
         boolean victorious;
-        if (choice == 2) { // TODO: Remove this cheat
-            print("Do you want to win(Y) or lose the battle(N)? ");
-            victorious = yesNoInput();
+        if (choice == 0) {
+            leaderSay("We can handle ourselves. Just show us where the enemy is.");
+            portraitSay("I admire your fervor. Just head on down the hill and you'll soon see the ranks. " +
+                    "Just find any unit and report to the lieutenant.");
+            leaderSay("See you on the other side general.");
+            List<BattleUnit> enemies = givenByAggressor ? war.getDefenderUnits() : war.getAggressorUnits();
+            List<BattleUnit> allies = givenByAggressor ? war.getAggressorUnits() : war.getDefenderUnits();
+            FightInUnitDuringBattleEvent fightEvent = new FightInUnitDuringBattleEvent(model,
+                    givenByAggressor ? war.getAggressor() : war.getDefender(),
+                    enemies);
+            model.getLog().waitForAnimationToFinish();
+            removePortraitSubView(model);
+            fightEvent.run(model);
+            if (model.getParty().isWipedOut()) {
+                return;
+            }
+            decimateRandomly(enemies, 0);
+            decimateRandomly(allies, +1);
+            victorious = fightEvent.isVictorious();
         } else {
-            // TODO: Implement joining a unit
             leaderSay("I think we'll stay with you. I'm sure we'll have some tactical insights we could share.");
             portraitSay("All right! Let's go give the enemy a taste of our zeal!");
             BattleState battle = new BattleState(model, war, givenByAggressor);
             battle.run(model);
-            setCurrentTerrainSubview(model);
-            showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
             victorious = battle.wasVictorious();
         }
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
 
         task.setCompleted(true);
 
@@ -96,7 +110,8 @@ public class CommandOutpostDailyEventState extends DailyEventState {
                 leaderSay("I'm happy to hear it. We are weary of war general.");
                 portraitSay("So am I. Farewell friend, until we meet again.");
                 leaderSay("Goodbye general.");
-                println("Each party member gains 100 XP!");
+                println("Your party gains 1 Reputation and each party member gains 100 XP!");
+                model.getParty().addToReputation(1);
                 MyLists.forEach(model.getParty().getPartyMembers(),
                         (GameCharacter gc) -> model.getParty().giveXP(model, gc, 100));
             } else {
@@ -187,6 +202,17 @@ public class CommandOutpostDailyEventState extends DailyEventState {
 
         if (warIsOver) {
             model.getWarHandler().endWar(war);
+        }
+    }
+
+    private void decimateRandomly(List<BattleUnit> units, int rollBonus) {
+        for (BattleUnit bu : units) {
+            int dieRoll = MyRandom.rollD6() + rollBonus;
+            if (dieRoll < 3) {
+                bu.setCount(0);
+            } else {
+                bu.setCount(Math.max(1, bu.getCount() / (8 - dieRoll)));
+            }
         }
     }
 

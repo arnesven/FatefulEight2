@@ -57,7 +57,7 @@ public class WarHandler implements Serializable {
 
     public void updateWars(Model model) {
         if (currentWars.isEmpty()) {
-            if (MyRandom.rollD10() >= 1) { // TODO: 10 (or even less likely)
+            if (MyRandom.rollD10() >= 10) {
                 List<CastleLocation> castles =
                         MyLists.transform(
                             MyLists.filter(model.getWorld().getLordLocations(),

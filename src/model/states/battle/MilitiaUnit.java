@@ -1,5 +1,7 @@
 package model.states.battle;
 
+import model.enemies.BanditEnemy;
+import model.enemies.Enemy;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -53,6 +55,18 @@ public class MilitiaUnit extends BattleUnit {
             return spritesSeven;
         }
         return spritesEleven;
+    }
+
+    @Override
+    public Enemy makeEnemy() {
+        return new MilitiaEnemy();
+    }
+
+
+    private static class MilitiaEnemy extends BanditEnemy {
+        public MilitiaEnemy() {
+            super('A', "Militia", 4);
+        }
     }
 
 }

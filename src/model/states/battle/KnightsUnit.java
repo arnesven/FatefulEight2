@@ -1,5 +1,8 @@
 package model.states.battle;
 
+import model.enemies.Enemy;
+import model.enemies.MountedEnemy;
+import model.enemies.SoldierEnemy;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -46,4 +49,31 @@ public class KnightsUnit extends BattleUnit implements MountedBattleUnit {
         }
         return sprites;
     }
+
+    @Override
+    public Enemy makeEnemy() {
+        return new KnightEnemy();
+    }
+
+    private static class KnightEnemy extends MountedEnemy {
+        public KnightEnemy() {
+            super(new SoldierEnemy('A'));
+        }
+
+        @Override
+        public String getName() {
+            return "Knight";
+        }
+
+        @Override
+        public int getDamage() {
+            return 5;
+        }
+
+        @Override
+        public int getDamageReduction() {
+            return 1;
+        }
+    }
+
 }

@@ -451,7 +451,9 @@ public class CombatEvent extends DailyEventState {
 
     public void removeAlly(GameCharacter gc) {
         this.allies.remove(gc);
-        combatMatrix.remove(gc);
+        if (combatMatrix.getElementList().contains(gc)) {
+            combatMatrix.remove(gc);
+        }
     }
 
     public List<GameCharacter> getAllies() {

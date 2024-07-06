@@ -1,6 +1,7 @@
 package model.states.battle;
 
 import model.Model;
+import model.enemies.Enemy;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;
@@ -49,6 +50,12 @@ public abstract class BattleUnit implements Serializable {
     }
 
     protected abstract Sprite[] getSprites();
+
+    /**
+     * For convert the unit into enemies for combat.
+     * @return An enemy corresponding to this unit.
+     */
+    public abstract Enemy makeEnemy();
 
     public void refillMovementPoints() {
         this.currentMP = maximumMP;
@@ -315,4 +322,5 @@ public abstract class BattleUnit implements Serializable {
     public int getMaximumReinforcement() {
         return reinforceMaximum;
     }
+
 }

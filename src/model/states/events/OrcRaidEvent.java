@@ -119,7 +119,6 @@ public class OrcRaidEvent extends DailyEventState {
         return new GameCharacter("Militia", "Elite", AllRaces.allRaces[raceIndex], Classes.PAL, new RandomAppearance(AllRaces.allRaces[raceIndex]),
                 Classes.NO_OTHER_CLASSES,
                 new Equipment(new Glaive(), new ScaleArmor(), new HeavyRing()));
-
     }
 
     @Override

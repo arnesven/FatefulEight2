@@ -1,5 +1,12 @@
 package model.states.battle;
 
+import model.Model;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.PersonCombatLoot;
+import model.enemies.Enemy;
+import model.enemies.SwordsmanEnemy;
+import model.races.Race;
+import util.MyRandom;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -29,6 +36,23 @@ public class SwordsmanUnit extends BattleUnit {
             return spritesFour;
         }
         return spritesSeven;
+    }
+
+    @Override
+    public Enemy makeEnemy() {
+        return new ArmySwordsmanEnemy();
+    }
+
+
+    private static class ArmySwordsmanEnemy extends SwordsmanEnemy {
+        public ArmySwordsmanEnemy() {
+            super('A', MyRandom.sample(Race.getAllRaces()));
+        }
+
+        @Override
+        public CombatLoot getLoot(Model model) {
+            return new PersonCombatLoot(model);
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package model.states.battle;
 
+import model.enemies.BanditArcherEnemy;
+import model.enemies.Enemy;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -56,5 +58,21 @@ public class ArchersUnit extends BattleUnit {
             return spritesFour;
         }
         return spritesSeven;
+    }
+
+    @Override
+    public Enemy makeEnemy() {
+        return new ArcherEnemy();
+    }
+
+    private static class ArcherEnemy extends BanditArcherEnemy {
+        public ArcherEnemy() {
+            super('A');
+        }
+
+        @Override
+        public String getName() {
+            return "Archer";
+        }
     }
 }
