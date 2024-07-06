@@ -178,8 +178,11 @@ public class BattleSubView extends SubView {
             return false;
         }
         pendingBattleAction.execute(model, battleState, pendingBattleAction.getPerformer());
-        if (pendingBattleAction.getPerformer().getCount() > 0) {
+        if (pendingBattleAction.getPerformer().getCount() > 0 &&
+                units.getElementList().contains(pendingBattleAction.getPerformer())) {
             grid.setSelectedPoint(units.getPositionFor(pendingBattleAction.getPerformer()));
+        } else {
+            cancelPending();
         }
         return true;
     }

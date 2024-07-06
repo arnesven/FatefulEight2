@@ -61,7 +61,7 @@ public class CommanderNode extends DailyActionNode {
                 return null;
             }
             KingdomWar war = model.getWarHandler().getWarsForKingdom(castle).get(0);
-            commanderSay("I'm sorry, I'm very busy at the moment. I've Got to draw up these battle plans.");
+            commanderSay("I'm sorry, I'm very busy at the moment. I've got to draw up these battle plans.");
             leaderSay("What's the trouble?");
             String line = "We're at war with the " + CastleLocation.placeNameToKingdom(war.getDefender());
             if (war.isDefender(castle)) {
