@@ -365,4 +365,8 @@ public class BattleState extends GameState {
         positions.addAll(positions2);
         return positions;
     }
+
+    public boolean isOnBattlefield(BattleUnit currentUnit) {
+        return units.getElementList().contains(currentUnit);
+    }
 }

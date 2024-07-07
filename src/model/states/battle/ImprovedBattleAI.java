@@ -28,7 +28,8 @@ public class ImprovedBattleAI extends BattleAI {
     protected void specificActivateUnit(Model model, BattleSubView subView, BattleState battleState,
                                         ArrayList<BattleUnit> currentUnits) {
         BattleUnit currentUnit = currentUnits.get(0);
-        if (currentUnit.getCount() == 0 || currentUnit.getMP() == 0) {
+        if (currentUnit.getCount() == 0 || currentUnit.getMP() == 0 ||
+                !battleState.isOnBattlefield(currentUnit)) {
             currentUnits.remove(currentUnit);
             return;
         }
