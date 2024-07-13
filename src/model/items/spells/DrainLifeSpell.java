@@ -13,11 +13,11 @@ import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.*;
 
-public class VampirismSpell extends CombatSpell {
+public class DrainLifeSpell extends CombatSpell {
     private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
-    public VampirismSpell() {
-        super("Vampirism", 18, MyColors.BLACK, 8, 3, false);
+    public DrainLifeSpell() {
+        super("Drain Life", 18, MyColors.BLACK, 8, 3, false);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class VampirismSpell extends CombatSpell {
 
     @Override
     public Item copy() {
-        return new VampirismSpell();
+        return new DrainLifeSpell();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class VampirismSpell extends CombatSpell {
             combat.addFloatyDamage(performer, totalRecovered, DamageValueEffect.HEALING);
             performer.addToHP(totalRecovered);
         }
-        combat.addSpecialEffect(performer, new VampirismEffect());
+        combat.addSpecialEffect(performer, new DrainLifeEffect());
         combat.println(target.getName() + " took " + damage + " from " + getName() + ", " +
                 performer.getName() + " absorbed " + totalRecovered + " of the damage as health points!");
     }

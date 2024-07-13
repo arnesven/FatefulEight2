@@ -251,7 +251,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new WeakenSpell(),
                 new DarkShroudSpell(),
                 new PoisonGasSpell(),
-                new VampirismSpell(),
+                new DrainLifeSpell(),
                 new BoneArmorSpell(),
                 // COLORLESS
                 new DispelSpell(),

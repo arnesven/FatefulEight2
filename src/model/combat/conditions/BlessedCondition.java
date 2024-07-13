@@ -49,4 +49,9 @@ public class BlessedCondition extends Condition {
     public ConditionHelpDialog getHelpView(GameView view) {
         return new ConditionHelpDialog(view, new BlessedCondition(0), HELP_TEXT);
     }
+
+    @Override
+    public int getStaminaBonus() {
+        return 1;
+    }
 }

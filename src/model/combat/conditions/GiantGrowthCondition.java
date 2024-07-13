@@ -48,4 +48,9 @@ public class GiantGrowthCondition extends Condition {
         return new ConditionHelpDialog(view, this, "A condition indicating that the combatant has been targeted " +
                 "by the Giant Growth spell.");
     }
+
+    @Override
+    public int getHealthBonus() {
+        return 2;
+    }
 }

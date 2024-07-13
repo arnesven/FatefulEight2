@@ -36,4 +36,8 @@ public class QuickenedCondition extends Condition {
                 "has a temporary boost to his or her speed.");
     }
 
+    @Override
+    public int getSpeedBonus() {
+        return QuickeningSpell.SPEED_BONUS;
+    }
 }

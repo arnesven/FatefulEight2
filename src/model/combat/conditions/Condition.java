@@ -65,9 +65,7 @@ public abstract class Condition implements Serializable {
 
     public abstract Sprite getSymbol();
 
-    public void wasRemoved(Combatant combatant) {
-
-    }
+    public void wasRemoved(Combatant combatant) { }
 
     public boolean removeAtEndOfCombat() {
         return false;
@@ -83,4 +81,11 @@ public abstract class Condition implements Serializable {
 
     public int getArmorBonus() { return 0; }
 
+    public int getHealthBonus() { return 0; }
+
+    public int getStaminaBonus() { return 0; }
+
+    public int getSpeedBonus() { return 0; }
+
+    public int getCarryCapBonus() { return 0; }
 }

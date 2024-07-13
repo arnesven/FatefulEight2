@@ -100,7 +100,7 @@ public class Party implements Serializable {
         }
         partyMembers.add(gameCharacter);
         gameCharacter.setParty(this);
-        carryingCapInKilos += gameCharacter.getRace().getCarryingCapacity();
+        carryingCapInKilos += gameCharacter.getCarryCap();
         if (gameCharacter.getCharClass().isBackRowCombatant()) {
             backRow.add(gameCharacter);
         } else {

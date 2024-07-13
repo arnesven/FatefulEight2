@@ -26,6 +26,7 @@ import model.races.Race;
 import model.states.CombatEvent;
 import model.states.events.RareBirdEvent;
 import sound.SoundEffects;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
@@ -167,10 +168,10 @@ public class GameCharacter extends Combatant {
         int levelBonus = Math.max(0, (level-2) / 3);
         int heavyClothing = equipment.getClothing().isHeavy() ? -2 : 0;
         int heavyAccessory = equipment.getAccessory() != null && equipment.getAccessory().isHeavy() ? -1 : 0;
-        int quickened = hasCondition(QuickenedCondition.class) ? QuickeningSpell.SPEED_BONUS : 0;
+        int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getSpeedBonus);
         return charClass.getSpeed() + race.getSpeedModifier() + levelBonus +
                 equipment.getSpeedModifiers() + heavyClothing +
-                heavyAccessory + quickened;
+                heavyAccessory + conditionBonus;
     }
 
     @Override
@@ -280,8 +281,8 @@ public class GameCharacter extends Combatant {
     }
 
     public int getMaxHP() {
-        int spellBonus = hasCondition(GiantGrowthCondition.class) ? 2 : 0;
-        return charClass.getHP() + race.getHPModifier() + equipment.getHealthBonus() + level + spellBonus;
+        int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getHealthBonus);
+        return charClass.getHP() + race.getHPModifier() + equipment.getHealthBonus() + level + conditionBonus;
     }
 
     public int getLevel() {
@@ -428,8 +429,8 @@ public class GameCharacter extends Combatant {
         if (equipment.getAccessory() != null) {
             equipmentBonus = equipment.getAccessory().getSPBonus();
         }
-        int blessedBonus = hasCondition(BlessedCondition.class) ? 1 : 0;
-        return 2 + levelBonus + equipmentBonus + blessedBonus;
+        int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getStaminaBonus);
+        return 2 + levelBonus + equipmentBonus + conditionBonus;
     }
 
     public Equipment getEquipment() {
@@ -757,5 +758,10 @@ public class GameCharacter extends Combatant {
     @Override
     protected boolean hasConditionImmunity(Condition cond) {
         return equipment.grantsConditionImmunity(cond);
+    }
+
+    public int getCarryCap() {
+        int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getCarryCapBonus);
+        return getRace().getCarryingCapacity() + conditionBonus;
     }
 }
