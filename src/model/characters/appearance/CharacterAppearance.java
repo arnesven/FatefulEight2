@@ -29,6 +29,7 @@ public abstract class CharacterAppearance implements Serializable {
     private MyColors hairColor;
     private MyColors mascaraColor;
     private MyColors lipColor;
+    private MyColors alternateSkinColor = null;
     private final boolean femaleGender;
     private Shoulders shoulders;
     private final TorsoChest chest;
@@ -196,7 +197,11 @@ public abstract class CharacterAppearance implements Serializable {
         for (int y = 0; y < grid[0].length; ++y) {
             for (int x = 0; x < grid.length; ++x) {
                 if (grid[x][y] != null) {
-                    grid[x][y].setSkinColor(race.getColor());
+                    if (hasAlternateSkinColor()) {
+                        grid[x][y].setSkinColor(getAlternateSkinColor());
+                    } else {
+                        grid[x][y].setSkinColor(race.getColor());
+                    }
                 }
             }
         }
@@ -465,5 +470,17 @@ public abstract class CharacterAppearance implements Serializable {
             screenHandler.register("lookRightleft", new Point(x - 1, y), lookRight.first);
             screenHandler.register("lookRightRight", new Point(x + 1, y), lookRight.second);
         }
+    }
+
+    public void setAlternateSkinColor(MyColors color) {
+        this.alternateSkinColor = color;
+    }
+
+    public boolean hasAlternateSkinColor() {
+        return alternateSkinColor != null;
+    }
+
+    public MyColors getAlternateSkinColor() {
+        return alternateSkinColor;
     }
 }

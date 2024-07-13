@@ -27,4 +27,9 @@ public class ColoredRace extends Race {
     public int getInitialAttitudeFor(Race race) {
         return race.getInitialAttitudeFor(race);
     }
+
+    @Override
+    public boolean isShort() {
+        return innerRace.isShort();
+    }
 }

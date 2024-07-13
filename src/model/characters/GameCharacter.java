@@ -22,6 +22,7 @@ import model.items.spells.QuickeningSpell;
 import model.items.weapons.NaturalWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
+import model.races.ColoredRace;
 import model.races.Race;
 import model.states.CombatEvent;
 import model.states.events.RareBirdEvent;
@@ -99,6 +100,9 @@ public class GameCharacter extends Combatant {
     }
 
     private AvatarSprite makeAvatarSprite() {
+        if (appearance.hasAlternateSkinColor()) {
+            return charClass.getAvatar(new ColoredRace(appearance.getAlternateSkinColor(), race), appearance);
+        }
         return charClass.getAvatar(race, appearance);
     }
 
@@ -749,9 +753,9 @@ public class GameCharacter extends Combatant {
     }
 
     public void setAppearance(CharacterAppearance appearance) {
+        appearance.setClass(charClass);
         this.appearance = appearance;
         deadAppearance = new SkeletonAppearance(appearance.getShoulders(), appearance.getGender());
-        setClass(charClass);
         avatarSprite = makeAvatarSprite();
     }
 

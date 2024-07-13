@@ -1,5 +1,11 @@
 package model.combat.conditions;
 
+import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
+import model.races.ElvenRace;
+import model.races.Race;
+import model.states.TravelBySeaState;
 import util.Arithmetics;
 import view.GameView;
 import view.MyColors;
@@ -19,6 +25,7 @@ public class VampirismCondition extends Condition {
     private static final int STAMINA_PER_STAGE = 2;
     private static final int SPEED_PER_STAGE = 2;
     private static final int CARRY_CAP_BONUS_PER_STAGE = 15;
+    private static final MyColors PALEST_SKIN_COLOR = MyColors.WHITE;
     private int stage;
 
     public VampirismCondition(int initialStage) {
@@ -41,8 +48,51 @@ public class VampirismCondition extends Condition {
         return new VampirismHelpView(view, this);
     }
 
-    public void progress() {
+    public void progress(GameCharacter owner) {
         this.stage = Arithmetics.incrementWithWrap(this.stage, MAX_STAGE + 1); // TODO: Stop at max instead of wrap-around
+        if (owner.getAppearance() instanceof AdvancedAppearance) {
+            AdvancedAppearance app = (AdvancedAppearance) owner.getAppearance().copy();
+            MyColors skinColor = getSkinColorForRaceAndStage(owner);
+            app.setAlternateSkinColor(skinColor);
+            app.setMascaraColor(skinColor);
+            owner.setAppearance(app);
+        }
+    }
+
+    private MyColors getSkinColorForRaceAndStage(GameCharacter owner) {
+        if (stage == 0) {
+            return owner.getRace().getColor();
+        }
+        if (stage >= 4) {
+            return PALEST_SKIN_COLOR;
+        }
+        if (owner.getRace() instanceof ElvenRace) {
+            return owner.getRace().getColor();
+        }
+        if (owner.getRace().id() == Race.HALFLING.id()) {
+            if (stage >= 2) {
+                return MyColors.BEIGE;
+            }
+        }
+        if (owner.getRace().id() == Race.HALF_ORC.id()) {
+            if (stage >= 2) {
+                return MyColors.LIGHT_GREEN;
+            }
+        }
+        if (owner.getRace().id() == Race.NORTHERN_HUMAN.id() || owner.getRace().id() == Race.DWARF.id()) {
+            if (stage >= 2) {
+                return MyColors.LIGHT_PINK;
+            }
+        }
+        if (owner.getRace().id() == Race.SOUTHERN_HUMAN.id()) {
+            if (stage >= 3) {
+                return MyColors.BEIGE;
+            }
+            if (stage >= 2) {
+                return MyColors.PEACH;
+            }
+        }
+        return owner.getRace().getColor();
     }
 
     public int getStage() {
