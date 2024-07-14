@@ -181,10 +181,6 @@ public class Party implements Serializable {
         partyMembers.forEach(gameCharacter -> gameCharacter.addToHP(i));
     }
 
-    private void allRecoverSP(int i) {
-        partyMembers.forEach(gameCharacter -> gameCharacter.addToSP(i));
-    }
-
     public boolean isOnRoad() {
         return onRoad;
     }
@@ -294,7 +290,11 @@ public class Party implements Serializable {
 
     public void lodging(int cost) {
         allRecoverHp(2);
-        allRecoverSP(1);
+        for (GameCharacter gc : partyMembers) {
+            if (!gc.hasCondition(VampirismCondition.class)) {
+                gc.addToSP(1);
+            }
+        }
         addToGold(-1 * cost);
     }
 

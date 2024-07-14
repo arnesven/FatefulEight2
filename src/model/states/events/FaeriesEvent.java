@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.combat.conditions.VampirismCondition;
 import model.enemies.FaeryEnemy;
 import model.states.DailyEventState;
 
@@ -30,7 +31,9 @@ public class FaeriesEvent extends DailyEventState {
             println("Each party member regains 3 health and 1 stamina.");
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 gc.addToHP(3);
-                gc.addToSP(1);
+                if (!gc.hasCondition(VampirismCondition.class)) {
+                    gc.addToSP(1);
+                }
             }
             randomSayIfPersonality(PersonalityTrait.calm, new ArrayList<>(), "So relaxing.");
         } else if (partyAlign < -1) {

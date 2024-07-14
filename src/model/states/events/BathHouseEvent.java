@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SwimAttire;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.enemies.RowdyBoyEnemy;
 import model.enemies.RowdyGirlEnemy;
@@ -195,7 +196,7 @@ public class BathHouseEvent extends DailyEventState {
     private void refreshingSwimSubEvent(Model model, List<GameCharacter> groupB, boolean alone) {
         println("You have a refreshing swim in the pool.");
         for (GameCharacter gc : groupB) {
-            if (gc.getSP() < gc.getMaxSP()) {
+            if (gc.getSP() < gc.getMaxSP() && !gc.hasCondition(VampirismCondition.class)) {
                 gc.addToSP(1);
                 println(gc.getName() + " gains 1 stamina point.");
             }

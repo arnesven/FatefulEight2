@@ -2,6 +2,7 @@ package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.VampirismCondition;
 import model.items.Item;
 import model.items.Prevalence;
 import view.MyColors;
@@ -33,6 +34,9 @@ public class StaminaPotion extends Potion {
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {
+        if (gc.hasCondition(VampirismCondition.class)) {
+            return "Stamina Potion had no effect on " + gc.getName() + " (vampirism).";
+        }
         gc.addToSP(gc.getMaxHP()-gc.getSP());
         return gc.getName() + " recovers all SP!";
     }

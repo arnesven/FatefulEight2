@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
 import model.combat.conditions.FatigueCondition;
+import model.combat.conditions.VampirismCondition;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.help.HelpDialog;
@@ -62,8 +63,12 @@ public class RestCombatAction extends CombatAction {
     }
 
     private void recoverSP(CombatEvent combat, GameCharacter performer) {
-        combat.println(performer.getFirstName() + " recovered 1 Stamina Point.");
-        performer.addToSP(1);
+        if (!performer.hasCondition(VampirismCondition.class)) {
+            combat.println(performer.getFirstName() + " recovered 1 Stamina Point.");
+            performer.addToSP(1);
+        } else {
+            combat.println(performer.getFirstName() + " does not recover any stamina (vampirism).");
+        }
     }
 
     @Override

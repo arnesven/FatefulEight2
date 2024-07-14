@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.conditions.BlessedCondition;
+import model.combat.conditions.VampirismCondition;
 import model.items.Item;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -52,6 +53,10 @@ public class BlessSpell extends ImmediateSpell {
     }
 
     public static void applyBlessing(Model model, GameState state, int durationDays, GameCharacter target) {
+        if (target.hasCondition(VampirismCondition.class)) {
+            state.println(target.getName() + " cannot be blessed! (vampirism)");
+            return;
+        }
         if (!target.hasCondition(BlessedCondition.class)) {
             target.addCondition(new BlessedCondition(model.getDay() + durationDays));
             target.addToSP(1);

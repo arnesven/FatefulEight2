@@ -2,6 +2,7 @@ package model.items.potions;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.VampirismCondition;
 import model.items.Item;
 import model.items.Prevalence;
 import view.MyColors;
@@ -49,7 +50,11 @@ public class RejuvenationPotion extends Potion {
     @Override
     public String useYourself(Model model, GameCharacter gc) {
         gc.addToHP(healAmount);
-        gc.addToSP(1);
+        if (!gc.hasCondition(VampirismCondition.class)) {
+            gc.addToSP(1);
+        } else {
+            return gc.getName() + " only recovered HP (vampirism).";
+        }
         return gc.getName() + " recovered HP and SP!";
     }
 

@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.combat.conditions.VampirismCondition;
 import model.enemies.CompanionEnemy;
 import model.enemies.Enemy;
 import model.items.Equipment;
@@ -61,7 +62,9 @@ public class PriestEvent extends GeneralInteractionEvent {
                 GameCharacter gc = model.getParty().partyMemberInput(model, this, null);
                 println("The priest heals " + gc.getName() + ".");
                 gc.addToHP(1000);
-                gc.addToSP(1000);
+                if (!gc.hasCondition(VampirismCondition.class)) {
+                    gc.addToSP(1000);
+                }
                 model.getParty().addToGold(-BLESS_COST);
                 model.getParty().partyMemberSay(model, gc, List.of("I feel refreshed!",
                         "I feel like a new person!", "What a cleansing feeling!",

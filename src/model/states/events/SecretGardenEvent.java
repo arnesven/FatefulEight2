@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.combat.conditions.BlessedCondition;
 import model.combat.conditions.PoisonCondition;
+import model.combat.conditions.VampirismCondition;
 import model.enemies.ElfEnemy;
 import model.enemies.FaeryEnemy;
 import model.items.Equipment;
@@ -285,7 +286,9 @@ public class SecretGardenEvent extends DailyEventState {
                             gc.removeCondition(BlessedCondition.class);
                         }
                         gc.addCondition(new BlessedCondition(model.getDay() + 10));
-                        gc.addToSP(1000);
+                        if (!gc.hasCondition(VampirismCondition.class)) {
+                            gc.addToSP(1000);
+                        }
                         gc.addToHP(1000);
                     }
                     leaderSay("So refreshing. I feel fit for fight!");

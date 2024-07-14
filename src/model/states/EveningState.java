@@ -55,6 +55,7 @@ public class EveningState extends GameState {
         checkForLeaderChange(model);
         checkBounties(model);
         checkTravellers(model);
+        checkForVampireFeeding(model);
         super.stepToNextDay(model);
         return nextState(model);
     }
@@ -427,4 +428,7 @@ public class EveningState extends GameState {
         }
     }
 
+    private void checkForVampireFeeding(Model model) {
+        // TODO
+    }
 }
