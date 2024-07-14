@@ -181,7 +181,11 @@ public abstract class GameState implements GameStateConstants {
     }
 
     public static String manOrWoman(boolean gender) {
-        return gender ? "woman" : "man";
+        return manOrWomanCap(gender).toLowerCase();
+    }
+
+    public static String manOrWomanCap(boolean gender) {
+        return gender ? "Woman" : "Man";
     }
 
     public static String himOrHer(boolean gender) {

@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.combat.conditions.VampirismCondition;
 import model.items.Inventory;
 import model.map.HexLocation;
 import model.quests.Quest;
@@ -19,6 +20,7 @@ import view.subviews.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class EveningState extends GameState {
@@ -48,14 +50,14 @@ public class EveningState extends GameState {
         print("Evening has come. ");
         model.getTutorial().evening(model);
         checkForQuest(model);
-        locationSpecificEvening(model);
-        if (model.getDay() == 50) {
-            model.transitionToDialog(new HalfTimeDialog(model.getView()));
-        }
         checkForLeaderChange(model);
         checkBounties(model);
         checkTravellers(model);
         checkForVampireFeeding(model);
+        locationSpecificEvening(model);
+        if (model.getDay() == 50) {
+            model.transitionToDialog(new HalfTimeDialog(model.getView()));
+        }
         super.stepToNextDay(model);
         return nextState(model);
     }
@@ -429,6 +431,21 @@ public class EveningState extends GameState {
     }
 
     private void checkForVampireFeeding(Model model) {
-        // TODO
+        List<GameCharacter> characters = new ArrayList<>(model.getParty().getPartyMembers());
+        characters.sort(Comparator.comparingInt(GameCharacter::getSP));
+        characters.removeIf((GameCharacter gc) -> !gc.hasCondition(VampirismCondition.class));
+        if (characters.isEmpty()) {
+            return;
+        }
+        while (!characters.isEmpty()) {
+            GameCharacter vampire = characters.remove(0);
+            print(vampire.getName() + " can feel the vampiric urge to feed. Do you venture out in the night with " +
+                    himOrHer(vampire.getGender()) + " to find a suitable victim? (Y/N) ");
+            if (yesNoInput()) {
+                VampireFeedingState feedingState = new VampireFeedingState(model, vampire);
+                feedingState.run(model);
+                break;
+            }
+        }
     }
 }
