@@ -32,6 +32,9 @@ public class SpecificRaceHelpDialog extends SubChapterHelpDialog {
         for (Skill s : skills) {
             bldr.append(s.getName() + ", ");
         }
+        if (bldr.toString().equals("")) {
+            return "";
+        }
         return bldr.substring(0, bldr.length()-2);
     }
 

@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedAppearance extends CharacterAppearance {
-    private final int mouth;
+    private int mouth;
     private final int nose;
-    private final CharacterEyes eyes;
+    private CharacterEyes eyes;
     private HairStyle hairStyle;
     private final Beard beard;
     private Sprite32x32 avatarNormalHair;
@@ -23,6 +23,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     private FaceDetail detail = FaceDetail.NO_FACE_DETAIL;
     private boolean raceSpecificEars = true;
     private int[] ears;
+    private MyColors eyeballColor = MyColors.WHITE;
 
     public AdvancedAppearance(Race race, boolean femaleGender, MyColors hairColor,
                               int mouth, int nose, CharacterEyes eyes, HairStyle hair,
@@ -312,5 +313,22 @@ public class AdvancedAppearance extends CharacterAppearance {
         if (!(detail instanceof EyePatchDetail)) {
             super.drawDrawLook(screenHandler, left, x, y);
         }
+    }
+
+    public void setMouth(int mouth) {
+        this.mouth = mouth;
+    }
+
+    public void setEyes(CharacterEyes eyes) {
+        this.eyes = eyes;
+    }
+
+    @Override
+    protected MyColors getEyeballColor() {
+        return eyeballColor;
+    }
+
+    public void setEyeballColor(MyColors color) {
+        this.eyeballColor = color;
     }
 }

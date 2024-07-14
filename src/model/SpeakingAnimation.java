@@ -1,6 +1,7 @@
 package model;
 
 import model.characters.appearance.CharacterAppearance;
+import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.AnimationManager;
 import view.sprites.CalloutSprite;
@@ -15,12 +16,14 @@ public class SpeakingAnimation implements Serializable {
     private final TimedAnimationSprite callout;
     private final MouthMovementSprite mouthAnimation;
 
-    public SpeakingAnimation(int calloutNum, Point location, int textLength, CharacterAppearance app) {
+    public SpeakingAnimation(int calloutNum, Point location, int textLength,
+                             CharacterAppearance app, boolean vampireTeeth) {
         this.location = location;
         callout = new CalloutSprite(calloutNum, textLength);
         if (app.showFacialHair()) {
-            mouthAnimation = new MouthMovementSprite(textLength, app.getRace().getColor(),
-                    app.getLipColor(), app.hasTuskMouth());
+            MyColors skinColor = app.hasAlternateSkinColor() ? app.getAlternateSkinColor() : app.getRace().getColor();
+            mouthAnimation = new MouthMovementSprite(textLength, skinColor,
+                    app.getLipColor(), app.hasTuskMouth(), vampireTeeth);
         } else {
             mouthAnimation = null;
         }

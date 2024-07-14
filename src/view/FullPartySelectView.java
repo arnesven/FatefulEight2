@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.special.*;
 import model.horses.Pony;
 import model.horses.Regal;
 import model.items.Equipment;
@@ -10,7 +11,6 @@ import model.items.Item;
 import model.items.ItemDeck;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
-import model.items.potions.HealthPotion;
 import model.items.weapons.Weapon;
 import util.Arithmetics;
 import view.party.DrawableObject;
@@ -36,6 +36,7 @@ public class FullPartySelectView extends SelectableListMenu {
     private final int maxCharacters;
     private final Model model;
     private final int[] selectedCharacters;
+    private final List<GameCharacter> selectableCharacters;
     private boolean canceled = false;
     private final int[] levels;
     private static final int MAX_LEVEL = 12;
@@ -50,12 +51,17 @@ public class FullPartySelectView extends SelectableListMenu {
     private int startingNotoriety = 0;
     private int expandDirection = 0;
     private int startingDay = 1;
-    private List<Item> otherItems = new ArrayList<>();
+    private final List<Item> otherItems = new ArrayList<>();
 
     public FullPartySelectView(Model model) {
         super(model.getView(), 58, DrawingArea.WINDOW_ROWS-1);
         this.model = model;
-        this.maxCharacters = model.getAllCharacters().size();
+        this.selectableCharacters = new ArrayList<>(model.getAllCharacters());
+        selectableCharacters.add(new EnchantressCharacter());
+        selectableCharacters.add(new RedKnightCharacter());
+        selectableCharacters.add(new WitchKingCharacter());
+        selectableCharacters.add(new GoblinCharacter());
+        this.maxCharacters = selectableCharacters.size();
         this.selectedCharacters = new int[]{maxCharacters, maxCharacters, maxCharacters, maxCharacters,
                         maxCharacters, maxCharacters, maxCharacters, maxCharacters};
         this.levels = new int[]{1,1,1,1,1,1,1,1};
@@ -122,7 +128,7 @@ public class FullPartySelectView extends SelectableListMenu {
     }
 
     private GameCharacter getSelectedCharacter(int i) {
-        return model.getAllCharacters().get(selectedCharacters[i-1]);
+        return selectableCharacters.get(selectedCharacters[i-1]);
     }
 
     private boolean isVacant(int i) {
@@ -435,7 +441,7 @@ public class FullPartySelectView extends SelectableListMenu {
         if (selectedCharacter == maxCharacters) {
             return "VACANT";
         }
-        return model.getAllCharacters().get(selectedCharacter).getName();
+        return selectableCharacters.get(selectedCharacter).getName();
     }
 
     @Override

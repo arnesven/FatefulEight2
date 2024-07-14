@@ -18,12 +18,6 @@ public class WitchKingAppearance extends AdvancedAppearance {
         return MyColors.YELLOW;
     }
 
-    private static class WitchKingEyes extends CharacterEyes {
-        public WitchKingEyes() {
-            super(-0x20 + 0x1F, "", 0);
-        }
-    }
-
     @Override
     public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
 }

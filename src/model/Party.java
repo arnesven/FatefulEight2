@@ -7,6 +7,7 @@ import model.characters.TamedDragonCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.horses.HorseHandler;
@@ -323,7 +324,8 @@ public class Party implements Serializable {
         int index = partyMembers.indexOf(gc);
         Point p = getLocationForPartyMember(index);
         if (!gc.isDead() && !bench.contains(gc)) {
-            partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance());
+            partyAnimations.addSpeakAnimation(pair.first, p, text.length(), gc.getAppearance(),
+                    gc.hasCondition(VampirismCondition.class));
         }
     }
 

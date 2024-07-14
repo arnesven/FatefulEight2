@@ -158,7 +158,7 @@ public class PortraitSubView extends SubView {
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(line);
         state.printQuote(portraitName, pair.second);
         if (appearance != null) {
-            partyAnimations.addSpeakAnimation(pair.first, CHAR_LOCATION, line.length(), appearance);
+            partyAnimations.addSpeakAnimation(pair.first, CHAR_LOCATION, line.length(), appearance, false);
         }
     }
 

@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.combat.conditions.Condition;
+import model.combat.conditions.VampirismCondition;
 import model.races.Race;
 import model.races.WitchKingRace;
 import util.MyLists;
@@ -29,4 +31,9 @@ public class WitchKingCharacter extends GameCharacter {
    public static boolean isInParty(Model model) {
         return getFromParty(model) != null;
    }
+
+    @Override
+    protected boolean hasConditionImmunity(Condition cond) {
+        return cond instanceof VampirismCondition;
+    }
 }

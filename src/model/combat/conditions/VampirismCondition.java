@@ -3,6 +3,8 @@ package model.combat.conditions;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.special.WitchKingAppearance;
+import model.characters.special.WitchKingEyes;
 import model.races.ElvenRace;
 import model.races.Race;
 import model.states.TravelBySeaState;
@@ -11,7 +13,9 @@ import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
 import view.help.VampirismHelpView;
+import view.party.CharacterCreationView;
 import view.sprites.CharSprite;
+import view.sprites.MouthSprite;
 import view.sprites.Sprite;
 
 public class VampirismCondition extends Condition {
@@ -26,7 +30,9 @@ public class VampirismCondition extends Condition {
     private static final int SPEED_PER_STAGE = 2;
     private static final int CARRY_CAP_BONUS_PER_STAGE = 15;
     private static final MyColors PALEST_SKIN_COLOR = MyColors.WHITE;
+    private static final MyColors PALEST_LIP_COLOR = MyColors.GRAY;
     private int stage;
+    private CharacterAppearance originalAppearance = null;
 
     public VampirismCondition(int initialStage) {
         super("Vampirism", "VMP");
@@ -49,14 +55,36 @@ public class VampirismCondition extends Condition {
     }
 
     public void progress(GameCharacter owner) {
+        if (originalAppearance == null) {
+            originalAppearance = owner.getAppearance();
+        }
         this.stage = Arithmetics.incrementWithWrap(this.stage, MAX_STAGE + 1); // TODO: Stop at max instead of wrap-around
         if (owner.getAppearance() instanceof AdvancedAppearance) {
-            AdvancedAppearance app = (AdvancedAppearance) owner.getAppearance().copy();
-            MyColors skinColor = getSkinColorForRaceAndStage(owner);
-            app.setAlternateSkinColor(skinColor);
-            app.setMascaraColor(skinColor);
-            owner.setAppearance(app);
+            if (stage == 0) {
+                owner.setAppearance(originalAppearance);
+            } else {
+                AdvancedAppearance app = (AdvancedAppearance) owner.getAppearance().copy();
+                MyColors skinColor = getSkinColorForRaceAndStage(owner);
+                app.setAlternateSkinColor(skinColor);
+                app.setMascaraColor(skinColor);
+                if (skinColor == PALEST_SKIN_COLOR) {
+                    app.setLipColor(PALEST_LIP_COLOR);
+                }
+                app.setMouth(CharacterCreationView.mouthSet[0]);
+                app.setEyeballColor(getEyeColorForStage());
+                owner.setAppearance(app);
+            }
         }
+    }
+
+    private MyColors getEyeColorForStage() {
+        if (stage >= 4) {
+            return MyColors.YELLOW;
+        }
+        if (stage >= 1) {
+            return MyColors.LIGHT_YELLOW;
+        }
+        return MyColors.WHITE;
     }
 
     private MyColors getSkinColorForRaceAndStage(GameCharacter owner) {

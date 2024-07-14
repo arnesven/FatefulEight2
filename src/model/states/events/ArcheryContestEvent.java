@@ -3,7 +3,7 @@ package model.states.events;
 import model.items.ItemDeck;
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.special.GoblinCharacter;
+import model.characters.special.GoblinAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.items.Equipment;
@@ -395,7 +395,7 @@ public class ArcheryContestEvent extends TournamentEvent {
         result.add(new GameCharacter("Vanessa", "Firsov", Race.SOUTHERN_HUMAN, Classes.CAP,
                 PortraitSubView.makeRandomPortrait(Classes.CAP, Race.SOUTHERN_HUMAN, true), noClasses, randomBow()));
         result.add(new GameCharacter("Goblin", "", Race.GOBLIN, Classes.GOBLIN,
-                new GoblinCharacter(), new CharacterClass[]{Classes.GOBLIN, None, None, None}, randomBow()));
+                new GoblinAppearance(), new CharacterClass[]{Classes.GOBLIN, None, None, None}, randomBow()));
         result.add(new GameCharacter("Locky", "Roseville", Race.WOOD_ELF, Classes.FOR,
                 PortraitSubView.makeRandomPortrait(Classes.FOR, Race.WOOD_ELF, false), noClasses, randomBow()));
         result.add(new GameCharacter("Endath", "Virmansee", Race.DARK_ELF, Classes.MAR,

@@ -16,8 +16,8 @@ public class MouthMovementSprite extends Sprite8x8 implements Animation {
     private int count;
     private int steps;
 
-    public MouthMovementSprite(int length, MyColors skinColor, MyColors lipColor, boolean withTusks) {
-        super("mouthani", "mouth.png", withTusks ? 0x10 : 0x00,
+    public MouthMovementSprite(int length, MyColors skinColor, MyColors lipColor, boolean withTusks, boolean vampireTeeth) {
+        super("mouthani", "mouth.png", vampireTeeth ? 0x40 : (withTusks ? 0x10 : 0x00),
                 MyColors.BLACK, lipColor, MyColors.BEIGE, skinColor);
         setFrames(MAX_FRAMES);
         this.count = 0;

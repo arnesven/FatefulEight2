@@ -1,5 +1,6 @@
 package model;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import util.MyRandom;
 import view.sprites.AnimationManager;
@@ -78,13 +79,14 @@ public class PartyAnimations implements Serializable {
     }
 
     // TODO: May require synchronize here
-    public void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance) {
+    public void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance,
+                                  boolean vampireTeeth) {
         lookers.remove(appearance);
         Point p = new Point(pOrig.x, pOrig.y);
         p.x += 3;
         p.y += 2;
         speakingAnimations.remove(appearance);
-        speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance));
+        speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance, vampireTeeth));
     }
 
     public DieRollAnimation addDieRollAnimation(Point location, int unmodifiedRoll) {

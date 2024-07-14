@@ -432,13 +432,13 @@ public abstract class CharacterAppearance implements Serializable {
         int lookLeft = 0x22 + getLookIndex() * 4;
         int lookRight = 0x23 + getLookIndex() * 4;
         this.lookLeft = new MyPair<>(new Sprite8x8("lookleftleft", "mouth.png", lookLeft,
-                MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE),
+                MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE),
                 new Sprite8x8("lookleftright", "mouth.png", lookRight,
-                        MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE));
+                        MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE));
         this.lookRight = new MyPair<>(new Sprite8x8("lookrightleft", "mouth.png", lookLeft+2,
-                MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE),
+                MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE),
                 new Sprite8x8("lookrightright", "mouth.png", lookRight+2,
-                        MyColors.BLACK, MyColors.WHITE, MyColors.BROWN, MyColors.BEIGE));
+                        MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE));
     }
 
     protected int getLookIndex() {

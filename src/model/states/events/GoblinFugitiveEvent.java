@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.special.GoblinAppearance;
 import model.characters.special.GoblinCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -25,8 +26,7 @@ public class GoblinFugitiveEvent extends DailyEventState {
 
     public GoblinFugitiveEvent(Model model) {
         super(model);
-        goblinChar = new GameCharacter("Goblin", "", Race.GOBLIN, Classes.GOBLIN,
-                new GoblinCharacter(), new CharacterClass[]{Classes.GOBLIN, None, None, None});
+        goblinChar = new GoblinCharacter();
 
     }
 
