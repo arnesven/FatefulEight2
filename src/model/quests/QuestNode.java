@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.spells.Spell;
+import model.states.GameState;
 import model.states.QuestState;
 import model.states.SpellCastException;
 import sound.SoundEffects;
@@ -25,7 +26,10 @@ public abstract class QuestNode {
     public abstract int getRow();
     public abstract void drawYourself(Model model, int xPos, int yPos);
     public abstract String getDescription();
-    public abstract QuestEdge run(Model model, QuestState state);
+    public abstract QuestEdge run(Model model, QuestState state); // Used by Quests States
+    public QuestEdge doAction(Model model, GameState state) { // Used by other states
+        return new QuestEdge(this);
+    }
 
     public Point getPosition() {
         return new Point(getColumn(), getRow());

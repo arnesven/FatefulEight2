@@ -7,6 +7,7 @@ import model.combat.conditions.VampirismCondition;
 import model.items.Inventory;
 import model.map.HexLocation;
 import model.quests.Quest;
+import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
@@ -250,6 +251,7 @@ public class EveningState extends GameState {
                 done = true;
             }
         } while (!done);
+        println("");
         model.setSubView(previous);
     }
 
@@ -439,8 +441,8 @@ public class EveningState extends GameState {
         }
         while (!characters.isEmpty()) {
             GameCharacter vampire = characters.remove(0);
-            print(vampire.getName() + " can feel the vampiric urge to feed. Do you venture out in the night with " +
-                    himOrHer(vampire.getGender()) + " to find a suitable victim? (Y/N) ");
+            print(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
+                    " venture out in the night to find a suitable victim? (Y/N) ");
             if (yesNoInput()) {
                 VampireFeedingState feedingState = new VampireFeedingState(model, vampire);
                 feedingState.run(model);
