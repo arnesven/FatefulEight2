@@ -7,9 +7,8 @@ import model.items.Item;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
-import view.MyColors;
 import view.sprites.AnimationManager;
-import view.sprites.RunOnceAnimationSprite;
+import view.sprites.SmokePuffAnimation;
 
 import java.awt.*;
 import java.util.Random;
@@ -51,10 +50,4 @@ public class HiddenChestObject extends DungeonChest {
         return new SingleItemCombatLoot(innerItem);
     }
 
-    private static class SmokePuffAnimation extends RunOnceAnimationSprite {
-        public SmokePuffAnimation() {
-            super("smokepuff", "dungeon.png", 0, 17, 32, 32, 7, MyColors.LIGHT_GRAY);
-            setColor2(MyColors.LIGHT_GRAY);
-        }
-    }
 }

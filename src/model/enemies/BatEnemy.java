@@ -4,8 +4,7 @@ import model.Model;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.MonsterCombatLoot;
 import model.enemies.behaviors.BleedAttackBehavior;
-import view.MyColors;
-import view.sprites.LoopingSprite;
+import view.sprites.BatSprite;
 import view.sprites.Sprite;
 
 public class BatEnemy extends BeastEnemy {
@@ -40,13 +39,4 @@ public class BatEnemy extends BeastEnemy {
         return new MonsterCombatLoot(model);
     }
 
-    private static class BatSprite extends LoopingSprite {
-        public BatSprite() {
-            super("batenemy", "enemies.png", 0x7A, 32);
-            setColor1(MyColors.BLACK);
-            setColor2(MyColors.LIGHT_GRAY);
-            setColor3(MyColors.DARK_GRAY);
-            setFrames(3);
-        }
-    }
 }

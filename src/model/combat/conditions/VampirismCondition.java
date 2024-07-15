@@ -153,4 +153,8 @@ public class VampirismCondition extends Condition {
     public int getCarryCapBonus() {
         return CARRY_CAP_BONUS_PER_STAGE * stage;
     }
+
+    public boolean hasBatAbility() {
+        return true; // TODO: Fix
+    }
 }

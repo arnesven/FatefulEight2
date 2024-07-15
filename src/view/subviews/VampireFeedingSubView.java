@@ -2,13 +2,12 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.enemies.BatEnemy;
 import model.quests.*;
 import model.states.feeding.VampireFeedingHouse;
 import model.states.feeding.VampireFeedingState;
 import view.MyColors;
-import view.sprites.Sprite;
-import view.sprites.Sprite16x16;
-import view.sprites.Sprite32x32;
+import view.sprites.*;
 
 import java.awt.*;
 import java.util.Random;
@@ -39,6 +38,8 @@ public class VampireFeedingSubView extends AvatarSubView {
     private final VampireFeedingState state;
     private boolean avatarEnabled = true;
     private Random random = new Random(1234);
+    private Point smokePosition;
+    private RunOnceAnimationSprite puffAnimation;
 
     public VampireFeedingSubView(VampireFeedingState state, GameCharacter vampire, VampireFeedingHouse house) {
         this.state = state;
@@ -54,6 +55,8 @@ public class VampireFeedingSubView extends AvatarSubView {
         drawBackground(model);
         drawEdges(model);
         drawSubScenes(model);
+        drawPortrait(model);
+        drawOngoingAnimations(model);
     }
 
     private void drawSubScenes(Model model) {
@@ -90,9 +93,22 @@ public class VampireFeedingSubView extends AvatarSubView {
         }
     }
 
+
+    private void drawPortrait(Model model) {
+        if (house.getPortrait() != null) {
+            Point p = convertToScreen(new Point(5, 5));
+            p.x += 2;
+            p.y += 2;
+            house.getPortrait().drawYourself(model.getScreenHandler(), p.x, p.y);
+            if (!house.isOpenEyes()) {
+                house.getPortrait().drawBlink(model.getScreenHandler(), p.x + 3, p.y + 3);
+            }
+        }
+    }
+
     @Override
     protected String getUnderText(Model model) {
-        return "Feeding";
+        return character.getFirstName() + " is on the prowl...";
     }
 
     @Override
@@ -102,18 +118,38 @@ public class VampireFeedingSubView extends AvatarSubView {
 
     public void moveAlongEdge(Point from, QuestEdge edge) {
         avatarEnabled = false;
-
-        QuestSubView.animateAvatarAlongEdge(this, from,
-                edge, character.getAvatarSprite());
-
+        Sprite spr = character.getAvatarSprite();
+        boolean wasBat = house.isBatForm();
+        if (wasBat) {
+            spr = new BatSprite();
+            smokePosition = from;
+            puffAnimation = new SmokePuffAnimation();
+        }
+        QuestSubView.animateAvatarAlongEdge(this, from, edge, spr);
+        house.setBatForm(false);
+        if (wasBat) {
+            smokePosition = edge.getNode().getPosition();
+            puffAnimation = new SmokePuffAnimation();
+        }
         avatarEnabled = true;
     }
-
 
     private void drawBackground(Model model) {
         drawSky(model);
         drawGround(model);
         drawHouse(model);
+    }
+
+    private void drawOngoingAnimations(Model model) {
+        if (puffAnimation != null) {
+            Point p = convertToScreen(smokePosition);
+            model.getScreenHandler().register("smokepuff", p, puffAnimation, 5);
+            if (puffAnimation.isDone()) {
+                AnimationManager.unregister(puffAnimation);
+                puffAnimation = null;
+                smokePosition = null;
+            }
+        }
     }
 
     private void drawHouse(Model model) {

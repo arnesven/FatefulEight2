@@ -454,7 +454,7 @@ public class Party implements Serializable {
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
             try {
-                if (size() > 1) {
+                if (size() - bench.size() > 1) {
                     GameCharacter best = findBestPerformer(skill, performers);
                     event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
                     event.print(" (Recommended " + best.getName() + "): ");
