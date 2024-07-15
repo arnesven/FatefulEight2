@@ -442,7 +442,7 @@ public class EveningState extends GameState {
         while (!characters.isEmpty()) {
             GameCharacter vampire = characters.remove(0);
             print(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
-                    " venture out in the night to find a suitable victim? (Y/N) ");
+                    " go on the prowl tonight to find a suitable victim? (Y/N) ");
             if (yesNoInput()) {
                 VampireFeedingState feedingState = new VampireFeedingState(model, vampire);
                 feedingState.run(model);

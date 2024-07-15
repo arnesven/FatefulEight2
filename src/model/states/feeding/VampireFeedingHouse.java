@@ -12,28 +12,46 @@ import model.states.events.GeneralInteractionEvent;
 import util.MyRandom;
 import util.MyStrings;
 import view.MyColors;
+import view.subviews.ArrowMenuSubView;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VampireFeedingHouse {
+    private static final List<MyColors> HOUSE_COLORS =
+            List.of(MyColors.CYAN, MyColors.PINK, MyColors.BEIGE,
+                    MyColors.LIGHT_YELLOW);
+    private final int width;
     private final int stories;
     private final int dwellers;
     private final int sleeping;
     private final int lockDifficulty;
+    private final int windowOpen;
+    private final MyColors color;
 
     private List<FeedingSubScene> subScenes;
     private List<FeedingJunction> junctions;
     private QuestFailNode failNode;
     private QuestSuccessfulNode successfulNode;
     private final GameCharacter vampire;
+    private boolean sleepInfoGiven = false;
 
     public VampireFeedingHouse(GameCharacter vampire) {
+        this.width = MyRandom.randInt(1, 3);
         this.stories = MyRandom.randInt(1, 3);
-        this.dwellers = MyRandom.randInt(1, 4);
-        this.sleeping = MyRandom.randInt(dwellers);
-        this.lockDifficulty = MyRandom.randInt(6, 8);
+        this.dwellers = MyRandom.randInt(1, width*stories + 1);
+        this.sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
+        this.lockDifficulty = (sleeping < dwellers && MyRandom.rollD6()==6) ? 0 : MyRandom.randInt(6, 8);
+        color = MyRandom.sample(HOUSE_COLORS);
+        if (stories == 1) {
+            windowOpen = 0;
+        } else if (stories == 2) {
+            windowOpen = MyRandom.randInt(2);
+        } else {
+            windowOpen = MyRandom.randInt(2) * 2;
+        }
+
         this.vampire = vampire;
         makeNodes();
     }
@@ -42,27 +60,54 @@ public class VampireFeedingHouse {
         this.junctions = new ArrayList<>();
         this.subScenes = new ArrayList<>();
 
-        subScenes.add(new StakeOutSubScene(0, 3, vampire));
-        subScenes.add(new UnlockDoorSubScene(2, 3, lockDifficulty, vampire));  // TODO: If multi-story house, choice of acrobatics.
-        subScenes.add(new SneakingSubScene(4, 3, dwellers - sleeping, vampire));
-        subScenes.add(new FeedingNode(6, 3, dwellers, sleeping, vampire));
-
-        junctions.add(new FeedingStartNode(subScenes.get(0)));
         this.failNode = new QuestFailNode();
-        GoToNextHouseNode goToNextHouse = new GoToNextHouseNode();
-        junctions.add(new ChooseToEnter(1, 3, List.of(new QuestEdge(subScenes.get(1)), new QuestEdge(goToNextHouse))));
-        junctions.add(goToNextHouse);
-
         this.successfulNode = new QuestSuccessfulNode(new Reward(0, 0,0 ), "");
         successfulNode.move(7, 3);
 
-        subScenes.get(0).connectSuccess(junctions.get(1));
-        subScenes.get(1).connectSuccess(subScenes.get(2));
-        subScenes.get(1).connectFail(goToNextHouse, QuestEdge.VERTICAL);
-        subScenes.get(2).connectSuccess(subScenes.get(3));
-        subScenes.get(2).connectFail(failNode, QuestEdge.VERTICAL);
-        subScenes.get(3).connectSuccess(successfulNode);
-        subScenes.get(3).connectFail(goToNextHouse, QuestEdge.VERTICAL);
+        StakeOutSubScene stakeOut = new StakeOutSubScene(0, 3, vampire);
+        subScenes.add(stakeOut);
+        UnlockDoorSubScene unlockScene = new UnlockDoorSubScene(2, 3, lockDifficulty, vampire);
+        subScenes.add(unlockScene);
+
+        ClimbingScene climbingScene = new ClimbingScene(2, 2, windowOpen, vampire);
+        if (anyWindowsOpen()) {
+            subScenes.add(climbingScene);
+        }
+
+        SneakingSubScene sneakScene = new SneakingSubScene(4, 3, dwellers - sleeping, vampire);
+        subScenes.add(sneakScene);
+        FeedingNode feedingNode = new FeedingNode(6, 3, dwellers, sleeping, vampire);
+        subScenes.add(feedingNode);
+
+
+        GoToNextHouseNode goToNextHouse = new GoToNextHouseNode();
+
+        List<QuestEdge> enterOptions = new ArrayList<>(List.of(new QuestEdge(subScenes.get(1)), new QuestEdge(goToNextHouse)));
+        if (anyWindowsOpen()) {
+            enterOptions.add(new QuestEdge(climbingScene, QuestEdge.VERTICAL));
+        }
+        ChooseToEnter chooseToEnterJunc = new ChooseToEnter(1, 3, windowOpen, enterOptions);
+
+        junctions.add(new FeedingStartNode(stakeOut));
+        junctions.add(chooseToEnterJunc);
+        junctions.add(goToNextHouse);
+
+        stakeOut.connectSuccess(chooseToEnterJunc);
+        unlockScene.connectSuccess(sneakScene);
+        unlockScene.connectFail(goToNextHouse, QuestEdge.VERTICAL);
+        sneakScene.connectSuccess(feedingNode);
+        sneakScene.connectFail(failNode, QuestEdge.VERTICAL);
+        feedingNode.connectSuccess(successfulNode);
+        feedingNode.connectFail(goToNextHouse, QuestEdge.VERTICAL);
+
+        if (anyWindowsOpen()) {
+            climbingScene.connectSuccess(sneakScene);
+            climbingScene.connectFail(goToNextHouse, QuestEdge.VERTICAL);
+        }
+    }
+
+    private boolean anyWindowsOpen() {
+        return windowOpen > 0;
     }
 
     public int getStories() {
@@ -97,6 +142,22 @@ public class VampireFeedingHouse {
         return nodes;
     }
 
+    public MyColors getColor() {
+        return color;
+    }
+
+    public int getOpenWindow() {
+        return windowOpen;
+    }
+
+    public boolean isSleepInfoGiven() {
+        return sleepInfoGiven;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     private class FeedingStartNode extends FeedingJunction {
         public FeedingStartNode(QuestNode nextNdde) {
             super(0, 0, List.of(new QuestEdge(nextNdde, QuestEdge.VERTICAL)));
@@ -106,8 +167,6 @@ public class VampireFeedingHouse {
         protected QuestEdge specificDoAction(Model model, GameState state) {
             state.println(state.heOrSheCap(vampire.getGender()) + " approaches a house, it's a " +
                     MyStrings.numberWord(getStories()) + " story building.");
-            model.getLog().waitForAnimationToFinish();
-
             return getConnection(0);
         }
     }
@@ -124,10 +183,10 @@ public class VampireFeedingHouse {
 
         @Override
         protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
-            state.println(vampire.getFirstName() + " stakes out the house for a few minutes...");
+            state.print(vampire.getFirstName() + " stakes out the house for a few minutes. ");
             SkillCheckResult result = vampire.testSkill(model, Skill.Perception);
             state.println("Perception " + result.asString() + ".");
-            if (result.getModifiedRoll() < 5) {
+            if (result.getModifiedRoll() < 6 || result.getUnmodifiedRoll() == 1) {
                 state.println("But " + heOrShe(vampire.getGender()) + " discerns nothing.");
             } else {
                 String dwellers = "are " + MyStrings.numberWord(getDwellers()) + " people";
@@ -136,7 +195,7 @@ public class VampireFeedingHouse {
                 }
                 state.print("And " + hisOrHer(vampire.getGender()) + " vampiric senses tell " +
                         himOrHer(vampire.getGender()) + " that there " + dwellers + " living there");
-                if (result.getModifiedRoll() >= 9) {
+                if (result.getModifiedRoll() >= 10) {
                     if (getDwellers() == 1) {
                         if (getSleeping() == 1) {
                             state.println(", and he or she is asleep.");
@@ -144,9 +203,14 @@ public class VampireFeedingHouse {
                             state.println(", and he or she is awake.");
                         }
                     } else {
-                        state.println(", " + MyStrings.numberWord(getSleeping()) + " of them " +
-                                (getSleeping()==1?"is":"are") + " asleep.");
+                        String numberWord = MyStrings.numberWord(getSleeping()).replace("zero","none");
+                        if (getDwellers() == getSleeping()) {
+                            numberWord = "all";
+                        }
+                        state.println(", " + numberWord +
+                                " of them " + (getSleeping()==1?"is":"are") + " asleep.");
                     }
+                    VampireFeedingHouse.this.sleepInfoGiven = true;
                 } else {
                     state.println(".");
                 }
@@ -156,17 +220,41 @@ public class VampireFeedingHouse {
     }
 
     private static class ChooseToEnter extends FeedingJunction {
-        public ChooseToEnter(int col, int row, List<QuestEdge> questEdges) {
+        private final int windowsOpen;
+
+        public ChooseToEnter(int col, int row, int windowOpen, List<QuestEdge> questEdges) {
             super(col, row, questEdges);
+            this.windowsOpen = windowOpen;
         }
 
         @Override
         protected QuestEdge specificDoAction(Model model, GameState state) {
-            state.print("Do you want to try to enter this house? (Y/N) ");
-            if (state.yesNoInput()) {
-                return getConnection(0);
+            if (windowsOpen > 0) {
+                state.print("There is a window open on the " + MyStrings.nthWord(windowsOpen) + " floor. How would you like to enter the house?");
+                int[] selectedAction = new int[1];
+                model.setSubView(new ArrowMenuSubView(model.getSubView(),
+                        List.of("Through front door", "Through window", "Not at all"), 32, 32, ArrowMenuSubView.NORTH_WEST) {
+                    @Override
+                    protected void enterPressed(Model model, int cursorPos) {
+                        selectedAction[0] = cursorPos;
+                        model.setSubView(getPrevious());
+                    }
+                });
+                state.waitForReturn();
+                if (selectedAction[0] == 0) {
+                    return getConnection(0);
+                }
+                if (selectedAction[0] == 1) {
+                    return getConnection(2);
+                }
+                return getConnection(1);
+            } else {
+                state.print("Do you want to try to enter this house? (Y/N) ");
+                if (state.yesNoInput()) {
+                    return getConnection(0);
+                }
+                return getConnection(1);
             }
-            return getConnection(1);
         }
     }
 
@@ -185,7 +273,11 @@ public class VampireFeedingHouse {
 
         @Override
         protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
-            state.println("The house is locked.");
+            if (difficulty == 0) {
+                state.println("The front door is not locked! " + vampire.getFirstName() + " quietly enters the house.");
+                return getSuccessEdge();
+            }
+            state.println("The front door is locked.");
             boolean success = model.getParty().doSoloLockpickCheck(model, state, difficulty);
             if (!success) {
                 state.println("The door to the house remains firmly locked.");
@@ -213,19 +305,26 @@ public class VampireFeedingHouse {
         @Override
         protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
             if (peopleAwake > 0) {
-                state.println(vampire.getFirstName() + " must sneak past the inhabitants who are still awake.");
-                SkillCheckResult result = vampire.testSkill(model, Skill.Sneak, 5 + peopleAwake*2);
+                state.println(vampire.getFirstName() + " must attempt to remain undetected " +
+                        "by the inhabitants who are still awake.");
+                SkillCheckResult result = vampire.testSkill(model, Skill.Sneak, 6 + peopleAwake);
+                state.println("Sneaking " + result.asString() + ".");
                 if (result.isFailure()) {
                     state.println("You have been spotted!");
                     state.printQuote(GameState.manOrWomanCap(MyRandom.flipCoin()), "HEY! Get out of here you creep!");
                     GeneralInteractionEvent.addToNotoriety(model, state, VampireFeedingState.NOTORIETY_FOR_BEING_SPOTTED);
-                    state.println(vampire.getFirstName() + " flees the house with haste before the constables arrive.");
+                    state.println(vampire.getFirstName() + " flees the house with haste before the constables arrive. " +
+                            "There is now much commotion among the townspeople and there is no point in " +
+                            "continuing the prowl tonight.");
                     return getFailEdge();
                 }
                 state.printQuote(GameState.manOrWomanCap(MyRandom.flipCoin()),
                         MyRandom.sample(List.of("Did I hear something? It's probably just the wind.",
                                 "What was that? Hmm... naw, it was nothing.",
                                 "Huh, someone there? No... just my mind playing tricks on me.")));
+            } else {
+                state.println("It appears nobody is awake in the house, and " + vampire.getFirstName() +
+                        " can move about freely without fear for being detected.");
             }
             return getSuccessEdge();
         }
@@ -273,6 +372,39 @@ public class VampireFeedingHouse {
         @Override
         protected MyColors getSuccessEdgeColor() {
             return MyColors.WHITE;
+        }
+    }
+
+    private static class ClimbingScene extends FeedingSubScene {
+        private final int windowLevel;
+
+        public ClimbingScene(int col, int row, int windowLevel, GameCharacter vampire) {
+            super(col, row, vampire);
+            this.windowLevel = windowLevel;
+        }
+
+        @Override
+        protected MyColors getSuccessEdgeColor() {
+            return MyColors.LIGHT_GREEN;
+        }
+
+        @Override
+        protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
+            state.print(vampire.getFirstName() + " climbs up the facade of the house... ");
+            SkillCheckResult result = vampire.testSkill(model, Skill.Acrobatics, 6 + windowLevel * 2);
+            state.println("Acrobatics " + result.asString() + ".");
+            if (result.isSuccessful()) {
+                state.println(" and nimbly slips in through the window.");
+                return getSuccessEdge();
+            }
+            state.println("But lost " + GameState.hisOrHer(vampire.getGender()) + " foothold and falls down!");
+            int hpBefore = vampire.getHP();
+            int healthLoss = Math.min(vampire.getHP()-1, 3);
+            vampire.addToHP(-healthLoss);
+            state.println(vampire.getName() + " loses " + healthLoss + " HP.");
+            model.getParty().partyMemberSay(model, vampire, List.of("Ouch.", "That hurt.", "Darn it!#",
+                    "Ouch, my back!", "Ow... my butt."));
+            return getFailEdge();
         }
     }
 }
