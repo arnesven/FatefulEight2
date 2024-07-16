@@ -5,10 +5,13 @@ import model.characters.GameCharacter;
 import model.quests.QuestEdge;
 import model.states.GameState;
 import view.MyColors;
+import view.sprites.Sprite32x32;
 
 import java.awt.*;
 
 class MesmerizeNode extends FeedingSubScene {
+    public static final Sprite32x32 EYE_SPRITE = new Sprite32x32("mesmerizesubscene", "quest.png", 0xA2,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
 
     private final int awake;
     private final VampireFeedingHouse house;
@@ -26,7 +29,7 @@ class MesmerizeNode extends FeedingSubScene {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(VampireFeedingHouse.EYE_SPRITE.getName(), new Point(xPos, yPos), VampireFeedingHouse.EYE_SPRITE, 1);
+        model.getScreenHandler().register(EYE_SPRITE.getName(), new Point(xPos, yPos), EYE_SPRITE, 1);
     }
 
     @Override

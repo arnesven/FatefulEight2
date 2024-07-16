@@ -1,27 +1,39 @@
 package model.combat.conditions;
 
+import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
-import model.characters.special.WitchKingAppearance;
-import model.characters.special.WitchKingEyes;
+import model.classes.Skill;
+import model.combat.Combatant;
 import model.races.ElvenRace;
 import model.races.Race;
-import model.states.TravelBySeaState;
-import util.Arithmetics;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
+import view.VampireAbilityInfoDialog;
+import view.VampireStageProgressionDialog;
 import view.help.ConditionHelpDialog;
 import view.help.VampirismHelpView;
 import view.party.CharacterCreationView;
 import view.sprites.CharSprite;
-import view.sprites.MouthSprite;
 import view.sprites.Sprite;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class VampirismCondition extends Condition {
 
     public static final int NO_STAGE = -1;
     public static final int INITIAL_STAGE = 0;
+    private static final List<VampireAbility> ALL_ABILITIES = List.of(
+            new BatFormVampireAbility(),
+            new MesmerizeVampireAbility(),
+            new WisdomAbility(),
+            new StrengthAbility(),
+            new ClawsVampireAbility(),
+            new CelerityVampireAbility());
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xDC), MyColors.WHITE, MyColors.DARK_RED, MyColors.CYAN);
     private static final int MAX_STAGE = 5;
@@ -33,6 +45,7 @@ public class VampirismCondition extends Condition {
     private static final MyColors PALEST_LIP_COLOR = MyColors.GRAY;
     private int stage;
     private CharacterAppearance originalAppearance = null;
+    private List<VampireAbility> learnedAbilities = new ArrayList<>();
 
     public VampirismCondition(int initialStage) {
         super("Vampirism", "VMP");
@@ -54,14 +67,24 @@ public class VampirismCondition extends Condition {
         return new VampirismHelpView(view, this);
     }
 
-    public void progress(GameCharacter owner) {
+    public void progress(Model model, GameCharacter owner) {
         if (originalAppearance == null) {
             originalAppearance = owner.getAppearance();
         }
-        this.stage = Arithmetics.incrementWithWrap(this.stage, MAX_STAGE + 1); // TODO: Stop at max instead of wrap-around
+        if (this.stage == MAX_STAGE) {
+            return;
+        }
+        this.stage++;
+        updateAppearance(owner);
+        model.getLog().waitForAnimationToFinish();
+        VampireStageProgressionDialog stageDialog = new VampireStageProgressionDialog(model, owner, this);
+        model.transitionToDialog(stageDialog);
+    }
+
+    private void updateAppearance(GameCharacter owner) {
         if (owner.getAppearance() instanceof AdvancedAppearance) {
             if (stage == 0) {
-                owner.setAppearance(originalAppearance);
+                owner.setAppearance(originalAppearance); // Should never happen...
             } else {
                 AdvancedAppearance app = (AdvancedAppearance) owner.getAppearance().copy();
                 MyColors skinColor = getSkinColorForRaceAndStage(owner);
@@ -74,6 +97,13 @@ public class VampirismCondition extends Condition {
                 app.setEyeballColor(getEyeColorForStage());
                 owner.setAppearance(app);
             }
+        }
+    }
+
+    @Override
+    public void wasRemoved(Combatant combatant) {
+        if (combatant instanceof GameCharacter) {
+            ((GameCharacter) combatant).setAppearance(originalAppearance);
         }
     }
 
@@ -155,6 +185,32 @@ public class VampirismCondition extends Condition {
     }
 
     public boolean hasBatAbility() {
-        return true; // TODO: Fix
+        return MyLists.any(learnedAbilities, (VampireAbility va) -> va instanceof BatFormVampireAbility);
+    }
+
+    public List<VampireAbility> getRandomAbilities() {
+        List<VampireAbility> result = new ArrayList<>(ALL_ABILITIES);
+        for (VampireAbility va : learnedAbilities) {
+            result.removeIf((VampireAbility v2) -> v2.getName().equals(va.getName()));
+        }
+        Collections.shuffle(result);
+        return result.subList(0, Math.min(result.size(), 3));
+    }
+
+    public void learnAbility(VampireAbility chosen) {
+        this.learnedAbilities.add(chosen);
+    }
+
+    public List<VampireAbility> getLearnedAbilities() {
+        return learnedAbilities;
+    }
+
+    public boolean hasMesmerizeAbility() {
+        return MyLists.any(learnedAbilities, (VampireAbility va) -> va instanceof MesmerizeVampireAbility);
+    }
+
+    @Override
+    public int getBonusForSkill(Skill skill) {
+        return MyLists.intAccumulate(learnedAbilities, (VampireAbility va) -> va.getBonusForSkill(skill));
     }
 }

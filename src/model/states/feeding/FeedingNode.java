@@ -5,10 +5,14 @@ import model.characters.GameCharacter;
 import model.quests.QuestEdge;
 import model.states.GameState;
 import view.MyColors;
+import view.sprites.Sprite32x32;
 
 import java.awt.*;
 
 class FeedingNode extends FeedingSubScene {
+    public static final Sprite32x32 BITE_SPRITE = new Sprite32x32("bitesubscene", "quest.png", 0xB2,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+
     private final int sleeping;
     private final VampireFeedingHouse house;
 
@@ -20,7 +24,7 @@ class FeedingNode extends FeedingSubScene {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(VampireFeedingHouse.BITE_SPRITE.getName(), new Point(xPos, yPos), VampireFeedingHouse.BITE_SPRITE, 1);
+        model.getScreenHandler().register(BITE_SPRITE.getName(), new Point(xPos, yPos), BITE_SPRITE, 1);
     }
 
     @Override

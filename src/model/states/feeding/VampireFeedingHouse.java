@@ -9,19 +9,12 @@ import model.quests.*;
 import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
-import view.sprites.Sprite32x32;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VampireFeedingHouse {
-    public static final Sprite32x32 BAT_SPRITE = new Sprite32x32("batsubscene", "quest.png", 0x92,
-            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
-    public static final Sprite32x32 EYE_SPRITE = new Sprite32x32("mesmerizesubscene", "quest.png", 0xA2,
-            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
-    public static final Sprite32x32 BITE_SPRITE = new Sprite32x32("bitesubscene", "quest.png", 0xB2,
-            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private static final List<MyColors> HOUSE_COLORS =
             List.of(MyColors.CYAN, MyColors.PINK, MyColors.BEIGE,
                     MyColors.LIGHT_YELLOW);
@@ -56,7 +49,7 @@ public class VampireFeedingHouse {
         this.vampire = vampire;
         VampirismCondition cond = ((VampirismCondition)vampire.getCondition(VampirismCondition.class));
         this.canDoBat = cond.hasBatAbility();
-        this.canDoMesmerize = true; // TODO: Fix
+        this.canDoMesmerize = cond.hasMesmerizeAbility();
         makeNodes();
     }
 
@@ -80,7 +73,7 @@ public class VampireFeedingHouse {
         } else if (anyWindowsOpen()) {
             subScenes.add(climbingScene);
         }
-        
+
         SneakingSubScene sneakScene = new SneakingSubScene(4, 3, dwellers - sleeping, vampire);
         subScenes.add(sneakScene);
         FeedingNode feedingNode = new FeedingNode(6, 3, vampire, this);

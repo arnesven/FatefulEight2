@@ -71,7 +71,7 @@ public class MainGameView extends GameView {
                 if (vampCond == null) {
                     target.addCondition(new VampirismCondition(VampirismCondition.INITIAL_STAGE));
                 } else {
-                    vampCond.progress(target);
+                    vampCond.progress(model, target);
                 }
             }
 

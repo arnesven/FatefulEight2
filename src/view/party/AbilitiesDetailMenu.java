@@ -7,6 +7,8 @@ import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
 import model.actions.CombatAction;
 import model.actions.PassiveCombatAction;
+import model.combat.conditions.VampireAbility;
+import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.enemies.SkeletonEnemy;
 import model.items.Equipment;
@@ -23,6 +25,7 @@ import java.util.Map;
 public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
     private final List<String> abilities;
     private static Map<String, CombatAction> abilityDictionary;
+    private static Map<String, VampireAbility> vampAbilityDict;
 
     public AbilitiesDetailMenu(Model model, PartyView partyView, GameCharacter gc, int x, int y) {
         super(partyView, findWidthOfDialog(makeAbilities(model, gc))+1,
@@ -40,7 +43,19 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
         addAbilityEntries(model, new AbilityCombatAction(gc, gc), result);
         addPassiveAbilities(gc, result);
         result.addAll(gc.getMasteries().getAbilityList());
+        addVampirsmAbilities(gc, result);
         return result;
+    }
+
+    private static void addVampirsmAbilities(GameCharacter gc, List<String> result) {
+        vampAbilityDict = new HashMap<>();
+        VampirismCondition vampCond = (VampirismCondition) gc.getCondition(VampirismCondition.class);
+        if (vampCond != null) {
+            for (VampireAbility vampAbis : vampCond.getLearnedAbilities()) {
+                vampAbilityDict.put(vampAbis.getName(), vampAbis);
+                result.add(vampAbis.getName());
+            }
+        }
     }
 
     private static void addPassiveAbilities(GameCharacter gc, List<String> result) {
@@ -72,7 +87,7 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
         List<DrawableObject> result = new ArrayList<>();
         result.add(new TextDecoration("Combat Abilities:", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         if (abilities.size() > abilityDictionary.size()) {
-            result.add(new TextDecoration("Spell Masteries:", xStart+1, yStart+2+abilityDictionary.size(), MyColors.WHITE, MyColors.BLUE, false));
+            result.add(new TextDecoration("Other Abilities:", xStart+1, yStart+2+abilityDictionary.size(), MyColors.WHITE, MyColors.BLUE, false));
         }
         return result;
     }
@@ -92,6 +107,8 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
                 public void performAction(Model model, int x, int y) {
                     if (abilityDictionary.containsKey(str)) {
                         setInnerMenu(abilityDictionary.get(str).getHelpChapter(model), model);
+                    } else if (vampAbilityDict.containsKey(str)) {
+                        setInnerMenu(vampAbilityDict.get(str).makeInfoDialog(AbilitiesDetailMenu.this, false), model);
                     } else {
                         setInnerMenu(new SpellMasteryHelpChapter(model.getView(), str), model);
                     }

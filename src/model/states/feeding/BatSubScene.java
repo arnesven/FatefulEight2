@@ -5,11 +5,14 @@ import model.characters.GameCharacter;
 import model.quests.QuestEdge;
 import model.states.GameState;
 import view.MyColors;
+import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.util.List;
 
 class BatSubScene extends FeedingSubScene {
+    public static final Sprite32x32 BAT_SPRITE = new Sprite32x32("batsubscene", "quest.png", 0x92,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private final VampireFeedingHouse house;
 
     public BatSubScene(int col, int row, GameCharacter vampire, VampireFeedingHouse house) {
@@ -24,7 +27,7 @@ class BatSubScene extends FeedingSubScene {
 
     @Override
     public void drawYourself(Model model, int xPos, int yPos) {
-        model.getScreenHandler().register(VampireFeedingHouse.BAT_SPRITE.getName(), new Point(xPos, yPos), VampireFeedingHouse.BAT_SPRITE, 1);
+        model.getScreenHandler().register(BAT_SPRITE.getName(), new Point(xPos, yPos), BAT_SPRITE, 1);
     }
 
     @Override

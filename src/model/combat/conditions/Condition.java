@@ -1,6 +1,7 @@
 package model.combat.conditions;
 
 import model.Model;
+import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.GameState;
 import view.GameView;
@@ -88,4 +89,8 @@ public abstract class Condition implements Serializable {
     public int getSpeedBonus() { return 0; }
 
     public int getCarryCapBonus() { return 0; }
+
+    public int getBonusForSkill(Skill skill) {
+        return 0;
+    }
 }

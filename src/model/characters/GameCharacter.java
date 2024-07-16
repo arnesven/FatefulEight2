@@ -259,8 +259,10 @@ public class GameCharacter extends Combatant {
         if (temporarySkillBonuses.containsKey(skill)) {
             tempBonus = temporarySkillBonuses.get(skill).getBonus();
         }
+        Skill finalSkill = skill;
+        int conditionBonus = MyLists.intAccumulate(getConditions(), (Condition cond) -> cond.getBonusForSkill(finalSkill));
         return Skill.getRankForSkill(charClass.getWeightForSkill(skill), getLevel())
-                + race.getBonusForSkill(skill) + equipment.getBonusForSkill(skill) + tempBonus;
+                + race.getBonusForSkill(skill) + equipment.getBonusForSkill(skill) + tempBonus + conditionBonus;
     }
 
     @Override
