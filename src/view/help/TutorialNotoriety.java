@@ -14,7 +14,8 @@ public class TutorialNotoriety extends HelpDialog {
             "A higher notoriety will attract the attention of local authorities when you " +
             "are in towns and castles, and add to your bounty if caught. Your notoriety " +
             "is reset if you repent for your crimes, either by spending time in " +
-            "jail or by paying a fine.";
+            "jail or by paying a fine.\n\n" +
+            "Having a high notoriety can make people refuse to deal with you.";
 
     public TutorialNotoriety(GameView view) {
         super(view, "Notoriety", TEXT);

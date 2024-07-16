@@ -58,6 +58,10 @@ public class TalkToBartenderNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+        if (GameState.partyIsCreepy(model)) {
+            state.print("The bartender refuses to deal with you.");
+            return false;
+        }
         return true;
     }
 

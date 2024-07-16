@@ -8,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
 import model.races.Race;
@@ -33,6 +34,10 @@ public abstract class GameState implements GameStateConstants {
 
     public GameState(Model model) {
         this.model = model;
+    }
+
+    public static boolean partyIsCreepy(Model model) {
+        return model.getParty().getLeader().hasCondition(VampirismCondition.class) || model.getParty().getNotoriety() >= 100;
     }
 
     public abstract GameState run(Model model);

@@ -62,8 +62,12 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 getVictimCompanions(model), getProvokedStrategy(), true)) {
             return;
         }
-        if (!doMainEventAndShowDarkDeeds(model)) {
-            return;
+        if (partyIsCreepy(model)) {
+            println("The " + getVictimCharacter(model).getName() + " refuses to deal with you!");
+        } else {
+            if (!doMainEventAndShowDarkDeeds(model)) {
+                return;
+            }
         }
         if (darkDeedsMenu(getVictimCharacter(model), getVictimCompanions(model),
                 getProvokedStrategy(), false)) {

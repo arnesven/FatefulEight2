@@ -4,6 +4,7 @@ import model.Model;
 import model.Party;
 import model.SteppingMatrix;
 import model.characters.*;
+import model.combat.conditions.VampirismCondition;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
@@ -72,6 +73,10 @@ public class RecruitState extends GameState {
     @Override
     public GameState run(Model model) {
         model.getTutorial().recruit(model);
+        if (GameState.partyIsCreepy(model)) {
+            println("There are some adventurers here, but they are unwilling to join because 'party to creepy'.");
+            return new EveningState(model);
+        }
 
         if (recruitables.size() > 0) {
             RecruitSubView subView = new RecruitSubView(this, recruitMatrix, startingGoldMap);

@@ -607,6 +607,7 @@ public class Party implements Serializable {
     }
 
     public synchronized int remove(GameCharacter gc, boolean transferEquipment, boolean payGold, int gold) {
+        partyAnimations.clearAnimationsFor(gc);
         if (transferEquipment) {
             gc.transferEquipmentToParty(this);
         }

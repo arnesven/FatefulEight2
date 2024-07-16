@@ -36,6 +36,10 @@ public class LodgingNode extends DailyActionNode {
             state.println("It's too early to hit the sack.");
             return false;
         }
+        if (GameState.partyIsCreepy(model)) {
+            state.println("The bartender refuses to serve you!");
+            return false;
+        }
         if (!EveningState.partyCanAffordLodging(model)) {
             state.println("You can't afford to pay for food and lodging here.");
             return false;
