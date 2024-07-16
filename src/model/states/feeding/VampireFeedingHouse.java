@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VampireFeedingHouse {
+    public static final Sprite32x32 BAT_SPRITE = new Sprite32x32("batsubscene", "quest.png", 0x92,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+    public static final Sprite32x32 EYE_SPRITE = new Sprite32x32("mesmerizesubscene", "quest.png", 0xA2,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+    public static final Sprite32x32 BITE_SPRITE = new Sprite32x32("bitesubscene", "quest.png", 0xB2,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
     private static final List<MyColors> HOUSE_COLORS =
             List.of(MyColors.CYAN, MyColors.PINK, MyColors.BEIGE,
                     MyColors.LIGHT_YELLOW);
@@ -33,6 +39,7 @@ public class VampireFeedingHouse {
     private final int windowOpen;
     private final MyColors color;
     private final boolean canDoBat;
+    private final boolean canDoMesmerize;
 
     private List<FeedingSubScene> subScenes;
     private List<FeedingJunction> junctions;
@@ -48,18 +55,14 @@ public class VampireFeedingHouse {
         this.width = MyRandom.randInt(1, 3);
         this.stories = MyRandom.randInt(1, 3);
         this.dwellers = MyRandom.randInt(1, width*stories + 1);
-        this.sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
+        this.sleeping = MyRandom.randInt(0, dwellers);
         this.lockDifficulty = (sleeping < dwellers && MyRandom.rollD6()==6) ? 0 : MyRandom.randInt(6, 8);
         color = MyRandom.sample(HOUSE_COLORS);
-        if (stories == 1) {
-            windowOpen = 0;
-        } else if (stories == 2) {
-            windowOpen = MyRandom.randInt(2);
-        } else {
-            windowOpen = MyRandom.randInt(2) * 2;
-        }
+        windowOpen = MyRandom.randInt(2) * (stories - 1);
         this.vampire = vampire;
-        this.canDoBat = ((VampirismCondition)vampire.getCondition(VampirismCondition.class)).hasBatAbility();
+        VampirismCondition cond = ((VampirismCondition)vampire.getCondition(VampirismCondition.class));
+        this.canDoBat = cond.hasBatAbility();
+        this.canDoMesmerize = true; // TODO: Fix
         makeNodes();
     }
 
@@ -90,6 +93,10 @@ public class VampireFeedingHouse {
         FeedingNode feedingNode = new FeedingNode(6, 3, dwellers, sleeping, vampire);
         subScenes.add(feedingNode);
 
+        MesmerizeNode mesmerizeNode = new MesmerizeNode(6, 4, dwellers - sleeping, vampire);
+        if (canDoMesmerize) {
+            subScenes.add(mesmerizeNode);
+        }
 
         GoToNextHouseNode goToNextHouse = new GoToNextHouseNode();
 
@@ -111,7 +118,15 @@ public class VampireFeedingHouse {
         sneakScene.connectSuccess(feedingNode);
         sneakScene.connectFail(failNode, QuestEdge.VERTICAL);
         feedingNode.connectSuccess(successfulNode);
-        feedingNode.connectFail(goToNextHouse, QuestEdge.VERTICAL);
+
+
+        if (canDoMesmerize) {
+            mesmerizeNode.connectSuccess(successfulNode);
+            mesmerizeNode.connectFail(goToNextHouse);
+            feedingNode.connectFail(mesmerizeNode, QuestEdge.VERTICAL);
+        } else {
+            feedingNode.connectFail(goToNextHouse, QuestEdge.VERTICAL);
+        }
 
         if (canDoBat) {
             batScene.connectSuccess(sneakScene);
@@ -120,6 +135,7 @@ public class VampireFeedingHouse {
             climbingScene.connectSuccess(sneakScene);
             climbingScene.connectFail(goToNextHouse, QuestEdge.VERTICAL);
         }
+
     }
 
     public void setBatForm(boolean b) {
@@ -382,37 +398,29 @@ public class VampireFeedingHouse {
         }
 
         @Override
+        public void drawYourself(Model model, int xPos, int yPos) {
+            model.getScreenHandler().register(BITE_SPRITE.getName(), new Point(xPos, yPos), BITE_SPRITE, 1);
+        }
+
+        @Override
         protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
             if (sleeping == 0) {
-                state.println("There is nobody sleeping in this house."); // TODO: Add mesmerize ability
-                state.println(vampire.getFirstName() + " quietly leaves the house.");
+                state.println("There is nobody sleeping in this house.");
+                if (!canDoMesmerize) {
+                    state.println(vampire.getFirstName() + " quietly leaves the house.");
+                }
                 return getFailEdge();
             }
             for (int i = 0; i < sleeping; ++i) {
-                AdvancedAppearance victim = PortraitSubView.makeRandomPortrait(Classes.None);
-                victim.setMascaraColor(victim.getRace().getColor());
-                state.println(vampire.getFirstName() + " approaches the bed of a " + victim.getRace().getName() + ".");
-                VampireFeedingHouse.this.setPortrait(victim);
-                state.print("Do you wish to feed on this victim? (Y/N) ");
-                if (state.yesNoInput()) {
-                    VampireFeedingHouse.this.setOpenEyes(true);
-                    state.println(vampire.getFirstName() + " descends upon the " + victim.getRace().getName() +
-                            " and sinks " + hisOrHer(vampire.getGender()) + " teeth into " + hisOrHer(victim.getGender()) + ".");
-                    model.getLog().waitForAnimationToFinish();
-                    VampireFeedingHouse.this.setOpenEyes(false);
-                    state.println("The " + victim.getRace().getName() + " gasps and for a moment it seems " + heOrShe(victim.getGender()) +
-                            " is about to wake up, but then it appears the dark aura of the vampire lulls " + himOrHer(victim.getGender()) +
-                            " back into a lethargic state. At last, " + vampire.getFirstName() + " can drink " +
-                            hisOrHer(vampire.getGender()) + " fill.");
-                    vampire.addToSP(9999);
-                    state.println(vampire.getFullName() + " Stamina has fully recovered.");
+                if (feedOnVictim(model, state, true)) {
                     return getSuccessEdge();
-                } else {
-                    VampireFeedingHouse.this.setPortrait(null);
-                    state.println(vampire.getFirstName() + " steps away from the bed.");
                 }
             }
-            state.println("Unable to find a suitable victim, " + vampire.getFirstName() + " quietly leaves the house.");
+            if (!canDoMesmerize) {
+                state.println("Unable to find a suitable victim, " + vampire.getFirstName() + " quietly leaves the house.");
+            } else {
+                state.println("There are no more people asleep in the house.");
+            }
             return getFailEdge();
         }
 
@@ -420,6 +428,43 @@ public class VampireFeedingHouse {
         protected MyColors getSuccessEdgeColor() {
             return MyColors.WHITE;
         }
+    }
+
+    private boolean feedOnVictim(Model model, GameState state, boolean isSleeping) {
+        AdvancedAppearance victim = PortraitSubView.makeRandomPortrait(Classes.None);
+        victim.setMascaraColor(victim.getRace().getColor());
+        VampireFeedingHouse.this.setPortrait(victim);
+        if (isSleeping) {
+            state.println(vampire.getFirstName() + " approaches the bed of a " + victim.getRace().getName() + ".");
+        } else {
+            VampireFeedingHouse.this.setOpenEyes(true);
+            state.println(vampire.getFirstName() + " approaches a " + victim.getRace().getName() + " and uses " +
+                    state.hisOrHer(vampire.getGender()) + " mesmerizing stare on " + state.hisOrHer(victim.getGender()) + ".");
+            model.getLog().waitForAnimationToFinish();
+            VampireFeedingHouse.this.setOpenEyes(false);
+        }
+        state.print("Do you wish to feed on this victim? (Y/N) ");
+        if (state.yesNoInput()) {
+            VampireFeedingHouse.this.setOpenEyes(true);
+            state.println(vampire.getFirstName() + " descends upon the " + victim.getRace().getName() +
+                    " and sinks " + state.hisOrHer(vampire.getGender()) + " teeth into " + state.hisOrHer(victim.getGender()) + ".");
+            model.getLog().waitForAnimationToFinish();
+            VampireFeedingHouse.this.setOpenEyes(false);
+            state.println("The " + victim.getRace().getName() + " gasps and for a moment it seems " + state.heOrShe(victim.getGender()) +
+                    " is about to wake up, but then it appears the dark aura of the vampire lulls " + state.himOrHer(victim.getGender()) +
+                    " back into a lethargic state. At last, " + vampire.getFirstName() + " can drink " +
+                    state.hisOrHer(vampire.getGender()) + " fill.");
+            vampire.addToSP(9999);
+            state.println(vampire.getFullName() + " Stamina has fully recovered.");
+            return true;
+        }
+        VampireFeedingHouse.this.setPortrait(null);
+        if (isSleeping) {
+            state.println(vampire.getFirstName() + " steps away from the bed.");
+        } else {
+            state.println(vampire.getFirstName() + " steps away from the " + victim.getRace().getName() + ".");
+        }
+        return false;
     }
 
     private static class ClimbingScene extends FeedingSubScene {
@@ -454,8 +499,6 @@ public class VampireFeedingHouse {
             return getFailEdge();
         }
     }
-    public static final Sprite32x32 SPRITE = new Sprite32x32("batsubscene", "quest.png", 0x92,
-            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
 
     private class BatSubScene extends FeedingSubScene {
         public BatSubScene(int col, int row, GameCharacter vampire) {
@@ -469,7 +512,7 @@ public class VampireFeedingHouse {
 
         @Override
         public void drawYourself(Model model, int xPos, int yPos) {
-            model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
+            model.getScreenHandler().register(BAT_SPRITE.getName(), new Point(xPos, yPos), BAT_SPRITE, 1);
         }
 
         @Override
@@ -485,6 +528,41 @@ public class VampireFeedingHouse {
                 state.println("the chimney.");
             }
             return getSuccessEdge();
+        }
+    }
+
+    private class MesmerizeNode extends FeedingSubScene {
+
+        private final int awake;
+
+        public MesmerizeNode(int col, int row, int awake, GameCharacter vampire) {
+            super(col, row, vampire);
+            this.awake = awake;
+        }
+
+        @Override
+        protected MyColors getSuccessEdgeColor() {
+            return MyColors.WHITE;
+        }
+
+        @Override
+        public void drawYourself(Model model, int xPos, int yPos) {
+            model.getScreenHandler().register(EYE_SPRITE.getName(), new Point(xPos, yPos), EYE_SPRITE, 1);
+        }
+
+        @Override
+        protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
+            if (awake == 0) {
+                state.println("With no other suitable victims in the house, " + vampire.getFirstName() + " quietly leaves.");
+                return getFailEdge();
+            }
+            for (int i = 0; i < awake; ++i) {
+                if (feedOnVictim(model, state, false)) {
+                    return getSuccessEdge();
+                }
+            }
+            state.println("Unable to find a suitable victim, " + vampire.getFirstName() + " quietly leaves the house.");
+            return getFailEdge();
         }
     }
 }
