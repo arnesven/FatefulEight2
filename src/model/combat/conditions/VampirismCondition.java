@@ -8,10 +8,10 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.races.ElvenRace;
 import model.races.Race;
+import model.states.GameState;
 import util.MyLists;
 import view.GameView;
 import view.MyColors;
-import view.VampireAbilityInfoDialog;
 import view.VampireStageProgressionDialog;
 import view.help.ConditionHelpDialog;
 import view.help.VampirismHelpView;
@@ -43,13 +43,24 @@ public class VampirismCondition extends Condition {
     private static final int CARRY_CAP_BONUS_PER_STAGE = 15;
     private static final MyColors PALEST_SKIN_COLOR = MyColors.WHITE;
     private static final MyColors PALEST_LIP_COLOR = MyColors.GRAY;
+    private static final int PROGRESS_EVERY_N_DAYS = 10;
+    private final int dayAdded;
     private int stage;
     private CharacterAppearance originalAppearance = null;
     private List<VampireAbility> learnedAbilities = new ArrayList<>();
 
-    public VampirismCondition(int initialStage) {
+    public VampirismCondition(int initialStage, int dayAdded) {
         super("Vampirism", "VMP");
         this.stage = initialStage;
+        this.dayAdded = dayAdded;
+    }
+
+    @Override
+    public void endOfDayTrigger(Model model, GameState state, Combatant comb) {
+        if (model.getDay() != dayAdded &&
+                ((model.getDay() - dayAdded) % PROGRESS_EVERY_N_DAYS) == 0) {
+            progress(model, (GameCharacter) comb);
+        }
     }
 
     @Override
@@ -76,6 +87,8 @@ public class VampirismCondition extends Condition {
         }
         this.stage++;
         updateAppearance(owner);
+        model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " +
+                stage + ".");
         model.getLog().waitForAnimationToFinish();
         VampireStageProgressionDialog stageDialog = new VampireStageProgressionDialog(model, owner, this);
         model.transitionToDialog(stageDialog);

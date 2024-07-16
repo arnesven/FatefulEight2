@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.combat.conditions.VampirismCondition;
 import model.items.Inventory;
 import model.map.HexLocation;
+import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
@@ -433,9 +434,14 @@ public class EveningState extends GameState {
     }
 
     private void checkForVampireFeeding(Model model) {
+        if (model.getCurrentHex().getLocation() == null ||
+                !(model.getCurrentHex().getLocation() instanceof UrbanLocation)) {
+            return;
+        }
         List<GameCharacter> characters = new ArrayList<>(model.getParty().getPartyMembers());
         characters.sort(Comparator.comparingInt(GameCharacter::getSP));
-        characters.removeIf((GameCharacter gc) -> !gc.hasCondition(VampirismCondition.class));
+        characters.removeIf((GameCharacter gc) -> !gc.hasCondition(VampirismCondition.class) ||
+                gc.getSP() == gc.getMaxSP());
         if (characters.isEmpty()) {
             return;
         }

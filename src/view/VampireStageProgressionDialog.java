@@ -36,8 +36,7 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
     @Override
     public void transitionedFrom(Model model) {
         VampireAbility chosen = getChosenVampireAbility();
-        model.getLog().addAnimated(vampire.getName() + " vampirism progressed to stage " +
-                condition.getStage() + ", learned ability " + chosen.getName() + ".\n");
+        model.getLog().addAnimated(vampire.getName() + " learned the vampire ability " + chosen.getName() + ".\n");
         condition.learnAbility(chosen);
     }
 

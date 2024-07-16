@@ -16,7 +16,7 @@ import java.util.List;
 public class VampireFeedingState extends GameState {
     public static final int NOTORIETY_FOR_BEING_SPOTTED = 25;
     private final GameCharacter vampire;
-    private static final int NO_OF_ATTEMPTS = 999; // TODO : 3
+    private static final int NO_OF_ATTEMPTS = 3;
     private QuestNode currentNode = null;
 
     public VampireFeedingState(Model model, GameCharacter vampire) {

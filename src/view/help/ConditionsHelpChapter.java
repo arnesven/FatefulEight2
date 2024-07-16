@@ -58,7 +58,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
                 new SneakAttackCondition().getHelpView(view),
                 new StrengthPotion().getCondition().getHelpView(view),
                 new SummonCondition(null).getHelpView(view),
-                new VampirismCondition(VampirismCondition.NO_STAGE).getHelpView(view),
+                new VampirismCondition(VampirismCondition.NO_STAGE, 0).getHelpView(view),
                 new WardCondition().getHelpView(view),
                 new WeakenCondition().getHelpView(view),
                 new WerewolfFormCondition(null, 0).getHelpView(view),

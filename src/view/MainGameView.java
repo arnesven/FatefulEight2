@@ -69,7 +69,7 @@ public class MainGameView extends GameView {
             for (GameCharacter target : model.getParty().getPartyMembers()) {
                 VampirismCondition vampCond = (VampirismCondition) target.getCondition(VampirismCondition.class);
                 if (vampCond == null) {
-                    target.addCondition(new VampirismCondition(VampirismCondition.INITIAL_STAGE));
+                    target.addCondition(new VampirismCondition(VampirismCondition.INITIAL_STAGE, model.getDay()));
                 } else {
                     vampCond.progress(model, target);
                 }
