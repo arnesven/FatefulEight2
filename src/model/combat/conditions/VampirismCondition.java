@@ -8,6 +8,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.races.ElvenRace;
 import model.races.Race;
+import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyLists;
 import view.GameView;
@@ -53,6 +54,14 @@ public class VampirismCondition extends Condition {
         super("Vampirism", "VMP");
         this.stage = initialStage;
         this.dayAdded = dayAdded;
+    }
+
+    public static void makeVampire(Model model, GameState state, GameCharacter target) {
+        target.addCondition(new VampirismCondition(VampirismCondition.INITIAL_STAGE, model.getDay()));
+        if (target.hasCondition(VampirismCondition.class)) {
+            state.println(target.getName() + " has been infected by vampirism!");
+            model.getTutorial().vampires(model);
+        }
     }
 
     @Override

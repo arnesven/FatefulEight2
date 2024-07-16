@@ -61,6 +61,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
             new TutorialTraining(null),
             new TutorialTravelDialog(null),
             new TutorialTravellers(null),
+            new TutorialVampires(null),
             new TutorialWars(null)));
     }
 
