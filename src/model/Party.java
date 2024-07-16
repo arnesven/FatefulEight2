@@ -850,4 +850,8 @@ public class Party implements Serializable {
     public void clearAnimations() {
         partyAnimations.clearAnimations();
     }
+
+    public void forceEyesClosed(GameCharacter victim, boolean closed) {
+        partyAnimations.forceEyesClosed(victim, closed);
+    }
 }

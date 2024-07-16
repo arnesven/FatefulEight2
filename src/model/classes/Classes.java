@@ -53,6 +53,7 @@ public interface Classes {
     CharacterClass BARBER = new BarberNPCClass();
     CharacterClass PROFESSOR = new ProfessorNPCClass();
     CharacterClass TRAVELLER = new TravellerNPCClass();
+    CharacterClass VAMPIRE = new VampireNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();

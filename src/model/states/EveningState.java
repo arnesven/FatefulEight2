@@ -8,6 +8,8 @@ import model.items.Inventory;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.quests.Quest;
+import model.states.dailyaction.LodgingState;
+import model.states.events.VampireProwlNightEvent;
 import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
@@ -55,7 +57,7 @@ public class EveningState extends GameState {
         checkForLeaderChange(model);
         checkBounties(model);
         checkTravellers(model);
-        checkForVampireFeeding(model);
+        checkForVampireFeeding(model, this instanceof LodgingState);
         locationSpecificEvening(model);
         if (model.getDay() == 50) {
             model.transitionToDialog(new HalfTimeDialog(model.getView()));
@@ -433,9 +435,16 @@ public class EveningState extends GameState {
         }
     }
 
-    private void checkForVampireFeeding(Model model) {
+    private void checkForVampireFeeding(Model model, boolean inTavern) {
         if (model.getCurrentHex().getLocation() == null ||
                 !(model.getCurrentHex().getLocation() instanceof UrbanLocation)) {
+            return;
+        }
+        if (!MyLists.any(model.getParty().getPartyMembers(),
+                (GameCharacter gc) -> gc.hasCondition(VampirismCondition.class))) {
+            if (MyRandom.rollD10() <= 1) {
+                new VampireProwlNightEvent(model, inTavern).run(model);
+            }
             return;
         }
         List<GameCharacter> characters = new ArrayList<>(model.getParty().getPartyMembers());

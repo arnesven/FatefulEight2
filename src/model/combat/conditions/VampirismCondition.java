@@ -103,7 +103,7 @@ public class VampirismCondition extends Condition {
         model.transitionToDialog(stageDialog);
     }
 
-    private void updateAppearance(GameCharacter owner) {
+    public void updateAppearance(GameCharacter owner) {
         if (owner.getAppearance() instanceof AdvancedAppearance) {
             if (stage == 0) {
                 owner.setAppearance(originalAppearance); // Should never happen...
@@ -111,12 +111,12 @@ public class VampirismCondition extends Condition {
                 AdvancedAppearance app = (AdvancedAppearance) owner.getAppearance().copy();
                 MyColors skinColor = getSkinColorForRaceAndStage(owner);
                 app.setAlternateSkinColor(skinColor);
+                app.setEyeballColor(getEyeColorForStage());
                 app.setMascaraColor(skinColor);
                 if (skinColor == PALEST_SKIN_COLOR) {
                     app.setLipColor(PALEST_LIP_COLOR);
                 }
                 app.setMouth(CharacterCreationView.mouthSet[0]);
-                app.setEyeballColor(getEyeColorForStage());
                 owner.setAppearance(app);
             }
         }

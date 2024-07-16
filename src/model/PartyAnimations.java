@@ -114,4 +114,12 @@ public class PartyAnimations implements Serializable {
         blinking.clear();
         lookers.clear();
     }
+
+    public void forceEyesClosed(GameCharacter victim, boolean closed) {
+        if (closed) {
+            blinking.put(victim.getAppearance(), Integer.MAX_VALUE);
+        } else {
+            blinking.remove(victim.getAppearance());
+        }
+    }
 }
