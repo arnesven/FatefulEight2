@@ -6,6 +6,7 @@ import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GuideGivesChoiceState extends GameState {
@@ -50,9 +51,15 @@ public abstract class GuideGivesChoiceState extends GameState {
             option2 = "Go somewhere else";
         }
         print("What would you like to do? ");
-        int choice = multipleOptionArrowMenu(model, 24, 4, List.of(event1.getGuideData().getName(), option2));
+        List<String> options = new ArrayList<>(List.of(event1.getGuideData().getName(), option2));
+        if (event2 != null) {
+            options.add("Go somewhere else");
+        }
+        int choice = multipleOptionArrowMenu(model, 24, 4, options);
         if (choice == 1) {
             selectedEvent = event2;
+        } else if (choice == 2) {
+            selectedEvent = null;
         }
 
         if (selectedEvent != null) {

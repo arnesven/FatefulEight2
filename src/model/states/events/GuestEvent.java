@@ -22,6 +22,12 @@ public class GuestEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit farmstead",
+                "There's a farm here. The family there never turns away travellers");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showExplicitPortrait(model, this.appearance, "Farmer");
         println("The party is invited into the home of these farmers who " +
