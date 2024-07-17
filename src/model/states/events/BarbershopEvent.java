@@ -81,7 +81,7 @@ public class BarbershopEvent extends DailyEventState {
             waitForReturnSilently();
         } while (!subView.isDone());
         GameCharacter charCopy = gc.copy();
-        charCopy.setAppearance(subView.getFinalAppearance()); // TODO: Fix bug that hair on avatar not updated.
+        charCopy.setAppearance(subView.getFinalAppearance());
         ChangeClassTransitionSubView.transition(model, subView, gc, charCopy);
         gc.setAppearance(subView.getFinalAppearance());
 

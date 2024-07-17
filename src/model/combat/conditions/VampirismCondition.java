@@ -101,8 +101,7 @@ public class VampirismCondition extends Condition {
         }
         this.stage++;
         updateAppearance(owner);
-//        model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " +
-//                stage + "."); // TODO: bring this back (hangs game when using key to progress)
+        model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " + stage + ".");
         model.getLog().waitForAnimationToFinish();
         VampireStageProgressionDialog stageDialog = new VampireStageProgressionDialog(model, owner, this);
         model.transitionToDialog(stageDialog);

@@ -68,6 +68,7 @@ public class SwampHex extends WorldHex {
                     new SwampRaftEvent(model),
                     new CryptEvent(model),
                     new LostExplorerEvent(model)
+                    // TODO: Kiss a toad event
             ));
         }
         return new NoEventState(model);
