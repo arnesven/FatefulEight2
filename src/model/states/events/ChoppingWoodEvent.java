@@ -13,6 +13,11 @@ public class ChoppingWoodEvent extends FieldsLaborEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Help farmer chop wood", "I know a farmer nearby who always needs help chopping wood");
+    }
+
+    @Override
     protected boolean makeSkillRolls(Model model) {
         boolean succ = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Axes, 7);
         succ = succ && model.getParty().doCollaborativeSkillCheck(model, this, Skill.Endurance, 6);

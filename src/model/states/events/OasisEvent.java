@@ -12,6 +12,11 @@ public class OasisEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to oasis", "There's an oasis just beyond those dunes");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("Exhausted from the heat, the party reaches a lush oasis in the " +
                 "desert. There is a watering hole here and some much " +

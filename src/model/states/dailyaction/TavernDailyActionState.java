@@ -32,6 +32,8 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(doorPos.x, doorPos.y, new ExitTavernNode());
             if (model.getDay() % 3 == 0 && model.getDay() < 100 - Loan.REPAY_WITHIN_DAYS * 2) {
                 addNode(4, 2, new TakeLoanNode());
+            } else {
+                addNode(4, 2, new GuideNode());
             }
         } else {
             addNode(7, 8, new TravelFromInnNode(model,

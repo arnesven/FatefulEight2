@@ -30,6 +30,12 @@ public class BarbarianEvent extends CombatExpertGeneralInteractionEvent {
         this.race = Race.ALL;
     }
 
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Meet with barbarian",
+                "There are plenty of barbarians living in this area");
+    }
+
     public void setRace(Race race) {
         this.race = race;
     }

@@ -18,6 +18,11 @@ public class UndergroundLakeEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to underground lake", "There's an underground lake close by");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party discovers an underground lake.");
         leaderSay("This might be a good place to rest, and to fill up our water skins.");

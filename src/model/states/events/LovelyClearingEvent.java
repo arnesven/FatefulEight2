@@ -18,4 +18,10 @@ public class LovelyClearingEvent extends DailyEventState {
         println("The party gains 3 ingredients.");
         model.getParty().randomPartyMemberSay(model, List.of("These may come in handy."));
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find clearing",
+                "There's a clearing not far from here. All kinds of marvelous plants grow there");
+    }
 }

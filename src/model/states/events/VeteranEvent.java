@@ -24,6 +24,11 @@ public class VeteranEvent extends CombatExpertGeneralInteractionEvent {
         this.withIntro = withIntro;
     }
 
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit veteran", "I know a veteran who lives in the area");
+    }
+
     public VeteranEvent(Model model) {
         this(model, true);
     }

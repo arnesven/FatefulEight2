@@ -16,6 +16,11 @@ public class CairnEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit cairns", "Just around that bend we'll find some cairns");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Cairn"));
         println("You pass a unusually large pillar of stacked stones. It's a cairn. " +

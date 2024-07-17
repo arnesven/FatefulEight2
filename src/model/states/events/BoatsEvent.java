@@ -31,6 +31,11 @@ public class BoatsEvent extends RiverEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to boats", "Last time I was here there was a few boats nearby");
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return !riverCrossed;
     }

@@ -35,4 +35,9 @@ public class TrollEvent extends DailyEventState {
             }
         }
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Seek out troll", "There's a ruined building nearby. It is rumored that a troll lives there");
+    }
 }

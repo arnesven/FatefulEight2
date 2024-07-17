@@ -19,6 +19,11 @@ public class MonumentEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit monument", "There's an interesting monument not far from here");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Monument"));
         println("Several large stone statues, adorned with a plaques. This " +

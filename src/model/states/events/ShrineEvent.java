@@ -21,6 +21,11 @@ public class ShrineEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit shrine", "We're close to a shrine");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Shrine"));
         println("The party passes a small shrine to a local deity.");

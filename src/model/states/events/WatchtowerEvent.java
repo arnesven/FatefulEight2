@@ -19,6 +19,11 @@ public class WatchtowerEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to watchtower", "There's an ancient watchtower not far from here");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Watchtower"));
         println("Up on a hill, an ancient watchtower sits silently and " +

@@ -19,6 +19,12 @@ public class StarvingFarmerEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit starving farmers", "I know of a farm, not far from here. " +
+                "The people there are very poor. If you could help them, they would appreciate it very much");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party comes to a farmstead. Working in a nearby field is a man and a woman, both look " +
                 "pale and thin.");

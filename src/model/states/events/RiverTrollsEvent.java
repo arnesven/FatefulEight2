@@ -19,6 +19,12 @@ public class RiverTrollsEvent extends RiverEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Look for river trolls",
+                "There are usually river trolls busy fishing in the water near here");
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return gotToCross;
     }

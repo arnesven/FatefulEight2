@@ -32,4 +32,9 @@ public class OrchardEvent extends DailyEventState {
         model.getParty().addToFood(gained);
         model.getParty().randomPartyMemberSay(model, List.of("Yummy!3"));
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit orchard", "There's an orchard nearby, it's filled with juice fruit");
+    }
 }

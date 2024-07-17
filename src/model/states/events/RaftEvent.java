@@ -79,4 +79,10 @@ class RaftEvent extends AlternativeTravelEvent {
     protected boolean isValidDestination(Model model, Point selectedPos) {
         return model.getWorld().getHex(selectedPos).getRivers() != Direction.NONE;
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find materials for raft",
+                "I saw some materials which would be great for building a rafts a little while ago");
+    }
 }

@@ -21,6 +21,12 @@ public class FertilityRitualEvent extends RitualEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to fertility ritual",
+                "Peasants usually perform a fertility ritual this time of year");
+    }
+
+    @Override
     protected CombatTheme getTheme() {
         return new GrassCombatTheme();
     }

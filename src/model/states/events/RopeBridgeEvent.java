@@ -21,6 +21,12 @@ public class RopeBridgeEvent extends RiverEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to rope bridge",
+                "There's a rope bridge across the river not too far from here");
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return walkAway;
     }

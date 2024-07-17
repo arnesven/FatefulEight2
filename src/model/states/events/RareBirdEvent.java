@@ -32,6 +32,11 @@ public class RareBirdEvent extends DailyEventState {
         super(model);
     }
 
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find rare bird", "I know a spot where I've seen rare birds make their nests");
+    }
+
     public static boolean hasStarted(Model model) {
         return model.getSettings().getMiscFlags().containsKey(HAS_STARTED_KEY);
     }

@@ -43,6 +43,11 @@ public class OutpostEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to outpost", "There's an outpost not far from here");
+    }
+
+    @Override
     protected GameState getEveningState(Model model) {
         if (!stayingAtInn) {
             return super.getEveningState(model);

@@ -45,6 +45,16 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        if (getModel().getParty().isSpecialCharacterMarked(enchantress) ||
+                getModel().getParty().size() < 3 || getModel().getCurrentHex().hasRoad()) {
+            return super.getGuideData();
+        }
+        return new GuideData("Visit strange hamlet", "There's a hamlet nearby, " +
+                "but everybody there is acting very strange, like they're under a spell or something");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().isSpecialCharacterMarked(enchantress) ||
                 model.getParty().size() < 3 || model.getCurrentHex().hasRoad()) {

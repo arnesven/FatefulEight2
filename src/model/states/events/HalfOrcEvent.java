@@ -54,4 +54,9 @@ public class HalfOrcEvent extends DailyEventState {
             adventurerWhoMayJoin(model, Race.HALF_ORC);
         }
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Meet half-orc", "I know a half-orc living in this area.");
+    }
 }

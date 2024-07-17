@@ -19,6 +19,11 @@ public class AltarEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to altar", "There's an altar at the top of this mountain.");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Altar"));
         println("The party reaches the summit of the mountain. There is an altar here. " +

@@ -32,6 +32,11 @@ public class TallSpireEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to tall spire", "There is a tall spire nearby. It is said a recluse live at the top");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         print("You come upon a very high spire. Do you want to enter? (Y/N) ");
         if (yesNoInput()) {

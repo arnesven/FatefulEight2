@@ -25,6 +25,15 @@ public class WitchKingEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        if (getModel().getParty().isSpecialCharacterMarked(witchKingChar)) {
+            return super.getGuideData();
+        }
+        return new GuideData("Go to stronghold",
+                "There's a strange stronghold in these parts. I've never been inside it");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().isSpecialCharacterMarked(witchKingChar)) {
             new NoEventState(model).doEvent(model);

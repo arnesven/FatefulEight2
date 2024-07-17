@@ -18,6 +18,11 @@ public class LumberMillEvent extends SimpleGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to lumber mill", "There's a lumber mill nearby");
+    }
+
+    @Override
     protected boolean isFreeLodging() {
         return freeLodge;
     }

@@ -16,6 +16,12 @@ public class BlackKnightEvent extends RiverEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Meet black knight",
+                "There's a crossing not far from here, but it's guarded by a stubborn black knight");
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return didFlee;
     }

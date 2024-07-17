@@ -71,6 +71,11 @@ public class GhostTownEvent extends DailyEventState {
         } while (chosen == 0);
     }
 
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find ghost town", "We're close to a ghost town");
+    }
+
     private void encounterGhosts(Model model) {
         println("The party encounters some ghosts!");
         List<Enemy> enemy = new ArrayList<>();

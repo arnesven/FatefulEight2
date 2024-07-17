@@ -23,6 +23,11 @@ public class HermitEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Seek out hermit", "I've heard that an old Hermit lives nearby");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), false);
         showExplicitPortrait(model, portrait, "Hermit");

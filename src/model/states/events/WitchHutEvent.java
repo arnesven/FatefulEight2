@@ -26,6 +26,12 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit Witch",
+                "When I passed through here last, I encountered a witch in a little hut");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIT);
         showExplicitPortrait(model, portrait, "Witch");

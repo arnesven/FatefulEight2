@@ -66,4 +66,9 @@ public class BerriesEvent extends DailyEventState {
             }
         }
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find berries", "I know a place where there are bushes with lots and lots of berries");
+    }
 }

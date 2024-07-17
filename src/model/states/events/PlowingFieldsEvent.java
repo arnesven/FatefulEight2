@@ -15,6 +15,12 @@ public class PlowingFieldsEvent extends FieldsLaborEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Help farmer plow",
+                "I know a farmer nearby who always needs help plowing his fields.");
+    }
+
+    @Override
     protected boolean makeSkillRolls(Model model) {
         return model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 6);
     }

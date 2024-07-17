@@ -20,6 +20,12 @@ public class MushroomsEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find mushrooms",
+                "I know a spot where there are mushrooms growing all over the ground");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mushrooms"));
         println("A large patch of mushrooms cover the ground ahead. " +

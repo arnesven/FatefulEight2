@@ -28,6 +28,11 @@ public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit Sorcerer", "We're close to a stone tower, a sorcerer lives within");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.SOR);
         showExplicitPortrait(model, portrait, "Sorcerer");

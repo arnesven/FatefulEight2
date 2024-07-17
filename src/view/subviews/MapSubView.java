@@ -63,6 +63,14 @@ public class MapSubView extends AvatarSubView {
         worldToDraw.drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
                     MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, cursorPos, avatarEnabled);
         drawTravellers(model);
+        drawGuide(model);
+    }
+
+    private void drawGuide(Model model) {
+        if (model.getParty().getGuide() > 0) {
+            BorderFrame.drawString(model.getScreenHandler(), "Guide: " + model.getParty().getGuide(),
+                    X_OFFSET, Y_OFFSET-1, MyColors.WHITE, MyColors.BLACK);
+        }
     }
 
     private void drawTravellers(Model model) {

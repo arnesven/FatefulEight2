@@ -53,6 +53,12 @@ public class SecretGardenEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find secret garden",
+                "There's a strange secret garden nearby. I haven't explored it yet, but I'm eager to do so");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party comes to a neat hedge.");
         leaderSay("Hey, these bushes look like they've been planted...");

@@ -18,6 +18,12 @@ public class HideoutEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to hideout",
+                "I've heard there's a gang of bandits who have their hideout down here");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You start up a tunnel when suddenly you hear voices. You creep closer to try to overhear the conversation.");
         println("From the way the inhabitants are talking it's clear that they are a bandit gang.");

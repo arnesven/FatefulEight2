@@ -18,6 +18,12 @@ public class FarmersChildEvent extends FarmerEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit farmer with the kid",
+                "I know a farmer nearby who wants adventurers to take on his kid as an apprentice");
+    }
+
+    @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
         print("The farmer begs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +

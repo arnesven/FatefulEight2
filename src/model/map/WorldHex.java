@@ -72,13 +72,27 @@ public abstract class WorldHex {
         } else if (model.getParty().isOnRoad()) {
             eventToReturn = generateOnRoadEvent(model);
         } else {
-            eventToReturn = generateTerrainSpecificEvent(model);
+            eventToReturn = generateTerrainEventWithGuide(model);
         }
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
         return eventToReturn;
     }
+
+    private DailyEventState generateTerrainEventWithGuide(Model model) {
+        GuideGivesChoiceState guideGivesChoiceState = new GuideGivesChoiceState(model) {
+            @Override
+            protected DailyEventState generateEvent(Model model) {
+                return generateTerrainSpecificEvent(model);
+            }
+        };
+        guideGivesChoiceState.run(model);
+        return guideGivesChoiceState.getSelectedEvent();
+    }
+
+    protected abstract DailyEventState generateTerrainSpecificEvent(Model model);
+
 
     private DailyEventState conditionalEvent(Model model) {
         DailyEventState eventToReturn = Loan.generateEvent(model, this);
@@ -92,8 +106,6 @@ public abstract class WorldHex {
         eventToReturn = CaveSpelunkerEvent.generateEvent(model);
         return eventToReturn;
     }
-
-    protected abstract DailyEventState generateTerrainSpecificEvent(Model model);
 
     private void setHexSprites() {
         this.upperLeft = getUpperLeftSprite(color, roads, rivers);
@@ -320,6 +332,17 @@ public abstract class WorldHex {
     }
 
     public RiverEvent generateRiverEvent(Model model) {
+        GuideGivesChoiceState choice = new GuideGivesChoiceState(model) {
+            @Override
+            protected DailyEventState generateEvent(Model model) {
+                return makeRandomRiverEvent(model);
+            }
+        };
+        choice.run(model);
+        return (RiverEvent) choice.getSelectedEvent();
+    }
+
+    public RiverEvent makeRandomRiverEvent(Model model) {
         return MyRandom.sample(List.of(
                 new ShallowsEvent(model),
                 new ShallowsEvent(model),

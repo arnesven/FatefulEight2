@@ -14,6 +14,11 @@ public class FerryEvent extends RiverEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to ferry", "There's a ferry just down the river from here");
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return !paid;
     }

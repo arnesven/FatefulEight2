@@ -23,6 +23,11 @@ public class DwarvenCityEvent extends DailyEventState {
     private boolean parkVisited = false;
     private boolean palaceVisited = false;
 
+    @Override
+    public GuideData getGuideData() {
+        return super.getGuideData();
+    }
+
     public DwarvenCityEvent(Model model) {
         super(model);
         shopInventory = ShopState.makeGeneralShopInventory(model, 10, 10, 10);

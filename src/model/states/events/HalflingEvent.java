@@ -45,4 +45,9 @@ public class HalflingEvent extends DailyEventState {
             adventurerWhoMayJoin(model, Race.HALFLING);
         }
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit halfling", "I know a halfling living nearby");
+    }
 }

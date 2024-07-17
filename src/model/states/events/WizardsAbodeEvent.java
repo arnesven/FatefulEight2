@@ -27,6 +27,11 @@ public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit wizard", "A wizard lives nearby. He loves tricks and riddles");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.randomRace(), false);
         showExplicitPortrait(model, portrait, "Wizard");

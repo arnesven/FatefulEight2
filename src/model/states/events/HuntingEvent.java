@@ -22,6 +22,11 @@ public class HuntingEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go hunting", "These parts are good for hunting");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         leaderSay("There may be some game in this area.");
         print("Do you wish to go hunting? (Y/N) ");

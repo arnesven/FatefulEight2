@@ -23,4 +23,9 @@ public class CaveEvent extends DailyEventState {
             model.enterCaveSystem(true);
         }
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find Cave", "There's a cave nearby");
+    }
 }

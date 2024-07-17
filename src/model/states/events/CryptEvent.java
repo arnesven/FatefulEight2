@@ -23,6 +23,12 @@ public class CryptEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to crypt", "I'm pretty sure there's a crypt not far from here. " +
+                "It's an interesting landmark, but kind of spooky");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party encounters a crypt.");
         randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()), "Perhaps we should take a look inside?");

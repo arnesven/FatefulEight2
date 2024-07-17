@@ -23,6 +23,11 @@ public class AmazonEvent extends CombatExpertGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find amazon", "Amazons live in these parts. I think I could track some down for you");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.AMZ);
         println("A large, handsome and scantily clad person stands " +

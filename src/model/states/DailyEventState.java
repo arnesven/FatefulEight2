@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.states.events.GuideData;
 import view.combat.CombatTheme;
 import view.combat.CaveTheme;
 import model.combat.loot.CombatLoot;
@@ -19,6 +20,7 @@ import model.races.Race;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
+import view.sprites.Sprite;
 import view.subviews.*;
 
 import java.awt.*;
@@ -33,6 +35,8 @@ public abstract class DailyEventState extends GameState {
     public DailyEventState(Model model) {
         super(model);
     }
+
+    protected abstract void doEvent(Model model);
 
     @Override
     public final GameState run(Model model) {
@@ -73,7 +77,6 @@ public abstract class DailyEventState extends GameState {
         return false;
     }
 
-    protected abstract void doEvent(Model model);
     public void doTheEvent(Model model) { doEvent(model); }
 
     protected void adventurerWhoMayJoin(Model model, Race race) {
@@ -326,5 +329,14 @@ public abstract class DailyEventState extends GameState {
                 }
             }
         }
+    }
+
+    public boolean isGuidable() {
+        return getGuideData() != null;
+    }
+
+
+    public GuideData getGuideData() {
+        return null;
     }
 }

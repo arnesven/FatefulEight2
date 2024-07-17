@@ -20,6 +20,11 @@ public class EaglesEvent extends AlternativeTravelEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find giant eagles", "I know a place where giant eagles roost nearby");
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

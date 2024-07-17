@@ -76,6 +76,7 @@ public class Party implements Serializable {
     private static Map<GameCharacter, TamedDragonCharacter> tamedDragons = new HashMap<>();
     private TravellerCollection travellers = new TravellerCollection();
     private List<DestinationTask> destinationTasks = new ArrayList<>();
+    private int guide = 0;
 
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
@@ -854,5 +855,17 @@ public class Party implements Serializable {
 
     public void forceEyesClosed(GameCharacter victim, boolean closed) {
         partyAnimations.forceEyesClosed(victim, closed);
+    }
+
+    public void setGuide(int days) {
+        this.guide = days;
+    }
+
+    public int getGuide() {
+        return guide;
+    }
+
+    public void addToGuide(int addition) {
+        this.guide += addition;
     }
 }

@@ -101,4 +101,9 @@ public class FarmersHorseRaceEvent extends DailyEventState {
         }
 
     }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit farm with horse track", "I went by a farm recently which has a prepared horse track. It's nearby");
+    }
 }

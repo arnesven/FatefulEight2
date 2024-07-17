@@ -25,6 +25,11 @@ public class MineEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to mine", "There's a mine nearby");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         boolean enteredFromSurface = true;
         if (model.isInCaveSystem()) {

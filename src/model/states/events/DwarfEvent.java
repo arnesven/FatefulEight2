@@ -11,6 +11,11 @@ public class DwarfEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Meet with dwarf", "I know a dwarf who lives around here");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         print("The party encounters a dwarf. This particular dwarf is a");
         int dieRoll = MyRandom.rollD10();

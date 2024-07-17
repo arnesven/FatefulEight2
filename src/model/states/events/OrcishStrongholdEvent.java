@@ -29,6 +29,12 @@ public class OrcishStrongholdEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to orcish stronghold", "There's an orcish stronghold not far from here. " +
+                "I would keep clear unless you know what you are doing");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Hold up a minute. That's some kind of fort or something up there."));
         model.getParty().randomPartyMemberSay(model, List.of("An orcish stronghold... Could be dangerous."));

@@ -35,6 +35,11 @@ public class MinerEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Locate miner", "There are usually plenty of miners in this part of the world");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.app = PortraitSubView.makeRandomPortrait(Classes.MIN, race);
         showExplicitPortrait(model, app, "Miner");
