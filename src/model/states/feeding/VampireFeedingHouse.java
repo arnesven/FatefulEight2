@@ -223,7 +223,7 @@ public class VampireFeedingHouse {
             state.println(vampire.getFirstName() + " descends upon the " + victim.getRace().getName() +
                     " and sinks " + state.hisOrHer(vampire.getGender()) + " teeth into " + state.hisOrHer(victim.getGender()) + ".");
             model.getLog().waitForAnimationToFinish();
-            VampireFeedingHouse.this.setOpenEyes(false);
+            VampireFeedingHouse.this.setOpenEyes(false); // TODO: Different effects for different races
             state.println("The " + victim.getRace().getName() + " gasps and for a moment it seems " + state.heOrShe(victim.getGender()) +
                     " is about to wake up, but then it appears the dark aura of the vampire lulls " + state.himOrHer(victim.getGender()) +
                     " back into a lethargic state. At last, " + vampire.getFirstName() + " can drink " +

@@ -16,6 +16,11 @@ public class InvisibilityCondition extends Condition {
     }
 
     @Override
+    public boolean removeAtEndOfCombat() {
+        return true;
+    }
+
+    @Override
     protected boolean noCombatTurn() {
         return false;
     }

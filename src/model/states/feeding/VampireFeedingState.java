@@ -57,9 +57,12 @@ public class VampireFeedingState extends GameState {
                 println(vampire.getFirstName() + " leaves the house.");
             }
         }
-
-        println("Dawn is rapidly approaching and " + vampire.getFullName() +
-                " must return to the party before anybody notices " + heOrShe(vampire.getGender()) + " is missing.");
+        if (model.getParty().size() > 1) {
+            println("Dawn is rapidly approaching and " + vampire.getFullName() +
+                    " must return to the party before anybody notices " + heOrShe(vampire.getGender()) + " is missing.");
+        } else {
+            println("Dawn is rapidly approaching.");
+        }
         print("Press enter to continue.");
         waitForReturn();
         CollapsingTransition.transition(model, oldSubView);
