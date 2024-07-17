@@ -45,7 +45,7 @@ public class VampirismCondition extends Condition {
     private static final int CARRY_CAP_BONUS_PER_STAGE = 15;
     private static final MyColors PALEST_SKIN_COLOR = MyColors.WHITE;
     private static final MyColors PALEST_LIP_COLOR = MyColors.GRAY;
-    private static final int PROGRESS_EVERY_N_DAYS = 10;
+    public static final int PROGRESS_EVERY_N_DAYS = 10;
     private final int dayAdded;
     private int stage;
     private CharacterAppearance originalAppearance = null;

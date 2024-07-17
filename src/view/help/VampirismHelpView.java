@@ -12,7 +12,8 @@ public class VampirismHelpView extends ConditionHelpDialog {
             "members may not react positively to having a vampire in the party.\n\n" +
             "A character with the Vampirism condition has his or her Health, Stamina, Speed and Carrying Capacity increased in " +
             "proportion to the condition's stage. However, a vampire never recovers stamina by resting in a bed, or drinking potions but must instead " +
-            "drink the blood of another living creature to replenish itself.";
+            "drink the blood of another living creature to replenish itself.\n\n" +
+            "The condition progresses every " + VampirismCondition.PROGRESS_EVERY_N_DAYS + " days, and the fifth stage is the last.";
 
     public VampirismHelpView(GameView view, VampirismCondition cond) {
         super(view, cond, makeStageText(cond) + TEXT);
