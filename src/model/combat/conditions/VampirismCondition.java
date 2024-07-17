@@ -29,12 +29,13 @@ public class VampirismCondition extends Condition {
     public static final int NO_STAGE = -1;
     public static final int INITIAL_STAGE = 0;
     private static final List<VampireAbility> ALL_ABILITIES = List.of(
+            new CelerityVampireAbility(),
+            new ClawsVampireAbility(),
             new BatFormVampireAbility(),
             new MesmerizeVampireAbility(),
-            new WisdomAbility(),
             new StrengthAbility(),
-            new ClawsVampireAbility(),
-            new CelerityVampireAbility());
+            new WisdomAbility()
+    );
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xDC), MyColors.WHITE, MyColors.DARK_RED, MyColors.CYAN);
     private static final int MAX_STAGE = 5;
@@ -62,6 +63,10 @@ public class VampirismCondition extends Condition {
             state.println(target.getName() + " has been infected by vampirism!");
             model.getTutorial().vampires(model);
         }
+    }
+
+    public static Iterable<? extends VampireAbility> getAllAbilities() {
+        return ALL_ABILITIES;
     }
 
     @Override

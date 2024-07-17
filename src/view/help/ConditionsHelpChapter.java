@@ -30,6 +30,7 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
+                new BatFormCondition().getHelpView(view),
                 new BlackPactCondition().getHelpView(view),
                 new BleedingCondition().getHelpView(view),
                 new BlessedCondition(0).getHelpView(view),

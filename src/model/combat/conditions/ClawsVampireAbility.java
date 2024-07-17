@@ -48,6 +48,11 @@ public class ClawsVampireAbility extends VampireAbility {
         return skill == Skill.UnarmedCombat ? BONUS : 0;
     }
 
+    @Override
+    public HelpDialog makeHelpChapter(GameView view) {
+        return getHelpChapter(view);
+    }
+
     public static int[] getDamageTable() {
         return DAMAGE_TABLE;
     }

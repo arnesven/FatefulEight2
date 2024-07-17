@@ -56,4 +56,9 @@ public class MesmerizeVampireAbility extends VampireAbility {
     public static HelpDialog getHelpChapter(GameView view) {
         return new SubChapterHelpDialog(view, NAME, NAME + " is a vampire ability which is " + DESCRIPTION.toLowerCase());
     }
+
+    @Override
+    public HelpDialog makeHelpChapter(GameView view) {
+        return getHelpChapter(view);
+    }
 }

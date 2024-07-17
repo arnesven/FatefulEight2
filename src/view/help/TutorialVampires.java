@@ -1,11 +1,9 @@
 package view.help;
 
-import model.combat.conditions.BatFormVampireAbility;
-import model.combat.conditions.CelerityVampireAbility;
-import model.combat.conditions.ClawsVampireAbility;
-import model.combat.conditions.MesmerizeVampireAbility;
+import model.combat.conditions.*;
 import view.GameView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TutorialVampires extends ExpandableHelpDialog {
@@ -26,10 +24,10 @@ public class TutorialVampires extends ExpandableHelpDialog {
 
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
-        return List.of(
-                BatFormVampireAbility.getHelpChapter(null),
-                CelerityVampireAbility.getHelpChapter(null),
-                ClawsVampireAbility.getHelpChapter(null),
-                MesmerizeVampireAbility.getHelpChapter(null));
+        List<HelpDialog> helpDialogs = new ArrayList<>();
+        for (VampireAbility vab : VampirismCondition.getAllAbilities()) {
+            helpDialogs.add(vab.makeHelpChapter(view));
+        }
+        return helpDialogs;
     }
 }

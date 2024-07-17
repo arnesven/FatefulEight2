@@ -5,6 +5,7 @@ import util.MyStrings;
 import view.GameView;
 import view.MyColors;
 import view.VampireAbilityInfoDialog;
+import view.help.HelpDialog;
 import view.party.SelectableListMenu;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -44,4 +45,6 @@ public abstract class VampireAbility implements Serializable {
     public int getBonusForSkill(Skill skill) {
         return 0;
     }
+
+    public abstract HelpDialog makeHelpChapter(GameView view);
 }

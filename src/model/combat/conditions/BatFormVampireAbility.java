@@ -56,4 +56,9 @@ public class BatFormVampireAbility extends VampireAbility {
         return List.of("Bat form!", "Bat!", "Dark Wings!", "Abracadabra!", "Shazam!", "Here I go!",
                 "Flap flap flap!", "Zippit!");
     }
+
+    @Override
+    public HelpDialog makeHelpChapter(GameView view) {
+        return getHelpChapter(view);
+    }
 }

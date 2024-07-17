@@ -40,4 +40,9 @@ public class CelerityVampireAbility extends VampireAbility {
         return new SubChapterHelpDialog(view, "Celerity", NAME +
                 " is a vampire ability. It " + DESCRIPTION.toLowerCase());
     }
+
+    @Override
+    public HelpDialog makeHelpChapter(GameView view) {
+        return getHelpChapter(view);
+    }
 }
