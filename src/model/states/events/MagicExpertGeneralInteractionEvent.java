@@ -4,6 +4,7 @@ import model.Model;
 import util.MyPair;
 import util.MyRandom;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,12 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
             "Tired of walking? Check out Teleport.",
             "Southern Cross is a powerful healing spell, but you can only use it under the right conditions."
     );
+    private static final List<String> VAMPIRE_TIPS = List.of(
+            "Vampires need to feed on humanoid creatures to sustain themselves. That's why they're drawn to towns and castles.",
+            "Vampirism can be cured. Look for stone circles out on the plains. Such places are often frequented by druids who know the right rituals for curing vampirism.",
+            "The longer a vampire lives, the strong it becomes. A fully grown vampire is very fast, strong and intelligent. Be wary of such dark fiends.",
+            "Vampires can turn into bats. Probably pretty convenient for them."
+    );
 
     public MagicExpertGeneralInteractionEvent(Model model, String interactText, int stealMoney) {
         super(model, interactText, stealMoney);
@@ -24,7 +31,11 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
 
     @Override
     protected Map<String, MyPair<String, String>> makeSpecificTopics(Model model) {
-        return Map.of("spells", new MyPair<>("Got any good tips about spells?",
+        Map<String, MyPair<String, String>> map = new HashMap<>();
+        map.put("spells", new MyPair<>("Got any good tips about spells?",
                 MyRandom.sample(SPELL_TIPS)));
+        map.put("vampires", new MyPair<>("Know anything about vampires?",
+                MyRandom.sample(VAMPIRE_TIPS)));
+        return map;
     }
 }

@@ -370,7 +370,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                     "Ask about " + himOrHer(victimChar.getGender()),
                     "Ask about region",
                     "Ask about news"));
-            Map<String, MyPair<String, String>> specificTopics = makeSpecificTopics(model);
+            Map<String, MyPair<String, String>> specificTopics = makeSpecificTopics(model); // Ask about curing vampirism
             for (String s : specificTopics.keySet()) {
                 options.add("Ask about " + s);
             }
