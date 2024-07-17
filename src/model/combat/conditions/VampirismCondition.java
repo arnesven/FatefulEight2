@@ -236,7 +236,11 @@ public class VampirismCondition extends Condition {
         return MyLists.intAccumulate(learnedAbilities, (VampireAbility va) -> va.getBonusForSkill(skill));
     }
 
-    public boolean asCelerityAbility() {
+    public boolean hasCelerityAbility() {
         return MyLists.any(learnedAbilities, (VampireAbility va) -> va instanceof CelerityVampireAbility);
+    }
+
+    public boolean hasClawsAbility() {
+        return MyLists.any(learnedAbilities, (VampireAbility va) -> va instanceof ClawsVampireAbility);
     }
 }

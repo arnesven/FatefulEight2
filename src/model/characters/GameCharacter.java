@@ -21,6 +21,7 @@ import model.items.spells.QuickenedCondition;
 import model.items.spells.QuickeningSpell;
 import model.items.weapons.NaturalWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
+import model.items.weapons.VampireClawsWeapon;
 import model.items.weapons.Weapon;
 import model.races.ColoredRace;
 import model.races.Race;
@@ -467,7 +468,11 @@ public class GameCharacter extends Combatant {
         if (!(equipment.getWeapon() instanceof UnarmedCombatWeapon)) {
             party.getInventory().add(equipment.getWeapon());
         }
-        equipment.setWeapon(new UnarmedCombatWeapon());
+        if (ClawsVampireAbility.canDoAbility(this)) {
+            equipment.setWeapon(new VampireClawsWeapon());
+        } else {
+            equipment.setWeapon(new UnarmedCombatWeapon());
+        }
     }
 
     public void equipWeaponFromInventory(Weapon weapon) {

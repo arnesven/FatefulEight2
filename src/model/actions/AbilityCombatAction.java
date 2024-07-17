@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.CelerityVampireAbility;
+import model.combat.conditions.ClawsVampireAbility;
 import model.enemies.Enemy;
 import model.items.weapons.*;
 import model.states.CombatEvent;
@@ -96,6 +97,9 @@ public class AbilityCombatAction extends CombatAction {
         }
         if (CelerityVampireAbility.canDoAbility(gc)) {
             list.add(CelerityVampireAbility.getPassiveCombatAbility());
+        }
+        if (ClawsVampireAbility.canDoAbility(gc)) {
+            list.add(ClawsVampireAbility.getPassiveCombatAbility());
         }
         return list;
     }

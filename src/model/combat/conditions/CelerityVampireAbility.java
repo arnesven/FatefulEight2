@@ -19,7 +19,7 @@ public class CelerityVampireAbility extends VampireAbility {
     public static boolean canDoAbility(GameCharacter gc) {
         if (gc.hasCondition(VampirismCondition.class)) {
             VampirismCondition vampCond = (VampirismCondition) gc.getCondition(VampirismCondition.class);
-            if (vampCond.asCelerityAbility()) {
+            if (vampCond.hasCelerityAbility()) {
                 return true;
             }
         }

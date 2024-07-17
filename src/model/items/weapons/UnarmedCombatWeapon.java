@@ -2,6 +2,7 @@ package model.items.weapons;
 
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.combat.conditions.ClawsVampireAbility;
 import model.items.Item;
 import view.sprites.Sprite;
 import view.sprites.AvatarItemSprite;
@@ -15,17 +16,20 @@ public class UnarmedCombatWeapon extends NaturalWeapon {
     public int getDamage(int modifiedRoll, GameCharacter damager) {
         if (damager.getEquipment().getAccessory() != null &&
                 damager.getEquipment().getAccessory().getDamageTable() != null) {
-            int[] damageTable = damager.getEquipment().getAccessory().getDamageTable();
-            int dmg = 0;
-            for (int i = 0; i < damageTable.length; ++i) {
-                if (modifiedRoll < damageTable[i]) {
-                    break;
-                }
-                dmg++;
-            }
-            return dmg;
+            return useOtherDamageTable(damager.getEquipment().getAccessory().getDamageTable(), modifiedRoll);
         }
         return super.getDamage(modifiedRoll, damager);
+    }
+
+    protected static int useOtherDamageTable(int[] damageTable, int modifiedRoll) {
+        int dmg = 0;
+        for (int i = 0; i < damageTable.length; ++i) {
+            if (modifiedRoll < damageTable[i]) {
+                break;
+            }
+            dmg++;
+        }
+        return dmg;
     }
 
     @Override
