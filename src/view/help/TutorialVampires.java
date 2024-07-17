@@ -1,8 +1,11 @@
 package view.help;
 
+import model.combat.conditions.CelerityVampireAbility;
 import view.GameView;
 
-public class TutorialVampires extends HelpDialog {
+import java.util.List;
+
+public class TutorialVampires extends ExpandableHelpDialog {
     private static final String TEXT = "Vampires are dark creatures who pray on " +
             "the blood of the living to sustain themselves. Several events, " +
             "like being attacked by a vampire, or having your blood sucked by one, " +
@@ -15,6 +18,11 @@ public class TutorialVampires extends HelpDialog {
             "ancient nature rituals, known only by some druids.";
 
     public TutorialVampires(GameView view) {
-        super(view, "Vampires", TEXT);
+        super(view, "Vampires", TEXT, false);
+    }
+
+    @Override
+    protected List<HelpDialog> makeSubSections(GameView view) {
+        return List.of(CelerityVampireAbility.getHelpChapter(null));
     }
 }

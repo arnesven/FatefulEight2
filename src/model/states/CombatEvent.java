@@ -4,6 +4,8 @@ import model.actions.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.actions.SneakAttackCombatAction;
 import model.actions.CombatAction;
+import model.combat.conditions.CelerityVampireAbility;
+import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -135,6 +137,11 @@ public class CombatEvent extends DailyEventState {
         }
         Collections.shuffle(initiativeOrder);
         Collections.sort(initiativeOrder, (c1, c2) -> c2.getSpeed() - c1.getSpeed());
+        for (GameCharacter gc : participants) {
+            if (CelerityVampireAbility.canDoAbility(gc)) {
+                initiativeOrder.add(gc);
+            }
+        }
     }
 
     private void runCombatLoop(Model model) {

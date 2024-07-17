@@ -19,6 +19,7 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
     private final GameCharacter vampire;
     private final VampirismCondition condition;
     private final List<VampireAbility> abilitiesToChooseFrom;
+    private final String[] parts;
     private VampireAbility chosenAbility = null;
 
     public VampireStageProgressionDialog(Model model, GameCharacter vampire, VampirismCondition cond) {
@@ -26,6 +27,9 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
         this.vampire = vampire;
         this.condition = cond;
         abilitiesToChooseFrom = cond.getRandomAbilities();
+        String text = vampire.getName() + "'s vampiric powers have grown, they are now at stage " +
+                condition.getStage() + ".\n\nSelect one vampiric ability to learn from the list below.";
+        parts = MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-1);
     }
 
     @Override
@@ -49,10 +53,6 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
                 BorderFrame.drawCentered(model.getScreenHandler(), "VAMPIRISM", y, MyColors.WHITE, MyColors.BLUE);
                 y += 2;
 
-                String text = vampire.getName() + "'s vampiric powers have grown, they are now at stage " +
-                        condition.getStage() + ".\n\nSelect one vampiric ability to learn from the list below.";
-                String[] parts = MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-1);
-
                 for (String part : parts) {
                     BorderFrame.drawCentered(model.getScreenHandler(), part, y++, MyColors.WHITE, MyColors.BLUE);
                 }
@@ -70,7 +70,7 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> content = new ArrayList<>();
 
-        int row = yStart + 12;
+        int row = yStart + parts.length + 5;
         int finalX = xStart + 12;
         for (VampireAbility abi : abilitiesToChooseFrom) {
             content.add(new SelectableListContent(finalX, row, abi.getName()) {

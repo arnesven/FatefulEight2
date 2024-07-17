@@ -96,8 +96,8 @@ public class VampirismCondition extends Condition {
         }
         this.stage++;
         updateAppearance(owner);
-        model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " +
-                stage + ".");
+//        model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " +
+//                stage + "."); // TODO: bring this back (hangs game when using key to progress)
         model.getLog().waitForAnimationToFinish();
         VampireStageProgressionDialog stageDialog = new VampireStageProgressionDialog(model, owner, this);
         model.transitionToDialog(stageDialog);
@@ -234,5 +234,9 @@ public class VampirismCondition extends Condition {
     @Override
     public int getBonusForSkill(Skill skill) {
         return MyLists.intAccumulate(learnedAbilities, (VampireAbility va) -> va.getBonusForSkill(skill));
+    }
+
+    public boolean asCelerityAbility() {
+        return MyLists.any(learnedAbilities, (VampireAbility va) -> va instanceof CelerityVampireAbility);
     }
 }

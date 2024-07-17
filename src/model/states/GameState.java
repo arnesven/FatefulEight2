@@ -36,19 +36,6 @@ public abstract class GameState implements GameStateConstants {
         this.model = model;
     }
 
-    public static boolean partyIsCreepy(Model model) {
-        if (model.getParty().getNotoriety() >= 100) {
-            return true;
-        }
-        if (model.getParty().getLeader().hasCondition(VampirismCondition.class)) {
-            VampirismCondition cond = (VampirismCondition) model.getParty().getLeader().getCondition(VampirismCondition.class);
-            if (cond.getStage() > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public abstract GameState run(Model model);
 
     protected Model getModel() { return model; }
@@ -306,5 +293,18 @@ public abstract class GameState implements GameStateConstants {
             }
         }
         return new MyPair<>(result, null);
+    }
+
+    public static boolean partyIsCreepy(Model model) {
+        if (model.getParty().getNotoriety() >= 100) {
+            return true;
+        }
+        if (model.getParty().getLeader().hasCondition(VampirismCondition.class)) {
+            VampirismCondition cond = (VampirismCondition) model.getParty().getLeader().getCondition(VampirismCondition.class);
+            if (cond.getStage() > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 }
