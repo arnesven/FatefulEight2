@@ -3,6 +3,7 @@ package view.help;
 import model.combat.conditions.BatFormVampireAbility;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClawsVampireAbility;
+import model.combat.conditions.MesmerizeVampireAbility;
 import view.GameView;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class TutorialVampires extends ExpandableHelpDialog {
         return List.of(
                 BatFormVampireAbility.getHelpChapter(null),
                 CelerityVampireAbility.getHelpChapter(null),
-                ClawsVampireAbility.getHelpChapter(null));
+                ClawsVampireAbility.getHelpChapter(null),
+                MesmerizeVampireAbility.getHelpChapter(null));
     }
 }

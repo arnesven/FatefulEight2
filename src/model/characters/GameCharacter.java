@@ -668,7 +668,7 @@ public class GameCharacter extends Combatant {
         int speedDiff = Math.max(getSpeed() - enemy.getSpeed(), 0) / 2;
         speedDiff += RiposteCombatAction.getEvadeBonus(this);
         int roll = MyRandom.rollD10();
-        return roll <= speedDiff;
+        return roll <= speedDiff && roll != 10;
     }
 
     private int calculateDamageReduction() {

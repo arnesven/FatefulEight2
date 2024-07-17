@@ -7,6 +7,7 @@ import model.combat.Combatant;
 import model.combat.conditions.BatFormVampireAbility;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClawsVampireAbility;
+import model.combat.conditions.MesmerizeVampireAbility;
 import model.enemies.Enemy;
 import model.items.weapons.*;
 import model.states.CombatEvent;
@@ -90,6 +91,9 @@ public class AbilityCombatAction extends CombatAction {
         }
         if (BatFormVampireAbility.canDoAbility(performer)) {
             list.add(BatFormVampireAbility.makeCombatAbility());
+        }
+        if (MesmerizeVampireAbility.canDoAbility(performer, target)) {
+            list.add(MesmerizeVampireAbility.makeCombatAbility());
         }
         return list;
     }
