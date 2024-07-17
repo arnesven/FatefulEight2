@@ -3,14 +3,12 @@ package model.enemies;
 import model.combat.*;
 import model.characters.GameCharacter;
 import model.Model;
-import model.combat.conditions.ErodeCondition;
-import model.combat.conditions.InvisibilityCondition;
-import model.combat.conditions.TransfiguredCondition;
-import model.combat.conditions.WeakenCondition;
+import model.combat.conditions.*;
 import model.combat.loot.CombatLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import model.states.CombatEvent;
+import util.MyLists;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
 import util.MyPixel;
@@ -47,8 +45,9 @@ public abstract class Enemy extends Combatant {
 
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
         Sprite spr = getSprite();
-        if (hasCondition(TransfiguredCondition.class)) {
-            ((TransfiguredCondition)getCondition(TransfiguredCondition.class)).drawYourself(screenHandler, xpos, ypos);
+        Condition cond = MyLists.find(getConditions(), Condition::hasAlternateAvatar);
+        if (cond != null) {
+            cond.drawYourself(screenHandler, xpos, ypos);
         } else {
             screenHandler.register(spr.getName(), new Point(xpos, ypos), spr);
         }

@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.GameState;
 import view.GameView;
+import view.ScreenHandler;
 import view.help.ConditionHelpDialog;
 import view.sprites.Sprite;
 
@@ -97,4 +98,8 @@ public abstract class Condition implements Serializable {
     }
 
     public void manipulateCombatActions(List<CombatAction> result) { }
+
+    public boolean hasAlternateAvatar() { return false; }
+
+    public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) { }
 }

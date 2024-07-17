@@ -1,8 +1,13 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.combat.conditions.VampirismCondition;
 import model.states.DailyEventState;
+import util.MyLists;
+import view.subviews.PortraitSubView;
 
 public class StoneCircleEvent extends DailyEventState {
     public StoneCircleEvent(Model model) {
@@ -11,13 +16,88 @@ public class StoneCircleEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.DRU, "Druid");
-        print("In a wide field, the party encounters a ring of standing " +
+        AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.DRU);
+        showExplicitPortrait(model, app, "Druid");
+        println("In a wide field, the party encounters a ring of standing " +
                 "stones. In the middle lay one large slab which seems to be " +
                 "intended as an altar. A druid is there with a gathering of " +
                 "a few followers and is just about to perform a nature " +
-                "ritual. You wait until the ceremony has concluded. " +
-                "Afterwards the druid offers teachings of druidism but asks for " +
+                "ritual. You wait until the ceremony has concluded.");
+        if (vampireInParty(model)) {
+            cureVampirismRitual(model, app);
+        } else {
+            offerDruidismLessons(model);
+        }
+    }
+
+    private boolean vampireInParty(Model model) {
+        return MyLists.any(model.getParty().getPartyMembers(),
+                (GameCharacter gc) -> gc.hasCondition(VampirismCondition.class));
+    }
+
+    private void cureVampirismRitual(Model model, AdvancedAppearance app) {
+        portraitSay("Oh hello. I see you have been cursed by the darkest of afflictions.");
+        GameCharacter vampire = MyLists.find(model.getParty().getPartyMembers(),
+                (GameCharacter gc) -> gc.hasCondition(VampirismCondition.class));
+        GameCharacter other = null;
+        if (model.getParty().size() > 1) {
+            other = model.getParty().getLeader();
+            if (vampire == other) {
+                other = model.getParty().getRandomPartyMember(vampire);
+            }
+            partyMemberSay(other, "What ever do you mean by that?");
+            portraitSay("Isn't it obvious. One of you is a vampire.");
+            partyMemberSay(other, "A VAMPIRE!? Are you serious?");
+            portraitSay("Of course. Druids are not known for their humor.");
+            if (model.getParty().size() > 2) {
+                partyMemberSay(other, "Well, I'm not a vampire... hey, who is a vampire? Time to come clean!");
+                println("An awkward silence follows...");
+                partyMemberSay(other, "Seriously, WHO'S A VAMPIRE!?");
+                partyMemberSay(vampire, "Okay okay, stop shouting. It's me okay?");
+            } else {
+                partyMemberSay(other, vampire.getFirstName() + ", are you a vampire?");
+                partyMemberSay(vampire, "I'm not... Oh to hell with it. Fine, I'm a vampire!");
+            }
+            partyMemberSay(other, vampire.getFirstName() + ", really? Why didn't you tell us?");
+            partyMemberSay(vampire, "Are you kidding? You'd kick me out of the party, or kill me on the spot.");
+            partyMemberSay(other, "Well...");
+            portraitSay("No need for that. Vampirism is an affliction which can be cured.");
+            partyMemberSay(vampire, "Interesting. How does that work?");
+            portraitSay("Well, it's not much different than the ritual you just witnessed. " +
+                    "The incantations are different of course. Would you be willing to permit us to try to cure you from your vampirism?");
+            partyMemberSay(other, "This is imparative " + vampire.getFirstName() + ". We won't be able to continue " +
+                    "our work together unless you're cured of this blight.");
+        } else { // vampire alone in party
+            partyMemberSay(vampire, "What ever do you mean by that?");
+            portraitSay("Isn't it obvious. You are a vampire.");
+            partyMemberSay(vampire, "Okay I admit, I'm a vampire. What about it?");
+            portraitSay("Well, vampirism is an affliction which can be cured.");
+            partyMemberSay(vampire, "Interesting. How does that work?");
+            portraitSay("Well, it's not much different than the ritual you just witnessed. " +
+                    "The incantations are different of course. Would you be willing to permit us to try to cure you from your vampirism?");
+        }
+        partyMemberSay(vampire, "Hmm...");
+        print("Do you let the druids try to cure you from the ritual? (Y/N) ");
+        CureVampirismRitualEvent cureVampirismRitualEvent = new CureVampirismRitualEvent(model, vampire, app);
+        if (yesNoInput()) {
+            removePortraitSubView(model);
+            cureVampirismRitualEvent.run(model);
+        } else if (other != null) {
+            partyMemberSay(other, "How can you refuse being cured? Are you mad?");
+        }
+
+        if (model.getParty().size() > 1 && !cureVampirismRitualEvent.wasCured()) {
+            CheckForVampireEvent checkForVampireEvent = new CheckForVampireEvent(model);
+            if (vampire == model.getParty().getLeader()) {
+                checkForVampireEvent.vampireIsLeader(model, vampire, other);
+            } else {
+                checkForVampireEvent.vampireNotLeader(model, vampire, other);
+            }
+        }
+    }
+
+    private void offerDruidismLessons(Model model) {
+        print("Afterwards the druid offers teachings of druidism but asks for " +
                 "some small compensation. ");
         model.getLog().waitForAnimationToFinish();
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.DRU);

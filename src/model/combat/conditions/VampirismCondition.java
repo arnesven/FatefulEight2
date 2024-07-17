@@ -129,7 +129,7 @@ public class VampirismCondition extends Condition {
 
     @Override
     public void wasRemoved(Combatant combatant) {
-        if (combatant instanceof GameCharacter) {
+        if (combatant instanceof GameCharacter && originalAppearance != null) {
             ((GameCharacter) combatant).setAppearance(originalAppearance);
         }
     }

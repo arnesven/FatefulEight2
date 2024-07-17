@@ -10,6 +10,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SplitPartySubView extends SubView {
@@ -20,12 +21,15 @@ public class SplitPartySubView extends SubView {
     private final SubView previous;
     private final List<GameCharacter> groupA;
     private final List<GameCharacter> groupB;
+    private final List<GameCharacter> forbidden;
     private SteppingMatrix<GameCharacter> matrix = new SteppingMatrix<>(4, 4);
 
-    public SplitPartySubView(SubView oldSubView, List<GameCharacter> groupA, List<GameCharacter> groupB) {
+    public SplitPartySubView(SubView oldSubView, List<GameCharacter> groupA,
+                             List<GameCharacter> groupB, List<GameCharacter> forbiddenCharacters) {
         this.previous = oldSubView;
         this.groupA = groupA;
         this.groupB = groupB;
+        this.forbidden = forbiddenCharacters;
         int col = 0;
         int row = 0;
         for (GameCharacter gc : groupA) {
@@ -36,6 +40,11 @@ public class SplitPartySubView extends SubView {
                 row++;
             }
         }
+    }
+
+    public SplitPartySubView(SubView oldSubView, List<GameCharacter> groupA,
+                             List<GameCharacter> groupB) {
+        this(oldSubView, groupA, groupB, new ArrayList<>());
     }
 
     @Override
@@ -94,6 +103,9 @@ public class SplitPartySubView extends SubView {
 
     private void shiftCharacter() {
         GameCharacter gc = matrix.getSelectedElement();
+        if (forbidden.contains(gc)) {
+            return;
+        }
         Point p = matrix.getSelectedPoint();
         matrix.remove(gc);
 

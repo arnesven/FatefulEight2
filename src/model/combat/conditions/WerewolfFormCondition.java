@@ -10,10 +10,13 @@ import model.races.Race;
 import model.states.GameState;
 import view.GameView;
 import view.MyColors;
+import view.ScreenHandler;
 import view.help.ConditionHelpDialog;
 import view.sprites.AvatarSprite;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
+
+import java.awt.*;
 
 public class WerewolfFormCondition extends Condition {
 
@@ -40,6 +43,16 @@ public class WerewolfFormCondition extends Condition {
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         regenCondition.endOfCombatRoundTrigger(model, state, comb);
+    }
+
+    @Override
+    public boolean hasAlternateAvatar() {
+        return true;
+    }
+
+    @Override
+    public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) {
+        screenHandler.register("wwavatarfor", new Point(xpos, ypos), getAvatar());
     }
 
     @Override

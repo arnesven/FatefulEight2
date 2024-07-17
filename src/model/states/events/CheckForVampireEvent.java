@@ -7,6 +7,7 @@ import model.classes.SkillCheckResult;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
+import model.enemies.VampireAttackBehavior;
 import model.log.GameLog;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class CheckForVampireEvent extends DailyEventState {
     private static final int PERSUADE_BASE_DIFFICULTY = 5;
+    private static final int ATTITUDE_THRESHOLD = 5;
 
     public CheckForVampireEvent(Model model) {
         super(model);
@@ -25,8 +27,8 @@ public class CheckForVampireEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         List<GameCharacter> vampires = MyLists.filter(model.getParty().getPartyMembers(),
-                (GameCharacter gc) -> gc.hasCondition(VampirismCondition.class));
-        if (vampires.isEmpty() || model.getParty().size() == 1) {
+                CheckForVampireEvent::isVampire);
+        if (vampires.isEmpty() || vampires.size() == model.getParty().size()) {
             return;
         }
         GameCharacter vampire = vampires.get(0);
@@ -68,8 +70,8 @@ public class CheckForVampireEvent extends DailyEventState {
         model.setInCombat(false);
     }
 
-    private void vampireNotLeader(Model model, GameCharacter vampire, GameCharacter other) {
-        if (vampire.getAttitude(other) > 5) {
+    protected void vampireNotLeader(Model model, GameCharacter vampire, GameCharacter other) {
+        if (vampire.getAttitude(other) >= ATTITUDE_THRESHOLD) {
             partyMemberSay(other, "I think we both know we can't continue being " +
                     "in the same party. I think you should leave.");
             partyMemberSay(vampire, "Fine. I'll find my own way I guess. Perhaps we will meet " +
@@ -85,21 +87,26 @@ public class CheckForVampireEvent extends DailyEventState {
             partyMemberSay(vampire, "You can try.");
             model.getParty().remove(vampire, false, false, 0);
             println(vampire.getFirstName() + " has left the party.");
-            runCombat(List.of(new FormerPartyMemberEnemy(vampire)));
+            println("You attack " + vampire.getFirstName() + "!");
+            Enemy enm = new FormerPartyMemberEnemy(vampire);
+            enm.setAttackBehavior(new VampireAttackBehavior());
+            runCombat(List.of(enm));
         }
     }
 
-    private void vampireIsLeader(Model model, GameCharacter vampire, GameCharacter other) {
-        if (other.getAttitude(vampire) > 5) {
+    protected void vampireIsLeader(Model model, GameCharacter vampire, GameCharacter other) {
+        if (other.getAttitude(vampire) >= ATTITUDE_THRESHOLD) {
             String imOrWere = (model.getParty().size() > 2 ? "We're" : "I'm");
             String iveOrWeve = (model.getParty().size() > 2 ? "We've" : "I've");
             partyMemberSay(other, "I can't believe " + iveOrWeve + " been travelling around with a blood sucking monster!" +
                     imOrWere + " leaving, right now!#");
             partyMemberSay(vampire, "Fine. Who needs you?");
             for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
-                if (gc != vampire) {
+                if (!isVampire(gc)) {
                     model.getParty().remove(gc, false, false, 0);
                     println(gc.getFirstName() + " left the party.");
+                } else if (gc != vampire) {
+                    partyMemberSay(gc, "Actually, I think I'll stick with you " + vampire.getFirstName() + ".");
                 }
             }
         } else {
@@ -108,15 +115,24 @@ public class CheckForVampireEvent extends DailyEventState {
             partyMemberSay(vampire, "You can try.");
             List<Enemy> enemies = new ArrayList<>();
             for (GameCharacter gc : new ArrayList<>(model.getParty().getPartyMembers())) {
-                if (gc != vampire) {
+                if (!isVampire(gc)) {
                     model.getParty().remove(gc, false, false, 0);
                     println(gc.getFirstName() + " left the party.");
                     enemies.add(new FormerPartyMemberEnemy(gc));
+                } else if (gc != vampire) {
+                    partyMemberSay(gc, "Actually, I think I'll stick with you " + vampire.getFirstName() + ".");
                 }
             }
-            runCombat(enemies);
+            if (!enemies.isEmpty()) {
+                println("Your former party members attack you!");
+                runCombat(enemies);
+            }
         }
 
+    }
+
+    private static boolean isVampire(GameCharacter gc) {
+        return gc.hasCondition(VampirismCondition.class);
     }
 
     private void persuadeSuccess(Model model, GameCharacter vampire, GameCharacter other) {

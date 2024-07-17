@@ -60,25 +60,33 @@ public abstract class RitualEvent extends DailyEventState {
         }
         SubView prevSubView = model.getSubView();
 
-        println("Please select which party members to participate in the ritual (B). " +
-                "The remaining group (A), will stand back and watch the ritual unfold.");
-        model.getLog().waitForAnimationToFinish();
-        List<GameCharacter> partOfParty;
-        do {
-            model.getParty().unbenchAll();
-            partOfParty = divideParty(model);
-            if (partOfParty.isEmpty()) {
+        List<GameCharacter> partOfParty = new ArrayList<>();
+        if (getRitualTargetedPartyMembers().size() < model.getParty().size()) {
+            println("Please select which party members to participate in the ritual (B). " +
+                    "The remaining group (A), will stand back and watch the ritual unfold.");
+            model.getLog().waitForAnimationToFinish();
+            do {
                 model.getParty().unbenchAll();
-                println("You decline to participated in the ritual and continue on your journey.");
-                return;
-            }
-            if (partOfParty.size() + ritualists.size() < 5) {
-                println("You must select at least " + (5 - ritualists.size()) + " party members for " +
-                        "group B if you want to perform the ritual.");
-            } else {
-                break;
-            }
-        } while (true);
+                partOfParty = divideParty(model);
+                if (partOfParty.isEmpty()) {
+                    if (ritualists.size() >= 5) {
+                        print("There are enough mages to perform the ritual without you. Is that okay? (Y/N) ");
+                        if (yesNoInput()) {
+                            break;
+                        }
+                    }
+                    model.getParty().unbenchAll();
+                    println("You decline to participated in the ritual and continue on your journey.");
+                    return;
+                }
+                if (partOfParty.size() + ritualists.size() < 5) {
+                    println("You must select at least " + (5 - ritualists.size()) + " party members for " +
+                            "group B if you want to perform the ritual.");
+                } else {
+                    break;
+                }
+            } while (true);
+        }
 
         ritualists.addAll(partOfParty);
         setupTurnOrder();
@@ -96,6 +104,7 @@ public abstract class RitualEvent extends DailyEventState {
             if (getNumberOfBeams(turnTaker) > 0) {
                 println(turnTaker.getFirstName() + " takes damage from maintaining the beam.");
                 takeBeamDamage(turnTaker, subView);
+                model.getLog().waitForAnimationToFinish();
             }
             if (turnTaker.getHP() < DROP_OUT_HP_THRESHOLD) {
                 dropOut(turnTaker, subView);
@@ -400,11 +409,16 @@ public abstract class RitualEvent extends DailyEventState {
         SubView oldSub = model.getSubView();
         List<GameCharacter> groupA = new ArrayList<>(model.getParty().getPartyMembers());
         List<GameCharacter> groupB = new ArrayList<>();
-        model.setSubView(new SplitPartySubView(oldSub, groupA, groupB));
+        model.setSubView(new SplitPartySubView(oldSub, groupA, groupB, getRitualTargetedPartyMembers()));
         waitForReturnSilently();
+        groupA.removeAll(getRitualTargetedPartyMembers());
         model.getParty().benchPartyMembers(groupA);
         model.setSubView(oldSub);
         return groupB;
+    }
+
+    protected List<GameCharacter> getRitualTargetedPartyMembers() {
+        return new ArrayList<>();
     }
 
     public List<GameCharacter> getRitualists() {

@@ -2,8 +2,10 @@ package model.enemies;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.Condition;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.FormerPartyMemberLoot;
+import util.MyLists;
 import view.sprites.Sprite;
 
 public class FormerPartyMemberEnemy extends Enemy {
@@ -36,12 +38,13 @@ public class FormerPartyMemberEnemy extends Enemy {
 
     @Override
     public int getSpeed() {
+        int bonus = MyLists.intAccumulate(getConditions(), (Condition::getSpeedBonus));
         if (getEnemyGroup() == 'A') {
-            return 1;
+            return 1 + bonus;
         } else if (getEnemyGroup() == 'B') {
-            return 3;
+            return 3 + bonus;
         }
-        return 6;
+        return 6 + bonus;
     }
 
     @Override

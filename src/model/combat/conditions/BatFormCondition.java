@@ -3,11 +3,13 @@ package model.combat.conditions;
 import model.actions.CombatAction;
 import view.GameView;
 import view.MyColors;
+import view.ScreenHandler;
 import view.help.ConditionHelpDialog;
 import view.sprites.BatSprite;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
+import java.awt.*;
 import java.util.List;
 
 public class BatFormCondition extends Condition {
@@ -55,5 +57,15 @@ public class BatFormCondition extends Condition {
     @Override
     public boolean removeAtEndOfCombat() {
         return true;
+    }
+
+    @Override
+    public boolean hasAlternateAvatar() {
+        return true;
+    }
+
+    @Override
+    public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) {
+        screenHandler.register("batavatar", new Point(xpos, ypos), getAvatar());
     }
 }

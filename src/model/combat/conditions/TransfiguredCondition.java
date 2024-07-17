@@ -31,6 +31,12 @@ public class TransfiguredCondition extends ParalysisCondition {
         }
     }
 
+    @Override
+    public boolean hasAlternateAvatar() {
+        return true;
+    }
+
+    @Override
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) {
         screenHandler.register(sprite.getName(), new Point(xpos, ypos), sprite);
     }

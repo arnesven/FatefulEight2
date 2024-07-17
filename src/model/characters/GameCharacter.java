@@ -346,6 +346,13 @@ public class GameCharacter extends Combatant {
     @Override
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos, Sprite initiativeSymbol) {
         if (!hasCondition(InvisibilityCondition.class)) {
+            Condition cond = MyLists.find(getConditions(), Condition::hasAlternateAvatar);
+            if (cond != null) {
+                cond.drawYourself(screenHandler, xpos, ypos);
+            } else {
+                drawAvatar(screenHandler, xpos, ypos);
+            }
+
             if (hasCondition(WerewolfFormCondition.class)) {
                 AvatarSprite werewolfAvatar = ((WerewolfFormCondition) getCondition(WerewolfFormCondition.class)).getAvatar();
                 if (isDead()) {
@@ -356,8 +363,6 @@ public class GameCharacter extends Combatant {
             } else if (hasCondition(BatFormCondition.class) && !isDead()) {
                 Sprite avatar = ((BatFormCondition) getCondition(BatFormCondition.class)).getAvatar();
                 screenHandler.register("batavatar" + getFullName(), new Point(xpos, ypos), avatar);
-            } else {
-                drawAvatar(screenHandler, xpos, ypos);
             }
         }
         screenHandler.register(getName() + "inittoken", new Point(xpos+3, ypos+3), initiativeSymbol);
