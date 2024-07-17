@@ -520,6 +520,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void guides(Model model) {
+        runOnce("guides", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialGuides(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

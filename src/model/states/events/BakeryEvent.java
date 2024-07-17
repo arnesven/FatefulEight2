@@ -18,6 +18,11 @@ public class BakeryEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit bakery", "The bakery in this town makes the loveliest pastries");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party passes by a bakery.");
         partyMemberSay(model.getParty().getRandomPartyMember(), "That smells lovely!");

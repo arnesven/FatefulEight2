@@ -15,6 +15,12 @@ public class TimedHorseRaceEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to horse track",
+                "There's a track just outside of town. People race on horses there");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("On the outskirts of town, a horse track has been prepared for racing. " +
                 "The caretaker is languishing nearby.");

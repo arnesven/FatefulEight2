@@ -14,6 +14,11 @@ public class ArmoryEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit armory", "There's an armory. Usually the lord's servant let's you take an item for free");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showSilhouettePortrait(model, "Servant");
         println("One of the Lord's servants approaches you and leads you to the castle armory.");

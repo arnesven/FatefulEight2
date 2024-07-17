@@ -19,6 +19,12 @@ public class TroubadourEvent extends MeetTravellerEvent {
         super(model, makeTroubadour(), MyRandom.randInt(10, 40), ProvokedStrategy.FIGHT_IF_ADVANTAGE, 15);
     }
 
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find troubadour",
+                "I know a troubadour, " + heOrShe(getVictimCharacter(getModel()).getGender()) + " is looking for an escort");
+    }
+
     private static GameCharacter makeTroubadour() {
         CharacterAppearance portrait = PortraitSubView.makeRandomPortrait(Classes.BRD);
         return new GameCharacter("Troubadour", "", portrait.getRace(), Classes.BRD, portrait,

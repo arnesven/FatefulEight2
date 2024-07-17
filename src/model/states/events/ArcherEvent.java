@@ -31,6 +31,11 @@ public class ArcherEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit archer", "I know an archer who offers training in marksmanship");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
             println("Out on the grounds, a skilled archer puts arrow after " +

@@ -27,6 +27,12 @@ public class WantedPosterEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find wanted poster",
+                "The constabulary usually hangs up posters with wanted criminals, I could find one for you");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         SubView previous = model.getSubView();
         println("You pass by a poster hanging on the wall of a building.");

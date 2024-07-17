@@ -45,6 +45,11 @@ public class BathHouseEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit bathhouse", "We have a bathhouse here. It's nice");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party passes a bath house. The entrance fee is 1 gold per person. " +
                 "Do any party members want to take a bath (group B)?");

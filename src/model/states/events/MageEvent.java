@@ -42,6 +42,11 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit mage", "I know a mage here, " + heOrShe(MyRandom.flipCoin()) + " has spells");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
             println("The party encounters a mage who seems eager to discuss the more academic aspects of magic.");

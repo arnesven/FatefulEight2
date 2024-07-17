@@ -19,6 +19,11 @@ public class ArcheryRangeEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit archery range", "There's an archery range just outside of town");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("There is an archery range on the outskirts of town. The marksman there approaches you.");
         printQuote("Marksman", "Hello there. Want to practice your marksmanship? For 5 gold I'll lend you " +

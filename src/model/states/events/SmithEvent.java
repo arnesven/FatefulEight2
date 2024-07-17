@@ -26,6 +26,11 @@ public class SmithEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit Smith", "There's a smith who often manufactures items of great quality");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.ART);
         showExplicitPortrait(model, portrait, "Smith");

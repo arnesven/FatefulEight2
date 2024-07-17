@@ -18,6 +18,11 @@ public class CourtWizardEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit court wizard", "There's a court wizard who usually has some spell books for sale");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.WIZ, "Court Wizard");
         println("The court wizard has a few spells for sale.");

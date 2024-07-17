@@ -20,6 +20,7 @@ public class HireGuideAction extends GameState {
     @Override
     public GameState run(Model model) {
         guideSay(this, "Hey, you! Are you heading into the wild? You'll need somebody who knows the country.");
+        model.getTutorial().guides(model);
         print("Hire the guide for " + DAYS + " days, cost of " + COST + " gold? (Y/N) ");
         if (model.getParty().getGold() >= COST && yesNoInput()) {
             leaderSay("You've got yourself a deal.");

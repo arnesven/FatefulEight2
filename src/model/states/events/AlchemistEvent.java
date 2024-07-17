@@ -20,6 +20,11 @@ public class AlchemistEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit alchemist", "There's a new alchemist in town. I think he may need some assistance");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.ALCHEMIST, Race.HALF_ORC, "Durok");
         println("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +

@@ -35,6 +35,11 @@ public class NoblemanEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Seek out nobleman", "I know a noble who often offers sponsorship to adventurers, if they can prove themselves worthy");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.NOB, race);
         println("You meet with a nobleman and " + hisOrHer(portrait.getGender()) + " entourage.");

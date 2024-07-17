@@ -21,6 +21,12 @@ public class GamblerEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Seek out gamblers",
+                "There are always some gamblers about, if you're into that kind of stuff");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You pass by an alley and see a small crowd gathered there. A few of " +
                 "them are squatting, some of them shouting and laughing. You casually " +

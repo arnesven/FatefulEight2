@@ -24,6 +24,11 @@ public class MarketEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to market", "It's market day. You'll find both business and pleasure there");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("Today is market day. The party casually browses the stands and booths.");
         randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(),

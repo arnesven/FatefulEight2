@@ -17,6 +17,11 @@ public class PlayEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to play", "There's a play running in town");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("There's apparently a play running in town. Everybody is talking about it. It is supposed to be pretty good.");
         randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(),

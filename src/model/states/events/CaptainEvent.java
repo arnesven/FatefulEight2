@@ -25,6 +25,12 @@ public class CaptainEvent extends CombatExpertGeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Talk to master-at-arms",
+                "I know a master-at-arms who happily teaches anybody who will listen");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         println("The party meets the master-at-arms of the castle.");
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.CAP);

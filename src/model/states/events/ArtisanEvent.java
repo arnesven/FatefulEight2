@@ -33,19 +33,6 @@ public class ArtisanEvent extends GeneralInteractionEvent {
     public ArtisanEvent(Model model, boolean withIntro) {
         super(model, "Trade with", MyRandom.randInt(10, 40));
         this.withIntro = withIntro;
-    }
-
-    public ArtisanEvent(Model model) {
-        this(model, true);
-    }
-
-    @Override
-    protected boolean doIntroAndContinueWithEvent(Model model) {
-        if (withIntro) {
-            print("The party encounters an artisan. ");
-        }
-        print("This particular artisan is a");
-        this.itemList = new ArrayList<>();
         subType = MyRandom.sample(List.of(
                 new Tailor(),
                 new Tailor(),
@@ -59,6 +46,25 @@ public class ArtisanEvent extends GeneralInteractionEvent {
                 new Cobbler(),
                 new Carpenter(),
                 new Enchanter()));
+    }
+
+    public ArtisanEvent(Model model) {
+        this(model, true);
+    }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit " + subType.getName(), "I know a very skilled " + subType.getName() + " in town");
+    }
+
+    @Override
+    protected boolean doIntroAndContinueWithEvent(Model model) {
+        if (withIntro) {
+            print("The party encounters an artisan. ");
+        }
+        print("This particular artisan is a");
+        this.itemList = new ArrayList<>();
+
 
         println(" an " + subType.getName().toLowerCase() + " and offers to sell you " +
                 subType.getItemType() + " at a discount.");

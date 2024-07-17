@@ -36,6 +36,11 @@ public class JesterEvent extends GeneralInteractionEvent {
         this(model, "Court Jester", "jester");
     }
 
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit court jester", "We have a court jester here. He's a funny bard");
+    }
+
     public void setRace(Race race) {
         this.race = race;
     }

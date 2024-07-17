@@ -22,6 +22,11 @@ public class BarbershopEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit barber", " If your hair needs a trim, there's a barbershop here");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You enter a shop.");
         leaderSay("Wait this isn't a shop...");

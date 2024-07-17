@@ -17,6 +17,12 @@ public class WorkshopEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit workshop",
+                "There's a workshop in town where a skilled craftsman makes lot's of interesting stuff.");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You enter what you think is a shop.");
         leaderSay("Hey... this isn't a shop, it's a workshop! There are tools and materials everywhere.");

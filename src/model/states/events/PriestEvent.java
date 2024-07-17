@@ -35,6 +35,11 @@ public class PriestEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit priest", "I know a priest who can heal you, for a small fee");
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         if (withIntro) {
             println("The party meets a priest.");
