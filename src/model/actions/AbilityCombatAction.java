@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.conditions.BatFormVampireAbility;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClawsVampireAbility;
 import model.enemies.Enemy;
@@ -86,6 +87,9 @@ public class AbilityCombatAction extends CombatAction {
         }
         if (StaffOfDeimosItem.canDoAbility(performer, target)) {
             list.add(StaffOfDeimosItem.makeCombatAbility(performer, target));
+        }
+        if (BatFormVampireAbility.canDoAbility(performer)) {
+            list.add(BatFormVampireAbility.makeCombatAbility());
         }
         return list;
     }

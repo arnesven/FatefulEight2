@@ -1,5 +1,6 @@
 package view.help;
 
+import model.combat.conditions.BatFormVampireAbility;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClawsVampireAbility;
 import view.GameView;
@@ -25,6 +26,7 @@ public class TutorialVampires extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
+                BatFormVampireAbility.getHelpChapter(null),
                 CelerityVampireAbility.getHelpChapter(null),
                 ClawsVampireAbility.getHelpChapter(null));
     }

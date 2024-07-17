@@ -2,6 +2,7 @@ package model.states.feeding;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.BatFormVampireAbility;
 import model.quests.QuestEdge;
 import model.states.GameState;
 import view.MyColors;
@@ -32,8 +33,7 @@ class BatSubScene extends FeedingSubScene {
 
     @Override
     protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
-        model.getParty().partyMemberSay(model, vampire, List.of("Batform!", "Bat!", "Dark Wings!",
-                "Abracadabra!", "Shazam!", "Here I go!"));
+        model.getParty().partyMemberSay(model, vampire, BatFormVampireAbility.getVerbalExpressions());
         house.setBatForm(true);
 
         state.print(vampire.getFirstName() + " flies into the house through ");

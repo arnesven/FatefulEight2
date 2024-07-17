@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.conditions.Condition;
 import model.combat.conditions.FatigueCondition;
 import model.items.UsableItem;
 import model.items.spells.CombatSpell;
@@ -141,6 +142,9 @@ public abstract class CombatAction {
                 combat.println("");
             }
         });
+        for (Condition cond : character.getConditions()) {
+            cond.manipulateCombatActions(result);
+        }
         return result;
     }
 

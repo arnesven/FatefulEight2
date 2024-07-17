@@ -1,6 +1,7 @@
 package model.combat.conditions;
 
 import model.Model;
+import model.actions.CombatAction;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.GameState;
@@ -10,6 +11,7 @@ import view.sprites.Sprite;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 public abstract class Condition implements Serializable {
     private String name;
@@ -93,4 +95,6 @@ public abstract class Condition implements Serializable {
     public int getBonusForSkill(Skill skill) {
         return 0;
     }
+
+    public void manipulateCombatActions(List<CombatAction> result) { }
 }

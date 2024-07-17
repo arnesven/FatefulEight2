@@ -12,6 +12,7 @@ import model.states.CombatEvent;
 import view.help.HelpDialog;
 import view.help.TutorialInvisibility;
 import view.sprites.SmokeBallAnimation;
+import view.sprites.SmokePuffAnimation;
 
 public class InvisibilityCombatAction extends CombatAction {
     public static final Skill SKILL_TO_USE = Skill.MagicBlue;
@@ -45,7 +46,7 @@ public class InvisibilityCombatAction extends CombatAction {
         } else {
             int turns = (result.getModifiedRoll() - DIFFICULTY + 3) / 3;
             combat.println(target.getName() + " turns invisible!");
-            combat.addSpecialEffect(target, new SmokeBallAnimation());
+            combat.addSpecialEffect(target, new SmokePuffAnimation());
             target.addCondition(new InvisibilityCondition(turns));
         }
     }

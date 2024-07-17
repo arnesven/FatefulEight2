@@ -40,7 +40,7 @@ public class VampirismCondition extends Condition {
     private static final int MAX_STAGE = 5;
     private static final int HEALTH_PER_STAGE = 3;
     private static final int STAMINA_PER_STAGE = 2;
-    private static final int SPEED_PER_STAGE = 2;
+    private static final int SPEED_PER_STAGE = 1;
     private static final int CARRY_CAP_BONUS_PER_STAGE = 15;
     private static final MyColors PALEST_SKIN_COLOR = MyColors.WHITE;
     private static final MyColors PALEST_LIP_COLOR = MyColors.GRAY;
