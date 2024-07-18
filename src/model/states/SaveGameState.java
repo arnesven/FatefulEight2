@@ -1,7 +1,7 @@
 package model.states;
 
 import model.Model;
-import sound.SoundEffects;
+import view.LogView;
 import view.SelectSaveSlotMenu;
 
 public class SaveGameState extends GameState {
@@ -12,7 +12,7 @@ public class SaveGameState extends GameState {
     @Override
     public GameState run(Model model) {
         model.transitionToDialog(new SelectSaveSlotMenu(model.getView(), false));
-        println("Saving game...");
+        println(LogView.GRAY_COLOR + "Saving game." + LogView.DEFAULT_COLOR);
         return new DailyActionState(model);
     }
 }
