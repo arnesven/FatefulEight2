@@ -31,6 +31,7 @@ public class VampireFeedingState extends GameState {
         others.remove(vampire);
         model.getParty().benchPartyMembers(others);
         println(vampire.getFirstName() + " sneaks out at night to find a victim to feed on.");
+        model.getTutorial().vampireFeeding(model);
         for (int i = 0; i < NO_OF_ATTEMPTS; ++i) {
             VampireFeedingHouse house = new VampireFeedingHouse(vampire);
             currentNode = house.getJunctions().get(0);

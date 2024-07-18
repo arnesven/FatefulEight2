@@ -4,8 +4,15 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.combat.conditions.PoisonCondition;
+import model.combat.conditions.SlowedCondition;
+import model.combat.conditions.StrangenessCondition;
 import model.combat.conditions.VampirismCondition;
 import model.quests.*;
+import model.races.Dwarf;
+import model.races.ElvenRace;
+import model.races.HumanRace;
+import model.races.Race;
 import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
@@ -228,8 +235,7 @@ public class VampireFeedingHouse {
                     " is about to wake up, but then it appears the dark aura of the vampire lulls " + state.himOrHer(victim.getGender()) +
                     " back into a lethargic state. At last, " + vampire.getFirstName() + " can drink " +
                     state.hisOrHer(vampire.getGender()) + " fill.");
-            vampire.addToSP(9999);
-            state.println(vampire.getFullName() + " Stamina has fully recovered.");
+            applyRaceSpecificEffect(model, state, vampire, victim);
             return true;
         }
         VampireFeedingHouse.this.setPortrait(null);
@@ -239,6 +245,47 @@ public class VampireFeedingHouse {
             state.println(vampire.getFirstName() + " steps away from the " + victim.getRace().getName() + ".");
         }
         return false;
+    }
+
+    private void applyRaceSpecificEffect(Model model, GameState state, GameCharacter vampire, AdvancedAppearance victim) {
+        if (victim.getRace().id() != vampire.getRace().id()) {
+            if (victim.getRace().id() == Race.HALFLING.id()) {
+                int spRecovered = MyRandom.rollD6();
+                if (spRecovered + vampire.getSP() < vampire.getMaxSP()) {
+                    state.println("The halfling's blood is not enough for " + vampire.getFirstName() + " to fully recover.");
+                    vampire.addToSP(spRecovered);
+                    state.println(vampire.getFirstName() + " recovers " + spRecovered + " Stamina.");
+                }
+                return;
+            } else if (victim.getRace().id() == Race.HALF_ORC.id()) {
+                state.println("The half-orc's blood is slightly toxic to " + vampire.getFirstName() + ". " +
+                        vampire.getFirstName() + " became poisoned.");
+                vampire.addCondition(new PoisonCondition());
+            } else if (victim.getRace() instanceof ElvenRace) {
+                state.println("The purity of the elven blood burns " + vampire.getFirstName() + "!");
+                if (vampire.getHP() < vampire.getMaxHP() / 2 && vampire.getHP() > 0) {
+                    vampire.addToHP(-1);
+                    state.println(vampire.getFirstName() + " loses 1 HP.");
+                } else {
+                    int loss = vampire.getMaxHP() / 2 - 1;
+                    state.println(vampire.getFirstName() + " loses " + loss + " HP.");
+                    vampire.addToHP(-loss);
+                }
+            } else if (victim.getRace().id() == Race.DWARF.id()) {
+                state.println("The thickness of the dwarven blood weighs heavy inside of " + vampire.getFirstName() + "!");
+                vampire.addCondition(new SlowedCondition(6, model.getDay()));
+            } else if (victim.getRace() instanceof HumanRace) {
+                state.println("The richness of the human blood saturates " + vampire.getFirstName() +
+                        "'s system and gives " + state.himOrHer(vampire.getGender()) + " an aura of strangeness.");
+                vampire.addCondition(new StrangenessCondition(model.getDay()));
+            }
+        }
+        fullyRecoverStamina(state, vampire);
+    }
+
+    private void fullyRecoverStamina(GameState state, GameCharacter vampire) {
+        vampire.addToSP(9999);
+        state.println(vampire.getFullName() + " Stamina has fully recovered.");
     }
 
 }

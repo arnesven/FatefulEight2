@@ -527,6 +527,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void vampireFeeding(Model model) {
+        runOnce("guides", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialFeeding(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

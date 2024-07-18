@@ -4,6 +4,7 @@ import model.combat.conditions.*;
 import view.GameView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class TutorialVampires extends ExpandableHelpDialog {
@@ -28,6 +29,9 @@ public class TutorialVampires extends ExpandableHelpDialog {
         for (VampireAbility vab : VampirismCondition.getAllAbilities()) {
             helpDialogs.add(vab.makeHelpChapter(view));
         }
+        helpDialogs.add(new TutorialFeeding(view));
+        helpDialogs.add(new BloodTypesHelpChapter(view));
+        helpDialogs.sort(Comparator.comparing(HelpDialog::getTitle));
         return helpDialogs;
     }
 }
