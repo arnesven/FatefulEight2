@@ -33,6 +33,7 @@ public class VampirismCondition extends Condition {
             new ClawsVampireAbility(),
             new BatFormVampireAbility(),
             new MesmerizeVampireAbility(),
+            new ShadowWalkAbility(),
             new StrengthAbility(),
             new WisdomAbility()
     );
