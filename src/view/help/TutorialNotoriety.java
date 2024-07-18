@@ -12,8 +12,9 @@ public class TutorialNotoriety extends HelpDialog {
             "Committing crimes will earn you points of Notoriety. Your current " +
             "notoriety can be seen in the top bar next to the following icon:\n\n\n\n" +
             "A higher notoriety will attract the attention of local authorities when you " +
-            "are in towns and castles, and add to your bounty if caught. Your notoriety " +
-            "is reset if you repent for your crimes, either by spending time in " +
+            "are in towns and castles, and add to your bounty if caught.\n\n" +
+            "Your notoriety decreases slightly each day.\n\n" +
+            "Your notoriety is reset if you repent for your crimes, either by spending time in " +
             "jail or by paying a fine.\n\n" +
             "Having a high notoriety can make people refuse to deal with you.";
 

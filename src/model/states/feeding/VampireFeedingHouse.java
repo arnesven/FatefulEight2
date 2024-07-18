@@ -64,7 +64,7 @@ public class VampireFeedingHouse {
         this.junctions = new ArrayList<>();
         this.subScenes = new ArrayList<>();
 
-        this.failNode = new QuestFailNode();
+        this.failNode = new VampireFeedingFailedNode();
         this.successfulNode = new QuestSuccessfulNode(new Reward(0, 0,0 ), "");
         successfulNode.move(7, 3);
 
@@ -86,14 +86,14 @@ public class VampireFeedingHouse {
         FeedingNode feedingNode = new FeedingNode(6, 3, vampire, this);
         subScenes.add(feedingNode);
 
-        MesmerizeNode mesmerizeNode = new MesmerizeNode(6, 4, vampire, this);
+        MesmerizeNode mesmerizeNode = new MesmerizeNode(6, 2, vampire, this);
         if (canDoMesmerize) {
             subScenes.add(mesmerizeNode);
         }
 
         GoToNextHouseNode goToNextHouse = new GoToNextHouseNode();
 
-        List<QuestEdge> enterOptions = new ArrayList<>(List.of(new QuestEdge(subScenes.get(1)), new QuestEdge(goToNextHouse)));
+        List<QuestEdge> enterOptions = new ArrayList<>(List.of(new QuestEdge(subScenes.get(1)), new QuestEdge(goToNextHouse, QuestEdge.VERTICAL)));
         if (canDoBat) {
             enterOptions.add(new QuestEdge(batScene, QuestEdge.VERTICAL));
         } else if (anyWindowsOpen()) {
@@ -255,6 +255,8 @@ public class VampireFeedingHouse {
                     state.println("The halfling's blood is not enough for " + vampire.getFirstName() + " to fully recover.");
                     vampire.addToSP(spRecovered);
                     state.println(vampire.getFirstName() + " recovers " + spRecovered + " Stamina.");
+                } else {
+                    fullyRecoverStamina(state, vampire);
                 }
                 return;
             } else if (victim.getRace().id() == Race.HALF_ORC.id()) {

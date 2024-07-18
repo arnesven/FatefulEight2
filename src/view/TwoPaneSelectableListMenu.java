@@ -17,6 +17,7 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
         super(previous, width, height);
         this.rightPaneWidth = rightPaneWidth;
         this.xOffset = width - 1 - rightPaneWidth;
+        setScrollArrowsEnabled(false);
     }
 
     @Override

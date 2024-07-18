@@ -239,7 +239,7 @@ public class VampireFeedingSubView extends AvatarSubView {
 
 
     private void drawGround(Model model) {
-        for (int y = 2; y < 5; ++y) {
+        for (int y = 2; y < 6; ++y) {
             for (int x = 0; x < 8; ++x) {
                 Point p = convertToScreen(new Point(x, y));
                 putFour(model, p, GROUND_SPRITE);

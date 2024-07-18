@@ -23,6 +23,7 @@ import sound.SoundEffects;
 import test.MainStoryTest;
 import util.MyLists;
 import util.MyPair;
+import util.MyRandom;
 import view.dev.SpritePreviewerView;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
@@ -318,6 +319,7 @@ public class Model {
         log.addAnimated("\n" + LogView.CYAN_COLOR + "- DAY " + gameData.day + " -" + LogView.DEFAULT_COLOR + "\n" );
         gameData.party.setRecruitmentPersistence(null);
         gameData.party.getHorseHandler().newAvailableHorse();
+        gameData.party.addToNotoriety(-(MyRandom.rollD6()+1)/2);
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
         gameData.settings.getMiscFlags().put("innworkdone", false);
         gameData.warHandler.updateWars(this);

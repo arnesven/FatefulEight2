@@ -9,7 +9,7 @@ import java.util.List;
 class GoToNextHouseNode extends FeedingJunction {
 
     public GoToNextHouseNode() {
-        super(1, 4, List.of());
+        super(7, 4, List.of());
     }
 
     @Override

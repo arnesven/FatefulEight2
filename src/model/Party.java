@@ -763,6 +763,9 @@ public class Party implements Serializable {
 
     public void addToNotoriety(int i) {
         this.notoriety += i;
+        if (notoriety < 0) {
+            notoriety = 0;
+        }
     }
 
     public int getNotoriety() {

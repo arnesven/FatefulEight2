@@ -20,6 +20,7 @@ public abstract class SelectableListMenu extends GameView {
     private int scrollShift = 0;
     public static Sprite downScroll = new AnimatedCharSprite((char)0xB2, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, 2);
     public static Sprite upScroll = new AnimatedCharSprite((char)0xB4, MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, 2);
+    private boolean showScrollArrows = true;
 
 
     public SelectableListMenu(GameView previous, int width, int height) {
@@ -29,6 +30,10 @@ public abstract class SelectableListMenu extends GameView {
         this.previous = previous;
         this.selectedRow = 0;
         innerMenu = null;
+    }
+
+    public void setScrollArrowsEnabled(boolean enabled) {
+        showScrollArrows = enabled;
     }
 
     protected void setPrevious(GameView view) {
@@ -102,7 +107,7 @@ public abstract class SelectableListMenu extends GameView {
                 p.drawDecorations(model, p.position.x, p.position.y);
             }
         }
-        if (content.size() >= height) {
+        if (content.size() >= height && showScrollArrows) {
             model.getScreenHandler().put(xStart+width-1, yStart+1, upScroll);
             model.getScreenHandler().put(xStart+width-1, yStart+height-1, downScroll);
         }

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
+import model.combat.conditions.VampirismCondition;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
@@ -46,7 +47,8 @@ public class PlayEvent extends DailyEventState {
                 println("The play features a romantic tale between an elf prince and a human common waif. " +
                         "It is truly very good. You feel your spirits have indeed been lifted by the play.");
                 println("Each party member recovers 1 SP.");
-                MyLists.forEach(model.getParty().getPartyMembers(), (GameCharacter gc) -> gc.addToSP(1));
+                MyLists.forEach(model.getParty().getPartyMembers(),
+                        (GameCharacter gc) -> gc.addToSP(gc.hasCondition(VampirismCondition.class)?0:1));
                 print("You were very impressed by the lead actor. After the play, you get the chance to talk to " + himOrHer(bardGender) +
                         ". It turns out " + heOrShe(bardGender) + " is a famous travelling minstrel. " + heOrShe(bardGender) + " offers to " +
                         "teach you in the ways of being a bard, ");

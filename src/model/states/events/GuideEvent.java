@@ -50,7 +50,7 @@ public class GuideEvent extends DailyEventState {
 
         portraitSay("Let's see... ");
         for (DailyEventState event : events) {
-            portraitSay(event.getGuideData() + ".");
+            portraitSay(event.getGuideData().getDescription() + ".");
         }
         portraitSay("Any of that sound interesting?");
         List<String> options = MyLists.transform(events, (DailyEventState ev) -> ev.getGuideData().getName());
