@@ -14,7 +14,7 @@ public class TutorialVampires extends ExpandableHelpDialog {
             "can turn you into a vampire.\n\n" +
             "Characters who become vampires will be loathed and feared by others and will not " +
             "regenerate stamina like normal. For more information, see Vampirism Condition.\n\n" +
-            "Vampires have a range of abilities at their disposal to augment them " +
+            "As their vampirism condition progresses, vampires can learn different special abilities to augment them " +
             "in their dark endeavours, see the corresponding help chapters.\n\n" +
             "A character can be cured from vampirism through the magic of " +
             "ancient nature rituals, known only by some druids.";
