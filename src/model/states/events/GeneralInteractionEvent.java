@@ -424,7 +424,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             }
             model.getTutorial().kingdomWars(model);
         } else if (!getModel().getWarHandler().getWars().isEmpty() && MyRandom.flipCoin()) {
-            KingdomWar warToTalkAbout = MyRandom.sample(warsForThisKingdom);
+            KingdomWar warToTalkAbout = MyRandom.sample(model.getWarHandler().getWars());
             String extra = MyRandom.sample(List.of("So much for diplomacy...", "It's apparently a very old feud.",
                     "Who do you think will prevail?", "Such meaningless suffering.",
                     "I try not to think of the horrific battles.", "At least the vultures will be pleased."));

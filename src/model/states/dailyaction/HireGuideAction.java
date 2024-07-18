@@ -21,17 +21,24 @@ public class HireGuideAction extends GameState {
     public GameState run(Model model) {
         guideSay(this, "Hey, you! Are you heading into the wild? You'll need somebody who knows the country.");
         model.getTutorial().guides(model);
-        print("Hire the guide for " + DAYS + " days, cost of " + COST + " gold? (Y/N) ");
-        if (model.getParty().getGold() >= COST && yesNoInput()) {
-            leaderSay("You've got yourself a deal.");
-            guideSay(this, "You won't regret this.");
-            println("You paid " + COST + " gold to the guide.");
-            model.getParty().addToGold(-COST);
-            model.getParty().setGuide(DAYS);
+
+        if (model.getParty().getGold() >= COST) {
+            print("Hire the guide for " + DAYS + " days, cost of " + COST + " gold? (Y/N) ");
+            if (yesNoInput()) {
+                leaderSay("You've got yourself a deal.");
+                guideSay(this, "You won't regret this.");
+                println("You paid " + COST + " gold to the guide.");
+                model.getParty().addToGold(-COST);
+                model.getParty().setGuide(DAYS);
+            } else {
+                leaderSay("No thanks.");
+                guideSay(this, "You'll get lost without me!");
+                leaderSay("We'll take our chances.");
+            }
         } else {
-            leaderSay("No thanks.");
-            guideSay(this, "You'll get lost without me!");
-            leaderSay("We'll take our chances.");
+            leaderSay("I'm sorry, can't afford it.");
+            guideSay(this, "That's too bad. I know a lot of good things to see. Come back when you got more gold.");
+            leaderSay("Maybe we will. See ya.");
         }
         return new DailyActionState(model);
     }
