@@ -453,7 +453,7 @@ public class EveningState extends GameState {
         }
         if (!MyLists.any(model.getParty().getPartyMembers(),
                 (GameCharacter gc) -> gc.hasCondition(VampirismCondition.class))) {
-            if (MyRandom.rollD10() <= 1) {
+            if (MyRandom.rollD10() <= 10) { // TODO: 1
                 new VampireProwlNightEvent(model, inTavern).run(model);
             }
             return;

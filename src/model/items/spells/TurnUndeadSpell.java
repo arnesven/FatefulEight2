@@ -7,6 +7,7 @@ import model.enemies.Enemy;
 import model.enemies.UndeadEnemy;
 import model.items.Item;
 import model.states.CombatEvent;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
 import view.sprites.ItemSprite;
@@ -42,8 +43,13 @@ public class TurnUndeadSpell extends CombatSpell {
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         if (target instanceof UndeadEnemy) {
-            combat.println(target.getName() + " took " + target.getHP() + " damage and was disintegrated into dust!");
-            combat.doDamageToEnemy(target, target.getHP(), performer);
+            int dieRoll = MyRandom.rollD10();
+            if (dieRoll > 1 && dieRoll < target.getMaxHP() / 2) {
+                combat.println(target.getName() + " resisted the spell!");
+            } else {
+                combat.println(target.getName() + " took " + target.getHP() + " damage and was disintegrated into dust!");
+                combat.doDamageToEnemy(target, target.getHP(), performer);
+            }
         } else {
             combat.println(getName() + " has no effect on " + target.getName() + ".");
         }

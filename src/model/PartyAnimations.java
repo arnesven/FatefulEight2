@@ -3,15 +3,12 @@ package model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import util.MyRandom;
-import view.sprites.AnimationManager;
 import view.sprites.DieRollAnimation;
 import view.ScreenHandler;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PartyAnimations implements Serializable {
     private static final int BLINK_RATE = 350;
@@ -21,6 +18,7 @@ public class PartyAnimations implements Serializable {
     private final Map<CharacterAppearance, Integer> blinking = new HashMap<>();
     private final Map<CharacterAppearance, Boolean> lookers = new HashMap<>();
     private final Map<Point, DieRollAnimation> dieRollAnimations = new HashMap<>();
+    private final Map<CharacterAppearance, VampireFeedingLook> feedingLooks = new HashMap<>();
 
     public void drawBlink(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
         if (!app.showFacialHair()) {
@@ -28,6 +26,7 @@ public class PartyAnimations implements Serializable {
         }
         handleLook(screenHandler, app, p);
         handleBlink(screenHandler, app, p);
+        handleMisc(screenHandler, app);
     }
 
     private void handleLook(ScreenHandler screenHandler, CharacterAppearance app, Point p) {
@@ -127,5 +126,22 @@ public class PartyAnimations implements Serializable {
         } else {
             blinking.remove(victim.getAppearance());
         }
+    }
+
+    private void handleMisc(ScreenHandler screenHandler, CharacterAppearance appearance) {
+        if (feedingLooks.containsKey(appearance)) {
+            feedingLooks.get(appearance).drawYourself(screenHandler);
+        }
+    }
+
+    public void setVampireFeedingLookEnabledFor(CharacterAppearance app, Point point) {
+        Point p = new Point(point);
+        p.x += 3;
+        p.y += 2;
+        this.feedingLooks.put(app, new VampireFeedingLook(app, p));
+    }
+
+    public void removeVampireFeedingLookFor(CharacterAppearance app) {
+        this.feedingLooks.remove(app);
     }
 }

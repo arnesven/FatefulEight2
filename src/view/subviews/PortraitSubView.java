@@ -2,7 +2,6 @@ package view.subviews;
 
 import model.Model;
 import model.PartyAnimations;
-import model.SpeakingAnimation;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.races.Race;
@@ -195,4 +194,7 @@ public class PortraitSubView extends SubView {
         return appearance;
     }
 
+    public void forceVampireFeedingLook() {
+        partyAnimations.setVampireFeedingLookEnabledFor(appearance, CHAR_LOCATION);
+    }
 }

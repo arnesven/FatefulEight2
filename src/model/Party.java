@@ -871,4 +871,14 @@ public class Party implements Serializable {
     public void addToGuide(int addition) {
         this.guide += addition;
     }
+
+    public void enabledVampireLookFor(GameCharacter vampire) {
+        int index = partyMembers.indexOf(vampire);
+        Point p = getLocationForPartyMember(index);
+        partyAnimations.setVampireFeedingLookEnabledFor(vampire.getAppearance(), p);
+    }
+
+    public void disableVampireLookFor(GameCharacter vampire) {
+        partyAnimations.removeVampireFeedingLookFor(vampire.getAppearance());
+    }
 }

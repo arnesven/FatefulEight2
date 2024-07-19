@@ -11,7 +11,8 @@ public class TutorialVampires extends ExpandableHelpDialog {
     private static final String TEXT = "Vampires are dark creatures who pray on " +
             "the blood of the living to sustain themselves. Several events, " +
             "like being attacked by a vampire, or having your blood sucked by one, " +
-            "can turn you into a vampire.\n\n" +
+            "can turn you into a vampire. Vampires are most common in rural areas where it is easy " +
+            "for them to find suitable prey.\n\n" +
             "Characters who become vampires will be loathed and feared by others and will not " +
             "regenerate stamina like normal. For more information, see Vampirism Condition.\n\n" +
             "As their vampirism condition progresses, vampires can learn different special abilities to augment them " +

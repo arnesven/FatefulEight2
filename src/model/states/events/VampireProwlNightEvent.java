@@ -87,11 +87,15 @@ public class VampireProwlNightEvent extends DailyEventState {
                 }
             } else {
                 model.getParty().forceEyesClosed(victim, true);
+                if (model.getSubView() instanceof PortraitSubView) {
+                    ((PortraitSubView) model.getSubView()).forceVampireFeedingLook();
+                }
                 println(victim.getFirstName() + " closes "+ hisOrHer(victim.getGender()) +
-                        " eyes and awaits the vampire's emprace.");
+                        " eyes and awaits the vampire's embrace.");
                 makeVampire(model, victim);
             }
         }
+        model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);
         model.getLog().waitForAnimationToFinish();
         model.getParty().forceEyesClosed(victim, false);
@@ -102,7 +106,7 @@ public class VampireProwlNightEvent extends DailyEventState {
         println("A sharp pain in the neck! Then, just as suddenly, it is gone and a strange, " +
                 "but pleasant sensation falls upon " + victim.getFirstName() + ". " + heOrSheCap(victim.getGender()) +
                 " falls into a deeper sleep and have odd dreams filled with violence, lust and the sense of immortality.");
-        int hpLoss = Math.min(victim.getMaxHP()-3, victim.getHP()-1);
+        int hpLoss = victim.getHP()-1;
         if (hpLoss > 0) {
             println(victim.getName() + " lost "+ hpLoss + " HP.");
             victim.addToHP(-hpLoss);
