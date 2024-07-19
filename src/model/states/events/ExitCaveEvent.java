@@ -11,6 +11,12 @@ public class ExitCaveEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Head toward the exit",
+                "There's passage to the surface is in this direction");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("There's a way out here!",
                 "Daylight! We can get out here!", "An exit, finally.", "Looks like there's an exit here."));
