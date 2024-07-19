@@ -5,10 +5,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.conditions.VampirismCondition;
 import view.help.HelpView;
+import view.party.PartyView;
 import view.widget.MiniLog;
 import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
+import java.security.Key;
 
 public class MainGameView extends GameView {
 
@@ -74,8 +76,26 @@ public class MainGameView extends GameView {
                     vampCond.progress(model, target);
                 }
             }
-
-
+        } else if (keyEvent.isControlDown()) {
+            if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
+                setTimeToTransition(true);
+                nextView = new PartyView(this);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
+                setTimeToTransition(true);
+                nextView = new SkillsView(this);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_Z) {
+                setTimeToTransition(true);
+                nextView = new SpellsView(this);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_W) {
+                setTimeToTransition(true);
+                nextView = new FullMapView(this);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_Q) {
+                setTimeToTransition(true);
+                nextView = new JournalView(this);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_X) {
+                setTimeToTransition(true);
+                nextView = new ExitGameView(this);
+            }
         } else if (model.getSubView().handleKeyEvent(keyEvent, model)) {
             //
         } else if (model.getLog().isAcceptingInput()) {
