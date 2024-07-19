@@ -77,24 +77,10 @@ public class MainGameView extends GameView {
                 }
             }
         } else if (keyEvent.isControlDown()) {
-            if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
+            GameView next = MainGameViewHotKeyHandler.handle(this, keyEvent);
+            if (next != null) {
                 setTimeToTransition(true);
-                nextView = new PartyView(this);
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
-                setTimeToTransition(true);
-                nextView = new SkillsView(this);
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_Z) {
-                setTimeToTransition(true);
-                nextView = new SpellsView(this);
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_W) {
-                setTimeToTransition(true);
-                nextView = new FullMapView(this);
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_Q) {
-                setTimeToTransition(true);
-                nextView = new JournalView(this);
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_X) {
-                setTimeToTransition(true);
-                nextView = new ExitGameView(this);
+                nextView = next;
             }
         } else if (model.getSubView().handleKeyEvent(keyEvent, model)) {
             //
