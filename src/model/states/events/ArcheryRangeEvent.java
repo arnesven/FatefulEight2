@@ -7,6 +7,7 @@ import model.items.weapons.BowWeapon;
 import model.items.weapons.ShortBow;
 import model.states.ArcheryState;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class ArcheryRangeEvent extends DailyEventState {
                 print("Which party member do you want to use? ");
                 GameCharacter shooter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
                 BowWeapon bowToUse = ArcheryState.getCharactersBowOrDefault(shooter);
-                ArcheryState archeryState = new ArcheryState(model, shooter,bowToUse, ArcheryState.FAR_DISTANCE);
+                ArcheryState archeryState = new ArcheryState(model, shooter, bowToUse, ArcheryState.FAR_DISTANCE);
                 archeryState.setShots(3);
                 archeryState.run(model);
                 List<Integer> results = archeryState.getDetailedResults();
@@ -52,9 +53,14 @@ public class ArcheryRangeEvent extends DailyEventState {
                     printQuote("Marksman", "If you'll excuse me, I have to go now. Please come and" +
                             " see me again some time.");
                     break;
+                } else if (results.contains(ArcheryState.getPointsForRing(1))) {
+                    partyMemberSay(shooter, "Aww, so close!");
+                    printQuote("Marksman", "Still pretty impressive though. I'll give you your money back.");
+                    println("You got " + COST_TO_PLAY + " gold back from the marksman.");
+                    model.getParty().addToGold(COST_TO_PLAY);
                 } else {
-                    model.getParty().randomPartyMemberSay(model, List.of("Hmm. Not my best performance.",
-                            "That's a miss.", "Aaw, so close!"));
+                    partyMemberSay(shooter, MyRandom.sample(List.of("Hmm. Not my best performance.",
+                            "That's a miss.", "Aaw, I thought I'd do better.")));
                     printQuote("Marksman", "That's too bad. But you can always try again. Whaddaya say?");
                 }
             } else {

@@ -53,8 +53,14 @@ public class HireGuideAction extends GameState {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle();
         UrbanLocation townOrCityClosest = (UrbanLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
-        guideSay(state, "My contract is up tomorrow. " +
-                "I'm heading back to " + townOrCityClosest.getPlaceName() + " unless you want to extend our deal.");
+        guideSay(state, "My contract is up tomorrow.");
+        if (townOrCityClosest == model.getCurrentHex().getLocation()) {
+            guideSay(state, "I'm staying here, but you can find me at the tavern if you want to hire me again");
+            state.leaderSay("Okay bye!");
+            return;
+        } else {
+            guideSay(state, "I'm heading back to " + townOrCityClosest.getPlaceName() + " unless you want to extend our deal.");
+        }
         state.print("Pay the guide another " + COST + " gold to extend the contract " + DAYS + " days? (Y/N) ");
         if (0 < model.getParty().getGold() && model.getParty().getGold() < COST) {
             state.leaderSay("Unfortunately, this party is a little short on gold. " +

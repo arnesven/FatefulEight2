@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.HigherTierItem;
 import model.items.weapons.BowWeapon;
 import model.items.weapons.CrossbowWeapon;
 import model.items.weapons.ShortBow;
@@ -226,7 +227,11 @@ public class ArcheryState extends GameState {
     }
 
     public static int getPointsForBullseye() {
-        return TARGET_POINTS[0];
+        return getPointsForRing(0);
+    }
+
+    public static Integer getPointsForRing(int i) {
+        return TARGET_POINTS[i];
     }
 
     public List<Integer> getDetailedResults() {
@@ -235,8 +240,12 @@ public class ArcheryState extends GameState {
 
     public static BowWeapon getCharactersBowOrDefault(GameCharacter shooter) {
         BowWeapon bowToUse = new ShortBow();
-        if (shooter.getEquipment().getWeapon() instanceof BowWeapon) {
-            bowToUse = (BowWeapon) shooter.getEquipment().getWeapon();
+        if (shooter.getEquipment().getWeapon().isOfType(BowWeapon.class)) {
+            if (shooter.getEquipment().getWeapon() instanceof HigherTierItem) {
+                bowToUse = (BowWeapon) ((HigherTierItem) shooter.getEquipment().getWeapon()).getInnerItem();
+            } else {
+                bowToUse = (BowWeapon) shooter.getEquipment().getWeapon();
+            }
         }
         return bowToUse;
     }
