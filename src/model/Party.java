@@ -455,7 +455,9 @@ public class Party implements Serializable {
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
             try {
-                if (size() - bench.size() > 1) {
+                List<GameCharacter> nonBenchers = new ArrayList<>(performers);
+                nonBenchers.removeAll(bench);
+                if (nonBenchers.size() > 1) {
                     GameCharacter best = findBestPerformer(skill, performers);
                     event.print("Which party member should be the primary performer of the Collaborative " + skill.getName() + " " + difficulty + " check?");
                     event.print(" (Recommended " + best.getName() + "): ");
@@ -464,7 +466,7 @@ public class Party implements Serializable {
                         performer = partyMemberInput(model, event, best);
                     } while (!performers.contains(performer));
                 } else {
-                    performer = performers.get(0);
+                    performer = nonBenchers.get(0);
                 }
                 break;
             } catch (SpellCastException spe) {

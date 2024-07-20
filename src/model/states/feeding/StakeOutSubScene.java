@@ -25,7 +25,6 @@ class StakeOutSubScene extends FeedingSubScene {
     @Override
     protected QuestEdge specificDoAction(Model model, GameState state, GameCharacter vampire) {
         state.print(vampire.getFirstName() + " stakes out the house for a few minutes. ");
-        model.getParty().enabledVampireLookFor(vampire); // TODO: Remove
         SkillCheckResult result = vampire.testSkill(model, Skill.Perception);
         state.println("Perception " + result.asString() + ".");
         if (result.getModifiedRoll() < 6 || result.getUnmodifiedRoll() == 1) {
