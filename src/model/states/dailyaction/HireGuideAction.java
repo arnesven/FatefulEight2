@@ -5,6 +5,8 @@ import model.map.UrbanLocation;
 import model.states.DailyActionState;
 import model.states.EveningState;
 import model.states.GameState;
+import view.subviews.SubView;
+import view.subviews.TavernSubView;
 
 import java.awt.*;
 import java.util.List;
@@ -19,31 +21,35 @@ public class HireGuideAction extends GameState {
 
     @Override
     public GameState run(Model model) {
-        guideSay(this, "Hey, you! Are you heading into the wild? You'll need somebody who knows the country.");
+        guideSay(model, this, "Hey, you! Are you heading into the wild? You'll need somebody who knows the country.");
         model.getTutorial().guides(model);
 
         if (model.getParty().getGold() >= COST) {
             print("Hire the guide for " + DAYS + " days, cost of " + COST + " gold? (Y/N) ");
             if (yesNoInput()) {
                 leaderSay("You've got yourself a deal.");
-                guideSay(this, "You won't regret this.");
+                guideSay(model, this, "You won't regret this.");
                 println("You paid " + COST + " gold to the guide.");
                 model.getParty().addToGold(-COST);
                 model.getParty().setGuide(DAYS);
             } else {
                 leaderSay("No thanks.");
-                guideSay(this, "You'll get lost without me!");
+                guideSay(model, this, "You'll get lost without me!");
                 leaderSay("We'll take our chances.");
             }
         } else {
             leaderSay("I'm sorry, can't afford it.");
-            guideSay(this, "That's too bad. I know a lot of good things to see. Come back when you got more gold.");
+            guideSay(model, this, "That's too bad. I know a lot of good things to see. Come back when you got more gold.");
             leaderSay("Maybe we will. See ya.");
         }
         return new DailyActionState(model);
     }
 
-    public static void guideSay(GameState state, String s) {
+    public static void guideSay(Model model, GameState state, String s) {
+        SubView view = model.getSubView();
+        if (view instanceof TavernSubView) {
+            ((TavernSubView)view).addCalloutAtAgentOrGuide(s.length());
+        }
         state.printQuote("Guide", s);
     }
 
@@ -53,19 +59,19 @@ public class HireGuideAction extends GameState {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle();
         UrbanLocation townOrCityClosest = (UrbanLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
-        guideSay(state, "My contract is up tomorrow.");
+        guideSay(model, state, "My contract is up tomorrow.");
         if (townOrCityClosest == model.getCurrentHex().getLocation()) {
-            guideSay(state, "I'm staying here, but you can find me at the tavern if you want to hire me again");
+            guideSay(model, state, "I'm staying here, but you can find me at the tavern if you want to hire me again");
             state.leaderSay("Okay bye!");
             return;
         } else {
-            guideSay(state, "I'm heading back to " + townOrCityClosest.getPlaceName() + " unless you want to extend our deal.");
+            guideSay(model, state, "I'm heading back to " + townOrCityClosest.getPlaceName() + " unless you want to extend our deal.");
         }
         state.print("Pay the guide another " + COST + " gold to extend the contract " + DAYS + " days? (Y/N) ");
         if (0 < model.getParty().getGold() && model.getParty().getGold() < COST) {
             state.leaderSay("Unfortunately, this party is a little short on gold. " +
                     "How about " + model.getParty().getGold() + " gold?");
-            guideSay(state, "Fine... I'll stick around for a few more days. " +
+            guideSay(model, state, "Fine... I'll stick around for a few more days. " +
                     "It's not like I really have any other prospects out here.");
             state.println("You paid " + model.getParty().getGold() + " gold to the guide.");
             int days = model.getParty().getGold() + 1;
@@ -76,11 +82,11 @@ public class HireGuideAction extends GameState {
             state.println("You paid " + COST + " gold to the guide.");
             model.getParty().addToGold(-COST);
             model.getParty().addToGuide(DAYS);
-            guideSay(state, "Glad to be of service.");
+            guideSay(model, state, "Glad to be of service.");
             state.println("The guide will stay with you for an additional " + DAYS + " days.");
         } else {
             state.leaderSay("No thanks.");
-            guideSay(state, "Then this is where are paths diverge. So long.");
+            guideSay(model, state, "Then this is where are paths diverge. So long.");
             state.leaderSay("Good bye.");
         }
     }

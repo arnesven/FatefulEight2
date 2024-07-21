@@ -43,11 +43,11 @@ public abstract class GuideGivesChoiceState extends GameState {
                 "can you tell me anything about this place?")));
         String option2;
         if (event2 != null) {
-            HireGuideAction.guideSay(this, "Yes, of course! " + MyStrings.capitalize(event1.getGuideData().getDescription()) +
+            HireGuideAction.guideSay(model, this, "Yes, of course! " + MyStrings.capitalize(event1.getGuideData().getDescription()) +
                     ". And " + event2.getGuideData().getDescription().toLowerCase() + ".");
             option2 = event2.getGuideData().getName();
         } else {
-            HireGuideAction.guideSay(this, "Yes, of course! " + MyStrings.capitalize(event1.getGuideData().getDescription()));
+            HireGuideAction.guideSay(model, this, "Yes, of course! " + MyStrings.capitalize(event1.getGuideData().getDescription()));
             option2 = "Go somewhere else";
         }
         print("What would you like to do? ");
@@ -64,10 +64,10 @@ public abstract class GuideGivesChoiceState extends GameState {
 
         if (selectedEvent != null) {
             leaderSay("Let's " + selectedEvent.getGuideData().getName().toLowerCase() + ".");
-            HireGuideAction.guideSay(this, "Alright, just follow me.");
+            HireGuideAction.guideSay(model, this, "Alright, just follow me.");
         } else {
             leaderSay("I think we'll pass on that today.");
-            HireGuideAction.guideSay(this, "That's fine, we'll avoid that.");
+            HireGuideAction.guideSay(model, this, "That's fine, we'll avoid that.");
             selectedEvent = generateOtherEvent(model);
         }
 
