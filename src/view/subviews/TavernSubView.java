@@ -131,7 +131,7 @@ public class TavernSubView extends DailyActionSubView {
             model.getScreenHandler().register(OVER_DOOR.getName(), p, OVER_DOOR, 4);
         }
         for (MyPair<RunOnceAnimationSprite, Point> effect : new ArrayList<>(otherEffects)) {
-            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first);
+            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first, 2);
             if (effect.first.isDone()) {
                 otherEffects.remove(effect);
             }
@@ -179,6 +179,10 @@ public class TavernSubView extends DailyActionSubView {
 
     public void addCalloutAtBartender(int lengthOfLine) {
         otherEffects.add(new MyPair<>(new TavernSpeechBubble(lengthOfLine), convertToScreen(new Point(1, 3))));
+    }
+
+    public void addCalloutAtTraveller(int length) {
+        otherEffects.add(new MyPair<>(new TavernSpeechBubble(length), convertToScreen(new Point(2, 1))));
     }
 
     private static class TavernSpeechBubble extends CombatSpeechBubble {

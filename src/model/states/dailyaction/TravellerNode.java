@@ -56,15 +56,15 @@ public class TravellerNode extends DailyActionNode {
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         model.getTutorial().travellers(model);
         if (model.getParty().size() == 1 && DailyEventState.calculateAverageLevel(model) < 2.0) {
-            traveller.refuseLowLevel(state);
+            traveller.refuseLowLevel(model, state);
             return false;
         }
         if (model.getParty().getNotoriety() > 10) {
-            traveller.refuseNotoriety(state);
+            traveller.refuseNotoriety(model, state);
             return false;
         }
         if (model.getParty().getActiveTravellers().contains(traveller)) {
-            traveller.printReady(state);
+            traveller.printReady(model, state);
             return false;
         }
         return true;

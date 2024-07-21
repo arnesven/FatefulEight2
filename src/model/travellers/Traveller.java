@@ -11,6 +11,8 @@ import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
 import util.MyRandom;
+import view.subviews.SubView;
+import view.subviews.TavernSubView;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -49,26 +51,26 @@ public class Traveller implements Serializable {
         return appearance.getRace();
     }
 
-    public void printReady(GameState state) {
-        state.printQuote(name, MyRandom.sample(List.of("I'm ready. When are we leaving?",
+    public void printReady(Model model, GameState state) {
+        travellerSay(model, state,   MyRandom.sample(List.of("I'm ready. When are we leaving?",
                 "I'm eager to get going.", "Lead the way, adventurer!", "I'm happy to have company on my journey.")));
     }
 
-    public void refuseLowLevel(GameState state) {
-        state.printQuote(name, "I'm looking for somebody to escort me to " + destination +
+    public void refuseLowLevel(Model model, GameState state) {
+        travellerSay(model, state,   "I'm looking for somebody to escort me to " + destination +
                 ". You? You don't really look like you're up to the task. No offense.");
     }
 
-    public void refuseNotoriety(GameState state) {
-        state.printQuote(name, "Me? I'm... uh... just enjoying a brew.");
+    public void refuseNotoriety(Model model, GameState state) {
+        travellerSay(model, state,   "Me? I'm... uh... just enjoying a brew.");
         state.leaderSay("You aren't you looking for an escort?");
-        state.printQuote(name, "Oh, hehehe... what gave you that idea? No no... not me.");
+        travellerSay(model, state,   "Oh, hehehe... what gave you that idea? No no... not me.");
     }
 
 
     public void complain(Model model, GameState state) {
         state.println(name + " approaches you.");
-        state.printQuote(name, "Hey, are we getting to " + destination + " anytime soon? " +
+        travellerSay(model, state,   "Hey, are we getting to " + destination + " anytime soon? " +
                 "I have some engagements I don't want to be late for.");
         state.leaderSay("Don't worry. We'll get there soon.");
     }
@@ -87,13 +89,13 @@ public class Traveller implements Serializable {
 
     public void complete(Model model, GameState state) {
         state.println(name + " approaches you.");
-        state.printQuote(name, "Thank you for safely delivering me to my destination.");
+        travellerSay(model, state,   "Thank you for safely delivering me to my destination.");
         if (getRemainingDays(model) >= 0) {
-            state.printQuote(name, "Here's the gold I promised you.");
+            travellerSay(model, state,   "Here's the gold I promised you.");
             state.println("The party receives " + gold + " gold.");
             model.getParty().addToGold(gold);
         } else {
-            state.printQuote(name, "I just wish we would have gotten here a little sooner. " +
+            travellerSay(model, state,   "I just wish we would have gotten here a little sooner. " +
                     "Now there will be consequences and I'm afraid I won't be able to pay you the full amount I promised.");
             state.println("The party receives " + (gold/2) + " gold.");
             model.getParty().addToGold((gold/2));
@@ -111,12 +113,20 @@ public class Traveller implements Serializable {
 
     public void abandon(Model model, GameState state) {
         state.println(name + " approaches you. " + DailyEventState.heOrSheCap(appearance.getGender()) + " looks annoyed.");
-        state.printQuote(name, "I'm fed up with you. I'm going to " + destination + " on my own.");
+        travellerSay(model, state,   "I'm fed up with you. I'm going to " + destination + " on my own.");
         state.println(name + " stomps off. You are no longer escorting " + name + ".");
         model.getParty().abandonTraveller(this);
         model.getParty().addToReputation(-1);
         state.printAlert("Your reputation has decreased.");
         JournalEntry.printJournalUpdateMessage(model);
+    }
+
+    private void travellerSay(Model model, GameState state, String text) {
+        SubView view = model.getSubView();
+        if (view instanceof TavernSubView) {
+            ((TavernSubView)view).addCalloutAtTraveller(text.length());
+        }
+        state.printQuote(name, text);
     }
 
     public JournalEntry getJournalEntry(Model model, boolean active, boolean completed) {

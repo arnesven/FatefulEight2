@@ -31,7 +31,7 @@ public class AcceptTravellerState extends GameState {
                 model.getParty().addTraveller(traveller);
                 JournalEntry.printJournalUpdateMessage(model);
                 traveller.accept(model.getDay());
-                traveller.printReady(this);
+                traveller.printReady(model, this);
             }
         }
         return previousState;
