@@ -86,6 +86,7 @@ public class TalkToBartenderNode extends DailyActionNode {
             if (model.getParty().getHorseHandler().size() > 0 && !inTown) {
                 options.add("Sell Horse");
             }
+            options.add("Never mind");
             int selected = multipleOptionArrowMenu(model, 32, 18, options);
             if (selected == 0) {
                 getAdvice(model);
@@ -95,7 +96,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                 new BuyHorseState(model, "Bartender").run(model);
             } else if (options.get(selected).contains("Sell Horse")) {
                 new SellHorseState(model).run(model);
-            } else {
+            } else if (options.get(selected).contains("Ask For Work")){
                 askForWork(model);
             }
             return model.getCurrentHex().getDailyActionState(model);
