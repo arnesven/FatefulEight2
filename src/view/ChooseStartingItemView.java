@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -16,6 +17,7 @@ import view.sprites.Sprite;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,14 +29,20 @@ public class ChooseStartingItemView extends SelectableListMenu {
     private static final int ITEMS_PER_ROW = 5;
     private static final int NO_OF_ITEMS_TO_PICK = 2;
     private final List<Item> items;
-    private int selectedIndex = 0;
+    private final SteppingMatrix<Item> matrix;
     private boolean canceled = false;
     private final List<Item> selectedItems = new ArrayList<>();
+    private boolean inItemMatrix = true;
 
 
     public ChooseStartingItemView(Model model, GameCharacter gc) {
         super(model.getView(), 11 + ITEMS_PER_ROW * 5, calculateHeight(gc));
         this.items = getStartingItems(gc);
+        this.matrix = new SteppingMatrix<>(ITEMS_PER_ROW,
+                (int)Math.ceil(((double)items.size()) / ITEMS_PER_ROW));
+        matrix.addElements(items);
+        matrix.setSelectedPoint(new Point(0, 0));
+        setSelectedRow(-1);
     }
 
     private static int calculateHeight(GameCharacter gc) {
@@ -76,26 +84,29 @@ public class ChooseStartingItemView extends SelectableListMenu {
                         MyColors.WHITE, MyColors.BLUE);
 
                 int row = y + ITEMS_Y_OFFSET - 5;
-                for (int i = 0; i < items.size(); ++i) {
-                    int itemX = i % ITEMS_PER_ROW;
-                    if (i % ITEMS_PER_ROW == 0) {
-                        row += 5;
-                    }
 
-                    Point position = new Point(xStart + itemX*6 + 5, row);
-
-                    items.get(i).drawYourself(model.getScreenHandler(), position.x, position.y);
-                    if (selectedItems.contains(items.get(i))) {
-                        model.getScreenHandler().put(position.x+3, position.y+3, CharacterCreationView.CHECK_SPRITE);
+                for (int matY = 0; matY < matrix.getRows(); ++matY) {
+                    row += 5;
+                    for (int matX = 0; matX < matrix.getColumns(); ++matX) {
+                        Item currentItem = matrix.getElementAt(matX, matY);
+                        if (currentItem != null) {
+                            Point position = new Point(xStart + matX*6 + 5, row);
+                            currentItem.drawYourself(model.getScreenHandler(), position.x, position.y);
+                            if (selectedItems.contains(currentItem)) {
+                                model.getScreenHandler().put(position.x+3, position.y+3, CharacterCreationView.CHECK_SPRITE);
+                            }
+                        }
                     }
                 }
-                Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
-                int cursorX = selectedIndex % ITEMS_PER_ROW;
-                int cursorY = selectedIndex / ITEMS_PER_ROW;
-                model.getScreenHandler().register(cursor.getName(),
-                        new Point(xStart + cursorX*6 + 5, y + ITEMS_Y_OFFSET - 3 + cursorY * 5), cursor);
 
-                Item it = items.get(selectedIndex);
+                if (inItemMatrix) {
+                    Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+                    Point cursorPos = matrix.getSelectedPoint();
+                    model.getScreenHandler().register(cursor.getName(),
+                            new Point(xStart + cursorPos.x * 6 + 5, y + ITEMS_Y_OFFSET - 3 + cursorPos.y * 5), cursor);
+                }
+
+                Item it = matrix.getSelectedElement();
                 String text = it.getName() + ", " + it.getShoppingDetails() +
                         ", Value: " + it.getCost();
                 String[] parts = text.split(", ");
@@ -135,20 +146,43 @@ public class ChooseStartingItemView extends SelectableListMenu {
 
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            selectedIndex = Arithmetics.incrementWithWrap(selectedIndex, items.size());
-            madeChanges();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            selectedIndex = Arithmetics.decrementWithWrap(selectedIndex, items.size());
-            madeChanges();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            Item currentItem = items.get(selectedIndex);
-            if (selectedItems.contains(currentItem)) {
-                selectedItems.remove(currentItem);
+
+    }
+
+    @Override
+    public void handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (inItemMatrix) {
+            if (matrix.getSelectedPoint().y == matrix.getRows()-1 && keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+                inItemMatrix = false;
+                super.setSelectedRow(0);
+            } else if (matrix.getSelectedPoint().y == matrix.getMinimumRow() && keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+                inItemMatrix = false;
+                super.setSelectedRow(1);
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+                Item currentItem = matrix.getSelectedElement();
+                if (selectedItems.contains(currentItem)) {
+                    selectedItems.remove(currentItem);
+                } else {
+                    selectedItems.add(currentItem);
+                    if (selectedItems.size() > NO_OF_ITEMS_TO_PICK) {
+                        selectedItems.remove(0);
+                    }
+                }
             } else {
-                selectedItems.add(currentItem);
+                matrix.handleKeyEvent(keyEvent);
             }
             madeChanges();
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP && getSelectedRow() == 0) {
+            inItemMatrix = true;
+            super.setSelectedRow(-1);
+            madeChanges();
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN && getSelectedRow() == 1) {
+            super.setSelectedRow(-1);
+            inItemMatrix = true;
+            matrix.setSelectedPoint(new Point(0, 0));
+            madeChanges();
+        } else {
+            super.handleKeyEvent(keyEvent, model);
         }
     }
 

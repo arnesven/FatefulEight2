@@ -211,6 +211,10 @@ public abstract class SelectableListMenu extends GameView {
         innerMenu.transitionedTo(model);
     }
 
+    protected void setSelectedRow(int i) {
+        this.selectedRow = i;
+    }
+
     protected static class ListContent {
         public Point position;
         public String text;
