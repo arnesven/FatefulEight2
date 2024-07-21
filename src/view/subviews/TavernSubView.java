@@ -3,6 +3,7 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.characters.appearance.CharacterAppearance;
 import model.races.Race;
 import model.states.dailyaction.*;
 import sprites.CombatSpeechBubble;
@@ -50,25 +51,12 @@ public class TavernSubView extends DailyActionSubView {
             MyColors.DARK_GRAY, MyColors.LIGHT_YELLOW, MyColors.TAN, MyColors.BLACK);
 
     private final boolean inTown;
-    private final Sprite[] colorGuys;
-    private boolean[] showColorGuys;
     private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
         super(state, matrix);
         this.inTown = inTown;
-        colorGuys = new Sprite32x32[]{
-                new Sprite32x32("colorguy1", "avatars.png", 0x108,
-                        MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor()),
-                new Sprite32x32("colorguy2", "avatars.png", 0x108,
-                        MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor()),
-                new Sprite32x32("colorguy3", "avatars.png", 0x108,
-                        MyColors.BLACK, MyRandom.nextColor(), MyRandom.nextRace().getColor())
-        };
-        do {
-            showColorGuys = new boolean[]{MyRandom.flipCoin(), MyRandom.flipCoin(), MyRandom.flipCoin()};
-        } while (!showColorGuys[0] && !showColorGuys[1] && !showColorGuys[2]);
     }
 
     @Override
@@ -106,7 +94,6 @@ public class TavernSubView extends DailyActionSubView {
         }
 
         drawDecorations(model);
-        drawRecruitArea(model);
         drawPartyArea(model, List.of(new Point(6, 6), new Point(6, 5),
                 new Point(5, 6), new Point(6, 4), new Point(4, 6),
                 new Point(5, 4), new Point(4, 5)));
@@ -135,19 +122,6 @@ public class TavernSubView extends DailyActionSubView {
             if (effect.first.isDone()) {
                 otherEffects.remove(effect);
             }
-        }
-    }
-
-
-    private void drawRecruitArea(Model model) {
-        if (showColorGuys[0]) {
-            drawForeground(model, 1, 5, colorGuys[0]);
-        }
-        if (showColorGuys[1]) {
-            drawForeground(model, 1, 6, colorGuys[1]);
-        }
-        if (showColorGuys[2]) {
-            drawForeground(model, 2, 6, colorGuys[2]);
         }
     }
 

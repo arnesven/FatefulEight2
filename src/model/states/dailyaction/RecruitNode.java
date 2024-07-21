@@ -2,20 +2,49 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.TimeOfDay;
+import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.states.GameState;
 import model.states.RecruitState;
+import util.MyRandom;
 import view.MyColors;
+import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.subviews.TavernSubView;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class RecruitNode extends DailyActionNode {
     public static final Sprite TABLE = new Sprite32x32("table", "world_foreground.png", 0x04,
             MyColors.BLACK, MyColors.TAN, MyColors.BROWN, MyColors.WHITE);
+    private final List<Point> offsets;
+    private final ArrayList<GameCharacter> defaultGuys;
     private RecruitState recruitState;
 
     public RecruitNode(Model model) {
         super("Recruit Adventurers");
+        this.offsets = new ArrayList<>(List.of(new Point(-4, 0),
+                new Point(-4, 4), new Point(0, 4)));
+        Collections.shuffle(offsets);
+        this.defaultGuys = new ArrayList<>();
+        for (int i = MyRandom.randInt(1, 3); i >= 0; --i) {
+            CharacterClass randClass = Classes.None;
+            if (MyRandom.randInt(3) > 0) {
+                randClass = MyRandom.sample(Arrays.asList(Classes.allClasses));
+            }
+            CharacterAppearance randApp = PortraitSubView.makeRandomPortrait(randClass);
+            GameCharacter gc = new GameCharacter("", "", randApp.getRace(),
+                    randClass, randApp, Classes.NO_OTHER_CLASSES);
+            defaultGuys.add(gc);
+        }
     }
 
     @Override
@@ -38,6 +67,23 @@ public class RecruitNode extends DailyActionNode {
     @Override
     public Sprite getForegroundSprite() {
         return TABLE;
+    }
+
+    @Override
+    public void drawYourself(Model model, Point p) {
+        model.getScreenHandler().put(p.x, p.y, getBackgroundSprite());
+        Sprite fg = getForegroundSprite();
+        model.getScreenHandler().register("objectforeground", p, fg);
+        List<GameCharacter> recruitables = defaultGuys;
+        if (this.recruitState != null) {
+             recruitables = recruitState.getRecruitables();
+        }
+        for (int i = 0; i < Math.min(3, recruitables.size()); ++i) {
+            AvatarSprite avatarSprite = recruitables.get(i).getAvatarSprite();
+            avatarSprite.synch();
+            Point pos = new Point(p.x + offsets.get(i).x, p.y + offsets.get(i).y);
+            model.getScreenHandler().register(avatarSprite.getName(), pos, avatarSprite);
+        }
     }
 
     @Override

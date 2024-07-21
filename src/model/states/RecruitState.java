@@ -272,4 +272,8 @@ public class RecruitState extends GameState {
     public void goToDismiss(Model model) {
         dismiss(model);
     }
+
+    public List<GameCharacter> getRecruitables() {
+        return recruitables;
+    }
 }
