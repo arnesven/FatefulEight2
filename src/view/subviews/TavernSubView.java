@@ -5,14 +5,18 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.races.Race;
 import model.states.dailyaction.*;
+import sprites.CombatSpeechBubble;
+import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 import view.combat.GrassCombatTheme;
 import view.sprites.FirePlaceSprite;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -48,6 +52,7 @@ public class TavernSubView extends DailyActionSubView {
     private final boolean inTown;
     private final Sprite[] colorGuys;
     private boolean[] showColorGuys;
+    private final List<MyPair<RunOnceAnimationSprite, Point>> otherEffects = new ArrayList<>();
 
     public TavernSubView(AdvancedDailyActionState state,
                          SteppingMatrix<DailyActionNode> matrix, boolean inTown) {
@@ -125,6 +130,12 @@ public class TavernSubView extends DailyActionSubView {
             Point p = convertToScreen(new Point(x, 7));
             model.getScreenHandler().register(OVER_DOOR.getName(), p, OVER_DOOR, 4);
         }
+        for (MyPair<RunOnceAnimationSprite, Point> effect : new ArrayList<>(otherEffects)) {
+            model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first);
+            if (effect.first.isDone()) {
+                otherEffects.remove(effect);
+            }
+        }
     }
 
 
@@ -166,4 +177,13 @@ public class TavernSubView extends DailyActionSubView {
                 from.y == AdvancedDailyActionState.TOWN_MATRIX_ROWS-1;
     }
 
+    public void addCalloutAtBartender(int lengthOfLine) {
+        otherEffects.add(new MyPair<>(new TavernSpeechBubble(lengthOfLine), convertToScreen(new Point(1, 3))));
+    }
+
+    private static class TavernSpeechBubble extends CombatSpeechBubble {
+        public TavernSpeechBubble(int lengthOfLine) {
+            setAnimationDelay(lengthOfLine / 4);
+        }
+    }
 }

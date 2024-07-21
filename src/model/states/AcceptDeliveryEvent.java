@@ -86,7 +86,7 @@ public class AcceptDeliveryEvent extends GeneralInteractionEvent {
         this.recipient = MyRandom.sample(recipiants);
     }
 
-    private void senderSpeak(String text) {
+    protected void senderSpeak(String text) {
         if (isTrueEvent) {
             portraitSay(text);
         } else {

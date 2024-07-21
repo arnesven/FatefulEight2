@@ -15,6 +15,8 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.SubView;
+import view.subviews.TavernSubView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -93,9 +95,21 @@ public class TalkToBartenderNode extends DailyActionNode {
             } else if (selected == 1) {
                 new TradeWithBartenderState(model, itemsForSale).run(model);
             } else if (options.get(selected).contains("Buy Horse")) {
-                new BuyHorseState(model, "Bartender").run(model);
+                BuyHorseState state = new BuyHorseState(model, "Bartender") {
+                    @Override
+                    protected void sellerSay(String seller, String text) {
+                        bartenderSay(model, text);
+                    }
+                };
+                state.run(model);
             } else if (options.get(selected).contains("Sell Horse")) {
-                new SellHorseState(model).run(model);
+                SellHorseState state = new SellHorseState(model, "Bartender") {
+                    @Override
+                    protected void buyerSay(String text) {
+                        bartenderSay(model, text);
+                    }
+                };
+                state.run(model);
             } else if (options.get(selected).contains("Ask For Work")){
                 askForWork(model);
             }
@@ -108,7 +122,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                     "Hey, can you give me a job?")));
             if (model.getSettings().getMiscFlags().containsKey("innworkdone") &&
                     model.getSettings().getMiscFlags().get("innworkdone")) {
-                printQuote("Bartender", "Sorry, not at the moment.");
+                bartenderSay(model,  "Sorry, not at the moment.");
                 return;
             }
             workDone = true;
@@ -128,32 +142,32 @@ public class TalkToBartenderNode extends DailyActionNode {
         }
 
         private void washDishes(Model model) {
-            printQuote("Bartender", "We do have an enormous amount of dishes that need washing. Won't pay much though.");
+            bartenderSay(model,  "We do have an enormous amount of dishes that need washing. Won't pay much though.");
             leaderSay("I'll do it.");
             println("You spend the rest of the day cleaning up in the kitchen.");
-            printQuote("Bartender", "Good work. Here's your pay.");
+            bartenderSay(model,  "Good work. Here's your pay.");
             model.getParty().addToGold(Math.min(4, model.getParty().size()));
             println("You got " + model.getParty().size() + " gold.");
         }
 
         private void cleanStables(Model model) {
-            printQuote("Bartender", "The stable needs cleaning. Make it tidy in there and I'll pay you.");
+            bartenderSay(model,  "The stable needs cleaning. Make it tidy in there and I'll pay you.");
             leaderSay("I'll do it.");
             println("You spend the rest of the day cleaning up the filthy stables.");
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Labor, 5);
             if (success) {
-                printQuote("Bartender", "Wow! I'm sure the ponies will be please. Good work. Here's your pay.");
+                bartenderSay(model,  "Wow! I'm sure the ponies will be please. Good work. Here's your pay.");
                 model.getParty().addToGold(5);
                 println("You got 5 gold.");
             } else {
-                printQuote("Bartender", "What's this? This place is even messier " +
+                bartenderSay(model,  "What's this? This place is even messier " +
                         "than it was before? I won't pay for such shoddy work!");
                 leaderSay("Rats...");
             }
         }
 
         private void helpWithBooks(Model model) {
-            printQuote("Bartender", "The previous owner of this place left the books in complete disarray. " +
+            bartenderSay(model,  "The previous owner of this place left the books in complete disarray. " +
                     "Can you have a look at them and set them straight?");
             leaderSay("I'll do it.");
             println("You spend the rest of the day trying to make sense of the bartender's economical situation.");
@@ -161,30 +175,30 @@ public class TalkToBartenderNode extends DailyActionNode {
             if (success) {
                 println("You finally manage to understand the system of symbols and numbers, then transcribe them into " +
                         "notes which are more generally understandable.");
-                printQuote("Bartender", "Oh, now I understand. Thank you for clearing this up. Good work. Here's your pay.");
+                bartenderSay(model,  "Oh, now I understand. Thank you for clearing this up. Good work. Here's your pay.");
                 model.getParty().addToGold(6);
                 println("You got 6 gold.");
             } else {
                 println("Despite your best efforts, the ledgers and papers are completely beyond your understand. " +
                         "After many hours you are forced to admit that you aren't getting anywhere.");
-                printQuote("Bartender", "That's a shame. Well, at least you tried. Here's something for your troubles.");
+                bartenderSay(model,  "That's a shame. Well, at least you tried. Here's something for your troubles.");
                 model.getParty().addToGold(2);
                 println("You got 2 gold.");
             }
         }
 
         private void sharpenKnives(Model model) {
-            printQuote("Bartender", "The knives in the kitchen are very blunt. Could you sharpen them for me?");
+            bartenderSay(model,  "The knives in the kitchen are very blunt. Could you sharpen them for me?");
             leaderSay("I'll do it.");
             println("You spend the rest of the day sharpening all the knives in the kitchen.");
             boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Blades, 6);
             if (success) {
-                printQuote("Bartender", "Excellent. You've saved me a trip to a town to have this done." +
+                bartenderSay(model,  "Excellent. You've saved me a trip to a town to have this done." +
                         " Here's your pay.");
                 model.getParty().addToGold(8);
                 println("You got 8 gold.");
             } else {
-                printQuote("Bartender", "... These knives are blunter than a sledgehammer. " +
+                bartenderSay(model,  "... These knives are blunter than a sledgehammer. " +
                         "I completely overestimated your ability. " +
                         "I won't pay for such shoddy work!");
             }
@@ -192,12 +206,18 @@ public class TalkToBartenderNode extends DailyActionNode {
 
 
         private void offerDeliveryTask(Model model) {
-            AcceptDeliveryEvent deliveryEvent = new AcceptDeliveryEvent(model, "Bartender");
+            AcceptDeliveryEvent deliveryEvent = new AcceptDeliveryEvent(model, "Bartender") {
+                @Override
+                protected void senderSpeak(String text) {
+                    bartenderSay(model, text);
+                }
+            };
             deliveryEvent.offerDeliveryTask(model);
         }
 
         private void getAdvice(Model model) {
-            printQuote("Bartender", "I used to be an adventurer like you, then I took an arrow to the knee. " +
+
+            bartenderSay(model,  "I used to be an adventurer like you, then I took an arrow to the knee. " +
                     "Now I run this place, and I'm doing pretty well for myself, but I do sometimes dream back to the " +
                     "good old days when I was in a party of adventurers. The things we accomplished...");
             leaderSay("Got any good advice on adventuring?");
@@ -213,6 +233,14 @@ public class TalkToBartenderNode extends DailyActionNode {
                     "Try to keep your fellow party members happy. Things can get out of hand quickly if they " +
                             "start disliking the leader.",
                     "Having a good formation during combat is crucial. And watch out for enemies with ranged weapons."));
+            bartenderSay(model,  line);
+        }
+
+        private void bartenderSay(Model model, String line) {
+            SubView view = model.getSubView();
+            if (view instanceof TavernSubView) {
+                ((TavernSubView)view).addCalloutAtBartender(line.length());
+            }
             printQuote("Bartender", line);
         }
 

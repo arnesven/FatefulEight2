@@ -10,13 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SellHorseState extends GameState {
-    public SellHorseState(Model model) {
+    private final String buyer;
+
+    public SellHorseState(Model model, String buyer) {
         super(model);
+        this.buyer = buyer;
     }
 
     @Override
     public GameState run(Model model) {
-        printQuote("Bartender", "Which horse did you want to sell?");
+        buyerSay("Which horse did you want to sell?");
         List<String> options = new ArrayList<>();
         for (Horse h : model.getParty().getHorseHandler()) {
             options.add(h.getName());
@@ -33,5 +36,9 @@ public class SellHorseState extends GameState {
             }
         }
         return new DailyActionState(model);
+    }
+
+    protected void buyerSay(String text) {
+        printQuote(buyer, text);
     }
 }

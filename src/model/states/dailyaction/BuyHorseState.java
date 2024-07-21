@@ -26,7 +26,7 @@ public class BuyHorseState extends GameState {
     @Override
     public GameState run(Model model) {
         Horse horse = model.getParty().getHorseHandler().getAvailableHorse(model);
-        printQuote(seller, "We have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.");
+        sellerSay(seller, "We have a nice " + horse.getName() + " for sale for " + price + " gold, if you are interested.");
         model.getTutorial().horses(model);
         if (model.getParty().getGold() < price) {
             leaderSay("I'd love to, but I can't afford it right now.");
@@ -46,6 +46,10 @@ public class BuyHorseState extends GameState {
             model.setSubView(previous);
         }
         return new DailyActionState(model);
+    }
+
+    protected void sellerSay(String seller, String text) {
+        printQuote(seller, text);
     }
 
 }
