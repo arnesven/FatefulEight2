@@ -87,7 +87,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
                                 "I hope things will be picking up soon.",
                                 "Perhaps it's time for some new leadership?",
                                 "Anybody else feel like things could be better?"));
-                print(gc.getName() + " was thinking about leaving the party but has decided to stay for now.");
+                println(gc.getName() + " was thinking about leaving the party but has decided to stay for now.");
             }
         }
     }
