@@ -5,18 +5,14 @@ import model.classes.Skill;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
-import model.enemies.behaviors.MultiMagicAttackBehavior;
 import model.items.Equipment;
-import model.items.weapons.Weapon;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class DragonEnemy extends BeastEnemy {
     private final int speed;
