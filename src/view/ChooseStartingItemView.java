@@ -77,10 +77,10 @@ public class ChooseStartingItemView extends SelectableListMenu {
                 BorderFrame.drawCentered(model.getScreenHandler(), "STARTING GEAR", y + 1,
                         MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawCentered(model.getScreenHandler(),
-                        "Use Space to select " + MyStrings.numberWord(NO_OF_ITEMS_TO_PICK) + " of the", y + 3,
+                        "Select " + MyStrings.numberWord(NO_OF_ITEMS_TO_PICK) + " of the following", y + 3,
                         MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawCentered(model.getScreenHandler(),
-                        "following as your starting items.", y + 4,
+                        "as your starting items.", y + 4,
                         MyColors.WHITE, MyColors.BLUE);
 
                 int row = y + ITEMS_Y_OFFSET - 5;
@@ -158,7 +158,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
             } else if (matrix.getSelectedPoint().y == matrix.getMinimumRow() && keyEvent.getKeyCode() == KeyEvent.VK_UP) {
                 inItemMatrix = false;
                 super.setSelectedRow(1);
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
                 Item currentItem = matrix.getSelectedElement();
                 if (selectedItems.contains(currentItem)) {
                     selectedItems.remove(currentItem);
