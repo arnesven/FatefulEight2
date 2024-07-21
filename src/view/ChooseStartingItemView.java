@@ -36,7 +36,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
 
 
     public ChooseStartingItemView(Model model, GameCharacter gc) {
-        super(model.getView(), 11 + ITEMS_PER_ROW * 5, calculateHeight(gc));
+        super(model.getView(), 8 + ITEMS_PER_ROW * 5, calculateHeight(gc));
         this.items = getStartingItems(gc);
         this.matrix = new SteppingMatrix<>(ITEMS_PER_ROW,
                 (int)Math.ceil(((double)items.size()) / ITEMS_PER_ROW));
@@ -90,7 +90,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
                     for (int matX = 0; matX < matrix.getColumns(); ++matX) {
                         Item currentItem = matrix.getElementAt(matX, matY);
                         if (currentItem != null) {
-                            Point position = new Point(xStart + matX*6 + 5, row);
+                            Point position = new Point(xStart + matX*6 + 3, row);
                             currentItem.drawYourself(model.getScreenHandler(), position.x, position.y);
                             if (selectedItems.contains(currentItem)) {
                                 model.getScreenHandler().put(position.x+3, position.y+3, CharacterCreationView.CHECK_SPRITE);
@@ -103,7 +103,7 @@ public class ChooseStartingItemView extends SelectableListMenu {
                     Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
                     Point cursorPos = matrix.getSelectedPoint();
                     model.getScreenHandler().register(cursor.getName(),
-                            new Point(xStart + cursorPos.x * 6 + 5, y + ITEMS_Y_OFFSET - 3 + cursorPos.y * 5), cursor);
+                            new Point(xStart + cursorPos.x * 6 + 3, y + ITEMS_Y_OFFSET - 3 + cursorPos.y * 5), cursor);
                 }
 
                 Item it = matrix.getSelectedElement();
