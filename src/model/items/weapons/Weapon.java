@@ -94,6 +94,9 @@ public abstract class Weapon extends EquipableItem {
         if (isTwoHanded()) {
             result.append(", Two-handed");
         }
+        if (!isPhysicalDamage()) {
+            result.append(", Magic Damage");
+        }
         result.append(getSkillBonusesAsString());
         if (!getExtraText().equals("")) {
             result.append(", " + getExtraText());
@@ -179,4 +182,6 @@ public abstract class Weapon extends EquipableItem {
     public String getAttackSound() {
         return "default_attack";
     }
+
+    public boolean isPhysicalDamage() { return true; }
 }

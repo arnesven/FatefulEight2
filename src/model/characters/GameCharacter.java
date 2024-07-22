@@ -227,7 +227,8 @@ public class GameCharacter extends Combatant {
         combatEvent.println(", dealing " + damage + " damage." + extraInfo);
         combatEvent.addSpecialEffect(target, equipment.getWeapon().getEffectSprite());
         if (damage > 0) {
-            MyColors damageColor = DamageValueEffect.STANDARD_DAMAGE;
+            MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
+                    DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;
             if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
                 damageColor = DamageValueEffect.CRITICAL_DAMAGE;
             }

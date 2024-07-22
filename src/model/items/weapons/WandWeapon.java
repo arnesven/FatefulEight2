@@ -52,4 +52,9 @@ public abstract class WandWeapon extends Weapon {
     public String getAttackSound() {
         return "wand";
     }
+
+    @Override
+    public boolean isPhysicalDamage() {
+        return false;
+    }
 }
