@@ -4,12 +4,11 @@ import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.horses.HorseItemAdapter;
-import model.items.Equipment;
-import model.items.HorseStartingItem;
-import model.items.InventoryDummyItem;
-import model.items.Item;
+import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
+import model.items.clothing.JustClothes;
+import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import util.MyRandom;
 import view.*;
@@ -161,15 +160,15 @@ public class ChooseStartingCharacterState extends GameState {
         assert startingItem != null;
         boolean canEquip = Equipment.canEquip(startingItem, gc).equals("");
         if (canEquip) {
-            if (startingItem instanceof Weapon) {
+            if (startingItem instanceof Weapon && gc.getEquipment().getWeapon() instanceof StartingItem) {
                 gc.getEquipment().setWeapon((Weapon) startingItem);
                 return;
             }
-            if (startingItem instanceof Clothing) {
+            if (startingItem instanceof Clothing && gc.getEquipment().getClothing() instanceof JustClothes) {
                 gc.getEquipment().setClothing((Clothing) startingItem);
                 return;
             }
-            if (startingItem instanceof Accessory) {
+            if (startingItem instanceof Accessory && gc.getEquipment().getAccessory() == null) {
                 gc.getEquipment().setAccessory((Accessory) startingItem);
                 return;
             }

@@ -10,9 +10,11 @@ import model.items.accessories.Accessory;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import util.MyPair;
+import util.MyStrings;
 import view.*;
 import view.help.RaceAndClassHelpDialog;
 import view.sprites.ArrowSprites;
+import view.subviews.SubView;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -132,7 +134,11 @@ public class PartyView extends SelectableListMenu {
             addListContent(content, x, y++, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString());
             addListContent(content, x, y++, getAttackString(w));
             addListContent(content, x, y++, getBonusesAsString(w));
-            addListContent(content, x, y++, w.getExtraText());
+            String extra = w.getExtraText();
+            if (extra.length() > rightColumnX - SubView.X_OFFSET) {
+                extra = extra.substring(0, rightColumnX - SubView.X_OFFSET);
+            }
+            addListContent(content, x, y++, extra);
         } else {
             content.add(new OpenWeaponMenuListContent(x, y++, gc, "NO WEAPON"));
             addListContent(content, x, y++, w.getExtraText());
