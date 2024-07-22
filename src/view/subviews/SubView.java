@@ -54,10 +54,10 @@ public abstract class SubView {
                 AnimationManager.unregister(p.second);
             }
         }
-        ongoingEffects.remove(toRemove);
+        toRemove.forEach(ongoingEffects::remove);
     }
 
-    protected void addOngoingEffect(MyPair<Point, RunOnceAnimationSprite> pair) {
+    protected synchronized void addOngoingEffect(MyPair<Point, RunOnceAnimationSprite> pair) {
         ongoingEffects.add(pair);
     }
 
