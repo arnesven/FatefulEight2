@@ -10,8 +10,11 @@ import model.combat.conditions.FatigueCondition;
 import model.items.UsableItem;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
+import sprites.CombatSpeechBubble;
+import util.MyLists;
 import util.MyRandom;
 import view.help.HelpDialog;
+import view.subviews.CombatSubView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -149,20 +152,35 @@ public abstract class CombatAction {
     }
 
     private static void performFleeFromBattle(Model model, CombatEvent combatEvent, GameCharacter character) {
+        boolean fleeSuccess = false;
         if (model.getParty().size() > 1) {
             SkillCheckResult result = character.testSkill(model, Skill.Leadership, 3 + model.getParty().size());
             combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
             if (result.isSuccessful()) {
-                combatEvent.setPartyFled(true);
+                combatEvent.leaderSay(MyRandom.sample(List.of("Retreat!", "Fall back!", "Let's get out of here!",
+                        "They're to strong, let's go!", "There's no point, let's get out of here.")));
+                combatEvent.addSpecialEffect(model.getParty().getLeader(), new CombatSpeechBubble());
+                fleeSuccess = true;
             }
         } else {
             int d10 = MyRandom.rollD10();
             combatEvent.print("Trying to escape from combat (D10 roll=" + d10 + ")");
             if (d10 >= 5) {
                 combatEvent.println(" >=5, SUCCESS.");
-                combatEvent.setPartyFled(true);
+                combatEvent.leaderSay("I'm out of here.");
+                combatEvent.addSpecialEffect(model.getParty().getLeader(), new CombatSpeechBubble());
+                fleeSuccess = true;
             } else {
                 combatEvent.println(" <5 FAIL. Can't get away!");
+            }
+        }
+        if (fleeSuccess) {
+            if (model.getSubView() instanceof CombatSubView) {
+                ((CombatSubView)model.getSubView()).enableFleeingAnimation();
+            }
+            combatEvent.setPartyFled(true);
+            for (GameCharacter gc : new ArrayList<>(combatEvent.getAllies())) {
+                combatEvent.removeAlly(gc);
             }
         }
     }

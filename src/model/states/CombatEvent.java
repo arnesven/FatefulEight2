@@ -451,7 +451,7 @@ public class CombatEvent extends DailyEventState {
 
 
     public void addAllies(List<GameCharacter> gcs) {
-        MyLists.forEach(allies, (GameCharacter gc) -> combatMatrix.remove(gc));
+        MyLists.forEach(allies, combatMatrix::remove);
         this.allies.addAll(gcs);
         combatMatrix.addAllies(allies);
     }

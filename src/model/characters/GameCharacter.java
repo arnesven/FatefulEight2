@@ -354,17 +354,17 @@ public class GameCharacter extends Combatant {
                 drawAvatar(screenHandler, xpos, ypos);
             }
 
-            if (hasCondition(WerewolfFormCondition.class)) {
-                AvatarSprite werewolfAvatar = ((WerewolfFormCondition) getCondition(WerewolfFormCondition.class)).getAvatar();
-                if (isDead()) {
-                    screenHandler.register("wwavatarfor" + getFullName() + "dead", new Point(xpos, ypos), werewolfAvatar.getDead());
-                } else {
-                    screenHandler.register("wwavatarfor" + getFullName(), new Point(xpos, ypos), werewolfAvatar);
-                }
-            } else if (hasCondition(BatFormCondition.class) && !isDead()) {
-                Sprite avatar = ((BatFormCondition) getCondition(BatFormCondition.class)).getAvatar();
-                screenHandler.register("batavatar" + getFullName(), new Point(xpos, ypos), avatar);
-            }
+//            if (hasCondition(WerewolfFormCondition.class)) {
+//                AvatarSprite werewolfAvatar = ((WerewolfFormCondition) getCondition(WerewolfFormCondition.class)).getAvatar();
+//                if (isDead()) {
+//                    screenHandler.register("wwavatarfor" + getFullName() + "dead", new Point(xpos, ypos), werewolfAvatar.getDead());
+//                } else {
+//                    screenHandler.register("wwavatarfor" + getFullName(), new Point(xpos, ypos), werewolfAvatar);
+//                }
+//            } else if (hasCondition(BatFormCondition.class) && !isDead()) {
+//                Sprite avatar = ((BatFormCondition) getCondition(BatFormCondition.class)).getAvatar();
+//                screenHandler.register("batavatar" + getFullName(), new Point(xpos, ypos), avatar);
+//            }
         }
         screenHandler.register(getName() + "inittoken", new Point(xpos+3, ypos+3), initiativeSymbol);
         drawConditions(screenHandler, xpos, ypos);

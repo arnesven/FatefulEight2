@@ -19,7 +19,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CombatSubView extends SubView {
 
@@ -35,6 +37,8 @@ public class CombatSubView extends SubView {
     public static final Sprite CURRENT_MARKER = new QuestCursorSprite();
     private int splashAnimationCountDown = 0;
     private String splash = "";
+    private boolean isFleeing = false;
+    private final Map<Combatant, Sprite> fleeingAvatars = new HashMap<>();
 
     public CombatSubView(CombatEvent combatEvent, CombatMatrix combatMatrix, CombatTheme theme) {
         this.combat = combatEvent;
@@ -89,6 +93,9 @@ public class CombatSubView extends SubView {
     }
 
     private void drawCursor(Model model) {
+        if (isFleeing) {
+            return;
+        }
         Combatant combatant = combat.getCurrentCombatant();
         Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
         if (combatant != null) {
@@ -110,9 +117,20 @@ public class CombatSubView extends SubView {
                 int xpos = X_OFFSET + col*4;
                 int ypos = Y_OFFSET + (row+2)*4 + shiftForCurrent(combatant);
                 if (combatant != null) {
-                    combatant.drawYourself(model.getScreenHandler(), xpos, ypos, getInitiativeSymbol(combatant, model));
-                    if (combatant == combat.getCurrentCombatant()) {
-                        model.getScreenHandler().register(CURRENT_MARKER.getName(), new Point(xpos, ypos), CURRENT_MARKER);
+                    if (combatant instanceof GameCharacter && isFleeing) {
+                        Sprite avatarBack;
+                        if (fleeingAvatars.containsKey(combatant)) {
+                            avatarBack = fleeingAvatars.get(combatant);
+                        } else {
+                            avatarBack = ((GameCharacter) combatant).getAvatarSprite().getAvatarBack();
+                            fleeingAvatars.put(combatant, avatarBack);
+                        }
+                        model.getScreenHandler().register(avatarBack.getName(), new Point(xpos, ypos), avatarBack);
+                    } else {
+                        combatant.drawYourself(model.getScreenHandler(), xpos, ypos, getInitiativeSymbol(combatant, model));
+                        if (combatant == combat.getCurrentCombatant()) {
+                            model.getScreenHandler().register(CURRENT_MARKER.getName(), new Point(xpos, ypos), CURRENT_MARKER);
+                        }
                     }
                 }
             }
@@ -276,5 +294,9 @@ public class CombatSubView extends SubView {
     public void displaySplashMessage(String splashMessage) {
         this.splash = splashMessage;
         this.splashAnimationCountDown = 300;
+    }
+
+    public void enableFleeingAnimation() {
+        this.isFleeing = true;
     }
 }
