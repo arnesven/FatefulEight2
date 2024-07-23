@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Beard implements Serializable {
     // DO NOT CHANGE THE ORDER OF allBeards, IT WILL AFFECT PRESET CHARACTERS
     public static Beard[] allBeards = new Beard[]{
-            new Beard(0, 0x00, false),
+            new NoBeard(),
             new Beard(1, 0x40),
             new Beard(2, 0x00, false),
             new Beard(3, 0x00, false),

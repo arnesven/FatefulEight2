@@ -14,7 +14,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     private final int nose;
     private CharacterEyes eyes;
     private HairStyle hairStyle;
-    private final Beard beard;
+    private Beard beard;
     private Sprite32x32 avatarNormalHair;
     private Sprite32x32 avatarBackHair;
     private Sprite32x32 avatarFullBackHair;
@@ -300,6 +300,10 @@ public class AdvancedAppearance extends CharacterAppearance {
         return hairStyle;
     }
 
+    public void setBeard(Beard beard) {
+        this.beard = beard;
+    }
+
     public void drawBlink(ScreenHandler screenHandler, int x, int y) {
         if (detail instanceof EyePatchDetail) {
             screenHandler.register("blinkright", new Point(x+1, y), getBlinkRight());
@@ -330,5 +334,9 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     public void setEyeballColor(MyColors color) {
         this.eyeballColor = color;
+    }
+
+    public Beard getBeard() {
+        return beard;
     }
 }
