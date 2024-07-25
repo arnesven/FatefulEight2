@@ -75,7 +75,7 @@ public class DogEvent extends DailyEventState {
                     leaderSay("Alright " + boyOrGirl(dogPortrait) + ", you can come along.");
                     println("The dog jumps and scampers about playfully. It seems happy to have found new master.");
                     model.getParty().setDog(new DogHorse());
-                    // TODO: Tutorial
+                    model.getTutorial().dog(model);
                 } else {
                     println("The dog quickly snatches the bag and runs off! You have lost 5 rations.");
                     model.getParty().addToFood(-5);

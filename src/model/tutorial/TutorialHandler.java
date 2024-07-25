@@ -534,6 +534,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void dog(Model model) {
+        runOnce("dogs", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new DogsTutorial(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }
