@@ -7,7 +7,7 @@ import view.sprites.FullPortraitSprite;
 import view.sprites.Sprite;
 
 public class SilhouetteAppearance extends CharacterAppearance {
-    private static final Sprite SILHOUETTE_SPRITE = new FullPortraitSprite(0);
+    private static final Sprite SILHOUETTE_SPRITE = new FullPortraitSprite(0, 0);
     public SilhouetteAppearance() {
         super(Race.ALL, true, MyColors.BLACK);
     }

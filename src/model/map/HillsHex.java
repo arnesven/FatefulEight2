@@ -37,7 +37,10 @@ public class HillsHex extends WorldHex {
 
 
     public static DailyEventState generateHillsEvent(Model model) {
-        if (MyRandom.rollD10() >= 5) {
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll == 4) {
+            return new DogEvent(model);
+        } else if (dieRoll >= 5) {
             return MyRandom.sample(List.of(
                     new OrcBandEvent(model),
                     new WizardsAbodeEvent(model),
@@ -62,6 +65,11 @@ public class HillsHex extends WorldHex {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new CaveEvent(model), new MineEvent(model), new AbandonedShackEvent(model)));
     }
 
     @Override

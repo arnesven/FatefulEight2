@@ -270,6 +270,7 @@ public abstract class WorldHex {
             events.add(new PilgrimEvent(model));
             events.add(new MonkEvent(model));
             events.add(new LottoHouseEvent(model));
+            events.add(new DogEvent(model));
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
@@ -437,4 +438,8 @@ public abstract class WorldHex {
     }
 
     public abstract String getTerrainDescription();
+
+    public DailyEventState generateDogEvent(Model model) {
+        return null;
+    }
 }

@@ -39,7 +39,10 @@ public class WoodsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        if (MyRandom.rollD10() >= 5) {
+        int roll = MyRandom.rollD10();
+        if (roll == 4) {
+            return new DogEvent(model);
+        } else if (roll >= 5) {
             List<DailyEventState> events = new ArrayList<>();
             events.add(new LumberMillEvent(model));
             events.add(new WolfEvent(model));
@@ -63,6 +66,11 @@ public class WoodsHex extends WorldHex {
             return MyRandom.sample(events);
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new CaveEvent(model), new ShrineEvent(model), new AbandonedShackEvent(model)));
     }
 
     @Override

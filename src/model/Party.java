@@ -10,17 +10,11 @@ import model.classes.SkillCheckResult;
 import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
+import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
-import model.items.accessories.ChainGloves;
-import model.items.accessories.ComfyShoes;
-import model.items.accessories.Crown;
-import model.items.accessories.SwiftRing;
-import model.items.books.ElfOriginBook;
-import model.items.books.SpelunkersNotesBook;
-import model.items.special.FashionableSash;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
@@ -69,6 +63,7 @@ public class Party implements Serializable {
     private final Set<String> specialCharactersRecruited = new HashSet<>();
     private Loan currentLoan = null;
     private HorseHandler horseHandler = new HorseHandler();
+    private DogHorse dog = null;
     private List<GameCharacter> recruitmentPersistence = null;
     private boolean seminarHeld = false;
     private int notoriety = 0;
@@ -882,5 +877,21 @@ public class Party implements Serializable {
 
     public void disableVampireLookFor(GameCharacter vampire) {
         partyAnimations.removeVampireFeedingLookFor(vampire.getAppearance());
+    }
+
+    public void setDog(DogHorse dogHorse) {
+        this.dog = dogHorse;
+    }
+
+    public void removeDog() {
+        this.dog = null;
+    }
+
+    public DogHorse getDog() {
+        return dog;
+    }
+
+    public boolean hasDog() {
+        return dog != null;
     }
 }

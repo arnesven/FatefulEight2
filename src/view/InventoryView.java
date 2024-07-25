@@ -2,6 +2,7 @@ package view;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.horses.HorseItemAdapter;
 import model.items.*;
 import model.items.spells.DragonTamingSpell;
 import model.items.spells.Spell;
@@ -223,6 +224,9 @@ public class InventoryView extends SelectableListMenu {
                     public List<? extends Item> getItems(Model model) {
                         List<Item> mounts = new ArrayList<>(model.getParty().getHorseHandler().getHorsesAsItems());
                         mounts.addAll(DragonTamingSpell.tamedDragonsAsItems(model));
+                        if (model.getParty().hasDog()) {
+                            mounts.add(new HorseItemAdapter(model.getParty().getDog()));
+                        }
                         return mounts;
                     }
                 },

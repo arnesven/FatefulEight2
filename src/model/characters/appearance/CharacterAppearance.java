@@ -483,4 +483,8 @@ public abstract class CharacterAppearance implements Serializable {
     public MyColors getAlternateSkinColor() {
         return alternateSkinColor;
     }
+
+    public boolean supportsSpeakingAnimation() {
+        return true;
+    }
 }

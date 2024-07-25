@@ -33,7 +33,9 @@ public class DesertHex extends WorldHex {
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
-        if (3 <= roll && roll <= 4 && getLocation() instanceof MountainLocation) {
+        if (roll == 2) {
+            return new DogEvent(model);
+        } else if (3 <= roll && roll <= 4 && getLocation() instanceof MountainLocation) {
             return MountainHex.generateMountainEvent(model);
         } else if (5 <= roll) {
             return MyRandom.sample(List.of(
@@ -60,6 +62,11 @@ public class DesertHex extends WorldHex {
             return HillsHex.generateHillsEvent(model);
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new DeadBodyEvent(model), new WoundedAdventurerEvent(model), new AbandonedShackEvent(model)));
     }
 
     @Override

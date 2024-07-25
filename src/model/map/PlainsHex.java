@@ -33,7 +33,10 @@ public class PlainsHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        if (MyRandom.rollD10() >= 5) {
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll == 4) {
+            return new DogEvent(model);
+        } else if (dieRoll >= 5) {
             return MyRandom.sample(List.of(
                     new StormEvent(model),
                     new UnicornEvent(model),
@@ -54,6 +57,11 @@ public class PlainsHex extends WorldHex {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new BrokenWagonEvent(model), new BerriesEvent(model), new CairnEvent(model)));
     }
 
     @Override

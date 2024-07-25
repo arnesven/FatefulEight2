@@ -45,7 +45,10 @@ public class SwampHex extends WorldHex {
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
-        if (3 <= roll && roll <= 4 && getLocation() instanceof SwampMountainLocation) {
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll == 2) {
+            return new DogEvent(model);
+        } else if (3 <= roll && roll <= 4 && getLocation() instanceof SwampMountainLocation) {
             return MountainHex.generateMountainEvent(model);
         } else if (roll >= 5) {
             return MyRandom.sample(List.of(
@@ -74,5 +77,8 @@ public class SwampHex extends WorldHex {
         return new NoEventState(model);
     }
 
-
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new SwampRaftEvent(model), new WoundedAdventurerEvent(model), new MushroomsEvent(model)));
+    }
 }

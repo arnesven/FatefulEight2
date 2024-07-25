@@ -23,18 +23,29 @@ public class JungleHex extends WorldHex {
     }
 
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return MyRandom.sample(List.of(
-                new JungleMonsterEvent(model),
-                new JungleMonsterEvent(model),
-                new DehydrationEvent(model),
-                new LostEvent(model),
-                new LostEvent(model),
-                new MosquitoesEvent(model),
-                new MushroomsEvent(model),
-                new AbandonedShackEvent(model),
-                new RareBirdEvent(model),
-                new NoEventState(model)
-        ));
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll == 2) {
+            return new DogEvent(model);
+        } else if (dieRoll >= 3) {
+            return MyRandom.sample(List.of(
+                    new JungleMonsterEvent(model),
+                    new JungleMonsterEvent(model),
+                    new DehydrationEvent(model),
+                    new LostEvent(model),
+                    new LostEvent(model),
+                    new MosquitoesEvent(model),
+                    new MushroomsEvent(model),
+                    new AbandonedShackEvent(model),
+                    new RareBirdEvent(model),
+                    new NoEventState(model)
+            ));
+        }
+        return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new MushroomsEvent(model), new WoundedAdventurerEvent(model), new AbandonedShackEvent(model)));
     }
 
     @Override

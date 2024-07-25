@@ -70,25 +70,40 @@ public class CaveHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        List<DailyEventState> events = new ArrayList<>(List.of(
-                new BatsEvent(model),
-                new UndergroundLakeEvent(model),
-                new ChasmEvent(model),
-                new MineEvent(model),
-                new HideoutEvent(model),
-                new DwarvenCityEvent(model),
-                new DeadBodyEvent(model),
-                new GoblinsEvent(model),
-                new OrcsEvent(model),
-                new WoundedAdventurerEvent(model),
-                new MushroomsEvent(model),
-                new GoblinFugitiveEvent(model),
-                new ChestEvent(model),
-                new BanishDaemonRitualEvent(model),
-                new FindTreasureMapEvent(model)
-        ));
+        int roll = MyRandom.rollD10();
+        if (roll == 2) {
+            return new DogEvent(model);
+        } else if (roll >= 3) {
+            List<DailyEventState> events = new ArrayList<>(List.of(
+                    new BatsEvent(model),
+                    new UndergroundLakeEvent(model),
+                    new ChasmEvent(model),
+                    new MineEvent(model),
+                    new HideoutEvent(model),
+                    new DwarvenCityEvent(model),
+                    new DeadBodyEvent(model),
+                    new GoblinsEvent(model),
+                    new OrcsEvent(model),
+                    new WoundedAdventurerEvent(model),
+                    new MushroomsEvent(model),
+                    new GoblinFugitiveEvent(model),
+                    new ChestEvent(model),
+                    new BanishDaemonRitualEvent(model),
+                    new FindTreasureMapEvent(model)
+            ));
+            if (canHaveExit()) {
+                events.addAll(List.of(new ExitCaveEvent(model), new ExitCaveEvent(model), new ExitCaveEvent(model)));
+            }
+            return MyRandom.sample(events);
+        }
+        return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        List<DailyEventState> events = new ArrayList<>(List.of(new ChestEvent(model), new WoundedAdventurerEvent(model), new MushroomsEvent(model)));
         if (canHaveExit()) {
-            events.addAll(List.of(new ExitCaveEvent(model), new ExitCaveEvent(model), new ExitCaveEvent(model)));
+            events.add(new ExitCaveEvent(model));
         }
         return MyRandom.sample(events);
     }

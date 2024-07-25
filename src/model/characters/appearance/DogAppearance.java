@@ -1,17 +1,17 @@
-package model.characters.special;
+package model.characters.appearance;
 
-import model.characters.appearance.CharacterAppearance;
 import model.races.Race;
+import util.MyRandom;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.FullPortraitSprite;
 import view.sprites.Sprite;
 
-public class GoblinAppearance extends CharacterAppearance {
-    private static final Sprite SPRITE = new GoblinPortraitSprite();
+public class DogAppearance extends CharacterAppearance {
+    private static final Sprite SPRITE = new DogPortraitSprite();
 
-    public GoblinAppearance() {
-        super(Race.GOBLIN, false, MyColors.PEACH);
+    public DogAppearance() {
+        super(Race.DOG, MyRandom.flipCoin(), MyColors.BEIGE);
     }
 
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
@@ -46,16 +46,7 @@ public class GoblinAppearance extends CharacterAppearance {
 
     @Override
     public CharacterAppearance copy() {
-        return new GoblinAppearance();
-    }
-
-    private static class GoblinPortraitSprite extends FullPortraitSprite {
-        public GoblinPortraitSprite() {
-            super(1, 0);
-            setColor1(MyColors.ORC_GREEN);
-            setColor3(MyColors.YELLOW);
-            setColor4(MyColors.TAN);
-        }
+        return new DogAppearance();
     }
 
     @Override
@@ -67,5 +58,12 @@ public class GoblinAppearance extends CharacterAppearance {
     @Override
     public boolean supportsSpeakingAnimation() {
         return false;
+    }
+
+    private static class DogPortraitSprite extends FullPortraitSprite {
+        public DogPortraitSprite() {
+            super(0, 1);
+            MyColors.transformImage(this);
+        }
     }
 }

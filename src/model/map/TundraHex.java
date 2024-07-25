@@ -38,7 +38,9 @@ public class TundraHex extends WorldHex {
         if (position.y < 10 && MyRandom.randInt(3) == 0) {
             return new TundraMonsterEvent(model);
         }
-        if (3 <= roll && roll <= 4 && getLocation() instanceof MountainLocation) {
+        if (roll == 2) {
+            return new DogEvent(model);
+        } else if (3 <= roll && roll <= 4 && getLocation() instanceof MountainLocation) {
             return MountainHex.generateMountainEvent(model);
         } else if (5 <= roll) {
             return MyRandom.sample(List.of(
@@ -63,6 +65,11 @@ public class TundraHex extends WorldHex {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new ChestEvent(model), new DeadBodyEvent(model), new OutpostEvent(model)));
     }
 
     @Override

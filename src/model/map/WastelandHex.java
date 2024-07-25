@@ -33,19 +33,30 @@ public class WastelandHex extends WorldHex {
 
     @Override
     protected DailyEventState generateTerrainSpecificEvent(Model model) {
-        return MyRandom.sample(List.of(
-                new GhostTownEvent(model),
-                new WastelandMonsterEvent(model),
-                new WastelandMonsterEvent(model),
-                new LostEvent(model),
-                new StormEvent(model),
-                new ChasmEvent(model),
-                new DehydrationEvent(model),
-                new OrcBandEvent(model),
-                new VulturesEvent(model),
-                new NoEventState(model),
-                new LostExplorerEvent(model)
-        ));
+        int dieRoll = MyRandom.rollD10();
+        if (dieRoll == 2) {
+            return new DogEvent(model);
+        } else if (dieRoll >= 3) {
+            return MyRandom.sample(List.of(
+                    new GhostTownEvent(model),
+                    new WastelandMonsterEvent(model),
+                    new WastelandMonsterEvent(model),
+                    new LostEvent(model),
+                    new StormEvent(model),
+                    new ChasmEvent(model),
+                    new DehydrationEvent(model),
+                    new OrcBandEvent(model),
+                    new VulturesEvent(model),
+                    new NoEventState(model),
+                    new LostExplorerEvent(model)
+            ));
+        }
+        return new NoEventState(model);
+    }
+
+    @Override
+    public DailyEventState generateDogEvent(Model model) {
+        return MyRandom.sample(List.of(new DeadBodyEvent(model), new LostExplorerEvent(model), new GhostTownEvent(model)));
     }
 
     @Override
