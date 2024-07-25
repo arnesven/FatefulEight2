@@ -38,7 +38,7 @@ public class CryptEvent extends DailyEventState {
             return;
         }
         CollapsingTransition.transition(model, caveSubView);
-        int dieRol = 1; //TODO: MyRandom.rollD10();
+        int dieRol = MyRandom.rollD10();
         if (dieRol == 1) {
             innerEvent = new PuzzleInTheCryptEvent(model);
             innerEvent.doTheEvent(model);

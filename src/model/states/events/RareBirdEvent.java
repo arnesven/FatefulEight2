@@ -50,7 +50,7 @@ public class RareBirdEvent extends DailyEventState {
     }
 
     public static boolean checkForSquawk(Model model, GameState state) {
-        if (MyRandom.flipCoin()) {
+        if (hasBird(model) && MyRandom.flipCoin()) {
             birdSquawk(state);
             List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
             candidates.removeAll(model.getParty().getBench());

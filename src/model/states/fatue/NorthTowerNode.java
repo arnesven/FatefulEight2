@@ -4,10 +4,7 @@ import model.Model;
 import model.items.clothing.MytheriumArmor;
 import model.items.special.FashionableSash;
 import model.items.special.FatueKeyItem;
-import model.ruins.DungeonLevel;
-import model.ruins.DungeonRoom;
-import model.ruins.FinalDungeonLevel;
-import model.ruins.RuinsDungeon;
+import model.ruins.*;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.NoLeversDungeonConfig;
 import model.ruins.configs.PitfallDungeonConfig;
@@ -16,6 +13,7 @@ import model.ruins.factories.UndeadMonsterFactory;
 import model.ruins.objects.HiddenChestObject;
 import model.ruins.objects.StairsDown;
 import model.ruins.objects.TowerExit;
+import model.ruins.themes.GrayRuinsTheme;
 import model.ruins.themes.PurpleBrickTheme;
 import model.ruins.themes.PurpleRuinsTheme;
 import model.ruins.themes.RedBrickTheme;
@@ -38,7 +36,7 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
 
     public NorthTowerNode(MyColors requiredKey1, MyColors requiredKey2) {
         super("North Tower", false, requiredKey1, PROMPT);
-        this.key1 = new FatueKeyItem(requiredKey1); // TODO: Other monster factory, and puzzle
+        this.key1 = new FatueKeyItem(requiredKey1); // TODO: Other monster factory
         this.key2 = new FatueKeyItem(requiredKey2);
     }
 
@@ -67,6 +65,7 @@ public class NorthTowerNode extends KeyRequiredFatueDungeonNode {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         levels.add(new FinalDungeonLevel(model, random, new RedBrickTheme()));
+        levels.add(new PuzzleDungeonLevel(model, random, false, false, new RedBrickTheme()));
         DungeonLevel level;
         do {
             PitfallDungeonConfig config = new PitfallDungeonConfig(new RedBrickTheme(), new FatueTowerMonsterFactory());

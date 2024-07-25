@@ -180,18 +180,10 @@ public class ExploreRuinsState extends GameState {
     }
 
     public void ascendOrDescend(boolean downWard) {
-        Point relPos = getCurrentRoom().getRelativeAvatarPosition();
-        if (!relPos.equals(new Point(0, 0))) {
-            generalMoveAnimation(relPos.x*4, relPos.y*4, 0, 0);
-        }
-        generalMoveAnimation(0, 0, 0, -4);
+        dungeon.getLevel(currentLevel).moveAvatarTowardStairs(this);
         currentLevel += downWard ? 1 : -1;
         changeLevel(downWard);
-        generalMoveAnimation(0, -4, 0,0);
-        relPos = getCurrentRoom().getRelativeAvatarPosition();
-        if (!relPos.equals(new Point(0, 0))) {
-            generalMoveAnimation(0, 0, relPos.x*4, relPos.y*4);
-        }
+        dungeon.getLevel(currentLevel).moveAvatarAwayFromStairs(this);
         getCurrentRoom().entryTrigger(getModel(), this);
     }
 

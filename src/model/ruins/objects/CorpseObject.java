@@ -58,7 +58,13 @@ public class CorpseObject extends CenterDungeonObject {
                     state.println("You found nothing of interest.");
                 }
             } else {
-                state.println("You found a map of these ruins!");
+                String type = state.getDungeonType().toLowerCase();
+                if (type.equals("ruins")) {
+                    type = "these " + type;
+                } else if (type.equals("dungeon")) {
+                    type = "this " + type;
+                }
+                state.println("You found a map of " + type + "!");
                 state.mapsFound(state.getCurrentLevel());
                 for (int i = 0; i <= state.getCurrentLevel(); ++i) {
                     for (DungeonRoom room : state.getDungeon().getLevel(i).getRoomList()) {

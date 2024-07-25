@@ -5,6 +5,7 @@ import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.factories.MonsterFactory;
 import model.ruins.objects.*;
 import model.ruins.themes.DungeonTheme;
+import model.states.ExploreRuinsState;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -263,5 +264,21 @@ public class DungeonLevel implements Serializable {
 
     public boolean showExitIcon() {
         return true;
+    }
+
+    public void moveAvatarTowardStairs(ExploreRuinsState state) {
+        Point relPos = state.getCurrentRoom().getRelativeAvatarPosition();
+        if (!relPos.equals(new Point(0, 0))) {
+            state.generalMoveAvatar(new Point(relPos.x*4, relPos.y*4), new Point(0, 0));
+        }
+        state.generalMoveAvatar(new Point(0, 0), new Point(0, -4));
+    }
+
+    public void moveAvatarAwayFromStairs(ExploreRuinsState state) {
+        state.generalMoveAvatar(new Point(0, -4), new Point(0,0));
+        Point relPos = state.getCurrentRoom().getRelativeAvatarPosition();
+        if (!relPos.equals(new Point(0, 0))) {
+            state.generalMoveAvatar(new Point(0, 0), new Point(relPos.x*4, relPos.y*4));
+        }
     }
 }

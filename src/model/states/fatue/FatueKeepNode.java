@@ -3,10 +3,7 @@ package model.states.fatue;
 import model.Model;
 import model.items.accessories.RingOfZeal;
 import model.items.special.FashionableSash;
-import model.ruins.DungeonLevel;
-import model.ruins.DungeonRoom;
-import model.ruins.FinalDungeonLevel;
-import model.ruins.RuinsDungeon;
+import model.ruins.*;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.PitfallDungeonConfig;
 import model.ruins.factories.UndeadMonsterFactory;
@@ -14,6 +11,7 @@ import model.ruins.objects.HiddenChestObject;
 import model.ruins.objects.StairsDown;
 import model.ruins.objects.TowerExit;
 import model.ruins.themes.BlueBrickTheme;
+import model.ruins.themes.GrayRuinsTheme;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.combat.MansionTheme;
@@ -40,8 +38,9 @@ public class FatueKeepNode extends KeyRequiredFatueDungeonNode {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         levels.add(new FinalDungeonLevel(model, random, new BlueBrickTheme()));
+        levels.add(new PuzzleDungeonLevel(model, random, false, false, new BlueBrickTheme()));
         DungeonLevel level;
-        do {// TODO: Other monster factory, and puzzle
+        do {// TODO: Other monster factory
             PitfallDungeonConfig config = new PitfallDungeonConfig(new BlueBrickTheme(), new UndeadMonsterFactory());
             config.addRequiredDeadEndObject(new HiddenChestObject(new RingOfZeal()), 0.33);
             level = new DungeonLevel(model, random, false, 7, config);

@@ -3,10 +3,7 @@ package model.states.fatue;
 import model.Model;
 import model.items.accessories.BootsOfMobility;
 import model.items.special.FashionableSash;
-import model.ruins.DungeonLevel;
-import model.ruins.DungeonRoom;
-import model.ruins.FinalDungeonLevel;
-import model.ruins.RuinsDungeon;
+import model.ruins.*;
 import model.ruins.configs.DungeonLevelConfig;
 import model.ruins.configs.PitfallDungeonConfig;
 import model.ruins.factories.FatueTowerMonsterFactory;
@@ -48,8 +45,9 @@ public class EastTowerNode extends KeyRequiredFatueDungeonNode {
         List<DungeonLevel> levels = new ArrayList<>();
         Random random = new Random();
         levels.add(new FinalDungeonLevel(model, random, new GrayRuinsTheme()));
+        levels.add(new PuzzleDungeonLevel(model, random, false, false, new GrayRuinsTheme()));
         DungeonLevel level;
-        do { // TODO: Other monster factory, and puzzle
+        do { // TODO: Other monster factory
             PitfallDungeonConfig config = new PitfallDungeonConfig(new GrayRuinsTheme(), new FatueTowerMonsterFactory());
             config.addRequiredDeadEndObject(new FatueKeyObject(givesKeyColor), FatueKeyObject.PREVALENCE);
             config.addRequiredDeadEndObject(new HiddenChestObject(new BootsOfMobility()), 0.33);

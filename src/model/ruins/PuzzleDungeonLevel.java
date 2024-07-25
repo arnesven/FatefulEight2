@@ -27,14 +27,14 @@ public class PuzzleDungeonLevel extends DungeonLevel {
     private static final int PLATES_ROWS = 4;
     private static final int PLATES_COLUMNS = 5;
     private final List<LeverObject> autoLevers = new ArrayList<>();
+    private final Point exitPosition = new Point(4, 7);
 
     public PuzzleDungeonLevel(Model model, Random random, boolean firstLevel, boolean descending, DungeonTheme theme) {
         super(model, random, false, 3, theme, new MonsterFactory());
         PuzzleRoom puzzleRoom = new PuzzleRoom();
         setRoom(0, 2, puzzleRoom);
         setStartingPoint(new Point(0, 2));
-        setDescentPoint(new Point(0, 0));
-        Point exitPosition = new Point(4, 7);
+        setDescentPoint(new Point(0, 2));
         DungeonDoor dobj = null;
         if (firstLevel) {
             dobj = new DungeonExit(exitPosition);
@@ -73,6 +73,13 @@ public class PuzzleDungeonLevel extends DungeonLevel {
             }
         }
         applyReverseSolution(plates);
+    }
+
+    public void moveAvatarAwayFromStairs(ExploreRuinsState state) {
+        Point mid = new Point((exitPosition.x-1)*4,(exitPosition.y-1)*4);
+        state.generalMoveAvatar(new Point((exitPosition.x-1)*4, exitPosition.y*4), mid);
+        Point relPos = state.getCurrentRoom().getRelativeAvatarPosition();
+        state.generalMoveAvatar(mid, new Point(relPos.x*4, relPos.y*4));
     }
 
     private void applyReverseSolution(PressurePlateObject[][] plates) {
@@ -117,27 +124,29 @@ public class PuzzleDungeonLevel extends DungeonLevel {
         public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
             super.entryTrigger(model, exploreRuinsState);
             exploreRuinsState.leaderSay("Hmm... let's see now.");
-            if (model.getParty().size() > 1) {
-                exploreRuinsState.leaderSay("Anybody got a clue how this thing works?");
-            }
-            MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, exploreRuinsState, Skill.Logic, 10);
-            boolean info = false;
-            if (pair.first) {
-                model.getParty().partyMemberSay(model, pair.second, "Isn't it obvious? We need all those levers to be in the right position. " +
-                        "The pressure plates probably control them. Although the creator of this puzzle has surely tried " +
-                        "hiding which plate goes to what lever. And, come to think of it, perhaps some plates are connected to multiple levers.");
-                info = true;
-            }
+            if (!showMarkedPlates) {
+                if (model.getParty().size() > 1) {
+                    exploreRuinsState.leaderSay("Anybody got a clue how this thing works?");
+                }
+                MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, exploreRuinsState, Skill.Logic, 10);
+                boolean info = false;
+                if (pair.first) {
+                    model.getParty().partyMemberSay(model, pair.second, "Isn't it obvious? We need all those levers to be in the right position. " +
+                            "The pressure plates probably control them. Although the creator of this puzzle has surely tried " +
+                            "hiding which plate goes to what lever. And, come to think of it, perhaps some plates are connected to multiple levers.");
+                    info = true;
+                }
 
-            pair = model.getParty().doSoloSkillCheckWithPerformer(model, exploreRuinsState, Skill.Perception, 12);
-            if (pair.first) {
-                model.getParty().partyMemberSay(model, pair.second,
-                        "Some of the pressure plates look a little different actually, like they're a little extra worn.");
-                this.showMarkedPlates = true;
-            }
+                pair = model.getParty().doSoloSkillCheckWithPerformer(model, exploreRuinsState, Skill.Perception, 12);
+                if (pair.first) {
+                    model.getParty().partyMemberSay(model, pair.second,
+                            "Some of the pressure plates look a little different actually, like they're a little extra worn.");
+                    this.showMarkedPlates = true;
+                }
 
-            if (!info && !showMarkedPlates) {
-                exploreRuinsState.leaderSay("I guess we'll just have to rely on brute force.");
+                if (!info && !showMarkedPlates) {
+                    exploreRuinsState.leaderSay("I guess we'll just have to rely on brute force.");
+                }
             }
         }
 
