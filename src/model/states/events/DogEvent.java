@@ -30,6 +30,8 @@ public class DogEvent extends DailyEventState {
                 innerEvent = model.getCurrentHex().generateDogEvent(model);
                 if (innerEvent != null) {
                     innerEvent.run(model);
+                } else {
+                    println("You follow the dog for a while but cannot find anything of importance.");
                 }
             } else {
                 leaderSay("You silly doggy! Come on, it's this way!");
