@@ -41,4 +41,8 @@ public class LeverObject extends CenterDungeonObject {
     public boolean isOn() {
         return on;
     }
+
+    public void setOn(boolean b) {
+        on = b;
+    }
 }

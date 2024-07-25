@@ -15,11 +15,17 @@ public class OpenDoor extends DungeonDoor {
     private final String direction;
     private final boolean isHorizontal;
     private List<LeverObject> levers = new ArrayList<>();
+    private boolean blocked;
 
     public OpenDoor(Point point, boolean isHorizontal, String direction) {
         super(point.x, point.y);
         this.isHorizontal = isHorizontal;
         this.direction = direction;
+        blocked = false;
+    }
+
+    public boolean isHorizontal() {
+        return isHorizontal;
     }
 
     @Override
@@ -56,6 +62,10 @@ public class OpenDoor extends DungeonDoor {
 
     @Override
     public void doAction(Model model, ExploreRuinsState state) {
+        if (blocked) {
+            state.println("You cannot use this door at the moment (you may have to move closer).");
+            return;
+        }
         if (!levers.isEmpty() && leversWrong()) {
             state.println("This door's lock cannot be picked.");
         } else {
@@ -73,5 +83,9 @@ public class OpenDoor extends DungeonDoor {
 
     public void addLeverConnection(LeverObject lever) {
         this.levers.add(lever);
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 }

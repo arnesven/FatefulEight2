@@ -6,8 +6,12 @@ import model.states.ExploreRuinsState;
 import java.awt.*;
 
 public class DungeonExit extends StairsUp {
+    public DungeonExit(Point p) {
+        super(p);
+    }
+
     public DungeonExit() {
-        super(new Point(1, 0));
+        this(new Point(1, 0));
     }
 
     @Override

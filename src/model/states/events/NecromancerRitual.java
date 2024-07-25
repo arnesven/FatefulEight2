@@ -84,7 +84,7 @@ public class NecromancerRitual extends RitualEvent {
                     "some kind of reward...");
             showExplicitPortrait(model, undeadAppearance, "Undead Lord");
             portraitSay("They are outsiders. Dispose of them immediately.");
-            leaderSay("Now wait just a minute here...");
+            leaderSay("Now wait just a minute here!");
             showExplicitPortrait(model, getRitualists().get(0).getAppearance(), "Necromancer");
             portraitSay("As you wish master.");
 

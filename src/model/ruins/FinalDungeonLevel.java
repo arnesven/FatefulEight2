@@ -10,9 +10,13 @@ import java.awt.*;
 import java.util.Random;
 
 public class FinalDungeonLevel extends DungeonLevel {
-    public FinalDungeonLevel(Model model, Random random, DungeonTheme theme) {
+    public FinalDungeonLevel(Model model, Random random, DungeonTheme theme, DungeonRoom room) {
         super(model, random, false, 1, theme, new MonsterFactory());
-        setFinalRoom(new BossRoom());
+        setFinalRoom(room);
+    }
+
+    public FinalDungeonLevel(Model model, Random random, DungeonTheme theme) {
+        this(model, random, theme, new BossRoom());
     }
 
     public void setFinalRoom(DungeonRoom room, boolean below) {

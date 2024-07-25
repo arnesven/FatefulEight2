@@ -8,15 +8,12 @@ import util.MyRandom;
 import java.awt.*;
 import java.util.List;
 
-public class BossRoom extends DungeonRoom {
+public class BossRoom extends LargeDungeonRoom {
     private final BossMonsterObject boss;
-    private Point relPos;
 
     public BossRoom() {
-        super(5, 5);
         this.boss = new BossMonsterObject();
         addObject(boss);
-        this.relPos = new Point(0, 0);
     }
 
     @Override
@@ -25,8 +22,8 @@ public class BossRoom extends DungeonRoom {
             model.getParty().randomPartyMemberSay(model, List.of("Why did we come back here?"));
             return;
         }
-        this.relPos = new Point(2, 1);
-        exploreRuinsState.moveCharacterToCenterAnimation(model, relPos);
+        setRelativeAvatarPosition(new Point(2, 1));
+        exploreRuinsState.moveCharacterToCenterAnimation(model, getRelativeAvatarPosition());
         model.getParty().partyMemberSay(model, model.getParty().getLeader(),
                 List.of("Okay people. Get ready for a boss fight.",
                 "This has to be the last enemy...", "Everybody ready?"));
@@ -43,8 +40,4 @@ public class BossRoom extends DungeonRoom {
         }
     }
 
-    @Override
-    public Point getRelativeAvatarPosition() {
-        return relPos;
-    }
 }

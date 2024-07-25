@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.characters.GameCharacter;
 import model.ruins.*;
 import model.ruins.objects.DungeonMonster;
 import model.ruins.objects.DungeonObject;
@@ -70,11 +71,15 @@ public class ExploreRuinsState extends GameState {
         populateMatrix();
         subView = new RuinsSubView(this, matrix, dungeonType);
         CollapsingTransition.transition(model, subView);
-
+        getCurrentRoom().entryTrigger(model, this);
         do {
             waitForReturnSilently();
-            matrix.getSelectedElement().doAction(model, this);
+            DungeonObject selected = matrix.getSelectedElement();
+            selected.doAction(model, this);
             populateMatrix();
+            if (matrix.getElementList().contains(selected)) {
+                matrix.setSelectedElement(selected);
+            }
         } while (!dungeonExited);
         model.setSubView(new DungeonStatsSubView(dungeon, dungeonType, visitedRooms.size(),
                 visitedLevels.size(), defeatedMonsters.size(), mapsFound.size()));
@@ -198,11 +203,11 @@ public class ExploreRuinsState extends GameState {
         ascendOrDescend(false);
     }
 
-    private void generalMoveAnimation(int fromX, int fromY, int toX, int toY) {
+    private void generalMoveAnimation(int fromX, int fromY, int toX, int toY, GameCharacter who) {
         dungeon.setAvatarEnabled(false);
         dungeon.setCursorEnabled(false);
         Point position = RuinsDungeon.avatarPosition(partyPosition);
-        subView.addMovementAnimation(getModel().getParty().getLeader().getAvatarSprite(),
+        subView.addMovementAnimation(who.getAvatarSprite(),
                 new Point(position.x+fromX, position.y+fromY),
                 new Point(position.x+toX, position.y+toY));
         subView.waitForAnimation();
@@ -211,7 +216,9 @@ public class ExploreRuinsState extends GameState {
         dungeon.setCursorEnabled(true);
     }
 
-
+    private void generalMoveAnimation(int fromX, int fromY, int toX, int toY) {
+        generalMoveAnimation(fromX, fromY, toX, toY, getModel().getParty().getLeader());
+    }
 
     private void changeLevel(boolean down) {
         if (down) {
@@ -239,6 +246,10 @@ public class ExploreRuinsState extends GameState {
 
     public void moveCharacterToCenterAnimation(Model model, Point where) {
         generalMoveAnimation(0, 0, where.x*4, where.y*4);
+    }
+
+    public void generalMoveAvatar(Point from, Point to) {
+        generalMoveAnimation(from.x, from.y, to.x, to.y);
     }
 
     public boolean isDungeonExited() {
