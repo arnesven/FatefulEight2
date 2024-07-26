@@ -7,16 +7,17 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.enemies.Enemy;
+import model.enemies.TrainingDummyEnemy;
 import model.items.Item;
 import model.items.accessories.*;
 import model.items.clothing.*;
 import model.items.weapons.*;
-import model.map.CastleLocation;
-import model.map.WorldBuilder;
-import model.map.WorldHex;
+import model.map.*;
 import model.map.wars.KingdomWar;
 import model.map.wars.PitchedBattleSite;
 import model.states.DailyEventState;
+import model.states.ShopState;
 import model.states.battle.*;
 import util.MyLists;
 import util.MyRandom;
@@ -26,17 +27,20 @@ import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class OrcsBattleEvent extends DailyEventState {
+    private boolean freeLodging = false;
+
     public OrcsBattleEvent(Model model) {
         super(model);
     }
 
     @Override
     protected void doEvent(Model model) {
-        println("The party comes upon a battle camp.");
+        println("The party comes upon an army camp.");
         if (WorldBuilder.isInExtendedRegion(model.getParty().getPosition())) {
             println("The scene is pretty busy and nobody seems to take not of you entering the camp.");
             fightBattle(model);
@@ -45,14 +49,58 @@ public class OrcsBattleEvent extends DailyEventState {
             println("There are guards patrolling the camp and the party must appear like they belong.");
             boolean success = model.getParty().doCollectiveSkillCheck(model, this, Skill.Entertain, 5);
             if (success) {
-                println("You successfully pose as soldiers of the kingdom.");
-                // TODO: Smith, Quartermaster, Free Lodging.
+                println("You successfully pose as soldiers of the kingdom. You are now free to roam in the army camp. " +
+                        "There also seems to be plenty of tents with empty cots for you to sleep on as well.");
+                int choice = multipleOptionArrowMenu(model, 24, 24,
+                        List.of("Visit weapon smith", "Visit armorer", "Visit quartermaster", "Combat training"));
+                if (choice == 0) {
+                    new ArtisanEvent(model, true, new ArtisanEvent.Smith()).doEvent(model);
+                } else if (choice == 1) {
+                    new ArtisanEvent(model, true, new ArtisanEvent.Armorer()).doEvent(model);
+                } else if (choice == 2) {
+                    println("The party finds a tent where a quartermaster happily provides them with one weapon each.");
+                    for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                        Weapon w = randomQuartermasterWeapon();
+                        println(gc.getName() + " got a " + w.getName() + ".");
+                        w.addYourself(model.getParty().getInventory());
+                    }
+                } else {
+                    println("The party finds an enclosure where soldiers can practice fighting against dummies.");
+                    leaderSay("We'll this is one fight I think we ought to win.");
+                    model.getLog().waitForAnimationToFinish();
+                    List<Enemy> enemies = new ArrayList<>();
+                    for (int i = 0; i < model.getParty().size(); ++i) {
+                        enemies.add(new TrainingDummyEnemy('A'));
+                    }
+                    runCombat(enemies, false);
+                }
+
+                this.freeLodging = true;
             } else {
                 showRandomPortrait(model, Classes.CAP, "Guard");
-                portraitSay("Hey you. You don't belong here. Shove off!");
+                portraitSay("Hey you. What are you think you're doing? You don't belong here.");
+                leaderSay("Uhm, we're just checking out your camp. It looks nice. Mind if we come in and stay for the evening?");
+                portraitSay("I certainly do mind! We have enough bums in our army. We don't need " +
+                        "the common rabble to be wandering about here too. Now shove off!");
                 leaderSay("Okay okay. No need to be so gruff. We'll just make our camp somewhere else then.");
+                println("You leave the army camp.");
             }
         }
+    }
+
+    private Weapon randomQuartermasterWeapon() {
+        return MyRandom.sample(List.of(new Longsword(), new Broadsword(), new LongBow(), new Spear(),
+                new BattleAxe(), new MorningStar()));
+    }
+
+    @Override
+    public boolean isFreeLodging() {
+        return freeLodging;
+    }
+
+    @Override
+    protected boolean isFreeRations() {
+        return freeLodging;
     }
 
     private void fightBattle(Model model) {
@@ -94,6 +142,9 @@ public class OrcsBattleEvent extends DailyEventState {
             return;
         }
 
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
+
         if (victorious) {
             portraitSay("What a glorious day, victory is ours!");
             leaderSay("Yes. The troops fought well.");
@@ -101,10 +152,10 @@ public class OrcsBattleEvent extends DailyEventState {
             leaderSay("Perhaps. Now it found the enemy instead. What now general?");
             portraitSay("We have driven the invaders off, but we must remain vigilant. " +
                     "These orcs and goblin scum may rise yet again to strike us.");
-
             leaderSay("And if they do, we'll be ready.");
-            portraitSay("I'm glad we can count on you.");
-            leaderSay("So long general.");
+            portraitSay("I'm glad we can count on you. Please stay in our camp tonight. We have plenty of spare beds and food for you.");
+            leaderSay("Thank you general, and so long.");
+            freeLodging = true;
             println("Each party member gains 25 XP!");
             MyLists.forEach(model.getParty().getPartyMembers(),
                     (GameCharacter gc) -> model.getParty().giveXP(model, gc, 25));
@@ -112,6 +163,16 @@ public class OrcsBattleEvent extends DailyEventState {
             if (yesNoInput()) {
                 lootBattlefield(model);
             }
+        } else {
+            println("In the hectic aftermath of the lost battle, you see the general barking order at " +
+                    "the confused units, or what remains of them.");
+            portraitSay("Retreat! Retreat I say!");
+            leaderSay("General... we did our best but...");
+            portraitSay("Fortune was not with us today, needless to say. We must make haste to our " +
+                    "rear positions before the enemy overruns us.");
+            portraitSay("Now make haste friend or we shall surely meet the same fate as many of our fallen comrades.");
+            leaderSay("Yes general.");
+            setFledCombat(true);
         }
     }
 
@@ -152,26 +213,42 @@ public class OrcsBattleEvent extends DailyEventState {
 
     private KingdomWar makeWar(Model model, CastleLocation castle) {
         KingdomWar war = new KingdomWar("Green Horde", castle.getPlaceName(), MyColors.RED, castle.getCastleColor(),
-                new ArrayList<>(), new PitchedBattleSite(model.getParty().getPosition(), MyColors.GREEN, "Battle with the orcs"),
+                new ArrayList<>(), new PitchedBattleSite(model.getParty().getPosition(), colorForHex(model.getCurrentHex()), "Battle with the orcs"),
                 new ArrayList<>());
         List<BattleUnit> result = war.getAggressorUnits();
         result.clear();
+        List<BattleUnit> units = new ArrayList<>(List.of(
+                new OrcWarriorUnit(MyRandom.randInt(12, 20)),
+                new OrcWarriorUnit(MyRandom.randInt(12, 20)),
+                new OrcWarriorUnit(MyRandom.randInt(12, 20)),
+                new GoblinSpearmanUnit(MyRandom.randInt(18, 26)),
+                new GoblinSpearmanUnit(MyRandom.randInt(18, 26)),
+                new GoblinBowmanUnit(MyRandom.randInt(18, 26)),
+                new GoblinBowmanUnit(MyRandom.randInt(18, 26))));
+        Collections.shuffle(units);
         for (int i = 0; i < 5; ++i) {
-            int roll = MyRandom.rollD6();
-            if (roll <= 2) {
-                result.add(new OrcWarriorUnit(MyRandom.randInt(12, 20)));
-            } else if (roll <= 4) {
-                result.add(new GoblinSpearmanUnit(MyRandom.randInt(18, 26)));
-            } else {
-                result.add(new GoblinSpearmanUnit(MyRandom.randInt(18, 26)));
-            }
+            result.add(units.remove(0));
         }
-        if (MyRandom.flipCoin()) {
+        if (MyRandom.flipCoin()) { // TODO: Add more fun units, like War Chariot, Orc Champion, Goblin shaman, Rock Lobber
             result.add(new GoblinWolfRiderUnit(MyRandom.randInt(6, 12)));
         } else {
             result.add(new OrcBoarRiderUnit(MyRandom.randInt(5, 9)));
         }
+        Collections.shuffle(result);
         return war;
+    }
+
+    private MyColors colorForHex(WorldHex currentHex) {
+        if (currentHex instanceof TundraHex) {
+            return MyColors.WHITE;
+        }
+        if (currentHex instanceof WastelandHex) {
+            return MyColors.TAN;
+        }
+        if (currentHex instanceof DesertHex) {
+            return MyColors.YELLOW;
+        }
+        return MyColors.GREEN;
     }
 
     private CastleLocation findClosestCastle(Model model) {

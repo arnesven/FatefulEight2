@@ -30,10 +30,18 @@ public class ArtisanEvent extends GeneralInteractionEvent {
     private AdvancedAppearance portrait;
     private ArtisanType subType;
 
-    public ArtisanEvent(Model model, boolean withIntro) {
+    public ArtisanEvent(Model model, boolean withIntro, ArtisanType subType) {
         super(model, "Trade with", MyRandom.randInt(10, 40));
         this.withIntro = withIntro;
-        subType = MyRandom.sample(List.of(
+        this.subType = subType;
+    }
+
+    public ArtisanEvent(Model model, boolean withIntro) {
+        this(model, withIntro, randomSubType());
+    }
+
+    private static ArtisanType randomSubType() {
+        return MyRandom.sample(List.of(
                 new Tailor(),
                 new Tailor(),
                 new Armorer(),
@@ -277,7 +285,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         }
     }
 
-    private static class Smith extends ArtisanType {
+    public static class Smith extends ArtisanType {
         public Smith() {
             super("Smith", "a weapon", MyColors.DARK_GRAY, MyColors.BROWN);
         }
@@ -354,7 +362,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         }
     }
 
-    private static class Armorer extends ArtisanType {
+    public static class Armorer extends ArtisanType {
         public Armorer() {
             super("Armorer", "a set of armor", MyColors.DARK_RED, MyColors.BROWN);
         }
