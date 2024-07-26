@@ -21,7 +21,7 @@ public class MountedEnemy extends Enemy {
 
     @Override
     public int getMaxHP() {
-        return 0;
+        return inner.getMaxHP();
     }
 
     @Override

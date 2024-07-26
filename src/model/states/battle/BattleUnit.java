@@ -158,7 +158,7 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private boolean checkForRout(BattleState battleState) {
-        if (hasLowMorale() && 0 < getCount() && getCount() < ROUT_THRESHOLD) {
+        if (0 < getCount() && getCount() < getRoutThreshold()) {
             battleState.println(getQualifiedName() + " has been routed and flees the battlefield!");
             battleState.removeUnit(this);
             return true;
@@ -166,8 +166,8 @@ public abstract class BattleUnit implements Serializable {
         return false;
     }
 
-    protected boolean hasLowMorale() {
-        return false;
+    protected int getRoutThreshold() {
+        return 0;
     }
 
     protected int getSpecificVSDefenseBonusWhenDefending(BattleState battleState, BattleUnit attacker) {
@@ -234,7 +234,14 @@ public abstract class BattleUnit implements Serializable {
     }
 
     private boolean doOneAttack(BattleState battleState, BattleUnit defender, int attackBonus, int defenseBonus) {
-        return MyRandom.rollD10() + combatSkillBonus + attackBonus >= defender.getDefense() + defenseBonus;
+        int roll = MyRandom.rollD10();
+        if (roll == 10) {
+            return true;
+        }
+        if (roll == 1) {
+            return false;
+        }
+        return roll + combatSkillBonus + attackBonus >= defender.getDefense() + defenseBonus;
     }
 
     private int getDefense() {

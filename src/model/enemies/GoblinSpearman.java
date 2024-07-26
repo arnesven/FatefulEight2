@@ -8,7 +8,7 @@ public class GoblinSpearman extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0x84);
 
     public GoblinSpearman(char a) {
-        super(a, "Goblin Spearman", new MeleeAttackBehavior());
+        super(a, "Spearman", new MeleeAttackBehavior());
     }
 
     @Override

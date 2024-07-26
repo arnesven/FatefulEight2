@@ -28,7 +28,7 @@ public class KnightsUnit extends BattleUnit implements MountedBattleUnit {
 
     @Override
     public HelpDialog getHelpSection(GameView view) {
-        return new BattleUnitHelpDialog(view, this, "Knights are fast, heavily armored fighting behemoths with First Strike. " +
+        return new BattleUnitHelpDialog(view, this, "Knights are fast, heavily armored, mounted fighting behemoths with First Strike. " +
                 "When attacking, units with First Strike have their hits applied to the defending unit before the defender makes its counter attack.");
     }
 

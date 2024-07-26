@@ -9,7 +9,7 @@ public class GoblinBowman extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinSprite(0xAB, MyColors.BROWN);
 
     public GoblinBowman(char a) {
-        super(a, "Goblin Bowman", new RangedAttackBehavior());
+        super(a, "Bowman", new RangedAttackBehavior());
     }
 
     @Override

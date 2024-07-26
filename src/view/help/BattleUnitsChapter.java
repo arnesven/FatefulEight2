@@ -29,9 +29,15 @@ public class BattleUnitsChapter extends ExpandableHelpDialog {
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(
                 new ArchersUnit(99, UNIT_ORIGIN, UNIT_COLOR).getHelpSection(view),
+                new GoblinBowmanUnit(99).getHelpSection(view),
+                new GoblinSpearmanUnit(99).getHelpSection(view),
+                new GoblinWolfRiderUnit(99).getHelpSection(view),
                 new KnightsUnit(99, UNIT_ORIGIN, UNIT_COLOR).getHelpSection(view),
                 new MilitiaUnit(99, UNIT_ORIGIN, UNIT_COLOR).getHelpSection(view),
+                new OrcBoarRiderUnit(99).getHelpSection(view),
+                new OrcWarriorUnit(99).getHelpSection(view),
                 new PikemenUnit(99, UNIT_ORIGIN, UNIT_COLOR).getHelpSection(view),
-                new SwordsmanUnit(99, UNIT_ORIGIN, UNIT_COLOR).getHelpSection(view));
+                new SwordsmanUnit(99, UNIT_ORIGIN, UNIT_COLOR).getHelpSection(view)
+        );
     }
 }

@@ -14,7 +14,9 @@ import model.items.weapons.*;
 import model.journal.JournalEntry;
 import model.map.CastleLocation;
 import model.map.wars.KingdomWar;
+import model.races.Race;
 import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.battle.BattleState;
 import model.states.battle.BattleUnit;
 import model.tasks.BattleDestinationTask;
@@ -41,14 +43,12 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         this.task = battleDestinationTask;
     }
 
+
     @Override
     protected void doEvent(Model model) {
         CharacterAppearance fieldGeneralAppearance = war.getGeneralAppearance();
-        println("You wander into the army camp. It is a large camp with tents, wagons and training dummies everywhere. " +
-                "There are plenty of soldiers about along with armor, weapons, clothes, provisions and everything " +
-                "else an army needs to sustain itself. There's a larger, more colorful tent up on a little hill. You " +
-                "assume this is the command tent. You walk up to it and step inside. A muscular " +
-                fieldGeneralAppearance.getRace().getName().toLowerCase() + " greets you as you enter.");
+        println("You wander into the army camp.");
+        intro(this, fieldGeneralAppearance.getRace());
         showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
         if (war.isInitialBattle()) {
             portraitSay("Hello there! You must be the ones the Commander mentioned in his message. " +
@@ -203,6 +203,14 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         if (warIsOver) {
             model.getWarHandler().endWar(war);
         }
+    }
+
+    public static void intro(DailyEventState state, Race raceOfFieldGeneral) {
+        state.println("It is a large camp with tents, wagons and training dummies everywhere. " +
+                "There are plenty of soldiers about along with armor, weapons, clothes, provisions and everything " +
+                "else an army needs to sustain itself. There's a larger, more colorful tent up on a little hill. You " +
+                "assume this is the command tent. You walk up to it and step inside. A muscular " +
+                raceOfFieldGeneral.getName().toLowerCase() + " greets you as you enter.");
     }
 
     private void decimateRandomly(List<BattleUnit> units, int rollBonus) {

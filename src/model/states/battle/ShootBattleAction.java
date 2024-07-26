@@ -25,7 +25,7 @@ public class ShootBattleAction extends BattleAction {
         super("Shoot", unit);
         Point position = state.getPositionForUnit(unit);
         this.grid = new SteppingMatrix<>(BattleState.BATTLE_GRID_WIDTH, BattleState.BATTLE_GRID_HEIGHT);
-        int range = state.getTerrainForPosition(position) instanceof HillsBattleTerrain ? LONG_RANGE : SHORT_RANGE;
+        int range = state.getTerrainForPosition(position) instanceof HillsBattleTerrain ? getLongRange() : getShortRange();
         int count = 0;
         for (int y = 0; y < grid.getRows(); y++) {
             for (int x = 0; x < grid.getColumns(); ++x) {
@@ -36,6 +36,14 @@ public class ShootBattleAction extends BattleAction {
                 }
             }
         }
+    }
+
+    public int getShortRange() {
+        return SHORT_RANGE;
+    }
+
+    public int getLongRange() {
+        return LONG_RANGE;
     }
 
     @Override

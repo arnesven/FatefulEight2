@@ -53,7 +53,8 @@ public class PlainsHex extends WorldHex {
                     new FarmersHorseRaceEvent(model),
                     new CryptEvent(model),
                     new HealingRitualEvent(model),
-                    new WildHorseEvent(model)
+                    new WildHorseEvent(model),
+                    new OrcsBattleEvent(model)
             ));
         }
         return new NoEventState(model);

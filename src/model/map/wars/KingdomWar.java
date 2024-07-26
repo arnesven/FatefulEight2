@@ -20,7 +20,6 @@ import java.util.List;
 public class KingdomWar implements Serializable {
     private final String aggressor;
     private final String defender;
-    private int stage = 0;
     private final List<BattleUnit> aggressorUnits;
     private final List<BattleUnit> defenderUnits;
     private final List<PitchedBattleSite> aggressorSites;

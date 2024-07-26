@@ -2,6 +2,7 @@ package model.states.battle;
 
 import model.enemies.BanditEnemy;
 import model.enemies.Enemy;
+import util.MyStrings;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -24,8 +25,8 @@ public class MilitiaUnit extends BattleUnit {
     }
 
     @Override
-    protected boolean hasLowMorale() {
-        return true;
+    protected int getRoutThreshold() {
+        return 4;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class MilitiaUnit extends BattleUnit {
         return new BattleUnitHelpDialog(view, this,
                 "Militia units are general infantry units. They are normally lightly equipped and can " +
                         "move quickly across the battlefield. They are normally less disciplined than other units and " +
-                        "will be routed if falling below four combatants.");
+                        "will be routed if falling below " + MyStrings.numberWord(getRoutThreshold()) + " combatants.");
     }
 
     @Override
