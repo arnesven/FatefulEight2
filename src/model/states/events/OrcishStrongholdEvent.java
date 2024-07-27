@@ -113,7 +113,9 @@ public class OrcishStrongholdEvent extends DailyEventState {
         }
         enemies.add(new OrcChieftain('C'));
         runCombat(enemies, false);
-
+        if (model.getParty().isWipedOut()) {
+            return;
+        }
 
         print("You've sacked the orcish stronghold. ");
         int dieRoll = MyRandom.rollD10();

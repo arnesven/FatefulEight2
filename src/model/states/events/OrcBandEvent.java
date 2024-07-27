@@ -4,6 +4,8 @@ import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.enemies.Enemy;
+import model.enemies.MountedOrcWarrior;
+import model.enemies.OrcArcherEnemy;
 import model.enemies.OrcWarrior;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -66,7 +68,7 @@ public class OrcBandEvent extends DailyEventState {
     private void doCombat(Model model, boolean ambush) {
         List<Enemy> enemies = new ArrayList<>();
         for (int i = 0; i < 6; ++i) {
-            enemies.add(new OrcWarrior('A'));
+            enemies.add(makeRandomOrcEnemy());
         }
         if (ambush) {
             runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
@@ -74,5 +76,11 @@ public class OrcBandEvent extends DailyEventState {
             runCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         }
         possiblyGetHorsesAfterCombat("orcs", 4);
+    }
+
+    private Enemy makeRandomOrcEnemy() {
+        return MyRandom.sample(List.of(new OrcWarrior('C'),
+                new OrcArcherEnemy('A'),
+                new MountedOrcWarrior('B')));
     }
 }
