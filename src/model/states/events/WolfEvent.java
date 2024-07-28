@@ -4,15 +4,20 @@ import model.Model;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.Enemy;
+import model.enemies.GoblinWolfRiderEnemy;
 import model.enemies.WolfEnemy;
 import model.states.DailyEventState;
+import util.MyRandom;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WolfEvent extends DailyEventState {
+    private final boolean isWolfRiders;
+
     public WolfEvent(Model model) {
         super(model);
+        this.isWolfRiders = calculateAverageLevel(model) >= 3.0 && MyRandom.flipCoin();
     }
 
     @Override
@@ -21,7 +26,7 @@ public class WolfEvent extends DailyEventState {
         if (!canSneak(model)) {
             model.getLog().waitForAnimationToFinish();
             List<Enemy> enemies = new ArrayList<>();
-            int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (new WolfEnemy('A')).getThreat());
+            int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (getWolf()).getThreat());
             for (int i = numberOfEnemies; i > 0; --i) {
                 enemies.add(getWolf());
             }
@@ -30,10 +35,13 @@ public class WolfEvent extends DailyEventState {
     }
 
     protected Enemy getWolf() {
-        return new WolfEnemy('A');
+        return isWolfRiders ? new GoblinWolfRiderEnemy('A') : new WolfEnemy('A');
     }
 
     protected String getExtraText() {
+        if (isWolfRiders) {
+            return " When the wolves come closer, you can clearly see that they have riders - goblins!";
+        }
         return "";
     }
 

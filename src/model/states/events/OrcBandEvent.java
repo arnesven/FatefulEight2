@@ -4,7 +4,7 @@ import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.enemies.Enemy;
-import model.enemies.MountedOrcWarrior;
+import model.enemies.OrcBoarRiderEnemy;
 import model.enemies.OrcArcherEnemy;
 import model.enemies.OrcWarrior;
 import model.states.DailyEventState;
@@ -81,6 +81,6 @@ public class OrcBandEvent extends DailyEventState {
     private Enemy makeRandomOrcEnemy() {
         return MyRandom.sample(List.of(new OrcWarrior('C'),
                 new OrcArcherEnemy('A'),
-                new MountedOrcWarrior('B')));
+                new OrcBoarRiderEnemy('B')));
     }
 }

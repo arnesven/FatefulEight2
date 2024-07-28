@@ -4,11 +4,11 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
-public class MountedOrcWarrior extends OrcWarrior {
+public class OrcBoarRiderEnemy extends OrcWarrior {
 
     private static final Sprite SPRITE = new MountedOrcWarriorSprite();
 
-    public MountedOrcWarrior(char a) {
+    public OrcBoarRiderEnemy(char a) {
         super(a);
         setName("Orc Boar Rider");
     }
@@ -21,6 +21,11 @@ public class MountedOrcWarrior extends OrcWarrior {
     @Override
     public int getMaxHP() {
         return 9;
+    }
+
+    @Override
+    protected int getHeight() {
+        return 2;
     }
 
     @Override

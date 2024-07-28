@@ -1,6 +1,7 @@
 package model.states.battle;
 
 import model.enemies.Enemy;
+import model.enemies.GoblinWolfRiderEnemy;
 import model.enemies.WolfEnemy;
 import util.MyStrings;
 import view.GameView;
@@ -44,7 +45,7 @@ public class GoblinWolfRiderUnit extends GoblinBattleUnit implements MountedBatt
 
     @Override
     public Enemy makeEnemy() {
-        return new WolfEnemy('A'); // TODO
+        return new GoblinWolfRiderEnemy('A');
     }
 
     @Override

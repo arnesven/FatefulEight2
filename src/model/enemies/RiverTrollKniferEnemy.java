@@ -5,7 +5,7 @@ import view.MyColors;
 
 public class RiverTrollKniferEnemy extends RiverTrollEnemy {
     public RiverTrollKniferEnemy(char c) {
-        super(c, "Knifer", 0x108, MyColors.DARK_GRAY);
+        super(c, "Knifer", 0x110, MyColors.DARK_GRAY);
         setAttackBehavior(new BleedAttackBehavior(2));
     }
 

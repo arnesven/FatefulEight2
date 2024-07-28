@@ -1,7 +1,7 @@
 package model.states.battle;
 
 import model.enemies.Enemy;
-import model.enemies.MountedOrcWarrior;
+import model.enemies.OrcBoarRiderEnemy;
 import view.GameView;
 import view.MyColors;
 import view.help.BattleUnitHelpDialog;
@@ -42,7 +42,7 @@ public class OrcBoarRiderUnit extends OrcishBattleUnit implements MountedBattleU
 
     @Override
     public Enemy makeEnemy() {
-        return new MountedOrcWarrior('A');
+        return new OrcBoarRiderEnemy('A');
     }
 
     @Override
