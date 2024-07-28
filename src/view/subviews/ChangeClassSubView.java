@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.items.Equipment;
+import model.states.GameState;
 import view.sprites.CombatCursorSprite;
 import view.BorderFrame;
 import view.MyColors;
@@ -30,6 +31,9 @@ public class ChangeClassSubView extends TopMenuSubView {
         this.targetClass = targetClass;
         for (GameCharacter gc : matrix.getElementList()) {
             GameCharacter wouldBe = gc.copy();
+            if (gc.getLevel() == 0) {
+                wouldBe.setLevel(1);
+            }
             wouldBe.setEquipment(new Equipment());
             wouldBe.setClass(targetClass);
             charMap.put(gc, wouldBe);

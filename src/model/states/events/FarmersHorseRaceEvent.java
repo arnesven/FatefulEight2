@@ -7,6 +7,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.horses.Horse;
 import model.horses.HorseHandler;
+import model.horses.Steed;
 import model.items.Equipment;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -75,7 +76,11 @@ public class FarmersHorseRaceEvent extends DailyEventState {
                     recruitState.run(model);
                     if (model.getParty().getPartyMembers().contains(farmerCharacter)) {
                         leaderSay("Welcome to the party kid.");
-                        Horse farmersHorse = HorseHandler.generateHorse();
+                        Horse farmersHorse;
+                        do {
+                            farmersHorse = HorseHandler.generateHorse();
+                        } while (farmersHorse instanceof Steed &&
+                                (farmer.getRace().id() == Race.HALFLING.id() || farmer.getRace().id() == Race.DWARF.id()));
                         println("The farmer " + boyOrGirl.toLowerCase() + " has brought a horse to the party, it is a " + farmersHorse.getName() + ".");
                         model.getParty().getHorseHandler().addHorse(farmersHorse);
                     } else {

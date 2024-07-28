@@ -93,6 +93,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         waitForReturn();
         shop.run(model);
         setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, portrait, subType.getName());
         offerImprove(model);
 
         portraitSay("You know... If you're interested I could give you some pointers...");
