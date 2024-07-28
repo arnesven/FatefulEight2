@@ -85,7 +85,7 @@ public class CareerCoachNode extends CareerOfficePersonNode {
                                 "eager to learn about being a " + className + ". However, toward the end, you can feel the " +
                                 "fatigue setting in from constantly talking.");
                         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                            if (gc.getCharClass() == most.first) {
+                            if (gc.getCharClass().getShortName().equals(most.first.getShortName())) {
                                 if (gc.getSP() > 0) {
                                     println(gc.getName() + " exhausts 1 Stamina Point.");
                                     gc.addToSP(-1);
@@ -108,20 +108,27 @@ public class CareerCoachNode extends CareerOfficePersonNode {
         }
 
         private MyPair<CharacterClass, Integer> findMostClasses(Model model) {
-            Map<CharacterClass, Integer> map = new HashMap<>();
+            Map<String, Integer> map = new HashMap<>();
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                if (!map.containsKey(gc.getCharClass())) {
-                    map.put(gc.getCharClass(), 0);
+                if (!map.containsKey(gc.getCharClass().getShortName())) {
+                    map.put(gc.getCharClass().getShortName(), 0);
                 }
-                map.put(gc.getCharClass(), map.get(gc.getCharClass()) + 1);
+                map.put(gc.getCharClass().getShortName(), map.get(gc.getCharClass().getShortName()) + 1);
             }
 
             int most = 0;
-            CharacterClass mostClass = null;
-            for (CharacterClass cls : map.keySet()) {
+            String mostClassStr = null;
+            for (String cls : map.keySet()) {
                 if (map.get(cls) > most) {
                     most = map.get(cls);
-                    mostClass = cls;
+                    mostClassStr = cls;
+                }
+            }
+
+            CharacterClass mostClass = null;
+            for (GameCharacter gc : model.getParty().getPartyMembers()) {
+                if (gc.getCharClass().getShortName().equals(mostClassStr)) {
+                    mostClass = gc.getCharClass();
                 }
             }
             return new MyPair<>(mostClass, most);
