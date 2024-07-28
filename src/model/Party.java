@@ -397,14 +397,16 @@ public class Party implements Serializable {
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
             try {
-                if (size() - bench.size() > 1) {
+                List<GameCharacter> nonBenchers = new ArrayList<>(getPartyMembers());
+                nonBenchers.removeAll(bench);
+                if (nonBenchers.size() > 1) {
                     GameCharacter best = findBestPerformer(skill);
                     event.print("Which party member should perform the Solo " + skill.getName() + " " + difficulty + " check?");
                     event.print(" (Recommended " + best.getName() + "): ");
                     model.getTutorial().skillChecks(model);
                     performer = partyMemberInput(model, event, best);
                 } else {
-                    performer = partyMembers.get(0);
+                    performer = nonBenchers.get(0);
                 }
                 break;
             } catch (SpellCastException spe) {
