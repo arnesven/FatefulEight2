@@ -21,6 +21,7 @@ public abstract class Headquarters implements Serializable {
     protected static final Sprite SIGN_SPRITE = new SignSprite("innisgn", 0x37, MyColors.BLACK, MyColors.WHITE);
 
     private final String locationName;
+    private final int cost;
     private int food = 0;
     private int gold = 0;
     private int materials = 0;
@@ -35,6 +36,7 @@ public abstract class Headquarters implements Serializable {
         this.locationName = location.getPlaceName();
         maxCharacters = size * 2;
         maxHorses = maxCharacters + 2;
+        this.cost = 75 + 50 * size;
     }
 
     public void drawYourself(Model model, Point p) {
@@ -101,5 +103,17 @@ public abstract class Headquarters implements Serializable {
 
     public List<Item> getItems() {
         return items;
+    }
+
+    public static Headquarters makeRandomHeadquarters(UrbanLocation loc) {
+        return new MediumHeadquarters(loc);
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public String presentYourself() {
+        return "It's a lovely, medium sized house.";
     }
 }

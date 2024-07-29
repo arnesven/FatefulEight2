@@ -25,6 +25,7 @@ import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
 import model.tasks.DestinationTask;
+import model.tasks.DoILookFatTask;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;
 import sound.SoundEffects;
@@ -75,7 +76,7 @@ public class Party implements Serializable {
     private TravellerCollection travellers = new TravellerCollection();
     private List<DestinationTask> destinationTasks = new ArrayList<>();
     private int guide = 0;
-    private Headquarters headquarters = new MediumHeadquarters(new LowerThelnTown());
+    private Headquarters headquarters = null;
 
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
@@ -908,10 +909,23 @@ public class Party implements Serializable {
     }
 
     public boolean hasHeadquartersIn(UrbanLocation urbanLocation) {
+        if (headquarters == null) {
+            return false;
+        }
         return headquarters.getLocationName().equals(urbanLocation.getPlaceName());
     }
 
     public Headquarters getHeadquarters() {
         return headquarters;
+    }
+
+    public void setHeadquarters(Model model, GameState state, Headquarters hq) {
+        if (headquarters == null) {
+            model.getTutorial().headquarters(model);
+            model.getLog().addAnimated(LogView.GOLD_COLOR + "You have established your headquarters in " +
+                    hq.getLocationName() + ". Starting tomorrow, you will have access to it. " +
+                    "It is located on the edge of town.\n" + LogView.DEFAULT_COLOR);
+        }
+        this.headquarters = hq;
     }
 }

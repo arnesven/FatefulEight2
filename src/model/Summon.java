@@ -29,11 +29,14 @@ public class Summon implements Serializable {
         tasks.add(new GiveFoodTask(summon, model, location));
         tasks.add(new MagicOrbTask(summon, model, location));
         tasks.add(new FencingTask(summon, model, location));
-        tasks.add(new DoILookFatTask(summon, model, location)); // TODO: Need 2 more (Total of 14 towns)
+        tasks.add(new DoILookFatTask(summon, model, location));
         tasks.add(new HelpMeWithPuzzleTask(summon, model, location));
         tasks.add(new BecomeASpyForMeTask(summon, model, location));
         tasks.add(new UnlockThisBathroom(summon, model, location));
         tasks.add(new InspireMeForAdventureTask(summon, model, location));
+        // TODO: Clear out cultist house task
+        // TODO: Convince vampire to leave task
+        // TODO: Restore mansion task
         return tasks;
     }
 

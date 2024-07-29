@@ -2,6 +2,8 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.headquarters.Headquarters;
+import model.headquarters.MediumHeadquarters;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.GeneralShopNode;
@@ -9,6 +11,7 @@ import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UrbanLocation {
@@ -26,4 +29,5 @@ public interface UrbanLocation {
     Sprite getExitSprite();
     int charterBoatEveryNDays();
     Point getCareerOfficePosition();
+    Headquarters getRealEstate();
 }

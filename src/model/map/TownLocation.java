@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.headquarters.Headquarters;
 import model.states.*;
 import model.states.dailyaction.*;
 import model.states.events.*;
@@ -27,6 +28,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     private final boolean isCoastal;
     private final Sprite QUEST_SPRITE = new Sprite32x32("halftownspriteqmb", "quest.png", 0x52,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
+    private Headquarters headquarters;
 
     public TownLocation(String townName, String lordName, boolean isCoastal) {
         super("Town of " + townName);
@@ -34,6 +36,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
         this.lordName = lordName;
         subView = new ImageSubView("town", "TOWN", "Town of " + townName, true);
         this.isCoastal = isCoastal;
+        headquarters = Headquarters.makeRandomHeadquarters(this);
     }
 
     @Override
@@ -88,6 +91,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        return new MayorEvent(model); /*
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
                     new AcceptDeliveryEvent(model),
@@ -125,7 +129,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new GuideEvent(model, 2)
             ));
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     @Override
@@ -200,5 +204,10 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     @Override
     public HelpDialog getHelpDialog(GameView view) {
         return new TownHelpDialog(view);
+    }
+
+    @Override
+    public Headquarters getRealEstate() {
+        return headquarters;
     }
 }

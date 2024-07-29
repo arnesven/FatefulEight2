@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
+import model.headquarters.Headquarters;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
@@ -135,11 +136,44 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 }
 
                 if (summon.getStep() == Summon.COMPLETE) {
-                    portraitSay("Thanks again for helping me with my problem. " +
-                            "Please, stay for supper and spend the night, there's room for everyone.");
-                    print("Do you wish to spend the night here? (Y/N): ");
-                    if (yesNoInput()) {
-                        spentNight = true;
+                    portraitSay("Thanks again for helping me with my problem.");
+
+                    checkForHeadquarterPurchase(model);
+
+                    if (!model.getParty().hasHeadquartersIn(VisitLordDailyActionState.this.location)) {
+                        portraitSay("Please, stay for supper and spend the night, there's room for everyone.");
+                        print("Do you wish to spend the night here? (Y/N): ");
+                        if (yesNoInput()) {
+                            spentNight = true;
+                        }
+                    }
+                }
+            }
+
+            private void checkForHeadquarterPurchase(Model model) {
+                if (model.getParty().getHeadquarters() == null) { // TODO: What if you want to move headquarters?
+                    portraitSay("Say, you seem like a stand up citizen. We need more of your ilk residing in our town! " +
+                            "It just so happens we have some real estate for sale at the moment. Would you be interested?");
+                    leaderSay("I could be. What are the details?");
+                    Headquarters hq = location.getRealEstate();
+                    portraitSay(hq.presentYourself() + " The current owner is willing to let it go for " +
+                            hq.getCost() + " Why don't you buy it? You could make it the " +
+                            "headquarters for your adventuring party.");
+                    if (hq.getCost() > model.getParty().getGold()) {
+                        leaderSay("I'm afraid it's a little over our budget.");
+                        portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
+                    } else {
+                        print("Buy the house? (Y/N) ");
+                        if (yesNoInput()) {
+                            leaderSay("Okay. We'll take it.");
+                            portraitSay("Splendid. I can hand you the keys right now.");
+                            println("You paid " + hq.getCost() + " gold to the " + location.getLordTitle() + ".");
+                            model.getParty().addToGold(-hq.getCost());
+                            model.getParty().setHeadquarters(model, this, hq);
+                        } else {
+                            leaderSay("We'll think about it.");
+                            portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
+                        }
                     }
                 }
             }

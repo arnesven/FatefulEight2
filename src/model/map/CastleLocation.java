@@ -2,6 +2,8 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.headquarters.Headquarters;
+import model.headquarters.MediumHeadquarters;
 import model.horses.HorseHandler;
 import model.races.Race;
 import model.states.AcceptDeliveryEvent;
@@ -30,6 +32,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     private final SubView subView;
     private final Sprite questSprite;
     private final Race lordRace;
+    private final Headquarters headquarters;
 
     public CastleLocation(String castleName, MyColors castleColor, String lordName, Race lordRace) {
         super(castleName);
@@ -39,6 +42,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
         questSprite = new Sprite32x32("halfcastleq", "quest.png", 0x64,
                 MyColors.BLACK, MyColors.LIGHT_GRAY, this.castleColor, MyColors.GREEN);
         this.lordRace = lordRace;
+        this.headquarters = new MediumHeadquarters(this);
     }
 
     @Override
@@ -207,5 +211,10 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     public MyColors getCastleColor() {
         return castleColor;
+    }
+
+    @Override
+    public Headquarters getRealEstate() {
+        return headquarters;
     }
 }

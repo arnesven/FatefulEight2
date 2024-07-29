@@ -22,8 +22,12 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
         super.addNode(3, 4, new StayHereNode());
         super.addNode(location.getTavernPosition().x, location.getTavernPosition().y, new TavernNode(freeLodge));
         super.addNode(3, 2, new GoToCastleActionNode(location));
-        super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, model, CastleSubView.GROUND_COLOR,
-                CastleSubView.GROUND_COLOR_NIGHT, "Camp outside the castle walls"));
+        if (model.getParty().hasHeadquartersIn(castleLocation)) {
+            super.addNode(0, TOWN_MATRIX_ROWS - 1, new HeadquartersNode(model));
+        } else {
+            super.addNode(0, TOWN_MATRIX_ROWS-1, new CampOutsideOfTownNode(freeRations, model, CastleSubView.GROUND_COLOR,
+                    CastleSubView.GROUND_COLOR_NIGHT, "Camp outside the castle walls"));
+        }
         super.addNode(location.getTravelNodePosition().x, location.getTravelNodePosition().y,
                 new TravelNode(model, CastleSubView.GROUND_COLOR, CastleSubView.GROUND_COLOR_NIGHT));
         super.addNode(6, 6, new WorkBenchNode(model, CastleSubView.GROUND_COLOR, CastleSubView.GROUND_COLOR_NIGHT));
