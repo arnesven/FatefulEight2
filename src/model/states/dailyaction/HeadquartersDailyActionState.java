@@ -22,7 +22,7 @@ import java.util.List;
 
 public class HeadquartersDailyActionState extends GameState {
     private final AdvancedDailyActionState previousState;
-    private static final Point MENU_LOCATION = new Point(24, 24);
+    private static final Point MENU_LOCATION = new Point(24, 19);
 
     public HeadquartersDailyActionState(Model model, AdvancedDailyActionState state) {
         super(model);
@@ -86,7 +86,7 @@ public class HeadquartersDailyActionState extends GameState {
         boolean pickup;
         if (canDoPickup(model) && canDoDropOff(model)) {
             state.print("Would you like to leave (Y) or pick up (N) a character? ");
-            pickup = state.yesNoInput();
+            pickup = !state.yesNoInput();
         } else if (canDoPickup(model)) {
             pickup = true;
         } else if (canDoDropOff(model)) {
@@ -133,7 +133,9 @@ public class HeadquartersDailyActionState extends GameState {
             state.println(selected.getName() + " came back to the party.");
             model.getLog().waitForAnimationToFinish();
             model.setSubView(subView);
+            model.getParty().getHeadquarters().getCharacters().remove(selected);
             model.getParty().add(selected, false);
+            subView.updateCharacters(model);
         } else {
             do {
                 print("Which party member do you want to leave at headquarters? ");

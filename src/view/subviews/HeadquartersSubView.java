@@ -52,6 +52,7 @@ public class HeadquartersSubView extends SubView {
                     Point p = convertToScreen(new Point(colStart + x, row+y));
                     AvatarSprite avatar = gc.getAvatarSprite();
                     avatar.synch();
+                    p.y += 2;
                     model.getScreenHandler().register(avatar.getName(), p, avatar);
                     Point p2 = new Point(p);
                     p2.y -= 4;
@@ -90,10 +91,17 @@ public class HeadquartersSubView extends SubView {
 
         p.y += 1;
         BorderFrame.drawString(model.getScreenHandler(),
-                String.format("Chars:%2d   Horses:%2d   Items:%3d",
-                        hq.getCharacters().size(),
+                String.format("Horses: %2d/%d         Items: %3d",
                         hq.getHorses().size(),
+                        hq.getMaxHorses(),
                         hq.getItems().size()), p.x, p.y, MyColors.WHITE);
+
+        Point p2 = convertToScreen(new Point(5, 3));
+        p2.y++;
+        BorderFrame.drawString(model.getScreenHandler(),
+                String.format("Chars: %2d/%d",
+                        hq.getCharacters().size(),
+                        hq.getMaxCharacters()), p2.x, p2.y, MyColors.WHITE);
     }
 
     private void drawBackground(Model model) {
