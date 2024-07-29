@@ -1,17 +1,17 @@
 package view.subviews;
 
 import model.Model;
+import model.SteppingMatrix;
 import model.TimeOfDay;
+import model.characters.GameCharacter;
 import model.headquarters.Headquarters;
 import view.BorderFrame;
 import view.MyColors;
-import view.sprites.FilledBlockSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite16x16;
-import view.sprites.Sprite32x32;
+import view.sprites.*;
 import view.widget.TopText;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class HeadquartersSubView extends SubView {
@@ -20,17 +20,52 @@ public class HeadquartersSubView extends SubView {
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
     private static final Sprite SKY_SPRITE_16 = new Sprite16x16("hqsky16", "world_foreground.png", 0xE4, MyColors.LIGHT_BLUE,
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
+    private static final int MATRIX_COLUMNS = 2;
+    private static final int MATRIX_ROWS = 6;
+    private final SteppingMatrix<GameCharacter> characterMatrix;
+    private boolean cursorEnabled = false;
+    private Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+
+    public HeadquartersSubView(Model model) {
+        this.characterMatrix = new SteppingMatrix<>(MATRIX_COLUMNS, MATRIX_ROWS);
+        characterMatrix.addElements(model.getParty().getHeadquarters().getCharacters());
+    }
 
     @Override
     protected void drawArea(Model model) {
         drawBackground(model);
         drawResources(model);
+        drawCharacters(model);
+    }
+
+    private Point convertToScreen(Point point) {
+        return new Point(X_OFFSET + point.x * 4, Y_OFFSET + point.y * 4);
+    }
+
+    private void drawCharacters(Model model) {
+        int row = 3;
+        int colStart = 6;
+        for (int y = 0; y < characterMatrix.getRows(); ++y) {
+            for (int x = 0; x < characterMatrix.getColumns(); ++x) {
+                GameCharacter gc = characterMatrix.getElementAt(x, y);
+                if (gc != null) {
+                    Point p = convertToScreen(new Point(colStart + x, row+y));
+                    AvatarSprite avatar = gc.getAvatarSprite();
+                    avatar.synch();
+                    model.getScreenHandler().register(avatar.getName(), p, avatar);
+                    Point p2 = new Point(p);
+                    p2.y -= 4;
+                    if (cursorEnabled && gc == characterMatrix.getSelectedElement()) {
+                        model.getScreenHandler().register(cursor.getName(), p2, cursor);
+                    }
+                }
+            }
+        }
     }
 
     private void drawResources(Model model) {
         Headquarters hq = model.getParty().getHeadquarters();
-        Point p = VampireFeedingSubView.convertToScreen(new Point(0, 0));
-        p.y -= 2;
+        Point p = convertToScreen(new Point(0, 0));
         int fieldWidth = 6;
         int extra = 1;
         BorderFrame.drawString(model.getScreenHandler(),
@@ -74,19 +109,44 @@ public class HeadquartersSubView extends SubView {
             }
             VampireFeedingSubView.drawGroundDay(model);
         }
-        Point p = VampireFeedingSubView.convertToScreen(new Point(6, 1));
+        Point p = convertToScreen(new Point(6, 2));
         p.x -= 2;
-        p.y += 2;
         model.getParty().getHeadquarters().drawYourself(model, p);
     }
 
     @Override
     protected String getUnderText(Model model) {
+        if (cursorEnabled) {
+            GameCharacter chara = getSelectedCharacter();
+            return chara.getName() + ", " + chara.getRace().getName() + " " +
+                    chara.getCharClass().getShortName() + " Lvl " + chara.getLevel();
+        }
         return "The headquarters of your party";
     }
 
     @Override
     protected String getTitleText(Model model) {
         return "HEADQUARTERS";
+    }
+
+    public void updateCharacters(Model model) {
+        characterMatrix.clear();
+        characterMatrix.addElements(model.getParty().getHeadquarters().getCharacters());
+    }
+
+    public void selectCharacterEnabled(boolean b) {
+        cursorEnabled = true;
+    }
+
+    @Override
+    public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (cursorEnabled) {
+            return characterMatrix.handleKeyEvent(keyEvent);
+        }
+        return false;
+    }
+
+    public GameCharacter getSelectedCharacter() {
+        return characterMatrix.getSelectedElement();
     }
 }

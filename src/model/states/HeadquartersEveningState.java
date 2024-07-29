@@ -7,8 +7,8 @@ import model.combat.conditions.VampirismCondition;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeadquatersEveningState extends EveningState {
-    public HeadquatersEveningState(Model model) {
+public class HeadquartersEveningState extends EveningState {
+    public HeadquartersEveningState(Model model) {
         super(model);
     }
 

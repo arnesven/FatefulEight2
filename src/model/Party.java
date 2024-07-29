@@ -91,13 +91,15 @@ public class Party implements Serializable {
         return result;
     }
 
-    public synchronized void add(GameCharacter gameCharacter) {
+    public synchronized void add(GameCharacter gameCharacter, boolean withInitialAttitude) {
         if (leader == null) {
             leader = gameCharacter;
         }
-        for (GameCharacter other : partyMembers) {
-            setInitialAttitude(gameCharacter, other);
-            setInitialAttitude(other, gameCharacter);
+        if (withInitialAttitude) {
+            for (GameCharacter other : partyMembers) {
+                setInitialAttitude(gameCharacter, other);
+                setInitialAttitude(other, gameCharacter);
+            }
         }
         partyMembers.add(gameCharacter);
         gameCharacter.setParty(this);
@@ -107,6 +109,10 @@ public class Party implements Serializable {
         } else {
             frontRow.add(gameCharacter);
         }
+    }
+
+    public synchronized void add(GameCharacter gameCharacter) {
+        add(gameCharacter, true);
     }
 
     private void setInitialAttitude(GameCharacter gameCharacter, GameCharacter other) {
