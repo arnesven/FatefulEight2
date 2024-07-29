@@ -29,6 +29,8 @@ public class VampireFeedingSubView extends AvatarSubView {
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
     private static final Sprite GROUND_SPRITE = new Sprite16x16("feedingground", "feeding.png", 0x14, GROUND_COLOR,
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
+    private static final Sprite GROUND_DAY_SPRITE = new Sprite16x16("feedinggroundday", "feeding.png", 0x14, MyColors.GREEN,
+            MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
 
     private final Sprite[][] houseSpritesLit;
     private final Sprite[][] houseSpritesBlack;
@@ -136,7 +138,7 @@ public class VampireFeedingSubView extends AvatarSubView {
 
     private void drawBackground(Model model) {
         drawSky(model);
-        drawGround(model);
+        drawGroundNight(model);
         drawHouse(model);
     }
 
@@ -212,9 +214,8 @@ public class VampireFeedingSubView extends AvatarSubView {
         }
         return houseSpritesLit[x][y];
     }
-    
-    private void drawSky(Model model) {
-        random = new Random(1234);
+
+    public static void drawSkyNight(Model model, Random random) {
         for (int x = 0; x < 8; ++x) {
             Point p = convertToScreen(new Point(x, 0));
             Sprite spr;
@@ -226,25 +227,36 @@ public class VampireFeedingSubView extends AvatarSubView {
             model.getScreenHandler().put(p.x, p.y, spr);
             p.y += 4;
             putFour(model, p, SKY_SPRITE_16);
-
         }
     }
 
-    private void putFour(Model model, Point p, Sprite sprite) {
+    private void drawSky(Model model) {
+        random = new Random(1234);
+        drawSkyNight(model, random);
+    }
+
+    private static void putFour(Model model, Point p, Sprite sprite) {
         model.getScreenHandler().put(p.x, p.y, sprite);
         model.getScreenHandler().put(p.x+2, p.y, sprite);
         model.getScreenHandler().put(p.x, p.y+2, sprite);
         model.getScreenHandler().put(p.x+2, p.y+2, sprite);
     }
 
-
-    private void drawGround(Model model) {
+    private static void drawGround(Model model, Sprite groundSprite) {
         for (int y = 2; y < 6; ++y) {
             for (int x = 0; x < 8; ++x) {
                 Point p = convertToScreen(new Point(x, y));
-                putFour(model, p, GROUND_SPRITE);
+                putFour(model, p, groundSprite);
             }
         }
+    }
+
+    public static void drawGroundNight(Model model) {
+        drawGround(model, GROUND_SPRITE);
+    }
+
+    public static void drawGroundDay(Model model) {
+        drawGround(model, GROUND_DAY_SPRITE);
     }
 
     private static Sprite[][] loadHouseSprites(MyColors windowColor, MyColors facadeColor) {

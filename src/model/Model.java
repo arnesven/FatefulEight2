@@ -6,6 +6,7 @@ import model.actions.StayInHexAction;
 import model.characters.*;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.headquarters.Headquarters;
 import model.items.ItemDeck;
 import model.items.spells.Spell;
 import model.log.GameLog;

@@ -21,12 +21,12 @@ public class TopText {
     public static final String INGREDIENTS_SETTINGS_FLAG = "showIngredientsInTopBar";
     public static final String KEY_REMINDERS_SETTINGS_FLAG = "keyRemindersInTopBar";
 
-    private static final CharSprite FOOD_ICON_SPRITE = CharSprite.make(2, MyColors.PEACH, MyColors.WHITE, MyColors.BLACK);
+    public static final CharSprite FOOD_ICON_SPRITE = CharSprite.make(2, MyColors.PEACH, MyColors.WHITE, MyColors.BLACK);
     public static final CharSprite GOLD_ICON_SPRITE = CharSprite.make(0, MyColors.TAN, MyColors.LIGHT_YELLOW, MyColors.BLACK);
     public static final CharSprite OBOL_ICON_SPRITE = CharSprite.make(0, MyColors.GRAY, MyColors.LIGHT_GRAY, MyColors.BLACK);
     public static final CharSprite REP_ICON_SPRITE = CharSprite.make(3, MyColors.LIGHT_GRAY, MyColors.CYAN, MyColors.BLACK);
-    private static final CharSprite INGREDIENTS_ICON_SPRITE = CharSprite.make(0x12, MyColors.WHITE, MyColors.LIGHT_GREEN, MyColors.BLACK);
-    private static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
+    public static final CharSprite INGREDIENTS_ICON_SPRITE = CharSprite.make(0x12, MyColors.WHITE, MyColors.LIGHT_GREEN, MyColors.BLACK);
+    public static final CharSprite MATERIALS_ICON_SPRITE = CharSprite.make(0x13, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
     private static final CharSprite LOCKPICKS_ICON_SPRITE = CharSprite.make(0x18, MyColors.LIGHT_GRAY, MyColors.WHITE, MyColors.BLACK);
     public static final CharSprite ALIGNMENT_ICON_SPRITE = makeAlignmentSprite();
     public static final CharSprite HORSES_ICON_SPRITE = CharSprite.make(0x15, MyColors.BEIGE, MyColors.BLACK, MyColors.BLACK);

@@ -10,6 +10,8 @@ import model.classes.SkillCheckResult;
 import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
+import model.headquarters.Headquarters;
+import model.headquarters.MediumHeadquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.Equipment;
@@ -18,6 +20,7 @@ import model.items.Lockpick;
 import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
+import model.map.locations.LowerThelnTown;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
@@ -72,6 +75,7 @@ public class Party implements Serializable {
     private TravellerCollection travellers = new TravellerCollection();
     private List<DestinationTask> destinationTasks = new ArrayList<>();
     private int guide = 0;
+    private Headquarters headquarters = new MediumHeadquarters(new LowerThelnTown());
 
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
@@ -895,5 +899,13 @@ public class Party implements Serializable {
 
     public boolean hasDog() {
         return dog != null;
+    }
+
+    public boolean hasHeadquartersIn(UrbanLocation urbanLocation) {
+        return headquarters.getLocationName().equals(urbanLocation.getPlaceName());
+    }
+
+    public Headquarters getHeadquarters() {
+        return headquarters;
     }
 }

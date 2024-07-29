@@ -385,7 +385,7 @@ public class EveningState extends GameState {
         }
     }
 
-    private void starveAndKill(Model model, List<GameCharacter> partyMembers) {
+    protected void starveAndKill(Model model, List<GameCharacter> partyMembers) {
         List<GameCharacter> toRemove = new ArrayList<>();
         for (GameCharacter gc : partyMembers) {
             if (gc.getSP() > 0) {
