@@ -37,7 +37,13 @@ public class ShopState extends GameState {
         buyItems = new SteppingMatrix<>(8, 8);
         sellItems = new SteppingMatrix<>(8, 8);
         this.seller = seller;
-        buyItems.addElements(itemsForSale);
+        boolean overflow = false;
+        if (itemsForSale.size() > buyItems.getRows()*buyItems.getColumns()) {
+            buyItems.addElements(itemsForSale.subList(0, buyItems.getRows()*buyItems.getColumns()));
+            overflow = true;
+        } else {
+            buyItems.addElements(itemsForSale);
+        }
         List<Item> itemsToSell = getSellableItems(model);
         if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
             itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
@@ -45,7 +51,12 @@ public class ShopState extends GameState {
         }
         sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
-        this.subView = new ShopSubView(buyItems, true, seller, prices, this);
+        this.subView = makeSubView(buyItems, true, seller, prices, this);
+        subView.setOverflowWarning(overflow);
+    }
+
+    protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller, HashMap<Item, Integer> prices, ShopState shopState) {
+        return new ShopSubView(buyItems, true, seller, prices, this);
     }
 
     public List<Item> getSellableItems(Model model) {
@@ -97,9 +108,9 @@ public class ShopState extends GameState {
 
             List<String> buySellActions = new ArrayList<>();
             if (showingBuyItems) {
-                buySellActions.add("Buy");
+                buySellActions.add(getAcquireVerb());
             } else {
-                buySellActions.add("Sell");
+                buySellActions.add(getRelinquishVerb());
             }
             if (matrixToUse.getSelectedElement().isAnalyzable()) {
                 buySellActions.add("Analyze");
@@ -112,9 +123,9 @@ public class ShopState extends GameState {
             model.setSubView(new ArrowMenuSubView(model.getSubView(), buySellActions, xPos, yPos, ArrowMenuSubView.NORTH_WEST) {
                 @Override
                 protected void enterPressed(Model model, int cursorPos) {
-                    if (buySellActions.get(cursorPos).equals("Buy")) {
+                    if (buySellActions.get(cursorPos).equals(getAcquireVerb())) {
                         selectedAction[0] = 'B';
-                    } else if (buySellActions.get(cursorPos).equals("Sell")) {
+                    } else if (buySellActions.get(cursorPos).equals(getRelinquishVerb())) {
                         selectedAction[0] = 'S';
                     } else if (buySellActions.get(cursorPos).equals("Analyze")) {
                         selectedAction[0] = 'A';
@@ -138,6 +149,14 @@ public class ShopState extends GameState {
             }
         }
         return new EveningState(model);
+    }
+
+    protected String getRelinquishVerb() {
+        return "Sell";
+    }
+
+    protected String getAcquireVerb() {
+        return "Buy";
     }
 
     protected boolean purchaseItem(Model model, Item it, int xPos, int yPos) {
@@ -181,11 +200,9 @@ public class ShopState extends GameState {
     protected boolean sellThisItem(Model model, Item it) {
         if (!isCurrentlyEquipped(model, it)) {
             sellItems.remove(it);
-            int money = it.getCost() / 2;
-            model.getParty().addToGold(money);
-            model.getParty().getInventory().remove(it);
-            println("You sold " + it.getName() + " for " + money + " gold.");
+            itemJustSold(model, it, buyItems, prices);
             SoundEffects.sellItem();
+            model.getParty().getInventory().remove(it);
             if (getSellableItems(model).size() == 0) {
                 if (buyItems.getElementList().isEmpty()) {
                     return true;
@@ -197,6 +214,13 @@ public class ShopState extends GameState {
             println("You cannot sell an item that is currently equipped.");
         }
         return false;
+    }
+
+    protected void itemJustSold(Model model, Item it, SteppingMatrix<Item> buyItems, HashMap<Item, Integer> prices) {
+        int money = it.getCost() / 2;
+        model.getParty().addToGold(money);
+        println("You sold " + it.getName() + " for " + money + " gold.");
+        SoundEffects.sellItem();
     }
 
     private boolean checkForImmediateEquip(Model model, Item it, int xPos, int yPos) {
@@ -257,6 +281,12 @@ public class ShopState extends GameState {
         return !model.getParty().getInventory().getAllItems().contains(it);
     }
 
+    public void setSellingMode(Model model) {
+        if (showingBuyItems) {
+            toggleBuySell(model);
+        }
+    }
+
     private void toggleBuySell(Model model) {
         showingBuyItems = !showingBuyItems;
         if (showingBuyItems) {
@@ -294,5 +324,9 @@ public class ShopState extends GameState {
 
     public void setMayOnlyBuyOne(boolean b) {
         this.mayOnlyBuyOne = b;
+    }
+
+    public boolean mayBuy() {
+        return !buyItems.getElementList().isEmpty();
     }
 }

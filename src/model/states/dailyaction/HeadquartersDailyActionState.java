@@ -4,13 +4,17 @@ import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
 import model.headquarters.Headquarters;
+import model.items.Item;
 import model.states.GameState;
 import model.states.HeadquartersEveningState;
+import model.states.ShopState;
+import model.states.TransferItemState;
 import util.MyLists;
 import util.MyRandom;
 import view.subviews.CollapsingTransition;
 import view.subviews.HeadquartersSubView;
 import view.subviews.PortraitSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,6 +52,8 @@ public class HeadquartersDailyActionState extends GameState {
                 transferResource(model);
             } else if (options.get(choice).contains("character")) {
                 transferCharacter(model, this, subView);
+            } else if (options.get(choice).contains("items")) {
+                transferItems(model, this, subView);
             } else if (options.get(choice).contains("Rest")) {
                 return new HeadquartersEveningState(model);
             } else {
@@ -55,6 +61,16 @@ public class HeadquartersDailyActionState extends GameState {
             }
         } while (true);
         return previousState;
+    }
+
+    private void transferItems(Model model, GameState state, SubView previous) {
+        List<Item> stashItems = model.getParty().getHeadquarters().getItems();
+        TransferItemState shop = new TransferItemState(model, "HEADQUARTERS", stashItems);
+        if (stashItems.isEmpty()) {
+            shop.setSellingMode(model);
+        }
+        shop.run(model);
+        CollapsingTransition.transition(model, previous);
     }
 
     private boolean headquartersHasCharacters(Model model) {

@@ -86,7 +86,7 @@ public class ShopSubView extends TopMenuSubView {
     @Override
     protected MyColors getTitleColor(Model model, int i) {
         if (i == 0) {
-            return MyColors.YELLOW;
+            return state.mayBuy() ? MyColors.YELLOW : MyColors.GRAY;
         }
         if (i == 2) {
             return MyColors.LIGHT_RED;
@@ -148,17 +148,21 @@ public class ShopSubView extends TopMenuSubView {
     protected String getUnderText(Model model) {
         Item it = matrix.getSelectedElement();
         if (it != null) {
-            int cost = it.getCost();
-            if (isBuying) {
-                cost = priceMap.get(it);
-            } else {
-                cost = it.getSellValue();
-            }
-            return it.getName() + " " + cost + " gold, " +
-                    it.getWeight() / 1000.0 + " kg" +
-                    it.getShoppingDetails();
+            return getItemInfo(it);
         }
         return "";
+    }
+
+    protected String getItemInfo(Item it) {
+        int cost;
+        if (isBuying) {
+            cost = priceMap.get(it);
+        } else {
+            cost = it.getSellValue();
+        }
+        return it.getName() + " " + cost + " gold, " +
+                it.getWeight() / 1000.0 + " kg" +
+                it.getShoppingDetails();
     }
 
     @Override

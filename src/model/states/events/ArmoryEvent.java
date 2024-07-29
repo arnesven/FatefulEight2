@@ -4,6 +4,7 @@ import model.Model;
 import model.items.Item;
 import model.states.DailyEventState;
 import model.states.ShopState;
+import model.states.TransferItemState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class ArmoryEvent extends DailyEventState {
                 items.add(it);
             }
         }
-        ShopState shop = new ShopState(model, "castle armory", items, new int[]{0, 0, 0, 0});
+        ShopState shop = new TransferItemState(model, "castle armory", items);
         shop.setMayOnlyBuyOne(true);
         shop.run(model);
     }
