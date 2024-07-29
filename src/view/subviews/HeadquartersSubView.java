@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.headquarters.Headquarters;
+import model.horses.Horse;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.*;
@@ -13,6 +14,7 @@ import view.widget.TopText;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.util.List;
 
 public class HeadquartersSubView extends SubView {
 
@@ -36,10 +38,29 @@ public class HeadquartersSubView extends SubView {
         drawBackground(model);
         drawResources(model);
         drawCharacters(model);
+        drawHorses(model);
     }
 
     private Point convertToScreen(Point point) {
         return new Point(X_OFFSET + point.x * 4, Y_OFFSET + point.y * 4);
+    }
+
+    private void drawHorses(Model model) {
+        List<Horse> horses = model.getParty().getHeadquarters().getHorses();
+
+        Point origin = convertToScreen(new Point(4, 2));
+        origin.y += 2;
+        origin.x += 2;
+        Point p = new Point(origin);
+        for (Horse h : horses) {
+            Sprite mini = h.getMiniSprite();
+            model.getScreenHandler().register(mini.getName(), p, mini);
+            if (p.x == 0) {
+                p = new Point(origin.x, p.y + 2);
+            } else {
+                p = new Point(p.x - 2, p.y);
+            }
+        }
     }
 
     private void drawCharacters(Model model) {

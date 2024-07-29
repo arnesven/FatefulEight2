@@ -5,14 +5,14 @@ import view.sprites.HorseSprite;
 import view.sprites.Sprite;
 
 public class Unicorn extends Steed {
-    private static final Sprite SPRITE = new HorseSprite(2, 2, MyColors.PEACH, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE);
+    private static final HorseSprite SPRITE = new HorseSprite(2, 2, MyColors.PEACH, MyColors.WHITE, MyColors.PINK, MyColors.BEIGE);
 
     public Unicorn() {
         super("Unicorn", 0, MyColors.BEIGE);
     }
 
     @Override
-    public Sprite getSprite() {
+    public HorseSprite getSprite() {
         return SPRITE;
     }
 

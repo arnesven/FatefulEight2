@@ -4,6 +4,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.sprites.HorseSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite16x16;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ public abstract class Horse implements Serializable {
     private int cost;
     private String type;
     private boolean gender;
+    private Sprite16x16 miniSprite;
 
     public Horse(String type, String name, int cost, MyColors avatarColor) {
         this.type = type;
@@ -27,7 +29,7 @@ public abstract class Horse implements Serializable {
         return BACKGROUND;
     }
 
-    public abstract Sprite getSprite();
+    public abstract HorseSprite getSprite();
 
     public String getName() {
         return name;
@@ -53,4 +55,10 @@ public abstract class Horse implements Serializable {
         return gender;
     }
 
+    public Sprite getMiniSprite() {
+        if (miniSprite == null) {
+            this.miniSprite = getSprite().getMini();
+        }
+        return miniSprite;
+    }
 }

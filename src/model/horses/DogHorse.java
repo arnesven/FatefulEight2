@@ -6,14 +6,14 @@ import view.sprites.Sprite;
 
 public class DogHorse extends Horse {
 
-    private static final Sprite SPRITE = new HorseSprite(2, 3, MyColors.BLACK, MyColors.BEIGE, MyColors.BROWN, MyColors.DARK_PURPLE);
+    private static final HorseSprite SPRITE = new HorseSprite(2, 3, MyColors.BLACK, MyColors.BEIGE, MyColors.BROWN, MyColors.DARK_PURPLE);
 
     public DogHorse() {
         super("Dog", "Dog", 0, MyColors.BROWN);
     }
 
     @Override
-    public Sprite getSprite() {
+    public HorseSprite getSprite() {
         return SPRITE;
     }
 
