@@ -928,4 +928,10 @@ public class Party implements Serializable {
         }
         this.headquarters = hq;
     }
+
+    public void updateHeadquarters(Model model) {
+        if (headquarters != null) {
+            headquarters.endOfDayUpdate(model);
+        }
+    }
 }

@@ -4,9 +4,11 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.horses.Horse;
 import model.items.Item;
+import model.items.books.BookItem;
 import model.map.UrbanLocation;
 import util.MyLists;
 import util.MyRandom;
+import util.MyStrings;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
@@ -14,6 +16,7 @@ import view.sprites.Sprite;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Headquarters implements Serializable {
@@ -37,6 +40,7 @@ public class Headquarters implements Serializable {
     private final List<Item> items = new ArrayList<>();
     private final int maxCharacters;
     private int maxHorses;
+    private HeadquartersLogBook logBook = new HeadquartersLogBook();
 
     public Headquarters(UrbanLocation location, int size) {
         this.locationName = location.getPlaceName();
@@ -126,5 +130,58 @@ public class Headquarters implements Serializable {
 
     public int getCost() {
         return cost;
+    }
+
+    public void endOfDayUpdate(Model model) {
+        StringBuilder logEntry = new StringBuilder();
+        if (logBook.isEmpty()) {
+            logEntry.append("We established these headquarters here in ").append(locationName).append(". ");
+        }
+
+        consumeRations(model, logEntry);
+        if (logEntry.length() > 0) {
+            logBook.makeDayEntry(model.getDay(), logEntry.toString());
+        }
+    }
+
+    private void consumeRations(Model model, StringBuilder logEntry) {
+        if (!characters.isEmpty()) {
+            if (food >= characters.size()) {
+                food -= characters.size();
+                logEntry.append(MyLists.commaAndJoin(characters, GameCharacter::getName));
+                logEntry.append(" ate rations (").append(characters.size()).append("). ");
+            } else if (food == 0) {
+                logEntry.append("The rations have run out. ");
+                logEntry.append(MyLists.commaAndJoin(characters, GameCharacter::getName));
+                logEntry.append(" starved. ");
+                checkIfLeaves(model, new ArrayList<>(characters), logEntry);
+            } else {
+                logEntry.append("There were not enough rations for everybody to eat. ");
+                List<GameCharacter> candidates = new ArrayList<>(characters);
+                Collections.shuffle(candidates);
+                List<GameCharacter> eaters = candidates.subList(0, food);
+                List<GameCharacter> starvers = new ArrayList<>(candidates);
+                starvers.removeAll(eaters);
+                logEntry.append(MyLists.commaAndJoin(eaters, GameCharacter::getName));
+                logEntry.append(" ate rations (").append(food).append("). ");
+                logEntry.append(MyLists.commaAndJoin(starvers, GameCharacter::getName));
+                logEntry.append(" starved. ");
+                checkIfLeaves(model, starvers, logEntry);
+                food = 0;
+            }
+        }
+    }
+
+    private void checkIfLeaves(Model model, List<GameCharacter> candidates, StringBuilder logEntry) {
+        for (GameCharacter gc : candidates) {
+            if (MyRandom.randInt(3) == 0) {
+                logEntry.append(gc.getFirstName()).append(" left permanently. ");
+                characters.remove(gc);
+            }
+        }
+    }
+
+    public BookItem getLogBook() {
+        return logBook;
     }
 }

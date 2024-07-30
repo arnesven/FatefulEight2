@@ -12,6 +12,7 @@ import model.states.ShopState;
 import model.states.TransferItemState;
 import util.MyLists;
 import util.MyRandom;
+import view.ReadBookView;
 import view.subviews.CollapsingTransition;
 import view.subviews.HeadquartersSubView;
 import view.subviews.PortraitSubView;
@@ -41,8 +42,8 @@ public class HeadquartersDailyActionState extends GameState {
             println("It's empty.");
         }
         do {
-            List<String> options = new ArrayList<>(List.of("Transfer resource", "Transfer items", "Leave HQ"));
-            if (previousState.isEvening()) {
+            List<String> options = new ArrayList<>(List.of("Transfer resource", "Transfer items", "Read log", "Leave HQ"));
+            if (!previousState.isMorning()) {
                 options.add("Rest");
             }
             if (model.getParty().getHorseHandler().size() > 1 || headQuartersHasHorses(model)) {
@@ -61,12 +62,28 @@ public class HeadquartersDailyActionState extends GameState {
             } else if (options.get(choice).contains("horses")) {
                 transferHorses(model, this, subView);
             } else if (options.get(choice).contains("Rest")) {
-                return new HeadquartersEveningState(model);
+                if (checkForRations(model, "rest")) {
+                    return new HeadquartersEveningState(model);
+                }
+            } else if (options.get(choice).contains("Read log")) {
+                model.transitionToDialog(new ReadBookView(model, model.getView(),
+                        model.getParty().getHeadquarters().getLogBook(), true));
             } else {
-                break;
+                if (checkForRations(model, "leave headquarters")) {
+                    break;
+                }
             }
         } while (true);
         return previousState;
+    }
+
+    private boolean checkForRations(Model model, String action) {
+        if (model.getParty().getHeadquarters().getFood() < model.getParty().getHeadquarters().getCharacters().size()) {
+            print("Warning: There are not enough rations in headquarters to feed the " +
+                    "characters staying there tonight. Are you sure you want to " + action + "? (Y/N) ");
+            return yesNoInput();
+        }
+        return true;
     }
 
     private void transferHorses(Model model, GameState state, HeadquartersSubView subView) {

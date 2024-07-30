@@ -21,7 +21,7 @@ public abstract class BookItem extends ReadableItem {
     private final Sprite sprite;
     private final String author;
     private final String title;
-    private final String textContent;
+    private String textContent;
 
     public BookItem(String itemName, int cost, MyColors coverColor, String title, String author, String content) {
         super(itemName, cost);
@@ -100,6 +100,8 @@ public abstract class BookItem extends ReadableItem {
     public String getTextContent() {
         return textContent;
     }
+
+    public void setTextContent(String newText) { textContent = newText; }
 
     @Override
     public Prevalence getPrevalence() {

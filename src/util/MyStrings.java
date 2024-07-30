@@ -1,5 +1,7 @@
 package util;
 
+import model.characters.GameCharacter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

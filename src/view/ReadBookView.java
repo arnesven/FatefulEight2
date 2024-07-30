@@ -24,7 +24,7 @@ public class ReadBookView extends GameView {
     private static final MyColors PAGE_COLOR = MyColors.BEIGE;
     private static final int PARTITION_WIDTH = BOOK_WIDTH-2;
     private static final int LINES_PER_PAGE = BOOK_HEIGHT - 4;
-    private final InventoryView previous;
+    private final GameView previous;
     private final BookItem book;
     private TopText topText;
 
@@ -40,7 +40,7 @@ public class ReadBookView extends GameView {
             List.of("This is page 4"));
     private Map<String, Sprite> figures;
 
-    public ReadBookView(Model model, InventoryView inventoryView, BookItem book) {
+    public ReadBookView(Model model, GameView inventoryView, BookItem book, boolean openAtEnd) {
         super(true);
         this.topText = new BookViewTopText();
         this.previous = inventoryView;
@@ -52,6 +52,13 @@ public class ReadBookView extends GameView {
         multiplePagesSprites = makeBookSprites(book.getCoverColor(), PAGE_COLOR, PAGE_COLOR, MyColors.GRAY);
 
         makeContentsFromBook(book);
+        if (openAtEnd) {
+            currentPagePair = maxPagePair;
+        }
+    }
+
+    public ReadBookView(Model model, GameView inventoryView, BookItem book) {
+        this(model, inventoryView, book, false);
     }
 
     private void makeContentsFromBook(BookItem book) {

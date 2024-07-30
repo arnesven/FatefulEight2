@@ -1,5 +1,6 @@
 package util;
 
+import model.characters.GameCharacter;
 import model.items.accessories.Accessory;
 
 import java.util.ArrayList;
@@ -120,5 +121,24 @@ public class MyLists {
             }
         }
         return result;
+    }
+
+    public static <E> String commaAndJoin(List<E> list, MyStringFunction<E> fun) {
+        if (list.isEmpty()) {
+            return "";
+        }
+        if (list.size() == 1) {
+            return fun.getString(list.get(0));
+        }
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < list.size() - 1; ++i) {
+            buf.append(fun.getString(list.get(i)));
+            if (i < list.size() - 2) {
+                buf.append(", ");
+            }
+        }
+        buf.append(" and ");
+        buf.append(fun.getString(list.get(list.size()-1)));
+        return buf.toString();
     }
 }

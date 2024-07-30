@@ -315,6 +315,7 @@ public class Model {
     }
 
     public void incrementDay() {
+        gameData.party.updateHeadquarters(this);
         gameData.day++;
         gameData.timeOfDay = TimeOfDay.MORNING;
         log.addAnimated("\n" + LogView.CYAN_COLOR + "- DAY " + gameData.day + " -" + LogView.DEFAULT_COLOR + "\n" );
