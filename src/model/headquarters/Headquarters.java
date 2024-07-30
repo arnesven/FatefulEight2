@@ -29,7 +29,7 @@ public class Headquarters implements Serializable {
     protected static final Sprite SIGN_SPRITE = new SignSprite("innisgn", 0x37, MyColors.BLACK, MyColors.WHITE);
 
     private final String locationName;
-    private final int cost;
+    private int size;
     private HeadquarterAppearance appearance;
     private int food = 0;
     private int gold = 0;
@@ -38,17 +38,17 @@ public class Headquarters implements Serializable {
     private final List<GameCharacter> characters = new ArrayList<>();
     private final List<Horse> horses = new ArrayList<>();
     private final List<Item> items = new ArrayList<>();
-    private final int maxCharacters;
-    private int maxHorses;
     private HeadquartersLogBook logBook = new HeadquartersLogBook();
 
     public Headquarters(UrbanLocation location, int size) {
         this.locationName = location.getPlaceName();
-        maxCharacters = size * 2;
-        maxHorses = maxCharacters + 2;
-        this.cost = 75 + 25 * size;
+        this.size = size;
 
         appearance = HeadquarterAppearance.createAppearance(size);
+    }
+
+    public static int calcCostFor(int size) {
+        return 75 + 25 * size;
     }
 
     public void drawYourself(Model model, Point p) {
@@ -104,7 +104,7 @@ public class Headquarters implements Serializable {
     }
 
     public int getMaxCharacters() {
-        return maxCharacters;
+        return size + 2;
     }
 
     public List<Horse> getHorses() {
@@ -112,7 +112,7 @@ public class Headquarters implements Serializable {
     }
 
     public int getMaxHorses() {
-        return maxHorses;
+        return getMaxCharacters() + 2;
     }
 
     public List<Item> getItems() {
@@ -129,7 +129,7 @@ public class Headquarters implements Serializable {
     }
 
     public int getCost() {
-        return cost;
+        return calcCostFor(size);
     }
 
     public void endOfDayUpdate(Model model) {
@@ -183,5 +183,13 @@ public class Headquarters implements Serializable {
 
     public BookItem getLogBook() {
         return logBook;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void incrementSize() {
+        size = Math.min(size + 1, MAJESTIC_SIZE);
     }
 }

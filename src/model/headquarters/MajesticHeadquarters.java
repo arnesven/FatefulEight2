@@ -29,6 +29,6 @@ public class MajesticHeadquarters extends HeadquarterAppearance {
 
     @Override
     public String getDescription() {
-        return "It's a large house. There's plenty of space to be comfortable.";
+        return "It's a majestic house, lavish in both its construction and interior decoration.";
     }
 }
