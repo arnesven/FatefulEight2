@@ -1,27 +1,33 @@
 package model.headquarters;
 
 import model.Model;
-import model.Party;
 import model.characters.GameCharacter;
 import model.horses.Horse;
 import model.items.Item;
 import model.map.UrbanLocation;
+import util.MyLists;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Headquarters implements Serializable {
+public class Headquarters implements Serializable {
 
+    public static final int SMALL_SIZE = 1;
+    public static final int MEDIUM_SIZE = 2;
+    public static final int LARGE_SIZE = 3;
+    public static final int GRAND_SIZE = 4;
+    public static final int MAJESTIC_SIZE = 5;
     protected static final Sprite SIGN_SPRITE = new SignSprite("innisgn", 0x37, MyColors.BLACK, MyColors.WHITE);
 
     private final String locationName;
     private final int cost;
+    private HeadquarterAppearance appearance;
     private int food = 0;
     private int gold = 0;
     private int materials = 0;
@@ -36,18 +42,22 @@ public abstract class Headquarters implements Serializable {
         this.locationName = location.getPlaceName();
         maxCharacters = size * 2;
         maxHorses = maxCharacters + 2;
-        this.cost = 75 + 50 * size;
+        this.cost = 75 + 25 * size;
+
+        appearance = HeadquarterAppearance.createAppearance(size);
     }
 
     public void drawYourself(Model model, Point p) {
-        specificDrawYourself(model, p);
+        appearance.drawYourself(model, p);
         Point p2 = new Point(p);
         p2.x += 2;
         p2.y += 2;
         model.getScreenHandler().register("objectforeground", p2, SIGN_SPRITE);
     }
 
-    protected abstract void specificDrawYourself(Model model, Point p);
+    public String presentYourself() {
+        return appearance.getDescription();
+    }
 
     public String getLocationName() {
         return locationName;
@@ -106,14 +116,15 @@ public abstract class Headquarters implements Serializable {
     }
 
     public static Headquarters makeRandomHeadquarters(UrbanLocation loc) {
-        return new MediumHeadquarters(loc);
+        return MyRandom.sample(List.of(
+                new Headquarters(loc, SMALL_SIZE),
+                new Headquarters(loc, MEDIUM_SIZE),
+                new Headquarters(loc, LARGE_SIZE),
+                new Headquarters(loc, GRAND_SIZE),
+                new Headquarters(loc, MAJESTIC_SIZE)));
     }
 
     public int getCost() {
         return cost;
-    }
-
-    public String presentYourself() {
-        return "It's a lovely, medium sized house.";
     }
 }

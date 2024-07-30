@@ -42,7 +42,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
         questSprite = new Sprite32x32("halfcastleq", "quest.png", 0x64,
                 MyColors.BLACK, MyColors.LIGHT_GRAY, this.castleColor, MyColors.GREEN);
         this.lordRace = lordRace;
-        this.headquarters = new MediumHeadquarters(this);
+        this.headquarters = new Headquarters(this, Headquarters.MEDIUM_SIZE);
     }
 
     @Override
