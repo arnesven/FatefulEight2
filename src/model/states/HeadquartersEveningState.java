@@ -3,6 +3,7 @@ package model.states;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.conditions.VampirismCondition;
+import model.states.dailyaction.LodgingState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ public class HeadquartersEveningState extends EveningState {
             }
             starveAndKill(model, remaining);
         }
+        new LodgingState(model, false).removePoison(model.getParty());
     }
 
     protected boolean hasEnoughFood(Model model) {

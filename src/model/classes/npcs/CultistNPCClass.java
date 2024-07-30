@@ -7,7 +7,7 @@ import model.classes.npcs.NPCClass;
 import view.MyColors;
 
 public class CultistNPCClass extends NPCClass {
-    protected CultistNPCClass() {
+    public CultistNPCClass() {
         super("Cultist");
     }
 

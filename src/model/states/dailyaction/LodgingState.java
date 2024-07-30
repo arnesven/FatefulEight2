@@ -36,7 +36,7 @@ public class LodgingState extends EveningState {
         removePoison(model.getParty());
     }
 
-    private void removePoison(Party party) {
+    public void removePoison(Party party) {
         for (GameCharacter gc : party.getPartyMembers()) {
             if (gc.hasCondition(PoisonCondition.class)) {
                 gc.removeCondition(PoisonCondition.class);
