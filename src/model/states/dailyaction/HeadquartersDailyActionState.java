@@ -205,7 +205,7 @@ public class HeadquartersDailyActionState extends GameState {
         return !model.getParty().getHeadquarters().getCharacters().isEmpty();
     }
 
-    private boolean headquartersFull(Model model) {
+    private static boolean headquartersFull(Model model) {
         return model.getParty().getHeadquarters().getMaxCharacters() ==
                 model.getParty().getHeadquarters().getCharacters().size();
     }
@@ -287,11 +287,8 @@ public class HeadquartersDailyActionState extends GameState {
                     state.leaderSay("I want you to stay at headquarters for a while " + selected.getFirstName() + ".");
                     model.getParty().partyMemberSay(model, selected,
                             List.of("Sure.", "Fine.", "Okay.", "No problem.", "That's OK with me.",
-                            "Alright.", "Oki-doki.", "Okay, bye.", "I understand.", "My pleasure."));
-                    state.println(selected.getName() + " has left the party and will remain at headquarters until picked up.");
-                    model.getLog().waitForAnimationToFinish();
-                    model.getParty().remove(selected, false, false, 0);
-                    model.getParty().getHeadquarters().getCharacters().add(selected);
+                                    "Alright.", "Oki-doki.", "Okay, bye.", "I understand.", "My pleasure."));
+                    dropOffAtHeadquarters(model, state, selected);
                     subView.updateCharacters(model);
                     break;
                 }
@@ -299,7 +296,14 @@ public class HeadquartersDailyActionState extends GameState {
         }
     }
 
-    private boolean canDoDropOff(Model model) {
+    public static void dropOffAtHeadquarters(Model model, GameState state, GameCharacter selected) {
+        state.println(selected.getName() + " has left the party and will remain at headquarters until picked up.");
+        model.getLog().waitForAnimationToFinish();
+        model.getParty().remove(selected, false, false, 0);
+        model.getParty().getHeadquarters().getCharacters().add(selected);
+    }
+
+    public static boolean canDoDropOff(Model model) {
         return model.getParty().size() > 1 && !headquartersFull(model);
     }
 

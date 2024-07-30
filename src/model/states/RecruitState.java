@@ -8,6 +8,7 @@ import model.combat.conditions.VampirismCondition;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
+import model.states.dailyaction.HeadquartersDailyActionState;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -136,7 +137,20 @@ public class RecruitState extends GameState {
 
     private void dismiss(Model model) {
         print("Which party member do you wish to dismiss? ");
+        model.getTutorial().dismiss(model);
         GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
+        if (model.getParty().getHeadquarters() != null && HeadquartersDailyActionState.canDoDropOff(model)) {
+            print("Do you wish to dismiss " + toDismiss.getName() + " permanently (Y) or send " +
+                    himOrHer(toDismiss.getGender()) + " to your headquarters (N) in " + model.getParty().getHeadquarters().getLocationName() + "? ");
+            if (!yesNoInput()) {
+                leaderSay(toDismiss.getFirstName() + ", I want you to go back to headquarters and stay there until further notice.");
+                partyMemberSay(toDismiss, MyRandom.sample(List.of("If you say so.", "If you think that's best", "Okay, it's your call.",
+                        "Fair enough.", "I understand.")));
+                HeadquartersDailyActionState.dropOffAtHeadquarters(model, this, toDismiss);
+                return;
+            }
+        }
+
         int goldLost =
                 toDismiss.getCharClass().getStartingGold() + toDismiss.getLevel()*5 + 5;
         if (goldLost > model.getParty().getGold()) {
