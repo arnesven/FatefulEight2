@@ -19,7 +19,7 @@ public class HelpMeWithPuzzleTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        printQuote(location.getLordName(), "Come over here and look at this table. I'm having some real troubles with this " +
+        portraitSay("Come over here and look at this table. I'm having some real troubles with this " +
                 "jigsaw puzzle. Could you help me?");
         model.getParty().randomPartyMemberSay(model, List.of("Really? This is the problem you need help with?"));
         print("Do you wish to help with the jigsaw puzzle now? (Y/N) ");
@@ -28,13 +28,13 @@ public class HelpMeWithPuzzleTask extends SummonTask {
             if (success) {
                 println("You spend a few hours helping " + location.getLordName() + " with the puzzle.");
                 summon.increaseStep();
-                printQuote(location.getLordName(), "Ahh perfect, it's all done! Please let me " +
+                portraitSay("Ahh perfect, it's all done! Please let me " +
                         "give you something for spending your time here.");
                 println("The party receives 15 gold.");
                 model.getParty().addToGold(15);
             }
         } else {
-            printQuote(location.getLordName(), "Uh, okay. But come back if you change your mind! " +
+            portraitSay("Uh, okay. But come back if you change your mind! " +
                     "Hmm, am I missing a piece?");
         }
     }

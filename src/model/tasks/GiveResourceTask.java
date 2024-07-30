@@ -26,17 +26,17 @@ public abstract class GiveResourceTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        printQuote(location.getLordName(), "" + firstPart +
+        portraitSay("" + firstPart +
                 "but unfortunately we don't have the resources to do so.");
         leaderSay("How much do you need?");
-        printQuote(location.getLordName(), "I think about " + amount + " " + resourceType + " would be enough.");
+        portraitSay("I think about " + amount + " " + resourceType + " would be enough.");
         if (getResource(model) >= amount) {
             print("Give " + amount + " " + resourceType + " to " + location.getPlaceName() + "? (Y/N) ");
             if (yesNoInput()) {
                 leaderSay("Naturally, we will help you.");
                 summon.increaseStep();
                 reduceResource(model, amount);
-                printQuote(location.getLordName(), "Thank you so much. Please allow me to compensate you.");
+                portraitSay("Thank you so much. Please allow me to compensate you.");
                 println("The party gains 50 gold.");
                 model.getParty().addToGold(50);
             } else {
@@ -49,7 +49,7 @@ public abstract class GiveResourceTask extends SummonTask {
 
     private void decline(Model model) {
         leaderSay("Hmm... well we'll keep our eyes open and get back to you.");
-        printQuote(location.getLordName(), "Please do! We are eager to get the work started.");
+        portraitSay("Please do! We are eager to get the work started.");
     }
 
     @Override

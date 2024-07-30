@@ -109,6 +109,10 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 super(model);
             }
 
+            public void lordSay(String text) {
+                portraitSay(text);
+            }
+
             @Override
             protected void doEvent(Model model) {
                 String lord = location.getLordName();
@@ -129,6 +133,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 }
                 if (summon.getStep() != Summon.COMPLETE) {
                     SummonTask task = summon.getTask(model, location);
+                    task.setPortraitSubView(this);
                     task.doTask(model);
                     if (summon.getStep() == Summon.COMPLETE) {
                         summon.setCompletedOnDay(model.getDay());

@@ -34,7 +34,7 @@ public class Summon implements Serializable {
         tasks.add(new BecomeASpyForMeTask(summon, model, location));
         tasks.add(new UnlockThisBathroom(summon, model, location));
         tasks.add(new InspireMeForAdventureTask(summon, model, location));
-        // TODO: Clear out cultist house task
+        tasks.add(new ClearOutCultistsHouseTask(summon, model, location));
         // TODO: Convince vampire to leave task
         // TODO: Restore mansion task
         return tasks;

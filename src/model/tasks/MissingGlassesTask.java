@@ -17,7 +17,7 @@ public class MissingGlassesTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        printQuote(location.getLordName(), "You see, I would ask some locals to handle it, " +
+        portraitSay("You see, I would ask some locals to handle it, " +
                 "but it's quite embarrassing and I was, uh, hoping we could handle this rather discretely? " +
                 "I've lost my glasses somewhere, and I just can't find them! I can't work without them and " +
                 "some of the townsfolk are starting to think I'm just slacking off. Will you please find them " +
@@ -27,12 +27,12 @@ public class MissingGlassesTask extends SummonTask {
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 10);
             if (success) {
                 summon.increaseStep();
-                printQuote(location.getLordName(), "There they are, thank goodness. Here, let me pay you for your trouble.");
+                portraitSay("There they are, thank goodness. Here, let me pay you for your trouble.");
                 println("The party receives 25 gold.");
                 model.getParty().addToGold(25);
             }
         } else {
-            printQuote(location.getLordName(), "Uh, okay. But come back if you change your mind! " +
+            portraitSay("Uh, okay. But come back if you change your mind! " +
                     "They must be around here somewhere...");
         }
     }

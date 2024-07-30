@@ -21,7 +21,7 @@ public class UnlockThisBathroom extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        printQuote(location.getLordName(), "You see, it's quite embarrassing, but I've locked myself out of my bathroom. " +
+        portraitSay("You see, it's quite embarrassing, but I've locked myself out of my bathroom. " +
                 "There must be something wrong with the lock! I've been running to a neighbors house to relieve myself, and I have " +
                 "quite the small bladder so I really want to get this issue fixed. Will you please help me with the lock?" +
                 " I'll pay you of course!");
@@ -33,17 +33,17 @@ public class UnlockThisBathroom extends SummonTask {
                 SoundEffects.playUnlock();
                 println("The lock clicks open loudly and the door swings open.");
                 printQuote("Kid","Hey, I'm in here!");
-                printQuote(location.getLordName(), "What! Somebody was in there?");
+                portraitSay("What! Somebody was in there?");
                 leaderSay("I thought you said the lock was jammed for a while!");
-                printQuote(location.getLordName(), "Yes! It's been at least fifteen minutes!");
+                portraitSay("Yes! It's been at least fifteen minutes!");
                 model.getParty().randomPartyMemberSay(model, List.of("Jeez... this " + (location.getLordGender()?"girl":"guy") + "..."));
-                printQuote(location.getLordName(), "Well, I do have a small bladder... good thing the lock is fixed. " +
+                portraitSay("Well, I do have a small bladder... good thing the lock is fixed. " +
                         "Here, let me pay you for your trouble.");
                 println("The party receives 5 gold.");
                 model.getParty().addToGold(5);
             }
         } else {
-            printQuote(location.getLordName(), "Uh, okay. But come back if you change your mind! " +
+            portraitSay("Uh, okay. But come back if you change your mind! " +
                     "Darn it, now I have to go again.");
             leaderSay("Maybe stop drinking so much...");
         }

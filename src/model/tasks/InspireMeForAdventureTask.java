@@ -21,17 +21,17 @@ public class InspireMeForAdventureTask extends SummonTask {
 
     @Override
     protected void doEvent(Model model) {
-        printQuote(location.getLordName(), "I've been meaning to do this for quite some time. I'm leaving!");
+        portraitSay("I've been meaning to do this for quite some time. I'm leaving!");
         leaderSay("What do you mean?");
-        printQuote(location.getLordName(), "I'm sick of doing this. I want to leave. I want to go out and have an adventure!");
+        portraitSay("I'm sick of doing this. I want to leave. I want to go out and have an adventure!");
         leaderSay("Don't take this the right way, but you don't really look the adventuring type.");
-        printQuote(location.getLordName(), "Nonsense! I'm all about trekking into the wilds. Fighting fierce adversaries! Treasure hunting!");
+        portraitSay("Nonsense! I'm all about trekking into the wilds. Fighting fierce adversaries! Treasure hunting!");
         leaderSay("It's not all glory. Sometimes we run into real trouble. And sometimes we're cold, hungry and lost...");
-        printQuote(location.getLordName(), "You're just saying that.");
+        portraitSay("You're just saying that.");
         leaderSay("No really. It's not easy. By the way, aren't you doing important work here?");
-        printQuote(location.getLordName(), "Sure... but anybody could do it. It's mostly just cutting ribbons, kissing babies. You know boring stuff...");
+        portraitSay("Sure... but anybody could do it. It's mostly just cutting ribbons, kissing babies. You know boring stuff...");
         leaderSay("Don't you get to make important decisions?");
-        printQuote(location.getLordName(), "Yes, I do... But It's dull. I don't think I con go on doing it any longer. Unless I was really inspired somehow.");
+        portraitSay("Yes, I do... But It's dull. I don't think I con go on doing it any longer. Unless I was really inspired somehow.");
         print("Do you wish to try and inspire the " + location.getLordTitle() + "? (Y/N) ");
         if (yesNoInput()) {
             MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.Leadership, 9);
@@ -39,24 +39,24 @@ public class InspireMeForAdventureTask extends SummonTask {
                 model.getParty().partyMemberSay(model, pair.second, "Come on now. Don't you know that this town depends on you? " +
                         "Just think about it. The work you do will inspire others to do even grater things. In 100 years, people will " +
                         "talk about the great leaders of this town, you can be among them. Maybe they'll even sing songs about you?");
-                printQuote(location.getLordName(), "You think so?");
+                portraitSay("You think so?");
                 model.getParty().partyMemberSay(model, pair.second, "Sure they will. If you really put some effort into this. " +
                         "Don't get distracted by ideas of running aimlessly out into the woods!");
-                printQuote(location.getLordName(), "I guess that would be rather foolish. And besides, I do have a very comfortable life here. " +
+                portraitSay("I guess that would be rather foolish. And besides, I do have a very comfortable life here. " +
                         "And people do like me as their " + location.getLordTitle() + ".");
                 leaderSay("There you go!");
                 summon.increaseStep();
-                printQuote(location.getLordName(), "Wow, I feel much better. Maybe I just had some kind of personal crisis?");
+                portraitSay("Wow, I feel much better. Maybe I just had some kind of personal crisis?");
                 leaderSay("The important thing now is to get back to work.");
-                printQuote(location.getLordName(), "Right!");
+                portraitSay("Right!");
                 model.getParty().randomPartyMemberSay(model, List.of("And to appreciate those around you."));
-                printQuote(location.getLordName(), "Yes of course! Here, please let me give you something for your time.");
+                portraitSay("Yes of course! Here, please let me give you something for your time.");
                 println("The party receives 15 gold.");
                 model.getParty().addToGold(15);
             }
         } else {
             leaderSay("I'm sorry you feel that way. But we just can't take you on. You understand.");
-            printQuote(location.getLordName(), "Uh, okay. But come back if you change your mind!");
+            portraitSay("Uh, okay. But come back if you change your mind!");
         }
     }
 
