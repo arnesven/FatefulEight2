@@ -45,7 +45,7 @@ public class TutorialHeadquarters extends ExpandableHelpDialog {
                 "possible to increase the size of your headquarters by selecting the 'Expand' action " +
                 "while visiting there. The cost of making such an expansion is " +
                         HeadquartersDailyActionState.EXPAND_COST_MATERIALS + " materials and " +
-                        HeadquartersDailyActionState.EXPAND_COST_GOLD + " gold. " +
+                        HeadquartersDailyActionState.EXPAND_COST_GOLD + " gold.\n" +
                 "Majestic headquarters can not be expanded.";
 
         public HeadquartersSizesHelpSection(GameView view) {
