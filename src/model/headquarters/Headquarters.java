@@ -137,11 +137,15 @@ public class Headquarters implements Serializable {
         if (logBook.isEmpty()) {
             logEntry.append("We established these headquarters here in ").append(locationName).append(". ");
         }
-
+        performAssignments(model, logEntry);
         consumeRations(model, logEntry);
         if (logEntry.length() > 0) {
             logBook.makeDayEntry(model.getDay(), logEntry.toString());
         }
+    }
+
+    private void performAssignments(Model model, StringBuilder logEntry) {
+
     }
 
     private void consumeRations(Model model, StringBuilder logEntry) {

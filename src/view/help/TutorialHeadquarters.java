@@ -1,5 +1,6 @@
 package view.help;
 
+import model.headquarters.ExpandHeadquartersAction;
 import model.headquarters.Headquarters;
 import model.states.dailyaction.HeadquartersDailyActionState;
 import view.GameView;
@@ -42,11 +43,12 @@ public class TutorialHeadquarters extends ExpandableHelpDialog {
                 "Large        6       8   " + Headquarters.calcCostFor(Headquarters.LARGE_SIZE) + "\n" +
                 "Grand        8      10   " + Headquarters.calcCostFor(Headquarters.GRAND_SIZE) + "\n" +
                 "Majestic    10      12   " + Headquarters.calcCostFor(Headquarters.MAJESTIC_SIZE) + "\n\n" +
-                "If any character in your party has a Labor skill of 5 or more, it is " +
+                "If any character in your party has a Labor skill of " +
+                        HeadquartersDailyActionState.LABOR_RANKS_REQUIRED_FOR_EXPAND + " or more, it is " +
                 "possible to increase the size of your headquarters by selecting the 'Expand' action " +
                 "while visiting there. The cost of making such an expansion is " +
-                        HeadquartersDailyActionState.EXPAND_COST_MATERIALS + " materials and " +
-                        HeadquartersDailyActionState.EXPAND_COST_GOLD + " gold.\n" +
+                        ExpandHeadquartersAction.EXPAND_COST_MATERIALS + " materials and " +
+                        ExpandHeadquartersAction.EXPAND_COST_GOLD + " gold.\n" +
                 "Majestic headquarters can not be expanded.";
 
         public HeadquartersSizesHelpSection(GameView view) {

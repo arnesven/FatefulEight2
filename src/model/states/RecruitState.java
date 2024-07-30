@@ -5,6 +5,7 @@ import model.Party;
 import model.SteppingMatrix;
 import model.characters.*;
 import model.combat.conditions.VampirismCondition;
+import model.headquarters.TransferCharacterHeadquartersAction;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
@@ -139,14 +140,14 @@ public class RecruitState extends GameState {
         print("Which party member do you wish to dismiss? ");
         model.getTutorial().dismiss(model);
         GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
-        if (model.getParty().getHeadquarters() != null && HeadquartersDailyActionState.canDoDropOff(model)) {
+        if (model.getParty().getHeadquarters() != null && TransferCharacterHeadquartersAction.canDoDropOff(model)) {
             print("Do you wish to dismiss " + toDismiss.getName() + " permanently (Y) or send " +
                     himOrHer(toDismiss.getGender()) + " to your headquarters (N) in " + model.getParty().getHeadquarters().getLocationName() + "? ");
             if (!yesNoInput()) {
                 leaderSay(toDismiss.getFirstName() + ", I want you to go back to headquarters and stay there until further notice.");
                 partyMemberSay(toDismiss, MyRandom.sample(List.of("If you say so.", "If you think that's best", "Okay, it's your call.",
                         "Fair enough.", "I understand.")));
-                HeadquartersDailyActionState.dropOffAtHeadquarters(model, this, toDismiss);
+                TransferCharacterHeadquartersAction.dropOffAtHeadquarters(model, this, toDismiss);
                 return;
             }
         }
