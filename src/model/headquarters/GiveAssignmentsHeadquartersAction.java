@@ -49,6 +49,10 @@ public class GiveAssignmentsHeadquartersAction extends HeadquartersAction {
             }
 
             GameCharacter selected = assignmentSubView.getSelectedCharacter();
+            if (hq.isAway(selected)) {
+                println(selected.getName() + " is away adventuring and cannot be given a new assignment at the moment.");
+                continue;
+            }
             PortraitSubView portraitSubView = new PortraitSubView(assignmentSubView, selected.getAppearance(), selected.getName());
             model.setSubView(portraitSubView);
             portraitSubView.portraitSay(model, this, "Hey " + model.getParty().getLeader().getFirstName() + ", what do you need?");
@@ -74,7 +78,7 @@ public class GiveAssignmentsHeadquartersAction extends HeadquartersAction {
                 leaderSay("I want you to go out adventuring in a sub-party.");
                 portraitSubView.portraitSay(model, this, "How exciting! How long should we be away?");
                 leaderSay("I think you should make a " +
-                        Headquarters.getTripLengthString(hq.getTripLength()).toLowerCase() + ", " +
+                        Headquarters.getTripLengthString(hq.getTripLength()).toLowerCase() + " trip, " +
                         MyStrings.numberWord(Headquarters.getTripLengthInDays(hq.getTripLength())) + " days.");
                 portraitSubView.portraitSay(model, this, "Understood. We'll keep doing trips like that.");
                 hq.assignSubParty(selected);

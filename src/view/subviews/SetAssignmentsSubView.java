@@ -20,12 +20,14 @@ public class SetAssignmentsSubView extends TopMenuSubView {
     private final Headquarters hq;
     private final SteppingMatrix<GameCharacter> matrix;
     private final Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+    private final Sprite blockedSprite;
 
     public SetAssignmentsSubView(Headquarters headquarters) {
         super(2, new int[]{X_OFFSET + 1, X_OFFSET + 13, X_OFFSET + 24});
         this.hq = headquarters;
         this.matrix = new SteppingMatrix<>(2, headquarters.getMaxCharacters() / 2);
         matrix.addElements(headquarters.getCharacters());
+        this.blockedSprite = HeadquartersSubView.BLOCKED_SPRITE;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class SetAssignmentsSubView extends TopMenuSubView {
         Point p = matrix.getSelectedPoint();
         Point p2 = new Point(convertToScreen(p.x, p.y+1));
         p2.y -= 2;
-        model.getScreenHandler().register(cursor.getName(), p2, cursor);
+        model.getScreenHandler().register(cursor.getName(), p2, cursor, 3);
     }
 
     @Override
@@ -49,6 +51,12 @@ public class SetAssignmentsSubView extends TopMenuSubView {
                     p.y += 2;
                     asp.synch();
                     model.getScreenHandler().register(asp.getName(), p, asp);
+                    if (model.getParty().getHeadquarters().isAway(gc)) {
+                        Point p2 = new Point(p);
+                        p2.x += 1;
+                        p2.y += 2;
+                        model.getScreenHandler().register(blockedSprite.getName(), p2, blockedSprite, 2);
+                    }
                     BorderFrame.drawString(model.getScreenHandler(), getAssignmentString(gc),
                             p.x + 4 , p.y + 2, MyColors.WHITE, MyColors.BLUE);
                 }
@@ -56,13 +64,22 @@ public class SetAssignmentsSubView extends TopMenuSubView {
         }
 
         Point p = convertToScreen(0, 0);
-        int row = p.y+2;
-        BorderFrame.drawString(model.getScreenHandler(), "Food limit: " + hq.getFoodLimit(), p.x, row++, MyColors.WHITE, MyColors.BLUE);
-
+        int row = p.y+1;
+        BorderFrame.drawString(model.getScreenHandler(), "Shopping food limit: " + hq.getFoodLimit(), p.x, row++, MyColors.WHITE, MyColors.BLUE);
+        row++;
         if (GiveAssignmentsHeadquartersAction.canAssignSubParty(model)) {
             BorderFrame.drawString(model.getScreenHandler(), "Sub-party trip: " +
                             Headquarters.getTripLengthString(hq.getTripLength()),
                     p.x, row++, MyColors.WHITE, MyColors.BLUE);
+            if (hq.getSubPartyETA() >= 0) {
+                BorderFrame.drawString(model.getScreenHandler(),
+                        "Sub-party ETA: " + hq.getSubPartyETA(),
+                        p.x, row++, MyColors.WHITE, MyColors.BLUE);
+            } else {
+                BorderFrame.drawString(model.getScreenHandler(),
+                        "Trip food required: " + hq.getSubPartyFoodRequired(),
+                        p.x, row++, MyColors.WHITE, MyColors.BLUE);
+            }
         }
     }
 

@@ -30,6 +30,7 @@ public class TransferCharacterHeadquartersAction extends HeadquartersAction {
 
     private void transferCharacter(Model model, GameState state, HeadquartersSubView subView) {
         boolean pickup;
+        Headquarters hq = model.getParty().getHeadquarters();
         if (canDoPickup(model) && canDoDropOff(model)) {
             state.print("Would you like to leave (Y) or pick up (N) a character? ");
             pickup = !state.yesNoInput();
@@ -40,7 +41,7 @@ public class TransferCharacterHeadquartersAction extends HeadquartersAction {
         } else {
             state.println("You can neither pick up or leave characters at headquarters.");
             if (headquartersFull(model)) {
-                state.println("(Headquarters can not hold more than " + model.getParty().getHeadquarters().getMaxCharacters() + " characters.)");
+                state.println("(Headquarters can not hold more than " + hq.getMaxCharacters() + " characters.)");
             }
             if (!headquartersHasCharacters(model)) {
                 state.println("(No characters at headquarters.)");
@@ -60,28 +61,31 @@ public class TransferCharacterHeadquartersAction extends HeadquartersAction {
             state.waitForReturnSilently();
             GameCharacter selected = subView.getSelectedCharacter();
             subView.selectCharacterEnabled(false);
-            state.leaderSay("Hello there " + selected.getFirstName() + ".");
-            PortraitSubView portraitSubView = new PortraitSubView(subView, selected.getAppearance(), selected.getName());
-            model.setSubView(portraitSubView);
-            portraitSubView.portraitSay(model, this,
-                    "Oh hello, " + model.getParty().getLeader().getFirstName() + ". How can I help?");
-            print("Are you sure you want to pick up " + selected.getFirstName() + " from headquarters? (Y/N) ");
-            if (!yesNoInput()) {
-                leaderSay("Never mind.");
+            if (hq.isAway(selected)) {
+                println(selected.getName() + " is out adventuring and cannot be picked up at the moment.");
+            } else {
+                state.leaderSay("Hello there " + selected.getFirstName() + ".");
+                PortraitSubView portraitSubView = new PortraitSubView(subView, selected.getAppearance(), selected.getName());
+                model.setSubView(portraitSubView);
+                portraitSubView.portraitSay(model, this,
+                        "Oh hello, " + model.getParty().getLeader().getFirstName() + ". How can I help?");
+                print("Are you sure you want to pick up " + selected.getFirstName() + " from headquarters? (Y/N) ");
+                if (!yesNoInput()) {
+                    leaderSay("Never mind.");
+                    model.getLog().waitForAnimationToFinish();
+                    model.setSubView(subView);
+                    return;
+                }
+                state.leaderSay("I want you to come with me.");
+                portraitSubView.portraitSay(model, state, MyRandom.sample(
+                        List.of("Great", "I'm ready", "That's good. I was getting bored.", "Finally!", "Really? Yay!",
+                                "Fair enough.", "Okay with me.", "Right-oh.", "Off we go then.")));
+                state.println(selected.getName() + " came back to the party.");
                 model.getLog().waitForAnimationToFinish();
                 model.setSubView(subView);
-                return;
+                hq.pickUpCharacter(selected, model.getParty());
+                subView.updateCharacters(model);
             }
-            state.leaderSay("I want you to come with me.");
-            portraitSubView.portraitSay(model, state, MyRandom.sample(
-                    List.of("Great", "I'm ready", "That's good. I was getting bored.", "Finally!", "Really? Yay!",
-                            "Fair enough.", "Okay with me.", "Right-oh.", "Off we go then.")));
-            state.println(selected.getName() + " came back to the party.");
-            model.getLog().waitForAnimationToFinish();
-            model.setSubView(subView);
-            model.getParty().getHeadquarters().getCharacters().remove(selected);
-            model.getParty().add(selected, false);
-            subView.updateCharacters(model);
         } else {
             do {
                 print("Which party member do you want to leave at headquarters? ");

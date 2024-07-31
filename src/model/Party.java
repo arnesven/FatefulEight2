@@ -76,7 +76,7 @@ public class Party implements Serializable {
     private TravellerCollection travellers = new TravellerCollection();
     private List<DestinationTask> destinationTasks = new ArrayList<>();
     private int guide = 0;
-    private Headquarters headquarters = new Headquarters(new LowerThelnTown(), Headquarters.MAJESTIC_SIZE);
+    private Headquarters headquarters = null;
 
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;

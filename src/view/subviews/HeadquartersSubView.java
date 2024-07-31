@@ -20,8 +20,7 @@ public class HeadquartersSubView extends SubView {
 
     private static final Sprite SKY_SPRITE = new Sprite32x32("hqsky", "world_foreground.png", 0x72, MyColors.LIGHT_BLUE,
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
-    private static final Sprite SKY_SPRITE_16 = new Sprite16x16("hqsky16", "world_foreground.png", 0xE4, MyColors.LIGHT_BLUE,
-            MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
+    public static final Sprite BLOCKED_SPRITE = new Sprite16x16("blocksprite", "arrows.png", 0x22, MyColors.RED);
     private static final int MATRIX_COLUMNS = 2;
     private static final int MATRIX_ROWS = 6;
     private final SteppingMatrix<GameCharacter> characterMatrix;
@@ -75,10 +74,18 @@ public class HeadquartersSubView extends SubView {
                     avatar.synch();
                     p.y += 2;
                     model.getScreenHandler().register(avatar.getName(), p, avatar);
+
+                    if (model.getParty().getHeadquarters().isAway(gc)) {
+                        Point p2 = new Point(p);
+                        p2.x += 1;
+                        p2.y += 2;
+                        model.getScreenHandler().register(BLOCKED_SPRITE.getName(), p2, BLOCKED_SPRITE, 2);
+                    }
+
                     if (cursorEnabled && gc == characterMatrix.getSelectedElement()) {
                         Point p2 = new Point(p);
                         p2.y -= 4;
-                        model.getScreenHandler().register(cursor.getName(), p2, cursor);
+                        model.getScreenHandler().register(cursor.getName(), p2, cursor, 3);
                     }
                 }
             }
@@ -164,7 +171,7 @@ public class HeadquartersSubView extends SubView {
     }
 
     public void selectCharacterEnabled(boolean b) {
-        cursorEnabled = true;
+        cursorEnabled = b;
     }
 
     @Override

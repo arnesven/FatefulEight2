@@ -29,7 +29,8 @@ public class TutorialHeadquarters extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         return List.of(new TutorialAssignments(view),
-                new HeadquartersSizesHelpSection(view));
+                new HeadquartersSizesHelpSection(view),
+                new HeadquartersSubPartyHelpSection(view));
     }
 
     private static class HeadquartersSizesHelpSection extends SubChapterHelpDialog {
