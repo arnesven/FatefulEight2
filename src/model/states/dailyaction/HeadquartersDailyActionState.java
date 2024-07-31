@@ -80,8 +80,7 @@ public class HeadquartersDailyActionState extends GameState {
 
     private boolean canGiveAssignments(Model model) {
         return headquartersHasCharacters(model) &&
-                MyLists.any(model.getParty().getPartyMembers(),
-                (GameCharacter gc) -> gc.getRankForSkill(Skill.Leadership) >= LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS);
+                model.getParty().getLeader().getRankForSkill(Skill.Leadership) >= LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS;
     }
 
     private boolean canDoExpand(Model model) {

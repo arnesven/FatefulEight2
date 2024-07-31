@@ -45,12 +45,15 @@ public class Headquarters implements Serializable {
     private final List<Horse> horses = new ArrayList<>();
     private final List<Item> items = new ArrayList<>();
     private HeadquartersLogBook logBook = new HeadquartersLogBook();
+    private int tripLength = 1;
+    private int foodLimit;
 
     public Headquarters(UrbanLocation location, int size) {
         this.locationName = location.getPlaceName();
         this.size = size;
 
         appearance = HeadquarterAppearance.createAppearance(size);
+        foodLimit = getMaxCharacters();
     }
 
     public static int calcCostFor(int size) {
@@ -152,13 +155,18 @@ public class Headquarters implements Serializable {
 
     private void performAssignments(Model model, StringBuilder logEntry) {
         if (!shoppers.isEmpty()) {
-            if (food < getMaxCharacters()) {
-                int goldToSpend = Math.min(gold, (int)Math.ceil(getMaxCharacters() / 5.0));
-                gold -= goldToSpend;
-                food += goldToSpend * 5;
-                logEntry.append(MyLists.commaAndJoin(shoppers, GameCharacter::getName));
-                logEntry.append(" went shopping, bought ").append(goldToSpend * 5);
-                logEntry.append(" rations for ").append(goldToSpend).append(" gold.\n");
+            if (food < foodLimit) {
+                if (gold == 0) {
+                    logEntry.append(MyLists.commaAndJoin(shoppers, GameCharacter::getName));
+                    logEntry.append(" could not go shopping, no gold in headquarters.\n");
+                } else {
+                    int goldToSpend = Math.min(gold, (int) Math.ceil(getMaxCharacters() / 5.0));
+                    gold -= goldToSpend;
+                    food += goldToSpend * 5;
+                    logEntry.append(MyLists.commaAndJoin(shoppers, GameCharacter::getName));
+                    logEntry.append(" went shopping, bought ").append(goldToSpend * 5);
+                    logEntry.append(" rations for ").append(goldToSpend).append(" gold.\n");
+                }
             }
         }
 
@@ -264,5 +272,36 @@ public class Headquarters implements Serializable {
 
     public List<GameCharacter> getSubParty() {
         return subParty;
+    }
+
+    public int getTripLength() {
+        return tripLength;
+    }
+
+    public static String getTripLengthString(int tripLength) {
+        switch (tripLength) {
+            case 1:
+                return "Short";
+            case 2:
+                return "Medium";
+            default:
+                return "Long";
+        }
+    }
+
+    public static int getTripLengthInDays(int tripLength) {
+        return tripLength * 2 + 1;
+    }
+
+    public int getFoodLimit() {
+        return foodLimit;
+    }
+
+    public void setFoodLimit(int amount) {
+        this.foodLimit = amount;
+    }
+
+    public void setTripLength(int i) {
+        this.tripLength = i;
     }
 }
