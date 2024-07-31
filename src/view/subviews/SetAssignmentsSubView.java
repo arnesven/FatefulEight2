@@ -68,6 +68,12 @@ public class SetAssignmentsSubView extends TopMenuSubView {
         if (hq.getTownWorkers().contains(gc)) {
             return "Town Work";
         }
+        if (hq.getShoppers().contains(gc)) {
+            return "Shopping";
+        }
+        if (hq.getSubParty().contains(gc)) {
+            return "Sub-Party";
+        }
         return "R'n'R";
     }
 

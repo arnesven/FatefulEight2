@@ -26,6 +26,7 @@ public class GiveAssignmentsHeadquartersAction extends HeadquartersAction {
         }
         SetAssignmentsSubView assignmentSubView = new SetAssignmentsSubView(model.getParty().getHeadquarters());
         model.setSubView(assignmentSubView);
+        model.getTutorial().assignments(model);
         do {
             waitForReturnSilently();
             if (assignmentSubView.getTopIndex() == 0) {
@@ -36,15 +37,19 @@ public class GiveAssignmentsHeadquartersAction extends HeadquartersAction {
             model.setSubView(portraitSubView);
             portraitSubView.portraitSay(model, this, "Hey " + model.getParty().getLeader().getFirstName() + ", what do you need?");
             println("What assignment do you want to give to " + selected.getName() + "?");
-            int index = multipleOptionArrowMenu(model, 24, 24, List.of("R'n'R", "Town Work"));
+            int index = multipleOptionArrowMenu(model, 24, 24, List.of("R'n'R", "Town Work", "Shopping"));
             if (index == 0) {
                 leaderSay("Don't leave headquarters OK? Just stay here and rest.");
                 portraitSubView.portraitSay(model, this, "I can do that.");
                 model.getParty().getHeadquarters().assignRnR(selected);
-            } else {
+            } else if (index == 1) {
                 leaderSay("Do some work in town. Okay?");
                 portraitSubView.portraitSay(model, this, "I'll do my best.");
                 model.getParty().getHeadquarters().assignTownWork(selected);
+            } else {
+                leaderSay("Keep our headquarters stocked with food.");
+                portraitSubView.portraitSay(model, this, "Sure, I'll go shopping if we're low on rations.");
+                model.getParty().getHeadquarters().assignShopping(selected);
             }
             model.getLog().waitForAnimationToFinish();
             model.setSubView(assignmentSubView);

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class HeadquartersDailyActionState extends GameState {
     public static final int LABOR_RANKS_REQUIRED_FOR_EXPAND = 5;
+    public static final int LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS = 3;
     private final AdvancedDailyActionState previousState;
     private static final Point MENU_LOCATION = new Point(24, 19);
 
@@ -80,7 +81,7 @@ public class HeadquartersDailyActionState extends GameState {
     private boolean canGiveAssignments(Model model) {
         return headquartersHasCharacters(model) &&
                 MyLists.any(model.getParty().getPartyMembers(),
-                (GameCharacter gc) -> gc.getRankForSkill(Skill.Leadership) >= 3);
+                (GameCharacter gc) -> gc.getRankForSkill(Skill.Leadership) >= LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS);
     }
 
     private boolean canDoExpand(Model model) {

@@ -16,7 +16,8 @@ public abstract class HeadquartersAction extends GameState {
     }
 
     protected boolean checkForRations(Model model, String action) {
-        if (model.getParty().getHeadquarters().getFood() < model.getParty().getHeadquarters().getCharacters().size()) {
+        Headquarters hq = model.getParty().getHeadquarters();
+        if (hq.getShoppers().isEmpty() && hq.getFood() < hq.getCharacters().size()) {
             print("Warning: There are not enough rations in headquarters to feed the " +
                     "characters staying there tonight. Are you sure you want to " + action + "? (Y/N) ");
             return yesNoInput();
