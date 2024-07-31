@@ -2,6 +2,7 @@ package model.headquarters;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.conditions.VampirismCondition;
 import model.horses.Horse;
 import model.items.Item;
 import model.items.books.BookItem;
@@ -16,6 +17,7 @@ import view.sprites.Sprite;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class Headquarters implements Serializable {
     private int materials = 0;
     private int ingredients = 0;
     private final List<GameCharacter> characters = new ArrayList<>();
+    private final List<GameCharacter> townWorkers = new ArrayList<>();
     private final List<Horse> horses = new ArrayList<>();
     private final List<Item> items = new ArrayList<>();
     private HeadquartersLogBook logBook = new HeadquartersLogBook();
@@ -104,7 +107,7 @@ public class Headquarters implements Serializable {
     }
 
     public int getMaxCharacters() {
-        return size + 2;
+        return size * 2 + 2;
     }
 
     public List<Horse> getHorses() {
@@ -135,7 +138,7 @@ public class Headquarters implements Serializable {
     public void endOfDayUpdate(Model model) {
         StringBuilder logEntry = new StringBuilder();
         if (logBook.isEmpty()) {
-            logEntry.append("We established these headquarters here in ").append(locationName).append(". ");
+            logEntry.append("We established these headquarters here in ").append(locationName).append(".\n");
         }
         performAssignments(model, logEntry);
         consumeRations(model, logEntry);
@@ -145,7 +148,15 @@ public class Headquarters implements Serializable {
     }
 
     private void performAssignments(Model model, StringBuilder logEntry) {
-
+        if (!townWorkers.isEmpty()) {
+            int goldGenerated = MyRandom.randInt(0, townWorkers.size()*3);
+            for (GameCharacter worker : townWorkers) {
+                worker.addToSP(-MyRandom.randInt(1, 2));
+            }
+            logEntry.append(MyLists.commaAndJoin(townWorkers, GameCharacter::getName));
+            logEntry.append(" did work in town, accrued ").append(goldGenerated).append(" gold.\n");
+            model.getParty().getHeadquarters().addToGold(goldGenerated);
+        }
     }
 
     private void consumeRations(Model model, StringBuilder logEntry) {
@@ -154,6 +165,7 @@ public class Headquarters implements Serializable {
                 food -= characters.size();
                 logEntry.append(MyLists.commaAndJoin(characters, GameCharacter::getName));
                 logEntry.append(" ate rations (").append(characters.size()).append("). ");
+                recover(characters);
             } else if (food == 0) {
                 logEntry.append("The rations have run out. ");
                 logEntry.append(MyLists.commaAndJoin(characters, GameCharacter::getName));
@@ -170,8 +182,18 @@ public class Headquarters implements Serializable {
                 logEntry.append(" ate rations (").append(food).append("). ");
                 logEntry.append(MyLists.commaAndJoin(starvers, GameCharacter::getName));
                 logEntry.append(" starved. ");
+                recover(eaters);
                 checkIfLeaves(model, starvers, logEntry);
                 food = 0;
+            }
+        }
+    }
+
+    private void recover(List<GameCharacter> candidates) {
+        for (GameCharacter gc : candidates) {
+            gc.addToHP(2);
+            if (!gc.hasCondition(VampirismCondition.class)) {
+                gc.addToSP(1);
             }
         }
     }
@@ -195,5 +217,19 @@ public class Headquarters implements Serializable {
 
     public void incrementSize() {
         size = Math.min(size + 1, MAJESTIC_SIZE);
+    }
+
+    public List<GameCharacter> getTownWorkers() {
+        return townWorkers;
+    }
+
+    public void assignRnR(GameCharacter selected) {
+        townWorkers.remove(selected);
+    }
+
+    public void assignTownWork(GameCharacter selected) {
+        if (!townWorkers.contains(selected)) {
+            townWorkers.add(selected);
+        }
     }
 }

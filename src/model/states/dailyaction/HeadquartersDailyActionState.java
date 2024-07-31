@@ -78,7 +78,8 @@ public class HeadquartersDailyActionState extends GameState {
     }
 
     private boolean canGiveAssignments(Model model) {
-        return MyLists.any(model.getParty().getPartyMembers(),
+        return headquartersHasCharacters(model) &&
+                MyLists.any(model.getParty().getPartyMembers(),
                 (GameCharacter gc) -> gc.getRankForSkill(Skill.Leadership) >= 3);
     }
 

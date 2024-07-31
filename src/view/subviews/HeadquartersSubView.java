@@ -75,9 +75,9 @@ public class HeadquartersSubView extends SubView {
                     avatar.synch();
                     p.y += 2;
                     model.getScreenHandler().register(avatar.getName(), p, avatar);
-                    Point p2 = new Point(p);
-                    p2.y -= 4;
                     if (cursorEnabled && gc == characterMatrix.getSelectedElement()) {
+                        Point p2 = new Point(p);
+                        p2.y -= 4;
                         model.getScreenHandler().register(cursor.getName(), p2, cursor);
                     }
                 }
