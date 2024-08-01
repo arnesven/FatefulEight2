@@ -132,7 +132,9 @@ public class SetAssignmentsSubView extends TopMenuSubView {
         }
         GameCharacter chara = getSelectedCharacter();
         return chara.getName() + ", " + chara.getRace().getName() + " " +
-                chara.getCharClass().getShortName() + " Lvl " + chara.getLevel();
+                chara.getCharClass().getShortName() + " Lvl " + chara.getLevel() +
+                " " + chara.getHP() + "/" + chara.getMaxHP() + " HP " +
+                chara.getSP() + "/" + chara.getMaxSP() + " SP";
     }
 
     public GameCharacter getSelectedCharacter() {

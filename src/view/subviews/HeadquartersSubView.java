@@ -21,6 +21,8 @@ public class HeadquartersSubView extends SubView {
     private static final Sprite SKY_SPRITE = new Sprite32x32("hqsky", "world_foreground.png", 0x72, MyColors.LIGHT_BLUE,
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
     public static final Sprite BLOCKED_SPRITE = new Sprite16x16("blocksprite", "arrows.png", 0x22, MyColors.RED);
+    private static final Sprite[] MINI_HEALTH_BAR_SPRITES = makeMiniHealthBarSprites();
+
     private static final int MATRIX_COLUMNS = 2;
     private static final int MATRIX_ROWS = 6;
     private final SteppingMatrix<GameCharacter> characterMatrix;
@@ -80,6 +82,12 @@ public class HeadquartersSubView extends SubView {
                         p2.x += 1;
                         p2.y += 2;
                         model.getScreenHandler().register(BLOCKED_SPRITE.getName(), p2, BLOCKED_SPRITE, 2);
+                    }
+
+                    {
+                        Point p2 = new Point(p);
+                        Sprite bar = getBarForHealthAndStamina(gc);
+                        model.getScreenHandler().register(bar.getName(), p2, bar, 2);
                     }
 
                     if (cursorEnabled && gc == characterMatrix.getSelectedElement()) {
@@ -155,7 +163,9 @@ public class HeadquartersSubView extends SubView {
         if (cursorEnabled) {
             GameCharacter chara = getSelectedCharacter();
             return chara.getName() + ", " + chara.getRace().getName() + " " +
-                    chara.getCharClass().getShortName() + " Lvl " + chara.getLevel();
+                    chara.getCharClass().getShortName() + " Lvl " + chara.getLevel()  +
+                    " " + chara.getHP() + "/" + chara.getMaxHP() + " HP " +
+                    chara.getSP() + "/" + chara.getMaxSP() + " SP";
         }
         return "The headquarters of your party";
     }
@@ -184,5 +194,28 @@ public class HeadquartersSubView extends SubView {
 
     public GameCharacter getSelectedCharacter() {
         return characterMatrix.getSelectedElement();
+    }
+
+    private static Sprite[] makeMiniHealthBarSprites() {
+        return new Sprite[]{
+                new Sprite32x32("full", "minihealth.png", 0, MyColors.BLACK, MyColors.GREEN, MyColors.BLACK),
+                new Sprite32x32("nearfull", "minihealth.png", 1, MyColors.BLACK, MyColors.GREEN, MyColors.BLACK),
+                new Sprite32x32("half", "minihealth.png", 2, MyColors.BLACK, MyColors.GREEN, MyColors.BLACK),
+                new Sprite32x32("nearempty", "minihealth.png", 3, MyColors.BLACK, MyColors.GREEN, MyColors.BLACK),
+        };
+    }
+
+
+    private static Sprite getBarForHealthAndStamina(GameCharacter gc) {
+        if (gc.getHP() == gc.getMaxHP() && gc.getSP() == gc.getMaxSP()) {
+            return MINI_HEALTH_BAR_SPRITES[0];
+        }
+        if (gc.getHP() > gc.getMaxHP() / 2 && gc.getSP() > 0) {
+            return MINI_HEALTH_BAR_SPRITES[1];
+        }
+        if (gc.getHP() < gc.getMaxHP() / 2 && gc.getSP() == 0) {
+            return MINI_HEALTH_BAR_SPRITES[3];
+        }
+        return MINI_HEALTH_BAR_SPRITES[2];
     }
 }
