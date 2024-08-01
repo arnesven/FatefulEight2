@@ -8,6 +8,7 @@ import model.headquarters.Headquarters;
 import model.horses.Horse;
 import view.BorderFrame;
 import view.MyColors;
+import view.combat.GrassCombatTheme;
 import view.sprites.*;
 import view.widget.TopText;
 
@@ -25,6 +26,13 @@ public class HeadquartersSubView extends SubView {
 
     private static final int MATRIX_COLUMNS = 2;
     private static final int MATRIX_ROWS = 6;
+    private static final Sprite DAY_GRASS = new Sprite32x32("hqgrassday", "world_foreground.png", 0x72, MyColors.GREEN,
+            MyColors.GRAY, MyColors.WHITE, MyColors.GREEN);
+    private static final Sprite NIGHT_GRASS = new Sprite32x32("hqgrassnight", "world_foreground.png", 0x72, MyColors.DARK_GREEN,
+            MyColors.GRAY, MyColors.WHITE, MyColors.DARK_GREEN);
+    private static final Sprite SKY_SPRITE_16 = new Sprite16x16("daysky16", "world_foreground.png", 0xE4, MyColors.LIGHT_BLUE,
+            MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
+
     private final SteppingMatrix<GameCharacter> characterMatrix;
     private boolean cursorEnabled = false;
     private Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
@@ -143,19 +151,51 @@ public class HeadquartersSubView extends SubView {
     private void drawBackground(Model model) {
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
             VampireFeedingSubView.drawSkyNight(model, new Random(1234));
-            VampireFeedingSubView.drawGroundNight(model);
         } else {
             for (int x = 0; x < 8; ++x) {
                 Point p = VampireFeedingSubView.convertToScreen(new Point(x, 0));
                 model.getScreenHandler().put(p.x, p.y, SKY_SPRITE);
-                p.y += 4;
-                model.getScreenHandler().put(p.x, p.y, SKY_SPRITE);
+                model.getScreenHandler().put(p.x, p.y+4, SKY_SPRITE_16);
+                model.getScreenHandler().put(p.x, p.y+6, SKY_SPRITE_16);
+                model.getScreenHandler().put(p.x+2, p.y+4, SKY_SPRITE_16);
+                model.getScreenHandler().put(p.x+2, p.y+6, SKY_SPRITE_16);
             }
-            VampireFeedingSubView.drawGroundDay(model);
         }
+        drawGrass(model);
+        drawRoom(model, 3, 3 + model.getParty().getHeadquarters().getSize());
         Point p = convertToScreen(new Point(6, 2));
         p.x -= 2;
         model.getParty().getHeadquarters().drawYourself(model, p);
+    }
+
+    private void drawRoom(Model model, int rowStart, int rowEnd) {
+        for (int row = rowStart; row < rowEnd+2; ++row) {
+            for (int col = 5; col < 8; ++col) {
+                Point p = convertToScreen(new Point(col, row));
+                p.y += 2;
+                if (col == 5 && row <= rowEnd) {
+                    model.getScreenHandler().put(p.x, p.y, TavernSubView.SIDE_WALL);
+                } else if (rowStart < row && row <= rowEnd) {
+                    model.getScreenHandler().put(p.x, p.y, TavernSubView.FLOOR);
+                } else if (row == rowStart) {
+                    model.getScreenHandler().put(p.x, p.y, TavernSubView.WALL);
+                }
+            }
+        }
+    }
+
+    private void drawGrass(Model model) {
+        Sprite spriteToUse = DAY_GRASS;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            spriteToUse = NIGHT_GRASS;
+        }
+        for (int y = 2; y < 9; ++y) {
+            for (int x = 0; x < 8; ++x) {
+                Point p = convertToScreen(new Point(x, y));
+                p.y += 2;
+                model.getScreenHandler().put(p.x, p.y, spriteToUse);
+            }
+        }
     }
 
     @Override
