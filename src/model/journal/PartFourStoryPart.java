@@ -252,6 +252,7 @@ public class PartFourStoryPart extends StoryPart {
                 increaseStep(model);
                 transitionStep(model);
             } else {
+                System.out.println("Step is " + step); // TODO: Fix this so there is some kind of reward when returning
                 showLord(model);
                 portraitSay("Ah, my friends. Have you dealt with the Quad yet?.");
                 leaderSay("Not yet, but we will.");
