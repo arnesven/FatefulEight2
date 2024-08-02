@@ -60,6 +60,10 @@ public class BountyDestinationTask extends DestinationTask {
         return new DailyAction("Find Bounty", new FindBountyEvent(model, this));
     }
 
+    public boolean drawTaskOnMap(Model model) {
+        return state == GOT_CLUE;
+    }
+
     @Override
     public boolean isFailed(Model model) {
         return false;

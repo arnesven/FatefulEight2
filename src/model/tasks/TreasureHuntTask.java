@@ -19,6 +19,11 @@ public class TreasureHuntTask extends DestinationTask {
     }
 
     @Override
+    public boolean drawTaskOnMap(Model model) {
+        return false;
+    }
+
+    @Override
     public JournalEntry getJournalEntry(Model model) {
         return new TreasureHuntJournalEntry();
     }

@@ -106,7 +106,7 @@ public class World implements Serializable {
     private void drawDestinationTasks(Model model, int x, int y, int screenX, int screenY) {
         for (DestinationTask dt : model.getParty().getDestinationTasks()) {
             Point pos = dt.getPosition();
-            if (pos != null && pos.x == x && pos.y == y && !dt.isCompleted() && !dt.isFailed(model)) { // TODO: Also ask DestinationTask if it should be drawn. Bounty should only be drawn when location is known.
+            if (dt.drawTaskOnMap(model) && pos != null && pos.x == x && pos.y == y && !dt.isCompleted() && !dt.isFailed(model)) { // TODO: Also ask DestinationTask if it should be drawn. Bounty should only be drawn when location is known.
                 model.getScreenHandler().register(DESTINATION_SPRITE.getName(), new Point(screenX, screenY), DESTINATION_SPRITE);
             }
         }

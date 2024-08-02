@@ -19,6 +19,11 @@ public class FatueDestinationTask extends DestinationTask {
     }
 
     @Override
+    public boolean drawTaskOnMap(Model model) {
+        return false;
+    }
+
+    @Override
     public JournalEntry getJournalEntry(Model model) {
         return new FatueJournalEntry(FortressAtUtmostEdgeState.firstTimeInCastleProper(model),
                 FortressAtUtmostEdgeState.hasStaff(model),

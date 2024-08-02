@@ -35,4 +35,8 @@ public abstract class DestinationTask implements Serializable {
     public abstract boolean givesDailyAction(Model model);
 
     public abstract boolean isCompleted();
+
+    public boolean drawTaskOnMap(Model model) {
+        return true;
+    }
 }
