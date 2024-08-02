@@ -1,6 +1,5 @@
-package model.states.events;
+package model.enemies;
 
-import model.enemies.GelatinousBlobEnemy;
 import view.MyColors;
 
 public class OrangeGelatinousBlobEnemy extends GelatinousBlobEnemy {

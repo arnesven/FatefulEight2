@@ -278,7 +278,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new TreasureHuntersHandbook(),
                 new PoetryBookOne(),
                 new SeaTravelBook(),
-                new ElfOriginBook());
+                new ElfOriginBook(),
+                new GelatinousBlobBook());
         // TODO: A Study of Gelatinous Blobs
         // TODO: Advanced Archery
         // TODO: The Finer Points of Alchemy (useless)
