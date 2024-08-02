@@ -182,6 +182,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         portraitSay("Bingo. I'm sorry " + main.getFirstName() + ", I think we really did have a connection.");
         partyMemberSay(main, "Hey, where is my gear? Where are my clothes?");
         model.getLog().waitForAnimationToFinish();
+        FormerPartyMemberLoot mainsLoot = new FormerPartyMemberLoot(main);
         main.setEquipment(new Equipment());
         printQuote("Gangster", "They belong to us now pal. And now I'm afraid we're going " +
                 "to have to kill you. No loose ends, you know.");
@@ -193,7 +194,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         model.getParty().unbenchAll();
         leaderSay("We're right here!");
         runCombat(List.of(new GangsterEnemy('A',  model), new GangsterEnemy('A',  model),
-                new GangsterEnemy('A', beauty.getRace(), new FormerPartyMemberLoot(main)),
+                new GangsterEnemy('A', beauty.getRace(), mainsLoot),
                 new GangsterEnemy('A',  model), new GangsterEnemy('A',  model)),
                 new MansionTheme(), true);
         if (model.getParty().isWipedOut()) {

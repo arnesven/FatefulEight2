@@ -213,7 +213,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
                 artisanEvent.portraitSay("Oh, it's a " + it.getName() + ". I've seen countless of these. Upgrading it should be easy.");
                 cost = it.getCost() / 2;
             } else if (it.getPrevalence() == Prevalence.uncommon) {
-                artisanEvent.portraitSay("Hmmm, it's a " + it.getName() + ". I've seen a some of these before. I can upgrade it.");
+                artisanEvent.portraitSay("Hmmm, it's a " + it.getName() + ". I've seen some of these before. I can upgrade it.");
                 cost = it.getCost();
             } else if (it.getPrevalence() == Prevalence.rare) {
                 artisanEvent.portraitSay("It's a " + it.getName() + " you say? I think I've seen something like this before. " +
