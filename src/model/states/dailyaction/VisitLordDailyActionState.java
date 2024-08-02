@@ -5,12 +5,17 @@ import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
 import model.headquarters.Headquarters;
+import model.journal.JournalEntry;
+import model.journal.RescueMissionStoryPart;
+import model.journal.StoryPart;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.quests.RescueMissionQuest;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
 import model.tasks.SummonTask;
+import util.MyLists;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownHallSubView;
@@ -118,17 +123,24 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 String lord = location.getLordName();
                 showExplicitPortrait(model, model.getLordPortrait(location), location.getLordName());
                 if (summon.getStep() == Summon.ACCEPTED) {
-                    String leaderName = model.getParty().getLeader().getName();
-                    portraitSay("Hello there. " + leaderName + ", I presume? I've been expecting you.");
-                    leaderSay("Yes, that's me. Who are you?");
-                    portraitSay("I'm " + lord + ". I'm in charge here. First of all, " +
-                            "let me formally welcome you to " + location.getPlaceName() +
-                            ", I hope you like our " + location.getLocationType() + ".");
-                    model.getParty().randomPartyMemberSay(model,
-                            List.of("Enough with the formalities. What is it you want?",
-                                    "Get on with it, I haven't got all day!", "It's pleasant enough I suppose.",
-                                    "Sure, it's great. Now what do you want?", "Thanks. Can I help you?", "How do you know my name?"));
-                    portraitSay("Your reputation has preceded you and I was wondering if you might be able to help me with a problem of mine.");
+                    if (hasMetLordThroughMainStory(model)) {
+                        String leaderName = model.getParty().getLeader().getName();
+                        portraitSay("Hello there. " + leaderName + "! Good to see you.");
+                        leaderSay("You summoned me.");
+                        portraitSay("Yes, there was another task I was wondering if you might be able to help me with.");
+                    } else {
+                        String leaderName = model.getParty().getLeader().getName();
+                        portraitSay("Hello there. " + leaderName + ", I presume? I've been expecting you.");
+                        leaderSay("Yes, that's me. Who are you?");
+                        portraitSay("I'm " + lord + ". I'm in charge here. First of all, " +
+                                "let me formally welcome you to " + location.getPlaceName() +
+                                ", I hope you like our " + location.getLocationType() + ".");
+                        model.getParty().randomPartyMemberSay(model,
+                                List.of("Enough with the formalities. What is it you want?",
+                                        "Get on with it, I haven't got all day!", "It's pleasant enough I suppose.",
+                                        "Sure, it's great. Now what do you want?", "Thanks. Can I help you?", "How do you know my name?"));
+                        portraitSay("Your reputation has preceded you and I was wondering if you might be able to help me with a problem of mine.");
+                    }
                     summon.increaseStep();
                 }
                 if (summon.getStep() != Summon.COMPLETE) {
@@ -162,7 +174,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                     leaderSay("I could be. What are the details?");
                     Headquarters hq = location.getRealEstate();
                     portraitSay(hq.presentYourself() + " The current owner is willing to let it go for " +
-                            hq.getCost() + " Why don't you buy it? You could make it the " +
+                            hq.getCost() + ". Why don't you buy it? You could make it the " +
                             "headquarters for your adventuring party.");
                     if (hq.getCost() > model.getParty().getGold()) {
                         leaderSay("I'm afraid it's a little over our budget.");
@@ -183,5 +195,13 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 }
             }
         }
+    }
+
+    public static boolean hasMetLordThroughMainStory(Model model) {
+        StoryPart part = MyLists.find(model.getMainStory().getStoryParts(), (StoryPart p) -> p instanceof RescueMissionStoryPart);
+        if (part != null && part.getJournalEntries().get(0).isComplete()) {
+            return true;
+        }
+        return model.getSettings().getMiscFlags().get("MAIN_STORY_LORD_MET");
     }
 }

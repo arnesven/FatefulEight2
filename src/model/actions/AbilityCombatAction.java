@@ -48,7 +48,7 @@ public class AbilityCombatAction extends CombatAction {
             if (performer.getRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy && target.canBeAttackedBy(performer)) {
                 list.add(new SneakAttackCombatAction());
             }
-            if (RiposteCombatAction.canDoRiposteAbility(performer) && target.canBeAttackedBy(performer)) {
+            if (RiposteCombatAction.canDoRiposteAbility(performer)) {
                 list.add(new RiposteCombatAction());
             }
             if (HeavyBlowCombatAction.canDoHeavyBlowAbility(performer) && target.canBeAttackedBy(performer)) {
@@ -68,7 +68,7 @@ public class AbilityCombatAction extends CombatAction {
         if (SniperShotCombatAction.canDoSniperShotAbility(performer)) {
             list.add(new SniperShotCombatAction());
         }
-        if (FairyHealCombatAction.canDoAbility(performer)) {
+        if (FairyHealCombatAction.canDoAbility(performer) && performer != target) {
             list.add(new FairyHealCombatAction());
         }
         if (RegenerationCombatAction.canDoAbility(performer)) {

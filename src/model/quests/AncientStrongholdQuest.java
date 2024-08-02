@@ -486,7 +486,7 @@ public class AncientStrongholdQuest extends MainQuest {
         public QuestEdge run(Model model, QuestState state) {
             state.println("You step out of the elevator and in to what feels like some kind of a lobby. Through a hallway you can see " +
                     "a light from the chamber within, and you hear voices.");
-            state.print("Do you enter the chamber and carefully and calmly (Y) or do you rush in with weapons drawn (N)? ");
+            state.print("Do you enter the chamber carefully and calmly (Y) or do you rush in with weapons drawn (N)? ");
             if (state.yesNoInput()) {
                 state.println("You slowly step into the chamber. There are lots of people here but also ghostly specters. " +
                         "Some of them notice you and start whispering to one another.");

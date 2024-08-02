@@ -46,7 +46,7 @@ public class SkullWand extends WandWeapon {
         if (MyRandom.rollD10() > 8) {
             combatEvent.println("Absorbed " + damage + " health points from " + target.getName() + ".");
             gameCharacter.addToHP(damage);
-            combatEvent.addFloatyDamage(target, damage, DamageValueEffect.HEALING);
+            combatEvent.addFloatyDamage(gameCharacter, damage, DamageValueEffect.HEALING);
         }
     }
 }

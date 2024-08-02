@@ -130,6 +130,7 @@ public class RescueMissionStoryPart extends StoryPart {
             setCurrentTerrainSubview(model);
             showLord(model);
             if (internalStep == VISIT_CASTLE_STEP) {
+                model.getSettings().getMiscFlags().put("MAIN_STORY_LORD_MET", true);
                 portraitSay("Welcome traveller, what can I do for you.");
                 TownLocation town = model.getMainStory().getStartingLocation(model);
                 leaderSay("We've come from the town of " + town.getName() + ", " +

@@ -104,7 +104,9 @@ public class SteppingMatrix<T> {
                 }
             }
         }
-        System.err.println("Could not find " + elem.toString() + " in matrix.");
+        if (elem != null) {
+            System.err.println("Could not find " + elem.toString() + " in matrix.");
+        }
         throw new NoSuchElementException();
     }
 
@@ -248,8 +250,12 @@ public class SteppingMatrix<T> {
     }
 
     public synchronized void addElementLast(T it) {
-        Point p = getPositionFor(null);
-        addElement(p.x, p.y, it);
+        try {
+            Point p = getPositionFor(null);
+            addElement(p.x, p.y, it);
+        } catch (NoSuchElementException nsee) {
+            System.err.println("Warning could not find a place to put elemt in matrix");
+        }
     }
 
     public void removeAll() {

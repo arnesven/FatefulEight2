@@ -251,6 +251,10 @@ public class PartFourStoryPart extends StoryPart {
                                 "are at least level 5 before venturing to the Ancient Stronghold."));
                 increaseStep(model);
                 transitionStep(model);
+            } else {
+                showLord(model);
+                portraitSay("Ah, my friends. Have you dealt with the Quad yet?.");
+                leaderSay("Not yet, but we will.");
             }
         }
 

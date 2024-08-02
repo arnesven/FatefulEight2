@@ -40,10 +40,20 @@ public class GoToCastleActionNode extends DailyActionNode {
             mainStoryEvent = model.getMainStory().getVisitLordEvent(model, location);
         }
         if (mainStoryEvent != null) {
-            return  mainStoryEvent;
-        } else if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
+            if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
+                state.print("Are you visiting the " + location.getLordTitle() +
+                        " to discuss the mystery of the Crimson Pearl (Y) or do you have other business with " +
+                        GameState.hisOrHer(location.getLordGender()) + " (N)? ");
+                if (state.yesNoInput()) {
+                    return mainStoryEvent;
+                }
+            }
+        }
+
+        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
             return askAboutInvitation(model, state, location);
-        } else if (!model.getWarHandler().getWarsForKingdom((CastleLocation) location).isEmpty()) {
+        }
+        if (!model.getWarHandler().getWarsForKingdom((CastleLocation) location).isEmpty()) {
             return askAboutRecruit(model, state, location);
         }
         return new VisitCastleEvent(model);
@@ -66,7 +76,7 @@ public class GoToCastleActionNode extends DailyActionNode {
 
     private GameState askAboutInvitation(Model model, AdvancedDailyActionState state, UrbanLocation location) {
         Summon summon = model.getParty().getSummons().get(location.getPlaceName());
-        if (summon.getStep() == Summon.ACCEPTED) {
+        if (summon.getStep() == Summon.ACCEPTED && !VisitLordDailyActionState.hasMetLordThroughMainStory(model)) {
             state.printQuote("Guard", "Hey you! Stop right there! Where do you think you're going?");
             state.leaderSay("Uhm, I'm going to visit the " + castle.getLordTitle() + ".");
             state.printQuote("Guard", "Do you have an invitation?");
@@ -170,8 +180,10 @@ public class GoToCastleActionNode extends DailyActionNode {
         public VisitCastleLordDailyActionNode(Model model, Summon summon, UrbanLocation location, boolean breakIn) {
             super(model, summon, location, breakIn);
             this.breakIn = breakIn;
-            addNode(5, 3, new CourtMageNode((CastleLocation)location));
-            addNode(2, 3, new CommanderNode((CastleLocation)location));
+            if (!breakIn) {
+                addNode(5, 3, new CourtMageNode((CastleLocation) location));
+                addNode(2, 3, new CommanderNode((CastleLocation) location));
+            }
             this.location = (CastleLocation)location;
         }
 
