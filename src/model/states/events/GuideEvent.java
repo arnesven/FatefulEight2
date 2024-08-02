@@ -57,6 +57,8 @@ public class GuideEvent extends DailyEventState {
         int result = multipleOptionArrowMenu(model, 24, 12, options);
         leaderSay("I think we'll " + events.get(result).getGuideData().getName().toLowerCase() + ".");
         portraitSay("Okay! Just come with me and I'll show you where it is.");
+        model.getLog().waitForAnimationToFinish();
+        removePortraitSubView(model);
         events.get(result).doTheEvent(model);
     }
 

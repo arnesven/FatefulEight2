@@ -36,7 +36,6 @@ public class WantedPosterSubView extends SubView {
         appearance.setLipColor(MyColors.GRAY);
         appearance.setClass(charClass);
         appearance.setSpecificClothing(new NoClothing());
-        // TODO: Remove blink, look and talk from this subview! (Got event from guide...)
     }
 
     public WantedPosterSubView(SubView subView, GameCharacter character, boolean withCompanions, int gold, String town) {
@@ -46,7 +45,7 @@ public class WantedPosterSubView extends SubView {
 
     @Override
     protected void drawArea(Model model) {
-        previous.drawArea(model); // Could the blinking, looking and talking be coming from here?
+        previous.drawArea(model);
 
         int xAdjust = (X_MAX - X_OFFSET - POSTER_WIDTH) / 2;
         for (int y = 0; y < POSTER_HEIGHT; ++y) {

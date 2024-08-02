@@ -16,6 +16,12 @@ public class MayorEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to wine district",
+                "There's a street here in town where they sell many good wines");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         UrbanLocation town = (UrbanLocation) model.getCurrentHex().getLocation();
         if (!model.getParty().getSummons().containsKey(town.getPlaceName())) {
