@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.*;
+import model.items.Item;
 import model.items.special.PearlItem;
 import model.items.spells.TeleportSpell;
 import model.quests.scenes.CombatSubScene;
@@ -107,7 +108,13 @@ public class AncientStrongholdQuest extends MainQuest {
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
-        state.println("As you return to the elevator, you notice an antechamber. Inside is a large glowing portal.");
+        state.println("As you have no more need of them. You discard the pearls you have collected.");
+        for (Item it : new ArrayList<>(model.getParty().getInventory().getPearls())) {
+            if (it instanceof PearlItem) {
+                model.getParty().getInventory().removePearl((PearlItem) it);
+            }
+        }
+        state.println("You return to the elevator and notice an antechamber. Inside is a large glowing portal.");
         state.leaderSay("I wonder where this would take us?");
         state.print("Do you step through the portal (Y/N)? ");
         if (state.yesNoInput()) {

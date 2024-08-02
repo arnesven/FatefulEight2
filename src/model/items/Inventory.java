@@ -141,8 +141,8 @@ public class Inventory implements Serializable {
     public void setObols(int amount) { obols = amount; }
 
     public List<Spell> getSpells() {
-        List<Spell> sp = new ArrayList<>();
-        sp.addAll(spells);
+        List<Spell> sp = new ArrayList<>(spells);
+        sp.sort(Comparator.comparing(Item::getName));
         return sp;
     }
 
