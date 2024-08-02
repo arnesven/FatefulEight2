@@ -19,7 +19,10 @@ public abstract class StaminaCombatAbility extends CombatAction {
 
     @Override
     public final void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        if (performer.getSP() > 0) {
+        if (target instanceof GameCharacter) {
+            combat.println("You can't do a " + getName() + " on a friendly character!");
+            takeAnotherAction = true;
+        } else if (performer.getSP() > 0) {
             performer.addToSP(-1);
             combat.print(performer.getFirstName() + " exhausts 1 Stamina Point. ");
             doStaminaCombatAbility(model, combat, performer, target);

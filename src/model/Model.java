@@ -325,7 +325,7 @@ public class Model {
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
         gameData.settings.getMiscFlags().put("innworkdone", false);
         gameData.warHandler.updateWars(this);
-        if (gameData.party.getDog() != null && MyRandom.rollD10() == 1) {
+        if (gameData.party.getDog() != null && MyRandom.rollD10() == 1) { // TODO: Move this into party.update(model);
             log.addAnimated("Your dog appears to have left you.\n");
             gameData.party.setDog(null);
         }

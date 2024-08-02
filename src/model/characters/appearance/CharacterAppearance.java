@@ -425,6 +425,7 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     protected void setBlinkSprites() {
+        // TODO: If has glasses... fix
         this.blinkSprites = new MyPair<>(new Sprite8x8("blinkleft", "mouth.png", 0x20,
                                         MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE),
                                         new Sprite8x8("blinkright", "mouth.png", 0x21,
