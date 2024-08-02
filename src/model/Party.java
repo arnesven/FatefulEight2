@@ -936,4 +936,14 @@ public class Party implements Serializable {
             headquarters.endOfDayUpdate(model);
         }
     }
+
+    public void startOfDayUpdate(Model model) {
+        setRecruitmentPersistence(null);
+        getHorseHandler().newAvailableHorse();
+        addToNotoriety(-(MyRandom.rollD6()+1)/2);
+        if (getDog() != null && MyRandom.rollD6() == 1 && MyRandom.rollD6() == 1) {
+            model.getLog().addAnimated("Your dog appears to have left you.\n");
+            setDog(null);
+        }
+    }
 }

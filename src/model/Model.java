@@ -6,7 +6,6 @@ import model.actions.StayInHexAction;
 import model.characters.*;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
-import model.headquarters.Headquarters;
 import model.items.ItemDeck;
 import model.items.spells.Spell;
 import model.log.GameLog;
@@ -24,7 +23,6 @@ import sound.SoundEffects;
 import test.MainStoryTest;
 import util.MyLists;
 import util.MyPair;
-import util.MyRandom;
 import view.dev.SpritePreviewerView;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
@@ -319,16 +317,10 @@ public class Model {
         gameData.day++;
         gameData.timeOfDay = TimeOfDay.MORNING;
         log.addAnimated("\n" + LogView.CYAN_COLOR + "- DAY " + gameData.day + " -" + LogView.DEFAULT_COLOR + "\n" );
-        gameData.party.setRecruitmentPersistence(null);
-        gameData.party.getHorseHandler().newAvailableHorse();
-        gameData.party.addToNotoriety(-(MyRandom.rollD6()+1)/2);
+        gameData.party.startOfDayUpdate(this);
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
         gameData.settings.getMiscFlags().put("innworkdone", false);
         gameData.warHandler.updateWars(this);
-        if (gameData.party.getDog() != null && MyRandom.rollD10() == 1) { // TODO: Move this into party.update(model);
-            log.addAnimated("Your dog appears to have left you.\n");
-            gameData.party.setDog(null);
-        }
     }
 
     public void setDay(int day) {
