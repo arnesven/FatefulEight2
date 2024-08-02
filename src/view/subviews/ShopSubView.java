@@ -15,8 +15,7 @@ import view.sprites.Sprite32x32;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 import java.util.List;
 
 public class ShopSubView extends TopMenuSubView {
@@ -124,8 +123,8 @@ public class ShopSubView extends TopMenuSubView {
             }
         }
         if (!integrityOk) {
-            List<Item> items = new ArrayList<>();
-            items.addAll(matrix.getElementList());
+            List<Item> items = new ArrayList<>(matrix.getElementList());
+            items.sort(Comparator.comparing(Item::getName));
             for (Item it : items) {
                 matrix.remove(it);
             }

@@ -48,6 +48,7 @@ public class ShopState extends GameState {
         if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
             itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
             warnAboutManyItems = true;
+            itemsToSell.sort(Comparator.comparing(Item::getName));
         }
         sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
