@@ -154,13 +154,20 @@ public class CastleSubView extends DailyActionSubView {
     }
 
     public void animateMovement(Model model, Point from, Point to) {
-        if (insideToOutside(from, to) || insideToOutside(to, from)) {
+        if (insideToOutside(to, from)) {
             Point doorPos = TavernDailyActionState.getDoorPosition();
             super.animateMovement(model, from, doorPos);
             Point below = new Point(doorPos);
             below.y++;
             super.animateMovement(model, doorPos, below);
             super.animateMovement(model, below, to);
+        } else if (insideToOutside(from, to)) {
+            Point doorPos = TavernDailyActionState.getDoorPosition();
+            Point below = new Point(doorPos);
+            below.y++;
+            super.animateMovement(model, from, below);
+            super.animateMovement(model, below, doorPos);
+            super.animateMovement(model, doorPos, to);
         } else {
             super.animateMovement(model, from, to);
         }

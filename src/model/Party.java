@@ -22,6 +22,7 @@ import model.items.spells.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.map.locations.LowerThelnTown;
+import model.map.locations.SunblazeCastle;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
