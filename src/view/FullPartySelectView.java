@@ -12,6 +12,7 @@ import model.items.ItemDeck;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
+import model.journal.CaidCharacter;
 import util.Arithmetics;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -61,6 +62,8 @@ public class FullPartySelectView extends SelectableListMenu {
         selectableCharacters.add(new RedKnightCharacter());
         selectableCharacters.add(new WitchKingCharacter());
         selectableCharacters.add(new GoblinCharacter());
+        selectableCharacters.add(new CaidCharacter());
+        selectableCharacters.add(new WillisCharacter());
         this.maxCharacters = selectableCharacters.size();
         this.selectedCharacters = new int[]{maxCharacters, maxCharacters, maxCharacters, maxCharacters,
                         maxCharacters, maxCharacters, maxCharacters, maxCharacters};

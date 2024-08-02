@@ -251,7 +251,7 @@ public class BattleSubView extends SubView {
         double angle = Math.toDegrees(Math.atan2(from.y - to.y, from.x - to.x));
         System.out.println("Rotation angle " + angle);
         angle += 90.0;
-        while (angle < 0.0) { // TODO: Something wrong with the angles here...
+        while (angle < 0.0) {
             angle += 360.0;
         }
         System.out.println("Setting rotation " + angle);
