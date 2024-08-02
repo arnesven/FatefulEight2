@@ -9,8 +9,7 @@ import model.items.spells.Spell;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import sound.SoundEffects;
-import view.MyColors;
-import view.sprites.RunOnceAnimationSprite;
+import view.sprites.ExplosionAnimation;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
 
@@ -118,11 +117,4 @@ public class CrackedWall extends DungeonDoor {
         }
     }
 
-    private static class ExplosionAnimation extends RunOnceAnimationSprite {
-        public ExplosionAnimation() {
-            super("explosion", "dungeon.png", 0, 8, 32, 32, 6, MyColors.ORANGE);
-            setColor2(MyColors.WHITE);
-            setColor3(MyColors.YELLOW);
-        }
-    }
 }

@@ -279,6 +279,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new PoetryBookOne(),
                 new SeaTravelBook(),
                 new ElfOriginBook());
+        // TODO: A Study of Gelatinous Blobs
         // TODO: Advanced Archery
         // TODO: The Finer Points of Alchemy (useless)
         // TODO: Grave Robber's Handbook (useful tips for dungeons)

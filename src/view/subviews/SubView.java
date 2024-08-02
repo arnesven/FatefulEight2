@@ -88,7 +88,7 @@ public abstract class SubView {
             Point left = new Point(point);
             left.x -= 1;
             addOngoingEffect(new MyPair<>(left, new DamageValueEffect(damge/10, color)));
-            addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, color)));
+            addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge%10, color)));
         } else {
             addOngoingEffect(new MyPair<>(point, new DamageValueEffect(damge, color)));
         }

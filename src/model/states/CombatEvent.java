@@ -400,7 +400,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
-        target.takeCombatDamage(this, damage);
+        target.takeCombatDamage(this, damage, damager);
         combatStats.damageDealt(damage, damager);
         if (target.getHP() <= 0) {
             RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();
@@ -643,5 +643,21 @@ public class CombatEvent extends DailyEventState {
                 model.getParty().getTamedDragons().remove(master);
             }
         }
+    }
+
+    public void addEnemy(GelatinousBlobEnemy splitGuy) {
+        if (enemies.size() < 24) {
+            MyLists.forEach(enemies, combatMatrix::remove);
+            enemies.add(splitGuy);
+            combatMatrix.addEnemies(enemies);
+        }
+    }
+
+    public List<Combatant> getAllCombatants() {
+        List<Combatant> result = new ArrayList<>();
+        result.addAll(participants);
+        result.addAll(allies);
+        result.addAll(enemies);
+        return result;
     }
 }

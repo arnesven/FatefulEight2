@@ -170,7 +170,7 @@ public abstract class Combatant implements Serializable {
         }
     }
 
-    public void takeCombatDamage(CombatEvent combatEvent, int damage) {
+    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
         addToHP(-damage);
     }
 

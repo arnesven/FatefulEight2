@@ -78,7 +78,7 @@ public class NPCCombatEvent extends CombatEvent {
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
         if (damager == null) {
-            target.takeCombatDamage(this, damage);
+            target.takeCombatDamage(this, damage, damager);
         } else if (damage > 0) {
             CharacterWrappedEnemy enemy = new CharacterWrappedEnemy(damager, damage);
             int hpBefore = enemy.getHP();

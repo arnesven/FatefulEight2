@@ -246,13 +246,13 @@ public abstract class Enemy extends Combatant {
     }
 
     @Override
-    public void takeCombatDamage(CombatEvent combatEvent, int damage) {
+    public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
         if (damage > 0 && getDamageReduction() > 0 && !hasCondition(ErodeCondition.class)) {
             int hpBefore = getHP();
-            super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()));
+            super.takeCombatDamage(combatEvent, Math.max(0, damage - getDamageReduction()), damager);
             combatEvent.printAlert("Damage was reduced by " + (damage - (hpBefore - getHP())) + "!");
         } else {
-            super.takeCombatDamage(combatEvent, damage);
+            super.takeCombatDamage(combatEvent, damage, damager);
         }
     }
 
