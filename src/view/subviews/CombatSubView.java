@@ -68,6 +68,9 @@ public class CombatSubView extends SubView {
         if (combat.isSurprise()) {
             return TITLE_TEXT + " - SURPRISE";
         }
+        if (combat.isAmbush()) {
+            return TITLE_TEXT + " - AMBUSH";
+        }
         return TITLE_TEXT;
     }
 

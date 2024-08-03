@@ -2,6 +2,7 @@ package model.ruins.objects;
 
 import model.Model;
 import model.classes.Skill;
+import model.combat.CombatAdvantage;
 import model.enemies.*;
 import model.items.potions.Potion;
 import model.items.potions.SleepingPotion;
@@ -72,7 +73,8 @@ public class DungeonMonster extends CenterDungeonObject {
         exploreRuinsState.print(enemies.get(0).getName() + "s attack you! Press enter to continue.");
         exploreRuinsState.waitForReturn();
 
-        CombatEvent combat = new CombatEvent(model, enemies, exploreRuinsState.getCombatTheme(), true, surprise);
+        CombatEvent combat = new CombatEvent(model, enemies, exploreRuinsState.getCombatTheme(),
+                true, surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
         if (getTimeLimit() != -1) {
             combat.setTimeLimit(getTimeLimit());
         }

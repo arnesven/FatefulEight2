@@ -22,7 +22,7 @@ public class GelatinousBlobEvent extends DailyEventState {
             GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             partyMemberSay(other, "What is it " + model.getParty().getLeader().getFirstName() + "?");
         }
-        leaderSay("The ground feels strange here. It's not dry... and it's not really wet. " +
+        leaderSay("The ground feels strange here. It's not dry... and it's not quite wet. " +
                 "It's spongy, like we're walking on a mushroom.");
         leaderSay("Wait a minute... That's some kind of creature!");
         println("All of a sudden, blobs of goop rise out of the ground and form clumps. They attack you!");
@@ -31,7 +31,7 @@ public class GelatinousBlobEvent extends DailyEventState {
         for (int i = MyRandom.randInt(4, 8); i > 0; --i) {
             enemies.add(blobTemplate.copy());
         }
-        runCombat(enemies);
+        runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
     }
 
     public static GelatinousBlobEnemy makeRandomBlob() {

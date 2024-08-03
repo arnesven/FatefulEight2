@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.combat.CombatAdvantage;
 import model.enemies.*;
 import model.items.Item;
 import model.items.special.PearlItem;
@@ -177,7 +178,7 @@ public class AncientStrongholdQuest extends MainQuest {
                 state.waitForReturn();
                 AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
                 CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
-                        state.getCombatTheme(), true, surprise);
+                        state.getCombatTheme(), true, surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
                 combat.addExtraLoot(enemySet.getPearls());
                 combat.run(model);
                 if (!model.getParty().isWipedOut()) {

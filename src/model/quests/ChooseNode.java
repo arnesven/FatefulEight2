@@ -1,6 +1,7 @@
 package model.quests;
 
 import model.Model;
+import model.combat.CombatAdvantage;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.QuestState;
@@ -82,7 +83,7 @@ public class ChooseNode extends QuestJunction {
             }
         }
         state.println("You encounter a group of automatons!");
-        CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), true, false);
+        CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), true, CombatAdvantage.Neither);
         combat.run(model);
         state.transitionToQuestView(model);
         for (MovingEnemyGroup group : enemyGroups) {

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
+import model.combat.CombatAdvantage;
 import model.combat.Combatant;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.PersonCombatLoot;
@@ -75,7 +76,7 @@ public class FightInUnitDuringBattleEvent extends GameState {
             List<Enemy> enemies = makeEnemyFromUnit(unit);
             println("You spot a unit of " + unit.getName().toLowerCase() + ", they charge you!");
             leaderSay(MyRandom.sample(List.of("Everybody, stand your ground!", "Get ready!", "Keep together now.", "Courage!")));
-            CombatEvent combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), true, false);
+            CombatEvent combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), true, CombatAdvantage.Neither);
             combat.addAllies(allies);
             combat.run(model);
             if (combat.haveFledCombat() || model.getParty().isWipedOut()) {

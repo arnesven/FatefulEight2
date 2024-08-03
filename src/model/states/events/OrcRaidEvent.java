@@ -6,6 +6,7 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.RandomAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.combat.CombatAdvantage;
 import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
 import model.items.Equipment;
@@ -55,7 +56,7 @@ public class OrcRaidEvent extends DailyEventState {
             for (int i = 0; i < numberOfOrcs; ++i) {
                 enemies.add(new OrcWarrior('A'));
             }
-            this.combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), true, false);
+            this.combat = new CombatEvent(model, enemies, model.getCurrentHex().getCombatTheme(), true, CombatAdvantage.Neither);
             List<GameCharacter> allies = new ArrayList<>();
             int numberOfMilitias = MyRandom.randInt(2, 4);
             for (int i = 0; i < numberOfMilitias; ++i) {

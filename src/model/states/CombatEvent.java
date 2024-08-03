@@ -4,6 +4,7 @@ import model.actions.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.actions.SneakAttackCombatAction;
 import model.actions.CombatAction;
+import model.combat.CombatAdvantage;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
@@ -48,7 +49,8 @@ public class CombatEvent extends DailyEventState {
     private CombatAction selectedCombatAction = null;
     private Combatant selectedTarget;
     private final List<GameCharacter> allies = new ArrayList<>();
-    private boolean isSurprise;
+    private final CombatAdvantage originalAdvantage;
+    private CombatAdvantage advantage;
     private int timeLimit = Integer.MAX_VALUE;
     private int roundCounter = 1;
     private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
@@ -58,7 +60,7 @@ public class CombatEvent extends DailyEventState {
     private MyPair<GameCharacter, Integer> flameWall = null;
     private boolean inQuickCast = false;
 
-    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isSurprise) {
+    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage advantage) {
         super(model);
         selectingFormation = true;
         combatMatrix = new CombatMatrix();
@@ -71,13 +73,14 @@ public class CombatEvent extends DailyEventState {
         setInitiativeOrder();
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.fleeingEnabled = fleeingEnabled;
-        this.isSurprise = isSurprise;
+        this.originalAdvantage = advantage;
+        this.advantage = advantage;
         this.sneakAttackers = new ArrayList<>();
         combatStats = new CombatStatistics();
     }
 
     public CombatEvent(Model model, List<Enemy> startingEnemies) {
-        this(model, startingEnemies, new GrassCombatTheme(), true, false);
+        this(model, startingEnemies, new GrassCombatTheme(), true, CombatAdvantage.Neither);
     }
 
     @Override
@@ -88,13 +91,17 @@ public class CombatEvent extends DailyEventState {
         if (allies.size() > 0) {
             model.getTutorial().allies(model);
         }
-        if (isSurprise) {
+        if (advantage == CombatAdvantage.Party) {
             model.getTutorial().surpriseAttack(model);
+        } else if (advantage == CombatAdvantage.Enemies) {
+            model.getTutorial().ambushes(model);
         }
         setInitiativeOrder();
         AnimationManager.synchAnimations();
         model.setInCombat(true);
-        setFormation(model);
+        if (advantage != CombatAdvantage.Enemies) {
+            setFormation(model);
+        }
         combatStats.startCombat(enemies, participants, allies);
         runQuickCastTurns(model);
         runCombatLoop(model);
@@ -104,7 +111,7 @@ public class CombatEvent extends DailyEventState {
         removedKilledTamedDragons(model);
         removeCombatConditions(model);
         model.setGameOver(model.getParty().isWipedOut());
-        model.playMainSong(); // TODO: Song is dependent on location...
+        model.playMainSong();
         model.setInCombat(false);
     }
 
@@ -209,20 +216,22 @@ public class CombatEvent extends DailyEventState {
         for ( ; currentInit < initiativeOrder.size() && !combatDone(model) ; currentInit++) {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {
-                if (!isSurprise) {
+                if (advantage != CombatAdvantage.Party) {
                     handleEnemyTurn(model, turnTaker);
                 }
             } else {
                 if (hasFlameWall() && flameWall.first == turnTaker) {
                     removeFlameWall();
                 }
-                handleCharacterTurn(model, turnTaker, false);
+                if (advantage != CombatAdvantage.Enemies) {
+                    handleCharacterTurn(model, turnTaker, false);
+                }
             }
         }
         if (!combatDone(model)) {
             handleSneakAttacks(model);
         }
-        isSurprise = false;
+        advantage = CombatAdvantage.Neither;
         delayedCombatants.clear();
     }
 
@@ -477,7 +486,11 @@ public class CombatEvent extends DailyEventState {
     }
 
     public boolean isSurprise() {
-        return isSurprise;
+        return originalAdvantage == CombatAdvantage.Party;
+    }
+
+    public boolean isAmbush() {
+        return originalAdvantage == CombatAdvantage.Enemies;
     }
 
     public void retreatEnemy(Combatant target) {

@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.special.WitchKingAppearance;
 import model.classes.Classes;
+import model.combat.CombatAdvantage;
 import model.combat.loot.SingleItemCombatLoot;
 import model.enemies.Enemy;
 import model.enemies.RisenWarriorEnemy;
@@ -61,7 +62,7 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
         List<Enemy> enemies = new ArrayList<>(List.of(new RisenWarriorEnemy('B'), new RisenWarriorEnemy('B'),
                 ultimateAdversary, new RisenWarriorEnemy('B'), new RisenWarriorEnemy('B')));
         do {
-            CombatEvent combatEvent = new CombatEvent(model, enemies, new DungeonTheme(), true, false);
+            CombatEvent combatEvent = new CombatEvent(model, enemies, new DungeonTheme(), true, CombatAdvantage.Neither);
             combatEvent.setTimeLimit(3);
             combatEvent.run(model);
             setCurrentTerrainSubview(model);

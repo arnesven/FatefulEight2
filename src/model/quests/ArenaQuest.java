@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.combat.CombatAdvantage;
 import model.enemies.*;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
@@ -193,7 +194,7 @@ public class ArenaQuest extends Quest {
             benchers.addAll(model.getParty().getPartyMembers());
             benchers.remove(fighter);
             model.getParty().benchPartyMembers(benchers);
-            CombatEvent combat = new CombatEvent(model, List.of(enemy), state.getCombatTheme(), false, false);
+            CombatEvent combat = new CombatEvent(model, List.of(enemy), state.getCombatTheme(), false, CombatAdvantage.Neither);
             combat.run(model);
             model.getParty().unbenchAll();
             state.transitionToQuestView(model);

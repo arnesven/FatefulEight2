@@ -2,6 +2,7 @@ package model.quests.scenes;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.combat.CombatAdvantage;
 import model.enemies.Enemy;
 import model.quests.QuestEdge;
 import model.quests.QuestSubScene;
@@ -84,7 +85,8 @@ public abstract class CombatSubScene extends QuestSubScene {
         } while (true);
         unacceptAllSpells(model);
 
-        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, surprise);
+        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled,
+                surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
         List<GameCharacter> allies = getAllies();
         if (!allies.isEmpty()) {
             combat.addAllies(allies);

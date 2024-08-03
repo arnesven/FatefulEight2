@@ -556,9 +556,16 @@ public class TutorialHandler implements Serializable {
     }
 
     public void assignments(Model model) {
-        runOnce("dismiss", () -> {
+        runOnce("assignments", () -> {
             model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialAssignments(model.getView()));
+        });
+    }
+
+    public void ambushes(Model model) {
+        runOnce("ambush", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialAmbush(model.getView()));
         });
     }
 
