@@ -27,7 +27,7 @@ public abstract class CombatSubScene extends QuestSubScene {
     private final boolean fleeingEnabled;
     private boolean defeated = false;
     private int timeLimit = 0;
-    private boolean ambush = false;
+    private boolean surprise = false;
 
     public CombatSubScene(int col, int row, List<Enemy> enemies, boolean fleeingEnabled) {
         super(col, row);
@@ -84,7 +84,7 @@ public abstract class CombatSubScene extends QuestSubScene {
         } while (true);
         unacceptAllSpells(model);
 
-        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, ambush);
+        CombatEvent combat = new CombatEvent(model, getEnemies(), state.getCombatTheme(), fleeingEnabled, surprise);
         List<GameCharacter> allies = getAllies();
         if (!allies.isEmpty()) {
             combat.addAllies(allies);
@@ -151,8 +151,8 @@ public abstract class CombatSubScene extends QuestSubScene {
         return enemies;
     }
 
-    public void setAmbush(boolean ambush) {
-        this.ambush = ambush;
+    public void setSurpriseAttack(boolean surprise) {
+        this.surprise = surprise;
     }
 
     @Override

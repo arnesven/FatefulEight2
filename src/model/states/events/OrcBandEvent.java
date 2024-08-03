@@ -43,7 +43,7 @@ public class OrcBandEvent extends DailyEventState {
                 } else {
                     println("After a while the band approaches a gorge.");
                     model.getParty().randomPartyMemberSay(model, List.of("If we hurry a little we could ambush the orcs in the gorge."));
-                    print("Do you wish to ambush the orcs? (Y/N) ");
+                    print("Do you wish to ambush the orcs (surprise attack)? (Y/N) ");
                     if (yesNoInput()) {
                         doCombat(model, true);
                     } else {
@@ -65,13 +65,13 @@ public class OrcBandEvent extends DailyEventState {
         }
     }
 
-    private void doCombat(Model model, boolean ambush) {
+    private void doCombat(Model model, boolean surprise) {
         List<Enemy> enemies = new ArrayList<>();
         for (int i = 0; i < 6; ++i) {
             enemies.add(makeRandomOrcEnemy());
         }
-        if (ambush) {
-            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+        if (surprise) {
+            runSurpriseCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         } else {
             runCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         }

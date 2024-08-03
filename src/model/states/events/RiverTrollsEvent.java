@@ -83,7 +83,7 @@ public class RiverTrollsEvent extends RiverEvent {
         } else {
             println("You rush up to the trolls with your weapons drawn. You've caught them off guard, " +
                     "time to press your advantage!");
-            runAmbushCombat(enemies, new RiverCombatTheme(), true);
+            runSurpriseCombat(enemies, new RiverCombatTheme(), true);
         }
         if (!model.getParty().isWipedOut() && !haveFledCombat()) {
             gotToCross = true;

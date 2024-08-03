@@ -168,16 +168,16 @@ public class AncientStrongholdQuest extends MainQuest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             if (MyRandom.flipCoin()) {
-                boolean ambush = MyRandom.flipCoin();
+                boolean surprise = MyRandom.flipCoin();
                 state.print("The party encounters a group of enemies! ");
-                if (ambush) {
+                if (surprise) {
                     state.print(" They seem to have been caught off guard by your presence! ");
                 }
                 state.print("Press enter to continue.");
                 state.waitForReturn();
                 AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
                 CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
-                        state.getCombatTheme(), true, ambush);
+                        state.getCombatTheme(), true, surprise);
                 combat.addExtraLoot(enemySet.getPearls());
                 combat.run(model);
                 if (!model.getParty().isWipedOut()) {
@@ -501,7 +501,7 @@ public class AncientStrongholdQuest extends MainQuest {
                         "Ah, finally, I was wondering if you would come for a visit.");
             } else {
                 state.println("The chamber is filled with people and specters who seem startled by your sudden presence!");
-                setAmbush(true);
+                setSurpriseAttack(true);
             }
             return super.run(model, state);
         }

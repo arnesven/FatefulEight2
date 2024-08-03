@@ -264,10 +264,10 @@ public class TutorialHandler implements Serializable {
         });
     }
 
-    public void ambush(Model model) {
-        runOnce("ambush", () -> {
+    public void surpriseAttack(Model model) {
+        runOnce("surprise", () -> {
             model.getLog().waitForAnimationToFinish();
-            model.transitionToDialog(new TutorialAmbush(model.getView()));
+            model.transitionToDialog(new TutorialSurpriseAttack(model.getView()));
         });
     }
 

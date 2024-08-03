@@ -5,7 +5,6 @@ import model.actions.QuickCastPassiveCombatAction;
 import model.actions.SneakAttackCombatAction;
 import model.actions.CombatAction;
 import model.combat.conditions.CelerityVampireAbility;
-import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -49,7 +48,7 @@ public class CombatEvent extends DailyEventState {
     private CombatAction selectedCombatAction = null;
     private Combatant selectedTarget;
     private final List<GameCharacter> allies = new ArrayList<>();
-    private boolean isAmbush;
+    private boolean isSurprise;
     private int timeLimit = Integer.MAX_VALUE;
     private int roundCounter = 1;
     private final List<MyPair<GameCharacter, SneakAttackCombatAction>> sneakAttackers;
@@ -59,7 +58,7 @@ public class CombatEvent extends DailyEventState {
     private MyPair<GameCharacter, Integer> flameWall = null;
     private boolean inQuickCast = false;
 
-    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isAmbush) {
+    public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, boolean isSurprise) {
         super(model);
         selectingFormation = true;
         combatMatrix = new CombatMatrix();
@@ -72,7 +71,7 @@ public class CombatEvent extends DailyEventState {
         setInitiativeOrder();
         this.subView = new CombatSubView(this, combatMatrix, theme);
         this.fleeingEnabled = fleeingEnabled;
-        this.isAmbush = isAmbush;
+        this.isSurprise = isSurprise;
         this.sneakAttackers = new ArrayList<>();
         combatStats = new CombatStatistics();
     }
@@ -89,8 +88,8 @@ public class CombatEvent extends DailyEventState {
         if (allies.size() > 0) {
             model.getTutorial().allies(model);
         }
-        if (isAmbush) {
-            model.getTutorial().ambush(model);
+        if (isSurprise) {
+            model.getTutorial().surpriseAttack(model);
         }
         setInitiativeOrder();
         AnimationManager.synchAnimations();
@@ -210,7 +209,7 @@ public class CombatEvent extends DailyEventState {
         for ( ; currentInit < initiativeOrder.size() && !combatDone(model) ; currentInit++) {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {
-                if (!isAmbush) {
+                if (!isSurprise) {
                     handleEnemyTurn(model, turnTaker);
                 }
             } else {
@@ -223,7 +222,7 @@ public class CombatEvent extends DailyEventState {
         if (!combatDone(model)) {
             handleSneakAttacks(model);
         }
-        isAmbush = false;
+        isSurprise = false;
         delayedCombatants.clear();
     }
 
@@ -477,8 +476,8 @@ public class CombatEvent extends DailyEventState {
         return sum;
     }
 
-    public boolean isAmbush() {
-        return isAmbush;
+    public boolean isSurprise() {
+        return isSurprise;
     }
 
     public void retreatEnemy(Combatant target) {
