@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.enemies.*;
 import model.states.DailyEventState;
 import util.MyRandom;
+import view.MyColors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,5 +46,10 @@ public class GelatinousBlobEvent extends DailyEventState {
                 new OrangeGelatinousBlobEnemy('A'),
                 new WhiteGelatinousBlobEnemy('A'),
                 new BlackGelatinousBlobEnemy('A')));
+    }
+
+    public static List<MyColors> getBlobColors() {
+        return List.of(MyColors.GREEN, MyColors.YELLOW, MyColors.BLUE, MyColors.BROWN,
+                MyColors.PURPLE, MyColors.PINK, MyColors.RED, MyColors.ORANGE, MyColors.WHITE, MyColors.BLACK);
     }
 }

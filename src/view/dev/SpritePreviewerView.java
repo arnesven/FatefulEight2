@@ -148,24 +148,24 @@ public class SpritePreviewerView extends SelectableListMenu {
 
                     @Override
                     public void turnLeft(Model model) {
-                        mapPos.x = Arithmetics.decrementWithWrap(mapPos.x, 16);
+                        mapPos.x = Arithmetics.decrementWithWrap(mapPos.x, 30);
                     }
 
                     @Override
                     public void turnRight(Model model) {
-                        mapPos.x = Arithmetics.incrementWithWrap(mapPos.x, 16);
+                        mapPos.x = Arithmetics.incrementWithWrap(mapPos.x, 30);
                     }
                 },
                 new CarouselListContent(xStart + COLUMN_SKIP, yStart + 11, String.format(" %2d ", mapPos.y)) {
 
                     @Override
                     public void turnLeft(Model model) {
-                        mapPos.y = Arithmetics.decrementWithWrap(mapPos.y, 20);
+                        mapPos.y = Arithmetics.decrementWithWrap(mapPos.y, 30);
                     }
 
                     @Override
                     public void turnRight(Model model) {
-                        mapPos.y = Arithmetics.incrementWithWrap(mapPos.y, 20);
+                        mapPos.y = Arithmetics.incrementWithWrap(mapPos.y, 30);
                     }
                 },
                 new CarouselListContent(xStart + COLUMN_SKIP, yStart + 13, colorSet[colors[0]].name()) {

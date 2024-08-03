@@ -8,6 +8,7 @@ import model.states.dailyaction.GrandEmporium;
 import model.states.dailyaction.RoyalArmory;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.List;
 
 public class SunblazeCastle extends CastleLocation {
@@ -25,5 +26,10 @@ public class SunblazeCastle extends CastleLocation {
     @Override
     public boolean getLordGender() {
         return false;
+    }
+
+    @Override
+    public Point getLeaguePosition() {
+        return new Point(1, 1);
     }
 }

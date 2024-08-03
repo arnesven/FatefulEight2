@@ -122,7 +122,7 @@ public class SpellsView extends SelectableListMenu {
             result.add(new SelectableListContent(xStart + col*COLUMN_WIDTH + 7, yStart + row*ROW_HEIGHT + 3, item.getName()) {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    setInnerMenu(new CastByWhomMenu(SpellsView.this, x, y, (Spell)item), model);
+                    setInnerMenu(new SpellMidMenu(SpellsView.this, (Spell)item), model);
                 }
             });
             ++row;
@@ -193,19 +193,17 @@ public class SpellsView extends SelectableListMenu {
     private class CastByWhomMenu extends SelectableListMenu {
         private final Spell spell;
 
-        public CastByWhomMenu(SpellsView spellsView, int x, int y, Spell item) {
+        public CastByWhomMenu(SelectableListMenu spellsView, int x, int y, Spell item) {
             super(spellsView, 12, 9);
             this.spell = item;
         }
 
         @Override
-        public void transitionedFrom(Model model) {
-
-        }
+        public void transitionedFrom(Model model) { }
 
         @Override
         protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-            return List.of(new TextDecoration("Cast?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
+            return List.of(new TextDecoration("By whom?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         }
 
         @Override
@@ -230,5 +228,43 @@ public class SpellsView extends SelectableListMenu {
         protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
 
         }
+    }
+
+    private class SpellMidMenu extends SelectableListMenu {
+        private final Spell spell;
+
+        public SpellMidMenu(SelectableListMenu previous, Spell spell) {
+            super(previous, 10, 5);
+            this.spell = spell;
+        }
+
+        @Override
+        public void transitionedFrom(Model model) { getPrevious().setTimeToTransition(true);}
+
+        @Override
+        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
+            return List.of(new SelectableListContent(xStart + 1, yStart + 1, "Cast") {
+                               @Override
+                               public void performAction(Model model, int x, int y) {
+                                   setInnerMenu(new CastByWhomMenu(SpellMidMenu.this, x, y, spell), model);
+                               }
+                           },
+                    new SelectableListContent(xStart + 1, yStart + 2, "Analyze") {
+                        @Override
+                        public void performAction(Model model, int x, int y) {
+                            setInnerMenu(new AnalyzeSpellDialog(model, spell), model);
+                        }
+                    }
+                    // TODO: Add masteries view
+            );
+        }
+
+        @Override
+        protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
     }
 }

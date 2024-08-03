@@ -344,9 +344,9 @@ public class ArtisanEvent extends GeneralInteractionEvent {
         }
     }
 
-    private static class Enchanter extends ArtisanType {
+    public static class Enchanter extends ArtisanType {
         public Enchanter() {
-            super("Enchanter", "a wand", MyColors.PURPLE, MyColors.DARK_RED);
+            super("Enchanter", "a wand or staff", MyColors.PURPLE, MyColors.DARK_RED);
         }
 
         @Override
@@ -356,7 +356,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         @Override
         protected Item getApplicableItem(Equipment equipment) {
-            if (equipment.getWeapon() instanceof WandWeapon) {
+            if (equipment.getWeapon() instanceof WandWeapon || equipment.getWeapon() instanceof StaffWeapon) {
                 return equipment.getWeapon();
             }
             return null;

@@ -6,6 +6,7 @@ import model.map.CastleLocation;
 import model.map.WorldHex;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.events.LeagueOfMagesEvent;
 import util.MyRandom;
 import view.sprites.Sprite;
 import view.subviews.*;
@@ -62,14 +63,21 @@ public class CourtMageNode extends DailyActionNode {
                     "with the mages of the other courts.");
             printQuote("Court Mage", "For " + TELEPORT_COST + " gold, I can teleport your party " +
                     "to another castle.");
-            if (model.getParty().getGold() < TELEPORT_COST) {
-                leaderSay("Fascinating. I think we'll pass.");
-                return null;
+            if (LeagueOfMagesEvent.isMember(model)) {
+                leaderSay("Actually, we're members of the League of Mages...");
+                printQuote("Court Mage", "Really? Well in that case, it's free of charge.");
+            } else {
+                if (model.getParty().getGold() < TELEPORT_COST) {
+                    leaderSay("Fascinating. I think we'll pass.");
+                    return null;
+                }
             }
             print("Do you want to teleport to another castle? (Y/N) ");
             if (yesNoInput()) {
                 leaderSay("Yes please. That would be very convenient.");
-                model.getParty().addToGold(-TELEPORT_COST);
+                if (!LeagueOfMagesEvent.isMember(model)) {
+                    model.getParty().addToGold(-TELEPORT_COST);
+                }
                 printQuote("Court Mage", "Fine. Which castle do you want me to teleport you to?");
                 List<String> options = new ArrayList<>(List.of("Arkvale Castle", "Sunblaze Castle", "Castle Ardh",
                         "Bogdown Castle"));
@@ -80,9 +88,11 @@ public class CourtMageNode extends DailyActionNode {
                 if (!yesNoInput()) {
                     leaderSay("On second thought, no, I've changed my mind.");
                     printQuote("Court Mage", MyRandom.sample(List.of("What? Okay...", "It doesn't hurt or anything.",
-                            "Getting cold feet?")));
-                    printQuote("Court Mage", "Here's your money back then.");
-                    model.getParty().addToGold(TELEPORT_COST);
+                            "Getting cold feet?", "That's okay. It's all the same to me.")));
+                    if (!LeagueOfMagesEvent.isMember(model)) {
+                        printQuote("Court Mage", "Here's your money back then.");
+                        model.getParty().addToGold(TELEPORT_COST);
+                    }
                     return null;
                 }
                 leaderSay("Okay. We're ready.");

@@ -35,4 +35,10 @@ public class ArkvaleCastle extends CastleLocation {
     public boolean getLordGender() {
         return true;
     }
+
+
+    @Override
+    public Point getLeaguePosition() {
+        return new Point(1, 1);
+    }
 }

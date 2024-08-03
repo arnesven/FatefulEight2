@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.map.CastleLocation;
 import model.states.GameState;
+import model.states.events.LeagueOfMagesEvent;
 import view.MyColors;
 import view.subviews.CastleSubView;
 import view.subviews.DailyActionSubView;
@@ -36,6 +37,10 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
         addNode(7, 1, new FlagPoleNode());
         for (GeneralShopNode shop : location.getShops(model)) {
             addNode(shop.getColumn(), shop.getRow(), shop);
+        }
+        if (LeagueOfMagesEvent.isMember(model)) {
+            Point league = location.getLeaguePosition();
+            addNode(league.x, league.y, new LeagueOfMagesOfficeNode());
         }
     }
 

@@ -11,6 +11,7 @@ import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
+import model.states.events.LeagueOfMagesEvent;
 import util.MyPair;
 import view.sprites.Sprite;
 import view.subviews.DailyActionSubView;
@@ -56,7 +57,19 @@ public class GoToCastleActionNode extends DailyActionNode {
         if (!model.getWarHandler().getWarsForKingdom((CastleLocation) location).isEmpty()) {
             return askAboutRecruit(model, state, location);
         }
+        if (LeagueOfMagesEvent.isMember(model)) {
+            return sayMember(model, state, location);
+        }
         return new VisitCastleEvent(model);
+    }
+
+    private GameState sayMember(Model model, AdvancedDailyActionState state, UrbanLocation location) {
+        state.printQuote("Guard", "Hey you! Stop right there! Where do you think you're going?");
+        state.leaderSay("Into the keep. We're members of the League of Mages and we need access to the court mage's teleportation service.");
+        state.printQuote("Guard", "My apologies. You can pass on through.");
+        model.getLog().waitForAnimationToFinish();
+        admitted = true;
+        return new VisitCastleLordDailyActionNode(model, null, location, false);
     }
 
     private GameState askAboutRecruit(Model model, AdvancedDailyActionState state, UrbanLocation location) {
@@ -71,6 +84,7 @@ public class GoToCastleActionNode extends DailyActionNode {
                 "the future. Don't you know we're at war? Go straight through and into the main chamber. " +
                 "Talk to the commander. He'll introduce you to the drill sargent. He he, we'll make a soldier out of you.");
         state.leaderSay("Sir, yes sir!");
+        admitted = true;
         return new VisitCastleLordDailyActionNode(model, null, location, false);
     }
 

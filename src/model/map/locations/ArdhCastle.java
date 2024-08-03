@@ -32,4 +32,10 @@ public class ArdhCastle extends CastleLocation {
     public boolean getLordGender() {
         return false;
     }
+
+
+    @Override
+    public Point getLeaguePosition() {
+        return new Point(6, 2);
+    }
 }

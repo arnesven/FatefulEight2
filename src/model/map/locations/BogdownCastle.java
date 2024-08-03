@@ -32,4 +32,9 @@ public class BogdownCastle extends CastleLocation {
     public boolean getLordGender() {
         return false;
     }
+
+    @Override
+    public Point getLeaguePosition() {
+        return new Point(5, 1);
+    }
 }

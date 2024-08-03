@@ -3,8 +3,6 @@ package model.map;
 import model.Model;
 import model.SteppingMatrix;
 import model.headquarters.Headquarters;
-import model.headquarters.MediumHeadquarters;
-import model.horses.HorseHandler;
 import model.races.Race;
 import model.states.AcceptDeliveryEvent;
 import model.states.DailyEventState;
@@ -24,6 +22,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.*;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CastleLocation extends HexLocation implements UrbanLocation {
@@ -113,7 +112,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public DailyEventState generateEvent(Model model) {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll >= 3) {
-            return MyRandom.sample(List.of(
+            List<DailyEventState> dailyEvents = new ArrayList<>(List.of(
                     new CaptainEvent(model),
                     new SmithEvent(model),
                     new ArcherEvent(model),
@@ -121,7 +120,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new NoblemanEvent(model),
                     new PriestEvent(model),
                     new BakeryEvent(model),
-                    new CourtWizardEvent(model),
                     new ArmoryEvent(model),
                     new JesterEvent(model),
                     new MayorEvent(model),
@@ -139,6 +137,10 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new WantedPosterEvent(model),
                     new ArtisanEvent(model)
             ));
+            if (!LeagueOfMagesEvent.isMember(model)) {
+                dailyEvents.add(new LeagueOfMagesEvent(model));
+            }
+            return MyRandom.sample(dailyEvents);
         }
         return new NoEventState(model);
     }
@@ -217,4 +219,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public Headquarters getRealEstate() {
         return headquarters;
     }
+
+    public abstract Point getLeaguePosition();
 }
