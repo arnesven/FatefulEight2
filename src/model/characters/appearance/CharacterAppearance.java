@@ -425,7 +425,6 @@ public abstract class CharacterAppearance implements Serializable {
     }
 
     protected void setBlinkSprites() {
-        // TODO: If has glasses... fix
         this.blinkSprites = makeBlinkSprites(mascaraColor);
         int lookLeft = 0x22 + getLookIndex() * 4;
         int lookRight = 0x23 + getLookIndex() * 4;
