@@ -1,6 +1,7 @@
 package model.characters.appearance;
 
 import model.races.Race;
+import util.MyPair;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.*;
@@ -259,10 +260,12 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     public void setFaceDetail(FaceDetail detail) {
         this.detail = detail;
+        setBlinkSprites();
     }
 
     public void setDetailColor(MyColors color) {
         detail.setColor(color);
+        setBlinkSprites();
     }
 
     @Override
@@ -310,6 +313,16 @@ public class AdvancedAppearance extends CharacterAppearance {
         } else {
             super.drawBlink(screenHandler, x, y);
         }
+    }
+
+    protected MyPair<Sprite8x8, Sprite8x8> makeBlinkSprites(MyColors mascaraColor) {
+        if (detail instanceof GlassesDetail || detail instanceof GlassesAndEarringsDetail) {
+            return new MyPair<>(new Sprite8x8("blinkleftwglasses", "mouth.png", 0x33,
+                            MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE),
+                                new Sprite8x8("blinkrightwclasses", "mouth.png", 0x34,
+                            MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE));
+        }
+        return super.makeBlinkSprites(mascaraColor);
     }
 
     @Override

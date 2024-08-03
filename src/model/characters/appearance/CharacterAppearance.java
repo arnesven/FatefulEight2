@@ -426,10 +426,7 @@ public abstract class CharacterAppearance implements Serializable {
 
     protected void setBlinkSprites() {
         // TODO: If has glasses... fix
-        this.blinkSprites = new MyPair<>(new Sprite8x8("blinkleft", "mouth.png", 0x20,
-                                        MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE),
-                                        new Sprite8x8("blinkright", "mouth.png", 0x21,
-                                                MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE));
+        this.blinkSprites = makeBlinkSprites(mascaraColor);
         int lookLeft = 0x22 + getLookIndex() * 4;
         int lookRight = 0x23 + getLookIndex() * 4;
         this.lookLeft = new MyPair<>(new Sprite8x8("lookleftleft", "mouth.png", lookLeft,
@@ -440,6 +437,13 @@ public abstract class CharacterAppearance implements Serializable {
                 MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE),
                 new Sprite8x8("lookrightright", "mouth.png", lookRight+2,
                         MyColors.BLACK, getEyeballColor(), MyColors.BROWN, MyColors.BEIGE));
+    }
+
+    protected MyPair<Sprite8x8, Sprite8x8> makeBlinkSprites(MyColors mascaraColor) {
+        return new MyPair<>(new Sprite8x8("blinkleft", "mouth.png", 0x20,
+                MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE),
+                new Sprite8x8("blinkright", "mouth.png", 0x21,
+                        MyColors.BLACK, mascaraColor, MyColors.BROWN, MyColors.BEIGE));
     }
 
     protected int getLookIndex() {
