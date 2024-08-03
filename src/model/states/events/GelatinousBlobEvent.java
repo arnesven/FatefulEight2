@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GelatinousBlobEvent extends DailyEventState {
+    private static final String HAVE_MET_BLOBS = "firstTimeMeetingGelatinousBlobs";
+
     public GelatinousBlobEvent(Model model) {
         super(model);
     }
@@ -24,14 +26,24 @@ public class GelatinousBlobEvent extends DailyEventState {
         }
         leaderSay("The ground feels strange here. It's not dry... and it's not quite wet. " +
                 "It's spongy, like we're walking on a mushroom.");
-        leaderSay("Wait a minute... That's some kind of creature!");
-        println("All of a sudden, blobs of goop rise out of the ground and form clumps. They attack you!");
+        if (model.getSettings().getMiscFlags().containsKey(HAVE_MET_BLOBS)) {
+            leaderSay("I think we're running into some blobs again.");
+            println("No sooner has " + model.getParty().getLeader().getFirstName() + " said so, many gelatinous blobs rise out of the ground and attack you!");
+        } else {
+            leaderSay("Wait a minute... That's some kind of creature!");
+            println("All of a sudden, blobs of goop rise out of the ground and form clumps. They attack you!");
+        }
         GelatinousBlobEnemy blobTemplate = makeRandomBlob();
         List<Enemy> enemies = new ArrayList<>();
         for (int i = MyRandom.randInt(4, 8); i > 0; --i) {
             enemies.add(blobTemplate.copy());
         }
-        runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+        if (model.getSettings().getMiscFlags().containsKey(HAVE_MET_BLOBS)) {
+            runCombat(enemies);
+        } else {
+            model.getSettings().getMiscFlags().put(HAVE_MET_BLOBS, true);
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+        }
     }
 
     public static GelatinousBlobEnemy makeRandomBlob() {
