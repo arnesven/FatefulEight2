@@ -4,6 +4,7 @@ import model.Model;
 import model.enemies.Enemy;
 import model.enemies.SkeletonEnemy;
 import model.states.DailyEventState;
+import util.MyRandom;
 import view.combat.DungeonTheme;
 
 import java.util.ArrayList;
@@ -16,12 +17,18 @@ public class SkeletonCryptEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party encounters some skeletons!");
+
         List<Enemy> result = new ArrayList<>();
         int num = getSuggestedNumberOfEnemies(getModel(), new SkeletonEnemy('A'));
         for (int i = num; i > 0; --i) {
             result.add(new SkeletonEnemy('A'));
         }
-        runCombat(result, new DungeonTheme(), true);
+        if (MyRandom.flipCoin()) {
+            println("The party encounters some skeletons!");
+            runCombat(result, new DungeonTheme(), true);
+        } else {
+            println("The party is ambushed by some skeletons!");
+            runAmbushCombat(result, new DungeonTheme(), true);
+        }
     }
 }

@@ -96,7 +96,7 @@ public abstract class DailyEventState extends GameState {
         }
     }
 
-    private void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage combatAdvantage) {
+    public void runCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage combatAdvantage) {
         CombatEvent combat = new CombatEvent(getModel(), enemies, theme, fleeingEnabled, combatAdvantage);
         combat.addExtraLoot(getExtraCombatLoot(getModel()));
         combat.run(getModel());

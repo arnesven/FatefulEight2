@@ -13,7 +13,8 @@ public class JungleMonsterEvent extends RoamingMonsterEvent{
 
     @Override
     protected void doEvent(Model model) {
-        println("The party encounters some monsters roaming the jungle!");
+        boolean ambush = MyRandom.flipCoin();
+        println("The party " + (ambush?"is ambushed by":"encounters") + " some monsters roaming the jungle!");
         List<Enemy> enemies = null;
         int roll = MyRandom.rollD10();
         switch (roll) {
@@ -43,6 +44,10 @@ public class JungleMonsterEvent extends RoamingMonsterEvent{
             case 10:
                 enemies = makeTrollEnemies();
         }
-        runCombat(enemies);
+        if (!ambush) {
+            runCombat(enemies);
+        } else {
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+        }
     }
 }

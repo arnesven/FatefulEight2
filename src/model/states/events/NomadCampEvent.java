@@ -34,7 +34,7 @@ public class NomadCampEvent extends DailyEventState {
 
     @Override
     public GuideData getGuideData() {
-        return new GuideData("Visit nomand camp", "There's a camp nearby. It's the home of a nomadic tribe");
+        return new GuideData("Visit nomad camp", "There's a camp nearby. It's the home of a nomadic tribe");
     }
 
     @Override

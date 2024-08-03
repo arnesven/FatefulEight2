@@ -13,7 +13,8 @@ public class WastelandMonsterEvent extends RoamingMonsterEvent {
 
     @Override
     protected void doEvent(Model model) {
-        println("The party encounters some monsters roaming the wasteland!");
+        boolean ambush = MyRandom.flipCoin();
+        println("The party " + (ambush?"is ambushed by":"encounters") + " some monsters roaming the wasteland!");
         List<Enemy> enemies = null;
         int roll = MyRandom.rollD10();
         switch (roll) {
@@ -41,6 +42,10 @@ public class WastelandMonsterEvent extends RoamingMonsterEvent {
             case 10:
                 enemies = makeTrollEnemies();
         }
-        runCombat(enemies);
+        if (ambush) {
+            runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
+        } else {
+            runCombat(enemies);
+        }
     }
 }
