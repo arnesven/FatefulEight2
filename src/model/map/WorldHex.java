@@ -442,4 +442,8 @@ public abstract class WorldHex {
     public DailyEventState generateDogEvent(Model model) {
         return null;
     }
+
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        return null;
+    }
 }

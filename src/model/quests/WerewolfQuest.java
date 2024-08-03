@@ -20,6 +20,7 @@ import model.states.QuestState;
 import util.MyLists;
 import view.BorderFrame;
 import view.MyColors;
+import view.combat.NightGrassCombatTheme;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
@@ -104,7 +105,7 @@ public class WerewolfQuest extends Quest {
 
     @Override
     public CombatTheme getCombatTheme() {
-        return new GrassCombatTheme();
+        return new NightGrassCombatTheme();
     }
 
     @Override

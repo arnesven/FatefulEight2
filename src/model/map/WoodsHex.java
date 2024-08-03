@@ -83,4 +83,12 @@ public class WoodsHex extends WorldHex {
         return "Wooded areas often contain many creatures, most often benign but some are hostile. " +
                 "You commonly encounter elves and halfings in woods.";
     }
+
+    @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() == 1) {
+            return new WolfNightAttackEvent(model); // TODO: Add some more of these to the other terrain types.
+        }
+        return null;
+    }
 }

@@ -22,8 +22,18 @@ public class WolfEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("The sound of wolves howling is now unmistakable and the pack finally catches up with you come nightfall." + getExtraText());
+        println("You suddenly hear something.");
+        leaderSay("Is that howling? Maybe it's just the wind.");
+        println("Convinced that it's just your imagination, you trudge onward.");
+        println("A little while later you hear it again.");
+        leaderSay("Yeah... that's howling alright.");
+        println("The sound of wolves howling is now unmistakable and the pack finally catches up with you." + getExtraText());
         if (!canSneak(model)) {
+            print("Do you want to try to run away? (Y/N) ");
+            if (yesNoInput()) {
+                setFledCombat(true);
+                return;
+            }
             model.getLog().waitForAnimationToFinish();
             List<Enemy> enemies = new ArrayList<>();
             int numberOfEnemies = Math.max(1, model.getParty().partyStrength() / (getWolf()).getThreat());
