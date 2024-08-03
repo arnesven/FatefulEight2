@@ -39,7 +39,7 @@ public class BlessSpell extends ImmediateSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

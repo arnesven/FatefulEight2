@@ -123,6 +123,7 @@ public class LeagueOfMagesEvent extends DailyEventState {
         leaderSay("How does one become a member?");
         portraitSay("Membership requires three things. You must have at least one spell mastery, " +
                 "you must complete a task assigned by the League and you must pay the membership fee of " + ENTRANCE_FEE + " gold.");
+        model.getTutorial().spellMasteries(model);
         GameCharacter leader = model.getParty().getLeader();
         boolean hasMastery = !leader.getMasteries().getAbilityList().isEmpty();
         if (hasMastery) {

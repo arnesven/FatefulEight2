@@ -6,7 +6,6 @@ import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.*;
 
@@ -33,7 +32,7 @@ public class EntropicBoltSpell extends CombatSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

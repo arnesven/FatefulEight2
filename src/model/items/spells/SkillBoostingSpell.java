@@ -1,7 +1,6 @@
 package model.items.spells;
 
 import model.Model;
-import model.SpellHandler;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.states.GameState;
@@ -18,7 +17,7 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
     protected abstract Skill getBoostingSkill();
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

@@ -29,7 +29,7 @@ public abstract class MasterySpell extends Spell {
         return character.getMasteries().getMasteryLevel(this);
     }
 
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return false;
     }
 

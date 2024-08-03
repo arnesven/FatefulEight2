@@ -51,7 +51,7 @@ public class HealingWordSpell extends CombatSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

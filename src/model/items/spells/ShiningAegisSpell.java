@@ -47,7 +47,7 @@ public class ShiningAegisSpell extends CombatSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 }

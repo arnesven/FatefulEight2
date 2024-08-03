@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.combat.conditions.TimedParalysisCondition;
-import model.enemies.AutomatonEnemy;
 import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
@@ -28,7 +27,7 @@ public class ConjurePhantasmSpell extends CombatSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

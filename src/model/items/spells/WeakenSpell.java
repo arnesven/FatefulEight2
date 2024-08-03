@@ -10,7 +10,6 @@ import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
 import view.sprites.DownArrowAnimation;
-import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class WeakenSpell extends CombatSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

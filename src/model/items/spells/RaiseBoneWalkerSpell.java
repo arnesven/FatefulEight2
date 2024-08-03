@@ -6,7 +6,6 @@ import model.characters.preset.LonnieLiebgott;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.Combatant;
-import model.combat.conditions.SummonCondition;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.accessories.GreatHelm;
@@ -21,8 +20,6 @@ import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.*;
-
-import java.util.List;
 
 public class RaiseBoneWalkerSpell extends SummonCombatSpell {
     private static final Sprite SPRITE = new CombatSpellSprite(9, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
@@ -64,7 +61,7 @@ public class RaiseBoneWalkerSpell extends SummonCombatSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

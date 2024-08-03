@@ -6,7 +6,6 @@ import model.combat.conditions.*;
 import model.items.Item;
 import model.states.GameState;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
@@ -55,7 +54,7 @@ public class SouthernCrossSpell extends ImmediateSpell {
     }
 
     @Override
-    protected boolean masteriesEnabled() {
+    public boolean masteriesEnabled() {
         return true;
     }
 

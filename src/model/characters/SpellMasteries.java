@@ -30,7 +30,7 @@ public class SpellMasteries implements Serializable {
         }
         MyPair<Integer, Integer> pair = masteries.get(masterySpell.getName());
         pair.second++;
-        if (pair.second == masterySpell.getThresholds().length) {
+        if (pair.second >= masterySpell.getThresholds().length) {
             return false;
         }
         if (pair.second.equals(masterySpell.getThresholds()[pair.first])) {
@@ -50,5 +50,16 @@ public class SpellMasteries implements Serializable {
 
     public int getMasteryLevel(MasterySpell masterySpell) {
         return getMasteryLevel(masterySpell.getName());
+    }
+
+    public int getCastCountPercentage(MasterySpell masterSpell) {
+        if (!masteries.containsKey(masterSpell.getName())) {
+            return 0;
+        }
+        MyPair<Integer, Integer> pair = masteries.get(masterSpell.getName());
+        if (pair.second == masterSpell.getThresholds().length) {
+            return 100;
+        }
+        return (int)Math.round(pair.second * 100.0 / pair.first);
     }
 }

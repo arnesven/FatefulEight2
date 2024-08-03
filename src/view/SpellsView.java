@@ -3,14 +3,13 @@ package view;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.spells.MasterySpell;
 import model.items.spells.Spell;
 import util.Arithmetics;
 import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
-import view.sprites.AnimatedCharSprite;
 import view.sprites.ArrowSprites;
-import view.sprites.MovingRightArrow;
 import view.widget.ItemTab;
 
 import java.awt.event.KeyEvent;
@@ -102,6 +101,9 @@ public class SpellsView extends SelectableListMenu {
                     for (String s : MyStrings.partition(sp.getDescription(), COLUMN_WIDTH-4)) {
                         print(model.getScreenHandler(),x + 5, y + (i++), s);
                     }
+                    if (sp instanceof MasterySpell && ((MasterySpell) sp).masteriesEnabled()) {
+                        BorderFrame.drawString(model.getScreenHandler(), "M", x, y+5, MyColors.GOLD, MyColors.BLUE);
+                    }
                 }
             });
             ++row;
@@ -119,10 +121,17 @@ public class SpellsView extends SelectableListMenu {
         int row = 0;
         int col = 0;
         for (Item item : tabNames[selectedTab].getItems(model)) {
-            result.add(new SelectableListContent(xStart + col*COLUMN_WIDTH + 7, yStart + row*ROW_HEIGHT + 3, item.getName()) {
+            int finalX = xStart + col*COLUMN_WIDTH + 7;
+            int finalY = yStart + row*ROW_HEIGHT + 3;
+            result.add(new SelectableListContent(finalX, finalY, item.getName()) {
                 @Override
                 public void performAction(Model model, int x, int y) {
-                    setInnerMenu(new SpellMidMenu(SpellsView.this, (Spell)item), model);
+                    setInnerMenu(new SpellMidMenu(SpellsView.this, finalX + 3, finalY + 1, (Spell)item), model);
+                }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return true;
                 }
             });
             ++row;
@@ -190,12 +199,26 @@ public class SpellsView extends SelectableListMenu {
                 }};
     }
 
-    private class CastByWhomMenu extends SelectableListMenu {
+    private static class CastByWhomMenu extends SelectableListMenu {
         private final Spell spell;
+        private final int xStart;
+        private final int yStart;
 
         public CastByWhomMenu(SelectableListMenu spellsView, int x, int y, Spell item) {
-            super(spellsView, 12, 9);
+            super(spellsView, 12, 10);
             this.spell = item;
+            this.xStart = x + 1;
+            this.yStart = y + 1;
+        }
+
+        @Override
+        protected int getXStart() {
+            return xStart;
+        }
+
+        @Override
+        protected int getYStart() {
+            return yStart;
         }
 
         @Override
@@ -232,10 +255,24 @@ public class SpellsView extends SelectableListMenu {
 
     private class SpellMidMenu extends SelectableListMenu {
         private final Spell spell;
+        private final int xStart;
+        private final int yStart;
 
-        public SpellMidMenu(SelectableListMenu previous, Spell spell) {
-            super(previous, 10, 5);
+        public SpellMidMenu(SelectableListMenu previous, int xStart, int yStart, Spell spell) {
+            super(previous, 10, 4);
             this.spell = spell;
+            this.xStart = xStart;
+            this.yStart = yStart;
+        }
+
+        @Override
+        protected int getXStart() {
+            return xStart;
+        }
+
+        @Override
+        protected int getYStart() {
+            return yStart;
         }
 
         @Override
@@ -248,20 +285,37 @@ public class SpellsView extends SelectableListMenu {
 
         @Override
         protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
-            return List.of(new SelectableListContent(xStart + 1, yStart + 1, "Cast") {
+            List<ListContent> content = new ArrayList<>();
+            content.add(new SelectableListContent(xStart + 1, yStart + 1, "Cast") {
                                @Override
                                public void performAction(Model model, int x, int y) {
                                    setInnerMenu(new CastByWhomMenu(SpellMidMenu.this, x, y, spell), model);
                                }
-                           },
-                    new SelectableListContent(xStart + 1, yStart + 2, "Analyze") {
-                        @Override
-                        public void performAction(Model model, int x, int y) {
-                            setInnerMenu(new AnalyzeSpellDialog(model, spell), model);
-                        }
+                           });
+            content.add(new SelectableListContent(xStart + 1, yStart + 2, "Analyze") {
+                            @Override
+                            public void performAction(Model model, int x, int y) {
+                                setInnerMenu(new AnalyzeSpellDialog(model, spell), model);
+                            }
+                            @Override
+                            public boolean isEnabled(Model model) {
+                                return true;
+                            }
+                        });
+            if (spell instanceof MasterySpell && ((MasterySpell) spell).masteriesEnabled()) {
+                content.add(new SelectableListContent(xStart + 1, yStart + 3, "Masteries") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        setInnerMenu(new MasteriesView(model, (MasterySpell)spell), model);
                     }
-                    // TODO: Add masteries view
-            );
+                    @Override
+                    public boolean isEnabled(Model model) {
+                        return true;
+                    }
+                });
+            }
+
+            return content;
         }
 
         @Override

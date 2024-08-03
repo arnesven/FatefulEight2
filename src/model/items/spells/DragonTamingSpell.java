@@ -95,7 +95,7 @@ public class DragonTamingSpell extends AuxiliarySpell {
         }
 
         @Override
-        protected boolean masteriesEnabled() {
+        public boolean masteriesEnabled() {
             return true;
         }
 
