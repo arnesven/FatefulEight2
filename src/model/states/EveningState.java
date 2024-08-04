@@ -10,6 +10,7 @@ import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.states.dailyaction.HireGuideAction;
 import model.states.dailyaction.LodgingState;
+import model.states.events.PartyMemberWantsToLeaveEvent;
 import model.states.events.VampireProwlNightEvent;
 import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
@@ -90,43 +91,56 @@ public class EveningState extends GameState {
             return;
         }
         Collections.shuffle(dissidents);
-        partyMemberSay(dissidents.get(0), MyRandom.sample(List.of("Perhaps it's time for new leadership?",
+        GameCharacter mainDissident = dissidents.get(0);
+        List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
+        candidates.remove(model.getParty().getLeader());
+        candidates.remove(mainDissident);
+        candidates.removeIf((GameCharacter gc) -> mainDissident.getAttitude(gc) < 0);
+
+        if (candidates.isEmpty()) {
+            PartyMemberWantsToLeaveEvent wantsToLeaveEvent = new PartyMemberWantsToLeaveEvent(model);
+            wantsToLeaveEvent.wantsToLeave(model, mainDissident, true);
+            return;
+        }
+
+        candidates.add(mainDissident);
+        Collections.sort(candidates, (gc1, gc2) -> {
+            int total1 = gc1.getRankForSkill(Skill.Leadership) * 10 + gc1.getSpeed();
+            int total2 = gc2.getRankForSkill(Skill.Leadership) * 10 + gc2.getSpeed();
+            return total2 - total1;
+        });
+
+        partyMemberSay(mainDissident, MyRandom.sample(List.of("Perhaps it's time for new leadership?",
                 "I think it's time for a new leader.", "This party needs new leadership, urgently.",
                 "Who else thinks we need to appoint a new leader?")));
         if (dissidents.size() > 1) {
             partyMemberSay(dissidents.get(1), MyRandom.sample(List.of("I agree!", "Here here!", "Well said.",
                     "I concur.", "Couldn't have said it better myself!", "So true!")));
         }
-        List<GameCharacter> candidates = new ArrayList<>(model.getParty().getPartyMembers());
-        candidates.remove(model.getParty().getLeader());
-        Collections.sort(candidates, (gc1, gc2) -> {
-            int total1 = gc1.getRankForSkill(Skill.Leadership) * 10 + gc1.getSpeed();
-            int total2 = gc2.getRankForSkill(Skill.Leadership) * 10 + gc2.getSpeed();
-            return total2 - total1;
-        });
-        if (candidates.get(0) == dissidents.get(0)) {
-            partyMemberSay(dissidents.get(0), "I think I would be a better leader.");
+        GameCharacter proposedLeader = candidates.get(0);
+        if (proposedLeader == mainDissident) {
+            partyMemberSay(mainDissident, "I think I would be a better leader.");
         } else {
-            partyMemberSay(dissidents.get(0), "I think " + candidates.get(0).getFirstName() + " would be a great leader.");
+            partyMemberSay(mainDissident, "I think " + proposedLeader.getFirstName() + " would be a great leader.");
         }
-        print("Do you agree to make " + candidates.get(0).getName() + " the leader of the party? (Y/N) ");
+        print("Do you agree to make " + proposedLeader.getName() + " the leader of the party? (Y/N) ");
         if (yesNoInput()) {
-            leaderSay("Fine... I give up. " + candidates.get(0).getFirstName() + ", good luck...");
-            model.getParty().setLeader(candidates.get(0));
+            leaderSay("Fine... I give up. " + proposedLeader.getFirstName() + ", good luck...");
+            model.getParty().setLeader(proposedLeader);
             leaderSay("Thanks. Okay people, follow my lead.");
-            int dissidentAttitudeTowardNewLeader = dissidents.get(0).getAttitude(model.getParty().getLeader());
+            int dissidentAttitudeTowardNewLeader = mainDissident.getAttitude(model.getParty().getLeader());
             if (dissidentAttitudeTowardNewLeader < 0) {
-                dissidents.get(0).addToAttitude(model.getParty().getLeader(), -dissidentAttitudeTowardNewLeader);
+                mainDissident.addToAttitude(model.getParty().getLeader(), -dissidentAttitudeTowardNewLeader);
             }
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc != model.getParty().getLeader()) {
                     gc.addToAttitude(model.getParty().getLeader(), 1);
                 }
             }
-            println(dissidents.get(0).getName() + " has been appeased.");
+            println(mainDissident.getName() + " has been appeased.");
         } else {
             if (MyRandom.flipCoin()) {
-                leaderSay("No way " + dissidents.get(0).getFirstName() + ".");
+                leaderSay("No way " + mainDissident.getFirstName() + ".");
             } else {
                 leaderSay("I refuse.");
             }
@@ -135,7 +149,7 @@ public class EveningState extends GameState {
                     gc.addToAttitude(model.getParty().getLeader(), -3);
                 }
             }
-            println(dissidents.get(0).getName() + " has been affronted.");
+            println(mainDissident.getName() + " has been affronted.");
         }
     }
 

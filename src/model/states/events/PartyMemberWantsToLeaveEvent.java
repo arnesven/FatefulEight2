@@ -92,7 +92,7 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
         }
     }
 
-    private boolean wantsToLeave(Model model, GameCharacter gc, boolean angryAtLeader) {
+    public boolean wantsToLeave(Model model, GameCharacter gc, boolean angryAtLeader) {
         if (angryAtLeader) {
             model.getParty().partyMemberSay(model, gc, List.of("I'm sick of this.", "It's time for me to go my own way.",
                     "I don't want to do this anymore.", "I want to leave the party.", "Guys... I'm done. I want out.",
