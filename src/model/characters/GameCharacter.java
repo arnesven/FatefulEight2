@@ -568,6 +568,9 @@ public class GameCharacter extends Combatant {
     public GameCharacter copy() {
         GameCharacter clone = new GameCharacter(firstName, lastName, race, charClass, appearance.copy(), classes, equipment);
         clone.setLevel(getLevel());
+        for (Condition cond : getConditions()) {
+            clone.addCondition(cond);
+        }
         return clone;
     }
 
