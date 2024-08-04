@@ -78,7 +78,7 @@ public class OrcBandEvent extends DailyEventState {
         possiblyGetHorsesAfterCombat("orcs", 4);
     }
 
-    private Enemy makeRandomOrcEnemy() {
+    public static Enemy makeRandomOrcEnemy() {
         return MyRandom.sample(List.of(new OrcWarrior('C'),
                 new OrcArcherEnemy('A'),
                 new OrcBoarRiderEnemy('B')));

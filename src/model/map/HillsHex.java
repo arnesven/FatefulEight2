@@ -68,6 +68,14 @@ public class HillsHex extends WorldHex {
     }
 
     @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() == 1) {
+            return new OrcNightAttackEvent(model);
+        }
+        return null;
+    }
+
+    @Override
     public DailyEventState generateDogEvent(Model model) {
         return MyRandom.sample(List.of(new CaveEvent(model), new MineEvent(model), new AbandonedShackEvent(model)));
     }

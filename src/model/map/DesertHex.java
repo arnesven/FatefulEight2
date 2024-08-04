@@ -70,6 +70,14 @@ public class DesertHex extends WorldHex {
     }
 
     @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() == 1) {
+            return new ScorpionNightAttackEvent(model);
+        }
+        return null;
+    }
+
+    @Override
     public CombatTheme getCombatTheme() {
         return new DesertCombatTheme();
     }

@@ -78,6 +78,14 @@ public class SwampHex extends WorldHex {
     }
 
     @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() == 1) {
+            return new CobraNightAttackEvent(model);
+        }
+        return null;
+    }
+
+    @Override
     public DailyEventState generateDogEvent(Model model) {
         return MyRandom.sample(List.of(new SwampRaftEvent(model), new WoundedAdventurerEvent(model), new MushroomsEvent(model)));
     }

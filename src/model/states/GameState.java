@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.DogAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -187,6 +188,14 @@ public abstract class GameState implements GameStateConstants {
 
     public static String manOrWomanCap(boolean gender) {
         return gender ? "Woman" : "Man";
+    }
+
+    public static String boyOrGirl(boolean gender) {
+        return boyOrGirlCap(gender).toLowerCase();
+    }
+
+    public static String boyOrGirlCap(boolean gender) {
+        return gender ? "Girl" : "Boy";
     }
 
     public static String himOrHer(boolean gender) {

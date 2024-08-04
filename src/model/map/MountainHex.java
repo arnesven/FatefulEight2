@@ -87,4 +87,12 @@ public class MountainHex extends WorldHex {
         return "Mountainous areas are notably dangerous because of the difficulty, and sometimes impassable terrain, " +
                 "and dangerous denizens who dwell there. Orcs, half-orcs and dwarves are common in mountains.";
     }
+
+    @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() == 1) {
+            return new GoblinNightAttackEvent(model);
+        }
+        return null;
+    }
 }

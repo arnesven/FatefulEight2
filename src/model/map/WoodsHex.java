@@ -87,7 +87,7 @@ public class WoodsHex extends WorldHex {
     @Override
     public DailyEventState getNightTimeAmbushEvent(Model model) {
         if (MyRandom.rollD10() == 1) {
-            return new WolfNightAttackEvent(model); // TODO: Add some more of these to the other terrain types.
+            return new WolfNightAttackEvent(model);
         }
         return null;
     }
