@@ -11,7 +11,7 @@ import view.subviews.SubView;
 import java.util.List;
 
 public class JungleHex extends WorldHex {
-    private static SubView subView = new ImageSubView("thejungle", "THE JUNGLE", "You are in the jungle.", true);
+    private static final SubView subView = new ImageSubView("thejungle", "THE JUNGLE", "You are in the jungle.", true);
 
     public JungleHex(int roads, int rivers, int state) {
         super(MyColors.GREEN, roads, rivers, new JungleLocation(), state);
@@ -46,6 +46,14 @@ public class JungleHex extends WorldHex {
     @Override
     public DailyEventState generateDogEvent(Model model) {
         return MyRandom.sample(List.of(new MushroomsEvent(model), new WoundedAdventurerEvent(model), new AbandonedShackEvent(model)));
+    }
+
+    @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() <= 2) {
+            return new SpiderNightAttackEvent(model);
+        }
+        return null;
     }
 
     @Override
