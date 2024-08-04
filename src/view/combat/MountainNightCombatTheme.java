@@ -14,16 +14,16 @@ public class MountainNightCombatTheme extends MountainCombatTheme {
     private Sprite mountLL;
     private Sprite mountLR;
 
-    public MountainNightCombatTheme(MyColors groundColor) {
+    public MountainNightCombatTheme(MyColors groundColor, MyColors mountainColor, MyColors cloudColor) {
         super(groundColor, MyColors.GRAY, MyColors.WHITE);
-        mountUL = new Sprite32x32("mountul", "combat.png", 0x70, MyColors.DARK_GRAY, groundColor, MyColors.GRAY, MyColors.DARK_BLUE);
-        mountUR = new Sprite32x32("mountur", "combat.png", 0x71, MyColors.DARK_GRAY, groundColor, MyColors.GRAY, MyColors.DARK_BLUE);
-        mountLL = new Sprite32x32("mountll", "combat.png", 0x80, MyColors.DARK_GRAY, groundColor, MyColors.GRAY, MyColors.DARK_BLUE);
-        mountLR = new Sprite32x32("mountlr", "combat.png", 0x81, MyColors.DARK_GRAY, groundColor, MyColors.GRAY, MyColors.DARK_BLUE);
+        mountUL = new Sprite32x32("mountul", "combat.png", 0x70, mountainColor, groundColor, cloudColor, MyColors.DARK_BLUE);
+        mountUR = new Sprite32x32("mountur", "combat.png", 0x71, mountainColor, groundColor, cloudColor, MyColors.DARK_BLUE);
+        mountLL = new Sprite32x32("mountll", "combat.png", 0x80, mountainColor, groundColor, cloudColor, MyColors.DARK_BLUE);
+        mountLR = new Sprite32x32("mountlr", "combat.png", 0x81, mountainColor, groundColor, cloudColor, MyColors.DARK_BLUE);
     }
 
     public MountainNightCombatTheme() {
-        this(MyColors.TAN);
+        this(MyColors.TAN, MyColors.DARK_GRAY, MyColors.GRAY);
     }
 
     @Override

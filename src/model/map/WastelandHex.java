@@ -62,6 +62,14 @@ public class WastelandHex extends WorldHex {
     }
 
     @Override
+    public DailyEventState getNightTimeAmbushEvent(Model model) {
+        if (MyRandom.rollD10() <= 2) {
+            return new BlobNightAttackEvent(model);
+        }
+        return null;
+    }
+
+    @Override
     protected SubView getSubView() {
         return subView;
     }
