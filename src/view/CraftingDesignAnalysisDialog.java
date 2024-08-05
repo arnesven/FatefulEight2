@@ -39,7 +39,7 @@ public class CraftingDesignAnalysisDialog extends AnalyzeDialog {
     }
 
     private double successProbability(int rank, int difficulty) {
-        return (double)Math.min(9, Math.max(10 - difficulty + rank, 0)) / 10.0;
+        return (double)Math.min(9, Math.max(11 - difficulty + rank, 0)) / 10.0;
     }
 
     @Override
