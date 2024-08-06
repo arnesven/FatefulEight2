@@ -1,9 +1,8 @@
 package sound;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import model.Party;
+
+import java.util.*;
 
 public class ClientSoundManager extends SoundManager {
 
@@ -11,6 +10,7 @@ public class ClientSoundManager extends SoundManager {
     private static SoundJLayer effectsSoundQueue;
     private static String backgroundSound = "nothing";
     private static SoundJLayer bgSoundLayer;
+    private static List<BackgroundMusic> bgSoundStack = new ArrayList<>();
 
     public static void playSound(String key) {
         SoundJLayer sjl = new SoundJLayer(getSoundResource(key, Volume.HIGH));
@@ -35,15 +35,16 @@ public class ClientSoundManager extends SoundManager {
         loadedSounds.put(key, new ClientSound(bytes, vol.amplitude));
     }
 
-    private static synchronized void playBackgroundSound(String ambientSound) {
-        if (!backgroundSound.equals(ambientSound)) {
+    private static synchronized void playBackgroundSound(BackgroundMusic ambientSound) {
+        if (!backgroundSound.equals(ambientSound.getFileName())) {
             System.out.println("Old bg song is " + backgroundSound + ", new is " + ambientSound);
-            backgroundSound = ambientSound;
+            bgSoundStack.add(0, ambientSound);
+            backgroundSound = ambientSound.getFileName();
             if (bgSoundLayer != null) {
                 bgSoundLayer.stop();
             }
-            if (!ambientSound.equals("nothing")) {
-                bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound, Volume.LOWEST), true);
+            if (!ambientSound.getFileName().equals("nothing")) {
+                bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound.getFileName(), Volume.LOWEST), true);
                 bgSoundLayer.play();
             }
         }
@@ -57,7 +58,15 @@ public class ClientSoundManager extends SoundManager {
     }
 
     public synchronized static void playBackgroundMusic(BackgroundMusic song) {
-        //stopPlayingBackgroundSound();
-        playBackgroundSound(song.getFileName());
+        playBackgroundSound(song);
+    }
+
+    public synchronized static void playPreviousBackgroundMusic() {
+        if (!bgSoundStack.isEmpty()) {
+            BackgroundMusic last = bgSoundStack.remove(0);
+            playBackgroundMusic(last);
+        } else {
+            playBackgroundMusic(BackgroundMusic.mainSong);
+        }
     }
 }

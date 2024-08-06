@@ -111,7 +111,7 @@ public class CombatEvent extends DailyEventState {
         removedKilledTamedDragons(model);
         removeCombatConditions(model);
         model.setGameOver(model.getParty().isWipedOut());
-        model.playMainSong();
+        ClientSoundManager.playPreviousBackgroundMusic();
         model.setInCombat(false);
     }
 

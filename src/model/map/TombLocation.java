@@ -47,7 +47,7 @@ public class TombLocation extends HexLocation {
 
     @Override
     public void travelFrom(Model model) {
-        model.playMainSong();
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     @Override

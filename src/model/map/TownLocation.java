@@ -71,7 +71,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public void travelFrom(Model model) {
-        model.playMainSong();
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     @Override

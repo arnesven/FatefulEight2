@@ -99,7 +99,7 @@ public class Model {
         gameView = new MainGameView();
         gameStartFileName = null;
         getParty().clearAnimations();
-        playMainSong();
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
     }
 
     public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {
@@ -122,7 +122,7 @@ public class Model {
         state = new ChooseStartingCharacterState(this);
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
-        playMainSong();
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
         if (FatefulEight.TEST_MODE) {
             MainStoryTest.testSuit(this);
         } else {
@@ -270,10 +270,6 @@ public class Model {
 
     private boolean endOfGameReached() {
         return getParty().getReputation() >= REP_TO_WIN || gameData.day > 100;
-    }
-
-    public void playMainSong() {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
     }
 
     public void setGameOver(boolean wipedOut) {
