@@ -6,6 +6,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import sound.BackgroundMusic;
 import view.combat.CaveTheme;
 import model.combat.loot.StandardCombatLoot;
 import model.enemies.*;
@@ -126,6 +127,11 @@ public class GoblinTunnelsQuest extends Quest {
             }
         }
         return super.endOfQuest(model, state, questWasSuccess);
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     @Override

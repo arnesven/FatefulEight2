@@ -101,7 +101,6 @@ public abstract class CombatSubScene extends QuestSubScene {
                 model.getParty().setLeader(gc);
             }
             state.transitionToQuestView(model);
-            ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         }
         if (combat.fled() || model.getParty().isWipedOut()) {
             return getFailEdge();

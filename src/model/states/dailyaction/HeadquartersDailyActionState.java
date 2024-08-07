@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.headquarters.*;
 import model.states.GameState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyRandom;
 import view.subviews.CollapsingTransition;
@@ -28,6 +30,7 @@ public class HeadquartersDailyActionState extends GameState {
     @Override
     public GameState run(Model model) {
         HeadquartersSubView subView = new HeadquartersSubView(model);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.festiveSong);
         CollapsingTransition.transition(model, subView);
         print("You step into your headquarters. ");
         if (headquartersHasCharacters(model)) {
@@ -36,6 +39,12 @@ public class HeadquartersDailyActionState extends GameState {
             println("It's empty.");
         }
 
+        GameState stateToReturn = runHeadquartersMenu(model, subView);
+        ClientSoundManager.playPreviousBackgroundMusic();
+        return stateToReturn;
+    }
+
+    private GameState runHeadquartersMenu(Model model, HeadquartersSubView subView) {
         do {
             List<HeadquartersAction> actions = new ArrayList<>(List.of(
                     new TransferResourceAction(model, MENU_LOCATION),

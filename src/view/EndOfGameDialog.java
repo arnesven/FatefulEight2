@@ -2,6 +2,8 @@ package view;
 
 import model.GameScore;
 import model.Model;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -40,6 +42,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     @Override
     public void transitionedTo(Model model) {
         super.transitionedTo(model);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.endingSong);
         if (model.getParty().getReputation() == Model.REP_TO_WIN) {
             title = "congratulations!";
             text = REPUTATION_TEXT;
@@ -104,6 +107,7 @@ public class EndOfGameDialog extends SelectableListMenu {
                 new SelectableListContent(40 - 4, yStart + getHeight() - 2, "CONTINUE") {
                     @Override
                     public void performAction(Model model, int x, int y) {
+                        ClientSoundManager.playPreviousBackgroundMusic();
                         model.setFreePlay(true);
                         setTimeToTransition(true);
                     }

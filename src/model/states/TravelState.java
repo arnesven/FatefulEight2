@@ -6,6 +6,8 @@ import model.items.Item;
 import model.map.Direction;
 import model.map.UrbanLocation;
 import model.states.events.RiverEvent;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.sprites.RidingSprite;
 import view.sprites.Sprite;
 import view.subviews.EmptySubView;
@@ -37,6 +39,7 @@ public class TravelState extends GameState {
 
         boolean riding = checkForRiding(model);
         if (riding) {
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.ridingSong);
             spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().get(0));
             model.getWorld().setAlternativeAvatar(spriteToUse);
         } else {
@@ -45,6 +48,9 @@ public class TravelState extends GameState {
 
         GameState state = travelOneStep(model, mapSubView, true);
         if (state != null) {
+            if (riding) {
+                ClientSoundManager.playPreviousBackgroundMusic();
+            }
             return state;
         }
         if (riding) {
@@ -52,6 +58,7 @@ public class TravelState extends GameState {
             CollapsingTransition.transition(model, mapSubView);
             state = travelOneStep(model, mapSubView, false);
             model.getWorld().setAlternativeAvatar(null);
+            ClientSoundManager.playPreviousBackgroundMusic();
             if (state != null) {
                 return state;
             }

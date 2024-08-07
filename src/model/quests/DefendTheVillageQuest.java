@@ -11,6 +11,7 @@ import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.BanditSprite;
@@ -47,6 +48,11 @@ public class DefendTheVillageQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     @Override

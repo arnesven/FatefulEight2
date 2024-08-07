@@ -13,6 +13,8 @@ import model.items.Equipment;
 import model.races.AllRaces;
 import model.races.Race;
 import model.states.DailyEventState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import view.combat.MansionTheme;
 import view.subviews.PortraitSubView;
@@ -39,6 +41,7 @@ public class VampireProwlNightEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         GameCharacter victim = MyRandom.sample(model.getParty().getPartyMembers());
         List<GameCharacter> others = new ArrayList<>(model.getParty().getPartyMembers());
         others.remove(victim);
@@ -100,6 +103,7 @@ public class VampireProwlNightEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         model.getParty().forceEyesClosed(victim, false);
         model.getParty().unbenchAll();
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     private void makeVampire(Model model, GameCharacter victim) {

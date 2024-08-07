@@ -17,6 +17,7 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import model.states.ArcheryState;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import util.MyLists;
 import view.BorderFrame;
 import view.MyColors;
@@ -64,6 +65,11 @@ public class TownFairQuest extends Quest {
     public void drawSpecialReward(Model model, int x, int y) {
         BorderFrame.drawString(model.getScreenHandler(), "  *", x, y, MyColors.WHITE, MyColors.BLACK);
         model.getScreenHandler().put(x, y, TopText.GOLD_ICON_SPRITE);
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.happyMandolin;
     }
 
     @Override

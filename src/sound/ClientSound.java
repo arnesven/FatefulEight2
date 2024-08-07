@@ -1,7 +1,7 @@
 package sound;
 
 public class ClientSound {
-    private final float lowVolume;
+    private float lowVolume;
     private byte[] bytes;
 
     public ClientSound(byte[] bytes, float volume) {
@@ -19,5 +19,9 @@ public class ClientSound {
 
     public float getVolume() {
         return lowVolume;
+    }
+
+    public void setVolume(float amplitude) {
+        this.lowVolume = amplitude;
     }
 }

@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.map.CastleLocation;
 import model.map.wars.KingdomWar;
+import model.states.CombatEvent;
 import model.states.GameState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -52,7 +53,7 @@ public class BattleState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.battleSong);
         this.subView = new BattleSubView(terrain, units, this, war.getGroundColor());
         SnakeTransition.transition(model, subView);
 
@@ -83,7 +84,7 @@ public class BattleState extends GameState {
         }
         print("Press enter to continue.");
         waitForReturn();
-
+        ClientSoundManager.playPreviousBackgroundMusic();
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

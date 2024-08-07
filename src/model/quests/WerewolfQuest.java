@@ -17,6 +17,7 @@ import model.quests.scenes.TimedCombatSubScene;
 import model.races.Race;
 import model.states.GameState;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import util.MyLists;
 import view.BorderFrame;
 import view.MyColors;
@@ -73,6 +74,11 @@ public class WerewolfQuest extends Quest {
             spell.addYourself(model.getParty().getInventory());
         }
         return super.endOfQuest(model, state, questWasSuccess);
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

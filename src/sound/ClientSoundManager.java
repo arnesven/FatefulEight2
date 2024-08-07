@@ -29,6 +29,15 @@ public class ClientSoundManager extends SoundManager {
         return loadedSounds.get(key);
     }
 
+    public static void changeSoundVolume(String key, Volume vol) {
+        if (loadedSounds.containsKey(key)) {
+            loadedSounds.get(key).setVolume(vol.amplitude);
+            if (backgroundSound.equals(key)) {
+                bgSoundLayer.adjustVolume();
+            }
+        }
+    }
+
     public static void loadSoundResource(String key, Volume vol) {
         System.out.println("Resources " + key + " isn't loaded, loading it");
         byte[] bytes = SoundManager.decodeAsBase64(SoundManager.getSoundAsBase64(key));
@@ -38,15 +47,17 @@ public class ClientSoundManager extends SoundManager {
     private static synchronized void playBackgroundSound(BackgroundMusic ambientSound) {
         if (!backgroundSound.equals(ambientSound.getFileName())) {
             System.out.println("Old bg song is " + backgroundSound + ", new is " + ambientSound);
-            bgSoundStack.add(0, ambientSound);
             backgroundSound = ambientSound.getFileName();
             if (bgSoundLayer != null) {
                 bgSoundLayer.stop();
             }
             if (!ambientSound.getFileName().equals("nothing")) {
-                bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound.getFileName(), Volume.LOWEST), true);
+                bgSoundLayer = new SoundJLayer(getSoundResource(ambientSound.getFileName(),
+                        ambientSound.getVolume()), true);
                 bgSoundLayer.play();
             }
+        } else {
+            System.out.println("Song is same as already playing, skipping");
         }
     }
 
@@ -58,14 +69,35 @@ public class ClientSoundManager extends SoundManager {
     }
 
     public synchronized static void playBackgroundMusic(BackgroundMusic song) {
+        System.out.println("Playing song " + song.getFileName());
+        bgSoundStack.add(0, song);
         playBackgroundSound(song);
+        printStack();
+    }
+
+    private static void printStack() {
+        System.out.println("Song Stack: ");
+        for (BackgroundMusic bgm : bgSoundStack) {
+            System.out.println("  " + bgm.getFileName());
+        }
+
     }
 
     public synchronized static void playPreviousBackgroundMusic() {
-        if (!bgSoundStack.isEmpty()) {
-            BackgroundMusic last = bgSoundStack.remove(0);
-            playBackgroundMusic(last);
-        } else {
+        System.out.println("Playing previous song.");
+        boolean emptyStack = bgSoundStack.isEmpty();
+        if (!emptyStack) {
+            bgSoundStack.remove(0); // Removing current song;
+            if (bgSoundStack.isEmpty()) {
+                emptyStack = true;
+            } else {
+                BackgroundMusic last = bgSoundStack.remove(0);
+                playBackgroundMusic(last);
+            }
+        }
+
+        if (emptyStack) {
+            System.out.println("Stack is empty, playing main song");
             playBackgroundMusic(BackgroundMusic.mainSong);
         }
     }

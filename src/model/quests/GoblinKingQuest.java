@@ -8,6 +8,7 @@ import model.enemies.GoblinSpearman;
 import model.quests.scenes.CombatSubScene;
 import model.ruins.objects.DungeonChest;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.sprites.DungeonWallSprite;
 import view.MyColors;
 import view.sprites.FirePlaceSprite;
@@ -85,6 +86,11 @@ public class GoblinKingQuest extends Quest {
     @Override
     public List<QuestBackground> getDecorations() {
         return DECORATIONS;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     private class TimedGoblinCombatSubScene extends CombatSubScene {

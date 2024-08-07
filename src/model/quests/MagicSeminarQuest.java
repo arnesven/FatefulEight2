@@ -11,6 +11,7 @@ import model.quests.scenes.*;
 import model.races.Race;
 import model.states.GameState;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -56,6 +57,11 @@ public class MagicSeminarQuest extends Quest implements CountingQuest {
             model.getParty().addToGold(extraGold);
         }
         return super.endOfQuest(model, state, questWasSuccess);
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     @Override

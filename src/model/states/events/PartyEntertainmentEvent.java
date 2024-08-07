@@ -8,6 +8,8 @@ import model.classes.normal.MagicianClass;
 import model.classes.Skill;
 import model.classes.normal.WizardClass;
 import model.states.DailyEventState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyRandom;
 
@@ -62,7 +64,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
                             "This isn't the right time for that."));
             return;
         }
-
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.happyMandolin);
         int entertainmentQuality = 0;
         for (GameCharacter gc : entertainers) {
             entertainmentQuality += gc.testSkill(model, Skill.Entertain).getModifiedRoll();
@@ -115,5 +117,6 @@ public class PartyEntertainmentEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         showPartyAttitudesSubView(model);
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 }

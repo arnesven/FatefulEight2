@@ -2,9 +2,7 @@ package model.map;
 
 import model.Model;
 import model.actions.DailyAction;
-import model.actions.ExploreRuinsDailyAction;
 import model.states.ExploreTombState;
-import model.states.GameState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
@@ -42,7 +40,7 @@ public class TombLocation extends HexLocation {
 
     @Override
     public void travelTo(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.dungeonSong);
     }
 
     @Override

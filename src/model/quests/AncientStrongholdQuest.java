@@ -13,7 +13,6 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
-import sound.ClientSoundManager;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -127,6 +126,11 @@ public class AncientStrongholdQuest extends MainQuest {
     }
 
     @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.strongholdSong;
+    }
+
+    @Override
     public MyColors getBackgroundColor() {
         return MyColors.BLACK;
     }
@@ -183,7 +187,6 @@ public class AncientStrongholdQuest extends MainQuest {
                 combat.run(model);
                 if (!model.getParty().isWipedOut()) {
                     state.transitionToQuestView(model);
-                    ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
                 } else {
                     return new QuestEdge(state.getQuest().getFailEndingNode());
                 }

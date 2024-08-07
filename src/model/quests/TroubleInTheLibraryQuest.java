@@ -9,6 +9,7 @@ import model.journal.StoryPart;
 import model.quests.scenes.ArrowlessEdge;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -369,6 +370,11 @@ public class TroubleInTheLibraryQuest extends MainQuest {
             return super.getDecorations();
         }
         return decorations;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     @Override

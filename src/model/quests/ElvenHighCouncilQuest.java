@@ -10,6 +10,7 @@ import model.enemies.ElvenGuardEnemy;
 import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -62,6 +63,11 @@ public class ElvenHighCouncilQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     @Override

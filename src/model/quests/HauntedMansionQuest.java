@@ -14,6 +14,7 @@ import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -47,6 +48,11 @@ public class HauntedMansionQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

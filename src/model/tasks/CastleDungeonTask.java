@@ -4,6 +4,8 @@ import model.Model;
 import model.Summon;
 import model.map.UrbanLocation;
 import model.states.ExploreRuinsState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.subviews.CollapsingTransition;
 import view.subviews.SubView;
 
@@ -25,8 +27,10 @@ public class CastleDungeonTask extends SummonTask {
         print("Do you wish to descend into the dungeon now? (Y/N) ");
         if (yesNoInput()) {
             SubView sub = model.getSubView();
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.dungeonSong);
             ExploreRuinsState explore = new ExploreRuinsState(model, location.getPlaceName(), "Dungeon");
             explore.run(model);
+            ClientSoundManager.playPreviousBackgroundMusic();
             if (explore.getDungeon().isCompleted()) {
                 CollapsingTransition.transition(model, sub);
                 summon.increaseStep();

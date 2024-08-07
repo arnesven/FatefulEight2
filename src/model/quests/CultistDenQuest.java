@@ -16,6 +16,7 @@ import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.LogView;
 import view.sprites.DungeonWallSprite;
 import util.MyRandom;
@@ -54,6 +55,11 @@ public class CultistDenQuest extends Quest {
     @Override
     public boolean clockTimeOutFailsQuest() {
         return false;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     @Override

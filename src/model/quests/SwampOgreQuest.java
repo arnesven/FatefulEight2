@@ -13,6 +13,7 @@ import model.items.spells.Spell;
 import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -57,6 +58,11 @@ public class SwampOgreQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

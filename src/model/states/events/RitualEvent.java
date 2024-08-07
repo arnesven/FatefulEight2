@@ -8,6 +8,8 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.spells.Spell;
 import model.states.DailyEventState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import sound.SoundEffects;
 import util.Arithmetics;
 import util.MyPair;
@@ -94,6 +96,7 @@ public abstract class RitualEvent extends DailyEventState {
         this.benched = new ArrayList<>(model.getParty().getBench());
 
         RitualSubView subView = new RitualSubView(getTheme(), this, magicColor);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.battleSong);
         CollapsingTransition.transition(model, subView);
 
         print("Press enter to start the ritual.");
@@ -144,6 +147,7 @@ public abstract class RitualEvent extends DailyEventState {
         model.getParty().unbenchAll();
 
         CollapsingTransition.transition(model, prevSubView);
+        ClientSoundManager.playPreviousBackgroundMusic();
         runEventOutro(model, !ritualFailed(), ritualists.size() - 4);
     }
 

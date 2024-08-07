@@ -41,7 +41,7 @@ public class QuestState extends GameState {
         currentPosition = quest.getStartNode();
         transitionToQuestView(model);
         println("The party sets out on a quest.");
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+        ClientSoundManager.playBackgroundMusic(quest.getMusic());
         println(quest.getText());
         print("Press enter to start quest.");
         model.getTutorial().quests(model);
@@ -69,6 +69,7 @@ public class QuestState extends GameState {
             }
         }
         currentPosition.run(model, this); // Success or fail node run.
+        ClientSoundManager.playPreviousBackgroundMusic();
         return quest.endOfQuest(model, this, currentPosition == quest.getSuccessEndingNode());
     }
 

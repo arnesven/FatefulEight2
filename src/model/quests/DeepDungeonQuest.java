@@ -11,6 +11,7 @@ import model.items.spells.TurnUndeadSpell;
 import model.quests.scenes.*;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.sprites.DungeonWallSprite;
 import view.MyColors;
 import view.subviews.PortraitSubView;
@@ -39,6 +40,11 @@ public class DeepDungeonQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     @Override

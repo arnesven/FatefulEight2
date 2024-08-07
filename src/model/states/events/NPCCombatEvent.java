@@ -8,6 +8,7 @@ import model.combat.Combatant;
 import model.combat.loot.NoCombatLoot;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
+import sound.ClientSoundManager;
 import util.MyPair;
 import view.MyColors;
 import view.sprites.AnimationManager;
@@ -32,6 +33,7 @@ public class NPCCombatEvent extends CombatEvent {
 
     @Override
     protected void doEvent(Model model) {
+        CombatEvent.startMusic();
         CollapsingTransition.transition(model, subView);
         AnimationManager.synchAnimations();
         round = 1;
@@ -48,6 +50,7 @@ public class NPCCombatEvent extends CombatEvent {
         fighter1.removeCombatConditions();
         fighter2.removeCombatConditions();
         waitForReturnSilently();
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     @Override

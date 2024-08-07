@@ -4,19 +4,17 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.characters.special.WitchKingCharacter;
-import model.items.special.CommonSash;
-import model.items.special.FashionableSash;
 import model.items.special.FatueKeyItem;
 import model.items.special.PieceOfStaffItem;
 import model.items.special.StoryItem;
-import model.items.spells.EntropicBoltSpell;
-import model.items.spells.SouthernCrossSpell;
 import model.items.weapons.StaffOfDeimosItem;
 import model.items.weapons.Weapon;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.events.ConfrontUltimateAdversaryEvent;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyStrings;
 import view.MyColors;
@@ -74,6 +72,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
 
     @Override
     public GameState run(Model model) {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.dungeonSong);
         leaderSay("My gosh, there's a whole castle down here!");
         if (model.getParty().size() > 1) {
             GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
@@ -82,6 +81,7 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         if (WitchKingCharacter.isInParty(model)) {
             partyMemberSay(WitchKingCharacter.getFromParty(model), "This place looks terribly familiar...");
         }
+        ClientSoundManager.playPreviousBackgroundMusic();
         return super.run(model);
     }
 

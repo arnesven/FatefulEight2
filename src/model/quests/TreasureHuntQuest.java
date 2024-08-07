@@ -9,6 +9,7 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
@@ -44,6 +45,11 @@ public class TreasureHuntQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.calmingSong;
     }
 
     @Override

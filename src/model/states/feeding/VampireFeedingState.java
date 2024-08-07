@@ -7,6 +7,8 @@ import model.quests.QuestFailNode;
 import model.quests.QuestNode;
 import model.quests.QuestSuccessfulNode;
 import model.states.GameState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.subviews.*;
 
 import java.awt.*;
@@ -32,6 +34,7 @@ public class VampireFeedingState extends GameState {
         model.getParty().benchPartyMembers(others);
         println(vampire.getFirstName() + " sneaks out at night to find a victim to feed on.");
         model.getTutorial().vampireFeeding(model);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
         for (int i = 0; i < NO_OF_ATTEMPTS; ++i) {
             VampireFeedingHouse house = new VampireFeedingHouse(vampire);
             currentNode = house.getJunctions().get(0);
@@ -68,6 +71,7 @@ public class VampireFeedingState extends GameState {
         waitForReturn();
         CollapsingTransition.transition(model, oldSubView);
         model.getParty().unbenchAll();
+        ClientSoundManager.playPreviousBackgroundMusic();
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

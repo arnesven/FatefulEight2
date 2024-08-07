@@ -13,6 +13,8 @@ import model.quests.QuestEdge;
 import model.quests.QuestNode;
 import model.states.DailyEventState;
 import model.states.QuestState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import sound.SoundEffects;
 import util.MyRandom;
 import util.MyStrings;
@@ -36,6 +38,12 @@ public class LottoHouseEvent extends DailyEventState {
         if (!yesNoInput()) {
             return;
         }
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
+        goIntoLottoHouse(model);
+        ClientSoundManager.playPreviousBackgroundMusic();
+    }
+
+    private void goIntoLottoHouse(Model model) {
         List<Item> stuffToGet = new ArrayList<>(model.getItemDeck().draw(3));
         stuffToGet.addAll(model.getItemDeck().draw(2, 0.99));
         stuffToGet.add(new HealthPotion());

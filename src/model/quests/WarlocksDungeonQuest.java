@@ -8,6 +8,7 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.TrapSubScene;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.LogView;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -47,6 +48,11 @@ public class WarlocksDungeonQuest extends Quest {
     @Override
     public int getTimeLimitSeconds() {
         return 10*60;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

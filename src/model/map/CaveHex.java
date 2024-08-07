@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.actions.*;
+import sound.BackgroundMusic;
 import view.combat.CombatTheme;
 import view.combat.CaveTheme;
 import model.map.locations.Stalagmites;
@@ -26,10 +27,12 @@ public class CaveHex extends WorldHex {
 
     public CaveHex(int roads, MyColors color, int state) {
         super(color, roads, 0x0, randomLocation(), state);
+        setMusic(BackgroundMusic.caveSong);
     }
 
     public CaveHex(int roads, int state, HexLocation location) {
         super(GROUND_COLOR, roads, 0, location, state);
+        setMusic(BackgroundMusic.caveSong);
     }
 
     public CaveHex(int roads, int state) {

@@ -50,7 +50,7 @@ public class RuinsLocation extends HexLocation {
 
     @Override
     public void travelTo(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.dungeonSong);
     }
 
     @Override

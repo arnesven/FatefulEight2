@@ -7,6 +7,8 @@ import model.classes.SkillCheckResult;
 import model.items.weapons.BowWeapon;
 import model.items.weapons.ShortBow;
 import model.items.weapons.TrainingBow;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import view.sprites.AnimationManager;
 import view.sprites.Sprite;
@@ -31,6 +33,7 @@ public class ShootBallsState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         this.subView = new ShootBallsSubView(this, shooter, bowToUse);
         CollapsingTransition.transition(model, subView);
         println("Press enter when you are ready for the balls to be thrown, fire with enter.");
@@ -52,6 +55,7 @@ public class ShootBallsState extends GameState {
         } while (true);
         AnimationManager.unregister(this.subView);
         println("Game over. You got " + subView.getScore() + " out of " + ShootBallsSubView.MAX_BALLS + " balls.");
+        ClientSoundManager.playPreviousBackgroundMusic();
         return model.getCurrentHex().getDailyActionState(model);
     }
 

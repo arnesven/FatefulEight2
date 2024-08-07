@@ -5,6 +5,8 @@ import model.actions.DailyAction;
 import model.states.*;
 import model.states.dailyaction.BuyRationsState;
 import model.states.events.*;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyPair;
 import util.MyRandom;
 import view.GameView;
@@ -49,6 +51,16 @@ public class TempleLocation extends HexLocation {
             ));
         }
         return new NoEventState(model);
+    }
+
+    @Override
+    public void travelTo(Model model) {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.templeSong);
+    }
+
+    @Override
+    public void travelFrom(Model model) {
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     @Override

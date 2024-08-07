@@ -13,6 +13,7 @@ import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -48,6 +49,11 @@ public class FrogmenProblemQuest extends MainQuest {
     @Override
     public boolean drawTownOrCastleInBackground() {
         return true;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

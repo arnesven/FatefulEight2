@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.combat.DungeonTheme;
@@ -192,4 +193,6 @@ public abstract class Quest {
     public boolean canBeHeld() {
         return true;
     }
+
+    public abstract BackgroundMusic getMusic();
 }

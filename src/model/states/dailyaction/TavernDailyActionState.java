@@ -4,6 +4,9 @@ import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.actions.Loan;
+import model.states.GameState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.subviews.DailyActionSubView;
 import view.subviews.TavernSubView;
 import view.subviews.TownSubView;
@@ -43,6 +46,20 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(4, 2, new InnShoppingNode(model));
             addNode(6, 3, new SaveGameNode());
         }
+    }
+
+    @Override
+    public GameState run(Model model) {
+        boolean musicOn = false;
+        if (inTown && isEvening()) {
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.festiveSong);
+            musicOn = true;
+        }
+        GameState toReturn = super.run(model);
+        if (musicOn) {
+            ClientSoundManager.playPreviousBackgroundMusic();
+        }
+        return toReturn;
     }
 
     public static Point getDoorPosition() {

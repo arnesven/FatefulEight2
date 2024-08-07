@@ -6,6 +6,8 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.enemies.*;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import view.subviews.BoatPlacementSubView;
 import view.subviews.CollapsingTransition;
@@ -52,7 +54,6 @@ public class BoatsEvent extends RiverEvent {
             }
             return;
         }
-
         println("There are boats here. They don't look sturdy enough to " +
                 "go for a longer ride in, but surely they will hold for just crossing the river.");
         model.getLog().waitForAnimationToFinish();
@@ -69,6 +70,7 @@ public class BoatsEvent extends RiverEvent {
         addCharactersToMatrix();
         boatsView = new BoatPlacementSubView(this, matrix, boats);
         boatsView.setCursorEnabled(false);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         CollapsingTransition.transition(model, boatsView);
 
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this,
@@ -78,6 +80,7 @@ public class BoatsEvent extends RiverEvent {
         } else {
             manualAssignment(model);
         }
+        ClientSoundManager.playPreviousBackgroundMusic();
         if (!shore.isEmpty()) {
             return;
         }

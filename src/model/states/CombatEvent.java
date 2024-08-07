@@ -59,6 +59,7 @@ public class CombatEvent extends DailyEventState {
     private final List<Combatant> delayedCombatants = new ArrayList<>();
     private MyPair<GameCharacter, Integer> flameWall = null;
     private boolean inQuickCast = false;
+    private static int songCounter = 0;
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage advantage) {
         super(model);
@@ -85,7 +86,7 @@ public class CombatEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.combatSong);
+        startMusic();
         StripedTransition.transition(model, subView);
         addAllies(new ArrayList<>(model.getParty().getTamedDragons().values()));
         if (allies.size() > 0) {
@@ -113,6 +114,11 @@ public class CombatEvent extends DailyEventState {
         model.setGameOver(model.getParty().isWipedOut());
         ClientSoundManager.playPreviousBackgroundMusic();
         model.setInCombat(false);
+    }
+
+    public static void startMusic() {
+        ClientSoundManager.playBackgroundMusic(++songCounter % 2 == 0 ?
+                BackgroundMusic.combatSong : BackgroundMusic.altCombatSong);
     }
 
     private void runQuickCastTurns(Model model) {

@@ -66,6 +66,11 @@ public class ArenaQuest extends Quest {
     }
 
     @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
+    }
+
+    @Override
     public List<QuestBackground> getBackgroundSprites() {
         return BG_SPRITES;
     }
@@ -198,7 +203,6 @@ public class ArenaQuest extends Quest {
             combat.run(model);
             model.getParty().unbenchAll();
             state.transitionToQuestView(model);
-            ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
             if (combat.fled() || fighter.isDead()) {
                 return new QuestEdge(ArenaQuest.this.getFailEndingNode());
             }

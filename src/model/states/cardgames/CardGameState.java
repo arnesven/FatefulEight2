@@ -5,6 +5,8 @@ import model.races.Race;
 import model.states.GameState;
 import model.states.cardgames.runny.RunnyCardGame;
 import model.states.dailyaction.CardGameNode;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.CardGameSubView;

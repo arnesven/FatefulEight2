@@ -13,6 +13,7 @@ import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.PalisadeSprite;
 import view.sprites.Sprite32x32;
@@ -68,6 +69,11 @@ public class OrcWarCampQuest extends MainQuest {
     @Override
     public CombatTheme getCombatTheme() {
         return combatTheme;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     @Override

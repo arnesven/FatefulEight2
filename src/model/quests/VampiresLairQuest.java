@@ -13,6 +13,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.QuestState;
 import model.states.RecruitState;
+import sound.BackgroundMusic;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -59,6 +60,11 @@ public class VampiresLairQuest extends MainQuest {
            possiblyRecruitCaid(model, state);
         }
         return Quest.endOfQuestProcedure(model, state, questWasSuccess);
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.darkQuestSong;
     }
 
     @Override

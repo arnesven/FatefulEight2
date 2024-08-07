@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.SoldierEnemy;
 import model.quests.scenes.CollaborativeLockpickingSubScene;
@@ -47,6 +48,11 @@ public class RescueMissionQuest extends MainQuest {
             return "You must have at least two party members to accept this quest.";
         }
         return null;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     private GameCharacter getSecondaryLeader(Model model) throws NoSouchGroupException {

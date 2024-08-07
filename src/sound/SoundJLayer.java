@@ -152,7 +152,7 @@ public class SoundJLayer extends PlaybackListener implements Runnable
     public void playbackFinished(PlaybackEvent playbackEvent) { }
 
 
-    private void adjustVolume() {
+    public void adjustVolume() {
         if (currentSound != null && currentSound.getVolume() != 0.0f) {
             new Thread(new VolumeChanger(this), "volumechanger").start();
         }

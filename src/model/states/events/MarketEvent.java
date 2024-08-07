@@ -11,6 +11,8 @@ import model.states.DailyEventState;
 import model.states.ShootBallsState;
 import model.states.ShopState;
 import model.states.dailyaction.BuyHorseState;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 import view.subviews.SubView;
@@ -30,6 +32,7 @@ public class MarketEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.happyMandolin);
         println("Today is market day. The party casually browses the stands and booths.");
         randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(),
                 "I wonder if they sell any special kinds of food here?");
@@ -37,6 +40,7 @@ public class MarketEvent extends DailyEventState {
                 "Let's check out if they have any games!");
         if (!chooseAnEvent(model)) {
             println("You leave the market early.");
+            ClientSoundManager.playPreviousBackgroundMusic();
             return;
         }
         println("There is still time to do do something at the market.");

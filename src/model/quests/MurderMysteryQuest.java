@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.quests.scenes.*;
+import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.MurdererEnemy;
 import model.races.Race;
@@ -49,6 +50,11 @@ public class MurderMysteryQuest extends Quest implements CountingQuest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

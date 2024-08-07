@@ -11,6 +11,7 @@ import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
 import model.races.AllRaces;
 import model.states.QuestState;
+import sound.BackgroundMusic;
 import util.MyRandom;
 import view.MyColors;
 import view.combat.CombatTheme;
@@ -35,6 +36,11 @@ public class HungryTrollQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PROTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     @Override

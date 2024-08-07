@@ -9,6 +9,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.QuestState;
 import model.states.RecruitState;
+import sound.BackgroundMusic;
 import view.BorderFrame;
 import view.MyColors;
 import view.widget.QuestBackground;
@@ -138,6 +139,11 @@ public class HelpWillisQuest extends MainQuest {
             new WillisEndingEvent(model).doEvent(model);
         }
         return super.endOfQuest(model, state, questWasSuccess);
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     private class WillisEndingEvent extends DailyEventState {

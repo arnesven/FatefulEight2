@@ -33,7 +33,7 @@ public class HorseRacingEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.citySong);
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.horseRacingSong);
         CollapsingTransition.transition(model, subView);
         print("Welcome to the horse race. Try to come in first place after " + MyStrings.numberWord(targetlaps) +
                 " laps. Press enter to start!");
@@ -58,6 +58,7 @@ public class HorseRacingEvent extends DailyEventState {
         }
         print("Press enter to continue.");
         waitForReturn();
+        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     public void addNPC(GameCharacter gameCharacter, Horse horse) {

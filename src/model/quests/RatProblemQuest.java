@@ -9,6 +9,7 @@ import model.enemies.RatEnemy;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.Sprite32x32;
 import view.combat.GrassCombatTheme;
@@ -43,6 +44,11 @@ public class RatProblemQuest extends Quest {
     @Override
     public CharacterAppearance getPortrait() {
         return PORTRAIT;
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.mysticSong;
     }
 
     @Override

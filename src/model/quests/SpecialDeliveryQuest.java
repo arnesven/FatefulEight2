@@ -2,6 +2,7 @@ package model.quests;
 
 import model.Model;
 import model.classes.Skill;
+import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.*;
 import model.quests.scenes.*;
@@ -40,6 +41,11 @@ public class SpecialDeliveryQuest extends MainQuest {
             return new TownCombatTheme();
         }
         return new GrassCombatTheme();
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.lightQuestSong;
     }
 
     @Override

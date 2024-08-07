@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.InterloperEnemy;
 import model.items.spells.FireworksSpell;
@@ -45,6 +46,11 @@ public class UnsuspectingLoversQuest extends Quest {
     @Override
     public CombatTheme getCombatTheme() {
         return new TownCombatTheme();
+    }
+
+    @Override
+    public BackgroundMusic getMusic() {
+        return BackgroundMusic.gentleMemory;
     }
 
     @Override
