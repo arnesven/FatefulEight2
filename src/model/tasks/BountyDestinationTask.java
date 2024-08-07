@@ -42,7 +42,7 @@ public class BountyDestinationTask extends DestinationTask {
     public BountyDestinationTask(Bounty bounty) {
         super(bounty.getPosition(), bounty.getDestinationShortDescription());
         this.state = LOOKING_FOR_BOUNTY;
-        this.bounty = bounty; // TODO: Fix so that question mark does not show up immediately on the map when getting this type of task. Only after learning the location.
+        this.bounty = bounty;
     }
 
     @Override

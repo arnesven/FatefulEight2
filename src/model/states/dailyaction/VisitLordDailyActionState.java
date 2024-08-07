@@ -168,9 +168,12 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             }
 
             private void checkForHeadquarterPurchase(Model model) {
-                if (model.getParty().getHeadquarters() == null) { // TODO: What if you want to move headquarters?
-                    portraitSay("Say, you seem like a stand up citizen. We need more of your ilk residing in our town! " +
-                            "It just so happens we have some real estate for sale at the moment. Would you be interested?");
+                if (model.getParty().hasHeadquartersIn(location)) {
+                    return;
+                }
+                portraitSay("Say, you seem like a stand up citizen. We need more of your ilk residing in our town! " +
+                        "It just so happens we have some real estate for sale at the moment. Would you be interested?");
+                if (model.getParty().getHeadquarters() == null) {
                     leaderSay("I could be. What are the details?");
                     Headquarters hq = location.getRealEstate();
                     portraitSay(hq.presentYourself() + " The current owner is willing to let it go for " +
@@ -192,6 +195,9 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                             portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
                         }
                     }
+                } else {
+                    leaderSay("I would have been if we didn't already own a house in another town.");
+                    // TODO: What if you want to move headquarters?
                 }
             }
         }

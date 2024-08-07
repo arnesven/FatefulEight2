@@ -2,6 +2,7 @@ package model;
 
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
+import model.tasks.RestoreMansionTask;
 import model.tasks.*;
 import util.MyRandom;
 
@@ -35,8 +36,8 @@ public class Summon implements Serializable {
         tasks.add(new UnlockThisBathroom(summon, model, location));
         tasks.add(new InspireMeForAdventureTask(summon, model, location));
         tasks.add(new ClearOutCultistsHouseTask(summon, model, location));
+        tasks.add(new RestoreMansionTask(summon, model, location));
         // TODO: Convince vampire to leave task
-        // TODO: Restore mansion task
         return tasks;
     }
 

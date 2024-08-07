@@ -62,7 +62,6 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    // TODO: May require synchronize here
     public void drawSpeakAnimations(ScreenHandler screenHandler) {
         for (CharacterAppearance app : new ArrayList<>(speakingAnimations.keySet())) {
             SpeakingAnimation speakAni = speakingAnimations.get(app);
@@ -77,7 +76,6 @@ public class PartyAnimations implements Serializable {
         }
     }
 
-    // TODO: May require synchronize here
     public void addSpeakAnimation(int calloutNum, Point pOrig, int length, CharacterAppearance appearance,
                                   boolean vampireTeeth) {
         lookers.remove(appearance);
