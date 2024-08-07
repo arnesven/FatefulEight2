@@ -32,7 +32,7 @@ public class BarbershopEvent extends DailyEventState {
         leaderSay("Wait this isn't a shop...");
         CharacterAppearance barberAppearance = PortraitSubView.makeRandomPortrait(Classes.BARBER);
         showExplicitPortrait(model, barberAppearance, "Barber");
-        portraitSay("This sir, is a barber shop!"); // TODO: Add fix beard
+        portraitSay("This sir, is a barber shop!");
         leaderSay("Uh...");
         portraitSay("A sharp look sir? Or perhaps something more traditional? I'm quick and nimble. " +
                 "I can even dye your hair. You won't be disappointed!");

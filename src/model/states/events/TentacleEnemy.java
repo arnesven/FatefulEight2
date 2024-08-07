@@ -4,6 +4,7 @@ import model.Model;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.MonsterCombatLoot;
 import model.enemies.Enemy;
+import model.enemies.behaviors.PullForwardAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -12,7 +13,7 @@ public class TentacleEnemy extends Enemy {
     private static final Sprite SPRITE = new TentacleSprite();
 
     public TentacleEnemy(char a) {
-        super(a, "Tentacle"); // TODO: Pull forward attack behavior
+        super(a, "Tentacle", new PullForwardAttackBehavior());
     }
 
     @Override
