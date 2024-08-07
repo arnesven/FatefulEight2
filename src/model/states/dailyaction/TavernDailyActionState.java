@@ -50,15 +50,10 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
 
     @Override
     public GameState run(Model model) {
-        boolean musicOn = false;
         if (inTown && isEvening()) {
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.festiveSong);
-            musicOn = true;
         }
         GameState toReturn = super.run(model);
-        if (musicOn) {
-            ClientSoundManager.playPreviousBackgroundMusic();
-        }
         return toReturn;
     }
 

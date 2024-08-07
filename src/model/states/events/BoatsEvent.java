@@ -70,6 +70,7 @@ public class BoatsEvent extends RiverEvent {
         addCharactersToMatrix();
         boatsView = new BoatPlacementSubView(this, matrix, boats);
         boatsView.setCursorEnabled(false);
+        BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         CollapsingTransition.transition(model, boatsView);
 
@@ -80,7 +81,7 @@ public class BoatsEvent extends RiverEvent {
         } else {
             manualAssignment(model);
         }
-        ClientSoundManager.playPreviousBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(previous);
         if (!shore.isEmpty()) {
             return;
         }

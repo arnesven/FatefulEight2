@@ -8,9 +8,8 @@ public class ClientSoundManager extends SoundManager {
 
     private static Map<String, ClientSound> loadedSounds = new HashMap<>();
     private static SoundJLayer effectsSoundQueue;
-    private static String backgroundSound = "nothing";
+    private static BackgroundMusic backgroundSound = null;
     private static SoundJLayer bgSoundLayer;
-    private static List<BackgroundMusic> bgSoundStack = new ArrayList<>();
 
     public static void playSound(String key) {
         SoundJLayer sjl = new SoundJLayer(getSoundResource(key, Volume.HIGH));
@@ -23,7 +22,7 @@ public class ClientSoundManager extends SoundManager {
     }
 
     private static ClientSound getSoundResource(String key, Volume vol) {
-        if (!loadedSounds.keySet().contains(key)) {
+        if (!loadedSounds.containsKey(key)) {
             loadSoundResource(key, vol);
         }
         return loadedSounds.get(key);
@@ -32,7 +31,7 @@ public class ClientSoundManager extends SoundManager {
     public static void changeSoundVolume(String key, Volume vol) {
         if (loadedSounds.containsKey(key)) {
             loadedSounds.get(key).setVolume(vol.amplitude);
-            if (backgroundSound.equals(key)) {
+            if (backgroundSound.getFileName().equals(key)) {
                 bgSoundLayer.adjustVolume();
             }
         }
@@ -45,9 +44,9 @@ public class ClientSoundManager extends SoundManager {
     }
 
     private static synchronized void playBackgroundSound(BackgroundMusic ambientSound) {
-        if (!backgroundSound.equals(ambientSound.getFileName())) {
+        if (backgroundSound == null || !backgroundSound.getFileName().equals(ambientSound.getFileName())) {
             System.out.println("Old bg song is " + backgroundSound + ", new is " + ambientSound);
-            backgroundSound = ambientSound.getFileName();
+            backgroundSound = ambientSound;
             if (bgSoundLayer != null) {
                 bgSoundLayer.stop();
             }
@@ -70,35 +69,10 @@ public class ClientSoundManager extends SoundManager {
 
     public synchronized static void playBackgroundMusic(BackgroundMusic song) {
         System.out.println("Playing song " + song.getFileName());
-        bgSoundStack.add(0, song);
         playBackgroundSound(song);
-        printStack();
     }
 
-    private static void printStack() {
-        System.out.println("Song Stack: ");
-        for (BackgroundMusic bgm : bgSoundStack) {
-            System.out.println("  " + bgm.getFileName());
-        }
-
-    }
-
-    public synchronized static void playPreviousBackgroundMusic() {
-        System.out.println("Playing previous song.");
-        boolean emptyStack = bgSoundStack.isEmpty();
-        if (!emptyStack) {
-            bgSoundStack.remove(0); // Removing current song;
-            if (bgSoundStack.isEmpty()) {
-                emptyStack = true;
-            } else {
-                BackgroundMusic last = bgSoundStack.remove(0);
-                playBackgroundMusic(last);
-            }
-        }
-
-        if (emptyStack) {
-            System.out.println("Stack is empty, playing main song");
-            playBackgroundMusic(BackgroundMusic.mainSong);
-        }
+    public static BackgroundMusic getCurrentBackgroundMusic() {
+        return backgroundSound;
     }
 }

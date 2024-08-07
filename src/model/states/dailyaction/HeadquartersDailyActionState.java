@@ -39,9 +39,7 @@ public class HeadquartersDailyActionState extends GameState {
             println("It's empty.");
         }
 
-        GameState stateToReturn = runHeadquartersMenu(model, subView);
-        ClientSoundManager.playPreviousBackgroundMusic();
-        return stateToReturn;
+        return runHeadquartersMenu(model, subView);
     }
 
     private GameState runHeadquartersMenu(Model model, HeadquartersSubView subView) {

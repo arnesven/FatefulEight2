@@ -27,10 +27,11 @@ public class CastleDungeonTask extends SummonTask {
         print("Do you wish to descend into the dungeon now? (Y/N) ");
         if (yesNoInput()) {
             SubView sub = model.getSubView();
+            BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.dungeonSong);
             ExploreRuinsState explore = new ExploreRuinsState(model, location.getPlaceName(), "Dungeon");
             explore.run(model);
-            ClientSoundManager.playPreviousBackgroundMusic();
+            ClientSoundManager.playBackgroundMusic(previous);
             if (explore.getDungeon().isCompleted()) {
                 CollapsingTransition.transition(model, sub);
                 summon.increaseStep();

@@ -120,7 +120,7 @@ public class CombatSubView extends SubView {
                 int xpos = X_OFFSET + col*4;
                 int ypos = Y_OFFSET + (row+2)*4 + shiftForCurrent(combatant);
                 if (combatant != null) {
-                    if (combatant instanceof GameCharacter && isFleeing) {
+                    if (combatant instanceof GameCharacter && isFleeing && !combatant.isDead()) {
                         Sprite avatarBack;
                         if (fleeingAvatars.containsKey(combatant)) {
                             avatarBack = fleeingAvatars.get(combatant);

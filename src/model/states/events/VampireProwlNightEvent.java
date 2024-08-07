@@ -103,7 +103,6 @@ public class VampireProwlNightEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         model.getParty().forceEyesClosed(victim, false);
         model.getParty().unbenchAll();
-        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     private void makeVampire(Model model, GameCharacter victim) {

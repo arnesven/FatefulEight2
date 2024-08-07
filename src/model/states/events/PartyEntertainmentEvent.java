@@ -117,6 +117,5 @@ public class PartyEntertainmentEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         showPartyAttitudesSubView(model);
-        ClientSoundManager.playPreviousBackgroundMusic();
     }
 }

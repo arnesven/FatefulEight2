@@ -81,7 +81,6 @@ public class FortressAtUtmostEdgeState extends AdvancedDailyActionState {
         if (WitchKingCharacter.isInParty(model)) {
             partyMemberSay(WitchKingCharacter.getFromParty(model), "This place looks terribly familiar...");
         }
-        ClientSoundManager.playPreviousBackgroundMusic();
         return super.run(model);
     }
 

@@ -33,6 +33,7 @@ public class ShootBallsState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         this.subView = new ShootBallsSubView(this, shooter, bowToUse);
         CollapsingTransition.transition(model, subView);
@@ -55,7 +56,7 @@ public class ShootBallsState extends GameState {
         } while (true);
         AnimationManager.unregister(this.subView);
         println("Game over. You got " + subView.getScore() + " out of " + ShootBallsSubView.MAX_BALLS + " balls.");
-        ClientSoundManager.playPreviousBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(previous);
         return model.getCurrentHex().getDailyActionState(model);
     }
 

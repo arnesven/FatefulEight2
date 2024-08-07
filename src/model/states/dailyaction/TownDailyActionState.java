@@ -6,6 +6,7 @@ import model.TimeOfDay;
 import model.map.HexLocation;
 import model.map.TownLocation;
 import model.map.UrbanLocation;
+import sound.BackgroundMusic;
 import view.MyColors;
 import view.subviews.DailyActionSubView;
 import view.subviews.TownSubView;
@@ -71,5 +72,10 @@ public class TownDailyActionState extends AdvancedDailyActionState {
 
     public TownLocation getTown() {
         return (TownLocation) urbanLocation;
+    }
+
+    @Override
+    protected BackgroundMusic getSound() {
+        return BackgroundMusic.citySong;
     }
 }

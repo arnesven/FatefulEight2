@@ -65,14 +65,10 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                 }
 
     @Override
-    public void travelTo(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.citySong);
-    }
+    public void travelTo(Model model) { }
 
     @Override
-    public void travelFrom(Model model) {
-        ClientSoundManager.playPreviousBackgroundMusic();
-    }
+    public void travelFrom(Model model) { }
 
     @Override
     public String getLordName() {

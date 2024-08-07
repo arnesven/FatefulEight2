@@ -5,6 +5,8 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.states.GameState;
 import model.tutorial.TutorialHandler;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import util.MyRandom;
 import view.help.TutorialStartDialog;
 import view.subviews.*;
@@ -60,6 +62,9 @@ public abstract class AdvancedDailyActionState extends GameState {
     public GameState run(Model model) {
         subView = makeSubView(model, this, matrix);
         DailyActionNode daily = null;
+        if (hasSound()) {
+            ClientSoundManager.playBackgroundMusic(getSound());
+        }
         while (!model.gameExited()) {
             if (model.getSubView() != subView) {
                 CollapsingTransition.transition(model, subView);
@@ -89,6 +94,14 @@ public abstract class AdvancedDailyActionState extends GameState {
         }
 
         return daily.getDailyAction(model, this);
+    }
+
+    protected BackgroundMusic getSound() {
+        return null;
+    }
+
+    private boolean hasSound() {
+        return getSound() != null;
     }
 
     private void printPrompt(Model model) {

@@ -59,13 +59,10 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     }
 
     @Override
-    public void travelTo(Model model) {
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.castleSong);
-    }
+    public void travelTo(Model model) { }
 
     @Override
     public void travelFrom(Model model) {
-        ClientSoundManager.playPreviousBackgroundMusic();
     }
 
     @Override

@@ -71,7 +71,6 @@ public class VampireFeedingState extends GameState {
         waitForReturn();
         CollapsingTransition.transition(model, oldSubView);
         model.getParty().unbenchAll();
-        ClientSoundManager.playPreviousBackgroundMusic();
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

@@ -84,7 +84,6 @@ public class BattleState extends GameState {
         }
         print("Press enter to continue.");
         waitForReturn();
-        ClientSoundManager.playPreviousBackgroundMusic();
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 

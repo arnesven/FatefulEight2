@@ -40,7 +40,6 @@ public class MarketEvent extends DailyEventState {
                 "Let's check out if they have any games!");
         if (!chooseAnEvent(model)) {
             println("You leave the market early.");
-            ClientSoundManager.playPreviousBackgroundMusic();
             return;
         }
         println("There is still time to do do something at the market.");

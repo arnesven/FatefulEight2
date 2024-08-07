@@ -43,14 +43,12 @@ public class TravelState extends GameState {
             spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().get(0));
             model.getWorld().setAlternativeAvatar(spriteToUse);
         } else {
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
             spriteToUse = model.getParty().getLeader().getAvatarSprite();
         }
 
         GameState state = travelOneStep(model, mapSubView, true);
         if (state != null) {
-            if (riding) {
-                ClientSoundManager.playPreviousBackgroundMusic();
-            }
             return state;
         }
         if (riding) {
@@ -58,7 +56,6 @@ public class TravelState extends GameState {
             CollapsingTransition.transition(model, mapSubView);
             state = travelOneStep(model, mapSubView, false);
             model.getWorld().setAlternativeAvatar(null);
-            ClientSoundManager.playPreviousBackgroundMusic();
             if (state != null) {
                 return state;
             }

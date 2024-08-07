@@ -38,9 +38,10 @@ public class LottoHouseEvent extends DailyEventState {
         if (!yesNoInput()) {
             return;
         }
+        BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         goIntoLottoHouse(model);
-        ClientSoundManager.playPreviousBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(previous);
     }
 
     private void goIntoLottoHouse(Model model) {

@@ -96,6 +96,7 @@ public abstract class RitualEvent extends DailyEventState {
         this.benched = new ArrayList<>(model.getParty().getBench());
 
         RitualSubView subView = new RitualSubView(getTheme(), this, magicColor);
+        BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.battleSong);
         CollapsingTransition.transition(model, subView);
 
@@ -147,7 +148,7 @@ public abstract class RitualEvent extends DailyEventState {
         model.getParty().unbenchAll();
 
         CollapsingTransition.transition(model, prevSubView);
-        ClientSoundManager.playPreviousBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(previous);
         runEventOutro(model, !ritualFailed(), ritualists.size() - 4);
     }
 

@@ -86,6 +86,7 @@ public class CombatEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         startMusic();
         StripedTransition.transition(model, subView);
         addAllies(new ArrayList<>(model.getParty().getTamedDragons().values()));
@@ -112,7 +113,7 @@ public class CombatEvent extends DailyEventState {
         removedKilledTamedDragons(model);
         removeCombatConditions(model);
         model.setGameOver(model.getParty().isWipedOut());
-        ClientSoundManager.playPreviousBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(previousSong);
         model.setInCombat(false);
     }
 

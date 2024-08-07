@@ -6,6 +6,8 @@ import model.TimeOfDay;
 import model.map.CastleLocation;
 import model.states.GameState;
 import model.states.events.LeagueOfMagesEvent;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
 import view.MyColors;
 import view.subviews.CastleSubView;
 import view.subviews.DailyActionSubView;
@@ -56,5 +58,10 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
     @Override
     protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
         return location.makeActionSubView(model, advancedDailyActionState, matrix);
+    }
+
+    @Override
+    protected BackgroundMusic getSound() {
+        return BackgroundMusic.castleSong;
     }
 }

@@ -54,9 +54,7 @@ public class RuinsLocation extends HexLocation {
     }
 
     @Override
-    public void travelFrom(Model model) {
-        ClientSoundManager.playPreviousBackgroundMusic();
-    }
+    public void travelFrom(Model model) { }
 
     @Override
     public MyPair<Point, Integer> getDailyActionMenuAnchor() {

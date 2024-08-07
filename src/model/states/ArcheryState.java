@@ -60,6 +60,7 @@ public class ArcheryState extends GameState {
         if (bow instanceof CrossbowWeapon) {
             targetSubView.setPowerLocked(true);
         }
+        BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         CollapsingTransition.transition(model, targetSubView);
         List<GameCharacter> beforeShooters = new ArrayList<>(npcShooters.subList(0, npcShooters.size()/2));
@@ -68,7 +69,7 @@ public class ArcheryState extends GameState {
         List<GameCharacter> afterShooters = new ArrayList<>(npcShooters);
         afterShooters.removeAll(beforeShooters);
         npcsShoot(afterShooters);
-        ClientSoundManager.playPreviousBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(previous);
         return model.getCurrentHex().getDailyActionState(model);
     }
 

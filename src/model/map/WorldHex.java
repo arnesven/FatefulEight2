@@ -295,9 +295,6 @@ public abstract class WorldHex {
         if (hexLocation != null) {
             hexLocation.travelFrom(model);
         }
-        if (hasMusic()) {
-            ClientSoundManager.playPreviousBackgroundMusic();
-        }
     }
 
     protected void setMusic(BackgroundMusic bg) {
