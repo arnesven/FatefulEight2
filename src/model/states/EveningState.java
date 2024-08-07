@@ -97,7 +97,7 @@ public class EveningState extends GameState {
         candidates.remove(mainDissident);
         candidates.removeIf((GameCharacter gc) -> mainDissident.getAttitude(gc) < 0);
 
-        if (candidates.isEmpty()) {
+        if (candidates.isEmpty() && mainDissident.getAttitude(model.getParty().getLeader()) <= -10) {
             PartyMemberWantsToLeaveEvent wantsToLeaveEvent = new PartyMemberWantsToLeaveEvent(model);
             wantsToLeaveEvent.wantsToLeave(model, mainDissident, true);
             return;

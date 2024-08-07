@@ -230,6 +230,9 @@ public class Model {
 
     public void setExitGame(boolean b) {
         this.gameExited = b;
+        if (gameExited) {
+            ClientSoundManager.stopPlayingBackgroundSound();
+        }
     }
 
     public SubView getSubView() {

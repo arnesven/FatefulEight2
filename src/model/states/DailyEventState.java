@@ -145,17 +145,18 @@ public abstract class DailyEventState extends GameState {
             return;
         }
 
-        StringBuffer buf = new StringBuffer();
-        for (GameCharacter gc : toRemove) {
+        for (GameCharacter gc : new ArrayList<>(toRemove)) {
             if (!didResurrect(model, this, gc)) {
                 model.getParty().remove(gc, !abandonEquipment, false, 0);
-                buf.append(gc.getFullName() + ", ");
+            } else {
+                toRemove.remove(gc);
             }
         }
-        if (buf.toString().equals("")) {
+        if (toRemove.isEmpty()) {
             return;
         }
-        printAlert(buf.toString().substring(0, buf.length()-2) + " has died.");
+        String names = MyLists.commaAndJoin(toRemove, GameCharacter::getName);
+        printAlert(names + " " + (toRemove.size()>1?"have":"has")+ " died.");
         if (!abandonEquipment && model.getParty().size() > 0) {
             println("You bury them and collect the equipment.");
         } else {
