@@ -109,13 +109,14 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             return new SilentNoEventState(model);
         }
 
-        private class InnerPortraitEvent extends DailyEventState {
+        private class InnerPortraitEvent extends SummonTask {
             public InnerPortraitEvent(Model model) {
                 super(model);
             }
 
-            public void lordSay(String text) {
-                portraitSay(text);
+            @Override
+            public String getJournalDescription() {
+                return "unused";
             }
 
             @Override
@@ -173,32 +174,41 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 }
                 portraitSay("Say, you seem like a stand up citizen. We need more of your ilk residing in our town! " +
                         "It just so happens we have some real estate for sale at the moment. Would you be interested?");
-                if (model.getParty().getHeadquarters() == null) {
-                    leaderSay("I could be. What are the details?");
-                    Headquarters hq = location.getRealEstate();
-                    portraitSay(hq.presentYourself() + " The current owner is willing to let it go for " +
-                            hq.getCost() + ". Why don't you buy it? You could make it the " +
-                            "headquarters for your adventuring party.");
-                    if (hq.getCost() > model.getParty().getGold()) {
-                        leaderSay("I'm afraid it's a little over our budget.");
-                        portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
-                    } else {
-                        print("Buy the house? (Y/N) ");
-                        if (yesNoInput()) {
-                            leaderSay("Okay. We'll take it.");
-                            portraitSay("Splendid. I can hand you the keys right now.");
-                            println("You paid " + hq.getCost() + " gold to the " + location.getLordTitle() + ".");
-                            model.getParty().addToGold(-hq.getCost());
-                            model.getParty().setHeadquarters(model, this, hq);
-                        } else {
-                            leaderSay("We'll think about it.");
-                            portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
-                        }
-                    }
+                leaderSay("I could be. What are the details?");
+                Headquarters hq = location.getRealEstate();
+                portraitSay(hq.presentYourself() + " The current owner is willing to let it go for " +
+                        hq.getCost() + ". Why don't you buy it? You could make it the " +
+                        "headquarters for your adventuring party.");
+                if (hq.getCost() > model.getParty().getGold()) {
+                    leaderSay("I'm afraid it's a little over our budget.");
+                    portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
                 } else {
-                    leaderSay("I would have been if we didn't already own a house in another town.");
-                    // TODO: What if you want to move headquarters?
+                    print("Buy the house? (Y/N) ");
+                    if (yesNoInput()) {
+                        if (model.getParty().getHeadquarters() == null) {
+                            leaderSay("Okay. We'll take it.");
+                            buyHome(model, location, hq);
+                        } else {
+                            boolean answer = offerTransfer(model, hq, location, "buy it");
+                            if (answer) {
+                                buyHome(model, location, hq);
+                            } else {
+                                leaderSay("No, I think I've changed my mind.");
+                                portraitSay("Alright then. Come back if you change it again.");
+                            }
+                        }
+                    } else {
+                        leaderSay("We'll think about it.");
+                        portraitSay("Oh, I see. Well, the offer lasts as long as nobody else buys it.");
+                    }
                 }
+            }
+
+            private void buyHome(Model model, UrbanLocation location, Headquarters hq) {
+                portraitSay("Splendid. I can hand you the keys right now.");
+                println("You paid " + hq.getCost() + " gold to the " + location.getLordTitle() + ".");
+                model.getParty().addToGold(-hq.getCost());
+                model.getParty().setHeadquarters(model, this, hq);
             }
         }
     }

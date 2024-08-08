@@ -78,30 +78,41 @@ public class ClearOutCultistsHouseTask extends SummonTask {
             portraitSay("Really? I mean... great! I didn't really expect you to succeed, but never mind that now.");
             leaderSay("Your welcome. Now, you mentioned a reward.");
             portraitSay("Uhm, yes, I did... A reward...");
-            if (model.getParty().getHeadquarters() == null) {
-                leaderSay("...");
-                portraitSay("Hey, I just had a splendid idea. Now that the house is empty, why don't you move in?");
-                leaderSay("You'd give the house to " + meOrUs() + "?");
-                portraitSay("Yeah, why not. That way you would make sure the cultists wouldn't come back, and besides, " +
-                        "we'd love having stand up citizens like you in our town. How about it?");
-                print("The " + location.getLordTitle() + " is offering you the house. " +
-                        location.getRealEstate().presentYourself() +
-                        ". It will become your headquarters in this town. Do you accept the offer? (Y/N) ");
-                if (yesNoInput()) {
-                    model.getParty().setHeadquarters(model, this, location.getRealEstate());
+            leaderSay("...");
+            portraitSay("Hey, I just had a splendid idea. Now that the house is empty, why don't you move in?");
+            leaderSay("You'd give the house to " + meOrUs() + "?");
+            portraitSay("Yeah, why not. That way you would make sure the cultists wouldn't come back, and besides, " +
+                    "we'd love having stand up citizens like you in our town. How about it?");
+            print("The " + location.getLordTitle() + " is offering you the house. " +
+                    location.getRealEstate().presentYourself() +
+                    ". It will become your headquarters in this town. Do you accept the offer? (Y/N) ");
+            if (yesNoInput()) {
+                if (model.getParty().getHeadquarters() == null) {
+                    getHouse(model);
                 } else {
-                    leaderSay("Sorry, not interested.");
-                    portraitSay("How unfortunate. Well...");
-                    goldReward(model);
+                    if (offerTransfer(model, location.getRealEstate(), location, "accept")) {
+                        getHouse(model);
+                    } else {
+                        leaderSay("Sorry. I don't want to sell my other house.");
+                        goldReward(model);
+                    }
                 }
             } else {
+                leaderSay("Sorry, not interested.");
+                portraitSay("How unfortunate. Well...");
                 goldReward(model);
             }
         }
     }
 
+    private void getHouse(Model model) {
+        leaderSay("Okay. It's a deal. " + iOrWeCap() + " will move in.");
+        portraitSay("Fantastic. I guess I'll see you around town then.");
+        model.getParty().setHeadquarters(model, this, location.getRealEstate());
+    }
+
     private void goldReward(Model model) {
-        portraitSay("Will you accept a monetary reward of 50 gold?");
+        portraitSay("Will you accept a monetary reward of 50 gold instead?");
         leaderSay("Yes, of course.");
         portraitSay("Good. Here you go. Well then our business have thus concluded.");
         println("You got 50 gold from the " + location.getLordTitle() + ".");

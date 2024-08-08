@@ -75,17 +75,28 @@ public class RestoreMansionTask extends SummonTask {
         } else if (chosen == 1) {
             leaderSay("That sounds like a good deal.");
             if (hasTheMoney(model)) {
+                Headquarters mansion = new Headquarters(location, Headquarters.MAJESTIC_SIZE);
                 if (model.getParty().getHeadquarters() != null) {
-                    leaderSay("But we already have a house in another town.");
-                    portraitSay("That's unfortunate."); // TODO: Offer transfer.
+                    leaderSay("I have the materials and gold but...");
+                    if (offerTransfer(model, mansion, location, "get the mansion")) {
+                        getMansion(model, mansion);
+                    } else {
+                        leaderSay("I don't think I want to get rid of our other house.");
+                        portraitSay("Alright. Will you sell me those materials for 200 gold?");
+                        print("Sell 75 materials for 200 gold to the " + location.getLordTitle() + "? (Y/N) ");
+                        if (yesNoInput()) {
+                            leaderSay("That seems fair.");
+                            println("You hand over 75 materials and receive 200 gold.");
+                            model.getParty().addToGold(200);
+                            model.getParty().getInventory().addToMaterials(-MATERIALS_AND_GOLD_COST);
+                            summon.increaseStep();
+                        } else {
+                            leaderSay("Sorry. No deal.");
+                            portraitSay("That's unfortunate.");
+                        }
+                    }
                 } else {
-                    leaderSay("Here are the materials and gold you asked for.");
-                    println("You hand over " + MATERIALS_AND_GOLD_COST + " materials and " + MATERIALS_AND_GOLD_COST + " gold");
-                    model.getParty().getInventory().addToMaterials(-MATERIALS_AND_GOLD_COST);
-                    model.getParty().addToGold(-MATERIALS_AND_GOLD_COST);
-                    portraitSay("Wonderful! I'll make all the arrangements then. Here are the keys to your new property!");
-                    model.getParty().setHeadquarters(model, this, new Headquarters(location, Headquarters.MAJESTIC_SIZE));
-                    summon.increaseStep();
+                    getMansion(model, mansion);
                 }
             } else {
                 leaderSay("But we don't have the money right now. We'll have to come back later.");
@@ -95,6 +106,16 @@ public class RestoreMansionTask extends SummonTask {
             leaderSay("I think we'll come back later.");
             portraitSay("Oh, okay. There's no rush really.");
         }
+    }
+
+    private void getMansion(Model model, Headquarters mansion) {
+        leaderSay("Here are the materials and gold you asked for.");
+        println("You hand over " + MATERIALS_AND_GOLD_COST + " materials and " + MATERIALS_AND_GOLD_COST + " gold");
+        model.getParty().getInventory().addToMaterials(-MATERIALS_AND_GOLD_COST);
+        model.getParty().addToGold(-MATERIALS_AND_GOLD_COST);
+        portraitSay("Wonderful! I'll make all the arrangements then. Here are the keys to your new property!");
+        model.getParty().setHeadquarters(model, this, mansion);
+        summon.increaseStep();
     }
 
     private boolean hasTheMoney(Model model) {

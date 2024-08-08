@@ -305,4 +305,25 @@ public class Headquarters implements Serializable {
     public int getSubPartyETA() {
         return subParty.getETA();
     }
+
+    public void transferTo(Headquarters newHQ) {
+        while (newHQ.getCharacters().size() <= newHQ.getMaxCharacters() && !characters.isEmpty()) {
+            newHQ.getCharacters().add(characters.remove(0));
+        }
+        characters.clear();
+        while (newHQ.getHorses().size() <= newHQ.getMaxHorses() && !horses.isEmpty()) {
+            newHQ.getHorses().add(horses.remove(0));
+        }
+        horses.clear();
+        newHQ.addToGold(gold);
+        gold = 0;
+        newHQ.addToMaterials(materials);
+        materials = 0;
+        newHQ.addToFood(food);
+        food = 0;
+        newHQ.addToIngredients(ingredients);
+        ingredients = 0;
+        newHQ.getItems().addAll(getItems());
+        getItems().clear();
+    }
 }
