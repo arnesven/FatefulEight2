@@ -1,7 +1,10 @@
 package view.help;
 
+import model.characters.special.GoblinAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.races.FrogmanAppearance;
+import model.races.OrcAppearance;
 import model.races.Race;
 import view.GameView;
 import view.party.CharacterCreationView;
@@ -27,6 +30,10 @@ public class TutorialRaces extends ExpandableHelpDialog {
         for (Race race : Race.allRaces) {
             subsections.add(new SpecificRaceHelpDialog(view, race, PortraitSubView.makeRandomPortrait(Classes.None, race)));
         }
+        subsections.add(new SpecificRaceHelpDialog(view, Race.FROGMAN, new FrogmanAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.ORC, new OrcAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.GOBLIN, new GoblinAppearance()));
+        // TODO: Trolls, Ogres, Lizardmen
         return subsections;
     }
 }

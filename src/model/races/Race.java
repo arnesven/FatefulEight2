@@ -28,6 +28,7 @@ public abstract class Race implements Serializable {
     public static final Race ORC = new OrcRace();
     public static final Race[] allRaces = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC};
     public static final Race[] allRacesIncludingMinor = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC, ORC};
+    public static final Race FROGMAN = new FrogmanRace();
     private static int nextRaceId = 0;
     private final int id;
     private final String description;

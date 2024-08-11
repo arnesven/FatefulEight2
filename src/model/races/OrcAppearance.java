@@ -38,7 +38,7 @@ public class OrcAppearance extends AdvancedAppearance {
         Sprite8x8[][] result = new Sprite8x8[3][3];
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 3; ++col) {
-                result[col][row] = new Sprite8x8("orcface" + col + ":" + row, "face.png", 0x1ED + 0x10*row + col,
+                result[col][row] = new Sprite8x8("orcface" + col + ":" + row, "races.png", 0x10 * row + col,
                         color1, color2, color3, color4);
 
             }

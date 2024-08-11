@@ -9,7 +9,12 @@ import view.sprites.PortraitSprite;
 public class OrcRace extends Race {
 
     protected OrcRace() {
-        super("Orc", MyColors.ORC_GREEN, 2, -2, 30, new Skill[]{}, "Unused");
+        super("Orc", MyColors.ORC_GREEN, 2, -2, 30, new Skill[]{},
+                "Orcs are a semi-intelligent species who live in primitive societies across the world. " +
+                        "Orcs are tall (often more than seven feet), muscular and tough, with a fortitude comparable only to dwarves. " +
+                        "Although not inherently overly aggressive orcs are often easily instigated to perform violent " +
+                        "acts. Because of this, orcs are typically feared by other races. Only goblins seem to be able to " +
+                        "somewhat harmoniously coexist with orcs.");
     }
 
     @Override
