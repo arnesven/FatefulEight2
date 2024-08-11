@@ -1,5 +1,6 @@
 package view.party;
 
+import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.*;
@@ -7,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.weapons.Weapon;
+import model.races.OrcAppearance;
 import model.races.Race;
 import util.Arithmetics;
 import util.MyPair;
@@ -33,7 +35,7 @@ public class CharacterCreationView extends SelectableListMenu {
     public static final Sprite NOT_OK_SPRITE = new Sprite8x8("notok", "charset.png", 0xB7, MyColors.BLACK, MyColors.LIGHT_RED, MyColors.BLUE, MyColors.CYAN);
     private List<MyPair<StringBuffer, Integer>> buffers = new ArrayList<>();
     private boolean gender = true;
-    private static final Race[] raceSet = Race.allRaces;
+    private static Race[] raceSet = Race.allRaces;
     private static final CharacterEyes[] eyeSet = CharacterEyes.allEyes;
     // DO NOT CHANGE THE ORDER OF noseSet or mouthSet, IT WILL AFFECT PRESET CHARACTERS
     public static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC, 0xD, 0xE, 0xF};
@@ -86,6 +88,9 @@ public class CharacterCreationView extends SelectableListMenu {
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
         avatarBack = lastCharacter.getAvatarSprite().getAvatarBack();
+        if (FatefulEight.inDebugMode()) {
+            raceSet = Race.allRacesIncludingMinor;
+        }
     }
 
     @Override
@@ -97,7 +102,7 @@ public class CharacterCreationView extends SelectableListMenu {
     public void transitionedFrom(Model model) {  }
 
     private CharacterAppearance makeAppearance() {
-        AdvancedAppearance app = new AdvancedAppearance(raceSet[selectedRace], gender,
+        AdvancedAppearance app = raceSet[selectedRace].makeAppearance(raceSet[selectedRace], gender,
                 hairColorSet[selectedHairColor], mouthSet[selectedMouth],
                 noseSet[selectedNose], eyeSet[selectedEyes], hairStyleSet[selectedHairStyle],
                 beardSet[selectedBeard]);

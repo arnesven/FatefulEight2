@@ -1,7 +1,6 @@
 package model.races;
 
-import model.characters.appearance.NormalNeck;
-import model.characters.appearance.TorsoNeck;
+import model.characters.appearance.*;
 import model.classes.Skill;
 import util.MyRandom;
 import view.MyColors;
@@ -25,8 +24,10 @@ public abstract class Race implements Serializable {
     public static final Race ALL = new AllRaces();
     public static final Race GOBLIN = new GoblinRace();
     public static final Race WITCH_KING = new WitchKingRace();
-    public static final Race[] allRaces = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC};
     public static final Race DOG = new DogRace();
+    public static final Race ORC = new OrcRace();
+    public static final Race[] allRaces = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC};
+    public static final Race[] allRacesIncludingMinor = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC, ORC};
     private static int nextRaceId = 0;
     private final int id;
     private final String description;
@@ -142,4 +143,11 @@ public abstract class Race implements Serializable {
     }
 
     public abstract int getInitialAttitudeFor(Race race);
+
+    public AdvancedAppearance makeAppearance(Race race, boolean gender, MyColors hairColor,
+                                             int mouth, int nose, CharacterEyes characterEyes,
+                                             HairStyle hairStyle, Beard beard) {
+        return new AdvancedAppearance(race, gender,
+                hairColor, mouth, nose, characterEyes, hairStyle, beard);
+    }
 }

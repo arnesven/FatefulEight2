@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -13,6 +14,7 @@ import model.enemies.TrollEnemy;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.Prevalence;
+import model.races.OrcAppearance;
 import model.states.DailyEventState;
 import model.states.RecruitState;
 import model.states.ShopState;
@@ -36,6 +38,9 @@ public class OrcishStrongholdEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        tradeWithOrcs(model); // TODO: remove
+
+
         model.getParty().randomPartyMemberSay(model, List.of("Hold up a minute. That's some kind of fort or something up there."));
         model.getParty().randomPartyMemberSay(model, List.of("An orcish stronghold... Could be dangerous."));
         print("Investigate the orcish stronghold? (Y/N) ");
@@ -69,11 +74,13 @@ public class OrcishStrongholdEvent extends DailyEventState {
     }
 
     private void tradeWithOrcs(Model model) {
+        CharacterAppearance orcAppearance = new OrcAppearance();
+        showExplicitPortrait(model, orcAppearance, "Orc Chieftain");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Which one of you do you call your leader?");
         println("The orcs gruff a little amongst themselves, but after a little while a large one steps forward.");
-        printQuote("Orc Chieftain", "Me Chief. What you want?");
+        portraitSay("Me Chief. What you want?");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Are you perhaps interested in trade?");
-        printQuote("Orc Chieftain", "Trade good! Us need gold and materials.");
+        portraitSay("Trade good! Us need gold and building stuff.");
         waitForReturn();
         List<Item> items = model.getItemDeck().draw(MyRandom.randInt(4, 8), Prevalence.rare);
         items.addAll(model.getItemDeck().draw(MyRandom.randInt(4, 8), Prevalence.uncommon));
