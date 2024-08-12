@@ -55,6 +55,7 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
 
         state.setCursorEnabled(true);
         unacceptAllSpells(model);
+        subSceneOutro(model, state, skillSuccess);
         return getEdgeToReturn(skillSuccess);
     }
 
@@ -65,6 +66,8 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
             }
         }
     }
+
+    protected void subSceneOutro(Model model, QuestState state, boolean skillSuccess) { }
 
     protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {
         if (skillCheckWasSuccessful) {

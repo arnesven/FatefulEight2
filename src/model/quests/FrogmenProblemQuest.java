@@ -69,10 +69,8 @@ public class FrogmenProblemQuest extends MainQuest {
                 new QuestScene("Approach the Camp",
                         List.of(new FrogmanGuardsCombat(2, 5),
                                 new PerceptFrogmenLanguageSubScene(5, 4),
-                                new SoloSkillCheckSubScene(5, 5, Skill.Logic, 7,
-                                        "Can anybody make any sense out of their garbled words?"),
-                                new CollaborativeSkillCheckSubScene(5, 6, Skill.Persuade, 8,
-                                        "Maybe we can persuade them to negotiate with the townspeople?"))),
+                                new UnderstandFrogmenLanguageSubScene(5, 5),
+                                new PersuadeFrogmenSubScene(5, 6))),
                 new QuestScene("Alarm Raised",
                         List.of(new FrogmanShamanCombat(2, 6),
                                 new FrogmanChieftainCombat(2, 7))));
@@ -249,15 +247,23 @@ public class FrogmenProblemQuest extends MainQuest {
     }
 
     private static class PerceptFrogmenLanguageSubScene extends CollaborativeSkillCheckSubScene {
+        private FrogmanPortraitEvent event;
+
         public PerceptFrogmenLanguageSubScene(int col, int row) {
             super(col, row, Skill.Perception, 8,
-                    "First, let's try to get a sense of how the frogmen communicate themselves.");
+                    "First, let's try to get a sense of how the frogmen communicate.");
         }
 
         @Override
         protected void subSceneIntro(Model model, QuestState state) {
             super.subSceneIntro(model, state);
-            new FrogmanPortraitEvent(model).doEvent(model);
+            this.event = new FrogmanPortraitEvent(model);
+            event.doEvent(model);
+        }
+
+        @Override
+        protected void subSceneOutro(Model model, QuestState state, boolean skillSuccess) {
+            event.doEventPartTwo(model, skillSuccess);
         }
 
         private static class FrogmanPortraitEvent extends DailyEventState {
@@ -270,6 +276,127 @@ public class FrogmenProblemQuest extends MainQuest {
                 showExplicitPortrait(model, new FrogmanAppearance(), "Frogman Villager");
                 portraitSay("Shlrrp-chiirp chi chi shsh llrrrp, chi chi chirp shllrrip?");
                 leaderSay("This is going to be harder than I thought...");
+            }
+
+            public void doEventPartTwo(Model model, boolean success) {
+                if (success) {
+                    leaderSay("I think there's a pattern to their sounds...");
+                    portraitSay("Chirri-Shhhl?");
+                } else {
+                    leaderSay("Who can understand such an abominable sounds? SPEAK CLEARLY!!!");
+                    portraitSay("Urrr, shlupp shlupp! Glrlrluuuhu!");
+                    if (model.getParty().size() > 1) {
+                        GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                        partyMemberSay(other, "I think you made him angry. Or is it a her?");
+                    }
+                    println("The frogmen suddenly attack you!");
+                }
+                model.getLog().waitForAnimationToFinish();
+                removePortraitSubView(model);
+            }
+        }
+    }
+
+    private static class UnderstandFrogmenLanguageSubScene extends SoloSkillCheckSubScene {
+        private FrogmanPortrait2Event event;
+
+        public UnderstandFrogmenLanguageSubScene(int col, int row) {
+            super(col, row, Skill.Logic, 7,
+                    "Can anybody make any sense out of their garbled words?");
+        }
+
+        @Override
+        protected void subSceneIntro(Model model, QuestState state) {
+            super.subSceneIntro(model, state);
+            this.event = new FrogmanPortrait2Event(model);
+            event.doEvent(model);
+        }
+
+        @Override
+        protected void subSceneOutro(Model model, QuestState state, boolean skillSuccess) {
+            event.doPartTwo(model, skillSuccess, getPerformer());
+        }
+
+        private static class FrogmanPortrait2Event extends DailyEventState {
+            public FrogmanPortrait2Event(Model model) {
+                super(model);
+            }
+
+            @Override
+            protected void doEvent(Model model) {
+                showExplicitPortrait(model, new FrogmanAppearance(), "Frogman Villager");
+                portraitSay("Gluhurrip plrrpi shhshhlurrilurp!");
+            }
+
+            public void doPartTwo(Model model, boolean skillSuccess, GameCharacter performer) {
+                if (skillSuccess) {
+                    partyMemberSay(performer, "I think he said: 'Please leave our village, we fear outsiders'.");
+                    portraitSay("Chi chi glurg!");
+                } else {
+                    partyMemberSay(performer, "I think he said: 'Grab my spear.");
+                    println(performer.getFirstName() + " approaches the frogman and attempts to grab its spear.");
+                    portraitSay("Shlurri! Shlurri! Shlurriiii!");
+                    leaderSay("Oh oh... he's pissed.");
+                    println("The frogmen suddenly attack you!");
+                }
+                model.getLog().waitForAnimationToFinish();
+                removePortraitSubView(model);
+            }
+        }
+    }
+
+    private static class PersuadeFrogmenSubScene extends CollaborativeSkillCheckSubScene {
+        private FrogmanPortrait3Event event;
+
+        public PersuadeFrogmenSubScene(int col, int row) {
+            super(col, row, Skill.Persuade, 8,
+                    "Maybe we can persuade them to negotiate with the townspeople?");
+        }
+
+        @Override
+        protected void subSceneIntro(Model model, QuestState state) {
+            super.subSceneIntro(model, state);
+            this.event = new FrogmanPortrait3Event(model);
+            this.event.doEvent(model);
+        }
+
+        @Override
+        protected void subSceneOutro(Model model, QuestState state, boolean skillSuccess) {
+            this.event.doEventPartTwo(model, skillSuccess);
+        }
+
+        private static class FrogmanPortrait3Event extends DailyEventState {
+            public FrogmanPortrait3Event(Model model) {
+                super(model);
+            }
+
+            @Override
+            protected void doEvent(Model model) {
+                showExplicitPortrait(model, new FrogmanAppearance(), "Frogman Villager");
+                portraitSay("Glurri chirp?");
+            }
+
+            public void doEventPartTwo(Model model, boolean skillSuccess) {
+                if (skillSuccess) {
+                    leaderSay("We... come... in... peace.");
+                    println(model.getParty().getLeader().getFirstName() + " gestures carefully while speaking to the frogman.");
+                    portraitSay("Shlurrpirurrrp.");
+                    leaderSay("Stop... attacking... village?");
+                    portraitSay("Churri churr shlurrp.");
+                    leaderSay("I think... maybe he understands?");
+                } else {
+                    leaderSay("Okay... here it goes. SHLURP, SHLURP, RIBBIT-SHLURP, get it?");
+                    portraitSay("Shlurri! Shlurri! Shlurriiii!");
+                    if (model.getParty().size() > 1) {
+                        GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                        partyMemberSay(other, "I don't think you said that right.");
+                        leaderSay("How can you tell?");
+                        partyMemberSay(other, "Oh you know, from the way they're coming at us with their weapons drawn!");
+                    }
+                    println("The frogmen attack you!");
+                }
+                model.getLog().waitForAnimationToFinish();
+                removePortraitSubView(model);
             }
         }
     }
