@@ -36,11 +36,7 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
     @Override
     public final QuestEdge run(Model model, QuestState state) {
         state.setCursorEnabled(false);
-        if (model.getParty().size() > 1) {
-            if (!text.equals("") && !model.getParty().getBench().contains(model.getParty().getLeader())) {
-                state.leaderSay(text);
-            }
-        }
+        subSceneIntro(model, state);
         acceptAllSpells(model);
         boolean skillSuccess = false;
         do {
@@ -60,6 +56,14 @@ public abstract class SkillQuestSubScene extends QuestSubScene {
         state.setCursorEnabled(true);
         unacceptAllSpells(model);
         return getEdgeToReturn(skillSuccess);
+    }
+
+    protected void subSceneIntro(Model model, QuestState state) {
+        if (model.getParty().size() > 1) {
+            if (!text.equals("") && !model.getParty().getBench().contains(model.getParty().getLeader())) {
+                state.leaderSay(text);
+            }
+        }
     }
 
     protected QuestEdge getEdgeToReturn(boolean skillCheckWasSuccessful) {

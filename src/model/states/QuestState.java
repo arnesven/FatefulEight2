@@ -39,10 +39,10 @@ public class QuestState extends GameState {
     @Override
     public GameState run(Model model) {
         currentPosition = quest.getStartNode();
-        transitionToQuestView(model);
-        println("The party sets out on a quest.");
         BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(quest.getMusic());
+        transitionToQuestView(model);
+        println("The party sets out on a quest.");
         println(quest.getText());
         print("Press enter to start quest.");
         model.getTutorial().quests(model);

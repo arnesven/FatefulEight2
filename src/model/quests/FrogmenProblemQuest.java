@@ -12,6 +12,8 @@ import model.items.spells.Spell;
 import model.quests.scenes.CollaborativeSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.races.FrogmanAppearance;
+import model.states.DailyEventState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import view.MyColors;
@@ -66,8 +68,7 @@ public class FrogmenProblemQuest extends MainQuest {
                                 "Now we just have to find this settlement."))),
                 new QuestScene("Approach the Camp",
                         List.of(new FrogmanGuardsCombat(2, 5),
-                                new CollaborativeSkillCheckSubScene(5, 4, Skill.Perception, 8,
-                                "First, let's try to get a sense of how the frogmen communicate themselves."),
+                                new PerceptFrogmenLanguageSubScene(5, 4),
                                 new SoloSkillCheckSubScene(5, 5, Skill.Logic, 7,
                                         "Can anybody make any sense out of their garbled words?"),
                                 new CollaborativeSkillCheckSubScene(5, 6, Skill.Persuade, 8,
@@ -244,6 +245,32 @@ public class FrogmenProblemQuest extends MainQuest {
         @Override
         protected String getCombatDetails() {
             return "Frogman Chieftain";
+        }
+    }
+
+    private static class PerceptFrogmenLanguageSubScene extends CollaborativeSkillCheckSubScene {
+        public PerceptFrogmenLanguageSubScene(int col, int row) {
+            super(col, row, Skill.Perception, 8,
+                    "First, let's try to get a sense of how the frogmen communicate themselves.");
+        }
+
+        @Override
+        protected void subSceneIntro(Model model, QuestState state) {
+            super.subSceneIntro(model, state);
+            new FrogmanPortraitEvent(model).doEvent(model);
+        }
+
+        private static class FrogmanPortraitEvent extends DailyEventState {
+            public FrogmanPortraitEvent(Model model) {
+                super(model);
+            }
+
+            @Override
+            protected void doEvent(Model model) {
+                showExplicitPortrait(model, new FrogmanAppearance(), "Frogman Villager");
+                portraitSay("Shlrrp-chiirp chi chi shsh llrrrp, chi chi chirp shllrrip?");
+                leaderSay("This is going to be harder than I thought...");
+            }
         }
     }
 }

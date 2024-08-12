@@ -57,4 +57,15 @@ public class FrogmanAppearance extends CharacterAppearance {
             setColor4(MyColors.DARK_GREEN);
         }
     }
+
+    @Override
+    public void drawBlink(ScreenHandler screenHandler, int x, int y) { }
+
+    @Override
+    public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) { }
+
+    @Override
+    public boolean supportsSpeakingAnimation() {
+        return false;
+    }
 }
