@@ -12,7 +12,8 @@ import view.sprites.Sprite;
 
 public class WerewolfEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new AvatarSprite(Race.NORTHERN_HUMAN, 0x1A8,
-            MyColors.DARK_GRAY, MyColors.LIGHT_GRAY, CharacterAppearance.noHair(), CharacterAppearance.noHair());
+            MyColors.DARK_GRAY, Race.NORTHERN_HUMAN.getColor(),
+            MyColors.LIGHT_GRAY, CharacterAppearance.noHair(), CharacterAppearance.noHair());
 
     public WerewolfEnemy(char a) {
         super(a, "Werewolf", HOSTILE, new BleedAttackBehavior(5));

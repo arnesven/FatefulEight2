@@ -19,7 +19,7 @@ public class FarmerNPCClass extends NPCClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x108, MyColors.BEIGE,
+        return new AvatarSprite(race, 0x108, MyColors.BEIGE, race.getColor(),
                 appearance.getNormalHair(), appearance.getFullBackHair());
     }
 }

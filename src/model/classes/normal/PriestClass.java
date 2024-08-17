@@ -44,7 +44,7 @@ public class PriestClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x48, MyColors.LIGHT_YELLOW, appearance.getNormalHair(), appearance.getFullBackHair());
+        return new AvatarSprite(race, 0x48, MyColors.LIGHT_YELLOW, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override

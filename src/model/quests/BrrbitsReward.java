@@ -403,7 +403,7 @@ public class BrrbitsReward extends Quest {
 
     private class BlobsCombatScene extends ProtectFrogmanCombatScene {
         public BlobsCombatScene(int col, int row, BrrbitCharacter frogman) {
-            super(frogman, col, row, GelatinousBlobEvent.makeRandomBlobEnemies(3, 3), true);
+            super(frogman, col, row, GelatinousBlobEvent.makeRandomBlobEnemies(2, 2), true);
         }
 
         @Override
@@ -468,12 +468,14 @@ public class BrrbitsReward extends Quest {
         public LizardmenCombatScene(int col, int row, BrrbitCharacter frogman) {
             super(frogman, col, row,
                     List.of(new LizardmanEnemy('A'), new LizardmanEnemy('A'),
-                            new LizardmanEnemy('A')), true);
+                            new LizardmanEnemy('A'), new LizardmanEnemy('A')), true);
         }
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
-            // TODO: Need to protect Brrbit again
+            state.println("The road leads up into the mountain. Suddenly a group of " +
+                    "lizardmen approach you with weapons drawn.");
+            state.leaderSay("They look hostile. Let's keep it together and protect " + FROGMAN_NAME + "!");
             theme = new MountainCombatTheme();
             return super.run(model, state);
         }

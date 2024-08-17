@@ -65,6 +65,9 @@ public class SneakAttackCombatAction extends CombatAction {
             model.getLog().waitForAnimationToFinish();
             for (int i = 0; i < performer.getEquipment().getWeapon().getNumberOfAttacks(); ++i) {
                 performer.doOneAttack(model, combatEvent, target, true, 0, 10);
+                if (target.isDead()) {
+                    break;
+                }
             }
             performer.removeCondition(SneakAttackCondition.class);
         }

@@ -19,6 +19,6 @@ public class MerchantNPCClass extends NPCClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x168, MyColors.GOLD, appearance.getBackHairOnly(), appearance.getFullBackHair());
+        return new AvatarSprite(race, 0x168, MyColors.GOLD, race.getColor(), appearance.getBackHairOnly(), appearance.getFullBackHair());
     }
 }

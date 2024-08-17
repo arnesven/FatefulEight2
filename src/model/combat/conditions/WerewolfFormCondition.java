@@ -30,7 +30,7 @@ public class WerewolfFormCondition extends Condition {
         this.regenCondition = new RegenerationCondition(999, regen);
         if (basedOn != null) {
             this.avatar = new AvatarSprite(basedOn.getRace(), 0x1A8,
-                    MyColors.DARK_GRAY, MyColors.LIGHT_GRAY,
+                    MyColors.DARK_GRAY, basedOn.getRace().getColor(), MyColors.LIGHT_GRAY,
                     CharacterAppearance.noHair(), CharacterAppearance.noHair());
         }
     }

@@ -54,7 +54,7 @@ public class MarksmanClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x08, ARMOR_COLOR, appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, 0x08, ARMOR_COLOR, race.getColor(), appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 
     @Override

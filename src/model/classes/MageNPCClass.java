@@ -19,6 +19,6 @@ public class MageNPCClass extends NPCClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x40, MyColors.RED, appearance.getBackHairOnly(), appearance.getHalfBackHair());
+        return new AvatarSprite(race, 0x40, MyColors.RED, race.getColor(), appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 }

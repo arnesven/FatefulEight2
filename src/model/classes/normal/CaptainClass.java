@@ -59,7 +59,7 @@ public class CaptainClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x08, ARMOR_COLOR,
+        return new AvatarSprite(race, 0x08, ARMOR_COLOR, race.getColor(),
                 appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 
