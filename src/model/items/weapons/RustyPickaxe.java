@@ -7,7 +7,7 @@ import view.sprites.Sprite;
 
 public class RustyPickaxe extends AxeWeapon {
 
-    private static final Sprite SPRITE =  new ItemSprite(2, 5, MyColors.DARK_BROWN, MyColors.DARK_RED);;
+    private static final Sprite SPRITE =  new ItemSprite(2, 5, MyColors.DARK_BROWN, MyColors.DARK_RED);
 
     public RustyPickaxe() {
         super("Rusty Pickaxe", 5, new int[]{6, 11}, false);

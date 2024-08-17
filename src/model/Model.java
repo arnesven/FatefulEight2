@@ -99,7 +99,7 @@ public class Model {
         gameView = new MainGameView();
         gameStartFileName = null;
         getParty().clearAnimations();
-        ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
+        //ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
     }
 
     public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {

@@ -62,13 +62,11 @@ public class QuestDecisionPoint extends QuestJunction {
             state.leaderSay(leaderTalk);
         }
 
-        if (model.getParty().size() - model.getParty().getBench().size() == 1) {
-            state.println("(Since you are alone in your party you automatically succeed at the decision point).");
-        } else {
-            if (leadershipTestFailed(model, state)) {
-                return getConnection(defaultConnectionIndex);
-            }
+        if (!canTakeDecision(model, state)) {
+            return getConnection(defaultConnectionIndex);
         }
+
+
 
         acceptAllSpells(model);
         QuestEdge finalEdge;
@@ -88,10 +86,22 @@ public class QuestDecisionPoint extends QuestJunction {
         return finalEdge;
     }
 
-    private boolean leadershipTestFailed(Model model, QuestState state) {
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, model.getParty().getLeader(), Skill.Leadership, 6, 0, 0);
+    protected boolean canTakeDecision(Model model, QuestState state) {
+        if (model.getParty().size() - model.getParty().getBench().size() == 1) {
+            state.println("(Since you are alone in your party you automatically succeed at the decision point).");
+            return true;
+        }
+        if (leadershipTestPassed(model, state)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean leadershipTestPassed(Model model, QuestState state) {
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state,
+                model.getParty().getLeader(), Skill.Leadership, 6, 0, 0);
         model.getLog().waitForAnimationToFinish();
-        return !result.isSuccessful();
+        return result.isSuccessful();
     }
 
 

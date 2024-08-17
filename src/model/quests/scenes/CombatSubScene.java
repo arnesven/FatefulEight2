@@ -163,9 +163,9 @@ public abstract class CombatSubScene extends QuestSubScene {
             threatSum += e.getThreat();
         }
         String diffStr = "E";
-        if (threatSum > 50) {
+        if (threatSum > 120) {
             diffStr = "H";
-        } else if (threatSum > 25) {
+        } else if (threatSum > 50) {
             diffStr = "M";
         }
         return "Combat " + diffStr;

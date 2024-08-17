@@ -57,6 +57,7 @@ public class AvatarSprite extends LoopingSprite {
     }
 
     public Sprite getAvatarBack() {
+        // TODO: how to get colors right on this...
         return new AvatarSprite(race, num+0x10, color2, color4, hairFromBack, CharacterAppearance.noHair());
     }
 }

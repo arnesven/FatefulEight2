@@ -66,7 +66,9 @@ public interface Classes {
     CharacterClass SWORD_MASTER = new SwordMasterClass();
     CharacterClass ARCANIST = new ArcanistClass();
     CharacterClass TREE_HERDER = new TreeHerderClass();
+    CharacterClass FROGMAN = new FrogmanClass();
 
     CharacterClass[] NO_OTHER_CLASSES = Classes.NO_OTHER_CLASSES;
     CharacterClass BEAUTY = new BeautyNPCClass();
+
 }

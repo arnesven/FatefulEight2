@@ -33,17 +33,22 @@ public class GelatinousBlobEvent extends DailyEventState {
             leaderSay("Wait a minute... That's some kind of creature!");
             println("All of a sudden, blobs of goop rise out of the ground and form clumps. They attack you!");
         }
-        GelatinousBlobEnemy blobTemplate = makeRandomBlob();
-        List<Enemy> enemies = new ArrayList<>();
-        for (int i = MyRandom.randInt(4, 8); i > 0; --i) {
-            enemies.add(blobTemplate.copy());
-        }
+        List<Enemy> enemies = makeRandomBlobEnemies(4, 8);
         if (model.getSettings().getMiscFlags().containsKey(HAVE_MET_BLOBS)) {
             runCombat(enemies);
         } else {
             model.getSettings().getMiscFlags().put(HAVE_MET_BLOBS, true);
             runAmbushCombat(enemies, model.getCurrentHex().getCombatTheme(), true);
         }
+    }
+
+    public static List<Enemy> makeRandomBlobEnemies(int minAmount, int maxAmount) {
+        GelatinousBlobEnemy blobTemplate = makeRandomBlob();
+        List<Enemy> enemies = new ArrayList<>();
+        for (int i = MyRandom.randInt(minAmount, maxAmount); i > 0; --i) {
+            enemies.add(blobTemplate.copy());
+        }
+        return enemies;
     }
 
     public static GelatinousBlobEnemy makeRandomBlob() {
