@@ -25,30 +25,30 @@ public class QuestDeck implements Serializable {
 
     private static List<Quest> makeAllQuests() {
         return List.of(
+                new AbandonedMineQuest(),
+                new ArenaQuest(),
                 new BrrbitsReward(),
-                new DeepDungeonQuest()
-//                new MansionHeistQuest(),
-//                new UnsuspectingLoversQuest(),
-//                new MissingBrotherQuest(),
-//                new DefendTheVillageQuest(),
-//                new RatProblemQuest(),
-//                new TreasureHuntQuest(),
-//                new SurveillanceQuest(),
-//                new WizardsTowerQuest(),
-//                new HauntedMansionQuest(),
-//                new ArenaQuest(),
-//                new TownFairQuest(),
-//                new AbandonedMineQuest(),
-//                new MasqueradeQuest(),
-//                new WarlocksDungeonQuest(),
-//                new MurderMysteryQuest(),
-//                new CultistDenQuest(),
-//                new SwampOgreQuest(),
-//                new GoblinTunnelsQuest(),
-//                new ElvenHighCouncilQuest(),
-//                new WerewolfQuest(),
-//                new MagicSeminarQuest(),
-//                new HungryTrollQuest()
+                new CultistDenQuest(),
+                new DeepDungeonQuest(),
+                new DefendTheVillageQuest(),
+                new ElvenHighCouncilQuest(),
+                new GoblinTunnelsQuest(),
+                new HauntedMansionQuest(),
+                new HungryTrollQuest(),
+                new MagicSeminarQuest(),
+                new MansionHeistQuest(),
+                new MasqueradeQuest(),
+                new MissingBrotherQuest(),
+                new MurderMysteryQuest(),
+                new RatProblemQuest(),
+                new SurveillanceQuest(),
+                new SwampOgreQuest(),
+                new TownFairQuest(),
+                new TreasureHuntQuest(),
+                new UnsuspectingLoversQuest(),
+                new WarlocksDungeonQuest(),
+                new WerewolfQuest(),
+                new WizardsTowerQuest()
                 // PrisonBreakQuest
         );
     }

@@ -31,8 +31,14 @@ import view.combat.CombatTheme;
 import view.combat.GrassCombatTheme;
 import view.combat.MountainCombatTheme;
 import view.combat.TownCombatTheme;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.widget.QuestBackground;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BrrbitsReward extends Quest {
     private static final String FROGMAN_NAME = "Brrbit";
@@ -44,6 +50,7 @@ public class BrrbitsReward extends Quest {
     private boolean hasSeenHorses;
     private boolean foundOreVein;
     private CombatTheme theme;
+    private static final List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public BrrbitsReward() {
         super(FROGMAN_NAME + "'s Reward", "Brrbit", QuestDifficulty.EASY, 0, 0, 50, INTRO, ENDING);
@@ -580,5 +587,61 @@ public class BrrbitsReward extends Quest {
             }
             state.println("You take your leave of " + FROGMAN_NAME + ".");
         }
+    }
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return bgSprites;
+    }
+
+    private static List<QuestBackground> makeBackgroundSprites() {
+        List<QuestBackground> result = new ArrayList<>();
+        Random rand = new Random(1234);
+        for (int row = 0; row < 9 ; ++row) {
+            for (int col = 0; col < 8; ++col) {
+                result.add(new QuestBackground(new Point(col, row),
+                        GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)],
+                        true));
+                if (row == 8) {
+                    result.add(new QuestBackground(new Point(col, row),
+                            GrassCombatTheme.grassSprites[rand.nextInt(GrassCombatTheme.grassSprites.length)],
+                            false));
+                }
+            }
+        }
+        final Sprite woods = new Sprite32x32("woodsqmb", "quest.png", 0x53,
+                MyColors.BLACK, MyColors.BROWN, MyColors.DARK_GREEN, MyColors.GREEN);
+        Sprite32x32 bogSprite = new Sprite32x32("bogsprite", "quest.png", 0x65,
+                MyColors.DARK_BROWN, MyColors.DARK_GREEN, MyColors.TAN, MyColors.GREEN);
+        Sprite32x32 mountains = new Sprite32x32("mountains", "quest.png", 0x66,
+                MyColors.BLACK, MyColors.WHITE, MyColors.GRAY, MyColors.GREEN);
+        for (int row = 0; row < 2; row++) {
+            for (int col = row+2; col < 8; col++) {
+                result.add(new QuestBackground(new Point(col, row), woods, true));
+            }
+        }
+        for (int y = 1; y < 3; ++y) {
+            for (int x = 5; x < 8; ++x) {
+                if (y != 1 || x > 5) {
+                    result.add(new QuestBackground(new Point(x, y), bogSprite, true));
+                }
+            }
+        }
+        for (int y = 3; y < 6; ++y) {
+            for (int x = 4; x < 8; ++x) {
+                if (y != 3 || x == 7) {
+                    result.add(new QuestBackground(new Point(x, y), mountains, true));
+                }
+            }
+        }
+        for (int y = 6; y < 8; ++y) {
+            for (int x = 6; x < 8; ++x) {
+                result.add(new QuestBackground(new Point(x, y), woods, true));
+            }
+        }
+        final Sprite huts = new Sprite32x32("frogmenhuts", "quest.png", 0x1F,
+                MyColors.DARK_BROWN, MyColors.DARK_GREEN, MyColors.TAN, MyColors.GREEN);
+        result.add(new QuestBackground(new Point(7, 7), huts, true));
+
+        return result;
     }
 }
