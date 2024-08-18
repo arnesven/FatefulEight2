@@ -1,10 +1,14 @@
 package model.enemies;
 
 import model.enemies.behaviors.MagicMeleeAttackBehavior;
+import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
+import java.util.List;
+
 public class FiendEnemy extends AltarEnemy {
-    private static final Sprite SPRITE = makeDemonSprite("fiend", 0x5C);
+    private static final Sprite SPRITE = new FiendSprite();
 
     public FiendEnemy(char a) {
         super(a, "Fiend");
@@ -29,5 +33,16 @@ public class FiendEnemy extends AltarEnemy {
     @Override
     public int getDamage() {
         return 4;
+    }
+
+    private static class FiendSprite extends LoopingSprite {
+        public FiendSprite() {
+            super("fiend", "enemies.png", 0x127, 32);
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.BEIGE);
+            setColor3(MyColors.RED);
+            setColor4(MyColors.DARK_RED);
+            setFrames(4);
+        }
     }
 }
