@@ -19,7 +19,7 @@ public class FoodStandsEvent extends DailyEventState {
             println("There are food stands here. The vendors are selling some kind of " +
                     "fried bread and sugary treats.");
             randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(), "Yummy yummy! Let's get some!");
-            println("Do you pay 2 gold for your entire party? (Y/N) ");
+            print("Do you pay 2 gold for your entire party? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().addToGold(-2);
                 if (model.getParty().size() == 1) {

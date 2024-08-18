@@ -161,7 +161,7 @@ public class BrrbitsReward extends Quest {
             @Override
             protected void doAction(Model model, QuestState state) {
                 state.leaderSay("No " + FROGMAN_NAME + ", we're staying here taming these horses.");
-                state.println("Your party starts trying to round up the horses.");
+                state.println("Your party starts trying to round up the horses."); // TODO: Could be a chance of Brrbit waiting for you?
                 state.println(FROGMAN_NAME + " is clearly upset by your refusal to follow him. He stomps his feet " +
                         "and babbles for a few minutes but then quickly shuffles off.");
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {
@@ -381,7 +381,7 @@ public class BrrbitsReward extends Quest {
             }
             println(FROGMAN_NAME + " continues down the road and the party reluctantly follow. A few minutes later you spot " +
                     "several broken down wagons. There are barrels, crates and sacks scattered all over the place. There " +
-                    "is blood on the ground, but no dead dead bodies.");
+                    "is blood on the ground, but no dead bodies.");
             if (model.getParty().size() > 1) {
                 GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
                 partyMemberSay(other, "An ambush by raiders?");

@@ -218,6 +218,6 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
         if (part != null && part.getJournalEntries().get(0).isComplete()) {
             return true;
         }
-        return model.getSettings().getMiscFlags().get("MAIN_STORY_LORD_MET");
+        return model.getSettings().getMiscFlags().containsKey("MAIN_STORY_LORD_MET");
     }
 }
