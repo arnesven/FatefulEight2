@@ -1,10 +1,15 @@
 package model.enemies;
 
 import model.enemies.behaviors.MagicRangedAttackBehavior;
+import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+
+import java.util.List;
 
 public class SuccubusEnemy extends AltarEnemy {
-    private static final Sprite SPRITE = makeDemonSprite("succubus", 0x5F);
+    private static final Sprite SPRITE = new SuccubusSprite();
 
     public SuccubusEnemy(char a) {
         super(a, "Succubus");
@@ -29,5 +34,16 @@ public class SuccubusEnemy extends AltarEnemy {
     @Override
     public int getDamage() {
         return 4;
+    }
+
+    private static class SuccubusSprite extends LoopingSprite {
+        public SuccubusSprite() {
+            super("succubus", "enemies.png", 0x120, 32);
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.BEIGE);
+            setColor3(MyColors.RED);
+            setColor4(MyColors.DARK_RED);
+            setFrames(7);
+        }
     }
 }
