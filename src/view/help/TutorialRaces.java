@@ -1,5 +1,6 @@
 package view.help;
 
+import model.characters.appearance.LizardmanAppearance;
 import model.characters.special.GoblinAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -33,6 +34,7 @@ public class TutorialRaces extends ExpandableHelpDialog {
         subsections.add(new SpecificRaceHelpDialog(view, Race.FROGMAN, new FrogmanAppearance()));
         subsections.add(new SpecificRaceHelpDialog(view, Race.ORC, new OrcAppearance()));
         subsections.add(new SpecificRaceHelpDialog(view, Race.GOBLIN, new GoblinAppearance()));
+        subsections.add(new SpecificRaceHelpDialog(view, Race.LIZARDMAN, new LizardmanAppearance()));
         // TODO: Trolls, Ogres, Lizardmen
         return subsections;
     }
