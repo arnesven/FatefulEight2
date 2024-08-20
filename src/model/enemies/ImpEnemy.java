@@ -1,10 +1,12 @@
 package model.enemies;
 
 import model.enemies.behaviors.MagicRangedAttackBehavior;
+import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
 public class ImpEnemy extends AltarEnemy {
-    private static final Sprite SPRITE = makeDemonSprite("impenemy", 0x5E);
+    private static final Sprite SPRITE = new ImpSprite();
 
     public ImpEnemy(char a) {
         super(a, "Imp");
@@ -29,5 +31,16 @@ public class ImpEnemy extends AltarEnemy {
     @Override
     public int getDamage() {
         return 3;
+    }
+
+    private static class ImpSprite extends LoopingSprite {
+        public ImpSprite() {
+            super("fiend", "enemies.png", 0x12B, 32);
+            setColor1(MyColors.BLACK);
+            setColor2(MyColors.BEIGE);
+            setColor3(MyColors.RED);
+            setColor4(MyColors.DARK_RED);
+            setFrames(4);
+        }
     }
 }
