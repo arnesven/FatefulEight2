@@ -7,7 +7,7 @@ import model.enemies.behaviors.BleedAttackBehavior;
 import view.sprites.Sprite;
 import view.sprites.WolfSprite;
 
-public class WolfEnemy extends BigBeastEnemy {
+public class WolfEnemy extends BeastEnemy {
     private static Sprite sprite = new WolfSprite("wolf", "enemies.png", 0x30);
     private final int health;
     private final int damage;
@@ -46,10 +46,5 @@ public class WolfEnemy extends BigBeastEnemy {
     @Override
     public CombatLoot getLoot(Model model) {
         return new MonsterCombatLoot(model);
-    }
-
-    @Override
-    public int getWidth() {
-        return 2;
     }
 }

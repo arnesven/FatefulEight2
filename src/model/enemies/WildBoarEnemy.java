@@ -7,7 +7,7 @@ import model.enemies.behaviors.KnockBackAttackBehavior;
 import view.sprites.Sprite;
 import view.sprites.WildBoarSprite;
 
-public class WildBoarEnemy extends BigBeastEnemy {
+public class WildBoarEnemy extends BeastEnemy {
     private static Sprite sprite = new WildBoarSprite("wildboar", "enemies.png", 0x20);
 
     public WildBoarEnemy(char a) {

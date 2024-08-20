@@ -7,7 +7,7 @@ import model.enemies.behaviors.KnockDownAttackBehavior;
 import view.sprites.BearSprite;
 import view.sprites.Sprite;
 
-public class BearEnemy extends BigBeastEnemy {
+public class BearEnemy extends BeastEnemy {
 
     private static Sprite sprite = new BearSprite("bear", "enemies.png", 0x10);
 
