@@ -5,11 +5,12 @@ import model.characters.GameCharacter;
 import model.combat.conditions.VampirismCondition;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.StaminaRecoveryItem;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class StaminaPotion extends Potion {
+public class StaminaPotion extends Potion implements StaminaRecoveryItem {
 
     private static final Sprite SPRITE = new ItemSprite(13, 7, MyColors.WHITE, MyColors.DARK_BLUE);
 

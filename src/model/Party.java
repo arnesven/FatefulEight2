@@ -7,6 +7,7 @@ import model.characters.TamedDragonCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
@@ -17,8 +18,10 @@ import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
+import model.items.StaminaRecoveryItem;
 import model.items.books.GelatinousBlobBook;
 import model.items.designs.CraftingDesign;
+import model.items.potions.Potion;
 import model.items.spells.*;
 import model.items.weapons.BastardSword;
 import model.map.UrbanLocation;
@@ -580,26 +583,8 @@ public class Party implements Serializable {
     }
 
     public SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {
-        SkillCheckResult result;
-        do {
-            result = performer.testSkill(model, skill, difficulty, bonus);
-            event.println(performer.getFirstName() + " performs " + skill.getName() + " " + result.asString());
-            if (result.isSuccessful()) {
-                if (exp > 0) {
-                    giveXP(model, performer, exp);
-                }
-                break;
-            } else if (performer.getSP() == 0) {
-                break;
-            } else {
-                event.print("Use 1 Stamina Point to re-roll? (Y/N) ");
-                if (event.yesNoInput()) {
-                    performer.addToSP(-1);
-                } else {
-                    break;
-                }
-            }
-        } while (true);
+        SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(
+                model, event, performer, skill, difficulty, exp, bonus);
         return result;
     }
 
