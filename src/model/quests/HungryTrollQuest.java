@@ -79,6 +79,11 @@ public class HungryTrollQuest extends Quest {
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
         StoryJunction sj1 = new StoryJunction(6, 1, new QuestEdge(scenes.get(1).get(0), QuestEdge.VERTICAL)) {
             @Override
+            public String getDescription() {
+                return "Try to reason with troll";
+            }
+
+            @Override
             protected void doAction(Model model, QuestState state) {
                 state.leaderSay("Listen mate, you've got to stop stealing the villagers' livestock.");
                 state.printQuote("Troll", "I'M HUNGRY!");
