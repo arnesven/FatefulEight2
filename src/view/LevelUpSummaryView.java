@@ -1,15 +1,22 @@
 package view;
 
 import model.Model;
+import model.actions.AbilityCombatAction;
+import model.actions.CombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.enemies.Enemy;
+import model.enemies.SkeletonEnemy;
 import util.BeforeAndAfterLine;
+import util.MyLists;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LevelUpSummaryView extends SelectableListMenu {
     private static final int DIALOG_WIDTH = 27;
@@ -37,6 +44,20 @@ public class LevelUpSummaryView extends SelectableListMenu {
                 this.content.add(new BeforeAndAfterLine<>(s.getName(), levler.getRankForSkill(s), willBe.getRankForSkill(s)));
             }
         }
+
+        Set<String> willBesAbilities = getAbilityList(model, willBe);
+        willBesAbilities.removeAll(getAbilityList(model, gc));
+        this.content.add(new BeforeAndAfterLine<>("", 0, 0));
+        for (String s : willBesAbilities) {
+            this.content.add(new BeforeAndAfterLine<>(s, -1, -1));
+        }
+    }
+
+    private Set<String> getAbilityList(Model model, GameCharacter performer) {
+        Enemy dummyEnemy = new SkeletonEnemy('A');
+        Set<String> set = new HashSet<>(MyLists.transform(new AbilityCombatAction(performer, dummyEnemy).getInnerActions(model), CombatAction::getName));
+        set.addAll(MyLists.transform(new AbilityCombatAction(performer, performer).getInnerActions(model), CombatAction::getName));
+        return set;
     }
 
     @Override
@@ -59,11 +80,21 @@ public class LevelUpSummaryView extends SelectableListMenu {
         objs.add(new TextDecoration("Leveled up to level " + (willBe.getLevel()) + "!", xStart+7, ++yStart,
                 MyColors.WHITE, MyColors.BLUE, true));
         yStart += 2;
+        boolean newAbilitiesPrinted = false;
         for (BeforeAndAfterLine<Integer> line : content) {
             if (!line.isEmpty()) {
-                String text = String.format("%-14s %2d  " + ((char) 0xB0) + " %2d", line.getLabel(), line.getBefore(), line.getAfter());
-                objs.add(new TextDecoration(text,
-                        xStart+2, yStart++, MyColors.WHITE, MyColors.BLUE, false));
+                if (line.getBefore() == -1) {
+                    if (!newAbilitiesPrinted) {
+                        objs.add(new TextDecoration("New Abilities:", xStart+2, yStart++, MyColors.WHITE, MyColors.BLUE, true));
+                        newAbilitiesPrinted = true;
+                    }
+                    objs.add(new TextDecoration(line.getLabel(),
+                            xStart + 2, yStart++, MyColors.WHITE, MyColors.BLUE, true));
+                } else {
+                    String text = String.format("%-14s %2d  " + ((char) 0xB0) + " %2d", line.getLabel(), line.getBefore(), line.getAfter());
+                    objs.add(new TextDecoration(text,
+                            xStart + 2, yStart++, MyColors.WHITE, MyColors.BLUE, false));
+                }
             } else {
                 yStart++;
             }

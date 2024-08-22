@@ -33,7 +33,7 @@ public class RatProblemQuest extends Quest {
             "With the rat problem dealt with you head back " +
             "to town, lugging plenty of dead rats. The " +
             "merchant indeed pays handsomely for them.";
-    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.DRU, Race.ALL, true);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeOldPortrait(Classes.DRU, Race.ALL, true);
 
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
