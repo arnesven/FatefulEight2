@@ -8,6 +8,7 @@ import model.horses.Horse;
 import model.items.Item;
 import model.items.books.BookItem;
 import model.map.UrbanLocation;
+import model.states.events.InvestInShopEvent;
 import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
@@ -146,6 +147,11 @@ public class Headquarters implements Serializable {
         consumeRations(model, logEntry);
         if (logEntry.length() > 0) {
             logBook.makeDayEntry(model.getDay(), logEntry.toString());
+        }
+        int investProfit = InvestInShopEvent.updateHeadquarters(model, locationName);
+        if (investProfit > 0) {
+            logEntry.append("A courier from a shop in town came by and deposited ").append(investProfit).append(" gold.\n");
+            addToGold(investProfit);
         }
     }
 

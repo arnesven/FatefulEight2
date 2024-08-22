@@ -120,7 +120,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new TroubadourEvent(model),
                     new WantedPosterEvent(model),
                     new WorkshopEvent(model),
-                    // TODO: InvestInShopEvent
+                    new InvestInShopEvent(model),
                     new GuideEvent(model, 1),
                     new GuideEvent(model, 2)
             ));
