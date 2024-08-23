@@ -12,7 +12,7 @@ public class CreatureComfortsSpell extends ImmediateSpell {
     private static final Sprite SPRITE = new ItemSprite(1, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public CreatureComfortsSpell() {
-        super("Creature Comforts", 20, MyColors.BLUE, 7, 3);
+        super("Creature Comforts", 20, MyColors.BLUE, 7, 4);
     }
 
     @Override

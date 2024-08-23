@@ -2,8 +2,10 @@ package model.combat.conditions;
 
 import model.Model;
 import model.actions.CombatAction;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.enemies.Enemy;
 import model.states.GameState;
 import view.GameView;
 import view.ScreenHandler;
@@ -102,4 +104,6 @@ public abstract class Condition implements Serializable {
     public boolean hasAlternateAvatar() { return false; }
 
     public void drawYourself(ScreenHandler screenHandler, int xpos, int ypos) { }
+
+    public void wasAttackedBy(GameCharacter subject, Enemy enemy, int damage) { }
 }

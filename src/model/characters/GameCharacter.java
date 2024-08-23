@@ -663,6 +663,10 @@ public class GameCharacter extends Combatant {
             combatEvent.getStatistics().addEnemyDamage(damage);
         }
         equipment.wielderWasAttackedBy(enemy, combatEvent);
+        int finalDamage = damage;
+        for (Condition cond : new ArrayList<>(getConditions())) {
+            cond.wasAttackedBy(this, enemy, finalDamage);
+        }
     }
 
     private boolean checkForBlock(Enemy enemy) {
