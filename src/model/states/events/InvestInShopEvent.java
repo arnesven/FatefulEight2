@@ -64,7 +64,7 @@ public class InvestInShopEvent extends DailyEventState {
             if (model.getDay() - days < 7) {
                 portraitSay("Yes, but there hasn't been enough time to turn a profit yet.");
                 leaderSay("I see...");
-                portraitSay("But don't worry, when we do, we'll deliver your share directly to your house in town.");
+                portraitSay("But don't worry! When we do, we'll deliver your share directly to your house in town.");
                 leaderSay("Alright then.");
             } else {
                 portraitSay("Yes it has. We've been sending your share to your house here in town.");

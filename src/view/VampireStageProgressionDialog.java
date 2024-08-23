@@ -27,8 +27,12 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
         this.vampire = vampire;
         this.condition = cond;
         abilitiesToChooseFrom = cond.getRandomAbilities();
-        String text = vampire.getName() + "'s vampiric powers have grown, they are now at stage " +
-                condition.getStage() + ".\n\nSelect one vampiric ability to learn from the list below.";
+        String stage = "stage " + condition.getStage();
+        if (condition.getStage() == VampirismCondition.MAX_STAGE) {
+            stage = "the final stage";
+        }
+        String text = vampire.getName() + "'s vampiric powers have grown, they are now at " + stage
+                 + ".\n\nSelect one vampiric ability to learn from the list below.";
         parts = MyStrings.partitionWithLineBreaks(text, DIALOG_WIDTH-1);
     }
 
@@ -38,11 +42,7 @@ public class VampireStageProgressionDialog extends SelectableListMenu {
     }
 
     @Override
-    public void transitionedFrom(Model model) {
-        VampireAbility chosen = getChosenVampireAbility();
-        model.getLog().addAnimated(vampire.getName() + " learned the vampire ability " + chosen.getName() + ".\n");
-        condition.learnAbility(chosen);
-    }
+    public void transitionedFrom(Model model) { }
 
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {

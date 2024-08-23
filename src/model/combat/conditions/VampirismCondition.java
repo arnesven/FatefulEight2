@@ -19,6 +19,8 @@ import view.help.VampirismHelpView;
 import view.party.CharacterCreationView;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
+import view.subviews.SubView;
+import view.subviews.VampireStageProgressionSubView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +41,7 @@ public class VampirismCondition extends Condition {
     );
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xDC), MyColors.WHITE, MyColors.DARK_RED, MyColors.CYAN);
-    private static final int MAX_STAGE = 5;
+    public static final int MAX_STAGE = 5;
     private static final int HEALTH_PER_STAGE = 3;
     private static final int STAMINA_PER_STAGE = 2;
     private static final int SPEED_PER_STAGE = 1;
@@ -104,8 +106,14 @@ public class VampirismCondition extends Condition {
         updateAppearance(owner);
         model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " + stage + ".");
         model.getLog().waitForAnimationToFinish();
-        VampireStageProgressionDialog stageDialog = new VampireStageProgressionDialog(model, owner, this);
-        model.transitionToDialog(stageDialog);
+        VampireStageProgressionSubView subView = new VampireStageProgressionSubView(model, owner, this);
+        model.setSubView(subView);
+        do {
+            model.getLog().waitForReturnSilently();
+        } while (!subView.isDone());
+        VampireAbility chosen = subView.getChosenVampireAbility();
+        model.getLog().addAnimated(owner.getName() + " learned the vampire ability " + chosen.getName() + ".\n");
+        learnAbility(chosen);
     }
 
     public void updateAppearance(GameCharacter owner) {

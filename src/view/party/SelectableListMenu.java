@@ -66,11 +66,15 @@ public abstract class SelectableListMenu extends GameView {
 
     @Override
     protected void internalUpdate(Model model) {
-        int xStart = getXStart();
-        int yStart = getYStart();
         if (!(previous instanceof SelectableListMenu)) {
             previous.update(model);
         }
+        drawYourself(model);
+    }
+
+    public void drawYourself(Model model) {
+        int xStart = getXStart();
+        int yStart = getYStart();
         clearPreviousForeground(model, xStart, yStart);
         BorderFrame.drawFrame(model.getScreenHandler(),
                 xStart, yStart, width, height,
