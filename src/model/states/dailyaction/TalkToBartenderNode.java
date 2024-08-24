@@ -221,7 +221,8 @@ public class TalkToBartenderNode extends DailyActionNode {
                     "Now I run this place, and I'm doing pretty well for myself, but I do sometimes dream back to the " +
                     "good old days when I was in a party of adventurers. The things we accomplished...");
             leaderSay("Got any good advice on adventuring?");
-            String line = MyRandom.sample(List.of("Keep your party members well rested and you will be more " +
+            String line = MyRandom.sample(List.of(
+                    "Keep your party members well rested and you will be more " +
                             "likely to succeed in your endeavors. We have rooms here with very comfortable beds.",
                     "Up-and-coming adventurers can usually contribute some coin to the party's purse. " +
                             "Hiring on a few may give you the starting capital you need.",
@@ -232,7 +233,14 @@ public class TalkToBartenderNode extends DailyActionNode {
                     "Be wary of the Brotherhood. Think twice about making any deals with them.",
                     "Try to keep your fellow party members happy. Things can get out of hand quickly if they " +
                             "start disliking the leader.",
-                    "Having a good formation during combat is crucial. And watch out for enemies with ranged weapons."));
+                    "Having a good formation during combat is crucial. And watch out for enemies with ranged weapons.",
+                    "Sometimes innkeepers and bartenders, like myself, have some work that need to be done. " +
+                            "It may not pay much, but at least it will put food on the table.",
+                    "Don't get ahead of yourself by hiring on too many hands too quickly. Large parties are much more " +
+                            "costly and difficult to maintain than small ones.",
+                    "Always keep a lock pick handy. You know, if you lock yourself out of your house.",
+                    "Try to get a good mix of characters in your party. It's important to have the right balance " +
+                            "of brawn, brains, stealth and magic."));
             bartenderSay(model,  line);
         }
 
