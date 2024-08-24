@@ -16,7 +16,8 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
             "Only good with one type of magic? You should get a copy of Channeling.",
             "Levitate can get you across rivers, among other things.",
             "Tired of walking? Check out Teleport.",
-            "Southern Cross is a powerful healing spell, but you can only use it under the right conditions."
+            "Southern Cross is a powerful healing spell, but you can only use it under the right conditions.",
+            "The Resurrect spell is a real life saver, literally. But it is exhausting, and takes a long time to cast."
     );
     private static final List<String> VAMPIRE_TIPS = List.of(
             "Vampires need to feed on humanoid creatures to sustain themselves. That's why they're drawn to towns and castles.",
