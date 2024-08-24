@@ -81,13 +81,25 @@ public class PartyView extends SelectableListMenu {
             });
         }
 
-        content.add(new SelectableListContent(x, y++, "Formation " +
-                (model.getParty().getFrontRow().contains(gc) ? "Front" : "Back")) {
-            @Override
-            public void performAction(Model model, int x, int y) {
-                model.getParty().toggleFormationFor(gc);
-            }
-        });
+        if (model.getParty().getBench().contains(gc)) {
+            content.add(new SelectableListContent(x, y++, "Absent from party") {
+                @Override
+                public void performAction(Model model, int x, int y) { }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return false;
+                }
+            });
+        } else {
+            content.add(new SelectableListContent(x, y++, "Formation " +
+                    (model.getParty().getFrontRow().contains(gc) ? "Front" : "Back")) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    model.getParty().toggleFormationFor(gc);
+                }
+            });
+        }
 
         addListContent(content, x, y++, String.format("Health %9s", gc.getHP() + "/" + gc.getMaxHP()));
         addListContent(content, x, y++, String.format("Stamina %8s", gc.getSP() + "/" + gc.getMaxSP()));
