@@ -40,7 +40,7 @@ public class RiposteCombatAction extends StaminaCombatAbility {
     private static final Sprite SPRITE = CharSprite.make((char)(0xD0), MyColors.LIGHT_BLUE, MyColors.BLACK, MyColors.CYAN);
 
     public static boolean canDoRiposteAbility(GameCharacter performer) {
-        return performer.getRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
+        return performer.getUnmodifiedRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
                 (performer.getEquipment().getWeapon().isOfType(BladedWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class));
     }

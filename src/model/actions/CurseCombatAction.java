@@ -37,7 +37,7 @@ public class CurseCombatAction extends CombatAction {
 
     public static boolean canDoAbility(GameCharacter performer, Combatant target) {
         return target instanceof Enemy &&
-                performer.getRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
+                performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }

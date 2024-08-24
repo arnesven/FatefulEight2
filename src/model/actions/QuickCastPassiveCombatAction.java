@@ -23,7 +23,7 @@ public class QuickCastPassiveCombatAction extends PassiveCombatAction {
     }
 
     public static boolean canDoAbility(GameCharacter gc) {
-        return gc.getRankForSkill(Skill.SpellCasting) >= MINIMUM_RANKS_REQUIRED;
+        return gc.getUnmodifiedRankForSkill(Skill.SpellCasting) >= MINIMUM_RANKS_REQUIRED;
     }
 
     @Override

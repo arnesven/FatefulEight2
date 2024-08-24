@@ -41,7 +41,7 @@ public class RegenerationCombatAction extends CombatAction {
     }
 
     public static boolean canDoAbility(GameCharacter performer) {
-        return performer.getRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
+        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }

@@ -87,12 +87,12 @@ public class HeadquartersDailyActionState extends GameState {
 
     private boolean canGiveAssignments(Model model) {
         return headquartersHasCharacters(model) &&
-                model.getParty().getLeader().getRankForSkill(Skill.Leadership) >= LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS;
+                model.getParty().getLeader().getUnmodifiedRankForSkill(Skill.Leadership) >= LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS;
     }
 
     private boolean canDoExpand(Model model) {
         return MyLists.any(model.getParty().getPartyMembers(),
-                (GameCharacter gc) -> gc.getRankForSkill(Skill.Labor) >= LABOR_RANKS_REQUIRED_FOR_EXPAND) &&
+                (GameCharacter gc) -> gc.getUnmodifiedRankForSkill(Skill.Labor) >= LABOR_RANKS_REQUIRED_FOR_EXPAND) &&
                 model.getParty().getHeadquarters().getSize() < Headquarters.MAJESTIC_SIZE;
     }
 

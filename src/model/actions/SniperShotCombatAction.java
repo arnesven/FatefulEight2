@@ -16,7 +16,7 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
     }
 
     public static boolean canDoSniperShotAbility(GameCharacter performer) {
-        return performer.getRankForSkill(Skill.Perception) >= PERCEPTION_RANKS_REQUIREMENT &&
+        return performer.getUnmodifiedRankForSkill(Skill.Perception) >= PERCEPTION_RANKS_REQUIREMENT &&
                 performer.getEquipment().getWeapon().isRangedAttack();
     }
 

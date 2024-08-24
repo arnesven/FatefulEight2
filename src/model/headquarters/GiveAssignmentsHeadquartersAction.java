@@ -92,7 +92,8 @@ public class GiveAssignmentsHeadquartersAction extends HeadquartersAction {
     }
 
     public static boolean canAssignSubParty(Model model) {
-        return model.getParty().getLeader().getRankForSkill(Skill.Leadership) >= LEADERSHIP_RANKS_REQUIRED_FOR_SUBPARTY;
+        return model.getParty().getLeader().getUnmodifiedRankForSkill(Skill.Leadership) >=
+                LEADERSHIP_RANKS_REQUIRED_FOR_SUBPARTY;
     }
 
     private void setFoodLimit(Model model, Headquarters hq) {

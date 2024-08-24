@@ -70,7 +70,7 @@ public class InspireCombatAction extends CombatAction {
     }
 
     public static boolean canDoInspireAbility(GameCharacter performer) {
-        return performer.getRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT;
+        return performer.getUnmodifiedRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT;
     }
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD8), MyColors.BLACK, MyColors.PINK, MyColors.CYAN);

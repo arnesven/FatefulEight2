@@ -247,24 +247,31 @@ public class GameCharacter extends Combatant {
         return equipment.getWeapon().isRangedAttack();
     }
 
-    public int getRankForSkill(Skill skill) {
-        if (skill.areEqual(Skill.MagicAny)) {
-            int best = 0;
-            for (Skill s : Skill.values()) {
-                if (s.isMagic() && charClass.getWeightForSkill(s) > best) {
-                    best = charClass.getWeightForSkill(s);
-                    skill = s;
-                }
-            }
-        }
+    public int getUnmodifiedRankForSkill(Skill skill) {
+        return Skill.getRankForSkill(charClass.getWeightForSkill(skill), getLevel())
+                + race.getBonusForSkill(skill);
+    }
+
+    private int internalGetRankForSkill(Skill skill) {
         int tempBonus = 0;
         if (temporarySkillBonuses.containsKey(skill)) {
             tempBonus = temporarySkillBonuses.get(skill).getBonus();
         }
-        Skill finalSkill = skill;
-        int conditionBonus = MyLists.intAccumulate(getConditions(), (Condition cond) -> cond.getBonusForSkill(finalSkill));
-        return Skill.getRankForSkill(charClass.getWeightForSkill(skill), getLevel())
-                + race.getBonusForSkill(skill) + equipment.getBonusForSkill(skill) + tempBonus + conditionBonus;
+        int conditionBonus = MyLists.intAccumulate(getConditions(), (Condition cond) -> cond.getBonusForSkill(skill));
+        return getUnmodifiedRankForSkill(skill) + equipment.getBonusForSkill(skill) + tempBonus + conditionBonus;
+    }
+
+    public int getRankForSkill(Skill skill) {
+        if (skill.areEqual(Skill.MagicAny)) {
+            int best = 0;
+            for (Skill s : Skill.values()) {
+                if (s.isMagic() && internalGetRankForSkill(s) > best) {
+                    best = internalGetRankForSkill(s);
+                    skill = s;
+                }
+            }
+        }
+        return internalGetRankForSkill(skill);
     }
 
     @Override
