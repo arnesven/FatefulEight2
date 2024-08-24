@@ -690,7 +690,11 @@ public class Party implements Serializable {
         for (GameCharacter gc : unbenchers) {
             if (partyMembers.contains(gc)) {
                 bench.remove(gc);
-                frontRow.add(gc);
+                if (gc.getCharClass().isBackRowCombatant()) {
+                    backRow.add(gc);
+                } else {
+                    frontRow.add(gc);
+                }
             }
         }
     }

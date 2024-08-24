@@ -67,6 +67,16 @@ public class PartyView extends SelectableListMenu {
 
         if (model.getParty().getLeader() == gc) {
             addListContent(content, x, y++, "Leader");
+        } else if (model.getParty().getBench().contains(gc)) {
+            content.add(new SelectableListContent(x, y++, "Absent from party") {
+                @Override
+                public void performAction(Model model, int x, int y) { }
+
+                @Override
+                public boolean isEnabled(Model model) {
+                    return false;
+                }
+            });
         } else {
             content.add(new SelectableListContent(x, y++, "Not Leader") {
                 @Override
@@ -82,15 +92,7 @@ public class PartyView extends SelectableListMenu {
         }
 
         if (model.getParty().getBench().contains(gc)) {
-            content.add(new SelectableListContent(x, y++, "Absent from party") {
-                @Override
-                public void performAction(Model model, int x, int y) { }
-
-                @Override
-                public boolean isEnabled(Model model) {
-                    return false;
-                }
-            });
+            y++;
         } else {
             content.add(new SelectableListContent(x, y++, "Formation " +
                     (model.getParty().getFrontRow().contains(gc) ? "Front" : "Back")) {
