@@ -7,6 +7,8 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.CombatAdvantage;
+import model.items.spells.ResurrectSpell;
+import model.items.spells.Spell;
 import model.states.events.GuideData;
 import view.combat.CombatTheme;
 import view.combat.CaveTheme;
@@ -186,23 +188,42 @@ public abstract class DailyEventState extends GameState {
     }
 
     public static boolean didResurrect(Model model, GameState event, GameCharacter gc) {
+        List<String> options = new ArrayList<>();
         RevivingElixir revive = null;
         for (Potion p : model.getParty().getInventory().getPotions()) {
             if (p instanceof RevivingElixir) {
                 revive = (RevivingElixir) p;
+                options.add(("Use " + p.getName()));
             }
         }
-        if (revive == null) {
+        ResurrectSpell resSpell = null;
+        for (Spell sp : model.getParty().getInventory().getSpells()) {
+            if (sp instanceof ResurrectSpell) {
+                resSpell = (ResurrectSpell) sp;
+                options.add("Cast " + resSpell.getName());
+            }
+        }
+
+        if (revive == null && resSpell == null) {
             return false;
         }
-        event.print("Do you want to use " + revive.getName() + " to revive " + gc.getName() + "? (Y/N) ");
-        if (!event.yesNoInput()) {
-            return false;
+
+        if (resSpell == null) {
+            return RevivingElixir.reviveWithElixir(model, event, gc, revive);
+        } else if (revive == null) {
+            return ResurrectSpell.useDuringEvent(model, event, gc, resSpell);
         }
-        model.getParty().getInventory().remove(revive);
-        String result = revive.useYourself(model, gc);
-        event.println(result);
-        return true;
+
+        options.add("No thanks");
+        event.println("How would you like to revive " + gc.getName() + "?");
+        int chosen = event.multipleOptionArrowMenu(model, 24, 24, options);
+        if (options.get(chosen).contains("Use")) {
+            return RevivingElixir.reviveWithElixir(model, event, gc, revive);
+        }
+        if (options.get(chosen).contains("Cast")) {
+            return ResurrectSpell.useDuringEvent(model, event, gc, resSpell);
+        }
+        return false;
     }
 
     protected void forcedMovement(Model model, List<Point> path) {

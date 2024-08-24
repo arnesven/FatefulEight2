@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.combat.conditions.CastingFullRoundSpellCondition;
 import model.items.Item;
+import model.items.potions.RevivingElixir;
 import model.states.CombatEvent;
 import model.states.GameState;
 import view.MyColors;
@@ -58,8 +59,10 @@ public class ResurrectSpell extends CombatSpell implements FullRoundSpell {
         } else {
             model.getLog().waitForAnimationToFinish();
             state.println(target.getName() + " comes back to life!");
-            ((CombatEvent)state).addSpecialEffect(target, new ShinyRingEffect());
-            model.getLog().waitForAnimationToFinish();
+            if (state instanceof CombatEvent) {
+                ((CombatEvent) state).addSpecialEffect(target, new ShinyRingEffect());
+                model.getLog().waitForAnimationToFinish();
+            }
             target.addToHP(target.getMaxHP() / 2);
         }
         performer.removeCondition(CastingFullRoundSpellCondition.class);
@@ -68,5 +71,28 @@ public class ResurrectSpell extends CombatSpell implements FullRoundSpell {
     @Override
     public int getCastTime() {
         return 1;
+    }
+
+    public static boolean useDuringEvent(Model model, GameState event, GameCharacter gc, ResurrectSpell resSpell) {
+        event.print("Do you want to use " + resSpell.getName() + " to resurrect " + gc.getName() + "? (Y/N) ");
+        if (!event.yesNoInput()) {
+            return false;
+        }
+        GameCharacter caster = null;
+        do {
+            event.println("Who should cast Resurrect?");
+            caster = model.getParty().partyMemberInput(model, event, model.getParty().getPartyMember(0));
+            if (caster.isDead()) {
+                event.println(caster.getFirstName() + " cannot cast resurrect, " +
+                        GameState.heOrShe(caster.getGender()) + "'s dead!");
+            } else {
+                break;
+            }
+        } while (true);
+        if (!resSpell.castYourself(model, event, caster)) {
+            return false;
+        }
+        resSpell.castingComplete(model, event, caster, gc);
+        return true;
     }
 }
