@@ -66,6 +66,8 @@ public class HelpDialog extends SelectableListMenu {
 
     }
 
+    public String getText() { return text; }
+
     public String getTitle() {
         return title;
     }

@@ -25,7 +25,7 @@ public class TutorialHandler implements Serializable {
     public void start(Model model) {
         runOnce("start", () -> {
                 model.getLog().waitForAnimationToFinish();
-                model.transitionToDialog(new TutorialStartDialog(model.getView()));
+                model.transitionToDialog(new TutorialStartDialog(model.getView(), false));
         });
     }
 

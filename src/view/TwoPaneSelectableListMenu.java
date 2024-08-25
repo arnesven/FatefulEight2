@@ -100,4 +100,8 @@ public abstract class TwoPaneSelectableListMenu extends SelectableListMenu {
     public void transitionedFrom(Model model) {
 
     }
+
+    protected void resetIndex() {
+        index = 0;
+    }
 }
