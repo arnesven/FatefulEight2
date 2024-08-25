@@ -323,8 +323,12 @@ public abstract class SelectableListMenu extends GameView {
         }
     }
 
+    protected static void print(ScreenHandler screenHandler, int x, int y, String text, MyColors fgColor) {
+        BorderFrame.drawString(screenHandler, text, x, y, fgColor, MyColors.BLUE);
+    }
+
     protected static void print(ScreenHandler screenHandler, int x, int y, String text) {
-        BorderFrame.drawString(screenHandler, text, x, y, MyColors.WHITE, MyColors.BLUE);
+        print(screenHandler, x, y, text, MyColors.WHITE);
     }
 
     public static ListContent makeOkButton(Model model, int xStart, int yStart, SelectableListMenu parent) {

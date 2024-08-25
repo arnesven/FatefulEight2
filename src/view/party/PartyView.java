@@ -291,8 +291,16 @@ public class PartyView extends SelectableListMenu {
         row++;
         for (Skill s : gc.getSkillSet()) {
             int rank = gc.getRankForSkill(s);
+            int base = gc.getUnmodifiedRankForSkill(s);
+            int extra = rank - base;
+            String extraString = extra > 0 ? "+"+extra : (extra < 0 ? ""+extra : "");
             if (rank != 0) {
-                print(screenHandler, midX, row++, String.format("%-16s%2d", s.getName(), gc.getRankForSkill(s)));
+                print(screenHandler, midX, row, String.format("%-14s%2d", s.getName(), base));
+                if (extra != 0) {
+                    print(screenHandler, midX+16, row, extraString,
+                            extra > 0 ? MyColors.LIGHT_GREEN : MyColors.LIGHT_RED);
+                }
+                row++;
             }
         }
         return row;
