@@ -6,10 +6,12 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
+import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
 import sound.SoundEffects;
 import view.*;
+import view.sprites.DamageValueEffect;
 
 public abstract class Spell extends Item {
     public static final MyColors COLORLESS = MyColors.PURPLE;
@@ -58,6 +60,9 @@ public abstract class Spell extends Item {
         }
         if (!isCastFromScroll) {
             caster.addToHP(-health);
+            if (state instanceof CombatEvent) {
+                ((CombatEvent) state).addFloatyDamage(caster, health, DamageValueEffect.MAGICAL_DAMAGE);
+            }
         }
         if (caster.isDead()) {
             state.println(caster.getFirstName() + " was killed by the effect of the spell!");

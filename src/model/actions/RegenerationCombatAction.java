@@ -8,8 +8,11 @@ import model.combat.Combatant;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
+import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialRegenerate;
+import view.sprites.CurlySpiralAnimation;
+import view.sprites.RunOnceAnimationSprite;
 
 public class RegenerationCombatAction extends CombatAction {
     public static final int REQUIRED_RANKS = 2;
@@ -35,6 +38,9 @@ public class RegenerationCombatAction extends CombatAction {
             combat.println("But it failed.");
         } else {
             int turns = result.getModifiedRoll() - DIFFICULTY + 1;
+            RunOnceAnimationSprite restAni = new CurlySpiralAnimation(MyColors.GREEN);
+            combat.addSpecialEffect(target, restAni);
+            combat.waitUntil(restAni, RunOnceAnimationSprite::isDone);
             combat.println(target.getName() + " starts regenerating health.");
             target.addCondition(new RegenerationCondition(turns));
         }

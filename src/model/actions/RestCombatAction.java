@@ -12,6 +12,7 @@ import util.MyRandom;
 import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialCombatResting;
+import view.sprites.CurlySpiralAnimation;
 import view.sprites.RunOnceAnimationSprite;
 
 public class RestCombatAction extends CombatAction {
@@ -42,7 +43,7 @@ public class RestCombatAction extends CombatAction {
             return;
         }
 
-        RunOnceAnimationSprite restAni = new RestAnimation();
+        RunOnceAnimationSprite restAni = new CurlySpiralAnimation(MyColors.WHITE);
         combat.addSpecialEffect(performer, restAni);
         combat.waitUntil(restAni, RunOnceAnimationSprite::isDone);
         if (fullHP) {
@@ -85,11 +86,4 @@ public class RestCombatAction extends CombatAction {
         return another;
     }
 
-    private static class RestAnimation extends RunOnceAnimationSprite {
-        public RestAnimation() {
-            super("restanimation", "combat.png",
-                    8, 13, 32, 32, 8, MyColors.WHITE);
-            setAnimationDelay(5);
-        }
-    }
 }
