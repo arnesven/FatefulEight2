@@ -40,8 +40,10 @@ public class LevelUpSummaryView extends SelectableListMenu {
         }
         this.content.add(new BeforeAndAfterLine<>("", 0, 0));
         for (Skill s : Skill.values()) {
-            if (willBe.getRankForSkill(s) != levler.getRankForSkill(s)) {
-                this.content.add(new BeforeAndAfterLine<>(s.getName(), levler.getRankForSkill(s), willBe.getRankForSkill(s)));
+            int skillBefore = levler.getUnmodifiedRankForSkill(s);
+            int skillAfter = willBe.getUnmodifiedRankForSkill(s);
+            if (skillAfter != skillBefore) {
+                this.content.add(new BeforeAndAfterLine<>(s.getName(), skillBefore, skillAfter));
             }
         }
 
