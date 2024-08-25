@@ -78,7 +78,7 @@ public class ChangeClassSubView extends TopMenuSubView {
         row++;
         for (Skill s : gc.getSkillSet()) {
             BorderFrame.drawString(model.getScreenHandler(), String.format("%-13s%2d", s.getName(),
-                    gc.getRankForSkill(s)), midX, row++, MyColors.WHITE, MyColors.BLUE);
+                    gc.getUnmodifiedRankForSkill(s)), midX, row++, MyColors.WHITE, MyColors.BLUE);
         }
         row++;
         BorderFrame.drawString(model.getScreenHandler(), "Armor Class ",

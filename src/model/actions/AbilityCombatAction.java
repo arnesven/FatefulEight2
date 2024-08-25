@@ -45,7 +45,7 @@ public class AbilityCombatAction extends CombatAction {
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> list = new ArrayList<>();
         if (model.getParty().getFrontRow().contains(performer)) {
-            if (performer.getRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy && target.canBeAttackedBy(performer)) {
+            if (performer.getUnmodifiedRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy && target.canBeAttackedBy(performer)) {
                 list.add(new SneakAttackCombatAction());
             }
             if (RiposteCombatAction.canDoRiposteAbility(performer)) {
