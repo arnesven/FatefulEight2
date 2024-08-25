@@ -62,7 +62,7 @@ public class ChainLightningSpell extends CombatSpell {
         int waves = mastery + 1;
         int split = 0;
         for (int i = 0; i < waves && !targets.isEmpty(); ++i) {
-            waitUntilDone(effect);
+            combat.waitUntil(effect, RunOnceAnimationSprite::isDone);
             Combatant oldTarget = target;
             List<Combatant> newTargets = new ArrayList<>();
             int numberOfNewTargets = MyRandom.randInt(1, 2 + mastery);
@@ -86,19 +86,6 @@ public class ChainLightningSpell extends CombatSpell {
         for (Combatant c : victims){
             combat.addFloatyDamage(c, damage, DamageValueEffect.MAGICAL_DAMAGE);
             combat.doDamageToEnemy(c, damage, performer);
-        }
-    }
-
-    private void waitUntilDone(ChainLightningEffect effect) {
-        while (true) {
-            try {
-                Thread.sleep(50);
-                if (effect.isDone()) {
-                    break;
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

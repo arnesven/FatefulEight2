@@ -8,8 +8,10 @@ import model.items.spells.ErodeSpell;
 import model.items.spells.Spell;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
+import model.states.GameState;
 import sound.SoundEffects;
 import view.sprites.ExplosionAnimation;
+import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
 
@@ -88,7 +90,7 @@ public class CrackedWall extends DungeonDoor {
         state.waitForReturnSilently();
         if (selected[0].contains("Use")) {
             model.getParty().getInventory().remove(pot);
-            explodeAndSound();
+            explodeAndSound(state);
             state.println("The " + pot.getName() + " explodes on contact with the wall. " +
                     "The wall crumbles and opens a passage into the next room.");
             state.unlockDoor(model, direction);
@@ -97,7 +99,7 @@ public class CrackedWall extends DungeonDoor {
             GameCharacter caster = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
             boolean success = erodeSpell.castYourself(model, state, caster);
             if (success) {
-                explodeAndSound();
+                explodeAndSound(state);
                 state.println("The wall crumbles to dust before your eyes.");
                 state.unlockDoor(model, direction);
             }
@@ -105,16 +107,10 @@ public class CrackedWall extends DungeonDoor {
 
     }
 
-    private void explodeAndSound() {
+    private void explodeAndSound(GameState state) {
         explo = new ExplosionAnimation();
         SoundEffects.playBoom();
-        while (!explo.isDone()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        state.waitUntil(explo, RunOnceAnimationSprite::isDone);
     }
 
 }
