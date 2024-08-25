@@ -40,7 +40,9 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
     private static class CombatAbilitiesChapter extends ExpandableHelpDialog {
         private static final String ABILITIES_TEXT =
                 "Combat abilities are special actions which can be taken in combat if a character " +
-                "fulfill certain criteria.";
+                "fulfill certain criteria. If those criteria include skill ranks, it is the character's " +
+                "unmodified skill ranks which is considered (i.e. equipment, condition and " +
+                        "temporary bonuses do not contribute).";
 
         public CombatAbilitiesChapter() {
             super(null, "Abilities", ABILITIES_TEXT, true);
