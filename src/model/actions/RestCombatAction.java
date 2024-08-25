@@ -9,8 +9,10 @@ import model.combat.conditions.FatigueCondition;
 import model.combat.conditions.VampirismCondition;
 import model.states.CombatEvent;
 import util.MyRandom;
+import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialCombatResting;
+import view.sprites.RunOnceAnimationSprite;
 
 public class RestCombatAction extends CombatAction {
     private boolean another;
@@ -34,10 +36,16 @@ public class RestCombatAction extends CombatAction {
         model.getTutorial().combatResting(model);
         boolean fullHP = performer.getHP() == performer.getMaxHP();
         boolean fullSP = performer.getSP() == performer.getMaxSP();
-        if (fullHP && fullSP) {
+        if (fullHP && fullSP && !performer.hasCondition(FatigueCondition.class)) {
             combat.println(performer.getFirstName() + " is already fully rested!");
             this.another = true;
-        } else if (fullHP) {
+            return;
+        }
+
+        RunOnceAnimationSprite restAni = new RestAnimation();
+        combat.addSpecialEffect(performer, restAni);
+        combat.waitUntil(restAni, RunOnceAnimationSprite::isDone);
+        if (fullHP) {
             recoverSP(combat, performer);
         } else if (fullSP) {
             recoverHP(combat, performer);
@@ -48,6 +56,7 @@ public class RestCombatAction extends CombatAction {
                 recoverSP(combat, performer);
             }
         }
+
         if (performer.hasCondition(FatigueCondition.class)) {
             SkillCheckResult result = performer.testSkillHidden(Skill.Endurance, performer.getAP(), 0);
             if (result.isSuccessful()) {
@@ -74,5 +83,13 @@ public class RestCombatAction extends CombatAction {
     @Override
     public boolean takeAnotherAction() {
         return another;
+    }
+
+    private static class RestAnimation extends RunOnceAnimationSprite {
+        public RestAnimation() {
+            super("restanimation", "combat.png",
+                    8, 13, 32, 32, 8, MyColors.WHITE);
+            setAnimationDelay(5);
+        }
     }
 }
