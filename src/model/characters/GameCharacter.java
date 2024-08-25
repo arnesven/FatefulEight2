@@ -35,10 +35,7 @@ import view.BorderFrame;
 import view.LogView;
 import view.MyColors;
 import view.ScreenHandler;
-import view.sprites.AvatarSprite;
-import view.sprites.DamageValueEffect;
-import view.sprites.DieRollAnimation;
-import view.sprites.Sprite;
+import view.sprites.*;
 import view.subviews.CombatSubView;
 import view.widget.HealthBar;
 
@@ -204,7 +201,14 @@ public class GameCharacter extends Combatant {
         }
     }
 
-    public void doOneAttack(Model model, CombatEvent combatEvent, Combatant target, boolean sneakAttack, int extraDamage, int crit) {
+    public void doOneAttack(Model model, CombatEvent combatEvent, Combatant target,
+                            boolean sneakAttack, int extraDamage, int crit) {
+        doOneAttack(model, combatEvent, target, sneakAttack, extraDamage,
+                crit, equipment.getWeapon().getEffectSprite());
+    }
+
+    public void doOneAttack(Model model, CombatEvent combatEvent, Combatant target,
+                            boolean sneakAttack, int extraDamage, int crit, RunOnceAnimationSprite effectSprite) {
         combatEvent.print(getFirstName() + " attacks " + target.getName());
         int bonus = getAttackBonusesFromConditions();
         SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this),
@@ -225,7 +229,15 @@ public class GameCharacter extends Combatant {
         }
         extraInfo += ")";
         combatEvent.println(", dealing " + damage + " damage." + extraInfo);
-        combatEvent.addSpecialEffect(target, equipment.getWeapon().getEffectSprite());
+        effectSprite.reset();
+        combatEvent.addSpecialEffect(target, effectSprite);
+        while (!effectSprite.isDone()) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         if (damage > 0) {
             MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
                     DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;

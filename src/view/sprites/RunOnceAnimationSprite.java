@@ -36,6 +36,11 @@ public class RunOnceAnimationSprite extends Sprite implements Animation {
 
     }
 
+    public void reset() {
+        count = 0;
+        currentFrame = 0;
+    }
+
     @Override
     protected BufferedImage internalGetImage() throws IOException {
         BufferedImage img = super.internalGetImage();

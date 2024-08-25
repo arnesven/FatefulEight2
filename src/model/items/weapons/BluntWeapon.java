@@ -3,6 +3,8 @@ package model.items.weapons;
 import model.classes.Skill;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
+import view.sprites.BluntStrikeEffectSprite;
+import view.sprites.RunOnceAnimationSprite;
 
 public abstract class BluntWeapon extends Weapon {
 
@@ -40,5 +42,10 @@ public abstract class BluntWeapon extends Weapon {
     @Override
     public int getWeight() {
         return isTwoHanded() ? 3500 : 1500;
+    }
+
+    @Override
+    public RunOnceAnimationSprite getEffectSprite() {
+        return new BluntStrikeEffectSprite();
     }
 }
