@@ -26,6 +26,7 @@ import model.items.weapons.Weapon;
 import model.races.ColoredRace;
 import model.races.Race;
 import model.states.CombatEvent;
+import model.states.GameState;
 import model.states.events.RareBirdEvent;
 import sound.SoundEffects;
 import util.MyLists;
@@ -41,6 +42,7 @@ import view.widget.HealthBar;
 
 import java.awt.Point;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class GameCharacter extends Combatant {
     private static final MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,
@@ -230,14 +232,8 @@ public class GameCharacter extends Combatant {
         extraInfo += ")";
         combatEvent.println(", dealing " + damage + " damage." + extraInfo);
         effectSprite.reset();
+        combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);
         combatEvent.addSpecialEffect(target, effectSprite);
-        while (!effectSprite.isDone()) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         if (damage > 0) {
             MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
                     DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;

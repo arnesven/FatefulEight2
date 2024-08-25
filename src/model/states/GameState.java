@@ -18,12 +18,14 @@ import util.MyPair;
 import util.MyRandom;
 import view.LogView;
 import view.PartyAttitudesDialog;
+import view.sprites.RunOnceAnimationSprite;
 import view.subviews.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 public abstract class GameState implements GameStateConstants {
 
@@ -315,5 +317,15 @@ public abstract class GameState implements GameStateConstants {
             }
         }
         return false;
+    }
+
+    public <E> void waitUntil(E arg, Predicate<E> test) {
+        while (test.test(arg)) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
