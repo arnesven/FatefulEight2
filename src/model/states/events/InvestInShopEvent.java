@@ -158,6 +158,7 @@ public class InvestInShopEvent extends DailyEventState {
                 leaderSay("I want to invest " + investment + " gold.");
                 portraitSay("You do? That's fantastic.");
                 println("You hand over " + investment + " gold to the shopkeeper.");
+                model.getParty().addToGold(-investment);
                 leaderSay("But I expect to see good profit from this in the end.");
                 portraitSay("You will, I guarantee it.");
                 if (hasHeadquartersHere(model)) {
