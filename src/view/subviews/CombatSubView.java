@@ -302,4 +302,16 @@ public class CombatSubView extends SubView {
     public void enableFleeingAnimation() {
         this.isFleeing = true;
     }
+
+    public void addSpecialEffectEverywhere(List<Combatant> excluding, RunOnceAnimationSprite animationSprite) {
+        for (int y = 0; y < combatMatrix.getRows(); ++y) {
+            for (int x = 0; x < combatMatrix.getColumns(); ++x) {
+                Combatant elem = combatMatrix.getElementAt(x, y);
+                if (elem == null || !excluding.contains(elem)) {
+                    Point p = new Point(X_OFFSET + x*4, Y_OFFSET + (y+2)*4);
+                    addOngoingEffect(new MyPair<>(p, animationSprite));
+                }
+            }
+        }
+    }
 }

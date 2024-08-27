@@ -66,4 +66,6 @@ public class RunOnceAnimationSprite extends Sprite implements Animation {
     public int getCurrentFrame() {
         return currentFrame;
     }
+
+    protected void setCurrentFrame(int frame) { currentFrame = frame; }
 }
