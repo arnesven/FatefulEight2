@@ -49,6 +49,8 @@ public class PlayEvent extends DailyEventState {
                 println("Each party member recovers 1 SP.");
                 MyLists.forEach(model.getParty().getPartyMembers(),
                         (GameCharacter gc) -> gc.addToSP(gc.hasCondition(VampirismCondition.class)?0:1));
+                model.getLog().waitForAnimationToFinish();
+                showRandomPortrait(model, Classes.BRD, "Minstrel");
                 print("You were very impressed by the lead actor. After the play, you get the chance to talk to " + himOrHer(bardGender) +
                         ". It turns out " + heOrShe(bardGender) + " is a famous travelling minstrel. " + heOrShe(bardGender) + " offers to " +
                         "teach you in the ways of being a bard, ");
