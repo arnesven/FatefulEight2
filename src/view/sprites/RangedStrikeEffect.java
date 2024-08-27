@@ -4,7 +4,8 @@ import model.Model;
 import view.MyColors;
 
 public class RangedStrikeEffect extends RunOnceAnimationSprite {
-    private int shift = 48;
+    private static final int INITIAL_SHIFT = 48;
+    private int shift = INITIAL_SHIFT;
 
     public RangedStrikeEffect() {
         super("rangedstrike", "combat.png", 12, 0, 32, 32, 4, MyColors.WHITE);
@@ -13,6 +14,12 @@ public class RangedStrikeEffect extends RunOnceAnimationSprite {
     @Override
     public int getYShift() {
         return shift;
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        shift = INITIAL_SHIFT;
     }
 
     @Override

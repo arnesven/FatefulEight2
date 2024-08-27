@@ -61,7 +61,7 @@ public class MurderMysteryQuest extends Quest implements CountingQuest {
     protected List<QuestScene> buildScenes() {
         return List.of(
                 new QuestScene("Crime Scene", List.of(
-                        new CountingSubScene(this, new SoloSkillCheckSubScene(6, 2, Skill.Perception, 11,
+                        new CountingSubScene(this, new SoloSkillCheckSubScene(5, 2, Skill.Perception, 11,
                         "Can anybody see any clues?")),
                         new CountingSubScene(this, new CollaborativeSkillCheckSubScene(5, 1, Skill.Search, 11,
                         "Maybe we can find some clues if we snoop around a bit.")))),

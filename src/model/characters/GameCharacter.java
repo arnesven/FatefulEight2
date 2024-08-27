@@ -232,8 +232,8 @@ public class GameCharacter extends Combatant {
         extraInfo += ")";
         combatEvent.println(", dealing " + damage + " damage." + extraInfo);
         effectSprite.reset();
-        combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);
         combatEvent.addSpecialEffect(target, effectSprite);
+        combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);
         if (damage > 0) {
             MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
                     DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;
