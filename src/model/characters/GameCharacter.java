@@ -233,7 +233,7 @@ public class GameCharacter extends Combatant {
         combatEvent.println(", dealing " + damage + " damage." + extraInfo);
         effectSprite.reset();
         combatEvent.addSpecialEffect(target, effectSprite);
-        combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);
+        SoundEffects.playSound(equipment.getWeapon().getAttackSound());
         if (damage > 0) {
             MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
                     DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;
@@ -241,10 +241,10 @@ public class GameCharacter extends Combatant {
                 damageColor = DamageValueEffect.CRITICAL_DAMAGE;
             }
             combatEvent.addFloatyDamage(target, damage, damageColor);
-            SoundEffects.playSound(equipment.getWeapon().getAttackSound());
         } else {
             combatEvent.addFloatyText(target, CombatSubView.MISS_TEXT);
         }
+        combatEvent.waitUntil(effectSprite, RunOnceAnimationSprite::isDone);
         combatEvent.doDamageToEnemy(target, damage, this);
         equipment.getWeapon().didOneAttackWith(model, combatEvent, this, target, damage, crit);
         combatEvent.blockSneakAttackFor(this);

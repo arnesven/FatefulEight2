@@ -88,7 +88,8 @@ public class PriestEvent extends GeneralInteractionEvent {
 
     @Override
     protected String getVictimSelfTalk() {
-        return "I'm what you call a holy man. But I consider myself more humble than that.";
+        return "I'm what you call a holy " + manOrWoman(getVictimCharacter(getModel()).getGender()) +
+                ". But I consider myself more humble than that.";
     }
 
     @Override
