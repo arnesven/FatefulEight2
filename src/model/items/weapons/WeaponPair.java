@@ -21,6 +21,8 @@ import java.util.List;
 public class WeaponPair extends Weapon {
     private static final AvatarItemSprite[] TWIN_BLADES =  makeShiftedSpriteSet(
             new AvatarItemSprite(0x40, MyColors.GOLD, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
+    private static final AvatarItemSprite[] OTHER_WEAPONS =  makeShiftedSpriteSet(
+            new AvatarItemSprite(0x54, MyColors.BLACK, MyColors.GRAY, MyColors.BROWN, MyColors.BEIGE));
 
     private final Weapon mainHand;
     private final Weapon offHand;
@@ -90,7 +92,10 @@ public class WeaponPair extends Weapon {
 
     @Override
     protected AvatarItemSprite getOnAvatarSprite(int index) {
-        return TWIN_BLADES[index]; // TODO: Make nicer
+        if (mainHand.isOfType(BladedWeapon.class) && offHand.isOfType(BladedWeapon.class)) {
+            return TWIN_BLADES[index];
+        }
+        return OTHER_WEAPONS[index];
     }
 
     private static String makeName(Weapon w1, Weapon w2) {
