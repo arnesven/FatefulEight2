@@ -88,8 +88,6 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
-        inventory.add(new TwinDaggers());
-        inventory.add(new WeaponPair(new Dirk(), new Club()));
     }
 
     private LoopingSprite[] makeCursorSprites() {
