@@ -6,7 +6,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class YewWand extends WandWeapon {
+public class YewWand extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(3, 6, MyColors.TAN, MyColors.BEIGE);
 
     public YewWand() {
@@ -21,5 +21,10 @@ public class YewWand extends WandWeapon {
     @Override
     public Item copy() {
         return new YewWand();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(11, 15, MyColors.TAN, MyColors.BEIGE);
     }
 }

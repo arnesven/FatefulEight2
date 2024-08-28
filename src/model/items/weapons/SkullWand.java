@@ -14,7 +14,7 @@ import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class SkullWand extends WandWeapon {
+public class SkullWand extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(6, 6, MyColors.BROWN, MyColors.BEIGE);
 
     public SkullWand() {
@@ -48,5 +48,10 @@ public class SkullWand extends WandWeapon {
             gameCharacter.addToHP(damage);
             combatEvent.addFloatyDamage(gameCharacter, damage, DamageValueEffect.HEALING);
         }
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(14, 15, MyColors.BROWN, MyColors.BEIGE);
     }
 }

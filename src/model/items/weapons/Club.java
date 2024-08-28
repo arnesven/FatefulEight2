@@ -5,7 +5,7 @@ import model.items.StartingItem;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Club extends BluntWeapon implements StartingItem {
+public class Club extends BluntWeapon implements StartingItem, PairableWeapon{
 
     private static final Sprite SPRITE = new ItemSprite(0, 1);
 
@@ -21,5 +21,10 @@ public class Club extends BluntWeapon implements StartingItem {
     @Override
     public Item copy() {
         return new Club();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(10, 14);
     }
 }

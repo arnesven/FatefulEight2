@@ -7,7 +7,7 @@ import model.items.StartingItem;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class OldWand extends WandWeapon implements StartingItem {
+public class OldWand extends WandWeapon implements StartingItem, PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(0, 6);
 
     public OldWand() {
@@ -27,5 +27,10 @@ public class OldWand extends WandWeapon implements StartingItem {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.common;
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(8, 15);
     }
 }

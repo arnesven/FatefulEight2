@@ -5,7 +5,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class PineWand extends WandWeapon {
+public class PineWand extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(1, 6);
 
     public PineWand() {
@@ -20,5 +20,10 @@ public class PineWand extends WandWeapon {
     @Override
     public Item copy() {
         return new PineWand();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(9, 15);
     }
 }

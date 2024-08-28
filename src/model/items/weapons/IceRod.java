@@ -13,7 +13,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class IceRod extends WandWeapon {
+public class IceRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
 
@@ -47,6 +47,11 @@ public class IceRod extends WandWeapon {
             target.addCondition(new FreezeCondition());
             combatEvent.println(target.getName() + " is paralyzed by the freezing cold!");
         }
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(0, 16, MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
     }
 
     private static class FreezeCondition extends TimedParalysisCondition {

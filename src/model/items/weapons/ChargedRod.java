@@ -13,7 +13,7 @@ import view.sprites.ItemSprite;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
 
-public class ChargedRod extends WandWeapon {
+public class ChargedRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.GOLD);
     private int charge = 0;
@@ -40,6 +40,11 @@ public class ChargedRod extends WandWeapon {
     @Override
     public String getExtraText() {
         return "Every 5th shot does double damage.";
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(0, 16, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.GOLD);
     }
 
     @Override

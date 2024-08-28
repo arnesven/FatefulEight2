@@ -2,28 +2,19 @@ package model.items.weapons;
 
 import model.classes.Skill;
 import model.items.Item;
+import model.items.Prevalence;
 import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
 import java.util.List;
 
-public class TwinHatchets extends AxeWeapon {
+public class TwinHatchets extends WeaponPair {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(7, 11);
 
     public TwinHatchets() {
-        super("Twin Hatchets", 16, new int[]{6, 11}, true);
-    }
-
-    @Override
-    public int getNumberOfAttacks() {
-        return 2;
-    }
-
-    @Override
-    protected Sprite getSprite() {
-        return SPRITE;
+        super(new Hatchet(), new Hatchet());
     }
 
     @Override
@@ -32,7 +23,7 @@ public class TwinHatchets extends AxeWeapon {
     }
 
     @Override
-    public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        return List.of(new MyPair<>(Skill.Axes, -2));
+    public Prevalence getPrevalence() {
+        return Prevalence.uncommon;
     }
 }

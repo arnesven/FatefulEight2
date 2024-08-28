@@ -6,7 +6,7 @@ import util.MyRandom;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class BattleAxe extends AxeWeapon {
+public class BattleAxe extends AxeWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(3, 5);
     private static final Sprite ALT_SPRITE = new ItemSprite(3, 11);
     private final Sprite sprite;
@@ -33,5 +33,13 @@ public class BattleAxe extends AxeWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.common;
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        if (sprite == ALT_SPRITE) {
+            return new ItemSprite(15, 15);
+        }
+        return new ItemSprite(2, 15);
     }
 }

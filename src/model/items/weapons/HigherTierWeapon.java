@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HigherTierWeapon extends Weapon implements HigherTierItem {
+public class HigherTierWeapon extends Weapon implements HigherTierItem, PairableWeapon{
     private final Weapon inner;
     private final int tier;
     private Sprite sprite;
@@ -133,5 +133,15 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem {
     @Override
     public Item getInnerItem() {
         return inner;
+    }
+
+    @Override
+    public boolean pairingAllowed() {
+        return inner instanceof PairableWeapon;
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return ((PairableWeapon)inner).makePairSprite();
     }
 }

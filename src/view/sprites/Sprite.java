@@ -36,6 +36,7 @@ public class Sprite implements Serializable {
     private int frames;
     private boolean looping;
     private int downShift = 0;
+    private boolean flipHorizontal = false;
 
     public Sprite(String name, String mapPath, int column, int row, int width, int height,
                   List<Sprite> layers){
@@ -105,7 +106,7 @@ public class Sprite implements Serializable {
     }
 
     public String getName(){
-        return name + (int)getRotation();
+        return name + (int)getRotation() + (flipHorizontal?"horiflip":"");
     }
 
     public BufferedImage getImage() throws IOException {
@@ -141,6 +142,18 @@ public class Sprite implements Serializable {
             double locationX = img.getWidth() / 2;
             double locationY = img.getHeight() / 2;
             AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            for (int n = 0; n < maxFrames; ++n) {
+                g2d.drawImage(op.filter(img, null), n * img.getWidth(), downShift, null);
+            }
+            for (Sprite s : layers) {
+                for (int n = 0; n < maxFrames; ++n) {
+                    g2d.drawImage(op.filter(s.internalGetImage(), null), n * (s.getWidth() * s.getFrames()), downShift, null);
+                }
+            }
+        } else if (flipHorizontal) {
+            AffineTransform tx = AffineTransform.getScaleInstance(-1.0, 1.0);
+            tx.translate(-img.getWidth(), 0);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
             for (int n = 0; n < maxFrames; ++n) {
                 g2d.drawImage(op.filter(img, null), n * img.getWidth(), downShift, null);
@@ -303,5 +316,9 @@ public class Sprite implements Serializable {
 
     public void setName(String s) {
         this.name = s;
+    }
+
+    protected void setFlipHorizontal(boolean b) {
+        flipHorizontal = b;
     }
 }

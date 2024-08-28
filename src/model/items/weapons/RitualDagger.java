@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class RitualDagger extends SmallBladedWeapon {
+public class RitualDagger extends SmallBladedWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(5, 0);
 
     public RitualDagger() {
@@ -25,5 +25,10 @@ public class RitualDagger extends SmallBladedWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(6, 14);
     }
 }

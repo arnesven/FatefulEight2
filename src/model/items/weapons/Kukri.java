@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Kukri extends BladedWeapon {
+public class Kukri extends BladedWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 11);
 
     public Kukri() {
@@ -30,5 +30,10 @@ public class Kukri extends BladedWeapon {
     @Override
     public int getCriticalTarget() {
         return 9;
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(1, 14);
     }
 }

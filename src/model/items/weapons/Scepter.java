@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Scepter extends BluntWeapon {
+public class Scepter extends BluntWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 1);
 
     public Scepter() {
@@ -19,5 +19,10 @@ public class Scepter extends BluntWeapon {
     @Override
     public Item copy() {
         return new Scepter();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(11, 14);
     }
 }

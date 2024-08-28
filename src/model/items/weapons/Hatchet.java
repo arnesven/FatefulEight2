@@ -6,7 +6,7 @@ import util.MyRandom;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Hatchet extends AxeWeapon implements StartingItem {
+public class Hatchet extends AxeWeapon implements StartingItem, PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(0, 5);
     private static final Sprite ALT_SPRITE = new ItemSprite(0, 11);
     private final Sprite sprite;
@@ -28,5 +28,10 @@ public class Hatchet extends AxeWeapon implements StartingItem {
     @Override
     public Item copy() {
         return new Hatchet();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(1, 15);
     }
 }

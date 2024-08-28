@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class MorningStar extends BluntWeapon {
+public class MorningStar extends BluntWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(5,1);
 
     public MorningStar() {
@@ -19,5 +19,10 @@ public class MorningStar extends BluntWeapon {
     @Override
     public Item copy() {
         return new MorningStar();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(12, 14);
     }
 }

@@ -13,7 +13,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class IvyRod extends WandWeapon {
+public class IvyRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(14, 11,
             MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
 
@@ -39,6 +39,11 @@ public class IvyRod extends WandWeapon {
     @Override
     public String getExtraText() {
         return "20% Chance to apply Poison Gas";
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(1, 16, MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
     }
 
     @Override

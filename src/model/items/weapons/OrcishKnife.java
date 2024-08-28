@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class OrcishKnife extends SmallBladedWeapon {
+public class OrcishKnife extends SmallBladedWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(4, 0);
 
     public OrcishKnife() {
@@ -19,5 +19,10 @@ public class OrcishKnife extends SmallBladedWeapon {
     @Override
     public Item copy() {
         return new OrcishKnife();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(5, 14);
     }
 }

@@ -13,7 +13,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class FireRod extends WandWeapon {
+public class FireRod extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(13, 11,
             MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
 
@@ -39,6 +39,11 @@ public class FireRod extends WandWeapon {
     @Override
     public String getExtraText() {
         return "20% Chance to apply Burn";
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(0, 16, MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
     }
 
     @Override

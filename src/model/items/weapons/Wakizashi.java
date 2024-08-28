@@ -5,7 +5,7 @@ import model.items.Prevalence;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Wakizashi extends BladedWeapon {
+public class Wakizashi extends BladedWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(9, 11);
 
     public Wakizashi() {
@@ -30,5 +30,10 @@ public class Wakizashi extends BladedWeapon {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(5, 15);
     }
 }

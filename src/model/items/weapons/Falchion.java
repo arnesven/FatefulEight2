@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Falchion extends BladedWeapon {
+public class Falchion extends BladedWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(7, 0);
 
     public Falchion() {
@@ -19,5 +19,10 @@ public class Falchion extends BladedWeapon {
     @Override
     public Item copy() {
         return new Falchion();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(8, 14);
     }
 }

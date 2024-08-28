@@ -56,6 +56,10 @@ public enum Skill implements Comparable<Skill> {
         return RANK_MATRIX[weightForSkill-1][level-1];
     }
 
+    public static boolean isMagicSkill(Skill skill) {
+        return skill.getName().startsWith("Magic");
+    }
+
     public String getName() {
         return name;
     }

@@ -9,13 +9,14 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class ClaspedOrb extends WandWeapon {
+public class ClaspedOrb extends WandWeapon implements PairableWeapon {
 
     private final ItemSprite sprite;
+    private final MyColors color;
 
     public ClaspedOrb() {
         super("Clasped Orb", 20, Skill.MagicBlue, new int[]{9,11,14});
-        MyColors color = MyRandom.sample(List.of(MyColors.BLUE, MyColors.CYAN, MyColors.LIGHT_BLUE, MyColors.PURPLE));
+        color = MyRandom.sample(List.of(MyColors.BLUE, MyColors.CYAN, MyColors.LIGHT_BLUE, MyColors.PURPLE));
         sprite = new ItemSprite(2, 6, MyColors.BROWN, color);
     }
 
@@ -27,5 +28,10 @@ public class ClaspedOrb extends WandWeapon {
     @Override
     public Item copy() {
         return new ClaspedOrb();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(10, 15, MyColors.BROWN, color);
     }
 }

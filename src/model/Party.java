@@ -23,7 +23,7 @@ import model.items.books.GelatinousBlobBook;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
 import model.items.spells.*;
-import model.items.weapons.BastardSword;
+import model.items.weapons.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.map.locations.LowerThelnTown;

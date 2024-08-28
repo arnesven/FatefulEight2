@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Rapier extends BladedWeapon {
+public class Rapier extends BladedWeapon implements PairableWeapon {
 
     private static final Sprite SPRITE = new ItemSprite(6, 12);
 
@@ -20,5 +20,10 @@ public class Rapier extends BladedWeapon {
     @Override
     public Item copy() {
         return new Rapier();
+    }
+
+    @Override
+    public Sprite makePairSprite() {
+        return new ItemSprite(4, 15);
     }
 }
