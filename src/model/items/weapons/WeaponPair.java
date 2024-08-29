@@ -9,12 +9,17 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
 import util.MyPair;
+import view.GameView;
 import view.MyColors;
+import view.YesNoMessageView;
+import view.party.DrawableObject;
+import view.party.SelectableListMenu;
 import view.sprites.AvatarItemSprite;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.sprites.WeaponPairSprite;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,5 +220,27 @@ public class WeaponPair extends Weapon {
     public boolean grantsConditionImmunity(Condition cond) {
         return mainHand.grantsConditionImmunity(cond) ||
                 offHand.grantsConditionImmunity(cond);
+    }
+
+    @Override
+    public boolean hasDualUseInMenu() {
+        return true;
+    }
+
+    @Override
+    public String getDualUseLabel() {
+        return "Split";
+    }
+
+    @Override
+    public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
+        return new YesNoMessageView(innerView, "Split this weapon into the two underlying weapons?") {
+            @Override
+            protected void doAction(Model model) {
+                model.getParty().getInventory().remove(WeaponPair.this);
+                WeaponPair.this.mainHand.addYourself(model.getParty().getInventory());
+                WeaponPair.this.offHand.addYourself(model.getParty().getInventory());
+            }
+        };
     }
 }

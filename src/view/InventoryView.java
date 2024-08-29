@@ -392,7 +392,7 @@ public class InventoryView extends SelectableListMenu {
         @Override
         public void handleKeyEvent(KeyEvent keyEvent, Model model) {
             super.handleKeyEvent(keyEvent, model);
-            if (equipItemMenu.timeToTransition()) {
+            if (equipItemMenu.timeToTransition() || dualUseMenu.timeToTransition()) {
                 setTimeToTransition(true);
             }
         }
