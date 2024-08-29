@@ -99,6 +99,7 @@ public class WeaponPairingDialog extends ConfigureSocketedItemMenu {
 
     @Override
     public void transitionedTo(Model model) {
+        model.getTutorial().weaponPairing(model);
         System.out.println("Removed main handed weapon from inventory");
         model.getParty().getInventory().remove(mainWeapon);
     }
@@ -134,7 +135,7 @@ public class WeaponPairingDialog extends ConfigureSocketedItemMenu {
 
         @Override
         public String getSocketLabels() {
-            return "Weapon 1   Weapon 2";
+            return "Main hand   Off-hand   ";
         }
 
         @Override

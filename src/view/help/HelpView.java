@@ -174,7 +174,8 @@ public class HelpView extends TwoPaneSelectableListMenu {
                 new TutorialTravelDialog(null),
                 new TutorialTravellers(null),
                 new TutorialVampires(null),
-                new TutorialWars(null)));
+                new TutorialWars(null),
+                new TutorialWeaponPairing(null)));
     }
 
     private static class NoSearchResultsFound extends HelpDialog {

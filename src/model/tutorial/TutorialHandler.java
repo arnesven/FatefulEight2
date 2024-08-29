@@ -569,6 +569,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void weaponPairing(Model model) {
+        runOnce("weaponpairing", () -> {
+            //model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialWeaponPairing(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

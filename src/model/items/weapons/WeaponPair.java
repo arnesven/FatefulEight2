@@ -12,14 +12,12 @@ import util.MyPair;
 import view.GameView;
 import view.MyColors;
 import view.YesNoMessageView;
-import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.AvatarItemSprite;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.sprites.WeaponPairSprite;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +48,14 @@ public class WeaponPair extends Weapon {
             result[i] = (int)Math.floor((table1[i] + table2[i]) / 2.0);
         }
         return result;
+    }
+
+    @Override
+    public Skill getSkillToUse(GameCharacter gc) {
+        if (attackCounter % 2 == 0) {
+            return mainHand.getSkillToUse(gc);
+        }
+        return offHand.getSkillToUse(gc);
     }
 
     @Override
@@ -154,7 +160,10 @@ public class WeaponPair extends Weapon {
 
     @Override
     public String getAttackSound() {
-        return mainHand.getAttackSound();
+        if (attackCounter % 2 == 0) {
+            return mainHand.getAttackSound();
+        }
+        return offHand.getAttackSound();
     }
 
     @Override
