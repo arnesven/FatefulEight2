@@ -294,7 +294,7 @@ public class PartyView extends SelectableListMenu {
             int base = gc.getUnmodifiedRankForSkill(s);
             int extra = rank - base;
             String extraString = extra > 0 ? "+"+extra : (extra < 0 ? ""+extra : "");
-            if (rank != 0) {
+            if (base != 0 || extra != 0) {
                 print(screenHandler, midX, row, String.format("%-14s%2d", s.getName(), base));
                 if (extra != 0) {
                     print(screenHandler, midX+16, row, extraString,
