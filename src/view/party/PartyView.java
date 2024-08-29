@@ -223,13 +223,13 @@ public class PartyView extends SelectableListMenu {
         } else {
             bldr.append("Melee ");
         }
-        bldr.append("Attack ");
+        bldr.append("Atk");
         if (w.getNumberOfAttacks() > 1) {
-            bldr.append("x" + w.getNumberOfAttacks());
+            bldr.append(" x").append(w.getNumberOfAttacks());
         }
 
         if (w.getSpeedModifier() != 0) {
-            bldr.append("Speed ");
+            bldr.append(", Speed ");
             if (w.getSpeedModifier() > 0) {
                 bldr.append("+");
             }
