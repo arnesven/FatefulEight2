@@ -23,6 +23,11 @@ public class WeaponPairingDialog extends ConfigureSocketedItemMenu {
     }
 
     @Override
+    protected boolean escapeDisposesMenu() {
+        return false;
+    }
+
+    @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> content = super.buildContent(model, xStart, yStart);
         content.remove(content.size()-1);
