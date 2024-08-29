@@ -155,14 +155,17 @@ public abstract class SelectableListMenu extends GameView {
             setTimeToTransition(true);
             SoundEffects.menuQuit();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            checkForSelectedRowReset(model);
             SoundEffects.menuDown();
             handleKeyDown(model);
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            checkForSelectedRowReset(model);
             SoundEffects.menuUp();
             handleKeyUp(model);
             madeChanges();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+            checkForSelectedRowReset(model);
             ListContent lc = buildContent(model, getXStart(), getYStart()).get(selectedRow);
             if (lc.isEnabled(model)) {
                 lc.performAction(model, lc.position.x, lc.position.y);
@@ -331,8 +334,8 @@ public abstract class SelectableListMenu extends GameView {
         print(screenHandler, x, y, text, MyColors.WHITE);
     }
 
-    public static ListContent makeOkButton(Model model, int xStart, int yStart, SelectableListMenu parent) {
-        return new SelectableListContent(xStart, yStart, "OK") {
+    private static ListContent makeDisposeButton(Model model, int xStart, int yStart, SelectableListMenu parent, String label) {
+        return new SelectableListContent(xStart, yStart, label) {
             @Override
             public void performAction(Model model, int x, int y) {
                 parent.setTimeToTransition(true);
@@ -343,5 +346,13 @@ public abstract class SelectableListMenu extends GameView {
                 return true;
             }
         };
+    }
+
+    public static ListContent makeOkButton(Model model, int xStart, int yStart, SelectableListMenu parent) {
+        return makeDisposeButton(model, xStart, yStart, parent, "OK");
+    }
+
+    public static ListContent makeCancelButton(Model model, int xStart, int yStart, SelectableListMenu parent) {
+        return makeDisposeButton(model, xStart, yStart, parent, "CANCEL");
     }
 }

@@ -11,6 +11,9 @@ import model.states.CombatEvent;
 import util.MyStrings;
 import view.AnalyzeDialog;
 import view.AnalyzeWeaponDialog;
+import view.GameView;
+import view.WeaponPairingDialog;
+import view.party.SelectableListMenu;
 import view.sprites.*;
 
 public abstract class Weapon extends EquipableItem {
@@ -184,4 +187,19 @@ public abstract class Weapon extends EquipableItem {
     }
 
     public boolean isPhysicalDamage() { return true; }
+
+    @Override
+    public boolean hasDualUseInMenu() {
+        return this instanceof PairableWeapon;
+    }
+
+    @Override
+    public String getDualUseLabel() {
+        return "Pair with";
+    }
+
+    @Override
+    public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
+        return new WeaponPairingDialog(innerView, this);
+    }
 }

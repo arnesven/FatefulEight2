@@ -17,16 +17,24 @@ import java.util.List;
 public class ConfigureSocketedItemMenu extends SelectableListMenu {
     private final SocketedItem socketedItem;
 
-    public ConfigureSocketedItemMenu(GameView innerView, SocketedItem socketedItem) {
-        super(innerView, 36, 14);
+    public ConfigureSocketedItemMenu(GameView innerView, SocketedItem socketedItem, int dialogHeight) {
+        super(innerView, 36, dialogHeight);
         this.socketedItem = socketedItem;
+    }
+
+    public ConfigureSocketedItemMenu(GameView innerView, SocketedItem socketedItem) {
+        this(innerView, socketedItem, 15);
+    }
+
+    protected SocketedItem getSocketItem() {
+        return socketedItem;
     }
 
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         String text = "Configure the " + socketedItem.getName() + " with items from your inventory.";
         String[] parts = MyStrings.partitionWithLineBreaks(text, getWidth() - 3);
         List<DrawableObject> result = new ArrayList<>();
-        int row = 1;
+        int row = 2;
         for (String part : parts) {
             result.add(new TextDecoration(part, xStart + 1, yStart + row++, MyColors.WHITE, MyColors.BLUE, true));
         }

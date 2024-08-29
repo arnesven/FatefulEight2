@@ -85,17 +85,7 @@ public class InventoryView extends SelectableListMenu {
         if (numberOfItems > 0 && getSelectedRow() < numberOfItems) {
             Item it = tabNames[selectedTab].getItems(model).get(getSelectedRow());
             it.drawYourself(model.getScreenHandler(), rightTabX + 11, y + 2);
-            String text = it.getName() + ", " + it.getShoppingDetails() +
-                    ", Value: " + it.getCost() +
-                    ", Weight: " + (it.getWeight() / 1000.0) + " Kg";
-            String[] parts = text.split(", ");
-            int row = y + it.getSpriteSize() + 3;
-            for (String s : parts) {
-                String[] innerParts = MyStrings.partition(s, 24);
-                for (String s2 : innerParts) {
-                    print(model.getScreenHandler(), rightTabX + 1, row++, s2);
-                }
-            }
+            int row = printItemText(model, it, rightTabX+1, y + it.getSpriteSize() + 3);
             row++;
             if (it.isAnalyzable()) {
                 print(model.getScreenHandler(), rightTabX+1, row++, it.getAnalysisType() + ":");
@@ -105,6 +95,20 @@ public class InventoryView extends SelectableListMenu {
                 }
             }
         }
+    }
+
+    public static int printItemText(Model model, Item it, int col, int row) {
+        String text = it.getName() + ", " + it.getShoppingDetails() +
+                ", Value: " + it.getCost() +
+                ", Weight: " + (it.getWeight() / 1000.0) + " Kg";
+        String[] parts = text.split(", ");
+        for (String s : parts) {
+            String[] innerParts = MyStrings.partition(s, 24);
+            for (String s2 : innerParts) {
+                print(model.getScreenHandler(), col, row++, s2);
+            }
+        }
+        return row;
     }
 
     @Override

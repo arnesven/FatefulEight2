@@ -22,6 +22,7 @@ import model.items.StaminaRecoveryItem;
 import model.items.books.GelatinousBlobBook;
 import model.items.designs.CraftingDesign;
 import model.items.potions.Potion;
+import model.items.special.FashionableSash;
 import model.items.spells.*;
 import model.items.weapons.*;
 import model.map.UrbanLocation;
