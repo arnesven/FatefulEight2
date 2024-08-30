@@ -305,14 +305,19 @@ public class InventoryView extends SelectableListMenu {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         if (itemToEquip instanceof EquipableItem) {
-                            String errorMessage = Equipment.canEquip(itemToEquip, gc);
-                            if (errorMessage.equals("")) {
-                                ((EquipableItem) itemToEquip).equipYourself(gc);
-                                setTimeToTransition(true);
-                                InventoryView.this.checkForSelectedRowReset(model);
-                                SoundEffects.playSound(itemToEquip.getSound());
+                            if (model.isInCombat()) {
+                                setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
+                                        "You cannot change equipment while in combat."), model);
                             } else {
-                                setInnerMenu(new SimpleMessageView(EquipItemMenu.this, errorMessage), model);
+                                String errorMessage = Equipment.canEquip(itemToEquip, gc);
+                                if (errorMessage.equals("")) {
+                                    ((EquipableItem) itemToEquip).equipYourself(gc);
+                                    setTimeToTransition(true);
+                                    InventoryView.this.checkForSelectedRowReset(model);
+                                    SoundEffects.playSound(itemToEquip.getSound());
+                                } else {
+                                    setInnerMenu(new SimpleMessageView(EquipItemMenu.this, errorMessage), model);
+                                }
                             }
                         } else if (itemToEquip instanceof Spell) {
                             setInnerMenu(new SimpleMessageView(EquipItemMenu.this,
