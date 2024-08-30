@@ -18,10 +18,10 @@ public class BanditRaidEvent extends DailyEventState {
         model.getParty().randomPartyMemberSay(model, List.of("It's time to teach this rabble a lesson."));
         runCombat(BanditEvent.generateBanditEnemies(model));
         setCurrentTerrainSubview(model);
+        possiblyGetHorsesAfterCombat("bandits", 5);
         if (!haveFledCombat() && !model.getParty().isWipedOut()) {
             new GuestEvent(model).doEvent(model);
         }
-        possiblyGetHorsesAfterCombat("bandits", 5);
     }
 
     @Override

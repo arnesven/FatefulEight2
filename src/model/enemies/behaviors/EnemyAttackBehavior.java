@@ -38,4 +38,8 @@ public abstract class EnemyAttackBehavior implements Serializable {
     public int numberOfAttacks() {
         return 1;
     }
+
+    public String getSound() {
+        return "default_attack";
+    }
 }

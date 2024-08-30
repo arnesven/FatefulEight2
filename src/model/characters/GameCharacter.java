@@ -234,9 +234,9 @@ public class GameCharacter extends Combatant {
         if (damage > 0 || equipment.getWeapon().isRangedAttack()) {
             effectSprite.reset();
             combatEvent.addSpecialEffect(target, effectSprite);
-            SoundEffects.playSound(equipment.getWeapon().getAttackSound());
         }
         if (damage > 0) {
+            SoundEffects.playSound(equipment.getWeapon().getAttackSound());
             MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
                     DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;
             if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {
@@ -652,6 +652,7 @@ public class GameCharacter extends Combatant {
             combatEvent.getStatistics().addToAvoidedDamage(damage);
             return;
         }
+        SoundEffects.playSound(enemy.getAttackBehavior().getSound());
         if ((checkForBlock(enemy) && enemy.getAttackBehavior().isPhysicalAttack()) ||
                 (!enemy.getAttackBehavior().isPhysicalAttack() && hasCondition(WardCondition.class))) {
             combatEvent.addFloatyText(this, CombatSubView.BLOCK_TEXT);

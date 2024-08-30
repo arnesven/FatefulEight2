@@ -30,6 +30,11 @@ public class MagicRangedAttackBehavior extends EnemyAttackBehavior {
     }
 
     @Override
+    public String getSound() {
+        return "wand";
+    }
+
+    @Override
     public RunOnceAnimationSprite getStrikeEffect() {
         return new RangedMagicStrikeEffectSprite();
     }
