@@ -351,6 +351,7 @@ public class EnchantressEvent extends DailyEventState {
             if (!hasSpell(model, MindControlSpell.class)) {
                 Item mindControl = new MindControlSpell();
                 println("The Enchantress teaches the party a new spell, " + mindControl.getName() + ".");
+                mindControl.addYourself(model.getParty().getInventory());
             }
         } else {
             leaderSay("Face your peers. You have committed a crime and justice must be found here.");

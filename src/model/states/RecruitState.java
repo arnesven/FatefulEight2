@@ -137,6 +137,7 @@ public class RecruitState extends GameState {
     }
 
     private void dismiss(Model model) {
+        model.setInCombat(true);
         print("Which party member do you wish to dismiss? ");
         model.getTutorial().dismiss(model);
         GameCharacter toDismiss = model.getParty().partyMemberInput(model, this, null);
@@ -148,6 +149,7 @@ public class RecruitState extends GameState {
                 partyMemberSay(toDismiss, MyRandom.sample(List.of("If you say so.", "If you think that's best", "Okay, it's your call.",
                         "Fair enough.", "I understand.")));
                 TransferCharacterHeadquartersAction.dropOffAtHeadquarters(model, this, toDismiss);
+                model.setInCombat(false);
                 return;
             }
         }
@@ -169,6 +171,7 @@ public class RecruitState extends GameState {
                 println(toDismiss.getFullName() + " left the party.");
             }
         }
+        model.setInCombat(false);
     }
 
     private void setRandomClasses(List<GameCharacter> recruitables) {
