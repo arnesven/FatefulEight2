@@ -68,7 +68,7 @@ public class AbilityCombatAction extends CombatAction {
         if (SniperShotCombatAction.canDoSniperShotAbility(performer)) {
             list.add(new SniperShotCombatAction());
         }
-        if (FairyHealCombatAction.canDoAbility(performer) && performer != target) {
+        if (FairyHealCombatAction.canDoAbility(performer, target)) {
             list.add(new FairyHealCombatAction());
         }
         if (RegenerationCombatAction.canDoAbility(performer)) {

@@ -231,10 +231,12 @@ public class GameCharacter extends Combatant {
         }
         extraInfo += ")";
         combatEvent.println(", dealing " + damage + " damage." + extraInfo);
-        if (damage > 0) {
+        if (damage > 0 || equipment.getWeapon().isRangedAttack()) {
             effectSprite.reset();
             combatEvent.addSpecialEffect(target, effectSprite);
             SoundEffects.playSound(equipment.getWeapon().getAttackSound());
+        }
+        if (damage > 0) {
             MyColors damageColor = equipment.getWeapon().isPhysicalDamage() ?
                     DamageValueEffect.STANDARD_DAMAGE : DamageValueEffect.MAGICAL_DAMAGE;
             if (result.isCritical(crit) && equipment.getWeapon().allowsCriticalHits()) {

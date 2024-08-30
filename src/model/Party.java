@@ -701,7 +701,7 @@ public class Party implements Serializable {
     }
 
     public void unbenchAll() {
-        unbenchPartyMembers(bench);
+        unbenchPartyMembers(new ArrayList<>(bench));
     }
 
     public List<GameCharacter> getBench() {

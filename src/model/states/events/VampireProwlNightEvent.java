@@ -111,8 +111,9 @@ public class VampireProwlNightEvent extends DailyEventState {
                 " falls into a deeper sleep and have odd dreams filled with violence, lust and the sense of immortality.");
         int hpLoss = victim.getHP()-1;
         if (hpLoss > 0) {
-            println(victim.getName() + " lost "+ hpLoss + " HP.");
+            println(victim.getName() + " lost "+ hpLoss + " HP and all stamina.");
             victim.addToHP(-hpLoss);
+            victim.addToSP(-victim.getSP());
         }
         if (MyRandom.rollD10() < 7) {
             VampirismCondition.makeVampire(model, this, victim);

@@ -43,7 +43,13 @@ public class FairyHealCombatAction extends CombatAction {
         }
     }
 
-    public static boolean canDoAbility(GameCharacter performer) {
+    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
+        if (performer == target) {
+            return false;
+        }
+        if (target.isDead()) {
+            return false;
+        }
         return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));

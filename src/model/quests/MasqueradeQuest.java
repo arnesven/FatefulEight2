@@ -2,6 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.*;
 import model.items.spells.FireworksSpell;
@@ -19,6 +21,7 @@ import view.sprites.Sprite32x32;
 import view.combat.CombatTheme;
 import view.combat.GrassCombatTheme;
 import view.combat.MansionTheme;
+import view.subviews.PortraitSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -49,6 +52,8 @@ public class MasqueradeQuest extends Quest {
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
             MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+    private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL);
+
     private static final List<QuestBackground> BG_SPRITES = makeBackground();
     public static final Sprite[] SPECTATORS = makeSpectators();
 
@@ -56,6 +61,11 @@ public class MasqueradeQuest extends Quest {
 
     public MasqueradeQuest() {
         super("Masquerade", "Bounty Office", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, OUTRO);
+    }
+
+    @Override
+    public CharacterAppearance getPortrait() {
+        return PORTRAIT;
     }
 
     @Override

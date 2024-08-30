@@ -79,6 +79,8 @@ public class CharlatanEvent extends DailyEventState {
         portraitSay(heOrSheCap(gc.getGender()) + " is right. It is juice!");
         println("The crowd quickly turns into an angry mob. The doctor scrambles to get away and " +
                 "the townsfolk chase after him, throwing his elixir at him and yelling insults.");
+        model.getLog().waitForAnimationToFinish();
+        removePortraitSubView(model);
         println("You search through the doctor's wagon and find bags of cherries and a small chest.");
         boolean lockPicked = model.getParty().doSoloLockpickCheck(model, this, 8);
         if (lockPicked) {
