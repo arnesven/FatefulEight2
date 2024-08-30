@@ -167,7 +167,7 @@ public class PartyView extends SelectableListMenu {
 
             @Override
             public boolean isEnabled(Model model) {
-                return gc.canChangeClothing();
+                return super.isEnabled(model) && gc.canChangeClothing();
             }
         });
         addListContent(content, x, y++, getArmorString(gc.getEquipment().getClothing(), true));
@@ -368,7 +368,7 @@ public class PartyView extends SelectableListMenu {
 
         @Override
         public boolean isEnabled(Model model) {
-            return character.canChangeAccessory();
+            return super.isEnabled(model) && character.canChangeAccessory();
         }
     }
 

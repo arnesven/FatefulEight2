@@ -17,6 +17,7 @@ public class BanditRaidEvent extends DailyEventState {
         println("This farmstead has been plagued by bandits for some time.");
         model.getParty().randomPartyMemberSay(model, List.of("It's time to teach this rabble a lesson."));
         runCombat(BanditEvent.generateBanditEnemies(model));
+        setCurrentTerrainSubview(model);
         if (!haveFledCombat() && !model.getParty().isWipedOut()) {
             new GuestEvent(model).doEvent(model);
         }
