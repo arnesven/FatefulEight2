@@ -8,6 +8,9 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import model.states.digging.DiggingSpace;
+import sound.BackgroundMusic;
+import sound.ClientSoundManager;
+import sound.SoundEffects;
 import util.MyLists;
 import util.MyPair;
 import view.subviews.CollapsingTransition;
@@ -63,6 +66,8 @@ public class DiggingGame extends DailyEventState {
         matrix.setSoundEnabled(false);
         fill(matrix);
         DiggingGameSubView subView = new DiggingGameSubView(matrix, boulders);
+        BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
+        ClientSoundManager.playBackgroundMusic(BackgroundMusic.jumpyBlip);
         CollapsingTransition.transition(model, subView);
         while (!gameIsOver(matrix)) {
             waitForReturnSilently();
@@ -86,6 +91,7 @@ public class DiggingGame extends DailyEventState {
         };
 
         if (foundBoulder) {
+            SoundEffects.playFoundBoulder();
             printQuote("Farmer", "That's a boulder! I'm afraid the game is over friend. Better luck next time!");
             leaderSay("Darn it...");
             printQuote("Farmer", "And now... the agreement was, dig up the rest of the boulders.");
@@ -120,6 +126,7 @@ public class DiggingGame extends DailyEventState {
             increaseWinCount(model);
         }
         model.getLog().waitForAnimationToFinish();
+        ClientSoundManager.playBackgroundMusic(previous);
     }
 
     private void getHint(Model model, SteppingMatrix<DiggingSpace> matrix, DiggingGameSubView subView) {
@@ -160,7 +167,7 @@ public class DiggingGame extends DailyEventState {
             leaderSay("Which one?");
             printQuote("Farmer", "Here. I'll remove the mark for you.");
             model.getLog().waitForAnimationToFinish();
-            incorrectlyMarked.get(0).toggleMarked();
+            subView.markSpace(incorrectlyMarked.get(0));
             hintsGiven++;
             return;
         }
@@ -247,6 +254,7 @@ public class DiggingGame extends DailyEventState {
                 matrix.setSelectedElement(space);
             }
             subView.startDigAnimation(false);
+            SoundEffects.digging();
             waitUntil(subView, DiggingGameSubView::isDiggingDone);
             space.setDug(true);
             if (space.hasBoulder()) {
@@ -265,6 +273,7 @@ public class DiggingGame extends DailyEventState {
             if (!adjSpace.isDug()) {
                 matrix.setSelectedElement(adjSpace);
                 subView.startDigAnimation(true);
+                SoundEffects.digging();
                 waitUntil(subView, DiggingGameSubView::isDiggingDone);
                 adjSpace.setDug(true);
                 if (adjSpace.getNumber() == 0) {
@@ -308,6 +317,7 @@ public class DiggingGame extends DailyEventState {
             }
         }
         matrix.addElements(stuff);
+        matrix.setSelectedPoint(new Point(matrix.getColumns()/2, matrix.getRows()/2));
     }
 
     private void increaseWinCount(Model model) {
@@ -336,6 +346,7 @@ public class DiggingGame extends DailyEventState {
 
     private void gainObols(Model model, SteppingMatrix<DiggingSpace> matrix) {
         int obolsGained = countObols(matrix);
+        MyLists.forEach(matrix.getElementList(), DiggingSpace::clearNumber);
         println("You gained " + obolsGained + " obols.");
         model.getParty().addToObols(obolsGained);
     }

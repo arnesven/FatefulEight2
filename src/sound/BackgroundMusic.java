@@ -12,7 +12,7 @@ public enum BackgroundMusic {
     festiveSong("festive", Volume.MEDIUM_BGM),
     lightQuestSong("festive2", Volume.MEDIUM_BGM),
     horseRacingSong("horse_racing", Volume.MEDIUM_BGM),
-    jumpyBlip("jumpy_blip", Volume.MEDIUM_BGM),
+    jumpyBlip("jumpy_blip", Volume.LOW),
     battleSong("serious", Volume.MEDIUM_BGM),
     altCombatSong("retro_rush", Volume.MEDIUM_BGM),
     dungeonSong("deepest_thought", Volume.MEDIUM_BGM),

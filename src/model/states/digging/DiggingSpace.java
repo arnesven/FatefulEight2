@@ -116,4 +116,8 @@ public class DiggingSpace {
     public boolean isMarked() {
         return marked;
     }
+
+    public void clearNumber() {
+        this.number = 0;
+    }
 }

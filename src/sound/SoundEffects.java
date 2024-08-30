@@ -95,4 +95,12 @@ public class SoundEffects {
     public static void playBamf() {
         playWithVolume("bamf", Volume.HIGHEST);
     }
+
+    public static void digging() {
+        playWithVolume("digging", Volume.HIGHEST);
+    }
+
+    public static void playFoundBoulder() {
+        playWithVolume("found_boulder", Volume.LOW);
+    }
 }
