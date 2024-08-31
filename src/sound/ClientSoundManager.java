@@ -68,8 +68,12 @@ public class ClientSoundManager extends SoundManager {
     }
 
     public synchronized static void playBackgroundMusic(BackgroundMusic song) {
-        System.out.println("Playing song " + song.getFileName());
-        playBackgroundSound(song);
+        if (song != null) {
+            System.out.println("Playing song " + song.getFileName());
+            playBackgroundSound(song);
+        } else {
+            System.err.println("Background song was null!");
+        }
     }
 
     public static BackgroundMusic getCurrentBackgroundMusic() {

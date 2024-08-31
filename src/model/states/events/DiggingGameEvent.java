@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DiggingGame extends DailyEventState {
+public class DiggingGameEvent extends DailyEventState {
     private static final String[] SIZE_NAMES = new String[]{"Easy (8x8, 10)", "Medium (10x10, 16)",
     "Hard (12x12 24)", "Very hard (14x14, 36)", "Impossible (16x18, 60)"};
     private static final int[] FIELD_SIZES = new int[]{8, 10, 12, 14, 16};
@@ -35,7 +35,7 @@ public class DiggingGame extends DailyEventState {
     private int hintsGiven = 0;
     private boolean firstTime = true;
 
-    public DiggingGame(Model model) {
+    public DiggingGameEvent(Model model) {
         super(model);
     }
 
@@ -147,7 +147,7 @@ public class DiggingGame extends DailyEventState {
                 model.getParty().addToGold(-hintCost);
             } else {
                 leaderSay(hintCost + " gold? Darn, you're really milking me here, aren't you?");
-                printQuote("Farmer", "The only ones I'm milking is Old Bessy at dawn. " +
+                printQuote("Farmer", "The only one I'm milking is Old Bessy at dawn. " +
                         "You knew what you were getting yourself into. " +
                         "If you don't want to pay for the hint you're just going to have to figure it out for yourself.");
                 return;
