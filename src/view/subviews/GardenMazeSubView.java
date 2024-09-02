@@ -38,7 +38,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     private static final int DISTANCE_1 = 5;
     private static final int DISTANCE_2 = 13;
-    private static final int[] STATUE_HEIGHTS = new int[]{9, 15, 14, 15, 15};
+    private static final int[] STATUE_HEIGHTS = new int[]{9, 15, 15, 15, 15};
     private final GardenMaze maze;
 
     private int currentFacing;
@@ -53,7 +53,9 @@ public class GardenMazeSubView extends BottomMenuSubView {
     private static final int[] RANGE_LOWER_BOUNDS = new int[]{ 0,  5,  9, 12, 14};
     private static final int[] RANGE_UPPER_BOUNDS = new int[]{ 2,  6, 10, 12, 14};
     private int statueDistance = -1;
-    private int yShift = 0;
+    private boolean statueFound = false;
+    private boolean abandoned = false;
+    private boolean showMap = false;
 
     public GardenMazeSubView(GardenMaze maze, Point currentPoint) {
         super(2, new int[]{X_OFFSET + 5, X_OFFSET + 17});
@@ -72,16 +74,19 @@ public class GardenMazeSubView extends BottomMenuSubView {
         if (keyEvent.getKeyCode() == KeyEvent.VK_UP && hallDistance > 0) {
             maze.goForward(currentPoint, currentFacing);
             maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
+            statueFound = maze.isStatuePoint(currentPoint);
             return true;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
             currentFacing = Arithmetics.decrementWithWrap(currentFacing, 4);
             maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
+            statueFound = maze.isStatuePoint(currentPoint);
             return true;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
             currentFacing = Arithmetics.incrementWithWrap(currentFacing, 4);
             maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
+            statueFound = maze.isStatuePoint(currentPoint);
             return true;
         }
         return false;
@@ -114,7 +119,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     @Override
     protected void drawInnerArea(Model model) {
-        if (getBorderIndex() == 0) {
+        if (showMap) {
             maze.drawMap(model.getScreenHandler(), X_OFFSET, Y_OFFSET);
         } else {
             for (int y = 0; y < height; ++y) {
@@ -130,7 +135,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
                 int xShift = toUse.getWidth() == 8 ? -4 : 0;
                 model.getScreenHandler().register(toUse.getName(),
                         new Point(X_OFFSET + width/2 - toUse.getWidth()/16,
-                                Y_OFFSET + STATUE_HEIGHTS[statueDistance] + yShift),
+                                Y_OFFSET + STATUE_HEIGHTS[statueDistance]),
                         toUse, 1, xShift, 0);
             }
 
@@ -311,5 +316,21 @@ public class GardenMazeSubView extends BottomMenuSubView {
         spr.setColor3(MyColors.LIGHT_GRAY);
         spr.setColor4(MyColors.GRAY);
         return spr;
+    }
+
+    public boolean isDone() {
+        return statueFound || super.getBorderIndex() != -1;
+    }
+
+    public boolean statueFound() {
+        return statueFound;
+    }
+
+    public boolean isAbandoned() {
+        return abandoned;
+    }
+
+    public void setShowMap(boolean b) {
+        this.showMap = b;
     }
 }

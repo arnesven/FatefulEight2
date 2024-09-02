@@ -36,12 +36,23 @@ public class GardenMazeEvent extends DailyEventState {
         GardenMazeSubView subView = new GardenMazeSubView(maze, currentPoint);
 
         CollapsingTransition.transition(model, subView);
-        while (true) {
+        do {
+            waitUntil(subView, GardenMazeSubView::isDone);
+            if (subView.statueFound()) {
+                leaderSay("There's the statue.");
+                println("Press enter to continue");
+            }
             waitForReturnSilently();
             if (subView.getBorderIndex() == 1) {
+                leaderSay("Ach, this is to tough. Let's give up.");
                 break;
+            } else if (subView.getBorderIndex() == 0) {
+                subView.setShowMap(true);
+            } else {
+                subView.setShowMap(false);
             }
-        }
+        } while (true);
+        setCurrentTerrainSubview(model);
     }
 
 }

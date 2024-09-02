@@ -6,6 +6,7 @@ import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite8x8;
 import view.subviews.GardenMazeSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 import java.util.*;
@@ -162,6 +163,8 @@ public class GardenMaze {
     }
 
     public void drawMap(ScreenHandler screenHandler, int xOffset, int yOffset) {
+        int xExtra = (SubView.X_MAX - SubView.X_OFFSET - grid.length/2) / 2;
+        xOffset += xExtra;
         for (int y = 0; y < grid[0].length/2+1; y++) {
             for (int x = 0; x < grid.length/2+1; x++) {
                 int sum = 0;
@@ -186,5 +189,10 @@ public class GardenMaze {
                     MyColors.GREEN, MyColors.BROWN, MyColors.BEIGE, MyColors.GRAY_RED);
         }
         return result;
+    }
+
+    public boolean isStatuePoint(Point currentPoint) {
+        System.out.println("Statue point: " + statuePos + ", current pos: " + currentPoint);
+        return currentPoint.equals(statuePos);
     }
 }
