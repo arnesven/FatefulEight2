@@ -17,19 +17,22 @@ public class GardenMaze {
     private static final int[][] DXDYS = new int[][]{new int[]{0, -1}, new int[]{1, 0}, new int[]{0, 1}, new int[]{-1, 0}};
     private static final int MAX_DISTANCE = 6;
     private final Point statuePos;
+    private final int entryX;
     private boolean[][] grid;
     private static final Sprite8x8[] MAZE_SPRITES = makeMazeSprites();
     private static final Sprite8x8 STATUE_SPRITE = new Sprite8x8("mazestatue", "maze.png", 0x46,
             MyColors.GREEN, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.LIGHT_BLUE);
 
-    private GardenMaze(int width, int height, Point statuePos) {
+    private GardenMaze(int width, int height, int entryColumn, Point statuePos) {
         grid = new boolean[width][height];
         this.statuePos = statuePos;
+        this.entryX = entryColumn;
     }
 
 
-    public static GardenMaze makeFromPlan(String[] mazePlan) {
-        GardenMaze maze = new GardenMaze(mazePlan[0].length(), mazePlan.length, new Point(2, 2));
+    public static GardenMaze makeFromPlan(String[] mazePlan, int entryColumn) {
+        GardenMaze maze = new GardenMaze(mazePlan[0].length(),
+                mazePlan.length, entryColumn, new Point(2, 2));
         int row = 0;
         for (String str : mazePlan) {
             for (int i = 0; i < str.length(); ++i) {
@@ -40,8 +43,8 @@ public class GardenMaze {
         return maze;
     }
 
-    public static GardenMaze generate(int width, int height) {
-        GardenMaze maze = new GardenMaze(width*2-1, height*2-1,
+    public static GardenMaze generate(int width, int height, int entryColumn) {
+        GardenMaze maze = new GardenMaze(width*2-1, height*2-1, entryColumn,
                 new Point(MyRandom.randInt(width), height/2 + MyRandom.randInt(height/2)));
         maze.fillDoors();
         Point current = new Point(width, height);
@@ -90,6 +93,7 @@ public class GardenMaze {
         int[] rightDir = DXDYS[Arithmetics.incrementWithWrap(currentFacing, DXDYS.length)];
         int distance = 0;
         int statueDistance = -1;
+        boolean showExit = false;
         for (int i = 0; i < MAX_DISTANCE; ++i) {
             if (statuePos.x * 2 == xPos && statuePos.y * 2 == yPos) {
                 statueDistance = i;
@@ -98,12 +102,12 @@ public class GardenMaze {
             int leftX = xPos + leftDir[0];
             int leftY = yPos + leftDir[1];
             // System.out.println("Left-pos: " + leftX + "," + leftY);
-            leftSide.add(inGrid(leftX, leftY) && !grid[leftX][leftY]);
+            leftSide.add(isOpening(leftX, leftY));
 
             int rightX = xPos + rightDir[0];
             int rightY = yPos + rightDir[1];
             // System.out.println("Right-pos: " + rightX + "," + rightY);
-            rightSide.add(inGrid(rightX, rightY) && !grid[rightX][rightY]);
+            rightSide.add(isOpening(rightX, rightY));
 
             int[] increment = DXDYS[currentFacing];
             xPos += increment[0];
@@ -120,7 +124,13 @@ public class GardenMaze {
             System.out.println("    " + leftSide.get(i) + " " + rightSide.get(i));
         }
         System.out.println("Statue distance: " + statueDistance);
-        subView.setWalls(leftSide, rightSide, distance, statueDistance);
+        showExit = (xPos == entryX*2 && yPos == -1);
+        System.out.println("SHow exit: " + showExit);
+        subView.setWalls(leftSide, rightSide, distance, statueDistance, showExit);
+    }
+
+    private Boolean isOpening(int x, int y) {
+        return (x == entryX * 2 && y == -1) || (inGrid(x, y) && !grid[x][y]);
     }
 
     private void printMaze(int x, int y, int currentFacing) {
@@ -171,7 +181,7 @@ public class GardenMaze {
                 for (int facing = 0; facing < 4; ++facing) {
                     int xPos = x*2 + DXDYS[facing][0];
                     int yPos = y*2 + DXDYS[facing][1];
-                    sum += (!inGrid(xPos, yPos) || grid[xPos][yPos]) ? ((int)(Math.pow(2, facing))) : 0;
+                    sum += !isOpening(xPos, yPos) ? ((int)(Math.pow(2, facing))) : 0;
                 }
                 screenHandler.put(xOffset + x, yOffset + y, MAZE_SPRITES[sum]);
                 if (statuePos.x == x && statuePos.y == y) {
@@ -186,7 +196,7 @@ public class GardenMaze {
         Sprite8x8[] result = new Sprite8x8[16];
         for (int i = 0; i < result.length; ++i) {
             result[i] = new Sprite8x8("gardenmaze" + i, "maze.png", 0x50 + (i/8)*0x10 + (i % 8),
-                    MyColors.GREEN, MyColors.BROWN, MyColors.BEIGE, MyColors.GRAY_RED);
+                    MyColors.DARK_GREEN, MyColors.TAN, MyColors.BEIGE, MyColors.GRAY_RED);
         }
         return result;
     }

@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.Model;
+import model.headquarters.MajesticHeadquarters;
 import model.states.maze.GardenMaze;
 import util.Arithmetics;
 import view.BorderFrame;
@@ -38,11 +39,13 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     private static final int DISTANCE_1 = 5;
     private static final int DISTANCE_2 = 13;
-    private static final int[] STATUE_HEIGHTS = new int[]{9, 15, 15, 15, 15};
+    private static final int[] STATUE_HEIGHTS = new int[]{9, 15, 15, 16, 15};
+    private static final Sprite GRASS_SPRITE = new FilledBlockSprite(MyColors.GREEN);
     private final GardenMaze maze;
+    private final MajesticHeadquarters house;
 
     private int currentFacing;
-    private final Point currentPoint;
+    private Point currentPoint;
     private List<Boolean> leftWall;
     private List<Boolean> rightWall;
     private int hallDistance;
@@ -55,7 +58,8 @@ public class GardenMazeSubView extends BottomMenuSubView {
     private int statueDistance = -1;
     private boolean statueFound = false;
     private boolean abandoned = false;
-    private boolean showMap = false;
+    private boolean showMap = true;
+    private boolean showExit = false;
 
     public GardenMazeSubView(GardenMaze maze, Point currentPoint) {
         super(2, new int[]{X_OFFSET + 5, X_OFFSET + 17});
@@ -63,9 +67,13 @@ public class GardenMazeSubView extends BottomMenuSubView {
         rightWall = new ArrayList<>(List.of(true, true, true, true, true));
         this.hallDistance = leftWall.size();
         this.maze = maze;
+        setPositionAndFacing(currentPoint, 2);
+        this.house = new MajesticHeadquarters();
+    }
 
+    public void setPositionAndFacing(Point currentPoint, int facing) {
         this.currentPoint = currentPoint;
-        this.currentFacing = 2;
+        this.currentFacing = facing;
         maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
     }
 
@@ -109,7 +117,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     @Override
     protected void drawCursor(Model model) {
-        model.getScreenHandler().put(X_OFFSET+13, Y_MAX-2, ArrowSprites.RIGHT_BLACK_BLINK);
+        model.getScreenHandler().put(X_OFFSET+9, Y_MAX-2, ArrowSprites.RIGHT_BLACK_BLINK);
     }
 
     @Override
@@ -120,7 +128,10 @@ public class GardenMazeSubView extends BottomMenuSubView {
     @Override
     protected void drawInnerArea(Model model) {
         if (showMap) {
-            maze.drawMap(model.getScreenHandler(), X_OFFSET, Y_OFFSET);
+            HeadquartersSubView.drawSky(model);
+            model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+10, Y_MAX - 4, GRASS_SPRITE);
+            house.drawYourself(model, new Point(X_OFFSET+width/2-4, Y_OFFSET+8));
+            maze.drawMap(model.getScreenHandler(), X_OFFSET, Y_OFFSET+12);
         } else {
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; ++x) {
@@ -130,7 +141,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
                     model.getScreenHandler().put(finalX, finalY, spriteToUse);
                 }
             }
-            if (0 <= statueDistance && statueDistance <= 5) {
+            if (0 <= statueDistance && statueDistance < 5) {
                 Sprite toUse = STATUE_SPRITES[statueDistance];
                 int xShift = toUse.getWidth() == 8 ? -4 : 0;
                 model.getScreenHandler().register(toUse.getName(),
@@ -140,7 +151,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
             }
 
         }
-        BorderFrame.drawString(model.getScreenHandler(), "Move", X_OFFSET + 14, Y_MAX-2, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), "Enter Maze", X_OFFSET + 10, Y_MAX-2, MyColors.WHITE);
     }
 
     @Override
@@ -151,7 +162,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
     @Override
     protected String getTitle(int i) {
         if (i == 0) {
-            return "Show map";
+            return "Return";
         }
         return "Give up";
     }
@@ -162,7 +173,11 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
         if (hallDistance < RANGE_UPPER_BOUNDS.length) {
             if (RANGE_UPPER_BOUNDS[hallDistance] < x && x < width - 1 - RANGE_UPPER_BOUNDS[hallDistance]) {
-                return getGapSprite(hallDistance, x, y);
+                if (showExit) {
+                    return getExitSprite(hallDistance, x, y);
+                } else {
+                    return getGapSprite(hallDistance, x, y);
+                }
             }
         }
         // See all the way down
@@ -172,6 +187,58 @@ public class GardenMazeSubView extends BottomMenuSubView {
             return getGapSprite(gapIndex, x, y);
         }
         return angledSprite(x, y, antiX);
+    }
+
+    private Sprite getExitSprite(int hallDistance, int x, int y) {
+        if (y <= RANGE_UPPER_BOUNDS[hallDistance]) {
+            return getSkySprite(x, y);
+        }
+        if (y >= height - RANGE_UPPER_BOUNDS[hallDistance] - 3) {
+            return GROUND_SPRITE;
+        }
+
+        int gapSize = RANGE_UPPER_BOUNDS[hallDistance] - RANGE_LOWER_BOUNDS[hallDistance] + 1;
+        int leftSide = RANGE_UPPER_BOUNDS[hallDistance] + 1;
+        int rightSide = width - 1 - RANGE_UPPER_BOUNDS[hallDistance];
+
+        if (leftSide + gapSize == x) {
+            if (x <= y && y <= width - x - 1) {
+                return FACING_WALL[wallSize(x)];
+            }
+        } else if (x == rightSide - 1 - gapSize) {
+            if (width - x - 1 <= y && y <= x) {
+                return FACING_WALL[wallSize(x)];
+            }
+        }
+
+        if (leftSide <= x && x < leftSide + gapSize) {
+            if (x == y) {
+                return DIAGONAL_WALL_SKY[wallSize(x)];
+            }
+            if (width - x - 1 == y) {
+                return ANTI_DIAGONAL_WALL_GROUND[wallSize(x)];
+            }
+            if ( x < y && y < width - x - 1) {
+                return ANGLED_WALL[wallSize(x)];
+            }
+        }
+
+        if (rightSide - gapSize <= x && x < rightSide) {
+            if (x == y) {
+                return DIAGONAL_WALL_GROUND[wallSize(x)];
+            }
+            if (width - x - 1 == y) {
+                return ANTI_DIAGONAL_WALL_SKY[wallSize(x)];
+            }
+            if (width - x - 1 < y && y < x) {
+                return ANGLED_WALL[wallSize(x)];
+            }
+        }
+
+        if (y < height/2 - 1) {
+            return getSkySprite(x, y);
+        }
+        return GROUND_SPRITE;
     }
 
     private Sprite angledSprite(int x, int y, int antiX) {
@@ -301,11 +368,12 @@ public class GardenMazeSubView extends BottomMenuSubView {
         return true;
     }
 
-    public void setWalls(List<Boolean> leftSide, List<Boolean> rightSide, int distance, int statueDistance) {
+    public void setWalls(List<Boolean> leftSide, List<Boolean> rightSide, int distance, int statueDistance, boolean showExit) {
         this.leftWall = leftSide;
         this.rightWall = rightSide;
         this.hallDistance = distance;
         this.statueDistance = statueDistance;
+        this.showExit = showExit;
     }
 
 

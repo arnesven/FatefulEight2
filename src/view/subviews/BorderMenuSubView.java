@@ -22,6 +22,10 @@ public abstract class BorderMenuSubView extends SubView {
         setBorderCursorIndex(getDefaultIndex());
     }
 
+    protected void setInBorderMenu(boolean b) {
+        this.inBorderMenu = b;
+    }
+
     protected void setBorderCursorIndex(int cursorIndex) {
         this.borderCursorIndex = cursorIndex;
     }

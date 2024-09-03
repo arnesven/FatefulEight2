@@ -50,7 +50,7 @@ public class HeadquartersSubView extends SubView {
         drawHorses(model);
     }
 
-    private Point convertToScreen(Point point) {
+    private static Point convertToScreen(Point point) {
         return new Point(X_OFFSET + point.x * 4, Y_OFFSET + point.y * 4);
     }
 
@@ -152,20 +152,24 @@ public class HeadquartersSubView extends SubView {
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
             VampireFeedingSubView.drawSkyNight(model, new Random(1234));
         } else {
-            for (int x = 0; x < 8; ++x) {
-                Point p = VampireFeedingSubView.convertToScreen(new Point(x, 0));
-                model.getScreenHandler().put(p.x, p.y, SKY_SPRITE);
-                model.getScreenHandler().put(p.x, p.y+4, SKY_SPRITE_16);
-                model.getScreenHandler().put(p.x, p.y+6, SKY_SPRITE_16);
-                model.getScreenHandler().put(p.x+2, p.y+4, SKY_SPRITE_16);
-                model.getScreenHandler().put(p.x+2, p.y+6, SKY_SPRITE_16);
-            }
+            drawSky(model);
         }
         drawGrass(model);
         drawRoom(model, 3, 3 + model.getParty().getHeadquarters().getSize());
         Point p = convertToScreen(new Point(6, 2));
         p.x -= 2;
         model.getParty().getHeadquarters().drawYourself(model, p);
+    }
+
+    public static void drawSky(Model model) {
+        for (int x = 0; x < 8; ++x) {
+            Point p = VampireFeedingSubView.convertToScreen(new Point(x, 0));
+            model.getScreenHandler().put(p.x, p.y, SKY_SPRITE);
+            model.getScreenHandler().put(p.x, p.y+4, SKY_SPRITE_16);
+            model.getScreenHandler().put(p.x, p.y+6, SKY_SPRITE_16);
+            model.getScreenHandler().put(p.x+2, p.y+4, SKY_SPRITE_16);
+            model.getScreenHandler().put(p.x+2, p.y+6, SKY_SPRITE_16);
+        }
     }
 
     private void drawRoom(Model model, int rowStart, int rowEnd) {
@@ -184,7 +188,7 @@ public class HeadquartersSubView extends SubView {
         }
     }
 
-    private void drawGrass(Model model) {
+    public static void drawGrass(Model model) {
         Sprite spriteToUse = DAY_GRASS;
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
             spriteToUse = NIGHT_GRASS;
