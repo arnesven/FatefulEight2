@@ -39,7 +39,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     private static final int DISTANCE_1 = 5;
     private static final int DISTANCE_2 = 13;
-    private static final int[] STATUE_HEIGHTS = new int[]{9, 15, 15, 16, 15};
+    private static final int[] STATUE_HEIGHTS = new int[]{9, 15, 16, 16, 15};
     private static final Sprite GRASS_SPRITE = new FilledBlockSprite(MyColors.GREEN);
     private final GardenMaze maze;
     private final MajesticHeadquarters house;
@@ -60,13 +60,17 @@ public class GardenMazeSubView extends BottomMenuSubView {
     private boolean abandoned = false;
     private boolean showMap = true;
     private boolean showExit = false;
+    private int timeLimitSeconds;
+    private long timeStarted = -1;
+    private int foundTime;
 
-    public GardenMazeSubView(GardenMaze maze, Point currentPoint) {
+    public GardenMazeSubView(GardenMaze maze, Point currentPoint, int timeLimitSeconds) {
         super(2, new int[]{X_OFFSET + 5, X_OFFSET + 17});
         leftWall  = new ArrayList<>(List.of(true, true, true, true, true));
         rightWall = new ArrayList<>(List.of(true, true, true, true, true));
         this.hallDistance = leftWall.size();
         this.maze = maze;
+        this.timeLimitSeconds = timeLimitSeconds;
         setPositionAndFacing(currentPoint, 2);
         this.house = new MajesticHeadquarters();
     }
@@ -82,22 +86,27 @@ public class GardenMazeSubView extends BottomMenuSubView {
         if (keyEvent.getKeyCode() == KeyEvent.VK_UP && hallDistance > 0) {
             maze.goForward(currentPoint, currentFacing);
             maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
-            statueFound = maze.isStatuePoint(currentPoint);
+            checkForStatueFound();
             return true;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
             currentFacing = Arithmetics.decrementWithWrap(currentFacing, 4);
             maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
-            statueFound = maze.isStatuePoint(currentPoint);
+            checkForStatueFound();
             return true;
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
             currentFacing = Arithmetics.incrementWithWrap(currentFacing, 4);
             maze.setPerspective(this, currentPoint.x, currentPoint.y, currentFacing);
-            statueFound = maze.isStatuePoint(currentPoint);
+            checkForStatueFound();
             return true;
         }
         return false;
+    }
+
+    private void checkForStatueFound() {
+        statueFound = maze.isStatuePoint(currentPoint);
+        foundTime = getClockTime();
     }
 
     @Override
@@ -117,7 +126,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     @Override
     protected void drawCursor(Model model) {
-        model.getScreenHandler().put(X_OFFSET+9, Y_MAX-2, ArrowSprites.RIGHT_BLACK_BLINK);
+        model.getScreenHandler().put(X_OFFSET+3, Y_MAX-2, ArrowSprites.RIGHT_BLACK_BLINK);
     }
 
     @Override
@@ -149,9 +158,21 @@ public class GardenMazeSubView extends BottomMenuSubView {
                                 Y_OFFSET + STATUE_HEIGHTS[statueDistance]),
                         toUse, 1, xShift, 0);
             }
-
         }
-        BorderFrame.drawString(model.getScreenHandler(), "Enter Maze", X_OFFSET + 10, Y_MAX-2, MyColors.WHITE);
+        drawClock(model);
+        BorderFrame.drawString(model.getScreenHandler(), "Enter Maze", X_OFFSET + 4, Y_MAX-2, MyColors.WHITE);
+    }
+
+    private void drawClock(Model model) {
+        int time = statueFound() ? foundTime : getClockTime();
+        int min = time / (60*100);
+        int sec = (time - min*60*100) / 100;
+        int hund = time - min*60*100 - sec*100;
+        if (time == 0 && ((System.currentTimeMillis() / 500) % 2) == 0) {
+            return;
+        }
+        BorderFrame.drawString(model.getScreenHandler(), String.format("Time: %02d:%02d:%02d", min, sec, hund),
+                X_OFFSET+17, Y_MAX-2, MyColors.WHITE, MyColors.BLACK);
     }
 
     @Override
@@ -387,7 +408,11 @@ public class GardenMazeSubView extends BottomMenuSubView {
     }
 
     public boolean isDone() {
-        return statueFound || super.getBorderIndex() != -1;
+        return statueFound || super.getBorderIndex() != -1 || isOutOfTime();
+    }
+
+    public boolean isOutOfTime() {
+        return getClockTime() == 0;
     }
 
     public boolean statueFound() {
@@ -400,5 +425,21 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     public void setShowMap(boolean b) {
         this.showMap = b;
+    }
+
+    public int getClockTime() {
+        int limit = timeLimitSeconds*100;
+        if (timeStarted == -1) {
+            return limit;
+        }
+        int left = limit - (int)((System.currentTimeMillis() - timeStarted) / 10);
+        if (left < 0) {
+            return 0;
+        }
+        return left;
+    }
+
+    public void startTimer() {
+        this.timeStarted = System.currentTimeMillis();
     }
 }
