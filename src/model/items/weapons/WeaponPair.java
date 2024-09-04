@@ -198,6 +198,9 @@ public class WeaponPair extends Weapon {
         } else {
             penalty = -4;
         }
+        if (offHand.isOfType(SmallBladedWeapon.class)) {
+            penalty += 1;
+        }
         if (mainHand.getSkill() != Skill.MagicAny) {
             if (Skill.isMagicSkill(mainHand.getSkill())) {
                 bonuses.add(new MyPair<>(mainHand.getSkill(), penalty+1));
