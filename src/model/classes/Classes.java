@@ -55,6 +55,7 @@ public interface Classes {
     CharacterClass TRAVELLER = new TravellerNPCClass();
     CharacterClass VAMPIRE = new VampireNPCClass();
     CharacterClass CULTIST = new CultistNPCClass();
+    CharacterClass GARDENER = new GardenerNPCClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();

@@ -138,9 +138,9 @@ public class GardenMazeSubView extends BottomMenuSubView {
     protected void drawInnerArea(Model model) {
         if (showMap) {
             HeadquartersSubView.drawSky(model);
-            model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+10, Y_MAX - 4, GRASS_SPRITE);
-            house.drawYourself(model, new Point(X_OFFSET+width/2-4, Y_OFFSET+8));
-            maze.drawMap(model.getScreenHandler(), X_OFFSET, Y_OFFSET+12);
+            model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+8, Y_MAX - 4, GRASS_SPRITE);
+            house.drawYourself(model, new Point(X_OFFSET+width/2-4, Y_OFFSET+6));
+            maze.drawMap(model.getScreenHandler(), X_OFFSET, Y_OFFSET+11, isOutOfTime() ? currentPoint : null);
         } else {
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; ++x) {
@@ -168,7 +168,7 @@ public class GardenMazeSubView extends BottomMenuSubView {
         int min = time / (60*100);
         int sec = (time - min*60*100) / 100;
         int hund = time - min*60*100 - sec*100;
-        if (time == 0 && ((System.currentTimeMillis() / 500) % 2) == 0) {
+        if (time == 0 && ((System.currentTimeMillis() / 500) % 2) == 0 && !showMap) {
             return;
         }
         BorderFrame.drawString(model.getScreenHandler(), String.format("Time: %02d:%02d:%02d", min, sec, hund),
@@ -441,5 +441,9 @@ public class GardenMazeSubView extends BottomMenuSubView {
 
     public void startTimer() {
         this.timeStarted = System.currentTimeMillis();
+    }
+
+    public void setTime(int i) {
+        this.timeLimitSeconds = i;
     }
 }

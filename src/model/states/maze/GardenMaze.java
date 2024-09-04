@@ -22,6 +22,10 @@ public class GardenMaze {
     private static final Sprite8x8[] MAZE_SPRITES = makeMazeSprites();
     private static final Sprite8x8 STATUE_SPRITE = new Sprite8x8("mazestatue", "maze.png", 0x46,
             MyColors.GREEN, MyColors.BROWN, MyColors.LIGHT_GRAY, MyColors.LIGHT_BLUE);
+    private static final Sprite8x8 MAZE_ENTRY = new Sprite8x8("mazestatue", "maze.png", 0x47,
+            MyColors.DARK_GREEN, MyColors.TAN, MyColors.GREEN, MyColors.LIGHT_BLUE);
+    private static final Sprite8x8 RED_DOT_SPRITE = new Sprite8x8("mazestatue", "maze.png", 0x36,
+            MyColors.RED, MyColors.TAN, MyColors.GREEN, MyColors.LIGHT_BLUE);
 
     private GardenMaze(int width, int height, int entryColumn, Point statuePos) {
         grid = new boolean[width][height];
@@ -50,6 +54,7 @@ public class GardenMaze {
         Point current = new Point(width, height);
         Set<Point> visited = new HashSet<>();
         maze.recursiveGenerate(current, visited);
+        maze.printMaze(entryColumn*2, 0, 0);
         return maze;
     }
 
@@ -57,7 +62,6 @@ public class GardenMaze {
         if (visited.contains(current)) {
             return;
         }
-        printMaze(current.x, current.y, 2);
         visited.add(current);
         List<Integer> facings = new ArrayList<>(List.of(0, 1, 2, 3));
         Collections.shuffle(facings);
@@ -66,9 +70,13 @@ public class GardenMaze {
             int yPos = current.y + DXDYS[facing][1];
             Point nextPoint = new Point(current.x + 2*DXDYS[facing][0],
                     current.y + 2*DXDYS[facing][1]);
-            if (inGrid(xPos, yPos) && (!visited.contains(nextPoint) || MyRandom.randInt(8) == 0)) {
-                grid[xPos][yPos] = false;
-                recursiveGenerate(nextPoint, visited);
+            if (inGrid(xPos, yPos)) {
+                if (!visited.contains(nextPoint)) {
+                    grid[xPos][yPos] = false;
+                    recursiveGenerate(nextPoint, visited);
+                } else if (MyRandom.randInt(8) == 0) {
+                    grid[xPos][yPos] = false;
+                }
             }
         }
     }
@@ -84,7 +92,7 @@ public class GardenMaze {
     public void setPerspective(GardenMazeSubView subView, int x, int y, int currentFacing) {
         int xPos = x * 2;
         int yPos = y * 2;
-        printMaze(xPos, yPos, currentFacing);
+        //printMaze(xPos, yPos, currentFacing);
 
         List<Boolean> leftSide = new ArrayList<>();
         List<Boolean> rightSide = new ArrayList<>();
@@ -172,7 +180,7 @@ public class GardenMaze {
         }
     }
 
-    public void drawMap(ScreenHandler screenHandler, int xOffset, int yOffset) {
+    public void drawMap(ScreenHandler screenHandler, int xOffset, int yOffset, Point current) {
         int xExtra = (SubView.X_MAX - SubView.X_OFFSET - grid.length/2) / 2;
         xOffset += xExtra;
         for (int y = 0; y < grid[0].length/2+1; y++) {
@@ -188,8 +196,13 @@ public class GardenMaze {
                     screenHandler.register(STATUE_SPRITE.getName(),
                             new Point(xOffset + statuePos.x, yOffset + statuePos.y), STATUE_SPRITE);
                 }
+                if (current != null && current.x == x && current.y == y && (System.currentTimeMillis() / 500) % 2 == 0) {
+                    screenHandler.register(RED_DOT_SPRITE.getName(),
+                            new Point(xOffset + x, yOffset + y), RED_DOT_SPRITE, 2);
+                }
             }
         }
+        screenHandler.put(xOffset + entryX, yOffset - 1, MAZE_ENTRY);
     }
 
     private static Sprite8x8[] makeMazeSprites() {
