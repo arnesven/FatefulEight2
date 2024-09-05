@@ -265,4 +265,8 @@ public class Inventory implements Serializable {
     public void addToTentSize() {
         tentSize = Math.min(tentSize + 1, MAXIMUM_TENT_SIZE);
     }
+
+    public boolean tentIsMaxSize() {
+        return tentSize == MAXIMUM_TENT_SIZE;
+    }
 }

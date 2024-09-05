@@ -4,6 +4,7 @@ import model.Model;
 import model.items.FoodDummyItem;
 import model.items.Item;
 import model.items.ObolsDummyItem;
+import model.items.special.TentUpgradeItem;
 import view.subviews.ArrowMenuSubView;
 
 import java.util.List;
@@ -58,6 +59,10 @@ public class TradeWithBartenderState extends ShopState {
         }
         if (it instanceof FoodDummyItem) {
             EveningState.buyRations(model, this);
+            return false;
+        }
+        if (it instanceof TentUpgradeItem && model.getParty().getInventory().tentIsMaxSize()) {
+            model.getLog().addAnimated("Your tent is already at its maximum size.\n");
             return false;
         }
         return super.purchaseItem(model, it, xPos, yPos);
