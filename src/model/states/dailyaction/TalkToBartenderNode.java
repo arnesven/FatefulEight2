@@ -9,6 +9,7 @@ import model.items.ObolsDummyItem;
 import model.items.potions.BeerPotion;
 import model.items.potions.WinePotion;
 import model.items.special.TentUpgradeItem;
+import model.items.weapons.FishingPole;
 import model.states.AcceptDeliveryEvent;
 import model.states.GameState;
 import model.states.TradeWithBartenderState;
@@ -37,6 +38,9 @@ public class TalkToBartenderNode extends DailyActionNode {
         itemsForSale = new ArrayList<>(List.of(new ObolsDummyItem(10),
                 new FoodDummyItem(5)));
         itemsForSale.add(new TentUpgradeItem());
+        if (MyRandom.randInt(4) == 0) {
+            itemsForSale.add(new FishingPole());
+        }
         for (int i = MyRandom.randInt(4); i > 0; --i) {
             itemsForSale.add(new BeerPotion());
         }
