@@ -75,6 +75,9 @@ public class RecruitState extends GameState {
     @Override
     public GameState run(Model model) {
         model.getTutorial().recruit(model);
+        print(" ");
+        model.getLog().waitForAnimationToFinish();
+        model.getTutorial().recruitContd(model);
         if (GameState.partyIsCreepy(model)) {
             println("There are some adventurers here, but they are unwilling to join because 'party to creepy'.");
             return new EveningState(model);

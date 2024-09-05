@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.items.Item;
+import model.items.special.TentUpgradeItem;
 import model.items.weapons.Dagger;
 import util.Arithmetics;
 import util.MyStrings;

@@ -2,9 +2,11 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialRecruitDialog extends HelpDialog {
+import java.util.List;
 
-    private static final String text =
+public class TutorialRecruitDialog extends ExpandableHelpDialog {
+
+    private static final String TEXT =
             "Recruitment can be performed at Inns, Towns and Castles.\n\n" +
             "It's a great way to expand your party, but sometimes there may not " +
             "be any adventurers willing to join your party. Some races dislike others, " +
@@ -13,12 +15,31 @@ public class TutorialRecruitDialog extends HelpDialog {
             "experienced.\n\n" +
             "New characters never bring more than a basic weapon with them but they sometimes " +
             "contribute a little bit of gold to the party's communal purse.\n\n" +
+            "Initially your party can consist of up to four party members. However, if you upgrade your " +
+            "tent you can hire on more party member. Tent upgrades can be purchased at inns and taverns " +
+            "and can be bought multiple times. You can have at most eight party members.";
+    private static final String TEXT_CONTD =
             "Think carefully about what characters you draft to your party. For instance, " +
             "take into account a newcomer's skill set and how it will affect the party's alignment.\n\n" +
             "A new party member's initial attitude toward the other party members is dependent on their " +
             "respective races. The initial attitude toward the leader or of the leader is never negative.";
 
     public TutorialRecruitDialog(GameView previous) {
-        super(previous, "Recruiting", text);
+        super(previous, "Recruiting", TEXT, false);
+    }
+
+    public static HelpDialog makeContdDialog(GameView view) {
+        return new TutorialRecruitContd(view);
+    }
+
+    @Override
+    protected List<HelpDialog> makeSubSections(GameView view) {
+        return List.of(makeContdDialog(view));
+    }
+
+    private static class TutorialRecruitContd extends SubChapterHelpDialog {
+        public TutorialRecruitContd(GameView view) {
+            super(view, "Recruiting (cont'd)", TEXT_CONTD);
+        }
     }
 }

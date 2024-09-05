@@ -272,7 +272,7 @@ public class Party implements Serializable {
     }
 
     public boolean isFull() {
-        return partyMembers.size() == 8;
+        return partyMembers.size() == inventory.getTentSize();
     }
 
     public void addToGold(int cost) {

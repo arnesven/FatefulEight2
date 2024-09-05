@@ -23,6 +23,7 @@ public class Inventory implements Serializable {
     public static final int WEIGHT_OF_INGREDIENTS = 100;
     public static final int WEIGHT_OF_LOCKPICKS = 10;
     private static final int STARTING_GOLD = 20;
+    private static final int MAXIMUM_TENT_SIZE = 8;
 
     private final List<Weapon> weapons = new ArrayList<>();
     private final List<Clothing> clothing = new ArrayList<>();
@@ -43,6 +44,7 @@ public class Inventory implements Serializable {
     private int ingredients = 0;
     private int materials = 0;
     private int lockpicks = 0;
+    private int tentSize = 4;
 
     public Inventory() { }
 
@@ -254,5 +256,13 @@ public class Inventory implements Serializable {
 
     public List<StoryItem> getStoryItems() {
         return storyItems;
+    }
+
+    public int getTentSize() {
+        return tentSize;
+    }
+
+    public void addToTentSize() {
+        tentSize = Math.min(tentSize + 1, MAXIMUM_TENT_SIZE);
     }
 }

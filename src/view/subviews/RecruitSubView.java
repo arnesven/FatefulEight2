@@ -29,7 +29,15 @@ public class RecruitSubView extends TopMenuSubView {
     @Override
     protected void drawInnerArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+1, Y_MAX, blueBlock);
+        drawAvailableSlots(model);
         drawRecruitables(model);
+    }
+
+    private void drawAvailableSlots(Model model) {
+        int slots = model.getParty().getInventory().getTentSize() - model.getParty().size();
+        MyColors textColor = slots > 0 ? MyColors.WHITE : MyColors.RED;
+        BorderFrame.drawCentered(model.getScreenHandler(), "Available tent space: " + slots, Y_OFFSET + 1,
+                textColor, MyColors.BLUE);
     }
 
     @Override
