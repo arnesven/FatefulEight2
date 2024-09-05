@@ -125,6 +125,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new GuideEvent(model, 1),
                     new GuideEvent(model, 2)
                     // WarehouseEvent = Sokoban
+                    // BoozersEvent
             ));
         }
         return new NoEventState(model);

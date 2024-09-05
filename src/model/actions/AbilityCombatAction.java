@@ -44,6 +44,7 @@ public class AbilityCombatAction extends CombatAction {
     @Override
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> list = new ArrayList<>();
+        // TODO: Refactor this: Make list of (active) combat abilities, go through and call canBeDone() one each. Let party view and level up summary use that list and call fulfillsSkillRrquirements()
         if (model.getParty().getFrontRow().contains(performer)) {
             if (performer.getUnmodifiedRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy && target.canBeAttackedBy(performer)) {
                 list.add(new SneakAttackCombatAction());
@@ -95,6 +96,11 @@ public class AbilityCombatAction extends CombatAction {
         if (MesmerizeVampireAbility.canDoAbility(performer, target)) {
             list.add(MesmerizeVampireAbility.makeCombatAbility());
         }
+        // TODO: Cleave (Requires Axes - 6)
+        // TODO: Grand Slam (Requires Blunt Weapons - 6)
+        // TODO: Feint/Parry (Requires Blades - 6)
+        // TODO: Multi-Shot (Requires Bows - 6)
+        // TODO: Impale (Requires Polearms - 6)
         return list;
     }
 
