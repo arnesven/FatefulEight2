@@ -86,6 +86,11 @@ public class SwampHex extends WorldHex {
     }
 
     @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.GOOD, ResourcePrevalence.NON_EXISTENT);
+    }
+
+    @Override
     public DailyEventState generateDogEvent(Model model) {
         return MyRandom.sample(List.of(new SwampRaftEvent(model), new WoundedAdventurerEvent(model), new MushroomsEvent(model)));
     }

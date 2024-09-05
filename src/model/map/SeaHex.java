@@ -76,6 +76,11 @@ public class SeaHex extends WorldHex {
     }
 
     @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.NON_EXISTENT);
+    }
+
+    @Override
     public CombatTheme getCombatTheme() {
         return new ShipCombatTheme();
     }

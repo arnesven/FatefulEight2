@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
+import model.states.dailyaction.FindResourcesDailyAction;
 import model.tasks.DestinationTask;
 import view.combat.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
@@ -206,6 +207,7 @@ public abstract class WorldHex {
             actions.addAll(model.getMainStory().getDailyActionsForHex(model, this));
         }
         FishingDailyAction.addActionIfApplicable(model, actions);
+        FindResourcesDailyAction.addActionIfApplicable(model, actions);
         if (model.getParty().isOnRoad()) {
             actions.add(new GetOffRoadAction(model));
         } else if (hasRoad()) {
@@ -446,4 +448,6 @@ public abstract class WorldHex {
     public DailyEventState getNightTimeAmbushEvent(Model model) {
         return null;
     }
+
+    public abstract ResourcePrevalence getResourcePrevalences();
 }

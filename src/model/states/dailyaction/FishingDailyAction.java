@@ -9,7 +9,7 @@ import java.util.List;
 public class FishingDailyAction extends DailyAction {
     private static int lastFishedOn = 0;
 
-    public FishingDailyAction(Model model) {
+    private FishingDailyAction(Model model) {
         super("Go Fishing", new FishingState(model));
     }
 

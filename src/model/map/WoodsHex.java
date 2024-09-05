@@ -91,4 +91,9 @@ public class WoodsHex extends WorldHex {
         }
         return null;
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.FAIR, ResourcePrevalence.POOR);
+    }
 }

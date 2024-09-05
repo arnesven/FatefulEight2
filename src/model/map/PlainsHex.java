@@ -75,4 +75,9 @@ public class PlainsHex extends WorldHex {
         return "Plains are open fields of grass. Nomads and hunters normally roam these lands but here and there " +
                 "halflings can also be found. Plains are not particularly dangerous terrain.";
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.FAIR, ResourcePrevalence.NON_EXISTENT);
+    }
 }

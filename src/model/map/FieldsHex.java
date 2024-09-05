@@ -61,4 +61,9 @@ public class FieldsHex extends WorldHex {
         }
         return new NoEventState(model);
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.POOR, ResourcePrevalence.POOR);
+    }
 }

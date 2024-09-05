@@ -96,4 +96,9 @@ public class MountainHex extends WorldHex {
         }
         return null;
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.POOR, ResourcePrevalence.GOOD);
+    }
 }

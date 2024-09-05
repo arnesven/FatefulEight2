@@ -65,4 +65,9 @@ public class JungleHex extends WorldHex {
     public String getTerrainDescription() {
         return "Jungles are heavily wooded areas filled with dangers. ...!";
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.GOOD, ResourcePrevalence.POOR);
+    }
 }

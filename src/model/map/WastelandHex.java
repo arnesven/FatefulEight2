@@ -85,4 +85,9 @@ public class WastelandHex extends WorldHex {
     public CombatTheme getCombatTheme() {
         return new WastelandCombatTheme();
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.POOR);
+    }
 }

@@ -88,4 +88,9 @@ public class DesertHex extends WorldHex {
                 "areas are dangerous because of the harsh climate but also because of the dangerous creatures who live there. " +
                 "Such creatures are often hardened by the elements and hostile to any who come near them.";
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.NON_EXISTENT);
+    }
 }

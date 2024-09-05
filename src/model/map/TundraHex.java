@@ -84,4 +84,9 @@ public class TundraHex extends WorldHex {
                 "being prevalent rather than trees. Tundras are inherently dangerous places because of the harsh climate but " +
                 "also because of dangerous creatures inhabiting the tundra.";
     }
+
+    @Override
+    public ResourcePrevalence getResourcePrevalences() {
+        return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.POOR);
+    }
 }
