@@ -6,6 +6,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
 import model.enemies.Enemy;
+import model.items.weapons.BowWeapon;
 import model.items.weapons.Weapon;
 import model.states.CombatEvent;
 import view.help.HelpDialog;
@@ -38,6 +39,7 @@ public class MultiShotCombatAction extends StaminaCombatAbility {
         performer.applyAttack(model, combat, target, false, 0,
                 weapon.getCriticalTarget(), weapon.getEffectSprite(), result);
         List<Enemy> enemies = new ArrayList<>(combat.getEnemies());
+        enemies.remove(target);
         Collections.shuffle(enemies);
         for (int i = 0; i < 4 && !enemies.isEmpty(); ++i) {
             target = enemies.remove(0);
@@ -53,7 +55,7 @@ public class MultiShotCombatAction extends StaminaCombatAbility {
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
-        return target instanceof Enemy;
+        return target instanceof Enemy && performer.getEquipment().getWeapon().isOfType(BowWeapon.class);
     }
 
 }
