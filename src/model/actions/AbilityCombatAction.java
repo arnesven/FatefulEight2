@@ -74,6 +74,7 @@ public class AbilityCombatAction extends CombatAction {
         }
         list.add(BatFormVampireAbility.makeCombatAbility());
         list.add(MesmerizeVampireAbility.makeCombatAbility());
+        list.add(new MultiShotCombatAction());
         // TODO: Cleave (Requires Axes - 6)
         // TODO: Grand Slam (Requires Blunt Weapons - 6)
         // TODO: Feint/Parry (Requires Blades - 6)

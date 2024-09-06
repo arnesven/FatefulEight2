@@ -215,6 +215,11 @@ public class GameCharacter extends Combatant {
         int bonus = getAttackBonusesFromConditions();
         SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this),
                 SkillCheckResult.NO_DIFFICULTY, bonus);
+        applyAttack(model, combatEvent, target, sneakAttack, extraDamage, crit, effectSprite, result);
+    }
+
+    public void applyAttack(Model model, CombatEvent combatEvent, Combatant target, boolean sneakAttack,
+                             int extraDamage, int crit, RunOnceAnimationSprite effectSprite, SkillCheckResult result) {
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
         if (extraDamage > 0) {
