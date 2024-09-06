@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.CombatAction;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.GameView;
@@ -30,8 +31,18 @@ public class BatFormVampireAbility extends VampireAbility {
         return false;
     }
 
-    public static CombatAction makeCombatAbility() {
-        return new CombatAction("Bat Form", false, false) {
+    public static SpecialAbilityCombatAction makeCombatAbility() {
+        return new SpecialAbilityCombatAction("Bat Form", false, false) {
+            @Override
+            public boolean possessesAbility(Model model, GameCharacter performer) {
+                return canDoAbility(performer);
+            }
+
+            @Override
+            protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+                return true;
+            }
+
             @Override
             public HelpDialog getHelpChapter(Model model) {
                 return BatFormVampireAbility.getHelpChapter(model.getView());

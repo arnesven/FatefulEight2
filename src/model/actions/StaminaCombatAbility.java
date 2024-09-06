@@ -3,9 +3,10 @@ package model.actions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.states.CombatEvent;
 
-public abstract class StaminaCombatAbility extends CombatAction {
+public abstract class StaminaCombatAbility extends SpecialAbilityCombatAction {
     private boolean takeAnotherAction = false;
 
     public StaminaCombatAbility(String name, boolean isMeleeAttack) {

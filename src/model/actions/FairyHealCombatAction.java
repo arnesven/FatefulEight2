@@ -5,19 +5,20 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.items.weapons.*;
 import model.states.CombatEvent;
 import view.help.HelpDialog;
 import view.help.TutorialFairyHeal;
 import view.sprites.DamageValueEffect;
 
-public class FairyHealCombatAction extends CombatAction {
+public class FairyHealCombatAction extends SpecialAbilityCombatAction {
     private static final int DIFFICULTY = 7;
     public static final int REQUIRED_RANKS = 2;
     public static final Skill SKILL_TO_USE = Skill.MagicWhite;
 
     public FairyHealCombatAction() {
-        super("Fairy Heal", false);
+        super("Fairy Heal", false, false);
     }
 
     @Override
@@ -43,15 +44,20 @@ public class FairyHealCombatAction extends CombatAction {
         }
     }
 
-    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         if (performer == target) {
             return false;
         }
         if (target.isDead()) {
             return false;
         }
-        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
-                (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
-                        performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+        return (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
+                performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }
 }

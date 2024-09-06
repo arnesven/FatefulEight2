@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.weapons.BladedWeapon;
@@ -32,18 +33,11 @@ public class RiposteCombatAction extends StaminaCombatAbility {
         }
     }
 
-
     public static int getEvadeBonus(GameCharacter gameCharacter) {
         return gameCharacter.hasCondition(RiposteStanceCondition.class) ? 2 : 0;
     }
 
     private static final Sprite SPRITE = CharSprite.make((char)(0xD0), MyColors.LIGHT_BLUE, MyColors.BLACK, MyColors.CYAN);
-
-    public static boolean canDoRiposteAbility(GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT &&
-                (performer.getEquipment().getWeapon().isOfType(BladedWeapon.class) ||
-                        performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class));
-    }
 
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
@@ -59,6 +53,18 @@ public class RiposteCombatAction extends StaminaCombatAbility {
 
     public Condition getCondition() {
         return new RiposteStanceCondition();
+    }
+
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return model.getParty().getFrontRow().contains(performer) &&
+                (performer.getEquipment().getWeapon().isOfType(BladedWeapon.class) ||
+                        performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class));
     }
 
     private static class RiposteStanceCondition extends Condition {

@@ -17,11 +17,6 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
         super("Sniper Shot", false);
     }
 
-    public static boolean canDoSniperShotAbility(GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Perception) >= PERCEPTION_RANKS_REQUIREMENT &&
-                performer.getEquipment().getWeapon().isRangedAttack();
-    }
-
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().sniperShot(model);
@@ -34,6 +29,16 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
     @Override
     public HelpDialog getHelpChapter(Model model) {
         return new TutorialSniperShot(model.getView());
+    }
+
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(Skill.Perception) >= PERCEPTION_RANKS_REQUIREMENT;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return performer.getEquipment().getWeapon().isRangedAttack();
     }
 
     private static class SniperShotStrikeEffectSprite extends RunOnceAnimationSprite {

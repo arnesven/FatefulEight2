@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
@@ -14,13 +15,13 @@ import view.help.TutorialRegenerate;
 import view.sprites.CurlySpiralAnimation;
 import view.sprites.RunOnceAnimationSprite;
 
-public class RegenerationCombatAction extends CombatAction {
+public class RegenerationCombatAction extends SpecialAbilityCombatAction {
     public static final int REQUIRED_RANKS = 2;
     public static final Skill SKILL_TO_USE = Skill.MagicGreen;
     public static final int DIFFICULTY = 7;
 
     public RegenerationCombatAction() {
-        super("Regenerate", false);
+        super("Regenerate", false, false);
     }
 
     @Override
@@ -46,10 +47,14 @@ public class RegenerationCombatAction extends CombatAction {
         }
     }
 
-    public static boolean canDoAbility(GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
-                (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
-                        performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
     }
 
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return !target.isDead() && (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
+                performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    }
 }

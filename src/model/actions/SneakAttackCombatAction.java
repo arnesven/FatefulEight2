@@ -5,20 +5,22 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
+import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyRandom;
 import view.help.HelpDialog;
 import view.help.TutorialSneakAttack;
 
-public class SneakAttackCombatAction extends CombatAction {
+public class SneakAttackCombatAction extends SpecialAbilityCombatAction {
     private Combatant target;
     private int sneakValue;
     private GameCharacter performer;
     private boolean takeAnotherAction;
 
     public SneakAttackCombatAction() {
-        super("Sneak Attack", true);
+        super("Sneak Attack", true, false);
         takeAnotherAction = false;
     }
 
@@ -77,4 +79,13 @@ public class SneakAttackCombatAction extends CombatAction {
         return sneakValue;
     }
 
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(Skill.Sneak) > 0;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return model.getParty().getFrontRow().contains(performer) && target instanceof Enemy && target.canBeAttackedBy(performer);
+    }
 }

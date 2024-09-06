@@ -26,7 +26,7 @@ public class Lute extends Weapon {
         super("Lute", 24, Skill.BluntWeapons, new int[]{8, 11});
     }
 
-    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
+    public static boolean canDoAbility(GameCharacter performer) {
         return performer.getEquipment().getWeapon().isOfType(Lute.class);
     }
 

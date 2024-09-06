@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.CombatAction;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.SocketedItem;
@@ -109,16 +110,15 @@ public class StaffOfDeimosItem extends StaffWeapon implements SocketedItem {
         return new ConfigureSocketedItemMenu(innerView, this);
     }
 
-
-    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
+    public static boolean canDoAbility(GameCharacter performer) {
         return performer.getEquipment().getWeapon().isOfType(StaffOfDeimosItem.class);
     }
 
-    public static CombatAction makeCombatAbility(GameCharacter performer, Combatant target) {
+    public static SpecialAbilityCombatAction makeCombatAbility(GameCharacter performer) {
         return new AutoCastAbility((StaffOfDeimosItem)performer.getEquipment().getWeapon());
     }
 
-    private static class AutoCastAbility extends CombatAction {
+    private static class AutoCastAbility extends SpecialAbilityCombatAction {
 
         private final StaffOfDeimosItem staff;
 
@@ -140,6 +140,16 @@ public class StaffOfDeimosItem extends StaffWeapon implements SocketedItem {
             } else {
                 model.getLog().addAnimated("Nothing happened...\n");
             }
+        }
+
+        @Override
+        public boolean possessesAbility(Model model, GameCharacter performer) {
+            return meetsOtherRequirements(model, performer, null);
+        }
+
+        @Override
+        protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+            return StaffOfDeimosItem.canDoAbility(performer);
         }
     }
 }

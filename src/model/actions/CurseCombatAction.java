@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.*;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.Condition;
 import model.combat.conditions.TimedParalysisCondition;
 import model.combat.conditions.TransfiguredCondition;
@@ -26,20 +27,13 @@ import view.sprites.DamageValueEffect;
 import view.sprites.DownArrowAnimation;
 import view.sprites.Sprite;
 
-public class CurseCombatAction extends CombatAction {
+public class CurseCombatAction extends SpecialAbilityCombatAction {
     public static final Skill SKILL_TO_USE = Skill.MagicBlack;
     public static final int DIFFICULTY = 7;
     public static final int REQUIRED_RANKS = 2;
 
     public CurseCombatAction() {
-        super("Curse", true);
-    }
-
-    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
-        return target instanceof Enemy &&
-                performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
-                (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
-                        performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+        super("Curse", true, false);
     }
 
     @Override
@@ -83,6 +77,18 @@ public class CurseCombatAction extends CombatAction {
 
     public Condition getPainCondition() {
         return new PainCondition(3);
+    }
+
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return target instanceof Enemy &&
+                (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
+                        performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }
 
     private static class PainCondition extends Condition {

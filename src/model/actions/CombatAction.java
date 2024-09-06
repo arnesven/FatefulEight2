@@ -33,10 +33,6 @@ public abstract class CombatAction {
         this.isMeleeAttack = isMeleeAttack;
     }
 
-    public CombatAction(String name, boolean doesFatigue) {
-        this(name, doesFatigue, false);
-    }
-
     public void executeCombatAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         doAction(model, combat, performer, target);
         if (isMeleeAttack) {

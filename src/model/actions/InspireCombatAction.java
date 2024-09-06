@@ -6,6 +6,7 @@ import model.classes.normal.BardClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.Condition;
 import model.items.weapons.Lute;
 import model.states.CombatEvent;
@@ -18,11 +19,11 @@ import view.help.TutorialInspire;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class InspireCombatAction extends CombatAction {
+public class InspireCombatAction extends SpecialAbilityCombatAction {
     public static final int LEADERSHIP_RANKS_REQUIREMENT = 4;
 
     public InspireCombatAction() {
-        super("Inspire", false);
+        super("Inspire", false, false);
     }
 
     @Override
@@ -69,14 +70,20 @@ public class InspireCombatAction extends CombatAction {
                 Skill.Leadership, 8, 0, isLeader);
     }
 
-    public static boolean canDoInspireAbility(GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT;
-    }
-
     private static final Sprite SPRITE = CharSprite.make((char)(0xD8), MyColors.BLACK, MyColors.PINK, MyColors.CYAN);
 
     public Condition getCondition() {
         return new InspiredCondition(1);
+    }
+
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return true;
     }
 
     private static class InspiredCondition extends Condition {

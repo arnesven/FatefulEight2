@@ -27,15 +27,21 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
                 2, 10, new HeavyBlowStrikeEffectSprite());
     }
 
-    public static boolean canDoHeavyBlowAbility(GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT &&
-                (performer.getEquipment().getWeapon().isOfType(BluntWeapon.class) ||
-                        performer.getEquipment().getWeapon().isOfType(AxeWeapon.class));
-    }
-
     @Override
     public HelpDialog getHelpChapter(Model model) {
         return new TutorialHeavyBlow(model.getView());
+    }
+
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return model.getParty().getFrontRow().contains(performer) &&
+                (performer.getEquipment().getWeapon().isOfType(BluntWeapon.class) ||
+                        performer.getEquipment().getWeapon().isOfType(AxeWeapon.class));
     }
 
     private static class HeavyBlowStrikeEffectSprite extends RunOnceAnimationSprite {

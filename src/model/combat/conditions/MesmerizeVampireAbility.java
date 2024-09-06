@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.CombatAction;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.enemies.Enemy;
 import model.enemies.HumanoidEnemy;
 import model.states.CombatEvent;
@@ -20,21 +21,24 @@ public class MesmerizeVampireAbility extends VampireAbility {
         super(NAME, 0xA2, DESCRIPTION);
     }
 
-    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
-        if (!(target instanceof Enemy)) {
-            return false;
-        }
-        if (performer.hasCondition(VampirismCondition.class)) {
-            VampirismCondition vampCond = (VampirismCondition) performer.getCondition(VampirismCondition.class);
-            if (vampCond.hasMesmerizeAbility()) {
-                return true;
+    public static SpecialAbilityCombatAction makeCombatAbility() {
+        return new SpecialAbilityCombatAction(NAME, true, false) {
+            @Override
+            public boolean possessesAbility(Model model, GameCharacter performer) {
+                if (performer.hasCondition(VampirismCondition.class)) {
+                    VampirismCondition vampCond = (VampirismCondition) performer.getCondition(VampirismCondition.class);
+                    if (vampCond.hasMesmerizeAbility()) {
+                        return true;
+                    }
+                }
+                return false;
             }
-        }
-        return false;
-    }
 
-    public static CombatAction makeCombatAbility() {
-        return new CombatAction(NAME, true, false) {
+            @Override
+            protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+                return target instanceof Enemy;
+            }
+
             @Override
             public HelpDialog getHelpChapter(Model model) {
                 return MesmerizeVampireAbility.getHelpChapter(model.getView());

@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.BatFormVampireAbility;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClawsVampireAbility;
@@ -21,7 +22,7 @@ public class AbilityCombatAction extends CombatAction {
     private final Combatant target;
 
     public AbilityCombatAction(GameCharacter performer, Combatant target) {
-        super("Ability", false);
+        super("Ability", false, false);
         this.performer = performer;
         this.target = target;
     }
@@ -44,58 +45,35 @@ public class AbilityCombatAction extends CombatAction {
     @Override
     public List<CombatAction> getInnerActions(Model model) {
         List<CombatAction> list = new ArrayList<>();
-        // TODO: Refactor this: Make list of (active) combat abilities, go through and call canBeDone() one each. Let party view and level up summary use that list and call fulfillsSkillRrquirements()
-        if (model.getParty().getFrontRow().contains(performer)) {
-            if (performer.getUnmodifiedRankForSkill(Skill.Sneak) > 0 && target instanceof Enemy && target.canBeAttackedBy(performer)) {
-                list.add(new SneakAttackCombatAction());
-            }
-            if (RiposteCombatAction.canDoRiposteAbility(performer)) {
-                list.add(new RiposteCombatAction());
-            }
-            if (HeavyBlowCombatAction.canDoHeavyBlowAbility(performer) && target.canBeAttackedBy(performer)) {
-                list.add(new HeavyBlowCombatAction());
+        List<SpecialAbilityCombatAction> abilities = getAllCombatAbilities(performer);
+        for (SpecialAbilityCombatAction ability : abilities) {
+            if (ability.canPerformAbility(model, performer, target)) {
+                list.add(ability);
             }
         }
+        return list;
+    }
 
-        if (DefendCombatAction.canDoDefendAbility(performer)) {
-            list.add(new DefendCombatAction());
+    public static List<SpecialAbilityCombatAction> getAllCombatAbilities(GameCharacter performer) {
+        List<SpecialAbilityCombatAction> list = new ArrayList<>();
+        list.add(new SneakAttackCombatAction());
+        list.add(new RiposteCombatAction());
+        list.add(new HeavyBlowCombatAction());
+        list.add(new DefendCombatAction());
+        list.add(new RestCombatAction());
+        list.add(new InspireCombatAction());
+        list.add(new SniperShotCombatAction());
+        list.add(new FairyHealCombatAction());
+        list.add(new RegenerationCombatAction());
+        list.add(new InvisibilityCombatAction());
+        list.add(new MagicMissileCombatAction());
+        list.add(new CurseCombatAction());
+        list.add(new BalladCombatAction());
+        if (StaffOfDeimosItem.canDoAbility(performer)) {
+            list.add(StaffOfDeimosItem.makeCombatAbility(performer));
         }
-        if (RestCombatAction.canDoRestAbility(model, performer)) {
-            list.add(new RestCombatAction());
-        }
-        if (InspireCombatAction.canDoInspireAbility(performer)) {
-            list.add(new InspireCombatAction());
-        }
-        if (SniperShotCombatAction.canDoSniperShotAbility(performer)) {
-            list.add(new SniperShotCombatAction());
-        }
-        if (FairyHealCombatAction.canDoAbility(performer, target)) {
-            list.add(new FairyHealCombatAction());
-        }
-        if (RegenerationCombatAction.canDoAbility(performer)) {
-            list.add(new RegenerationCombatAction());
-        }
-        if (InvisibilityCombatAction.canDoAbility(performer, target)) {
-            list.add(new InvisibilityCombatAction());
-        }
-        if (MagicMissileCombatAction.canDoAbility(performer, target)) {
-            list.add(new MagicMissileCombatAction());
-        }
-        if (CurseCombatAction.canDoAbility(performer, target)) {
-            list.add(new CurseCombatAction());
-        }
-        if (Lute.canDoAbility(performer, target)) {
-            list.add(new BalladCombatAction());
-        }
-        if (StaffOfDeimosItem.canDoAbility(performer, target)) {
-            list.add(StaffOfDeimosItem.makeCombatAbility(performer, target));
-        }
-        if (BatFormVampireAbility.canDoAbility(performer)) {
-            list.add(BatFormVampireAbility.makeCombatAbility());
-        }
-        if (MesmerizeVampireAbility.canDoAbility(performer, target)) {
-            list.add(MesmerizeVampireAbility.makeCombatAbility());
-        }
+        list.add(BatFormVampireAbility.makeCombatAbility());
+        list.add(MesmerizeVampireAbility.makeCombatAbility());
         // TODO: Cleave (Requires Axes - 6)
         // TODO: Grand Slam (Requires Blunt Weapons - 6)
         // TODO: Feint/Parry (Requires Blades - 6)

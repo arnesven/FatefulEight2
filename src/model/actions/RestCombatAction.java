@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.FatigueCondition;
 import model.combat.conditions.VampirismCondition;
 import model.states.CombatEvent;
@@ -15,16 +16,12 @@ import view.help.TutorialCombatResting;
 import view.sprites.CurlySpiralAnimation;
 import view.sprites.RunOnceAnimationSprite;
 
-public class RestCombatAction extends CombatAction {
+public class RestCombatAction extends SpecialAbilityCombatAction {
     private boolean another;
 
     public RestCombatAction() {
-        super("Rest", false);
+        super("Rest", false, false);
         another = false;
-    }
-
-    public static boolean canDoRestAbility(Model model, GameCharacter performer) {
-        return performer.getLevel() >= 3 && model.getParty().getBackRow().contains(performer);
     }
 
     @Override
@@ -86,4 +83,13 @@ public class RestCombatAction extends CombatAction {
         return another;
     }
 
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getLevel() >= 3;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return model.getParty().getBackRow().contains(performer);
+    }
 }

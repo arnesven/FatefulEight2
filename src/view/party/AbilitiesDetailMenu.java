@@ -7,10 +7,12 @@ import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
 import model.actions.CombatAction;
 import model.actions.PassiveCombatAction;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.enemies.Enemy;
 import model.enemies.SkeletonEnemy;
 import model.items.Equipment;
 import model.races.Race;
+import util.MyLists;
 import view.MyColors;
 import view.help.SpellMasteryHelpChapter;
 
@@ -32,12 +34,18 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
 
     private static List<String> makeAbilities(Model model, GameCharacter gc) {
         List<String> result = new ArrayList<>();
-        Enemy enemy = new SkeletonEnemy('A');
         abilityDictionary = new HashMap<>();
-        addAbilityEntries(model, new AbilityCombatAction(gc, enemy), result);
-        GameCharacter other = makeDummyCharacter();
-        addAbilityEntries(model, new AbilityCombatAction(gc, other), result);
-        addAbilityEntries(model, new AbilityCombatAction(gc, gc), result);
+        List<SpecialAbilityCombatAction> abilities =
+                MyLists.filter(AbilityCombatAction.getAllCombatAbilities(gc),
+                        (SpecialAbilityCombatAction abi) -> abi.possessesAbility(model, gc));
+        for (CombatAction act : abilities) {
+            if (!result.contains(act.getName())) {
+                result.add(act.getName());
+                if (!abilityDictionary.containsKey(act.getName())) {
+                    abilityDictionary.put(act.getName(), act);
+                }
+            }
+        }
         addPassiveAbilities(gc, result);
         result.addAll(gc.getMasteries().getAbilityList());
         return result;
@@ -47,17 +55,6 @@ public class AbilitiesDetailMenu extends FixedPositionSelectableListMenu {
         for (PassiveCombatAction passive : AbilityCombatAction.getPassiveCombatActions(gc)) {
             result.add(passive.getName());
             abilityDictionary.put(passive.getName(), passive);
-        }
-    }
-
-    private static void addAbilityEntries(Model model, AbilityCombatAction abilityCombatAction, List<String> result) {
-        for (CombatAction act : abilityCombatAction.getInnerActions(model)) {
-            if (!result.contains(act.getName())) {
-                result.add(act.getName());
-                if (!abilityDictionary.containsKey(act.getName())) {
-                    abilityDictionary.put(act.getName(), act);
-                }
-            }
         }
     }
 

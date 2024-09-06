@@ -5,8 +5,7 @@ import model.actions.AbilityCombatAction;
 import model.actions.CombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.enemies.Enemy;
-import model.enemies.SkeletonEnemy;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import util.BeforeAndAfterLine;
 import util.MyLists;
 import view.party.DrawableObject;
@@ -56,10 +55,11 @@ public class LevelUpSummaryView extends SelectableListMenu {
     }
 
     private Set<String> getAbilityList(Model model, GameCharacter performer) {
-        Enemy dummyEnemy = new SkeletonEnemy('A');
-        Set<String> set = new HashSet<>(MyLists.transform(new AbilityCombatAction(performer, dummyEnemy).getInnerActions(model), CombatAction::getName));
-        set.addAll(MyLists.transform(new AbilityCombatAction(performer, performer).getInnerActions(model), CombatAction::getName));
-        return set;
+        return new HashSet<>(
+                MyLists.transform(
+                        MyLists.filter(AbilityCombatAction.getAllCombatAbilities(performer),
+                                (SpecialAbilityCombatAction abi) -> abi.possessesAbility(model, performer)),
+                        CombatAction::getName));
     }
 
     @Override

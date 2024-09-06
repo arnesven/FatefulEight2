@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SpecialAbilityCombatAction;
 import model.enemies.Enemy;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
@@ -15,20 +16,13 @@ import view.help.TutorialMagicMissile;
 import view.sprites.DamageValueEffect;
 import view.sprites.EntropicBoltEffect;
 
-public class MagicMissileCombatAction extends CombatAction {
+public class MagicMissileCombatAction extends SpecialAbilityCombatAction {
     public static final Skill SKILL_TO_USE = Skill.MagicRed;
     public static final int DIFFICULTY = 7;
     public static final int REQUIRED_RANKS = 2;
 
     public MagicMissileCombatAction() {
-        super("Magic Missile", true);
-    }
-
-    public static boolean canDoAbility(GameCharacter performer, Combatant target) {
-        return target instanceof Enemy &&
-                performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS &&
-                (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
-                        performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+        super("Magic Missile", true, false);
     }
 
     @Override
@@ -52,5 +46,17 @@ public class MagicMissileCombatAction extends CombatAction {
             combat.addFloatyDamage(target, damage, DamageValueEffect.MAGICAL_DAMAGE);
             combat.doDamageToEnemy(target, damage, performer);
         }
+    }
+
+    @Override
+    public boolean possessesAbility(Model model, GameCharacter performer) {
+        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
+    }
+
+    @Override
+    protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
+        return target instanceof Enemy &&
+                (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
+                        performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
     }
 }
