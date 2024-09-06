@@ -7,7 +7,7 @@ public enum Skill implements Comparable<Skill> {
     BluntWeapons("Blunt Weapons", "handling and fighting with blunt weapons, like clubs, maces, hammers, flails and staffs."),  // 0
     Bows("Bows", "archery. This includes proficiency in using crossbows."),                   // 4
     Endurance("Endurance", "resisting all kinds of elements and strain, like cold weather, searing heat, poisons or performing physical activity for long periods of time.\n\nSpecifically this skill is used in combat to stave off fatigue."),         // 12
-    Entertain("Entertain", "all kinds of entertainment, like singing, acting, doing party tricks or making speeches. This skill also covers less formal occasions like just being able to engage well in conversation. This skill is used for when a character needs to disguise herself. "),         // 8
+    Entertain("Entertain", "all kinds of entertainment, like singing, acting, doing party tricks or making speeches. This skill also covers less formal occasions like just being able to engage well in conversation. This skill is also used for when a character needs to disguise herself. "),         // 8
     Labor("Labor", "all kinds of day-to-day work, like chopping wood, mending garments, plowing fields, painting a house or repairing a fence."),                 // 9
     Leadership("Leadership", "leading and inspiring other individuals.\n\nSpecifically this skill is used by the leader of the party at quest decision points and during flee attempts in combat."),       // 4
     Logic("Logic", "representing a persons capacity for reasoning and deduction, and to some degree knowledge."),                 // 13
@@ -25,7 +25,7 @@ public enum Skill implements Comparable<Skill> {
     SeekInfo("Seek Info", "represents a character's ability to find information in towns or other urban locations. This may include figuring out who to talk to and what questions to ask, and even how to speak to people to get the most information out of them."),          // 13
     Sneak("Sneak", "moving covertly and hiding."),                 // 13
     SpellCasting("Spell Casting", "casting spells.\n\nA character's rank in this skill is added to each skill check when that character is attempting to cast a spell."),  // 3
-    Survival("Survival", "knowledge and ability to be able to survive in the wilderness. This includes many things like navigating rough terrain, finding food and being able to cook it and setting up an adequate shelter or avoiding injury while traveling."),           // 16
+    Survival("Survival", "knowledge and ability to be able to survive in the wilderness. This includes many things like navigating rough terrain, taming animals, finding food and being able to cook it and setting up an adequate shelter or avoiding injury while traveling."),           // 16
 
     UnarmedCombat("Unarmed Combat", "for fighting without a weapon.\n\nA character does not have ranks in this skill, but it is used when making an unarmed attack in combat and can receive bonuses in certain situations.");
 
