@@ -213,6 +213,9 @@ public class GameCharacter extends Combatant {
                             boolean sneakAttack, int extraDamage, int crit, RunOnceAnimationSprite effectSprite) {
         combatEvent.print(getFirstName() + " attacks " + target.getName());
         int bonus = getAttackBonusesFromConditions();
+        if (target.hasCondition(ExposedCondition.class)) {
+            bonus += 2;
+        }
         SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this),
                 SkillCheckResult.NO_DIFFICULTY, bonus);
         applyAttack(model, combatEvent, target, sneakAttack, extraDamage, crit, effectSprite, result);

@@ -114,6 +114,10 @@ public abstract class Enemy extends Combatant {
         }
         candidates.removeIf(Combatant::isDead);
         candidates.removeIf((GameCharacter gc) -> gc.hasCondition(InvisibilityCondition.class));
+        if (hasCondition(ImpaledCondition.class)) {
+            ImpaledCondition impCond = (ImpaledCondition) getCondition(ImpaledCondition.class);
+            candidates.removeIf((GameCharacter gc) -> gc != impCond.getImapler());
+        }
         return candidates;
     }
 
@@ -158,7 +162,7 @@ public abstract class Enemy extends Combatant {
     public MyPair<Integer, Boolean> calculateBaseDamage(boolean isRanged) {
         int damage = combatBehavior.calculateDamage(this, isRanged);
         if (hasCondition(WeakenCondition.class)) {
-            damage = Math.max(1, damage - 2);
+            damage = Math.max(0, damage - 2);
         }
         if (combatBehavior.isCriticalHit()) {
             damage = damage + 2;

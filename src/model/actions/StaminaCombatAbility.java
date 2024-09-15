@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.combat.abilities.SpecialAbilityCombatAction;
 import model.states.CombatEvent;
+import model.states.GameState;
+import util.MyStrings;
 
 public abstract class StaminaCombatAbility extends SpecialAbilityCombatAction {
     private boolean takeAnotherAction = false;
@@ -28,7 +30,7 @@ public abstract class StaminaCombatAbility extends SpecialAbilityCombatAction {
             combat.print(performer.getFirstName() + " exhausts 1 Stamina Point. ");
             doStaminaCombatAbility(model, combat, performer, target);
         } else {
-            combat.println(performer.getFirstName() + " is too exhausted to perform a " + getName().toLowerCase() + ".");
+            combat.println(performer.getFirstName() + " is too exhausted to do that.");
             takeAnotherAction = true;
         }
     }

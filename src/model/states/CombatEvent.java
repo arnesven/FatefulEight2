@@ -6,6 +6,7 @@ import model.actions.SneakAttackCombatAction;
 import model.actions.CombatAction;
 import model.combat.CombatAdvantage;
 import model.combat.conditions.CelerityVampireAbility;
+import model.combat.conditions.ClinchedCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.Model;
@@ -398,12 +399,15 @@ public class CombatEvent extends DailyEventState {
     }
 
     public void toggleFormationFor(Model model, GameCharacter combatant) {
-        if (!combatant.isDead()) {
+        if (!combatant.isDead() && !combatant.hasCondition(ClinchedCondition.class)) {
             model.getParty().toggleFormationFor(combatant);
             combatMatrix.toggleFormationFor(combatant);
             if (model.getParty().getBackRow().contains(combatant)) {
                 backMovers.add(combatant);
             }
+        } else if (combatant.hasCondition(ClinchedCondition.class)) {
+            println("");
+            println("Cannot change formation for clinched combatant.");
         } else {
             println("");
             println("Cannot change formation for dead party member.");
