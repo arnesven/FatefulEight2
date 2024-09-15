@@ -62,6 +62,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                     new ImpaleAbilityHelpChapter(null),
                     new TutorialMagicMissile(null),
                     new MultiShotHelpChapter(null),
+                    new ParryAbilityHelpChapter(null),
                     new TutorialQuickCasting(null),
                     new TutorialCombatResting(null),
                     new TutorialRegenerate(null),
