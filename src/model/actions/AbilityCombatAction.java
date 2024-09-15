@@ -78,8 +78,8 @@ public class AbilityCombatAction extends CombatAction {
         list.add(new CleaveAbility());
         list.add(new GrandSlamAbility());
         list.add(new ImpaleAbility());
+        list.add(new FeintAbility());
         // TODO: Feint/Parry (Requires Blades - 5)
-        // TODO: Impale (Requires Polearms - 5)
         return list;
     }
 

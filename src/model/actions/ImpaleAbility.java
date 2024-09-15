@@ -7,6 +7,7 @@ import model.combat.Combatant;
 import model.combat.conditions.*;
 import model.items.weapons.PolearmWeapon;
 import model.states.CombatEvent;
+import model.states.GameState;
 import view.help.HelpDialog;
 import view.help.ImpaleAbilityHelpChapter;
 import view.sprites.StrikeEffectSprite;
@@ -25,6 +26,10 @@ public class ImpaleAbility extends StaminaCombatAbility {
 
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+        combat.println(performer.getName() + " attempts to impale " + target.getName() +
+                " with " + GameState.hisOrHer(performer.getGender()) + " " +
+                performer.getEquipment().getWeapon().getName().toLowerCase() + ".");
+        model.getTutorial().impaleAbility(model);
         int hpBefore = target.getHP();
         performer.doOneAttack(model, combat, target, false, 0,
                 performer.getEquipment().getWeapon().getCriticalTarget(), new StrikeEffectSprite());

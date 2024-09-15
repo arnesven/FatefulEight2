@@ -32,6 +32,7 @@ public class MultiShotCombatAction extends StaminaCombatAbility {
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         combat.print(performer.getFirstName() + " performs a Multi-Shot");
+        model.getTutorial().multiShot(model);
         int bonus = performer.getAttackBonusesFromConditions();
         Weapon weapon = performer.getEquipment().getWeapon();
         SkillCheckResult result = performer.testSkill(model, weapon.getSkillToUse(performer),

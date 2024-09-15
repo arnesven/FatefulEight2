@@ -29,6 +29,7 @@ public class CleaveAbility extends StaminaCombatAbility {
 
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+        model.getTutorial().cleaveAbility(model);
         int hpBefore = target.getHP();
         performer.doOneAttack(model, combat, target, false, 2,
                 performer.getEquipment().getWeapon().getCriticalTarget());

@@ -577,15 +577,48 @@ public class TutorialHandler implements Serializable {
 
     public void weaponPairing(Model model) {
         runOnce("weaponpairing", () -> {
-            //model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialWeaponPairing(model.getView()));
         });
     }
 
     public void collectResources(Model model) {
         runOnce("collectresources", () -> {
-            //model.getLog().waitForAnimationToFinish();
             model.transitionToDialog(new TutorialFindResources(model.getView()));
+        });
+    }
+
+    public void feintAbility(Model model) {
+        runOnce("feint", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new FeintAbilityHelpChapter(model.getView()));
+        });
+    }
+
+    public void impaleAbility(Model model) {
+        runOnce("impale", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new ImpaleAbilityHelpChapter(model.getView()));
+        });
+    }
+
+    public void grandSlamAbility(Model model) {
+        runOnce("grandSlam", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new GrandSlamHelpChapter(model.getView()));
+        });
+    }
+
+    public void cleaveAbility(Model model) {
+        runOnce("cleave", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new CleaveHelpDialog(model.getView()));
+        });
+    }
+
+    public void multiShot(Model model) {
+        runOnce("multiShot", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new MultiShotHelpChapter(model.getView()));
         });
     }
 

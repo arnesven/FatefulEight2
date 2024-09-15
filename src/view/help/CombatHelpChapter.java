@@ -1,7 +1,5 @@
 package view.help;
 
-import model.actions.AbilityCombatAction;
-import model.actions.MultiShotCombatAction;
 import view.GameView;
 
 import java.util.List;
@@ -58,6 +56,7 @@ public class CombatHelpChapter extends ExpandableHelpDialog {
                     new TutorialInspire(null),
                     new TutorialInvisibility(null),
                     new TutorialFairyHeal(null),
+                    new FeintAbilityHelpChapter(null),
                     new GrandSlamHelpChapter(null),
                     new TutorialHeavyBlow(null),
                     new ImpaleAbilityHelpChapter(null),

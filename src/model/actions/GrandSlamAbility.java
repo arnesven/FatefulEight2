@@ -28,6 +28,7 @@ public class GrandSlamAbility extends StaminaCombatAbility {
     @Override
     protected void doStaminaCombatAbility(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         combat.println(performer.getFirstName() + " does a grand slam!");
+        model.getTutorial().grandSlamAbility(model);
         performer.doOneAttack(model, combat, target, false,
                 3, performer.getEquipment().getWeapon().getCriticalTarget(),
                 new GrandSlamStrikeEffectSprite());
