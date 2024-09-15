@@ -3,7 +3,7 @@ package view.help;
 import model.actions.ImpaleAbility;
 import view.GameView;
 
-public class ImpaleAbilityHelpChapter extends HelpDialog {
+public class ImpaleAbilityHelpChapter extends SubChapterHelpDialog {
     private static final String TEXT =
             "A character with at least " + ImpaleAbility.POLEARMS_RANKS_REQUIREMENT + " ranks of Polearms " +
             "can perform the Impale ability in combat. The character must have at least 1 Point of Stamina and " +
@@ -19,5 +19,6 @@ public class ImpaleAbilityHelpChapter extends HelpDialog {
 
     public ImpaleAbilityHelpChapter(GameView view) {
         super(view, "Impale", TEXT);
+        setLevel(2);
     }
 }

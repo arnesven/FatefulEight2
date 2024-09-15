@@ -3,7 +3,7 @@ package view.help;
 import model.actions.GrandSlamAbility;
 import view.GameView;
 
-public class GrandSlamHelpChapter extends HelpDialog {
+public class GrandSlamHelpChapter extends SubChapterHelpDialog {
     private static final String TEXT = "A character with at least " + GrandSlamAbility.BLUNT_RANKS_REQUIRED + " ranks of " +
             "the Blunt Weapons skill, equipped with a blunt weapon and has at least 1 point of stamina, " +
             "can perform the Grand Slam ability in combat.\n\n" +
@@ -16,5 +16,6 @@ public class GrandSlamHelpChapter extends HelpDialog {
 
     public GrandSlamHelpChapter(GameView view) {
         super(view, "Grand Slam", TEXT);
+        setLevel(2);
     }
 }

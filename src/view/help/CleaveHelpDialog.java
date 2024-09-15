@@ -3,7 +3,7 @@ package view.help;
 import model.actions.CleaveAbility;
 import view.GameView;
 
-public class CleaveHelpDialog extends HelpDialog {
+public class CleaveHelpDialog extends SubChapterHelpDialog {
     private static final String TEXT = "A character with at least " + CleaveAbility.AXE_RANKS_REQUIRED +
             " can perform the Cleave ability in combat while wielding an axe.\n\n" +
             "When performing the ability, the character first exhausts 1 Stamina, then makes a normal attack " +
@@ -12,5 +12,6 @@ public class CleaveHelpDialog extends HelpDialog {
 
     public CleaveHelpDialog(GameView view) {
         super(view, "Cleave", TEXT);
+        setLevel(2);
     }
 }

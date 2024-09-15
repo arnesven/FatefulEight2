@@ -16,5 +16,6 @@ public class ParryAbilityHelpChapter extends SubChapterHelpDialog {
 
     public ParryAbilityHelpChapter(GameView view) {
         super(view, "Parry", TEXT);
+        setLevel(2);
     }
 }

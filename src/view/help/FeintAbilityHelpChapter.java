@@ -14,5 +14,6 @@ public class FeintAbilityHelpChapter extends SubChapterHelpDialog {
 
     public FeintAbilityHelpChapter(GameView view) {
         super(view, "Feint", TEXT);
+        setLevel(2);
     }
 }
