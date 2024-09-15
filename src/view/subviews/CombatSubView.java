@@ -29,6 +29,7 @@ public class CombatSubView extends SubView {
     public static final int BLOCK_TEXT = 1;
     public static final int EVADE_TEXT = 0;
     public static final int MISS_TEXT = 2;
+    public static final int PARRY_TEXT = 3;
     private static final Sprite FIREWALL_SPRITE = new FirewallSprite();
     private final CombatEvent combat;
     private final CombatMatrix combatMatrix;

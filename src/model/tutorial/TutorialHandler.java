@@ -622,6 +622,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void parry(Model model) {
+        runOnce("parry", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new ParryAbilityHelpChapter(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

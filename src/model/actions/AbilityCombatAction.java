@@ -79,7 +79,6 @@ public class AbilityCombatAction extends CombatAction {
         list.add(new GrandSlamAbility());
         list.add(new ImpaleAbility());
         list.add(new FeintAbility());
-        // TODO: Feint/Parry (Requires Blades - 5)
         return list;
     }
 
@@ -93,6 +92,9 @@ public class AbilityCombatAction extends CombatAction {
         }
         if (ClawsVampireAbility.canDoAbility(gc)) {
             list.add(ClawsVampireAbility.getPassiveCombatAbility());
+        }
+        if (ParryAbility.canDoAbility(gc)) {
+            list.add(ParryAbility.getPassiveCombatAbility());
         }
         return list;
     }

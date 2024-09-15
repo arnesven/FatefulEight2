@@ -667,6 +667,10 @@ public class GameCharacter extends Combatant {
             combatEvent.println(getFirstName() + " blocked " + enemy.getName() + "'s attack!");
             model.getTutorial().blocking(model);
             combatEvent.getStatistics().addToAvoidedDamage(damage);
+        } else if (ParryAbility.checkForParry(model, combatEvent, this, enemy)) {
+            model.getTutorial().parry(model);
+            combatEvent.getStatistics().addToAvoidedDamage(damage);
+            combatEvent.addFloatyText(this, CombatSubView.PARRY_TEXT);
         } else {
             String reductionString = "";
             if (enemy.getAttackBehavior().isPhysicalAttack() || equipment.applyArmorToMagicAttacks()) {
