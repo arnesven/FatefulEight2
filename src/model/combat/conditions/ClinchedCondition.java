@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ClinchedCondition extends Condition {
 
-    private static final Sprite SPRITE = CharSprite.make((char)(0xD0), MyColors.RED, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite SPRITE = CharSprite.make((char)(0xD0), MyColors.WHITE, MyColors.BLACK, MyColors.CYAN);
     private static final String TEXT = "A condition indicating that this combatant is clinched with another combatant. " +
             "When a character is clinched, he or she can take no actions except passing or releasing the clinch.";
     private final Condition otherCond;

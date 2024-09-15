@@ -1,6 +1,7 @@
 package view.help;
 
 
+import model.Model;
 import model.actions.*;
 import model.combat.conditions.*;
 import model.items.potions.CharismaPotion;
@@ -12,6 +13,8 @@ import model.items.spells.BoneArmorCondition;
 import model.items.spells.QuickenedCondition;
 import model.states.events.EnchantressEvent;
 import view.GameView;
+import view.MyColors;
+import view.party.DrawableObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,49 +32,91 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
 
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
+        List<HelpDialog> result = new ArrayList<>();
+        result.add(new ConditionSummaryHelpChapter(view, makeAllConditions()));
+        for (Condition cond : makeAllConditions()) {
+            result.add(cond.getHelpView(view));
+        }
+        return result;
+    }
+
+    private List<Condition> makeAllConditions() {
         return List.of(
-                new BatFormCondition().getHelpView(view),
-                new BlackPactCondition().getHelpView(view),
-                new BleedingCondition().getHelpView(view),
-                new BlessedCondition(0).getHelpView(view),
-                new BoneArmorCondition(0).getHelpView(view),
-                new BurningCondition(null).getHelpView(view),
-                new BurningWeaponCondition().getHelpView(view),
-                new CastingFullRoundSpellCondition(null, null, null, 0).getHelpView(view),
-                new CharismaPotion().getCondition().getHelpView(view),
-                new ClinchedCondition(null, null).getHelpView(view),
-                new CowardlyCondition(new ArrayList<>()).getHelpView(view),
-                new DefendCombatAction().getCondition().getHelpView(view),
-                new DexterityPotion().getCondition().getHelpView(view),
-                EnchantressEvent.getCondition().getHelpView(view),
-                new ErodeCondition().getHelpView(view),
-                new ExposedCondition().getHelpView(view),
-                new FatigueCondition().getHelpView(view),
-                new GiantGrowthCondition(2).getHelpView(view),
-                new ImpaledCondition(null).getHelpView(view),
-                new IntoxicatedCondition().getHelpView(view),
-                new InspireCombatAction().getCondition().getHelpView(view),
-                new InvisibilityCondition(3).getHelpView(view),
-                new CurseCombatAction().getPainCondition().getHelpView(view),
-                new ParalysisCondition().getHelpView(view),
-                new PoisonCondition().getHelpView(view),
-                new QuickenedCondition(5).getHelpView(view),
-                new RegenerationCondition(3).getHelpView(view),
-                new RiposteCombatAction().getCondition().getHelpView(view),
-                new RoutedCondition().getHelpView(view),
-                new ShiningAegisCondition(5).getHelpView(view),
-                new SlowedCondition(-1, 0).getHelpView(view),
-                new SneakAttackCondition().getHelpView(view),
-                new StrangenessCondition(-1).getHelpView(view),
-                new StrengthPotion().getCondition().getHelpView(view),
-                new SummonCondition(null).getHelpView(view),
-                new TamedCondition().getHelpView(view),
-                new TransfiguredCondition(1).getHelpView(view),
-                new VampirismCondition(VampirismCondition.NO_STAGE, 0).getHelpView(view),
-                new WardCondition().getHelpView(view),
-                new WeakenCondition().getHelpView(view),
-                new WerewolfFormCondition(null, 0).getHelpView(view),
-                new WitsPotion().getCondition().getHelpView(view)
+                new BatFormCondition(),
+                new BlackPactCondition(),
+                new BleedingCondition(),
+                new BlessedCondition(0),
+                new BoneArmorCondition(0),
+                new BurningCondition(null),
+                new BurningWeaponCondition(),
+                new CastingFullRoundSpellCondition(null, null, null, 0),
+                new CharismaPotion().getCondition(),
+                new ClinchedCondition(null, null),
+                new CowardlyCondition(new ArrayList<>()),
+                new DefendCombatAction().getCondition(),
+                new DexterityPotion().getCondition(),
+                EnchantressEvent.getCondition(),
+                new ErodeCondition(),
+                new ExposedCondition(),
+                new FatigueCondition(),
+                new GiantGrowthCondition(2),
+                new ImpaledCondition(null),
+                new IntoxicatedCondition(),
+                new InspireCombatAction().getCondition(),
+                new InvisibilityCondition(3),
+                new CurseCombatAction().getPainCondition(),
+                new ParalysisCondition(),
+                new PoisonCondition(),
+                new QuickenedCondition(5),
+                new RegenerationCondition(3),
+                new RiposteCombatAction().getCondition(),
+                new RoutedCondition(),
+                new ShiningAegisCondition(5),
+                new SlowedCondition(-1, 0),
+                new SneakAttackCondition(),
+                new StrangenessCondition(-1),
+                new StrengthPotion().getCondition(),
+                new SummonCondition(null),
+                new TamedCondition(),
+                new VampirismCondition(VampirismCondition.NO_STAGE, 0),
+                new WardCondition(),
+                new WeakenCondition(),
+                new WerewolfFormCondition(null, 0),
+                new WitsPotion().getCondition()
         );
+    }
+
+    private static class ConditionSummaryHelpChapter extends SubChapterHelpDialog {
+        private final List<Condition> allConditions;
+
+        public ConditionSummaryHelpChapter(GameView previous, List<Condition> allConditions) {
+            super(previous, "Summary", "");
+            this.allConditions = allConditions;
+        }
+
+        @Override
+        protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
+            List<DrawableObject> dobjs = super.buildDecorations(model, xStart, yStart);
+            int count = 0;
+            for (Condition cond : allConditions) {
+                int finalY = yStart + count + 3;
+                int column = 0;
+                int half = allConditions.size() / 2 + 1;
+                if (count >= half) {
+                    column = 18;
+                    finalY -= half;
+                }
+                dobjs.add(new DrawableObject(xStart+1+column, finalY) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        model.getScreenHandler().put(x, y, cond.getSymbol());
+                    }
+                });
+                dobjs.add(new TextDecoration(cond.getName(), xStart+3+column,
+                        finalY, MyColors.WHITE, MyColors.BLUE, false));
+                count++;
+            }
+            return dobjs;
+        }
     }
 }

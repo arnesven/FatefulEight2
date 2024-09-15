@@ -8,7 +8,7 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class QuickenedCondition extends Condition {
-    private static final Sprite CONDITION_SPRITE = CharSprite.make((char)(0xC0), MyColors.CYAN, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD2), MyColors.CYAN, MyColors.BLACK, MyColors.CYAN);
 
     public QuickenedCondition(int duration) {
         super("Quickened", "QCK");

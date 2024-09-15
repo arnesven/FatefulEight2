@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class CowardlyCondition extends Condition {
-    private static final Sprite SPRITE = CharSprite.make((char)(0xC1), MyColors.YELLOW, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite SPRITE = CharSprite.make((char)(0xD9), MyColors.PINK, MyColors.BLACK, MyColors.CYAN);
     private final List<Enemy> team;
 
     public CowardlyCondition(List<Enemy> enemies) {

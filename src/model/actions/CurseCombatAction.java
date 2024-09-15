@@ -73,7 +73,7 @@ public class CurseCombatAction extends SpecialAbilityCombatAction {
         }
     }
 
-    private static final Sprite SPRITE = CharSprite.make((char)(0xC1), MyColors.DARK_RED, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite SPRITE = CharSprite.make((char)(0xC0), MyColors.RED, MyColors.YELLOW, MyColors.CYAN);
 
     public Condition getPainCondition() {
         return new PainCondition(3);

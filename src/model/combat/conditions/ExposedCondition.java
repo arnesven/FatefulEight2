@@ -7,8 +7,7 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class ExposedCondition extends Condition {
-
-    private static final Sprite SPRITE = CharSprite.make((char) (0xC2), MyColors.GREEN, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite SPRITE = CharSprite.make((char) (0xD6), MyColors.WHITE, MyColors.BLACK, MyColors.CYAN);
     private static final String TEXT = "A condition indicating that this combatant has its defense lowered and is exposed to attacks.\n\n" +
             "Combatants attacking an exposed target enjoy a +2 bonus to their attack rolls.";
 

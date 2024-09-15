@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.List;
 
 public class BatFormCondition extends Condition {
-    private static final Sprite SPRITE = CharSprite.make((char)(0xD5), MyColors.LIGHT_GRAY, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite SPRITE = CharSprite.make((char)(0xD7), MyColors.LIGHT_GRAY, MyColors.BLACK, MyColors.CYAN);
     private static final Sprite AVATAR_SPRITE = new BatSprite();
     private static final int BONUS = 6;
     public static final String DETAILS = "As a bat, your speed is increased by " + BONUS + ", but you can take no actions " +

@@ -13,7 +13,7 @@ import view.sprites.Sprite;
 
 public class StrangenessCondition extends Condition {
 
-    private static final Sprite SPRITE = CharSprite.make((char)(0xD5), MyColors.GREEN, MyColors.BLACK, MyColors.CYAN);
+    private static final Sprite SPRITE = CharSprite.make((char)(0xD5), MyColors.GREEN, MyColors.PURPLE, MyColors.CYAN);
     private static final int PENALTY = 2;
     private static final int DURATION_DAYS = 3;
     private final int gottenOnDay;
