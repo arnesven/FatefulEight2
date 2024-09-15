@@ -330,14 +330,16 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<? extends Weapon> allBluntWeapons() {
         return List.of(new Club(), new LongStaff(), new OldStaff(), new MagesStaff(),
                 new Scepter(), new MorningStar(), new Flail(), new Warhammer(), new Mace(),
-                new GrandMaul(), new TripleFlail(), new IronStaff(), new GrandStaff(), new BoStaff());
+                new GrandMaul(), new TripleFlail(), new IronStaff(), new GrandStaff(), new BoStaff(),
+                new Nunchuck(), new TwinNunchucks());
     }
 
     public static List<? extends Weapon> allBlades() {
         return List.of(new Dirk(), new Dagger(), new ThrowingKnives(), new Kukri(), new ShortSword(),
                 new OrcishKnife(), new RitualDagger(), new Scimitar(), new Falchion(), new Wakizashi(),
                 new Broadsword(), new Longsword(), new Estoc(), new Rapier(), new Katana(), new TwoHandedSword(),
-                new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(), new TwinKukris());
+                new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(),
+                new TwinKukris(), new Sai(), new TwinSais());
     }
 
     public void setStandardItemTier(int averageLevel) {
