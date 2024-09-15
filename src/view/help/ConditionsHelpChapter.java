@@ -24,7 +24,8 @@ public class ConditionsHelpChapter extends ExpandableHelpDialog {
             "Conditions are presented for each character as 'STATUS', and can also be viewed through the party menu.\n\n" +
             "Conditions have different durations. Some expire only a few combat rounds, some expire at end of combat. " +
             "Some conditions last until the end of the day. Some conditions are permanent, until specific circumstances come " +
-            "about which remove them.";
+            "about which remove them.\n\n" +
+            "For an overview of all conditions, see the Summary page.";
 
     public ConditionsHelpChapter(GameView view) {
         super(view, "Conditions", TEXT, false);
