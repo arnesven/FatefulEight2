@@ -4,7 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.StaminaRecoveryItem;
-import model.items.potions.Potion;
 import model.states.GameState;
 import util.MyLists;
 import view.InventoryView;

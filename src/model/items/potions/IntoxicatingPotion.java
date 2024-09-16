@@ -4,12 +4,13 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.IntoxicatedCondition;
+import model.races.Race;
 
 public abstract class IntoxicatingPotion extends Potion {
     private static final int HEALING_AMOUNT = 3;
     private String dislikedBy;
 
-    protected abstract boolean doesReject(Model model, GameCharacter gc);
+    public abstract boolean doesReject(Model model, Race race);
 
     public IntoxicatingPotion(String name, int cost, String dislikedBy) {
         super(name, cost);
@@ -23,7 +24,7 @@ public abstract class IntoxicatingPotion extends Potion {
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {
-        if (doesReject(model, gc)) {
+        if (doesReject(model, gc.getRace())) {
             return gc.getName() + " rejected the " + getName().toLowerCase() + "!";
         }
 

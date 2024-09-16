@@ -122,10 +122,10 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new WorkshopEvent(model),
                     new InvestInShopEvent(model),
                     new GardenMazeEvent(model),
+                    new BoozersEvent(model),
                     new GuideEvent(model, 1),
                     new GuideEvent(model, 2)
                     // WarehouseEvent = Sokoban
-                    // BoozersEvent
             ));
         }
         return new NoEventState(model);

@@ -32,6 +32,7 @@ import model.map.locations.SunblazeCastle;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
+import model.states.events.TavernBrawlEvent;
 import model.tasks.DestinationTask;
 import model.tasks.DoILookFatTask;
 import model.travellers.Traveller;
@@ -787,6 +788,10 @@ public class Party implements Serializable {
             Lockpick.checkForBreakage(model, state, success);
         }
         return success;
+    }
+
+    public SkillCheckResult doIntimidationSkillCheck(Model model, GameState state, GameCharacter gc, int difficult, int exp) {
+        return doSkillCheckWithReRoll(model, state, gc, Skill.Persuade, difficult, exp, gc.getRankForSkill(Skill.Endurance));
     }
 
     public int getEncumbrance() {

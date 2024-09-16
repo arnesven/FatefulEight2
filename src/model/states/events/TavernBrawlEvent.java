@@ -109,8 +109,7 @@ public class TavernBrawlEvent extends PersonalityTraitEvent {
 
     private void intimidate(Model model, GameCharacter main) {
         println("You attempt to frighten the patron.");
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, model.getParty().getLeader(), Skill.Persuade,
-                9, 10, model.getParty().getLeader().getRankForSkill(Skill.Endurance));
+        SkillCheckResult result = model.getParty().doIntimidationSkillCheck(model, this, model.getParty().getLeader(), 9, 10);
         if (result.isSuccessful()) {
             leaderSay("Look, you don't want to mess with us. Now it's up to you, what do you want to do?");
             portraitSay("Maybe I was out of line. Sorry.");

@@ -48,7 +48,7 @@ public class MuggerEnemy extends HumanoidEnemy {
         return new PersonCombatLoot(model);
     }
 
-    private static class MuggerSprite extends LoopingSprite {
+    protected static class MuggerSprite extends LoopingSprite {
         public MuggerSprite(Race race) {
             super("mugger", "enemies.png", 0x2C, 32, 32);
             setColor1(MyColors.BLACK);

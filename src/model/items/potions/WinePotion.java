@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.races.AllRaces;
+import model.races.Race;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -26,7 +27,7 @@ public class WinePotion extends IntoxicatingPotion {
     }
 
     @Override
-    protected boolean doesReject(Model model, GameCharacter gc) {
-        return gc.getRace().id() == AllRaces.DWARF.id();
+    public boolean doesReject(Model model, Race race) {
+        return race.id() == AllRaces.DWARF.id();
     }
 }
