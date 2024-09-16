@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.map.CastleLocation;
 import model.states.GameState;
+import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -43,6 +44,10 @@ public class CastleDailyActionState extends AdvancedDailyActionState {
         if (LeagueOfMagesEvent.isMember(model)) {
             Point league = location.getLeaguePosition();
             addNode(league.x, league.y, new LeagueOfMagesOfficeNode());
+        }
+        if (GentlepersonsClubEvent.isMember(model)) {
+            Point club = location.getClubPosition();
+            addNode(club.x, club.y, new GentlepersonsClubNode());
         }
     }
 

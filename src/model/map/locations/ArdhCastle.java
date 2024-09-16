@@ -38,4 +38,9 @@ public class ArdhCastle extends CastleLocation {
     public Point getLeaguePosition() {
         return new Point(6, 2);
     }
+
+    @Override
+    public Point getClubPosition() {
+        return new Point(6, 1);
+    }
 }

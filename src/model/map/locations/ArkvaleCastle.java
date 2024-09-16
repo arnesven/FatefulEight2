@@ -41,4 +41,9 @@ public class ArkvaleCastle extends CastleLocation {
     public Point getLeaguePosition() {
         return new Point(1, 1);
     }
+
+    @Override
+    public Point getClubPosition() {
+        return new Point(1, 2);
+    }
 }

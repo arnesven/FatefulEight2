@@ -43,6 +43,7 @@ public interface Classes {
     CharacterClass MERCHANT = new MerchantNPCClass();
     CharacterClass BANDIT = new BanditNPCClass();
     CharacterClass ALCHEMIST = new AlchemistNPCClass();
+    CharacterClass ARISTOCRAT = new AristocratNPCClass();
     CharacterClass CHARLATAN = new CharlatanNPCClass();
     CharacterClass CONSTABLE = new ConstableNPCClass();
     CharacterClass TEMPLE_GUARD = new TempleGuardNPCClass();

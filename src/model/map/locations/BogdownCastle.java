@@ -37,4 +37,9 @@ public class BogdownCastle extends CastleLocation {
     public Point getLeaguePosition() {
         return new Point(5, 1);
     }
+
+    @Override
+    public Point getClubPosition() {
+        return new Point(1, 4);
+    }
 }

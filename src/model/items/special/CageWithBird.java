@@ -5,7 +5,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class CageWithBird extends StoryItem {
+public class CageWithBird extends StoryItem implements CollectorItem {
 
     private static final Sprite SPRITE = new ItemSprite(15, 14, MyColors.LIGHT_YELLOW, MyColors.ORANGE, MyColors.RED);
 
