@@ -33,6 +33,12 @@ public class BoozersEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Meet drunks",
+                "I know a couple of rowdy drunks, but you probably don't want to meet them");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("Intending to take a short cut, you cut through an alley. You encounter a few men who seem a bit odd. " +
                 "They're a bit rowdy and it's clear they've been drinking. Rather than go back, you attempt to push " +
