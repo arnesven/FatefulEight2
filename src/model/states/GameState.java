@@ -1,5 +1,6 @@
 package model.states;
 
+import control.GameExitedException;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -107,8 +108,7 @@ public abstract class GameState implements GameStateConstants {
             }
             sleep();
         }
-        System.exit(0);
-        throw new IllegalStateException("Program failed to exit");
+        throw new GameExitedException();
     }
 
     protected void sleep() {

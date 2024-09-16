@@ -20,23 +20,26 @@ public class FatefulEight extends JFrame {
     private static final int TIMER_DELAY_MS = 20;
     public static String version = "1.423";
     private static boolean debug = false;
-    private DrawingArea drawingArea;
+    private final DrawingArea drawingArea;
     public static boolean inFullScreenMode = false;
-    private Deque<KeyEvent> keyboardEvents = new LinkedList<>();
+    private final Deque<KeyEvent> keyboardEvents = new LinkedList<>();
     private Timer timer;
+    private MyKeyListener keyListener;
 
-    public FatefulEight(Model model, DrawingArea drawingArea) {
+    public FatefulEight(DrawingArea drawingArea) {
         super("Fateful Eight");
         this.drawingArea = drawingArea;
-        this.setSize(this.drawingArea.getMagnification()*640,
-                this.drawingArea.getMagnification()*400+30);
+        this.setSize(DrawingArea.getMagnification()*640,
+                DrawingArea.getMagnification()*400+30);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-
         this.add(this.drawingArea, BorderLayout.CENTER);
         this.setVisible(true);
-        this.addKeyListener(new MyKeyListener(model, this));
+    }
 
+    private void setModel(Model model) {
+        this.keyListener = new MyKeyListener(model, this);
+        this.addKeyListener(keyListener);
         timer = new Timer(TIMER_DELAY_MS, new ActionListener() {
             private long lastUpdateTime = System.currentTimeMillis();
 
@@ -44,7 +47,7 @@ public class FatefulEight extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (model.gameExited()) {
                     timer.stop();
-                    FatefulEight.this.dispose();
+                    //FatefulEight.this.dispose();
                     return;
                 }
                 checkKeyboardInput(model);
@@ -67,17 +70,37 @@ public class FatefulEight extends JFrame {
             System.out.print((char)i + " ");
         }
         MyColors.findClosest(MyColors.PEACH.toAwtColor().getRGB());
+
         DrawingArea drawingArea = new DrawingArea();
-        Model model = new Model(drawingArea.getScreenHandler());
-        FatefulEight frame = new FatefulEight(model, drawingArea);
-        model.setFrame(frame);
-        if (args.length == 1 && args[0].equals("--balancing")) {
-            Balancing.runWeaponValueAnalysis(model);
-            Balancing.runClothingAnalysis(model);
-            Balancing.runAccessoryAnalysis(model);
-            Balancing.runClassesAnalysis(model);
+        FatefulEight frame = new FatefulEight(drawingArea);
+        while (true) {
+            Model model = new Model(drawingArea.getScreenHandler(), frame);
+            frame.setModel(model);
+            if (args.length == 1 && args[0].equals("--balancing")) {
+                Balancing.runWeaponValueAnalysis(model);
+                Balancing.runClothingAnalysis(model);
+                Balancing.runAccessoryAnalysis(model);
+                Balancing.runClassesAnalysis(model);
+            }
+            try {
+                model.runGameScript();
+            } catch (GameExitedException gee) {
+                System.out.println("Game exited via exception.");
+            }
+            frame.tearDown();
+            if (!model.gameAbandoned()) {
+                break;
+            }
         }
-        model.runGameScript();
+        frame.dispose();
+        System.exit(0);
+    }
+
+    private void tearDown() {
+        this.timer.stop();
+        removeKeyListener(keyListener);
+        drawingArea.clear();
+        repaint();
     }
 
     public static boolean inDebugMode() {

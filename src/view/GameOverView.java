@@ -26,7 +26,7 @@ public class GameOverView extends GameView {
 
     @Override
     public GameView getNextView(Model model) {
-        return new StartGameMenu();
+        return new IntroGameView();
     }
 
     @Override
@@ -34,6 +34,8 @@ public class GameOverView extends GameView {
         if (model.getLog().isAcceptingInput()) {
             model.getLog().keyTyped(keyEvent, model);
         }
+        model.setGameAbandoned(true);
+        model.setExitGame(true);
         setTimeToTransition(true);
     }
 }

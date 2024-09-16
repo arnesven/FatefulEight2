@@ -1,5 +1,6 @@
 package model.states;
 
+import control.GameExitedException;
 import model.Model;
 
 public class WaitForStartOfGameState extends GameState {
@@ -14,6 +15,9 @@ public class WaitForStartOfGameState extends GameState {
             try {
                 System.out.print(".");
                 Thread.sleep(1000);
+                if (model.gameExited()) {
+                    throw new GameExitedException();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

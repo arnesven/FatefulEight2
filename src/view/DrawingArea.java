@@ -22,9 +22,9 @@ public class DrawingArea extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
+        g.setColor(MyColors.BLACK.toAwtColor());
+        g.fillRect(0, 0, getWidth(), getHeight());
         if (this.buffer != null) {
-            g.setColor(MyColors.BLACK.toAwtColor());
-            g.fillRect(0, 0, getWidth(), getHeight());
             g.drawImage(buffer, 0, 0, getWidth(), getHeight(), null);
         }
     }
@@ -54,6 +54,11 @@ public class DrawingArea extends JComponent {
 
     public ScreenHandler getScreenHandler() {
         return screenHandler;
+    }
+
+    public void clear() {
+        this.buffer = null;
+        this.screenHandler = new ScreenHandler();
     }
 }
 

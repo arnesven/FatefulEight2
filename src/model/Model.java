@@ -56,10 +56,12 @@ public class Model {
     private boolean gameOver;
     private boolean gameStarted;
     private boolean inCombat;
+    private boolean gameAbandoned;
     private String gameStartFileName = null;
 
-    public Model(ScreenHandler screenHandler) {
+    public Model(ScreenHandler screenHandler, FatefulEight frame) {
         this.screenHandler = screenHandler;
+        this.frame = frame;
         initialize();
         log = new GameLog();
         subView = new EmptySubView();
@@ -75,6 +77,7 @@ public class Model {
         gameOver = false;
         gameStarted = false;
         inCombat = false;
+        gameAbandoned = false;
     }
 
     public void prepareForStartGameFromSave(String fileName) {
@@ -503,10 +506,6 @@ public class Model {
         this.gameData.mainStory = new MainStory();
     }
 
-    public void setFrame(FatefulEight frame) {
-        this.frame = frame;
-    }
-
     public void toggleFullScreen() {
         frame.toggleFullScreen();
     }
@@ -525,5 +524,13 @@ public class Model {
 
     public WarHandler getWarHandler() {
         return gameData.warHandler;
+    }
+
+    public boolean gameAbandoned() {
+        return gameAbandoned;
+    }
+
+    public void setGameAbandoned(boolean b) {
+        this.gameAbandoned = b;
     }
 }
