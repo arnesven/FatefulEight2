@@ -229,7 +229,7 @@ public class VampireFeedingHouse {
             model.getParty().enabledVampireLookFor(vampire);
             VampireFeedingHouse.this.setOpenEyes(true);
             state.println(vampire.getFirstName() + " descends upon the " + victim.getRace().getName() +
-                    " and sinks " + state.hisOrHer(vampire.getGender()) + " teeth into " + state.hisOrHer(victim.getGender()) + ".");
+                    " and sinks " + state.hisOrHer(vampire.getGender()) + " teeth into " + state.hisOrHer(victim.getGender()) + " neck.");
             model.getLog().waitForAnimationToFinish();
             VampireFeedingHouse.this.setOpenEyes(false);
             state.println("The " + victim.getRace().getName() + " gasps and for a moment it seems " + state.heOrShe(victim.getGender()) +

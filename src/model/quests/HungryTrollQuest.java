@@ -22,8 +22,8 @@ import view.widget.QuestBackground;
 import java.util.List;
 
 public class HungryTrollQuest extends Quest {
-    private static final String INTRO = "The elder of a nearby village have come to you with their problem. " +
-            "An abnormally large troll has settled nearby and keeps steeling their livestock. They've hired you to deal with the behemoth.";
+    private static final String INTRO = "The elders of a nearby village have come to you with their problem. " +
+            "An abnormally large troll has settled nearby and keeps stealing their livestock. They've hired you to deal with the behemoth.";
     private static final String OUTRO = "Relieved that the issue with the troll has been resolved, the elder rewards " +
             "you with what little gold the village can spare.";
     private static final CharacterAppearance PROTRAIT = PortraitSubView.makeOldPortrait(Classes.PRI, AllRaces.ALL, MyRandom.flipCoin());
