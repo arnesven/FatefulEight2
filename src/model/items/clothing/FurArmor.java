@@ -15,7 +15,7 @@ public class FurArmor extends Clothing {
             MyColors.GRAY_RED, MyColors.LIGHT_GRAY, MyColors.BEIGE);
     private static final Sprite ALT_SPRITE = new ItemSprite(12, 3,
             MyColors.ORANGE, MyColors.BROWN, MyColors.BEIGE);
-    private final Sprite sprite;
+    private Sprite sprite;
 
     public FurArmor() {
         super("Fur Armor", 28, 3, false);
@@ -44,6 +44,12 @@ public class FurArmor extends Clothing {
 
     @Override
     public Item copy() {
-        return new FurArmor();
+        FurArmor toReturn = new FurArmor();
+        if (this.sprite == SPRITE) {
+            toReturn.sprite = SPRITE;
+        } else {
+            toReturn.sprite = ALT_SPRITE;
+        }
+        return toReturn;
     }
 }
