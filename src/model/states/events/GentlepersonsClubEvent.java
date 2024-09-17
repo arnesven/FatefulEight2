@@ -7,15 +7,16 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Item;
-import model.items.special.CageWithBird;
 import model.items.special.CollectorItem;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
-import model.states.GameState;
 import model.states.TrainingState;
 import util.MyLists;
-import util.MyPair;
+import util.MyRandom;
+import util.MyStrings;
 import view.LogView;
+import view.subviews.CollapsingTransition;
+import view.subviews.GuildHallImageSubView;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ import java.util.List;
 public class GentlepersonsClubEvent extends DailyEventState {
     private static final String CLUB_MEMBER_KEY = "GentlepersonsClubMember";
     private static final int MEMBERSHIP_FEE = 100;
-    private boolean politicianTalkedTo = false;
-    private boolean informationBrokerMet = false;
 
     public GentlepersonsClubEvent(Model model) {
         super(model);
@@ -40,7 +39,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        setCurrentTerrainSubview(model);
+        CollapsingTransition.transition(model, GuildHallImageSubView.getInstance("Gentleperson's Club"));
         println("You happen to pass a building with a very elaborate sign out front. " +
                 "'Gentleperson's Club' is written in fancy letters upon it. " +
                 "You step inside.");
@@ -63,80 +62,32 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private void handleMember(Model model) {
+        List<ClubPerson> peopleHere = makePeopleInClub();
         println("You step into a grand parlor. It is filled with fancy plush furniture and the walls are decorated with " +
-                "beautiful portraits and ornaments. There are three people here, " +
-                "a tall gentleman in a fancy robe and a top hat, somebody who looks like a politician, and an information broker.");
+                "beautiful portraits and ornaments. There are " + MyStrings.numberWord(peopleHere.size()) + " people here.");
         do {
-            int count = multipleOptionArrowMenu(model, 24, 24, List.of("Talk to gentleman",
-                    "Talk to politician", "Talk to information broker", "Leave"));
-            if (count == 0) {
-                talkToCollector(model);
-            } else if (count == 1) {
-                talkToPolitician(model);
-            } else if (count == 2) {
-                talkToInformationBroker(model);
-            } else {
+            println("Who would you like to approach?");
+            List<String> options = MyLists.transform(peopleHere, ClubPerson::getName);
+            options.add("Leave club");
+            int count = multipleOptionArrowMenu(model, 24, 24, options);
+            if (count == peopleHere.size()) {
                 break;
             }
+            peopleHere.get(count).handlePerson(model);
         } while (true);
     }
 
-    private void talkToInformationBroker(Model model) {
-        showRandomPortrait(model, Classes.SPY, "Information Broker");
-        if (informationBrokerMet) {
-            portraitSay("I'm sorry, I don't think there's anything more I can teach you.");
-            leaderSay("All right. See you around.");
-            return;
+    private List<ClubPerson> makePeopleInClub() {
+        List<ClubPerson> result = new ArrayList<>();
+        List<ClubPerson> people = new ArrayList<>(List.of(new Collector(), new Politician(), new InformationBroker()));
+        for (int i = MyRandom.randInt(2, people.size()); i > 0; --i) {
+            ClubPerson person = MyRandom.sample(people);
+            people.remove(person);
+            result.add(person);
         }
-        portraitSay("Good day sir. Are you new here?");
-        leaderSay("Yes. What do you do?");
-        portraitSay("I'm an information broker. My job is to know things, and people, and places.");
-        leaderSay("Intriguing. How does one attain such a profession?");
-        portraitSay("Through years and years of building up a contact network. I was a spy in our lords " +
-                "service for many years. Then, when things got a little to hot, I settled down and opened a little " +
-                "pub. It was quite popular, not for its food or drink, but for the meetings and deals that were " +
-                "made there, it was quite the water hole for greasers and fixers. After a year or so, I decided to sell " +
-                "the joint and continue working primarily as a contact specialist. I found the Gentleperson's club to be " +
-                "a great place to work my trade.");
-        leaderSay("You've got quite the story.");
-        portraitSay("Everybody has a story. Why don't you tell me yours?");
-        print("Tell your story to the information broker? (Y/N) ");
-        if (yesNoInput()) {
-            println("You take a little time explaining your adventures to the information broker, who listens attentively.");
-            portraitSay("Fascinating. I'm always amazed by the lives of adventurers such as yourselves. Thank you for " +
-                    "telling me your story. In return, would you permit you to offer you some advice on making contacts and seeking information?");
-            doSkillTraining(model, "information broker", Skill.SeekInfo, "We had better be on our way now.");
-            informationBrokerMet = true;
-        } else {
-            leaderSay("Actually, we need to be on our way.");
-            portraitSay("I see. Well, good bye then.");
-        }
+        return result;
     }
 
-    private void talkToPolitician(Model model) {
-        showRandomPortrait(model, Classes.NOB, "Politician");
-        if (politicianTalkedTo) {
-            portraitSay("I'm sorry. I really need to focus on this speech now.");
-            leaderSay("Sorry...");
-            return;
-        }
-        portraitSay("Hello there. You wouldn't happen to know a synonym for 'society' do you?");
-        leaderSay("Uhm... maybe 'community'?");
-        portraitSay("Yes! That will work.");
-        leaderSay("What are you doing?");
-        portraitSay("Oh, I'm working on a speech for the local authority here. Times have been a bit tough, so it needs " +
-                "to be particularly inspiring.");
-        leaderSay("Oh I see. You're a politician?");
-        portraitSay("Yes, or at least I was. I used to be quite famous.");
-        leaderSay("What happened?");
-        portraitSay("Due a, uhm misunderstanding a few years a go I had to resign my office.");
-        leaderSay("What kind of misunderstanding?");
-        portraitSay("I'd rather not get into that. Anyway nowadays I function more as a leadership coach. Say, in return for " +
-                "helping me with my speech, maybe I can teach you a think or two about being a leader?");
-        doSkillTraining(model, "politician", Skill.Leadership,
-                iOrWeCap() + " had better let you get back to your speech.");
-        politicianTalkedTo = true;
-    }
 
     private void doSkillTraining(Model model, String trainer, Skill skill, String endText) {
         print("Permit the " + trainer + " to give you a lesson in " + skill.getName() + "? (Y/N) ");
@@ -163,57 +114,6 @@ public class GentlepersonsClubEvent extends DailyEventState {
         } else {
             leaderSay("Actually, we have to get going.");
             portraitSay("Fair enough. See you around.");
-        }
-    }
-
-    private void talkToCollector(Model model) {
-        showRandomPortrait(model, Classes.ARISTOCRAT, "Collector");
-        portraitSay("Hello there, nice to see a new face around here.");
-        leaderSay("Not very busy in here is it?");
-        portraitSay("Not at the moment no.");
-        leaderSay("So... do you come here often?");
-        portraitSay("Yes. I am a collector of rare objects. I own an auction house and I'm always looking for " +
-                "odd curious from around the world.");
-        leaderSay("Interesting. Is that a lucrative business?");
-        portraitSay("I have found it so. My clients often pay large sums to for my items, " +
-                "seeing how they are absolutely unique. Of course, I also have to pay well to acquire them " +
-                "in the first place. You wouldn't happen to have come across any rare objects have you?");
-        Item it = findRareObject(model);
-        if (it != null) {
-            leaderSay("Well, I do have this rare bird...");
-            println("You bring out the cage with the rare bird in it. The collector's eyes widen with fascination.");
-            leaderSay("I believe it is quite unique.");
-            portraitSay("Indeed! It's tremendously beautiful, and I don't think I've ever seen anything like it. " +
-                    "Are you willing to sell it to me?");
-            leaderSay("It depends on the price. What is your offer?");
-            int offer = it.getCost() / 2;
-            portraitSay("Hmmm... How does " + offer + " gold sound to you?");
-            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this,
-                    model.getParty().getLeader(), Skill.Persuade, 10, 20, 0);
-            if (result.isSuccessful()) {
-                leaderSay("Now that I think about it, I'm not sure I'm ready to let it go. It's so transfixing to look at.");
-                offer += it.getCost() / 4;
-                portraitSay("I agree... A shame... Would an offer of " + offer + " gold change your mind?");
-            } else {
-                leaderSay("Perhaps...");
-            }
-            print("Sell the rare bird for " + offer + " gold? (Y/N) ");
-            if (yesNoInput()) {
-                leaderSay("The terms are acceptable to me. Do you have the money here?");
-                portraitSay("Yes, of course. Here it is.");
-                println("The collector hands you " + offer + " gold.");
-                model.getParty().addToGold(offer);
-                leaderSay("Then the bird is yours.");
-                portraitSay("Ah... a real find! Great doing business with you.");
-                leaderSay("My pleasure");
-                model.getParty().getInventory().remove(it);
-            } else {
-                leaderSay("... Actually, I'm going to keep the bird for now. It's too precious to me.");
-                portraitSay("I understand. I too would be hesitant to relinquishing something so wonderful.");
-            }
-        } else {
-            leaderSay("I'm afraid I don't have anything like that.");
-            portraitSay("I see. Well, nice talking to you. Good day.");
         }
     }
 
@@ -250,6 +150,8 @@ public class GentlepersonsClubEvent extends DailyEventState {
                 portraitSay("No need. We'll make sure all of our locations know your name and appearance, you're one of us now.");
                 leaderSay("That's nice of you.");
                 portraitSay("Right this way to the club common rooms.");
+                model.getLog().waitForAnimationToFinish();
+                removePortraitSubView(model);
                 model.getSettings().getMiscFlags().put(CLUB_MEMBER_KEY, true);
                 model.getLog().addAnimated(LogView.GOLD_COLOR +
                         "You have become a member of the Gentleperson's Club. " +
@@ -264,5 +166,151 @@ public class GentlepersonsClubEvent extends DailyEventState {
 
     public static boolean isMember(Model model) {
         return model.getSettings().getMiscFlags().get(CLUB_MEMBER_KEY) != null;
+    }
+
+    private static abstract class ClubPerson {
+
+        private final String name;
+
+        protected boolean alreadyTalkedTo = false;
+
+        public ClubPerson(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public abstract void handlePerson(Model model);
+    }
+
+    private class Collector extends ClubPerson {
+        public Collector() {
+            super("Gentleman");
+        }
+
+        @Override
+        public void handlePerson(Model model) {
+            showRandomPortrait(model, Classes.ARISTOCRAT, "Collector");
+            portraitSay("Hello there, nice to see a new face around here.");
+            leaderSay("Not very busy in here is it?");
+            portraitSay("Not at the moment no.");
+            leaderSay("So... do you come here often?");
+            portraitSay("Yes. I am a collector of rare objects. I own an auction house and I'm always looking for " +
+                    "odd curious from around the world.");
+            leaderSay("Interesting. Is that a lucrative business?");
+            portraitSay("I have found it so. My clients often pay large sums to for my items, " +
+                    "seeing how they are absolutely unique. Of course, I also have to pay well to acquire them " +
+                    "in the first place. You wouldn't happen to have come across any rare objects have you?");
+            Item it = findRareObject(model);
+            if (it != null) {
+                leaderSay("Well, I do have this rare bird...");
+                println("You bring out the cage with the rare bird in it. The collector's eyes widen with fascination.");
+                leaderSay("I believe it is quite unique.");
+                portraitSay("Indeed! It's tremendously beautiful, and I don't think I've ever seen anything like it. " +
+                        "Are you willing to sell it to me?");
+                leaderSay("It depends on the price. What is your offer?");
+                int offer = it.getCost() / 2;
+                portraitSay("Hmmm... How does " + offer + " gold sound to you?");
+                SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, GentlepersonsClubEvent.this,
+                        model.getParty().getLeader(), Skill.Persuade, 10, 20, 0);
+                if (result.isSuccessful()) {
+                    leaderSay("Now that I think about it, I'm not sure I'm ready to let it go. It's so transfixing to look at.");
+                    offer += it.getCost() / 4;
+                    portraitSay("I agree... A shame... Would an offer of " + offer + " gold change your mind?");
+                } else {
+                    leaderSay("Perhaps...");
+                }
+                print("Sell the rare bird for " + offer + " gold? (Y/N) ");
+                if (yesNoInput()) {
+                    leaderSay("The terms are acceptable to me. Do you have the money here?");
+                    portraitSay("Yes, of course. Here it is.");
+                    println("The collector hands you " + offer + " gold.");
+                    model.getParty().addToGold(offer);
+                    leaderSay("Then the bird is yours.");
+                    portraitSay("Ah... a real find! Great doing business with you.");
+                    leaderSay("My pleasure");
+                    model.getParty().getInventory().remove(it);
+                } else {
+                    leaderSay("... Actually, I'm going to keep the bird for now. It's too precious to me.");
+                    portraitSay("I understand. I too would be hesitant to relinquishing something so wonderful.");
+                }
+            } else {
+                leaderSay("I'm afraid I don't have anything like that.");
+                portraitSay("I see. Well, nice talking to you. Good day.");
+            }
+        }
+    }
+
+    private class Politician extends ClubPerson {
+        public Politician() {
+            super("Politician");
+        }
+
+        @Override
+        public void handlePerson(Model model) {
+            showRandomPortrait(model, Classes.NOB, "Politician");
+            if (alreadyTalkedTo) {
+                portraitSay("I'm sorry. I really need to focus on this speech now.");
+                leaderSay("Sorry...");
+                return;
+            }
+            portraitSay("Hello there. You wouldn't happen to know a synonym for 'society' do you?");
+            leaderSay("Uhm... maybe 'community'?");
+            portraitSay("Yes! That will work.");
+            leaderSay("What are you doing?");
+            portraitSay("Oh, I'm working on a speech for the local authority here. Times have been a bit tough, so it needs " +
+                    "to be particularly inspiring.");
+            leaderSay("Oh I see. You're a politician?");
+            portraitSay("Yes, or at least I was. I used to be quite famous.");
+            leaderSay("What happened?");
+            portraitSay("Due a, uhm misunderstanding a few years a go I had to resign my office.");
+            leaderSay("What kind of misunderstanding?");
+            portraitSay("I'd rather not get into that. Anyway nowadays I function more as a leadership coach. Say, in return for " +
+                    "helping me with my speech, maybe I can teach you a think or two about being a leader?");
+            doSkillTraining(model, "politician", Skill.Leadership,
+                    iOrWeCap() + " had better let you get back to your speech.");
+            alreadyTalkedTo = true;
+        }
+    }
+
+    private class InformationBroker extends ClubPerson {
+        public InformationBroker() {
+            super("Information Broker");
+        }
+
+        @Override
+        public void handlePerson(Model model) {
+            showRandomPortrait(model, Classes.SPY, "Information Broker");
+            if (alreadyTalkedTo) {
+                portraitSay("I'm sorry, I don't think there's anything more I can teach you.");
+                leaderSay("All right. See you around.");
+                return;
+            }
+            portraitSay("Good day sir. Are you new here?");
+            leaderSay("Yes. What do you do?");
+            portraitSay("I'm an information broker. My job is to know things, and people, and places.");
+            leaderSay("Intriguing. How does one attain such a profession?");
+            portraitSay("Through years and years of building up a contact network. I was a spy in our lords " +
+                    "service for many years. Then, when things got a little to hot, I settled down and opened a little " +
+                    "pub. It was quite popular, not for its food or drink, but for the meetings and deals that were " +
+                    "made there, it was quite the water hole for greasers and fixers. After a year or so, I decided to sell " +
+                    "the joint and continue working primarily as a contact specialist. I found the Gentleperson's club to be " +
+                    "a great place to work my trade.");
+            leaderSay("You've got quite the story.");
+            portraitSay("Everybody has a story. Why don't you tell me yours?");
+            print("Tell your story to the information broker? (Y/N) ");
+            if (yesNoInput()) {
+                println("You take a little time explaining your adventures to the information broker, who listens attentively.");
+                portraitSay("Fascinating. I'm always amazed by the lives of adventurers such as yourselves. Thank you for " +
+                        "telling me your story. In return, would you permit you to offer you some advice on making contacts and seeking information?");
+                doSkillTraining(model, "information broker", Skill.SeekInfo, "We had better be on our way now.");
+                alreadyTalkedTo = true;
+            } else {
+                leaderSay("Actually, we need to be on our way.");
+                portraitSay("I see. Well, good bye then.");
+            }
+        }
     }
 }

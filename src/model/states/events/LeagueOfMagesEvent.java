@@ -20,6 +20,8 @@ import util.MyLists;
 import util.MyRandom;
 import view.JournalView;
 import view.LogView;
+import view.subviews.CollapsingTransition;
+import view.subviews.GuildHallImageSubView;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
@@ -45,7 +47,7 @@ public class LeagueOfMagesEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        setCurrentTerrainSubview(model);
+        CollapsingTransition.transition(model, GuildHallImageSubView.getInstance("League of Mages"));
         println("You pass by a building with an ornate sign out front. " +
                 "'League of Mages - Guild Hall' is written in gilded letters upon it. " +
                 "You step inside.");
