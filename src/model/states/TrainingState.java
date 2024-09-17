@@ -65,27 +65,28 @@ public class TrainingState extends GameState {
             if (p.y == matrix.getRows()-1) {
                 doTempleChores(model, gc);
             } else {
-                doSkillTraining(model, gc,p.y, p.y > 2 ? p.y - 3 : p.y);
+                doSkillTraining(model, this, gc, lessons.get(p.y), p.y > 2 ? p.y - 3 : p.y);
             }
         }
         model.getLog().waitForAnimationToFinish();
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 
-    private void doSkillTraining(Model model, GameCharacter performer, int index, int level) {
+    public static boolean doSkillTraining(Model model, GameState state, GameCharacter performer, Skill skill, int level) {
         String maybeN = level < 2 ? "n" : "";
-        println(performer.getName() + " attends a" + maybeN + " " + LEVELS[level].toLowerCase() +
-                " level training session in " + getLessonName(index) + ".");
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, performer,
-                lessons.get(index), DIFFICULTY[level], EXPERIENCE[level], 0);
+        state.println(performer.getName() + " attends a" + maybeN + " " + LEVELS[level].toLowerCase() +
+                " level training session in " + getLessonName(skill) + ".");
+        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, performer,
+                skill, DIFFICULTY[level], EXPERIENCE[level], 0);
         if (result.isSuccessful()) {
             model.getParty().partyMemberSay(model, performer,
                     List.of("Yes!", "Eureka!", "Wonderful!", "I'm learning."));
-            println(performer.getName() + " gains " + EXPERIENCE[level] + " experience.");
-        } else {
-            model.getParty().partyMemberSay(model, performer,
-                    List.of("Aaw!#", "Oh no!#", "Shoot!#", "Phooey!#", "Darn it!#"));
+            state.println(performer.getName() + " gains " + EXPERIENCE[level] + " experience.");
+            return true;
         }
+        model.getParty().partyMemberSay(model, performer,
+                    List.of("Aaw!#", "Oh no!#", "Shoot!#", "Phooey!#", "Darn it!#"));
+        return false;
     }
 
     private void doTempleChores(Model model, GameCharacter gc) {
@@ -137,12 +138,16 @@ public class TrainingState extends GameState {
         return -1;
     }
 
-    public String getLessonName(int i) {
-        if (lessons.get(i).getName().contains("(")) {
-            String[] parts = lessons.get(i).getName().split("\\(");
+    public static String getLessonName(Skill skill) {
+        if (skill.getName().contains("(")) {
+            String[] parts = skill.getName().split("\\(");
             return parts[1].replace(")", "") + " " + parts[0];
         }
-        return lessons.get(i).getName();
+        return skill.getName();
+    }
+
+    public String getLessonName(int i) {
+        return getLessonName(lessons.get(i));
     }
 
     public boolean isInResolution() {

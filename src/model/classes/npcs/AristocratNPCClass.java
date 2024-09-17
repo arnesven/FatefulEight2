@@ -12,7 +12,7 @@ public class AristocratNPCClass extends NPCClass {
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        MagicianClass.putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GRAY);
+        MagicianClass.putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY);
         Looks.putOnFancyRobe(characterAppearance, MyColors.DARK_BLUE, MyColors.DARK_GRAY);
     }
 }

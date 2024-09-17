@@ -15,6 +15,7 @@ import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSpriteWithBack;
+import view.sprites.PortraitSprite;
 
 import java.util.List;
 
@@ -41,15 +42,25 @@ public class MagicianClass extends CharacterClass {
         putOnTopHat(characterAppearance, MyColors.DARK_GRAY, MyColors.DARK_PURPLE);
     }
 
-    public static void putOnTopHat(CharacterAppearance characterAppearance, MyColors color1, MyColors color2) {
+    public static void putOnTopHat(CharacterAppearance characterAppearance, MyColors color1, MyColors color2, MyColors color4) {
         characterAppearance.removeOuterHair();
         for (int y = 0; y <= 2; ++y) {
             for (int x = 2; x <= 4; ++x) {
-                characterAppearance.setSprite(x, y, new ClothesSpriteWithBack(0x62 + 0x10 * y + x, color1, color2  ));
+                PortraitSprite ps = new ClothesSpriteWithBack(0x62 + 0x10 * y + x, color1, color2);
+                ps.setColor4(color4);
+                characterAppearance.setSprite(x, y, ps);
             }
         }
-        characterAppearance.setSprite(1, 2, new ClothesSpriteWithBack(0x83, color1, color2  ));
-        characterAppearance.setSprite(5, 2, new ClothesSpriteWithBack(0x87, color1, color2  ));
+        PortraitSprite ps = new ClothesSpriteWithBack(0x83, color1, color2);
+        ps.setColor4(color4);
+        characterAppearance.setSprite(1, 2, ps);
+        ps = new ClothesSpriteWithBack(0x87, color1, color2);
+        ps.setColor4(color4);
+        characterAppearance.setSprite(5, 2, ps);
+    }
+
+    public static void putOnTopHat(CharacterAppearance characterAppearance, MyColors color1, MyColors color2) {
+        putOnTopHat(characterAppearance, color1, color2, color2);
     }
 
     @Override
