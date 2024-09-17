@@ -4,7 +4,7 @@ import view.GameView;
 
 public class TutorialFindResources extends HelpDialog {
     private static final String TEXT =
-            "When you are not in a town or castle you can select Find Resources as your daily action. " +
+            "When you are not in a town or castle, or on a road, you can select Find Resources as your daily action. " +
             "When finding resources you can either search for ingredients or for crafting materials. " +
             "How likely it is to find ingredients or materials depends on the type of terrain you are " +
             "currently exploring.\n\n" +

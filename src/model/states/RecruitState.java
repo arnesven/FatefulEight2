@@ -6,6 +6,7 @@ import model.SteppingMatrix;
 import model.characters.*;
 import model.combat.conditions.VampirismCondition;
 import model.headquarters.TransferCharacterHeadquartersAction;
+import model.map.UrbanLocation;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
@@ -234,6 +235,9 @@ public class RecruitState extends GameState {
                 model.getParty().addToGold(-roundIncr);
                 sum += roundIncr;
             }
+        }
+        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
+            sum += 1;
         }
         if (model.getParty().size() < 2) {
             sum -= 1;

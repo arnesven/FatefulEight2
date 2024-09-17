@@ -13,7 +13,7 @@ public class FindResourcesDailyAction extends DailyAction {
     }
 
     public static void addActionIfApplicable(Model model, List<DailyAction> actions) {
-        if (!alreadyDone(model)) {
+        if (!alreadyDone(model) && !model.getParty().isOnRoad()) {
             actions.add(new FindResourcesDailyAction(model));
         }
     }
