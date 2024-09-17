@@ -3,9 +3,7 @@ package util;
 import model.races.Race;
 import view.MyColors;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MyRandom {
     private static Random random = new Random();
@@ -19,6 +17,15 @@ public class MyRandom {
 
     public static <T> T sample(List<? extends T> list) {
         return list.get(MyRandom.randInt(list.size()));
+    }
+
+    public static <T> List<T> sampleN(int n, List<? extends T> list) {
+        List<T> result = new ArrayList<>(list);
+        Collections.shuffle(result);
+        for (int i = n; i < list.size(); ++i) {
+            result.remove(0);
+        }
+        return result;
     }
 
     public static int rollD6() {
