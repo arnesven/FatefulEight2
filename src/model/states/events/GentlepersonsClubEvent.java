@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
@@ -10,6 +11,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.horses.HorseItemAdapter;
 import model.items.Item;
+import model.items.potions.FineWine;
 import model.items.special.CollectorItem;
 import model.map.UrbanLocation;
 import model.races.AllRaces;
@@ -55,6 +57,9 @@ public class GentlepersonsClubEvent extends DailyEventState {
         if (isMember(model)) {
             leaderSay("As a matter of fact, I am.");
             portraitSay("Right this way then.");
+            leaderSay("Thanks. Just gonna get a drink.");
+            portraitSay("Of course, help yourselves.");
+            giveDrinks(model);
             model.getLog().waitForAnimationToFinish();
             removePortraitSubView(model);
             handleMember(model);
@@ -153,7 +158,10 @@ public class GentlepersonsClubEvent extends DailyEventState {
                 leaderSay("Here's the " + MEMBERSHIP_FEE + " gold. Do we get a membership card or something?");
                 portraitSay("No need. We'll make sure all of our locations know your name and appearance, you're one of us now.");
                 leaderSay("That's nice of you.");
-                portraitSay("Right this way to the club common rooms.");
+                portraitSay("Right this way to the club common rooms. Oh, and members always receive a free drink upon arrival.");
+                randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(), "Free booze? This place is great!");
+                leaderSay("Sure, we'll have a drink");
+                giveDrinks(model);
                 model.getLog().waitForAnimationToFinish();
                 removePortraitSubView(model);
                 model.getSettings().getMiscFlags().put(CLUB_MEMBER_KEY, true);
@@ -166,6 +174,13 @@ public class GentlepersonsClubEvent extends DailyEventState {
                 portraitSay("Yes of course...");
             }
         }
+    }
+
+    private void giveDrinks(Model model) {
+        for (int i = 0; i < model.getParty().size(); ++i) {
+            new FineWine().addYourself(model.getParty().getInventory());
+        }
+        println("You collect " + MyStrings.numberWord(model.getParty().size()) + " drinks from the bar.");
     }
 
     public static boolean isMember(Model model) {
