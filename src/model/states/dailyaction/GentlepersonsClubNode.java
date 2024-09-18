@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.GameState;
 import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
@@ -53,5 +54,7 @@ public class GentlepersonsClubNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        model.setTimeOfDay(TimeOfDay.EVENING);
+    }
 }

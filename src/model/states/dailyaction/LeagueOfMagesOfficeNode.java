@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.states.GameState;
 import model.states.events.LeagueOfMagesEvent;
 import view.MyColors;
@@ -52,5 +53,7 @@ public class LeagueOfMagesOfficeNode extends DailyActionNode {
     }
 
     @Override
-    public void setTimeOfDay(Model model, AdvancedDailyActionState state) { }
+    public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
+        model.setTimeOfDay(TimeOfDay.EVENING);
+    }
 }

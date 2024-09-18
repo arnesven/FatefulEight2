@@ -205,13 +205,16 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class Collector extends ClubPerson {
+        private final AdvancedAppearance appearance;
+
         public Collector() {
             super("Gentleman");
+            this.appearance = PortraitSubView.makeRandomPortrait(Classes.ARISTOCRAT);
         }
 
         @Override
         public void handlePerson(Model model) {
-            showRandomPortrait(model, Classes.ARISTOCRAT, "Collector");
+            showExplicitPortrait(model, appearance, "Collector");
             portraitSay("Hello there, nice to see a new face around here.");
             leaderSay("Not very busy in here is it?");
             portraitSay("Not at the moment no.");
@@ -263,13 +266,16 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class Politician extends ClubPerson {
+        private final AdvancedAppearance appearance;
+
         public Politician() {
             super("Politician");
+            this.appearance = PortraitSubView.makeRandomPortrait(Classes.NOB);
         }
 
         @Override
         public void handlePerson(Model model) {
-            showRandomPortrait(model, Classes.NOB, "Politician");
+            showExplicitPortrait(model, appearance, "Politician");
             if (alreadyTalkedTo) {
                 portraitSay("I'm sorry. I really need to focus on this speech now.");
                 leaderSay("Sorry...");
@@ -295,13 +301,16 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class InformationBroker extends ClubPerson {
+        private final AdvancedAppearance appearance;
+
         public InformationBroker() {
             super("Information Broker");
+            this.appearance = PortraitSubView.makeRandomPortrait(Classes.SPY);
         }
 
         @Override
         public void handlePerson(Model model) {
-            showRandomPortrait(model, Classes.SPY, "Information Broker");
+            showExplicitPortrait(model, appearance, "Information Broker");
             if (alreadyTalkedTo) {
                 portraitSay("I'm sorry, I don't think there's anything more I can teach you.");
                 leaderSay("All right. See you around.");
@@ -334,14 +343,17 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class Screenwriter extends ClubPerson {
+        private final AdvancedAppearance appearance;
+
         public Screenwriter() {
             super("Screenwriter");
+            this.appearance = PortraitSubView.makeRandomPortrait(Classes.BRD);
         }
 
         @Override
         public void handlePerson(Model model) {
             println("You approach a person who has a large a fancy hat.");
-            showRandomPortrait(model, Classes.BRD, "Screenwriter");
+            showExplicitPortrait(model, appearance, "Screenwriter");
             if (alreadyTalkedTo) {
                 portraitSay("I really must get on with the script now. Please don't disturb me.");
                 leaderSay("Of course. " + iOrWeCap() + "'ll let you work.");
@@ -397,13 +409,16 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class Mathematician extends ClubPerson {
+        private final CharacterAppearance appearance;
+
         public Mathematician() {
             super("Mathematician");
+            this.appearance = PortraitSubView.makeOldPortrait(Classes.PROFESSOR, AllRaces.randomRace(), MyRandom.flipCoin());
         }
 
         @Override
         public void handlePerson(Model model) {
-            showRandomPortrait(model, Classes.PROFESSOR, "Mathematician");
+            showExplicitPortrait(model, appearance, "Mathematician");
             portraitSay("Hello there. Nice to see you again.");
             if (alreadyTalkedTo) {
                 leaderSay("Hmmm... I guess your little habit does makes sense to me now.");
@@ -430,13 +445,16 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class Diplomat extends ClubPerson {
+        private final AdvancedAppearance appearance;
+
         public Diplomat() {
             super("Diplomat");
+            this.appearance = PortraitSubView.makeRandomPortrait(Classes.NOB);
         }
 
         @Override
         public void handlePerson(Model model) {
-            showRandomPortrait(model, Classes.NOB, "Diplomat");
+            showExplicitPortrait(model, appearance, "Diplomat");
             if (alreadyTalkedTo) {
                 portraitSay("Oh, it's you again. We could share stories. But I don't think I can teach you anything else.");
                 leaderSay("Okay. Until we meet again then.");
@@ -463,8 +481,11 @@ public class GentlepersonsClubEvent extends DailyEventState {
     }
 
     private class RetiredAdventurer extends ClubPerson {
+        private final CharacterAppearance portrait;
+
         public RetiredAdventurer() {
             super("Retired adventurer");
+            this.portrait = PortraitSubView.makeOldPortrait(Classes.SWORD_MASTER, AllRaces.randomRace(), MyRandom.flipCoin());
         }
 
         @Override
@@ -473,7 +494,6 @@ public class GentlepersonsClubEvent extends DailyEventState {
                 println("You look around a bit, but it seems the retired adventurer has left the Club.");
                 return;
             }
-            CharacterAppearance portrait = PortraitSubView.makeOldPortrait(Classes.SWORD_MASTER, AllRaces.randomRace(), MyRandom.flipCoin());
             showExplicitPortrait(model, portrait, "Retired adventurer");
             alreadyTalkedTo = true;
             leaderSay("I don't think there's anybody else in here who carries a sword on their back.");
@@ -592,7 +612,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
                                             0));
             goldSum += MyLists.intAccumulate(model.getParty().getHorseHandler().getHorsesAsItems(), (HorseItemAdapter::getCost));
             String assessment = findLevel(goldSum,
-                    new int[]{            100,        200,       400,    600,         800,     1200},
+                    new int[]{            100,        200,       400,    800,        1500,     3000},
                     new String[]{"really bad", "not good", "alright", "good", "very good",  "great", "fantastic"});
             return new MyPair<>(goldSum, assessment);
         }
