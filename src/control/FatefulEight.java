@@ -18,7 +18,7 @@ public class FatefulEight extends JFrame {
 
     public static final boolean TEST_MODE = false;
     private static final int TIMER_DELAY_MS = 20;
-    public static String version = "1.423";
+    public static String version = "1.424";
     private static boolean debug = false;
     private final DrawingArea drawingArea;
     public static boolean inFullScreenMode = false;
