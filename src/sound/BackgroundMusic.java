@@ -15,7 +15,7 @@ public enum BackgroundMusic {
     jumpyBlip("jumpy_blip", Volume.LOW),
     battleSong("serious", Volume.MEDIUM_BGM),
     altCombatSong("retro_rush", Volume.MEDIUM_BGM),
-    dungeonSong("deepest_thought", Volume.MEDIUM_BGM),
+    dungeonSong("deepest_thought", Volume.HIGH_BGM),
     gentleMemory("gentle_memory", Volume.MEDIUM_BGM),
     ridingSong("going_home", Volume.MEDIUM_BGM),
     happyMandolin("happy_mandolin", Volume.MEDIUM_BGM),

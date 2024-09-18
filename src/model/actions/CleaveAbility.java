@@ -38,7 +38,7 @@ public class CleaveAbility extends StaminaCombatAbility {
         enemies.remove(target);
         Collections.shuffle(enemies);
         for (int i = 0; damage > 0 && i < 2 && !enemies.isEmpty(); ++i) {
-            target = enemies.remove(i);
+            target = enemies.remove(0);
             combat.println(target.getName() + " takes " + damage + " damage from Cleave.");
             combat.addFloatyDamage(target, damage, DamageValueEffect.STANDARD_DAMAGE);
             combat.doDamageToEnemy(target, damage, performer);

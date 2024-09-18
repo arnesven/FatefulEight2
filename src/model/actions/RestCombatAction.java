@@ -14,6 +14,7 @@ import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialCombatResting;
 import view.sprites.CurlySpiralAnimation;
+import view.sprites.DamageValueEffect;
 import view.sprites.RunOnceAnimationSprite;
 
 public class RestCombatAction extends SpecialAbilityCombatAction {
@@ -67,6 +68,7 @@ public class RestCombatAction extends SpecialAbilityCombatAction {
     private void recoverHP(CombatEvent combat, GameCharacter performer) {
         combat.println(performer.getFirstName() + " recovered 1 Health Point.");
         performer.addToHP(1);
+        combat.addFloatyDamage(performer, 1, DamageValueEffect.HEALING);
     }
 
     private void recoverSP(CombatEvent combat, GameCharacter performer) {

@@ -39,7 +39,11 @@ public abstract class SetEquipmentMenu extends FixedPositionSelectableListMenu {
         List<Item> inventory = new ArrayList<>();
         inventory.addAll(getSpecificInventory(model));
         for (Item item : inventory) {
-            content.add(new SelectableListContent(xStart + 1, ++yStart, item.getName()) {
+            String name = item.getName();
+            if (name.length() >= 20) {
+                name = item.getName().substring(0, 19);
+            }
+            content.add(new SelectableListContent(xStart + 1, ++yStart, name) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     boolean success = SetEquipmentMenu.this.doAction(model, item, person);
