@@ -55,11 +55,14 @@ public class LevelUpSummaryView extends SelectableListMenu {
     }
 
     private Set<String> getAbilityList(Model model, GameCharacter performer) {
-        return new HashSet<>(
+        Set<String> set = new HashSet<>(
                 MyLists.transform(
                         MyLists.filter(AbilityCombatAction.getAllCombatAbilities(performer),
                                 (SpecialAbilityCombatAction abi) -> abi.possessesAbility(model, performer)),
                         CombatAction::getName));
+        set.addAll(MyLists.transform(AbilityCombatAction.getPassiveCombatActions(performer),
+                CombatAction::getName));
+        return set;
     }
 
     @Override

@@ -14,6 +14,7 @@ import model.races.Race;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
+import view.subviews.SubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,9 @@ public class MinerEvent extends GeneralInteractionEvent {
                 "the earth, to dig for precious gems and metal ore. The " +
                 "miner gladly demonstrates the gear and offers to teach you about the life of a miner, ");
         ChangeClassEvent changeClassEvent = new ChangeClassEvent(model, Classes.MIN);
+        SubView subView = model.getSubView();
         changeClassEvent.areYouInterested(model);
+        model.setSubView(subView);
         return true;
     }
 
