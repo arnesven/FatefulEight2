@@ -113,7 +113,7 @@ public class PortraitSubView extends SubView {
         this.portraitName = portraitName;
     }
 
-    private static boolean isBeardyMouth(int mouthIndex) {
+    public static boolean isBeardyMouth(int mouthIndex) {
         return mouthIndex == 4 || mouthIndex == 5 || mouthIndex >= 12;
     }
 

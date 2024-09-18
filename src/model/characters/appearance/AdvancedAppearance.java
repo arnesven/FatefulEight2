@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AdvancedAppearance extends CharacterAppearance {
     private int mouth;
-    private final int nose;
+    private int nose;
     private CharacterEyes eyes;
     private HairStyle hairStyle;
     private Beard beard;
@@ -339,6 +339,8 @@ public class AdvancedAppearance extends CharacterAppearance {
     public void setEyes(CharacterEyes eyes) {
         this.eyes = eyes;
     }
+
+    public void setNose(int nose) { this.nose = nose; }
 
     @Override
     protected MyColors getEyeballColor() {

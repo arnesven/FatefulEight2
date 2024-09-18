@@ -82,7 +82,7 @@ public enum PersonalityTrait {
             case cowardly:
                 // return new NightmareEvent(model, this, mainCharacter);
             case narcissistic:
-                // return new DoppelgangerEvent(model, this, mainCharacter);
+                return new DoppelgangerEvent(model, mainCharacter);
             default:
 
         }

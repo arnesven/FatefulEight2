@@ -683,6 +683,7 @@ public class Party implements Serializable {
                 backRow.remove(gc);
                 frontRow.remove(gc);
                 bench.add(gc);
+                partyAnimations.clearAnimationsFor(gc);
             }
         }
     }
