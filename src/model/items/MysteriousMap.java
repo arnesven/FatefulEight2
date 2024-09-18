@@ -3,6 +3,7 @@ package model.items;
 import model.Model;
 import model.characters.GameCharacter;
 import model.map.Direction;
+import model.map.WorldHex;
 import model.states.AcceptDeliveryEvent;
 import model.tasks.DestinationTask;
 import model.tasks.TreasureHuntTask;
@@ -58,9 +59,12 @@ public class MysteriousMap extends ReadableItem {
             Point dxDy2 = MyRandom.sample(secondDirections);
             model.getWorld().move(temporary2, dxDy2.x, dxDy2.y);
             if (temporary1.equals(temporary2) && !path.contains(temporary1)) {
-                System.out.println("Found inversion point at " + temporary1 + "!");
-                path.add(index + 1, temporary1);
-                return;
+                WorldHex hex = model.getWorld().getHex(temporary1);
+                if (hex.canTravelTo(model)) {
+                    System.out.println("Found inversion point at " + temporary1 + "!");
+                    path.add(index + 1, temporary1);
+                    return;
+                }
             }
         }
         System.out.println("Failed while trying to find inversion.");
