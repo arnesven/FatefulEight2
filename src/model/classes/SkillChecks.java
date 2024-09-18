@@ -22,7 +22,7 @@ public class SkillChecks {
                 break;
             }
             if (performer.getSP() == 0) {
-                if (MyLists.any(model.getParty().getInventory().getAllItems(),
+                if (!model.isInCombat() && MyLists.any(model.getParty().getInventory().getAllItems(),
                         (Item p) -> p instanceof StaminaRecoveryItem)) {
                     event.print(performer.getFirstName() + " is out of Stamina, but you " +
                             "have items in your inventory which you can raise stamina. " +
@@ -40,7 +40,7 @@ public class SkillChecks {
                     } else {
                         event.println(" now has Stamina.");
                     }
-                } else { // No potions
+                } else { // No potions or in combat
                     break;
                 }
             }
