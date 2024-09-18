@@ -198,4 +198,100 @@ public class GameStatistics {
     public static int getSpellSuccesses() {
         return get("spellSuccesses");
     }
+
+    public static void incrementCardGamesPlayed() {
+        increment("cardGamesPlayed", 1);
+    }
+
+    public static int getCardGamesPlayed() {
+        return get("cardGamesPlayed");
+    }
+
+    public static void incrementBattlesFought() {
+        increment("battlesFought", 1);
+    }
+
+    public static int getBattlesFought() {
+        return get("battlesFought");
+    }
+
+    public static void recordMaximumFish(int weight) {
+        recordMax("largestFish", weight);
+    }
+
+    public static int getLargestFishCaught() {
+        return get("largestFish");
+    }
+
+    public static void incrementHorseRaces() {
+        increment("horseRaces", 1);
+    }
+
+    public static int getHorseRaces() {
+        return get("horseRaces");
+    }
+
+    public static void incrementTrainingSessions() {
+        increment("trainingSessions", 1);
+    }
+
+    public static int getTrainingSessions() {
+        return get("trainingSessions");
+    }
+
+    public static void incrementClassChanges() {
+        increment("classChanges", 1);
+    }
+
+    public static int getClassChanges() {
+        return get("classChanges");
+    }
+
+    public static void incrementRituals() {
+        increment("rituals", 1);
+    }
+
+    public static int getRituals() {
+        return get("rituals");
+    }
+
+    public static void incrementItemsStolen(int i) {
+        increment("itemsStolen", i);
+    }
+
+    public static int getItemsStolen() {
+        return get("itemsStolen");
+    }
+
+    public static void incrementGoldPickpocketed(int stealMoney) {
+        increment("pickpocketGold", stealMoney);
+    }
+
+    public static int getPickpocketGold() {
+        return get("pickpocketGold");
+    }
+
+    public static void incrementItemsCrafted(int i) {
+        increment("itemsCrafted", i);
+    }
+
+    public static int getItemsCrafted() {
+        return get("itemsCrafted");
+    }
+
+    public static void incrementItemsUpgraded(int i) {
+        increment("itemsUpgraded", i);
+    }
+
+    public static int getItemsUpgraded() {
+        return get("itemsUpgraded");
+    }
+
+    public static void incrementMurders(int numberOfMurders) {
+        increment("murders", numberOfMurders);
+    }
+
+    public static int getMurders() {
+        return get("murders");
+    }
 }

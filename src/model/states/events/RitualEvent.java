@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
@@ -99,6 +100,7 @@ public abstract class RitualEvent extends DailyEventState {
         BackgroundMusic previous = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.battleSong);
         CollapsingTransition.transition(model, subView);
+        GameStatistics.incrementRituals();
 
         print("Press enter to start the ritual.");
         model.getTutorial().rituals(model);

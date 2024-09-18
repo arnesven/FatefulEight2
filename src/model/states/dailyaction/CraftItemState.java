@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -73,6 +74,7 @@ public class CraftItemState extends GameState {
             return new DailyActionState(model);
         }
         if (makeItemFromMaterials(model, triplet.first, triplet.second, "craft", triplet.third)) {
+            GameStatistics.incrementItemsCrafted(1);
             model.getParty().getInventory().addItem(triplet.first.copy());
         }
         return new DailyActionState(model);
@@ -271,6 +273,7 @@ public class CraftItemState extends GameState {
         print("Are you sure you want to attempt to upgrade " + selectedItem.getName() + " to " + potentialItem.getName() + "? (Y/N) ");
         if (yesNoInput()) {
             if (makeItemFromMaterials(model, selectedItem, selectedItem.getCost(), "upgrade", false)) {
+                GameStatistics.incrementItemsUpgraded(1);
                 model.getParty().getInventory().remove(selectedItem);
                 potentialItem.addYourself(model.getParty().getInventory());
             }

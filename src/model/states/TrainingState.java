@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameStatistics;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
@@ -73,6 +74,7 @@ public class TrainingState extends GameState {
     }
 
     public static boolean doSkillTraining(Model model, GameState state, GameCharacter performer, Skill skill, int level) {
+        GameStatistics.incrementTrainingSessions();
         String maybeN = level < 2 ? "n" : "";
         state.println(performer.getName() + " attends a" + maybeN + " " + LEVELS[level].toLowerCase() +
                 " level training session in " + getLessonName(skill) + ".");

@@ -1,5 +1,6 @@
 package model.states.battle;
 
+import model.GameStatistics;
 import model.Model;
 import model.SteppingMatrix;
 import model.map.CastleLocation;
@@ -54,6 +55,7 @@ public class BattleState extends GameState {
     @Override
     public GameState run(Model model) {
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.battleSong);
+        GameStatistics.incrementBattlesFought();
         this.subView = new BattleSubView(terrain, units, this, war.getGroundColor());
         SnakeTransition.transition(model, subView);
 

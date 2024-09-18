@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
@@ -43,6 +44,7 @@ public class ChangeClassEvent extends DailyEventState {
                 GameCharacter gc = matrix.getSelectedElement();
                 print("Are you sure you want to make " + gc.getName() + " a " + targetClasss.getFullName() + "? (Y/N) ");
                 if (yesNoInput()) {
+                    GameStatistics.incrementClassChanges();
                     ChangeClassTransitionSubView.transition(model, subView, gc, subView.getWouldBe(gc));
                     gc.setClass(targetClasss);
                     if (gc.getLevel() == 0) {

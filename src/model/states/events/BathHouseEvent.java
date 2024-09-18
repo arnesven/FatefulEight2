@@ -174,7 +174,7 @@ public class BathHouseEvent extends DailyEventState {
                 }
             }
             if (numDead > 0) {
-                GeneralInteractionEvent.addToNotoriety(model, this, GeneralInteractionEvent.MURDER_NOTORIETY * numDead);
+                GeneralInteractionEvent.addMurdersToNotoriety(model, this, numDead);
                 leaderSay("Uh-oh... I'm sure we didn't mean to kill " + himOrHer(gender) + " right?");
                 partyMemberSay(groupB.get(groupB.size() - 1), "It was an accident. I swear!");
                 leaderSay("We better get out of here before we get caught...");

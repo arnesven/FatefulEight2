@@ -1,5 +1,6 @@
 package model.states.cardgames;
 
+import model.GameStatistics;
 import model.Model;
 import model.races.Race;
 import model.states.GameState;
@@ -71,6 +72,7 @@ public class CardGameState extends GameState {
             }
             cardGame.setup(this);
             waitForReturn();
+            GameStatistics.incrementCardGamesPlayed();
             cardGame.playRound(model, this);
             synchObols(model, cardGame.getPlayerObols());
             model.getParty().addToObols(cardGame.getPlayerObols());

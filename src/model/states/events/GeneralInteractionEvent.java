@@ -1,6 +1,6 @@
 package model.states.events;
 
-import control.FatefulEight;
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
@@ -29,8 +29,6 @@ import util.MyStrings;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public abstract class GeneralInteractionEvent extends DailyEventState {
     public static final int PICK_POCKETING_NOTORIETY = 5;
@@ -143,6 +141,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             println(thief.getFirstName() + " attempts to grab the " + victim +
                     "'s purse (Security " + result.asString() + ").");
             if (result.isSuccessful()) {
+                GameStatistics.incrementGoldPickpocketed(stealMoney);
                 println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");
                 getModel().getParty().addToGold(stealMoney);
                 leaderSay("Please excuse us " + victim + ", we have pressing matters to attend.");
@@ -191,6 +190,10 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         model.getParty().addToNotoriety(notoriety);
     }
 
+    public static void addMurdersToNotoriety(Model model, GameState state, int numberOfMurders) {
+        GameStatistics.incrementMurders(numberOfMurders);
+        addToNotoriety(model, state, numberOfMurders * MURDER_NOTORIETY);
+    }
 
     private void attack(GameCharacter victimChar, List<Enemy> companions,
                         ProvokedStrategy combStrat, boolean isAggressor) {
@@ -229,14 +232,14 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         if (numberOfDead < enemies.size()) {
             println("Some of your enemies have escaped and reported your crime to the local authorities.");
             if (numberOfDead > 0) {
-                addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
+                addMurdersToNotoriety(getModel(), this, numberOfDead);
             }
             if (isAggressor) {
                 addToNotoriety(getModel(), this, enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
             }
         } else if (getModel().getCurrentHex().getLocation() instanceof UrbanLocation) {
             println("Your crime has been witnessed and reported to the local authorities.");
-            addToNotoriety(getModel(), this, numberOfDead * MURDER_NOTORIETY);
+            addMurdersToNotoriety(getModel(), this, numberOfDead );
         }
         randomSayIfPersonality(PersonalityTrait.lawful, List.of(getModel().getParty().getLeader()),
                 "Is this what we are? Thugs who attack innocent people?");

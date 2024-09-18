@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.horses.Horse;
@@ -33,6 +34,7 @@ public class HorseRacingEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        GameStatistics.incrementHorseRaces();
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.horseRacingSong);
         CollapsingTransition.transition(model, subView);

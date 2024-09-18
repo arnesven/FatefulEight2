@@ -1,5 +1,6 @@
 package model.states.dailyaction;
 
+import model.GameStatistics;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
@@ -97,6 +98,7 @@ public abstract class ShoppingNode extends DailyActionNode {
                 } else {
                     Item it = newSubView.getSelectedItem();
                     state.println("You stole " + it.getName() + ".");
+                    GameStatistics.incrementItemsStolen(1);
                     shopInventory.remove(it);
                     it.addYourself(model.getParty().getInventory());
                     newSubView.removeItem(it);

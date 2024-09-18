@@ -1,5 +1,6 @@
 package model.states.events;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -47,6 +48,7 @@ public class FishingState extends GameState {
         Fish fish = generateFish();
         MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.Survival, fish.getDifficulty());
         if (pair.first) {
+            GameStatistics.recordMaximumFish(fish.getWeight());
             partyMemberSay(pair.second, "Oh, it's a " + fish.getName().toLowerCase() + ".");
             if (model.getParty().size() > 1 && fish.getWeight() > 1500) {
                 partyMemberSay(model.getParty().getRandomPartyMember(pair.second), "Nice catch!");

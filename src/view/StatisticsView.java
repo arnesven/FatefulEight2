@@ -9,19 +9,18 @@ import model.states.GameState;
 import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
 import util.MyPair;
-import view.help.TutorialRecruitDialog;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
 
-public class StatusView extends SelectableListMenu {
+public class StatisticsView extends SelectableListMenu {
     private static final int PARTY_OFFSET = 1;
     private static final int FACTION_OFFSET = 5;
     private List<MyPair<String, String>> factionStatus;
 
-    public StatusView(GameView previous) {
+    public StatisticsView(GameView previous) {
         super(previous, 60, 40);
     }
 
@@ -77,18 +76,21 @@ public class StatusView extends SelectableListMenu {
         List<ListContent> result = new ArrayList<>();
         result.add(new ListContent(leftColumn, row++, "PARTY"));
         String partySize = model.getParty().size() + "/" + model.getParty().getInventory().getTentSize();
-        result.add(makeStringLine(leftColumn, row++, 46, 10, "Current Party Size", partySize));
+        result.add(makeStringLine(leftColumn, row++, 46, 10, "Current party size", partySize));
         String averagePartyLevel = String.format("%2.1f", GameState.calculateAverageLevel(model));
         result.add(makeStringLine(leftColumn, row++, 46, 10, "Average party level", averagePartyLevel));
-        result.add(makeIntLine(leftColumn, row++, "Total Experience Gained", GameStatistics.getTotalXpGained()));
+        result.add(makeIntLine(leftColumn, row++, "Total experience gained", GameStatistics.getTotalXpGained()));
         result.add(makeIntLine(leftColumn, row++, "Distance travelled", GameStatistics.getDistanceTraveled()));
+        result.add(makeIntLine(leftColumn, row++, "Rations consumed", GameStatistics.getRationsConsumed()));
         result.add(makeIntLine(leftColumn, row++, "Gold earned", GameStatistics.getGoldEarned()));
         result.add(makeIntLine(leftColumn, row++, "Gold lost", GameStatistics.getGoldLost()));
-        result.add(makeIntLine(leftColumn, row++, "Current Brotherhood loan", getLoanAmount(model)));
-        result.add(makeIntLine(leftColumn, row++, "Rations consumed", GameStatistics.getRationsConsumed()));
-        result.add(makeIntLine(leftColumn, row++, "Maximum notoriety", GameStatistics.getMaximumNotoriety()));
+
+        row++;
+        result.add(new ListContent(leftColumn, row++, "GEAR"));
         result.add(makeIntLine(leftColumn, row++, "Items purchased", GameStatistics.getItemsBought()));
         result.add(makeIntLine(leftColumn, row++, "Items sold", GameStatistics.getItemsSold()));
+        result.add(makeIntLine(leftColumn, row++, "Items crafted", GameStatistics.getItemsCrafted()));
+        result.add(makeIntLine(leftColumn, row++, "Items upgraded", GameStatistics.getItemsUpgraded()));
 
         row++;
         result.add(new ListContent(leftColumn, row++, "COMBAT"));
@@ -101,11 +103,13 @@ public class StatusView extends SelectableListMenu {
 
         row++;
         result.add(new ListContent(leftColumn, row++, "SKILLS"));
-        result.add(makeIntLine(leftColumn, row++, "Solo Skill Checks Performed", GameStatistics.getSoloSkillChecks()));
-        result.add(makeIntLine(leftColumn, row++, "Collaborative Skill Checks Performed", GameStatistics.getCollaborativeSkillChecks()));
-        result.add(makeIntLine(leftColumn, row++, "Collective Skill Checks Performed", GameStatistics.getCollectiveSkillChecks()));
-        result.add(makeIntLine(leftColumn, row++, "Total Skill Checks Performed", GameStatistics.getTotalSkillChecks()));
+        result.add(makeIntLine(leftColumn, row++, "Solo Skill Checks", GameStatistics.getSoloSkillChecks()));
+        result.add(makeIntLine(leftColumn, row++, "Collaborative Skill Checks", GameStatistics.getCollaborativeSkillChecks()));
+        result.add(makeIntLine(leftColumn, row++, "Collective Skill Checks", GameStatistics.getCollectiveSkillChecks()));
+        result.add(makeIntLine(leftColumn, row++, "Total Skill Checks", GameStatistics.getTotalSkillChecks()));
         result.add(makeIntLine(leftColumn, row++, "Stamina Re-rolls used", GameStatistics.getRerollsUsed()));
+        result.add(makeIntLine(leftColumn, row++, "Training sessions", GameStatistics.getTrainingSessions()));
+        result.add(makeIntLine(leftColumn, row++, "Class changes", GameStatistics.getClassChanges()));
 
         row++;
         result.add(new ListContent(leftColumn, row++, "MAGIC"));
@@ -113,10 +117,26 @@ public class StatusView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Spell casts successes", GameStatistics.getSpellSuccesses()));
 
         row++;
+        result.add(new ListContent(leftColumn, row++, "CRIME"));
+        result.add(makeIntLine(leftColumn, row++, "Gold pick pocketed", GameStatistics.getPickpocketGold()));
+        result.add(makeIntLine(leftColumn, row++, "Items stolen", GameStatistics.getItemsStolen()));
+        result.add(makeIntLine(leftColumn, row++, "Maximum notoriety", GameStatistics.getMaximumNotoriety()));
+        result.add(makeIntLine(leftColumn, row++, "Current Brotherhood loan", getLoanAmount(model)));
+        result.add(makeIntLine(leftColumn, row++, "Murders", GameStatistics.getMurders()));
+
+        row++;
         result.add(new ListContent(leftColumn, row++, "FACTIONS"));
         for (MyPair<String, String> p : factionStatus) {
             result.add(makeStringLine(leftColumn, row++, 40, 16, p.first, p.second));
         }
+
+        row++;
+        result.add(new ListContent(leftColumn, row++, "MISCELLANEOUS"));
+        result.add(makeIntLine(leftColumn, row++, "Card games played", GameStatistics.getCardGamesPlayed()));
+        result.add(makeIntLine(leftColumn, row++, "Rituals performed", GameStatistics.getRituals()));
+        result.add(makeIntLine(leftColumn, row++, "Battles fought", GameStatistics.getBattlesFought()));
+        result.add(makeIntLine(leftColumn, row++, "Largest fish caught", GameStatistics.getLargestFishCaught()));
+        result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
 
         return result;
     }
