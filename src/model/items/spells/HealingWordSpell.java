@@ -40,7 +40,7 @@ public class HealingWordSpell extends CombatSpell {
         combat.println(target.getName() + " recovers " + totalRecovered + " HP!");
         combat.addSpecialEffect(target, new ShinyRingEffect());
         combat.addFloatyDamage(target, totalRecovered, DamageValueEffect.HEALING);
-        if (target != performer) {
+        if (target != performer && model.getParty().getPartyMembers().contains(target)) {
             model.getParty().partyMemberSay(model, (GameCharacter) target,
                     List.of("Thank you so much!3", "Much obliged!3",
                             "I really needed that!3", "Aah, I feel great!3"));
