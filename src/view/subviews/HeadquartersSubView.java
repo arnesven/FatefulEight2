@@ -129,7 +129,7 @@ public class HeadquartersSubView extends SubView {
         model.getScreenHandler().put(p.x+extra, p.y, TopText.INGREDIENTS_ICON_SPRITE);
 
         BorderFrame.drawString(model.getScreenHandler(),
-                String.format("%" + fieldWidth + "d", hq.getMaterials()), p.x+extra+1, p.y, MyColors.GRAY);
+                String.format("%" + fieldWidth + "d", hq.getMaterials()), p.x+extra+1, p.y, MyColors.LIGHT_GRAY);
         extra += fieldWidth + 1;
         model.getScreenHandler().put(p.x+extra, p.y, TopText.MATERIALS_ICON_SPRITE);
 

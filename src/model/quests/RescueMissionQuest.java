@@ -392,7 +392,7 @@ public class RescueMissionQuest extends MainQuest {
             leaderSay("So you are a bandit?");
             println("The bandit girl seems embarrassed.");
             portraitSay("Uhm yes...");
-            leaderSay("But not a vermin. You wiped them out, you said. Did you happen to see a tall handsome fellow " +
+            leaderSay("But not a Vermin. You wiped them out, you said. Did you happen to see a tall handsome fellow " +
                     "with a headband and a sword on his back?");
             portraitSay("Hmm, there was a tall handsome guy in one of the dungeon cells when we took over the fort. " +
                     "He was going on about how he was a royal something-or-other... He didn't have a sword obviously, but I think he did " +
@@ -431,7 +431,7 @@ public class RescueMissionQuest extends MainQuest {
             portraitSay("Maybe, but they were my only good lead. I thought maybe I could turn the situation around again.");
             leaderSay("I guess you couldn't.");
             portraitSay("Well, they were probably talking about how to best ransom me back to my employer when the fort was " +
-                    "stormed by a rival gang, completely wiping out 'the vermin'.");
+                    "stormed by a rival gang, completely wiping out the Vermin.");
             portraitSay("The new tenants of the fort didn't believe me when I told them who I was and seemed to have no intentions of " +
                     "letting me loose. So there I was stuck.");
             leaderSay("Until now. So what's the plan now?");

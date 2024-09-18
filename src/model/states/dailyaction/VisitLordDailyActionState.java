@@ -177,7 +177,7 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
                 leaderSay("I could be. What are the details?");
                 Headquarters hq = location.getRealEstate();
                 portraitSay(hq.presentYourself() + " The current owner is willing to let it go for " +
-                        hq.getCost() + ". Why don't you buy it? You could make it the " +
+                        hq.getCost() + " gold. Why don't you buy it? You could make it the " +
                         "headquarters for your adventuring party.");
                 if (hq.getCost() > model.getParty().getGold()) {
                     leaderSay("I'm afraid it's a little over our budget.");
