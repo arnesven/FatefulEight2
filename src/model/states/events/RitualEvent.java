@@ -343,7 +343,7 @@ public abstract class RitualEvent extends DailyEventState {
             SoundEffects.playSpellSuccess();
             addBeam(sender, receiver);
             println("A ritual beam was successfully established between " + sender.getFirstName() +
-                    " and " + receiver.getFirstName());
+                    " and " + receiver.getFirstName() + ".");
         } else {
             println(receiver.getName() + " couldn't hold the beam, and it dissipates.");
             subView.addSpecialEffect(receiver, new MiscastEffectSprite());
