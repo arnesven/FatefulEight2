@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameStatistics;
 import model.actions.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.actions.SneakAttackCombatAction;
@@ -87,6 +88,7 @@ public class CombatEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        GameStatistics.incrementCombatEvents();
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         startMusic();
         StripedTransition.transition(model, subView);
@@ -381,7 +383,7 @@ public class CombatEvent extends DailyEventState {
         if (killer != null) {
             System.out.println("Killer is " + killer.getName());
             combatStats.registerCharacterKill(killer, enemy);
-
+            GameStatistics.incrementKills(1);
         }
         enemy.doUponDeath(model, this, killer);
         for (GameCharacter gc : participants) {
@@ -420,6 +422,8 @@ public class CombatEvent extends DailyEventState {
 
     public void doDamageToEnemy(Combatant target, int damage, GameCharacter damager) {
         target.takeCombatDamage(this, damage, damager);
+        GameStatistics.incrementTotalDamage(damage);
+        GameStatistics.recordMaximumDamage(damage);
         combatStats.damageDealt(damage, damager);
         if (target.getHP() <= 0) {
             RunOnceAnimationSprite killAnimation = ((Enemy)target).getKillAnimation();

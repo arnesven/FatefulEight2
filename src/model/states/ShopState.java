@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameStatistics;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
@@ -176,6 +177,7 @@ public class ShopState extends GameState {
             model.getParty().addToGold(-1 * cost);
             if (cost > 0) {
                 println("You bought " + it.getName() + " for " + cost + " gold.");
+                GameStatistics.incrementItemsBought(1);
             } else {
                 println("You received " + it.getName() + ".");
             }
@@ -221,6 +223,7 @@ public class ShopState extends GameState {
         int money = it.getCost() / 2;
         model.getParty().addToGold(money);
         println("You sold " + it.getName() + " for " + money + " gold.");
+        GameStatistics.incrementItemsSold(1);
         SoundEffects.sellItem();
     }
 

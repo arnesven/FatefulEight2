@@ -1,5 +1,6 @@
 package model.characters;
 
+import model.GameStatistics;
 import model.actions.*;
 import model.characters.appearance.PortraitClothing;
 import model.characters.appearance.SkeletonAppearance;

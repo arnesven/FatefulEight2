@@ -12,29 +12,18 @@ import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;
 import model.headquarters.Headquarters;
-import model.headquarters.MediumHeadquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
-import model.items.StaminaRecoveryItem;
-import model.items.books.GelatinousBlobBook;
-import model.items.designs.CraftingDesign;
-import model.items.potions.Potion;
-import model.items.special.FashionableSash;
 import model.items.spells.*;
-import model.items.weapons.*;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
-import model.map.locations.LowerThelnTown;
-import model.map.locations.SunblazeCastle;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
-import model.states.events.TavernBrawlEvent;
 import model.tasks.DestinationTask;
-import model.tasks.DoILookFatTask;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;
 import sound.SoundEffects;
@@ -163,6 +152,7 @@ public class Party implements Serializable {
         heldQuests.clear();
         this.previousPosition = new Point(position);
         model.getWorld().move(position, dx, dy);
+        GameStatistics.incrementDistanceTraveled(1);
     }
 
     public void setPosition(Point newPosition) {
@@ -171,6 +161,7 @@ public class Party implements Serializable {
         }
         this.previousPosition = new Point(position);
         this.position = new Point(newPosition);
+        GameStatistics.incrementDistanceTraveled((int)Math.round(previousPosition.distance(position)));
     }
 
     public int getGold() {
@@ -278,6 +269,11 @@ public class Party implements Serializable {
 
     public void addToGold(int cost) {
         inventory.setGold(inventory.getGold() + cost);
+        if (cost > 0) {
+            GameStatistics.incrementGoldEarned(cost);
+        } else {
+            GameStatistics.incrementGoldLost(-cost);
+        }
     }
 
     public int partyStrength() {
@@ -297,6 +293,7 @@ public class Party implements Serializable {
         allRecoverHp(1);
         if (!forFree) {
             addToFood(-size());
+            GameStatistics.incrementRationsConsumed(size());
         }
     }
 
@@ -367,6 +364,7 @@ public class Party implements Serializable {
         if (gc.getLevel() == 0) {
             return;
         }
+        GameStatistics.incrementTotalXP(xp);
         System.out.println(gc.getName() + " got " + xp + " XP.");
         model.getTutorial().attributes(model);
         boolean levelUp = false;
@@ -413,6 +411,7 @@ public class Party implements Serializable {
     }
 
     public MyPair<Boolean, GameCharacter> doSoloSkillCheckWithPerformer(Model model, GameState event, Skill skill, int difficulty) {
+        GameStatistics.incrementSoloSkillChecks(1);
         GameCharacter performer = null;
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
@@ -468,6 +467,7 @@ public class Party implements Serializable {
     }
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> performers) {
+        GameStatistics.incrementCollaborativeSkillChecks(1);
         GameCharacter performer = null;
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
@@ -549,6 +549,7 @@ public class Party implements Serializable {
     }
 
     public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {
+        GameStatistics.incrementCollectiveSkillChecks(1);
         event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
         model.getTutorial().skillChecks(model);
         while (true) {
@@ -585,9 +586,9 @@ public class Party implements Serializable {
     }
 
     public SkillCheckResult doSkillCheckWithReRoll(Model model, GameState event, GameCharacter performer, Skill skill, int difficulty, int exp, int bonus) {
-        SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(
+        GameStatistics.incrementTotalSkillChecks(1);
+        return SkillChecks.doSkillCheckWithReRoll(
                 model, event, performer, skill, difficulty, exp, bonus);
-        return result;
     }
 
     public GameCharacter partyMemberInput(Model model, GameState event, GameCharacter preselected) {
@@ -771,6 +772,7 @@ public class Party implements Serializable {
         if (notoriety < 0) {
             notoriety = 0;
         }
+        GameStatistics.recordMaximumNotoriety(this.notoriety);
     }
 
     public int getNotoriety() {

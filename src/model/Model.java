@@ -102,6 +102,7 @@ public class Model {
         gameView = new MainGameView();
         gameStartFileName = null;
         getParty().clearAnimations();
+        GameStatistics.setModel(this);
     }
 
     public static GameData readGameData(String filename) throws CorruptSaveFileException, FileNotFoundException {
@@ -130,6 +131,7 @@ public class Model {
         } else {
             gameData.mainStory.progressStoryForTesting(this);
         }
+        GameStatistics.setModel(this);
     }
 
     public boolean gameStarted() {

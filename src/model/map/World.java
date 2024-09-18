@@ -436,6 +436,18 @@ public class World implements Serializable {
         return result;
     }
 
+    public List<TempleLocation> getTempleLocations() {
+        List<TempleLocation> result = new ArrayList<>();
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() instanceof TempleLocation) {
+                    result.add((TempleLocation)(hexes[x][y].getLocation()));
+                }
+            }
+        }
+        return result;
+    }
+
     public CastleLocation getCastleByName(String castleName) {
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {

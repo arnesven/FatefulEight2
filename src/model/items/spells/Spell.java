@@ -1,5 +1,6 @@
 package model.items.spells;
 
+import model.GameStatistics;
 import model.items.Inventory;
 import model.Model;
 import model.characters.GameCharacter;
@@ -49,6 +50,7 @@ public abstract class Spell extends Item {
     public abstract String getDescription();
 
     public boolean castYourself(Model model, GameState state, GameCharacter caster) {
+        GameStatistics.incrementSpellsAttempts();
         state.println(caster.getName() + " tries to cast " + getName() + "...");
         model.getTutorial().spells(model);
         int health = hpCost;
@@ -75,6 +77,7 @@ public abstract class Spell extends Item {
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster,
                 getSkillForColor(color), difficulty, getExperience(), castingBonus);
         if (result.isSuccessful()) {
+            GameStatistics.incrementSpellSuccesses();
             state.println(getName() + " was successfully cast.");
             SoundEffects.playSpellSuccess();
             successfullyCastHook(model, state, caster);

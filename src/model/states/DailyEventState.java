@@ -1,5 +1,6 @@
 package model.states;
 
+import model.GameStatistics;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
@@ -129,10 +130,12 @@ public abstract class DailyEventState extends GameState {
     }
 
     protected void runSurpriseCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
+        GameStatistics.incrementSurpriseCombats();
         runCombat(enemies, theme, fleeingEnabled, CombatAdvantage.Party);
     }
 
     protected void runAmbushCombat(List<Enemy> enemies, CombatTheme theme, boolean fleeingEnabled) {
+        GameStatistics.incrementAmbushCombats();
         runCombat(enemies, theme, fleeingEnabled, CombatAdvantage.Enemies);
     }
 

@@ -277,6 +277,17 @@ public abstract class SelectableListMenu extends GameView {
         }
     }
 
+    protected static abstract class PermanentlyEnabledListContent extends SelectableListContent {
+        public PermanentlyEnabledListContent(int x, int y, String text) {
+            super(x, y, text);
+        }
+
+        @Override
+        public boolean isEnabled(Model model) {
+            return true;
+        }
+    }
+
     protected static class TextDecoration extends DrawableObject {
 
         private final String text;

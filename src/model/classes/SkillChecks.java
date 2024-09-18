@@ -1,5 +1,6 @@
 package model.classes;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
@@ -48,6 +49,7 @@ public class SkillChecks {
             if (declinedReRoll(event, performer)) {
                 break;
             }
+            GameStatistics.incrementRerollsUsed();
         } while (true);
         return result;
     }
