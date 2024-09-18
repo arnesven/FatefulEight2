@@ -24,6 +24,7 @@ public class CrocodilesEvent extends DailyEventState {
             if (gc.testSkillHidden(Skill.Perception, 8, 0).isSuccessful()) {
                 println(gc.getName() + " spots the crocodiles and raises the alarm!");
                 spotted = true;
+                break;
             }
         }
         List<Enemy> enemies = List.of(new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A'));
