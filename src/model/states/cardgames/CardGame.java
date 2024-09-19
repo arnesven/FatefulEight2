@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class CardGame {
     private final List<CardGamePlayer> players;
     private CardGamePlayer characterPlayer;
-    private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 16);
+    private SteppingMatrix<CardGameObject> cardArea = new SteppingMatrix<>(14, 17);
     private final String name;
     private boolean cursorEnabled = false;
     private CardGameDeck deck;
@@ -232,8 +232,5 @@ public abstract class CardGame {
 
     protected void addToPlayArea(CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         currentPlayer.getPlayArea().add(cardGameCard);
-        if (currentPlayer == characterPlayer) {
-            cardArea.addElement(3 + currentPlayer.getPlayArea().size(), cardArea.getRows()-2, cardGameCard);
-        }
     }
 }

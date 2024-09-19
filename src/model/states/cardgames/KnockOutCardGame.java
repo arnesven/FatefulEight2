@@ -2,6 +2,7 @@ package model.states.cardgames;
 
 import javazoom.jl.player.Player;
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.GameState;
@@ -9,6 +10,7 @@ import util.Arithmetics;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
+import view.subviews.ArrowMenuSubView;
 
 import java.util.*;
 
@@ -18,6 +20,7 @@ public class KnockOutCardGame extends CardGame {
     private CardGamePlayer winner;
     private CardGamePlayer startingPlayer;
     private HashSet<CardGamePlayer> knockedOutPlayers;
+    private HashSet<CardGamePlayer> protectedPlayers = new HashSet<>();
 
     public KnockOutCardGame() {
         super("Knock-Out",
@@ -56,6 +59,7 @@ public class KnockOutCardGame extends CardGame {
 
         this.startingPlayer = MyRandom.sample(getPlayers());
         knockedOutPlayers = new HashSet<>();
+        protectedPlayers = new HashSet<>();
 
         state.println(startingPlayer.getName() + " will start the game. Press enter to continue.");
     }
@@ -70,8 +74,10 @@ public class KnockOutCardGame extends CardGame {
             }
         }
         MyLists.forEach(getPlayers(), (CardGamePlayer p) -> {
-            addToPlayArea(p, p.getCard(0));
-            p.clearCards();
+            if (p.numberOfCardsInHand() > 0) {
+                addToPlayArea(p, p.getCard(0));
+                p.clearCards();
+            }
         });
         if (winner.isNPC()) {
             state.printQuote(winner.getName(),
@@ -95,8 +101,7 @@ public class KnockOutCardGame extends CardGame {
     }
 
     private boolean checkForWin(Model model, CardGameState state) {
-        List<CardGamePlayer> playersRemaining = MyLists.filter(getPlayers(),
-                (CardGamePlayer player) -> !knockedOutPlayers.contains(player));
+        List<CardGamePlayer> playersRemaining = getPlayersRemaining();
         if (playersRemaining.size() > 1 && !getDeck().isEmpty()) {
             return false;
         }
@@ -127,11 +132,37 @@ public class KnockOutCardGame extends CardGame {
     @Override
     public void doCardInHandAction(Model model, CardGameState state, CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         state.println((currentPlayer.isNPC() ? (GameState.heOrSheCap(currentPlayer.getGender()) + " plays") : "You play") +
-                " a " + MyStrings.numberWord(cardGameCard.getValue()) + ".");
+                " a " + cardGameCard.getText() + ".");
         currentPlayer.removeCard(cardGameCard, this);
         state.addHandAnimation(currentPlayer, true, false, false);
         state.waitForAnimationToFinish();
         super.addToPlayArea(currentPlayer, cardGameCard);
+        KnockOutCardGamePlayer knockOutPlayer = (KnockOutCardGamePlayer)currentPlayer;
+        switch (cardGameCard.getValue()) {
+            case 1: // Cudgel
+                knockOutPlayer.makeGuess(model, state, this);
+                break;
+            case 2: // Spyglass
+                knockOutPlayer.lookAtPlayersHand(model, state, this);
+                break;
+            case 3: // Rapier
+                knockOutPlayer.compareWithPlayer(model, state, this);
+                break;
+            case 4: // Shield
+                protectedPlayers.add(currentPlayer);
+                break;
+            case 5: // Crossbow
+                knockOutPlayer.forcePlayerToDiscard(model, state, this);
+                break;
+            case 6: // Magic Mirror
+                knockOutPlayer.switchWithOtherPlayer(model, state, this);
+                break;
+            case 8: // Scepter
+                knockOut(state, knockOutPlayer);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -152,5 +183,60 @@ public class KnockOutCardGame extends CardGame {
     @Override
     public void addMorePlayers(Model model, CardGameState cardGameState) {
 
+    }
+
+    public void removeFromProtected(KnockOutCardGamePlayer knockOutCardGamePlayer) {
+        protectedPlayers.remove(knockOutCardGamePlayer);
+    }
+
+    public void knockOut(GameState state, CardGamePlayer player) {
+        if (player.numberOfCardsInHand() > 0) {
+            forceDiscard(player);
+        }
+        knockedOutPlayers.add(player);
+        String comment = MyRandom.sample(List.of("Drat!", "Darn it.", "Shoot.", "Ahh... I'm out.",
+                "It's over for me I guess.", "And I was doing so well.", "How annoying!", "Knocked out?"));
+        if (player.isNPC()) {
+            state.println(player.getName() + " was knocked out!");
+            state.printQuote(player.getName(), comment);
+        } else {
+            state.println("You have been knocked out of the game.");
+            state.leaderSay(comment);
+        }
+    }
+
+    public void forceDiscard(CardGamePlayer player) {
+        addToPlayArea(player, player.getCard(0));
+        player.clearCards();
+    }
+
+    public List<CardGamePlayer> getPlayersRemaining() {
+        return MyLists.filter(getPlayers(),
+                (CardGamePlayer player) -> !knockedOutPlayers.contains(player));
+    }
+
+    public List<CardGamePlayer> getTargetablePlayers(boolean includingSelf, CardGamePlayer self) {
+        List<CardGamePlayer> result =  MyLists.filter(getPlayersRemaining(), (CardGamePlayer player) -> !protectedPlayers.contains(player));
+        if (!includingSelf) {
+            result.remove(self);
+        }
+        return result;
+    }
+
+    public int selectCardGuess(Model model, GameState state) {
+        List<String> options = new ArrayList<>();
+        for (int i = 2; i <= 8; ++i) {
+            options.add(KnockOutCardGameDeck.nameForValue(i) + " (" + i + ")");
+        }
+        int[] selectedAction = new int[1];
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 24, ArrowMenuSubView.NORTH_WEST) {
+            @Override
+            protected void enterPressed(Model model, int cursorPos) {
+                selectedAction[0] = cursorPos;
+                model.setSubView(getPrevious());
+            }
+        });
+        state.waitForReturnSilently();
+        return selectedAction[0]+2;
     }
 }

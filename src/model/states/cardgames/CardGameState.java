@@ -8,6 +8,7 @@ import model.states.cardgames.runny.RunnyCardGame;
 import model.states.dailyaction.CardGameNode;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
 import view.subviews.CardGameSubView;
@@ -124,5 +125,10 @@ public class CardGameState extends GameState {
 
     public int getNumberOfPlayers() {
         return cardGame.getPlayers().size();
+    }
+
+    public CardGamePlayer selectPlayer(Model model, List<CardGamePlayer> targetablePlayers, CardGame card) {
+        int count = multipleOptionArrowMenu(model, 24, 24, MyLists.transform(targetablePlayers, CardGamePlayer::getName));
+        return targetablePlayers.get(count);
     }
 }

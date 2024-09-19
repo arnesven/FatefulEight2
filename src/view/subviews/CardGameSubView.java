@@ -89,6 +89,14 @@ public class CardGameSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), cardGame.getCharacterPlayer().getObols() + "",
                 X_OFFSET + 17, Y_MAX-1, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, cardGame.getCharacterPlayer().getBet(), X_OFFSET+18, Y_MAX-10);
+        int col = X_OFFSET + 8;
+        int increment = cardGame.getCharacterPlayer().getPlayArea().size() > 7 ? 1 : 2;
+        for (CardGameCard card : cardGame.getCharacterPlayer().getPlayArea()) {
+            Sprite spr = card.getSprite();
+            Point position = new Point(col, Y_MAX - 5);
+            col += increment;
+            model.getScreenHandler().register(spr.getName(), position, spr);
+        }
     }
 
     private void drawCorners(Model model) {
@@ -144,11 +152,12 @@ public class CardGameSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols()+"",
                 X_OFFSET+20, Y_OFFSET, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_OFFSET + 12, Y_OFFSET + 4);
-        int col = X_OFFSET+10;
+        int col = X_OFFSET+8;
+        int increment = npc.getPlayArea().size() > 7 ? 1 : 2;
         for (CardGameCard card : npc.getPlayArea()) {
             Sprite spr = card.getSprite();
             Point position = new Point(col, Y_OFFSET+3);
-            col += 2;
+            col += increment;
             model.getScreenHandler().register(spr.getName(), position, spr);
         }
     }
