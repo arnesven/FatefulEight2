@@ -26,10 +26,10 @@ public class MonumentEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Monument"));
-        println("Several large stone statues, adorned with a plaques. This " +
+        println("You see several large stone statues, adorned with plaques. This " +
                 "monument was erected to honor the memory of a group " +
                 "of heroes who once saved this world from a terrible fate. " +
-                "The plaque has a detailed account of how the world was " +
+                "One plaque has a detailed account of how the world was " +
                 "saved from eternal damnation.");
         randomSayIfPersonality(PersonalityTrait.intellectual, new ArrayList<>(), "Fascinating...");
         randomSayIfPersonality(PersonalityTrait.rude, List.of(model.getParty().getLeader()), "Boring...");

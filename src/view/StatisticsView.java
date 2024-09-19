@@ -16,8 +16,6 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class StatisticsView extends SelectableListMenu {
-    private static final int PARTY_OFFSET = 1;
-    private static final int FACTION_OFFSET = 5;
     private List<MyPair<String, String>> factionStatus;
 
     public StatisticsView(GameView previous) {
