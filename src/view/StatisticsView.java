@@ -72,7 +72,7 @@ public class StatisticsView extends SelectableListMenu {
         int leftColumn = xStart + 2;
         int row = yStart + 1;
         List<ListContent> result = new ArrayList<>();
-        result.add(new ListContent(leftColumn, row++, "PARTY"));
+        result.add(makeTitleLine(leftColumn, row++, "PARTY"));
         String partySize = model.getParty().size() + "/" + model.getParty().getInventory().getTentSize();
         result.add(makeStringLine(leftColumn, row++, 46, 10, "Current party size", partySize));
         String averagePartyLevel = String.format("%2.1f", GameState.calculateAverageLevel(model));
@@ -84,14 +84,14 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Gold lost", GameStatistics.getGoldLost()));
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "GEAR"));
+        result.add(makeTitleLine(leftColumn, row++, "GEAR"));
         result.add(makeIntLine(leftColumn, row++, "Items purchased", GameStatistics.getItemsBought()));
         result.add(makeIntLine(leftColumn, row++, "Items sold", GameStatistics.getItemsSold()));
         result.add(makeIntLine(leftColumn, row++, "Items crafted", GameStatistics.getItemsCrafted()));
         result.add(makeIntLine(leftColumn, row++, "Items upgraded", GameStatistics.getItemsUpgraded()));
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "COMBAT"));
+        result.add(makeTitleLine(leftColumn, row++, "COMBAT"));
         result.add(makeIntLine(leftColumn, row++, "Combat events", GameStatistics.getCombatEvents()));
         result.add(makeIntLine(leftColumn, row++, "Surprise combats", GameStatistics.getSurpriseCombats()));
         result.add(makeIntLine(leftColumn, row++, "Ambush combats", GameStatistics.getAmbushCombats()));
@@ -101,7 +101,7 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Maximum damage dealt", GameStatistics.getMaximumDamage()));
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "SKILLS"));
+        result.add(makeTitleLine(leftColumn, row++, "SKILLS"));
         result.add(makeIntLine(leftColumn, row++, "Solo Skill Checks", GameStatistics.getSoloSkillChecks()));
         result.add(makeIntLine(leftColumn, row++, "Collaborative Skill Checks", GameStatistics.getCollaborativeSkillChecks()));
         result.add(makeIntLine(leftColumn, row++, "Collective Skill Checks", GameStatistics.getCollectiveSkillChecks()));
@@ -111,12 +111,12 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Class changes", GameStatistics.getClassChanges()));
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "MAGIC"));
+        result.add(makeTitleLine(leftColumn, row++, "MAGIC"));
         result.add(makeIntLine(leftColumn, row++, "Spell casts attempted", GameStatistics.getSpellCastsAttempted()));
         result.add(makeIntLine(leftColumn, row++, "Spell casts successes", GameStatistics.getSpellSuccesses()));
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "CRIME"));
+        result.add(makeTitleLine(leftColumn, row++, "CRIME"));
         result.add(makeIntLine(leftColumn, row++, "Gold pick pocketed", GameStatistics.getPickpocketGold()));
         result.add(makeIntLine(leftColumn, row++, "Items stolen", GameStatistics.getItemsStolen()));
         result.add(makeIntLine(leftColumn, row++, "Maximum notoriety", GameStatistics.getMaximumNotoriety()));
@@ -124,13 +124,13 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Murders", GameStatistics.getMurders()));
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "FACTIONS"));
+        result.add(makeTitleLine(leftColumn, row++, "FACTIONS"));
         for (MyPair<String, String> p : factionStatus) {
             result.add(makeStringLine(leftColumn, row++, 40, 16, p.first, p.second));
         }
 
         row++;
-        result.add(new ListContent(leftColumn, row++, "MISCELLANEOUS"));
+        result.add(makeTitleLine(leftColumn, row++, "MISCELLANEOUS"));
         result.add(makeIntLine(leftColumn, row++, "Card games played", GameStatistics.getCardGamesPlayed()));
         result.add(makeIntLine(leftColumn, row++, "Rituals performed", GameStatistics.getRituals()));
         result.add(makeIntLine(leftColumn, row++, "Battles fought", GameStatistics.getBattlesFought()));
@@ -138,6 +138,15 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
 
         return result;
+    }
+
+    private ListContent makeTitleLine(int leftColumn, int row, String text) {
+        return new ListContent(leftColumn, row, text) {
+            @Override
+            public MyColors getForegroundColor(Model model) {
+                return MyColors.LIGHT_GRAY;
+            }
+        };
     }
 
     private int getLoanAmount(Model model) {
