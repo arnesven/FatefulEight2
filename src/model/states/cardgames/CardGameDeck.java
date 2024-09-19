@@ -5,13 +5,12 @@ import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObject {
     public static final MyColors[] CARD_SUITS = new MyColors[]{MyColors.GREEN, MyColors.BLUE, MyColors.RED};
+    public static final MyColors[] OTHER_COLORS = new MyColors[]{MyColors.PURPLE, MyColors.ORANGE,
+            MyColors.BROWN, MyColors.BLACK, MyColors.DARK_GREEN};
     public static final int MAX_VALUE = 9;
     private static final Sprite SPRITE = new Sprite16x16("cardgamedeck", "cardgame.png", 0x15,
             MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
@@ -78,7 +77,10 @@ public class CardGameDeck extends ArrayList<CardGameCard> implements CardGameObj
 
     private static Map<MyColors, Sprite[]> makeSpriteMap() {
         Map<MyColors, Sprite[]> result = new HashMap<>();
-        for (MyColors suit : CARD_SUITS) {
+        List<MyColors> colorsToUse = new ArrayList<>();
+        colorsToUse.addAll(Arrays.asList(CARD_SUITS));
+        colorsToUse.addAll(Arrays.asList(OTHER_COLORS));
+        for (MyColors suit : colorsToUse) {
             Sprite[] sprites = new Sprite[MAX_VALUE+1];
             for (int i = 0; i < MAX_VALUE+1; ++i) {
                 sprites[i] = new Sprite16x16("cardgamecard"+suit.name()+i, "cardgame.png", i,

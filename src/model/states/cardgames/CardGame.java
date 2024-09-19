@@ -3,6 +3,9 @@ package model.states.cardgames;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import model.races.Race;
+import model.states.cardgames.runny.RunnyCardGame;
+import util.MyRandom;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -24,6 +27,15 @@ public abstract class CardGame {
         this.players = new ArrayList<>(npcPlayers);
         setDeck(deck);
         setDiscard(new CardPile());
+    }
+
+    protected static List<Race> makeRandomRaces(int number) {
+        List<Race> result = new ArrayList<>();
+        int count = MyRandom.randInt(2, number);
+        for (int i = 0; i < count; ++i) {
+            result.add(Race.randomRace());
+        }
+        return result;
     }
 
     public abstract void setup(CardGameState state);
@@ -52,6 +64,15 @@ public abstract class CardGame {
 
     public List<CardGamePlayer> getPlayers() {
         return players;
+    }
+
+    protected int makeWinPot() {
+        int sum = 0;
+        for (CardGamePlayer player : getPlayers()) {
+            sum += player.getBet();
+            player.resetBet();
+        }
+        return sum;
     }
 
     protected void dealCardsToPlayers(CardGameState state, int amount) {
@@ -191,9 +212,7 @@ public abstract class CardGame {
         return (ButtonCardGameObject)button;
     }
 
-    public int getMaximumBet() {
-        return Integer.MAX_VALUE;
-    }
+    public abstract int getMaximumBet();
 
     public abstract void replacePlayersLowOnObols(Model model, CardGameState cardGameState);
 
@@ -201,5 +220,20 @@ public abstract class CardGame {
 
     public void removePlayer() {
         players.removeIf((CardGamePlayer player) -> !player.isNPC());
+    }
+
+    protected void clearCardsInMatrix() {
+        for (CardGameObject obj : new ArrayList<>(getMatrix().getElementList())) {
+            if (obj instanceof CardGameCard) {
+                getMatrix().remove(obj);
+            }
+        }
+    }
+
+    protected void addToPlayArea(CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
+        currentPlayer.getPlayArea().add(cardGameCard);
+        if (currentPlayer == characterPlayer) {
+            cardArea.addElement(3 + currentPlayer.getPlayArea().size(), cardArea.getRows()-2, cardGameCard);
+        }
     }
 }

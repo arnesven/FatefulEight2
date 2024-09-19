@@ -144,6 +144,13 @@ public class CardGameSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols()+"",
                 X_OFFSET+20, Y_OFFSET, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_OFFSET + 12, Y_OFFSET + 4);
+        int col = X_OFFSET+10;
+        for (CardGameCard card : npc.getPlayArea()) {
+            Sprite spr = card.getSprite();
+            Point position = new Point(col, Y_OFFSET+3);
+            col += 2;
+            model.getScreenHandler().register(spr.getName(), position, spr);
+        }
     }
 
     private void drawBet(Model model, int bet, int x, int y) {
@@ -177,6 +184,12 @@ public class CardGameSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), npc.getObols() + "",
                 X_OFFSET, Y_OFFSET + firstNPCY + Math.max(6, npc.getName().length()) + 1, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_OFFSET + 6, Y_OFFSET + firstNPCY+6);
+        int row = Y_OFFSET + firstNPCY;
+        for (CardGameCard card : npc.getPlayArea()) {
+            Sprite spr = card.getSprite();
+            Point position = new Point(X_OFFSET+3, row++);
+            model.getScreenHandler().register(spr.getName(), position, spr);
+        }
     }
 
     private void drawNPCToRight(Model model, CardGamePlayer npc, int firstNPCY) {
@@ -192,6 +205,12 @@ public class CardGameSubView extends SubView {
         BorderFrame.drawString(model.getScreenHandler(), obolsString,
                 X_MAX-obolsString.length()-1, Y_OFFSET + firstNPCY-3, MyColors.LIGHT_GRAY, MyColors.BROWN);
         drawBet(model, npc.getBet(), X_MAX-9, Y_OFFSET + firstNPCY-6);
+        int row = Y_OFFSET + firstNPCY - 2;
+        for (CardGameCard card : npc.getPlayArea()) {
+            Sprite spr = card.getSprite();
+            Point position = new Point(X_MAX-5, row++);
+            model.getScreenHandler().register(spr.getName(), position, spr);
+        }
     }
 
     @Override

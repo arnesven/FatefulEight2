@@ -22,8 +22,9 @@ public class RunnyCardGame extends CardGame {
     private Set<CardGamePlayer> foldedPlayers;
     private int currentRound = 0;
 
-    public RunnyCardGame(List<Race> npcRaces) {
-        super("Runny", makePlayers(npcRaces), new CardGameDeck());
+    public RunnyCardGame() {
+        super("Runny", makePlayers(CardGame.makeRandomRaces(MAX_NUMBER_OF_PLAYERS-1)),
+                new CardGameDeck());
     }
 
     private static List<CardGamePlayer> makePlayers(List<Race> npcRaces) {
@@ -43,7 +44,7 @@ public class RunnyCardGame extends CardGame {
     public void setup(CardGameState state) {
         winner = null;
         currentRound = 0;
-        clearCardsInMatrix(state);
+        clearCardsInMatrix();
         setDeck(new CardGameDeck());
         setDiscard(new CardPile());
         resetCurrentBet();
@@ -59,14 +60,6 @@ public class RunnyCardGame extends CardGame {
         }
         addToCurrentBet(1);
         state.println(startingPlayer.getName() + " will start the game. Press enter to continue.");
-    }
-
-    private void clearCardsInMatrix(CardGameState state) {
-        for (CardGameObject obj : new ArrayList<>(getMatrix().getElementList())) {
-            if (obj instanceof CardGameCard) {
-                getMatrix().remove(obj);
-            }
-        }
     }
 
     @Override
@@ -119,15 +112,6 @@ public class RunnyCardGame extends CardGame {
     @Override
     protected CardGamePlayer makeCharacterPlayer(GameCharacter leader, int obols) {
         return new RunnyCharacterPlayer(leader.getFirstName(), leader.getGender(), leader.getRace(), obols);
-    }
-
-    private int makeWinPot() {
-        int sum = 0;
-        for (CardGamePlayer player : getPlayers()) {
-            sum += player.getBet();
-            player.resetBet();
-        }
-        return sum;
     }
 
     private boolean checkForWin(Model model, CardGameState state) {

@@ -2,7 +2,6 @@ package model.states.cardgames;
 
 import model.Model;
 import model.races.Race;
-import model.states.cardgames.runny.RunnyCardGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +14,7 @@ public abstract class CardGamePlayer {
     private Race race;
     private int obols;
     private List<CardGameCard> cards = new ArrayList<>();
+    private List<CardGameCard> playArea = new ArrayList<>();
     private int currentBet = 0;
 
     public CardGamePlayer(String firstName, boolean gender, Race race, int obols, boolean isNPC) {
@@ -25,11 +25,13 @@ public abstract class CardGamePlayer {
         this.isNPC = isNPC;
     }
 
-    public abstract void takeTurn(Model model, CardGameState state, RunnyCardGame runnyCardGame);
+    public abstract void takeTurn(Model model, CardGameState state, CardGame cardGame);
 
     public Race getRace() {
         return race;
     }
+
+    public boolean getGender() { return gender; }
 
     public String getName() {
         return name;
@@ -96,5 +98,9 @@ public abstract class CardGamePlayer {
 
     public void clearCards() {
         cards.clear();
+    }
+
+    public List<CardGameCard> getPlayArea() {
+        return playArea;
     }
 }

@@ -90,6 +90,7 @@ public interface GameStateConstants {
             "Stig",
             "Simon",
             "Tobert",
+            "Todd",
             "Trevor",
             "Voldo"
     );
@@ -120,6 +121,7 @@ public interface GameStateConstants {
             "McDougal",
             "McInnery",
             "McLaird",
+            "Odinson",
             "Osorio",
             "Overhill",
             "Patrues",

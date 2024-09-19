@@ -17,7 +17,8 @@ public abstract class RunnyCardGamePlayer extends CardGamePlayer {
     }
 
     @Override
-    public final void takeTurn(Model model, CardGameState state, RunnyCardGame runnyCardGame) {
+    public final void takeTurn(Model model, CardGameState state, CardGame cardGame) {
+        RunnyCardGame runnyCardGame = (RunnyCardGame)cardGame;
         announceTurn(state);
         boolean fold = false;
         if (runnyCardGame.getCurrentBet() > getBet()) {

@@ -24,7 +24,7 @@ public class CardGameState extends GameState {
     public CardGameState(Model model) {
         super(model);
         this.subView = new CardGameSubView();
-        this.cardGame = new RunnyCardGame(makeRandomRaces());
+        this.cardGame = new KnockOutCardGame();//new RunnyCardGame();
         subView.setGame(cardGame);
     }
 
@@ -45,15 +45,6 @@ public class CardGameState extends GameState {
 
     private boolean notEnoughObols(Model model) {
         return model.getParty().getObols() < cardGame.getMaximumBet();
-    }
-
-    private List<Race> makeRandomRaces() {
-        List<Race> result = new ArrayList<>();
-        int count = MyRandom.randInt(2, RunnyCardGame.MAX_NUMBER_OF_PLAYERS-1);
-        for (int i = 0; i < count; ++i) {
-            result.add(Race.randomRace());
-        }
-        return result;
     }
 
     private void playCardGame(Model model) {
