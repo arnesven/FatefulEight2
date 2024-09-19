@@ -67,7 +67,7 @@ public class CardGameState extends GameState {
             cardGame.replacePlayersLowOnObols(model, this);
             cardGame.addMorePlayers(model, this);
             if (cardGame.getPlayers().size() < 2) {
-                println("There's nobody left to play runny with now.");
+                println("There's nobody left to play " + cardGame.getName() + " with now.");
                 break;
             }
             cardGame.setup(this);
