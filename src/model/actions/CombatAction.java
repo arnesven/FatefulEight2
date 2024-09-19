@@ -1,5 +1,6 @@
 package model.actions;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
@@ -171,6 +172,7 @@ public abstract class CombatAction {
             }
         }
         if (fleeSuccess) {
+            GameStatistics.incrementCombatsFled();
             if (model.getSubView() instanceof CombatSubView) {
                 ((CombatSubView)model.getSubView()).enableFleeingAnimation();
             }

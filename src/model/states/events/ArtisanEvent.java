@@ -185,7 +185,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
         protected Item getItemForUpgrade(Equipment equipment) {
             Item it = getApplicableItem(equipment);
-            if (alreadyUpgraded.contains(it) || !it.isCraftable()) {
+            if (alreadyUpgraded.contains(it) || !it.isCraftable() || !it.supportsHigherTier()) {
                 return null;
             }
             return it;

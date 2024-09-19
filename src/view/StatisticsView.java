@@ -95,6 +95,7 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Combat events", GameStatistics.getCombatEvents()));
         result.add(makeIntLine(leftColumn, row++, "Surprise combats", GameStatistics.getSurpriseCombats()));
         result.add(makeIntLine(leftColumn, row++, "Ambush combats", GameStatistics.getAmbushCombats()));
+        result.add(makeIntLine(leftColumn, row++, "Combats fled", GameStatistics.getCombatsFled()));
         result.add(makeIntLine(leftColumn, row++, "Total damage dealt", GameStatistics.getTotalDamage()));
         result.add(makeIntLine(leftColumn, row++, "Enemies killed", GameStatistics.getEnemiesKilled()));
         result.add(makeIntLine(leftColumn, row++, "Maximum damage dealt", GameStatistics.getMaximumDamage()));

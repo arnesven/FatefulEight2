@@ -2,6 +2,7 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.clothing.FurArmor;
 import util.MyRandom;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -9,7 +10,7 @@ import view.sprites.Sprite;
 public class BattleAxe extends AxeWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(3, 5);
     private static final Sprite ALT_SPRITE = new ItemSprite(3, 11);
-    private final Sprite sprite;
+    private Sprite sprite;
 
     public BattleAxe() {
         super("Battle Axe", 19, new int[]{5, 8, 9}, false);
@@ -27,7 +28,13 @@ public class BattleAxe extends AxeWeapon implements PairableWeapon {
 
     @Override
     public Item copy() {
-        return new BattleAxe();
+        BattleAxe toReturn = new BattleAxe();
+        if (this.sprite == SPRITE) {
+            toReturn.sprite = SPRITE;
+        } else {
+            toReturn.sprite = ALT_SPRITE;
+        }
+        return toReturn;
     }
 
     @Override

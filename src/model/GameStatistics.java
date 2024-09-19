@@ -294,4 +294,12 @@ public class GameStatistics {
     public static int getMurders() {
         return get("murders");
     }
+
+    public static void incrementCombatsFled() {
+        increment("combatsFled", 1);
+    }
+
+    public static int getCombatsFled() {
+        return get("combatsFled");
+    }
 }
