@@ -1,24 +1,24 @@
 package model.states.cardgames;
 
-import javazoom.jl.player.Player;
 import model.Model;
-import model.Party;
 import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.GameState;
 import util.Arithmetics;
 import util.MyLists;
 import util.MyRandom;
-import util.MyStrings;
 import view.subviews.ArrowMenuSubView;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class KnockOutCardGame extends CardGame {
 
     private static final int MAX_NUMBER_OF_PLAYERS = 6;
     private CardGamePlayer winner;
     private CardGamePlayer startingPlayer;
+    private CardGameCard hiddenCard;
     private HashSet<CardGamePlayer> knockedOutPlayers;
     private HashSet<CardGamePlayer> protectedPlayers = new HashSet<>();
 
@@ -45,6 +45,7 @@ public class KnockOutCardGame extends CardGame {
     public void setup(CardGameState state) {
         winner = null;
         clearCardsInMatrix();
+        MyLists.forEach(getPlayers(), (CardGamePlayer p) -> p.getPlayArea().clear());
         setDeck(new KnockOutCardGameDeck());
         setDiscard(new CardPile());
         resetCurrentBet();
@@ -56,6 +57,12 @@ public class KnockOutCardGame extends CardGame {
 
         state.println("The deck is shuffled and 1 card is dealt to each player. ");
         super.dealCardsToPlayers(state,1);
+        state.println("One card is set aside - the hidden card.");
+        hiddenCard = getDeck().drawCard();
+        Point p = getMatrix().getPositionFor(getDiscard());
+        getMatrix().remove(getDiscard());
+        hiddenCard.flipCard();
+        getMatrix().addElement(p.x, p.y, hiddenCard);
 
         this.startingPlayer = MyRandom.sample(getPlayers());
         knockedOutPlayers = new HashSet<>();
@@ -229,7 +236,7 @@ public class KnockOutCardGame extends CardGame {
             options.add(KnockOutCardGameDeck.nameForValue(i) + " (" + i + ")");
         }
         int[] selectedAction = new int[1];
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 24, ArrowMenuSubView.NORTH_WEST) {
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 4, 24, ArrowMenuSubView.NORTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selectedAction[0] = cursorPos;
@@ -238,5 +245,9 @@ public class KnockOutCardGame extends CardGame {
         });
         state.waitForReturnSilently();
         return selectedAction[0]+2;
+    }
+
+    public CardGameCard getHiddenCard() {
+        return hiddenCard;
     }
 }

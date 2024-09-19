@@ -3,10 +3,14 @@ package model.states.cardgames;
 import model.Model;
 import view.MyColors;
 import view.sprites.Sprite;
+import view.sprites.Sprite16x16;
 
 public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
     private int number;
     private MyColors color;
+    private boolean isFlipped = false;
+    private static final Sprite FLIPPED = new Sprite16x16("cardgamedeck", "cardgame.png", 0x11,
+            MyColors.BLACK, MyColors.BROWN, MyColors.PINK, MyColors.BEIGE);
 
     public CardGameCard(int i, MyColors suit) {
         this.number = i;
@@ -19,11 +23,25 @@ public class CardGameCard implements CardGameObject, Comparable<CardGameCard> {
     }
 
     public Sprite getSprite() {
-        return CardGameDeck.getSpriteForCard(this);
+       if (isFlipped) {
+           return FLIPPED;
+       }
+       return CardGameDeck.getSpriteForCard(this);
+    }
+
+    public void flipCard() {
+        isFlipped = !isFlipped;
+    }
+
+    public boolean isFlipped() {
+        return isFlipped;
     }
 
     @Override
     public String getText() {
+        if (isFlipped) {
+            return "A face-down card.";
+        }
         return color.name() + " " + number;
     }
 

@@ -17,8 +17,7 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
 
     @Override
     public void takeTurn(Model model, CardGameState state, CardGame cardGame) {
-        state.println(getName() + "'s turn.");
-        state.waitForReturn();
+        state.print(getName() + "'s turn. ");
         KnockOutCardGame knockOutGame = (KnockOutCardGame)cardGame;
         knockOutGame.removeFromProtected(this);
         drawFromDeck(model, state, knockOutGame);
@@ -137,7 +136,13 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
 
         if (!knockOutCardGame.getDeck().isEmpty()) {
             state.println((playerPicked.isNPC() ? (playerPicked.getName() + " draws") : "You draw") + " a replacement card.");
-            playerPicked.giveCard(knockOutCardGame.getDeck().drawCard(), knockOutCardGame);
+            ((KnockOutCardGamePlayer)playerPicked).drawFromDeck(model, state, knockOutCardGame);
+        } else {
+            state.println((playerPicked.isNPC() ? (playerPicked.getName() + " gets") : "You get") + " the hidden card.");
+            state.addHandAnimation(playerPicked, false, true, false);
+            state.waitForAnimationToFinish();
+            playerPicked.giveCard(knockOutCardGame.getHiddenCard(), knockOutCardGame);
+            knockOutCardGame.getMatrix().remove(knockOutCardGame.getHiddenCard());
         }
     }
 
@@ -154,7 +159,10 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
         this.removeCard(0, knockOutCardGame);
         playerPicked.giveCard(thisCard, knockOutCardGame);
         this.giveCard(otherCard, knockOutCardGame);
-        if (!playerPicked.isNPC() || !isNPC()) {
+        if (!playerPicked.isNPC()) {
+            state.println("You got a " + playerPicked.getCard(0).getText() + ".");
+        }
+        if (!isNPC()) {
             state.println("You got a " + getCard(0).getText() + ".");
         }
     }

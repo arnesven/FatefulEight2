@@ -128,7 +128,7 @@ public class CardGameState extends GameState {
     }
 
     public CardGamePlayer selectPlayer(Model model, List<CardGamePlayer> targetablePlayers, CardGame card) {
-        int count = multipleOptionArrowMenu(model, 24, 24, MyLists.transform(targetablePlayers, CardGamePlayer::getName));
+        int count = multipleOptionArrowMenu(model, 4, 24, MyLists.transform(targetablePlayers, CardGamePlayer::getName));
         return targetablePlayers.get(count);
     }
 }

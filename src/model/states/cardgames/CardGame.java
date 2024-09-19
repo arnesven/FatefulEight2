@@ -102,7 +102,10 @@ public abstract class CardGame {
     }
 
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-        return cardArea.handleKeyEvent(keyEvent);
+        if (cursorEnabled) {
+            return cardArea.handleKeyEvent(keyEvent);
+        }
+        return false;
     }
 
     public SteppingMatrix<CardGameObject> getMatrix() {

@@ -110,7 +110,7 @@ public class TradeWithBartenderState extends ShopState {
     private void internalBuyObols(Model model, int amount) {
         model.getParty().addToGold(-amount);
         model.getParty().addToObols(amount * 10);
-        print("You bought " + amount + " obols.");
+        print("You bought " + amount*10 + " obols.");
         println(" You now have " + model.getParty().getObols() + " obols.");
     }
 }

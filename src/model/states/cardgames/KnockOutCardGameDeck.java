@@ -51,6 +51,9 @@ public class KnockOutCardGameDeck extends CardGameDeck {
 
         @Override
         public String getText() {
+            if (isFlipped()) {
+                return super.getText();
+            }
             return nameForValue(getValue()) + " (" + getValue() + ")";
         }
     }
