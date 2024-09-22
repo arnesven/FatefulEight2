@@ -138,6 +138,13 @@ public class KnockOutCardGame extends CardGame {
             System.out.println(p.getName() + " " + getShowdownScore(p));
         }
         winner = playersRemaining.get(0);
+        state.print("The game is over, ");
+        if (playersRemaining.size() == 1) {
+            state.println(winner.getName() + " is the only remaining player!");
+        } else {
+            state.println(winner.getName() + " has the highest card, the " +
+                    winner.getCard(0).getText() + ".");
+        }
         return true;
     }
 

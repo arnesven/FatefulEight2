@@ -81,6 +81,15 @@ public class MyLists {
         return null;
     }
 
+    public static <E> void removeFirstIf(List<E> source, Predicate<E> pred) {
+        for (E e : new ArrayList<>(source)) {
+            if (pred.test(e)) {
+                source.remove(e);
+                return;
+            }
+        }
+    }
+
     public static <E> int maximum(List<E> source, MyUnaryIntFunction<E> fun) {
         int max = Integer.MIN_VALUE;
         for (E e : source) {

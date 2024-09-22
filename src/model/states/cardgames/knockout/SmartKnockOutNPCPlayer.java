@@ -6,8 +6,10 @@ import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGameCard;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
+import view.MyColors;
 
 import java.util.*;
 
@@ -95,7 +97,33 @@ public class SmartKnockOutNPCPlayer extends KnockOutCardGamePlayer {
                                     opposCards.get(opposCards.size() - 1).getValue());
             }
         }
-        return new MyPair<>(MyRandom.sample(targets), MyRandom.randInt(2, 8)); // TODO: Base guess on what's on the table.
+        return new MyPair<>(MyRandom.sample(targets), makeSmartGuess(state, knockOutCardGame));
+    }
+
+    private int makeSmartGuess(CardGameState state, KnockOutCardGame knockOutCardGame) {
+        KnockOutCardGameDeck deck = new KnockOutCardGameDeck();
+        MyLists.removeFirstIf(deck, card -> card.getValue() == getCard(0).getValue());
+        for (CardGamePlayer player : knockOutCardGame.getPlayers()){
+            for (CardGameCard c : player.getPlayArea()) {
+                MyLists.removeFirstIf(deck, card -> card.getValue() == c.getValue());
+            }
+        }
+
+        for (Integer i : opponentCards.values()) {
+            MyLists.removeFirstIf(deck, card -> card.getValue() == i);
+        }
+        if (deck.isEmpty()) {
+            log("What, no more cards to guess from?");
+            return MyRandom.randInt(2, 8);
+        }
+        List<Integer> choices = MyLists.transform(deck, CardGameCard::getValue);
+        log("Guess choices: " + Arrays.toString(choices.toArray()));
+        if (MyLists.any(choices, i -> i == 3)) {
+            log("Adding an extra 3.");
+            choices.add(3);
+        }
+        Collections.shuffle(choices);
+        return MyRandom.sample(choices);
     }
 
     @Override
