@@ -197,7 +197,7 @@ public class KnockOutCardGame extends CardGame {
 
     @Override
     public void replacePlayersLowOnObols(Model model, CardGameState cardGameState) {
-
+        // TODO: Make not abstract
     }
 
     @Override

@@ -43,7 +43,7 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
         int otherIndex = 1 - falseIndex;
         CardGameCard otherCard = getCard(otherIndex);
         if (otherCard.getValue() == 5 || otherCard.getValue() == 6) {
-            otherCard.doAction(model, state, cardGame, this);
+            getCard(falseIndex).doAction(model, state, cardGame, this);
             return true;
         }
         return false;
@@ -138,9 +138,9 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
         if (card.getValue() == 8) {
             state.println((playerPicked.isNPC() ? playerPicked.getName() : "You") + " dropped the Scepter!");
             knockOutCardGame.knockOut(state, playerPicked);
-        } else {
-            state.println("A " + card.getText() + " was discarded.");
+            return;
         }
+        state.println("A " + card.getText() + " was discarded.");
 
         if (!knockOutCardGame.getDeck().isEmpty()) {
             state.println((playerPicked.isNPC() ? (playerPicked.getName() + " draws") : "You draw") + " a replacement card.");

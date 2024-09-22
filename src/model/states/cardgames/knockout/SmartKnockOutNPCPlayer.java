@@ -95,7 +95,7 @@ public class SmartKnockOutNPCPlayer extends KnockOutCardGamePlayer {
                                     opposCards.get(opposCards.size() - 1).getValue());
             }
         }
-        return new MyPair<>(MyRandom.sample(targets), MyRandom.randInt(2, 8));
+        return new MyPair<>(MyRandom.sample(targets), MyRandom.randInt(2, 8)); // TODO: Base guess on what's on the table.
     }
 
     @Override
