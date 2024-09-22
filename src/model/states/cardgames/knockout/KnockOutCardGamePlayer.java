@@ -1,8 +1,12 @@
-package model.states.cardgames;
+package model.states.cardgames.knockout;
 
 import model.Model;
 import model.races.Race;
 import model.states.GameState;
+import model.states.cardgames.CardGame;
+import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGamePlayer;
+import model.states.cardgames.CardGameState;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;

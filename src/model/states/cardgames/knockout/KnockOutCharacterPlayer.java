@@ -1,7 +1,11 @@
-package model.states.cardgames;
+package model.states.cardgames.knockout;
 
 import model.Model;
 import model.races.Race;
+import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGameObject;
+import model.states.cardgames.CardGamePlayer;
+import model.states.cardgames.CardGameState;
 import util.MyPair;
 
 public class KnockOutCharacterPlayer extends KnockOutCardGamePlayer {

@@ -1,9 +1,10 @@
-package model.states.cardgames;
+package model.states.cardgames.knockout;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.races.Race;
 import model.states.GameState;
+import model.states.cardgames.*;
 import util.Arithmetics;
 import util.MyLists;
 import util.MyRandom;

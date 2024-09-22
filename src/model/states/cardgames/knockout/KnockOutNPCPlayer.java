@@ -1,7 +1,10 @@
-package model.states.cardgames;
+package model.states.cardgames.knockout;
 
 import model.Model;
 import model.races.Race;
+import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGamePlayer;
+import model.states.cardgames.CardGameState;
 import util.MyPair;
 import util.MyRandom;
 
@@ -17,10 +20,17 @@ public class KnockOutNPCPlayer extends KnockOutCardGamePlayer {
     @Override
     protected void playOneCard(Model model, CardGameState state, KnockOutCardGame knockOutGame) {
         CardGameCard cardToPlay;
-        do {
-            cardToPlay = getCard(MyRandom.randInt(0, 1));
-        } while (cardToPlay.getValue() == 8);
+        cardToPlay = getCard(rankOfCard(0) > rankOfCard(1) ? 0 : 1);
         cardToPlay.doAction(model, state, knockOutGame, this);
+    }
+
+    private int rankOfCard(int i) {
+        int card = getCard(i).getValue();
+        if (card == 8) {
+            return Integer.MIN_VALUE;
+        }
+
+        return (8 - card) * 10 + MyRandom.randInt(-25, 25);
     }
 
     @Override

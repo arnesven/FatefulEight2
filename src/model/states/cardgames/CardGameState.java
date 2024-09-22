@@ -2,19 +2,13 @@ package model.states.cardgames;
 
 import model.GameStatistics;
 import model.Model;
-import model.races.Race;
 import model.states.GameState;
-import model.states.cardgames.runny.RunnyCardGame;
-import model.states.dailyaction.CardGameNode;
-import sound.BackgroundMusic;
-import sound.ClientSoundManager;
+import model.states.cardgames.knockout.KnockOutCardGame;
 import util.MyLists;
-import util.MyRandom;
 import util.MyStrings;
 import view.subviews.CardGameSubView;
 import view.subviews.CollapsingTransition;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CardGameState extends GameState {

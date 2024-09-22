@@ -1,5 +1,7 @@
-package model.states.cardgames;
+package model.states.cardgames.knockout;
 
+import model.states.cardgames.CardGameCard;
+import model.states.cardgames.CardGameDeck;
 import view.MyColors;
 
 import java.util.Collections;
