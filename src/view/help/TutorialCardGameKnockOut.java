@@ -8,7 +8,7 @@ public class TutorialCardGameKnockOut extends SubChapterHelpDialog {
             "Each player is dealt 1 card at the beginning of the game and draws 1 card at the beginning of each turn, then " +
             "chooses one of the two cards to play. The object of the game is to have the highest valued card when the deck " +
             "runs out, or to be the last player remaining. There are the following cards:\n\n" +
-            "1 - CUDGEL (8): Guess another players card. If you're right, they get knocked out.\n" +
+            "1 - CUDGEL (8): Guess another players card (but not Cudgel). If you're right, they get knocked out.\n" +
             "2 - SPYGLASS (3): Look at another players hand.\n" +
             "3 - RAPIER (3): Compare your card with another player's. The player with the lower card is knocked out.\n" +
             "4 - SHIELD (3): Protects you from being target by other cards until your next turn.\n" +

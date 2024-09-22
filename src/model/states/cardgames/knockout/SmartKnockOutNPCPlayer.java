@@ -108,6 +108,7 @@ public class SmartKnockOutNPCPlayer extends KnockOutCardGamePlayer {
                 MyLists.removeFirstIf(deck, card -> card.getValue() == c.getValue());
             }
         }
+        deck.removeIf(card -> card.getValue() == 1);
 
         for (Integer i : opponentCards.values()) {
             MyLists.removeFirstIf(deck, card -> card.getValue() == i);
