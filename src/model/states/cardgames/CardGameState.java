@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.Model;
 import model.states.GameState;
 import model.states.cardgames.knockout.KnockOutCardGame;
+import model.states.cardgames.runny.RunnyCardGame;
 import util.MyLists;
 import util.MyStrings;
 import view.subviews.CardGameSubView;
@@ -13,13 +14,13 @@ import java.util.List;
 
 public class CardGameState extends GameState {
     private final CardGameSubView subView;
-    private CardGame cardGame;
+    private final CardGame cardGame;
     private int roundsPlayed = 0;
 
     public CardGameState(Model model) {
         super(model);
         this.subView = new CardGameSubView();
-        this.cardGame = new KnockOutCardGame(KnockOutCardGame.LOW_STAKES);//new RunnyCardGame();
+        this.cardGame = new KnockOutCardGame(KnockOutCardGame.LOW_STAKES);// new RunnyCardGame(); //
         subView.setGame(cardGame);
     }
 
@@ -46,7 +47,7 @@ public class CardGameState extends GameState {
         cardGame.addPlayer(model.getParty().getLeader(), model.getParty().getObols());
         CollapsingTransition.transition(model, subView);
         print("You sit down to play a game of " + cardGame.getName() + ". Press enter to continue.");
-        model.getTutorial().cardGameRunny(model);
+        cardGame.triggerTutorial(model);
         waitForReturn();
         do {
             roundsPlayed++;

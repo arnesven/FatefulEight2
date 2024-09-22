@@ -2,7 +2,7 @@ package view.help;
 
 import view.GameView;
 
-public class TutorialCardGameRunny extends HelpDialog {
+public class TutorialCardGameRunny extends SubChapterHelpDialog {
     private static final String TEXT =
             "Runny is played with a deck of 60 cards. Cards are valued from 0 to 9, in three suits, " +
             "and two copies of each card. Players are dealt 6 cards at the start of the game and try to " +
@@ -18,6 +18,6 @@ public class TutorialCardGameRunny extends HelpDialog {
             "The winner of each round collects the entire pot of obols.";
 
     public TutorialCardGameRunny(GameView view) {
-        super(view, "Runny (Card Game)", TEXT);
+        super(view, "Runny", TEXT);
     }
 }

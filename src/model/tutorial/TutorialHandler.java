@@ -629,6 +629,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void cardGameKnockOut(Model model) {
+        runOnce("knockout", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialCardGameKnockOut(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

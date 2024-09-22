@@ -204,6 +204,11 @@ public class KnockOutCardGame extends CardGame {
 
     }
 
+    @Override
+    public void triggerTutorial(Model model) {
+        model.getTutorial().cardGameKnockOut(model);
+    }
+
     public void removeFromProtected(KnockOutCardGamePlayer knockOutCardGamePlayer) {
         protectedPlayers.remove(knockOutCardGamePlayer);
     }

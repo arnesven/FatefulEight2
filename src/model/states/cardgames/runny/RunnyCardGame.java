@@ -192,6 +192,11 @@ public class RunnyCardGame extends CardGame {
         }
     }
 
+    @Override
+    public void triggerTutorial(Model model) {
+        model.getTutorial().cardGameRunny(model);
+    }
+
     private boolean alreadyAtTable(CardGamePlayer replacement) {
         for (CardGamePlayer player : getPlayers()) {
             if (player.getName().equals(replacement.getName())) {

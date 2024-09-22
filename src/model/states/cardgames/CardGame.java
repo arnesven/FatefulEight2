@@ -236,4 +236,6 @@ public abstract class CardGame {
     protected void addToPlayArea(CardGamePlayer currentPlayer, CardGameCard cardGameCard) {
         currentPlayer.getPlayArea().add(cardGameCard);
     }
+
+    public abstract void triggerTutorial(Model model);
 }
