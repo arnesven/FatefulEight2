@@ -19,7 +19,7 @@ public class CardGameState extends GameState {
     public CardGameState(Model model) {
         super(model);
         this.subView = new CardGameSubView();
-        this.cardGame = new KnockOutCardGame();//new RunnyCardGame();
+        this.cardGame = new KnockOutCardGame(KnockOutCardGame.LOW_STAKES);//new RunnyCardGame();
         subView.setGame(cardGame);
     }
 

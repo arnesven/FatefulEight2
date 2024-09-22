@@ -16,30 +16,41 @@ import java.util.List;
 
 public class KnockOutCardGame extends CardGame {
 
+    public static int LOW_STAKES = 0;
+    public static int HIGH_STAKES = 1;
+
     private static final int MAX_NUMBER_OF_PLAYERS = 6;
+    private final int maximimBet;
     private CardGamePlayer winner;
     private CardGamePlayer startingPlayer;
     private CardGameCard hiddenCard;
     private HashSet<CardGamePlayer> knockedOutPlayers;
     private HashSet<CardGamePlayer> protectedPlayers = new HashSet<>();
 
-    public KnockOutCardGame() {
-        super("Knock-Out",
-                makePlayers(CardGame.makeRandomRaces(MAX_NUMBER_OF_PLAYERS-1)),
+    public KnockOutCardGame(int stakes) {
+        super(prefixForStake(stakes) + " Knock-Out",
+                makePlayers(stakes, CardGame.makeRandomRaces(MAX_NUMBER_OF_PLAYERS-1)),
                 new KnockOutCardGameDeck());
+        this.maximimBet = stakes * 30 + 20;
     }
 
-    private static List<CardGamePlayer> makePlayers(List<Race> randomRaces) {
+    private static String prefixForStake(int stakes) {
+        return stakes == 0 ? "low stakes" : "high stakes";
+    }
+
+    private static List<CardGamePlayer> makePlayers(int stakes, List<Race> randomRaces) {
         List<CardGamePlayer> players = new ArrayList<>();
         for (Race r : randomRaces) {
-            players.add(makeKnockOutNPC(r));
+            players.add(makeKnockOutNPC(stakes, r));
         }
         return players;
     }
 
-    private static CardGamePlayer makeKnockOutNPC(Race r) {
+    private static CardGamePlayer makeKnockOutNPC(int stakes, Race r) {
         boolean gender = MyRandom.flipCoin();
-        return new KnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
+       // if (stakes == 0) {
+            return new KnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
+        //return  // TODO: Make smarter KnockOut player.
     }
 
     @Override
@@ -180,7 +191,7 @@ public class KnockOutCardGame extends CardGame {
 
     @Override
     public int getMaximumBet() {
-        return 25;
+        return maximimBet;
     }
 
     @Override
