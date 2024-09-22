@@ -31,7 +31,7 @@ public class KnockOutCardGame extends CardGame {
         super(prefixForStake(stakes) + " Knock-Out",
                 makePlayers(stakes, CardGame.makeRandomRaces(MAX_NUMBER_OF_PLAYERS-1)),
                 new KnockOutCardGameDeck());
-        this.maximimBet = stakes * 30 + 20;
+        this.maximimBet = stakes * 15 + 10;
     }
 
     private static String prefixForStake(int stakes) {
@@ -48,9 +48,10 @@ public class KnockOutCardGame extends CardGame {
 
     private static CardGamePlayer makeKnockOutNPC(int stakes, Race r) {
         boolean gender = MyRandom.flipCoin();
-       // if (stakes == 0) {
+        if (stakes == 0) {
             return new KnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
-        //return  // TODO: Make smarter KnockOut player.
+        }
+        return new SmartKnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
     }
 
     @Override
@@ -231,7 +232,7 @@ public class KnockOutCardGame extends CardGame {
 
     public void forceDiscard(CardGamePlayer player) {
         addToPlayArea(player, player.getCard(0));
-        player.clearCards();
+        player.removeCard(player.getCard(0), this);
     }
 
     public List<CardGamePlayer> getPlayersRemaining() {

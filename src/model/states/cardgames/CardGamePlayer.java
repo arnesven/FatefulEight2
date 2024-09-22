@@ -103,4 +103,6 @@ public abstract class CardGamePlayer {
     public List<CardGameCard> getPlayArea() {
         return playArea;
     }
+
+    public abstract void runStartOfGameHook(Model model, CardGameState cardGameState, CardGame cardGame);
 }

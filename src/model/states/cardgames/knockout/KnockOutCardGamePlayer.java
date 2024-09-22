@@ -55,6 +55,7 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
     protected abstract CardGamePlayer pickPlayerForComparing(Model model, CardGameState state, KnockOutCardGame knockOutCardGame);
     protected abstract CardGamePlayer pickPlayerToForceDiscard(Model model, CardGameState state, KnockOutCardGame knockOutCardGame);
     protected abstract CardGamePlayer pickPlayerForSwitch(Model model, CardGameState state, KnockOutCardGame knockOutCardGame);
+    protected abstract void seeCardHook(Model model, CardGameState state, KnockOutCardGame knockOutCardGame, CardGamePlayer player, CardGameCard card);
 
     protected void drawFromDeck(Model model, CardGameState state, KnockOutCardGame knockOutGame) {
         knockOutGame.getDeck().doAction(model, state, knockOutGame, this);
@@ -82,6 +83,7 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
         CardGamePlayer playerPicked = pickPlayerForLooking(model, state, knockOutCardGame);
         sayLine(state,"I want to look at your card " + playerPicked.getName() + ".");
         model.getLog().waitForAnimationToFinish();
+        seeCardHook(model, state, knockOutCardGame, playerPicked, playerPicked.getCard(0));
         if (!isNPC()) {
             state.println("You look at " + playerPicked.getName() + "'s card, it's a " +
                     playerPicked.getCard(0).getText() + ".");
@@ -104,6 +106,8 @@ public abstract class KnockOutCardGamePlayer extends CardGamePlayer {
         } else if (!isNPC() || !playerPicked.isNPC()) {
             state.println("Both of you have " + thisCard + "s!");
         } else {
+            seeCardHook(model, state, knockOutCardGame, playerPicked, playerPicked.getCard(0));
+            ((KnockOutCardGamePlayer)playerPicked).seeCardHook(model, state, knockOutCardGame, this, getCard(0));
             state.println("Neither player was knocked out.");
         }
     }

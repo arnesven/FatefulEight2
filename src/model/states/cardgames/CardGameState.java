@@ -20,7 +20,7 @@ public class CardGameState extends GameState {
     public CardGameState(Model model) {
         super(model);
         this.subView = new CardGameSubView();
-        this.cardGame = new KnockOutCardGame(KnockOutCardGame.LOW_STAKES);// new RunnyCardGame(); //
+        this.cardGame = new KnockOutCardGame(KnockOutCardGame.HIGH_STAKES);// new RunnyCardGame(); //
         subView.setGame(cardGame);
     }
 
@@ -58,6 +58,7 @@ public class CardGameState extends GameState {
                 break;
             }
             cardGame.setup(this);
+            MyLists.forEach(cardGame.getPlayers(), cardGamePlayer -> cardGamePlayer.runStartOfGameHook(model, this, cardGame));
             waitForReturn();
             GameStatistics.incrementCardGamesPlayed();
             cardGame.playRound(model, this);

@@ -55,4 +55,7 @@ public class RunnyCharacterPlayer extends RunnyCardGamePlayer {
                 pass, pass, "Would you like to raise the bet, or pass?");
         selected.doAction(model, state, runnyCardGame, this);
     }
+
+    @Override
+    public void runStartOfGameHook(Model model, CardGameState cardGameState, CardGame cardGame) { }
 }

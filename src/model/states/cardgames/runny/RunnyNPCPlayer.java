@@ -160,4 +160,7 @@ public class RunnyNPCPlayer extends RunnyCardGamePlayer {
         }
         return false;
     }
+
+    @Override
+    public void runStartOfGameHook(Model model, CardGameState cardGameState, CardGame cardGame) { }
 }

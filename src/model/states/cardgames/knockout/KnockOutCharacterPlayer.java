@@ -2,10 +2,7 @@ package model.states.cardgames.knockout;
 
 import model.Model;
 import model.races.Race;
-import model.states.cardgames.CardGameCard;
-import model.states.cardgames.CardGameObject;
-import model.states.cardgames.CardGamePlayer;
-import model.states.cardgames.CardGameState;
+import model.states.cardgames.*;
 import util.MyPair;
 
 public class KnockOutCharacterPlayer extends KnockOutCardGamePlayer {
@@ -58,4 +55,11 @@ public class KnockOutCharacterPlayer extends KnockOutCardGamePlayer {
         state.println("Who do you want to target with the Magic Mirror?");
         return state.selectPlayer(model, knockOutCardGame.getTargetablePlayers(false, this), knockOutCardGame);
     }
+
+    @Override
+    protected void seeCardHook(Model model, CardGameState state, KnockOutCardGame knockOutCardGame,
+                               CardGamePlayer player, CardGameCard card) { }
+
+    @Override
+    public void runStartOfGameHook(Model model, CardGameState cardGameState, CardGame cardGame) { }
 }

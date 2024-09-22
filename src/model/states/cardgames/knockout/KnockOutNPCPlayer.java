@@ -2,6 +2,7 @@ package model.states.cardgames.knockout;
 
 import model.Model;
 import model.races.Race;
+import model.states.cardgames.CardGame;
 import model.states.cardgames.CardGameCard;
 import model.states.cardgames.CardGamePlayer;
 import model.states.cardgames.CardGameState;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class KnockOutNPCPlayer extends KnockOutCardGamePlayer {
     public KnockOutNPCPlayer(String name, boolean gender, Race r) {
-        super(name, gender, r, 99, true);
+        super(name, gender, r, MyRandom.randInt(40, 100), true);
     }
 
     @Override
@@ -64,4 +65,11 @@ public class KnockOutNPCPlayer extends KnockOutCardGamePlayer {
     protected CardGamePlayer pickPlayerForSwitch(Model model, CardGameState state, KnockOutCardGame knockOutCardGame) {
         return pickRandomOther(knockOutCardGame, false);
     }
+
+    @Override
+    protected void seeCardHook(Model model, CardGameState state, KnockOutCardGame knockOutCardGame,
+                               CardGamePlayer player, CardGameCard card) { }
+
+    @Override
+    public void runStartOfGameHook(Model model, CardGameState cardGameState, CardGame cardGame) { }
 }
