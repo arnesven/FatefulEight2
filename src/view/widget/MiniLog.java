@@ -66,4 +66,8 @@ public class MiniLog {
     public boolean isFinalStage() {
         return currentSize == NO_OF_STAGES - 1;
     }
+
+    public boolean isOnRight() {
+        return currentSize == LARGE_RIGHT;
+    }
 }

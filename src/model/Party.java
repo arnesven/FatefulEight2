@@ -75,6 +75,7 @@ public class Party implements Serializable {
     private List<DestinationTask> destinationTasks = new ArrayList<>();
     private int guide = 0;
     private Headquarters headquarters = null;
+    private boolean drawPartyVertically = false;
 
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
@@ -139,8 +140,14 @@ public class Party implements Serializable {
     }
 
     public Point getLocationForPartyMember(int count) {
+        int height = 11;
+        if (drawPartyVertically) {
+            int x = (count / 2) * (DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS);
+            int y = 2 + (count % 2) * height;
+            return new Point(x, y);
+        }
         int x = (count % 2) * (DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS);
-        int y = 2 + (count / 2) * 11;
+        int y = 2 + (count / 2) * height;
         return new Point(x, y);
     }
 
@@ -944,5 +951,9 @@ public class Party implements Serializable {
             model.getLog().addAnimated("Your dog appears to have left you.\n");
             setDog(null);
         }
+    }
+
+    public void setDrawPartyVertically(boolean onRight) {
+        drawPartyVertically = onRight;
     }
 }

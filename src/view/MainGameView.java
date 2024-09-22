@@ -59,6 +59,7 @@ public class MainGameView extends GameView {
                 nextView = new LogView(this);
             }
             miniLog.toggleSize();
+            model.getParty().setDrawPartyVertically(miniLog.isOnRight());
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
             nextView = new MenuView(this);
