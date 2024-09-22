@@ -217,7 +217,7 @@ public abstract class CardGame {
 
     public abstract int getMaximumBet();
 
-    public void replacePlayersLowOnObols(Model model, CardGameState cardGameState) {
+    public final void replacePlayersLowOnObols(Model model, CardGameState cardGameState) {
         for (int i = 0; i < getPlayers().size(); ++i) {
             CardGamePlayer player = getPlayers().get(i);
             if (player.isNPC()) {
