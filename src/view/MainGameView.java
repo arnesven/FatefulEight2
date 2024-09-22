@@ -5,12 +5,10 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.conditions.VampirismCondition;
 import view.help.HelpView;
-import view.party.PartyView;
 import view.widget.MiniLog;
 import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class MainGameView extends GameView {
 
@@ -56,11 +54,11 @@ public class MainGameView extends GameView {
     @Override
     public void handleKeyEvent(KeyEvent keyEvent, Model model) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_F2) {
-            miniLog.toggleSize();
-            if (!miniLog.isLarge()) {
+            if (miniLog.isFinalStage()) {
                 setTimeToTransition(true);
                 nextView = new LogView(this);
             }
+            miniLog.toggleSize();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
             nextView = new MenuView(this);

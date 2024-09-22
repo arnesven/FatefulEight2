@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import util.MyStrings;
 import view.help.HelpView;
 import view.widget.TopText;
 
@@ -89,6 +90,32 @@ public class LogView extends GameView {
         }
     }
 
+    public static void drawLogHalf(Model model, int totalRows, int rowOffset, int colOffset, int scroll) {
+        MyColors colorToUse = DEFAULT_TEXT_COLOR;
+        int row = DrawingArea.WINDOW_ROWS;
+        for (int currentRow = 0; currentRow < model.getLog().getContents().size(); currentRow++) {
+            String[] parts = MyStrings.partitionWithLineBreaks(model.getLog().getContents().get(currentRow),
+                    DrawingArea.WINDOW_COLUMNS - colOffset);
+            row -= parts.length;
+            int finalRow = row;
+            for (String s : parts) {
+                int col = 0;
+                for (int i = 0; i < s.length(); i++) {
+                    String substr = s.charAt(i) + "";
+                    if (SPECIAL_CHARS.contains(substr)) {
+                        colorToUse = getColorForSpecialChar(s.charAt(i));
+                    } else if (finalRow >= rowOffset) {
+                        BorderFrame.drawString(model.getScreenHandler(), substr, colOffset + col++, finalRow, colorToUse);
+                    }
+                }
+                finalRow++;
+            }
+            if (row <= 1) {
+                return;
+            }
+        }
+    }
+
     private static MyColors getColorForSpecialChar(char c) {
         int i = SPECIAL_CHARS.indexOf(c);
         if (0 <= i && i < SPECIAL_CHARS.length()) {
@@ -96,19 +123,6 @@ public class LogView extends GameView {
         }
         return DEFAULT_TEXT_COLOR;
     }
-
-//    private static MyColors getColorForLine(String s) {
-//        if (s.startsWith("!")) {
-//            return MyColors.LIGHT_RED;
-//        } else if (s.contains("DAY")) {
-//            return MyColors.CYAN;
-//        } else if (s.contains("\"")) {
-//            return MyColors.YELLOW;
-//        } else if (s.contains("Autosaving")) {
-//            return MyColors.GRAY;
-//        }
-//        return MyColors.LIGHT_GREEN;
-//    }
 
     @Override
     public GameView getNextView(Model model) {
