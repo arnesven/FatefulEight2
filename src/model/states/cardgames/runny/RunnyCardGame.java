@@ -159,27 +159,6 @@ public class RunnyCardGame extends CardGame {
     }
 
     @Override
-    public void replacePlayersLowOnObols(Model model, CardGameState cardGameState) {
-        for (int i = 0; i < getPlayers().size(); ++i) {
-            CardGamePlayer player = getPlayers().get(i);
-            if (player.isNPC()) {
-                boolean lowOnObols = player.getObols() < getMaximumBet();
-                if (lowOnObols) {
-                    cardGameState.println(player.getName() + " is low on obols and leaves the table.");
-                }
-                boolean gotTired = MyRandom.randInt(40 - cardGameState.getRoundsPlayed()) == 0 &&
-                        cardGameState.getRoundsPlayed() > 1;
-                if (gotTired) {
-                    cardGameState.println(player.getName() + " has had enough and leaves the table.");
-                }
-                if (lowOnObols || gotTired) {
-                    getPlayers().remove(player);
-                }
-            }
-        }
-    }
-
-    @Override
     public void addMorePlayers(Model model, CardGameState cardGameState) {
         if (getPlayers().size() < MAX_NUMBER_OF_PLAYERS &&
                 MyRandom.randInt(cardGameState.getRoundsPlayed()) == 0 && cardGameState.getRoundsPlayed() > 1) {

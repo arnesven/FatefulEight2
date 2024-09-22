@@ -17,7 +17,8 @@ import java.util.List;
 public class KnockOutCardGame extends CardGame {
 
     public static int LOW_STAKES = 0;
-    public static int HIGH_STAKES = 1;
+    public static int MEDIUM_STAKES = 1;
+    public static int HIGH_STAKES = 2;
 
     private static final int MAX_NUMBER_OF_PLAYERS = 6;
     private final int maximimBet;
@@ -35,7 +36,13 @@ public class KnockOutCardGame extends CardGame {
     }
 
     private static String prefixForStake(int stakes) {
-        return stakes == 0 ? "low stakes" : "high stakes";
+        switch (stakes) {
+            case 0:
+                return "low stakes";
+            case 1:
+                return "medium stakes";
+        }
+        return "high stakes";
     }
 
     private static List<CardGamePlayer> makePlayers(int stakes, List<Race> randomRaces) {
@@ -48,10 +55,10 @@ public class KnockOutCardGame extends CardGame {
 
     private static CardGamePlayer makeKnockOutNPC(int stakes, Race r) {
         boolean gender = MyRandom.flipCoin();
-        if (stakes == 0) {
-            return new KnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
+        if (stakes == 1 || (stakes == 2 && MyRandom.flipCoin())) {
+            return new SmartKnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
         }
-        return new SmartKnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
+        return new KnockOutNPCPlayer(GameState.randomFirstName(gender), gender, r);
     }
 
     @Override

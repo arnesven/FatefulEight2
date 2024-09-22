@@ -6,6 +6,7 @@ import model.states.GameState;
 import model.states.cardgames.knockout.KnockOutCardGame;
 import model.states.cardgames.runny.RunnyCardGame;
 import util.MyLists;
+import util.MyRandom;
 import util.MyStrings;
 import view.subviews.CardGameSubView;
 import view.subviews.CollapsingTransition;
@@ -20,7 +21,11 @@ public class CardGameState extends GameState {
     public CardGameState(Model model) {
         super(model);
         this.subView = new CardGameSubView();
-        this.cardGame = new KnockOutCardGame(KnockOutCardGame.HIGH_STAKES);// new RunnyCardGame(); //
+        if (MyRandom.flipCoin()) {
+            this.cardGame = new RunnyCardGame();
+        } else {
+            this.cardGame = new KnockOutCardGame(MyRandom.randInt(0, 2));
+        }
         subView.setGame(cardGame);
     }
 
