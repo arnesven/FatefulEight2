@@ -30,7 +30,7 @@ public class MyStrings {
                 int i = 0;
                 do {
                     bldr.append(splits[i++] + " ");
-                } while (bldr.length() + splits[i].length() + 1 < maxWidth);
+                } while (i < splits.length && bldr.length() + splits[i].length() + 1 < maxWidth);
                 strs.add(bldr.toString());
                 bldr = new StringBuilder();
                 for (; i < splits.length; ++i) {

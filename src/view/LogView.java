@@ -7,10 +7,7 @@ import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class LogView extends GameView {
     public static final char RED_COLOR = (char)0xF1;
@@ -91,27 +88,43 @@ public class LogView extends GameView {
     }
 
     public static void drawLogHalf(Model model, int totalRows, int rowOffset, int colOffset, int scroll) {
-        MyColors colorToUse = DEFAULT_TEXT_COLOR;
+        List<String> contentToPrint = new ArrayList<>();
         int row = DrawingArea.WINDOW_ROWS;
         for (int currentRow = 0; currentRow < model.getLog().getContents().size(); currentRow++) {
             String[] parts = MyStrings.partitionWithLineBreaks(model.getLog().getContents().get(currentRow),
                     DrawingArea.WINDOW_COLUMNS - colOffset);
             row -= parts.length;
-            int finalRow = row;
-            for (String s : parts) {
-                int col = 0;
-                for (int i = 0; i < s.length(); i++) {
-                    String substr = s.charAt(i) + "";
-                    if (SPECIAL_CHARS.contains(substr)) {
-                        colorToUse = getColorForSpecialChar(s.charAt(i));
-                    } else if (finalRow >= rowOffset) {
-                        BorderFrame.drawString(model.getScreenHandler(), substr, colOffset + col++, finalRow, colorToUse);
-                    }
-                }
-                finalRow++;
+            for (int i = parts.length-1; i >= 0; --i) {
+                contentToPrint.add(parts[i]);
             }
             if (row <= 1) {
-                return;
+                break;
+            }
+        }
+
+        int logStartIndex = Math.min(totalRows - 1 + scroll + 5, contentToPrint.size()-1);
+        int cutOff = Math.min(totalRows - 1 + scroll, contentToPrint.size()-1);
+        row = rowOffset;
+        MyColors colorToUse = DEFAULT_TEXT_COLOR;
+        for (; logStartIndex >= 0; logStartIndex--) {
+            String s = contentToPrint.get(logStartIndex);
+            int col = 0;
+            for (int i = 0; i < s.length(); i++) {
+                String substr = s.charAt(i) + "";
+                if (SPECIAL_CHARS.contains(substr)) {
+                    colorToUse = getColorForSpecialChar(s.charAt(i));
+                } else if (logStartIndex <= cutOff) {
+                    if (!substr.equals("\n")) {
+                        BorderFrame.drawString(model.getScreenHandler(), substr, colOffset + col++, row, colorToUse);
+                    }
+                }
+            }
+
+            if (logStartIndex <= cutOff) {
+                row++;
+            }
+            if (row == DrawingArea.WINDOW_ROWS) {
+                break;
             }
         }
     }
