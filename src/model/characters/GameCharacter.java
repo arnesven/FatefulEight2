@@ -134,11 +134,10 @@ public class GameCharacter extends Combatant {
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d HP", this.getHP(), this.getMaxHP()), col+8, row+3, HealthBar.getHealthColor(this.getHP(), this.getMaxHP()));
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), col+18, row+3, getStaminaColor());
         BorderFrame.drawString(screenHandler, String.format("SPEED %2d", this.getSpeed()), col+8, row+4, DEFAULT_TEXT_COLOR);
-        String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
-        BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), col+18, row+4, MyColors.WHITE);
 
         drawStatus(screenHandler, col+8, row+4);
-
+        String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
+        BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), col+18, row+4, MyColors.WHITE);
 
         equipment.drawYourself(screenHandler, col, row);
     }
@@ -167,8 +166,8 @@ public class GameCharacter extends Combatant {
         }
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), x+8, y+2, getStaminaColor());
         String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
-        BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), x+5, y+2, MyColors.WHITE);
         drawStatus(screenHandler, x, y+3);
+        BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), x+9, y+3, MyColors.WHITE);
     }
 
     private MyColors getStaminaColor() {

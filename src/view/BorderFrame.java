@@ -125,4 +125,35 @@ public class BorderFrame {
             screenHandler.put(i, row, CharSprite.make(HORIZONTAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         }
     }
+
+    public static void fixLogRightCorners(ScreenHandler screenHandler) {
+        for (int y=1; y < 4; ++y ) {
+            screenHandler.put(WINDOW_COLUMNS-CHARACTER_WINDOW_COLUMNS-1, 1+y*(CHARACTER_WINDOW_ROWS+1),
+                    CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+        }
+        screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, WINDOW_ROWS-5,
+                CharSprite.make(VERTICAL_LEFT, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+
+
+        for (int i = 4; i > 0; i--) {
+            screenHandler.put(80 - CHARACTER_WINDOW_COLUMNS - 1, WINDOW_ROWS - i,
+                    CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+        }
+
+        for (int i = 1; i < 4; ++i) {
+            screenHandler.put(i * 14 - 1, WINDOW_ROWS - 5,
+                    CharSprite.make(HORIZONTAL_DOWN, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+            for (int j = 4; j > 0; --j) {
+                screenHandler.put(i * 14 - 1, WINDOW_ROWS - j,
+                        CharSprite.make(VERTICAL, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+            }
+        }
+
+    }
+
+    public static void fixLogHalfBottomCorners(ScreenHandler screenHandler) {
+        int y=3;
+        screenHandler.put(CHARACTER_WINDOW_COLUMNS, 1+y*(CHARACTER_WINDOW_ROWS+1), CharSprite.make(LOWER_RIGHT_CORNER, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+        screenHandler.put(WINDOW_COLUMNS-CHARACTER_WINDOW_COLUMNS-1, 1+y*(CHARACTER_WINDOW_ROWS+1), CharSprite.make(LOWER_LEFT_CORNER, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
+    }
 }
