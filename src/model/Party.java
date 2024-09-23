@@ -35,6 +35,7 @@ import view.*;
 import view.sprites.*;
 import view.subviews.SelectPartyMemberSubView;
 import view.subviews.SubView;
+import view.widget.MiniLog;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -129,7 +130,11 @@ public class Party implements Serializable {
         int count = 0;
         for (GameCharacter gc : partyMembers) {
             Point p = getLocationForPartyMember(count);
-            gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
+            if (drawPartyVertically && count >= 4) {
+                gc.drawAbbreviated(screenHandler, p.x, p.y, partyMemberColors[count]);
+            } else {
+                gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
+            }
             count++;
             if (!gc.isDead() && !bench.contains(gc)) {
                 partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
@@ -142,8 +147,12 @@ public class Party implements Serializable {
     public Point getLocationForPartyMember(int count) {
         int height = 11;
         if (drawPartyVertically) {
-            int x = (count / 2) * (DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS);
-            int y = 2 + (count % 2) * height;
+            if (count < 4) {
+                int y = 2 + count * height;
+                return new Point(0, y);
+            }
+            int x = (count - 4) * 14;
+            int y = 2 + 4 * height;
             return new Point(x, y);
         }
         int x = (count % 2) * (DrawingArea.WINDOW_COLUMNS - BorderFrame.CHARACTER_WINDOW_COLUMNS);
@@ -955,5 +964,9 @@ public class Party implements Serializable {
 
     public void setDrawPartyVertically(boolean onRight) {
         drawPartyVertically = onRight;
+    }
+
+    public boolean isDrawVertically() {
+        return drawPartyVertically;
     }
 }

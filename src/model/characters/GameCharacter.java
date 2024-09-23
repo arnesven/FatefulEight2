@@ -137,17 +137,38 @@ public class GameCharacter extends Combatant {
         String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
         BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), col+18, row+4, MyColors.WHITE);
 
-        String status = this.getStatus();
-        if (status.length() <= 7) {
-            BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
-        } else if (status.length() <= 15) {
-            BorderFrame.drawString(screenHandler, String.format("%s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
-        } else {
-            status = status.substring(0, 3) + "...";
-            BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), col+8, row+5, DEFAULT_TEXT_COLOR);
-        }
+        drawStatus(screenHandler, col+8, row+4);
+
 
         equipment.drawYourself(screenHandler, col, row);
+    }
+
+    private void drawStatus(ScreenHandler screenHandler, int x, int y) {
+        String status = this.getStatus();
+        if (status.length() <= 7) {
+            BorderFrame.drawString(screenHandler, String.format("STATUS %s", this.getStatus()), x, y, DEFAULT_TEXT_COLOR);
+        } else if (status.length() <= 15) {
+            BorderFrame.drawString(screenHandler, String.format("%s", this.getStatus()), x, y, DEFAULT_TEXT_COLOR);
+        } else {
+            status = status.substring(0, 3) + "...";
+            BorderFrame.drawString(screenHandler, String.format("STATUS %s", status), x, y, DEFAULT_TEXT_COLOR);
+        }
+    }
+
+
+    public void drawAbbreviated(ScreenHandler screenHandler, int x, int y, MyColors partyMemberColor) {
+        String nameString = getFirstName() + (getLastName().equals("") ? "" : (" " + getLastName().charAt(0)));
+        BorderFrame.drawString(screenHandler, nameString, x, y, partyMemberColor);
+        HealthBar.drawHealthBar(screenHandler, this, x, y+1);
+        BorderFrame.drawString(screenHandler, String.format("%2d/%2d", this.getHP(), this.getMaxHP()), x+7, y+1,
+                HealthBar.getHealthColor(this.getHP(), this.getMaxHP()));
+        if (party != null && party.getBench().contains(this)) {
+            BorderFrame.drawString(screenHandler, "ABSENT", x+1, y+1, DEFAULT_TEXT_COLOR);
+        }
+        BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), x+8, y+2, getStaminaColor());
+        String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
+        BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), x+5, y+2, MyColors.WHITE);
+        drawStatus(screenHandler, x, y+3);
     }
 
     private MyColors getStaminaColor() {

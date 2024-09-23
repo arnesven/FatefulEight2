@@ -3,6 +3,7 @@ package view.subviews;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import view.DrawingArea;
 import view.sprites.CharacterSelectCursor;
 import view.sprites.Sprite;
 
@@ -13,30 +14,33 @@ public class SelectPartyMemberSubView extends SubView {
 
     private final SubView previous;
     private SteppingMatrix<GameCharacter> matrix;
+    private boolean orientation;
 
     public SelectPartyMemberSubView(Model model, GameCharacter preselected) {
         this.previous = model.getSubView();
-        this.matrix = new SteppingMatrix<>(2, 4);
-        int col = 0;
-        int row = 0;
+        makeMatrix(model, preselected);
+    }
+
+    private void makeMatrix(Model model, GameCharacter preselected) {
+        this.matrix = new SteppingMatrix<>(DrawingArea.WINDOW_COLUMNS, DrawingArea.WINDOW_ROWS);
+        int count = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (model.getParty().getBench().contains(gc)) {
-                col++;
-            } else {
-                matrix.addElement(col++, row, gc);
-            }
-            if (col == matrix.getColumns()) {
-                row++;
-                col = 0;
-            }
+            Point p = model.getParty().getLocationForPartyMember(count++);
+            p.x += 4;
+            p.y -= 1;
+            matrix.addElement(p.x, p.y, gc);
         }
         if (preselected != null) {
             matrix.setSelectedElement(preselected);
         }
+        this.orientation = model.getParty().isDrawVertically();
     }
 
     @Override
     protected void drawArea(Model model) {
+        if (orientation != model.getParty().isDrawVertically()) {
+            makeMatrix(model, model.getParty().getPartyMember(0));
+        }
         previous.drawArea(model);
         drawCursor(model);
     }
@@ -44,11 +48,6 @@ public class SelectPartyMemberSubView extends SubView {
     private void drawCursor(Model model) {
         Point p = new Point(matrix.getSelectedPoint());
         Sprite sp = CharacterSelectCursor.LEFT_ARROW;
-        if (p.x == 1) {
-            sp = CharacterSelectCursor.RIGHT_ARROW;
-        }
-        p.x = p.x*50 + 6;
-        p.y = p.y*11 + 5;
         model.getScreenHandler().register("memberSelectCursor", p, sp, 2);
     }
 

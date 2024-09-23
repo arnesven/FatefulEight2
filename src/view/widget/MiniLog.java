@@ -1,11 +1,9 @@
 package view.widget;
 
 import model.Model;
+import model.characters.GameCharacter;
 import util.Arithmetics;
-import view.BorderFrame;
-import view.DrawingArea;
-import view.LogView;
-import view.MyColors;
+import view.*;
 import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
 
