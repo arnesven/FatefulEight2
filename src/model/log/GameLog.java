@@ -62,11 +62,10 @@ public class GameLog {
                 tempElapsed -= delay;
             }
 
-
         } else if (inputMode != null) {
             if (this.caretBlinkCount % 8 == 0) {
                 if (caret == FILLED_BLOCK) {
-                    caret = ' ';
+                    caret = '{';
                 } else {
                     caret = FILLED_BLOCK;
                 }

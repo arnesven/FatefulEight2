@@ -68,4 +68,10 @@ public class MiniLog {
     public boolean isOnRight() {
         return currentSize == LARGE_RIGHT;
     }
+
+    public void setState(boolean drawVertically) {
+        if (drawVertically) {
+            currentSize = LARGE_RIGHT;
+        }
+    }
 }

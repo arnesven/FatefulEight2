@@ -22,6 +22,7 @@ public class MainGameView extends GameView {
 
     @Override
     public void transitionedTo(Model model) {
+        miniLog.setState(model.getParty().isDrawVertically());
         update(model);
     }
 

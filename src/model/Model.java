@@ -100,6 +100,7 @@ public class Model {
             ex.printStackTrace();
         }
         gameView = new MainGameView();
+        gameView.transitionedTo(this);
         gameStartFileName = null;
         getParty().clearAnimations();
         GameStatistics.setModel(this);
