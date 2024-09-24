@@ -29,6 +29,11 @@ public class KidsWantFireworksEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find kids", "There are some kids who are always begging for magic tricks");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("As you walk down the road a group of little kids suddenly ambush you.");
         CharacterAppearance kid1 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
