@@ -22,7 +22,7 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
         model.getTutorial().sniperShot(model);
         combat.println(performer.getFirstName() + " is zeroing in on a weak spot.");
         performer.doOneAttack(model, combat, target, false, 0, 6,
-                new SniperShotStrikeEffectSprite()); // TODO: Add special animation
+                new SniperShotStrikeEffectSprite());
 
     }
 
