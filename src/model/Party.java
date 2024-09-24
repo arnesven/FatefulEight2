@@ -875,7 +875,11 @@ public class Party implements Serializable {
 
     public DieRollAnimation addDieRollAnimation(GameCharacter character, int unmodifiedRoll) {
         Point position = getLocationForPartyMember(partyMembers.indexOf(character));
-        position.translate(1, 8);
+        if (isDrawVertically() && partyMembers.indexOf(character) > 3) {
+            position.translate(1, 2);
+        } else {
+            position.translate(1, 8);
+        }
         return partyAnimations.addDieRollAnimation(position, unmodifiedRoll);
     }
 

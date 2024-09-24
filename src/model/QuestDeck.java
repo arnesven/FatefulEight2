@@ -40,6 +40,7 @@ public class QuestDeck implements Serializable {
                 new MasqueradeQuest(),
                 new MissingBrotherQuest(),
                 new MurderMysteryQuest(),
+                new OrcishDelightQuest(),
                 new RatProblemQuest(),
                 new SurveillanceQuest(),
                 new SwampOgreQuest(),

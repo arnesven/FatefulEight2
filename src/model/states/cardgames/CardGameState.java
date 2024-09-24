@@ -31,7 +31,7 @@ public class CardGameState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players are playing a game of " + cardGame.getName() + ". ");
+        print("There are " + MyStrings.numberWord(cardGame.getNumberOfNPCs()) + " players playing a game of " + cardGame.getName() + ". ");
         model.getTutorial().obols(model);
         if (notEnoughObols(model)) {
             println("However, you do not have the minimum amount of obols required to play (" + cardGame.getMaximumBet() + ").");

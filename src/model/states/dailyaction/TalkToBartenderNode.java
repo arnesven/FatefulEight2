@@ -185,7 +185,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                 model.getParty().addToGold(6);
                 println("You got 6 gold.");
             } else {
-                println("Despite your best efforts, the ledgers and papers are completely beyond your understand. " +
+                println("Despite your best efforts, the ledgers and papers are completely beyond your understanding. " +
                         "After many hours you are forced to admit that you aren't getting anywhere.");
                 bartenderSay(model,  "That's a shame. Well, at least you tried. Here's something for your troubles.");
                 model.getParty().addToGold(2);
@@ -244,7 +244,7 @@ public class TalkToBartenderNode extends DailyActionNode {
                             "It may not pay much, but at least it will put food on the table.",
                     "Don't get ahead of yourself by hiring on too many hands too quickly. Large parties are much more " +
                             "costly and difficult to maintain than small ones.",
-                    "Always keep a lock pick handy. You know, if you lock yourself out of your house.",
+                    "Always keep a lock pick handy. You know... if you lock yourself out of your house.",
                     "Try to get a good mix of characters in your party. It's important to have the right balance " +
                             "of brawn, brains, stealth and magic."));
             bartenderSay(model,  line);
