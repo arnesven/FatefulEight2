@@ -1,0 +1,147 @@
+package model.states.events;
+
+import model.Model;
+import model.actions.InvisibilityCombatAction;
+import model.characters.GameCharacter;
+import model.classes.Classes;
+import model.classes.Skill;
+import model.combat.Combatant;
+import model.combat.conditions.InvisibilityCondition;
+import model.enemies.TrainingDummyEnemy;
+import model.items.spells.FireworksSpell;
+import model.states.CombatEvent;
+import model.states.DailyEventState;
+import util.MyLists;
+import util.MyPair;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class KidsWantFireworksEvent extends DailyEventState {
+    public KidsWantFireworksEvent(Model model) {
+        super(model);
+    }
+
+    @Override
+    protected void doEvent(Model model) {
+        println("As you walk down the road a group of little kids suddenly ambush you.");
+        showSilhouettePortrait(model, "Kid 1");
+        portraitSay("Hey... you know magic right? Do some magic!");
+        leaderSay("Eh, what?");
+        showSilhouettePortrait(model, "Kid 2");
+        portraitSay("Yeah, show us some magic tricks! Pull a rabbit out of your hat!");
+        showSilhouettePortrait(model, "Kid 3");
+        portraitSay("Turn this stick into a flower!");
+        showSilhouettePortrait(model, "Kid 4");
+        portraitSay("Make my mommy disappear!");
+        showSilhouettePortrait(model, "Kid 1");
+        portraitSay("Do some fireworks!");
+        showSilhouettePortrait(model, "Kid 3");
+        portraitSay("Yeah fireworks!");
+        println("All of the kids are now chanting for fireworks.");
+        leaderSay("Oh come on kids...");
+        List<String> options = new ArrayList<>();
+        options.add("Do cheap trick");
+        SpecialInvisibilityAbility invisibilityAbility = new SpecialInvisibilityAbility();
+        if (MyLists.any(model.getParty().getPartyMembers(), gc -> invisibilityAbility.possessesAbility(model, gc))) {
+            options.add("Go invisible");
+        }
+        if (MyLists.any(model.getParty().getInventory().getSpells(), sp -> sp instanceof FireworksSpell)) {
+            options.add("Do fireworks");
+        }
+        options.add("Drive kids off");
+        int count = multipleOptionArrowMenu(model, 24, 24, options);
+        if (options.get(count).contains("fireworks")) {
+            GameCharacter caster = model.getParty().getPartyMember(0);
+            if (model.getParty().size() > 1) {
+                print("Who should cast the fireworks spell? ");
+                caster = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            }
+            boolean success = new FireworksSpell().castYourself(model, this, caster);
+            if (success) {
+                showSilhouettePortrait(model, "Kid 1");
+                portraitSay("Awesome! Fireworks!");
+                showSilhouettePortrait(model, "Kid 2");
+                portraitSay("That was the coolest thing ever!");
+                rewardByParent(model, 20);
+            } else {
+                portraitSay("Lame!");
+                println("The kids stick their tongues out at you, then run away.");
+            }
+        } else if (options.get(count).contains("invisible")) {
+            GameCharacter caster = model.getParty().getPartyMember(0);
+            if (model.getParty().size() > 1) {
+                print("Who should cast the invisibility? ");
+                caster = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            }
+            invisibilityAbility.castYourself(model,
+                    new CombatEvent(model, List.of(new TrainingDummyEnemy('A'))), caster, caster);
+            if (caster.hasCondition(InvisibilityCondition.class)) {
+                println("The kids are visibly stunned by the disappearance of " + caster.getFirstName() + ".");
+                showSilhouettePortrait(model, "Kid 1");
+                portraitSay("Whoa! Where did " + heOrShe(caster.getGender()) + " go?");
+                println("After a little while, " + caster.getFirstName() + " becomes visible again, right behind the kids.");
+                caster.removeCondition(InvisibilityCondition.class);
+                partyMemberSay(caster, "Booo!");
+                showSilhouettePortrait(model, "Kid 4");
+                portraitSay("Eeeeh!");
+                println("The kids shout with glee and jump around " + caster.getFirstName() + ".");
+                rewardByParent(model, 15);
+            } else {
+                portraitSay("Lame!");
+                println("The kids stick their tongues out at you, then run away.");
+            }
+        } else if (options.get(count).contains("cheap trick")) {
+            leaderSay("Okay kids, check this out...");
+            MyPair<Boolean, GameCharacter> result = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.MagicAny, 6);
+            if (result.first) {
+                println(result.second.getFirstName() + " make some sparks glitter in the air. " +
+                        "They crackle faintly, then disappear with little pops.");
+                println("The kids seem more curious than impressed.");
+                showSilhouettePortrait(model, "Kid 1");
+                portraitSay("Do more do more!");
+                leaderSay("I think that's enough for now. We got places to be you know.");
+                portraitSay("Awww... okay...");
+                leaderSay("Bye kids.");
+                println("Each party member gains 5 experience points.");
+                MyLists.forEach(model.getParty().getPartyMembers(), gc -> model.getParty().giveXP(model, gc, 5));
+            } else {
+                println(result.second.getFirstName() + " waves " + hisOrHer(result.second.getGender()) + " hands in the air " +
+                        "but nothing happens.");
+                showSilhouettePortrait(model, "Kid 1");
+                portraitSay("What's that supposed to be?");
+                showSilhouettePortrait(model, "Kid 2");
+                portraitSay("Lame!");
+                println("The kids stick their tongues out at you, then run away.");
+            }
+        } else {
+            leaderSay("Beat it kids! We don't have time to waste on you urchins.");
+            showSilhouettePortrait(model, "Kid 2");
+            portraitSay("Awww... no fun. Bluuh!");
+            println("The kids stick their tongues out at you, then run away.");
+        }
+    }
+
+    private void rewardByParent(Model model, int gold) {
+        leaderSay("Hehe... Okay kids, we've had some fun, but we'd better be on our way now.");
+        portraitSay("Okay. Come back again sometime!");
+        model.getLog().waitForAnimationToFinish();
+        removePortraitSubView(model);
+        println("You leave the elated group of kids and continue down the road. After just a few yards a man stops you.");
+        showRandomPortrait(model, Classes.None, "Parent");
+        portraitSay("Hey there. Saw what you did for the kids. They don't get a show like that very often. Most people " +
+                "just ignore them or yell at them to go away.");
+        leaderSay("It's rough being a kid...");
+        portraitSay("Yeah... why don't you take this. It's not much, but you've earned it.");
+        println("The man hands you a small bag of coins.");
+        println("The party receives " + gold + " gold.");
+        model.getParty().addToGold(gold);
+        leaderSay("Thanks.");
+    }
+
+    private static class SpecialInvisibilityAbility extends InvisibilityCombatAction {
+        public void castYourself(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+            doAction(model, combat, performer, target);
+        }
+    }
+}
