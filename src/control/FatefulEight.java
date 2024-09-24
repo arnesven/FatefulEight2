@@ -18,7 +18,7 @@ public class FatefulEight extends JFrame {
 
     public static final boolean TEST_MODE = false;
     private static final int TIMER_DELAY_MS = 20;
-    public static String version = "1.424";
+    public static String version = "1.43";
     private static boolean debug = false;
     private final DrawingArea drawingArea;
     public static boolean inFullScreenMode = false;
@@ -47,7 +47,6 @@ public class FatefulEight extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 if (model.gameExited()) {
                     timer.stop();
-                    //FatefulEight.this.dispose();
                     return;
                 }
                 checkKeyboardInput(model);
