@@ -108,6 +108,10 @@ public class TradeWithBartenderState extends ShopState {
     }
 
     private void internalBuyObols(Model model, int amount) {
+        if (amount > model.getParty().getGold()) {
+            println("You cannot afford to buy " + amount*10 + " obols.");
+            return;
+        }
         model.getParty().addToGold(-amount);
         model.getParty().addToObols(amount * 10);
         print("You bought " + amount*10 + " obols.");
