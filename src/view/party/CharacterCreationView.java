@@ -8,7 +8,6 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.weapons.Weapon;
-import model.races.OrcAppearance;
 import model.races.Race;
 import util.Arithmetics;
 import util.MyPair;

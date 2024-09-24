@@ -1,5 +1,6 @@
 package model.combat.conditions;
 
+import model.classes.Skill;
 import view.GameView;
 import view.help.HelpDialog;
 import view.help.SubChapterHelpDialog;
@@ -16,5 +17,13 @@ public class ShadowWalkAbility extends VampireAbility {
     @Override
     public HelpDialog makeHelpChapter(GameView view) {
         return new SubChapterHelpDialog(view, NAME, NAME + " is a vampire ability which " + DESCRIPTION.toLowerCase());
+    }
+
+    @Override
+    public int getBonusForSkill(Skill skill) {
+        if (skill == Skill.Sneak) {
+            return BONUS;
+        }
+        return super.getBonusForSkill(skill);
     }
 }
