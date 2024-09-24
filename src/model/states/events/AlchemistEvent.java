@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.Item;
@@ -10,6 +11,7 @@ import model.races.Race;
 import model.states.DailyEventState;
 import model.states.ShopState;
 import util.MyPair;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,8 @@ public class AlchemistEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.ALCHEMIST, Race.HALF_ORC, "Durok");
+        AdvancedAppearance durok = PortraitSubView.makeRandomPortrait(Classes.ALCHEMIST, Race.HALF_ORC, false);
+        showExplicitPortrait(model, durok, "Durok");
         println("As you walk down the street, you see a busy half-orc carrying boxes into a little shop. You casually " +
                 "approach the half-orc. The facade of the shop looks brand new. 'Alchemy by Durok' is painted on the window.");
         leaderSay("Opening up a new shop?");
