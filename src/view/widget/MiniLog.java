@@ -30,12 +30,12 @@ public class MiniLog {
                     getYStart(), DrawingArea.WINDOW_ROWS);
             model.getScreenHandler().fillSpace(getColOffset(), DrawingArea.WINDOW_COLUMNS,
                     getYStart(), DrawingArea.WINDOW_ROWS, FILLED_BLACK);
-            model.getScreenHandler().clearForeground(getColOffset()+1, DrawingArea.WINDOW_COLUMNS,
-                    getYStart(), DrawingArea.WINDOW_ROWS);
             if (currentSize == LARGE_RIGHT) {
                 LogView.drawLogHalf(model, getTotalRows(), getYStart(), getColOffset(), 0);
                 BorderFrame.fixLogRightCorners(model.getScreenHandler());
             } else {
+                model.getScreenHandler().clearForeground(getColOffset()+1, DrawingArea.WINDOW_COLUMNS,
+                        getYStart(), DrawingArea.WINDOW_ROWS);
                 LogView.drawLog(model, getTotalRows(), getYStart(), 0);
                 if (currentSize == LARGE_BOTTOM) {
                     BorderFrame.fixLogHalfBottomCorners(model.getScreenHandler());

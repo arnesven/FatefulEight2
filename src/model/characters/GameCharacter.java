@@ -135,7 +135,7 @@ public class GameCharacter extends Combatant {
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), col+18, row+3, getStaminaColor());
         BorderFrame.drawString(screenHandler, String.format("SPEED %2d", this.getSpeed()), col+8, row+4, DEFAULT_TEXT_COLOR);
 
-        drawStatus(screenHandler, col+8, row+4);
+        drawStatus(screenHandler, col+8, row+5);
         String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});
         BorderFrame.drawString(screenHandler, String.format("%s", isLeader() ? leaderIcon : ""), col+18, row+4, MyColors.WHITE);
 
