@@ -126,7 +126,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
 
     private void attemptPickPocket(String victim, GameCharacter victimChar, int stealMoney,
                                    List<Enemy> companions, ProvokedStrategy strat) {
-        print("Who should attempt to pick-pocket the " + victim + "?"); // TODO: Add tutorial about this
+        print("Who should attempt to pick-pocket the " + victim + "?");
         getModel().getTutorial().pickPocketing(getModel());
         GameCharacter thief = getModel().getParty().partyMemberInput(getModel(),
                 this, getModel().getParty().getPartyMember(0));
