@@ -43,7 +43,7 @@ import java.util.*;
 import java.util.List;
 
 public class Party implements Serializable {
-    private static MyColors[] partyMemberColors = new MyColors[]{
+    private static final MyColors[] partyMemberColors = new MyColors[]{
                 MyColors.LIGHT_BLUE, MyColors.GREEN, MyColors.LIGHT_RED,
                 MyColors.LIGHT_YELLOW, MyColors.PURPLE, MyColors.PEACH,
                 MyColors.RED, MyColors.CYAN};
@@ -65,15 +65,15 @@ public class Party implements Serializable {
     private int lastSuccessfulRecruitDay = -500;
     private final Set<String> specialCharactersRecruited = new HashSet<>();
     private Loan currentLoan = null;
-    private HorseHandler horseHandler = new HorseHandler();
+    private final HorseHandler horseHandler = new HorseHandler();
     private DogHorse dog = null;
     private List<GameCharacter> recruitmentPersistence = null;
     private boolean seminarHeld = false;
     private int notoriety = 0;
     private int carryingCapInKilos = 0;
-    private static Map<GameCharacter, TamedDragonCharacter> tamedDragons = new HashMap<>();
-    private TravellerCollection travellers = new TravellerCollection();
-    private List<DestinationTask> destinationTasks = new ArrayList<>();
+    private static final Map<GameCharacter, TamedDragonCharacter> tamedDragons = new HashMap<>();
+    private final TravellerCollection travellers = new TravellerCollection();
+    private final List<DestinationTask> destinationTasks = new ArrayList<>();
     private int guide = 0;
     private Headquarters headquarters = null;
     private boolean drawPartyVertically = false;
