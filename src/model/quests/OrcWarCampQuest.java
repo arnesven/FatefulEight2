@@ -13,6 +13,7 @@ import model.quests.scenes.CollectiveSkillCheckSubScene;
 import model.quests.scenes.CombatSubScene;
 import model.races.Race;
 import model.states.QuestState;
+import model.states.events.OrcsEvent;
 import sound.BackgroundMusic;
 import view.MyColors;
 import view.sprites.PalisadeSprite;
@@ -220,6 +221,13 @@ public class OrcWarCampQuest extends MainQuest {
             if (fail) {
                 state.println("The party walks up to the front gate. The guards are about to let you in, when one of them starts shouting and points to " + failer.getName() + ".");
                 state.leaderSay("Uh-oh...");
+                if (OrcsEvent.getAttitude(model) > 0) {
+                    state.println("Curiously, instead of rushing you with your weapons, you are approached by a large orc and his entourage.");
+                    if (new OrcsEvent(model).interactWithOrcs(model)) {
+                        return getSuccessEdge();
+                    }
+                    return getFailEdge();
+                }
                 state.println("Before you know it, lots of orcs have rushed out of their tents and come at you with their weapons drawn.");
                 return getFailEdge();
             }
@@ -283,6 +291,7 @@ public class OrcWarCampQuest extends MainQuest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
+            OrcsEvent.decreaseAttitude(model);
             combatTheme = new PalisadeCombatTheme(true);
             return super.run(model, state);
         }

@@ -6,12 +6,11 @@ import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.Enemy;
 import model.enemies.OrcBaker;
-import model.enemies.OrcWarrior;
 import model.quests.scenes.*;
 import model.races.OrcAppearance;
-import model.races.Race;
 import model.states.DailyEventState;
 import model.states.QuestState;
+import model.states.events.OrcsEvent;
 import sound.BackgroundMusic;
 import view.BorderFrame;
 import view.MyColors;
@@ -243,6 +242,7 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
                         "as many lemon bars as you want on your way out.");
                 leaderSay("Thanks!");
                 println("You stuff your bags with lemon bars. The party receives 25 rations.");
+                OrcsEvent.increaseAttitude(model);
                 model.getParty().addToFood(25);
             }
         }

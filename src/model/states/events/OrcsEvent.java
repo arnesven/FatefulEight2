@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrcsEvent extends DailyEventState {
+    private static final String ATTITUDE_KEY = "ORCS_ATTITUDE";
+
     public OrcsEvent(Model model) {
         super(model);
     }
@@ -38,22 +40,71 @@ public class OrcsEvent extends DailyEventState {
                 noOfHalfOrcs++;
             }
         }
-        if (noOfHalfOrcs > 0) {
+        if (noOfHalfOrcs > 0 || getAttitude(model) >= 0) {
             if (noOfHalfOrcs == model.getParty().size()) {
                 print("The orcs seem to ignore you. Do you wish to attack them? (Y/N) ");
-                return !yesNoInput();
+                if (yesNoInput()) {
+                    println("You attack the orcs!");
+                    decreaseAttitude(model);
+                    return false;
+                }
+                return true;
             }
+            int attitude = getAttitude(model);
             println("The orcs seem aggressive but can perhaps be persuaded to not attack you.");
-            boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 11 - noOfHalfOrcs);
+            boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 11 - noOfHalfOrcs - attitude);
             if (result) {
                 print("The orcs have calmed down. Do you wish to attack them? (Y/N) ");
-                return !yesNoInput();
+                if (yesNoInput()) {
+                    println("You attack the orcs!");
+                    decreaseAttitude(model);
+                    return false;
+                }
             }
         }
-
+        decreaseAttitude(model);
         println("The orcs attack you!");
         return false;
     }
 
+    public static String getOrcsFactionString(Model model) {
+        if (!model.getSettings().getMiscCounters().containsKey(ATTITUDE_KEY)) {
+            return "";
+        }
+        int attitude = model.getSettings().getMiscCounters().get(ATTITUDE_KEY);
+        if (attitude < -10) {
+            return "Sworn enemy";
+        }
+        if (attitude < -5) {
+            return "Enemy";
+        }
+        if (attitude < 0) {
+            return "Unliked";
+        }
+        if (attitude == 0) {
+            return "Neutral";
+        }
+        if (attitude > 5) {
+            return "Good Friend";
+        }
+        return "Friend";
+    }
+
+    public static int getAttitude(Model model) {
+        int attitude = 0;
+        if (model.getSettings().getMiscCounters().containsKey(ATTITUDE_KEY)) {
+            attitude = model.getSettings().getMiscCounters().get(ATTITUDE_KEY);
+        }
+        return attitude;
+    }
+
+    public static void decreaseAttitude(Model model) {
+        model.getSettings().getMiscCounters().put(ATTITUDE_KEY, getAttitude(model) - 1);
+    }
+
+
+    public static void increaseAttitude(Model model) {
+        model.getSettings().getMiscCounters().put(ATTITUDE_KEY, getAttitude(model) + 1);
+    }
 
 }

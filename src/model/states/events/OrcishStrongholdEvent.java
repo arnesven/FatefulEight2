@@ -38,9 +38,6 @@ public class OrcishStrongholdEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        tradeWithOrcs(model); // TODO: remove
-
-
         model.getParty().randomPartyMemberSay(model, List.of("Hold up a minute. That's some kind of fort or something up there."));
         model.getParty().randomPartyMemberSay(model, List.of("An orcish stronghold... Could be dangerous."));
         print("Investigate the orcish stronghold? (Y/N) ");
@@ -74,6 +71,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
     }
 
     private void tradeWithOrcs(Model model) {
+        OrcsEvent.increaseAttitude(model);
         CharacterAppearance orcAppearance = new OrcAppearance();
         showExplicitPortrait(model, orcAppearance, "Orc Chieftain");
         model.getParty().partyMemberSay(model, model.getParty().getLeader(), "Which one of you do you call your leader?");

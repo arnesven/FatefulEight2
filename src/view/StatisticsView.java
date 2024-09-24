@@ -8,6 +8,7 @@ import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
+import model.states.events.OrcsEvent;
 import util.MyPair;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -53,6 +54,10 @@ public class StatisticsView extends SelectableListMenu {
         }
         if (LeagueOfMagesEvent.isMember(model)) {
             result.add(new MyPair<>("League of Mages", "Member"));
+        }
+        String orcsFaction = OrcsEvent.getOrcsFactionString(model);
+        if (!orcsFaction.equals("")) {
+            result.add(new MyPair<>("Orcish Tribes", orcsFaction));
         }
         return result;
     }
