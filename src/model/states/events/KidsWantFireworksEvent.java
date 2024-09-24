@@ -3,16 +3,22 @@ package model.states.events;
 import model.Model;
 import model.actions.InvisibilityCombatAction;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.ChildAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.InvisibilityCondition;
 import model.enemies.TrainingDummyEnemy;
 import model.items.spells.FireworksSpell;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyPair;
+import util.MyRandom;
+import view.MyColors;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +31,22 @@ public class KidsWantFireworksEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("As you walk down the road a group of little kids suddenly ambush you.");
-        showSilhouettePortrait(model, "Kid 1");
+        CharacterAppearance kid1 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        showExplicitPortrait(model, kid1, "Kid 1");
         portraitSay("Hey... you know magic right? Do some magic!");
         leaderSay("Eh, what?");
-        showSilhouettePortrait(model, "Kid 2");
+        CharacterAppearance kid2 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        showExplicitPortrait(model, kid2, "Kid 2");
         portraitSay("Yeah, show us some magic tricks! Pull a rabbit out of your hat!");
-        showSilhouettePortrait(model, "Kid 3");
+        CharacterAppearance kid3 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        showExplicitPortrait(model, kid3, "Kid 3");
         portraitSay("Turn this stick into a flower!");
-        showSilhouettePortrait(model, "Kid 4");
+        CharacterAppearance kid4 = PortraitSubView.makeChildAppearance(Race.randomRace(), MyRandom.flipCoin());
+        showExplicitPortrait(model, kid4,"Kid 4");
         portraitSay("Make my mommy disappear!");
-        showSilhouettePortrait(model, "Kid 1");
+        showExplicitPortrait(model, kid1, "Kid 1");
         portraitSay("Do some fireworks!");
-        showSilhouettePortrait(model, "Kid 3");
+        showExplicitPortrait(model, kid3, "Kid 3");
         portraitSay("Yeah fireworks!");
         println("All of the kids are now chanting for fireworks.");
         leaderSay("Oh come on kids...");
@@ -59,9 +69,9 @@ public class KidsWantFireworksEvent extends DailyEventState {
             }
             boolean success = new FireworksSpell().castYourself(model, this, caster);
             if (success) {
-                showSilhouettePortrait(model, "Kid 1");
+                showExplicitPortrait(model, kid1, "Kid 1");
                 portraitSay("Awesome! Fireworks!");
-                showSilhouettePortrait(model, "Kid 2");
+                showExplicitPortrait(model, kid2, "Kid 2");
                 portraitSay("That was the coolest thing ever!");
                 rewardByParent(model, 20);
             } else {
@@ -78,12 +88,12 @@ public class KidsWantFireworksEvent extends DailyEventState {
                     new CombatEvent(model, List.of(new TrainingDummyEnemy('A'))), caster, caster);
             if (caster.hasCondition(InvisibilityCondition.class)) {
                 println("The kids are visibly stunned by the disappearance of " + caster.getFirstName() + ".");
-                showSilhouettePortrait(model, "Kid 1");
+                showExplicitPortrait(model, kid1, "Kid 1");
                 portraitSay("Whoa! Where did " + heOrShe(caster.getGender()) + " go?");
                 println("After a little while, " + caster.getFirstName() + " becomes visible again, right behind the kids.");
                 caster.removeCondition(InvisibilityCondition.class);
                 partyMemberSay(caster, "Booo!");
-                showSilhouettePortrait(model, "Kid 4");
+                showExplicitPortrait(model, kid4, "Kid 4");
                 portraitSay("Eeeeh!");
                 println("The kids shout with glee and jump around " + caster.getFirstName() + ".");
                 rewardByParent(model, 15);
@@ -98,7 +108,7 @@ public class KidsWantFireworksEvent extends DailyEventState {
                 println(result.second.getFirstName() + " make some sparks glitter in the air. " +
                         "They crackle faintly, then disappear with little pops.");
                 println("The kids seem more curious than impressed.");
-                showSilhouettePortrait(model, "Kid 1");
+                showExplicitPortrait(model, kid1, "Kid 1");
                 portraitSay("Do more do more!");
                 leaderSay("I think that's enough for now. We got places to be you know.");
                 portraitSay("Awww... okay...");
@@ -108,15 +118,15 @@ public class KidsWantFireworksEvent extends DailyEventState {
             } else {
                 println(result.second.getFirstName() + " waves " + hisOrHer(result.second.getGender()) + " hands in the air " +
                         "but nothing happens.");
-                showSilhouettePortrait(model, "Kid 1");
+                showExplicitPortrait(model, kid1, "Kid 1");
                 portraitSay("What's that supposed to be?");
-                showSilhouettePortrait(model, "Kid 2");
+                showExplicitPortrait(model, kid2, "Kid 2");
                 portraitSay("Lame!");
                 println("The kids stick their tongues out at you, then run away.");
             }
         } else {
             leaderSay("Beat it kids! We don't have time to waste on you urchins.");
-            showSilhouettePortrait(model, "Kid 2");
+            showExplicitPortrait(model, kid2, "Kid 2");
             portraitSay("Awww... no fun. Bluuh!");
             println("The kids stick their tongues out at you, then run away.");
         }

@@ -3,12 +3,15 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
 import model.items.Item;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
 import view.GameView;
+import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,8 @@ public class DollyEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         boolean childGender = MyRandom.randInt(2) == 0;
-        showSilhouettePortrait(model, "Crying Child");
+        CharacterAppearance kid = PortraitSubView.makeChildAppearance(Race.randomRace(), childGender);
+        showExplicitPortrait(model, kid, "Crying Child");
         println("You spend some time in a park and cannot help but overhearing a mother trying to console her child. " +
                 "The child seems to be in some kind of distress. Apparently " + heOrShe(childGender) +
                 " has lost " + hisOrHer(childGender) + " dolly.");

@@ -4,6 +4,7 @@ import model.Model;
 import model.PartyAnimations;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.races.Race;
 import model.states.GameState;
 import util.MyPair;
@@ -115,6 +116,12 @@ public class PortraitSubView extends SubView {
 
     public static boolean isBeardyMouth(int mouthIndex) {
         return mouthIndex == 4 || mouthIndex == 5 || mouthIndex >= 12;
+    }
+
+    public static CharacterAppearance makeChildAppearance(Race race, boolean gender) {
+        ChildAppearance app = new ChildAppearance(race, gender, HairStyle.randomHairColor());
+        app.setClass(Classes.None);
+        return app;
     }
 
     @Override
