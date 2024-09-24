@@ -131,6 +131,11 @@ public class PartThreeStoryPart extends StoryPart {
         }
 
         @Override
+        public int getWidth() {
+            return 2;
+        }
+
+        @Override
         public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
             return new VisitLibraryEvent(model, model.getWorld().getCastleByName(castleName));
         }

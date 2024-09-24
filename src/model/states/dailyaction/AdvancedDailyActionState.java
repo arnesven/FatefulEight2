@@ -46,7 +46,7 @@ public abstract class AdvancedDailyActionState extends GameState {
         if (!matrix.isFull()) {
             Random random = new Random(seed);
             for (int i = 0; i < 1000; i++) {
-                int col = random.nextInt(matrix.getColumns());
+                int col = random.nextInt(matrix.getColumns()-(node.getWidth()-1));
                 int row = random.nextInt(matrix.getRows());
                 if (matrix.getElementAt(col, row) == null) {
                     matrix.addElement(col, row, node);

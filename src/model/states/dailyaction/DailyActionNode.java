@@ -50,4 +50,8 @@ public abstract class DailyActionNode implements Serializable {
     public boolean returnNextState() {
         return false;
     }
+
+    public int getWidth() {
+        return 1;
+    }
 }
