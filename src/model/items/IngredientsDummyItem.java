@@ -3,11 +3,12 @@ package model.items;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+import view.sprites.TwoHandedItemSprite;
 
 public class IngredientsDummyItem extends InventoryDummyItem {
 
-    private static final Sprite SPRITE = new ItemSprite(14, 7, MyColors.WHITE,
-            MyColors.LIGHT_GREEN, MyColors.CYAN);
+    public static final Sprite SPRITE = new ItemSprite(12, 12,
+            MyColors.GREEN, MyColors.RED, MyColors.BLUE);
     private final int amount;
 
     public IngredientsDummyItem(int ingredients) {

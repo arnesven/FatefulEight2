@@ -166,7 +166,7 @@ public class ShopState extends GameState {
         if (cost > model.getParty().getGold()) {
             println("You cannot afford that.");
         } else {
-            if (it instanceof InventoryDummyItem) {
+            if (it instanceof InventoryDummyItem && ((InventoryDummyItem) it).keepInStock()) {
                 model.getParty().getInventory().addItem(it.copy());
             } else {
                 buyItems.remove(it);
@@ -323,6 +323,12 @@ public class ShopState extends GameState {
             shopInventory.addAll(model.getItemDeck().draw(1, Prevalence.veryRare, 0.0));
         }
         Collections.sort(shopInventory);
+        int dieRoll = MyRandom.rollD6();
+        if (dieRoll == 5) {
+            shopInventory.add(new MaterialsForSaleItem(MyRandom.randInt(1, 10)));
+        } else if (dieRoll == 6) {
+            shopInventory.add(new IngredientsForSale(MyRandom.randInt(1, 10)));
+        }
         return shopInventory;
     }
 

@@ -19,4 +19,8 @@ public abstract class InventoryDummyItem extends Item {
     public boolean isSellable() {
         return false;
     }
+
+    public boolean keepInStock() {
+        return true;
+    }
 }
