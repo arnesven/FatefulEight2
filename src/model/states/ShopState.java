@@ -119,7 +119,7 @@ public class ShopState extends GameState {
             }
             buySellActions.add("Back");
 
-            int xPos = matrixToUse.getSelectedPoint().x*4 + SubView.X_OFFSET;
+            int xPos = Math.min(matrixToUse.getColumns()-2, matrixToUse.getSelectedPoint().x)*4 + SubView.X_OFFSET;
             int yPos = matrixToUse.getSelectedPoint().y*4 + 10;
             final char[] selectedAction = new char[]{'x'};
             model.setSubView(new ArrowMenuSubView(model.getSubView(), buySellActions, xPos, yPos, ArrowMenuSubView.NORTH_WEST) {
