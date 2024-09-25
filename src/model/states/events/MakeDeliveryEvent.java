@@ -52,7 +52,6 @@ public class MakeDeliveryEvent extends GeneralInteractionEvent {
         portraitSay("Oh, yes, I've been expecting this! Thank you.");
         portraitSay("Let me find my purse so I can pay you.");
         deliverTask.receivePayment(model);
-        JournalEntry.printJournalUpdateMessage(model);
         return true;
     }
 

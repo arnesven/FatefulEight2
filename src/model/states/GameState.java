@@ -307,16 +307,18 @@ public abstract class GameState implements GameStateConstants {
     }
 
     public static boolean partyIsCreepy(Model model) {
-        if (model.getParty().getNotoriety() >= 100) {
-            return true;
-        }
+        int creepyness = model.getParty().getNotoriety();
         if (model.getParty().getLeader().hasCondition(VampirismCondition.class)) {
             VampirismCondition cond = (VampirismCondition) model.getParty().getLeader().getCondition(VampirismCondition.class);
             if (cond.getStage() > 0) {
-                return true;
+                creepyness += cond.getStage() * 100;
             }
         }
-        return false;
+        creepyness += MyLists.intAccumulate(model.getParty().getPartyMembers(),
+                gc -> gc.hasCondition(VampirismCondition.class)
+                        ? 20 * ((VampirismCondition)gc.getCondition(VampirismCondition.class)).getStage()
+                        : 0);
+        return creepyness >= 100;
     }
 
     public <E> void waitUntil(E arg, Predicate<E> test) {

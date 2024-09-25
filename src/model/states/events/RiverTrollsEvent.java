@@ -26,7 +26,7 @@ public class RiverTrollsEvent extends RiverEvent {
 
     @Override
     public boolean eventPreventsCrossing(Model model) {
-        return gotToCross;
+        return !gotToCross;
     }
 
     @Override
@@ -78,7 +78,6 @@ public class RiverTrollsEvent extends RiverEvent {
                 printQuote("Troll", "GOOD FISH. NOW GO!");
                 leaderSay("We're as good as gone.");
                 println("The trolls let you pass them and you wade over to the other side of the river.");
-                gotToCross = true;
             }
         } else {
             println("You rush up to the trolls with your weapons drawn. You've caught them off guard, " +
