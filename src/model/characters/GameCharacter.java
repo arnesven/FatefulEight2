@@ -162,7 +162,7 @@ public class GameCharacter extends Combatant {
         BorderFrame.drawString(screenHandler, String.format("%2d/%2d", this.getHP(), this.getMaxHP()), x+7, y+1,
                 HealthBar.getHealthColor(this.getHP(), this.getMaxHP()));
         if (party != null && party.getBench().contains(this)) {
-            BorderFrame.drawString(screenHandler, "ABSENT", x+1, y+1, DEFAULT_TEXT_COLOR);
+            BorderFrame.drawString(screenHandler, "ABSENT", x+1, y+2, DEFAULT_TEXT_COLOR);
         }
         BorderFrame.drawString(screenHandler, String.format("%1d SP", this.getSP()), x+8, y+2, getStaminaColor());
         String leaderIcon = new String(new char[]{0xC3, 0xC4, 0xC5, 0xC6});

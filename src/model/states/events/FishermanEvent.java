@@ -3,11 +3,14 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
+import model.items.special.GoodFishingPole;
 import model.items.weapons.FishingPole;
 
 import java.util.ArrayList;
 
 public class FishermanEvent extends RiverEvent {
+    private static final int COST = 15;
+
     public FishermanEvent(Model model) {
         super(model, false);
     }
@@ -27,17 +30,19 @@ public class FishermanEvent extends RiverEvent {
                 "OH, SORRY, WE DIDN'T REALIZE YOU WERE FISHING!");
         portraitSay("Oh well... I wasn't having much fishing luck anyway. " +
                 "Guess I'm going home empty-handed again. Or... you wouldn't be interested in purchasing this " +
-                "fine fishing pole? I'll let you have it for 15 gold!");
+                "fine fishing pole? I'll let you have it for " + COST + " gold!");
         randomSayIfPersonality(PersonalityTrait.critical, new ArrayList<>(),
                 "Oh come on, we're not that gullible.");
-        print("Buy the fishing pole? (Y/N) ");
-        if (yesNoInput()) {
+        if (model.getParty().getGold() >= COST) {
+            print("Buy the fishing pole? (Y/N) ");
+        }
+        if (model.getParty().getGold() >= COST && yesNoInput()) {
             leaderSay("Fine, we'll take it.");
             portraitSay("Excellent. Here you go.");
-            println("You lost 15 gold");
-            model.getParty().addToGold(-15);
+            println("You lost " + COST + " gold");
+            model.getParty().addToGold(-COST);
             println("You got a fishing pole.");
-            model.getParty().getInventory().add(new FishingPole());
+            model.getParty().getInventory().add(new GoodFishingPole());
             leaderSay("We'll be going now.");
             portraitSay("Good-bye!");
         } else {

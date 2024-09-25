@@ -138,7 +138,7 @@ public class CheckForVampireEvent extends DailyEventState {
     private void persuadeSuccess(Model model, GameCharacter vampire, GameCharacter other) {
         partyMemberSay(other, "Yeah, I guess I'm being silly. I just thought your teeth had " +
                 "gotten a little pointier or something. Sorry for cornering you like that.");
-        partyMemberSay(vampire, "It's okay " + other.getFirstName() + ", I didn't take any offense " +
+        partyMemberSay(vampire, "It's okay " + other.getFirstName() + ", I didn't take any offense. " +
                 "Who wouldn't want to be a vampire. They're really cool right?.");
         partyMemberSay(other, "If by 'cool' you mean super scary, gross and an abomination which " +
                 "must be rooted out at all costs, then yes.");
