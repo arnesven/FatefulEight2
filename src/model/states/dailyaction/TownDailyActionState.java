@@ -15,7 +15,6 @@ import java.awt.Point;
 
 public class TownDailyActionState extends AdvancedDailyActionState {
 
-    private final boolean isCoastal;
     private final UrbanLocation urbanLocation;
 
     public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation,
@@ -42,8 +41,13 @@ public class TownDailyActionState extends AdvancedDailyActionState {
                 addNode(1, 0, new GoTheDocksNode(model));
                 addNode(4, 0, new CharterBoatAtDocks(model));
             } else {
-                addNode(2, 0, new GoTheDocksNode(model));
+                addNode(TOWN_MATRIX_COLUMNS-1, 0, new GoTheDocksNode(model));
             }
+            if (urbanLocation.bothBoatAndCarriage()) {
+                addNode(TOWN_MATRIX_COLUMNS-2, 5, new GoToCarriageNode(model));
+            }
+        } else {
+            addNode(4, 0, new GoToCarriageNode(model));
         }
         for (GeneralShopNode shop : urbanLocation.getShops(model)) {
             addNode(shop.getColumn(), shop.getRow(), shop);
@@ -52,7 +56,6 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         if (careerOfficePosition != null) {
             addNode(careerOfficePosition.x, careerOfficePosition.y, new CareerOfficeNode());
         }
-        this.isCoastal = isCoastal;
         model.getMainStory().handleTownSetup(this);
     }
 

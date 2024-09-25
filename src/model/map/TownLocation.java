@@ -210,4 +210,9 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     public Headquarters getRealEstate() {
         return headquarters;
     }
+
+    @Override
+    public boolean bothBoatAndCarriage() {
+        return false;
+    }
 }

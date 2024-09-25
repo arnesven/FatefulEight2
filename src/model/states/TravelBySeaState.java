@@ -125,9 +125,9 @@ public class TravelBySeaState extends GameState {
         TownLocation noShip = null;
 
         // OBS: If you update these tables, don't forget to update the corresponding BookItem.
-        SeaTravelTable table = null;
+        TravelTable table = null;
         if (currentLocation == durham) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip,    0, noShip,    0,
                     cape,      2,
                     cape,      1,
@@ -138,7 +138,7 @@ public class TravelBySeaState extends GameState {
                     ebonshire, 1,
                     lower,     2);
         } else if (currentLocation == cape) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip, 0,
                     durham, 4,
                     durham, 3,
@@ -150,13 +150,13 @@ public class TravelBySeaState extends GameState {
                     ebonshire, 2,
                     roukon, 2);
         } else if (currentLocation == roukon) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip, 0, noShip, 0, noShip, 0, noShip, 0,
                     ebonshire, 2, ebonshire, 1,
                     lower, 2, lower, 1,
                     durham, 3, cape, 3);
         } else if (currentLocation == ebonshire) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     ackerville, 3,
                     sutton, 2,
                     roukon, 2,
@@ -168,21 +168,21 @@ public class TravelBySeaState extends GameState {
                     durham, 3,
                     durham, 2);
         } else if (currentLocation == sutton) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip, 0, noShip, 0, noShip, 0, noShip, 0, noShip, 0,
                     ebonshire, 2, ebonshire, 1,
                     ackerville, 2, ackerville, 1,
                     lower, 3
             );
         } else if (currentLocation == ackerville) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip, 0, noShip, 0, noShip, 0, noShip, 0, noShip, 0, noShip, 0,
                     sutton, 2, sutton, 1,
                     ebonshire, 3,
                     ebonshire, 2
             );
         } else if (currentLocation == lower) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip, 0,
                     durham, 3,
                     cape, 2,
@@ -195,7 +195,7 @@ public class TravelBySeaState extends GameState {
                     sutton, 3
             );
         } else if (currentLocation == upper) {
-            table = new SeaTravelTable(
+            table = new TravelTable(
                     noShip, 0, noShip, 0, noShip, 0, noShip, 0, noShip, 0, noShip, 0,
                     lower, 3, lower, 2, lower, 1,
                     cape, 3
@@ -206,23 +206,6 @@ public class TravelBySeaState extends GameState {
 
         int roll = MyRandom.rollD10();
         return table.get(roll);
-    }
-
-    private static class SeaTravelTable {
-        private final TownLocation[] destinations;
-        private final int[] costs;
-
-        public SeaTravelTable(TownLocation d1, int c1, TownLocation d2, int c2, TownLocation d3, int c3,
-                              TownLocation d4, int c4, TownLocation d5, int c5, TownLocation d6, int c6,
-                              TownLocation d7, int c7, TownLocation d8, int c8, TownLocation d9, int c9,
-                              TownLocation d10, int c10) {
-            this.destinations = new TownLocation[]{d1, d2, d3, d4, d5, d6, d7, d8, d9, d10};
-            this.costs = new int[]{c1, c2, c3, c4, c5, c6, c7, c8, c9, c10};
-        }
-
-        public MyPair<TownLocation, Integer> get(int roll) {
-            return new MyPair<>(destinations[roll-1], costs[roll-1]);
-        }
     }
 
 }

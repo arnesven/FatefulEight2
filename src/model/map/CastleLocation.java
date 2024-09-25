@@ -224,4 +224,9 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public abstract Point getLeaguePosition();
 
     public abstract Point getClubPosition();
+
+    @Override
+    public boolean bothBoatAndCarriage() {
+        return false;
+    }
 }

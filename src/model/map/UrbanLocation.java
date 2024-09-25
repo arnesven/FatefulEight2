@@ -30,4 +30,5 @@ public interface UrbanLocation {
     int charterBoatEveryNDays();
     Point getCareerOfficePosition();
     Headquarters getRealEstate();
+    boolean bothBoatAndCarriage();
 }

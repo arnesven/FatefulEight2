@@ -35,4 +35,9 @@ public class UpperThelnTown extends TownLocation {
     public Point getCareerOfficePosition() {
         return new Point(2, 5);
     }
+
+    @Override
+    public boolean bothBoatAndCarriage() {
+        return true;
+    }
 }
