@@ -64,7 +64,7 @@ public class DeliverParcelTask extends DestinationTask {
 
     @Override
     public boolean isFailed(Model model) {
-        return !model.getParty().getInventory().getParcels().contains(parcel);
+        return !completed && !model.getParty().getInventory().getParcels().contains(parcel);
     }
 
     @Override
