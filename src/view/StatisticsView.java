@@ -17,10 +17,12 @@ import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class StatisticsView extends SelectableListMenu {
+    public static final int WIDTH = 60;
+    public static final int HEIGHT = 40;
     private List<MyPair<String, String>> factionStatus;
 
     public StatisticsView(GameView previous) {
-        super(previous, 60, 40);
+        super(previous, WIDTH, HEIGHT);
     }
 
     @Override
@@ -79,7 +81,12 @@ public class StatisticsView extends SelectableListMenu {
         List<ListContent> result = new ArrayList<>();
         result.add(makeTitleLine(leftColumn, row++, "PARTY"));
         String partySize = model.getParty().size() + "/" + model.getParty().getInventory().getTentSize();
-        result.add(makeStringLine(leftColumn, row++, 46, 10, "Current party size", partySize));
+        result.add(new SelectableListContent(leftColumn, row++, format(46, 10, "Current party size", partySize)) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                setInnerMenu(new PartyCompositionView(model), model);
+            }
+        });
         String averagePartyLevel = String.format("%2.1f", GameState.calculateAverageLevel(model));
         result.add(makeStringLine(leftColumn, row++, 46, 10, "Average party level", averagePartyLevel));
         result.add(makeIntLine(leftColumn, row++, "Total experience gained", GameStatistics.getTotalXpGained()));
@@ -166,7 +173,11 @@ public class StatisticsView extends SelectableListMenu {
     }
 
     private ListContent makeStringLine(int column, int row, int leftWidth, int rightWidth, String leftText, String rightText) {
-        return new ListContent(column, row, String.format("%-" + leftWidth + "s %" + rightWidth + "s", leftText, rightText));
+        return new ListContent(column, row, format(leftWidth, rightWidth, leftText, rightText));
+    }
+
+    private String format(int leftWidth, int rightWidth, String leftText, String rightText) {
+        return String.format("%-" + leftWidth + "s %" + rightWidth + "s", leftText, rightText);
     }
 
     @Override
