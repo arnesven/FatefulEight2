@@ -22,7 +22,8 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
     private GameView mainGameView;
 
     public SelectSaveSlotMenu(GameView startGameMenu, boolean loading) {
-        super(startGameMenu, 64, 42);
+        super(startGameMenu, DrawingArea.WINDOW_COLUMNS - 1,
+                DrawingArea.WINDOW_ROWS - 1);
         this.loading = loading;
     }
 
@@ -66,13 +67,13 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> result = new ArrayList<>();
-        int row = 2;
+        int row = 3;
         int index = 0;
         for (String slotName : slotNames) {
             String fileName = slotName + FILE_POSTFIX;
             GameData data = gameDatas[index];
             boolean corrupt = corruptData[index];
-            result.add(new SelectableListContent(xStart + 1, yStart + row, slotName) {
+            result.add(new SelectableListContent(xStart + 4, yStart + row, slotName) {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     if (loading) {
@@ -122,9 +123,9 @@ public class SelectSaveSlotMenu extends SelectableListMenu {
                 }
             });
             index++;
-            row += 10;
+            row += 11;
         }
-        result.add(new SelectableListContent(40-3, row+2, loading?"CANCEL":"RETURN") {
+        result.add(new SelectableListContent(DrawingArea.WINDOW_COLUMNS/2-3, row-1, loading?"CANCEL":"RETURN") {
             @Override
             public void performAction(Model model, int x, int y) {
                 setTimeToTransition(true);
