@@ -44,7 +44,7 @@ public class TownDailyActionState extends AdvancedDailyActionState {
                 addNode(2, 0, new GoTheDocksNode(model));
             }
             if (urbanLocation.bothBoatAndCarriage()) {
-                addNode(TOWN_MATRIX_COLUMNS-2, 5, new GoToCarriageNode(model));
+                addNode(TOWN_MATRIX_COLUMNS-1, 5, new GoToCarriageNode(model));
             }
         } else {
             addNode(4, 0, new GoToCarriageNode(model));
