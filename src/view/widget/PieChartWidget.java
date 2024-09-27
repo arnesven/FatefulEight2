@@ -68,12 +68,27 @@ public class PieChartWidget<E> {
             int dy = (int)Math.round(radius * Math.sin(aStart + currSlice/2.0));
             int finalX = origin.x - dx;
             int finalY = origin.y - dy;
-            if (dx > 0) {
-                finalX -= slice.second.length() - 1;
-            } else if (dx == 0) {
-                finalX -= slice.second.length() / 2;
+            if (slice.second.length() > 10) {
+                String[] parts = slice.second.split(" ");
+                int longest = Math.max(parts[0].length(), parts[1].length());
+                if (dx > 0) {
+                    finalX -= longest - 1;
+                } else if (dx == 0) {
+                    finalX -= longest / 2;
+                }
+                if (dy > 0) {
+                    finalY--;
+                }
+                BorderFrame.drawString(model.getScreenHandler(), parts[0], finalX, finalY, slice.third, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), parts[1], finalX, finalY+1, slice.third, MyColors.BLUE);
+            } else {
+                if (dx > 0) {
+                    finalX -= slice.second.length() - 1;
+                } else if (dx == 0) {
+                    finalX -= slice.second.length() / 2;
+                }
+                BorderFrame.drawString(model.getScreenHandler(), slice.second, finalX, finalY, slice.third, MyColors.BLUE);
             }
-            BorderFrame.drawString(model.getScreenHandler(), slice.second, finalX, finalY, slice.third, MyColors.BLUE);
             aStart += currSlice;
         }
     }

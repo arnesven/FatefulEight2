@@ -43,7 +43,7 @@ public class PieChartSprite extends Sprite {
                 double current = slice * 360.0;
                 g.setColor(colors.get(index++).toAwtColor());
                 g.fillArc(MARGIN_PX, MARGIN_PX, getWidth() - 2*MARGIN_PX, getHeight() - 2*MARGIN_PX,
-                        (int)startAngle, (int)-current);
+                        (int)startAngle, (int)Math.floor(-current));
                 startAngle -= current;
             }
         }

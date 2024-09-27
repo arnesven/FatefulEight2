@@ -1,5 +1,6 @@
 package view.widget;
 
+import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import view.MyColors;
@@ -15,8 +16,25 @@ public class AlignmentClassStrategy extends ClassStrategy {
                     "Evil", MyColors.BLACK,
                     "Neutral", MyColors.GRAY);
 
+    private List<String> description;
+
     public AlignmentClassStrategy() {
         super("Alignmt", COLOR_TABLE, AlignmentClassStrategy::getAlignmentName);
+        description = makeDescription();
+    }
+
+    public List<String> makeDescription() {
+        Map<String, List<CharacterClass>> classSets = Map.of("Evil", new ArrayList<>(),
+                "Shady", new ArrayList<>(), "Good", new ArrayList<>());
+        for (CharacterClass cc : Classes.allClasses) {
+            List<CharacterClass> list = classSets.get(getAlignmentName(cc));
+            if (cc != Classes.None && list != null) {
+                list.add(cc);
+            }
+        }
+        List<String> result = makeDescription(classSets);
+        result.add("Neutral: Others");
+        return result;
     }
 
     public static String getAlignmentName(CharacterClass cls) {
@@ -36,6 +54,6 @@ public class AlignmentClassStrategy extends ClassStrategy {
 
     @Override
     public List<String> getDescription() {
-        return new ArrayList<>(); // TODO:
+        return description;
     }
 }
