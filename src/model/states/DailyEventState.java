@@ -24,7 +24,6 @@ import model.races.Race;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
-import view.sprites.Sprite;
 import view.subviews.*;
 
 import java.awt.*;
@@ -32,7 +31,7 @@ import java.util.*;
 import java.util.List;
 
 public abstract class DailyEventState extends GameState {
-    private static final Map<Integer, Integer> alignmentMap = makePartyAlignmentMap();
+
     private boolean fledCombat = false;
     private PortraitSubView portraitSubView;
 
@@ -300,8 +299,8 @@ public abstract class DailyEventState extends GameState {
         int sum = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             int modifier = 0;
-            if (alignmentMap.containsKey(gc.getCharClass().id())) {
-                modifier = alignmentMap.get(gc.getCharClass().id());
+            if (Classes.ALIGNMENT.containsKey(gc.getCharClass().id())) {
+                modifier = Classes.ALIGNMENT.get(gc.getCharClass().id());
             }
             event.println("... " + gc.getFirstName() + " is a " + gc.getCharClass().getFullName() + ": " + MyStrings.withPlus(modifier));
             sum += modifier;
@@ -314,28 +313,12 @@ public abstract class DailyEventState extends GameState {
         int sum = 0;
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             int modifier = 0;
-            if (alignmentMap.containsKey(gc.getCharClass().id())) {
-                modifier = alignmentMap.get(gc.getCharClass().id());
+            if (Classes.ALIGNMENT.containsKey(gc.getCharClass().id())) {
+                modifier = Classes.ALIGNMENT.get(gc.getCharClass().id());
             }
             sum += modifier;
         }
         return sum;
-    }
-
-    private static Map<Integer, Integer> makePartyAlignmentMap() {
-        Map<Integer, Integer> classMap = new HashMap<>();
-        classMap.put(Classes.ASN.id(), -2);
-        classMap.put(Classes.BKN.id(), -2);
-        classMap.put(Classes.THF.id(), -1);
-        classMap.put(Classes.SOR.id(), -1);
-        classMap.put(Classes.WIT.id(), -1);
-        classMap.put(Classes.BBN.id(), -1);
-        classMap.put(Classes.SPY.id(), -1);
-
-        classMap.put(Classes.PRI.id(), +1);
-        classMap.put(Classes.PAL.id(), +1);
-        classMap.put(Classes.NOB.id(), +1);
-        return classMap;
     }
 
     protected GameCharacter makeRandomCharacter() {

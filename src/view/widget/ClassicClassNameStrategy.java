@@ -23,6 +23,12 @@ public class ClassicClassNameStrategy extends ClassStrategy {
             List.of(Classes.ASN, Classes.SPY, Classes.THF, Classes.BRD, Classes.NOB, Classes.ART, Classes.MAR),
             "Magic",
             List.of(Classes.DRU, Classes.MAG, Classes.PRI, Classes.WIZ, Classes.WIT, Classes.SOR));
+    private final List<String> description;
+
+    public ClassicClassNameStrategy() {
+        super("Classic", CLASSIC_COLORS, ClassicClassNameStrategy::getClassicClassTypeName);
+        this.description = makeDescription(CLASSIC_TYPE_NAMES);
+    }
 
     private static String getClassicClassTypeName(CharacterClass charClass) {
         for (Map.Entry<String, List<CharacterClass>> entry : CLASSIC_TYPE_NAMES.entrySet()) {
@@ -33,8 +39,8 @@ public class ClassicClassNameStrategy extends ClassStrategy {
         return getOtherString();
     }
 
-    public ClassicClassNameStrategy() {
-        super(CLASSIC_COLORS, ClassicClassNameStrategy::getClassicClassTypeName);
+    @Override
+    public List<String> getDescription() {
+        return description;
     }
-
 }

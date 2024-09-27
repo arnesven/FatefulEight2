@@ -7,6 +7,7 @@ import model.classes.Classes;
 import model.races.AllRaces;
 import model.races.ElvenRace;
 import model.races.Race;
+import util.Arithmetics;
 import util.MyLists;
 import util.MyTriplet;
 import view.party.DrawableObject;
@@ -30,14 +31,20 @@ public class PartyCompositionView extends SelectableListMenu {
     private final RaceStrategy pieChartStrategyHide = new RaceStrategy(makeBasicRaceColors(), PartyCompositionView::getBasicName);
     private RaceStrategy currentPieChartStrategy = pieChartStrategyHide;
 
-    private final ClassStrategy classicClassStrategy = new ClassicClassNameStrategy();
-    private final ClassStrategy detailedClassStrategy = new DetailedClassNameStrategy();
-    private ClassStrategy currentClassStrategy = classicClassStrategy;
+    private final ClassStrategy[] classStrategies = new ClassStrategy[]{new ClassicClassNameStrategy(),
+                                                                        new DetailedClassNameStrategy(),
+                                                                        new AlignmentClassStrategy()};
+
+    private int currentClassStrategyIndex = 0;
 
     public PartyCompositionView(Model model) {
         super(model.getView(), DrawingArea.WINDOW_COLUMNS-10, StatisticsView.HEIGHT);
         racePieChart = new PieChartWidget<>(model, currentPieChartStrategy, PIE_CHART_SIZE);
-        classPieChart = new PieChartWidget<>(model, currentClassStrategy, PIE_CHART_SIZE);
+        classPieChart = new PieChartWidget<>(model, getCurrentClassStrategy(), PIE_CHART_SIZE);
+    }
+
+    private ClassStrategy getCurrentClassStrategy() {
+        return classStrategies[currentClassStrategyIndex];
     }
 
     @Override
@@ -53,40 +60,46 @@ public class PartyCompositionView extends SelectableListMenu {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         return List.of(
-        new TextDecoration("Class types    ", xStart + 2, yStart + getHeight() - 6, MyColors.WHITE, MyColors.BLUE, false),
-        new TextDecoration("Elf/Human types", xStart + 2, yStart + getHeight() - 4, MyColors.WHITE, MyColors.BLUE, false),
-        new DrawableObject(xStart + 1, yStart + 1) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                BorderFrame.drawCentered(model.getScreenHandler(), "Party Race/Class Breakdown", y, MyColors.WHITE, MyColors.BLUE);
-            }
-        },
-        new DrawableObject(xStart + 10, yStart + 6) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                racePieChart.drawYourself(model, x, y);
-            }
-        },
-        new DrawableObject(xStart + getWidth() - 12 - PIE_CHART_SIZE, yStart + 6) {
-            @Override
-            public void drawYourself(Model model, int x, int y) {
-                classPieChart.drawYourself(model, x, y);
-            }
-        });
+                new TextDecoration("Class types    ", xStart + 2, yStart + getHeight() - 6, MyColors.WHITE, MyColors.BLUE, false),
+                new TextDecoration("Elf/Human types", xStart + 2, yStart + getHeight() - 4, MyColors.WHITE, MyColors.BLUE, false),
+                new DrawableObject(xStart + 1, yStart + 1) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        BorderFrame.drawCentered(model.getScreenHandler(), "Party Race/Class Breakdown", y, MyColors.WHITE, MyColors.BLUE);
+                    }
+                },
+                new DrawableObject(xStart + 10, yStart + 6) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        racePieChart.drawYourself(model, x, y);
+                    }
+                },
+                new DrawableObject(xStart + getWidth() - 12 - PIE_CHART_SIZE, yStart + 6) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        classPieChart.drawYourself(model, x, y);
+                    }
+                },
+                new DrawableObject(xStart + 27,
+                        yStart + getHeight() - getCurrentClassStrategy().getDescription().size() - 3) {
+                    @Override
+                    public void drawYourself(Model model, int x, int y) {
+                        int row = y;
+                        for (String s : getCurrentClassStrategy().getDescription()) {
+                            BorderFrame.drawString(model.getScreenHandler(), s, x, row++, MyColors.WHITE, MyColors.BLUE);
+                        }
+                    }
+                });
     }
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(new SelectableListContent(xStart + 18, yStart + getHeight() - 6,
-                (currentClassStrategy == detailedClassStrategy ? "DETAILED" : "CLASSIC")) {
+                getCurrentClassStrategy().getName().toUpperCase()) {
             @Override
             public void performAction(Model model, int x, int y) {
-                if (currentClassStrategy == detailedClassStrategy) {
-                    currentClassStrategy = classicClassStrategy;
-                } else {
-                    currentClassStrategy = detailedClassStrategy;
-                }
-                classPieChart = new PieChartWidget<>(model, currentClassStrategy, PIE_CHART_SIZE);
+                currentClassStrategyIndex = Arithmetics.incrementWithWrap(currentClassStrategyIndex, classStrategies.length);
+                classPieChart = new PieChartWidget<>(model, getCurrentClassStrategy(), PIE_CHART_SIZE);
                 madeChanges();
             }
         },

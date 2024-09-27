@@ -6,6 +6,8 @@ import model.classes.prestige.NinjaClass;
 import model.classes.prestige.SamuraiClass;
 import model.classes.special.*;
 
+import java.util.Map;
+
 public interface Classes {
     CharacterClass AMZ = new AmazonClass();
     CharacterClass ART = new ArtisanClass();
@@ -72,5 +74,18 @@ public interface Classes {
 
     CharacterClass[] NO_OTHER_CLASSES = Classes.NO_OTHER_CLASSES;
     CharacterClass BEAUTY = new BeautyNPCClass();
+
+    Map<Integer, Integer> ALIGNMENT = Map.of(
+            Classes.ASN.id(), -2,
+            Classes.BKN.id(), -2,
+            Classes.THF.id(), -1,
+            Classes.SOR.id(), -1,
+            Classes.WIT.id(), -1,
+            Classes.BBN.id(), -1,
+            Classes.SPY.id(), -1,
+
+            Classes.PRI.id(), +1,
+            Classes.PAL.id(), +1,
+            Classes.NOB.id(), +1);
 
 }

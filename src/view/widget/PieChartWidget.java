@@ -49,7 +49,7 @@ public class PieChartWidget<E> {
             if (counts.containsKey(raceName)) {
                 counts.put(raceName, counts.get(raceName) + 1);
             } else {
-                counts.put(strategy.getOtherString(), counts.get(strategy.getOtherString()) + 1);
+                counts.put(PieChartStrategy.getOtherString(), counts.get(PieChartStrategy.getOtherString()) + 1);
             }
         }
         return counts;
@@ -69,7 +69,7 @@ public class PieChartWidget<E> {
             int finalX = origin.x - dx;
             int finalY = origin.y - dy;
             if (dx > 0) {
-                finalX -= slice.second.length();
+                finalX -= slice.second.length() - 1;
             } else if (dx == 0) {
                 finalX -= slice.second.length() / 2;
             }

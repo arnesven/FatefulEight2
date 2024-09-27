@@ -3,7 +3,6 @@ package view.widget;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import util.MyLists;
-import util.MyStringFunction;
 import view.MyColors;
 
 import java.util.List;
@@ -31,6 +30,13 @@ public class DetailedClassNameStrategy extends ClassStrategy {
             "Mage",
             List.of(Classes.DRU, Classes.WIZ, Classes.WIT, Classes.SOR));
 
+    private final List<String> description;
+
+    public DetailedClassNameStrategy() {
+        super("Detailed", DETAILED_COLORS, DetailedClassNameStrategy::getDetailedName);
+        this.description = makeDescription(DETAILED_NAMES);
+    }
+
     private static String getDetailedName(CharacterClass charClass) {
         for (Map.Entry<String, List<CharacterClass>> entry : DETAILED_NAMES.entrySet()) {
             if (MyLists.any(entry.getValue(), cc -> cc.getFullName().equals(charClass.getFullName()))) {
@@ -40,7 +46,8 @@ public class DetailedClassNameStrategy extends ClassStrategy {
         return getOtherString();
     }
 
-    public DetailedClassNameStrategy() {
-        super(DETAILED_COLORS, DetailedClassNameStrategy::getDetailedName);
+    @Override
+    public List<String> getDescription() {
+        return description;
     }
 }
