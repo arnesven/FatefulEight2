@@ -90,34 +90,16 @@ public class CardGameState extends GameState {
 
     public void addHandAnimation(CardGamePlayer currentPlayer, boolean cardIn, boolean cardOut, boolean coin) {
         subView.addHandAnimationFor(currentPlayer, cardIn, cardOut, coin);
-        do {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } while (!subView.handAnimationHalfWay());
+        waitUntil(subView, CardGameSubView::handAnimationHalfWay);
     }
 
     public void waitForAnimationToFinish() {
-        do {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } while (!subView.handAnimationDone());
+        waitUntil(subView, CardGameSubView::handAnimationDone);
     }
 
     public void addCardDealtAnimation(CardGamePlayer p) {
         subView.addCardDealtAnimation(p);
-        do {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } while (!subView.cardDealtAnimationDone());
+        waitUntil(subView, CardGameSubView::cardDealtAnimationDone);
     }
 
     public int getRoundsPlayed() {

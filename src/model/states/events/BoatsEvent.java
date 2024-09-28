@@ -233,11 +233,7 @@ public class BoatsEvent extends RiverEvent {
                 internalShiftCharacter();
             }
             if (!shore.contains(guy)) {
-                try {
-                    Thread.sleep(750);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                delay(750);
             }
         }
         print("The party members have assigned themselves to the boats. Press return to cross the river.");

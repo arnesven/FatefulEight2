@@ -52,11 +52,7 @@ public abstract class TransitionView extends SubView implements Animation {
 
     public void waitToBeOver() {
         while (!done) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            delay(100);
         }
     }
 

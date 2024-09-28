@@ -224,14 +224,6 @@ public class BattleState extends GameState {
         }
     }
 
-    public void delay(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void moveUnitInDirection(BattleUnit performer, BattleDirection direction) {
         Point pos = units.getPositionFor(performer);
         Point toPos = new Point(pos.x + direction.dxdy.x, pos.y + direction.dxdy.y);

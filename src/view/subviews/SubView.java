@@ -101,4 +101,12 @@ public abstract class SubView {
                     new DamageValueEffect(mapOffset + x)));
         }
     }
+
+    protected void delay(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

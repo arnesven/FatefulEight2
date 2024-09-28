@@ -106,14 +106,14 @@ public abstract class GameState implements GameStateConstants {
                 MyPair<Spell, GameCharacter> pair = model.getSpellHandler().getCastSpell();
                 throw new SpellCastException(pair.first, pair.second);
             }
-            sleep();
+            sleep(20);
         }
         throw new GameExitedException();
     }
 
-    private void sleep() {
+    private static void sleep(int millis) {
         try {
-            Thread.sleep(20);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -323,8 +323,15 @@ public abstract class GameState implements GameStateConstants {
 
     public <E> void waitUntil(E arg, Predicate<E> test) {
         while (!test.test(arg) && !getModel().gameExited()) {
-            sleep();
+            sleep(20);
         }
+        if (model.gameExited()) {
+            throw new GameExitedException();
+        }
+    }
+
+    public void delay(int millis) {
+        sleep(millis);
         if (model.gameExited()) {
             throw new GameExitedException();
         }

@@ -1,5 +1,6 @@
 package model.characters;
 
+import control.GameExitedException;
 import model.GameStatistics;
 import model.actions.*;
 import model.characters.appearance.PortraitClothing;
@@ -458,12 +459,15 @@ public class GameCharacter extends Combatant {
         SkillCheckResult result = new SkillCheckResult(getRankAndRemoveTempBonus(skill), difficulty, bonus);
         if (party != null && model.getSettings().animateDieRollsEnabled()) {
             DieRollAnimation die = party.addDieRollAnimation(this, result.getUnmodifiedRoll());
-            while (die.blocksGame()) {
+            while (die.blocksGame() && !model.gameExited()) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+            }
+            if (model.gameExited()) {
+                throw new GameExitedException();
             }
             if (result.isSuccessful()) {
                 SoundEffects.successSkill();

@@ -84,13 +84,7 @@ public abstract class GelatinousBlobEnemy extends Enemy {
         GelatinousBlobEnemy splitGuy = getMitosisCopy();
         splitGuy.hidden = true;
         this.splitAni = new MitosisEffect(primaryColor, shadeColor);
-        do {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } while (!splitAni.isDone());
+        combatEvent.waitUntil(splitAni, MitosisEffect::isDone);
         this.splitAni = null;
         combatEvent.println(getName() + " split in two!");
         hidden = false;

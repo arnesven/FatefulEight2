@@ -78,11 +78,7 @@ public class ChangeClassTransitionSubView extends SubView implements Animation {
         model.setSubView(transition);
         SoundEffects.playSound("classchange");
         while (!transition.animationDone()) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            subView.delay(100);
         }
         model.setSubView(subView);
         AnimationManager.unregister(transition);

@@ -46,11 +46,7 @@ public abstract class AvatarSubView extends SubView {
             if (movementAnimationIsDone()) {
                 break;
             }
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            delay(100);
         }
     }
 

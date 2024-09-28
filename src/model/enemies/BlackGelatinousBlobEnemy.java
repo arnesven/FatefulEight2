@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.states.CombatEvent;
+import model.states.GameState;
 import sound.SoundEffects;
 import util.MyRandom;
 import view.MyColors;
@@ -31,25 +32,17 @@ public class BlackGelatinousBlobEnemy extends GelatinousBlobEnemy {
         return super.getSprite();
     }
 
-    private void shakeAnimation() {
+    private void shakeAnimation(GameState state) {
         this.altSprite = shakeSprite;
-        mySleep(2000);
+        state.delay(2000);
         this.altSprite = null;
-    }
-
-    private void mySleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
     public void takeCombatDamage(CombatEvent combatEvent, int damage, GameCharacter damager) {
         super.takeCombatDamage(combatEvent, damage, damager);
         if (this.isDead() && damager != null) {
-            shakeAnimation();
+            shakeAnimation(combatEvent);
             combatEvent.println(getName() + " erupts in a violent explosion!");
             combatEvent.addSpecialEffect(this, new ExplosionAnimation());
             SoundEffects.playBoom();
@@ -81,7 +74,7 @@ public class BlackGelatinousBlobEnemy extends GelatinousBlobEnemy {
         @Override
         public void performAttack(Model model, Enemy enemy, GameCharacter target, CombatEvent combatEvent) {
             if (MyRandom.rollD6() == 1) {
-                shakeAnimation();
+                shakeAnimation(combatEvent);
                 combatEvent.println(getName() + " seems to be decomposing.");
                 combatEvent.doDamageToEnemy(enemy, 1, null);
                 combatEvent.addFloatyDamage(enemy, 1, DamageValueEffect.STANDARD_DAMAGE);
