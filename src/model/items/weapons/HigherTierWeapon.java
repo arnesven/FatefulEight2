@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class HigherTierWeapon extends Weapon implements HigherTierItem, PairableWeapon{
+public class HigherTierWeapon extends Weapon implements HigherTierItem, PairableWeapon {
     private final Weapon inner;
     private final int tier;
     private Sprite sprite;

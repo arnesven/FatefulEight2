@@ -190,7 +190,7 @@ public abstract class Weapon extends EquipableItem {
 
     @Override
     public boolean hasDualUseInMenu() {
-        return this instanceof PairableWeapon;
+        return this instanceof PairableWeapon && ((PairableWeapon) this).pairingAllowed();
     }
 
     @Override
