@@ -59,6 +59,8 @@ public interface Classes {
     CharacterClass VAMPIRE = new VampireNPCClass();
     CharacterClass CULTIST = new CultistNPCClass();
     CharacterClass GARDENER = new GardenerNPCClass();
+    CharacterClass ARTIST = new ArtistNPCClass();
+
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
@@ -87,5 +89,4 @@ public interface Classes {
             Classes.PRI.id(), +1,
             Classes.PAL.id(), +1,
             Classes.NOB.id(), +1);
-
 }

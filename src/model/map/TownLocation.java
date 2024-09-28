@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.characters.PersonalityTrait;
 import model.headquarters.Headquarters;
 import model.states.*;
 import model.states.dailyaction.*;

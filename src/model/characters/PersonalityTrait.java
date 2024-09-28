@@ -76,7 +76,7 @@ public enum PersonalityTrait {
             case greedy:
                 // return new TreasureTroveEvent(model, this, mainCharacter); // push-your-luck infiltration style
             case encouraging:
-                // return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
+                return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
             case intellectual:
                 // return new GuildHallEvent(model, this, mainCharacter);
             case cowardly:
