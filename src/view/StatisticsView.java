@@ -3,6 +3,9 @@ package view;
 import model.GameStatistics;
 import model.Model;
 import model.Summon;
+import model.headquarters.HeadquarterAppearance;
+import model.headquarters.Headquarters;
+import model.headquarters.HeadquartersAction;
 import model.map.TempleLocation;
 import model.map.UrbanLocation;
 import model.states.GameState;
@@ -10,11 +13,14 @@ import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
 import model.states.events.OrcsEvent;
 import util.MyPair;
+import util.MyStrings;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 
 import java.awt.event.KeyEvent;
 import java.util.*;
+
+import static model.headquarters.Headquarters.*;
 
 public class StatisticsView extends SelectableListMenu {
     public static final int WIDTH = 60;
@@ -43,7 +49,7 @@ public class StatisticsView extends SelectableListMenu {
                 if (model.getParty().hasHeadquartersIn(urb)) {
                     description = "Resident (HQ)";
                 }
-                result.add(new MyPair<>(summon.getKey(), description));
+                result.add(new MyPair<>(MyStrings.capitalize(summon.getKey()), description));
             }
         }
         for (TempleLocation temple : model.getWorld().getTempleLocations()) {
@@ -94,6 +100,16 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Rations consumed", GameStatistics.getRationsConsumed()));
         result.add(makeIntLine(leftColumn, row++, "Gold earned", GameStatistics.getGoldEarned()));
         result.add(makeIntLine(leftColumn, row++, "Gold lost", GameStatistics.getGoldLost()));
+
+        if (model.getParty().getHeadquarters() != null) {
+            row++;
+            Headquarters hq = model.getParty().getHeadquarters();
+            result.add(makeTitleLine(leftColumn, row++, "HEADQUARTERS"));
+            result.add(makeStringLine(leftColumn, row++, 24, 32, "Location", hq.getLocationName().replace("the", "")));
+            result.add(makeStringLine(leftColumn, row++, 44, 12, "Size", HeadquarterAppearanceGetSizeName(hq.getSize())));
+            String hqChars = hq.getCharacters().size() + "/" + hq.getMaxCharacters();
+            result.add(makeStringLine(leftColumn, row++, 46, 10, "Characters", hqChars));
+        }
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "GEAR"));
@@ -150,6 +166,23 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
 
         return result;
+    }
+
+    private String HeadquarterAppearanceGetSizeName(int size) {
+        switch (size) { // TODO: Move to HeadquartersAppearance (breaks save)
+            case SMALL_SIZE:
+                return "Small";
+            case MEDIUM_SIZE:
+                return "Medium";
+            case LARGE_SIZE:
+                return "Large";
+            case GRAND_SIZE:
+                return "Grand";
+            case MAJESTIC_SIZE:
+                return "Majestic";
+            default:
+                throw new IllegalArgumentException("Headquarters size not supporter: " + size);
+        }
     }
 
     private ListContent makeTitleLine(int leftColumn, int row, String text) {
