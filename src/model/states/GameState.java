@@ -322,12 +322,15 @@ public abstract class GameState implements GameStateConstants {
     }
 
     public <E> void waitUntil(E arg, Predicate<E> test) {
-        while (!test.test(arg)) {
+        while (!test.test(arg) && !getModel().gameExited()) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        if (model.gameExited()) {
+            throw new GameExitedException();
         }
     }
 }

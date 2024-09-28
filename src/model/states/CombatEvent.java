@@ -301,9 +301,7 @@ public class CombatEvent extends DailyEventState {
 
     private void waitToProceed() {
         blockCombat = true;
-        while (blockCombat) {
-            sleep();
-        }
+        waitUntil(null, o -> !blockCombat);
     }
 
     private boolean anyAlive(List<GameCharacter> chars) {

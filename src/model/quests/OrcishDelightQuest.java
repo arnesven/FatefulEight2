@@ -20,6 +20,7 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.TownSubView;
 import view.widget.QuestBackground;
+import view.widget.TopText;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -42,8 +43,9 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
 
     @Override
     public void drawSpecialReward(Model model, int x, int y) {
-        y += 2;
-        BorderFrame.drawString(model.getScreenHandler(), "25 Rations", x, y++, MyColors.WHITE, MyColors.BLACK);
+        model.getScreenHandler().put(x, y, TopText.FOOD_ICON_SPRITE);
+        BorderFrame.drawString(model.getScreenHandler(), "25", x+2, y++, MyColors.WHITE, MyColors.BLACK);
+
     }
 
     @Override
