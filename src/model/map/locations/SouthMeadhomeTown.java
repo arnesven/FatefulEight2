@@ -32,4 +32,9 @@ public class SouthMeadhomeTown extends TownLocation {
     public boolean noBoat() {
         return true;
     }
+
+    @Override
+    public boolean bothBoatAndCarriage() {
+        return true;
+    }
 }

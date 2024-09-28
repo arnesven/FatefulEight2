@@ -35,8 +35,10 @@ public class TransferCharacterHeadquartersAction extends HeadquartersAction {
             state.print("Would you like to leave (Y) or pick up (N) a character? ");
             pickup = !state.yesNoInput();
         } else if (canDoPickup(model)) {
+            state.println("You cannot drop off any more party members.");
             pickup = true;
         } else if (canDoDropOff(model)) {
+            state.println("You cannot pick up any more characters.");
             pickup = false;
         } else {
             state.println("You can neither pick up or leave characters at headquarters.");
