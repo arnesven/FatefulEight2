@@ -52,7 +52,7 @@ public abstract class HairStyle implements Serializable {
             new SpecialMordKroftHairStyle(),
             new HairStyle3x2(6, false, 0x16, 0x16, 0x00, "Priest"),
             new HairStyle3x2(0xA7, false, true, false, false, 0x24, 0x00, 0x32, 0x0, "Rough"),
-            new HairStyle3x2(0xA7, false, true, true, true, 0x05, 0x07, 0x33, 0x34, "Rough/Long"),
+            new RoughLongHairStyle(),
             new TorhildHairstyle(),
             new PigTailHairStyle(0x9, true, 0x26, "Braids/Flat"),
             new PigTailHairStyle(0xC, true, 0x37, "Braids/Priest"),
