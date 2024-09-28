@@ -164,6 +164,7 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Battles fought", GameStatistics.getBattlesFought()));
         result.add(makeIntLine(leftColumn, row++, "Largest fish caught", GameStatistics.getLargestFishCaught()));
         result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
+        result.add(makeIntLine(leftColumn, row++, "Vampires killed", GameStatistics.getVampiresKilled()));
 
         return result;
     }

@@ -302,4 +302,12 @@ public class GameStatistics {
     public static int getCombatsFled() {
         return get("combatsFled");
     }
+
+    public static void incrementVampiresKilled() {
+        increment("vampireskilled", 1);
+    }
+
+    public static int getVampiresKilled() {
+        return get("vampireskilled");
+    }
 }

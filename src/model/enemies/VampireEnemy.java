@@ -1,8 +1,11 @@
 package model.enemies;
 
+import model.GameStatistics;
 import model.Model;
+import model.characters.GameCharacter;
 import model.combat.loot.BossCombatLoot;
 import model.combat.loot.CombatLoot;
+import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
@@ -37,6 +40,12 @@ public class VampireEnemy extends UndeadEnemy {
     @Override
     public CombatLoot getLoot(Model model) {
         return new BossCombatLoot(model);
+    }
+
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        super.doUponDeath(model, combatEvent, killer);
+        GameStatistics.incrementVampiresKilled();
     }
 
     private static class VampireEnemySprite extends LoopingSprite {
