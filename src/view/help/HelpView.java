@@ -49,7 +49,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
             madeChanges();
         }
         if (searchEnabled) {
-            if (isAlpha(keyEvent)) {
+            if (isAlphaOrSpace(keyEvent)) {
                 if (buffIndex < searchBuffer.length()) {
                     searchBuffer.setCharAt(buffIndex++, keyEvent.getKeyChar());
                     filterChapters();
@@ -90,9 +90,10 @@ public class HelpView extends TwoPaneSelectableListMenu {
         }
     }
 
-    private boolean isAlpha(KeyEvent keyEvent) {
+    private boolean isAlphaOrSpace(KeyEvent keyEvent) {
         return ('a' <= keyEvent.getKeyChar() && keyEvent.getKeyChar() <= 'z') ||
-                ('A' <= keyEvent.getKeyChar() && keyEvent.getKeyChar() <= 'Z');
+                ('A' <= keyEvent.getKeyChar() && keyEvent.getKeyChar() <= 'Z') ||
+                keyEvent.getKeyCode() == ' ';
     }
 
     @Override
