@@ -38,14 +38,12 @@ public class HorseRacingEvent extends DailyEventState {
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.horseRacingSong);
         CollapsingTransition.transition(model, subView);
-        print("Welcome to the horse race. Try to come in first place after " + MyStrings.numberWord(targetlaps) +
+        print("You've entered a horse race. Try to come in first place after " + MyStrings.numberWord(targetlaps) +
                 " laps. Press enter to start!");
         model.getTutorial().horseRacing(model);
         waitForReturn();
         subView.startRace();
-        while (!subView.raceIsOver(targetlaps)) {
-            sleep();
-        }
+        waitUntil(subView, s -> s.raceIsOver(targetlaps));
 
         int place = subView.getPlayerPlacement();
         subView.stopRace();
