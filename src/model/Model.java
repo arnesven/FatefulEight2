@@ -236,6 +236,7 @@ public class Model {
     public void setExitGame(boolean b) {
         this.gameExited = b;
         if (gameExited) {
+            log.flushContent(this);
             ClientSoundManager.stopPlayingBackgroundSound();
         }
     }

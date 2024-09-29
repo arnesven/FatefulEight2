@@ -210,4 +210,10 @@ public class GameLog {
     public void setContent(List<String> logContent) {
         this.content = logContent;
     }
+
+    public void flushContent(Model model) {
+        while (!animationBuffer.isEmpty()) {
+            takeOne(model);
+        }
+    }
 }

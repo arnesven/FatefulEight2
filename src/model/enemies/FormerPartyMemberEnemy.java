@@ -1,16 +1,19 @@
 package model.enemies;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.combat.conditions.Condition;
+import model.combat.conditions.VampirismCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.FormerPartyMemberLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.enemies.behaviors.MagicRangedAttackBehavior;
 import model.enemies.behaviors.MeleeAttackBehavior;
 import model.enemies.behaviors.RangedAttackBehavior;
+import model.states.CombatEvent;
 import util.MyLists;
 import view.sprites.Sprite;
 
@@ -100,4 +103,11 @@ public class FormerPartyMemberEnemy extends Enemy {
         return new FormerPartyMemberLoot(basedOn);
     }
 
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        super.doUponDeath(model, combatEvent, killer);
+        if (basedOn.hasCondition(VampirismCondition.class)) {
+            GameStatistics.incrementVampiresKilled();
+        }
+    }
 }
