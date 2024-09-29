@@ -18,6 +18,7 @@ import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
 import model.items.spells.*;
+import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.quests.Quest;
@@ -77,6 +78,7 @@ public class Party implements Serializable {
     private int guide = 0;
     private Headquarters headquarters = null;
     private boolean drawPartyVertically = false;
+    private final List<DiscoveredRoute> discoveredRoutes = new ArrayList<>();
 
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
@@ -972,5 +974,9 @@ public class Party implements Serializable {
 
     public boolean isDrawVertically() {
         return drawPartyVertically;
+    }
+
+    public List<DiscoveredRoute> getDiscoveredRoutes() {
+        return discoveredRoutes;
     }
 }

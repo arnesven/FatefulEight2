@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.map.DiscoveredRoute;
 import model.map.TownLocation;
 import model.states.GameState;
 import model.states.TravelTable;
@@ -60,7 +61,10 @@ public class TravelByCarriageState extends GameState {
         MapSubView mapSubView = new CarriageTravelSubView(model, carriage.first);
         CollapsingTransition.transition(model, mapSubView);
         Point newPosition = model.getWorld().getPositionForHex(carriage.first.getHex());
-
+        if (model.getCurrentHex().getLocation() != null) {
+            DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(), carriage.first,
+                    model.getCurrentHex().getLocation(), DiscoveredRoute.CARRIAGE);
+        }
         model.getWorld().dijkstrasByLand(model.getWorld().getPositionForHex(carriage.first.getHex()), false);
 
         Point currentPos = model.getParty().getPosition();

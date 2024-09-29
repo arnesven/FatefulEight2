@@ -3,6 +3,10 @@ package view;
 import control.FatefulEight;
 import model.Model;
 import model.map.World;
+import model.map.objects.DiscoveredTravelRoutesFilter;
+import model.map.objects.MapFilter;
+import model.map.objects.UnderworldLegendFilter;
+import util.Arithmetics;
 import view.help.SpecificTerrainHelpDialog;
 import view.widget.FullMapTopText;
 import view.widget.TopText;
@@ -15,10 +19,13 @@ public class FullMapView extends GameView {
     private static final int MAP_WIDTH_HEXES = 20;
     private static final int MAP_HEIGHT_HEXES = 12;
     private static final int Y_OFFSET = 2;
+    private static final int MAX_VIEW_TYPES = 3;
     private Point cursorPos = null;
     private final GameView previousView;
     private TopText topText = new FullMapTopText();
     private World worldToDraw;
+    private int viewType = 0;
+    private MapFilter currentFilter = null;
 
     public FullMapView(GameView previous, Point startCursorPos) {
         super(true);
@@ -69,7 +76,11 @@ public class FullMapView extends GameView {
         topText.drawYourself(model);
         screenHandler.clearForeground();
         worldToDraw.drawYourself(model, cursorPos, model.getParty().getPosition(),
-                MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, null, true);
+                MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, null, true,
+                currentFilter);
+        if (currentFilter != null) {
+            currentFilter.drawLegend(screenHandler, 0, 2);
+        }
         screenHandler.clearSpace(0, 80,49, 50);
         if (worldToDraw == model.getWorld()) {
             BorderFrame.drawString(screenHandler, model.getHexInfo(cursorPos), 0, 49, MyColors.WHITE);
@@ -93,13 +104,22 @@ public class FullMapView extends GameView {
                 model.transitionToDialog(new SpecificTerrainHelpDialog(model.getView(),
                         worldToDraw.getHex(cursorPos), model.getMapObjects(cursorPos), true));
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_F4) {
-                if (worldToDraw == model.getWorld()) {
-                    worldToDraw = model.getCaveSystem();
-                } else {
-                    worldToDraw = model.getWorld();
-                }
+                cycleView(model);
                 madeChanges();
             }
+        }
+    }
+
+    private void cycleView(Model model) {
+        viewType = Arithmetics.incrementWithWrap(viewType, MAX_VIEW_TYPES);
+        if (viewType == 2) {
+            currentFilter = new UnderworldLegendFilter();
+            worldToDraw = model.getCaveSystem();
+        } else if (viewType == 1) {
+            currentFilter = new DiscoveredTravelRoutesFilter();
+        } else {
+            currentFilter = null;
+            worldToDraw = model.getWorld();
         }
     }
 

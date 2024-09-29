@@ -1,6 +1,7 @@
 package model.map;
 
 import model.Model;
+import model.map.objects.MapFilter;
 import model.map.objects.MapObject;
 import model.states.dailyaction.FlagPoleNode;
 import model.tasks.DestinationTask;
@@ -64,6 +65,13 @@ public class World implements Serializable {
     public void drawYourself(Model model, Point viewPoint, Point partyPosition,
                              int mapXRange, int mapYRange, int yOffset, Point cursorPos,
                              boolean avatarEnabled) {
+        drawYourself(model, viewPoint, partyPosition, mapXRange, mapYRange, yOffset,
+                cursorPos, avatarEnabled, null);
+    }
+
+    public void drawYourself(Model model, Point viewPoint, Point partyPosition,
+                             int mapXRange, int mapYRange, int yOffset, Point cursorPos,
+                             boolean avatarEnabled, MapFilter filter) {
         ScreenHandler screenHandler = model.getScreenHandler();
         Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
         Interval xVals = calcInterval(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
@@ -71,6 +79,10 @@ public class World implements Serializable {
         int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
         screenHandler.clearSpace(startX, (DrawingArea.WINDOW_COLUMNS - startX),
                 yOffset, yOffset + mapYRange*4 - 2);
+        List<MyPair<Point, Sprite>> filterObjects = null;
+        if (filter != null) {
+            filterObjects = filter.getObjects(model);
+        }
 
         int row = 0;
         for (int y = yVals.from; y <= yVals.to; ++y) {
@@ -97,9 +109,20 @@ public class World implements Serializable {
                 }
                 model.getMainStory().drawMapObjects(model, x, y, screenX, screenY);
                 drawDestinationTasks(model, x, y, screenX, screenY);
+                drawFilterObjects(model, filterObjects, x, y, screenX, screenY);
                 col++;
             }
             row++;
+        }
+    }
+
+    private void drawFilterObjects(Model model, List<MyPair<Point, Sprite>> filterObjects, int x, int y, int screenX, int screenY) {
+        if (filterObjects != null) {
+            for (MyPair<Point, Sprite> pair : filterObjects) {
+                if (x == pair.first.x && y == pair.first.y) {
+                    model.getScreenHandler().register(pair.second.getName(), new Point(screenX, screenY), pair.second);
+                }
+            }
         }
     }
 

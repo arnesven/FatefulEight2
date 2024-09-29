@@ -3,6 +3,7 @@ package model.states.dailyaction;
 import model.Model;
 import model.items.spells.TeleportSpell;
 import model.map.CastleLocation;
+import model.map.DiscoveredRoute;
 import model.map.WorldHex;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -97,6 +98,11 @@ public class CourtMageNode extends DailyActionNode {
                 }
                 leaderSay("Okay. We're ready.");
                 CastleLocation destination = model.getWorld().getCastleByName(options.get(selected));
+
+                if (model.getCurrentHex().getLocation() != null) {
+                    DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(),
+                            model.getCurrentHex().getLocation(), destination, DiscoveredRoute.TELEPORT);
+                }
 
                 Point p = model.getWorld().getPositionForLocation(destination);
                 TeleportSpell.teleportPartyToPosition(model, this, p, false);

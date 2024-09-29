@@ -1,7 +1,9 @@
 package model.states;
 
 import model.Model;
+import model.map.DiscoveredRoute;
 import model.map.TownLocation;
+import model.map.UrbanLocation;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -52,6 +54,11 @@ public class TravelBySeaState extends GameState {
         MapSubView mapSubView = new SeaTravelMapSubView(model, ship.first);
         CollapsingTransition.transition(model, mapSubView);
         Point newPosition = model.getWorld().getPositionForHex(ship.first.getHex());
+
+        if (model.getCurrentHex().getLocation() != null) {
+            DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(),
+                    model.getCurrentHex().getLocation(), ship.first, DiscoveredRoute.SHIP);
+        }
 
         model.getWorld().dijkstrasBySea(ship.first.getHex());
 
