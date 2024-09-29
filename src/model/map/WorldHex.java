@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
+import model.characters.PersonalityTrait;
 import model.states.dailyaction.FindResourcesDailyAction;
 import model.tasks.DestinationTask;
 import view.combat.TownCombatTheme;

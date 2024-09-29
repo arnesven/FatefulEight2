@@ -10,7 +10,7 @@ public enum Skill implements Comparable<Skill> {
     Entertain("Entertain", "all kinds of entertainment, like singing, acting, doing party tricks or making speeches. This skill also covers less formal occasions like just being able to engage well in conversation. This skill is also used for when a character needs to disguise herself. "),         // 8
     Labor("Labor", "all kinds of day-to-day work, like chopping wood, mending garments, plowing fields, painting a house or repairing a fence."),                 // 9
     Leadership("Leadership", "leading and inspiring other individuals.\n\nSpecifically this skill is used by the leader of the party at quest decision points and during flee attempts in combat."),       // 4
-    Logic("Logic", "representing a persons capacity for reasoning and deduction, and to some degree knowledge."),                 // 13
+    Logic("Logic", "representing a persons capacity for reasoning and deduction, and to some degree knowledge. This skill is also used for representing a person's memory."),                 // 13
     MagicBlack("Magic (Black)", "knowledge about black magic. Black magic is associated with darkness, death, decay and emptiness."),    // 1
     MagicBlue("Magic (Blue)", "knowledge about blue magic. Blue magic is associated with alteration, illusions, thinking and the element of water."),      // 2
     MagicGreen("Magic (Green)", "knowledge about green magic. Green magic is associated with nature, change, growth and the element of earth."),    // 1
