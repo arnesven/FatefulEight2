@@ -363,11 +363,8 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     }
 
     private void makeInquiry(Model model, String victim, GameCharacter victimChar) {
-        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
-        List<Point> path = model.getWorld().generalShortestPath(0,
-                worldHex -> worldHex.getLocation() != null &&
-                        worldHex.getLocation() instanceof CastleLocation);
-        CastleLocation nearestCastle = (CastleLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
+        CastleLocation kingdomCastle = model.getWorld().getKingdomForPosition(model.getParty().getPosition());
+
         while (true) {
             List<String> options = new ArrayList<>(List.of(
                     "Ask about " + himOrHer(victimChar.getGender()),
@@ -391,14 +388,18 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             } else if (options.get(chosen).contains("Cancel")) {
                 break;
             } else if (options.get(chosen).contains("news")) {
-                askAboutNews(getModel(), nearestCastle);
+                askAboutNews(getModel(), kingdomCastle);
             } else if (options.get(chosen).contains("region")) {
                 leaderSay(MyRandom.sample(List.of("Uhm, where are we?", "Tell me about this region.",
                         "What kingdom is this?", "What can you tell me about these lands?")));
-                String kingdom = CastleLocation.placeNameToKingdom(nearestCastle.getPlaceName());
-                portraitSay(MyRandom.sample(List.of("This is", "You are in")) + " the " + kingdom + ".");
-                if (!talkAboutFatue(model, nearestCastle)) {
-                   portraitSay(nearestCastle.getLordName() + " rules these lands.");
+                if (kingdomCastle == null) {
+                    portraitSay("This is the wilderness, far from the kingdoms of the world.");
+                } else {
+                    String kingdom = CastleLocation.placeNameToKingdom(kingdomCastle.getPlaceName());
+                    portraitSay(MyRandom.sample(List.of("This is", "You are in")) + " the " + kingdom + ".");
+                    if (!talkAboutFatue(model, kingdomCastle)) {
+                        portraitSay(kingdomCastle.getLordName() + " rules these lands.");
+                    }
                 }
             } else {
                 String key = options.get(chosen).replace("Ask about ", "");
@@ -409,21 +410,25 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
     }
 
-    private void askAboutNews(Model model, CastleLocation nearestCastle) {
+    private void askAboutNews(Model model, CastleLocation kingdomCastle) {
         leaderSay("Got any news to share?");
-        List<KingdomWar> warsForThisKingdom = getModel().getWarHandler().getWarsForKingdom(nearestCastle);
+        if (kingdomCastle == null) {
+            portraitSay("Not much news out here. Haven't heard much in a while.");
+            return;
+        }
+        List<KingdomWar> warsForThisKingdom = getModel().getWarHandler().getWarsForKingdom(kingdomCastle);
         if (!warsForThisKingdom.isEmpty()) {
             KingdomWar warToTalkAbout = MyRandom.sample(warsForThisKingdom);
-            if (warToTalkAbout.isAggressor(nearestCastle)) {
+            if (warToTalkAbout.isAggressor(kingdomCastle)) {
                 String extra = MyRandom.sample(List.of("Best stay clear of any fighting, friend.",
                         "Everybody must do their part I suppose.", "Glory to our homeland!",
                         "I hope nobody expects me to fight."));
-                portraitSay("The " + nearestCastle.getLordTitle() + " of " + nearestCastle.getPlaceName() +
+                portraitSay("The " + kingdomCastle.getLordTitle() + " of " + kingdomCastle.getPlaceName() +
                         " has declared war on " + CastleLocation.placeNameToKingdom(warToTalkAbout.getDefender()) +
                         ". " + extra);
             } else {
                 portraitSay(warToTalkAbout.getAggressor() + " has declared war on this kingdom. Our " +
-                        nearestCastle.getLordTitle() + " has been mustering troops to defend our land!");
+                        kingdomCastle.getLordTitle() + " has been mustering troops to defend our land!");
             }
             model.getTutorial().kingdomWars(model);
         } else if (!getModel().getWarHandler().getWars().isEmpty() && MyRandom.flipCoin()) {
@@ -437,9 +442,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             model.getTutorial().kingdomWars(model);
         } else {
             portraitSay(MyRandom.sample(List.of(
-                    "I've heard " + nearestCastle.getLordName() + " is planning to host an archery contest soon.",
-                    "I've heard " + nearestCastle.getLordName() + " is planning to host a melee tournament soon.",
-                    "I've heard " + nearestCastle.getLordName() + " is planning a horse racing cup soon.",
+                    "I've heard " + kingdomCastle.getLordName() + " is planning to host an archery contest soon.",
+                    "I've heard " + kingdomCastle.getLordName() + " is planning to host a melee tournament soon.",
+                    "I've heard " + kingdomCastle.getLordName() + " is planning a horse racing cup soon.",
                     "Orcish raids seem to have become more common lately. Watch yourself friend.",
                     "Ever been to the Isle of Faith? The monks are restoring the monastery there.",
                     "I've heard there are communities of dwarves that live down in caves. I wonder what that's like.",
@@ -447,16 +452,11 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
     }
 
-    protected boolean talkAboutFatue(Model model, CastleLocation nearestCastle) {
+    protected boolean talkAboutFatue(Model model, CastleLocation kingdomCastle) {
         Point fatuePos = model.getCaveSystem().getFatuePosition();
-        model.getWorld().dijkstrasByLand(fatuePos, true);
-        List<Point> path = model.getWorld().generalShortestPath(0,
-                worldHex -> worldHex.getLocation() != null &&
-                        worldHex.getLocation() instanceof CastleLocation);
-        CastleLocation nearestCastle2 = (CastleLocation) model.getWorld().getHex(path.get(path.size()-1)).getLocation();
-        if (nearestCastle2 == nearestCastle) {
-            path = model.getWorld().shortestPathToNearestTownOrCastle();
-            Point townOrCastlePosition = path.get(path.size()-1);
+        CastleLocation fatueKingdom = model.getWorld().getKingdomForPosition(fatuePos);
+        if (fatueKingdom == kingdomCastle) {
+            Point townOrCastlePosition = model.getWorld().getPositionForLocation(fatueKingdom);
             UrbanLocation townOrCastle = (UrbanLocation) model.getWorld().getHex(townOrCastlePosition).getLocation();
             portraitSay("I've heard there's a strange place in the caves around " + townOrCastle.getPlaceName() + ". " +
                     "From what I've heard it's some kind of ruined fortress.");

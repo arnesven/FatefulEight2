@@ -524,6 +524,17 @@ public class World implements Serializable {
         return kingdoms;
     }
 
+    public CastleLocation getKingdomForPosition(Point position) {
+        CastleLocation kingdomCastle = null;
+        for (CastleLocation castle : kingdoms.keySet()) {
+            if (MyLists.any(kingdoms.get(castle), p -> p.equals(position))) {
+                kingdomCastle = castle;
+                break;
+            }
+        }
+        return kingdomCastle;
+    }
+
     private static class Interval {
         public int from;
         public int to;
