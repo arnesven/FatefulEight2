@@ -23,10 +23,11 @@ import java.util.function.Predicate;
 public class World implements Serializable {
 
     private final Set<WaterPath> waterWays;
+    private final Map<CastleLocation, List<Point>> kingdoms;
     private Map<WorldHex, Integer> landNodes;
     //  x   y
-    private WorldHex[][] hexes;
-    private ViewPointMarker cursor = new HexCursorMarker();
+    private final WorldHex[][] hexes;
+    private final ViewPointMarker cursor = new HexCursorMarker();
     private static final Sprite DESTINATION_SPRITE = new SpriteQuestMarker();
     private Sprite alternativeAvatar = null;
     private int currentState;
@@ -35,6 +36,7 @@ public class World implements Serializable {
         this.hexes = hexes;
         waterWays = makeWaterWays();
         currentState = WorldBuilder.ORIGINAL;
+        kingdoms = findKingdoms();
     }
 
     public Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
@@ -518,6 +520,10 @@ public class World implements Serializable {
                 MyRandom.randInt(bounds.y, bounds.y+bounds.height-1));
     }
 
+    public Map<CastleLocation, List<Point>> getKingdoms() {
+        return kingdoms;
+    }
+
     private static class Interval {
         public int from;
         public int to;
@@ -567,5 +573,34 @@ public class World implements Serializable {
             }
         }
         return null;
+    }
+
+
+    private Map<CastleLocation, List<Point>> findKingdoms() {
+        Map<CastleLocation, List<Point>> result = new HashMap<>();
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                if (hexes[x][y].getLocation() instanceof CastleLocation) {
+                    CastleLocation castle = (CastleLocation)hexes[x][y].getLocation();
+                    List<Point> pointsForKingdom = new ArrayList<>(castle.getExtraKingdomPositions());
+                    HashSet<Point> set = new HashSet<>();
+                    addPointsAround(set, x, y, 5);
+                    pointsForKingdom.addAll(set);
+                    result.put(castle, pointsForKingdom);
+                }
+            }
+        }
+        return result;
+    }
+
+    private void addPointsAround(HashSet<Point> set, int x, int y, int level) {
+        if (!(hexes[x][y] instanceof SeaHex)) {
+            set.add(new Point(x, y));
+        }
+        if (level > 0) {
+            for (Point dxdy : Direction.getDxDyDirections(new Point(x, y))) {
+                addPointsAround(set, x + dxdy.x, y + dxdy.y, level-1);
+            }
+        }
     }
 }

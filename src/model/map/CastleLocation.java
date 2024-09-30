@@ -229,4 +229,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     public boolean bothBoatAndCarriage() {
         return false;
     }
+
+    public abstract List<Point> getExtraKingdomPositions();
 }
