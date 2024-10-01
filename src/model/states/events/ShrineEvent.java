@@ -53,8 +53,8 @@ public class ShrineEvent extends DailyEventState {
             println(gc.getFirstName() + " places a coin in a bowl on the altar in the shrine.");
             if (gc.hasPersonality(PersonalityTrait.critical) || gc.hasPersonality(PersonalityTrait.rude)) {
                 println("Then " + heOrShe(gc.getGender()) + " " +
-                        MyRandom.sample(List.of(" shakes " + hisOrHer(gc.getGender()) + " fist toward the sky.",
-                                " sticks out " + hisOrHer(gc.getGender()) + " tongue at the little statue within the shrine.")));
+                        MyRandom.sample(List.of("shakes " + hisOrHer(gc.getGender()) + " fist toward the sky.",
+                                "sticks out " + hisOrHer(gc.getGender()) + " tongue at the little statue within the shrine.")));
             } else {
                 println("Then " + heOrShe(gc.getGender()) + " " +
                         MyRandom.sample(List.of("whispers a quick prayer.",
