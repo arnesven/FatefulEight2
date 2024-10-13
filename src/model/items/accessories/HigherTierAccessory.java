@@ -91,7 +91,7 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
         List<MyPair<Skill, Integer>> bonuses = inner.getSkillBonuses();
         for (MyPair<Skill, Integer> pair : bonuses) {
-            pair.second += 1*tier;
+            pair.second += tier;
         }
         return bonuses;
     }
@@ -114,5 +114,15 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
     @Override
     public Item getInnerItem() {
         return inner;
+    }
+
+    @Override
+    public int getMasteryFactor() {
+        return inner.getMasteryFactor();
+    }
+
+    @Override
+    public double getExperienceFactor() {
+        return inner.getExperienceFactor();
     }
 }

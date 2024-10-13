@@ -27,8 +27,8 @@ public abstract class MasterySpell extends Spell {
     }
 
     protected int getMasteryTimes(GameCharacter caster) {
-        if (caster.getEquipment().getAccessory() instanceof MasterRing) {
-            return MasterRing.MASTERY_FACTORY;
+        if (caster.getEquipment().getAccessory() != null) {
+            return caster.getEquipment().getAccessory().getMasteryFactor();
         }
         return 1;
     }

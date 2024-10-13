@@ -1,16 +1,20 @@
 package model.items.accessories;
 
+import model.classes.Skill;
 import model.items.Item;
 import model.items.Prevalence;
-import util.MyStrings;
+import util.MyPair;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
+import java.util.List;
+
 public class MasterRing extends JewelryItem {
 
-    public static final int MASTERY_FACTORY = 3;
-    private static final Sprite SPRITE = new ItemSprite(8, 9, MyColors.GOLD, MyColors.TAN, MyColors.DARK_GRAY);
+    private static final int MASTERY_FACTORY = 3;
+    private static final Sprite SPRITE = new ItemSprite(8, 9,
+            MyColors.GOLD, MyColors.ORANGE, MyColors.GRAY_RED);
 
     public MasterRing() {
         super("Master Ring", 18);
@@ -42,7 +46,28 @@ public class MasterRing extends JewelryItem {
     }
 
     @Override
-    public String getExtraText() {
-        return ", Levels of mastery are attained " + MyStrings.numberWord(MASTERY_FACTORY) + " times as fast.";
+    public int getMasteryFactor() {
+        return MASTERY_FACTORY;
+    }
+
+    @Override
+    public Item makeHigherTierCopy(int tier) {
+        return new HigherTierMasterRing(this, tier);
+    }
+
+    private static class HigherTierMasterRing extends HigherTierAccessory {
+        public HigherTierMasterRing(MasterRing masterRing, int tier) {
+            super(masterRing, tier);
+        }
+
+        @Override
+        public int getMasteryFactor() {
+            return getTier() + MASTERY_FACTORY;
+        }
+
+        @Override
+        public List<MyPair<Skill, Integer>> getSkillBonuses() {
+            return List.of(new MyPair<>(Skill.SpellCasting, getTier()));
+        }
     }
 }

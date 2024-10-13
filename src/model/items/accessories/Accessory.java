@@ -30,20 +30,27 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public final String getShoppingDetails() {
         StringBuilder result = new StringBuilder();
         if (getAP() != 0) {
-            result.append(", Armor " + getAP() + " " + (isHeavy() ? "HEAVY" : "LIGHT"));
+            result.append(", Armor ").append(getAP()).append(" ").append(isHeavy() ? "HEAVY" : "LIGHT");
         }
         if (getSpeedModifier() != 0) {
-            result.append(", Speed " + MyStrings.withPlus(getSpeedModifier()));
+            result.append(", Speed ").append(MyStrings.withPlus(getSpeedModifier()));
         }
         if (getHealthBonus() != 0) {
-            result.append(", Health " + MyStrings.withPlus(getHealthBonus()));
+            result.append(", Health ").append(MyStrings.withPlus(getHealthBonus()));
         }
         if (getSPBonus() != 0) {
-            result.append(", Stamina " + MyStrings.withPlus(getSPBonus()));
+            result.append(", Stamina ").append(MyStrings.withPlus(getSPBonus()));
         }
         result.append(getSkillBonusesAsString());
         if (!getExtraText().equals("")) {
-            result.append(", " + getExtraText());
+            result.append(", ").append(getExtraText());
+        }
+        if (getMasteryFactor() != 1) {
+            result.append(", Levels of mastery are attained ").append(MyStrings.numberWord(getMasteryFactor())).append(" times as fast");
+        }
+        if (getExperienceFactor() != 1.0) {
+            int percent = (int)Math.round((getExperienceFactor()-1.0) * 10.0);
+            result.append(", ").append(percent).append("% more Experience Points gained.");
         }
         return result.toString();
     }
@@ -103,4 +110,8 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public boolean isSellable() {
         return true;
     }
+
+    public int getMasteryFactor() { return 1; }
+
+    public double getExperienceFactor() { return 1.0; }
 }

@@ -17,6 +17,7 @@ import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
+import model.items.accessories.ApprenticeRing;
 import model.items.accessories.MasterRing;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
@@ -84,7 +85,6 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
-        inventory.add(new MasterRing());
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -384,6 +384,9 @@ public class Party implements Serializable {
         if (gc.getLevel() == 0) {
             return;
         }
+        double factor = gc.getEquipment().getAccessory() == null ? 1.0
+                : gc.getEquipment().getAccessory().getExperienceFactor();
+        xp = (int)Math.round(xp * factor);
         GameStatistics.incrementTotalXP(xp);
         System.out.println(gc.getName() + " got " + xp + " XP.");
         model.getTutorial().attributes(model);
