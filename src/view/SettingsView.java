@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SettingsView extends SelectableListMenu {
     private static final int WIDTH = 24;
-    private static final int HEIGHT = 31;
+    private static final int HEIGHT = 32;
 
     public SettingsView(GameView previous) {
         super(previous, WIDTH, HEIGHT);
@@ -90,6 +90,13 @@ public class SettingsView extends SelectableListMenu {
             @Override
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleAlwaysRide();
+            }
+        });
+        y += 1;
+        result.add(new ListContent(xStart+2, y, "Game Difficulty " + (model.getSettings().getGameDifficultyString())) {
+            @Override
+            public void performAction(Model model, int x, int y) {
+                model.getSettings().cycleGameDifficulty();
             }
         });
         y += 1;

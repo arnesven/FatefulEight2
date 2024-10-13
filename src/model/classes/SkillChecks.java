@@ -62,4 +62,8 @@ public class SkillChecks {
         }
         return true;
     }
+
+    public static int adjustDifficulty(Model model, int difficulty) {
+        return difficulty + model.getSettings().getGameDifficulty() - 1;
+    }
 }

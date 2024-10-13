@@ -675,7 +675,7 @@ public class GameCharacter extends Combatant {
         combatEvent.blockSneakAttackFor(this);
         combatEvent.addSpecialEffect(this, enemy.getStrikeEffect());
         MyPair<Integer, Boolean> pair = enemy.calculateBaseDamage(model.getParty().getBackRow().contains(this));
-        int damage = pair.first;
+        int damage = Math.max(0, pair.first + model.getSettings().getGameDifficulty() - 1);
         boolean critical = pair.second;
         if (checkForEvade(enemy)) {
             combatEvent.addFloatyText(this, CombatSubView.EVADE_TEXT);

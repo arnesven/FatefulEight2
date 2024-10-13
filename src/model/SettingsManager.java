@@ -1,5 +1,6 @@
 package model;
 
+import util.Arithmetics;
 import view.widget.TopText;
 
 import java.io.Serializable;
@@ -22,6 +23,8 @@ public class SettingsManager implements Serializable {
     private final Map<String, Boolean> miscFlags = new HashMap<>();
     private final Map<String, Integer> miscCounters = new HashMap<>();
     private boolean animateDieRolls = true;
+    private int gameDifficulty = 1;
+    private static final int MAX_DIFFICULTY = 2;
 
     public SettingsManager() {
         miscFlags.put(TopText.GOLD_SETTINGS_FLAG, true);
@@ -127,5 +130,29 @@ public class SettingsManager implements Serializable {
 
     public void toggleAnimateDieRolls() {
         animateDieRolls = !animateDieRolls;
+    }
+
+    public int getGameDifficulty() {
+        return gameDifficulty;
+    }
+
+    public String getGameDifficultyString() {
+        switch (gameDifficulty) {
+            case 0 :
+                return "EASY";
+            case 1:
+                return "NORMAL";
+            case MAX_DIFFICULTY:
+                return "HARD";
+        }
+        throw new IllegalStateException("Illegal game difficulty: " + gameDifficulty);
+    }
+
+    public void cycleGameDifficulty() {
+        gameDifficulty = Arithmetics.incrementWithWrap(gameDifficulty, MAX_DIFFICULTY+1);
+    }
+
+    public void setGameDifficulty(int difficulty) {
+        this.gameDifficulty = difficulty;
     }
 }

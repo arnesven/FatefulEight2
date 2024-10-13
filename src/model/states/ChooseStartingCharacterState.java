@@ -71,6 +71,7 @@ public class ChooseStartingCharacterState extends GameState {
             }
         }
         println("");
+        model.transitionToDialog(new SelectGameDifficultyView(model));
 
         print("You have selected your starting character: ");
         model.getParty().add(gc);

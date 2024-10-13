@@ -430,6 +430,7 @@ public class Party implements Serializable {
 
     public MyPair<Boolean, GameCharacter> doSoloSkillCheckWithPerformer(Model model, GameState event, Skill skill, int difficulty) {
         GameStatistics.incrementSoloSkillChecks(1);
+        difficulty = SkillChecks.adjustDifficulty(model, difficulty);
         GameCharacter performer = null;
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
@@ -486,6 +487,7 @@ public class Party implements Serializable {
 
     public boolean doCollaborativeSkillCheck(Model model, GameState event, Skill skill, int difficulty, List<GameCharacter> performers) {
         GameStatistics.incrementCollaborativeSkillChecks(1);
+        difficulty = SkillChecks.adjustDifficulty(model, difficulty);
         GameCharacter performer = null;
         while (true) {
             model.getSpellHandler().acceptSkillBoostingSpells(model.getParty(), skill);
@@ -568,6 +570,7 @@ public class Party implements Serializable {
 
     public List<GameCharacter> doCollectiveSkillCheckWithFailers(Model model, GameState event, Skill skill, int difficulty) {
         GameStatistics.incrementCollectiveSkillChecks(1);
+        difficulty = SkillChecks.adjustDifficulty(model, difficulty);
         event.print("Preparing to perform a Collective " + skill.getName() + " " + difficulty + " check. Press enter.");
         model.getTutorial().skillChecks(model);
         while (true) {
