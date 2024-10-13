@@ -17,6 +17,7 @@ import model.horses.HorseHandler;
 import model.items.Equipment;
 import model.items.Inventory;
 import model.items.Lockpick;
+import model.items.accessories.MasterRing;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
@@ -83,6 +84,7 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
+        inventory.add(new MasterRing());
     }
 
     private LoopingSprite[] makeCursorSprites() {

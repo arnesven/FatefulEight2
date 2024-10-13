@@ -2,6 +2,7 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.items.accessories.MasterRing;
 import model.states.GameState;
 import view.MyColors;
 
@@ -14,12 +15,22 @@ public abstract class MasterySpell extends Spell {
     @Override
     protected void successfullyCastHook(Model model, GameState state, GameCharacter caster) {
         if (masteriesEnabled()) {
-            boolean updated = caster.getMasteries().registerSuccessfullCast(model, this);
-            if (updated) {
-                state.println(caster.getName() + " has achieved mastery level " +
-                        getMasteryLevel(caster) + " for " + getName() + "!");
+            int masteryTimes = getMasteryTimes(caster);
+            for (int i = 0; i < masteryTimes; ++i) {
+                boolean updated = caster.getMasteries().registerSuccessfullCast(model, this);
+                if (updated) {
+                    state.println(caster.getName() + " has achieved mastery level " +
+                            getMasteryLevel(caster) + " for " + getName() + "!");
+                }
             }
         }
+    }
+
+    protected int getMasteryTimes(GameCharacter caster) {
+        if (caster.getEquipment().getAccessory() instanceof MasterRing) {
+            return MasterRing.MASTERY_FACTORY;
+        }
+        return 1;
     }
 
     protected int getMasteryLevel(GameCharacter character) {
