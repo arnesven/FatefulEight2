@@ -2,6 +2,7 @@ package model.combat.loot;
 
 import model.Model;
 import model.Party;
+import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.MysteriousMap;
 import util.MyRandom;
@@ -24,6 +25,7 @@ public class StandardCombatLoot extends CombatLoot {
         if (dieRoll == 7) {
             gold++;
         }
+        gold = (int)Math.round(getGoldFactor(model) * gold);
         if (dieRoll >= 10) {
             if (MyRandom.randInt(100) == 0) {
                 items.add(new MysteriousMap(model));
@@ -31,6 +33,16 @@ public class StandardCombatLoot extends CombatLoot {
                 items.add(model.getItemDeck().getRandomItem(0.5));
             }
         }
+    }
+
+    protected double getGoldFactor(Model model) {
+        double factor = 1.0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc.getEquipment().getAccessory() != null) {
+                factor *= gc.getEquipment().getAccessory().getGoldFromLootFactor();
+            }
+        }
+        return factor;
     }
 
     public StandardCombatLoot(Model model) {

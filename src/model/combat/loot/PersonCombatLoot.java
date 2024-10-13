@@ -17,6 +17,7 @@ public class PersonCombatLoot extends StandardCombatLoot {
         } else {
             obols += MyRandom.randInt(0, 10);
         }
+        obols = (int)Math.round(getGoldFactor(model) * obols);
     }
 
     @Override

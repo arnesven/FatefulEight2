@@ -45,7 +45,7 @@ public class ApprenticeRing extends JewelryItem {
 
     @Override
     public Item makeHigherTierCopy(int tier) {
-        return new HigherTierApprenticeRing(this, tier);
+        return new HigherTierApprenticeRing((ApprenticeRing)copy(), tier);
     }
 
     private static class HigherTierApprenticeRing extends HigherTierAccessory {

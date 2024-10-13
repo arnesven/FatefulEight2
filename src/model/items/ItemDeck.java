@@ -195,7 +195,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new RubyRing(), new SapphireRing(), new HeavyRing(),
                 new ExpensiveRing(), new SwiftRing(), new EyeRing(), new AmberRing(),
                 new EmeraldRing(), new OrnateRing(), new GoldRing(), new MasterRing(),
-                new ApprenticeRing(), new LuckyTalisman(),
+                new ApprenticeRing(), new GreedyRing(), new LuckyTalisman(),
                 new Pentagram(), new PlateNecklace(), new AnkhPendant(), new ShinyAmulet());
     }
 

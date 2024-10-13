@@ -125,4 +125,9 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
     public double getExperienceFactor() {
         return inner.getExperienceFactor();
     }
+
+    @Override
+    public double getGoldFromLootFactor() {
+        return inner.getGoldFromLootFactor();
+    }
 }

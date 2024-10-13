@@ -49,8 +49,12 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
             result.append(", Levels of mastery are attained ").append(MyStrings.numberWord(getMasteryFactor())).append(" times as fast");
         }
         if (getExperienceFactor() != 1.0) {
-            int percent = (int)Math.round((getExperienceFactor()-1.0) * 10.0);
+            int percent = (int)Math.round((getExperienceFactor()-1.0) * 100.0);
             result.append(", ").append(percent).append("% more Experience Points gained.");
+        }
+        if (getGoldFromLootFactor() != 1.0) {
+            int percent = (int)Math.round((getGoldFromLootFactor()-1.0) * 100.0);
+            result.append(", ").append(percent).append("% more gold and obols from loot.");
         }
         return result.toString();
     }
@@ -114,4 +118,8 @@ public abstract class Accessory extends EquipableItem implements ArmorItem {
     public int getMasteryFactor() { return 1; }
 
     public double getExperienceFactor() { return 1.0; }
+
+    public double getGoldFromLootFactor() {
+        return 1.0;
+    }
 }

@@ -52,7 +52,7 @@ public class MasterRing extends JewelryItem {
 
     @Override
     public Item makeHigherTierCopy(int tier) {
-        return new HigherTierMasterRing(this, tier);
+        return new HigherTierMasterRing((MasterRing)copy(), tier);
     }
 
     private static class HigherTierMasterRing extends HigherTierAccessory {
