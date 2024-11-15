@@ -9,15 +9,13 @@ import model.items.EquipableItem;
 import model.items.Item;
 import model.states.CombatEvent;
 import util.MyStrings;
-import view.AnalyzeDialog;
-import view.AnalyzeWeaponDialog;
-import view.GameView;
-import view.WeaponPairingDialog;
+import view.*;
 import view.party.SelectableListMenu;
 import view.sprites.*;
 
 public abstract class Weapon extends EquipableItem {
 
+    private static final Sprite BURNING_SPRITE = CharSprite.make(0xDD, MyColors.LIGHT_GRAY, MyColors.RED, MyColors.BEIGE);
     private final Skill skill;
     private final int[] damageTable;
     private boolean isBurning;
@@ -116,6 +114,9 @@ public abstract class Weapon extends EquipableItem {
             int chance = (11 - getCriticalTarget()) * 10;
             return chance + "% Critical Hit Chance";
         }
+        if (isBurning) {
+            return "Enchanted";
+        }
         return "";
     }
 
@@ -201,5 +202,13 @@ public abstract class Weapon extends EquipableItem {
     @Override
     public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
         return new WeaponPairingDialog(innerView, this);
+    }
+
+    @Override
+    public void drawYourself(ScreenHandler screenHandler, int col, int row) {
+        super.drawYourself(screenHandler, col, row);
+        if (isBurning) {
+            screenHandler.put(col+3, row+3, BURNING_SPRITE);
+        }
     }
 }
