@@ -158,13 +158,22 @@ public class StatisticsView extends SelectableListMenu {
         }
 
         row++;
+        result.add(makeTitleLine(leftColumn, row++, "ENEMIES"));
+        result.add(makeIntLine(leftColumn, row++, "Bandits killed", GameStatistics.getBanditsKilled()));
+        result.add(makeIntLine(leftColumn, row++, "Beasts killed", GameStatistics.getBeastsKilled()));
+        result.add(makeIntLine(leftColumn, row++, "Orcs killed", GameStatistics.getOrcsKilled()));
+        result.add(makeIntLine(leftColumn, row++, "Goblins killed", GameStatistics.getGoblinsKilled()));
+        result.add(makeIntLine(leftColumn, row++, "Demons killed", GameStatistics.getDemonsKilled()));
+        result.add(makeIntLine(leftColumn, row++, "Dragons killed", GameStatistics.getDragonsKilled()));
+        result.add(makeIntLine(leftColumn, row++, "Vampires killed", GameStatistics.getVampiresKilled()));
+
+        row++;
         result.add(makeTitleLine(leftColumn, row++, "MISCELLANEOUS"));
         result.add(makeIntLine(leftColumn, row++, "Card games played", GameStatistics.getCardGamesPlayed()));
         result.add(makeIntLine(leftColumn, row++, "Rituals performed", GameStatistics.getRituals()));
         result.add(makeIntLine(leftColumn, row++, "Battles fought", GameStatistics.getBattlesFought()));
         result.add(makeIntLine(leftColumn, row++, "Largest fish caught", GameStatistics.getLargestFishCaught()));
         result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
-        result.add(makeIntLine(leftColumn, row++, "Vampires killed", GameStatistics.getVampiresKilled()));
 
         return result;
     }

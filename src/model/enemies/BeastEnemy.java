@@ -1,5 +1,7 @@
 package model.enemies;
 
+import model.GameStatistics;
+import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.states.CombatEvent;
@@ -48,5 +50,11 @@ public abstract class BeastEnemy extends Enemy {
     @Override
     public String getDeathSound() {
         return "beast_death";
+    }
+
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        super.doUponDeath(model, combatEvent, killer);
+        GameStatistics.incrementBeastsKilled();
     }
 }

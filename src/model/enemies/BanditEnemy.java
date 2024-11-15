@@ -1,9 +1,12 @@
 package model.enemies;
 
+import model.GameStatistics;
 import model.Model;
+import model.characters.GameCharacter;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.PersonCombatLoot;
 import model.races.Race;
+import model.states.CombatEvent;
 import util.MyRandom;
 import view.sprites.BanditSprite;
 import view.sprites.LoopingSprite;
@@ -58,5 +61,11 @@ public class BanditEnemy extends HumanoidEnemy {
     @Override
     public CombatLoot getLoot(Model model) {
         return new PersonCombatLoot(model);
+    }
+
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        super.doUponDeath(model, combatEvent, killer);
+        GameStatistics.incrementBanditsKilled();
     }
 }

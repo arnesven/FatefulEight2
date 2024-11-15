@@ -1,9 +1,12 @@
 package model.enemies;
 
+import model.GameStatistics;
 import model.Model;
+import model.characters.GameCharacter;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.PersonCombatLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
+import model.states.CombatEvent;
 
 public abstract class GoblinEnemy extends Enemy {
     public GoblinEnemy(char enemyGroup, String name, EnemyAttackBehavior behavior) {
@@ -36,4 +39,10 @@ public abstract class GoblinEnemy extends Enemy {
     }
 
     public abstract GoblinEnemy copy();
+
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        super.doUponDeath(model, combatEvent, killer);
+        GameStatistics.incrementGoblinsKilled();
+    }
 }

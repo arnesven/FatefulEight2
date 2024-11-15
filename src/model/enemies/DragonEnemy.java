@@ -1,11 +1,14 @@
 package model.enemies;
 
+import model.GameStatistics;
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.StandardCombatLoot;
 import model.enemies.behaviors.EnemyAttackBehavior;
 import model.items.Equipment;
+import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -83,6 +86,12 @@ public abstract class DragonEnemy extends BeastEnemy {
     @Override
     public boolean isFearless() {
         return true;
+    }
+
+    @Override
+    public void doUponDeath(Model model, CombatEvent combatEvent, GameCharacter killer) {
+        super.doUponDeath(model, combatEvent, killer);
+        GameStatistics.incrementDragonsKilled();
     }
 
     @Override

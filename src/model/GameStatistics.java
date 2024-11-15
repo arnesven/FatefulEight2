@@ -310,4 +310,50 @@ public class GameStatistics {
     public static int getVampiresKilled() {
         return get("vampireskilled");
     }
+
+    public static void incrementOrcsKilled() { increment("orcskilled", 1); }
+
+    public static int getOrcsKilled() {
+        return get("orcskilled");
+    }
+
+    public static void incrementDemonsKilled() {
+        increment("demonskilled", 1);
+    }
+
+    public static int getDemonsKilled() {
+        return get("demonskilled");
+    }
+
+    public static void incrementBeastsKilled() {
+        increment("beastskilled", 1);
+    }
+
+    public static int getBeastsKilled() {
+        return get("beastskilled");
+    }
+
+    public static void incrementDragonsKilled() {
+        increment("dragonskilled", 1);
+    }
+
+    public static int getDragonsKilled() {
+        return get("dragonskilled");
+    }
+
+    public static void incrementBanditsKilled() {
+        increment("banditskilled", 1);
+    }
+
+    public static int getBanditsKilled() {
+        return get("banditskilled");
+    }
+
+    public static void incrementGoblinsKilled() {
+        increment("goblinskilled", 1);
+    }
+
+    public static int getGoblinsKilled() {
+        return get("goblinskilled");
+    }
 }
