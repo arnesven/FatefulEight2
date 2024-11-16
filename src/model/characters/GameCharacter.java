@@ -246,6 +246,9 @@ public class GameCharacter extends Combatant {
     public void applyAttack(Model model, CombatEvent combatEvent, Combatant target, boolean sneakAttack,
                              int extraDamage, int crit, RunOnceAnimationSprite effectSprite, SkillCheckResult result) {
         int damage = equipment.getWeapon().getDamage(result.getModifiedRoll(), this);
+        if (hasCondition(WerewolfFormCondition.class)) {
+            extraDamage += 1;
+        }
         String extraInfo = " (" + result.asString() + " on [" + equipment.getWeapon().getDamageTableAsString() + "]";
         if (extraDamage > 0) {
             damage += extraDamage;

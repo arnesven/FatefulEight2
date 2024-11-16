@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.combat.conditions.BurningWeaponCondition;
 import model.combat.Combatant;
 import model.items.Item;
+import model.items.imbuements.ExtraDamageImbuement;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.states.CombatEvent;
@@ -44,10 +45,14 @@ public class BurningWeaponSpell extends CombatSpell {
 
     @Override
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-        target.addCondition(new BurningWeaponCondition());
-        Weapon weapon = ((GameCharacter) target).getEquipment().getWeapon();
-        weapon.setBurning(true);
-        combat.addSpecialEffect(target, new UpArrowAnimation());
+        if (!((GameCharacter)target).getEquipment().getWeapon().isImbued()) {
+            target.addCondition(new BurningWeaponCondition());
+            Weapon weapon = ((GameCharacter) target).getEquipment().getWeapon();
+            weapon.setImbuement(new ExtraDamageImbuement());
+            combat.addSpecialEffect(target, new UpArrowAnimation());
+        } else {
+            combat.println(getName() + " had no effect on " + target.getName() + "'s weapon!");
+        }
     }
 
     @Override

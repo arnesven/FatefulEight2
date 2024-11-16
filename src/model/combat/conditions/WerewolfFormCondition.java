@@ -6,7 +6,6 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.combat.Combatant;
 import model.items.spells.WerewolfFormSpell;
-import model.races.Race;
 import model.states.GameState;
 import view.GameView;
 import view.MyColors;
@@ -66,11 +65,7 @@ public class WerewolfFormCondition extends Condition {
     }
 
     @Override
-    public void wasRemoved(Combatant combatant) {
-        if (combatant instanceof GameCharacter) {
-            ((GameCharacter) combatant).getEquipment().getWeapon().setBurning(false);
-        }
-    }
+    public void wasRemoved(Combatant combatant) { }
 
     @Override
     public ConditionHelpDialog getHelpView(GameView view) {

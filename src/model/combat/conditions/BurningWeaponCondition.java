@@ -40,6 +40,6 @@ public class BurningWeaponCondition extends Condition {
     @Override
     public void wasRemoved(Combatant combatant) {
         Weapon weapon = ((GameCharacter) combatant).getEquipment().getWeapon();
-        weapon.setBurning(false);
+        weapon.removeImbuement();
     }
 }

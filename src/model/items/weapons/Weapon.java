@@ -7,6 +7,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.EquipableItem;
 import model.items.Item;
+import model.items.imbuements.WeaponImbuement;
 import model.states.CombatEvent;
 import util.MyStrings;
 import view.*;
@@ -15,15 +16,22 @@ import view.sprites.*;
 
 public abstract class Weapon extends EquipableItem {
 
-    private static final Sprite BURNING_SPRITE = CharSprite.make(0xDD, MyColors.LIGHT_GRAY, MyColors.RED, MyColors.BEIGE);
     private final Skill skill;
     private final int[] damageTable;
-    private boolean isBurning;
+    private WeaponImbuement imbuement = null;
 
     public Weapon(String name, int cost, Skill skill, int[] damageTable) {
         super(name, cost);
         this.skill = skill;
         this.damageTable = damageTable;
+    }
+
+    @Override
+    public String getName() {
+        if (isImbued()) {
+            return "Imbued " + super.getName();
+        }
+        return super.getName();
     }
 
     @Override
@@ -63,15 +71,10 @@ public abstract class Weapon extends EquipableItem {
     }
 
     public int[] getDamageTable() {
-        if (!isBurning) {
-            return damageTable;
+        if (isImbued()) {
+            return imbuement.makeDamageTable(damageTable);
         }
-        int[] burningTable = new int[damageTable.length+1];
-        burningTable[0] = damageTable[0];
-        for (int i = 0; i < damageTable.length; ++i) {
-            burningTable[i+1] = damageTable[i];
-        }
-        return burningTable;
+        return damageTable;
     }
 
     public boolean isRangedAttack() {
@@ -114,9 +117,6 @@ public abstract class Weapon extends EquipableItem {
             int chance = (11 - getCriticalTarget()) * 10;
             return chance + "% Critical Hit Chance";
         }
-        if (isBurning) {
-            return "Enchanted";
-        }
         return "";
     }
 
@@ -131,8 +131,12 @@ public abstract class Weapon extends EquipableItem {
         gc.equipWeaponFromInventory(this);
     }
 
-    public void setBurning(boolean b) {
-        isBurning = b;
+    public void setImbuement(WeaponImbuement imbuement) {
+        this.imbuement = imbuement;
+    }
+
+    public boolean isImbued() {
+        return this.imbuement != null;
     }
 
     public LoopingSprite getOnAvatarSprite(GameCharacter gameCharacter) {
@@ -207,8 +211,12 @@ public abstract class Weapon extends EquipableItem {
     @Override
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
         super.drawYourself(screenHandler, col, row);
-        if (isBurning) {
-            screenHandler.put(col+3, row+3, BURNING_SPRITE);
+        if (isImbued()) {
+            imbuement.drawYourself(screenHandler, col + 3, row + 3);
         }
+    }
+
+    public void removeImbuement() {
+        this.imbuement = null;
     }
 }

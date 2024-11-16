@@ -44,7 +44,6 @@ public class WerewolfFormSpell extends CombatSpell {
     public void applyCombatEffect(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         if (!performer.hasCondition(WerewolfFormCondition.class)) {
             performer.addCondition(new WerewolfFormCondition(performer, getMasteryLevel(performer) + 1));
-            performer.getEquipment().getWeapon().setBurning(true);
         } else {
             combat.println(getName() + " has no effect on " + performer.getName() + ".");
         }
