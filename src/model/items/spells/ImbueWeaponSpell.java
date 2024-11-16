@@ -50,12 +50,17 @@ public class ImbueWeaponSpell extends ImmediateSpell {
             state.println("Spell cancelled.");
             return false;
         }
-        if (w instanceof NaturalWeapon || w.isImbued()) {
+        if (w instanceof NaturalWeapon) {
             state.println(w.getName() + " cannot be imbued with magic.");
             return false;
         }
+        String extra = "";
+        if (w.isImbued()) {
+            extra = " (its current imbuement will be overwritten) ";
+        }
         this.weaponToImbue = w;
-        state.print("Are you sure you want to permanently imbue the " + weaponToImbue.getName() + " with magic? (Y/N) ");
+        state.print("Are you sure you want to permanently imbue the " + weaponToImbue.getName() +
+                " with magic" + extra + "? (Y/N) ");
         if (!state.yesNoInput()) {
             return false;
         }
