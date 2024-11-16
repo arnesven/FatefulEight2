@@ -6,6 +6,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.weapons.MagesStaff;
 import model.items.weapons.OldStaff;
+import model.items.weapons.Weapon;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.SignSprite;
@@ -37,7 +38,11 @@ public class MagicShopNode extends GeneralShopNode {
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotions(), MyRandom.randInt(1, 6), Prevalence.unspecified, 0.0));
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allScrolls(), MyRandom.randInt(4), Prevalence.unspecified, 0.0));
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotionRecipes(), MyRandom.randInt(2), Prevalence.unspecified, 0.0));
-
+        if (MyRandom.flipCoin()) {
+            Weapon w = (Weapon) model.getItemDeck().draw(ItemDeck.allWeapons(), 1, Prevalence.unspecified, 0.0);
+            w.setImbuement(MyRandom.sample(ItemDeck.allImbuements()));
+            inventory.add(w);
+        }
         for (int i = 0; i < 4; ++i) {
             if (MyRandom.randInt(2) == 0) {
                 if (i % 2 == 0) {
