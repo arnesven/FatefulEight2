@@ -1,14 +1,9 @@
 package model.items.weapons;
 
-import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.conditions.BurningCondition;
-import model.combat.Combatant;
 import model.items.Item;
 import model.items.Prevalence;
-import model.states.CombatEvent;
-import util.MyRandom;
+import model.items.imbuements.BurningImbuement;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -19,6 +14,7 @@ public class FireRod extends WandWeapon implements PairableWeapon {
 
     public FireRod() {
         super("Fire Rod", 36, Skill.MagicRed, new int[]{9, 11, 12, 14});
+        setImbuement(new BurningImbuement());
     }
 
     @Override
@@ -37,20 +33,7 @@ public class FireRod extends WandWeapon implements PairableWeapon {
     }
 
     @Override
-    public String getExtraText() {
-        return "20% Chance to apply Burn";
-    }
-
-    @Override
     public Sprite makePairSprite() {
         return new ItemSprite(0, 16, MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
-    }
-
-    @Override
-    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-        if (!target.isDead() && MyRandom.rollD10() > 8 && !target.hasCondition(BurningCondition.class)) {
-            combatEvent.println(target.getName() + " starts burning!");
-            target.addCondition(new BurningCondition(gameCharacter));
-        }
     }
 }

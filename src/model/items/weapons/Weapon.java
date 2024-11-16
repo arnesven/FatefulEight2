@@ -72,9 +72,13 @@ public abstract class Weapon extends EquipableItem {
 
     public int[] getDamageTable() {
         if (isImbued()) {
-            return imbuement.makeDamageTable(damageTable);
+            return getImbuement().makeDamageTable(damageTable);
         }
         return damageTable;
+    }
+
+    protected WeaponImbuement getImbuement() {
+        return imbuement;
     }
 
     public boolean isRangedAttack() {
@@ -116,6 +120,9 @@ public abstract class Weapon extends EquipableItem {
         if (getCriticalTarget() != 10) {
             int chance = (11 - getCriticalTarget()) * 10;
             return chance + "% Critical Hit Chance";
+        }
+        if (isImbued()) {
+            return getImbuement().getText();
         }
         return "";
     }
@@ -184,7 +191,7 @@ public abstract class Weapon extends EquipableItem {
 
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter,
                                  Combatant target, int damage, int critical) {
-
+        getImbuement().didOneAttackWith(model, combatEvent, gameCharacter, target, damage, critical);
     }
 
     public String getAttackSound() {
@@ -212,7 +219,7 @@ public abstract class Weapon extends EquipableItem {
     public void drawYourself(ScreenHandler screenHandler, int col, int row) {
         super.drawYourself(screenHandler, col, row);
         if (isImbued()) {
-            imbuement.drawYourself(screenHandler, col + 3, row + 3);
+            getImbuement().drawYourself(screenHandler, col + 3, row + 3);
         }
     }
 

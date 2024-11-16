@@ -77,6 +77,7 @@ public class Lute extends Weapon {
 
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+        super.didOneAttackWith(model, combatEvent, gameCharacter, target, damage, critical);
         if (MyRandom.rollD10() > 8) {
             combatEvent.println("The lute is broken!");
             combatEvent.partyMemberSay(gameCharacter, MyRandom.sample(List.of("Darn it!", "That's unfortunate.", "No! My lute!")));

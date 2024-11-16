@@ -11,4 +11,9 @@ public class ExtraDamageImbuement extends WeaponImbuement {
         }
         return burningTable;
     }
+
+    @Override
+    public String getText() {
+        return "Increased damage";
+    }
 }

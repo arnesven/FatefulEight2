@@ -1,11 +1,8 @@
 package model.items.weapons;
 
-import model.Model;
-import model.characters.GameCharacter;
-import model.combat.Combatant;
 import model.items.Item;
 import model.items.Prevalence;
-import model.states.CombatEvent;
+import model.items.imbuements.VigorImbuement;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -16,19 +13,7 @@ public class SwordOfVigor extends BladedWeapon {
 
     public SwordOfVigor() {
         super("Sword of Vigor", 110, new int[]{5, 8, 12}, false, 1);
-    }
-
-    @Override
-    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-        if (damage > 0 && target.isDead()) {
-            combatEvent.println(gameCharacter.getName() + " absorbed energy from the slain " + target.getName() + " - regained 1 SP!");
-            gameCharacter.addToSP(1);
-        }
-    }
-
-    @Override
-    public String getExtraText() {
-        return ", gain 1 SP on kill.";
+        setImbuement(new VigorImbuement());
     }
 
     @Override

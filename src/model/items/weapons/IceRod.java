@@ -1,14 +1,9 @@
 package model.items.weapons;
 
-import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Skill;
-import model.combat.Combatant;
-import model.combat.conditions.TimedParalysisCondition;
 import model.items.Item;
 import model.items.Prevalence;
-import model.states.CombatEvent;
-import util.MyRandom;
+import model.items.imbuements.FreezeImbuement;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -19,6 +14,7 @@ public class IceRod extends WandWeapon implements PairableWeapon {
 
     public IceRod() {
         super("Ice Rod", 44, Skill.MagicBlue, new int[]{9, 11, 12, 14});
+        setImbuement(new FreezeImbuement());
     }
 
     @Override
@@ -32,31 +28,12 @@ public class IceRod extends WandWeapon implements PairableWeapon {
     }
 
     @Override
-    public String getExtraText() {
-        return "20% Chance to apply Freeze";
-    }
-
-    @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
     }
 
     @Override
-    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-        if (!target.isDead() && MyRandom.rollD10() >= 9 && !target.hasCondition(TimedParalysisCondition.class)) {
-            target.addCondition(new FreezeCondition());
-            combatEvent.println(target.getName() + " is paralyzed by the freezing cold!");
-        }
-    }
-
-    @Override
     public Sprite makePairSprite() {
         return new ItemSprite(0, 16, MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
-    }
-
-    private static class FreezeCondition extends TimedParalysisCondition {
-        public FreezeCondition() {
-            super(1);
-        }
     }
 }

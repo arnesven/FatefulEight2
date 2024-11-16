@@ -160,4 +160,9 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     public void removeImbuement() {
         inner.removeImbuement();
     }
+
+    @Override
+    protected WeaponImbuement getImbuement() {
+        return inner.getImbuement();
+    }
 }

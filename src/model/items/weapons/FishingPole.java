@@ -41,6 +41,7 @@ public class FishingPole extends PolearmWeapon {
 
     @Override
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
+        super.didOneAttackWith(model, combatEvent, gameCharacter, target, damage, critical);
         if (MyRandom.rollD10() > 8) {
             combatEvent.println("The fishing pole is broken!");
             combatEvent.partyMemberSay(gameCharacter, MyRandom.sample(List.of("Darn it!", "That's unfortunate.", "No! My fishing pole!")));
