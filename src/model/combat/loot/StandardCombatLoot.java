@@ -4,7 +4,10 @@ import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.ItemDeck;
 import model.items.MysteriousMap;
+import model.items.imbuements.WeaponImbuement;
+import model.items.weapons.Weapon;
 import util.MyRandom;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ public class StandardCombatLoot extends CombatLoot {
         if (dieRoll <= 7) {
             gold = dieRoll - 1;
         } else if (dieRoll <= 9) {
-            items.add(model.getItemDeck().getRandomItem(0.10));
+            items.add(makeItem(model, 0.1));
         }
         if (dieRoll == 7) {
             gold++;
@@ -30,9 +33,18 @@ public class StandardCombatLoot extends CombatLoot {
             if (MyRandom.randInt(100) == 0) {
                 items.add(new MysteriousMap(model));
             } else {
-                items.add(model.getItemDeck().getRandomItem(0.5));
+                items.add(makeItem(model, 0.5));
             }
         }
+    }
+
+    private Item makeItem(Model model, double tierChance) {
+        Item toReturn = model.getItemDeck().getRandomItem(tierChance);
+        if (toReturn instanceof Weapon && MyRandom.rollD6() + MyRandom.rollD6() == 12) {
+            WeaponImbuement imbuement = MyRandom.sample(ItemDeck.allImbuements());
+            ((Weapon) toReturn).setImbuement(imbuement);
+        }
+        return toReturn;
     }
 
     protected double getGoldFactor(Model model) {

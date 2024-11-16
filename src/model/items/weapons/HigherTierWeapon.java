@@ -165,4 +165,9 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     protected WeaponImbuement getImbuement() {
         return inner.getImbuement();
     }
+
+    @Override
+    public int getAttackBonus() {
+        return inner.getAttackBonus();
+    }
 }

@@ -238,6 +238,7 @@ public class GameCharacter extends Combatant {
         if (target.hasCondition(ExposedCondition.class)) {
             bonus += 2;
         }
+        bonus += equipment.getWeapon().getAttackBonus();
         SkillCheckResult result = testSkill(model, equipment.getWeapon().getSkillToUse(this),
                 SkillCheckResult.NO_DIFFICULTY, bonus);
         applyAttack(model, combatEvent, target, sneakAttack, extraDamage, crit, effectSprite, result);

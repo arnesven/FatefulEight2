@@ -25,4 +25,8 @@ public abstract class WeaponImbuement {
     }
 
     public abstract String getText();
+
+    public int getAttackBonus() {
+        return 0;
+    }
 }

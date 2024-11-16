@@ -95,9 +95,9 @@ public abstract class Weapon extends EquipableItem {
     @Override
     public final String getShoppingDetails() {
         StringBuilder result = new StringBuilder();
-        result.append(", " + getSkill().getName().replace(" Weapons", "") + " [" + getDamageTableAsString() + "]");
+        result.append(", ").append(getSkill().getName().replace(" Weapons", "")).append(" [").append(getDamageTableAsString()).append("]");
         if (getSpeedModifier() != 0) {
-            result.append(", Speed " + MyStrings.withPlus(getSpeedModifier()));
+            result.append(", Speed ").append(MyStrings.withPlus(getSpeedModifier()));
         }
         if (isTwoHanded()) {
             result.append(", Two-handed");
@@ -225,5 +225,12 @@ public abstract class Weapon extends EquipableItem {
 
     public void removeImbuement() {
         this.imbuement = null;
+    }
+
+    public int getAttackBonus() {
+        if (isImbued()) {
+            return getImbuement().getAttackBonus();
+        }
+        return 0;
     }
 }

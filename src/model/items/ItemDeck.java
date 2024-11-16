@@ -4,6 +4,7 @@ import model.items.accessories.*;
 import model.items.books.*;
 import model.items.clothing.*;
 import model.items.designs.CraftingDesign;
+import model.items.imbuements.*;
 import model.items.potions.*;
 import model.items.spells.*;
 import model.items.weapons.SkullWand;
@@ -341,6 +342,14 @@ public class ItemDeck extends ArrayList<Item> {
                 new Broadsword(), new Longsword(), new Estoc(), new Rapier(), new Katana(), new TwoHandedSword(),
                 new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(),
                 new TwinKukris(), new Sai(), new TwinSais());
+    }
+
+
+    public static List<? extends WeaponImbuement> allImbuements() {
+        return List.of(new AbsorptionImbuement(), new BurningImbuement(), new ChainLightningImbuement(),
+                new DismembermentImbuement(), new ExtraDamageImbuement(), new FreezeImbuement(),
+                new PoisonImbuement(), new StunImbuement(), new VigorImbuement(),
+                new FinesseImbuement());
     }
 
     public void setStandardItemTier(int averageLevel) {
