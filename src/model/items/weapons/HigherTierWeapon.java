@@ -5,6 +5,7 @@ import model.classes.Skill;
 import model.items.HigherTierItem;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.imbuements.WeaponImbuement;
 import util.MyPair;
 import view.sprites.*;
 
@@ -143,5 +144,20 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     @Override
     public Sprite makePairSprite() {
         return ((PairableWeapon)inner).makePairSprite();
+    }
+
+    @Override
+    public boolean isImbued() {
+        return inner.isImbued();
+    }
+
+    @Override
+    public void setImbuement(WeaponImbuement imbuement) {
+        inner.setImbuement(imbuement);
+    }
+
+    @Override
+    public void removeImbuement() {
+        inner.removeImbuement();
     }
 }
