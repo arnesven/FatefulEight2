@@ -262,7 +262,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new CombineSpell(),
                 new QuickeningSpell(),
                 new DragonTamingSpell(),
-                new ChannelingSpell()
+                new ChannelingSpell(),
+                new ImbueWeaponSpell()
                 // TODO: Imbue Weapon
                 );
     }
