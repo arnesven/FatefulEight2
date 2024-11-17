@@ -25,6 +25,8 @@ public abstract class AuxiliarySpell extends MasterySpell {
         boolean success = super.castYourself(model, state, caster);
         if (success) {
             applyAuxiliaryEffect(model, state, caster);
+        } else {
+            applyFailureEffect(model, state, caster);
         }
         return success;
     }
@@ -37,4 +39,5 @@ public abstract class AuxiliarySpell extends MasterySpell {
 
     public final boolean canBeCastInCombat() { return getCombatSpell() != null; }
 
+    protected void applyFailureEffect(Model model, GameState state, GameCharacter caster) { }
 }

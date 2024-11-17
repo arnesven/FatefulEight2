@@ -15,10 +15,6 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
-import model.items.accessories.ApprenticeRing;
-import model.items.accessories.GreatHelm;
-import model.items.accessories.GreedyRing;
-import model.items.accessories.MasterRing;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
@@ -38,7 +34,6 @@ import view.*;
 import view.sprites.*;
 import view.subviews.SelectPartyMemberSubView;
 import view.subviews.SubView;
-import view.widget.MiniLog;
 
 import java.awt.*;
 import java.io.Serializable;

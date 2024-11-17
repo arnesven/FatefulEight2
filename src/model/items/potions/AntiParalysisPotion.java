@@ -24,7 +24,7 @@ public class AntiParalysisPotion extends Potion {
 
     @Override
     public String getShoppingDetails() {
-        return ", cures Paralysis for one party member.";
+        return ", Cures Paralysis for one party member.";
     }
 
     @Override

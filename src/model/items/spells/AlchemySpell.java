@@ -5,11 +5,16 @@ import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.PotionRecipe;
 import model.items.potions.Potion;
+import model.items.potions.UnstablePotion;
 import model.states.GameState;
+import util.MyLists;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+import view.subviews.AlchemySubView;
 import view.subviews.ArrowMenuSubView;
+import view.subviews.SubView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,33 +49,47 @@ public class AlchemySpell extends ImmediateSpell {
             return false;
         }
 
-        state.print(caster.getName() + " is preparing to cast Alchemy. Do you wish to brew (Y) or distill (N) potions? ");
-        this.distill = !state.yesNoInput();
+        SubView previousSubView = model.getSubView();
+        AlchemySubView subView = new AlchemySubView();
+        model.setSubView(subView);
 
-        Set<String> setOfPotions = new HashSet<>();
-        for (Potion p : model.getParty().getInventory().getPotions()) {
-            int cost = p.getCost() / 2;
-            if (cost <= model.getParty().getInventory().getIngredients() || distill) {
-                setOfPotions.add(nameAndStandardBrewingCost(p));
+        do {
+            subView.unsetContents();
+            state.println(caster.getName() + " is preparing to cast Alchemy.");
+            if (!selectBrewOrDistill(model, state, subView)) {
+                return false;
             }
-        }
-        if (!distill) {
-            for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
-                Potion p = recipe.getBrewable();
-                setOfPotions.remove(nameAndStandardBrewingCost(p));
-                setOfPotions.add(p.getName() + " (" + recipe.getBrewable().getCost() / 3 + ")");
-            }
-        }
-        if (setOfPotions.isEmpty()) {
-            state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have enough ingredients.");
-            return false;
-        }
 
-        state.println("What potion would you like to attempt to make with Alchemy?");
+            Set<String> setOfPotions = findSetOfPotions(model);
+            if (setOfPotions.isEmpty()) {
+                state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have enough ingredients.");
+                model.setSubView(previousSubView);
+                return false;
+            }
+
+            setSelectedPotionAndCost(model, state, setOfPotions);
+            if (this.selectedPotion == null) {
+                model.setSubView(previousSubView);
+                return false;
+            }
+            subView.setContents(selectedPotion, ingredientCost);
+            state.print("Are you sure you want to ");
+            if (distill) {
+                state.print("use up " + selectedPotion.getName() + " to recover " + ingredientCost + " ingredients");
+            } else {
+                state.print("spend " + ingredientCost + " ingredients to brew " + selectedPotion.getName());
+            }
+            state.print("? (Y/N) ");
+        } while (!state.yesNoInput());
+        return true;
+    }
+
+    private void setSelectedPotionAndCost(Model model, GameState state, Set<String> setOfPotions) {
+        state.println("What potion would you like to attempt to " + (distill ? "distill" : "make") + " with Alchemy?");
         List<String> options = new ArrayList<>(setOfPotions);
         options.add("Cancel");
         final String[] selected = {null};
-        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 28, 24 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), options, 24, 36 - options.size()*2, ArrowMenuSubView.NORTH_WEST) {
             @Override
             protected void enterPressed(Model model, int cursorPos) {
                 selected[0] = options.get(cursorPos);
@@ -81,25 +100,64 @@ public class AlchemySpell extends ImmediateSpell {
         for (Potion p : model.getParty().getInventory().getPotions()) {
             if (selected[0].contains(p.getName())) {
                 this.selectedPotion = p;
-                this.ingredientCost = p.getCost() / 2;
+                this.ingredientCost = standardCostForPotion(p);
                 break;
             }
         }
         for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
             if (selected[0].contains(recipe.getBrewable().getName())) {
                 this.selectedPotion = recipe.getBrewable();
-                this.ingredientCost = recipe.getBrewable().getCost() / 3;
+                this.ingredientCost = recipeCost(recipe.getBrewable());
                 break;
             }
         }
-        if (this.selectedPotion == null) {
-            return false;
+    }
+
+    private Set<String> findSetOfPotions(Model model) {
+        Set<String> setOfPotions = new HashSet<>();
+        for (Potion p : model.getParty().getInventory().getPotions()) {
+            if (standardCostForPotion(p) <= model.getParty().getInventory().getIngredients() || distill) {
+                setOfPotions.add(nameAndStandardBrewingCost(p));
+            }
         }
-        return true;
+        if (!distill) {
+            for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
+                Potion p = recipe.getBrewable();
+                setOfPotions.remove(nameAndStandardBrewingCost(p));
+                setOfPotions.add(p.getName() + " (" + recipeCost(recipe.getBrewable()) + ")");
+            }
+        }
+        return setOfPotions;
+    }
+
+    private boolean selectBrewOrDistill(Model model, GameState state, AlchemySubView subView) {
+        final boolean[] cancelled = {false};
+        model.setSubView(new ArrowMenuSubView(model.getSubView(), List.of("Brew", "Distill", "Cancel"),
+                24, 26, ArrowMenuSubView.NORTH_WEST) {
+            @Override
+            protected void enterPressed(Model model, int cursorPos) {
+                distill = cursorPos == 1;
+                if (cursorPos == 2) {
+                    cancelled[0] = true;
+                }
+            }
+        });
+        state.waitForReturnSilently();
+        model.setSubView(subView);
+        subView.setDistill(distill);
+        return !cancelled[0];
     }
 
     private String nameAndStandardBrewingCost(Potion p) {
-        return p.getName() + " (" + p.getCost() / 2 + ")";
+        return p.getName() + " (" + standardCostForPotion(p) + ")";
+    }
+
+    private int standardCostForPotion(Potion p) {
+        return Math.max(1, p.getCost() / 2);
+    }
+
+    private int recipeCost(Potion p) {
+        return Math.max(1, p.getCost() / 3);
     }
 
     @Override
@@ -108,6 +166,14 @@ public class AlchemySpell extends ImmediateSpell {
             state.println(caster.getName() + " distilled " + selectedPotion.getName() + " and recovered " + ingredientCost + " ingredients.");
             model.getParty().getInventory().remove(selectedPotion);
             model.getParty().getInventory().addToIngredients(ingredientCost);
+            if (MyRandom.rollD6() == 6 &&
+                    !MyLists.any(model.getParty().getInventory().getRecipes(),
+                            r -> r.getBrewable().getName().equals(selectedPotion.getName()))) {
+                state.println(caster.getName() + " also learned the recipe of " + selectedPotion.getName() + "!");
+                model.getParty().getInventory().add(new PotionRecipe(selectedPotion));
+                model.getParty().partyMemberSay(model, caster, List.of("I've got it!", "Eureka!", "That's it!",
+                        "Finally!", "I understand now.", "Of course, it makes sense now."));
+            }
         } else {
             int cost = ingredientCost;
             state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
@@ -117,6 +183,27 @@ public class AlchemySpell extends ImmediateSpell {
         model.getParty().partyMemberSay(model, caster, List.of("Bubble bubble!", "Ahh, what an aroma.",
                 "I'm cooking!", "It took a little time, but now it's done.", "Let's save this for later.",
                 "Mmmm... magical.", "Potions, potions, potions..."));
+    }
+
+    @Override
+    protected void applyFailureEffect(Model model, GameState state, GameCharacter caster) {
+        if (distill) {
+            state.println(caster.getName() + " was unable to recover any ingredients from the "
+                    + selectedPotion.getName() + ".");
+            model.getParty().getInventory().remove(selectedPotion);
+        } else {
+            model.getParty().getInventory().addToIngredients(-ingredientCost);
+            if (ingredientCost > 4 && MyRandom.rollD6() == 1) {
+                state.println(caster.getName() + " used up " + ingredientCost + " ingredients... the results were unexpected!");
+                UnstablePotion potion = new UnstablePotion();
+                potion.addYourself(model.getParty().getInventory());
+                state.println("You got an " + potion.getName() + ".");
+            } else {
+                state.println(caster.getName() + " used up " + ingredientCost + " ingredients but was unable to " +
+                        "brew anything useful.");
+
+            }
+        }
     }
 
     @Override

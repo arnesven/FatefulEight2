@@ -12,7 +12,8 @@ public class TutorialAlchemy extends HelpDialog {
             "collected from defeated monsters. \n\n" +
             "Keep a lookout for Potion Recipes. With recipes, you don't need a draft of " +
             "the potion you want to brew, and using a recipe consumes less ingredients " +
-            "then you would normally (on third).";
+            "then you would normally (one third).\n\n" +
+            "When distilling a potion, there is a small chance of also learning the Potion Recipe for that potion.";
 
     public TutorialAlchemy(GameView view) {
         super(view, "Alchemy", TEXT);
