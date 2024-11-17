@@ -27,6 +27,14 @@ public abstract class Weapon extends EquipableItem {
     }
 
     @Override
+    public int getCost() {
+        if (isImbued()) {
+            return super.getCost() + getImbuement().getCostAddition();
+        }
+        return super.getCost();
+    }
+
+    @Override
     public boolean isCraftable() {
         return true;
     }

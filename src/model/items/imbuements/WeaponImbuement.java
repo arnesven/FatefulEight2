@@ -30,4 +30,8 @@ public abstract class WeaponImbuement implements Serializable {
     public int getAttackBonus() {
         return 0;
     }
+
+    public int getCostAddition() {
+        return 25;
+    }
 }

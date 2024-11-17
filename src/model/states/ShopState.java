@@ -323,7 +323,7 @@ public class ShopState extends GameState {
             shopInventory.addAll(model.getItemDeck().draw(1, Prevalence.veryRare, 0.0));
         }
         if (MyRandom.rollD10() == 10) {
-            Weapon w = (Weapon) model.getItemDeck().draw(ItemDeck.allWeapons(), 1, Prevalence.unspecified, 0.0);
+            Weapon w = (Weapon) (model.getItemDeck().draw(ItemDeck.allWeapons(), 1, Prevalence.unspecified, 0.0).get(0));
             w.setImbuement(MyRandom.sample(ItemDeck.allImbuements()));
             shopInventory.add(w);
         }

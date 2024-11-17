@@ -26,4 +26,9 @@ public class ChainLightningImbuement extends WeaponImbuement {
             spell.applyCombatEffect(model, combatEvent, gameCharacter, target);
         }
     }
+
+    @Override
+    public int getCostAddition() {
+        return 50;
+    }
 }
