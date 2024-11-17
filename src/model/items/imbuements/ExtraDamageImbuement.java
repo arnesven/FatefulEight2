@@ -1,5 +1,10 @@
 package model.items.imbuements;
 
+import model.Model;
+import model.characters.GameCharacter;
+import model.combat.Combatant;
+import model.states.CombatEvent;
+
 public class ExtraDamageImbuement extends WeaponImbuement {
 
     @Override
@@ -10,6 +15,12 @@ public class ExtraDamageImbuement extends WeaponImbuement {
             burningTable[i+1] = damageTable[i];
         }
         return burningTable;
+    }
+
+    @Override
+    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter,
+                                 Combatant target, int damage, int critical) {
+
     }
 
     @Override

@@ -133,7 +133,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new CraftingDesign(new Pike()),
                 new CraftingDesign(new RepeatingCrossbow()),
                 new CraftingDesign(new RitualDagger()),
-                new CraftingDesign(new SkullWand()),
+                new CraftingDesign(new GrandStaff()),
                 new CraftingDesign(new Katana()),
                 new CraftingDesign(new Crown()),
                 new CraftingDesign(new Diadem()),

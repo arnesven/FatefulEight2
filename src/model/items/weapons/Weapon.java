@@ -27,14 +27,6 @@ public abstract class Weapon extends EquipableItem {
     }
 
     @Override
-    public String getName() {
-        if (isImbued()) {
-            return "Imbued " + super.getName();
-        }
-        return super.getName();
-    }
-
-    @Override
     public boolean isCraftable() {
         return true;
     }
@@ -191,7 +183,9 @@ public abstract class Weapon extends EquipableItem {
 
     public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter,
                                  Combatant target, int damage, int critical) {
-        getImbuement().didOneAttackWith(model, combatEvent, gameCharacter, target, damage, critical);
+        if (isImbued()) {
+            getImbuement().didOneAttackWith(model, combatEvent, gameCharacter, target, damage, critical);
+        }
     }
 
     public String getAttackSound() {

@@ -9,7 +9,9 @@ import view.ScreenHandler;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public abstract class WeaponImbuement {
+import java.io.Serializable;
+
+public abstract class WeaponImbuement implements Serializable {
     private static final Sprite BURNING_SPRITE = CharSprite.make(0xDD, MyColors.LIGHT_GRAY, MyColors.RED, MyColors.BEIGE);
 
     public int[] makeDamageTable(int[] damageTable) {
@@ -20,9 +22,8 @@ public abstract class WeaponImbuement {
         screenHandler.put(col, row, BURNING_SPRITE);
     }
 
-    public void didOneAttackWith(Model model, CombatEvent combatEvent, GameCharacter gameCharacter, Combatant target, int damage, int critical) {
-
-    }
+    public abstract void didOneAttackWith(Model model, CombatEvent combatEvent,
+                                          GameCharacter gameCharacter, Combatant target, int damage, int critical);
 
     public abstract String getText();
 
