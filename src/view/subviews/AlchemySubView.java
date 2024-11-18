@@ -47,7 +47,7 @@ public class AlchemySubView extends SubView {
         }
     }
 
-    private void drawIngredients(Model model, int yStart) {
+    private synchronized void drawIngredients(Model model, int yStart) {
         int xOffset = isInDistill ? X_OFFSET + 16 : X_OFFSET;
         ingredientsDummy.drawYourself(model.getScreenHandler(), xOffset + 6, yStart);
         int textX = isInDistill ? X_MAX - ingredientsDummy.getName().length() : X_OFFSET;
@@ -81,7 +81,7 @@ public class AlchemySubView extends SubView {
 
     private void randomizeBlink() {
         delay = MyRandom.randInt(10, 30);
-        blinkLength = MyRandom.randInt(5);
+        blinkLength = MyRandom.randInt(delay);
     }
 
     private void drawBlink(Model model) {
@@ -96,7 +96,7 @@ public class AlchemySubView extends SubView {
         }
     }
 
-    public void setContents(Potion selectedPotion, int ingredientCost) {
+    public synchronized void setContents(Potion selectedPotion, int ingredientCost) {
         this.selectedPotion = selectedPotion;
         this.ingredientsDummy = new IngredientsDummyItem(ingredientCost);
     }
@@ -105,7 +105,7 @@ public class AlchemySubView extends SubView {
         isInDistill = distill;
     }
 
-    public void unsetContents() {
+    public synchronized void unsetContents() {
         this.selectedPotion = null;
         this.ingredientsDummy = null;
     }
