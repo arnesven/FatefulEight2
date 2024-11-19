@@ -15,7 +15,7 @@ public class WorkBenchNode extends DailyActionNode {
     private final Sprite32x32 nightSprite;
 
     public WorkBenchNode(Model model, MyColors dayColor, MyColors nightColor) {
-        super("Work Bench");
+        super("Workbench");
         this.model = model;
         daySprite = new Sprite32x32("workbenchtown", "world_foreground.png", 0x71,
                 dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.TAN);

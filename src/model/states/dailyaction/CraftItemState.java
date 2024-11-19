@@ -15,9 +15,7 @@ import model.states.GameState;
 import util.MyPair;
 import util.MyRandom;
 import util.MyTriplet;
-import view.subviews.SubView;
-import view.subviews.UpgradeItemOverview;
-import view.subviews.ArrowMenuSubView;
+import view.subviews.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,25 +30,31 @@ public class CraftItemState extends GameState {
 
     @Override
     public GameState run(Model model) {
+        CraftingSubView subView = new CraftingSubView();
+        CollapsingTransition.transition(model, subView);
         println("What would you like to do at the workbench?");
-        int selected = multipleOptionArrowMenu(model, 30, 20,
-                List.of("Craft Item", "Upgrade Item", "Salvage Item", "Cancel"));
-        if (selected == 1) {
-            upgradeItem(model);
-        } else if (selected == 2) {
-            salvageItem(model);
-        }
-        if (selected > 0) {
-            return new DailyActionState(model);
-        }
+        do {
+            int selected = multipleOptionArrowMenu(model, 24, 26,
+                    List.of("Craft Item", "Upgrade Item", "Salvage Item", "Cancel"));
+            if (selected == 1) {
+                upgradeItem(model);
+            } else if (selected == 2) {
+                salvageItem(model);
+            } else if (selected == 0) {
+                craftItem(model);
+            } else {
+                return new DailyActionState(model);
+            }
+        } while (true);
+    }
+
+    private void craftItem(Model model) {
         model.getTutorial().crafting(model);
         List<Item> allItems = getAllItems(model);
         allItems.removeIf((Item it) -> it instanceof BookItem || it instanceof Scroll);
         if (allItems.isEmpty()) {
-            println("You cannot craft since you do not have any items.");
-            return new DailyActionState(model);
+            println("You cannot craft since you do not have any suitable items or crafting designs.");
         }
-
         Set<String> optionNames = new HashSet<>();
         for (Item it : allItems) {
             if (it instanceof CraftingDesign) {
@@ -67,17 +71,16 @@ public class CraftItemState extends GameState {
         }
         if (optionNames.isEmpty()) {
             println("You do not have enough materials to craft anything.");
-            return new DailyActionState(model);
+            return;
         }
-         MyTriplet<Item, Integer, Boolean> triplet = getSelectedItem(model, optionNames, allItems);
+        MyTriplet<Item, Integer, Boolean> triplet = getSelectedItem(model, optionNames, allItems);
         if (triplet == null) {
-            return new DailyActionState(model);
+            return;
         }
         if (makeItemFromMaterials(model, triplet.first, triplet.second, "craft", triplet.third)) {
             GameStatistics.incrementItemsCrafted(1);
             model.getParty().getInventory().addItem(triplet.first.copy());
         }
-        return new DailyActionState(model);
     }
 
     private boolean makeItemFromMaterials(Model model, Item selectedItem, Integer materialCost, String actionName, boolean fromCraftingDesign) {
@@ -210,7 +213,7 @@ public class CraftItemState extends GameState {
             println(salvager.getFirstName() + " failed to salvage any materials.");
             model.getParty().partyMemberSay(model, salvager, List.of("Darn it!#", "Doh!#", "Phooey!#",
                     "That's too bad.", "What a waste...", "I'm sorry. This is ruined now.",
-                    "Hmm. I really thought I could do it.", "Trash..."));
+                    "Hmm. I really thought I could do it.", "Trash...", "What, it broke?"));
         }
         model.getParty().getInventory().remove(itemToSalvage);
     }

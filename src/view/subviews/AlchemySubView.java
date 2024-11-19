@@ -10,10 +10,11 @@ import view.BorderFrame;
 import view.MyColors;
 import view.sprites.ArrowSprites;
 import view.sprites.Sprite;
+import view.widget.SpriteArray;
 
 public class AlchemySubView extends SubView {
 
-    private static AlchemySubViewSprite SPRITE = new AlchemySubViewSprite();
+    private static final AlchemySubViewSprite SPRITE = new AlchemySubViewSprite();
     private static final int Y_PIC_END = Y_OFFSET + SPRITE.getHeight() / 8;
     private static Sprite EYES = new CatEyesSprite();
     private static final Sprite EMPTY = Item.EMPTY_ITEM_SPRITE;
@@ -31,7 +32,7 @@ public class AlchemySubView extends SubView {
     @Override
     protected void drawArea(Model model) {
         model.getScreenHandler().clearSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_MAX);
-        model.getScreenHandler().put(X_OFFSET, Y_OFFSET, SPRITE);
+        SPRITE.drawYourself(model.getScreenHandler(), X_OFFSET, Y_OFFSET);
         drawBlink(model);
 
         int yStart = Y_PIC_END + 4;
@@ -118,10 +119,9 @@ public class AlchemySubView extends SubView {
         }
     }
 
-    private static class AlchemySubViewSprite extends Sprite {
+    private static class AlchemySubViewSprite extends SpriteArray {
         public AlchemySubViewSprite() {
-            super("alchemysubview", "alchemy.png", 0, 0, 256, 164);
-            MyColors.transformImage(this);
+            super("alchemysubview", "alchemy.png", 256, 164, true);
         }
     }
 }
