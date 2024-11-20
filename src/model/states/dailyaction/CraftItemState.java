@@ -252,7 +252,7 @@ public class CraftItemState extends GameState {
             println("You have no items in your inventory which can be upgraded.");
             return;
         }
-        println("Which item would you like to salvage?");
+        println("Which item would you like to upgrade?");
         List<String> names = new ArrayList<>();
         for (Item it : upgradeableItems) {
             if (it.getCost() <= model.getParty().getInventory().getMaterials()) {
