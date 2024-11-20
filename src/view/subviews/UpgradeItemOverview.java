@@ -36,7 +36,7 @@ public class UpgradeItemOverview extends SubView {
         int frameStartY = Y_OFFSET+10;
         int dialogHeight = 15 + analysisDrawableObjects.size() / 2;
         model.getScreenHandler().clearSpace(frameStartX, frameStartX+DIALOG_WIDTH,
-                frameStartY-2, frameStartY+dialogHeight);
+                frameStartY, frameStartY+dialogHeight);
         model.getScreenHandler().clearForeground(frameStartX-2, frameStartX+DIALOG_WIDTH,
                 frameStartY-2, frameStartY+dialogHeight);
         BorderFrame.drawFrame(model.getScreenHandler(), frameStartX, frameStartY,
@@ -71,7 +71,7 @@ public class UpgradeItemOverview extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return previous.getUnderText(model);
+        return "Upgrading " + fromItem.getName() + "...";
     }
 
     @Override

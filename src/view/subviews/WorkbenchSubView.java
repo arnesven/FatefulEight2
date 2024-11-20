@@ -4,7 +4,7 @@ import model.Model;
 import view.widget.SpriteArray;
 
 
-public class CraftingSubView extends SubView {
+public class WorkbenchSubView extends SubView {
 
     private static final SpriteArray SPRITE = new WorkBenchSprite();
 

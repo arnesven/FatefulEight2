@@ -12,7 +12,6 @@ import model.items.designs.CraftingDesign;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.DailyActionState;
 import model.states.GameState;
-import util.MyPair;
 import util.MyRandom;
 import util.MyTriplet;
 import view.subviews.*;
@@ -30,7 +29,7 @@ public class CraftItemState extends GameState {
 
     @Override
     public GameState run(Model model) {
-        CraftingSubView subView = new CraftingSubView();
+        WorkbenchSubView subView = new WorkbenchSubView();
         CollapsingTransition.transition(model, subView);
         println("What would you like to do at the workbench?");
         do {
@@ -77,10 +76,15 @@ public class CraftItemState extends GameState {
         if (triplet == null) {
             return;
         }
-        if (makeItemFromMaterials(model, triplet.first, triplet.second, "craft", triplet.third)) {
+        SubView previous = model.getSubView();
+        model.setSubView(new CraftItemSubView(previous, triplet.first, triplet.second, triplet.third));
+        print("Are you sure you want to spend " + triplet.second +
+                " materials to attempt to craft " + triplet.first.getName() + "? (Y/N) ");
+        if (yesNoInput() && makeItemFromMaterials(model, triplet.first, triplet.second, "craft", triplet.third)) {
             GameStatistics.incrementItemsCrafted(1);
             model.getParty().getInventory().addItem(triplet.first.copy());
         }
+        model.setSubView(previous);
     }
 
     private boolean makeItemFromMaterials(Model model, Item selectedItem, Integer materialCost, String actionName, boolean fromCraftingDesign) {
@@ -196,26 +200,33 @@ public class CraftItemState extends GameState {
             return;
         }
         Item itemToSalvage = salvageableItems.get(selected);
-        print("Which party member should attempt to salvage the " + itemToSalvage.getName() + "? ");
-        GameCharacter salvager = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-        SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, salvager, Skill.Labor, 5, 5, 0);
-        int materialsGained = Math.max(0, (itemToSalvage.getCost() + result.getModifiedRoll() - 5) / 5);
-        println("The " + itemToSalvage.getName() + " was destroyed.");
-        if (result.isSuccessful() && materialsGained > 0) {
-            println(salvager.getFirstName() + " managed to salvage " + materialsGained +
-                    " material" + (materialsGained==1?"":"s") + " from the " + itemToSalvage.getName() + ".");
-            model.getParty().partyMemberSay(model, salvager, List.of("Why throw something away just because it's old?",
-                    "We can probably use these materials for something.",
-                    "These are good quality materials, let's save them for later.",
-                    "Nice!"));
-            model.getParty().getInventory().addToMaterials(materialsGained);
-        } else {
-            println(salvager.getFirstName() + " failed to salvage any materials.");
-            model.getParty().partyMemberSay(model, salvager, List.of("Darn it!#", "Doh!#", "Phooey!#",
-                    "That's too bad.", "What a waste...", "I'm sorry. This is ruined now.",
-                    "Hmm. I really thought I could do it.", "Trash...", "What, it broke?"));
+
+        SubView previous = model.getSubView();
+        model.setSubView(new SalvageItemSubView(previous, itemToSalvage));
+        print("Are you sure you want to attempt to salvage " + itemToSalvage.getName() + "? (Y/N) ");
+        if (yesNoInput()) {
+            print("Which party member should attempt to salvage the " + itemToSalvage.getName() + "? ");
+            GameCharacter salvager = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, salvager, Skill.Labor, 5, 5, 0);
+            int materialsGained = Math.max(0, (itemToSalvage.getCost() + result.getModifiedRoll() - 5) / 5);
+            println("The " + itemToSalvage.getName() + " was destroyed.");
+            if (result.isSuccessful() && materialsGained > 0) {
+                println(salvager.getFirstName() + " managed to salvage " + materialsGained +
+                        " material" + (materialsGained == 1 ? "" : "s") + " from the " + itemToSalvage.getName() + ".");
+                model.getParty().partyMemberSay(model, salvager, List.of("Why throw something away just because it's old?",
+                        "We can probably use these materials for something.",
+                        "These are good quality materials, let's save them for later.",
+                        "Nice!"));
+                model.getParty().getInventory().addToMaterials(materialsGained);
+            } else {
+                println(salvager.getFirstName() + " failed to salvage any materials.");
+                model.getParty().partyMemberSay(model, salvager, List.of("Darn it!#", "Doh!#", "Phooey!#",
+                        "That's too bad.", "What a waste...", "I'm sorry. This is ruined now.",
+                        "Hmm. I really thought I could do it.", "Trash...", "What, it broke?"));
+            }
+            model.getParty().getInventory().remove(itemToSalvage);
         }
-        model.getParty().getInventory().remove(itemToSalvage);
+        model.setSubView(previous);
     }
 
     private int showMenu(Model model, List<String> names) {
@@ -273,7 +284,8 @@ public class CraftItemState extends GameState {
         SubView oldSubview = model.getSubView();
         UpgradeItemOverview overview = new UpgradeItemOverview(model, selectedItem, potentialItem);
         model.setSubView(overview);
-        print("Are you sure you want to attempt to upgrade " + selectedItem.getName() + " to " + potentialItem.getName() + "? (Y/N) ");
+        print("Are you sure you want to attempt to upgrade " + selectedItem.getName() + " to " +
+                potentialItem.getName() + " (cost of " + selectedItem.getCost() + " materials)" +"? (Y/N) ");
         if (yesNoInput()) {
             if (makeItemFromMaterials(model, selectedItem, selectedItem.getCost(), "upgrade", false)) {
                 GameStatistics.incrementItemsUpgraded(1);
