@@ -321,4 +321,30 @@ public class Sprite implements Serializable {
     protected void setFlipHorizontal(boolean b) {
         flipHorizontal = b;
     }
+
+    public char[][] getCharArray() {
+        char[][] result = new char[width][height];
+        try {
+            BufferedImage original = internalGetImage();
+            for (int y = 0; y < original.getHeight(); ++y) {
+                for (int x = 0; x < original.getWidth(); ++x) {
+                    if (original.getRGB(x, y) == color1.toAwtColor().getRGB()) {
+                        result[x][y] = '1';
+                    } else if (original.getRGB(x, y) == color2.toAwtColor().getRGB()) {
+                        result[x][y] = '2';
+                    } else if (original.getRGB(x, y) == color3.toAwtColor().getRGB()) {
+                        result[x][y] = '3';
+                    } else if (original.getRGB(x, y) == color4.toAwtColor().getRGB()) {
+                        result[x][y] = '4';
+                    } else {
+                        result[x][y] = '0';
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

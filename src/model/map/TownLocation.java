@@ -2,13 +2,11 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.characters.PersonalityTrait;
 import model.headquarters.Headquarters;
 import model.states.*;
+import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
 import model.states.events.*;
-import sound.BackgroundMusic;
-import sound.ClientSoundManager;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;
@@ -88,6 +86,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        return new BeanGameEvent(model); /*
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
                     new AcceptDeliveryEvent(model),
@@ -98,6 +97,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new BakeryEvent(model),
                     new BarbershopEvent(model),
                     new BathHouseEvent(model),
+                    new BeanGameEvent(model),
                     new BorrowedMoneyEvent(model),
                     new CatInATreeEvent(model),
                     new CharlatanEvent(model),
@@ -130,7 +130,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     // WarehouseEvent = Sokoban
             ));
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     @Override

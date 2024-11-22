@@ -103,4 +103,8 @@ public class SoundEffects {
     public static void playFoundBoulder() {
         playWithVolume("found_boulder", Volume.LOW);
     }
+
+    public static void playClickSound() {
+        playWithVolume("click", Volume.HIGH);
+    }
 }

@@ -5,7 +5,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.DogAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -19,7 +18,6 @@ import util.MyPair;
 import util.MyRandom;
 import view.LogView;
 import view.PartyAttitudesDialog;
-import view.sprites.RunOnceAnimationSprite;
 import view.subviews.*;
 
 import java.util.ArrayList;
