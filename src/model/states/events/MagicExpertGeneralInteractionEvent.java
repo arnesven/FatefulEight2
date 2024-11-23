@@ -17,7 +17,8 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
             "Levitate can get you across rivers, among other things.",
             "Tired of walking? Check out Teleport.",
             "Southern Cross is a powerful healing spell, but you can only use it under the right conditions.",
-            "The Resurrect spell is a real life saver, literally. But it is exhausting, and takes a long time to cast."
+            "The Resurrect spell is a real life saver, literally. But it is exhausting, and takes a long time to cast.",
+            "I once knew a Magician who liked to use Telekinesis while gambling. He made quite a bit of money, until he got caught."
     );
     private static final List<String> VAMPIRE_TIPS = List.of(
             "Vampires need to feed on humanoid creatures to sustain themselves. That's why they're drawn to towns and castles.",

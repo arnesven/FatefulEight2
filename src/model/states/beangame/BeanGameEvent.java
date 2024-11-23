@@ -2,6 +2,8 @@ package model.states.beangame;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
@@ -28,6 +30,7 @@ import java.util.List;
 public class BeanGameEvent extends DailyEventState {
 
     private static final String BEAN_GAME_FIRST_TIME = "BEAN_GAME_FIRST_TIME";
+    private AdvancedAppearance gamblerAppearance;
 
     public BeanGameEvent(Model model) {
         super(model);
@@ -41,7 +44,7 @@ public class BeanGameEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        CharacterAppearance gamblerAppearance = PortraitSubView.makeRandomPortrait(Classes.THF);
+        this.gamblerAppearance = PortraitSubView.makeRandomPortrait(Classes.THF);
         println("As you walk down a street, a " + manOrWoman(gamblerAppearance.getGender()) + " calls out to you.");
         model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, gamblerAppearance, "Gambler");
@@ -61,6 +64,8 @@ public class BeanGameEvent extends DailyEventState {
             leaderSay("The Jackpot?");
             portraitSay("That's the big leagues friend. Pay me one gold and pick a board. I'll give you three beans. " +
                     "If you manage to hit a winning pocket all three times, all multiply those numbers and pay you - in gold!");
+            randomSayIfPersonality(PersonalityTrait.greedy, List.of(model.getParty().getLeader()),
+                    "Did " + heOrShe(gamblerAppearance.getGender()) + " say the words 'multiply' and 'gold'?");
             leaderSay("What if I don't hit a winning pocket?");
             portraitSay("Then the game is over. But you look like a lucky individual.");
             leaderSay("I believe I am... Let me have a look at the boards.");
@@ -75,14 +80,21 @@ public class BeanGameEvent extends DailyEventState {
         ClientSoundManager.stopPlayingBackgroundSound();
         printQuote("Gambler", "Do ya just want to play Singles, " +
                 "or do you want to try your luck on the Jackpot?");
-        do {
+        int constableTime = MyRandom.randInt(3, 24);
+
+        for (int timesPlayed = 0; ; timesPlayed++) {
             ChooseBeanGameSubView chooseView = new ChooseBeanGameSubView(boards);
             CollapsingTransition.transition(model, chooseView);
 
             int choice = multipleOptionArrowMenu(model, 24, 32, List.of("Singles", "Jackpot", "Walk away"));
             if (choice == 2) {
                 break;
-            } else if (choice == 0) {
+            }
+            if (timesPlayed > constableTime) {
+                constableCome(model);
+                break;
+            }
+            if (choice == 0) {
                 if (!playSingles(model, chooseView)) {
                     break;
                 }
@@ -91,12 +103,22 @@ public class BeanGameEvent extends DailyEventState {
                     break;
                 }
             }
-            // TODO: Check for constable
             print("Press enter to continue.");
             waitForReturn();
             gamblerSay("Up for another game?");
-        } while (true);
+        }
         println("You walk away from the bean games.");
+    }
+
+    private void constableCome(Model model) {
+        setCurrentTerrainSubview(model);
+        println("You're just about to talk to the gambler when you see a constable coming " +
+                "around the corner down the street. You discretely nod your head at him.");
+        showExplicitPortrait(model, gamblerAppearance, "Gambler");
+        portraitSay("Fiddlesticks! Well friend, it's been fun. But I'd better skedaddle.");
+        leaderSay("Yeah, I had an inkling this wasn't exactly legal.");
+        println("The gambler begins to hurriedly collect " + hisOrHer(gamblerAppearance.getGender()) +
+                " bean game board.");
     }
 
     private boolean isFirstTime(Model model) {
@@ -201,6 +223,8 @@ public class BeanGameEvent extends DailyEventState {
             }
         }
         jackpotWin(model, prizes);
+        portraitSay("Now, I'm afraid I have to pack it in for today. Good bye!");
+        leaderSay("He he. I think we broke the house.");
         return false;
     }
 
@@ -208,6 +232,7 @@ public class BeanGameEvent extends DailyEventState {
         leaderSay("JACKPOT!!!");
         model.getLog().waitForAnimationToFinish();
         setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, gamblerAppearance, "Gambler");
         println("The gambler's enthusiasm is quickly replaced by obvious disappointment.");
         portraitSay("Jackpot indeed.");
         leaderSay("I guess this is my lucky day.");
@@ -215,7 +240,7 @@ public class BeanGameEvent extends DailyEventState {
         SkillCheckResult skillResult = model.getParty().getLeader().testSkillHidden(Skill.Logic, 8, 0);
         if (result <= 10 || skillResult.isSuccessful()) {
             leaderSay("Now pay me my " + result + " gold please.");
-            println("(" + skillResult.asString() + ".");
+            println("(" + skillResult.asString() + ".)");
             portraitSay("Hmm... yes, congratulations...");
             println("The gambler brings out a bag of money and counts up your prize. You get " + result + " gold.");
             model.getParty().addToGold(result);
@@ -244,8 +269,6 @@ public class BeanGameEvent extends DailyEventState {
             leaderSay("Thank you!");
             println("You gladly accept the " + fakeResult + " gold.");
             model.getParty().addToGold(fakeResult);
-            portraitSay("Now, I'm afraid I have to pack it in for today. Good bye!");
-            leaderSay("He he. I think we broke the house.");
         }
     }
 
@@ -255,12 +278,12 @@ public class BeanGameEvent extends DailyEventState {
         if (MyRandom.flipCoin()) {
             leaderSay(MyRandom.sample(List.of("Let's see...", "Where to drop it?", "Hmm...", "I drop it up here?")));
         }
+        model.getSpellHandler().acceptSpell(new TelekinesisSpell().getName());
         waitForReturnSilently();
         if (MyRandom.flipCoin()) {
             leaderSay(MyRandom.sample(List.of("Drop!", "Go!", "Bye little bean.", "Fingers crossed!")));
         }
         beanSubView.start();
-        model.getSpellHandler().acceptSpell(new TelekinesisSpell().getName());
         try {
             waitUntilOrSpell(beanSubView, BeanGameSubView::gameIsOver);
         } catch (SpellCastException sce) {
@@ -304,7 +327,8 @@ public class BeanGameEvent extends DailyEventState {
     private static class TelekinesisActivatedDialog extends SimpleMessageView {
         public TelekinesisActivatedDialog(Model model, GameCharacter caster) {
             super(model.getView(), caster.getName() + " is now affecting the bean with Telekinesis! " +
-                    "You can nudge the ball by using the arrow keys.");
+                    "You can nudge the ball by using the arrow keys. Attention: excessive use may " +
+                    "cause suspicion!");
         }
     }
 }

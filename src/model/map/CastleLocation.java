@@ -7,6 +7,7 @@ import model.races.Race;
 import model.states.AcceptDeliveryEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
 import model.states.events.*;
 import sound.BackgroundMusic;
@@ -113,6 +114,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new CaptainEvent(model),
                     new SmithEvent(model),
                     new ArcherEvent(model),
+                    new BeanGameEvent(model),
                     new NoblemanEvent(model),
                     new NoblemanEvent(model),
                     new PriestEvent(model),

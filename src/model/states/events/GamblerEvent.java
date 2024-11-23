@@ -51,7 +51,7 @@ public class GamblerEvent extends DailyEventState {
                     int die2 = MyRandom.randInt(1, 6);
                     println("You roll a " + die1 + " and a " + die2 + ", for a total of " + (die1 + die2) + ".");
                     if (die1 == 6 && die2 == 6) {
-                        leaderSay("Jackpot!");
+                        leaderSay("Double sixes!");
                         portraitSay("You lucky bastard...#");
                         leaderSay("Pay up man, I won that pot fair and square.");
                         println("Looks around nervously as to assess his options.");

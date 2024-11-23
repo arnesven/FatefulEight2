@@ -86,7 +86,6 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new BeanGameEvent(model); /*
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
                     new AcceptDeliveryEvent(model),
@@ -130,7 +129,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     // WarehouseEvent = Sokoban
             ));
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     @Override
