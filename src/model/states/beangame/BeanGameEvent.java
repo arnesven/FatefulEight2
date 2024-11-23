@@ -288,13 +288,14 @@ public class BeanGameEvent extends DailyEventState {
             waitUntilOrSpell(beanSubView, BeanGameSubView::gameIsOver);
         } catch (SpellCastException sce) {
             beanSubView.setPause(true);
-            if (sce.getSpell().castYourself(model, this, sce.getCaster())) {
+            if (sce.getSpell() instanceof TelekinesisSpell &&
+                    sce.getSpell().castYourself(model, this, sce.getCaster())) {
                 beanSubView.enableTelekinesis();
+                model.getLog().waitForAnimationToFinish();
                 model.transitionToDialog(new TelekinesisActivatedDialog(model, sce.getCaster()));
             }
             beanSubView.setPause(false);
             waitUntil(beanSubView, BeanGameSubView::gameIsOver);
-
         }
         model.getSpellHandler().unacceptSpell(new TelekinesisSpell().getName());
         beanSubView.stop();
