@@ -6,12 +6,16 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.spells.TelekinesisSpell;
 import model.states.DailyEventState;
+import model.states.SpellCastException;
 import model.states.events.GuideData;
 import sound.*;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
+import view.GameView;
+import view.SimpleMessageView;
 import view.subviews.BeanGameSubView;
 import view.subviews.ChooseBeanGameSubView;
 import view.subviews.CollapsingTransition;
@@ -256,7 +260,20 @@ public class BeanGameEvent extends DailyEventState {
             leaderSay(MyRandom.sample(List.of("Drop!", "Go!", "Bye little bean.", "Fingers crossed!")));
         }
         beanSubView.start();
-        waitUntil(beanSubView, BeanGameSubView::gameIsOver);
+        model.getSpellHandler().acceptSpell(new TelekinesisSpell().getName());
+        try {
+            waitUntilOrSpell(beanSubView, BeanGameSubView::gameIsOver);
+        } catch (SpellCastException sce) {
+            beanSubView.setPause(true);
+            if (sce.getSpell().castYourself(model, this, sce.getCaster())) {
+                beanSubView.enableTelekinesis();
+                model.transitionToDialog(new TelekinesisActivatedDialog(model, sce.getCaster()));
+            }
+            beanSubView.setPause(false);
+            waitUntil(beanSubView, BeanGameSubView::gameIsOver);
+
+        }
+        model.getSpellHandler().unacceptSpell(new TelekinesisSpell().getName());
         beanSubView.stop();
         return beanMatrix.getPrize(beanSubView.getWinPocket()-1);
     }
@@ -282,5 +299,12 @@ public class BeanGameEvent extends DailyEventState {
     private void leaderCommentOnLoss() {
         leaderSay(MyRandom.sample(List.of("Drat!", "It was so close!", "Rotten luck.",
                 "It's over?", "Nothing.", "Meh.", "Dung beetles!", "That was unfortunate.")));
+    }
+
+    private static class TelekinesisActivatedDialog extends SimpleMessageView {
+        public TelekinesisActivatedDialog(Model model, GameCharacter caster) {
+            super(model.getView(), caster.getName() + " is now affecting the bean with Telekinesis! " +
+                    "You can nudge the ball by using the arrow keys.");
+        }
     }
 }

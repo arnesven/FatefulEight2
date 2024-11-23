@@ -319,13 +319,25 @@ public abstract class GameState implements GameStateConstants {
         return creepyness >= 100;
     }
 
-    public <E> void waitUntil(E arg, Predicate<E> test) {
+    public <E> void waitUntil(E arg, Predicate<E> test, boolean withSpell) {
         while (!test.test(arg) && !getModel().gameExited()) {
+            if (withSpell && model.getSpellHandler().spellReady()) {
+                MyPair<Spell, GameCharacter> pair = model.getSpellHandler().getCastSpell();
+                throw new SpellCastException(pair.first, pair.second);
+            }
             sleep(20);
         }
         if (model.gameExited()) {
             throw new GameExitedException();
         }
+    }
+
+    public <E> void waitUntil(E arg, Predicate<E> test) {
+        waitUntil(arg, test, false);
+    }
+
+    public <E> void waitUntilOrSpell(E arg, Predicate<E> test) {
+        waitUntil(arg, test, true);
     }
 
     public void delay(int millis) {

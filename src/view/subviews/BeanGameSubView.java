@@ -50,6 +50,8 @@ public class BeanGameSubView extends SubView implements Animation {
     private int frameCount = 0;
     private boolean droppingBean = true;
     private boolean gameOver = false;
+    private boolean telekinesisEnabled = false;
+    private boolean paused = false;
 
     public BeanGameSubView(BeanGameBoard beanGameBoard, GameCharacter player) {
         this.gameBoard = beanGameBoard;
@@ -150,7 +152,8 @@ public class BeanGameSubView extends SubView implements Animation {
 
     @Override
     protected String getUnderText(Model model) {
-        return "You are playing the bean game.";
+        String extra = " Telekinesis activated.";
+        return "You are playing the bean game." + (telekinesisEnabled ? extra : "");
     }
 
     @Override
@@ -174,7 +177,7 @@ public class BeanGameSubView extends SubView implements Animation {
                 screen = Arithmetics.decrementWithWrap(screen, numberOfScreens);
                 return true;
             }
-        } else {
+        } else if (telekinesisEnabled) {
             double nudgeSpeed = 2.0;
             if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
                 velocity = new Point2D.Double(-nudgeSpeed, velocity.getY());
@@ -199,8 +202,15 @@ public class BeanGameSubView extends SubView implements Animation {
         AnimationManager.registerPausable(this);
     }
 
+    public void setPause(boolean enabled) {
+        this.paused = enabled;
+    }
+
     @Override
     public void stepAnimation(long elapsedTimeMs, Model model) {
+        if (paused) {
+            return;
+        }
         frameCount++;
         if (frameCount % ANIMATION_DELAY == 0) {
             updateState();
@@ -337,6 +347,10 @@ public class BeanGameSubView extends SubView implements Animation {
                 'G', new PinSprite(MyColors.DARK_GRAY, BeanGameBoardMaker.getColor('G')),
                 'w', new PinSprite(MyColors.GRAY, BeanGameBoardMaker.getColor('w')),
                 'k', new PinSprite(MyColors.BLACK, BeanGameBoardMaker.getColor('k')));
+    }
+
+    public void enableTelekinesis() {
+        this.telekinesisEnabled = true;
     }
 
     private static class PinSprite extends Sprite8x8{
