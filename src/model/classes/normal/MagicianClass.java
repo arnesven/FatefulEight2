@@ -8,6 +8,7 @@ import model.items.Equipment;
 import model.items.Item;
 import model.items.spells.CreatureComfortsSpell;
 import model.items.spells.ShiningAegisSpell;
+import model.items.spells.TelekinesisSpell;
 import model.items.spells.TransmuteSpell;
 import model.items.weapons.ClaspedOrb;
 import model.items.weapons.OldWand;
@@ -104,6 +105,6 @@ public class MagicianClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new ClaspedOrb(), new ShiningAegisSpell(), new CreatureComfortsSpell());
+        return List.of(new ClaspedOrb(), new TelekinesisSpell(), new CreatureComfortsSpell());
     }
 }
