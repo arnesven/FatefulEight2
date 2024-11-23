@@ -6,7 +6,6 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class TelekinesisSpell extends QuestSpell {
-    // TODO: Make used in more places (only bean game for now)
     private static final Sprite SPRITE = new ItemSprite(5, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
 
     public TelekinesisSpell() {
