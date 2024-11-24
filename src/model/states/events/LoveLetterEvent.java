@@ -11,15 +11,13 @@ import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 
-public class LoveLetterEvent extends DailyEventState {
+public class LoveLetterEvent extends LetterOnTheStreetEvent {
     public LoveLetterEvent(Model model) {
         super(model);
     }
 
     @Override
-    protected void doEvent(Model model) {
-        println("You are pacing through town when suddenly something on the ground catches your eye. At first, " +
-                "you take it for just a piece of trash, but then you realize it's a letter. You pick it up.");
+    protected void innerDoEvent(Model model) {
         leaderSay("Hmm, looks quite fancy. " +
                 "It's addressed to 'Maggie', but who could have sent it?");
         print("Do you open the letter? (Y/N) ");

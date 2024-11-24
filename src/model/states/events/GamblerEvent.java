@@ -158,7 +158,7 @@ public class GamblerEvent extends DailyEventState {
                     new BrotherhoodCronyEnemy('C'), new BrotherhoodCronyEnemy('C')
             ));
             Collections.shuffle(enemies);
-            for (int toRemove = MyRandom.randInt(3, 6); toRemove >= 0; --toRemove) {
+            for (int toRemove = MyRandom.randInt(3, 6); toRemove > 0; --toRemove) {
                 enemies.remove(0);
             }
             runCombat(enemies);

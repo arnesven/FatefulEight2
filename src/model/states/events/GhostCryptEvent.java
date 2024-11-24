@@ -28,6 +28,6 @@ public class GhostCryptEvent extends DailyEventState {
         for (int i = num; i > 0; --i) {
             result.add(new GhostEnemy('A'));
         }
-        runCombat(result, new DungeonTheme(), true, ambush ? CombatAdvantage.Enemies : CombatAdvantage.Neither);
+        runCombat(result, new DungeonTheme(), true, ambush ? CombatAdvantage.Enemies : CombatAdvantage.Neither, new ArrayList<>());
     }
 }

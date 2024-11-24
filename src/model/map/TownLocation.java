@@ -114,6 +114,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new PlayEvent(model),
                     new PsychicRitual(model),
                     new SmithEvent(model),
+                    new SmugglersEvent(model),
                     new ThiefEvent(model),
                     new ThievesGuildEvent(model),
                     new TimedHorseRaceEvent(model),
@@ -214,5 +215,9 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     @Override
     public boolean bothBoatAndCarriage() {
         return false;
+    }
+
+    public boolean isCoastal() {
+        return isCoastal;
     }
 }
