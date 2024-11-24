@@ -57,7 +57,8 @@ public class SelectMinigameDialog extends SelectableListMenu {
                 new MyPair<>("Archery", m -> new ArcheryRangeEvent(m)),
                 new MyPair<>("Garden Maze", m -> new GardenMazeEvent(m)),
                 new MyPair<>("Runny Card Game", m -> new CardGameState(m, new RunnyCardGame())),
-                new MyPair<>("Knockout Card Game", m -> new CardGameState(m, new KnockOutCardGame(1)))
+                new MyPair<>("Knockout Card Game", m -> new CardGameState(m, new KnockOutCardGame(1))),
+                new MyPair<>("Lotto House", m -> new LottoHouseEvent(m))
         ));
         events.sort(Comparator.comparing(p -> p.first));
         return MyLists.transform(events,
