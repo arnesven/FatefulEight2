@@ -242,7 +242,8 @@ public class ArcheryContestEvent extends TournamentEvent {
             if (chara == chosen) {
                 println("It is now " + chosen.getName() + "'s turn.");
                 model.getLog().waitForAnimationToFinish();
-                ShootBallsState state = new ShootBallsState(model, chosen, bowToUse);
+                ShootBallsState state = new ShootBallsState(model, chosen, bowToUse,
+                        "ARCHERY CONTEST - ROUND 2");
                 state.useFletching(fletchings.get(chosen));
                 state.run(model);
                 newPoints.put(chosen, state.getPoints());

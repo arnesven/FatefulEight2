@@ -78,9 +78,13 @@ public abstract class GameState implements GameStateConstants {
         waitForReturn(false);
     }
 
-    public void waitForReturnSilently() {
+    public void waitForReturnSilently(boolean stopForSpell) {
         model.getLog().waitForReturnSilently();
-        internalInput();
+        internalInput(stopForSpell);
+    }
+
+    public void waitForReturnSilently() {
+        waitForReturnSilently(false);
     }
 
     public boolean yesNoInput() {

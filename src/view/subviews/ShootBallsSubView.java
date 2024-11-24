@@ -32,6 +32,7 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
     private static final Rectangle OUTER_BOUNDS = new Rectangle(X_OFFSET+1, Y_OFFSET-19, X_MAX - X_OFFSET-2, Y_MAX - Y_OFFSET - 2 + 20);
     private final List<MyPair<Ball, RunOnceAnimationSprite>> destroyAnimations = new ArrayList<>();
     private int reloadCounter;
+    private boolean telekinesis = false;
 
     public ShootBallsSubView(ShootBallsState shootBallsState, GameCharacter shooter, BowWeapon bowToUse) {
         this.state = shootBallsState;
@@ -66,12 +67,15 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
         } else {
             text += "next shot in " + reloadCounter + " seconds.";
         }
+        if (telekinesis) {
+            text += " (Telekinesis).";
+        }
         return text;
     }
 
     @Override
     protected String getTitleText(Model model) {
-        return "ARCHERY CONTEST - ROUND 2";
+        return state.getSubViewTitleText();
     }
 
     @Override
@@ -111,15 +115,17 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
         if (animationStarted) {
             internalCount++;
             if (internalCount % animationDelay == 0) {
-                for (Ball b : balls) {
-                    int x = b.position.x*8 + b.shift.x + b.velocity.x;
-                    int y = b.position.y*8 + b.shift.y + b.velocity.y;
-                    b.position.x = x / 8;
-                    b.position.y = y / 8;
-                    b.shift.x = x % 8;
-                    b.shift.y = y % 8;
-                    if (internalCount % (animationDelay*4) == 0) {
-                        b.velocity.y += 1;
+                if (!telekinesis || !stillBallsToShoot()) {
+                    for (Ball b : balls) {
+                        int x = b.position.x * 8 + b.shift.x + b.velocity.x;
+                        int y = b.position.y * 8 + b.shift.y + b.velocity.y;
+                        b.position.x = x / 8;
+                        b.position.y = y / 8;
+                        b.shift.x = x % 8;
+                        b.shift.y = y % 8;
+                        if (internalCount % (animationDelay * 4) == 0) {
+                            b.velocity.y += 1;
+                        }
                     }
                 }
                 if (internalCount % (animationDelay*4) == 0) {
@@ -181,6 +187,10 @@ public class ShootBallsSubView extends AimingSubView implements Animation {
 
     public boolean shotReady() {
         return reloadCounter == 0;
+    }
+
+    public void enableTelekinesis() {
+        this.telekinesis = true;
     }
 
     private static class Ball {
