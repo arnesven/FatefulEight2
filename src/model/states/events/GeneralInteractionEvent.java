@@ -11,6 +11,8 @@ import model.combat.conditions.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
+import model.items.spells.Spell;
+import model.items.spells.TelekinesisSpell;
 import model.journal.JournalEntry;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
@@ -136,11 +138,14 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         println("While " + decoy.getFirstName() + " distracts " + victim + ", " + thief.getFirstName() +
                 " sneaks around from the back (Sneak " + result.asString() + ").");
         if (result.isSuccessful()) {
-            result = thief.testSkill(getModel(), Skill.Security,
-                    PICK_POCKETING_BASE_SECURITY_DIFFICULTY + victimChar.getLevel());
-            println(thief.getFirstName() + " attempts to grab the " + victim +
-                    "'s purse (Security " + result.asString() + ").");
-            if (result.isSuccessful()) {
+            boolean teleUsed = tryUseTelekinesis(thief);
+            if (!teleUsed) {
+                result = thief.testSkill(getModel(), Skill.Security,
+                        PICK_POCKETING_BASE_SECURITY_DIFFICULTY + victimChar.getLevel());
+                println(thief.getFirstName() + " attempts to grab the " + victim +
+                        "'s purse (Security " + result.asString() + ").");
+            }
+            if (teleUsed || result.isSuccessful()) {
                 GameStatistics.incrementGoldPickpocketed(stealMoney);
                 println(thief.getFirstName() + " successfully pick-pocketed " + stealMoney + " gold from the " + victim + ".");
                 getModel().getParty().addToGold(stealMoney);
@@ -180,6 +185,21 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         } else {
             attack(victimChar, companions, strat, false);
         }
+    }
+
+    private boolean tryUseTelekinesis(GameCharacter thief) {
+        Spell sp = MyLists.find(getModel().getParty().getInventory().getSpells(),
+                s -> s instanceof TelekinesisSpell);
+        if (sp != null) {
+            print("Would you like " + thief.getFirstName() + " to use " + sp.getName() +
+                    " instead of Security while pick-pocketing? (Y/N) ");
+            if (yesNoInput()) {
+                if (sp.castYourself(getModel(), this, thief)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static void addToNotoriety(Model model, GameState state, int notoriety) {
