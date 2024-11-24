@@ -8,7 +8,7 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class LethalPoison extends Potion {
+public class LethalPoison extends Potion { // TODO: Extends throwable potion
 
     private static final Sprite SPRITE = new ItemSprite(13, 6, MyColors.WHITE, MyColors.DARK_PURPLE);
 

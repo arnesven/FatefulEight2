@@ -108,6 +108,13 @@ public abstract class CombatAction {
             });
         }
 
+        if (character == target && !combatEvent.isInQuickCast()) {
+            EquipItemCombatAction eqAction = new EquipItemCombatAction(model);
+            if (eqAction.isValid()) {
+                result.add(eqAction);
+            }
+        }
+
         if (model.getParty().getPartyMembers().contains(character)) {
             Set<UsableItem> usableItems = new HashSet<>();
             usableItems.addAll(model.getParty().getInventory().getPotions());
