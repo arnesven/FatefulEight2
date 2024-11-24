@@ -3,6 +3,7 @@ package model.items.potions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
@@ -43,5 +44,10 @@ public class ZeppelinFuel extends Potion {
     @Override
     public int getWeight() {
         return 500;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.veryRare;
     }
 }

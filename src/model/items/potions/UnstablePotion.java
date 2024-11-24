@@ -18,7 +18,7 @@ public class UnstablePotion extends ThrowablePotion {
 
     public UnstablePotion() {
         super("Unstable Potion", 16);
-        damage = 3;
+        damage = 4;
     }
 
     @Override
