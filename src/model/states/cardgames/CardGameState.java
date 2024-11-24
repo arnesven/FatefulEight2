@@ -18,15 +18,17 @@ public class CardGameState extends GameState {
     private final CardGame cardGame;
     private int roundsPlayed = 0;
 
-    public CardGameState(Model model) {
+    public CardGameState(Model model, CardGame cardGame) {
         super(model);
         this.subView = new CardGameSubView();
-        if (MyRandom.flipCoin()) {
-            this.cardGame = new RunnyCardGame();
-        } else {
-            this.cardGame = new KnockOutCardGame(MyRandom.randInt(0, 2));
-        }
+        this.cardGame = cardGame;
         subView.setGame(cardGame);
+    }
+
+    public CardGameState(Model model) {
+        this(model, MyRandom.flipCoin()
+                ? new RunnyCardGame()
+                : new KnockOutCardGame(MyRandom.randInt(0, 2)));
     }
 
     @Override

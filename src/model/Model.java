@@ -135,6 +135,11 @@ public class Model {
         GameStatistics.setModel(this);
     }
 
+    public void startGameWithState(GameState state) {
+        startGameNoLoad();
+        this.state = state;
+    }
+
     public boolean gameStarted() {
         return gameStarted;
     }
