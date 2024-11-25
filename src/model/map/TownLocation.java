@@ -7,6 +7,7 @@ import model.states.*;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
 import model.states.events.*;
+import model.states.warehouse.WarehouseEvent;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;
@@ -125,9 +126,10 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new GardenMazeEvent(model),
                     new BoozersEvent(model),
                     new KidsWantFireworksEvent(model),
+                    new WarehouseEvent(model),
+                    new WarehouseEvent(model),
                     new GuideEvent(model, 1),
                     new GuideEvent(model, 2)
-                    // WarehouseEvent = Sokoban
             ));
         }
         return new NoEventState(model);

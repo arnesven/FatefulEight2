@@ -124,6 +124,7 @@ public class Model {
         log = new GameLog();
         gameData = new GameData();
         state = new ChooseStartingCharacterState(this);
+        System.out.println("Set state to ChooseStartingCharacterState");
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
@@ -136,8 +137,17 @@ public class Model {
     }
 
     public void startGameWithState(GameState state) {
-        startGameNoLoad();
+        initialize();
+        subView = new EmptySubView();
+        log = new GameLog();
+        gameData = new GameData();
         this.state = state;
+        caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
+        getSettings().toggleMovementSpeed();
+        getSettings().toggleLogSpeed();
+        GameStatistics.setModel(this);
+        System.out.println("Setting state with startGameWithState");
+        gameStarted = true;
     }
 
     public boolean gameStarted() {

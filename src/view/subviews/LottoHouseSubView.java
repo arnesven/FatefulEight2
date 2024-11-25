@@ -12,10 +12,9 @@ import model.items.potions.Potion;
 import model.items.spells.Spell;
 import model.items.weapons.Weapon;
 import model.quests.QuestEdge;
-import model.quests.QuestNode;
+import model.quests.scenes.DummyQuestNode;
 import model.races.Race;
 import model.ruins.objects.DungeonChest;
-import model.states.QuestState;
 import view.MyColors;
 import view.sprites.CombatCursorSprite;
 import view.sprites.Sprite;
@@ -199,39 +198,6 @@ public class LottoHouseSubView extends AvatarSubView {
 
     public void resetAvatarPosition() {
         avatarInitialPos = new Point(4, 5);
-    }
-
-    private static class DummyQuestNode extends QuestNode {
-        private final int column;
-        private final int row;
-
-        public DummyQuestNode(int col, int row) {
-            this.column = col;
-            this.row = row;
-        }
-
-        @Override
-        public int getColumn() {
-            return column;
-        }
-
-        @Override
-        public int getRow() {
-            return row;
-        }
-
-        @Override
-        public void drawYourself(Model model, int xPos, int yPos) { }
-
-        @Override
-        public String getDescription() {
-            return null;
-        }
-
-        @Override
-        public QuestEdge run(Model model, QuestState state) {
-            return null;
-        }
     }
 
     private static class MiniItemSprite extends Sprite16x16 {

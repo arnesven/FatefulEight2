@@ -7,6 +7,7 @@ import model.states.cardgames.CardGameState;
 import model.states.cardgames.knockout.KnockOutCardGame;
 import model.states.cardgames.runny.RunnyCardGame;
 import model.states.events.*;
+import model.states.warehouse.WarehouseEvent;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -20,13 +21,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SelectMinigameDialog extends SelectableListMenu {
+    private GameState selectedEvent;
+
     public SelectMinigameDialog(GameView view) {
         super(view, 23, 16);
     }
 
     @Override
     public void transitionedFrom(Model model) {
-
+        model.startGameWithState(selectedEvent);
+        model.getParty().add(MyRandom.sample(model.getAllCharacters()));
+        model.getParty().addToGold(100);
+        model.getParty().addToObols(100);
     }
 
     @Override
@@ -58,7 +64,8 @@ public class SelectMinigameDialog extends SelectableListMenu {
                 new MyPair<>("Garden Maze", m -> new GardenMazeEvent(m)),
                 new MyPair<>("Runny Card Game", m -> new CardGameState(m, new RunnyCardGame())),
                 new MyPair<>("Knockout Card Game", m -> new CardGameState(m, new KnockOutCardGame(1))),
-                new MyPair<>("Lotto House", m -> new LottoHouseEvent(m))
+                new MyPair<>("Lotto House", m -> new LottoHouseEvent(m)),
+                new MyPair<>("Warehouse", m -> new WarehouseEvent(m))
         ));
         events.sort(Comparator.comparing(p -> p.first));
         return MyLists.transform(events,
@@ -66,10 +73,7 @@ public class SelectMinigameDialog extends SelectableListMenu {
     }
 
     private void startWithEvent(Model model, GameState state) {
-        model.startGameWithState(state);
-        model.getParty().add(MyRandom.sample(model.getAllCharacters()));
-        model.getParty().addToGold(100);
-        model.getParty().addToObols(100);
+        this.selectedEvent = state;
         setTimeToTransition(true);
     }
 

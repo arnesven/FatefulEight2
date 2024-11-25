@@ -3,7 +3,6 @@ package model.states.beangame;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
-import view.sprites.Sprite;
 
 import java.util.ArrayList;
 import java.util.Collections;

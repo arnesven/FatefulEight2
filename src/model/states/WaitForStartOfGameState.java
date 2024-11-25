@@ -1,6 +1,5 @@
 package model.states;
 
-import control.GameExitedException;
 import model.Model;
 
 public class WaitForStartOfGameState extends GameState {
