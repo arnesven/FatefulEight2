@@ -4,6 +4,7 @@ import model.Model;
 import model.Party;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.GameState;
 import util.MyPair;
 import view.MyColors;
@@ -24,6 +25,11 @@ public class TransmuteSpell extends ImmediateSpell {
 
     public TransmuteSpell() {
         super("Transmute", 18, COLORLESS, 8, 1);
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

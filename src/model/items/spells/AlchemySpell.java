@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.PotionRecipe;
+import model.items.Prevalence;
 import model.items.potions.Potion;
 import model.items.potions.UnstablePotion;
 import model.states.GameState;
@@ -34,6 +35,11 @@ public class AlchemySpell extends ImmediateSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.common;
     }
 
     @Override

@@ -6,6 +6,7 @@ import model.combat.Combatant;
 import model.combat.conditions.WeakenCondition;
 import model.enemies.Enemy;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.CombatSpellSprite;
@@ -24,6 +25,11 @@ public class WeakenSpell extends CombatSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.common;
     }
 
     @Override

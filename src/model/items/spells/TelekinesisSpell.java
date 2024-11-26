@@ -1,6 +1,7 @@
 package model.items.spells;
 
 import model.items.Item;
+import model.items.Prevalence;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;

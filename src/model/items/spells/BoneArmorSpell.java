@@ -7,6 +7,7 @@ import model.characters.appearance.PortraitClothing;
 import model.classes.Looks;
 import model.combat.Combatant;
 import model.items.Item;
+import model.items.Prevalence;
 import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;
@@ -32,6 +33,11 @@ public class BoneArmorSpell extends CombatSpell {
     @Override
     public boolean canBeCastOn(Model model, Combatant target) {
         return target instanceof GameCharacter;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

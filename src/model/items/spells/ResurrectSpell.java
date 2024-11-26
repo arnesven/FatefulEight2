@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.combat.conditions.CastingFullRoundSpellCondition;
 import model.items.Item;
+import model.items.Prevalence;
 import model.items.potions.RevivingElixir;
 import model.states.CombatEvent;
 import model.states.GameState;
@@ -24,6 +25,11 @@ public class ResurrectSpell extends CombatSpell implements FullRoundSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

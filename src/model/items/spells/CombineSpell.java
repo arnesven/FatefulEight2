@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyLists;
@@ -32,6 +33,11 @@ public class CombineSpell extends AuxiliarySpell {
 
     public static int getResultingHealthCost(List<Spell> combined) {
         return MyLists.maximum(combined, Spell::getHPCost) + combined.size() - 1;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     public String castFromMenu(Model model, GameCharacter gc) {

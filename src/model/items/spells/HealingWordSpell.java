@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.*;
@@ -25,6 +26,11 @@ public class HealingWordSpell extends CombatSpell {
     @Override
     public Item copy() {
         return new HealingWordSpell();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.common;
     }
 
     @Override

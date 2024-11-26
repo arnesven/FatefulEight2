@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.CombatEvent;
 import sound.SoundEffects;
 import util.MyRandom;
@@ -26,6 +27,11 @@ public class ChainLightningSpell extends CombatSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

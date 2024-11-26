@@ -10,6 +10,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.Equipment;
 import model.items.Item;
+import model.items.Prevalence;
 import model.items.accessories.GreatHelm;
 import model.items.accessories.HeraldicShield;
 import model.items.clothing.ChainMail;
@@ -37,6 +38,11 @@ public class SummonTreeHerderSpell extends SummonCombatSpell {
     @Override
     public Item copy() {
         return new SummonTreeHerderSpell();
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

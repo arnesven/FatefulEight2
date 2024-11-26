@@ -9,6 +9,7 @@ import model.combat.conditions.TamedCondition;
 import model.enemies.BeastEnemy;
 import model.enemies.DragonEnemy;
 import model.items.Item;
+import model.items.Prevalence;
 import model.items.TamedDragonItemAdapter;
 import model.map.DesertHex;
 import model.map.HillsHex;
@@ -33,6 +34,11 @@ public class DragonTamingSpell extends AuxiliarySpell {
 
     public DragonTamingSpell() {
         super("Dragon Taming", 85, COLORLESS, DIFFICULTY, HP_COST);
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

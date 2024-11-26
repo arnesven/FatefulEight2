@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.*;
@@ -19,6 +20,11 @@ public class EntropicBoltSpell extends CombatSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.common;
     }
 
     @Override

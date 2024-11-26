@@ -3,6 +3,7 @@ package model.items.spells;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
+import model.items.Prevalence;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.ItemSprite;
@@ -38,6 +39,11 @@ public class TeleportSpell extends ImmediateSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override

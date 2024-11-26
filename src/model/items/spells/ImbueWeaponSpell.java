@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.ItemDeck;
+import model.items.Prevalence;
 import model.items.imbuements.WeaponImbuement;
 import model.items.weapons.NaturalWeapon;
 import model.items.weapons.Weapon;
@@ -29,6 +30,11 @@ public class ImbueWeaponSpell extends ImmediateSpell {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.rare;
     }
 
     @Override
