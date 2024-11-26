@@ -346,6 +346,9 @@ public class Party implements Serializable {
     }
 
     public void partyMemberSay(Model model, GameCharacter gc, String text) {
+        if (isWipedOut()) {
+            return;
+        }
         model.getLog().waitForAnimationToFinish();
         MyPair<Integer, String> pair = CalloutSprite.getSpriteNumForText(text);
         model.getLog().addAnimated(gc.getName() + ": " + LogView.YELLOW_COLOR + "\"" + pair.second +
