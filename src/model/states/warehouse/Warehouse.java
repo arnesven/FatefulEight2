@@ -1,5 +1,6 @@
 package model.states.warehouse;
 
+import util.MatrixFunction;
 import util.MyMatrices;
 import util.MyRandom;
 import view.MyColors;
@@ -10,6 +11,7 @@ import view.subviews.WarehouseSubView;
 
 import java.util.List;
 import java.awt.*;
+import java.util.function.Predicate;
 
 public class Warehouse {
 
@@ -97,7 +99,7 @@ public class Warehouse {
         return false;
     }
 
-    private boolean isFree(Point position) {
+    public boolean isFree(Point position) {
         if (isInBounds(position)) {
             return matrix[position.x][position.y] == null;
         }
@@ -155,11 +157,7 @@ public class Warehouse {
         return matrix[doorPosition.x][doorPosition.y] instanceof WarehouseCrate;
     }
 
-
-    public void removeOtherBox() {
-        if (!checkForOtherBoxRemove()) {
-            System.err.println("Warning, trying to remove non-existant box at door.");
-        }
-        removeObject(doorPosition);
+    public Point getSpecialBoxPosition() {
+        return MyMatrices.findElement(matrix, warehouseObject -> warehouseObject instanceof SpecialWarehouseCrate);
     }
 }

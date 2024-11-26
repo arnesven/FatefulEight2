@@ -36,6 +36,7 @@ public class WarehouseSubView extends AvatarSubView {
     private boolean avatarEnabled = true;
     private final Point avatarPos;
     private int moveCount = 0;
+    private boolean telekinesisOn = false;
 
     public WarehouseSubView(Model model, Warehouse warehouse) {
         this.avatar = model.getParty().getLeader().getAvatarSprite();
@@ -97,7 +98,11 @@ public class WarehouseSubView extends AvatarSubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Move with the arrow keys, SPACE to quit.";
+        String extra = "";
+        if (telekinesisOn) {
+            extra = " (Telekinesis)";
+        }
+        return "Move with the arrow keys, SPACE to quit." + extra;
     }
 
     @Override
@@ -114,6 +119,28 @@ public class WarehouseSubView extends AvatarSubView {
             return true;
         }
         Point dxdy = DXDYS_FOR_KEYS.get(key.getKeyCode());
+        if (telekinesisOn) {
+            moveSpecialBox(dxdy);
+        } else {
+            moveAvatar(key, dxdy);
+        }
+        return true;
+    }
+
+    private void moveSpecialBox(Point dxdy) {
+        Point boxPosition = warehouse.getSpecialBoxPosition();
+        Point newPosition = new Point(boxPosition.x + dxdy.x, boxPosition.y + dxdy.y);
+        if (warehouse.isFree(newPosition) && !newPosition.equals(avatarPos)) {
+            WarehouseObject wobj = warehouse.removeObject(boxPosition);
+            addMovementAnimation(wobj.getSprite(),
+                    convertToScreen(boxPosition), convertToScreen(newPosition));
+            waitForAnimation();
+            warehouse.addObject(newPosition, wobj);
+            removeMovementAnimation();
+        }
+    }
+
+    private void moveAvatar(KeyEvent key, Point dxdy) {
         Point newPosition = new Point(avatarPos.x + dxdy.x, avatarPos.y + dxdy.y);
         if (warehouse.canMoveInto(newPosition, dxdy)) {
             moveCount++;
@@ -140,7 +167,6 @@ public class WarehouseSubView extends AvatarSubView {
             avatarPos.y = newPosition.y;
             avatarEnabled = true;
         }
-        return true;
     }
 
     private synchronized KeyEvent removeFromQueue() {
@@ -172,7 +198,11 @@ public class WarehouseSubView extends AvatarSubView {
         return warehouse.checkForOtherBoxRemove();
     }
 
-    public void removeOtherBox() {
-        warehouse.removeOtherBox();
+    public void setTelekinesisEnabled(boolean on) {
+        this.telekinesisOn = on;
+    }
+
+    public boolean isTelekinesisActivated() {
+        return telekinesisOn;
     }
 }

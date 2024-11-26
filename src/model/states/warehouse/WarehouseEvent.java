@@ -1,15 +1,22 @@
 package model.states.warehouse;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.items.spells.TelekinesisSpell;
 import model.states.DailyEventState;
+import model.states.ShootBallsState;
+import model.states.SpellCastException;
 import model.states.events.GuideData;
 import util.MyRandom;
+import view.GameView;
+import view.SimpleMessageView;
 import view.subviews.CollapsingTransition;
 import view.subviews.PortraitSubView;
 import view.subviews.WarehouseSubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WarehouseEvent extends DailyEventState {
@@ -52,29 +59,50 @@ public class WarehouseEvent extends DailyEventState {
         Warehouse warehouse = new Warehouse();
         WarehouseSubView subView = new WarehouseSubView(model, warehouse);
         CollapsingTransition.transition(model, subView);
+        model.getSpellHandler().acceptSpell(new TelekinesisSpell().getName());
         do {
-            waitUntil(subView, WarehouseSubView::hasMovesToHandle);
-            if (!subView.handleMove()) {
-                printQuote("Worker", "Are you finished?");
-                int choice = multipleOptionArrowMenu(model, 24,34, List.of("Start over", "Quit"));
-                if (choice == 1) {
-                    break;
-                } else {
-                    leaderSay(MyRandom.sample(List.of("I think I messed up. Can I do over?",
-                            "Not yet. I'm just starting over.")));
+            try {
+                waitUntil(subView, WarehouseSubView::hasMovesToHandle, true);
+                if (!subView.handleMove()) {
+                    printQuote("Worker", "Are you finished?");
+                    List<String> options = new ArrayList<>(List.of("Start over", "Quit"));
+                    if (subView.isTelekinesisActivated()) {
+                        options.add("Stop telekinesis");
+                    }
+                    int choice = multipleOptionArrowMenu(model, 24,34, options);
+                    if (choice == 1) {
+                        break;
+                    } else if (choice == 2) {
+                        subView.setTelekinesisEnabled(false);
+                    } else {
+                        leaderSay(MyRandom.sample(List.of("I think I messed up. Can I do over?",
+                                "Not yet. I'm just starting over.")));
+                        subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()));
+                        CollapsingTransition.transition(model, subView);
+                    }
+                }
+                if (subView.checkForRemove()) {
+                    printQuote("Worker", "What's this? This isn't the one I wanted.");
+                    leaderSay("Sorry...");
+                    model.getLog().waitForAnimationToFinish();
                     subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()));
                     CollapsingTransition.transition(model, subView);
                 }
-            }
-            if (subView.checkForRemove()) {
-                printQuote("Worker", "What's this? This isn't the one I wanted.");
-                leaderSay("Sorry...");
-                model.getLog().waitForAnimationToFinish();
-                subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()));
-                CollapsingTransition.transition(model, subView);
+            } catch (SpellCastException sce) {
+                if (sce.getSpell() instanceof TelekinesisSpell) {
+                    if (sce.getSpell().castYourself(model, this, sce.getCaster())) {
+                        model.transitionToDialog(new TelekinesisEnabledDialog(model, sce.getCaster()));
+                        subView.setTelekinesisEnabled(true);
+                    }
+                    model.getSpellHandler().acceptSpell(new TelekinesisSpell().getName());
+                    if (model.getParty().isWipedOut()) {
+                        return;
+                    }
+                }
             }
         } while (!subView.gameWon());
 
+        model.getSpellHandler().unacceptSpell(new TelekinesisSpell().getName());
         if (!subView.gameWon()) {
             leaderSay("Bah, this is impossible. I give up.");
             printQuote("Worker", "Yeah... what a mess.");
@@ -94,5 +122,12 @@ public class WarehouseEvent extends DailyEventState {
         leaderSay("Thanks. Try keeping the warehouse tidy from now on.");
         portraitSay("I'll try. Goodbye.");
         leaderSay("Bye for now.");
+    }
+
+    private static class TelekinesisEnabledDialog extends SimpleMessageView {
+        public TelekinesisEnabledDialog(Model model, GameCharacter caster) {
+            super(model.getView(), caster.getName() + " is now controlling the special " +
+                    "box wth telekinesis!");
+        }
     }
 }

@@ -143,8 +143,6 @@ public class Model {
         gameData = new GameData();
         this.state = state;
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
-        getSettings().toggleMovementSpeed();
-        getSettings().toggleLogSpeed();
         GameStatistics.setModel(this);
         System.out.println("Setting state with startGameWithState");
         gameStarted = true;

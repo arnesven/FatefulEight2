@@ -66,6 +66,9 @@ public class ShootBallsState extends GameState {
                     subView.enableTelekinesis();
                     disableTelekinesis(model);
                 }
+                if (model.getParty().isWipedOut()) {
+                    return model.getCurrentHex().getDailyActionState(model);
+                }
             }
         } while (true);
         disableTelekinesis(model);

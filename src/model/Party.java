@@ -80,6 +80,7 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
+        inventory.add(new TelekinesisSpell());
     }
 
     private LoopingSprite[] makeCursorSprites() {

@@ -1,6 +1,7 @@
 package view;
 
 import model.Model;
+import model.SettingsManager;
 import model.states.GameState;
 import model.states.beangame.BeanGameEvent;
 import model.states.cardgames.CardGameState;
@@ -33,6 +34,9 @@ public class SelectMinigameDialog extends SelectableListMenu {
         model.getParty().add(MyRandom.sample(model.getAllCharacters()));
         model.getParty().addToGold(100);
         model.getParty().addToObols(100);
+        model.getSettings().toggleMovementSpeed();
+        model.getSettings().toggleLogSpeed();
+        SettingsManager.toggleTutorial(model);
     }
 
     @Override

@@ -164,6 +164,9 @@ public class BeanGameEvent extends DailyEventState {
             gamblerSay("Here's your bean. Go ahead.");
         }
         int prize = runBeanGame(model, beanMatrix);
+        if (model.getParty().isWipedOut()) {
+            return false;
+        }
         if (prize == 0) {
             if (MyRandom.flipCoin()) {
                 gamblerSay(MyRandom.sample(List.of("Bad luck friend.", "Trickier than it looks, right?",
@@ -205,6 +208,9 @@ public class BeanGameEvent extends DailyEventState {
         for (int round = 1; round <= 3; round++) {
             gamblerSay(MyStrings.capitalize(MyStrings.nthWord(round)) + " bean. Good luck!");
             int prize = runBeanGame(model, beanMatrix);
+            if (model.getParty().isWipedOut()) {
+                return false;
+            }
             prizes.add(prize);
             if (prize == 0) {
                 leaderCommentOnLoss();
