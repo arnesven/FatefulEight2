@@ -104,7 +104,7 @@ public class VampirismCondition extends Condition {
         }
         this.stage++;
         updateAppearance(owner);
-        model.getLog().addAnimated(owner.getName() + " vampirism progressed to stage " + stage + ".");
+        model.getLog().addAnimated(owner.getName() + "'s vampirism progressed to stage " + stage + ".");
         model.getLog().waitForAnimationToFinish();
         VampireStageProgressionSubView subView = new VampireStageProgressionSubView(model, owner, this);
         model.setSubView(subView);

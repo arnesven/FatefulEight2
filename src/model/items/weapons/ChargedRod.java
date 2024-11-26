@@ -19,7 +19,7 @@ public class ChargedRod extends WandWeapon implements PairableWeapon {
             MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.GOLD);
 
     public ChargedRod() {
-        super("Charged Rod", 46, Skill.MagicWhite, new int[]{9, 11, 12, 14});
+        super("Charged Rod", 21, Skill.MagicWhite, new int[]{9, 11, 12, 14});
         setImbuement(new ChargedRodImbuement());
     }
 

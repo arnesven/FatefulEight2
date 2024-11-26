@@ -29,7 +29,7 @@ public class LethalPoison extends ThrowablePotion {
 
     @Override
     public String getShoppingDetails() {
-        return "A very potent and deadly poison";
+        return ", A very potent and deadly poison";
     }
 
     @Override

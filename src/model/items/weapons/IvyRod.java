@@ -13,7 +13,7 @@ public class IvyRod extends WandWeapon implements PairableWeapon {
             MyColors.PEACH, MyColors.DARK_GREEN, MyColors.GOLD);
 
     public IvyRod() {
-        super("Ivy Rod", 36, Skill.MagicGreen, new int[]{8,10,13});
+        super("Ivy Rod", 11, Skill.MagicGreen, new int[]{8,10,13});
         setImbuement(new PoisonImbuement());
     }
 

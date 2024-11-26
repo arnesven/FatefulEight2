@@ -48,6 +48,8 @@ public class GoToCastleActionNode extends DailyActionNode {
                 if (state.yesNoInput()) {
                     return mainStoryEvent;
                 }
+            } else {
+                return mainStoryEvent;
             }
         }
 

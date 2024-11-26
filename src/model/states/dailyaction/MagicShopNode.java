@@ -39,9 +39,12 @@ public class MagicShopNode extends GeneralShopNode {
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allScrolls(), MyRandom.randInt(4), Prevalence.unspecified, 0.0));
         inventory.addAll(model.getItemDeck().draw(ItemDeck.allPotionRecipes(), MyRandom.randInt(2), Prevalence.unspecified, 0.0));
         if (MyRandom.flipCoin()) {
-            Weapon w = (Weapon) model.getItemDeck().draw(ItemDeck.allWeapons(), 1, Prevalence.unspecified, 0.0);
-            w.setImbuement(MyRandom.sample(ItemDeck.allImbuements()));
-            inventory.add(w);
+            List<Item> list = model.getItemDeck().draw(ItemDeck.allWeapons(), 1, Prevalence.unspecified, 0.0);
+            if (!list.isEmpty()) {
+                Weapon w = (Weapon)list.get(0);
+                w.setImbuement(MyRandom.sample(ItemDeck.allImbuements()));
+                inventory.add(w);
+            }
         }
         for (int i = 0; i < 4; ++i) {
             if (MyRandom.randInt(2) == 0) {

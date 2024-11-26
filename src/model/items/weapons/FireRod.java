@@ -13,7 +13,7 @@ public class FireRod extends WandWeapon implements PairableWeapon {
             MyColors.YELLOW, MyColors.ORANGE, MyColors.PEACH);
 
     public FireRod() {
-        super("Fire Rod", 36, Skill.MagicRed, new int[]{9, 11, 12, 14});
+        super("Fire Rod", 11, Skill.MagicRed, new int[]{9, 11, 12, 14});
         setImbuement(new BurningImbuement());
     }
 

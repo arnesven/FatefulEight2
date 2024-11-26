@@ -12,7 +12,7 @@ public class SkullWand extends WandWeapon implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(6, 6, MyColors.BROWN, MyColors.BEIGE);
 
     public SkullWand() {
-        super("Skull Wand", 28, Skill.MagicBlack, new int[]{8,11,13,14});
+        super("Skull Wand", 3, Skill.MagicBlack, new int[]{8,11,13,14});
         setImbuement(new AbsorptionImbuement());
     }
 

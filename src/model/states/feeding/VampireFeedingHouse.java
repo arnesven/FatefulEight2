@@ -266,7 +266,7 @@ public class VampireFeedingHouse {
                 state.println("The half-orc's blood is slightly toxic to " + vampire.getFirstName() + ". " +
                         vampire.getFirstName() + " became poisoned.");
                 vampire.addCondition(new PoisonCondition());
-            } else if (victim.getRace() instanceof ElvenRace) {
+            } else if (victim.getRace() instanceof ElvenRace && !(vampire.getRace() instanceof ElvenRace)) {
                 state.println("The purity of the elven blood burns " + vampire.getFirstName() + "!");
                 if (vampire.getHP() < vampire.getMaxHP() / 2 && vampire.getHP() > 0) {
                     vampire.addToHP(-1);
@@ -279,7 +279,7 @@ public class VampireFeedingHouse {
             } else if (victim.getRace().id() == Race.DWARF.id()) {
                 state.println("The thickness of the dwarven blood weighs heavy inside of " + vampire.getFirstName() + "!");
                 vampire.addCondition(new SlowedCondition(6, model.getDay()));
-            } else if (victim.getRace() instanceof HumanRace) {
+            } else if (victim.getRace() instanceof HumanRace && !(vampire.getRace() instanceof HumanRace)) {
                 state.println("The richness of the human blood saturates " + vampire.getFirstName() +
                         "'s system and gives " + state.himOrHer(vampire.getGender()) + " an aura of strangeness.");
                 vampire.addCondition(new StrangenessCondition(model.getDay()));

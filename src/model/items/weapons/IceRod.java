@@ -13,7 +13,7 @@ public class IceRod extends WandWeapon implements PairableWeapon {
             MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.LIGHT_BLUE);
 
     public IceRod() {
-        super("Ice Rod", 44, Skill.MagicBlue, new int[]{9, 11, 12, 14});
+        super("Ice Rod", 19, Skill.MagicBlue, new int[]{9, 11, 12, 14});
         setImbuement(new FreezeImbuement());
     }
 

@@ -61,7 +61,7 @@ public class VampireProwlNightEvent extends DailyEventState {
             removePortraitSubView(model);
             showExplicitPortrait(model, vampireCharacter.getAppearance(), "Vampire");
             println(victim.getFirstName() + " wakes up and finds a dark figure standing next to " +
-                    hisOrHer(victim.getGender()) + " bed, leaning over " + hisOrHer(victim.getGender()) +
+                    hisOrHer(victim.getGender()) + " bed, leaning over " + himOrHer(victim.getGender()) +
                     "! Fearing it may be a vampire, panic starts to set in.");
             print("Do you call out for help (Y) or do you let the vampire feed on you (N)? ");
             if (yesNoInput()) {

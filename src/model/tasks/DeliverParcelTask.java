@@ -89,7 +89,7 @@ public class DeliverParcelTask extends DestinationTask {
                             recipient + " in exchange for " + promisedGold + " gold.";
                 }
                 return "You have agreed to deliver a " + parcel.getName().toLowerCase() + " to " + sender + "'s " +
-                        recipient + " in exchange for " + promisedGold + " gold. This person lives " +
+                        recipient + " in exchange for " + promisedGold + " gold. This person lives in " +
                         getDestinationDescription() + ".";
 
             }
