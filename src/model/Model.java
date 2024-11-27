@@ -9,6 +9,8 @@ import model.classes.Classes;
 import model.items.ItemDeck;
 import model.items.spells.Spell;
 import model.log.GameLog;
+import model.mainstory.MainStory;
+import model.mainstory.MainStoryStep;
 import model.map.*;
 import model.map.objects.MapObject;
 import model.map.objects.UnderworldEntrance;
@@ -20,7 +22,6 @@ import model.tutorial.TutorialHandler;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import sound.SoundEffects;
-import test.MainStoryTest;
 import util.MyLists;
 import util.MyPair;
 import view.dev.SpritePreviewerView;
@@ -129,9 +130,7 @@ public class Model {
         gameStarted = true;
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mainSong);
         if (FatefulEight.TEST_MODE) {
-            MainStoryTest.testSuit(this);
-        } else {
-            gameData.mainStory.progressStoryForTesting(this);
+            //MainStoryTest.testSuit(this);
         }
         GameStatistics.setModel(this);
     }
@@ -146,6 +145,10 @@ public class Model {
         GameStatistics.setModel(this);
         System.out.println("Setting state with startGameWithState");
         gameStarted = true;
+    }
+
+    public void progressMainStory(MainStoryStep part) {
+        gameData.mainStory.progressStoryForTesting(this, part);
     }
 
     public boolean gameStarted() {

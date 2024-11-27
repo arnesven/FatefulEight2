@@ -1,5 +1,6 @@
 package view;
 
+import model.mainstory.MainStoryStep;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.special.*;
@@ -32,7 +33,7 @@ public class FullPartySelectView extends SelectableListMenu {
     private static final int COLUMN_SKIP = 36;
     private static final int MAX_GOLD = 100000;
     private static final int INVENTORY_TAB = 9;
-    private static final int INVENTORY_VSKIP = 10;
+    private static final int INVENTORY_VSKIP = 12;
     private static final int MAX_NOTORIETY = 1000;
     private final int maxCharacters;
     private final Model model;
@@ -53,6 +54,7 @@ public class FullPartySelectView extends SelectableListMenu {
     private int expandDirection = 0;
     private int startingDay = 1;
     private final List<Item> otherItems = new ArrayList<>();
+    private MainStoryStep mainStoryProgression = MainStoryStep.NOT_STARTED;
 
     public FullPartySelectView(Model model) {
         super(model.getView(), 58, DrawingArea.WINDOW_ROWS-1);
@@ -109,7 +111,7 @@ public class FullPartySelectView extends SelectableListMenu {
                 BorderFrame.drawString(model.getScreenHandler(), "World ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Day: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Expanded: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
-
+                BorderFrame.drawString(model.getScreenHandler(), "Main Story: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
 
                 y = yStart+INVENTORY_VSKIP;
                 BorderFrame.drawString(model.getScreenHandler(), "Inventory ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
@@ -258,6 +260,18 @@ public class FullPartySelectView extends SelectableListMenu {
             @Override
             public void turnRight(Model model) {
                 expandDirection = Arithmetics.incrementWithWrap(expandDirection, 0x10);
+            }
+        });
+        partyRow += 1;
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + 2, partyRow, mainStoryProgression.makeNiceString() ) {
+            @Override
+            public void turnLeft(Model model) {
+                mainStoryProgression = MainStoryStep.values()[Arithmetics.decrementWithWrap(mainStoryProgression.ordinal(), MainStoryStep.values().length)];
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                mainStoryProgression = MainStoryStep.values()[Arithmetics.incrementWithWrap(mainStoryProgression.ordinal(), MainStoryStep.values().length)];
             }
         });
         int inventoryRow = yStart + INVENTORY_VSKIP + 1;
@@ -497,6 +511,7 @@ public class FullPartySelectView extends SelectableListMenu {
         model.getParty().addToNotoriety(startingNotoriety - model.getParty().getNotoriety());
         model.setWorldState(expandDirection);
         model.setDay(startingDay);
+        model.progressMainStory(mainStoryProgression);
     }
 
     private static class SetAllEquipmentMenu extends SelectableListMenu {

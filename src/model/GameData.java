@@ -2,6 +2,7 @@ package model;
 
 import model.characters.appearance.CharacterAppearance;
 import model.items.ItemDeck;
+import model.mainstory.MainStory;
 import model.map.WorldBuilder;
 import model.map.objects.MapObject;
 import model.map.wars.WarHandler;

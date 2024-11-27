@@ -1,6 +1,6 @@
 package model.journal;
 
-import model.MainStory;
+import model.mainstory.MainStory;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.CharacterAppearance;
