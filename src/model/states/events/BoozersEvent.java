@@ -40,7 +40,13 @@ public class BoozersEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        println("Intending to take a short cut, you cut through an alley. You encounter a few men who seem a bit odd. " +
+        String pair = "";
+        if (boozer1.getGender() && boozer2.getGender()) {
+            pair = " of women";
+        } else if (!boozer1.getGender() && !boozer2.getGender()) {
+            pair = " of men";
+        }
+        println("Intending to take a short cut, you cut through an alley. You encounter a pair" + pair + " who seem a bit odd. " +
                 "They're a bit rowdy and it's clear they've been drinking. Rather than go back, you attempt to push " +
                 "past them in the narrow alley but end up accidentally bumping into one of them.");
         leaderSay("Excuse " + meOrUs() + ".");
