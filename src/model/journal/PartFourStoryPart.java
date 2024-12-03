@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.items.Item;
+import model.mainstory.VisitLordEvent;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.quests.OrcWarCampQuest;
@@ -50,9 +51,9 @@ public class PartFourStoryPart extends StoryPart {
     }
 
     @Override
-    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
+    public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {
         if (location instanceof CastleLocation &&
-                ((CastleLocation) location).getName().equals(castleName)) {
+                ((CastleLocation) location).getName().equals(castleName) && step < COMPLETE) {
             return new PartFourEvent(model, model.getWorld().getCastleByName(castleName));
         }
         return super.getVisitLordEvent(model, location);
@@ -131,7 +132,7 @@ public class PartFourStoryPart extends StoryPart {
         }
     }
 
-    private class PartFourEvent extends DailyEventState {
+    private class PartFourEvent extends VisitLordEvent {
         private final CastleLocation castle;
 
         public PartFourEvent(Model model, CastleLocation castleByName) {

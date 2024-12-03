@@ -12,18 +12,20 @@ import java.util.List;
 public class MovingEnemyGroup {
     private final List<Enemy> enemies;
     private final List<Point> path;
+    private final String name;
     private int pathIndex;
     private ChooseNode node;
     private boolean defeated = false;
 
-    public MovingEnemyGroup(List<Enemy> enemies, List<Point> path, int pathIndex) {
+    public MovingEnemyGroup(String name, List<Enemy> enemies, List<Point> path, int pathIndex) {
+        this.name = name;
         this.enemies = enemies;
         this.path = path;
         this.pathIndex = pathIndex;
     }
 
-    public MovingEnemyGroup(List<Enemy> enemies, List<Point> path) {
-        this(enemies, path, 0);
+    public MovingEnemyGroup(String name, List<Enemy> enemies, List<Point> path) {
+        this(name, enemies, path, 0);
     }
 
     public Sprite getSprite() {
@@ -74,5 +76,9 @@ public class MovingEnemyGroup {
 
     public boolean isDefeated() {
         return defeated;
+    }
+
+    public String getName() {
+        return name;
     }
 }

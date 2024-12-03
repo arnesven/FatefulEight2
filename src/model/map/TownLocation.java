@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.SteppingMatrix;
 import model.headquarters.Headquarters;
+import model.mainstory.FugitiveTownEvent;
 import model.states.*;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
@@ -87,6 +88,9 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        if (model.getMainStory().isFugitive()) {
+            return new FugitiveTownEvent(model);
+        }
         if (MyRandom.rollD10() >= 3) {
             return MyRandom.sample(List.of(
                     new AcceptDeliveryEvent(model),

@@ -283,12 +283,12 @@ public class TroubleInTheLibraryQuest extends MainQuest {
         List<MyColors> colors = List.of(MyColors.RED, MyColors.LIGHT_BLUE, MyColors.GOLD);
         for (int j = 0; j < colors.size(); ++j) {
             if (j == 0) {
-                enemies.add(new MovingEnemyGroup(makeAutomatons(6, colors.get(j)), enemyPaths.get(j)));
+                enemies.add(new MovingEnemyGroup("Automatons", makeAutomatons(6, colors.get(j)), enemyPaths.get(j)));
             } else {
-                enemies.add(new MovingEnemyGroup(makeAutomatons(2, colors.get(j)), enemyPaths.get(j), j));
-                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), j+7));
-                enemies.add(new MovingEnemyGroup(makeAutomatons(3, colors.get(j)), enemyPaths.get(j), j+15));
-                enemies.add(new MovingEnemyGroup(makeAutomatons(2, colors.get(j)), enemyPaths.get(j), j+23));
+                enemies.add(new MovingEnemyGroup("Automatons", makeAutomatons(2, colors.get(j)), enemyPaths.get(j), j));
+                enemies.add(new MovingEnemyGroup("Automatons", makeAutomatons(3, colors.get(j)), enemyPaths.get(j), j+7));
+                enemies.add(new MovingEnemyGroup("Automatons", makeAutomatons(3, colors.get(j)), enemyPaths.get(j), j+15));
+                enemies.add(new MovingEnemyGroup("Automatons", makeAutomatons(2, colors.get(j)), enemyPaths.get(j), j+23));
             }
         }
     }

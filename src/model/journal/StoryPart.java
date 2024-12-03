@@ -4,6 +4,7 @@ import model.mainstory.MainStory;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.CharacterAppearance;
+import model.mainstory.VisitLordEvent;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.MainQuest;
@@ -52,7 +53,7 @@ public abstract class StoryPart implements Serializable {
         return quest;
     }
 
-    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
+    public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {
         return null;
     }
 

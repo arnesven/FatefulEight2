@@ -244,15 +244,21 @@ public class WeaponPair extends Weapon {
         return "Split";
     }
 
+
+
     @Override
     public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
         return new YesNoMessageView(innerView, "Split this weapon into the two underlying weapons?") {
             @Override
             protected void doAction(Model model) {
-                model.getParty().getInventory().remove(WeaponPair.this);
-                WeaponPair.this.mainHand.addYourself(model.getParty().getInventory());
-                WeaponPair.this.offHand.addYourself(model.getParty().getInventory());
+                splitToInventory(model);
             }
         };
+    }
+
+    public void splitToInventory(Model model) {
+        model.getParty().getInventory().remove(this);
+        mainHand.addYourself(model.getParty().getInventory());
+        offHand.addYourself(model.getParty().getInventory());
     }
 }

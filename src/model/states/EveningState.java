@@ -207,7 +207,7 @@ public class EveningState extends GameState {
             }
         }
         if (quests.size() > 0) {
-            offerQuests(model, quests);
+            goOnQuest = offerQuests(model, this, quests);
         }
     }
 
@@ -237,17 +237,18 @@ public class EveningState extends GameState {
         }
     }
 
-    private void offerQuests(Model model, List<Quest> quests) {
-        println("The party has been offered " + MyStrings.numberWord(quests.size()) +
+    public static Quest offerQuests(Model model, GameState state, List<Quest> quests) {
+        Quest toReturn = null;
+        state.println("The party has been offered " + MyStrings.numberWord(quests.size()) +
                 " quest" + (quests.size() > 1?"s":"") + ".");
-        print("Will you go tomorrow? ");
+        state.print("Will you go tomorrow? ");
         boolean done = false;
         SubView previous = model.getSubView();
         SelectQuestSubView subView = new SelectQuestSubView(model.getSubView(), quests);
         model.setSubView(subView);
         do {
             model.getTutorial().questOffers(model);
-            waitForReturnSilently();
+            state.waitForReturnSilently();
             Point cursor = subView.getCursorPoint();
             if (subView.didSelectQuest()) {
                 Quest q = subView.getSelectedQuest();
@@ -255,17 +256,17 @@ public class EveningState extends GameState {
                 if (model.getParty().questIsHeld(q)) {
                     options.set(1, "Stop Holding");
                 }
-                int selectedOption = multipleOptionArrowMenu(model, cursor.x, cursor.y, options);
+                int selectedOption = state.multipleOptionArrowMenu(model, cursor.x, cursor.y, options);
                 if (selectedOption == 0) {
                     if (q.arePrerequisitesMet(model)) {
-                        this.goOnQuest = q;
-                        println("You have accepted quest '" + q.getName() + "'!");
+                        toReturn = q;
+                        state.println("You have accepted quest '" + q.getName() + "'!");
                         if (model.getCurrentHex().getLocation() != null) {
                             model.getQuestDeck().accept(q, model.getCurrentHex().getLocation(), model.getDay());
                         }
                         done = true;
                     } else {
-                        println(q.getPrerequisites(model));
+                        state.println(q.getPrerequisites(model));
                     }
                 } else if (selectedOption == 1){
                     if (model.getParty().questIsHeld(q)) {
@@ -273,9 +274,9 @@ public class EveningState extends GameState {
                     } else {
                         if (q.canBeHeld()) {
                             model.getParty().holdQuest(q);
-                            println("Quest will be held as long as you remain in your current location.");
+                            state.println("Quest will be held as long as you remain in your current location.");
                         } else {
-                            println("That quest cannot be held.");
+                            state.println("That quest cannot be held.");
                         }
                     }
                 }
@@ -283,8 +284,9 @@ public class EveningState extends GameState {
                 done = true;
             }
         } while (!done);
-        println("");
+        state.println("");
         model.setSubView(previous);
+        return toReturn;
     }
 
     public static void buyRations(Model model, GameState state) {

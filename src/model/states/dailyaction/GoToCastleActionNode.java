@@ -6,6 +6,7 @@ import model.Summon;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.mainstory.VisitLordEvent;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class GoToCastleActionNode extends DailyActionNode {
     private final CastleLocation castle;
-    private boolean admitted = false;
+    private boolean returnNextState = false;
 
     public GoToCastleActionNode(CastleLocation location) {
         super("Visit Keep");
@@ -36,11 +37,12 @@ public class GoToCastleActionNode extends DailyActionNode {
             return handleCastleBreakIn(model, state, location);
         }
 
-        DailyEventState mainStoryEvent = null;
+        VisitLordEvent mainStoryEvent = null;
         if (model.getMainStory().isStarted()) {
             mainStoryEvent = model.getMainStory().getVisitLordEvent(model, location);
         }
         if (mainStoryEvent != null) {
+            returnNextState = mainStoryEvent.returnEveningState();
             if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
                 state.print("Are you visiting the " + location.getLordTitle() +
                         " to discuss the mystery of the Crimson Pearl (Y) or do you have other business with " +
@@ -70,7 +72,7 @@ public class GoToCastleActionNode extends DailyActionNode {
         state.leaderSay("Into the keep. We're members of the League of Mages and we need access to the court mage's teleportation service.");
         state.printQuote("Guard", "My apologies. You can pass on through.");
         model.getLog().waitForAnimationToFinish();
-        admitted = true;
+        returnNextState = true;
         return new VisitCastleLordDailyActionNode(model, null, location, false);
     }
 
@@ -86,7 +88,7 @@ public class GoToCastleActionNode extends DailyActionNode {
                 "the future. Don't you know we're at war? Go straight through and into the main chamber. " +
                 "Talk to the commander. He'll introduce you to the drill sargent. He he, we'll make a soldier out of you.");
         state.leaderSay("Sir, yes sir!");
-        admitted = true;
+        returnNextState = true;
         return new VisitCastleLordDailyActionNode(model, null, location, false);
     }
 
@@ -102,7 +104,7 @@ public class GoToCastleActionNode extends DailyActionNode {
         } else {
             state.println("You were admitted to the keep.");
         }
-        admitted = true;
+        returnNextState = true;
         return new VisitCastleLordDailyActionNode(model, summon, location, false);
     }
 
@@ -123,7 +125,7 @@ public class GoToCastleActionNode extends DailyActionNode {
                         model.getParty().setLeader(cat);
                         state.printAlert(cat.getName() + " has been set as the leader of the party.");
                     }
-                    admitted = true;
+                    returnNextState = true;
                     return new VisitCastleLordDailyActionNode(model, null, location, true);
                 } else {
                     state.println(pair.second.getName() + " fell off the keep wall and took 2 damage!");
@@ -140,13 +142,13 @@ public class GoToCastleActionNode extends DailyActionNode {
 
             }
         }
-        admitted = true;
+        returnNextState = true;
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 
     @Override
     public boolean returnNextState() {
-        return admitted;
+        return returnNextState;
     }
 
     @Override

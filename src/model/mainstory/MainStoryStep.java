@@ -9,10 +9,11 @@ import model.races.Race;
 import util.MyStrings;
 
 public enum MainStoryStep {
-    NOT_STARTED((model, mainStory) -> { }),
+    NOT_STARTED((model, mainStory) -> {
+    }),
 
     STARTED((model, mainStory) -> {
-                GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
+        GameCharacter dummy = new GameCharacter("Dummy", "Delacroix", Race.HALF_ORC, Classes.WIT,
                 new KruskTalandro(), Classes.NO_OTHER_CLASSES);
         mainStory.setupStory(dummy); // Get task "visit uncle"
     }),
@@ -84,6 +85,13 @@ public enum MainStoryStep {
     }),
     A_S_QUEST_DONE((model, mainStory) -> {
         mainStory.getStoryParts().get(6).progress(); // Ancient Stronghold Quest done
+    }),
+    RETURNED_TO_LORD_5((model, mainStory) -> {
+        mainStory.getStoryParts().get(6).progress();     // Returned to lord, get thrown in the dungeon
+        mainStory.getStoryParts().get(6).transitionStep(model);
+    }),
+    ESCAPE_QUEST_DONE((model, mainStory) -> {
+       mainStory.getStoryParts().get(7).progress();      // Escape from castle dungeon quest done
     });
 
     MainStoryProgressor progressor;

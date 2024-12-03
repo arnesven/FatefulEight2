@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.SteppingMatrix;
 import model.headquarters.Headquarters;
+import model.mainstory.FugitiveTownEvent;
 import model.races.Race;
 import model.states.AcceptDeliveryEvent;
 import model.states.DailyEventState;
@@ -108,6 +109,10 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        if (model.getMainStory().isFugitive() &&
+                model.getCurrentHex().getLocation().getName().equals(model.getMainStory().getCastleName())) {
+            return new FugitiveTownEvent(model);
+        }
         int dieRoll = MyRandom.rollD10();
         if (dieRoll >= 3) {
             List<DailyEventState> dailyEvents = new ArrayList<>(List.of(

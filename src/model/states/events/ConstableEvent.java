@@ -191,7 +191,7 @@ public class ConstableEvent extends DailyEventState {
             if (i > 0) {
                 println("The party is in jail.");
             }
-            model.incrementDay();
+            stepToNextDay(model);
         }
         println("The party is released from jail. You feel happy to get out, but sitting in that cell for " +
                 "days has left you tired and disillusioned.");

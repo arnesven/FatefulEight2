@@ -75,14 +75,16 @@ public class ChooseNode extends QuestJunction {
 
     public boolean runCombat(Model model, QuestState state) {
         List<Enemy> enemies = new ArrayList<>();
+        String groupName = "";
         for (MovingEnemyGroup group : enemyGroups) {
             for (Enemy e : group.getEnemies()) {
                 if (!e.isDead()) {
+                    groupName = group.getName();
                     enemies.add(e);
                 }
             }
         }
-        state.println("You encounter a group of automatons!");
+        state.println("You encounter a group of " + groupName + "!");
         CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), true, CombatAdvantage.Neither);
         combat.run(model);
         state.transitionToQuestView(model);

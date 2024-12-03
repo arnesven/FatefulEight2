@@ -14,6 +14,7 @@ import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
+import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
 
@@ -142,6 +143,8 @@ public class MainStory implements Serializable {
         map.put(strongholdQuest.getName(), strongholdQuest);
         VampiresLairQuest vampireQuest = new VampiresLairQuest();
         map.put(vampireQuest.getName(), vampireQuest);
+        EscapeTheDungeonQuest escapeQuest = new EscapeTheDungeonQuest();
+        map.put(escapeQuest.getName(), escapeQuest);
         return map;
     }
 
@@ -149,9 +152,9 @@ public class MainStory implements Serializable {
         return QUESTS.get(key);
     }
 
-    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
+    public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {
         for (StoryPart sp : storyParts) {
-            DailyEventState event = sp.getVisitLordEvent(model, location);
+            VisitLordEvent event = sp.getVisitLordEvent(model, location);
             if (event != null) {
                 return event;
             }
@@ -255,5 +258,9 @@ public class MainStory implements Serializable {
 
     public boolean isCompleted(Model model) {
         return getQuest(AncientStrongholdQuest.QUEST_NAME).isCompleted(model);
+    }
+
+    public boolean isFugitive() {
+        return MyLists.any(storyParts, (StoryPart sp) -> sp instanceof PartSixStoryPart);
     }
 }

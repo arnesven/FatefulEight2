@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.mainstory.VisitLordEvent;
 import model.map.CastleLocation;
 import model.map.MountainHex;
 import model.map.TownLocation;
@@ -77,7 +78,8 @@ public class RescueMissionStoryPart extends StoryPart {
                 !model.getMainStory().isCaidQuestDone() &&
                 (caidQuestPosition == null ||
                         (caidQuestPosition.x == model.getParty().getPosition().x &&
-                         caidQuestPosition.y == model.getParty().getPosition().y));
+                         caidQuestPosition.y == model.getParty().getPosition().y))
+                && !model.getMainStory().isFugitive();
     }
 
     @Override
@@ -102,7 +104,7 @@ public class RescueMissionStoryPart extends StoryPart {
     }
 
     @Override
-    public DailyEventState getVisitLordEvent(Model model, UrbanLocation location) {
+    public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {
         if (location instanceof CastleLocation &&
                 ((CastleLocation) location).getName().equals(castleName) && internalStep <= COMPLETED) {
             return new RescueMissionLordEvent(model, model.getWorld().getCastleByName(castleName), model.getWorld().getTownByName(libraryTown));
@@ -115,7 +117,7 @@ public class RescueMissionStoryPart extends StoryPart {
         return internalStep >= COMPLETED;
     }
 
-    private class RescueMissionLordEvent extends DailyEventState {
+    private class RescueMissionLordEvent extends VisitLordEvent {
         private final CastleLocation castle;
         private final TownLocation libraryTown;
 

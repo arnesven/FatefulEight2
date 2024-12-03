@@ -3,6 +3,7 @@ package model.journal;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
@@ -79,7 +80,7 @@ public class WitchStoryPart extends StoryPart {
     @Override
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) {
         Point hexPoint = model.getWorld().getPositionForHex(worldHex);
-        if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
+        if (!model.getMainStory().isFugitive() && witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
             String name = "Find Witch";
             if (internalStep > FIND_WITCH) {
                 name = "Visit Witch";
@@ -97,6 +98,10 @@ public class WitchStoryPart extends StoryPart {
     @Override
     protected StoryPart getNextStoryPart(Model model, int track) {
         return new PartThreeStoryPart(model.getMainStory().getCastleName(), model.getMainStory().getLibraryTownName());
+    }
+
+    public CharacterAppearance getWitchAppearance() {
+        return witchAppearance;
     }
 
     public class FindTheWitch extends MainStoryTask {
