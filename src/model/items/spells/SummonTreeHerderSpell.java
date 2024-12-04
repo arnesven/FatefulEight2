@@ -54,7 +54,7 @@ public class SummonTreeHerderSpell extends SummonCombatSpell {
     protected GameCharacter makeSummon(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         GameCharacter herder = new TreeHerderAlly();
         int mastery = getMasteryLevel(performer);
-        herder.setLevel(mastery);
+        herder.setLevel(mastery+2);
         herder.addToHP(herder.getMaxHP() - herder.getHP());
         return herder;
     }

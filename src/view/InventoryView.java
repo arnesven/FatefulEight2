@@ -273,7 +273,7 @@ public class InventoryView extends SelectableListMenu {
         private final Item itemToEquip;
 
         public EquipItemMenu(SelectableListMenu selectableListContent, int x, int y, Item it) {
-            super(selectableListContent, 12, 9, x, y);
+            super(selectableListContent, 12, 10, x, y);
             this.itemToEquip = it;
         }
 

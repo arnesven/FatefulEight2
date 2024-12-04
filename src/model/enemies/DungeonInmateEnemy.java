@@ -14,4 +14,14 @@ public class DungeonInmateEnemy extends ThrallEnemy {
     public CombatLoot getLoot(Model model) {
         return new DungeonInmateLoot();
     }
+
+    @Override
+    public int getDamage() {
+        return 2;
+    }
+
+    @Override
+    public int getSpeed() {
+        return 5;
+    }
 }

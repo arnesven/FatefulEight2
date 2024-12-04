@@ -16,7 +16,7 @@ public class WorkbenchSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Crafting...";
+        return "You have " + model.getParty().getInventory().getMaterials() + " Materials.";
     }
 
     @Override

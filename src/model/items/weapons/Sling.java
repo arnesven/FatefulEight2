@@ -10,7 +10,7 @@ import view.sprites.Sprite;
 
 public class Sling extends Weapon {
 
-    private static final Sprite SPRITE = new ItemSprite(4, 16, MyColors.BROWN, MyColors.GRAY);
+    private static final Sprite SPRITE = new ItemSprite(5, 16, MyColors.BROWN, MyColors.GRAY);
 
     public Sling() {
         super("Sling", 5, Skill.Acrobatics, new int[]{8, 9});
@@ -19,6 +19,11 @@ public class Sling extends Weapon {
     @Override
     protected Sprite getSprite() {
         return SPRITE;
+    }
+
+    @Override
+    public boolean isRangedAttack() {
+        return true;
     }
 
     @Override

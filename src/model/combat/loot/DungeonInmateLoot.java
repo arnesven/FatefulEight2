@@ -5,6 +5,8 @@ import model.Party;
 import model.items.Item;
 import model.items.accessories.CrudeShield;
 import model.items.designs.CraftingDesign;
+import model.items.potions.BeerPotion;
+import model.items.potions.WinePotion;
 import model.items.weapons.*;
 import util.MyRandom;
 
@@ -18,6 +20,8 @@ public class DungeonInmateLoot extends CombatLoot {
             new Sling(), new MakeshiftCrossbow(), new ImprovisedWand()
     );
 
+    private static final List<Item> BEER_OR_WINE = List.of(new BeerPotion(), new WinePotion());
+
     private final ArrayList<Item> items;
     private int materials = 0;
 
@@ -26,9 +30,11 @@ public class DungeonInmateLoot extends CombatLoot {
         items.add(MyRandom.sample(DROPS).copy());
         int roll = MyRandom.rollD6();
         if (roll < 4) {
-            this.materials = MyRandom.randInt(3, 10);
-        } else if (roll < 6) {
+            this.materials = MyRandom.randInt(1, 4);
+        } else if (roll < 5) {
             items.add(new CraftingDesign(MyRandom.sample(DROPS).copy()));
+        } else if (roll < 6) {
+            items.add(MyRandom.sample(BEER_OR_WINE).copy());
         } else {
             items.add(new CrudeShield());
         }

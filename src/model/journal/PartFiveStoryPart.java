@@ -171,6 +171,11 @@ public class PartFiveStoryPart extends StoryPart {
         }
 
         @Override
+        protected boolean allowPartyEvent() {
+            return false;
+        }
+
+        @Override
         protected GameState getEveningState(Model model) {
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 gc.unequipAccessory();
@@ -182,7 +187,17 @@ public class PartFiveStoryPart extends StoryPart {
             model.getLog().addAnimated(LogView.GOLD_COLOR + "Your belongings have been taken from you!\n" + LogView.DEFAULT_COLOR);
             EscapeTheDungeonQuest q = (EscapeTheDungeonQuest)getQuestAndSetPortrait(EscapeTheDungeonQuest.QUEST_NAME,
                     new SilhouetteAppearance(), "Nobody");
-            q.setLootRewardItems(belongings);
+            q.setLootRewardItems(belongings,
+                    model.getParty().getGold(),
+                    model.getParty().getObols(),
+                    model.getParty().getInventory().getMaterials(),
+                    model.getParty().getInventory().getIngredients(),
+                    model.getParty().getInventory().getLockpicks());
+            model.getParty().addToGold(-model.getParty().getGold());
+            model.getParty().addToObols(-model.getParty().getObols());
+            model.getParty().getInventory().addToMaterials(-model.getParty().getInventory().getMaterials());
+            model.getParty().getInventory().addToIngredients(-model.getParty().getInventory().getIngredients());
+            model.getParty().getInventory().addToLockpicks(-model.getParty().getInventory().getLockpicks());
             MyLists.forEach(belongings, it -> model.getParty().getInventory().remove(it));
 
             q.setStoryPart(model.getMainStory().getStoryParts().get(model.getMainStory().getStoryParts().size()-1));

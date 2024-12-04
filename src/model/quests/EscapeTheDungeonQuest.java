@@ -2,8 +2,12 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.special.AllyFromEnemyCharacter;
+import model.characters.special.PrisonerAlly;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.combat.CombatAdvantage;
+import model.combat.Combatant;
 import model.enemies.*;
 import model.items.Item;
 import model.mainstory.SitInDungeonState;
@@ -15,12 +19,11 @@ import model.states.QuestState;
 import model.states.RunAwayState;
 import model.states.dailyaction.CraftItemState;
 import sound.BackgroundMusic;
-import util.MatrixFunction;
 import util.MyMatrices;
 import util.MyPair;
 import util.MyStrings;
+import view.LogView;
 import view.MyColors;
-import view.sprites.DungeonWallSprite;
 import view.sprites.Sprite32x32;
 import view.subviews.QuestSubView;
 import view.subviews.SubView;
@@ -39,6 +42,12 @@ public class EscapeTheDungeonQuest extends MainQuest {
     private List<Item> belongings;
     private QuestJunction[][] nodeGrid;
     private List<MovingEnemyGroup> enemies;
+    private List<GameCharacter> allies;
+    private int gold;
+    private int obols;
+    private int materials;
+    private int ingredients;
+    private int lockpicks;
 
     public EscapeTheDungeonQuest() {
         super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 0, 50, INTRO, OUTRO);
@@ -50,8 +59,14 @@ public class EscapeTheDungeonQuest extends MainQuest {
     }
 
 
-    public void setLootRewardItems(List<Item> belongings) {
-        this.belongings = belongings; // TODO: Give back to player
+    public void setLootRewardItems(List<Item> belongings,
+                                   int gold, int obols, int materials, int ingredients, int lockpicks) {
+        this.belongings = belongings;
+        this.gold = gold;
+        this.obols = obols;
+        this.materials = materials;
+        this.ingredients = ingredients;
+        this.lockpicks = lockpicks;
     }
 
     @Override
@@ -68,24 +83,25 @@ public class EscapeTheDungeonQuest extends MainQuest {
     protected List<QuestScene> buildScenes() {
         List<QuestScene> scenes = new ArrayList<>();
         scenes.add(new QuestScene("Break out of cell", List.of(
-                new SoloLockpickingSubScene(4, 1, 1, "Maybe we can try this old piece of bone."), // 9
-                new SoloSkillCheckSubScene(3, 1, Skill.Sneak, 1, "He passes every once in a while, " + // 10
+                new SoloLockpickingSubScene(4, 1, 8, "Maybe we can try this old piece of bone."),
+                new SoloSkillCheckSubScene(3, 1, Skill.Sneak, 12, "He passes every once in a while, " +
                         "if we time it just right we can probably grab his keys without him noticing."),
-                new CollaborativeSkillCheckSubScene(5, 0, Skill.Labor, 1, "It will be a lot of work " + // 13
+                new CollaborativeSkillCheckSubScene(5, 0, Skill.Labor, 14, "It will be a lot of work " +
                         "but maybe we can dig a tunnel through this wall."),
-                new CollaborativeSkillCheckSubScene(1, 0, Skill.Labor, 1, "It will be a lot of work " + // 13
+                new CollaborativeSkillCheckSubScene(1, 0, Skill.Labor, 14, "It will be a lot of work " +
                         "but maybe we can dig a tunnel through this wall."))));
         scenes.add(new QuestScene("Inmates", List.of(
-                new CombatInmatesSubScene(6, 0, 3),
-                new CombatInmatesSubScene(1, 4, 5),
-                new CombatInmatesSubScene(1, 6, 6),
-                new CombatInmatesSubScene(6, 4, 7),
-                new CombatInmatesSubScene(6, 6, 8)
+                new CombatInmatesSubScene(6, 0, 5),
+                new CombatInmatesSubScene(1, 3, 7),
+                new CombatInmatesSubScene(1, 5, 8),
+                new CombatInmatesSubScene(6, 3, 9),
+                new CombatInmatesSubScene(6, 5, 10)
         )));
         scenes.add(new QuestScene("Guards at the door", List.of(
                 new CombatGuardsSubScene(5, 7),
-                new CollectiveSkillCheckSubScene(4, 8, Skill.Sneak, 8,
-                        "They'll have to be blind not to see us, but let's try it anyway.")
+                new CollectiveSkillCheckSubScene(3, 8, Skill.Sneak, 8,
+                        "They'll have to be blind not to see us, but let's try it anyway."),
+                new BelongingsSubScene(5, 8)
         )));
         return scenes;
     }
@@ -93,6 +109,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
         enemies = makeGuardGroups();
+        allies = new ArrayList<>();
         List<QuestJunction> juncs = new ArrayList<>();
         juncs.add(new QuestStartingPointWithPosition(3, 0,
                         List.of(new QuestEdge(scenes.get(0).get(0)), new QuestEdge(scenes.get(0).get(1), QuestEdge.VERTICAL),
@@ -176,13 +193,13 @@ public class EscapeTheDungeonQuest extends MainQuest {
             @Override
             protected boolean preRunHook(Model model, QuestState state) {
                 if (hasEnemies()) {
-                    if (runCombat(model, state)) {
+                    if (runCombat(model, state, CombatAdvantage.Party)) {
                         return true;
                     }
                 }
                 moveGuards(model, state);
                 if (hasEnemies()) {
-                    if (runCombat(model, state)) {
+                    if (runCombat(model, state, CombatAdvantage.Enemies)) {
                         return true;
                     }
                 }
@@ -222,15 +239,17 @@ public class EscapeTheDungeonQuest extends MainQuest {
         scenes.get(0).get(3).connectSuccess(nodeGrid[3][2], QuestEdge.VERTICAL);
 
         scenes.get(1).get(0).connectSuccess(nodeGrid[4][2], QuestEdge.VERTICAL);
-        scenes.get(1).get(1).connectSuccess(nodeGrid[3][3]);
-        scenes.get(1).get(2).connectSuccess(nodeGrid[3][5]);
-        scenes.get(1).get(3).connectSuccess(nodeGrid[4][3]);
-        scenes.get(1).get(4).connectSuccess(nodeGrid[4][5]);
+        scenes.get(1).get(1).connectSuccess(nodeGrid[3][3], QuestEdge.VERTICAL);
+        scenes.get(1).get(2).connectSuccess(nodeGrid[3][5], QuestEdge.VERTICAL);
+        scenes.get(1).get(3).connectSuccess(nodeGrid[4][3], QuestEdge.VERTICAL);
+        scenes.get(1).get(4).connectSuccess(nodeGrid[4][5], QuestEdge.VERTICAL);
 
-        scenes.get(2).get(0).connectSuccess(getSuccessEndingNode());
+        scenes.get(2).get(0).connectSuccess(scenes.get(2).get(2));
 
-        scenes.get(2).get(1).connectSuccess(getSuccessEndingNode());
+        scenes.get(2).get(1).connectSuccess(scenes.get(2).get(2));
         scenes.get(2).get(1).connectFail(getFailEndingNode());
+
+        scenes.get(2).get(2).connectSuccess(getSuccessEndingNode());
     }
 
     @Override
@@ -250,7 +269,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
 
     private static List<QuestBackground> makeBackground() {
         List<QuestBackground> result = new ArrayList<>();
-        Sprite32x32[] walls = new Sprite32x32[7];
+        Sprite32x32[] walls = new Sprite32x32[8];
         for (int i = 0; i < walls.length; ++i) {
             walls[i] = new Sprite32x32("escapedungeonwall" + i, "quest.png", 0x96 + i, MyColors.DARK_BROWN,
                     MyColors.LIGHT_GRAY, MyColors.BLACK, MyColors.GRAY);
@@ -273,28 +292,28 @@ public class EscapeTheDungeonQuest extends MainQuest {
 
         // LEFT CELLS
         result.add(new QuestBackground(new Point(0, 3), walls[1]));
-        result.add(new QuestBackground(new Point(1, 3), walls[5]));
+        result.add(new QuestBackground(new Point(1, 3), walls[1]));
         result.add(new QuestBackground(new Point(2, 3), walls[5]));
         result.add(new QuestBackground(new Point(2, 4), walls[6]));
         result.add(new QuestBackground(new Point(0, 5), walls[1]));
         result.add(new QuestBackground(new Point(1, 5), walls[1]));
-        result.add(new QuestBackground(new Point(2, 5), walls[2]));
+        result.add(new QuestBackground(new Point(2, 5), walls[7]));
         result.add(new QuestBackground(new Point(2, 6), walls[6]));
         result.add(new QuestBackground(new Point(0, 7), walls[1]));
-        result.add(new QuestBackground(new Point(1, 7), walls[5]));
+        result.add(new QuestBackground(new Point(1, 7), walls[1]));
         result.add(new QuestBackground(new Point(2, 7), walls[2]));
 
         // RIGHT CELLS
         result.add(new QuestBackground(new Point(7, 3), walls[1]));
-        result.add(new QuestBackground(new Point(6, 3), walls[5]));
+        result.add(new QuestBackground(new Point(6, 3), walls[1]));
         result.add(new QuestBackground(new Point(5, 3), walls[5]));
         result.add(new QuestBackground(new Point(5, 4), walls[6]));
         result.add(new QuestBackground(new Point(7, 5), walls[1]));
         result.add(new QuestBackground(new Point(6, 5), walls[1]));
-        result.add(new QuestBackground(new Point(5, 5), walls[2]));
+        result.add(new QuestBackground(new Point(5, 5), walls[7]));
         result.add(new QuestBackground(new Point(5, 6), walls[6]));
         result.add(new QuestBackground(new Point(7, 7), walls[1]));
-        result.add(new QuestBackground(new Point(6, 7), walls[5]));
+        result.add(new QuestBackground(new Point(6, 7), walls[1]));
         result.add(new QuestBackground(new Point(5, 7), walls[2]));
 
         return result;
@@ -310,7 +329,6 @@ public class EscapeTheDungeonQuest extends MainQuest {
 
     private class CombatInmatesSubScene extends CombatSubScene {
         private final int numberOfPrisoner;
-        private boolean removeAvatars = false;
 
         public CombatInmatesSubScene(int col, int row, int numberOfEnemies) {
             super(col, row, makeInmates(numberOfEnemies));
@@ -318,7 +336,15 @@ public class EscapeTheDungeonQuest extends MainQuest {
         }
 
         @Override
+        public String getDetailedDescription() {
+            return null; // To remove from quest details
+        }
+
+        @Override
         public QuestEdge run(Model model, QuestState state) {
+            if (hasBeenDefeated()) {
+                return getSuccessEdge();
+            }
             moveGuards(model, state);
             InmateEvent inmateEvent = new InmateEvent(model);
             inmateEvent.doTheEvent(model);
@@ -327,7 +353,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
             if (inmateEvent.didAttack()) {
                 toReturn = super.run(model, state);
             } else {
-                removeAvatars = true;
+                setDefeated(true);
                 toReturn = getSuccessEdge();
             }
 
@@ -336,11 +362,6 @@ public class EscapeTheDungeonQuest extends MainQuest {
                 state.print("Do you want to hide out in this cell for a bit? (Y/N) ");
             } while (inmateEvent.yesNoInput());
             return toReturn;
-        }
-
-        @Override
-        protected boolean hasBeenDefeated() {
-            return removeAvatars;
         }
 
         @Override
@@ -376,7 +397,10 @@ public class EscapeTheDungeonQuest extends MainQuest {
                     if (pair.first) {
                         partyMemberSay(pair.second, "How about we join forces? If we swarm the guards, there's not much they can do.");
                         portraitSay("That sounds like a good idea!");
-                        // TODO: Make allies during this quest.
+                        println("You have been joined by " + numberOfPrisoner + " prisoners who will help you against the guards.");
+                        for (int i = 0; i < numberOfPrisoner; ++i) {
+                            allies.add(new PrisonerAlly(new DungeonInmateEnemy('A')));
+                        }
                     } else {
                         partyMemberSay(pair.second, "Yes... you guys go first, we'll be right behind you.");
                         portraitSay("Hey, that doesn't seem quite fair to me.");
@@ -387,8 +411,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
                     portraitSay("You want a piece of us? Fine, we'll smack you down!");
                     didAttack = true;
                 } else {
-                    // TODO: Bring back
-                    // tryToBackOut(model);
+                    tryToBackOut(model);
                 }
                 model.setSubView(subView);
             }
@@ -417,6 +440,18 @@ public class EscapeTheDungeonQuest extends MainQuest {
         protected String getCombatDetails() {
             return "Lots of guards";
         }
+
+        @Override
+        protected List<GameCharacter> getAllies() {
+            return allies;
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            QuestEdge toReturn = super.run(model, state);
+            allies.removeIf(GameCharacter::isDead);
+            return toReturn;
+        }
     }
 
     private class CraftingTableJunction extends StoryJunction {
@@ -436,6 +471,54 @@ public class EscapeTheDungeonQuest extends MainQuest {
                 moveGuards(model, state);
                 state.print("Do you want to hide out here for a bit? (Y/N) ");
             } while (state.yesNoInput());
+        }
+    }
+
+    private static final Sprite32x32 SPRITE = new Sprite32x32("belongingssubscene", "quest.png", 0x26,
+            MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BLACK);
+
+    private class BelongingsSubScene extends QuestSubScene {
+        public BelongingsSubScene(int col, int row) {
+            super(col, row);
+        }
+
+        @Override
+        protected MyColors getSuccessEdgeColor() {
+            return MyColors.WHITE;
+        }
+
+        @Override
+        public String getDetailedDescription() {
+            return "Loot";
+        }
+
+        @Override
+        public void drawYourself(Model model, int xPos, int yPos) {
+            model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
+        }
+
+        @Override
+        public String getDescription() {
+            return "Your belongings";
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            state.println("On your way through the guard station house you see a large chest marked 'evidence'. " +
+                    "When you open it, you smile to yourself.");
+            for (Item it : belongings) {
+                it.addYourself(model.getParty().getInventory());
+            }
+            model.getParty().addToGold(gold);
+            model.getParty().addToObols(obols);
+            model.getParty().getInventory().addToMaterials(materials);
+            model.getParty().getInventory().addToIngredients(ingredients);
+            model.getParty().getInventory().addToLockpicks(lockpicks);
+
+            model.getLog().addAnimated(LogView.GOLD_COLOR + "You have regained your lost belongings.\n" +
+                    LogView.DEFAULT_COLOR);
+            model.getLog().waitForAnimationToFinish();
+            return getSuccessEdge();
         }
     }
 }

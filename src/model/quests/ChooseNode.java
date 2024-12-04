@@ -46,6 +46,9 @@ public class ChooseNode extends QuestJunction {
 
     @Override
     public String getDescription() {
+        if (hasEnemies()) {
+            return "Combat " + enemyGroups.get(0).getName();
+        }
         return "";
     }
 
@@ -74,6 +77,10 @@ public class ChooseNode extends QuestJunction {
     }
 
     public boolean runCombat(Model model, QuestState state) {
+        return runCombat(model, state, CombatAdvantage.Neither);
+    }
+
+    public boolean runCombat(Model model, QuestState state, CombatAdvantage advantage) {
         List<Enemy> enemies = new ArrayList<>();
         String groupName = "";
         for (MovingEnemyGroup group : enemyGroups) {
@@ -85,7 +92,7 @@ public class ChooseNode extends QuestJunction {
             }
         }
         state.println("You encounter a group of " + groupName + "!");
-        CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), true, CombatAdvantage.Neither);
+        CombatEvent combat = new CombatEvent(model, enemies, new MansionTheme(), true, advantage);
         combat.run(model);
         state.transitionToQuestView(model);
         for (MovingEnemyGroup group : enemyGroups) {
