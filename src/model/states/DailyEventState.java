@@ -296,6 +296,10 @@ public abstract class DailyEventState extends GameState {
         return portraitSubView.getPortraitGender();
     }
 
+    protected void forcePortraitEyes(boolean closed) {
+        portraitSubView.forceEyesClosed(closed);
+    }
+
     protected static int calculatePartyAlignment(Model model, DailyEventState event) {
         model.getTutorial().alignment(model);
         int sum = 0;
