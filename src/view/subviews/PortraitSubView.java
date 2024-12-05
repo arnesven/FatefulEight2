@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import model.PartyAnimations;
+import model.characters.GameCharacter;
 import model.characters.appearance.*;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -203,5 +204,9 @@ public class PortraitSubView extends SubView {
 
     public void forceVampireFeedingLook() {
         partyAnimations.setVampireFeedingLookEnabledFor(appearance, CHAR_LOCATION);
+    }
+
+    public void forceEyesClosed(boolean closed) {
+        partyAnimations.forceEyesClosed(appearance, closed);
     }
 }

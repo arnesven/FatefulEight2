@@ -2,6 +2,8 @@ package model.quests;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.CharacterAppearance;
 import model.characters.special.AllyFromEnemyCharacter;
 import model.characters.special.PrisonerAlly;
 import model.classes.Classes;
@@ -10,6 +12,7 @@ import model.combat.CombatAdvantage;
 import model.combat.Combatant;
 import model.enemies.*;
 import model.items.Item;
+import model.journal.InitialStoryPart;
 import model.mainstory.SitInDungeonState;
 import model.map.CastleLocation;
 import model.quests.scenes.*;
@@ -25,6 +28,7 @@ import util.MyStrings;
 import view.LogView;
 import view.MyColors;
 import view.sprites.Sprite32x32;
+import view.subviews.PortraitSubView;
 import view.subviews.QuestSubView;
 import view.subviews.SubView;
 import view.widget.QuestBackground;
@@ -76,7 +80,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
             return new RunAwayState(model);
         }
         CastleLocation castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
-        return new SitInDungeonState(model, castle, this, 0);
+        return new SitInDungeonState(model, castle, this, 1, false);
     }
 
     @Override
@@ -518,7 +522,45 @@ public class EscapeTheDungeonQuest extends MainQuest {
             model.getLog().addAnimated(LogView.GOLD_COLOR + "You have regained your lost belongings.\n" +
                     LogView.DEFAULT_COLOR);
             model.getLog().waitForAnimationToFinish();
+
+            DailyEventState findEverix = new FindEverixEvent(model);
+            findEverix.doTheEvent(model);
             return getSuccessEdge();
+        }
+    }
+
+    private static class FindEverixEvent extends DailyEventState {
+        public FindEverixEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            println("In a cell close by the prison guard house you notice a woman lying on the floor.");
+            leaderSay("Wait a minute...");
+            println(model.getParty().getLeader().getFirstName() + " crouches down next the woman.");
+            leaderSay("It's Everix!");
+            model.getLog().waitForAnimationToFinish();
+            CharacterAppearance app = ((InitialStoryPart)model.getMainStory().getStoryParts().get(0)).getEverixPortrait();
+            PortraitSubView subView = new PortraitSubView(model.getSubView(), app, "Everix");
+            subView.forceEyesClosed(true);
+            model.setSubView(subView);
+            GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+            if (other != null) {
+                partyMemberSay(other, "Is she alive?");
+            }
+            leaderSay("She's breathing... she's been knocked unconscious bu those goons.");
+            if (other != null) {
+                partyMemberSay(other, "We can't just leave her here, or she'll meet the same " +
+                        "fate as that advisor fellow.");
+            }
+            leaderSay("We're bringing her.");
+            println(model.getParty().getLeader().getFirstName() + "'s picks Everix up.");
+            leaderSay("Ugh... she's heavy. Come on. Let's get out of here before more guards show up.");
+            if (other != null) {
+                partyMemberSay(other, "Not this way... I hear more guards coming this way.");
+            }
+            leaderSay("What's this... a grate. A sewage drain. It's big enough for us to climb through.");
         }
     }
 }

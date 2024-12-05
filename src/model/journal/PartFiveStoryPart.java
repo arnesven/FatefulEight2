@@ -201,10 +201,8 @@ public class PartFiveStoryPart extends StoryPart {
             MyLists.forEach(belongings, it -> model.getParty().getInventory().remove(it));
 
             q.setStoryPart(model.getMainStory().getStoryParts().get(model.getMainStory().getStoryParts().size()-1));
-            return new SitInDungeonState(model, castle, q, 3);
+            return new SitInDungeonState(model, castle, q, 3, true);
         }
-
-
     }
 
 
