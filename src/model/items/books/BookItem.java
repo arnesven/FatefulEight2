@@ -81,8 +81,8 @@ public abstract class BookItem extends ReadableItem {
     }
 
     @Override
-    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, Item itemToEquip) {
-        return new ReadBookView(model, inventoryView, (BookItem)itemToEquip);
+    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, GameCharacter user) {
+        return new ReadBookView(model, inventoryView, this);
     }
 
     public MyColors getCoverColor() {

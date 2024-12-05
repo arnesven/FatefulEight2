@@ -327,7 +327,7 @@ public class InventoryView extends SelectableListMenu {
                                     ((Scroll) itemToEquip).castFromMenu(model, gc)), model);
                         } else if (itemToEquip.opensViewFromInventoryMenu()) {
                             setTimeToTransition(true);
-                            model.transitionToDialog(itemToEquip.getViewFromInventoryMenu(model, InventoryView.this, itemToEquip));
+                            model.transitionToDialog(itemToEquip.getViewFromInventoryMenu(model, InventoryView.this, gc));
                         } else if (itemToEquip instanceof UsableItem) {
                             if (((UsableItem) itemToEquip).canBeUsedOn(model, gc)) {
                                 String message = ((UsableItem) itemToEquip).useYourself(model, gc);

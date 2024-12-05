@@ -10,6 +10,11 @@ import static model.map.Direction.*;
 
 public class WorldBuilder {
 
+    public static final Point TEMPLE_CRYSTAL = new Point(15, 11);
+    public static final Point TEMPLE_PLAINS = new Point(14, 19);
+    public static final Point TEMPLE_SURF = new Point(24, 25);
+    public static final Point TEMPLE_PEAKS = new Point(38, 17);
+
     public static final Point CROSSROADS_INN_POSITION = new Point(26, 19);
     public static final Point FAITH_ISLAND_POSITION = new Point(22, 15);
     public static final Point MONASTERY_POSITION = new Point(FAITH_ISLAND_POSITION.x + 1, FAITH_ISLAND_POSITION.y);
@@ -131,7 +136,7 @@ public class WorldBuilder {
         addRuins(contents, 28, 10, "Grond", SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,30, 10, SOUTH_WEST | SOUTH_EAST | NORTH, 0);
 
-        addTemple(contents, 15, 11, "Crystal");
+        addTemple(contents, TEMPLE_CRYSTAL.x, TEMPLE_CRYSTAL.y, "Crystal");
         addTown(contents, 21, 11, new EastDurhamTown(), 0, SOUTH_EAST);
         addTown(contents, 25, 11, new CapePaxtonTown(), NORTH, SOUTH_WEST);
         addRoadsAndRivers(contents, 27, 11, NORTH_WEST | NORTH_EAST, 0);
@@ -177,7 +182,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 28, 17, NORTH_WEST | NORTH | SOUTH, NORTH | NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 29, 17, 0, SOUTH_WEST);
         addRoadsAndRivers(contents, 30, 17, 0, SOUTH);
-        addTemple(contents, 38, 17, "the Peaks");
+        addTemple(contents, TEMPLE_PEAKS.x, TEMPLE_PEAKS.y, "the Peaks");
         addEvilTower(contents, getFortressPosition(EXPAND_EAST), EXPAND_EAST);
 
         addRoadsAndRivers(contents, 13, 18, 0, SOUTH_EAST);
@@ -192,7 +197,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 31, 18, 0, SOUTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 32, 18, 0, SOUTH_WEST);
 
-        addTemple(contents, 14, 19, "the Plains");
+        addTemple(contents, TEMPLE_PLAINS.x, TEMPLE_PLAINS.y, "the Plains");
         addRoadsAndRivers(contents, 17, 19, 0, NORTH | NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 18, 19, 0, NORTH_WEST | SOUTH_WEST);
         addRoadsAndRivers(contents, 22, 19, SOUTH_WEST | NORTH_EAST, 0);
@@ -261,7 +266,7 @@ public class WorldBuilder {
 
         addRoadsAndRivers(contents, 18, 25, SOUTH_WEST | SOUTH_EAST, 0);
         addInn(contents, 21, 25, "Hunter's Inn", SOUTH, 0);
-        addTemple(contents, 24, 25, "the Surf");
+        addTemple(contents, TEMPLE_SURF.x, TEMPLE_SURF.y, "the Surf");
         addTown(contents, 26, 25, new SouthMeadhomeTown(), 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 27, 25, 0, SOUTH_WEST | SOUTH);
         addRoadsAndRivers(contents, 28, 25, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);

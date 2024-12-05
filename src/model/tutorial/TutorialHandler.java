@@ -636,6 +636,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void puzzleTubes(Model model) {
+        runOnce("puzzletubes", () -> {
+            // No wait for animation
+            model.transitionToDialog(new TutorialPuzzleTubes(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

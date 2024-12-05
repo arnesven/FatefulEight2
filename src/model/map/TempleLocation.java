@@ -47,7 +47,8 @@ public class TempleLocation extends HexLocation {
                     new TempleGuardsEvent(model, true),
                     new KitchenDutyEvent(model),
                     new MeditationEvent(model),
-                    new GoldenIdolsEvent(model)
+                    new GoldenIdolsEvent(model),
+                    new FindPuzzleTubeEvent(model)
             ));
         }
         return new NoEventState(model);

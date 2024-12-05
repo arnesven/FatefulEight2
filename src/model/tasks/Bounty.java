@@ -5,7 +5,6 @@ import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.races.Race;
-import model.states.AcceptDeliveryEvent;
 import model.states.GameState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -41,7 +40,7 @@ public class Bounty implements Serializable {
         String lastName = GameState.randomLastName();
         int gold = MyRandom.randInt(20, 120);
         boolean andCompanions = MyRandom.flipCoin();
-        Destination dest = AcceptDeliveryEvent.makeRandomDestination(model);
+        Destination dest = Destination.generateDwellingDestination(model);
         return new Bounty(firstName, lastName, gold, gender, andCompanions, town, dest);
     }
 
@@ -74,7 +73,7 @@ public class Bounty implements Serializable {
     }
 
     public String getClue() {
-        return destination.getLongDescription();
+        return destination.getPreposition() + " " + destination.getLongDescription();
     }
 
     public String getDestinationShortDescription() {

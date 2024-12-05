@@ -1,6 +1,7 @@
 package model.items;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.Condition;
 import model.enemies.Enemy;
@@ -142,7 +143,7 @@ public abstract class Item implements Serializable, Comparable<Item> {
         return false;
     }
 
-    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, Item itemToEquip) {
+    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, GameCharacter user) {
         return null;
     }
 

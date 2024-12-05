@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.map.Direction;
 import model.map.WorldHex;
 import model.states.AcceptDeliveryEvent;
+import model.tasks.Destination;
 import model.tasks.DestinationTask;
 import model.tasks.TreasureHuntTask;
 import util.MyRandom;
@@ -25,7 +26,7 @@ public class MysteriousMap extends ReadableItem {
 
     public MysteriousMap(Model model) {
         super("Mysterious Map", MyRandom.randInt(20, 60));
-        this.location = AcceptDeliveryEvent.randomPositionWithoutLocation(model);
+        this.location = Destination.randomPositionWithoutLocation(model);
         model.getWorld().dijkstrasByLand(location, false);
         this.path = model.getWorld().shortestPathToNearestTownOrCastle(1);
         while (path.size() < 10) {
@@ -129,7 +130,7 @@ public class MysteriousMap extends ReadableItem {
     }
 
     @Override
-    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, Item itemToEquip) {
-        return new TreasureMapView(inventoryView, (MysteriousMap) itemToEquip, model);
+    public GameView getViewFromInventoryMenu(Model model, InventoryView inventoryView, GameCharacter user) {
+        return new TreasureMapView(inventoryView, this, model);
     }
 }

@@ -1,8 +1,5 @@
 package util;
 
-import model.characters.GameCharacter;
-import model.items.accessories.Accessory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,5 +146,13 @@ public class MyLists {
         buf.append(" and ");
         buf.append(fun.getString(list.get(list.size()-1)));
         return buf.toString();
+    }
+
+    public static <E> List<E> generate(int length, MyGeneratorFunction<E> fun) {
+        List<E> result = new ArrayList<>();
+        for (int i = 0; i < length; ++i) {
+            result.add(fun.generate());
+        }
+        return result;
     }
 }

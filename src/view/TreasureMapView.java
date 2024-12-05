@@ -236,7 +236,7 @@ public class TreasureMapView extends GameView {
     }
 
 
-    private static Sprite[][] makeMapSprites() {
+    public static Sprite[][] makeMapSprites() {
         Sprite[][] sprites = new Sprite[3][3];
         for (int y = 0; y < sprites[0].length; y++) {
             for (int x = 0; x < sprites.length; x++) {

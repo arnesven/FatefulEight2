@@ -3,20 +3,20 @@ package view;
 import model.Model;
 import model.QuestDeck;
 import model.Summon;
-import model.items.special.StoryItem;
+import model.items.puzzletube.DwarvenPuzzleTube;
 import model.journal.*;
 import model.map.UrbanLocation;
 import model.states.events.RareBirdEvent;
 import model.states.events.VisitMonasteryEvent;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
+import util.MyLists;
 import util.MyStrings;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 
 public class JournalView extends TwoPaneSelectableListMenu {
@@ -40,6 +40,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
         questsAndTasks.addAll(model.getMainStory().getMainStoryTasks(model));
         addMonasteryTask(model);
         addRareBirdTask(model);
+        addPuzzleTubeTasks(model);
         addGenericQuests(model);
         addTravellers(model);
         addDestinationTasks(model);
@@ -198,5 +199,13 @@ public class JournalView extends TwoPaneSelectableListMenu {
         if (RareBirdEvent.hasStarted(model)) {
             questsAndTasks.add(RareBirdEvent.makeJournalEntry(model));
         }
+    }
+
+    private void addPuzzleTubeTasks(Model model) {
+        MyLists.forEach(model.getParty().getInventory().getBooks(), readableItem -> {
+            if (readableItem instanceof DwarvenPuzzleTube) {
+                questsAndTasks.add(((DwarvenPuzzleTube)readableItem).getTask(model));
+            }
+        });
     }
 }

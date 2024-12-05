@@ -4,6 +4,8 @@ import model.Model;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
+import java.awt.*;
+
 import static view.DrawingArea.WINDOW_COLUMNS;
 import static view.DrawingArea.WINDOW_ROWS;
 import static view.sprites.BorderSpriteConstants.*;
@@ -62,6 +64,13 @@ public class BorderFrame {
         screenHandler.put(CHARACTER_WINDOW_COLUMNS, CENTER_TEXT_BOTTOM-centerTextHeight-1, CharSprite.make(VERTICAL_RIGHT, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
         screenHandler.put(80-CHARACTER_WINDOW_COLUMNS-1, CENTER_TEXT_BOTTOM-centerTextHeight-1, CharSprite.make(VERTICAL_LEFT, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK));
 
+    }
+
+    public static void drawStringInForeground(ScreenHandler screenHandler, String s, int col, int row, MyColors color, MyColors bgColor) {
+        for (int i = 0; i < s.length(); ++i) {
+            Sprite charSprite = CharSprite.make(s.charAt(i), color, MyColors.CYAN, bgColor);
+            screenHandler.register(charSprite.getName(), new Point(col+i, row), charSprite);
+        }
     }
 
     public static void drawString(ScreenHandler screenHandler, String s, int col, int row, MyColors color, MyColors bgColor) {

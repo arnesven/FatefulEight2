@@ -169,7 +169,7 @@ public class BountyDestinationTask extends DestinationTask {
             }
             if (state == GOT_CLUE) {
                 return "You are hunting down " + start + "You have been told " +
-                        bounty.getFirstName() + " is hiding out in " +
+                        bounty.getFirstName() + " is hiding out " +
                         bounty.getClue() + ".";
             }
             if (state == BOUNTY_KILLED) {

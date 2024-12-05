@@ -4,6 +4,7 @@ import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
 import model.characters.PersonalityTrait;
+import model.items.puzzletube.DwarvenPuzzleTube;
 import model.states.dailyaction.FindResourcesDailyAction;
 import model.tasks.DestinationTask;
 import view.combat.TownCombatTheme;
@@ -106,6 +107,10 @@ public abstract class WorldHex {
             return eventToReturn;
         }
         eventToReturn = CaveSpelunkerEvent.generateEvent(model);
+        if (eventToReturn != null) {
+            return eventToReturn;
+        }
+        eventToReturn = DwarvenPuzzleTube.generateEvent(model);
         return eventToReturn;
     }
 
