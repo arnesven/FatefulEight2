@@ -186,7 +186,7 @@ public class PartFiveStoryPart extends StoryPart {
                     (Item it) -> !getsToKeep(it));
             model.getLog().addAnimated(LogView.GOLD_COLOR + "Your belongings have been taken from you!\n" + LogView.DEFAULT_COLOR);
             EscapeTheDungeonQuest q = (EscapeTheDungeonQuest)getQuestAndSetPortrait(EscapeTheDungeonQuest.QUEST_NAME,
-                    new SilhouetteAppearance(), "Nobody");
+                    new SilhouetteAppearance(), "Yourself");
             q.setLootRewardItems(belongings,
                     model.getParty().getGold(),
                     model.getParty().getObols(),

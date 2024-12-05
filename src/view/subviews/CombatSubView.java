@@ -153,7 +153,7 @@ public class CombatSubView extends SubView {
     }
 
     private void drawInitiativeOrder(Model model) {
-        int col = 0;
+        int col = 0; // TODO: Fix when initiative bar is looong! (For instance EscapeFromDungeonQuest)
         int xPosStart = X_OFFSET + (X_MAX - X_OFFSET) / 2 - combat.getInitiativeOrder().size();
         List<Combatant> initOrder = new ArrayList<>(combat.getInitiativeOrder());
         for (Combatant combatant : initOrder) {

@@ -9,7 +9,7 @@ import model.items.accessories.GrayRing;
 import model.items.clothing.FullPlateArmor;
 import model.items.clothing.LeatherArmor;
 import model.items.clothing.ScaleArmor;
-import model.items.weapons.Claymore;
+import model.items.weapons.*;
 import model.races.Race;
 import view.MyColors;
 import view.ScreenHandler;
@@ -51,7 +51,15 @@ public class AllyFromEnemyCharacter extends GameCharacter {
         } else if (enemy.getDamageReduction() > 0) {
             eq.setClothing(new LeatherArmor()); // 3
         }
-        eq.setWeapon(new Claymore());
+        if (enemy.getDamage() > 3) {
+            eq.setWeapon(new Claymore());
+        } else if (enemy.getDamage() > 2) {
+            eq.setWeapon(new Broadsword());
+        } else if (enemy.getDamage() > 1) {
+            eq.setWeapon(new ShortSword());
+        } else {
+            eq.setWeapon(new Dirk());
+        }
         return eq;
     }
 }

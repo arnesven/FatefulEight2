@@ -433,7 +433,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
 
     private class CombatGuardsSubScene extends CombatSubScene {
         public CombatGuardsSubScene(int col, int row) {
-            super(col, row, makeGuards(12));
+            super(col, row, makeGuards(14));
         }
 
         @Override
