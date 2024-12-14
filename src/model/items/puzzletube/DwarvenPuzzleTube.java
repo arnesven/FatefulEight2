@@ -142,16 +142,16 @@ public class DwarvenPuzzleTube extends ReadableItem {
         return nextDestination.getPreposition() + " " + nextDestination.getLongDescription();
     }
 
-    private static final Point WOODS_NEAR_EBONSHIRE = new Point(19, 19);
-    private static final Point SW_DESERT_HILLS = new Point(14, 26);
-    private static final Point SW_DESERT_MOUNTAIN = new Point(20, 23);
-    private static final Point SE_MOUNTAIN = new Point(33, 27);
-    private static final Point E_DESERT_HILLS = new Point(34, 21);
+    private static final Point WOODS_NEAR_EBONSHIRE    = new Point(19, 19);
+    private static final Point SW_DESERT_HILLS         = new Point(14, 26);
+    private static final Point SW_DESERT_MOUNTAIN      = new Point(20, 23);
+    private static final Point SE_MOUNTAIN             = new Point(33, 27);
+    private static final Point E_DESERT_HILLS          = new Point(34, 21);
     private static final Point FIELDS_NEAR_ASHTONSHIRE = new Point(33, 18);
-    private static final Point PLAINS_NEAR_URNTOWN = new Point(31, 14);
-    private static final Point N_TUNDRA_HILLS = new Point(32, 10);
-    private static final Point NW_TUNDRA = new Point(18, 10);
-    private static final Point NW_SWAMP = new Point(14, 12);
+    private static final Point PLAINS_NEAR_URNTOWN     = new Point(31, 14);
+    private static final Point N_TUNDRA_HILLS          = new Point(32, 10);
+    private static final Point NW_TUNDRA               = new Point(18, 10);
+    private static final Point NW_SWAMP                = new Point(14, 12);
 
     private static Map<Point, Point> makeLocationMap() {
         Map<Point, Point> result = new HashMap<>();
