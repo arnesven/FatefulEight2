@@ -12,24 +12,22 @@ import model.tasks.Destination;
 public class SearchForDwarvenTubeAction extends DailyAction {
 
 
-    public SearchForDwarvenTubeAction(Model model, Destination dest, FindPuzzleDestinationTask task) {
-        super("Serach for Puzzle Tube", new SearchForDwarvenTubeEvent(model, dest, task));
+    public SearchForDwarvenTubeAction(Model model, Destination dest) {
+        super("Serach for Puzzle Tube", new SearchForDwarvenTubeEvent(model, dest));
 
     }
 
     private static class SearchForDwarvenTubeEvent extends DailyEventState {
         private final Destination destination;
-        private final FindPuzzleDestinationTask task;
 
-        public SearchForDwarvenTubeEvent(Model model, Destination dest, FindPuzzleDestinationTask task) {
+        public SearchForDwarvenTubeEvent(Model model, Destination dest) {
             super(model);
             this.destination = dest;
-            this.task = task;
         }
 
         @Override
         protected void doEvent(Model model) {
-            if (FindPuzzleTubeEvent.alreadyFoundInThisLocation(model)) {
+            if (FindPuzzleTubeEvent.alreadyFoundInCurrentLocation(model)) {
                 leaderSay("Now where is could that tube be hidden?");
                 if (model.getParty().size() > 1) {
                     GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
@@ -48,7 +46,6 @@ public class SearchForDwarvenTubeAction extends DailyAction {
                     ", in hopes that you can find the Dwarven Puzzle tube.");
             boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 8);
             if (success) {
-                task.setCompleted(true);
                 new FindPuzzleTubeEvent(model).doTheEvent(model);
             } else {
                 println("You search for hours, but find nothing.");

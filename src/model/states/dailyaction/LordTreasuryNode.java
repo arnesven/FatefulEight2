@@ -3,11 +3,14 @@ package model.states.dailyaction;
 import model.Model;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.items.puzzletube.DwarvenPuzzleTube;
+import model.items.puzzletube.FindPuzzleDestinationTask;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.ruins.objects.DungeonChest;
 import model.states.GameState;
 import model.states.events.ChestEvent;
+import model.states.events.FindPuzzleTubeEvent;
 import model.states.events.GeneralInteractionEvent;
 import model.states.events.SilentNoEventState;
 import view.sprites.Sprite;
@@ -119,7 +122,11 @@ public class LordTreasuryNode extends DailyActionNode {
             leaderSay("Now's our chance. Let's break into the treasury!");
             boolean success = model.getParty().doSoloLockpickCheck(model, this, 8);
             if (success) {
-                ChestEvent.chestOpens(model, this, isBig()?15:7);
+                if (DwarvenPuzzleTube.locationHasPuzzleTube(model.getParty().getPosition())) {
+                    new FindPuzzleTubeEvent(model).doTheEvent(model);
+                } else {
+                    ChestEvent.chestOpens(model, this, isBig() ? 15 : 7);
+                }
                 opened = true;
                 model.getSettings().getMiscFlags().put(location.getPlaceName() + OPENED_FLAG_SUFFIX, true);
             } else {

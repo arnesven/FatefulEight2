@@ -15,6 +15,13 @@ public class WorldBuilder {
     public static final Point TEMPLE_SURF = new Point(24, 25);
     public static final Point TEMPLE_PEAKS = new Point(38, 17);
 
+    public static final Point TOWN_CAPE_PAXTON = new Point(25, 11);
+    public static final Point TOWN_LOWER_THELN = new Point(27, 17);
+    public static final Point TOWN_UPPER_THELN = new Point(31, 21);
+    public static final Point TOWN_ROUKON = new Point(14, 15);
+    public static final Point TOWN_SAINT_QUELLIN = new Point(36, 21);
+    public static final Point TOWN_SHEFFIELD = new Point(32, 25);
+
     public static final Point CROSSROADS_INN_POSITION = new Point(26, 19);
     public static final Point FAITH_ISLAND_POSITION = new Point(22, 15);
     public static final Point MONASTERY_POSITION = new Point(FAITH_ISLAND_POSITION.x + 1, FAITH_ISLAND_POSITION.y);
@@ -138,7 +145,7 @@ public class WorldBuilder {
 
         addTemple(contents, TEMPLE_CRYSTAL.x, TEMPLE_CRYSTAL.y, "Crystal");
         addTown(contents, 21, 11, new EastDurhamTown(), 0, SOUTH_EAST);
-        addTown(contents, 25, 11, new CapePaxtonTown(), NORTH, SOUTH_WEST);
+        addTown(contents, TOWN_CAPE_PAXTON.x, TOWN_CAPE_PAXTON.y, new CapePaxtonTown(), NORTH, SOUTH_WEST);
         addRoadsAndRivers(contents, 27, 11, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents, 29, 11, NORTH_WEST | NORTH_EAST, 0);
         addRoadsAndRivers(contents,31, 11, NORTH_WEST | SOUTH_EAST, 0);
@@ -163,7 +170,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents,28, 14, NORTH_WEST | SOUTH, 0);
 
         addTomb(contents, 3, 15, "King Miron", 0, 0);
-        addTown(contents, 14, 15, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
+        addTown(contents, TOWN_ROUKON.x, TOWN_ROUKON.y, new RoukonTown(), SOUTH_EAST, NORTH | NORTH_EAST);
         addMonastery(contents);
         addRoadsAndRivers(contents,28, 15, SOUTH | NORTH, 0);
 
@@ -178,7 +185,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 16, 17, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 17, 17, NORTH_WEST | SOUTH_EAST, SOUTH | SOUTH_EAST);
         addTown(contents, 18, 17, new EbonshireTown(), NORTH_WEST, NORTH_WEST);
-        addTown(contents, 27, 17, new LowerThelnTown(), 0, NORTH | NORTH_EAST);
+        addTown(contents, TOWN_LOWER_THELN.x, TOWN_LOWER_THELN.y, new LowerThelnTown(), 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 28, 17, NORTH_WEST | NORTH | SOUTH, NORTH | NORTH_EAST | SOUTH_EAST);
         addRoadsAndRivers(contents, 29, 17, 0, SOUTH_WEST);
         addRoadsAndRivers(contents, 30, 17, 0, SOUTH);
@@ -231,8 +238,8 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 26, 21, NORTH | SOUTH, 0);
         addRoadsAndRivers(contents, 29, 21, NORTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 30, 21, NORTH_WEST | NORTH_EAST, 0);
-        addTown(contents, 31, 21, new UpperThelnTown(), SOUTH_WEST, NORTH_EAST);
-        addTown(contents, 36, 21, new SaintQuellinTown(), SOUTH_EAST, 0);
+        addTown(contents, TOWN_UPPER_THELN.x, TOWN_UPPER_THELN.y, new UpperThelnTown(), SOUTH_WEST, NORTH_EAST);
+        addTown(contents, TOWN_SAINT_QUELLIN.x, TOWN_SAINT_QUELLIN.y, new SaintQuellinTown(), SOUTH_EAST, 0);
 
         addRoadsAndRivers(contents, 16, 22, 0, NORTH_EAST | SOUTH_EAST);
         addTown(contents, 17, 22, new LittleErindeTown(), NORTH_EAST | SOUTH_EAST, SOUTH_WEST | NORTH_WEST | NORTH);
@@ -272,7 +279,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 28, 25, 0, SOUTH_WEST | SOUTH | SOUTH_EAST);
         addRoadsAndRivers(contents, 29, 25, 0, SOUTH | SOUTH_EAST | NORTH_EAST);
         addRoadsAndRivers(contents, 30, 25, 0, NORTH_WEST);
-        addTown(contents, 32, 25, new SheffieldTown(), NORTH, 0);
+        addTown(contents, TOWN_SHEFFIELD.x, TOWN_SHEFFIELD.y, new SheffieldTown(), NORTH, 0);
         addCastle(contents, 35, 25, new ArdhCastle(), NORTH_EAST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 36, 25, NORTH_WEST | SOUTH_EAST, 0);
         addTown(contents, 38, 25, new BullsVilleTown(), SOUTH_WEST, 0);

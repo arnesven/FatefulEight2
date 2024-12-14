@@ -7,6 +7,7 @@ import model.states.dailyaction.SearchForDwarvenTubeAction;
 import model.states.events.FindPuzzleTubeEvent;
 import model.tasks.Destination;
 import model.tasks.DestinationTask;
+import util.MyLists;
 
 public class FindPuzzleDestinationTask extends DestinationTask {
     private final Destination destination;
@@ -29,7 +30,7 @@ public class FindPuzzleDestinationTask extends DestinationTask {
 
     @Override
     public DailyAction getDailyAction(Model model) {
-        return new SearchForDwarvenTubeAction(model, destination, this);
+        return new SearchForDwarvenTubeAction(model, destination);
     }
 
     @Override
@@ -39,7 +40,6 @@ public class FindPuzzleDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        completed = FindPuzzleTubeEvent.alreadyFoundInThisLocation(model);
         return !completed && model.getParty().getPosition().equals(destination.getPosition());
     }
 
@@ -50,5 +50,12 @@ public class FindPuzzleDestinationTask extends DestinationTask {
 
     public void setCompleted(boolean b) {
         this.completed = b;
+    }
+
+    public static boolean hasTaskAtCurrentLocation(Model model) {
+        return MyLists.any(model.getParty().getDestinationTasks(),
+                dt -> dt instanceof FindPuzzleDestinationTask &&
+                        dt.getPosition().equals(model.getParty().getPosition()) &&
+                        !dt.isCompleted());
     }
 }

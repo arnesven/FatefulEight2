@@ -23,7 +23,8 @@ class FindNextTubeTask implements JournalEntry {
     @Override
     public String getText() {
         if (completed) {
-            return "You found the Dwarven Puzzle Tube.\n\nCompleted";
+            return "You found the Dwarven Puzzle Tube " + destination.getPreposition() + " " +
+                    destination.getLongDescription() + ".\n\nCompleted";
         }
         return "Search for another Dwarven Puzzle Tube. According to the parchment, it is " +
                 destination.getPreposition() + " " +

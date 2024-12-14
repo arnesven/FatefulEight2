@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.Summon;
 import model.TimeOfDay;
+import model.items.puzzletube.FindPuzzleDestinationTask;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
@@ -34,7 +35,8 @@ public class TownHallNode extends DailyActionNode {
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
-        if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
+        if (model.getParty().getSummons().containsKey(location.getPlaceName()) ||
+                FindPuzzleDestinationTask.hasTaskAtCurrentLocation(model)) {
             state.println("You have been admitted to town hall!");
             admitted = true;
             return new VisitMayorDailyActionState(model,
