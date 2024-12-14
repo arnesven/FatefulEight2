@@ -67,7 +67,7 @@ public class Destination implements Serializable {
         return makeDestination(model, position, landmarkAndPrep.first, landmarkAndPrep.second);
     }
 
-    private static Destination makeDwellingDestinationAtPosition(Model model, Point position) {
+    public static Destination makeDwellingDestinationAtPosition(Model model, Point position) {
         System.out.println("Position: (" + position.x + ", " + position.y + ")");
         String dwelling = MyRandom.sample(java.util.List.of(
                 "hut", "house", "cottage", "lodge", "tower",
@@ -75,7 +75,7 @@ public class Destination implements Serializable {
         return makeDestination(model, position, dwelling, "in");
     }
 
-    private static Destination makeDestination(Model model, Point position, String object, String preposition) {
+    public static Destination makeDestination(Model model, Point position, String object, String preposition) {
         WorldHex hex = model.getWorld().getHex(position);
         String article = "a ";
         if ("aeoui".contains(object.charAt(0)+"")) {

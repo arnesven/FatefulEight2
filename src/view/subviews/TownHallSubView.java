@@ -56,6 +56,7 @@ public class TownHallSubView extends DailyActionSubView {
                 } else if (row == 7) {
                     model.getScreenHandler().put(p.x, p.y, LOWER_WALL);
                 } else {
+                    // TODO: If !drawLord, make dark grass sprites.
                     model.getScreenHandler().put(p.x, p.y,
                             GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)]);
                 }
@@ -69,7 +70,7 @@ public class TownHallSubView extends DailyActionSubView {
 
     private void drawDecorations(Model model) {
         drawForeground(model, 1, 0, WINDOW);
-        drawForeground(model, 3, 0, WINDOW);
+        drawForeground(model, 3, 0, WINDOW); // TODO: If !drawLord, make evening window.
         drawForeground(model, 4, 0, WINDOW);
         drawForeground(model, 6, 0, WINDOW);
         drawForeground(model, 0, 1, PLANT);

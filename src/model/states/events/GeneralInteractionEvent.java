@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.conditions.CowardlyCondition;
@@ -11,16 +12,24 @@ import model.combat.conditions.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
+import model.items.ReadableItem;
+import model.items.puzzletube.DwarvenPuzzleConstants;
+import model.items.puzzletube.DwarvenPuzzleTube;
+import model.items.puzzletube.FindPuzzleDestinationTask;
+import model.items.puzzletube.MysteryOfTheTubesDestinationTask;
 import model.items.spells.Spell;
 import model.items.spells.TelekinesisSpell;
 import model.journal.JournalEntry;
 import model.map.CastleLocation;
+import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.map.wars.KingdomWar;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.tasks.BountyDestinationTask;
+import model.tasks.Destination;
 import model.tasks.DestinationTask;
 import model.tasks.FatueDestinationTask;
 import util.MyLists;
@@ -371,6 +380,79 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
     }
 
+    private void askAboutPuzzleTubes(Model model, GameCharacter victimChar) {
+        println(model.getParty().getLeader().getFirstName() + " brings out a Dwarven Puzzle " +
+                "Tubes and shows it to " + victimChar.getName() + ".");
+        leaderSay("Ever seen anything like this?");
+        boolean hasKnowledge = victimChar.getCharClass().id() == Classes.NOB.id() ||
+                victimChar.getCharClass().id() == Classes.ART.id() ||
+                victimChar.getCharClass().id() == Classes.MAG.id();
+        boolean isDwarf = victimChar.getRace().id() == Race.DWARF.id();
+        MysteryOfTheTubesDestinationTask task = (MysteryOfTheTubesDestinationTask)
+                MyLists.find(model.getParty().getDestinationTasks(),
+                dt -> dt instanceof MysteryOfTheTubesDestinationTask);
+        boolean isInKingdom = task.isInKingdom(model);
+        if (isDwarf) {
+            if (isInKingdom) {
+                pointToToyMakersHut(model, task);
+            } else {
+                pointToToyMakersKingdom(model, task);
+            }
+            leaderSay("Thank you. You've been helpful.");
+        } else if (hasKnowledge) { // not dwarf
+            if (isInKingdom) {
+                pointToToyMakersKingdom(model, task);
+            } else {
+                pointToPuzzleTubeAtTempleOrTown(model, task);
+            }
+            leaderSay("Thank you. You've been helpful.");
+        } else {
+            portraitSay("It looks like some kind of puzzle. I can't say I've ever seen anything like it.");
+            leaderSay("Never mind then.");
+        }
+    }
+
+    private void pointToPuzzleTubeAtTempleOrTown(Model model, MysteryOfTheTubesDestinationTask task) {
+        model.getWorld().dijkstrasByLand(model.getParty().getPosition(), true);
+        List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle();
+        Point puzzleLoc = path.get(path.size()-1);
+        if (!DwarvenPuzzleTube.locationHasPuzzleTube(puzzleLoc)) {
+            path = model.getWorld().shortestPathToNearestTemple();
+            puzzleLoc = path.get(path.size()-1);
+        }
+        HexLocation location = model.getWorld().getHex(puzzleLoc).getLocation();
+        if (!DwarvenPuzzleTube.locationHasPuzzleTube(puzzleLoc)) {
+            throw new IllegalStateException("Could not find a location for puzzle tube.");
+        }
+        Destination dest = DwarvenPuzzleTube.makeTempleOrTownDestination(puzzleLoc, location);
+        portraitSay("Oh yes. That's a dwarven puzzle tube, quite the spectacular craftmanship! I've seen one before " +
+                dest.getPreposition() + " " + dest.getLongDescription() + ".");
+        Point finalPuzzleLoc = puzzleLoc;
+        if (!MyLists.any(model.getParty().getDestinationTasks(), dt -> dt.getPosition().equals(finalPuzzleLoc))) {
+            model.getParty().addDestinationTask(new FindPuzzleDestinationTask(dest));
+        }
+    }
+
+    private void pointToToyMakersHut(Model model, MysteryOfTheTubesDestinationTask task) {
+        portraitSay("Yes. That's a dwarven puzzle tube. They were popular a long time ago. I believe they " +
+                "were made by a famous toymaker named " +  DwarvenPuzzleConstants.TOYMAKER_NAME +
+                ". He used to live not far from here, but it must be well over two decades ago.");
+        leaderSay("Can you mark the location on my map?");
+        portraitSay("Sure. ");
+        task.progressToHutFound();
+    }
+
+    private void pointToToyMakersKingdom(Model model, MysteryOfTheTubesDestinationTask task) {
+        portraitSay("Yes. That's a dwarven puzzle tube. They were popular a long time ago. I believe they " +
+                "were made by a famous toymaker. Rumour has it he was quite the eccentric.");
+        leaderSay("Do you remember his name?");
+        CastleLocation kingdomForToymaker = model.getWorld().getKingdomForPosition(task.getPosition());
+        portraitSay("I'm sorry no. All I remember is that he used to live in the " +
+                CastleLocation.placeNameToKingdom(kingdomForToymaker.getPlaceName()) +
+                ". Maybe somebody from that part of the realm could tell you more.");
+        task.progressToKingdomKnown();
+    }
+
     private boolean hasBountyTasks(Model model) {
         for (DestinationTask dt : model.getParty().getDestinationTasks()) {
             if (dt instanceof BountyDestinationTask) {
@@ -397,6 +479,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             if (hasBountyTasks(getModel())) {
                 options.add("Ask about bounties");
             }
+            if (canAskAboutPuzzleTubes(getModel())) {
+                options.add("Ask about puzzle tubes");
+            }
             options.add("Cancel");
             int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
             if (chosen == 0) {
@@ -405,6 +490,8 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(getVictimSelfTalk());
             } else if (options.get(chosen).contains("bounties")) {
                 askAboutBounties(getModel(), victimChar);
+            } else if (options.get(chosen).contains("puzzle tubes")) {
+                askAboutPuzzleTubes(getModel(), victimChar);
             } else if (options.get(chosen).contains("Cancel")) {
                 break;
             } else if (options.get(chosen).contains("news")) {
@@ -428,6 +515,11 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(queryAndResponse.second);
             }
         }
+    }
+
+    private boolean canAskAboutPuzzleTubes(Model model) {
+        return MyLists.any(model.getParty().getInventory().getBooks(), ri -> ri instanceof DwarvenPuzzleTube) &&
+                MyLists.any(model.getParty().getDestinationTasks(), dt -> dt instanceof MysteryOfTheTubesDestinationTask);
     }
 
     private void askAboutNews(Model model, CastleLocation kingdomCastle) {

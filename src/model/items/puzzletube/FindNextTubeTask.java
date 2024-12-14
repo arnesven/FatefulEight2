@@ -26,7 +26,7 @@ class FindNextTubeTask implements JournalEntry {
             return "You found the Dwarven Puzzle Tube " + destination.getPreposition() + " " +
                     destination.getLongDescription() + ".\n\nCompleted";
         }
-        return "Search for another Dwarven Puzzle Tube. According to the parchment, it is " +
+        return "Search for another Dwarven Puzzle Tube. You know that it is " +
                 destination.getPreposition() + " " +
                 destination.getLongDescription() + ".";
     }
