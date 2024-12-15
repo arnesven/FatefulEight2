@@ -17,11 +17,21 @@ import java.util.List;
 
 public class VeteranEvent extends CombatExpertGeneralInteractionEvent {
     private final boolean withIntro;
+    private final Race race;
     private CharacterAppearance app;
 
-    public VeteranEvent(Model model, boolean withIntro) {
+    public VeteranEvent(Model model, boolean withIntro, Race race) {
         super(model, "Talk to", MyRandom.randInt(2, 10));
         this.withIntro = withIntro;
+        this.race = race;
+    }
+
+    public VeteranEvent(Model model, Race race) {
+        this(model, true, race);
+    }
+
+    public VeteranEvent(Model model) {
+        this(model, MyRandom.sample(Race.getAllRaces()));
     }
 
     @Override
@@ -29,13 +39,9 @@ public class VeteranEvent extends CombatExpertGeneralInteractionEvent {
         return new GuideData("Visit veteran", "I know a veteran who lives in the area");
     }
 
-    public VeteranEvent(Model model) {
-        this(model, true);
-    }
-
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        this.app = PortraitSubView.makeOldPortrait(Classes.None, Race.randomRace(), MyRandom.flipCoin());
+        this.app = PortraitSubView.makeOldPortrait(Classes.None, race, MyRandom.flipCoin());
         showExplicitPortrait(model, app, "Veteran");
         if (withIntro) {
             println("The party passes an old tattered hut. Inside sits a venerable figure, " +

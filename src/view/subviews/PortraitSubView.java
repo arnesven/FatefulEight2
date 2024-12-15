@@ -49,7 +49,8 @@ public class PortraitSubView extends SubView {
         do {
             mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
         } while ((gender && isBeardyMouth(mouthIndex)) || // woman with beard
-                (raceToUse.id() == Race.DWARF.id() && !gender && !isBeardyMouth(mouthIndex) && MyRandom.flipCoin())); // un-bearded dwarf man 50% of the time
+                (raceToUse.id() == Race.DWARF.id() &&
+                        !gender && !isBeardyMouth(mouthIndex) && MyRandom.flipCoin())); // un-bearded dwarf man 50% of the time
 
         int mouth = CharacterCreationView.mouthSet[mouthIndex];
         int nose = CharacterCreationView.noseSet[MyRandom.randInt(CharacterCreationView.noseSet.length)];

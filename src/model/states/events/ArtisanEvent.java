@@ -16,6 +16,8 @@ import model.items.clothing.Clothing;
 import model.items.clothing.FancyJerkin;
 import model.items.clothing.JustClothes;
 import model.items.weapons.*;
+import model.races.AllRaces;
+import model.races.Race;
 import model.states.ShopState;
 import util.MyRandom;
 import view.MyColors;
@@ -26,18 +28,24 @@ import java.util.List;
 
 public class ArtisanEvent extends GeneralInteractionEvent {
     private final boolean withIntro;
+    private final Race race;
     private ArrayList<Item> itemList;
     private AdvancedAppearance portrait;
     private ArtisanType subType;
 
-    public ArtisanEvent(Model model, boolean withIntro, ArtisanType subType) {
+    public ArtisanEvent(Model model, boolean withIntro, ArtisanType subType, Race race) {
         super(model, "Trade with", MyRandom.randInt(10, 40));
         this.withIntro = withIntro;
         this.subType = subType;
+        this.race = race;
     }
 
-    public ArtisanEvent(Model model, boolean withIntro) {
-        this(model, withIntro, randomSubType());
+    public ArtisanEvent(Model model, boolean withIntro, ArtisanType subType) {
+        this(model, withIntro, subType, MyRandom.sample(AllRaces.getAllRaces()));
+    }
+
+    public ArtisanEvent(Model model, boolean withIntro, Race race) {
+        this(model, withIntro, randomSubType(), race);
     }
 
     private static ArtisanType randomSubType() {
@@ -57,7 +65,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
     }
 
     public ArtisanEvent(Model model) {
-        this(model, true);
+        this(model, true, MyRandom.sample(Race.getAllRaces()));
     }
 
     @Override
@@ -78,7 +86,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
                 subType.getItemType() + " at a discount.");
         itemList.add(subType.getItem(model));
         this.portrait = PortraitSubView.makeRandomPortrait(
-                new SpecificArtisanClass(subType.getShirtColor(), subType.getApronColor()));
+                new SpecificArtisanClass(subType.getShirtColor(), subType.getApronColor()), race);
         showExplicitPortrait(model, portrait, subType.getName());
         return true;
     }
