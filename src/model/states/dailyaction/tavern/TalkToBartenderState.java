@@ -3,16 +3,19 @@ package model.states.dailyaction.tavern;
 import model.Model;
 import model.TimeOfDay;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.states.AcceptDeliveryEvent;
 import model.states.GameState;
 import model.states.TradeWithBartenderState;
 import model.states.dailyaction.BuyHorseState;
 import model.states.dailyaction.SellHorseState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.SubView;
 import view.subviews.TavernSubView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TalkToBartenderState extends GameState {
@@ -27,9 +30,10 @@ public class TalkToBartenderState extends GameState {
             new HelpWithBooksInnWork(),
             new MusicalPerformanceInnWork(),
             new MusicalPerformanceInnWork(),
+            new SharpenKnivesInnWork(),
+            new SharpenKnivesInnWork(),
             new OfferDeliveryInnWork(),
-            new OfferDeliveryInnWork(),
-            new SharpenKnivesInnWork()
+            new OfferDeliveryInnWork()
     );
 
     private final TalkToBartenderNode talkToBartenderNode;
@@ -91,9 +95,31 @@ public class TalkToBartenderState extends GameState {
         }
         talkToBartenderNode.setWorkDone(true);
         model.getSettings().getMiscFlags().put("innworkdone", true);
-        InnWorkAction innWork = MyRandom.sample(ALL_INN_WORKS);
-        bartenderSay(model, innWork.getDescription());
-        leaderSay("I'll do it.");
+
+        List<InnWorkAction> works = new ArrayList<>(List.of(MyRandom.sample(ALL_INN_WORKS)));
+        SkillCheckResult result = model.getParty().getLeader().testSkillHidden(Skill.SeekInfo, 8,
+                model.getParty().getLeader().getRankForSkill(Skill.Persuade));
+        if (result.isSuccessful()) {
+            println("(Seek Info " + result.asString() + ")");
+            while (works.size() < 2) {
+                InnWorkAction work2 = MyRandom.sample(ALL_INN_WORKS);
+                if (!work2.getName().equals(works.get(0).getName())) {
+                    works.add(work2);
+                }
+            }
+            Collections.shuffle(works);
+        }
+
+        for (InnWorkAction ia : works) {
+            bartenderSay(model, ia.getDescription());
+        }
+        InnWorkAction innWork = works.get(0);
+        if (works.size() == 1) {
+            leaderSay("I'll do it.");
+        } else {
+            int choice = multipleOptionArrowMenu(model, 24, 24, MyLists.transform(works, InnWorkAction::getName));
+            innWork = works.get(choice);
+        }
         innWork.doWork(model, this);
     }
 
