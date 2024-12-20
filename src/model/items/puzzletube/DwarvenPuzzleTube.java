@@ -117,7 +117,7 @@ public class DwarvenPuzzleTube extends ReadableItem implements DwarvenPuzzleCons
                 dt -> dt instanceof MysteryOfTheTubesDestinationTask)) {
             model.getParty().addDestinationTask(
                     new MysteryOfTheTubesDestinationTask(model,
-                            MyRandom.sample(DwarvenPuzzleConstants.WORKSHOP_POSITIONS)));
+                            MyRandom.sample(DwarvenPuzzleConstants.MYSTERY_POSITIONS)));
         }
     }
 

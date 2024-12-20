@@ -13,7 +13,8 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
 
     private static final int INITIAL_STEP = 0;
     private static final int KINGDOM_FOUND_OUT = 1;
-    private static final int TOYMAKER_HUT_FOUND_OUT = 2;
+    private static final int RESIDENCE_FOUND_OUT = 2;
+    private static final int HUT_FOUND = 3;
     private final Destination destination;
 
     private int step = 0;
@@ -36,7 +37,7 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
 
     @Override
     public boolean drawTaskOnMap(Model model) {
-        return step == TOYMAKER_HUT_FOUND_OUT;
+        return step == RESIDENCE_FOUND_OUT;
     }
 
     @Override
@@ -46,7 +47,8 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
 
     @Override
     public DailyAction getDailyAction(Model model) {
-        return null;
+        return new DailyAction("Search for toy maker's house",
+                new SearchForToyMakersHouseEvent(model, this));
     }
 
     @Override
@@ -56,7 +58,7 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return false;
+        return step == RESIDENCE_FOUND_OUT && model.getParty().getPosition().equals(getPosition());
     }
 
     @Override
@@ -64,15 +66,31 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
         return false;
     }
 
-    public void progressToHutFound() {
-        if (step < TOYMAKER_HUT_FOUND_OUT) {
-            step = TOYMAKER_HUT_FOUND_OUT;
+    @Override
+    public Point getPosition() {
+        if (step < HUT_FOUND) {
+            return super.getPosition();
+        }
+        Point shifted = super.getPosition();
+        shifted.y = shifted.y - 1;
+        return shifted;
+    }
+
+    public void progressToResidenceKnown() {
+        if (step < RESIDENCE_FOUND_OUT) {
+            step = RESIDENCE_FOUND_OUT;
         }
     }
 
     public void progressToKingdomKnown() {
         if (step < KINGDOM_FOUND_OUT) {
             step = KINGDOM_FOUND_OUT;
+        }
+    }
+
+    public void progressToHutFound() {
+        if (step < HUT_FOUND) {
+            step = HUT_FOUND;
         }
     }
 
@@ -95,7 +113,9 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
             if (step > INITIAL_STEP) {
                 extra = "The Puzzle Tubes were made by a dwarf, an eccentric toy maker from the " +
                             CastleLocation.placeNameToKingdom(kingdomCastle.getPlaceName()) + ".";
-                if (step == TOYMAKER_HUT_FOUND_OUT) {
+                if (step == KINGDOM_FOUND_OUT) {
+                    extra += "\n\nMaybe somebody in that kingdom knows more.";
+                } else if (step == RESIDENCE_FOUND_OUT) {
                     extra += " His name is " + DwarvenPuzzleConstants.TOYMAKER_NAME + ". ";
                     extra += " His last known residence was " +
                             destination.getLongDescription() + ".";
@@ -122,7 +142,7 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
 
         @Override
         public Point getPosition(Model model) {
-            if (step == TOYMAKER_HUT_FOUND_OUT) {
+            if (step == RESIDENCE_FOUND_OUT) {
                 return MysteryOfTheTubesDestinationTask.this.getPosition();
             }
             return null;

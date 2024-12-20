@@ -7,15 +7,12 @@ import model.items.puzzletube.DwarvenPuzzleConstants;
 import model.items.puzzletube.MysteryOfTheTubesDestinationTask;
 import model.map.CastleLocation;
 import model.map.UrbanLocation;
-import model.map.World;
 import model.states.GameState;
 import model.states.events.FindPuzzleTubeEvent;
 import model.states.events.SilentNoEventState;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import util.MyPair;
-
-import java.awt.*;
 
 class MakeDealForPuzzleTubeDailyAction extends GameState {
 
@@ -83,7 +80,7 @@ class MakeDealForPuzzleTubeDailyAction extends GameState {
                                 ". He used to live not far from here, but it must be well over two decades ago.");
                         leaderSay("Can you mark the location on my map?");
                         lordSay("Sure. ");
-                        ((MysteryOfTheTubesDestinationTask)task).progressToHutFound();
+                        ((MysteryOfTheTubesDestinationTask)task).progressToResidenceKnown();
                         leaderSay("Thanks a bunch. We'll get out of your hair now.");
                         lordSay("Good bye then.");
                     } else {

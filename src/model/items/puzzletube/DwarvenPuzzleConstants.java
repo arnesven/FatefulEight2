@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DwarvenPuzzleConstants {
 
-    List<Point> WORKSHOP_POSITIONS  = List.of(
+    List<Point> MYSTERY_POSITIONS = List.of(
             new Point(24, 20),  // Bogdown
             new Point(26, 18),  // Ardh
             new Point(29, 18),  // Arkvale
@@ -27,7 +27,9 @@ public interface DwarvenPuzzleConstants {
     Point NW_SWAMP                = new Point(14, 12);
 
     Map<Point, Point> LOCATION_MAP = makeLocationMap();
-    String TOYMAKER_NAME = "Ralki Blackrock";
+    String TOYMAKER_FIRST_NAME = "Ralki";
+    String TOYMAKER_LAST_NAME = "Blackfoot";
+    String TOYMAKER_NAME = TOYMAKER_FIRST_NAME + " " + TOYMAKER_LAST_NAME;
 
     static Map<Point, Point> makeLocationMap() {
         Map<Point, Point> result = new HashMap<>();

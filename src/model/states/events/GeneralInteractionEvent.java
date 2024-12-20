@@ -12,7 +12,6 @@ import model.combat.conditions.RoutedCondition;
 import model.enemies.BodyGuardEnemy;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
-import model.items.ReadableItem;
 import model.items.puzzletube.DwarvenPuzzleConstants;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.items.puzzletube.FindPuzzleDestinationTask;
@@ -439,7 +438,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 ". He used to live not far from here, but it must be well over two decades ago.");
         leaderSay("Can you mark the location on my map?");
         portraitSay("Sure. ");
-        task.progressToHutFound();
+        task.progressToResidenceKnown();
     }
 
     private void pointToToyMakersKingdom(Model model, MysteryOfTheTubesDestinationTask task) {
