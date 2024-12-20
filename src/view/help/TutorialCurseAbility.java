@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.CurseCombatAction;
+import model.combat.abilities.CurseCombatAction;
 import view.GameView;
 
 public class TutorialCurseAbility extends SubChapterHelpDialog {

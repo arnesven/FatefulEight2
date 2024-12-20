@@ -3,10 +3,13 @@ package model.actions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.combat.abilities.SkillAbilityCombatAction;
 import view.help.TutorialQuickCasting;
 import view.help.HelpDialog;
 
-public class QuickCastPassiveCombatAction extends PassiveCombatAction {
+import java.util.List;
+
+public class QuickCastPassiveCombatAction extends PassiveCombatAction implements SkillAbilityCombatAction {
     public static final int MINIMUM_RANKS_REQUIRED = 4;
 
     private static QuickCastPassiveCombatAction instance = null;
@@ -22,12 +25,22 @@ public class QuickCastPassiveCombatAction extends PassiveCombatAction {
         super("Quick Casting");
     }
 
-    public static boolean canDoAbility(GameCharacter gc) {
-        return gc.getUnmodifiedRankForSkill(Skill.SpellCasting) >= MINIMUM_RANKS_REQUIRED;
+    public boolean canDoAbility(GameCharacter gc) {
+        return hasRequiredRanks(gc);
     }
 
     @Override
     public HelpDialog getHelpChapter(Model model) {
         return new TutorialQuickCasting(model.getView());
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.SpellCasting);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return MINIMUM_RANKS_REQUIRED;
     }
 }

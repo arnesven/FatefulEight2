@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.HeavyBlowCombatAction;
+import model.combat.abilities.HeavyBlowCombatAction;
 import view.GameView;
 
 public class TutorialHeavyBlow extends SubChapterHelpDialog {

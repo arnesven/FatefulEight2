@@ -3,6 +3,7 @@ package model.actions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.abilities.CombatAction;
 import model.enemies.Enemy;
 import model.items.Scroll;
 import model.items.UsableItem;

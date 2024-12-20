@@ -32,6 +32,11 @@ public class ClawsVampireAbility extends VampireAbility {
     public static PassiveCombatAction getPassiveCombatAbility() {
         return new PassiveCombatAction("Claws") {
             @Override
+            public boolean canDoAbility(GameCharacter gc) {
+                return ClawsVampireAbility.canDoAbility(gc);
+            }
+
+            @Override
             public HelpDialog getHelpChapter(Model model) {
                 return ClawsVampireAbility.getHelpChapter(model.getView());
             }

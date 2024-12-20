@@ -3,6 +3,7 @@ package view.help;
 
 import model.Model;
 import model.actions.*;
+import model.combat.abilities.*;
 import model.combat.conditions.*;
 import model.items.potions.CharismaPotion;
 import model.items.potions.DexterityPotion;

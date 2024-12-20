@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CleaveAbility extends StaminaCombatAbility {
+public class CleaveAbility extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int AXE_RANKS_REQUIRED = 5;
 
     public CleaveAbility() {
@@ -47,11 +48,21 @@ public class CleaveAbility extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Axes) >= AXE_RANKS_REQUIRED;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return target instanceof Enemy && performer.getEquipment().getWeapon().isOfType(AxeWeapon.class);
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Axes);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return AXE_RANKS_REQUIRED;
     }
 }

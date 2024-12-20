@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.InspireCombatAction;
+import model.combat.abilities.InspireCombatAction;
 import view.GameView;
 
 public class TutorialInspire extends SubChapterHelpDialog {

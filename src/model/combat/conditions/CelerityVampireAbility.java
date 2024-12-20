@@ -29,6 +29,11 @@ public class CelerityVampireAbility extends VampireAbility {
     public static PassiveCombatAction getPassiveCombatAbility() {
         return new PassiveCombatAction(NAME) {
             @Override
+            public boolean canDoAbility(GameCharacter gc) {
+                return CelerityVampireAbility.canDoAbility(gc);
+            }
+
+            @Override
             public HelpDialog getHelpChapter(Model model) {
                 return CelerityVampireAbility.getHelpChapter(model.getView());
 

@@ -76,4 +76,12 @@ public class MyStrings {
         String rest = name.substring(1).toLowerCase();
         return first+rest;
     }
+
+    public static <E> String makeString(List<E> list, MyStringFunction<E> fun) {
+        StringBuilder bldr = new StringBuilder();
+        for (E e : list) {
+            bldr.append(fun.getString(e));
+        }
+        return bldr.toString();
+    }
 }

@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -12,7 +13,9 @@ import view.help.HelpDialog;
 import view.help.ImpaleAbilityHelpChapter;
 import view.sprites.StrikeEffectSprite;
 
-public class ImpaleAbility extends StaminaCombatAbility {
+import java.util.List;
+
+public class ImpaleAbility extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int POLEARMS_RANKS_REQUIREMENT = 5;
 
     public ImpaleAbility() {
@@ -47,12 +50,22 @@ public class ImpaleAbility extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Polearms) >= POLEARMS_RANKS_REQUIREMENT;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return model.getParty().getFrontRow().contains(performer) &&
                 performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class);
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Polearms);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return POLEARMS_RANKS_REQUIREMENT;
     }
 }

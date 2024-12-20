@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.ImpaleAbility;
+import model.combat.abilities.ImpaleAbility;
 import view.GameView;
 
 public class ImpaleAbilityHelpChapter extends SubChapterHelpDialog {

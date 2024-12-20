@@ -1,10 +1,9 @@
 package model.states.events;
 
 import model.Model;
-import model.actions.InvisibilityCombatAction;
+import model.combat.abilities.InvisibilityCombatAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.ChildAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -17,7 +16,6 @@ import model.states.DailyEventState;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
-import view.MyColors;
 import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;

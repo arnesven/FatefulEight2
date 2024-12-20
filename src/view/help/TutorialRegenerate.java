@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.RegenerationCombatAction;
+import model.combat.abilities.RegenerationCombatAction;
 import view.GameView;
 
 public class TutorialRegenerate extends SubChapterHelpDialog {

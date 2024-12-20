@@ -38,8 +38,8 @@ public enum Skill implements Comparable<Skill> {
             new int[]{3, 4, 5, 5, 6, 7, 7, 7, 7}  // Weight 6
             // level  1  2  3  4  5  6  7  8  9
     };
-    private String name;
-    private String description;
+    private final String name;
+    private final String description;
 
     Skill(String name, String description) {
         this.name = name;

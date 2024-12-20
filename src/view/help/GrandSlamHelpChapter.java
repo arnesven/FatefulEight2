@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.GrandSlamAbility;
+import model.combat.abilities.GrandSlamAbility;
 import view.GameView;
 
 public class GrandSlamHelpChapter extends SubChapterHelpDialog {

@@ -1,7 +1,11 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.GameStatistics;
 import model.Model;
+import model.actions.BasicCombatAction;
+import model.actions.EquipItemCombatAction;
+import model.actions.ItemCombatAction;
+import model.actions.SpellCombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -12,7 +16,6 @@ import model.items.UsableItem;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
 import sprites.CombatSpeechBubble;
-import util.MyLists;
 import util.MyRandom;
 import view.help.HelpDialog;
 import view.subviews.CombatSubView;

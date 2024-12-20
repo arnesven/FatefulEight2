@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MultiShotCombatAction extends StaminaCombatAbility {
+public class MultiShotCombatAction extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final String MULTI_SHOT = "Multi-Shot";
     public static final int BOW_RANKS_REQUIRED = 5;
 
@@ -51,7 +52,7 @@ public class MultiShotCombatAction extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Bows) >= BOW_RANKS_REQUIRED;
+        return hasRequiredRanks(performer);
     }
 
     @Override
@@ -59,4 +60,13 @@ public class MultiShotCombatAction extends StaminaCombatAbility {
         return target instanceof Enemy && performer.getEquipment().getWeapon().isOfType(BowWeapon.class);
     }
 
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Bows);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return BOW_RANKS_REQUIRED;
+    }
 }

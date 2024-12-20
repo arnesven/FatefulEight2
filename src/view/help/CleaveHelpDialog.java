@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.CleaveAbility;
+import model.combat.abilities.CleaveAbility;
 import view.GameView;
 
 public class CleaveHelpDialog extends SubChapterHelpDialog {

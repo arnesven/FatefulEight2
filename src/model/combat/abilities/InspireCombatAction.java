@@ -1,4 +1,4 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -6,7 +6,6 @@ import model.classes.normal.BardClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
-import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.Condition;
 import model.items.weapons.Lute;
 import model.states.CombatEvent;
@@ -19,7 +18,9 @@ import view.help.TutorialInspire;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class InspireCombatAction extends SpecialAbilityCombatAction {
+import java.util.List;
+
+public class InspireCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final int LEADERSHIP_RANKS_REQUIREMENT = 4;
 
     public InspireCombatAction() {
@@ -78,12 +79,22 @@ public class InspireCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Leadership) >= InspireCombatAction.LEADERSHIP_RANKS_REQUIREMENT;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return true;
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Leadership);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return LEADERSHIP_RANKS_REQUIREMENT;
     }
 
     private static class InspiredCondition extends Condition {

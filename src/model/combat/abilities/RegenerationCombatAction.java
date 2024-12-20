@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.RegenerationCondition;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -15,7 +16,9 @@ import view.help.TutorialRegenerate;
 import view.sprites.CurlySpiralAnimation;
 import view.sprites.RunOnceAnimationSprite;
 
-public class RegenerationCombatAction extends SpecialAbilityCombatAction {
+import java.util.List;
+
+public class RegenerationCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final int REQUIRED_RANKS = 2;
     public static final Skill SKILL_TO_USE = Skill.MagicGreen;
     public static final int DIFFICULTY = 7;
@@ -49,12 +52,22 @@ public class RegenerationCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return !target.isDead() && (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                 performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(SKILL_TO_USE);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return REQUIRED_RANKS;
     }
 }

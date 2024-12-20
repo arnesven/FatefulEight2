@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.FairyHealCombatAction;
+import model.combat.abilities.FairyHealCombatAction;
 import view.GameView;
 
 public class TutorialFairyHeal extends SubChapterHelpDialog {

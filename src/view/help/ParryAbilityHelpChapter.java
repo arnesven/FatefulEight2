@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.ParryAbility;
+import model.combat.abilities.ParryAbility;
 import view.GameView;
 
 public class ParryAbilityHelpChapter extends SubChapterHelpDialog {

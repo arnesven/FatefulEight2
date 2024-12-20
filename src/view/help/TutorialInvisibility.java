@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.InvisibilityCombatAction;
+import model.combat.abilities.InvisibilityCombatAction;
 import view.GameView;
 
 public class TutorialInvisibility extends SubChapterHelpDialog {

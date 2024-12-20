@@ -1,15 +1,13 @@
 package view.party;
 
 import model.Model;
-import model.actions.AbilityCombatAction;
+import model.combat.abilities.AbilityCombatAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.RandomAppearance;
 import model.classes.Classes;
-import model.actions.CombatAction;
+import model.combat.abilities.CombatAction;
 import model.actions.PassiveCombatAction;
 import model.combat.abilities.SpecialAbilityCombatAction;
-import model.enemies.Enemy;
-import model.enemies.SkeletonEnemy;
 import model.items.Equipment;
 import model.races.Race;
 import util.MyLists;

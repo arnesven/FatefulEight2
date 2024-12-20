@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.PassiveCombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.enemies.Enemy;
@@ -10,10 +11,12 @@ import util.MyRandom;
 import view.help.HelpDialog;
 import view.help.ParryAbilityHelpChapter;
 
-public class ParryAbility extends PassiveCombatAction {
+import java.util.List;
+
+public class ParryAbility extends PassiveCombatAction implements SkillAbilityCombatAction {
     public static final int BLADES_RANKS_REQUIREMENT = 3;
 
-    public ParryAbility() {
+    private ParryAbility() {
         super("Parry");
     }
 
@@ -21,8 +24,8 @@ public class ParryAbility extends PassiveCombatAction {
         return new ParryAbility();
     }
 
-    public static boolean canDoAbility(GameCharacter gc) {
-        return gc.getUnmodifiedRankForSkill(Skill.Blades) >= BLADES_RANKS_REQUIREMENT;
+    public boolean canDoAbility(GameCharacter gc) {
+        return hasRequiredRanks(gc);
     }
 
     public static boolean checkForParry(Model model, CombatEvent combatEvent, GameCharacter character, Enemy enemy) {
@@ -38,5 +41,15 @@ public class ParryAbility extends PassiveCombatAction {
     @Override
     public HelpDialog getHelpChapter(Model model) {
         return new ParryAbilityHelpChapter(model.getView());
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Blades);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return BLADES_RANKS_REQUIREMENT;
     }
 }

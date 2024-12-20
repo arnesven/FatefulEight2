@@ -1,7 +1,7 @@
 package model.states.events;
 
 import model.Model;
-import model.actions.CombatAction;
+import model.combat.abilities.CombatAction;
 import model.characters.GameCharacter;
 import model.combat.loot.CombatLoot;
 import model.combat.Combatant;

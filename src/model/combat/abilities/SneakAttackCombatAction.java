@@ -1,11 +1,10 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
-import model.combat.abilities.SpecialAbilityCombatAction;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.GameState;
@@ -13,7 +12,10 @@ import util.MyRandom;
 import view.help.HelpDialog;
 import view.help.TutorialSneakAttack;
 
-public class SneakAttackCombatAction extends SpecialAbilityCombatAction {
+import java.util.List;
+
+public class SneakAttackCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
+    private static final int RANKS_REQUIRED = 1;
     private Combatant target;
     private int sneakValue;
     private GameCharacter performer;
@@ -81,11 +83,21 @@ public class SneakAttackCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Sneak) > 0;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return model.getParty().getFrontRow().contains(performer) && target instanceof Enemy && target.canBeAttackedBy(performer);
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Sneak);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return RANKS_REQUIRED;
     }
 }

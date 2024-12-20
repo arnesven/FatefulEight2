@@ -1,4 +1,4 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.combat.conditions.Condition;
 import view.GameView;

@@ -3,6 +3,7 @@ package model.actions;
 import model.Model;
 import model.characters.GameCharacter;
 import model.combat.Combatant;
+import model.combat.abilities.CombatAction;
 import model.items.spells.CombatSpell;
 import model.states.CombatEvent;
 

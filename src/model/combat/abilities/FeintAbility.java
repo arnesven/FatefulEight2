@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -11,7 +12,9 @@ import model.states.CombatEvent;
 import view.help.FeintAbilityHelpChapter;
 import view.help.HelpDialog;
 
-public class FeintAbility extends StaminaCombatAbility {
+import java.util.List;
+
+public class FeintAbility extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int BLADES_RANKS_REQUIREMENT = 4;
     public static final int DIFFICULTY = 7;
 
@@ -42,12 +45,22 @@ public class FeintAbility extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Blades) >= BLADES_RANKS_REQUIREMENT;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return model.getParty().getFrontRow().contains(performer) &&
                 performer.getEquipment().getWeapon().isOfType(BladedWeapon.class);
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Blades);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return BLADES_RANKS_REQUIREMENT;
     }
 }

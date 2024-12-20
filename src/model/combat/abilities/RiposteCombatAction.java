@@ -1,10 +1,10 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
-import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.weapons.BladedWeapon;
@@ -18,7 +18,9 @@ import view.help.TutorialRiposte;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class RiposteCombatAction extends StaminaCombatAbility {
+import java.util.List;
+
+public class RiposteCombatAction extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int ACROBATICS_RANKS_REQUIREMENT = 3;
 
     public RiposteCombatAction() {
@@ -57,7 +59,7 @@ public class RiposteCombatAction extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Acrobatics) >= RiposteCombatAction.ACROBATICS_RANKS_REQUIREMENT;
+        return hasRequiredRanks(performer);
     }
 
     @Override
@@ -65,6 +67,16 @@ public class RiposteCombatAction extends StaminaCombatAbility {
         return model.getParty().getFrontRow().contains(performer) &&
                 (performer.getEquipment().getWeapon().isOfType(BladedWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class));
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Acrobatics);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return ACROBATICS_RANKS_REQUIREMENT;
     }
 
     private static class RiposteStanceCondition extends Condition {

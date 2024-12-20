@@ -1,8 +1,8 @@
 package view;
 
 import model.Model;
-import model.actions.AbilityCombatAction;
-import model.actions.CombatAction;
+import model.combat.abilities.AbilityCombatAction;
+import model.combat.abilities.CombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.abilities.SpecialAbilityCombatAction;

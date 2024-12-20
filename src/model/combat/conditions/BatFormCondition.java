@@ -1,6 +1,6 @@
 package model.combat.conditions;
 
-import model.actions.CombatAction;
+import model.combat.abilities.CombatAction;
 import view.GameView;
 import view.MyColors;
 import view.ScreenHandler;

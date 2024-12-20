@@ -1,7 +1,7 @@
 package view.subviews;
 
 import model.Model;
-import model.actions.CombatAction;
+import model.combat.abilities.CombatAction;
 import model.combat.Combatant;
 import model.states.CombatEvent;
 

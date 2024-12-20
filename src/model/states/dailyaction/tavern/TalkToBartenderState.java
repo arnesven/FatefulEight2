@@ -4,7 +4,6 @@ import model.Model;
 import model.TimeOfDay;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.states.AcceptDeliveryEvent;
 import model.states.GameState;
 import model.states.TradeWithBartenderState;
 import model.states.dailyaction.BuyHorseState;

@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -12,7 +13,9 @@ import view.help.HelpDialog;
 import view.help.TutorialHeavyBlow;
 import view.sprites.RunOnceAnimationSprite;
 
-public class HeavyBlowCombatAction extends StaminaCombatAbility {
+import java.util.List;
+
+public class HeavyBlowCombatAction extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int LABOR_RANKS_REQUIREMENT = 3;
 
     public HeavyBlowCombatAction() {
@@ -34,7 +37,7 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Labor) >= HeavyBlowCombatAction.LABOR_RANKS_REQUIREMENT;
+        return hasRequiredRanks(performer);
     }
 
     @Override
@@ -42,6 +45,16 @@ public class HeavyBlowCombatAction extends StaminaCombatAbility {
         return model.getParty().getFrontRow().contains(performer) &&
                 (performer.getEquipment().getWeapon().isOfType(BluntWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(AxeWeapon.class));
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Labor);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return LABOR_RANKS_REQUIREMENT;
     }
 
     private static class HeavyBlowStrikeEffectSprite extends RunOnceAnimationSprite {

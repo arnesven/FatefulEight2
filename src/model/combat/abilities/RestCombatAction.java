@@ -1,4 +1,4 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -16,6 +16,8 @@ import view.help.TutorialCombatResting;
 import view.sprites.CurlySpiralAnimation;
 import view.sprites.DamageValueEffect;
 import view.sprites.RunOnceAnimationSprite;
+
+import java.util.List;
 
 public class RestCombatAction extends SpecialAbilityCombatAction {
     private boolean another;

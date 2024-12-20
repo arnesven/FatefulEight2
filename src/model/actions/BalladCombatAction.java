@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.InspireCombatAction;
 import model.items.weapons.Lute;
 import model.states.CombatEvent;
 import sound.SoundEffects;

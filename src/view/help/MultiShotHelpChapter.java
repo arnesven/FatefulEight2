@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.MultiShotCombatAction;
+import model.combat.abilities.MultiShotCombatAction;
 import view.GameView;
 
 public class MultiShotHelpChapter extends SubChapterHelpDialog {

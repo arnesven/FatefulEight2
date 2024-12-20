@@ -1,7 +1,7 @@
 package model.combat.conditions;
 
 import model.Model;
-import model.actions.CombatAction;
+import model.combat.abilities.CombatAction;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;

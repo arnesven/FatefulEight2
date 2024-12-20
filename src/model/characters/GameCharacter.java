@@ -1,8 +1,6 @@
 package model.characters;
 
 import control.GameExitedException;
-import model.GameStatistics;
-import model.actions.*;
 import model.characters.appearance.PortraitClothing;
 import model.characters.appearance.SkeletonAppearance;
 import model.combat.*;
@@ -12,6 +10,9 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.combat.abilities.DefendCombatAction;
+import model.combat.abilities.ParryAbility;
+import model.combat.abilities.RiposteCombatAction;
 import model.combat.conditions.*;
 import model.enemies.Enemy;
 import model.items.*;
@@ -19,8 +20,6 @@ import model.items.accessories.Accessory;
 import model.items.accessories.ShieldItem;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
-import model.items.spells.QuickenedCondition;
-import model.items.spells.QuickeningSpell;
 import model.items.weapons.NaturalWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.VampireClawsWeapon;
@@ -28,8 +27,6 @@ import model.items.weapons.Weapon;
 import model.races.ColoredRace;
 import model.races.Race;
 import model.states.CombatEvent;
-import model.states.GameState;
-import model.states.events.RareBirdEvent;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyPair;
@@ -44,7 +41,6 @@ import view.widget.HealthBar;
 
 import java.awt.Point;
 import java.util.*;
-import java.util.function.Predicate;
 
 public class GameCharacter extends Combatant {
     private static final MyColors[] xpColors = new MyColors[]{MyColors.LIGHT_PINK, MyColors.CYAN, MyColors.WHITE, MyColors.LIGHT_YELLOW, MyColors.LIGHT_GREEN,

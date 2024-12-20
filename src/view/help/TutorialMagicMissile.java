@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.MagicMissileCombatAction;
+import model.combat.abilities.MagicMissileCombatAction;
 import view.GameView;
 
 public class TutorialMagicMissile extends SubChapterHelpDialog {

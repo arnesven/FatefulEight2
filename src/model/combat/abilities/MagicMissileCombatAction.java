@@ -1,4 +1,4 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -16,7 +16,9 @@ import view.help.TutorialMagicMissile;
 import view.sprites.DamageValueEffect;
 import view.sprites.EntropicBoltEffect;
 
-public class MagicMissileCombatAction extends SpecialAbilityCombatAction {
+import java.util.List;
+
+public class MagicMissileCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final Skill SKILL_TO_USE = Skill.MagicRed;
     public static final int DIFFICULTY = 7;
     public static final int REQUIRED_RANKS = 2;
@@ -50,7 +52,7 @@ public class MagicMissileCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
+        return hasRequiredRanks(performer);
     }
 
     @Override
@@ -58,5 +60,15 @@ public class MagicMissileCombatAction extends SpecialAbilityCombatAction {
         return target instanceof Enemy &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(SKILL_TO_USE);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return REQUIRED_RANKS;
     }
 }

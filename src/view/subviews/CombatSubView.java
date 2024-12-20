@@ -2,7 +2,7 @@ package view.subviews;
 
 import model.*;
 import model.characters.GameCharacter;
-import model.actions.CombatAction;
+import model.combat.abilities.CombatAction;
 import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;

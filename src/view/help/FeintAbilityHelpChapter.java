@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.FeintAbility;
+import model.combat.abilities.FeintAbility;
 import view.GameView;
 
 public class FeintAbilityHelpChapter extends SubChapterHelpDialog {

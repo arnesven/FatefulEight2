@@ -1,10 +1,11 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.combat.Combatant;
+import model.combat.abilities.SkillAbilityCombatAction;
 import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.InvisibilityCondition;
 import model.items.weapons.StaffWeapon;
@@ -15,7 +16,9 @@ import view.help.TutorialInvisibility;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.SmokePuffAnimation;
 
-public class InvisibilityCombatAction extends SpecialAbilityCombatAction {
+import java.util.List;
+
+public class InvisibilityCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final Skill SKILL_TO_USE = Skill.MagicBlue;
     public static final int REQUIRED_RANKS = 2;
     public static final int DIFFICULTY = 7;
@@ -47,7 +50,7 @@ public class InvisibilityCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(SKILL_TO_USE) >= REQUIRED_RANKS;
+        return hasRequiredRanks(performer);
     }
 
     @Override
@@ -55,5 +58,15 @@ public class InvisibilityCombatAction extends SpecialAbilityCombatAction {
         return target instanceof GameCharacter &&
                 (performer.getEquipment().getWeapon().isOfType(StaffWeapon.class) ||
                         performer.getEquipment().getWeapon().isOfType(WandWeapon.class));
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(SKILL_TO_USE);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return REQUIRED_RANKS;
     }
 }

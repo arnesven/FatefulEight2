@@ -1,6 +1,6 @@
 package view.help;
 
-import model.actions.RiposteCombatAction;
+import model.combat.abilities.RiposteCombatAction;
 import view.GameView;
 
 public class TutorialRiposte extends SubChapterHelpDialog {

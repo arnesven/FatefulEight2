@@ -1,6 +1,7 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.StaminaCombatAbility;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
@@ -13,7 +14,9 @@ import view.help.GrandSlamHelpChapter;
 import view.help.HelpDialog;
 import view.sprites.RunOnceAnimationSprite;
 
-public class GrandSlamAbility extends StaminaCombatAbility {
+import java.util.List;
+
+public class GrandSlamAbility extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int BLUNT_RANKS_REQUIRED = 5;
 
     public GrandSlamAbility() {
@@ -46,7 +49,17 @@ public class GrandSlamAbility extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.BluntWeapons) >= BLUNT_RANKS_REQUIRED;
+        return hasRequiredRanks(performer);
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.BluntWeapons);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return BLUNT_RANKS_REQUIRED;
     }
 
     private static class GrandSlamStrikeEffectSprite extends RunOnceAnimationSprite {

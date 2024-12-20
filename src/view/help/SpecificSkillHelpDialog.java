@@ -1,10 +1,51 @@
 package view.help;
 
+import model.actions.PassiveCombatAction;
+import model.combat.abilities.AbilityCombatAction;
 import model.classes.Skill;
+import model.combat.abilities.SkillAbilityCombatAction;
+import model.combat.abilities.SpecialAbilityCombatAction;
+import util.MyLists;
+import util.MyPair;
+import util.MyStrings;
 import view.GameView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
     public SpecificSkillHelpDialog(GameView view, Skill s) {
-        super(view, 20, s.getName(), s.getDescription());
+        super(view, 20, s.getName(), makeText(s));
+    }
+
+    private static String makeText(Skill s) {
+
+        List<SkillAbilityCombatAction> skillAbilities = new ArrayList<>();
+
+        addAllForSkill(skillAbilities, s, AbilityCombatAction.getAllCombatAbilities(null));
+        addAllForSkill(skillAbilities, s, AbilityCombatAction.getAllPassiveCombatActions());
+        skillAbilities.sort(Comparator.comparingInt(SkillAbilityCombatAction::getRequiredRanks));
+
+        String abiExtra = "";
+        if (!skillAbilities.isEmpty()) {
+            abiExtra = "\n\nCombat Abilities:\n" + MyStrings.makeString(skillAbilities,
+                    skiAb -> skiAb.getName() + " (" + skiAb.getRequiredRanks() + ")\n");
+        }
+
+        return s.getDescription() + abiExtra;
+    }
+
+    private static <T> void addAllForSkill(List<SkillAbilityCombatAction> skillAbilities,
+                                           Skill s, List<T> objects) {
+        for (Object sac : objects) {
+            if (sac instanceof SkillAbilityCombatAction) {
+                SkillAbilityCombatAction skiAb = (SkillAbilityCombatAction) sac;
+                if (skiAb.getLinkedSkills().contains(s)) {
+                    skillAbilities.add(skiAb);
+                }
+            }
+        }
     }
 }

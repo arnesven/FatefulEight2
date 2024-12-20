@@ -1,17 +1,16 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
+import model.actions.*;
 import model.characters.GameCharacter;
-import model.classes.Skill;
 import model.combat.Combatant;
-import model.combat.abilities.SpecialAbilityCombatAction;
 import model.combat.conditions.BatFormVampireAbility;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClawsVampireAbility;
 import model.combat.conditions.MesmerizeVampireAbility;
-import model.enemies.Enemy;
 import model.items.weapons.*;
 import model.states.CombatEvent;
+import util.MyLists;
 import view.help.HelpDialog;
 
 import java.util.ArrayList;
@@ -69,7 +68,7 @@ public class AbilityCombatAction extends CombatAction {
         list.add(new MagicMissileCombatAction());
         list.add(new CurseCombatAction());
         list.add(new BalladCombatAction());
-        if (StaffOfDeimosItem.canDoAbility(performer)) {
+        if (performer != null && StaffOfDeimosItem.canDoAbility(performer)) {
             list.add(StaffOfDeimosItem.makeCombatAbility(performer));
         }
         list.add(BatFormVampireAbility.makeCombatAbility());
@@ -82,20 +81,14 @@ public class AbilityCombatAction extends CombatAction {
         return list;
     }
 
+    public static List<PassiveCombatAction> getAllPassiveCombatActions() {
+        return List.of(QuickCastPassiveCombatAction.getInstance(),
+                CelerityVampireAbility.getPassiveCombatAbility(),
+                ClawsVampireAbility.getPassiveCombatAbility(),
+                ParryAbility.getPassiveCombatAbility());
+    }
+
     public static List<PassiveCombatAction> getPassiveCombatActions(GameCharacter gc) {
-        List<PassiveCombatAction> list = new ArrayList<>();
-        if (QuickCastPassiveCombatAction.canDoAbility(gc)) {
-            list.add(QuickCastPassiveCombatAction.getInstance());
-        }
-        if (CelerityVampireAbility.canDoAbility(gc)) {
-            list.add(CelerityVampireAbility.getPassiveCombatAbility());
-        }
-        if (ClawsVampireAbility.canDoAbility(gc)) {
-            list.add(ClawsVampireAbility.getPassiveCombatAbility());
-        }
-        if (ParryAbility.canDoAbility(gc)) {
-            list.add(ParryAbility.getPassiveCombatAbility());
-        }
-        return list;
+        return MyLists.filter(getAllPassiveCombatActions(), pa -> pa.canDoAbility(gc));
     }
 }

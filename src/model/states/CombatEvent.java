@@ -1,10 +1,10 @@
 package model.states;
 
 import model.GameStatistics;
-import model.actions.AbilityCombatAction;
+import model.combat.abilities.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
-import model.actions.SneakAttackCombatAction;
-import model.actions.CombatAction;
+import model.combat.abilities.SneakAttackCombatAction;
+import model.combat.abilities.CombatAction;
 import model.combat.CombatAdvantage;
 import model.combat.conditions.CelerityVampireAbility;
 import model.combat.conditions.ClinchedCondition;

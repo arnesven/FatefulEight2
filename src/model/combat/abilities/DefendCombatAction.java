@@ -1,4 +1,4 @@
-package model.actions;
+package model.combat.abilities;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -15,9 +15,11 @@ import view.help.TutorialDefending;
 import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
-public class DefendCombatAction extends SpecialAbilityCombatAction {
+import java.util.List;
+
+public class DefendCombatAction extends SpecialAbilityCombatAction implements SkillAbilityCombatAction {
     public static final int DEFEND_SKILL_RANKS = 3;
-    private static final Skill[] SKILLS = new Skill[]{Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms};
+    private static final List<Skill> SKILLS = List.of(Skill.Axes, Skill.Blades, Skill.BluntWeapons, Skill.Polearms);
 
     public DefendCombatAction() {
         super("Defend", false, false);
@@ -47,12 +49,7 @@ public class DefendCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        for (Skill s : SKILLS) {
-            if (performer.getUnmodifiedRankForSkill(s) >= DEFEND_SKILL_RANKS) {
-                return true;
-            }
-        }
-        return false;
+        return hasRequiredRanks(performer);
     }
 
     @Override
@@ -64,6 +61,16 @@ public class DefendCombatAction extends SpecialAbilityCombatAction {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return SKILLS;
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return DEFEND_SKILL_RANKS;
     }
 
     private static class DefendCondition extends Condition {

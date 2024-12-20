@@ -4,13 +4,16 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
+import model.combat.abilities.SkillAbilityCombatAction;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialSniperShot;
 import view.sprites.RunOnceAnimationSprite;
 
-public class SniperShotCombatAction extends StaminaCombatAbility {
+import java.util.List;
+
+public class SniperShotCombatAction extends StaminaCombatAbility implements SkillAbilityCombatAction {
     public static final int PERCEPTION_RANKS_REQUIREMENT = 3;
 
     public SniperShotCombatAction() {
@@ -33,12 +36,22 @@ public class SniperShotCombatAction extends StaminaCombatAbility {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getUnmodifiedRankForSkill(Skill.Perception) >= PERCEPTION_RANKS_REQUIREMENT;
+        return hasRequiredRanks(performer);
     }
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return performer.getEquipment().getWeapon().isRangedAttack();
+    }
+
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Perception);
+    }
+
+    @Override
+    public int getRequiredRanks() {
+        return PERCEPTION_RANKS_REQUIREMENT;
     }
 
     private static class SniperShotStrikeEffectSprite extends RunOnceAnimationSprite {
