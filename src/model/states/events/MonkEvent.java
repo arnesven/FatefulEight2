@@ -2,22 +2,14 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
-import model.enemies.Enemy;
 import model.items.Equipment;
-import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.LongStaff;
-import model.map.HexLocation;
-import model.states.DailyEventState;
-import model.states.dailyaction.AcceptTravellerState;
-import model.travellers.Traveller;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MonkEvent extends MeetTravellerEvent {

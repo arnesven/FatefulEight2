@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.states.GameState;
+import model.states.dailyaction.tavern.TavernDailyActionState;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;

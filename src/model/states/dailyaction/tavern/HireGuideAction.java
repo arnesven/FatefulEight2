@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.map.UrbanLocation;

@@ -5,7 +5,7 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.TavernDailyActionState;
+import model.states.dailyaction.tavern.TavernDailyActionState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

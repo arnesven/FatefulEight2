@@ -1,10 +1,12 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.states.GameState;
 import model.states.RecruitState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import util.MyLists;
 import util.MyRandom;
 import view.PartyAttitudesDialog;

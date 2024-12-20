@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.characters.GameCharacter;
@@ -7,6 +7,8 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.states.cardgames.CardGameState;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarSprite;

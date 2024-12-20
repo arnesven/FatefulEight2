@@ -1,8 +1,7 @@
 package model.states;
 
 import model.Model;
-import model.states.dailyaction.HireGuideAction;
-import util.MyLists;
+import model.states.dailyaction.tavern.HireGuideAction;
 import util.MyRandom;
 import util.MyStrings;
 

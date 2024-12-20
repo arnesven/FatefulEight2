@@ -1,9 +1,11 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.TimeOfDay;
 import model.races.Race;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

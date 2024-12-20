@@ -1,6 +1,5 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
-import control.FatefulEight;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
@@ -8,6 +7,9 @@ import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.tavern.AcceptTravellerState;
 import model.travellers.Traveller;
 import util.MyRandom;
 import view.MyColors;

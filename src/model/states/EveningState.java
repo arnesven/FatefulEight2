@@ -8,7 +8,7 @@ import model.items.Inventory;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.quests.Quest;
-import model.states.dailyaction.HireGuideAction;
+import model.states.dailyaction.tavern.HireGuideAction;
 import model.states.dailyaction.LodgingState;
 import model.states.events.PartyMemberWantsToLeaveEvent;
 import model.states.events.VampireProwlNightEvent;

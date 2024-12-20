@@ -6,7 +6,7 @@ import model.actions.RecruitAction;
 import model.actions.SaveGameAction;
 import model.items.*;
 import model.states.*;
-import model.states.dailyaction.TavernDailyActionState;
+import model.states.dailyaction.tavern.TavernDailyActionState;
 import model.states.events.SilentNoEventState;
 import util.MyRandom;
 import view.GameView;

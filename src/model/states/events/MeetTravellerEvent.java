@@ -4,7 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.map.HexLocation;
-import model.states.dailyaction.AcceptTravellerState;
+import model.states.dailyaction.tavern.AcceptTravellerState;
 import model.travellers.Traveller;
 
 import java.awt.*;

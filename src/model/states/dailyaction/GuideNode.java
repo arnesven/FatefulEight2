@@ -4,6 +4,7 @@ import model.Model;
 import model.races.AllRaces;
 import model.races.Race;
 import model.states.GameState;
+import model.states.dailyaction.tavern.HireGuideAction;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;

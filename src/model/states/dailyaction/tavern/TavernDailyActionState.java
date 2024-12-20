@@ -1,10 +1,11 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.actions.Loan;
 import model.states.GameState;
+import model.states.dailyaction.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.subviews.DailyActionSubView;

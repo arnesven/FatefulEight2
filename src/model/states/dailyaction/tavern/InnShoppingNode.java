@@ -1,9 +1,10 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.items.Item;
 import model.items.Lockpick;
 import model.states.ShopState;
+import model.states.dailyaction.ShoppingNode;
 import util.MyRandom;
 import view.sprites.Sprite;
 import view.subviews.TavernSubView;
