@@ -4,9 +4,12 @@ import model.Model;
 import model.journal.MainStoryTask;
 import util.MyStrings;
 import view.BorderFrame;
+import view.DrawingArea;
 import view.GameView;
 import view.TwoPaneSelectableListMenu;
 import view.party.DrawableObject;
+import view.widget.HelpViewTopText;
+import view.widget.TopText;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
 
     private static final int WIDTH = 57;
     public static final int HELP_VIEW_HEIGHT = 42;
+    private final TopText topText;
     private List<HelpDialog> chapters;
     private boolean searchEnabled = false;
     private StringBuffer searchBuffer = new StringBuffer("þþþþþþþþþþþþþþþþþþþ");
@@ -24,10 +28,13 @@ public class HelpView extends TwoPaneSelectableListMenu {
     public HelpView(GameView view) {
         super(view, WIDTH, HELP_VIEW_HEIGHT, 36);
         resetHelpChapters();
+        this.topText = new HelpViewTopText();
     }
 
     @Override
     protected void drawContent(Model model, int index, int x, int y) {
+        model.getScreenHandler().clearSpace(0, DrawingArea.WINDOW_COLUMNS, 0, 1);
+        topText.drawYourself(model);
         for (DrawableObject dObject : chapters.get(index).buildDecorations(model, x, y)) {
             dObject.drawYourself(model, dObject.position.x, dObject.position.y);
         }
@@ -43,29 +50,29 @@ public class HelpView extends TwoPaneSelectableListMenu {
 
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model, int index) {
-        if (keyEvent.isControlDown() && keyEvent.getKeyCode() == KeyEvent.VK_F) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
             searchEnabled = !searchEnabled;
-            filterChapters();
+            filterChapters(model);
             madeChanges();
         }
         if (searchEnabled) {
             if (isAlphaOrSpace(keyEvent)) {
                 if (buffIndex < searchBuffer.length()) {
                     searchBuffer.setCharAt(buffIndex++, keyEvent.getKeyChar());
-                    filterChapters();
+                    filterChapters(model);
                     madeChanges();
                 }
             } else if (keyEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                 if (buffIndex > 0) {
                     searchBuffer.setCharAt(--buffIndex, 'þ');
-                    filterChapters();
+                    filterChapters(model);
                     madeChanges();
                 }
             }
         }
     }
 
-    private void filterChapters() {
+    private void filterChapters(Model model) {
         String searchKey = searchBuffer.toString().replaceAll("þ", "");
         resetHelpChapters();
         if (searchEnabled && !searchKey.equals("")) {
@@ -75,15 +82,18 @@ public class HelpView extends TwoPaneSelectableListMenu {
                 searchResults.add(new NoSearchResultsFound());
             }
             chapters = searchResults;
-            resetIndex();
-            setSelectedRow(0);
         }
+        resetIndex();
+        checkForSelectedRowReset(model);
     }
 
     private void addSearchResults(List<HelpDialog> searchResults, List<HelpDialog> chapters, String searchKey) {
         String cap = MyStrings.capitalize(searchKey);
+        String lowerCase = searchKey.toLowerCase();
         for (HelpDialog chap : chapters) {
-            if (chap.getText().contains(searchKey) || chap.getText().contains(cap)) {
+            if (chap.getText().contains(searchKey) || 
+                    chap.getText().contains(cap) ||
+                    chap.getText().contains(lowerCase)) {
                 searchResults.add(chap);
             }
             addSearchResults(searchResults, chap.getSubSections(), searchKey);
