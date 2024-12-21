@@ -13,6 +13,8 @@ public class TutorialClassesDialog extends ExpandableHelpDialog {
             "their skills and whether or not that character can wear heavy armor. A character's " +
             "class also affects how much gold they contribute to the party when joining and " +
             "how much gold they would claim if being dismissed.\n\n" +
+            "The Skill Weights (denoted W1, W2 etc.) indicate how a character's ranks in a skill will increase each " +
+            "level. See the Skills Chapter for details.\n\n" +
             "Each character has four classes which he or she may assume. Various events will allow " +
             "characters to change their class. Think carefully before switching classes, you may not " +
             "get a chance to switch back soon!";
