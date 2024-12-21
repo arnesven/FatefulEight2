@@ -91,7 +91,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
         String cap = MyStrings.capitalize(searchKey);
         String lowerCase = searchKey.toLowerCase();
         for (HelpDialog chap : chapters) {
-            if (chap.getText().contains(searchKey) || 
+            if (chap.getText().contains(searchKey) ||
                     chap.getText().contains(cap) ||
                     chap.getText().contains(lowerCase)) {
                 searchResults.add(chap);
@@ -181,6 +181,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
                 new TutorialScoringDialog(null),
                 new TutorialScrolls(null),
                 new TutorialShoppingDialog(null),
+                new SkillsHelpChapter(null),
                 new TutorialSkillChecksDialog(null),
                 new TutorialSpells(null),
                 new TerrainHelpChapter(null),

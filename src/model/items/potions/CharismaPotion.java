@@ -16,7 +16,7 @@ public class CharismaPotion extends SkillBoostingPotion {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.BLUE, MyColors.BLACK, MyColors.CYAN);
 
     public CharismaPotion() {
-        super("Charisma Potion", new Skill[]{Skill.Entertain, Skill.Leadership, Skill.Persuade, Skill.SeekInfo});
+        super("Charisma Potion", Skill.getCharismaSkills());
     }
 
     @Override

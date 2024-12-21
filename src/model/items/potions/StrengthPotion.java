@@ -4,6 +4,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
 import model.items.Item;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -16,7 +17,7 @@ public class StrengthPotion extends SkillBoostingPotion {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.ORANGE, MyColors.BLACK, MyColors.CYAN);
 
     public StrengthPotion() {
-        super("Strength Potion", new Skill[]{Skill.Acrobatics, Skill.Axes, Skill.BluntWeapons, Skill.Endurance, Skill.Labor});
+        super("Strength Potion", Skill.getStrengthSkills());
     }
 
     @Override
@@ -51,7 +52,8 @@ public class StrengthPotion extends SkillBoostingPotion {
         @Override
         public ConditionHelpDialog getHelpView(GameView view) {
             return new ConditionHelpDialog(view, this, "A condition indicating that the character is currently " +
-                    "receiving a bonus to Strength-based skills, i.e. Acrobatics, Axes, BluntWeapons, Endurance and Labor.");
+                    "receiving a bonus to Strength-based skills, i.e. " +
+                    MyLists.commaAndJoin(Skill.getStrengthSkills(), Skill::getName) + ".");
         }
 
         @Override

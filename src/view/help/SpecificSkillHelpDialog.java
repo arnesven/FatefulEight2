@@ -30,11 +30,26 @@ public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
 
         String abiExtra = "";
         if (!skillAbilities.isEmpty()) {
-            abiExtra = "\n\nCombat Abilities:\n" + MyStrings.makeString(skillAbilities,
-                    skiAb -> skiAb.getName() + " (" + skiAb.getRequiredRanks() + ")\n");
+            abiExtra = "\n\nCombat Abilities (Required Ranks)\n" + MyStrings.makeString(skillAbilities,
+                    skiAb -> " " + skiAb.getName() + " (" + skiAb.getRequiredRanks() + ")\n");
         }
 
-        return s.getDescription() + abiExtra;
+        return getGoverningAttribute(s) + s.getDescription() + abiExtra;
+    }
+
+    private static String getGoverningAttribute(Skill s) {
+        StringBuilder bldr = new StringBuilder("Governing attribute: ");
+        for (String key : Skill.getAttributeSets().keySet()) {
+            for (Skill attrSkill : Skill.getAttributeSets().get(key)) {
+                if (attrSkill == s) {
+                    bldr.append(key);
+                    bldr.append("\n\n");
+                    return bldr.toString();
+                }
+            }
+        }
+        bldr.append("None\n\n");
+        return bldr.toString();
     }
 
     private static <T> void addAllForSkill(List<SkillAbilityCombatAction> skillAbilities,

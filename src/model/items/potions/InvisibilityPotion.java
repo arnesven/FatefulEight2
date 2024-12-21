@@ -12,12 +12,14 @@ import view.sprites.CharSprite;
 import view.sprites.SkillBoostingPotionSprite;
 import view.sprites.Sprite;
 
+import java.util.List;
+
 public class InvisibilityPotion extends SkillBoostingPotion {
 
     private static final Sprite SPRITE = new SkillBoostingPotionSprite(MyColors.GRAY);
 
     public InvisibilityPotion() {
-        super("Invisibility Potion", new Skill[]{Skill.Sneak});
+        super("Invisibility Potion", List.of(Skill.Sneak));
     }
 
     @Override

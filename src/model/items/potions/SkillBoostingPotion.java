@@ -6,19 +6,20 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
 import model.states.GameState;
+import util.MyLists;
+
+import java.util.List;
 
 public abstract class SkillBoostingPotion extends Potion {
 
-    private final Skill[] skills;
+    private final List<Skill> skills;
     private final String description;
 
-    public SkillBoostingPotion(String name,Skill[] skills) {
+    public SkillBoostingPotion(String name, List<Skill> skills) {
         super(name, 24);
         this.skills = skills;
         StringBuilder bldr = new StringBuilder(", for the rest of the day +" + getBoostAmount() + " to: ");
-        for (Skill s : skills) {
-            bldr.append(s.getName() + ", ");
-        }
+        bldr.append(MyLists.commaAndJoin(skills, Skill::getName));
         this.description = bldr.substring(0, bldr.length()-2);
     }
 

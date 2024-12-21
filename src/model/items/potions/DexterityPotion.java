@@ -4,6 +4,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
 import model.items.Item;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -16,7 +17,7 @@ public class DexterityPotion extends SkillBoostingPotion {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.GREEN, MyColors.BLACK, MyColors.CYAN);
 
     public DexterityPotion() {
-        super("Dexterity Potion", new Skill[]{Skill.Blades, Skill.Bows, Skill.Polearms, Skill.Sneak, Skill.Security});
+        super("Dexterity Potion", Skill.getDexteritySkills());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class DexterityPotion extends SkillBoostingPotion {
         @Override
         public ConditionHelpDialog getHelpView(GameView view) {
             return new ConditionHelpDialog(view, this, "A condition indicating that the character is currently " +
-                    "receiving a bonus to Dexterity-based skills, i.e. Blades, Bows, Polearms, Sneak and Security.");
+                    "receiving a bonus to Dexterity-based skills, i.e. " + MyLists.commaAndJoin(Skill.getDexteritySkills(), Skill::getName) + ".");
         }
 
         @Override

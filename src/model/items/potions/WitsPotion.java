@@ -4,6 +4,7 @@ import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.conditions.Condition;
 import model.items.Item;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
@@ -16,7 +17,7 @@ public class WitsPotion extends SkillBoostingPotion {
     private static final Sprite CONDITION_SPRITE = CharSprite.make((char) (0xD4), MyColors.GOLD, MyColors.BLACK, MyColors.CYAN);
 
     public WitsPotion() {
-        super("Wits Potion", new Skill[]{Skill.Logic, Skill.Perception, Skill.Search, Skill.SpellCasting, Skill.Survival});
+        super("Wits Potion", Skill.getWitsSkills());
     }
 
     @Override
@@ -51,7 +52,8 @@ public class WitsPotion extends SkillBoostingPotion {
         @Override
         public ConditionHelpDialog getHelpView(GameView view) {
             return new ConditionHelpDialog(view, this, "A condition indicating that the character is currently " +
-                    "receiving a bonus to Wits-based skills, i.e. Logic, Perception, Search, SpellCasting and Survival.");
+                    "receiving a bonus to Wits-based skills, i.e. " +
+                    MyLists.commaAndJoin(Skill.getWitsSkills(), Skill::getName) + ".");
         }
 
         @Override

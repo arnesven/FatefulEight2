@@ -4,6 +4,7 @@ import model.Model;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.states.GameState;
+import util.MyLists;
 import util.MyStrings;
 import view.GameView;
 import view.MyColors;
@@ -42,11 +43,7 @@ public class StrangenessCondition extends Condition {
 
     @Override
     public int getBonusForSkill(Skill skill) {
-        if (skill == Skill.SeekInfo || skill == Skill.Persuade ||
-                skill == Skill.Entertain || skill == Skill.Leadership) {
-            return -2;
-        }
-        return super.getBonusForSkill(skill);
+        return Skill.getCharismaSkills().contains(skill) ? -2 : super.getBonusForSkill(skill);
     }
 
     @Override
@@ -54,6 +51,7 @@ public class StrangenessCondition extends Condition {
         return new ConditionHelpDialog(view, this,
                 "A condition indicating that this character has a strangeness, " +
                         "impairing his or her charisma for " + MyStrings.numberWord(DURATION_DAYS) + " days. " +
-                        "Entertain, Leadership, Persuade and Seek Info Skills suffer a -" + PENALTY + " penalty.");
+                        MyLists.commaAndJoin(Skill.getCharismaSkills(), Skill::getName) +
+                        " suffer a -" + PENALTY + " penalty.");
     }
 }

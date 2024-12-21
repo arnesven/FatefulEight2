@@ -1,5 +1,12 @@
 package model.classes;
 
+import model.states.TravelTable;
+import util.MyLists;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public enum Skill implements Comparable<Skill> {
     Acrobatics("Acrobatics", "acrobatic and athletic activities, like climbing, jumping, swimming, tumbling, running and crawling.\n\nSpecifically this skill is used in combat to avoid opportunity attacks when a character is moving from front formation to back."),       // 12
     Axes("Axes", "handling all types of axes, both during common work and in combat."),                   // 1
@@ -29,7 +36,7 @@ public enum Skill implements Comparable<Skill> {
 
     UnarmedCombat("Unarmed Combat", "for fighting without a weapon.\n\nA character does not have ranks in this skill, but it is used when making an unarmed attack in combat and can receive bonuses in certain situations.");
 
-    private static final int[][] RANK_MATRIX = new int[][]{
+    public static final int[][] RANK_MATRIX = new int[][]{
             new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3}, // Weight 1
             new int[]{1, 1, 1, 2, 2, 3, 3, 3, 4}, // Weight 2
             new int[]{2, 2, 3, 3, 3, 4, 4, 5, 5}, // Weight 3
@@ -38,6 +45,13 @@ public enum Skill implements Comparable<Skill> {
             new int[]{3, 4, 5, 5, 6, 7, 7, 7, 7}  // Weight 6
             // level  1  2  3  4  5  6  7  8  9
     };
+
+    private static final Map<String, List<Skill>> ATTRIBUTES =
+            Map.of("Wits",       List.of(Skill.Logic, Skill.Perception, Skill.Search, Skill.SpellCasting, Skill.Survival),
+                    "Strength",  List.of(Skill.Acrobatics, Skill.Axes, Skill.BluntWeapons, Skill.Endurance, Skill.Labor),
+                    "Dexterity", List.of(Skill.Blades, Skill.Bows, Skill.Polearms, Skill.Sneak, Skill.Security),
+                    "Charisma",  List.of(Skill.Entertain, Skill.Leadership, Skill.Persuade, Skill.SeekInfo));
+
     private final String name;
     private final String description;
 
@@ -58,6 +72,26 @@ public enum Skill implements Comparable<Skill> {
 
     public static boolean isMagicSkill(Skill skill) {
         return skill.getName().startsWith("Magic");
+    }
+
+    public static List<Skill> getCharismaSkills() {
+        return Skill.ATTRIBUTES.get("Charisma");
+    }
+
+    public static List<Skill> getDexteritySkills() {
+        return Skill.ATTRIBUTES.get("Dexterity");
+    }
+
+    public static List<Skill> getStrengthSkills() {
+        return Skill.ATTRIBUTES.get("Strength");
+    }
+
+    public static List<Skill> getWitsSkills() {
+        return Skill.ATTRIBUTES.get("Wits");
+    }
+
+    public static Map<String, List<Skill>> getAttributeSets() {
+        return ATTRIBUTES;
     }
 
     public String getName() {
