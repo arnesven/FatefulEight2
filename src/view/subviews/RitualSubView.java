@@ -246,7 +246,7 @@ public class RitualSubView extends SubView implements Animation {
         ritualSuccess = b;
     }
 
-    private static ParticleSprite[] makeAngledBeams(MyColors color) {
+    public static ParticleSprite[] makeAngledBeams(MyColors color) {
         ParticleSprite[] sprites = new ParticleSprite[14];
         for (int i = 0; i < sprites.length; ++i) {
             sprites[i] = new ParticleSprite(0x20 + i*0x10, color);
@@ -254,12 +254,12 @@ public class RitualSubView extends SubView implements Animation {
         return sprites;
     }
 
-    private static MyColors convertColor(MyColors magicColor) {
+    public static MyColors convertColor(MyColors magicColor) {
         switch (magicColor) {
             case GREEN:
                 return MyColors.LIGHT_GREEN;
             case BLUE:
-                return MyColors.CYAN;
+                return MyColors.LIGHT_BLUE;
             case BLACK:
                 return MyColors.GRAY;
             case RED:

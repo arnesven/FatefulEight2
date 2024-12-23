@@ -3,10 +3,9 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
-import model.characters.PersonalityTrait;
 import model.items.puzzletube.DwarvenPuzzleTube;
-import model.races.Race;
 import model.states.dailyaction.FindResourcesDailyAction;
+import model.states.duel.MagicDuelEvent;
 import model.tasks.DestinationTask;
 import view.combat.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
@@ -256,6 +255,7 @@ public abstract class WorldHex {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
+        return new MagicDuelEvent(model); /*
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8) {
             List<DailyEventState> events = new ArrayList<>();
@@ -284,7 +284,7 @@ public abstract class WorldHex {
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     public void travelTo(Model model) {
