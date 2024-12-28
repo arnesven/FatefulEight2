@@ -248,6 +248,9 @@ public abstract class GameState implements GameStateConstants {
         boolean gender = MyRandom.flipCoin();
         AdvancedAppearance portrait = PortraitSubView.makeRandomPortrait(cls, race, gender);
         String firstName = randomFirstName(gender);
+        if (lastNames.isEmpty()) {
+            lastNames.addAll(COMMON_LAST_NAMES);
+        }
         String lastName = lastNames.remove(MyRandom.randInt(lastNames.size()));
         GameCharacter gc = new GameCharacter(firstName, lastName, race, cls, portrait,
                 makeRandomClassSet(cls));

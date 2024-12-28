@@ -1,5 +1,6 @@
 package view.subviews;
 
+import control.FatefulEight;
 import model.Model;
 import model.states.duel.MagicDuelist;
 import model.states.duel.PowerGauge;
@@ -128,6 +129,10 @@ public class MagicDuelSubView extends SubView implements Animation {
         PowerGauge gauge = player.getGauge();
         gauge.drawYourself(model.getScreenHandler(), X_MAX - 8, Y_OFFSET);
 
+        if (FatefulEight.inDebugMode()) {
+            opponent.getGauge().drawYourself(model.getScreenHandler(), X_OFFSET, Y_OFFSET);
+        }
+
     }
 
     private void drawWandSprite(Model model) {
@@ -178,6 +183,11 @@ public class MagicDuelSubView extends SubView implements Animation {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
         model.getScreenHandler().clearSpace(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
         model.getScreenHandler().clearForeground(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
+
+        if (FatefulEight.inDebugMode()) {
+            model.getScreenHandler().clearSpace(X_OFFSET, X_OFFSET + 8, Y_OFFSET, Y_MAX);
+            model.getScreenHandler().clearForeground(X_OFFSET, X_OFFSET + 8, Y_OFFSET, Y_MAX);
+        }
     }
 
     private void drawMidPointSprite(Model model) {
@@ -200,6 +210,15 @@ public class MagicDuelSubView extends SubView implements Animation {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+//        if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+//            player.getGauge().addToLevel(1);
+//            return true;
+//        }
+//        if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+//            player.getGauge().addToLevel(-1);
+//            return true;
+//        }
+
         return super.handleKeyEvent(keyEvent, model);
     }
 

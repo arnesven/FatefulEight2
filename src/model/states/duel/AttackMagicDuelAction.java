@@ -15,6 +15,7 @@ public class AttackMagicDuelAction extends MagicDuelAction {
 
     @Override
     protected void specificPrepare(Model model, MagicDuelEvent state, MagicDuelist performer) {
+        this.didDamage = false;
         this.success = performer.testMagicSkill(model, state, BASE_DIFFICULTY);
         if (!success) {
             getPerformer().setAnimation(new MiscastEffectSprite());
@@ -62,7 +63,7 @@ public class AttackMagicDuelAction extends MagicDuelAction {
             if (damage > 1) {
                 hit = "hits";
             }
-            magicDuelEvent.println(getPerformer().getName() + " dealt " + damage + " " + hit +
+            magicDuelEvent.textOutput(getPerformer().getName() + " dealt " + damage + " " + hit +
                     " to " + opponent.getName() + "!");
             opponent.takeDamage(damage);
         }

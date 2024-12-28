@@ -7,6 +7,7 @@ import model.states.beangame.BeanGameEvent;
 import model.states.cardgames.CardGameState;
 import model.states.cardgames.knockout.KnockOutCardGame;
 import model.states.cardgames.runny.RunnyCardGame;
+import model.states.duel.MagicDuelEvent;
 import model.states.events.*;
 import model.states.warehouse.WarehouseEvent;
 import util.MyLists;
@@ -60,6 +61,7 @@ public class SelectMinigameDialog extends SelectableListMenu {
         AtomicInteger y = new AtomicInteger(yStart + 3);
         int x = xStart + 2;
         List<MyPair<String, EventMaker>> events = new ArrayList<>(List.of(
+                new MyPair<>("AI Magic Duel", m -> new AIMagicDuelEvent(m)),
                 new MyPair<>("Bean Game",  m -> new BeanGameEvent(m)),
                 new MyPair<>("Market Day", m -> new MarketEvent(m)),
                 new MyPair<>("Farmer's Horse Race", m -> new FarmersHorseRaceEvent(m)),

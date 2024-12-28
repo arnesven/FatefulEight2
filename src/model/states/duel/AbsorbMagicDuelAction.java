@@ -5,6 +5,7 @@ import util.MyRandom;
 import view.sprites.AbsorbMagicAnimationSprite;
 
 public class AbsorbMagicDuelAction extends MagicDuelAction {
+    private static final int DICE_PER_POWER_LEVEL = 6;
     private boolean absorbed = false;
     private int amount;
 
@@ -15,6 +16,7 @@ public class AbsorbMagicDuelAction extends MagicDuelAction {
 
     @Override
     protected void specificPrepare(Model model, MagicDuelEvent state, MagicDuelist performer) {
+        absorbed = false;
         // Nothing to do.
     }
 
@@ -30,10 +32,13 @@ public class AbsorbMagicDuelAction extends MagicDuelAction {
                 BASE_DIFFICULTY + attackMagicDuelAction.getPowerLevel());
         if (success) {
             this.absorbed = true;
-            for (int i = 0; i < attackMagicDuelAction.getPowerLevel() + 1; ++i) {
-                this.amount += (MyRandom.rollD6() + MyRandom.rollD6() + MyRandom.rollD6());
+            this.amount += (MyRandom.rollD6() + MyRandom.rollD6() + MyRandom.rollD6());
+            for (int i = 1; i <= attackMagicDuelAction.getPowerLevel(); ++i) {
+                for (int j = 0; j < DICE_PER_POWER_LEVEL; ++j) {
+                    this.amount += MyRandom.rollD6();
+                }
             }
-            state.println(getPerformer().getName() + " successfully absorbed the power of " +
+            state.textOutput(getPerformer().getName() + " successfully absorbed the power of " +
                     opponent.getName() + "'s attack.");
         }
         return success;

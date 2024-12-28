@@ -13,13 +13,24 @@ public class MagicDuelist {
     private final GameCharacter character;
     private final MyColors magicColor;
     private final PowerGauge gauge;
+    private final boolean withAnimation;
     private int hitsTaken = 0;
     private RunOnceAnimationSprite reactionAnimation;
 
-    public MagicDuelist(GameCharacter chara, MyColors magicColor, PowerGauge gauge) {
+    public MagicDuelist(GameCharacter chara, MyColors magicColor, PowerGauge gauge, boolean withAnimation) {
         this.character = chara;
         this.magicColor = magicColor;
         this.gauge = gauge;
+        this.withAnimation = withAnimation;
+    }
+
+    public MagicDuelist(GameCharacter chara, MyColors magicColor, PowerGauge gauge) {
+        this(chara, magicColor, gauge, true);
+    }
+
+    public void reset() {
+        hitsTaken = 0;
+        gauge.setCurrentLevel(0);
     }
 
     public GameCharacter getCharacter() {
@@ -38,7 +49,7 @@ public class MagicDuelist {
         SkillCheckResult result = character.testSkill(model,
                 Spell.getSkillForColor(magicColor), difficulty, 0);
         if (result.isFailure()) {
-            state.println(character.getName() + " miscasts! (" + result.asString() + ").");
+            state.textOutput(character.getName() + " miscasts! (" + result.asString() + ").");
         }
         return result.isSuccessful();
     }
@@ -52,7 +63,9 @@ public class MagicDuelist {
     }
 
     public void setAnimation(RunOnceAnimationSprite animationSprite) {
-        this.reactionAnimation = animationSprite;
+        if (withAnimation) {
+            this.reactionAnimation = animationSprite;
+        }
     }
 
     public boolean hasAnimation() {
@@ -78,7 +91,9 @@ public class MagicDuelist {
 
     public void takeDamage(int amount) {
         takeHits(amount);
-        setAnimation(new StrikeEffectSprite());
+        if (withAnimation) {
+            setAnimation(new StrikeEffectSprite());
+        }
     }
 
     public int getHitsTaken() {

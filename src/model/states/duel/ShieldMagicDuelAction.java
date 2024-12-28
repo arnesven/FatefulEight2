@@ -21,6 +21,7 @@ public class ShieldMagicDuelAction extends MagicDuelAction {
 
     @Override
     protected void specificPrepare(Model model, MagicDuelEvent state, MagicDuelist performer) {
+        showShieldAnimation = false;
         this.success = performer.testMagicSkill(model, state, BASE_DIFFICULTY + level);
         if (!success) {
             getPerformer().setAnimation(new MiscastEffectSprite());
@@ -40,11 +41,11 @@ public class ShieldMagicDuelAction extends MagicDuelAction {
         if (success) {
             this.showShieldAnimation = true;
             if (attackMagicDuelAction.getPowerLevel() > level) {
-                state.println(opponent.getName() + "'s attack is too powerful for " +
+                state.textOutput(opponent.getName() + "'s attack is too powerful for " +
                         getPerformer().getName() + "'s shield, it broke though!");
                 return false;
             }
-            state.println(getPerformer().getName() + " successfully shielded against " +
+            state.textOutput(getPerformer().getName() + " successfully shielded against " +
                     opponent.getName() + "'s attack.");
             return true;
         }

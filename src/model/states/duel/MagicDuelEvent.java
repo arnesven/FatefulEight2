@@ -16,31 +16,53 @@ import view.MyColors;
 import view.subviews.MagicDuelSubView;
 import view.subviews.StripedTransition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MagicDuelEvent extends DailyEventState {
 
+    private enum OutputType{ normal, console, none;}
+
     public static final int MAX_HITS = 5;
+
     private static final int MAX_SHIFT = 3;
     private static final List<CharacterClass> RITUALIST_CLASSES = List.of(Classes.SOR, Classes.MAG, Classes.WIZ,
                                                                           Classes.WIT, Classes.PRI, Classes.DRU);
+    protected List<MagicDuelist> duelists;
 
-    private List<MagicDuelist> duelists;
-    private DuelistController controller1;
-    private DuelistController controller2;
+    protected DuelistController controller1;
+    protected DuelistController controller2;
     private MagicDuelSubView subView;
-    private LockedBeam lockedBeam = null;
+
+    private boolean lockedBeamOn = false;
+    private int lockedBeamPower = 0;
+    private int lockedBeamShift = 0;
+
+    private final boolean aisOnly;
+    private final OutputType outputType;
+
+    public MagicDuelEvent(Model model, boolean aisOnly) {
+        super(model);
+        if (aisOnly) {
+            outputType = OutputType.none;
+        } else {
+            outputType = OutputType.normal;
+        }
+        this.aisOnly = aisOnly;
+    }
 
     public MagicDuelEvent(Model model) {
-        super(model);
+        this(model, false);
+    }
+
+    public GameCharacter makeNPCMageOfClassAndLevel(CharacterClass cls, int level) {
+        GameCharacter gc = makeRandomCharacter(level);
+        gc.setClass(cls);
+        gc.addToHP(999);
+        return gc;
     }
 
     public GameCharacter makeRandomMageNPC() {
-        GameCharacter gc = makeRandomCharacter();
-        gc.setClass(MyRandom.sample(RITUALIST_CLASSES));
-        gc.addToHP(999);
-        return gc;
+        return makeNPCMageOfClassAndLevel(MyRandom.sample(RITUALIST_CLASSES), 6);
     }
 
     @Override
@@ -51,13 +73,13 @@ public class MagicDuelEvent extends DailyEventState {
         this.duelists = new ArrayList<>();
 
         MyColors playerMagicColor = MyColors.BLUE;
-        duelists.add(new MagicDuelist(model.getParty().getLeader(), playerMagicColor, new PowerGauge()));
+        duelists.add(new MagicDuelist(model.getParty().getLeader(), playerMagicColor, new ATypePowerGauge(true)));
         this.controller1 = new PlayerDuelistController(duelists.get(0));
 
         GameCharacter npcMage = makeRandomMageNPC();
         MyColors opposColor = findBestMagicColor(npcMage);
-        duelists.add(new MagicDuelist(npcMage, opposColor, new PowerGauge()));
-        this.controller2 = new AIDuelistController(duelists.get(1));
+        duelists.add(new MagicDuelist(npcMage, opposColor, new BTypePowerGauge()));
+        this.controller2 = new MatrixDuelistController(duelists.get(1), AIMatrices.level6WizardWithBGauge());
         this.subView = new MagicDuelSubView(model.getCurrentHex().getCombatTheme(),
                 duelists.get(0), duelists.get(1));
         StripedTransition.transition(model, subView);
@@ -74,7 +96,8 @@ public class MagicDuelEvent extends DailyEventState {
         ClientSoundManager.playBackgroundMusic(previousMusic);
     }
 
-    private void runDuel(Model model) {
+    protected int runDuel(Model model) {
+        int roundCounter = 1;
         do {
             if (beamsAreLocked()) {
                 beamUpkeep(model);
@@ -87,13 +110,14 @@ public class MagicDuelEvent extends DailyEventState {
                 normalTurn(model);
             }
         } while (!duelIsOver());
+        return roundCounter;
     }
 
     private boolean duelIsOver() {
         return MyLists.any(duelists, MagicDuelist::isKnockedOut);
     }
 
-    private static MyColors findBestMagicColor(GameCharacter npcMage) {
+    protected static MyColors findBestMagicColor(GameCharacter npcMage) {
         int maxRank = -1;
         Skill bestSkill = null;
         for (Skill s : Skill.values()) {
@@ -117,18 +141,22 @@ public class MagicDuelEvent extends DailyEventState {
     private void resolveActions(Model model, MagicDuelAction selectedAction,
                                 MagicDuelAction opponentAction,
                                 MagicDuelSubView subView) {
-        subView.clearTemporaryBeams();
+        clearTemporaryBeams();
         selectedAction.prepare(model, this, duelists.get(0));
         opponentAction.prepare(model, this, duelists.get(1));
         selectedAction.resolve(model, this, opponentAction);
-        waitUntil(subView, MagicDuelSubView::temporaryBeamsDone);
+        if (!aisOnly) {
+            waitUntil(subView, MagicDuelSubView::temporaryBeamsDone);
+        }
         selectedAction.wrapUp(model, this, duelists.get(1));
         opponentAction.wrapUp(model, this, duelists.get(0));
-        if (!beamsAreLocked()) {
-            subView.clearTemporaryBeams();
-        } else {
-            subView.setTwoBeamsAtMidPoint(lockedBeam.shift);
-            subView.setFlash();
+        if (!aisOnly) {
+            if (!beamsAreLocked()) {
+                clearTemporaryBeams();
+            } else {
+                subView.setTwoBeamsAtMidPoint(lockedBeamShift);
+                subView.setFlash();
+            }
         }
     }
 
@@ -140,34 +168,36 @@ public class MagicDuelEvent extends DailyEventState {
 
     private void resolveBeamOptions(Model model, BeamOptions selectedAction, BeamOptions otherAction) {
         if (selectedAction == BeamOptions.HoldOn && otherAction == BeamOptions.HoldOn) {
-            println("Both duelist are holding the locked beams.");
+            textOutput("Both duelist are holding the locked beams.");
             return;
         }
 
         if (selectedAction == BeamOptions.Release && otherAction == BeamOptions.Release) {
-            println("Both duelists simultaneously released the locked beams.");
-            lockedBeam = null;
-            subView.clearTemporaryBeams();
+            textOutput("Both duelists simultaneously released the locked beams.");
+            lockedBeamOn = false;
+            clearTemporaryBeams();
             return;
         }
 
         if (selectedAction == BeamOptions.IncreasePower) {
-            println(duelists.get(0).getName() + " increases the power of the beam!");
-            lockedBeam.power++;
-            lockedBeam.shift--;
+            textOutput(duelists.get(0).getName() + " increases the power of the beam!");
+            lockedBeamPower++;
+            lockedBeamShift--;
         }
         if (otherAction == BeamOptions.IncreasePower) {
-            println(duelists.get(1).getName() + " increases the power of the beam!");
-            lockedBeam.power++;
-            lockedBeam.shift++;
+            textOutput(duelists.get(1).getName() + " increases the power of the beam!");
+            lockedBeamPower++;
+            lockedBeamShift++;
         }
-        subView.setTwoBeamsAtMidPoint(lockedBeam.shift);
+        if (!aisOnly) {
+            subView.setTwoBeamsAtMidPoint(lockedBeamShift);
+        }
 
-        if (lockedBeam.shift == MAX_SHIFT) {
+        if (lockedBeamShift == MAX_SHIFT) {
             lockedBeamHits(model, duelists.get(0));
             return;
         }
-        if (lockedBeam.shift == -MAX_SHIFT) {
+        if (lockedBeamShift == -MAX_SHIFT) {
             lockedBeamHits(model, duelists.get(1));
             return;
         }
@@ -183,51 +213,66 @@ public class MagicDuelEvent extends DailyEventState {
     }
 
     private void attemptReleaseBeam(Model model, MagicDuelist magicDuelist) {
-        print(magicDuelist.getName() + " is trying to release the locked beam...");
-        model.getLog().waitForAnimationToFinish();
-        if (magicDuelist.testMagicSkill(model, this, MagicDuelAction.BASE_DIFFICULTY + lockedBeam.power)) {
-            println("and successfully disentangles the beams!");
-            model.getLog().waitForAnimationToFinish();
-            subView.clearTemporaryBeams();
-            lockedBeam = null;
+        textOutput(magicDuelist.getName() + " is trying to release the locked beam...", false);
+        waitForLog(model);
+        if (magicDuelist.testMagicSkill(model, this, MagicDuelAction.BASE_DIFFICULTY + lockedBeamPower)) {
+            textOutput("and successfully disentangles the beams!");
+            waitForLog(model);
+            clearTemporaryBeams();
+            lockedBeamOn = false;
         } else {
-            lockedBeamHits(model, magicDuelist);
+            if (MyRandom.rollD6() < 4) {
+                lockedBeamHits(model, magicDuelist);
+            } else {
+                textOutput("but the beams are still locked.");
+            }
+        }
+    }
+
+    private void waitForLog(Model model) {
+        if (!aisOnly) {
+            model.getLog().waitForAnimationToFinish();
         }
     }
 
     private void lockedBeamHits(Model model, MagicDuelist magicDuelist) {
-        println(magicDuelist.getName() + " got hit by the locked beams!");
+        textOutput(magicDuelist.getName() + " got hit by the locked beams!");
         magicDuelist.takeDamage(1);
-        subView.clearTemporaryBeams();
-        lockedBeam = null;
+        clearTemporaryBeams();
+        lockedBeamOn = false;
     }
 
     private void beamUpkeep(Model model) {
         for (MagicDuelist d : duelists) {
-            d.addToPower(lockedBeam.power * -3);
+            d.addToPower(lockedBeamPower * -3);
         }
 
         if (duelists.get(0).getPower() == 0 && duelists.get(1).getPower() == 0) {
-            println("Both duelists are out of power! The beam dissipates.");
-            model.getLog().waitForAnimationToFinish();
-            lockedBeam = null;
-            subView.clearTemporaryBeams();
+            textOutput("Both duelists are out of power! The beam dissipates.");
+            waitForLog(model);
+            lockedBeamOn = false;
+            clearTemporaryBeams();
             return;
         }
 
         if (duelists.get(0).getPower() == 0) {
-            println(duelists.get(0).getName() + " is out of power!");
-            model.getLog().waitForAnimationToFinish();
+            textOutput(duelists.get(0).getName() + " is out of power!");
+            waitForLog(model);
             lockedBeamHits(model, duelists.get(0));
             return;
         }
 
         if (duelists.get(1).getPower() == 0) {
-            println(duelists.get(1).getName() + " is out of power!");
-            model.getLog().waitForAnimationToFinish();
+            textOutput(duelists.get(1).getName() + " is out of power!");
+            waitForLog(model);
             lockedBeamHits(model, duelists.get(1));
         }
+    }
 
+    private void clearTemporaryBeams() {
+        if (!aisOnly) {
+            subView.clearTemporaryBeams();
+        }
     }
 
     private void generatePower(List<MagicDuelist> duelists) {
@@ -239,36 +284,74 @@ public class MagicDuelEvent extends DailyEventState {
     public void lockBeams(int playerStrength, int opposStrength) {
         int shift = opposStrength - playerStrength;
         if (shift >= MAX_SHIFT) {
-            println(duelists.get(0).getName() + "'s attack is blown away by the power of " +
+            textOutput(duelists.get(0).getName() + "'s attack is blown away by the power of " +
                     duelists.get(1).getName() + "'s attack!");
             duelists.get(0).takeDamage(MAX_SHIFT - shift + 1);
         } else if (-shift >= MAX_SHIFT) {
-            println(duelists.get(1).getName() + "'s attack is blown away by the power of " +
+            textOutput(duelists.get(1).getName() + "'s attack is blown away by the power of " +
                     duelists.get(0).getName() + "'s attack!");
             duelists.get(1).takeDamage(MAX_SHIFT + shift + 1);
         } else {
-            lockedBeam = new LockedBeam();
-            lockedBeam.power = playerStrength + opposStrength;
-            lockedBeam.shift = shift;
-            println(duelists.get(0).getName() + "'s and " + duelists.get(1).getName() + "'s beams are locked together!");
-            subView.animatedTwoBeamsAtMidPoint(playerStrength, opposStrength);
+            lockedBeamOn = true;
+            lockedBeamPower = playerStrength + opposStrength;
+            lockedBeamShift = shift;
+            textOutput(duelists.get(0).getName() + "'s and " + duelists.get(1).getName() + "'s beams are locked together!");
+            if (!aisOnly) {
+                subView.animatedTwoBeamsAtMidPoint(playerStrength, opposStrength);
+            }
+        }
+    }
+
+    protected void textOutput(String s) {
+        textOutput(s,true);
+    }
+
+    protected void textOutput(String s, boolean newLine) {
+        switch (outputType) {
+            case normal:
+                if (newLine) {
+                    println(s);
+                } else {
+                    print(s);
+                }
+                break;
+
+            case console:
+                if (newLine) {
+                    System.out.println(s);
+                } else {
+                    System.out.print(s);
+                }
         }
     }
 
     public boolean beamsAreLocked() {
-        return lockedBeam != null;
+        return lockedBeamOn;
     }
 
     public void fireBeamAtOpponent(MagicDuelist performer, int beamStrength) {
-        if (performer == duelists.get(0)) {
-            subView.animatedBeamAtOpponent(beamStrength);
-        } else {
-            subView.animatedBeamAtPlayer(beamStrength);
+        if (!aisOnly) {
+            if (performer == duelists.get(0)) {
+                subView.animatedBeamAtOpponent(beamStrength);
+            } else {
+                subView.animatedBeamAtPlayer(beamStrength);
+            }
         }
     }
 
+    public int getOpponentPowerStrength(MagicDuelist whosAsking) {
+        if (whosAsking == duelists.get(0)) {
+            return duelists.get(1).getGauge().getCurrentStrength();
+        }
+        return duelists.get(0).getGauge().getCurrentStrength();
+    }
+
+    public int getLockedBeamShift() {
+        return lockedBeamShift;
+    }
+
     private static class LockedBeam {
-        private int power = 0;
-        private int shift = 0;
+
+
     }
 }
