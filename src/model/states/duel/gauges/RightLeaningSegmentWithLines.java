@@ -1,14 +1,13 @@
-package model.states.duel;
+package model.states.duel.gauges;
 
 import view.MyColors;
 import view.sprites.Sprite;
 
-public class NarrowSegment implements PowerGaugeSegment {
-
+public class RightLeaningSegmentWithLines implements PowerGaugeSegment {
     private static final Sprite[] SPRITES =
-            PowerGaugeSegment.makeSprites(0, 8, BACKGROUND_COLOR, FILL_COLOR);
+            PowerGaugeSegment.makeSprites(8, 30, BACKGROUND_COLOR, FILL_COLOR);
     private static final Sprite[] SPRITES_ANI =
-            PowerGaugeSegment.makeSprites(0, 10, MyColors.WHITE, MyColors.YELLOW);
+            PowerGaugeSegment.makeSprites(8, 31, MyColors.WHITE, MyColors.YELLOW);
 
     @Override
     public Sprite[] getNormalSpriteSet() {
@@ -22,6 +21,6 @@ public class NarrowSegment implements PowerGaugeSegment {
 
     @Override
     public int getWidth() {
-        return 1;
+        return 2;
     }
 }

@@ -643,6 +643,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void magicDuels(Model model) {
+        runOnce("magicduels", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialMagicDuels(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

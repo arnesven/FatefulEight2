@@ -13,11 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NPCClass extends CharacterClass {
+    protected NPCClass(String name, WeightedSkill[] weightedSkills) {
+        super(name, "", 7, 0, false, 0, weightedSkills);
+    }
+
     protected NPCClass(String name) {
-        super(name, "", 7, 0, false, 0,
-                new WeightedSkill[]{
-                        new WeightedSkill(Skill.Perception, 1),
-                        new WeightedSkill(Skill.Blades, 1)});
+        this(name, new WeightedSkill[]{
+                new WeightedSkill(Skill.Perception, 1),
+                new WeightedSkill(Skill.Blades, 1)});
     }
 
     @Override

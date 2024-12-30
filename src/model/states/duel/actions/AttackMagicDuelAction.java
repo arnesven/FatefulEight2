@@ -1,6 +1,8 @@
-package model.states.duel;
+package model.states.duel.actions;
 
 import model.Model;
+import model.states.duel.MagicDuelEvent;
+import model.states.duel.MagicDuelist;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 

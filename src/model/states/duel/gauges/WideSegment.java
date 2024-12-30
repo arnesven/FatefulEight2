@@ -1,13 +1,14 @@
-package model.states.duel;
+package model.states.duel.gauges;
 
 import view.MyColors;
 import view.sprites.Sprite;
 
-public class WideSegmentWithLines implements PowerGaugeSegment {
+public class WideSegment implements PowerGaugeSegment {
+
     private static final Sprite[] SPRITES =
-            PowerGaugeSegment.makeSprites(8, 13, BACKGROUND_COLOR, FILL_COLOR);
+            PowerGaugeSegment.makeSprites(8, 12, BACKGROUND_COLOR, FILL_COLOR);
     private static final Sprite[] SPRITES_ANI =
-            PowerGaugeSegment.makeSprites(8, 15, MyColors.WHITE, MyColors.YELLOW);
+            PowerGaugeSegment.makeSprites(8, 14, MyColors.WHITE, MyColors.YELLOW);
 
     @Override
     public Sprite[] getNormalSpriteSet() {

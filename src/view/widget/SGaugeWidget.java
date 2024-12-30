@@ -1,24 +1,24 @@
 package view.widget;
 
-import model.states.duel.gauges.PowerGauge;
 import model.states.duel.gauges.PowerGaugeSegment;
+import model.states.duel.gauges.STypePowerGauge;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
 
-public class AGaugeWidget extends PowerGaugeWidget {
+public class SGaugeWidget extends PowerGaugeWidget {
 
     private static final Sprite BOTTOM = PowerGaugeSegment.makeGaugeSprite(4, 8, MyColors.BEIGE, MyColors.BLUE);
-    private static final Sprite TOP    = PowerGaugeSegment.makeGaugeSprite(5, 8, MyColors.CYAN, MyColors.BLUE);
+    private static final Sprite TOP    = PowerGaugeSegment.makeGaugeSprite(5, 10, MyColors.CYAN, MyColors.BLUE);
 
-    private static final Sprite GAUGE_TYPE = new Sprite16x16("gaugetype", "gauge.png", 0x16,
+    private static final Sprite GAUGE_TYPE = new Sprite16x16("gaugetype", "gauge.png", 0x15,
             MyColors.WHITE, MyColors.BLUE, MyColors.GRAY, MyColors.GRAY_RED);
-    private final PowerGauge gauge;
+    private final STypePowerGauge gauge;
 
-    public AGaugeWidget(PowerGauge powerGauge) {
-        super(powerGauge);
-        this.gauge = powerGauge;
+    public SGaugeWidget(STypePowerGauge sTypePowerGauge) {
+        super(sTypePowerGauge);
+        this.gauge = sTypePowerGauge;
     }
 
     @Override

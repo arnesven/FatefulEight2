@@ -1,6 +1,8 @@
-package model.states.duel;
+package model.states.duel.actions;
 
 import model.Model;
+import model.states.duel.MagicDuelEvent;
+import model.states.duel.MagicDuelist;
 
 public class SpecialAttackDuelAction extends AttackMagicDuelAction {
 
@@ -28,7 +30,7 @@ public class SpecialAttackDuelAction extends AttackMagicDuelAction {
     public void wrapUp(Model model, MagicDuelEvent magicDuelEvent, MagicDuelist opponent) {
         super.wrapUp(model, magicDuelEvent, opponent);
         if (magicDuelEvent.beamsAreLocked()) {
-            getPerformer().addToPower(powerPaid / 2);
+            getPerformer().refundPower(powerPaid);
         }
     }
 

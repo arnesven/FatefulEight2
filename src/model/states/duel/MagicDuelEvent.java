@@ -8,13 +8,19 @@ import model.classes.Skill;
 import model.items.spells.Spell;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
+import model.states.TravelTable;
+import model.states.duel.actions.BeamOptions;
+import model.states.duel.actions.MagicDuelAction;
+import model.states.duel.gauges.*;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
 import view.subviews.MagicDuelSubView;
+import view.subviews.SetupMagicDuelSubView;
 import view.subviews.StripedTransition;
+import view.subviews.SubView;
 
 import java.util.*;
 
@@ -25,8 +31,15 @@ public class MagicDuelEvent extends DailyEventState {
     public static final int MAX_HITS = 5;
 
     private static final int MAX_SHIFT = 3;
-    private static final List<CharacterClass> RITUALIST_CLASSES = List.of(Classes.SOR, Classes.MAG, Classes.WIZ,
-                                                                          Classes.WIT, Classes.PRI, Classes.DRU);
+    private static final List<CharacterClass> RITUALIST_CLASSES =
+            List.of(Classes.SOR, Classes.MAG, Classes.WIZ,
+                    Classes.WIT, Classes.PRI, Classes.DRU);
+    private static final Map<MyColors, List<MyColors>> ADVANTAGE_MAP =
+            Map.of(MyColors.RED, List.of(MyColors.BLUE, MyColors.WHITE),
+                    MyColors.BLUE, List.of(MyColors.GREEN),
+                    MyColors.GREEN, List.of(MyColors.BLACK),
+                    MyColors.BLACK, List.of(MyColors.WHITE));
+    private final GameCharacter opponent;
     protected List<MagicDuelist> duelists;
 
     protected DuelistController controller1;
@@ -37,11 +50,15 @@ public class MagicDuelEvent extends DailyEventState {
     private int lockedBeamPower = 0;
     private int lockedBeamShift = 0;
 
+    private boolean showOpposColor = false;
+    private boolean showOpposGauge = false;
+
     private final boolean aisOnly;
     private final OutputType outputType;
 
-    public MagicDuelEvent(Model model, boolean aisOnly) {
+    public MagicDuelEvent(Model model, boolean aisOnly, GameCharacter opponentChar) {
         super(model);
+        this.opponent = opponentChar;
         if (aisOnly) {
             outputType = OutputType.none;
         } else {
@@ -51,10 +68,10 @@ public class MagicDuelEvent extends DailyEventState {
     }
 
     public MagicDuelEvent(Model model) {
-        this(model, false);
+        this(model, false, makeNPCMageOfClassAndLevel(Classes.MAGE, 1));
     }
 
-    public GameCharacter makeNPCMageOfClassAndLevel(CharacterClass cls, int level) {
+    public static GameCharacter makeNPCMageOfClassAndLevel(CharacterClass cls, int level) {
         GameCharacter gc = makeRandomCharacter(level);
         gc.setClass(cls);
         gc.addToHP(999);
@@ -67,33 +84,80 @@ public class MagicDuelEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        MyColors opposColor = findBestMagicColor(opponent);
+        PowerGauge opposGauge = getRandomGauge();
+
+        GameCharacter selectedCharacter = model.getParty().getPartyMember(0);
+        if (model.getParty().size() > 1) {
+            print("Which party member should take part in the duel? ");
+            model.getTutorial().magicDuels(model);
+            selectedCharacter = model.getParty().partyMemberInput(model,
+                    this, model.getParty().getPartyMember(0));
+        } else {
+            print(selectedCharacter.getName() + " is entering into a magic duel.");
+            model.getTutorial().magicDuels(model);
+        }
+
+        SetupMagicDuelSubView setupSubview = new SetupMagicDuelSubView(opponent, selectedCharacter,
+                showOpposColor ? opposColor : null,
+                showOpposGauge ? opposGauge : null);
+        model.setSubView(setupSubview);
+
+        do {
+            waitForReturnSilently();
+        } while (!setupSubview.isOnStart());
+
         BackgroundMusic previousMusic = ClientSoundManager.getCurrentBackgroundMusic();
         CombatEvent.startMusic();
 
         this.duelists = new ArrayList<>();
 
-        MyColors playerMagicColor = MyColors.BLUE;
-        duelists.add(new MagicDuelist(model.getParty().getLeader(), playerMagicColor, new ATypePowerGauge(true)));
+        duelists.add(new MagicDuelist(selectedCharacter,
+                setupSubview.getSelectedColor(), setupSubview.getSelectedGauge()));
         this.controller1 = new PlayerDuelistController(duelists.get(0));
 
-        GameCharacter npcMage = makeRandomMageNPC();
-        MyColors opposColor = findBestMagicColor(npcMage);
-        duelists.add(new MagicDuelist(npcMage, opposColor, new BTypePowerGauge()));
-        this.controller2 = new MatrixDuelistController(duelists.get(1), AIMatrices.level6WizardWithBGauge());
+
+        duelists.add(new MagicDuelist(opponent, opposColor, opposGauge));
+        this.controller2 = new MatrixDuelistController(duelists.get(1),
+                opposGauge.getAIMatrices(opponent));
         this.subView = new MagicDuelSubView(model.getCurrentHex().getCombatTheme(),
                 duelists.get(0), duelists.get(1));
         StripedTransition.transition(model, subView);
-
-        println("Press enter to start duel");
-        waitForReturn();
 
         runDuel(model);
 
         MagicDuelist winner = MyLists.find(duelists, d -> !d.isKnockedOut());
         println("The duel is over, the winner is " + winner.getName() + "!");
+        drainStamina(model, duelists.get(0));
+        drainStamina(model, duelists.get(1));
         print("Press enter to continue.");
         waitForReturn();
         ClientSoundManager.playBackgroundMusic(previousMusic);
+    }
+
+    private void drainStamina(Model model, MagicDuelist duelist) {
+        int SPLoss = duelist.getHitsTaken()/2;
+        String word = "tired";
+        if (SPLoss > 1) {
+            word = "exhausted";
+        }
+        if (SPLoss > 0) {
+            duelist.getCharacter().addToSP(-SPLoss);
+            if (model.getParty().getPartyMembers().contains(duelist.getCharacter())) {
+                println(duelist.getCharacter().getName() + " is " + word + " from the duel and loses " + SPLoss + " stamina.");
+            }
+        }
+    }
+
+    private PowerGauge getRandomGauge() {
+        return MyRandom.sample(List.of(
+                new ATypePowerGauge(true),
+                new BTypePowerGauge(),
+                new CTypePowerGauge(true),
+                new KTypePowerGauge(true),
+                new STypePowerGauge(true),
+                new TTypePowerGauge(true),
+                new VTypePowerGauge(true)));
     }
 
     protected int runDuel(Model model) {
@@ -118,15 +182,15 @@ public class MagicDuelEvent extends DailyEventState {
     }
 
     protected static MyColors findBestMagicColor(GameCharacter npcMage) {
+        List<Skill> magicSkills = List.of(Skill.MagicRed, Skill.MagicBlue, Skill.MagicGreen,
+                Skill.MagicBlack, Skill.MagicWhite);
         int maxRank = -1;
         Skill bestSkill = null;
-        for (Skill s : Skill.values()) {
-            if (s.isMagic()) {
-                int rankForSkill = npcMage.getRankForSkill(s);
-                if (rankForSkill > maxRank) {
-                    bestSkill = s;
-                    maxRank = rankForSkill;
-                }
+        for (Skill s : magicSkills) {
+            int rankForSkill = npcMage.getRankForSkill(s);
+            if (rankForSkill > maxRank) {
+                bestSkill = s;
+                maxRank = rankForSkill;
             }
         }
         return Spell.getColorForSkill(bestSkill);
@@ -215,7 +279,8 @@ public class MagicDuelEvent extends DailyEventState {
     private void attemptReleaseBeam(Model model, MagicDuelist magicDuelist) {
         textOutput(magicDuelist.getName() + " is trying to release the locked beam...", false);
         waitForLog(model);
-        if (magicDuelist.testMagicSkill(model, this, MagicDuelAction.BASE_DIFFICULTY + lockedBeamPower)) {
+        if (magicDuelist.testMagicSkill(model, this,
+                calcDifficultyFor(magicDuelist) + lockedBeamPower)) {
             textOutput("and successfully disentangles the beams!");
             waitForLog(model);
             clearTemporaryBeams();
@@ -227,6 +292,24 @@ public class MagicDuelEvent extends DailyEventState {
                 textOutput("but the beams are still locked.");
             }
         }
+    }
+
+    public int calcDifficultyFor(MagicDuelist magicDuelist) {
+        MagicDuelist opponent = duelists.get(0);
+        if (opponent == magicDuelist) {
+            opponent = duelists.get(1);
+        }
+        if (hasAdvantageOver(magicDuelist.getMagicColor(), opponent.getMagicColor())) {
+            return MagicDuelAction.BASE_DIFFICULTY - 1;
+        }
+        return MagicDuelAction.BASE_DIFFICULTY;
+    }
+
+    public static boolean hasAdvantageOver(MyColors left, MyColors right) {
+        if (!ADVANTAGE_MAP.containsKey(left)) {
+            return false;
+        }
+        return ADVANTAGE_MAP.get(left).contains(right);
     }
 
     private void waitForLog(Model model) {
@@ -244,7 +327,7 @@ public class MagicDuelEvent extends DailyEventState {
 
     private void beamUpkeep(Model model) {
         for (MagicDuelist d : duelists) {
-            d.addToPower(lockedBeamPower * -3);
+            addToPower(d, lockedBeamPower * -3);
         }
 
         if (duelists.get(0).getPower() == 0 && duelists.get(1).getPower() == 0) {
@@ -269,7 +352,18 @@ public class MagicDuelEvent extends DailyEventState {
         }
     }
 
-    private void clearTemporaryBeams() {
+    public void addToPower(MagicDuelist d, int amount) {
+        if (amount > 0 && controller1 instanceof PlayerDuelistController && controller1.getDuelist() == d) {
+            for (int x = 0; x < amount; ++x) {
+                d.addToPower(1);
+                delay(Math.max(50, 400 / (amount - x)));
+            }
+        } else {
+            d.addToPower(amount);
+        }
+    }
+
+    public void clearTemporaryBeams() {
         if (!aisOnly) {
             subView.clearTemporaryBeams();
         }
@@ -277,7 +371,8 @@ public class MagicDuelEvent extends DailyEventState {
 
     private void generatePower(List<MagicDuelist> duelists) {
         for (MagicDuelist d : duelists) {
-            d.generatePower();
+            int amount = MyRandom.rollD6() + MyRandom.rollD6() + MyRandom.rollD6();
+            addToPower(d, amount);
         }
     }
 
@@ -302,7 +397,7 @@ public class MagicDuelEvent extends DailyEventState {
         }
     }
 
-    protected void textOutput(String s) {
+    public void textOutput(String s) {
         textOutput(s,true);
     }
 
@@ -350,8 +445,21 @@ public class MagicDuelEvent extends DailyEventState {
         return lockedBeamShift;
     }
 
-    private static class LockedBeam {
+    public GameCharacter getWinner() {
+        if (duelists.get(0).getHitsTaken() >= 5) {
+            return duelists.get(1).getCharacter();
+        }
+        if (duelists.get(1).getHitsTaken() >= 5) {
+            return duelists.get(0).getCharacter();
+        }
+        return null;
+    }
 
+    public void setShowOpponentColor(boolean b) {
+        this.showOpposColor = b;
+    }
 
+    public void setShowOpponentGauge(boolean b) {
+        this.showOpposGauge = b;
     }
 }

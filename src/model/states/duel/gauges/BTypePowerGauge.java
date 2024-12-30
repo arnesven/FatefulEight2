@@ -1,5 +1,8 @@
-package model.states.duel;
+package model.states.duel.gauges;
 
+import model.states.duel.AIMatrices;
+import model.states.duel.AIMatricesPresets;
+import util.MyStrings;
 import view.widget.BGaugeWidget;
 import view.widget.PowerGaugeWidget;
 
@@ -10,10 +13,13 @@ public class BTypePowerGauge extends PowerGauge {
 
     private static final int POWER_PER_SEGMENT = 8;
     private static final int[] LEVEL_INDICES = new int[]{7, 15, 23};
+    private static final String HELP_TEXT = "The B-Gauge is the most basic Power Gauge. It has " +
+            MyStrings.numberWord(LEVEL_INDICES.length) + " levels, which all store " +
+            "the same amount of power.";
     private final int[] requiredStrengths;
 
     public BTypePowerGauge(boolean withGraphics) {
-        super(LEVEL_INDICES, withGraphics);
+        super("B", LEVEL_INDICES, withGraphics);
 
         requiredStrengths = new int[LEVEL_INDICES.length];
         for (int i = 0; i < requiredStrengths.length; ++i) {
@@ -23,6 +29,10 @@ public class BTypePowerGauge extends PowerGauge {
 
     public BTypePowerGauge() {
         this(true);
+    }
+
+    public String getHelpText() {
+        return HELP_TEXT;
     }
 
     @Override
@@ -56,5 +66,15 @@ public class BTypePowerGauge extends PowerGauge {
     @Override
     public int getPowerPerSegment(int segmentIndex) {
         return POWER_PER_SEGMENT;
+    }
+
+    @Override
+    protected AIMatrices getHighLevelAIMatrices() {
+        return AIMatricesPresets.mutatedLevel6BGauge();
+    }
+
+    @Override
+    protected AIMatrices getLowLevelAIMatrices() {
+        return AIMatricesPresets.mutatedLevel1BGauge();
     }
 }

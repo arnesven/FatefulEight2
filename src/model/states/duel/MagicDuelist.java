@@ -4,7 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.SkillCheckResult;
 import model.items.spells.Spell;
-import util.MyRandom;
+import model.states.duel.gauges.PowerGauge;
 import view.MyColors;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.StrikeEffectSprite;
@@ -76,11 +76,6 @@ public class MagicDuelist {
         return this.reactionAnimation;
     }
 
-    public void generatePower() {
-        int amount = MyRandom.rollD6() + MyRandom.rollD6() + MyRandom.rollD6();
-        gauge.addToLevel(amount);
-    }
-
     public void addToPower(int amount) {
         gauge.addToLevel(amount);
     }
@@ -110,5 +105,9 @@ public class MagicDuelist {
 
     public boolean isKnockedOut() {
         return hitsTaken >= MagicDuelEvent.MAX_HITS;
+    }
+
+    public void refundPower(int powerPaid) {
+        gauge.refundPower(powerPaid);
     }
 }

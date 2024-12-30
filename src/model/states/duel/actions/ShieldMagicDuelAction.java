@@ -1,6 +1,8 @@
-package model.states.duel;
+package model.states.duel.actions;
 
 import model.Model;
+import model.states.duel.MagicDuelEvent;
+import model.states.duel.MagicDuelist;
 import view.sprites.CastingEffectSprite;
 import view.sprites.MiscastEffectSprite;
 import view.sprites.ShieldDuelAnimation;
@@ -22,7 +24,7 @@ public class ShieldMagicDuelAction extends MagicDuelAction {
     @Override
     protected void specificPrepare(Model model, MagicDuelEvent state, MagicDuelist performer) {
         showShieldAnimation = false;
-        this.success = performer.testMagicSkill(model, state, BASE_DIFFICULTY + level);
+        this.success = performer.testMagicSkill(model, state, state.calcDifficultyFor(performer) + level);
         if (!success) {
             getPerformer().setAnimation(new MiscastEffectSprite());
         } else {
@@ -32,7 +34,7 @@ public class ShieldMagicDuelAction extends MagicDuelAction {
 
     @Override
     protected int getPowerCost() {
-        return level;
+        return level*3;
     }
 
     @Override

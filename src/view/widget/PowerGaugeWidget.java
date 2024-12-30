@@ -1,8 +1,8 @@
 package view.widget;
 
 import model.Model;
-import model.states.duel.PowerGauge;
-import model.states.duel.PowerGaugeSegment;
+import model.states.duel.gauges.PowerGauge;
+import model.states.duel.gauges.PowerGaugeSegment;
 import view.BorderFrame;
 import view.MyColors;
 import view.ScreenHandler;
@@ -10,6 +10,8 @@ import view.sprites.Animation;
 import view.sprites.AnimationManager;
 import view.sprites.Sprite;
 import view.sprites.Sprite16x16;
+
+import java.awt.*;
 
 public abstract class PowerGaugeWidget implements Animation {
 
@@ -58,13 +60,22 @@ public abstract class PowerGaugeWidget implements Animation {
         drawGaugeLogo(screenHandler, xStart, yStart);
     }
 
+    public void drawSegmentsOnly(ScreenHandler screenHandler, int xOffset, int yOffset) {
+        screenHandler.clearSpace(xOffset-2, xOffset+2, yOffset-1, yOffset+gauge.getNoOfSegments()+1);
+        drawSegments(screenHandler, xOffset, yOffset);
+        drawLevelLabels(screenHandler, xOffset, yOffset);
+    }
+
     protected abstract void drawGaugeLogo(ScreenHandler screenHandler, int xStart, int yStart);
 
     private void drawLevelLabels(ScreenHandler screenHandler, int xStart, int yStart) {
         for (int i = 0; i < gauge.getLevels(); ++i) {
+            PowerGaugeSegment seg = gauge.getSegment(gauge.getLevelIndices(i));
             MyColors color = gauge.getCurrentSegmentIndex() > gauge.getLevelIndices(i) ? MyColors.YELLOW : MyColors.GRAY;
-            BorderFrame.drawString(screenHandler, String.format("%1d", (i+1)),
-                    xStart - 1, yStart + gauge.getNoOfSegments() - gauge.getLevelIndices(i) - 1,
+            int extraForShift = seg.getXShift() < 0 ? -1 : 0;
+            BorderFrame.drawString(screenHandler, gauge.getLabelForLevel(i+1),
+                    xStart - 1 + extraForShift,
+                    yStart + gauge.getNoOfSegments() - gauge.getLevelIndices(i) - 1,
                     color, MyColors.BLACK);
         }
     }
@@ -72,9 +83,12 @@ public abstract class PowerGaugeWidget implements Animation {
     private void drawSegmentsAnimated(ScreenHandler screenHandler, int xStart, int yStart) {
         drawTop(screenHandler, xStart, yStart);
         for (int segment = 0; segment < gauge.getNoOfSegments(); ++segment) {
-            Sprite[] spriteSetToUse = gauge.getSegment(segment).getAnimatedSpriteSet();
+            PowerGaugeSegment seg = gauge.getSegment(segment);
+            Sprite[] spriteSetToUse = seg.getAnimatedSpriteSet();
             Sprite spriteToUse = spriteSetToUse[aniShift % 4];
-            screenHandler.put(xStart, yStart + gauge.getNoOfSegments() - segment - 1, spriteToUse);
+            screenHandler.register(spriteToUse.getName(),
+                    new Point(xStart, yStart + gauge.getNoOfSegments() - segment - 1),
+                    spriteToUse, 0, seg.getXShift(), 0);
         }
         drawBottom(screenHandler, xStart, yStart);
     }
@@ -100,7 +114,9 @@ public abstract class PowerGaugeWidget implements Animation {
             } else {
                 spriteToUse = spriteSetToUse[0];
             }
-            screenHandler.put(xStart, yStart + gauge.getNoOfSegments() - segment - 1, spriteToUse);
+            screenHandler.register(spriteToUse.getName(),
+                    new Point(xStart, yStart + gauge.getNoOfSegments() - segment - 1),
+                    spriteToUse, 0, seg.getXShift(), 0);
         }
         drawBottom(screenHandler, xStart, yStart);
     }

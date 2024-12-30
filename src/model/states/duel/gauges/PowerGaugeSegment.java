@@ -1,4 +1,4 @@
-package model.states.duel;
+package model.states.duel.gauges;
 
 import view.MyColors;
 import view.sprites.Sprite;
@@ -15,6 +15,8 @@ public interface PowerGaugeSegment {
 
     int getWidth();
 
+    default int getXShift() { return 0; }
+
     static Sprite[] makeSprites(int colOff, int row, MyColors bgColor, MyColors fillColor) {
         Sprite[] result = new Sprite[5];
         for (int col = 0; col < result.length; ++col) {
@@ -29,11 +31,16 @@ public interface PowerGaugeSegment {
         return result;
     }
 
-    static Sprite makeGaugeSprite(int column, int row, MyColors bgColor, MyColors fillColor) {
+    static Sprite makeGaugeSprite(int column, int row, MyColors bgColor, MyColors fillColor, int rotation) {
         Sprite sp = new Sprite("gauge", "gauge.png", column, row, 16, 8);
         sp.setColor1(bgColor);
         sp.setColor2(LINE_COLOR);
         sp.setColor3(fillColor);
+        sp.setRotation(rotation);
         return sp;
+    }
+
+    static Sprite makeGaugeSprite(int column, int row, MyColors bgColor, MyColors fillColor) {
+        return makeGaugeSprite(column, row, bgColor, fillColor, 0);
     }
 }

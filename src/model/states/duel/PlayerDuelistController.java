@@ -2,7 +2,7 @@ package model.states.duel;
 
 import model.Model;
 import model.states.GameState;
-import util.MyRandom;
+import model.states.duel.actions.*;
 import view.subviews.ArrowMenuSubView;
 
 import java.awt.*;
@@ -48,6 +48,11 @@ public class PlayerDuelistController implements DuelistController {
             selectedAction = BeamOptions.Release;
         }
         return selectedAction;
+    }
+
+    @Override
+    public MagicDuelist getDuelist() {
+        return duelist;
     }
 
     private MagicDuelAction attackMenu(Model model, MagicDuelEvent state) {

@@ -1,9 +1,11 @@
-package model.states.duel;
+package model.states.duel.actions;
 
 import model.Model;
+import model.states.duel.MagicDuelEvent;
+import model.states.duel.MagicDuelist;
 
 public abstract class MagicDuelAction {
-    protected static final int BASE_DIFFICULTY = 5;
+    public static final int BASE_DIFFICULTY = 5;
 
     private MagicDuelist performer;
 
@@ -13,7 +15,7 @@ public abstract class MagicDuelAction {
 
     public void prepare(Model model, MagicDuelEvent state, MagicDuelist performer) {
         this.performer = performer;
-        performer.addToPower(-getPowerCost());
+        state.addToPower(performer, -getPowerCost());
         specificPrepare(model, state, performer);
     }
 

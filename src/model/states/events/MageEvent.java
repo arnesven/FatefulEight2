@@ -15,11 +15,11 @@ import model.items.Equipment;
 import model.items.Item;
 import model.items.ItemDeck;
 import model.items.accessories.Accessory;
-import model.items.clothing.MagesRobes;
+import model.items.clothing.*;
 import model.items.spells.Spell;
-import model.items.weapons.MagesStaff;
-import model.items.weapons.OldWand;
+import model.items.weapons.*;
 import model.states.ShopState;
+import model.states.duel.MagicDuelEvent;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -58,6 +58,46 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
+        if (MyRandom.rollD6() > 2) {
+            return favoriteSpell(model);
+        }
+        return MageIsOffended(model);
+    }
+
+    private boolean MageIsOffended(Model model) {
+        println("After talking a bit with the mage, a heated discussion erupts about the finer points of magic.");
+        portraitSay("Now really. You can't be serious! That's just preposterous.");
+        leaderSay("I'm afraid your wrong about this.");
+        portraitSay("Most aggravating! I challenge you to a magic duel to settle this dispute!");
+        print("Do you accept dueling the mage? (Y/N) ");
+        if (!yesNoInput()) {
+            leaderSay("We don't have time for that.");
+            portraitSay("Coward. I think this proves my point.");
+            leaderSay("Eh? Whatever.");
+            return true;
+        }
+        GameCharacter mage =  getVictimCharacter(model);
+        MagicDuelEvent duelEvent = new MagicDuelEvent(model, false, mage);
+        duelEvent.setShowOpponentColor(false);
+        duelEvent.setShowOpponentGauge(false);
+        duelEvent.run(model);
+        setCurrentTerrainSubview(model);
+        showExplicitPortrait(model, appearance, "Mage");
+        if (duelEvent.getWinner() == mage) {
+            portraitSay("There! Now we know who's the better magic user. My word is the one we'll be " +
+                    "trusting on the disputed matter.");
+            leaderSay("Ahh... whatever.");
+            return true;
+        }
+        leaderSay("That should teach you.");
+        portraitSay("Grrr... I thought I would win!");
+        println("The mage stomps off in anger.");
+        println(duelEvent.getWinner().getFullName() + " got 50 experience for winning the duel.");
+        model.getParty().giveXP(model, duelEvent.getWinner(), 50);
+        return false;
+    }
+
+    private boolean favoriteSpell(Model model) {
         if (withIntro) {
             portraitSay("So friend, please tell me, which is your favorite spell?");
             if (model.getParty().getInventory().getSpells().isEmpty() ||
@@ -113,10 +153,20 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
     @Override
     protected GameCharacter getVictimCharacter(Model model) {
         GameCharacter gc = new GameCharacter("Mage", "", appearance.getRace(), Classes.MAGE, appearance,
-                Classes.NO_OTHER_CLASSES, new Equipment(new MagesStaff(), new MagesRobes(),
+                Classes.NO_OTHER_CLASSES, new Equipment(mageRandomWeapon(), mageRandomClothes(),
                 (Accessory) MyRandom.sample(ItemDeck.allJewelry()).copy()));
         gc.setLevel(MyRandom.randInt(1, 4));
         return gc;
+    }
+
+    private Clothing mageRandomClothes() {
+        return MyRandom.sample(List.of(new MesmersRobes(), new MagesRobes(),
+                new WarlocksRobes(), new ShamansRobes(), new CultistsRobes()));
+    }
+
+    private Weapon mageRandomWeapon() {
+        return MyRandom.sample(List.of(new MagesStaff(), new OldStaff(), new IronStaff(),
+                new PineWand(), new ClaspedOrb(), new YewWand()));
     }
 
     @Override

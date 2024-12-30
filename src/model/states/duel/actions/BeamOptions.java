@@ -1,4 +1,4 @@
-package model.states.duel;
+package model.states.duel.actions;
 
 public enum BeamOptions {
     HoldOn,

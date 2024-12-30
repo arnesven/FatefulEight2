@@ -1,6 +1,8 @@
-package model.states.duel;
+package model.states.duel.actions;
 
 import model.Model;
+import model.states.duel.MagicDuelEvent;
+import model.states.duel.MagicDuelist;
 import util.MyRandom;
 import view.sprites.AbsorbMagicAnimationSprite;
 
@@ -29,7 +31,7 @@ public class AbsorbMagicDuelAction extends MagicDuelAction {
     protected boolean avertsAttack(Model model, MagicDuelEvent state,
                                    AttackMagicDuelAction attackMagicDuelAction, MagicDuelist opponent) {
         boolean success = getPerformer().testMagicSkill(model, state,
-                BASE_DIFFICULTY + attackMagicDuelAction.getPowerLevel());
+                state.calcDifficultyFor(getPerformer()) + attackMagicDuelAction.getPowerLevel());
         if (success) {
             this.absorbed = true;
             this.amount += (MyRandom.rollD6() + MyRandom.rollD6() + MyRandom.rollD6());
@@ -47,8 +49,9 @@ public class AbsorbMagicDuelAction extends MagicDuelAction {
     @Override
     public void wrapUp(Model model, MagicDuelEvent magicDuelEvent, MagicDuelist opponent) {
         if (absorbed) {
-            getPerformer().addToPower(this.amount);
+            magicDuelEvent.clearTemporaryBeams();
             getPerformer().setAnimation(new AbsorbMagicAnimationSprite());
+            magicDuelEvent.addToPower(getPerformer(), this.amount);
         }
     }
 }

@@ -2,8 +2,9 @@ package view.subviews;
 
 import control.FatefulEight;
 import model.Model;
+import model.characters.GameCharacter;
 import model.states.duel.MagicDuelist;
-import model.states.duel.PowerGauge;
+import model.states.duel.gauges.PowerGauge;
 import sprites.SparklingLockedBeamsSprite;
 import util.MyLists;
 import util.MyPair;
@@ -39,6 +40,7 @@ public class MagicDuelSubView extends SubView implements Animation {
     private final MagicDuelist player;
     private final MagicDuelist opponent;
     private boolean flash = false;
+    private boolean showOpponentGauge = false;
 
     public MagicDuelSubView(CombatTheme combatTheme, MagicDuelist player,  MagicDuelist opponent) {
         this.theme = combatTheme;
@@ -73,11 +75,26 @@ public class MagicDuelSubView extends SubView implements Animation {
             flash = false;
         } else {
             drawBackground(model);
+            drawBystanders(model);
             drawDuelists(model);
             drawPowerGauge(model);
             drawWandSprite(model);
             drawBeams(model);
             drawMidPointSprite(model);
+        }
+    }
+
+    private void drawBystanders(Model model) {
+        if (showOpponentGauge) {
+            return;
+        }
+        int i = 0;
+        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+            if (gc != player.getCharacter() && gc != opponent.getCharacter()) {
+                AvatarSprite spr = gc.getAvatarSprite();
+                spr.synch();
+                model.getScreenHandler().register(spr.getName(), new Point(X_OFFSET+4, Y_OFFSET+8 + 4*(i++)), spr);
+            }
         }
     }
 
@@ -129,7 +146,7 @@ public class MagicDuelSubView extends SubView implements Animation {
         PowerGauge gauge = player.getGauge();
         gauge.drawYourself(model.getScreenHandler(), X_MAX - 8, Y_OFFSET);
 
-        if (FatefulEight.inDebugMode()) {
+        if (showOpponentGauge) {
             opponent.getGauge().drawYourself(model.getScreenHandler(), X_OFFSET, Y_OFFSET);
         }
 
@@ -184,7 +201,7 @@ public class MagicDuelSubView extends SubView implements Animation {
         model.getScreenHandler().clearSpace(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
         model.getScreenHandler().clearForeground(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
 
-        if (FatefulEight.inDebugMode()) {
+        if (showOpponentGauge) {
             model.getScreenHandler().clearSpace(X_OFFSET, X_OFFSET + 8, Y_OFFSET, Y_MAX);
             model.getScreenHandler().clearForeground(X_OFFSET, X_OFFSET + 8, Y_OFFSET, Y_MAX);
         }
@@ -210,15 +227,10 @@ public class MagicDuelSubView extends SubView implements Animation {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
-//        if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-//            player.getGauge().addToLevel(1);
-//            return true;
-//        }
-//        if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-//            player.getGauge().addToLevel(-1);
-//            return true;
-//        }
-
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F8) {
+            showOpponentGauge = !showOpponentGauge;
+            return true;
+        }
         return super.handleKeyEvent(keyEvent, model);
     }
 

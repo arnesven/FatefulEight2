@@ -49,6 +49,9 @@ public class HelpDialog extends SelectableListMenu {
         return textContent;
     }
 
+    protected int getTextHeight(String text) {
+        return MyStrings.partitionWithLineBreaks(text, textWidth).length;
+    }
 
     @Override
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {

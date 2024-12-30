@@ -28,7 +28,7 @@ public class AIMatrices {
     private final double[][][] convertedShield;
     private final double[][][] convertedBeams;
 
-    private AIMatrices(double[][][] normal, double[][][] attack, double[][][] shield, double[][][] beams) {
+    protected AIMatrices(double[][][] normal, double[][][] attack, double[][][] shield, double[][][] beams) {
         this.normalTables = normal;
         this.attackTables = attack;
         this.shieldTables = shield;
@@ -104,22 +104,22 @@ public class AIMatrices {
     }
 
 
-    private static double[][][] makeBaselineBeamMatrix() {
+    protected static double[][][] makeBaselineBeamMatrix() {
         return make3dMatrix(NO_OF_SHIFTS, NO_OF_STRENGTHS, NO_OF_BEAM_OPTIONS,
                 BEAM_BASELINE);
     }
 
-    private static double[][][] makeBaselineShieldMatrix() {
+    protected static double[][][] makeBaselineShieldMatrix() {
         return make3dMatrix(NO_OF_OPPONENT_STRENGTHS, NO_OF_STRENGTHS, NO_OF_SHIELDS,
                 SHIELD_BASELINE);
     }
 
-    private static double[][][] makeBaselineAttackMatrix() {
+    protected static double[][][] makeBaselineAttackMatrix() {
         return make3dMatrix(NO_OF_OPPONENT_STRENGTHS, NO_OF_STRENGTHS-1, NO_OF_ATTACKS,
                 ATTACK_BASELINE);
     }
 
-    private static double[][][] makeBaselineNormalMatrix() {
+    protected static double[][][] makeBaselineNormalMatrix() {
         return make3dMatrix(NO_OF_OPPONENT_STRENGTHS, NO_OF_STRENGTHS, NO_OF_BASIC_ACTIONS,
                 NORMAL_BASELINE);
     }
@@ -133,28 +133,40 @@ public class AIMatrices {
 
     public static List<AIMatrices> makeChildren(AIMatrices m1, AIMatrices m2) {
         List<AIMatrices> result = new ArrayList<>();
-        result.add(new AIMatrices(m1.normalTables, m1.attackTables, m1.shieldTables, m1.beamTables)); // TODO: Copy these
+        double[][][][] normalTables = new double[][][][]{m1.normalTables, m2.normalTables};
+        double[][][][] attackTables = new double[][][][]{m1.attackTables, m2.attackTables};
+        double[][][][] shieldTables = new double[][][][]{m1.shieldTables, m2.shieldTables};
+        double[][][][] beamTables = new double[][][][]{m1.beamTables, m2.beamTables};
 
-        result.add(new AIMatrices(m2.normalTables, m1.attackTables, m1.shieldTables, m1.beamTables));
-        result.add(new AIMatrices(m1.normalTables, m2.attackTables, m1.shieldTables, m1.beamTables));
-        result.add(new AIMatrices(m1.normalTables, m1.attackTables, m2.shieldTables, m1.beamTables));
-        result.add(new AIMatrices(m1.normalTables, m1.attackTables, m1.shieldTables, m2.beamTables));
-
-        result.add(new AIMatrices(m2.normalTables, m2.attackTables, m1.shieldTables, m1.beamTables));
-        result.add(new AIMatrices(m1.normalTables, m2.attackTables, m2.shieldTables, m1.beamTables));
-        result.add(new AIMatrices(m1.normalTables, m1.attackTables, m2.shieldTables, m2.beamTables));
-
-        result.add(new AIMatrices(m2.normalTables, m1.attackTables, m2.shieldTables, m1.beamTables));
-        result.add(new AIMatrices(m1.normalTables, m2.attackTables, m1.shieldTables, m2.beamTables));
-        result.add(new AIMatrices(m2.normalTables, m1.attackTables, m1.shieldTables, m2.beamTables));
-
-        result.add(new AIMatrices(m1.normalTables, m2.attackTables, m2.shieldTables, m2.beamTables));
-        result.add(new AIMatrices(m2.normalTables, m1.attackTables, m2.shieldTables, m2.beamTables));
-        result.add(new AIMatrices(m2.normalTables, m2.attackTables, m1.shieldTables, m2.beamTables));
-        result.add(new AIMatrices(m2.normalTables, m2.attackTables, m2.shieldTables, m1.beamTables));
-
-        result.add(new AIMatrices(m2.normalTables, m2.attackTables, m2.shieldTables, m2.beamTables));
+        for (double[][][] normal : normalTables) {
+            for (double[][][] attack : attackTables) {
+                for (double[][][] shield : shieldTables) {
+                    for (double[][][] beam : beamTables) {
+                        result.add(new AIMatrices(
+                                mutateCopy(normal), mutateCopy(attack),
+                                mutateCopy(shield), mutateCopy(beam)));
+                    }
+                }
+            }
+        }
         return result;
+    }
+
+    private static double[][][] mutateCopy(double[][][] m) {
+        double[][][] c = new double[m.length][m[0].length][m[0][0].length];
+        for (int x = 0; x < m.length; ++x) {
+            for (int y = 0; y < m[0].length; ++y) {
+                for (int z = 0; z < m[0][0].length; ++z) {
+                    c[x][y][z] = m[x][y][z];
+                }
+            }
+        }
+
+        int xRand = MyRandom.randInt(m.length);
+        int yRand = MyRandom.randInt(m[0].length);
+        int zRand = MyRandom.randInt(m[0][0].length);
+        c[xRand][yRand][zRand] = MyRandom.nextDouble();
+        return c;
     }
 
     public void printYourself() {
@@ -197,83 +209,6 @@ public class AIMatrices {
         }
     }
 
-
-    public static AIMatrices level6WizardWithBGauge() {
-        double[][][] normalTables = new double[][][]{
-                new double[][]{
-                        new double[]{0.57, 0.17, 0.25},
-                        new double[]{0.11, 0.36, 0.53},
-                        new double[]{0.30, 0.22, 0.48},
-                        new double[]{0.56, 0.16, 0.28},
-                },
-                new double[][]{
-                        new double[]{0.12, 0.55, 0.33},
-                        new double[]{0.91, 0.05, 0.03},
-                        new double[]{0.39, 0.28, 0.33},
-                        new double[]{0.38, 0.39, 0.23},
-                },
-        };
-        double[][][] attackTables = new double[][][]{
-                new double[][]{
-                        new double[]{0.66, 0.34},
-                        new double[]{0.59, 0.41},
-                        new double[]{0.39, 0.61},
-                },
-                new double[][]{
-                        new double[]{0.31, 0.69},
-                        new double[]{0.17, 0.83},
-                        new double[]{0.02, 0.98},
-                },
-        };
-        double[][][] shieldTables = new double[][][]{
-                new double[][]{
-                        new double[]{0.73, 0.23, 0.00, 0.03},
-                        new double[]{0.09, 0.31, 0.43, 0.17},
-                        new double[]{0.05, 0.15, 0.24, 0.56},
-                        new double[]{0.59, 0.26, 0.09, 0.06},
-                },
-                new double[][]{
-                        new double[]{0.16, 0.10, 0.25, 0.49},
-                        new double[]{0.13, 0.30, 0.47, 0.10},
-                        new double[]{0.10, 0.31, 0.33, 0.27},
-                        new double[]{0.31, 0.35, 0.06, 0.28},
-                },
-        };
-        double[][][] beamTables = new double[][][]{
-                new double[][]{
-                        new double[]{0.01, 0.66, 0.33},
-                        new double[]{0.48, 0.22, 0.30},
-                        new double[]{0.11, 0.01, 0.89},
-                        new double[]{0.43, 0.19, 0.39},
-                },
-                new double[][]{
-                        new double[]{0.28, 0.38, 0.34},
-                        new double[]{0.41, 0.21, 0.38},
-                        new double[]{0.09, 0.45, 0.46},
-                        new double[]{0.83, 0.09, 0.09},
-                },
-                new double[][]{
-                        new double[]{0.16, 0.49, 0.36},
-                        new double[]{0.31, 0.22, 0.47},
-                        new double[]{0.45, 0.46, 0.09},
-                        new double[]{0.52, 0.19, 0.29},
-                },
-                new double[][]{
-                        new double[]{0.46, 0.03, 0.51},
-                        new double[]{0.11, 0.56, 0.33},
-                        new double[]{0.35, 0.25, 0.39},
-                        new double[]{0.33, 0.35, 0.32},
-                },
-                new double[][]{
-                        new double[]{0.37, 0.45, 0.18},
-                        new double[]{0.33, 0.23, 0.43},
-                        new double[]{0.41, 0.14, 0.44},
-                        new double[]{0.41, 0.36, 0.23},
-                },
-        };
-        return new AIMatrices(normalTables, attackTables, shieldTables, beamTables);
-    }
-
     private int rollOnTable(double[] table) {
         double roll = MyRandom.nextDouble();
         for (int i = 0; i < table.length; ++i) {
@@ -310,8 +245,8 @@ public class AIMatrices {
 
     private int checkAndCap(int x, int length, String label) {
         if (x >= length) {
-            System.err.println(label + " larger than expected: " + x +
-                    ", capping it at " + (length - 1));
+//            System.err.println(label + " larger than expected: " + x +
+//                    ", capping it at " + (length - 1));
             x = length - 1;
         }
         return x;

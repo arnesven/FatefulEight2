@@ -1,6 +1,12 @@
-package model.states.duel;
+package model.states.duel.gauges;
 
+import model.characters.GameCharacter;
+import model.states.duel.AIMatrices;
+import model.states.duel.CombinedAIMatrices;
+import view.GameView;
 import view.ScreenHandler;
+import view.help.HelpDialog;
+import view.help.PowerGaugeHelpSection;
 import view.widget.PowerGaugeWidget;
 
 public abstract class PowerGauge {
@@ -8,9 +14,11 @@ public abstract class PowerGauge {
     private final PowerGaugeWidget widget;
     private final boolean withGraphics;
     private final int[] levelIndices;
+    private final String name;
     private int currentLevel = 0;
 
-    public PowerGauge(int[] levelIndices, boolean withGraphics) {
+    public PowerGauge(String name, int[] levelIndices, boolean withGraphics) {
+        this.name = name;
         this.levelIndices = levelIndices;
         this.withGraphics = withGraphics;
         if (withGraphics) {
@@ -20,11 +28,18 @@ public abstract class PowerGauge {
         }
     }
 
+    public HelpDialog makeHelpSection(GameView view) {
+        return new PowerGaugeHelpSection(view, this);
+    }
+
     protected abstract PowerGaugeWidget makeWidget();
-
     public abstract int getMaxLevel();
-
     protected abstract int powerRequiredForStrength(int strength);
+    public abstract PowerGaugeSegment getSegment(int segment);
+    public abstract int getCurrentSegmentIndex();
+    public abstract int getPowerPerSegment(int segmentIndex);
+    protected abstract AIMatrices getHighLevelAIMatrices();
+    protected abstract AIMatrices getLowLevelAIMatrices();
 
     public void addToLevel(int i) {
         currentLevel = Math.max(0, Math.min(getMaxLevel(), currentLevel + i));
@@ -79,9 +94,31 @@ public abstract class PowerGauge {
         return levelIndices.length;
     }
 
-    public abstract PowerGaugeSegment getSegment(int segment);
+    public String getLabelForLevel(int level) {
+        return level + "";
+    }
 
-    public abstract int getCurrentSegmentIndex();
+    public void refundPower(int powerPaid) {
+        addToLevel(powerPaid / 2);
+    }
 
-    public abstract int getPowerPerSegment(int segmentIndex);
+    public String getName() {
+        return name;
+    }
+
+    public AIMatrices getAIMatrices(GameCharacter mage) {
+        if (mage.getLevel() == 1) {
+            return getLowLevelAIMatrices();
+        }
+        if (mage.getLevel() >= 6) {
+            return getHighLevelAIMatrices();
+        }
+        return new CombinedAIMatrices(mage.getLevel(), getLowLevelAIMatrices(), getHighLevelAIMatrices());
+    }
+
+    public abstract String getHelpText();
+
+    public void drawSegments(ScreenHandler screenHandler, int x, int y) {
+        widget.drawSegmentsOnly(screenHandler, x, y);
+    }
 }

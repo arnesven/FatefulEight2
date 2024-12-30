@@ -1,10 +1,11 @@
 package model.states.duel;
 
 import model.Model;
+import model.states.duel.actions.*;
 
-public class MatrixDuelistController implements DuelistController {
+public class MatrixDuelistController extends AIDuelistController {
 
-    private final MagicDuelist duelist;
+    private MagicDuelist duelist;
     private AIMatrices matrices;
     private final MagicDuelAction normalAttackAction = new NormalAttackDuelAction();
     private final MagicDuelAction specialAttackAction = new SpecialAttackDuelAction();
@@ -16,6 +17,7 @@ public class MatrixDuelistController implements DuelistController {
             new ShieldMagicDuelAction(3)};
 
     public MatrixDuelistController(MagicDuelist magicDuelist, AIMatrices matrices) {
+        super(magicDuelist);
         this.duelist = magicDuelist;
         this.matrices = matrices;
     }
@@ -75,5 +77,9 @@ public class MatrixDuelistController implements DuelistController {
 
     public void setMatrix(AIMatrices matrix) {
         this.matrices = matrix;
+    }
+
+    public void setDuelist(MagicDuelist duelist) {
+        this.duelist = duelist;
     }
 }

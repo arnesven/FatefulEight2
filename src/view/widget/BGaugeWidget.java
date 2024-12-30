@@ -1,7 +1,7 @@
 package view.widget;
 
-import model.states.duel.BTypePowerGauge;
-import model.states.duel.PowerGaugeSegment;
+import model.states.duel.gauges.BTypePowerGauge;
+import model.states.duel.gauges.PowerGaugeSegment;
 import view.MyColors;
 import view.ScreenHandler;
 import view.sprites.Sprite;

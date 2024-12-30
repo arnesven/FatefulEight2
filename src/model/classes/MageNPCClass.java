@@ -8,7 +8,14 @@ import view.sprites.AvatarSprite;
 
 public class MageNPCClass extends NPCClass {
     protected MageNPCClass() {
-        super("Mage");
+        super("Mage", new WeightedSkill[]{
+                new WeightedSkill(Skill.MagicRed, 3),
+                new WeightedSkill(Skill.MagicBlue, 3),
+                new WeightedSkill(Skill.MagicGreen, 3),
+                new WeightedSkill(Skill.MagicWhite, 3),
+                new WeightedSkill(Skill.MagicBlack, 3),
+                new WeightedSkill(Skill.SpellCasting, 3),
+        });
     }
 
     @Override
