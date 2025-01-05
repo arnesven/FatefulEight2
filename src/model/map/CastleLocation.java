@@ -11,8 +11,6 @@ import model.states.GameState;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
 import model.states.events.*;
-import sound.BackgroundMusic;
-import sound.ClientSoundManager;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;
@@ -141,7 +139,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new WantedPosterEvent(model),
                     new InvestInShopEvent(model),
                     new ArtisanEvent(model),
-                    new MagicDuelContest(model, this)
+                    new MagicDuelContestEvent(model, this)
             ));
             if (!LeagueOfMagesEvent.isMember(model)) {
                 dailyEvents.add(new LeagueOfMagesEvent(model));

@@ -619,14 +619,21 @@ public class Party implements Serializable {
         SubView previous = model.getSubView();
         SelectPartyMemberSubView subView = new SelectPartyMemberSubView(model, preselected);
         model.setSubView(subView);
-        try {
-            event.waitForReturn(true);
-            model.setSubView(previous);
-        } catch (SpellCastException spe) {
-            model.setSubView(previous);
-            throw spe;
-        }
-        return subView.getSelectedCharacter();
+        do {
+            try {
+                event.waitForReturn(true);
+            } catch (SpellCastException spe) {
+                model.setSubView(previous);
+                throw spe;
+            }
+            GameCharacter selected = subView.getSelectedCharacter();
+            if (bench.contains(selected)) {
+                model.getLog().addAnimated(selected.getName() + " is absent from the party at the moment.");
+            } else {
+                model.setSubView(previous);
+                return selected;
+            }
+        } while (true);
     }
 
     public void randomPartyMemberSay(Model model, List<String> strings) {

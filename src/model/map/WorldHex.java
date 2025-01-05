@@ -5,7 +5,6 @@ import model.TimeOfDay;
 import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.states.dailyaction.FindResourcesDailyAction;
-import model.states.duel.MagicDuelEvent;
 import model.tasks.DestinationTask;
 import view.combat.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
@@ -255,7 +254,7 @@ public abstract class WorldHex {
     protected abstract SubView getSubView();
 
     private DailyEventState generateOnRoadEvent(Model model) {
-        return new MagicDuelContest(model, model.getWorld().getCastleByName("Arkvale Castle")); /*
+        return new MagicDuelContestEvent(model, model.getWorld().getCastleByName("Arkvale Castle")); /*
         int dieRoll = MyRandom.rollD10();
         if (5 <= dieRoll && dieRoll <= 8) {
             List<DailyEventState> events = new ArrayList<>();

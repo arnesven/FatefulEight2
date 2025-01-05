@@ -14,22 +14,24 @@ import model.races.Race;
 import model.states.GameState;
 import model.states.duel.MagicDuelEvent;
 import model.states.duel.gauges.PowerGauge;
-import model.tasks.BountyDestinationTask;
+import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 import view.subviews.DuelingContestSubView;
 import view.subviews.PortraitSubView;
 import view.subviews.TournamentSubView;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
-public class MagicDuelContest extends TournamentEvent {
+public class MagicDuelContestEvent extends TournamentEvent {
     private final CastleLocation castle;
     private boolean sponsored;
     private final Map<GameCharacter, MyColors> knownColors = new HashMap<>();
     private final Map<GameCharacter, PowerGauge> knownGauges = new HashMap<>();
 
-    public MagicDuelContest(Model model, CastleLocation castleLocation) {
+    public MagicDuelContestEvent(Model model, CastleLocation castleLocation) {
         super(model, castleLocation);
         this.castle = castleLocation;
     }
@@ -98,10 +100,7 @@ public class MagicDuelContest extends TournamentEvent {
         waitForReturn();
         List<GameCharacter> duelists = makeDuelists(model, 7);
         duelists.add(MyRandom.randInt(duelists.size()), chosen);
-        TournamentSubView tournamentSubView = new DuelingContestSubView(duelists, knownColors, knownGauges);
-        model.setSubView(tournamentSubView);
-        waitForReturnSilently();
-        setCurrentTerrainSubview(model);
+        lookAtBoard(model, duelists, false);
 
         List<GameCharacter> winners = new ArrayList<>();
         List<GameCharacter> losers = new ArrayList<>();
@@ -136,7 +135,7 @@ public class MagicDuelContest extends TournamentEvent {
                 handleSponsorWhenLost(model);
                 return;
             }
-            lookAtBoard(model, current);
+            lookAtBoard(model, current, true);
         }
 
         doLongBreak(model);
@@ -170,7 +169,7 @@ public class MagicDuelContest extends TournamentEvent {
                 handleSponsorWhenLost(model);
                 return;
             }
-            lookAtBoard(model, current);
+            lookAtBoard(model, current, true);
         }
 
         doLongBreak(model);
@@ -199,18 +198,80 @@ public class MagicDuelContest extends TournamentEvent {
     private void doLongBreak(Model model) {
         println("Taking advantage of the longer break, you have a stroll around to look at some of the side attractions.");
         new FoodStandsEvent(model).doEvent(model);
+        // TODO: Find other duelist and potentially "take him out".
         setCurrentTerrainSubview(model);
         println("You're surprised at how quickly time has passed when you again hear the voice of the announcer.");
     }
 
-    private void lookAtBoard(Model model, List<GameCharacter> current) {
-        println("You get up from your seats and walk over to the board next to the booth where you signed up " +
-                "for the tournament. It has already been updated.");
+    private void lookAtBoard(Model model, List<GameCharacter> current, boolean withIntro) {
+        if (withIntro) {
+            println("You get up from your seats and walk over to the board next to the booth where you signed up " +
+                    "for the tournament. It has already been updated.");
+        }
         model.getLog().waitForAnimationToFinish();
         TournamentSubView tournamentSubView = new DuelingContestSubView(current, knownColors, knownGauges);
         model.setSubView(tournamentSubView);
-        waitForReturnSilently();
+        int timeLeft = 3;
+        List<MyPair<GameCharacter, GameCharacter>> delayedSearchers = new ArrayList<>();
+        do {
+            tournamentSubView.setTimeLeft(timeLeft*5);
+            waitForReturnSilently();
+            if (tournamentSubView.getTopIndex() == 1) {
+                timeLeft = 1;
+            } else if (tournamentSubView.getTopIndex() == 0) {
+                timeLeft--;
+                if (MyRandom.randInt(3) < delayedSearchers.size()) {
+                    returnASearcher(model, delayedSearchers);
+                }
+            } else {
+                Point pos = tournamentSubView.getCursorPosition();
+                GameCharacter fighter = tournamentSubView.getSelectedFighter();
+                int sel = multipleOptionArrowMenu(model, pos.x + 2, pos.y + 4, List.of("Find Info", "Back"));
+                if (sel == 0) {
+                    List<GameCharacter> notBenched = new ArrayList<>(model.getParty().getPartyMembers());
+                    notBenched.removeAll(model.getParty().getBench());
+                    if (notBenched.size() == 1) {
+                        partyMemberSay(notBenched.get(0), "Somebody's got to stay here...");
+                    } else {
+                        if (knownGauges.containsKey(fighter)) {
+                            println("You already know everything about " + fighter.getName() + ".");
+                        } else {
+                            print("Who do you want to send to find info about " + fighter.getName() + "? ");
+                            GameCharacter chara = model.getParty().partyMemberInput(model, this, notBenched.get(0));
+                            delayedSearchers.add(new MyPair<>(chara, fighter));
+                            partyMemberSay(chara, "I'll see what I can find out.");
+                            model.getLog().waitForAnimationToFinish();
+                            model.getParty().benchPartyMembers(List.of(chara));
+                            timeLeft--;
+                        }
+                    }
+                }
+            }
+        } while (timeLeft > 1);
+        while (!delayedSearchers.isEmpty()) {
+            returnASearcher(model, delayedSearchers);
+        }
+        model.getLog().waitForAnimationToFinish();
         setCurrentTerrainSubview(model);
+        println("With only five minutes left to the next duel, you hurry " +
+                "over to the arena. You take your places and the duel begins.");
+    }
+
+    private void returnASearcher(Model model, List<MyPair<GameCharacter, GameCharacter>> delayedSearchers) {
+        Collections.shuffle(delayedSearchers);
+        MyPair<GameCharacter, GameCharacter> searcher = delayedSearchers.remove(0);
+        println(searcher.first.getFirstName() + " has comes back.");
+        model.getParty().unbenchPartyMembers(List.of(searcher.first));
+        SkillCheckResult success = model.getParty().doSkillCheckWithReRoll(model, this, searcher.first, Skill.SeekInfo, 8, 10,
+                searcher.first.getRankForSkill(Skill.SpellCasting));
+        if (success.isSuccessful()) {
+            println(searcher.first.getFirstName() + " has found out what magic color and gauge type " +
+                    searcher.second.getName() + " prefers during duels.");
+            knownColors.put(searcher.second, MagicDuelEvent.findBestMagicColor(searcher.second));
+            knownGauges.put(searcher.second, MagicDuelEvent.makeRandomGauge());
+        } else {
+            partyMemberSay(searcher.first, "I couldn't find out anything useful about " + himOrHer(searcher.second.getGender()) + ".");
+        }
     }
 
     private void handleSponsorWhenLost(Model model) {
