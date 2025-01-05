@@ -6,6 +6,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.spells.Spell;
+import model.races.Race;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.TravelTable;
@@ -28,6 +29,7 @@ public class MagicDuelEvent extends DailyEventState {
 
     private enum OutputType{ normal, console, none;}
 
+
     public static final int MAX_HITS = 5;
 
     private static final int MAX_SHIFT = 3;
@@ -40,11 +42,13 @@ public class MagicDuelEvent extends DailyEventState {
                     MyColors.GREEN, List.of(MyColors.BLACK),
                     MyColors.BLACK, List.of(MyColors.WHITE));
     private final GameCharacter opponent;
+    private final GameCharacter preselectedPartyMember;
+    private PowerGauge preselectedOpponentGauge = null;
     protected List<MagicDuelist> duelists;
 
     protected DuelistController controller1;
     protected DuelistController controller2;
-    private MagicDuelSubView subView;
+    protected MagicDuelSubView subView;
 
     private boolean lockedBeamOn = false;
     private int lockedBeamPower = 0;
@@ -56,7 +60,7 @@ public class MagicDuelEvent extends DailyEventState {
     private final boolean aisOnly;
     private final OutputType outputType;
 
-    public MagicDuelEvent(Model model, boolean aisOnly, GameCharacter opponentChar) {
+    public MagicDuelEvent(Model model, boolean aisOnly, GameCharacter opponentChar, GameCharacter preselectedPartyChar) {
         super(model);
         this.opponent = opponentChar;
         if (aisOnly) {
@@ -65,10 +69,11 @@ public class MagicDuelEvent extends DailyEventState {
             outputType = OutputType.normal;
         }
         this.aisOnly = aisOnly;
+        this.preselectedPartyMember = preselectedPartyChar;
     }
 
     public MagicDuelEvent(Model model) {
-        this(model, false, makeNPCMageOfClassAndLevel(Classes.MAGE, 1));
+        this(model, false, makeNPCMageOfClassAndLevel(Classes.MAGE, 1), null);
     }
 
     public static GameCharacter makeNPCMageOfClassAndLevel(CharacterClass cls, int level) {
@@ -85,17 +90,24 @@ public class MagicDuelEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         MyColors opposColor = findBestMagicColor(opponent);
-        PowerGauge opposGauge = getRandomGauge();
+        PowerGauge opposGauge = preselectedOpponentGauge;
+        if (opposGauge == null) {
+            opposGauge = makeRandomGauge();
+        }
 
         GameCharacter selectedCharacter = model.getParty().getPartyMember(0);
-        if (model.getParty().size() > 1) {
-            print("Which party member should take part in the duel? ");
-            model.getTutorial().magicDuels(model);
-            selectedCharacter = model.getParty().partyMemberInput(model,
-                    this, model.getParty().getPartyMember(0));
+        if (preselectedPartyMember != null) {
+            selectedCharacter = preselectedPartyMember;
         } else {
-            print(selectedCharacter.getName() + " is entering into a magic duel.");
-            model.getTutorial().magicDuels(model);
+            if (model.getParty().size() > 1) {
+                print("Which party member should take part in the duel? ");
+                model.getTutorial().magicDuels(model);
+                selectedCharacter = model.getParty().partyMemberInput(model,
+                        this, model.getParty().getPartyMember(0));
+            } else {
+                print(selectedCharacter.getName() + " is entering into a magic duel.");
+                model.getTutorial().magicDuels(model);
+            }
         }
 
         SetupMagicDuelSubView setupSubview = new SetupMagicDuelSubView(opponent, selectedCharacter,
@@ -149,24 +161,15 @@ public class MagicDuelEvent extends DailyEventState {
         }
     }
 
-    private PowerGauge getRandomGauge() {
-        return MyRandom.sample(List.of(
-                new ATypePowerGauge(true),
-                new BTypePowerGauge(),
-                new CTypePowerGauge(true),
-                new KTypePowerGauge(true),
-                new STypePowerGauge(true),
-                new TTypePowerGauge(true),
-                new VTypePowerGauge(true)));
-    }
-
     protected int runDuel(Model model) {
         int roundCounter = 1;
         do {
             if (beamsAreLocked()) {
                 beamUpkeep(model);
             }
-
+            if (duelIsOver()) { // Knocked out from beam upkeep.
+                break;
+            }
             if (beamsAreLocked()) {
                 beamTurn(model);
             } else {
@@ -181,7 +184,7 @@ public class MagicDuelEvent extends DailyEventState {
         return MyLists.any(duelists, MagicDuelist::isKnockedOut);
     }
 
-    protected static MyColors findBestMagicColor(GameCharacter npcMage) {
+    public static MyColors findBestMagicColor(GameCharacter npcMage) {
         List<Skill> magicSkills = List.of(Skill.MagicRed, Skill.MagicBlue, Skill.MagicGreen,
                 Skill.MagicBlack, Skill.MagicWhite);
         int maxRank = -1;
@@ -461,5 +464,33 @@ public class MagicDuelEvent extends DailyEventState {
 
     public void setShowOpponentGauge(boolean b) {
         this.showOpposGauge = b;
+    }
+
+    public MagicDuelist getDuelist(int i) {
+        return duelists.get(i);
+    }
+
+    public void setPreselectedOpponentGauge(PowerGauge powerGauge) {
+        this.preselectedOpponentGauge = powerGauge;
+    }
+
+    public static PowerGauge makeRandomGauge() {
+        int i = MyRandom.randInt(7);
+        switch (i) {
+            case 0:
+                return new BTypePowerGauge(true);
+            case 1:
+                return new ATypePowerGauge(true);
+            case 2:
+                return new CTypePowerGauge(true);
+            case 3:
+                return new KTypePowerGauge(true);
+            case 4:
+                return new TTypePowerGauge(true);
+            case 5:
+                return new STypePowerGauge(true);
+            default:
+                return new VTypePowerGauge(true);
+        }
     }
 }

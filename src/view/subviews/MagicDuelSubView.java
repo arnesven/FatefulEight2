@@ -42,7 +42,7 @@ public class MagicDuelSubView extends SubView implements Animation {
     private boolean flash = false;
     private boolean showOpponentGauge = false;
 
-    public MagicDuelSubView(CombatTheme combatTheme, MagicDuelist player,  MagicDuelist opponent) {
+    public MagicDuelSubView(CombatTheme combatTheme, MagicDuelist player, MagicDuelist opponent) {
         this.theme = combatTheme;
         this.upperAvatar = opponent.getCharacter().getAvatarSprite();
         this.lowerAvatar = player.getCharacter().getAvatarSprite().getAvatarBack();
@@ -93,7 +93,7 @@ public class MagicDuelSubView extends SubView implements Animation {
             if (gc != player.getCharacter() && gc != opponent.getCharacter()) {
                 AvatarSprite spr = gc.getAvatarSprite();
                 spr.synch();
-                model.getScreenHandler().register(spr.getName(), new Point(X_OFFSET+4, Y_OFFSET+8 + 4*(i++)), spr);
+                model.getScreenHandler().register(spr.getName(), new Point(X_OFFSET+4, Y_OFFSET+4 + 4*(i++)), spr);
             }
         }
     }
@@ -143,8 +143,9 @@ public class MagicDuelSubView extends SubView implements Animation {
     }
 
     private void drawPowerGauge(Model model) {
-        PowerGauge gauge = player.getGauge();
-        gauge.drawYourself(model.getScreenHandler(), X_MAX - 8, Y_OFFSET);
+        if (showPlayerGauge(model)) {
+            player.getGauge().drawYourself(model.getScreenHandler(), X_MAX - 8, Y_OFFSET);
+        }
 
         if (showOpponentGauge) {
             opponent.getGauge().drawYourself(model.getScreenHandler(), X_OFFSET, Y_OFFSET);
@@ -198,13 +199,19 @@ public class MagicDuelSubView extends SubView implements Animation {
 
     private void drawBackground(Model model) {
         theme.drawBackground(model, X_OFFSET, Y_OFFSET);
-        model.getScreenHandler().clearSpace(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
-        model.getScreenHandler().clearForeground(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
+        if (showPlayerGauge(model)) {
+            model.getScreenHandler().clearSpace(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
+            model.getScreenHandler().clearForeground(X_MAX - 8, X_MAX, Y_OFFSET, Y_MAX);
+        }
 
         if (showOpponentGauge) {
             model.getScreenHandler().clearSpace(X_OFFSET, X_OFFSET + 8, Y_OFFSET, Y_MAX);
             model.getScreenHandler().clearForeground(X_OFFSET, X_OFFSET + 8, Y_OFFSET, Y_MAX);
         }
+    }
+
+    private boolean showPlayerGauge(Model model) {
+        return model.getParty().getPartyMembers().contains(player.getCharacter());
     }
 
     private void drawMidPointSprite(Model model) {

@@ -54,6 +54,11 @@ public class VTypePowerGauge extends ComplexPowerGauge {
     }
 
     @Override
+    public PowerGauge copy() {
+        return new VTypePowerGauge(isWithGraphics());
+    }
+
+    @Override
     public String getHelpText() {
         return HELP_TEXT;
     }

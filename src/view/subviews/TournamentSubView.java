@@ -26,7 +26,7 @@ public class TournamentSubView extends TopMenuSubView {
     private static final Sprite VERTICAL_LINE = CharSprite.make(0xAC, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final Sprite HORIZONTAL_LINE = CharSprite.make(0xAD, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
     private static final Sprite CORNER = CharSprite.make(0xAE, MyColors.WHITE, MyColors.BROWN, MyColors.BLUE);
-    private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();
+    protected static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();
     private final SteppingMatrix<GameCharacter> matrix;
     private final Map<GameCharacter, TournamentOdds> odds;
     private Set<GameCharacter> knownFighters = new HashSet<>();
@@ -64,10 +64,9 @@ public class TournamentSubView extends TopMenuSubView {
         this(fighters, null);
     }
 
-    private void drawCharacterCard(Model model) {
+    protected void drawCharacterCard(Model model, GameCharacter fighter) {
         Point pos = new Point(X_OFFSET + 4, Y_MAX-10);
         model.getScreenHandler().clearSpace(X_OFFSET, X_MAX, pos.y, Y_MAX);
-        GameCharacter fighter = matrix.getSelectedElement();
         BorderFrame.drawString(model.getScreenHandler(), fighter.getName(), pos.x, pos.y, MyColors.LIGHT_GRAY);
         String raceAndClassString = fighter.getRace().getName() + " " + fighter.getCharClass().getShortName() + " Lvl " + fighter.getLevel();
         BorderFrame.drawString(model.getScreenHandler(), raceAndClassString, pos.x, pos.y+1, MyColors.LIGHT_GRAY);
@@ -193,7 +192,7 @@ public class TournamentSubView extends TopMenuSubView {
         }
         drawTree(model, matrix.getElementList().size()-1);
         drawFighters(model);
-        drawCharacterCard(model);
+        drawCharacterCard(model, matrix.getSelectedElement());
     }
 
     @Override

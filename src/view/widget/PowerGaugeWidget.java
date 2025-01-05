@@ -66,7 +66,7 @@ public abstract class PowerGaugeWidget implements Animation {
         drawLevelLabels(screenHandler, xOffset, yOffset);
     }
 
-    protected abstract void drawGaugeLogo(ScreenHandler screenHandler, int xStart, int yStart);
+    public abstract void drawGaugeLogo(ScreenHandler screenHandler, int xStart, int yStart);
 
     private void drawLevelLabels(ScreenHandler screenHandler, int xStart, int yStart) {
         for (int i = 0; i < gauge.getLevels(); ++i) {

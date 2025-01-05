@@ -57,16 +57,16 @@ public class ArcheryContestEvent extends TournamentEvent {
                 "can hit the most balls tossed at the same time will qualify to the third round. In the third round, each contestant is " +
                 "given three arrows and score points for how well they hit the target. The contestant who scores the most points in the final " +
                 "round wins a marvelous prize - the Golden Bow. Oh and you'll also receive the " + castle.getLordTitle() +
-                " blessing - which is probably equally valuable.");
+                "'s blessing - which is probably equally valuable.");
         showOfficial();
         portraitSay("But all of you can't enter the contest, in fact we only have room for one more. Are you still interested?");
         boolean sponsored = false;
         if (model.getParty().getGold() < ENTRY_FEE) {
             println("You are about to reply that you can't afford it when a shady fellow in a hood steps up behind you.");
             showSponsor();
-            portraitSay("You look like your the capable sort, I can front the money for the competition. " +
+            portraitSay("You look like you're the capable sort, I can front the money for the competition. " +
                     "But if you win I'll want the bow you used during the contest. What do you say?");
-            print("Do you accept the strangers sponsorship? (Y/N) ");
+            print("Do you accept the stranger's sponsorship? (Y/N) ");
             sponsored = true;
         } else {
             print("Will you enter one of your party members into the contest? (Y/N) ");

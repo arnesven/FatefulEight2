@@ -77,4 +77,9 @@ public class BTypePowerGauge extends PowerGauge {
     protected AIMatrices getLowLevelAIMatrices() {
         return AIMatricesPresets.mutatedLevel1BGauge();
     }
+
+    @Override
+    public PowerGauge copy() {
+        return new BTypePowerGauge(isWithGraphics());
+    }
 }

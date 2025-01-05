@@ -52,7 +52,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         portraitSay("Okay then. That means we have all eight combatants! Let me just randomize the setup.");
         println("The official places eight slips of paper into his hat, and then pulls them out one by one. For each one " +
                 "he writes the name on a large sign next to the booth.");
-        portraitSay("This is the match tree. It shows who will fight whom and what the outcome has been as the fights conclude, " +
+        portraitSay("This is the match tree. It shows who will fight whom and what the outcome has been as the fights conclude. " +
                 "Please have a look at it now.");
         waitForReturn();
         List<GameCharacter> fighters = makeFighters(model, 7);
@@ -145,7 +145,7 @@ public class ParticipateInTournamentEvent extends TournamentEvent {
         }
 
         doLongBreak(model, winners, losers, fighters, chosen);
-        announcerSay("We are about ready to start the semi-finals! Please take your seats.");
+        announcerSay("We are about ready to start the final match! Please take your seats.");
         GameCharacter winner = performOneFight(model, fighters.get(0), fighters.get(1));
         if (model.getParty().isWipedOut()) {
             return;

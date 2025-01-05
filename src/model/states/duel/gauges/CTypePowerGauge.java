@@ -82,4 +82,9 @@ public class CTypePowerGauge extends BTypePowerGauge {
     public String getHelpText() {
         return HELP_TEXT;
     }
+
+    @Override
+    public PowerGauge copy() {
+        return new CTypePowerGauge(isWithGraphics());
+    }
 }

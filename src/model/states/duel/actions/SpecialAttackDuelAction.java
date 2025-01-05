@@ -22,7 +22,9 @@ public class SpecialAttackDuelAction extends AttackMagicDuelAction {
 
     @Override
     protected void execute(Model model, MagicDuelEvent state, MagicDuelAction opponentsAction, MagicDuelist opponent) {
-        state.textOutput(getPerformer().getName() + " makes a special attack of power " + this.powerLevel + "!");
+        if (isSuccess()) {
+            state.textOutput(getPerformer().getName() + " makes a special attack of power " + this.powerLevel + "!");
+        }
         super.execute(model, state, opponentsAction, opponent);
     }
 

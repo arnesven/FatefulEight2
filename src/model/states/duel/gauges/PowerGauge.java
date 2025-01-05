@@ -40,6 +40,7 @@ public abstract class PowerGauge {
     public abstract int getPowerPerSegment(int segmentIndex);
     protected abstract AIMatrices getHighLevelAIMatrices();
     protected abstract AIMatrices getLowLevelAIMatrices();
+    public abstract PowerGauge copy();
 
     public void addToLevel(int i) {
         currentLevel = Math.max(0, Math.min(getMaxLevel(), currentLevel + i));
@@ -56,6 +57,12 @@ public abstract class PowerGauge {
     public void drawYourself(ScreenHandler screenHandler, int xOffset, int yOffset) {
         if (withGraphics) {
             widget.drawYourself(screenHandler, xOffset, yOffset);
+        }
+    }
+
+    public void drawGaugeLogo(ScreenHandler screenHandler, int xOffset, int yOffset) {
+        if (withGraphics) {
+            widget.drawGaugeLogo(screenHandler, xOffset, yOffset);
         }
     }
 
@@ -120,5 +127,9 @@ public abstract class PowerGauge {
 
     public void drawSegments(ScreenHandler screenHandler, int x, int y) {
         widget.drawSegmentsOnly(screenHandler, x, y);
+    }
+
+    protected boolean isWithGraphics() {
+        return withGraphics;
     }
 }

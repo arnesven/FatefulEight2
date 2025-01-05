@@ -15,7 +15,7 @@ public class AIMagicDuelEvent extends MagicDuelEvent {
     private List<MagicDuelist> opponents;
 
     public AIMagicDuelEvent(Model m) {
-        super(m, true, makeNPCMageOfClassAndLevel(Classes.WIZ, 1));
+        super(m, true, makeNPCMageOfClassAndLevel(Classes.WIZ, 1), null);
     }
 
     @Override

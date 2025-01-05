@@ -57,6 +57,11 @@ public class ATypePowerGauge extends ComplexPowerGauge {
     }
 
     @Override
+    public PowerGauge copy() {
+        return new ATypePowerGauge(isWithGraphics());
+    }
+
+    @Override
     public String getHelpText() {
         return HELP_TEXT;
     }

@@ -71,15 +71,15 @@ public class TournamentEvent extends DailyEventState {
         leaderSay("Perhaps. What are the parameters?");
         portraitSay("The entry fee is " + ENTRY_FEE + " gold. Eight champions will enter the tournament. There will be one-on-one " +
                 "face offs until only one remains. Fights continue until one combatant yields, or to the death! The winner receives " +
-                "100 gold and the " + castle.getLordTitle() + " blessing - which is worth more than any bag of gold mind you.");
+                "100 gold and the " + castle.getLordTitle() + "'s blessing - which is worth more than any bag of gold mind you.");
         portraitSay("But all of you can't fight. We only have room for one more. Are you still interested?");
         boolean sponsored = false;
         if (model.getParty().getGold() < ENTRY_FEE) {
             println("You are about to reply that you can't afford it when a shady fellow in a hood steps up behind you.");
             showSponsor();
-            portraitSay("You look like your the capable sort, I can front the money for the fight. But I'll expect half the " +
+            portraitSay("You look like you're the capable sort, I can front the money for the fight. But I'll expect half the " +
                     "prize money if you come out on top. What do you say?");
-            print("Do you accept the strangers sponsorship? (Y/N) ");
+            print("Do you accept the stranger's sponsorship? (Y/N) ");
             sponsored = true;
         } else {
             print("Will you enter one of your party members into the tournament (Y), or will you " +
@@ -360,9 +360,9 @@ public class TournamentEvent extends DailyEventState {
         getModel().getLog().waitForAnimationToFinish();
     }
 
-    private String present(GameCharacter fighter) {
+    protected String present(GameCharacter fighter) {
         if (fighter.getCharClass() == Classes.None) {
-            return "... uh, well a fellow..";
+            return "... uh, well a fellow...";
         }
         return " " + MyRandom.sample(ADJECTIVES) + " " + fighter.getCharClass().getFullName().toLowerCase();
     }

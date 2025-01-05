@@ -77,7 +77,7 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
             return true;
         }
         GameCharacter mage =  getVictimCharacter(model);
-        MagicDuelEvent duelEvent = new MagicDuelEvent(model, false, mage);
+        MagicDuelEvent duelEvent = new MagicDuelEvent(model, false, mage, null);
         duelEvent.setShowOpponentColor(false);
         duelEvent.setShowOpponentGauge(false);
         duelEvent.run(model);

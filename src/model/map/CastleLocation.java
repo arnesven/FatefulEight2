@@ -140,7 +140,8 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
                     new AcceptDeliveryEvent(model),
                     new WantedPosterEvent(model),
                     new InvestInShopEvent(model),
-                    new ArtisanEvent(model)
+                    new ArtisanEvent(model),
+                    new MagicDuelContest(model, this)
             ));
             if (!LeagueOfMagesEvent.isMember(model)) {
                 dailyEvents.add(new LeagueOfMagesEvent(model));

@@ -64,6 +64,11 @@ public class TTypePowerGauge extends PowerGauge {
     }
 
     @Override
+    public PowerGauge copy() {
+        return new TTypePowerGauge(isWithGraphics());
+    }
+
+    @Override
     public String getHelpText() {
         return HELP_TEXT;
     }

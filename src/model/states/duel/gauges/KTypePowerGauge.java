@@ -92,4 +92,9 @@ public class KTypePowerGauge extends PowerGauge {
     protected AIMatrices getLowLevelAIMatrices() {
         return AIMatricesPresets.mutatedLevel1KGauge();
     }
+
+    @Override
+    public PowerGauge copy() {
+        return new KTypePowerGauge(isWithGraphics());
+    }
 }
