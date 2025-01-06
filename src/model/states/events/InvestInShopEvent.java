@@ -102,7 +102,7 @@ public class InvestInShopEvent extends DailyEventState {
                 itemRows++;
             }
             List<Item> stock = model.getItemDeck().draw(itemRows * 8);
-            ShopState shopState = new ShopState(model, "Partnership Shop", stock, null);
+            ShopState shopState = new ShopState(model, "Partnership Shop", stock);
             print("Press enter to continue.");
             waitForReturn();
             shopState.run(model);

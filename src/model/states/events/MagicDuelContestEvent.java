@@ -100,7 +100,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
         waitForReturn();
         List<GameCharacter> duelists = makeDuelists(model, 7);
         duelists.add(MyRandom.randInt(duelists.size()), chosen);
-        lookAtBoard(model, duelists, false);
+        lookAtBoard(model, duelists, false, true);
 
         List<GameCharacter> winners = new ArrayList<>();
         List<GameCharacter> losers = new ArrayList<>();
@@ -113,9 +113,6 @@ public class MagicDuelContestEvent extends TournamentEvent {
                         duelistB.getName() + ", how exciting! You should hurry to the dueling arena!");
                 println("You make your way over to the dueling arena. Up on a podium, a man is speaking behind a large cone which " +
                         "is amplifying his voice enough for everyone to hear.");
-            } else {
-                println("You hear the announcer start to call out that the duel is about to start, so you walk back over to the " +
-                        "dueling arena and take your seats again.");
             }
             GameCharacter winner = performOneDuel(model, duelistA, duelistB);
             winners.add(0, winner);
@@ -135,7 +132,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
                 handleSponsorWhenLost(model);
                 return;
             }
-            lookAtBoard(model, current, true);
+            lookAtBoard(model, current, true, i == 3);
         }
 
         doLongBreak(model);
@@ -147,10 +144,6 @@ public class MagicDuelContestEvent extends TournamentEvent {
         for (int i = 0; i < 2; ++i) {
             GameCharacter duelistB = duelists.remove(duelists.size() - 1);
             GameCharacter duelistA = duelists.remove(duelists.size() - 1);
-            if (i == 1) {
-                println("You hear the announcer start to call out that the duel is about to start, so you walk back over to the " +
-                        "arena and take your seats again.");
-            }
             GameCharacter winner = performOneDuel(model, duelistA, duelistB);
             if (model.getParty().isWipedOut()) {
                 return;
@@ -169,7 +162,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
                 handleSponsorWhenLost(model);
                 return;
             }
-            lookAtBoard(model, current, true);
+            lookAtBoard(model, current, true, i==1);
         }
 
         doLongBreak(model);
@@ -196,14 +189,21 @@ public class MagicDuelContestEvent extends TournamentEvent {
     }
 
     private void doLongBreak(Model model) {
-        println("Taking advantage of the longer break, you have a stroll around to look at some of the side attractions.");
-        new FoodStandsEvent(model).doEvent(model);
-        // TODO: Find other duelist and potentially "take him out".
+        println("How would you like to do during the longer break? ");
+        int choice = multipleOptionArrowMenu(model, 24, 24,
+                List.of("Visit food stands", "Visit beverage tent", "Walk around the grounds"));
+        if (choice == 0) {
+            new FoodStandsEvent(model).doEvent(model);
+        } else if (choice == 1) {
+            new BeverageTentEvent(model).doEvent(model);
+        } else {
+            // TODO: Find other duelist and potentially "take him out".
+        }
         setCurrentTerrainSubview(model);
         println("You're surprised at how quickly time has passed when you again hear the voice of the announcer.");
     }
 
-    private void lookAtBoard(Model model, List<GameCharacter> current, boolean withIntro) {
+    private void lookAtBoard(Model model, List<GameCharacter> current, boolean withIntro, boolean noActions) {
         if (withIntro) {
             println("You get up from your seats and walk over to the board next to the booth where you signed up " +
                     "for the tournament. It has already been updated.");
@@ -211,6 +211,11 @@ public class MagicDuelContestEvent extends TournamentEvent {
         model.getLog().waitForAnimationToFinish();
         TournamentSubView tournamentSubView = new DuelingContestSubView(current, knownColors, knownGauges);
         model.setSubView(tournamentSubView);
+        if (noActions) {
+            waitForReturn();
+            setCurrentTerrainSubview(model);
+            return;
+        }
         int timeLeft = 3;
         List<MyPair<GameCharacter, GameCharacter>> delayedSearchers = new ArrayList<>();
         do {
@@ -411,7 +416,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
 
     private void identifyGauge(Model model, GameCharacter winner, PowerGauge gauge) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            SkillCheckResult result = gc.testSkillHidden(Skill.SpellCasting, 11, gc.getRankForSkill(Skill.Perception));
+            SkillCheckResult result = gc.testSkillHidden(Skill.SpellCasting, 12, gc.getRankForSkill(Skill.Perception));
             if (result.isSuccessful()) {
                 println(gc.getName() + " successfully identifies the Power Gauge being used by " +
                         "the duelists (Spell Casting " + result.asString() + ").");

@@ -148,7 +148,7 @@ public class MagicDuelEvent extends DailyEventState {
     }
 
     private void drainStamina(Model model, MagicDuelist duelist) {
-        int SPLoss = duelist.getHitsTaken()/2;
+        int SPLoss = Math.min(duelist.getCharacter().getSP(), duelist.getHitsTaken()/2);
         String word = "tired";
         if (SPLoss > 1) {
             word = "exhausted";

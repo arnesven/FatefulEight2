@@ -57,6 +57,10 @@ public class ShopState extends GameState {
         subView.setOverflowWarning(overflow);
     }
 
+    public ShopState(Model model, String seller, List<Item> itemsForSale) {
+        this(model, seller, itemsForSale, null);
+    }
+
     protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller, HashMap<Item, Integer> prices, ShopState shopState) {
         return new ShopSubView(buyItems, true, seller, prices, this);
     }
