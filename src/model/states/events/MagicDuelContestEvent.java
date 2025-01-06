@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
@@ -14,6 +15,7 @@ import model.races.Race;
 import model.states.GameState;
 import model.states.duel.MagicDuelEvent;
 import model.states.duel.gauges.PowerGauge;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -30,10 +32,12 @@ public class MagicDuelContestEvent extends TournamentEvent {
     private boolean sponsored;
     private final Map<GameCharacter, MyColors> knownColors = new HashMap<>();
     private final Map<GameCharacter, PowerGauge> knownGauges = new HashMap<>();
+    private List<GameCharacter> removedDuelists;
 
     public MagicDuelContestEvent(Model model, CastleLocation castleLocation) {
         super(model, castleLocation);
         this.castle = castleLocation;
+        removedDuelists = new ArrayList<>();
     }
 
     @Override
@@ -135,7 +139,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
             lookAtBoard(model, current, true, i == 3);
         }
 
-        doLongBreak(model);
+        doLongBreak(model, winners);
         duelists.addAll(winners);
         announcerSay("We are about ready to start the semi-finals! Please take your seats.");
 
@@ -165,7 +169,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
             lookAtBoard(model, current, true, i==1);
         }
 
-        doLongBreak(model);
+        doLongBreak(model, winners);
         duelists.addAll(winners);
         announcerSay("We are about ready to start the final duel! Please take your seats.");
         GameCharacter winner = performOneDuel(model, duelists.get(0), duelists.get(1));
@@ -188,7 +192,7 @@ public class MagicDuelContestEvent extends TournamentEvent {
         }
     }
 
-    private void doLongBreak(Model model) {
+    private void doLongBreak(Model model, List<GameCharacter> charsStillInContest) {
         println("How would you like to do during the longer break? ");
         int choice = multipleOptionArrowMenu(model, 24, 24,
                 List.of("Visit food stands", "Visit beverage tent", "Walk around the grounds"));
@@ -197,7 +201,25 @@ public class MagicDuelContestEvent extends TournamentEvent {
         } else if (choice == 1) {
             new BeverageTentEvent(model).doEvent(model);
         } else {
-            // TODO: Find other duelist and potentially "take him out".
+            List<GameCharacter> opponentsLeft = new ArrayList<>(charsStillInContest);
+            opponentsLeft.removeIf(gc -> model.getParty().getPartyMembers().contains(gc));
+            GameCharacter opponent = MyRandom.sample(opponentsLeft);
+            println("You stroll around the grounds when you happen to see " + opponent.getName() + ".");
+            leaderSay("Hey, there's " + opponent.getName() + ".");
+            GameCharacter other = model.getParty().getLeader();
+            if (model.getParty().size() > 1) {
+                other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+            }
+            partyMemberSay(other, "Maybe we can 'persuade' " + himOrHer(opponent.getGender()) +
+                    " to drop out of the contest.");
+            model.getLog().waitForAnimationToFinish();
+            IncapacitateNPCEvent incapEvent = new IncapacitateNPCEvent(model, opponent, 100, 14,
+                    "Let's be honest " + opponent.getFirstName() + ", you really don't have a chance. " +
+                            "Why don't you just drop out of the contest, spare yourself the humiliation?");
+            incapEvent.doEvent(model);
+            if (incapEvent.wasSuccess()) {
+                 this.removedDuelists.add(opponent);
+            }
         }
         setCurrentTerrainSubview(model);
         println("You're surprised at how quickly time has passed when you again hear the voice of the announcer.");
@@ -335,6 +357,11 @@ public class MagicDuelContestEvent extends TournamentEvent {
 
     private GameCharacter runRealDuel(Model model, GameCharacter partyMember, GameCharacter opponent) {
         println(partyMember.getName() + " enters the dueling arena...");
+        if (removedDuelists.contains(opponent)) {
+            announceMissing(partyMember, opponent);
+            return partyMember;
+        }
+        announcerStartOfCombat(partyMember, opponent);
         MagicDuelEvent duelEvent = new MagicDuelEvent(model, false, opponent, partyMember);
         if (knownGauges.containsKey(opponent)) {
             duelEvent.setPreselectedOpponentGauge(knownGauges.get(opponent));
@@ -358,6 +385,16 @@ public class MagicDuelContestEvent extends TournamentEvent {
                 duelistA.getName() + "!");
         announcerSay("And on the other side, we have a" + present(duelistB) + ". Let's have another big round of applause for... " +
                 duelistB.getName() + "!");
+        getModel().getLog().waitForAnimationToFinish();
+    }
+
+    private void announceMissing(GameCharacter duelistA, GameCharacter duelistB) {
+        announcerSay("And now, ladies and gentlemen, we are about to see a " +
+                MyRandom.sample(List.of("fierce", "exciting", "hectic")) + " " +
+                MyRandom.sample(List.of("duel", "face off", "standoff", "showdown", "match")) + " between two skilled opponents!");
+        announcerSay("But wait. Something is amiss. We seem to be missing one duelist! " + duelistB.getName() + " is not here. " +
+                "That means " + duelistA.getName() + " wins by default! Sorry folks, but those are the rules! " +
+                "Congratulations " + duelistA.getName() + "!");
         getModel().getLog().waitForAnimationToFinish();
     }
 
@@ -440,6 +477,14 @@ public class MagicDuelContestEvent extends TournamentEvent {
         }
 
         println("You sit down on one of the benches overlooking the dueling arena.");
+        if (removedDuelists.contains(duelistA)) {
+            announceMissing(duelistB, duelistA);
+            return duelistB;
+        }
+        if (removedDuelists.contains(duelistB)) {
+            announceMissing(duelistA, duelistB);
+            return duelistA;
+        }
         announcerStartOfCombat(duelistA, duelistB);
         print("Do you want to skip the details of the duel? (Y/N) ");
         if (yesNoInput()) {

@@ -223,6 +223,10 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         addToNotoriety(model, state, numberOfMurders * MURDER_NOTORIETY);
     }
 
+    public static void addAssaultsToNotoriety(Model model, GameState state, int numberOfAssaults) {
+        addToNotoriety(model, state,  numberOfAssaults * ASSAULT_NOTORIETY);
+    }
+
     private void attack(GameCharacter victimChar, List<Enemy> companions,
                         ProvokedStrategy combStrat, boolean isAggressor) {
         if (combStrat == ProvokedStrategy.ALWAYS_ESCAPE) {
@@ -263,7 +267,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 addMurdersToNotoriety(getModel(), this, numberOfDead);
             }
             if (isAggressor) {
-                addToNotoriety(getModel(), this, enemies.size() - numberOfDead * ASSAULT_NOTORIETY);
+                addAssaultsToNotoriety(getModel(), this, enemies.size() - numberOfDead);
             }
         } else if (getModel().getCurrentHex().getLocation() instanceof UrbanLocation) {
             println("Your crime has been witnessed and reported to the local authorities.");

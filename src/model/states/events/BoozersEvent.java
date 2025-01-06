@@ -159,7 +159,7 @@ public class BoozersEvent extends DailyEventState {
         model.getParty().getInventory().remove(drink);
         boozer1Say("Uh... hic... a drink? Gimme!");
         if (drink.doesReject(model, boozer1.getRace())) {
-            println("The boozer is about to have a sip of the " + drinkName + ", but them recoils with a jerk.");
+            println("The boozer is about to have a sip of the " + drinkName + ", but then recoils with a jerk.");
             boozer1Say("Whaaa... what kind of swill is thish?#");
             boozer2Say("Everybody, hic, knowsh your kind hatesh " + drinkName + "!" +
                             "I think " + heOrShe(model.getParty().getLeader().getGender()) + "'s tryin' to inshult ya!");
