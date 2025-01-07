@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
+import model.classes.SkillChecks;
 import model.states.DailyEventState;
 import util.MyRandom;
 import view.sprites.MiniPictureSprite;
@@ -23,7 +24,7 @@ public class PartyCookingEvent extends DailyEventState {
     protected void doEvent(Model model) {
         List<GameCharacter> cooks = new ArrayList<>();
         for (GameCharacter chara : model.getParty().getPartyMembers()) {
-            if (chara.testSkillHidden(Skill.Survival, 10, 0).isSuccessful()) {
+            if (chara.testSkillHidden(Skill.Survival, SkillChecks.adjustDifficulty(model, 10), 0).isSuccessful()) {
                 cooks.add(chara);
             }
         }

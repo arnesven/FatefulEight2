@@ -6,6 +6,7 @@ import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.states.dailyaction.FindResourcesDailyAction;
 import model.tasks.DestinationTask;
+import util.MyLists;
 import view.combat.TownCombatTheme;
 import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
@@ -97,20 +98,16 @@ public abstract class WorldHex {
 
 
     private DailyEventState conditionalEvent(Model model) {
-        DailyEventState eventToReturn = Loan.generateEvent(model, this);
-        if (eventToReturn != null) {
-            return eventToReturn;
+        List<DailyEventState> conditionalEvents = new ArrayList<>();
+        MyLists.nonNullAdd(conditionalEvents, Loan.eventDependentOnLoan(model, this));
+        MyLists.nonNullAdd(conditionalEvents, GeneralInteractionEvent.eventDependentOnNotoriety(model, this));
+        MyLists.nonNullAdd(conditionalEvents, CaveSpelunkerEvent.generateEvent(model));
+        MyLists.nonNullAdd(conditionalEvents, DwarvenPuzzleTube.generateEvent(model));
+        MyLists.nonNullAdd(conditionalEvents, CrimsonAssassinsInvitationEvent.eventDependentOnMurders(model));
+        if (conditionalEvents.isEmpty()) {
+            return null;
         }
-        eventToReturn = GeneralInteractionEvent.generateEvent(model, this);
-        if (eventToReturn != null) {
-            return eventToReturn;
-        }
-        eventToReturn = CaveSpelunkerEvent.generateEvent(model);
-        if (eventToReturn != null) {
-            return eventToReturn;
-        }
-        eventToReturn = DwarvenPuzzleTube.generateEvent(model);
-        return eventToReturn;
+        return MyRandom.sample(conditionalEvents);
     }
 
     private void setHexSprites() {

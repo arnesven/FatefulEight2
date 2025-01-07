@@ -156,7 +156,8 @@ public class ItemDeck extends ArrayList<Item> {
                 new PotionRecipe(new AntidotePotion()), new PotionRecipe(new UnstablePotion()),
                 new PotionRecipe(new SleepingPotion()), new PotionRecipe(new StrengthPotion()),
                 new PotionRecipe(new DexterityPotion()), new PotionRecipe(new WitsPotion()),
-                new PotionRecipe(new CharismaPotion()), new PotionRecipe(new RevivingElixir()));
+                new PotionRecipe(new CharismaPotion()), new PotionRecipe(new RevivingElixir()),
+                new PotionRecipe(new CommonPoison()));
     }
 
     public static List<HeadGearItem> allHeadGear() {

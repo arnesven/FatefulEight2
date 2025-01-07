@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.combat.CombatAdvantage;
 import model.enemies.*;
 import model.items.Item;
@@ -13,6 +14,7 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -191,17 +193,15 @@ public class AncientStrongholdQuest extends MainQuest {
                     return new QuestEdge(state.getQuest().getFailEndingNode());
                 }
             } else if (!pearlsFound) {
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    if (gc.testSkillHidden(Skill.Perception, 8, 0).isSuccessful()) {
-                        state.println("You spot some pearls on the floor and pick them up.");
-                        for (int i = 0; i < 3; ++i) {
-                            PearlItem pearl = makeRandomPearl();
-                            state.println("The party gains a " + pearl.getName() + ".");
-                            model.getParty().getInventory().addSpecialItem(pearl);
-                        }
-                        pearlsFound = true;
-                        break;
+                MyPair<SkillCheckResult, GameCharacter> result = state.doPassiveSkillCheck(Skill.Perception, 8);
+                if (result.first.isSuccessful()) {
+                    state.println("You spot some pearls on the floor and pick them up.");
+                    for (int i = 0; i < 3; ++i) {
+                        PearlItem pearl = makeRandomPearl();
+                        state.println("The party gains a " + pearl.getName() + ".");
+                        model.getParty().getInventory().addSpecialItem(pearl);
                     }
+                    pearlsFound = true;
                 }
             }
 

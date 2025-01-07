@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.combat.conditions.PoisonCondition;
 import model.states.DailyEventState;
 import util.MyRandom;
@@ -38,14 +39,14 @@ public class BerriesEvent extends DailyEventState {
             println("The party happily eats and picks as many berries as they can carry.");
             model.getParty().addToFood(2*model.getParty().size());
         } else {
-            GameCharacter survivalist = null;
+            GameCharacter survivalist = model.getParty().getPartyMember(0);
             int best = Integer.MIN_VALUE;
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc.getRankForSkill(Skill.Survival) > best) {
                     survivalist = gc;
                 }
             }
-            SkillCheckResult result = survivalist.testSkillHidden(Skill.Survival, 6, 0);
+            SkillCheckResult result = survivalist.testSkillHidden(Skill.Survival, SkillChecks.adjustDifficulty(model, 6), 0);
             if (result.isSuccessful()) {
                 println(survivalist.getName() + "'s survival instinct kicks in. (Survival " + result.asString() + ")");
                 model.getParty().partyMemberSay(model, survivalist, List.of("Wait! Those are poisonous!"));

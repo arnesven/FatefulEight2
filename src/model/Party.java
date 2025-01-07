@@ -15,6 +15,7 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
+import model.items.potions.CommonPoison;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
@@ -80,6 +81,7 @@ public class Party implements Serializable {
     public Party() {
         position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
+        inventory.add(new CommonPoison());
     }
 
     private LoopingSprite[] makeCursorSprites() {
@@ -978,6 +980,9 @@ public class Party implements Serializable {
         if (getDog() != null && MyRandom.rollD6() == 1 && MyRandom.rollD6() == 1) {
             model.getLog().addAnimated("Your dog appears to have left you.\n");
             setDog(null);
+        }
+        for (DestinationTask dt : destinationTasks) {
+            dt.runStartOfDayHook(model);
         }
     }
 

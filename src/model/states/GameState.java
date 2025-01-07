@@ -5,10 +5,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
-import model.classes.CharacterClass;
-import model.classes.Classes;
-import model.classes.Skill;
-import model.classes.SkillCheckResult;
+import model.classes.*;
 import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
@@ -218,6 +215,8 @@ public abstract class GameState implements GameStateConstants {
 
     protected String iveOrWeve() { return model.getParty().size() == 1 ? "I've":"we've"; }
 
+    protected String imOrWere() { return model.getParty().size() == 1 ? "I'm":"We're"; }
+
     protected String myOrOur() { return model.getParty().size() == 1 ? "my":"our"; }
 
     protected void showPartyAttitudesSubView(Model model) {
@@ -300,15 +299,26 @@ public abstract class GameState implements GameStateConstants {
         return true;
     }
 
-    protected MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty) {
+    public MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty, Skill bonusFromSkill) {
         SkillCheckResult result = null;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            result = gc.testSkillHidden(skill, difficulty, 0);
+        difficulty = SkillChecks.adjustDifficulty(model, difficulty);
+        List<GameCharacter> partyMembers = new ArrayList<>(model.getParty().getPartyMembers());
+        partyMembers.removeAll(model.getParty().getBench());
+        for (GameCharacter gc : partyMembers) {
+            int bonus = 0;
+            if (bonusFromSkill != null) {
+                bonus = gc.getRankForSkill(bonusFromSkill);
+            }
+            result = gc.testSkillHidden(skill, difficulty, bonus);
             if (result.isSuccessful()) {
                 return new MyPair<>(result, gc);
             }
         }
         return new MyPair<>(result, null);
+    }
+
+    public MyPair<SkillCheckResult, GameCharacter> doPassiveSkillCheck(Skill skill, int difficulty) {
+        return doPassiveSkillCheck(skill, difficulty, null);
     }
 
     public static boolean partyIsCreepy(Model model) {

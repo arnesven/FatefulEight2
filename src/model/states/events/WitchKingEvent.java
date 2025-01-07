@@ -128,19 +128,17 @@ public class WitchKingEvent extends DailyEventState {
             exploreRuinsState.leaderSay("Okay people. Get ready for a boss fight.");
             model.getParty().randomPartyMemberSay(model, List.of("Wait a minute, is this guy asleep?"));
             model.getParty().randomPartyMemberSay(model, List.of("Looks like he's in some kind of a trance..."));
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                SkillCheckResult result = gc.testSkillHidden(Skill.SpellCasting, 10, 0);
-                if (result.isSuccessful()) {
-                    exploreRuinsState.println(gc.getName() + " detects a powerful enchantment. (Spellcasting " + result.asString() + ")");
-                    model.getParty().partyMemberSay(model, gc, "He's under the effects of an enchantment. A binding spell of black magic.");
-                    leaderSay("Can we break the spell?");
-                    GameCharacter gc2 = model.getParty().getRandomPartyMember();
-                    model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
-                    exploreRuinsState.printQuote("Witch King", "Please.... Help.... Me....");
-                    tryBreakSpell(model, exploreRuinsState);
-                    model.getParty().partyMemberSay(model, gc, "He appears to be waking up.");
-                    break;
-                }
+            MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.SpellCasting, 10);
+            if (passiveResult.first.isSuccessful()) {
+                GameCharacter gc = passiveResult.second;
+                exploreRuinsState.println(gc.getName() + " detects a powerful enchantment. (Spellcasting " + passiveResult.first.asString() + ")");
+                model.getParty().partyMemberSay(model, gc, "He's under the effects of an enchantment. A binding spell of black magic.");
+                leaderSay("Can we break the spell?");
+                GameCharacter gc2 = model.getParty().getRandomPartyMember();
+                model.getParty().partyMemberSay(model, gc2, "Better not. I'm sure whoever put him under did it for a reason.");
+                exploreRuinsState.printQuote("Witch King", "Please.... Help.... Me....");
+                tryBreakSpell(model, exploreRuinsState);
+                model.getParty().partyMemberSay(model, gc, "He appears to be waking up.");
             }
             exploreRuinsState.println("The Witch King suddenly opens his eyes. In a wild fury he lunges at you!");
             do {

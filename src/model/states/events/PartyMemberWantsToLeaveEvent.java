@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.states.DailyEventState;
@@ -58,7 +59,8 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
         partyMemberSay(potentialLeaver, "Hey... I've been thinking about leaving the party.");
         leaderSay("What's the matter " + potentialLeaver.getFirstName() + "? Don't like my style of leadership?");
         partyMemberSay(potentialLeaver, "No it's not you, it's some of these other guys. They don't seem to get me.");
-        SkillCheckResult result = model.getParty().getLeader().testSkill(model, Skill.Persuade, 10,
+        SkillCheckResult result = model.getParty().getLeader().testSkill(model, Skill.Persuade,
+                SkillChecks.adjustDifficulty(model, 10),
                 model.getParty().getLeader().getRankForSkill(Skill.Leadership));
         if (result.isSuccessful()) {
             leaderSay(potentialLeaver.getFirstName() + ", you are a great asset to this company. We need you. " +

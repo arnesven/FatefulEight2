@@ -8,6 +8,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.Lockpick;
 import model.states.DailyEventState;
+import util.MyPair;
 import util.MyRandom;
 
 import java.util.List;
@@ -46,12 +47,10 @@ public class CharlatanEvent extends DailyEventState {
             print("Buy the doctor's elixir? (Y/N) ");
             if (yesNoInput()) {
                 model.getParty().addToGold(-20);
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    SkillCheckResult result = gc.testSkillHidden(Skill.MagicGreen, 10, 0);
-                    if (result.isSuccessful()) {
-                        charlatanFoundOut(model, gc, result);
-                        return;
-                    }
+                MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.MagicGreen, 10);
+                if (passiveResult.first.isSuccessful()) {
+                    charlatanFoundOut(model, passiveResult.second, passiveResult.first);
+                    return;
                 }
 
                 println("You manage to get a hold on one of the last of the doctor's bottles. The doctor " +

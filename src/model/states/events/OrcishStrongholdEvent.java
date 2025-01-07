@@ -168,14 +168,12 @@ public class OrcishStrongholdEvent extends DailyEventState {
                 model.getParty().partyMemberSay(model, pair.second, "Oh, and they have a troll!");
             }
             if (spotted < warriors) {
-                for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                    SkillCheckResult result = gc.testSkillHidden(Skill.Logic, 8, 0);
-                    if (result.isSuccessful()) {
-                        println(gc.getFirstName() + " tests Logic " + result.asString() + ".");
-                        model.getParty().partyMemberSay(model, gc, "Hmm. Based on the smoke coming from those chimneys " +
-                                "I'm guessing there are at least a few more. I'd say " + MyStrings.numberWord(warriors) + " of them in total.");
-                        break;
-                    }
+                MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.Logic, 8);
+                if (passiveResult.first.isSuccessful()) {
+                    GameCharacter gc = passiveResult.second;
+                    println(gc.getFirstName() + " tests Logic " + passiveResult.first.asString() + ".");
+                    model.getParty().partyMemberSay(model, gc, "Hmm. Based on the smoke coming from those chimneys " +
+                            "I'm guessing there are at least a few more. I'd say " + MyStrings.numberWord(warriors) + " of them in total.");
                 }
             }
         } else {

@@ -8,12 +8,14 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.items.spells.TelekinesisSpell;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
 import model.states.events.GuideData;
 import sound.*;
 import util.MyLists;
+import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
 import view.GameView;
@@ -243,7 +245,8 @@ public class BeanGameEvent extends DailyEventState {
         portraitSay("Jackpot indeed.");
         leaderSay("I guess this is my lucky day.");
         int result = prizes.get(0) * prizes.get(1) * prizes.get(2);
-        SkillCheckResult skillResult = model.getParty().getLeader().testSkillHidden(Skill.Logic, 8, 0);
+        SkillCheckResult skillResult = model.getParty().getLeader().testSkillHidden(Skill.Logic,
+                SkillChecks.adjustDifficulty(model, 8), 0);
         if (result <= 10 || skillResult.isSuccessful()) {
             leaderSay("Now pay me my " + result + " gold please.");
             println("(" + skillResult.asString() + ".)");
@@ -258,20 +261,19 @@ public class BeanGameEvent extends DailyEventState {
             println("The gambler brings out a bag of money and counts up coins.");
             portraitSay(" uhm, it's " + fakeResult + " gold. Here you go.");
 
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                if (gc != model.getParty().getLeader()) {
-                    skillResult = gc.testSkillHidden(Skill.Logic, 8, 0);
-                    if (skillResult.isSuccessful()) {
-                        println(gc.getName() + " does some quick counting on " + hisOrHer(gc.getGender()) +
-                                " fingers (" + skillResult.asString() + ") ");
-                        partyMemberSay(gc, "Hey, that doesn't seem right! I get it to " + result + " gold.");
-                        portraitSay("Yes, of course, how silly of me. An honest mistake, here you go.");
-                        println("The gambler nervously pulls out some more money. You get " + result + " gold.");
-                        model.getParty().addToGold(result);
-                        return;
-                    }
-                }
+            MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.Logic, 8);
+
+            if (passiveResult.first.isSuccessful()) {
+                GameCharacter gc = passiveResult.second;
+                println(gc.getName() + " does some quick counting on " + hisOrHer(gc.getGender()) +
+                        " fingers (" + skillResult.asString() + ") ");
+                partyMemberSay(gc, "Hey, that doesn't seem right! I get it to " + result + " gold.");
+                portraitSay("Yes, of course, how silly of me. An honest mistake, here you go.");
+                println("The gambler nervously pulls out some more money. You get " + result + " gold.");
+                model.getParty().addToGold(result);
+                return;
             }
+
             leaderSay("Thank you!");
             println("You gladly accept the " + fakeResult + " gold.");
             model.getParty().addToGold(fakeResult);

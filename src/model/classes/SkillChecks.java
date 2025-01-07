@@ -5,8 +5,11 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
 import model.items.StaminaRecoveryItem;
+import model.items.weapons.UnarmedCombatWeapon;
+import model.states.ExploreRuinsState;
 import model.states.GameState;
 import util.MyLists;
+import util.MyRandom;
 import view.InventoryView;
 
 public class SkillChecks {
@@ -65,5 +68,23 @@ public class SkillChecks {
 
     public static int adjustDifficulty(Model model, int difficulty) {
         return difficulty + model.getSettings().getGameDifficulty() - 1;
+    }
+
+    public static int doDamageToDoor(Model model, GameState state) {
+        state.println("Who should try to break down the door.");
+        GameCharacter performer = model.getParty().partyMemberInput(model, state, model.getParty().getLeader());
+        if (performer.getEquipment().getWeapon() instanceof UnarmedCombatWeapon) {
+            state.println("This character has nothing to break down the door with.");
+            return 0;
+        }
+        performer.addToSP(-1);
+        SkillCheckResult result = performer.testSkill(model, performer.getEquipment().getWeapon().getSkillToUse(performer));
+        int damage = performer.getEquipment().getWeapon().getDamage(result.getModifiedRoll(), performer);
+        state.println(performer.getName() + " did " + damage + " damage to the door.");
+        if (MyRandom.rollD10() == 1) {
+            state.println("The " + performer.getEquipment().getWeapon().getName() + " broke!");
+            performer.getEquipment().setWeapon(new UnarmedCombatWeapon());
+        }
+        return damage;
     }
 }

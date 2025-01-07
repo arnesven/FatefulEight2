@@ -52,11 +52,19 @@ public class Destination implements Serializable {
     }
 
     public static Destination generateDwellingDestination(Model model) {
-        System.out.println("Making random destination!");
         Point position = randomPositionWithoutLocation(model);
         return makeDwellingDestinationAtPosition(model, position);
     }
 
+    public static Destination generateUrbanDestination(Model model) {
+        UrbanLocation urb = MyRandom.sample(model.getWorld().getLordLocations());
+        Point position = model.getWorld().getPositionForLocation((HexLocation) urb);
+        String dwelling = MyRandom.sample(java.util.List.of(
+                "hut", "house", "cottage", "lodge", "building",
+                "shack", "villa", "cabin", "mansion"));
+        String description = "a " + dwelling + " in " + urb.getPlaceName();
+        return new Destination(position, description, dwelling, "in");
+    }
 
     public static Destination generateNaturalLandmarkDestinationAtPosition(Model model, Point position) {
         MyPair<String, String> landmarkAndPrep = MyRandom.sample(List.of(

@@ -3,9 +3,12 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.enemies.CrocodileEnemy;
 import model.enemies.Enemy;
 import model.states.DailyEventState;
+import util.MyPair;
 
 import java.util.List;
 
@@ -20,12 +23,10 @@ public class CrocodilesEvent extends DailyEventState {
                 "floating logs they soon realize, they are not logs at all! " +
                 "The creatures come alive and snap at you with deadly jaws.");
         boolean spotted = false;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            if (gc.testSkillHidden(Skill.Perception, 8, 0).isSuccessful()) {
-                println(gc.getName() + " spots the crocodiles and raises the alarm!");
-                spotted = true;
-                break;
-            }
+        MyPair<SkillCheckResult, GameCharacter> result = doPassiveSkillCheck(Skill.Perception, 8);
+        if (result.first.isSuccessful()) {
+            spotted = true;
+            println(result.second.getName() + " spots the crocodiles and raises the alarm (Perception " + result.first.asString() + ")!");
         }
         List<Enemy> enemies = List.of(new CrocodileEnemy('A'), new CrocodileEnemy('A'), new CrocodileEnemy('A'));
         if (spotted) {

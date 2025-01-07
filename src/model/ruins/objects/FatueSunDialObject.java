@@ -4,10 +4,12 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.items.special.FatueKeyItem;
 import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import model.states.fatue.SouthGardenNode;
+import util.MyPair;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -72,13 +74,11 @@ public class FatueSunDialObject extends DungeonObject {
             state.leaderSay("A sundial, down here? Now that just doesn't make any sense. " +
                     "There's no sunlight down here. If there hadn't been for these campfires there wouldn't " +
                     "be a shadow on the dial at all.");
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                if (gc.testSkillHidden(Skill.Logic, 9, 0).isSuccessful()) {
-                    state.partyMemberSay(gc, "Maybe that's just it. Why don't we put out the fires and see what happens?");
-                    state.randomSayIfPersonality(PersonalityTrait.anxious, List.of(gc),
-                            "But that will make it so dark... Do we have to?");
-                    break;
-                }
+            MyPair<SkillCheckResult, GameCharacter> result = state.doPassiveSkillCheck(Skill.Logic, 9);
+            if (result.first.isSuccessful()) {
+                state.partyMemberSay(result.second, "Maybe that's just it. Why don't we put out the fires and see what happens?");
+                state.randomSayIfPersonality(PersonalityTrait.anxious, List.of(result.second),
+                        "But that will make it so dark... Do we have to?");
             }
             firstTime = false;
         } else {

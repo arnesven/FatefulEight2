@@ -452,16 +452,14 @@ public class MagicDuelContestEvent extends TournamentEvent {
     }
 
     private void identifyGauge(Model model, GameCharacter winner, PowerGauge gauge) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            SkillCheckResult result = gc.testSkillHidden(Skill.SpellCasting, 12, gc.getRankForSkill(Skill.Perception));
-            if (result.isSuccessful()) {
-                println(gc.getName() + " successfully identifies the Power Gauge being used by " +
-                        "the duelists (Spell Casting " + result.asString() + ").");
-                knownGauges.put(winner, gauge);
-                partyMemberSay(gc, "I'm pretty sure " + winner.getName() + " was using a " + gauge.getName() + "-Gauge.");
-                leaderSay("That could be good to know if we go up against " + himOrHer(winner.getGender()) + " later.");
-                break;
-            }
+        MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.SpellCasting, 12, Skill.Perception);
+        if (passiveResult.first.isSuccessful()) {
+            GameCharacter gc = passiveResult.second;
+            println(gc.getName() + " successfully identifies the Power Gauge being used by " +
+                    "the duelists (Spell Casting " + passiveResult.first.asString() + ").");
+            knownGauges.put(winner, gauge);
+            partyMemberSay(gc, "I'm pretty sure " + winner.getName() + " was using a " + gauge.getName() + "-Gauge.");
+            leaderSay("That could be good to know if we go up against " + himOrHer(winner.getGender()) + " later.");
         }
     }
 

@@ -12,7 +12,7 @@ import view.sprites.DamageValueEffect;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class LethalPoison extends ThrowablePotion {
+public class LethalPoison extends PoisonPotion {
 
     private static final Sprite SPRITE = new ItemSprite(13, 6, MyColors.WHITE, MyColors.DARK_PURPLE);
     private final int damage;

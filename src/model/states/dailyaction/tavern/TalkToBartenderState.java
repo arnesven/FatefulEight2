@@ -4,6 +4,7 @@ import model.Model;
 import model.TimeOfDay;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.states.GameState;
 import model.states.TradeWithBartenderState;
 import model.states.dailyaction.BuyHorseState;
@@ -96,7 +97,8 @@ public class TalkToBartenderState extends GameState {
         model.getSettings().getMiscFlags().put("innworkdone", true);
 
         List<InnWorkAction> works = new ArrayList<>(List.of(MyRandom.sample(ALL_INN_WORKS)));
-        SkillCheckResult result = model.getParty().getLeader().testSkillHidden(Skill.SeekInfo, 8,
+        SkillCheckResult result = model.getParty().getLeader().testSkillHidden(Skill.SeekInfo,
+                SkillChecks.adjustDifficulty(model, 8),
                 model.getParty().getLeader().getRankForSkill(Skill.Persuade));
         if (result.isSuccessful()) {
             println("(Seek Info " + result.asString() + ")");

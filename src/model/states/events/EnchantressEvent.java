@@ -6,6 +6,7 @@ import model.characters.special.EnchantressCharacter;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.combat.conditions.Condition;
 import model.enemies.EnchantressEnemy;
 import model.enemies.Enemy;
@@ -14,6 +15,7 @@ import model.items.spells.DispelSpell;
 import model.items.spells.MindControlSpell;
 import model.items.spells.Spell;
 import model.states.*;
+import util.MyPair;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;
@@ -77,15 +79,15 @@ public class EnchantressEvent extends DailyEventState {
         leaderSay("What's the matter with people here? They seem distant and distracted.");
         GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
         model.getParty().partyMemberSay(model, other, "It's almost like they're in a perpetual daydream, a trance...");
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            SkillCheckResult result = gc.testSkillHidden(Skill.SpellCasting, 10, 0);
-            if (result.isSuccessful()) {
-                println(gc.getName() + " detects a powerful enchantment. (Spellcasting " + result.asString() + ")");
-                model.getParty().partyMemberSay(model, gc, "They must be enchanted some how...");
-                enchantmentDetected = true;
-                break;
-            }
+
+        MyPair<SkillCheckResult, GameCharacter> passiveResult = doPassiveSkillCheck(Skill.SpellCasting, 10);
+        if (passiveResult.first.isSuccessful()) {
+            println(passiveResult.second.getName() + " detects a powerful enchantment. (Spellcasting " +
+                    passiveResult.first.asString() + ")");
+            model.getParty().partyMemberSay(model, passiveResult.second, "They must be enchanted some how...");
+            enchantmentDetected = true;
         }
+
         leaderSay("They're all working like there's no tomorrow though. Everybody but... that woman.");
         println("Down by a creek, a woman is sitting by the water, casually watching the villagers.");
         model.getParty().partyMemberSay(model, other, "That woman is... beautiful!");
@@ -98,7 +100,8 @@ public class EnchantressEvent extends DailyEventState {
 
 
     private void enchantressEnchants(Model model, GameCharacter other) {
-        SkillCheckResult result = other.testSkillHidden(Skill.Perception, 10, enchantmentDetected ? 2 : 0);
+        SkillCheckResult result = other.testSkillHidden(Skill.Perception,
+                SkillChecks.adjustDifficulty(model, 10), enchantmentDetected ? 2 : 0);
         if (result.isSuccessful()) {
             println(other.getName() + " has withstood the effects of an enchantment! (Perception " + result.asString() + ")");
             enchantedPartyMember = false;

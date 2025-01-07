@@ -8,6 +8,7 @@ import model.combat.loot.StandardCombatLoot;
 import model.states.DailyEventState;
 import model.states.GameState;
 import sound.SoundEffects;
+import util.MyPair;
 
 import java.util.List;
 
@@ -18,21 +19,16 @@ public class ChestEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        SkillCheckResult result = null;
         GameCharacter performer = null;
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
-            result = gc.testSkillHidden(Skill.Perception, 7, 0);
-            if (result.isSuccessful()) {
-                performer = gc;
-                break;
-            }
-        }
-        if (!result.isSuccessful()) {
+        MyPair<SkillCheckResult, GameCharacter> result = doPassiveSkillCheck(Skill.Perception, 7);
+        if (result.first.isSuccessful()) {
+            performer = result.second;
+        } else {
             new NoEventState(model).doEvent(model);
             return;
         }
 
-        println(performer.getName() + " spots something! (Perception " + result.asString() + ")");
+        println(performer.getName() + " spots something! (Perception " + result.first.asString() + ")");
         if (model.getParty().size() > 1) {
             model.getParty().partyMemberSay(model, performer, "It's a chest. Help me dig it up!");
         } else {

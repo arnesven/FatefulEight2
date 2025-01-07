@@ -1,5 +1,7 @@
 package util;
 
+import model.states.DailyEventState;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -154,5 +156,13 @@ public class MyLists {
             result.add(fun.generate());
         }
         return result;
+    }
+
+    public static <E> boolean nonNullAdd(List<E> list, E item) {
+        if (item != null) {
+            list.add(item);
+            return true;
+        }
+        return false;
     }
 }

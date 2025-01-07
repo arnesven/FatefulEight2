@@ -323,7 +323,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         return result;
     }
 
-    public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
+    public static DailyEventState eventDependentOnNotoriety(Model model, WorldHex worldHex) {
         if (model.getParty().getNotoriety() > 0) {
             if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
                 if (MyRandom.rollD10() < Math.min(5, model.getParty().getNotoriety() / 10)) {

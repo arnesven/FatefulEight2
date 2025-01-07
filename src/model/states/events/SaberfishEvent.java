@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import util.MyLists;
 import util.MyRandom;
 
@@ -28,7 +29,7 @@ public class SaberfishEvent extends RiverEvent {
         model.getParty().randomPartyMemberSay(model, List.of("Ouch!#", "Damn fishies!#", "Stop eating me!#",
                 "I though fish were vegetarians.", "Hey! that hurt..."));
         GameCharacter gc = MyRandom.sample(model.getParty().getPartyMembers());
-        SkillCheckResult result = gc.testSkillHidden(Skill.Survival, 10, 0);
+        SkillCheckResult result = gc.testSkillHidden(Skill.Survival, SkillChecks.adjustDifficulty(model, 10), 0);
         if (result.isSuccessful()) {
             println(gc.getName() + " manages to catch some of the fish! (Survival " + result.asString() + ")");
             model.getParty().addToFood(MyRandom.randInt(2,5));

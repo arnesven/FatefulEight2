@@ -12,10 +12,17 @@ import view.sprites.CharSprite;
 import view.sprites.Sprite;
 
 public class RoutedCondition extends Condition {
+    public static final int DEFAULT_ESCAPE_CHANCE = 7;
     private static final Sprite SPRITE = CharSprite.make((char)(0xD5), MyColors.BLUE, MyColors.WHITE, MyColors.PURPLE);
+    private int fleeChance;
+
+    public RoutedCondition(int fleeChance) {
+        super("Routed", "RTD");
+        this.fleeChance = fleeChance;
+    }
 
     public RoutedCondition() {
-        super("Routed", "RTD");
+        this(DEFAULT_ESCAPE_CHANCE);
     }
 
     @Override
@@ -37,7 +44,7 @@ public class RoutedCondition extends Condition {
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         super.endOfCombatRoundTrigger(model, state, comb);
-        if (MyRandom.rollD10() > 3) {
+        if (MyRandom.rollD10() > 10 - fleeChance) {
             state.println(comb.getName() + " flees from combat.");
             if (state instanceof CombatEvent) {
                 ((CombatEvent) state).retreatEnemy(comb);

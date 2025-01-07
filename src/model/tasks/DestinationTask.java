@@ -39,4 +39,6 @@ public abstract class DestinationTask implements Serializable {
     public boolean drawTaskOnMap(Model model) {
         return true;
     }
+
+    public void runStartOfDayHook(Model model) { }
 }

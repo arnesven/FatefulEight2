@@ -3,6 +3,9 @@ package model.states.dailyaction;
 import model.Model;
 import model.states.EveningState;
 import model.states.GameState;
+import model.states.events.InformationBrokerAssassinationEndingEvent;
+import model.tasks.AssassinationDestinationTask;
+import model.tasks.AssassinationEnding;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -14,6 +17,7 @@ public class LodgingNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("table", "world_foreground.png", 0x54,
             MyColors.DARK_GRAY, TavernSubView.FLOOR_COLOR, MyColors.BROWN);
     private final boolean freeLodging;
+    private boolean giveAssassinationEndingEvent = false;
 
     public LodgingNode(boolean freeLodging) {
         super("Stay at the tavern for the night.");
@@ -22,6 +26,9 @@ public class LodgingNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
+        if (giveAssassinationEndingEvent) {
+            return new InformationBrokerAssassinationEndingEvent(model);
+        }
         return new LodgingState(model, freeLodging);
     }
 
@@ -32,6 +39,10 @@ public class LodgingNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+        if (AssassinationDestinationTask.runLodgingNodeHook(model, state)) {
+            giveAssassinationEndingEvent = true;
+            return true;
+        }
         if (state.isMorning()) {
             state.println("It's too early to hit the sack.");
             return false;

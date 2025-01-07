@@ -15,7 +15,7 @@ public class Loan extends MyPair<Integer, Integer> {
         super(amount, day);
     }
 
-    public static DailyEventState generateEvent(Model model, WorldHex worldHex) {
+    public static DailyEventState eventDependentOnLoan(Model model, WorldHex worldHex) {
         if (model.getParty().getLoan() != null) {
             if (model.getParty().getLoan().getDay() + Loan.REPAY_WITHIN_DAYS < model.getDay()) {
                 int target = 8;

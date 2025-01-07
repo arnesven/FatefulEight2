@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.classes.SkillChecks;
 import model.classes.normal.BardClass;
 import model.classes.normal.MagicianClass;
 import model.classes.Skill;
@@ -25,7 +26,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
     protected void doEvent(Model model) {
         List<GameCharacter> entertainers = new ArrayList<>();
         for (GameCharacter chara : model.getParty().getPartyMembers()) {
-            if (chara.testSkillHidden(Skill.Entertain, 10, 0).isSuccessful()) {
+            if (chara.testSkillHidden(Skill.Entertain, SkillChecks.adjustDifficulty(model, 10), 0).isSuccessful()) {
                 entertainers.add(chara);
             }
             if (entertainers.size() == model.getParty().size()-1) {
