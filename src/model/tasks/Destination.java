@@ -57,8 +57,13 @@ public class Destination implements Serializable {
     }
 
     public static Destination generateUrbanDestination(Model model) {
-        UrbanLocation urb = MyRandom.sample(model.getWorld().getLordLocations());
-        Point position = model.getWorld().getPositionForLocation((HexLocation) urb);
+        UrbanLocation urb;
+        Point position;
+        do {
+            urb = MyRandom.sample(model.getWorld().getLordLocations());
+            position = model.getWorld().getPositionForLocation((HexLocation) urb);
+        } while (model.getWorld().getKingdomForPosition(position) !=
+                model.getWorld().getKingdomForPosition(model.getParty().getPosition())); // Only destinations in same kingdom
         String dwelling = MyRandom.sample(java.util.List.of(
                 "hut", "house", "cottage", "lodge", "building",
                 "shack", "villa", "cabin", "mansion"));

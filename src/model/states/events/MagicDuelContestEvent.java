@@ -15,6 +15,8 @@ import model.races.Race;
 import model.states.GameState;
 import model.states.duel.MagicDuelEvent;
 import model.states.duel.gauges.PowerGauge;
+import model.tasks.AssassinationDestinationTask;
+import model.tasks.WritOfExecution;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -341,8 +343,8 @@ public class MagicDuelContestEvent extends TournamentEvent {
             leaderSay("Fine. I'm sure it's a very bad person anyway.");
             println("You grab the writ and unroll it to read its contents. When you look up, " +
                     "the mysterious stranger has disappeared once more.");
-            // TODO: add AssassinationDestinationTask
-            //JournalEntry.printJournalUpdateMessage(model);
+            JournalEntry.printJournalUpdateMessage(model); // TODO: Add tutorial about assassinations
+            model.getParty().addDestinationTask(new AssassinationDestinationTask(new WritOfExecution(model)));
         }
     }
 
