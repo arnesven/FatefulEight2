@@ -11,8 +11,13 @@ import model.states.GameState;
 import util.MyStrings;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GeneralInteractionConversations {
+
+    private static final Map<String, String> MONSTER_MAP = makeMonsterMap();
+
     public static String getReplyFor(Model model, GameCharacter victim, String topic) {
         topic = topic.toLowerCase();
         String answer = checkForWorldQuestions(model, topic);
@@ -20,6 +25,10 @@ public class GeneralInteractionConversations {
             return answer;
         }
         answer = checkForRaceQuestions(model, victim, topic);
+        if (answer != null) {
+            return answer;
+        }
+        answer = checkForMonsterQuestions(model, topic);
         return answer;
     }
 
@@ -79,5 +88,71 @@ public class GeneralInteractionConversations {
             }
         }
         return null;
+    }
+
+    private static String checkForMonsterQuestions(Model model, String topic) {
+        if (MONSTER_MAP.containsKey(topic)) {
+            return MONSTER_MAP.get(topic);
+        }
+        if (MONSTER_MAP.containsKey(topic + "s")) {
+            return MONSTER_MAP.get(topic + "s");
+        }
+        return null;
+    }
+
+    private static Map<String, String> makeMonsterMap() {
+        Map<String, String> map = new HashMap<>(Map.of(
+                "bats",
+                "Bats live in caves underground. They're pretty harmless, unless they attack you en masse.",
+                "bears",
+                "Bears live in the woods or the mountains. They can be very dangerous.",
+                "snakes",
+                "Snakes live in woods or swamps. Some kinds are poisonous.",
+                "crocodiles",
+                "Crocodiles only live in swamps. They're pretty terrifying beasts.",
+                "dragons",
+                "Dragons are fearsome creatures. If you try to fight one, you better come prepared.",
+                "faery",
+                "Faeries are fickle critters. The ones I encountered almost acted like they could read my mind."
+                ));
+
+        map.putAll(Map.of(
+                "frogmen",
+                "Frogmen are near-intelligent creatures. They have their own language and everything.",
+                "ghosts",
+                "Ghosts are scary. I try to stay clear of haunted houses.",
+                "ghouls",
+                "Ghouls are undead, zombie-like creatures. Pretty horrific if you ask me.",
+                "goblins",
+                "Goblins can be very dangerous if many of them come after you with their weapons drawn.",
+                "lizardmen",
+                "Lizardmen are an uncanny race of humanoids. I've only met a few, but I can't say I trust them.",
+                "manticores",
+                "Manticores are dangerous monsters who live in deserts.",
+                "ogres",
+                "Ogers are larger than orcs, and dumber too. If you meet one, don't upset it!",
+                "orcs",
+                "Orcs are a malicious race of muscular humanoids who often pillage and plunder innocent villages."
+        ));
+
+        map.putAll(Map.of(
+                "rats",
+                "Rats live in old basements and dungeons. They're not very dangerous, but the big ones can be a handful to exterminate.",
+                "scorpions",
+                "Scorpions can be found in deserts. Their stingers are poisonous.",
+                "skeletons",
+                "I've heard skeletons sometimes guard tombs and crypts. I'd be freaked out if I ever met one.",
+                "spiders",
+                "Spiders live in forests, caves and many other places. Their attacks can paralyze you, be careful.",
+                "trolls",
+                "Trolls are larger than orcs, even larger than ogres! They are very dangerous, but can somtimes be reasoned with.",
+                "werewolves",
+                "Werewolves are normal people who turn into half-wolves during full moon nights. Their howls are terrifying.",
+                "boars",
+                "Wild boars are dangerous beasts, but their meat is delicious when roasted over an open fire.",
+                "wolves",
+                "Wolves hunt in packs. Don't forget to have somebody keep watch if you're trekking through the wilds."
+        ));
+        return map;
     }
 }
