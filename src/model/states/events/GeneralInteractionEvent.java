@@ -35,6 +35,8 @@ import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import util.MyStrings;
+import view.subviews.SimpleInputDialogSubView;
+import view.subviews.SubView;
 
 import java.awt.*;
 import java.util.*;
@@ -485,6 +487,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             if (canAskAboutPuzzleTubes(getModel())) {
                 options.add("Ask about puzzle tubes");
             }
+            options.add("Ask custom topic");
             options.add("Cancel");
             int chosen = multipleOptionArrowMenu(getModel(), 24, 25, options);
             if (chosen == 0) {
@@ -495,6 +498,8 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 askAboutBounties(getModel(), victimChar);
             } else if (options.get(chosen).contains("puzzle tubes")) {
                 askAboutPuzzleTubes(getModel(), victimChar);
+            } else if (options.get(chosen).contains("custom topic")) {
+                askAboutCustomTopic(getModel(), victim);
             } else if (options.get(chosen).contains("Cancel")) {
                 break;
             } else if (options.get(chosen).contains("news")) {
@@ -518,6 +523,20 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 portraitSay(queryAndResponse.second);
             }
         }
+    }
+
+    private void askAboutCustomTopic(Model model, String victim) {
+        print("What topic would you like to ask about?");
+        SubView sub = model.getSubView();
+        SimpleInputDialogSubView inputDialog = new SimpleInputDialogSubView(sub, 25, "Enter a topic:");
+        model.setSubView(inputDialog);
+        waitForReturn();
+        model.setSubView(sub);
+        String topic = inputDialog.getInput();
+        leaderSay(MyRandom.sample(List.of("Tell me what you know about " + topic + ".",
+                "Know anything about " + topic + "?",
+                "Can you tell me anything about " + topic + "?")));
+        portraitSay("I'm sorry, but I don't know anything about " + topic + ".");
     }
 
     private boolean canAskAboutPuzzleTubes(Model model) {

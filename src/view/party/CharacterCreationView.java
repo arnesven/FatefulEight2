@@ -19,6 +19,7 @@ import view.MyColors;
 import view.help.TutorialClassesDialog;
 import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
+import view.widget.InputBufferWidget;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,12 +28,10 @@ import java.util.List;
 
 public class CharacterCreationView extends SelectableListMenu {
 
-    private static final Integer INPUT_MAX_LENGTH = 12;
-    private static final String START_STRING = "þþþþþþþþþþþþ";
     private static final int COLUMN_SKIP = 12;
     public static final Sprite CHECK_SPRITE = new Sprite8x8("check", "charset.png", 0xB6, MyColors.BLACK, MyColors.LIGHT_GREEN, MyColors.BLUE, MyColors.CYAN);
     public static final Sprite NOT_OK_SPRITE = new Sprite8x8("notok", "charset.png", 0xB7, MyColors.BLACK, MyColors.LIGHT_RED, MyColors.BLUE, MyColors.CYAN);
-    private List<MyPair<StringBuffer, Integer>> buffers = new ArrayList<>();
+    private final List<InputBufferWidget> buffers = new ArrayList<>();
     private boolean gender = true;
     private static Race[] raceSet = Race.allRaces;
     private static final CharacterEyes[] eyeSet = CharacterEyes.allEyes;
@@ -82,7 +81,7 @@ public class CharacterCreationView extends SelectableListMenu {
     public CharacterCreationView(GameView previous) {
         super(previous, DrawingArea.WINDOW_COLUMNS-34, DrawingArea.WINDOW_ROWS-6);
         for (int i = 0; i < 2; ++i) {
-            buffers.add(new MyPair<>(new StringBuffer(START_STRING), 0));
+            buffers.add(new InputBufferWidget(12));
         }
         lastAppearance = makeAppearance();
         lastCharacter = makeCharacter();
@@ -136,15 +135,7 @@ public class CharacterCreationView extends SelectableListMenu {
     }
 
     private GameCharacter makeCharacter() {
-        String firstName = buffers.get(0).first.toString();
-        if (firstName.contains("þ")) {
-            firstName = firstName.substring(0, firstName.indexOf("þ"));
-        }
-        String lastName = buffers.get(1).first.toString();
-        if (lastName.contains("þ")) {
-            lastName = lastName.substring(0, lastName.indexOf("þ"));
-        }
-        return new GameCharacter(firstName, lastName, raceSet[selectedRace], classSet[selectedClass], makeAppearance(),
+        return new GameCharacter(buffers.get(0).getText(), buffers.get(1).getText(), raceSet[selectedRace], classSet[selectedClass], makeAppearance(),
                 new CharacterClass[]{classSet[selectedClass], classSet[other1], classSet[other2], classSet[other3]});
     }
 
@@ -507,7 +498,7 @@ public class CharacterCreationView extends SelectableListMenu {
     }
 
     private boolean nameOk(int i) {
-        return !buffers.get(i-1).first.toString().equals(START_STRING);
+        return buffers.get(i-1).hasChanged();
     }
 
     private void setOther1(int index) {
@@ -525,17 +516,8 @@ public class CharacterCreationView extends SelectableListMenu {
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
         if (getSelectedRow() < buffers.size()) {
-            MyPair<StringBuffer, Integer> input = buffers.get(getSelectedRow());
-            if (' ' == keyEvent.getKeyChar() || '-' == keyEvent.getKeyChar() ||
-                    ('a' <= keyEvent.getKeyChar() && keyEvent.getKeyChar() <= 'z') ||
-                    ('A' <= keyEvent.getKeyChar() && keyEvent.getKeyChar() <= 'Z')) {
-                if (input.second < INPUT_MAX_LENGTH) {
-                    input.first.setCharAt(input.second++, keyEvent.getKeyChar());
-                    madeChanges();
-                }
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                input.second = Math.max(0, input.second - 1);
-                input.first.setCharAt(input.second, 'þ');
+            InputBufferWidget input = buffers.get(getSelectedRow());
+            if (input.enterKeyStroke(keyEvent)) {
                 madeChanges();
             }
         }
@@ -556,7 +538,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private class InputFieldContent extends ListContent {
         public InputFieldContent(int x, int y, int index) {
-            super(x, y, buffers.get(index).first.toString());
+            super(x, y, buffers.get(index).getRawText());
         }
     }
 
