@@ -29,7 +29,21 @@ public class GeneralInteractionConversations {
             return answer;
         }
         answer = checkForMonsterQuestions(model, topic);
+        if (answer != null) {
+            return answer;
+        }
+        answer = checkForMiscQuestions(model, topic);
         return answer;
+    }
+
+    private static String checkForMiscQuestions(Model model, String topic) {
+        if (topic.equals("runny") || topic.equals("knock-out")) {
+            return "It's a card game. It's played at inns and taverns.";
+        }
+        if (topic.equals("dog") || topic.equals("dogs")) {
+            return "There are plenty of dogs in towns. Dogs also sometimes appear out in the wild.";
+        }
+        return null;
     }
 
     private static String checkForWorldQuestions(Model model, String topic) {
