@@ -32,8 +32,28 @@ public class GeneralInteractionConversations {
         if (answer != null) {
             return answer;
         }
+        answer = checkForTravelQuestions(model, topic);
+        if (answer != null) {
+            return answer;
+        }
         answer = checkForMiscQuestions(model, topic);
         return answer;
+    }
+
+    private static String checkForTravelQuestions(Model model, String topic) {
+        if (topic.equals("horse") || topic.equals("horses") || topic.equals("pony") || topic.equals("ponies")) {
+            return "If you have a horse to ride on, you'll travel faster.";
+        }
+        if (topic.equals("boat") || topic.equals("ship")) {
+            return "You can sometimes take a boat from a coastal town to another, for a small fee of course. " +
+                    "Sometimes you may even be able to charter a boat, but that would be more expensive.";
+        }
+        if (topic.equals("cart") || topic.equals("wagon") || topic.equals("carriage")) {
+            return "You can travel by carriage between some towns. " +
+                    "It costs a little, but it's a comfortable way to travel. " +
+                    "Sometimes farmers will give you a ride for free.";
+        }
+        return null;
     }
 
     private static String checkForMiscQuestions(Model model, String topic) {
