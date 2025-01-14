@@ -17,4 +17,8 @@ public class HighElf extends ElvenRace {
                         "Priests, Paladins, Nobles, Bards and Artisans.");
     }
 
+    @Override
+    public String getShortDescription() {
+        return "tall, fair, well-spoken and gentle but perhaps sometimes a little aloof.";
+    }
 }

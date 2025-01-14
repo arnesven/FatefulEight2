@@ -30,6 +30,11 @@ public class SunblazeCastle extends CastleLocation {
     }
 
     @Override
+    public String getGeographicalDescription() {
+        return "It lies on the northern shore of the Southern Sea.";
+    }
+
+    @Override
     public Point getLeaguePosition() {
         return new Point(1, 1);
     }

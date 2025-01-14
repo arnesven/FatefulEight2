@@ -35,6 +35,11 @@ public class BogdownCastle extends CastleLocation {
     }
 
     @Override
+    public String getGeographicalDescription() {
+        return "It's a castle surrounded by swamps, and to the south is the Great Strait.";
+    }
+
+    @Override
     public Point getLeaguePosition() {
         return new Point(5, 1);
     }

@@ -13,4 +13,9 @@ public class WoodElf extends ElvenRace {
                         "High elves take up all kinds of professions but it is not uncommon for them to be " +
                         "Amazons, Witches, Marksmen, Druids and Foresters.");
     }
+
+    @Override
+    public String getShortDescription() {
+        return "tall, and have olive skin, friendly and care-free.";
+    }
 }

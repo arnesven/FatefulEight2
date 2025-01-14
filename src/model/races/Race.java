@@ -5,7 +5,6 @@ import model.classes.Skill;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
-import view.sprites.Neck;
 import view.sprites.PortraitSprite;
 
 import java.io.Serializable;
@@ -152,4 +151,10 @@ public abstract class Race implements Serializable {
         return new AdvancedAppearance(race, gender,
                 hairColor, mouth, nose, characterEyes, hairStyle, beard);
     }
+
+    public String getPlural() {
+        return getName() + "s";
+    }
+
+    public String getShortDescription() { return "Unused"; }
 }

@@ -37,4 +37,9 @@ public class SouthMeadhomeTown extends TownLocation {
     public boolean bothBoatAndCarriage() {
         return true;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It is located south of Great Forest, not far from the shores of the Southern Sea.";
+    }
 }

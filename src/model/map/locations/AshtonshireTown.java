@@ -31,4 +31,9 @@ public class AshtonshireTown extends TownLocation {
     public boolean getLordGender() {
         return false;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It's a village on the edge of the Eastern Woodland.";
+    }
 }

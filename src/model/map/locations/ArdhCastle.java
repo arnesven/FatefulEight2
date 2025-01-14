@@ -34,6 +34,11 @@ public class ArdhCastle extends CastleLocation {
         return false;
     }
 
+    @Override
+    public String getGeographicalDescription() {
+        return "It lies just east of a mighty mountain range known as the Rusty Peaks.";
+    }
+
 
     @Override
     public Point getLeaguePosition() {

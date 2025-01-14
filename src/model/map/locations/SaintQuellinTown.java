@@ -33,4 +33,9 @@ public class SaintQuellinTown extends TownLocation {
     public Point getCareerOfficePosition() {
         return new Point(2, 5);
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It lies just south of the desert of Zind.";
+    }
 }

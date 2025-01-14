@@ -28,4 +28,9 @@ public class AckervilleTown extends TownLocation {
     public boolean getLordGender() {
         return true;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It's close to the swamps of the Great Forest, on the shores of Lake Acker.";
+    }
 }

@@ -499,7 +499,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             } else if (options.get(chosen).contains("puzzle tubes")) {
                 askAboutPuzzleTubes(getModel(), victimChar);
             } else if (options.get(chosen).contains("custom topic")) {
-                askAboutCustomTopic(getModel(), victim);
+                askAboutCustomTopic(getModel(), victimChar);
             } else if (options.get(chosen).contains("Cancel")) {
                 break;
             } else if (options.get(chosen).contains("news")) {
@@ -525,7 +525,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         }
     }
 
-    private void askAboutCustomTopic(Model model, String victim) {
+    private void askAboutCustomTopic(Model model, GameCharacter victim) {
         print("What topic would you like to ask about?");
         SubView sub = model.getSubView();
         SimpleInputDialogSubView inputDialog = new SimpleInputDialogSubView(sub, 25, "Enter a topic:");
@@ -536,7 +536,12 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         leaderSay(MyRandom.sample(List.of("Tell me what you know about " + topic + ".",
                 "Know anything about " + topic + "?",
                 "Can you tell me anything about " + topic + "?")));
-        portraitSay("I'm sorry, but I don't know anything about " + topic + ".");
+        String answer = GeneralInteractionConversations.getReplyFor(model, victim, topic);
+        if (answer == null) {
+            portraitSay("I'm sorry, but I don't know anything about " + topic + ".");
+        } else {
+            portraitSay(answer);
+        }
     }
 
     private boolean canAskAboutPuzzleTubes(Model model) {

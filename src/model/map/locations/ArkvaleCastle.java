@@ -37,6 +37,11 @@ public class ArkvaleCastle extends CastleLocation {
         return true;
     }
 
+    @Override
+    public String getGeographicalDescription() {
+        return "It's up in the Northern Mountains.";
+    }
+
 
     @Override
     public Point getLeaguePosition() {

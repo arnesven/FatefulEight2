@@ -19,4 +19,9 @@ public class DarkElf extends ElvenRace {
     public MyColors getMouthDefaultColor() {
         return MyColors.DARK_GRAY;
     }
+
+    @Override
+    public String getShortDescription() {
+        return "tall, and have dusky complexions, determined but reserved.";
+    }
 }

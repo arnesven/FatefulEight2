@@ -28,4 +28,9 @@ public class BullsVilleTown extends TownLocation {
     public boolean getLordGender() {
         return false;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It's a farming village east of Castle Ardh.";
+    }
 }

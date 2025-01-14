@@ -28,4 +28,9 @@ public class UrnTownTown extends TownLocation {
     public boolean getLordGender() {
         return false;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It lies west of Arkvale Castle, on the other side of the mountains.";
+    }
 }

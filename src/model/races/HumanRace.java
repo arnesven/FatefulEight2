@@ -26,4 +26,9 @@ public abstract class HumanRace extends Race {
         }
         return 0;
     }
+
+    @Override
+    public String getShortDescription() {
+        return "prevalent all over the world.";
+    }
 }

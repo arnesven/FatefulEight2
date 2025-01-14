@@ -35,4 +35,9 @@ public class EastDurhamTown extends TownLocation {
     public int charterBoatEveryNDays() {
         return 3;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It's on the western shore of the Icy Bay.";
+    }
 }

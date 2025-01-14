@@ -34,4 +34,9 @@ public class LowerThelnTown extends TownLocation {
     public Point getCareerOfficePosition() {
         return new Point(5, 2);
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It is located right where the river Thelnius meets the sea.";
+    }
 }

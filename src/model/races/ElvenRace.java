@@ -8,7 +8,7 @@ import view.sprites.FaceSprite;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.PortraitSprite;
 
-public class ElvenRace extends Race {
+public abstract class ElvenRace extends Race {
 
     public ElvenRace(String name, MyColors color, Skill[] skillBonuses, String description) {
         super(name, color, -1, +1, 20, skillBonuses, description);
@@ -39,4 +39,13 @@ public class ElvenRace extends Race {
         }
         return DISLIKE_ATTITUDE;
     }
+
+    @Override
+    public String getPlural() {
+        String[] splits = getName().split(" ");
+        return splits[0] + " elves";
+    }
+
+    @Override
+    public abstract String getShortDescription();
 }

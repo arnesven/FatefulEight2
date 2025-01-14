@@ -33,4 +33,9 @@ public class EbonshireTown extends TownLocation {
     public int charterBoatEveryNDays() {
         return 5;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It's right where the Ojai river meets the Sea.";
+    }
 }

@@ -37,4 +37,9 @@ public class RoukonTown extends TownLocation {
     public Point getCareerOfficePosition() {
         return new Point(5, 3);
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It lies on the southern shores of the Great Strait.";
+    }
 }

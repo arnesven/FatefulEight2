@@ -40,4 +40,9 @@ public class UpperThelnTown extends TownLocation {
     public boolean bothBoatAndCarriage() {
         return true;
     }
+
+    @Override
+    public String getGeographicalDescription() {
+        return "It's on the river Thelnius, surrounded by vast farmlands.";
+    }
 }

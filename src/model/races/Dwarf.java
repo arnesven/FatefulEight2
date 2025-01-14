@@ -51,4 +51,14 @@ public class Dwarf extends Race {
         }
         return 0;
     }
+
+    @Override
+    public String getPlural() {
+        return "Dwarves";
+    }
+
+    @Override
+    public String getShortDescription() {
+        return "short, stocky individuals. More often with beards than not.";
+    }
 }

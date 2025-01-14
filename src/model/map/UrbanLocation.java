@@ -31,4 +31,6 @@ public interface UrbanLocation {
     Point getCareerOfficePosition();
     Headquarters getRealEstate();
     boolean bothBoatAndCarriage();
+
+    String getGeographicalDescription();
 }

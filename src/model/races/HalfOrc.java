@@ -60,4 +60,9 @@ public class HalfOrc extends Race {
         }
         return 0;
     }
+
+    @Override
+    public String getShortDescription() {
+        return "hardy, stout and rugged, but most of them aren't as rough as you think.";
+    }
 }
