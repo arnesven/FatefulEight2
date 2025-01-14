@@ -43,6 +43,27 @@ public class GeneralInteractionConversations {
         if (topic.equals("dog") || topic.equals("dogs")) {
             return "There are plenty of dogs in towns. Dogs also sometimes appear out in the wild.";
         }
+        if (topic.equals("brotherhood") || topic.equals("the brotherhood")) {
+            return "The brotherhood is an organized crime network. They're really a shady bunch.";
+        }
+        if (topic.equals("crafting")) {
+            return "Crafting benches can be found in towns and castles. " +
+                    "You'll need some materials if you want to make something though.";
+        }
+        if (topic.equals("alchemy")) {
+            return "It's a spell right? You'll need ingredients to brew potions.";
+        }
+        if (topic.equals("fishing")) {
+            return "Do you have a fishing pole? Fish are almost everywhere... everywhere there's water that is.";
+        }
+        if (topic.equals("ingredients")) {
+            return "The best place to find some ingredients is in the forest, on the plains or in caves. " +
+                    "But I bet you can find even more if you go to more exotic places like swamps and jungles.";
+        }
+        if (topic.equals("materials")) {
+            return "The best place to find materials is in the mountains, " +
+                    "but hilly areas and caves are often good too.";
+        }
         return null;
     }
 
