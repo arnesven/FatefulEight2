@@ -1,6 +1,8 @@
 package view.sprites;
 
 import model.characters.appearance.CharacterAppearance;
+import model.races.Dwarf;
+import model.races.Halfling;
 import model.races.Race;
 import view.MyColors;
 
@@ -21,7 +23,7 @@ public class AvatarSprite extends LoopingSprite {
     private int delay = 16;
 
     public AvatarSprite(Race race, int num, MyColors color2, MyColors color3, MyColors color4, Sprite hairSprite, Sprite hairFromBack) {
-        super("avatar"+num+race.getName(), "avatars.png", num+(race.isShort()?4:0), 32, 32, List.of(hairSprite));
+        super("avatar"+num+race.getName(), "avatars.png", adjustForRace(num, race), 32, 32, List.of(hairSprite));
         this.race = race;
         this.num = num;
         this.color2 = color2;
@@ -36,6 +38,16 @@ public class AvatarSprite extends LoopingSprite {
         setColor4(color4);
         deadSprite = new Sprite32x32("deadavatar", "avatars.png", num+3, MyColors.BLACK, color2, race.getColor());
         deadSprite.setColor4(color4);
+    }
+
+    private static int adjustForRace(int num, Race race) {
+        if (race instanceof Halfling) {
+            return num + 7;
+        }
+        if (race instanceof Dwarf) {
+            return num + 4;
+        }
+        return num;
     }
 
     public AvatarSprite(Race race, int num, MyColors color2, MyColors color3, Sprite hairSprite, Sprite hairFromBack) {
