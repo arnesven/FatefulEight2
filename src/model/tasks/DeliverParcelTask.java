@@ -70,8 +70,7 @@ public class DeliverParcelTask extends DestinationTask {
     @Override
     public boolean givesDailyAction(Model model) {
         return !isFailed(model) && !completed &&
-                model.getParty().getPosition().equals(getPosition()) &&
-                !model.isInCaveSystem();
+                model.partyIsInOverworldPosition(getPosition());
     }
 
     @Override

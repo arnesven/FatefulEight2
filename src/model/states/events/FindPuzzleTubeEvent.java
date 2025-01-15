@@ -28,7 +28,7 @@ public class FindPuzzleTubeEvent extends DailyEventState {
         println("The party finds a Dwarven Puzzle Tube!");
         DwarvenPuzzleTube.giveNewTubeToParty(model, model.getParty().getPosition());
         DestinationTask task = MyLists.find(model.getParty().getDestinationTasks(), dt ->
-                dt instanceof FindPuzzleDestinationTask && dt.getPosition().equals(model.getParty().getPosition()) &&
+                dt instanceof FindPuzzleDestinationTask && model.partyIsInOverworldPosition(dt.getPosition()) &&
                         !dt.isCompleted());
         if (task != null) {
             ((FindPuzzleDestinationTask)task).setCompleted(true);

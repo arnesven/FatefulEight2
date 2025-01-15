@@ -339,7 +339,7 @@ public abstract class DailyEventState extends GameState {
                 if (numberOfHorses == 1) {
                     println("The " + enemy + " had a horse which you happily take over ownership of.");
                 } else {
-                    println("The " + enemy + " had some horses which you happily take over ownership of.");
+                    println("The " + enemy + " had some horses which you happily take ownership of.");
                 }
                 for (int i = numberOfHorses; i > 0; --i) {
                     Horse horse = HorseHandler.generateHorse();

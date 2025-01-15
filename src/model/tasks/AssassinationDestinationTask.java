@@ -43,7 +43,7 @@ public class AssassinationDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return !isFailed(model) && !completed && model.getParty().getPosition().equals(getPosition());
+        return !isFailed(model) && !completed && model.partyIsInOverworldPosition(getPosition());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AssassinationDestinationTask extends DestinationTask {
 
     public static AssassinationDestinationTask getInfoBrokerTask(Model model) {
         return (AssassinationDestinationTask) MyLists.find(model.getParty().getDestinationTasks(),
-                dt -> dt.getPosition().equals(model.getParty().getPosition()) &&
+                dt -> model.partyIsInOverworldPosition(dt.getPosition()) &&
                         dt instanceof AssassinationDestinationTask &&
                         !dt.isCompleted() &&
                         !dt.isFailed(model) &&

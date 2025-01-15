@@ -21,7 +21,7 @@ public class DigForTreasureEvent extends DailyEventState {
         super(model);
         for (DestinationTask dt : model.getParty().getDestinationTasks()) {
             if (dt instanceof TreasureHuntTask) {
-                if (dt.getPosition().equals(model.getParty().getPosition()) && !model.isInCaveSystem()) {
+                if (model.partyIsInOverworldPosition(dt.getPosition())) {
                     this.task = (TreasureHuntTask) dt;
                     this.found = true;
                     break;

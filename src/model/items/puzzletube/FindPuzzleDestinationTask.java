@@ -55,7 +55,7 @@ public class FindPuzzleDestinationTask extends DestinationTask {
     public static boolean hasTaskAtCurrentLocation(Model model) {
         return MyLists.any(model.getParty().getDestinationTasks(),
                 dt -> dt instanceof FindPuzzleDestinationTask &&
-                        dt.getPosition().equals(model.getParty().getPosition()) &&
+                        model.partyIsInOverworldPosition(dt.getPosition()) &&
                         !dt.isCompleted());
     }
 }

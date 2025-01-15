@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
+import model.enemies.Enemy;
 import model.states.DailyEventState;
 
 import java.util.List;
@@ -16,9 +17,10 @@ public class BanditRaidEvent extends DailyEventState {
         showRandomPortrait(model, Classes.BANDIT, "Bandits");
         println("This farmstead has been plagued by bandits for some time.");
         model.getParty().randomPartyMemberSay(model, List.of("It's time to teach this rabble a lesson."));
-        runCombat(BanditEvent.generateBanditEnemies(model));
+        List<Enemy> enemies = BanditEvent.generateBanditEnemies(model);
+        runCombat(enemies);
         setCurrentTerrainSubview(model);
-        possiblyGetHorsesAfterCombat("bandits", 5);
+        possiblyGetHorsesAfterCombat("bandits", enemies.size() + 1);
         if (!haveFledCombat() && !model.getParty().isWipedOut()) {
             new GuestEvent(model).doEvent(model);
         }

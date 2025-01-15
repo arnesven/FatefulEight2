@@ -555,4 +555,8 @@ public class Model {
     public void setGameAbandoned(boolean b) {
         this.gameAbandoned = b;
     }
+
+    public boolean partyIsInOverworldPosition(Point position) {
+        return !gameData.inUnderworld && position.equals(getParty().getPosition());
+    }
 }

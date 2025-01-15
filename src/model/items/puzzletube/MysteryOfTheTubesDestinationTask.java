@@ -58,7 +58,7 @@ public class MysteryOfTheTubesDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return step == RESIDENCE_FOUND_OUT && model.getParty().getPosition().equals(getPosition());
+        return step == RESIDENCE_FOUND_OUT && model.partyIsInOverworldPosition(getPosition());
     }
 
     @Override
