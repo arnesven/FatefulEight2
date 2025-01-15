@@ -37,7 +37,7 @@ public class GoblinClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x128, MyColors.BEIGE, race.getColor(), appearance.getNormalHair(), CharacterAppearance.noHair());
+        return new AvatarSprite(race, 0x300, MyColors.BEIGE, race.getColor(), appearance.getNormalHair(), CharacterAppearance.noHair());
     }
 
     @Override

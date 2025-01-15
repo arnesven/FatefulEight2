@@ -17,7 +17,7 @@ public class FrogmanClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x174, MyColors.DARK_GREEN, MyColors.BROWN, MyColors.LIGHT_YELLOW,
+        return new AvatarSprite(race, 0x374, MyColors.DARK_GREEN, MyColors.BROWN, MyColors.LIGHT_YELLOW,
                 appearance.getNormalHair(), CharacterAppearance.noHair());
     }
 

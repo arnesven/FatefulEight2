@@ -57,7 +57,7 @@ public class ArtisanClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0xC8, MyColors.LIGHT_BLUE, race.getColor(), MyColors.BROWN, appearance.getNormalHair(), appearance.getFullBackHair());
+        return new AvatarSprite(race, 0x1E0, MyColors.LIGHT_BLUE, race.getColor(), MyColors.BROWN, appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override

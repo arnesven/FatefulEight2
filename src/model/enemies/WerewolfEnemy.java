@@ -11,7 +11,7 @@ import view.sprites.AvatarSprite;
 import view.sprites.Sprite;
 
 public class WerewolfEnemy extends BeastEnemy {
-    private static final Sprite SPRITE = new AvatarSprite(Race.NORTHERN_HUMAN, 0x1A8,
+    private static final Sprite SPRITE = new AvatarSprite(Race.NORTHERN_HUMAN, 0x2E0,
             MyColors.DARK_GRAY, Race.NORTHERN_HUMAN.getColor(),
             MyColors.LIGHT_GRAY, CharacterAppearance.noHair(), CharacterAppearance.noHair());
 

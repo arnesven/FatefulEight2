@@ -53,7 +53,7 @@ public class SorcererClass extends CharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x68, MyColors.DARK_GRAY, race.getColor(), MyColors.RED,
+        return new AvatarSprite(race, 0x180, MyColors.DARK_GRAY, race.getColor(), MyColors.RED,
                 appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 

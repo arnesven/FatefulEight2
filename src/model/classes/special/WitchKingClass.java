@@ -36,7 +36,7 @@ public class WitchKingClass extends SpecialCharacterClass {
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x140, MyColors.DARK_RED, race.getColor(),
+        return new AvatarSprite(race, 0x340, MyColors.DARK_RED, race.getColor(),
                 MyColors.YELLOW, appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 

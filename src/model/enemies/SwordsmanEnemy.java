@@ -15,7 +15,7 @@ public class SwordsmanEnemy extends HumanoidEnemy {
 
     public SwordsmanEnemy(char a, Race race) {
         super(a, "Swordsman");
-        sprite = new AvatarSprite(race, 0x08, MyColors.GRAY_RED, race.getColor(), race.getColor(),
+        sprite = new AvatarSprite(race, 0x120, MyColors.GRAY_RED, race.getColor(), race.getColor(),
                 new DefaultAppearance().getNormalHair(), CharacterAppearance.noHair());
     }
 
