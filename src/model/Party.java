@@ -79,8 +79,11 @@ public class Party implements Serializable {
     private final List<DiscoveredRoute> discoveredRoutes = new ArrayList<>();
 
     public Party() {
-        position = WorldBuilder.CROSSROADS_INN_POSITION;
         cursorSprites = makeCursorSprites();
+    }
+
+    public void setStartingPosition(Point position) {
+        this.position = position;
     }
 
     private LoopingSprite[] makeCursorSprites() {

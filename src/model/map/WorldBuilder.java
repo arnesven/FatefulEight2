@@ -4,6 +4,7 @@ import model.map.locations.*;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static model.map.Direction.*;
@@ -23,6 +24,11 @@ public class WorldBuilder {
     public static final Point TOWN_SHEFFIELD = new Point(32, 25);
 
     public static final Point CROSSROADS_INN_POSITION = new Point(26, 19);
+    public static final Point HUNTERS_INN_POSITION = new Point(21, 25);
+    public static final Point WATERFRONT_INN_POISITION = new Point(26, 13);
+
+    public static final List<Point> INN_LOCATIONS = List.of(CROSSROADS_INN_POSITION,
+            HUNTERS_INN_POSITION, WATERFRONT_INN_POISITION);
     public static final Point FAITH_ISLAND_POSITION = new Point(22, 15);
     public static final Point MONASTERY_POSITION = new Point(FAITH_ISLAND_POSITION.x + 1, FAITH_ISLAND_POSITION.y);
     public static final int WORLD_WIDTH = 53;
@@ -160,7 +166,7 @@ public class WorldBuilder {
 
         addCastle(contents, 15, 13, new BogdownCastle(), 0, 0);
         addRuins(contents, 19, 13, "Urh", 0, 0);
-        addInn(contents, 26, 13, "Waterfront Inn", SOUTH_EAST, 0);
+        addInn(contents, WATERFRONT_INN_POISITION.x, WATERFRONT_INN_POISITION.y, "Waterfront Inn", SOUTH_EAST, 0);
         addRoadsAndRivers(contents,32, 13, NORTH | NORTH_EAST, 0);
         addRoadsAndRivers(contents,33, 13, SOUTH_WEST | SOUTH_EAST, 0);
         addRoadsAndRivers(contents,34, 13, NORTH_WEST | NORTH_EAST, 0);
@@ -272,7 +278,7 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 37, 24, SOUTH_WEST | NORTH_EAST, 0);
 
         addRoadsAndRivers(contents, 18, 25, SOUTH_WEST | SOUTH_EAST, 0);
-        addInn(contents, 21, 25, "Hunter's Inn", SOUTH, 0);
+        addInn(contents, HUNTERS_INN_POSITION.x, HUNTERS_INN_POSITION.y, "Hunter's Inn", SOUTH, 0);
         addTemple(contents, TEMPLE_SURF.x, TEMPLE_SURF.y, "the Surf");
         addTown(contents, 26, 25, new SouthMeadhomeTown(), 0, NORTH | NORTH_EAST);
         addRoadsAndRivers(contents, 27, 25, 0, SOUTH_WEST | SOUTH);

@@ -24,6 +24,7 @@ import sound.ClientSoundManager;
 import sound.SoundEffects;
 import util.MyLists;
 import util.MyPair;
+import util.MyRandom;
 import view.dev.SpritePreviewerView;
 import view.sprites.AnimationManager;
 import view.subviews.EmptySubView;
@@ -125,6 +126,7 @@ public class Model {
         log = new GameLog();
         gameData = new GameData();
         state = new ChooseStartingCharacterState(this);
+        gameData.party.setStartingPosition(MyRandom.sample(WorldBuilder.INN_LOCATIONS));
         System.out.println("Set state to ChooseStartingCharacterState");
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
