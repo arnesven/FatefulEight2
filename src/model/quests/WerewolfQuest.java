@@ -34,7 +34,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WerewolfQuest extends Quest {
+public class WerewolfQuest extends QuestWithMoveAfter {
     private static final int TURNS_TO_SURVIVE = 4;
     private static final String INTRO = "Benny is worried his girlfriend Sandy has been abducted by some kind of monster. " +
             "She was last seen in her home in town. Where could she have been taken, and what took her?";
@@ -46,7 +46,7 @@ public class WerewolfQuest extends Quest {
     private boolean getSpell = false;
 
     public WerewolfQuest() {
-        super("Werewolf", "Boyfriend Benny", QuestDifficulty.EASY, 0, 80, 0, INTRO, ENDING);
+        super(1, "Werewolf", "Boyfriend Benny", QuestDifficulty.EASY, 0, 80, 0, INTRO, ENDING);
     }
 
     @Override

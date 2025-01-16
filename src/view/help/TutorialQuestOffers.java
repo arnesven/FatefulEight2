@@ -7,6 +7,10 @@ public class TutorialQuestOffers extends SubChapterHelpDialog {
             "Each evening you spend at a town " +
             "or castle, you will be offered a number of random quest. If you accept, the party will " +
             "set out on the quest the following day.\n\n" +
+            "In the Quest Offer view you can see a summary of the what the quest entails, as well as what " +
+            "rewards you can expect if you complete the quest.\n\n" +
+            "Some quests will be marked with an After-Move text, e.g. 'After Move 2'. This means that " +
+            "the quest takes place in a remote location and the party will move up to 2 hexes after the quest ends.\n\n" +
             "Some quest can be Held. A held quest will continue to be offered as long as you are in that " +
             "town or castle.\n\n" +
             "Once you have successfully completed a quest in a town or castle, you will be offered much " +

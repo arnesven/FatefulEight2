@@ -26,7 +26,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwampOgreQuest extends Quest {
+public class SwampOgreQuest extends QuestWithMoveAfter {
     private static final String INTRO = "Albedan the mage has been taken prisoner by a Oleg, an ogre in the Dank\n" +
             "Swamp. The party sets out to rescue Albedan but the sleeping ogre is a " +
             "formidable foe, can it be circumvented?";
@@ -38,7 +38,7 @@ public class SwampOgreQuest extends Quest {
     private static final List<QuestBackground> BACKGROUND = makeBackgroundSprites();
 
     public SwampOgreQuest() {
-        super("Swamp Ogre", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, ENDING);
+        super(2, "Swamp Ogre", "Albedan the Mage", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, ENDING);
         getScenes().get(2).get(0).addSpellCallback(new HarmonizeSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {

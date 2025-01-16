@@ -10,8 +10,11 @@ import model.enemies.Enemy;
 import model.enemies.OrcWarrior;
 import model.quests.scenes.*;
 import model.races.Race;
+import model.states.GameState;
 import model.states.QuestState;
+import model.states.events.MoveAwayFromCurrentPositionEvent;
 import sound.BackgroundMusic;
+import view.BorderFrame;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SurveillanceQuest extends Quest {
+public class SurveillanceQuest extends QuestWithMoveAfter {
     private static final String START_TEXT =
             "A general has approached you and given you a mission; reconnoiter and survey an Orcish " +
                     "military camp. You must gather as much intel as possible, without getting caught.";
@@ -37,7 +40,7 @@ public class SurveillanceQuest extends Quest {
     private GameCharacter wallClimber;
 
     public SurveillanceQuest() {
-        super("Surveillance", "General", QuestDifficulty.MEDIUM, 1, 175, START_TEXT, END_TEXT);
+        super(2, "Surveillance", "General", QuestDifficulty.MEDIUM, 1, 175, 0, START_TEXT, END_TEXT);
     }
 
     @Override
@@ -49,6 +52,7 @@ public class SurveillanceQuest extends Quest {
     public BackgroundMusic getMusic() {
         return BackgroundMusic.lightQuestSong;
     }
+
 
     @Override
     protected List<QuestScene> buildScenes() {
@@ -254,4 +258,5 @@ public class SurveillanceQuest extends Quest {
             return "Sneak *";
         }
     }
+
 }

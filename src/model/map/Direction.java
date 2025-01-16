@@ -136,4 +136,8 @@ public class Direction {
         }
         throw new IllegalStateException(dxDy.toString() + " is not a valid direction for position " + pointInWorld.toString());
     }
+
+    public static Point getDxDyForDirection(Point position, int direction) {
+        return getDxDyDirections(position).get(dirList.indexOf(direction));
+    }
 }

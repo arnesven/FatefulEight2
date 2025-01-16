@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TreasureHuntQuest extends Quest {
+public class TreasureHuntQuest extends QuestWithMoveAfter {
 
     private static final String TEXT =
             "A junk seller has sold you a strange " +
@@ -32,14 +32,12 @@ public class TreasureHuntQuest extends Quest {
             "wild?";
 
     private static final String END_TEXT =
-            "Your journey back to town is less adventurous. " +
-                    "You return happy, well rested and much " +
-                    "wealthier than before.";
+            "You found the treasure!";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MERCHANT, Race.ALL);
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public TreasureHuntQuest() {
-        super("Treasure Hunt", "Junk Seller", QuestDifficulty.HARD, 1, 250, 0, TEXT, END_TEXT);
+        super(3, "Treasure Hunt", "Junk Seller", QuestDifficulty.HARD, 1, 250, 0, TEXT, END_TEXT);
     }
 
     @Override

@@ -223,10 +223,11 @@ public class World implements Serializable {
     }
 
     public boolean canTravelTo(Model model, Point p) {
-        if (p.x < 0 || p.x >= WorldBuilder.WORLD_WIDTH) {
+        Rectangle bounds = WorldBuilder.getWorldBounds(getCurrentState());
+        if (p.x < bounds.x || p.x >= bounds.x + bounds.width) {
             return false;
         }
-        if (p.y < 0 || p.y >= WorldBuilder.WORLD_HEIGHT) {
+        if (p.y < bounds.y || p.y >= bounds.y + bounds.height) {
             return false;
         }
         return getHex(p).canTravelTo(model) || model.isInCaveSystem();

@@ -21,7 +21,7 @@ import view.widget.QuestBackground;
 
 import java.util.List;
 
-public class HungryTrollQuest extends Quest {
+public class HungryTrollQuest extends QuestWithMoveAfter {
     private static final String INTRO = "The elders of a nearby village have come to you with their problem. " +
             "An abnormally large troll has settled nearby and keeps stealing their livestock. They've hired you to deal with the behemoth.";
     private static final String OUTRO = "Relieved that the issue with the troll has been resolved, the elder rewards " +
@@ -30,7 +30,7 @@ public class HungryTrollQuest extends Quest {
     private static final List<QuestBackground> BACKGROUND = DefendTheVillageQuest.makeBackgroundSprites();
 
     public HungryTrollQuest() {
-        super("Hungry Troll", "Elder", QuestDifficulty.EASY, 1, 75, 0, INTRO, OUTRO);
+        super(2, "Hungry Troll", "Elder", QuestDifficulty.EASY, 1, 75, 0, INTRO, OUTRO);
     }
 
     @Override
