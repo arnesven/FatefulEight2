@@ -43,19 +43,20 @@ public class TakeLoanAction extends GameState {
             if (model.getParty().getLoan() == null) {
                 offerLoan(model);
             } else {
-                repayLoan(model);
+                repayLoan(model);   
             }
-        }
-        agentSay(model, "What can I do for you brother?");
-        int choice = multipleOptionArrowMenu(model, 28, 20, options);
-        if (options.get(choice).equals("Clear bounty")) {
-            offerToClearNotoriety(model);
-        } else if (options.get(choice).equals("Take loan")) {
-            offerLoan(model);
-        } else if (options.get(choice).equals("Repay loan")) {
-            repayLoan(model);
         } else {
-            offerWrit(model);
+            agentSay(model, "What can I do for you brother?");
+            int choice = multipleOptionArrowMenu(model, 28, 20, options);
+            if (options.get(choice).equals("Clear bounty")) {
+                offerToClearNotoriety(model);
+            } else if (options.get(choice).equals("Take loan")) {
+                offerLoan(model);
+            } else if (options.get(choice).equals("Repay loan")) {
+                repayLoan(model);
+            } else {
+                offerWrit(model);
+            }
         }
         return new DailyActionState(model);
     }
