@@ -59,9 +59,9 @@ public class FlagPoleNode extends DailyActionNode {
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         if (showSuccessFlag(model, ((UrbanLocation)model.getCurrentHex().getLocation()))) {
-            state.println("You have gained the favor of the lord here.");
+            state.println("The flag is raised.");
         } else {
-            state.println("You have not gained the lord's favor yet.");
+            state.println("Just a flagpole...");
         }
         return false;
     }

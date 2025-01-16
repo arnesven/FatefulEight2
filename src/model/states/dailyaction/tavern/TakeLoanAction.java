@@ -43,7 +43,7 @@ public class TakeLoanAction extends GameState {
             if (model.getParty().getLoan() == null) {
                 offerLoan(model);
             } else {
-                repayLoan(model);   
+                repayLoan(model);
             }
         } else {
             agentSay(model, "What can I do for you brother?");
