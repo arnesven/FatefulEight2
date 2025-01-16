@@ -148,7 +148,17 @@ public class TalkToBartenderState extends GameState {
                         "costly and difficult to maintain than small ones.",
                 "Always keep a lock pick handy. You know... if you lock yourself out of your house.",
                 "Try to get a good mix of characters in your party. It's important to have the right balance " +
-                        "of brawn, brains, stealth and magic."));
+                        "of brawn, brains, stealth and magic.",
+                "I have some gear for sale. I recommend getting a fishing pole, there's plenty of good fishing spots around",
+                "Check with travellers at inns and taverns, sometimes they're heading the same way you are and will " +
+                        "pay you a little for escorting them",
+                "Horses will let you travel faster, but stabling them at inns and taverns isn't free.",
+                "Always look for ingredients and materials while you travel. You never know when you might need them",
+                "If you can't afford to buy they items you want, try crafting them instead. Crafting benches can be found in towns and castles",
+                "Always keep a few potions in your inventory, just trust me on that.",
+                "Hiring a guide is a good way to get the most out of your journey through the countryside, or while in town.",
+                "Carefully think about how you equip your party members. Consider their strength and weaknesses.",
+                "Always keep some room in your tent, that way you can accommodate a newcomer to your party at any time."));
         bartenderSay(model, line);
     }
 

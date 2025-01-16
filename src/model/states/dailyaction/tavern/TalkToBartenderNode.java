@@ -7,6 +7,7 @@ import model.items.Item;
 import model.items.ObolsDummyItem;
 import model.items.potions.BeerPotion;
 import model.items.potions.WinePotion;
+import model.items.special.LargeTentUpgradeItem;
 import model.items.special.TentUpgradeItem;
 import model.items.weapons.FishingPole;
 import model.states.GameState;
@@ -34,15 +35,20 @@ public class TalkToBartenderNode extends DailyActionNode {
         this.inTown = inTown;
         itemsForSale = new ArrayList<>(List.of(new ObolsDummyItem(10),
                 new FoodDummyItem(5)));
-        itemsForSale.add(new TentUpgradeItem());
-        if (MyRandom.randInt(4) == 0) {
-            itemsForSale.add(new FishingPole());
-        }
         for (int i = MyRandom.randInt(4); i > 0; --i) {
             itemsForSale.add(new BeerPotion());
         }
         for (int i = MyRandom.randInt(3); i > 0; --i) {
             itemsForSale.add(new WinePotion());
+        }
+        if (MyRandom.randInt(4) != 0) {
+            itemsForSale.add(new TentUpgradeItem());
+        }
+        if (MyRandom.randInt(4) == 0) {
+            itemsForSale.add(new LargeTentUpgradeItem());
+        }
+        if (MyRandom.randInt(4) == 0) {
+            itemsForSale.add(new FishingPole());
         }
     }
 
