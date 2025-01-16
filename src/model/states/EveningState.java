@@ -61,7 +61,7 @@ public class EveningState extends GameState {
         checkTravellers(model);
         checkGuides(model);
         checkForVampireFeeding(model, this instanceof LodgingState);
-        checkForNightTimeAmbush(model);
+        checkForNightTimeEvent(model);
         locationSpecificEvening(model);
         if (model.getDay() == 50) {
             model.transitionToDialog(new HalfTimeDialog(model.getView()));
@@ -70,7 +70,7 @@ public class EveningState extends GameState {
         return nextState(model);
     }
 
-    private void checkForNightTimeAmbush(Model model) {
+    private void checkForNightTimeEvent(Model model) {
         DailyEventState ambushEvent = model.getCurrentHex().getNightTimeAmbushEvent(model);
         if (ambushEvent != null) {
             GameState next = ambushEvent.run(model);

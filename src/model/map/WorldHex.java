@@ -275,6 +275,8 @@ public abstract class WorldHex {
             events.add(new MonkEvent(model));
             events.add(new LottoHouseEvent(model));
             events.add(new DogEvent(model));
+            events.add(new CampSiteEvent(model));
+            events.add(new CampSiteEvent(model));
             return MyRandom.sample(events);
         } else if (dieRoll >= 9) {
             return generateTerrainSpecificEvent(model);
