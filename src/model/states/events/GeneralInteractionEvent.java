@@ -584,6 +584,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                     "I've heard " + kingdomCastle.getLordName() + " is planning to host an archery contest soon.",
                     "I've heard " + kingdomCastle.getLordName() + " is planning to host a melee tournament soon.",
                     "I've heard " + kingdomCastle.getLordName() + " is planning a horse racing cup soon.",
+                    "I've heard " + kingdomCastle.getLordName() + " is planning a magic dueling contest soon.",
                     "Orcish raids seem to have become more common lately. Watch yourself friend.",
                     "Ever been to the Isle of Faith? The monks are restoring the monastery there.",
                     "I've heard there are communities of dwarves that live down in caves. I wonder what that's like.",
