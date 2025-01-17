@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class TreasureHuntQuest extends QuestWithMoveAfter {
+public class TreasureHuntQuest extends Quest {
 
     private static final String TEXT =
             "A junk seller has sold you a strange " +
@@ -37,7 +37,8 @@ public class TreasureHuntQuest extends QuestWithMoveAfter {
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public TreasureHuntQuest() {
-        super(3, "Treasure Hunt", "Junk Seller", QuestDifficulty.HARD, 1, 250, 0, TEXT, END_TEXT);
+        super("Treasure Hunt", "Junk Seller", QuestDifficulty.HARD,
+                new Reward(1, 250), 3, TEXT, END_TEXT);
     }
 
     @Override

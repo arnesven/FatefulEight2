@@ -40,7 +40,8 @@ public class FrogmenProblemQuest extends MainQuest {
     private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public FrogmenProblemQuest() {
-        super(QUEST_NAME, "Uncle", QuestDifficulty.EASY, 1, 0, 25, TEXT, END_TEXT);
+        super(QUEST_NAME, "Uncle", QuestDifficulty.EASY,
+                new Reward(1, 0, 25), 2, TEXT, END_TEXT);
     }
 
     @Override

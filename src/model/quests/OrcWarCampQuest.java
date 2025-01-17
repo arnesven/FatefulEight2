@@ -40,7 +40,8 @@ public class OrcWarCampQuest extends MainQuest {
     private CombatTheme combatTheme = new PalisadeCombatTheme(true);
 
     public OrcWarCampQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 0, 0, INTRO_TEXT, ENDING_TEXT);
+        super(QUEST_NAME, "", QuestDifficulty.HARD,
+                new Reward(1, 0), 0, INTRO_TEXT, ENDING_TEXT);
         archers = List.of(new OrcArcherEnemy('C'), new OrcArcherEnemy('C'), new OrcArcherEnemy('C'),
                 new OrcArcherEnemy('C'), new OrcArcherEnemy('C'), new OrcArcherEnemy('C'));
         otherEnemies = new ArrayList<>();

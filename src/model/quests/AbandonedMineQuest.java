@@ -32,7 +32,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbandonedMineQuest extends QuestWithMoveAfter {
+public class AbandonedMineQuest extends Quest {
     private static final String INTRO =
             "Murak the dwarven miner has contracted an escort to return to a nearby mine " +
             "to retrieve some equipment which was hastily left behind. He is curiously " +
@@ -53,7 +53,8 @@ public class AbandonedMineQuest extends QuestWithMoveAfter {
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.MIN, Race.DWARF);
 
     public AbandonedMineQuest() {
-        super(2, "Abandoned Mine", "Murak", QuestDifficulty.HARD, 1, 250, 0, INTRO, OUTRO);
+        super("Abandoned Mine", "Murak", QuestDifficulty.HARD,
+                new Reward(1, 250, 0), 2, INTRO, OUTRO);
         getScenes().get(1).get(0).addSpellCallback(new LevitateSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {

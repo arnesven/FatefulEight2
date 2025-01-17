@@ -44,7 +44,8 @@ public class TownFairQuest extends Quest {
     private static final CharacterAppearance APPEARANCE = PortraitSubView.makeRandomPortrait(Classes.NOB, Race.NORTHERN_HUMAN);
 
     public TownFairQuest() {
-        super("Town Fair", "Townsfolk", QuestDifficulty.EASY, 0, 0, 0, INTRO, ENDING);
+        super("Town Fair", "Townsfolk", QuestDifficulty.EASY,
+                new Reward(0, 0), 0, INTRO, ENDING);
         getScenes().get(2).get(0).addSpellCallback(new FireworksSpell().getName(), new SpellCallback() {
             @Override
             public QuestEdge run(Model model, QuestState state, Spell spell, GameCharacter caster) {
@@ -62,9 +63,8 @@ public class TownFairQuest extends Quest {
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        BorderFrame.drawString(model.getScreenHandler(), "  *", x, y, MyColors.WHITE, MyColors.BLACK);
-        model.getScreenHandler().put(x, y, TopText.GOLD_ICON_SPRITE);
+    protected List<String> getSpecialRewards() {
+        return List.of("More", "Gold");
     }
 
     @Override

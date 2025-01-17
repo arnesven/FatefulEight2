@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BrrbitsReward extends QuestWithMoveAfter {
+public class BrrbitsReward extends Quest {
     private static final String FROGMAN_NAME = "Brrbit";
     private static final String INTRO = "The party is casually strolling down the street when they happen to see " +
             "a gang of thugs ruffing up a lone frogman. Intrigued, the party joins the fight to drive off the bandits.";
@@ -53,7 +53,8 @@ public class BrrbitsReward extends QuestWithMoveAfter {
     private static final List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public BrrbitsReward() {
-        super(3, FROGMAN_NAME + "'s Reward", "Brrbit", QuestDifficulty.EASY, 0, 0, 50, INTRO, ENDING);
+        super(FROGMAN_NAME + "'s Reward", "Brrbit", QuestDifficulty.EASY,
+                new Reward(0, 0, 50), 3, INTRO, ENDING);
     }
 
     @Override
@@ -65,11 +66,8 @@ public class BrrbitsReward extends QuestWithMoveAfter {
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        y += 1;
-        BorderFrame.drawString(model.getScreenHandler(), "???", x, y++, MyColors.WHITE, MyColors.BLACK);
-        y++;
-        super.drawSpecialReward(model, x, y);
+    protected List<String> getSpecialRewards() {
+        return List.of("???");
     }
 
     @Override

@@ -1,9 +1,11 @@
 package model.states.events;
 
 import model.Model;
+import model.journal.JournalEntry;
 import model.map.Direction;
 import model.states.DailyEventState;
 import util.MyLists;
+import view.LogView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class MoveAwayFromCurrentPositionEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        model.getLog().addAnimated(LogView.GOLD_COLOR + "Going on the quest has moved your party.\n" +
+                LogView.DEFAULT_COLOR);
         java.util.List<Point> directions = findValidDirections(model);
         if (directions.isEmpty()) {
             System.out.println("Nowhere to go? Returning");

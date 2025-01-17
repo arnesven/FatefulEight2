@@ -7,7 +7,9 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
 import model.states.QuestState;
+import model.states.events.MoveAwayFromCurrentPositionEvent;
 import sound.BackgroundMusic;
+import view.BorderFrame;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.combat.DungeonTheme;
@@ -20,6 +22,7 @@ public abstract class Quest {
     private static final CharacterAppearance SIL_APPEARANCE = new SilhouetteAppearance();
     private final String name;
     private final Reward reward;
+    private final int moveAfter;
     private final String text;
     private final String endingText;
     private String provider;
@@ -29,11 +32,13 @@ public abstract class Quest {
     private QuestSuccessfulNode successEnding;
     private QuestNode failEnding;
 
-    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, int exp, String text, String endText) {
+    public Quest(String name, String provider, QuestDifficulty difficulty,
+                 Reward reward, int moveAfter, String text, String endText) {
         this.name = name;
         this.provider = provider;
         this.difficulty = difficulty;
-        this.reward = new Reward(partyRep, gold, exp);
+        this.reward = reward;
+        this.moveAfter = moveAfter;
         this.text = text;
         this.endingText = endText;
         resetQuest();
@@ -45,10 +50,6 @@ public abstract class Quest {
         scenes = buildScenes();
         junctions = buildJunctions(scenes);
         connectScenesToJunctions(scenes, junctions);
-    }
-
-    public Quest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, String text, String endText) {
-        this(name, provider, difficulty, partyRep, gold, 0, text, endText);
     }
 
     protected abstract List<QuestScene> buildScenes();
@@ -142,7 +143,20 @@ public abstract class Quest {
         return result;
     }
 
-    public void drawSpecialReward(Model model, int x, int y) { }
+    public final void drawQuestOfferCardMiddle(Model model, int x, int y) {
+        for (String s : getSpecialRewards()) {
+            BorderFrame.drawString(model.getScreenHandler(), s, x, y++, MyColors.WHITE, MyColors.BLACK);
+        }
+        if (moveAfter > 0) {
+            y += 1;
+            BorderFrame.drawString(model.getScreenHandler(), "After", x, y++, MyColors.WHITE, MyColors.BLACK);
+            BorderFrame.drawString(model.getScreenHandler(), "Move " + moveAfter, x, y++, MyColors.WHITE, MyColors.BLACK);
+        }
+    }
+
+    protected List<String> getSpecialRewards() {
+        return new ArrayList<>();
+    }
 
     public boolean clockEnabled() {
         return false;
@@ -157,13 +171,18 @@ public abstract class Quest {
     }
 
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
-        return endOfQuestProcedure(model, state, questWasSuccess);
+        return endOfQuestProcedure(model, state, questWasSuccess, moveAfter);
     }
 
-    protected static GameState endOfQuestProcedure(Model model, QuestState state, boolean questWasSuccess) {
+    protected static GameState endOfQuestProcedure(Model model, QuestState state, boolean questWasSuccess, int moveSteps) {
         state.print("Press enter to continue.");
         state.waitForReturn();
-        QuestState.setCurrentTerrainSubview(model);
+        if (moveSteps == 0) {
+            QuestState.setCurrentTerrainSubview(model);
+        } else {
+            MoveAwayFromCurrentPositionEvent event = new MoveAwayFromCurrentPositionEvent(model, moveSteps);
+            event.doTheEvent(model);
+        }
         model.getParty().stopHoldingQuest(state.getQuest());
         model.setTimeOfDay(TimeOfDay.EVENING);
         adjustAttitudes(model, questWasSuccess);

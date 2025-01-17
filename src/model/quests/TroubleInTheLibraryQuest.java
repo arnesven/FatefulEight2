@@ -49,7 +49,8 @@ public class TroubleInTheLibraryQuest extends MainQuest {
     private boolean goldShowing = false;
 
     public TroubleInTheLibraryQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 0, 0, INTRO_TEXT, ENDING_TEXT);
+        super(QUEST_NAME, "", QuestDifficulty.HARD,
+                new Reward(1, 0), 0, INTRO_TEXT, ENDING_TEXT);
     }
 
     @Override

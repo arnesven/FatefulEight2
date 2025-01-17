@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class SurveillanceQuest extends QuestWithMoveAfter {
+public class SurveillanceQuest extends Quest {
     private static final String START_TEXT =
             "A general has approached you and given you a mission; reconnoiter and survey an Orcish " +
                     "military camp. You must gather as much intel as possible, without getting caught.";
@@ -40,7 +40,8 @@ public class SurveillanceQuest extends QuestWithMoveAfter {
     private GameCharacter wallClimber;
 
     public SurveillanceQuest() {
-        super(2, "Surveillance", "General", QuestDifficulty.MEDIUM, 1, 175, 0, START_TEXT, END_TEXT);
+        super("Surveillance", "General", QuestDifficulty.MEDIUM,
+                new Reward(1, 175), 2, START_TEXT, END_TEXT);
     }
 
     @Override

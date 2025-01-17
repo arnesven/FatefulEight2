@@ -36,21 +36,15 @@ public class OrcishDelightQuest extends Quest implements CountingQuest {
     private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public OrcishDelightQuest() {
-        super("Orcish Delight", "Mysterious Baker", QuestDifficulty.EASY, 0, 50, 50, INTRO, ENDING);
+        super("Orcish Delight", "Mysterious Baker", QuestDifficulty.EASY,
+                new Reward(0, 50, 50), 0, INTRO, ENDING);
         orcPortrait = new OrcAppearance();
         orcPortrait.setClass(Classes.BAKER);
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        model.getScreenHandler().put(x, y, TopText.FOOD_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), "25", x+2, y++, MyColors.WHITE, MyColors.BLACK);
-
-    }
-
-    @Override
-    public Reward getReward() {
-        return super.getReward();
+    protected List<String> getSpecialRewards() {
+        return List.of("Food");
     }
 
     @Override

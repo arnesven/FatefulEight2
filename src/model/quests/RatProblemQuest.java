@@ -38,7 +38,8 @@ public class RatProblemQuest extends Quest {
     private List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public RatProblemQuest() {
-        super("Rat Problem", "Granny Petronella", QuestDifficulty.MEDIUM, 1, 175, 0, TEXT, END_TEXT);
+        super("Rat Problem", "Granny Petronella", QuestDifficulty.MEDIUM,
+                new Reward(1, 175), 0, TEXT, END_TEXT);
     }
 
     @Override

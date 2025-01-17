@@ -44,16 +44,13 @@ public class GoblinTunnelsQuest extends Quest {
     private GameCharacter riddleGuy = null;
 
     public GoblinTunnelsQuest() {
-        super("Goblin Tunnels", "Map Maker", QuestDifficulty.MEDIUM, 0, 0, 0, INTRO, ENDING);
+        super("Goblin Tunnels", "Map Maker", QuestDifficulty.MEDIUM,
+                new Reward(0, 0), 0, INTRO, ENDING);
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        BorderFrame.drawString(model.getScreenHandler(), "Loot", x, y++, MyColors.WHITE, MyColors.BLACK);
-        y++;
-        BorderFrame.drawString(model.getScreenHandler(), "Goblin", x, y++, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), "King", x, y++, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), "Quest", x, y++, MyColors.WHITE, MyColors.BLACK);
+    protected List<String> getSpecialRewards() {
+        return List.of("Loot", "", "Goblin", "King", "Quest");
     }
 
     @Override

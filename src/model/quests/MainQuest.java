@@ -11,8 +11,9 @@ public abstract class MainQuest extends Quest {
     private CharacterAppearance portrait;
     private StoryPart storyPart;
 
-    public MainQuest(String name, String provider, QuestDifficulty difficulty, int partyRep, int gold, int exp, String text, String endText) {
-        super(name, provider, difficulty, partyRep, gold, exp, text, endText);
+    public MainQuest(String name, String provider, QuestDifficulty difficulty,
+                     Reward reward, int moveAfter, String text, String endText) {
+        super(name, provider, difficulty, reward, moveAfter, text, endText);
     }
 
     @Override

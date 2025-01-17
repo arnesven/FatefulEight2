@@ -28,7 +28,8 @@ public class MurderMysteryQuest extends Quest implements CountingQuest {
     private int questSuccesses = 0;
 
     public MurderMysteryQuest() {
-        super("Murder Mystery", "Sheriff", QuestDifficulty.HARD, 1, 250, 0, INTRO, ENDING);
+        super("Murder Mystery", "Sheriff", QuestDifficulty.HARD,
+                new Reward(1, 250),0, INTRO, ENDING);
     }
 
     @Override

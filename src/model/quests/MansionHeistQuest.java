@@ -54,23 +54,8 @@ public class MansionHeistQuest extends Quest {
     private static final String endText = "You return to your contact and deliver the contents of Lady Golbrads safe.";
 
     public MansionHeistQuest() {
-        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM, 0, 175, text, endText);
-    }
-
-    @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        super.drawSpecialReward(model, x, y);
-        model.getScreenHandler().put(x, y, TopText.NOTORIETY_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), NOTORIETY_REWARD+"", x+2, y, MyColors.RED, MyColors.BLACK);
-    }
-
-    @Override
-    public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
-        GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
-        if (questWasSuccess) {
-            GeneralInteractionEvent.addToNotoriety(model, state, NOTORIETY_REWARD);
-        }
-        return toReturn;
+        super("Mansion Heist", "Shady Contact", QuestDifficulty.MEDIUM,
+                new Reward(0, 175, 0, NOTORIETY_REWARD), 0, text, endText);
     }
 
     @Override

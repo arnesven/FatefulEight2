@@ -54,7 +54,8 @@ public class EscapeTheDungeonQuest extends MainQuest {
     private int lockpicks;
 
     public EscapeTheDungeonQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 0, 50, INTRO, OUTRO);
+        super(QUEST_NAME, "", QuestDifficulty.HARD,
+                new Reward(1, 0, 50), 0, INTRO, OUTRO);
     }
 
     @Override

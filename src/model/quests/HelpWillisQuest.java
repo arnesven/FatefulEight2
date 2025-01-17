@@ -26,14 +26,13 @@ public class HelpWillisQuest extends MainQuest {
     private int recruited = 0;
 
     public HelpWillisQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.EASY, 0, 75, 0, INTRO_TEXT, ENDING_TEXT);
+        super(QUEST_NAME, "", QuestDifficulty.EASY,
+                new Reward(0, 75), 0, INTRO_TEXT, ENDING_TEXT);
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        y += 2;
-        BorderFrame.drawString(model.getScreenHandler(), "Recruit", x, y++, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), "Willis", x, y++, MyColors.WHITE, MyColors.BLACK);
+    protected List<String> getSpecialRewards() {
+        return List.of("Recruit", "Willis");
     }
 
     @Override

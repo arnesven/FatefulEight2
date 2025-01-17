@@ -39,7 +39,7 @@ public class RescueMissionQuest extends MainQuest {
 
     public RescueMissionQuest() {
         super(QUEST_NAME, "", QuestDifficulty.MEDIUM,
-                1, 175, 0, TEXT, ENDING);
+                new Reward(1, 175), 2, TEXT, ENDING);
     }
 
     @Override

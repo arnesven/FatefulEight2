@@ -48,7 +48,8 @@ public class AncientStrongholdQuest extends MainQuest {
     private boolean willisIntroOtherRun = false;
 
     public AncientStrongholdQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.HARD, 2, 0, 100, TEXT, END_TEXT);
+        super(QUEST_NAME, "", QuestDifficulty.HARD,
+                new Reward(2, 0, 100), 0, TEXT, END_TEXT);
         strongholdModel = new AncientStrongholdModel();
         updateDecorations();
     }

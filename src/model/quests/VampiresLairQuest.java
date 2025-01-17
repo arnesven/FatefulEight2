@@ -36,7 +36,8 @@ public class VampiresLairQuest extends MainQuest {
 
 
     public VampiresLairQuest() {
-        super(QUEST_NAME, "", QuestDifficulty.HARD, 1, 120, 0, TEXT, END_TEXT);
+        super(QUEST_NAME, "", QuestDifficulty.HARD,
+                new Reward(1, 120), 0, TEXT, END_TEXT);
     }
 
     @Override
@@ -45,10 +46,8 @@ public class VampiresLairQuest extends MainQuest {
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        y++;
-        BorderFrame.drawString(model.getScreenHandler(), "Recruit", x, y++, MyColors.WHITE, MyColors.BLACK);
-        BorderFrame.drawString(model.getScreenHandler(), "Caid", x, y++, MyColors.WHITE, MyColors.BLACK);
+    protected List<String> getSpecialRewards() {
+        return List.of("Recruit", "Caid"); // TODO: Caid can teach you how to become a SWM?
     }
 
     @Override
@@ -59,7 +58,7 @@ public class VampiresLairQuest extends MainQuest {
         if (questWasSuccess) {
            possiblyRecruitCaid(model, state);
         }
-        return Quest.endOfQuestProcedure(model, state, questWasSuccess);
+        return Quest.endOfQuestProcedure(model, state, questWasSuccess, 0);
     }
 
     @Override

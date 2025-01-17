@@ -60,7 +60,8 @@ public class MasqueradeQuest extends Quest {
     private static final List<QuestBackground> DECORATIONS = makeDecorations();
 
     public MasqueradeQuest() {
-        super("Masquerade", "Bounty Office", QuestDifficulty.MEDIUM, 1, 175, 0, INTRO, OUTRO);
+        super("Masquerade", "Bounty Office", QuestDifficulty.MEDIUM,
+                new Reward(1, 175), 0, INTRO, OUTRO);
     }
 
     @Override

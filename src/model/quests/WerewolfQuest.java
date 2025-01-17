@@ -34,7 +34,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WerewolfQuest extends QuestWithMoveAfter {
+public class WerewolfQuest extends Quest {
     private static final int TURNS_TO_SURVIVE = 4;
     private static final String INTRO = "Benny is worried his girlfriend Sandy has been abducted by some kind of monster. " +
             "She was last seen in her home in town. Where could she have been taken, and what took her?";
@@ -46,7 +46,8 @@ public class WerewolfQuest extends QuestWithMoveAfter {
     private boolean getSpell = false;
 
     public WerewolfQuest() {
-        super(1, "Werewolf", "Boyfriend Benny", QuestDifficulty.EASY, 0, 80, 0, INTRO, ENDING);
+        super("Werewolf", "Boyfriend Benny", QuestDifficulty.EASY,
+                new Reward(0, 80), 1, INTRO, ENDING);
     }
 
     @Override
@@ -56,8 +57,8 @@ public class WerewolfQuest extends QuestWithMoveAfter {
     }
 
     @Override
-    public void drawSpecialReward(Model model, int x, int y) {
-        BorderFrame.drawString(model.getScreenHandler(), "Spell", x, y, MyColors.WHITE, MyColors.BLACK);
+    protected List<String> getSpecialRewards() {
+        return List.of("Spell");
     }
 
     @Override

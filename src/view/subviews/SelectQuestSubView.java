@@ -102,7 +102,12 @@ public class SelectQuestSubView extends SubView {
             BorderFrame.drawString(model.getScreenHandler(), "XP " + quest.getReward().getExp(),
                     xStart + 10, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
         }
-        quest.drawSpecialReward(model, xStart + 10, yStart + (row++));
+        if (quest.getReward().getNotoriety() != 0) {
+            model.getScreenHandler().put(xStart + 10, yStart + (row++), TopText.NOTORIETY_SPRITE);
+            BorderFrame.drawString(model.getScreenHandler(), quest.getReward().getNotoriety()+"",
+                    xStart+12, yStart + row-1, MyColors.RED, MyColors.BLACK);
+        }
+        quest.drawQuestOfferCardMiddle(model, xStart + 10, yStart + row);
     }
 
     private void drawDifficulty(Model model, int xStart, int yStart, Quest quest) {

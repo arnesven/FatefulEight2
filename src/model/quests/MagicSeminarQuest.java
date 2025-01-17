@@ -34,7 +34,8 @@ public class MagicSeminarQuest extends Quest implements CountingQuest {
     private CharacterAppearance portrait = PortraitSubView.makeOldPortrait(Classes.PROFESSOR, Race.NORTHERN_HUMAN, MyRandom.flipCoin());
 
     public MagicSeminarQuest() {
-        super("Magic Seminar", "Professor", QuestDifficulty.EASY, 0, 100, 0, INTRO, OUTRO);
+        super("Magic Seminar", "Professor", QuestDifficulty.EASY,
+                new Reward(0, 100), 0, INTRO, OUTRO);
     }
 
     @Override

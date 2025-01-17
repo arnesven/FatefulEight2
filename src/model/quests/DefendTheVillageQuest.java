@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class DefendTheVillageQuest extends QuestWithMoveAfter {
+public class DefendTheVillageQuest extends Quest {
 
     private static final String TEXT =
             "Some peasants are looking for capable warriors " +
@@ -41,8 +41,8 @@ public class DefendTheVillageQuest extends QuestWithMoveAfter {
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public DefendTheVillageQuest() {
-        super(2, "Defend the Village", "Desperate Peasants", QuestDifficulty.MEDIUM,
-                1, 150, 0, TEXT, END_TEXT);
+        super("Defend the Village", "Desperate Peasants", QuestDifficulty.MEDIUM,
+                new Reward(1, 150), 2, TEXT, END_TEXT);
     }
 
     @Override

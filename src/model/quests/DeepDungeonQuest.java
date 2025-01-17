@@ -34,7 +34,8 @@ public class DeepDungeonQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBackground();
 
     public DeepDungeonQuest() {
-        super("Deep Dungeon", "Antiques Dealer", QuestDifficulty.HARD, 1, 250, text, endText);
+        super("Deep Dungeon", "Antiques Dealer", QuestDifficulty.HARD,
+                new Reward(1, 250), 0, text, endText);
     }
 
     @Override

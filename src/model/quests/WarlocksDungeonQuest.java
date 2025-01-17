@@ -37,7 +37,8 @@ public class WarlocksDungeonQuest extends Quest {
     private static final List<QuestBackground> BACK_SIDE = makeBackSide();
 
     public WarlocksDungeonQuest() {
-        super("Warlock's Dungeon", "Warlock", QuestDifficulty.MEDIUM, 1, 0, 100, INTRO, OUTRO);
+        super("Warlock's Dungeon", "Warlock", QuestDifficulty.MEDIUM,
+                new Reward(1, 0, 100), 0, INTRO, OUTRO);
     }
 
     @Override

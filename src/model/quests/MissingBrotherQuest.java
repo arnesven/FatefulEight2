@@ -39,8 +39,7 @@ public class MissingBrotherQuest extends Quest {
             "instead. She offers a handsome reward " +
             "for finding him.";
 
-    private static final String endText = "You accompany Ghania's brother back to town " +
-            "and she rewards you for returning him safely.";
+    private static final String endText = "Ghania's brother rewards you, then he returns to town.";
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.None, Race.ALL, true);
     private static final Sprite townSprite = new Sprite32x32("townspriteqmb", "quest.png", 0x51,
             MyColors.BLACK, MyColors.LIGHT_YELLOW, MyColors.GRAY, MyColors.GREEN);
@@ -63,7 +62,8 @@ public class MissingBrotherQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public MissingBrotherQuest() {
-        super("Missing Brother", "Ghania", QuestDifficulty.EASY, 1, 125, 0, text, endText);
+        super("Missing Brother", "Ghania", QuestDifficulty.EASY,
+                new Reward(1, 125), 3, text, endText);
     }
 
     @Override

@@ -40,7 +40,8 @@ public class UnsuspectingLoversQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBgSprites();
 
     public UnsuspectingLoversQuest() {
-        super("Unsuspecting Lovers", "Jason and Tamara's parents", QuestDifficulty.EASY, 0, 125, 50, text, endText);
+        super("Unsuspecting Lovers", "Jason and Tamara's parents", QuestDifficulty.EASY,
+                new Reward(0, 125, 50), 0, text, endText);
     }
 
     @Override

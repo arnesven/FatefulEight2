@@ -39,7 +39,8 @@ public class WizardsTowerQuest extends Quest {
     private static List<QuestBackground> bgSprites = makeBackgroundSprites();
 
     public WizardsTowerQuest() {
-        super("Wizard's Tower", "Local Bookie", QuestDifficulty.HARD, 1, 250, 0, INTRO_TEXT, END_TEXT);
+        super("Wizard's Tower", "Local Bookie", QuestDifficulty.HARD,
+                new Reward(1, 250), 0, INTRO_TEXT, END_TEXT);
     }
 
     @Override

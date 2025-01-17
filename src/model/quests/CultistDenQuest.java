@@ -39,7 +39,8 @@ public class CultistDenQuest extends Quest {
 
 
     public CultistDenQuest() {
-        super("Cultist Den", "Cleric", QuestDifficulty.MEDIUM, 1, 75, 0, INTRO, ENDING);
+        super("Cultist Den", "Cleric", QuestDifficulty.MEDIUM,
+                new Reward(1, 75), 1, INTRO, ENDING);
     }
 
     @Override
