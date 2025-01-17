@@ -253,7 +253,6 @@ public abstract class DailyEventState extends GameState {
         model.getParty().setPosition(currentPos);
         model.getCurrentHex().travelTo(model);
         model.getParty().setOnRoad(false);
-        mapSubView.drawAvatarEnabled(true);
     }
 
     protected void showRandomPortrait(Model model, CharacterClass cls, Race race, String portraitName) {

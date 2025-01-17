@@ -51,7 +51,7 @@ public class MoveAwayFromCurrentPositionEvent extends DailyEventState {
                 break;
             }
         }
-
+        path.add(0, model.getParty().getPosition());
         forcedMovement(model, path);
     }
 
