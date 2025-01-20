@@ -56,7 +56,7 @@ public class SitInDungeonState extends GameState {
                         List.of(quest));
                 if (q2 != null) {
                     stepToNextDay(model);
-                    return new QuestState(model, q2);
+                    return new QuestState(model, q2, model.getParty().getPosition());
                 }
             }
             stepToNextDay(model);

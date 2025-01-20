@@ -2,6 +2,7 @@ package model.states;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.map.WorldHex;
 import model.quests.Quest;
 import model.quests.QuestEdge;
 import model.quests.QuestNode;
@@ -19,12 +20,13 @@ public class QuestState extends GameState {
     private final Quest quest;
     private final QuestSubView questSubView;
     private final SteppingMatrix<QuestNode> matrix;
+    private final Point startingPosition;
     private QuestNode currentPosition;
     private boolean cursorEnabled;
     private int counter = 0;
     private long timeStarted = -1;
 
-    public QuestState(Model model, Quest quest) {
+    public QuestState(Model model, Quest quest, Point questStartingPos) {
         super(model);
         this.quest = quest;
         matrix = new SteppingMatrix<>(QUEST_MATRIX_COLUMNS, QUEST_MATRIX_ROWS);
@@ -34,6 +36,7 @@ public class QuestState extends GameState {
         matrix.setSelectedElement(quest.getStartNode());
         cursorEnabled = true;
         questSubView = new QuestSubView(this, quest, matrix);
+        this.startingPosition = questStartingPos;
     }
 
     @Override
@@ -130,5 +133,9 @@ public class QuestState extends GameState {
 
     public Quest getQuest() {
         return quest;
+    }
+
+    public Point getStartingLocation() {
+        return startingPosition;
     }
 }

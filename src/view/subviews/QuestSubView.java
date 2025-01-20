@@ -4,6 +4,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.combat.Combatant;
 import model.enemies.Enemy;
+import model.map.WorldHex;
 import model.quests.*;
 import model.states.QuestState;
 import util.MyPair;
@@ -99,7 +100,8 @@ public class QuestSubView extends AvatarSubView {
             converted.y -= 2;
             model.getScreenHandler().clearSpace(converted.x, converted.x+4,
                     converted.y, converted.y+4);
-            model.getScreenHandler().put(converted.x, converted.y, model.getCurrentHex().getLocation().getTownOrCastleSprite());
+            WorldHex hex = model.getWorld().getHex(state.getStartingLocation());
+            model.getScreenHandler().put(converted.x, converted.y, hex.getLocation().getTownOrCastleSprite());
         }
 
         for (QuestBackground qb : quest.getDecorations()) {

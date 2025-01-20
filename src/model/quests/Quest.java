@@ -7,6 +7,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
 import model.states.QuestState;
+import model.states.events.ForcedMovementEvent;
 import model.states.events.MoveAwayFromCurrentPositionEvent;
 import sound.BackgroundMusic;
 import view.BorderFrame;
@@ -15,6 +16,7 @@ import view.combat.CombatTheme;
 import view.combat.DungeonTheme;
 import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,7 @@ public abstract class Quest {
     private List<QuestJunction> junctions;
     private QuestSuccessfulNode successEnding;
     private QuestNode failEnding;
+    private List<Point> remotePath;
 
     public Quest(String name, String provider, QuestDifficulty difficulty,
                  Reward reward, int moveAfter, String text, String endText) {
@@ -143,15 +146,16 @@ public abstract class Quest {
         return result;
     }
 
-    public final void drawQuestOfferCardMiddle(Model model, int x, int y) {
+    public final int drawQuestOfferCardMiddle(Model model, int x, int y) {
+        if (moveAfter > 0) {
+            BorderFrame.drawString(model.getScreenHandler(), "Move", x, y++, MyColors.WHITE, MyColors.BLACK);
+            BorderFrame.drawString(model.getScreenHandler(), "  " + moveAfter, x, y++, MyColors.WHITE, MyColors.BLACK);
+            y += 1;
+        }
         for (String s : getSpecialRewards()) {
             BorderFrame.drawString(model.getScreenHandler(), s, x, y++, MyColors.WHITE, MyColors.BLACK);
         }
-        if (moveAfter > 0) {
-            y += 1;
-            BorderFrame.drawString(model.getScreenHandler(), "After", x, y++, MyColors.WHITE, MyColors.BLACK);
-            BorderFrame.drawString(model.getScreenHandler(), "Move " + moveAfter, x, y++, MyColors.WHITE, MyColors.BLACK);
-        }
+        return y;
     }
 
     protected List<String> getSpecialRewards() {
@@ -177,12 +181,7 @@ public abstract class Quest {
     protected static GameState endOfQuestProcedure(Model model, QuestState state, boolean questWasSuccess, int moveSteps) {
         state.print("Press enter to continue.");
         state.waitForReturn();
-        if (moveSteps == 0) {
-            QuestState.setCurrentTerrainSubview(model);
-        } else {
-            MoveAwayFromCurrentPositionEvent event = new MoveAwayFromCurrentPositionEvent(model, moveSteps);
-            event.doTheEvent(model);
-        }
+        QuestState.setCurrentTerrainSubview(model);
         model.getParty().stopHoldingQuest(state.getQuest());
         model.setTimeOfDay(TimeOfDay.EVENING);
         adjustAttitudes(model, questWasSuccess);
@@ -214,4 +213,30 @@ public abstract class Quest {
     }
 
     public abstract BackgroundMusic getMusic();
+
+    public void setRemoteLocation(Model model) {
+        if (moveAfter > 0) {
+            this.remotePath = MoveAwayFromCurrentPositionEvent.makePathToRemoteLocation(model, moveAfter);
+        } else {
+            this.remotePath = new ArrayList<>(List.of(new Point(model.getParty().getPosition())));
+        }
+    }
+
+    public HeldQuestData getHeldData() {
+        return new HeldQuestData(getPortrait(), remotePath);
+    }
+
+    public List<Point> getRemotePath() {
+        return remotePath;
+    }
+
+    public void movePartyToRemoteLocation(Model model) {
+        if (moveAfter > 0) {
+            List<Point> path = remotePath;
+            if (model.getParty().questIsHeld(this)) {
+                path = model.getParty().getHeldDataFor(this).getRemotePath();
+            }
+            new ForcedMovementEvent(model, path).doTheEvent(model);
+        }
+    }
 }

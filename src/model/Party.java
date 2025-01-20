@@ -20,6 +20,7 @@ import model.items.spells.*;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
+import model.quests.HeldQuestData;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
@@ -34,6 +35,7 @@ import util.MyRandom;
 import view.*;
 import view.sprites.*;
 import view.subviews.SelectPartyMemberSubView;
+import view.subviews.SelectQuestSubView;
 import view.subviews.SubView;
 
 import java.awt.*;
@@ -54,7 +56,7 @@ public class Party implements Serializable {
     private final PartyAnimations partyAnimations = new PartyAnimations();
     private final Map<String, Summon> summons = new HashMap<>();
     private final Set<String> templeBannings = new HashSet<>();
-    private final Set<String> heldQuests = new HashSet<>();
+    private final Map<String, HeldQuestData> heldQuests = new HashMap<>();
     private Point position;
     private Point previousPosition;
     private int reputation = 0;
@@ -839,7 +841,7 @@ public class Party implements Serializable {
     }
 
     public void holdQuest(Quest q) {
-        heldQuests.add(q.getName());
+        heldQuests.put(q.getName(), q.getHeldData());
     }
 
     public void stopHoldingQuest(Quest q) {
@@ -847,12 +849,13 @@ public class Party implements Serializable {
     }
 
     public boolean questIsHeld(Quest q) {
-        return heldQuests.contains(q.getName());
+        return heldQuests.containsKey(q.getName());
     }
 
     public List<Quest> getHeldQuests(Model model) {
         List<Quest> result = new ArrayList<>();
-        for (String key : heldQuests) {
+        for (String key : heldQuests.keySet()) {
+            Quest q = model.getQuestDeck().getQuestByName(key);
             result.add(model.getQuestDeck().getQuestByName(key));
         }
         return result;
@@ -998,5 +1001,9 @@ public class Party implements Serializable {
 
     public List<DiscoveredRoute> getDiscoveredRoutes() {
         return discoveredRoutes;
+    }
+
+    public HeldQuestData getHeldDataFor(Quest quest) {
+        return heldQuests.get(quest.getName());
     }
 }

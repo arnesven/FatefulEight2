@@ -10,6 +10,7 @@ import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.states.dailyaction.tavern.HireGuideAction;
 import model.states.dailyaction.LodgingState;
+import model.states.events.MoveAwayFromCurrentPositionEvent;
 import model.states.events.PartyMemberWantsToLeaveEvent;
 import model.states.events.VampireProwlNightEvent;
 import model.states.feeding.VampireFeedingState;
@@ -192,7 +193,9 @@ public class EveningState extends GameState {
             }
             return model.getCurrentHex().getDailyActionState(model);
         }
-        return new QuestState(model, goOnQuest);
+        Point beforeMoving = new Point(model.getParty().getPosition());
+        goOnQuest.movePartyToRemoteLocation(model);
+        return new QuestState(model, goOnQuest, beforeMoving);
     }
 
     protected void checkForQuest(Model model) {
@@ -233,6 +236,7 @@ public class EveningState extends GameState {
                     return;
                 }
             } while (model.getQuestDeck().alreadyDone(q) || quests.contains(q));
+            q.setRemoteLocation(model);
             quests.add(q);
         }
     }

@@ -20,25 +20,23 @@ public class MoveAwayFromCurrentPositionEvent extends DailyEventState {
         this.stepsToTake = steps;
     }
 
-    private Point makeNextPosition(Point currentPosition, Point p) {
-        Point nextP = new Point(currentPosition);
-        nextP.x += p.x;
-        nextP.y += p.y;
-        return nextP;
-    }
-
     @Override
     protected void doEvent(Model model) {
         model.getLog().addAnimated(LogView.GOLD_COLOR + "Going on the quest has moved your party.\n" +
                 LogView.DEFAULT_COLOR);
+        List<Point> path = makePathToRemoteLocation(model, stepsToTake);
+        forcedMovement(model, path);
+    }
+
+    public static List<Point> makePathToRemoteLocation(Model model, int stepsToTake) {
+        List<Point> path = new ArrayList<>();
         java.util.List<Point> directions = findValidDirections(model);
         if (directions.isEmpty()) {
             System.out.println("Nowhere to go? Returning");
-            return;
+            return path;
         }
         Point dir = directions.get(0);
         int dirAsInt = Direction.getDirectionForDxDy(model.getParty().getPosition(), dir);
-        List<Point> path = new ArrayList<>();
         path.add(makeNextPosition(model.getParty().getPosition(), dir));
 
         for (int step = 1; step < stepsToTake; ++step) {
@@ -52,10 +50,17 @@ public class MoveAwayFromCurrentPositionEvent extends DailyEventState {
             }
         }
         path.add(0, model.getParty().getPosition());
-        forcedMovement(model, path);
+        return path;
     }
 
-    private java.util.List<Point> findValidDirections(Model model) {
+    private static Point makeNextPosition(Point currentPosition, Point p) {
+        Point nextP = new Point(currentPosition);
+        nextP.x += p.x;
+        nextP.y += p.y;
+        return nextP;
+    }
+
+    private static List<Point> findValidDirections(Model model) {
         List<Point> directions = new ArrayList<>(Direction.getDxDyDirections(model.getParty().getPosition()));
         directions = MyLists.filter(directions, (Point dir) ->
                 model.getWorld().canTravelTo(model, makeNextPosition(model.getParty().getPosition(), dir)));

@@ -1,6 +1,7 @@
 package view.subviews;
 
 import model.Model;
+import model.characters.appearance.CharacterAppearance;
 import model.quests.Quest;
 import model.quests.QuestDifficulty;
 import util.Arithmetics;
@@ -15,7 +16,9 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class SelectQuestSubView extends SubView {
-    private static final int LIST_START_Y = 13;
+    private static final int LIST_START_Y = 27;
+    private static final int QUEST_CARD_Y_START = Y_OFFSET;
+    private static final int QUEST_MAP_Y_START = QUEST_CARD_Y_START + 12;
     private final List<Quest> quests;
     private int index;
 
@@ -28,17 +31,40 @@ public class SelectQuestSubView extends SubView {
     protected void drawArea(Model model) {
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET, Y_OFFSET+LIST_START_Y-1, blackBlock);
         model.getScreenHandler().fillSpace(X_OFFSET, X_MAX, Y_OFFSET+LIST_START_Y, Y_MAX, blueBlock);
+
         if (index < quests.size()) {
+            List<Point> path = getRemotePath(model);
+            Point mid = path.get(path.size()/2);
+            model.getWorld().drawYourself(model, mid, model.getParty().getPosition(),
+                    4, 4, QUEST_MAP_Y_START, path.get(path.size()-1), true,
+                    null);
             drawSelectedQuest(model);
         }
         drawQuestList(model);
         drawCursor(model);
     }
 
+    private List<Point> getRemotePath(Model model) {
+        Quest selectedQuest = quests.get(index);
+        if (model.getParty().questIsHeld(selectedQuest)) {
+            return model.getParty().getHeldDataFor(selectedQuest).getRemotePath();
+        }
+        return quests.get(index).getRemotePath();
+    }
+
+
+    private CharacterAppearance getPortrait(Model model) {
+        Quest selectedQuest = quests.get(index);
+        if (model.getParty().questIsHeld(selectedQuest)) {
+            return model.getParty().getHeldDataFor(selectedQuest).getAppearance();
+        }
+        return quests.get(index).getPortrait();
+    }
+
     private void drawSelectedQuest(Model model) {
         Quest quest = quests.get(index);
         int xStart = X_OFFSET;
-        int yStart = Y_OFFSET;
+        int yStart = QUEST_CARD_Y_START;
         BorderFrame.drawString(model.getScreenHandler(), quest.getName(), xStart, yStart,
                 MyColors.WHITE, MyColors.BLACK);
         drawProvider(model, xStart, yStart, quest);
@@ -85,29 +111,29 @@ public class SelectQuestSubView extends SubView {
     }
 
     private void drawRewards(Model model, int xStart, int yStart, Quest quest) {
-        int row = 2;
-        BorderFrame.drawString(model.getScreenHandler(), "Reward", xStart + 10, yStart + row++, MyColors.WHITE, MyColors.BLACK);
+        int row = quest.drawQuestOfferCardMiddle(model, xStart + 10, yStart + 2);
+
+        row++;
         if (quest.getReward().getReputation() != 0) {
             int rep = quest.getReward().getReputation();
             BorderFrame.drawString(model.getScreenHandler(), "  " + MyStrings.withPlus(rep),
-                    xStart + 10, yStart + (row++), (rep < 0 ? MyColors.RED : MyColors.WHITE), MyColors.BLACK);
-            model.getScreenHandler().put(xStart + 10, yStart + (row-1), TopText.REP_ICON_SPRITE);
+                    xStart + 10, row++, (rep < 0 ? MyColors.RED : MyColors.WHITE), MyColors.BLACK);
+            model.getScreenHandler().put(xStart + 10, row - 1, TopText.REP_ICON_SPRITE);
         }
         if (quest.getReward().getGold() != 0) {
             BorderFrame.drawString(model.getScreenHandler(), "  " + quest.getReward().getGold(),
-                    xStart + 10, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
-            model.getScreenHandler().put(xStart + 10, yStart + (row-1), TopText.GOLD_ICON_SPRITE);
+                    xStart + 10, row++, MyColors.WHITE, MyColors.BLACK);
+            model.getScreenHandler().put(xStart + 10, row - 1, TopText.GOLD_ICON_SPRITE);
         }
         if (quest.getReward().getExp() != 0) {
             BorderFrame.drawString(model.getScreenHandler(), "XP " + quest.getReward().getExp(),
-                    xStart + 10, yStart + (row++), MyColors.WHITE, MyColors.BLACK);
+                    xStart + 10, row++, MyColors.WHITE, MyColors.BLACK);
         }
         if (quest.getReward().getNotoriety() != 0) {
-            model.getScreenHandler().put(xStart + 10, yStart + (row++), TopText.NOTORIETY_SPRITE);
+            model.getScreenHandler().put(xStart + 10, row++, TopText.NOTORIETY_SPRITE);
             BorderFrame.drawString(model.getScreenHandler(), quest.getReward().getNotoriety()+"",
-                    xStart+12, yStart + row-1, MyColors.RED, MyColors.BLACK);
+                    xStart+12, row - 1, MyColors.RED, MyColors.BLACK);
         }
-        quest.drawQuestOfferCardMiddle(model, xStart + 10, yStart + row);
     }
 
     private void drawDifficulty(Model model, int xStart, int yStart, Quest quest) {
@@ -122,7 +148,8 @@ public class SelectQuestSubView extends SubView {
     }
 
     private void drawProvider(Model model, int xStart, int yStart, Quest quest) {
-        quest.getPortrait().drawYourself(model.getScreenHandler(), xStart + 2, yStart+2);
+        CharacterAppearance portrait = getPortrait(model);
+        portrait.drawYourself(model.getScreenHandler(), xStart + 2, yStart+2);
         String provider = quest.getProvider();
         String[] providerParts = MyStrings.partition(provider, 11);
         for (int i = 0; i < providerParts.length; ++i) {
@@ -137,7 +164,7 @@ public class SelectQuestSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "";
+        return "Use arrow keys to select a quest to go on or hold.";
     }
 
     @Override
