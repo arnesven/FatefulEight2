@@ -113,7 +113,6 @@ public class SelectQuestSubView extends SubView {
     private void drawRewards(Model model, int xStart, int yStart, Quest quest) {
         int row = quest.drawQuestOfferCardMiddle(model, xStart + 10, yStart + 2);
 
-        row++;
         if (quest.getReward().getReputation() != 0) {
             int rep = quest.getReward().getReputation();
             BorderFrame.drawString(model.getScreenHandler(), "  " + MyStrings.withPlus(rep),

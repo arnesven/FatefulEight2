@@ -62,6 +62,7 @@ public class FindResourcesState extends GameState {
                 }
                 if (gc.getSP() > 0 && MyRandom.rollD6() == 1) {
                     println(gc.getFirstName() + " lost 1 Stamina while searching for " + resourceType + ".");
+                    gc.addToSP(-1);
                 }
             }
             if (i == 0) {

@@ -152,8 +152,13 @@ public abstract class Quest {
             BorderFrame.drawString(model.getScreenHandler(), "  " + moveAfter, x, y++, MyColors.WHITE, MyColors.BLACK);
             y += 1;
         }
+        boolean special = false;
         for (String s : getSpecialRewards()) {
             BorderFrame.drawString(model.getScreenHandler(), s, x, y++, MyColors.WHITE, MyColors.BLACK);
+            special = true;
+        }
+        if (special) {
+            y++;
         }
         return y;
     }

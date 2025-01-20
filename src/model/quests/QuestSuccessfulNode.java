@@ -3,6 +3,7 @@ package model.quests;
 import model.Model;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
+import model.map.WorldHex;
 import model.states.QuestState;
 import view.MyColors;
 import view.sprites.Sprite32x32;
@@ -63,7 +64,8 @@ public class QuestSuccessfulNode extends QuestNode {
             state.println(".");
         }
         if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
-            model.getQuestDeck().setSuccessfulIn(model, state.getQuest(), model.getCurrentHex().getLocation());
+            WorldHex hex = model.getWorld().getHex(state.getStartingLocation());
+            model.getQuestDeck().setSuccessfulIn(model, state.getQuest(), hex.getLocation());
         }
         reward.giveYourself(model);
         return new QuestEdge(this);

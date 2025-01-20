@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
+import model.combat.conditions.RowdyCondition;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.NoCombatLoot;
 import model.races.Race;
@@ -13,11 +14,12 @@ public class InterloperEnemy extends HumanoidEnemy {
 
     public InterloperEnemy(char a) {
         super(a, "Interloper");
+        addCondition(new RowdyCondition());
     }
 
     @Override
     public int getMaxHP() {
-        return 4;
+        return 3;
     }
 
     @Override

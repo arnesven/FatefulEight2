@@ -6,6 +6,8 @@ import model.characters.GameCharacter;
 import model.characters.appearance.DefaultAppearance;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.enemies.Enemy;
+import model.states.events.GeneralInteractionEvent;
 import sound.BackgroundMusic;
 import view.combat.TownCombatTheme;
 import model.enemies.InterloperEnemy;
@@ -167,7 +169,7 @@ public class UnsuspectingLoversQuest extends Quest {
 
         @Override
         protected String getCombatDetails() {
-            return "an interloper infatuated with Tamara (-1 Rep)";
+            return "an interloper infatuated with Tamara (gain Notoriety)";
         }
 
         @Override
@@ -177,10 +179,12 @@ public class UnsuspectingLoversQuest extends Quest {
 
         @Override
         public QuestEdge run(Model model, QuestState state) {
+            List<Enemy> enemies = getEnemies();
             QuestEdge qe = super.run(model, state);
-            if (qe == getSuccessEdge()) {
-                model.getParty().addToReputation(-1);
-                state.println("The party loses 1 reputation!");
+            if (enemies.get(0).isDead()) {
+                GeneralInteractionEvent.addMurdersToNotoriety(model, state, 1);
+            } else {
+                GeneralInteractionEvent.addAssaultsToNotoriety(model, state, 1);
             }
             return qe;
         }

@@ -119,6 +119,9 @@ public class MainStory implements Serializable {
                 sp.addQuests(model, quests);
             }
         }
+        for (Quest q : quests) {
+            q.setRemoteLocation(model);
+        }
     }
 
     public static List<Quest> getQuests() {
