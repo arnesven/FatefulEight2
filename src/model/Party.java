@@ -48,6 +48,7 @@ public class Party implements Serializable {
                 MyColors.LIGHT_BLUE, MyColors.GREEN, MyColors.LIGHT_RED,
                 MyColors.LIGHT_YELLOW, MyColors.PURPLE, MyColors.PEACH,
                 MyColors.RED, MyColors.CYAN};
+    public static final int MAXIMUM_PARTY_SIZE = 8;
     private final Inventory inventory = new Inventory();
     private final List<GameCharacter> partyMembers = new ArrayList<>();
     private final List<GameCharacter> frontRow = new ArrayList<>();
@@ -132,17 +133,25 @@ public class Party implements Serializable {
     }
 
     public synchronized void drawYourself(ScreenHandler screenHandler) {
-        int count = 0;
-        for (GameCharacter gc : partyMembers) {
+        for (int count = 0; count < MAXIMUM_PARTY_SIZE; ++count) {
             Point p = getLocationForPartyMember(count);
-            if (drawPartyVertically && count >= 4) {
-                gc.drawAbbreviated(screenHandler, p.x, p.y, partyMemberColors[count]);
+            if (count < size()) {
+                GameCharacter gc = getPartyMember(count);
+                if (drawPartyVertically && count >= 4) {
+                    gc.drawAbbreviated(screenHandler, p.x, p.y, partyMemberColors[count]);
+                } else {
+                    gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
+                }
+                if (!gc.isDead() && !bench.contains(gc)) {
+                    partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
+                }
             } else {
-                gc.drawYourself(screenHandler, p.x, p.y, partyMemberColors[count]);
-            }
-            count++;
-            if (!gc.isDead() && !bench.contains(gc)) {
-                partyAnimations.drawBlink(screenHandler, gc.getAppearance(), p);
+                Point wordLocation = new Point(p.x + (drawPartyVertically && count >= 4 ? 3 : 8), p.y + 2);
+                if (count < inventory.getTentSize()) {
+                    BorderFrame.drawString(screenHandler, "*VACANT*", wordLocation.x, wordLocation.y, MyColors.GRAY, MyColors.BLACK);
+                } else {
+                    BorderFrame.drawString(screenHandler, "*LOCKED*", wordLocation.x, wordLocation.y, MyColors.DARK_RED, MyColors.BLACK);
+                }
             }
         }
         partyAnimations.drawSpeakAnimations(screenHandler);

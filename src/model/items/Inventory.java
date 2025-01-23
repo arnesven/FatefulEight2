@@ -1,5 +1,6 @@
 package model.items;
 
+import model.Party;
 import model.items.accessories.*;
 import model.items.clothing.Clothing;
 import model.items.designs.CraftingDesign;
@@ -23,7 +24,7 @@ public class Inventory implements Serializable {
     public static final int WEIGHT_OF_INGREDIENTS = 100;
     public static final int WEIGHT_OF_LOCKPICKS = 10;
     private static final int STARTING_GOLD = 20;
-    private static final int MAXIMUM_TENT_SIZE = 8;
+    private static final int MAXIMUM_TENT_SIZE = Party.MAXIMUM_PARTY_SIZE;
 
     private final List<Weapon> weapons = new ArrayList<>();
     private final List<Clothing> clothing = new ArrayList<>();

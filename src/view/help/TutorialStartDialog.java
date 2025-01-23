@@ -20,7 +20,7 @@ public class TutorialStartDialog extends HelpDialog {
             "Your objective is to achieve a Party Reputation of " + Model.REP_TO_WIN + " within 100 days.\n\n\n\n" +
             "You have many things to learn about adventuring, but perhaps you already know it? " +
             "Would you like to enable the tutorial?";
-    private static final String EXTRA = "\n\nThere are many help pages to browse. Press Ctrl+F to enter search mode.";
+    private static final String EXTRA = "\n\nThere are many help pages to browse. Press F3 to enter search mode.";
 
     public TutorialStartDialog(GameView previous, boolean fromHelpView) {
         super(previous, "Welcome to Fateful Eight!", text + (fromHelpView ? EXTRA : ""));
