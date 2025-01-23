@@ -72,7 +72,7 @@ public class AlchemySubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Preparing to perform alchemy.";
+        return "Preparing to perform alchemy. Ingredients: " + model.getParty().getInventory().getIngredients();
     }
 
     @Override

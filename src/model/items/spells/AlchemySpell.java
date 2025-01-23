@@ -189,6 +189,7 @@ public class AlchemySpell extends ImmediateSpell {
         model.getParty().partyMemberSay(model, caster, List.of("Bubble bubble!", "Ahh, what an aroma.",
                 "I'm cooking!", "It took a little time, but now it's done.", "Let's save this for later.",
                 "Mmmm... magical.", "Potions, potions, potions..."));
+        askToCastAgain(model, state, caster, this);
     }
 
     @Override
@@ -209,6 +210,14 @@ public class AlchemySpell extends ImmediateSpell {
                         "brew anything useful.");
 
             }
+        }
+        askToCastAgain(model, state, caster, this);
+    }
+
+    private static void askToCastAgain(Model model, GameState state, GameCharacter caster, AlchemySpell alchemySpell) {
+        state.print("Do you want to continue using " + alchemySpell.getName() + "? (Y/N) ");
+        if (state.yesNoInput()) {
+            alchemySpell.castYourself(model, state, caster);
         }
     }
 
