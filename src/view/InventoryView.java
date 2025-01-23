@@ -17,8 +17,7 @@ import view.sprites.MovingRightArrow;
 import view.widget.ItemTab;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class InventoryView extends SelectableListMenu {
     private static final int WIDTH = 48;
@@ -34,6 +33,12 @@ public class InventoryView extends SelectableListMenu {
     @Override
     protected void clearPreviousForeground(Model model, int xStart, int yStart) {
         model.getScreenHandler().clearForeground(xStart, xStart + WIDTH, yStart-2, yStart + HEIGHT);
+    }
+
+    @Override
+    protected void madeChanges() {
+        super.madeChanges();
+        refreshTabs();
     }
 
     @Override
@@ -81,11 +86,12 @@ public class InventoryView extends SelectableListMenu {
         BorderFrame.drawFrame(model.getScreenHandler(),
                 rightTabX, y, WIDTH - 22, HEIGHT - 4,
                 MyColors.BLACK, MyColors.WHITE, MyColors.BLUE, true);
-        int numberOfItems = tabNames[selectedTab].getItems(model).size();
+        int numberOfItems = getItemsForTab(model).size();
         if (numberOfItems > 0 && getSelectedRow() < numberOfItems) {
-            Item it = tabNames[selectedTab].getItems(model).get(getSelectedRow());
+            Item it = getItemsForTab(model).get(getSelectedRow());
             it.drawYourself(model.getScreenHandler(), rightTabX + 11, y + 2);
-            int row = printItemText(model, it, rightTabX+1, y + it.getSpriteSize() + 3);
+            int row = innerPrintItemText(model, it.getName() + getExtraForStacking(it),
+                    it, rightTabX + 1, y + it.getSpriteSize() + 3);
             row++;
             if (it.isAnalyzable()) {
                 print(model.getScreenHandler(), rightTabX+1, row++, it.getAnalysisType() + ":");
@@ -97,8 +103,12 @@ public class InventoryView extends SelectableListMenu {
         }
     }
 
-    public static int printItemText(Model model, Item it, int col, int row) {
-        String text = it.getName() + ", " + it.getShoppingDetails() +
+    private List<? extends Item> getItemsForTab(Model model) {
+        return tabNames[selectedTab].getItems(model);
+    }
+
+    private static int innerPrintItemText(Model model, String itemName, Item it, int col, int row) {
+        String text = itemName + ", " + it.getShoppingDetails() +
                 ", Value: " + it.getCost() +
                 ", Weight: " + (it.getWeight() / 1000.0) + " Kg";
         String[] parts = text.split(", ");
@@ -111,6 +121,10 @@ public class InventoryView extends SelectableListMenu {
         return row;
     }
 
+    public static int printItemText(Model model, Item it, int col, int row) {
+       return innerPrintItemText(model, it.getName(), it, col, row);
+    }
+
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         return new ArrayList<>();
@@ -120,10 +134,10 @@ public class InventoryView extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         List<ListContent> contents = new ArrayList<>();
         int row = yStart+1;
-        for (Item it : tabNames[selectedTab].getItems(model)) {
+        for (Item it : getItemsForTab(model)) {
             if (it.canBeUsedFromMenu()) {
                 if (it.hasDualUseInMenu()) {
-                    contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitle(it)) {
+                    contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitleForTab(it)) {
                         @Override
                         public void performAction(Model model, int x, int y) {
                             setInnerMenu(new DualUseItemMenu(InventoryView.this, x, y,
@@ -132,7 +146,7 @@ public class InventoryView extends SelectableListMenu {
                         }
                     });
                 } else {
-                    contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitle(it)) {
+                    contents.add(new SelectableListContent(xStart + 1, row++, makeItemTitleForTab(it)) {
                         @Override
                         public void performAction(Model model, int x, int y) {
                             setInnerMenu(new EquipItemMenu(InventoryView.this, x, y, it), model);
@@ -140,16 +154,16 @@ public class InventoryView extends SelectableListMenu {
                     });
                 }
             } else {
-                contents.add(new ListContent(xStart + 1, row++, makeItemTitle(it)));
+                contents.add(new ListContent(xStart + 1, row++, makeItemTitleForTab(it)));
             }
         }
-        if (tabNames[selectedTab].getItems(model).size() == 0) {
+        if (getItemsForTab(model).size() == 0) {
             contents.add(new ListContent(xStart+1, yStart+1, "*No Items*"));
         }
         return contents;
     }
 
-    private String makeItemTitle(Item it) {
+    private String makeItemTitleForTab(Item it) {
         String result = it.getName();
         for (String prefix : Item.TIER_PREFIXES) {
             if (it.getName().contains(prefix)) {
@@ -157,7 +171,16 @@ public class InventoryView extends SelectableListMenu {
                 break;
             }
         }
+        result += getExtraForStacking(it);
         return result.substring(0, Math.min(result.length(), WIDTH - 30));
+    }
+
+    private String getExtraForStacking(Item it) {
+        String extra = "";
+        if (tabNames[selectedTab].getStackCount(it) > 1) {
+            extra = " (" + tabNames[selectedTab].getStackCount(it) + ")";
+        }
+        return extra;
     }
 
     @Override
@@ -173,11 +196,17 @@ public class InventoryView extends SelectableListMenu {
         }
     }
 
+    private void refreshTabs() {
+        for (ItemTab tab : tabNames) {
+            tab.invalidate();
+        }
+    }
+
     private static ItemTab[] makeTabs() {
         return new ItemTab[]{
                 new ItemTab("All") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         List<Item> result = new ArrayList<>(model.getParty().getInventory().getAllItems());
                         addResources(model, result);
                         return result;
@@ -185,37 +214,37 @@ public class InventoryView extends SelectableListMenu {
                 },
                 new ItemTab("Weapons") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         return model.getParty().getInventory().getWeapons();
                     }
                 },
                 new ItemTab("Clothing") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         return model.getParty().getInventory().getClothing();
                     }
                 },
                 new ItemTab("Accessories") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         return model.getParty().getInventory().getAccessories();
                     }
                 },
                 new ItemTab("Spells  ") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         return model.getParty().getInventory().getSpells();
                     }
                 },
                 new ItemTab("Potions") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         return model.getParty().getInventory().getPotions();
                     }
                 },
                 new ItemTab("Parchments") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         List<Item> result = new ArrayList<>(model.getParty().getInventory().getRecipes());
                         result.addAll(model.getParty().getInventory().getCraftingDesigns());
                         result.addAll(model.getParty().getInventory().getScrolls());
@@ -225,7 +254,7 @@ public class InventoryView extends SelectableListMenu {
                 },
                 new ItemTab("Mounts") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         List<Item> mounts = new ArrayList<>(model.getParty().getHorseHandler().getHorsesAsItems());
                         mounts.addAll(DragonTamingSpell.tamedDragonsAsItems(model));
                         if (model.getParty().hasDog()) {
@@ -236,7 +265,7 @@ public class InventoryView extends SelectableListMenu {
                 },
                 new ItemTab("Other           ") {
                     @Override
-                    public List<? extends Item> getItems(Model model) {
+                    public List<? extends Item> getItemsFromSource(Model model) {
                         List<Item> result = new ArrayList<>();
                         addResources(model, result);
                         result.addAll(model.getParty().getInventory().getPearls());
