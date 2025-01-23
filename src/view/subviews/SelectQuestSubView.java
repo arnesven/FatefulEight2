@@ -36,7 +36,7 @@ public class SelectQuestSubView extends SubView {
             List<Point> path = getRemotePath(model);
             Point mid = path.get(path.size()/2);
             model.getWorld().drawYourself(model, mid, model.getParty().getPosition(),
-                    4, 4, QUEST_MAP_Y_START, path.get(path.size()-1), true,
+                    4, 4, X_OFFSET, QUEST_MAP_Y_START, path.get(path.size()-1), true,
                     null);
             drawSelectedQuest(model);
         }

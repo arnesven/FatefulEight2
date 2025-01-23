@@ -290,7 +290,7 @@ public class VampireFeedingHouse {
 
     private void fullyRecoverStamina(GameState state, GameCharacter vampire) {
         vampire.addToSP(9999);
-        state.println(vampire.getFullName() + " Stamina has fully recovered.");
+        state.println(vampire.getFullName() + "'s Stamina has fully recovered.");
     }
 
 }

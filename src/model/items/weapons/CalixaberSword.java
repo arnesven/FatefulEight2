@@ -1,8 +1,10 @@
 package model.items.weapons;
 
+import model.characters.GameCharacter;
 import model.items.Prevalence;
 import model.items.imbuements.StunImbuement;
 import view.MyColors;
+import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
@@ -39,4 +41,8 @@ public class CalixaberSword extends TwoHandedSword {
         return ", 30% chance of stunning humanoid opponents for 1 turn.";
     }
 
+//    @Override
+//    public LoopingSprite getOnAvatarSprite(GameCharacter gameCharacter) {
+//        return super.getOnAvatarSprite(gameCharacter); // TODO: Make white sword on avatar
+//    }
 }

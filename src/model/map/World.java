@@ -67,18 +67,26 @@ public class World implements Serializable {
     public void drawYourself(Model model, Point viewPoint, Point partyPosition,
                              int mapXRange, int mapYRange, int yOffset, Point cursorPos,
                              boolean avatarEnabled) {
-        drawYourself(model, viewPoint, partyPosition, mapXRange, mapYRange, yOffset,
+        int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
+        drawYourself(model, viewPoint, partyPosition, mapXRange, mapYRange, startX, yOffset,
                 cursorPos, avatarEnabled, null);
     }
 
     public void drawYourself(Model model, Point viewPoint, Point partyPosition,
                              int mapXRange, int mapYRange, int yOffset, Point cursorPos,
                              boolean avatarEnabled, MapFilter filter) {
+        int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
+        drawYourself(model, viewPoint, partyPosition, mapXRange, mapYRange, startX, yOffset,
+                cursorPos, avatarEnabled, filter);
+    }
+
+    public void drawYourself(Model model, Point viewPoint, Point partyPosition,
+                             int mapXRange, int mapYRange, int startX, int yOffset, Point cursorPos,
+                             boolean avatarEnabled, MapFilter filter) {
         ScreenHandler screenHandler = model.getScreenHandler();
         Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
         Interval xVals = calcInterval(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
         Interval yVals = calcInterval(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
-        int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
         screenHandler.clearSpace(startX, (DrawingArea.WINDOW_COLUMNS - startX),
                 yOffset, yOffset + mapYRange*4 - 2);
         List<MyPair<Point, Sprite>> filterObjects = null;
@@ -106,8 +114,8 @@ public class World implements Serializable {
                     screenHandler.register(avatar.getName(), new Point(screenX, bottomAlignedYpos), avatar, 3);
                 }
                 if ((cursorPos == null && (x == viewPoint.x && y == viewPoint.y)) ||
-                    (cursorPos != null && (x == cursorPos.x && y == cursorPos.y))) {
-                        cursor.updateYourself(screenHandler, screenX, screenY);
+                        (cursorPos != null && (x == cursorPos.x && y == cursorPos.y))) {
+                    cursor.updateYourself(screenHandler, screenX, screenY);
                 }
                 model.getMainStory().drawMapObjects(model, x, y, screenX, screenY);
                 drawDestinationTasks(model, x, y, screenX, screenY);

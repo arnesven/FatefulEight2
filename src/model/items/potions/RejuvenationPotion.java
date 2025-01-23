@@ -23,7 +23,7 @@ public class RejuvenationPotion extends Potion implements StaminaRecoveryItem {
     private int healAmount = 3;
 
     public RejuvenationPotion() {
-        super("Rejuvenation Potion", 10);
+        super("Rejuvenation Potion", 5);
         this.sprite = SPRITE;
     }
 
