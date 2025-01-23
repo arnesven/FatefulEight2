@@ -58,6 +58,11 @@ public class CraftingDesign extends WeightlessItem {
     }
 
     @Override
+    public boolean canBeUsedFromMenu() {
+        return true;
+    }
+
+    @Override
     public Item copy() {
         return new CraftingDesign(craftable);
     }

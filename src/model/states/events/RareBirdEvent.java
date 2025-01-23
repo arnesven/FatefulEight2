@@ -79,7 +79,9 @@ public class RareBirdEvent extends DailyEventState {
             if (hasCage(model)) {
                 tryToUseCage(model, rando);
             } else if (MyLists.any(model.getParty().getInventory().getCraftingDesigns(),
-                    (CraftingDesign cd) -> cd instanceof CageCraftingDesign)) {
+                        cd -> cd instanceof CageCraftingDesign) ||
+                       MyLists.any(model.getParty().getLearnedCraftingDesigns(),
+                            cd -> cd instanceof CageCraftingDesign)) {
                 leaderSay("Oh, it's that bird again. Darn, we forgot to make a cage!");
             } else {
                 leaderSay("Oh, it's that strange bird again. It's so pretty!");

@@ -50,7 +50,7 @@ public class AlchemySpell extends ImmediateSpell {
     @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         model.getTutorial().alchemy(model);
-        if (model.getParty().getInventory().getPotions().isEmpty() && model.getParty().getInventory().getRecipes().isEmpty()) {
+        if (model.getParty().getInventory().getPotions().isEmpty() && model.getParty().getPotionRecipes().isEmpty()) {
             state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have any potions or recipes.");
             return false;
         }
@@ -110,7 +110,7 @@ public class AlchemySpell extends ImmediateSpell {
                 break;
             }
         }
-        for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
+        for (PotionRecipe recipe : model.getParty().getPotionRecipes()) {
             if (selected[0].contains(recipe.getBrewable().getName())) {
                 this.selectedPotion = recipe.getBrewable();
                 this.ingredientCost = recipeCost(recipe.getBrewable());
@@ -127,7 +127,7 @@ public class AlchemySpell extends ImmediateSpell {
             }
         }
         if (!distill) {
-            for (PotionRecipe recipe : model.getParty().getInventory().getRecipes()) {
+            for (PotionRecipe recipe : model.getParty().getPotionRecipes()) {
                 Potion p = recipe.getBrewable();
                 setOfPotions.remove(nameAndStandardBrewingCost(p));
                 setOfPotions.add(p.getName() + " (" + recipeCost(recipe.getBrewable()) + ")");
@@ -173,7 +173,7 @@ public class AlchemySpell extends ImmediateSpell {
             model.getParty().getInventory().remove(selectedPotion);
             model.getParty().getInventory().addToIngredients(ingredientCost);
             if (MyRandom.rollD6() == 6 &&
-                    !MyLists.any(model.getParty().getInventory().getRecipes(),
+                    !MyLists.any(model.getParty().getPotionRecipes(),
                             r -> r.getBrewable().getName().equals(selectedPotion.getName()))) {
                 state.println(caster.getName() + " also learned the recipe of " + selectedPotion.getName() + "!");
                 model.getParty().getInventory().add(new PotionRecipe(selectedPotion));

@@ -51,9 +51,11 @@ public class CraftItemState extends GameState {
         model.getTutorial().crafting(model);
         List<Item> allItems = getAllItems(model);
         allItems.removeIf((Item it) -> it instanceof BookItem || it instanceof Scroll);
+        allItems.addAll(model.getParty().getLearnedCraftingDesigns());
         if (allItems.isEmpty()) {
             println("You cannot craft since you do not have any suitable items or crafting designs.");
         }
+
         Set<String> optionNames = new HashSet<>();
         for (Item it : allItems) {
             if (it instanceof CraftingDesign) {

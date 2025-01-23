@@ -15,8 +15,11 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
+import model.items.designs.CraftingDesign;
+import model.items.potions.AntidotePotion;
 import model.items.potions.CommonPoison;
 import model.items.spells.*;
+import model.items.weapons.Claymore;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
@@ -1027,5 +1030,19 @@ public class Party implements Serializable {
                 it -> it instanceof Spell),
                 it -> (Spell)it));
         return spells;
+    }
+
+    public List<PotionRecipe> getPotionRecipes() {
+        List<PotionRecipe> recipes = new ArrayList<>(inventory.getRecipes());
+        recipes.addAll(MyLists.transform(MyLists.filter(permanentlyLearnedItems,
+                it -> it instanceof PotionRecipe),
+                it -> (PotionRecipe)it));
+        return recipes;
+    }
+
+    public List<CraftingDesign> getLearnedCraftingDesigns() {
+        return MyLists.transform(MyLists.filter(permanentlyLearnedItems,
+                it -> it instanceof CraftingDesign),
+                it -> (CraftingDesign)it);
     }
 }

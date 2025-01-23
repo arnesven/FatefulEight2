@@ -20,6 +20,11 @@ public class PotionRecipe extends WeightlessItem {
     }
 
     @Override
+    public boolean canBeUsedFromMenu() {
+        return true;
+    }
+
+    @Override
     public boolean isCraftable() {
         return false;
     }

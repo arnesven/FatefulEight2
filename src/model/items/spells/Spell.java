@@ -202,15 +202,7 @@ public abstract class Spell extends Item {
 
     @Override
     public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
-        return new YesNoMessageView(innerView,
-                "Are you sure you want to learn " + getName() + " permanently? " +
-                        "This will remove it from your inventory but your party " +
-                        "members will still be able to cast it.") {
-            @Override
-            protected void doAction(Model model) {
-                model.getParty().getInventory().remove(Spell.this);
-                model.getParty().permanentlyLearn(Spell.this);
-            }
-        };
+        return new LearnPermanentlyDialog(innerView, this, "cast", false);
     }
+
 }
