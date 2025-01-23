@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.BullsVilleTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.PRI;
@@ -14,5 +15,6 @@ public class JordynStrongCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.benevolent);
         addToPersonality(PersonalityTrait.forgiving);
         addToPersonality(PersonalityTrait.lawful);
+        setHomeTown(BullsVilleTown.NAME);
     }
 }

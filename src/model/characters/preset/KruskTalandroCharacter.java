@@ -3,6 +3,7 @@ package model.characters.preset;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.BogdownCastle;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
@@ -15,5 +16,6 @@ public class KruskTalandroCharacter extends GameCharacter {
         addToPersonality(PersonalityTrait.generous);
         addToPersonality(PersonalityTrait.lawful);
         addToPersonality(PersonalityTrait.intellectual);
+        setHomeTown(BogdownCastle.CASTLE_NAME);
     }
 }

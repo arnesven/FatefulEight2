@@ -3,6 +3,7 @@ package model.characters.preset;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.RoukonTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.PAL;
@@ -15,5 +16,6 @@ public class BungoDarkwoodCharacter extends GameCharacter {
         addToPersonality(PersonalityTrait.snobby);
         addToPersonality(PersonalityTrait.diplomatic);
         addToPersonality(PersonalityTrait.critical);
+        setHomeTown(RoukonTown.NAME);
     }
 }

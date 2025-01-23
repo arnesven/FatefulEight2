@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.UpperThelnTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAG;
@@ -14,5 +15,6 @@ public class VendelaGawainsCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.anxious);
         addToPersonality(PersonalityTrait.friendly);
+        setHomeTown(UpperThelnTown.NAME);
     }
 }

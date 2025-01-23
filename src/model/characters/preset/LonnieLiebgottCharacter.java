@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.UrnTownTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.THF;
@@ -14,5 +15,6 @@ public class LonnieLiebgottCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.playful);
         addToPersonality(PersonalityTrait.mischievous);
+        setHomeTown(UrnTownTown.NAME);
     }
 }

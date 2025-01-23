@@ -2,6 +2,8 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.BullsVilleTown;
+import model.map.locations.LowerThelnTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.BRD;
@@ -14,5 +16,6 @@ public class ThorbaltRamcrownCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.narcissistic);
         addToPersonality(PersonalityTrait.critical);
         addToPersonality(PersonalityTrait.friendly);
+        setHomeTown(BullsVilleTown.NAME);
     }
 }

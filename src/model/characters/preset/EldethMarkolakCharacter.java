@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.AshtonshireTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
@@ -14,5 +15,6 @@ public class EldethMarkolakCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.prudish);
         addToPersonality(PersonalityTrait.gluttonous);
         addToPersonality(PersonalityTrait.naive);
+        setHomeTown(AshtonshireTown.NAME);
     }
 }

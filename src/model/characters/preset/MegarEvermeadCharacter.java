@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.RoukonTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MIN;
@@ -14,5 +15,6 @@ public class MegarEvermeadCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.benevolent);
         addToPersonality(PersonalityTrait.brave);
         addToPersonality(PersonalityTrait.irritable);
+        setHomeTown(RoukonTown.NAME);
     }
 }

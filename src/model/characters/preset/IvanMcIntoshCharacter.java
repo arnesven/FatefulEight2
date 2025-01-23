@@ -3,6 +3,7 @@ package model.characters.preset;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SheffieldTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MIN;
@@ -15,5 +16,6 @@ public class IvanMcIntoshCharacter extends GameCharacter {
         addToPersonality(PersonalityTrait.generous);
         addToPersonality(PersonalityTrait.forgiving);
         addToPersonality(PersonalityTrait.calm);
+        setHomeTown(SheffieldTown.NAME);
     }
 }

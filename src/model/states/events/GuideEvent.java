@@ -12,6 +12,10 @@ import java.util.List;
 public class GuideEvent extends DailyEventState {
     private final int cost;
 
+    public interface GuideTalkInterface {
+        void guideTalk(String line);
+    }
+
     public GuideEvent(Model model, int cost) {
         super(model);
         this.cost = cost;
@@ -38,6 +42,15 @@ public class GuideEvent extends DailyEventState {
         model.getParty().addToGold(-cost);
         portraitSay("Thank you! Now where would you like to go?");
         leaderSay("You tell me. What are the sights?");
+        chooseFromGuidableEvents(model, this::portraitSay);
+    }
+
+    private void decline(Model model) {
+        model.getParty().randomPartyMemberSay(model, List.of("I'm sure we'll find it ourselves."));
+        portraitSay("Of course. You lot look like you're on top of things.");
+    }
+
+    public void chooseFromGuidableEvents(Model model, GuideTalkInterface talkFunc) {
         List<DailyEventState> events = new ArrayList<>();
         int numberOfEvents = MyRandom.randInt(4, 6);
         while (events.size() < numberOfEvents) {
@@ -48,22 +61,17 @@ public class GuideEvent extends DailyEventState {
             }
         }
 
-        portraitSay("Let's see... ");
+        talkFunc.guideTalk("Let's see... ");
         for (DailyEventState event : events) {
-            portraitSay(event.getGuideData().getDescription() + ".");
+            talkFunc.guideTalk(event.getGuideData().getDescription() + ".");
         }
-        portraitSay("Any of that sound interesting?");
+        talkFunc.guideTalk("Any of that sound interesting?");
         List<String> options = MyLists.transform(events, (DailyEventState ev) -> ev.getGuideData().getName());
         int result = multipleOptionArrowMenu(model, 24, 12, options);
         leaderSay("I think we'll " + events.get(result).getGuideData().getName().toLowerCase() + ".");
-        portraitSay("Okay! Just come with me and I'll show you where it is.");
+        talkFunc.guideTalk("Okay! Just come with me and I'll show you where it is.");
         model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);
         events.get(result).doTheEvent(model);
-    }
-
-    private void decline(Model model) {
-        model.getParty().randomPartyMemberSay(model, List.of("I'm sure we'll find it ourselves."));
-        portraitSay("Of course. You lot look like you're on top of things.");
     }
 }

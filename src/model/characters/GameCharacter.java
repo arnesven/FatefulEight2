@@ -24,6 +24,7 @@ import model.items.weapons.NaturalWeapon;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.VampireClawsWeapon;
 import model.items.weapons.Weapon;
+import model.map.UrbanLocation;
 import model.races.ColoredRace;
 import model.races.Race;
 import model.states.CombatEvent;
@@ -69,6 +70,7 @@ public class GameCharacter extends Combatant {
     private final Map<GameCharacter, Integer> attitudes = new HashMap<>();
     private final Personality personality;
     private final SpellMasteries spellMasteries = new SpellMasteries();
+    private String homeTownName = null;
 
     public GameCharacter(String firstName, String lastName, Race race, CharacterClass charClass, CharacterAppearance appearance,
                          CharacterClass[] classes, Equipment equipment) {
@@ -845,5 +847,20 @@ public class GameCharacter extends Combatant {
     public int getCarryCap() {
         int conditionBonus = MyLists.intAccumulate(getConditions(), Condition::getCarryCapBonus);
         return getRace().getCarryingCapacity() + conditionBonus;
+    }
+
+    public void setHomeTown(String townOrCastleName) {
+        this.homeTownName = townOrCastleName;
+    }
+
+    public boolean hasHomeTown() {
+        return homeTownName != null;
+    }
+
+    public UrbanLocation getHomeTown(Model model) {
+        if (homeTownName == null) {
+            throw new IllegalStateException("Cannot get home town for character that doesn't have one!");
+        }
+        return model.getWorld().getUrbanLocationByPlaceName(homeTownName);
     }
 }

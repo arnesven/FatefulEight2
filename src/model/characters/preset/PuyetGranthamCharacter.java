@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SaintQuellinTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MIN;
@@ -14,5 +15,6 @@ public class PuyetGranthamCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.stingy);
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.friendly);
+        setHomeTown(SaintQuellinTown.NAME);
     }
 }

@@ -104,6 +104,7 @@ public abstract class WorldHex {
         MyLists.nonNullAdd(conditionalEvents, CaveSpelunkerEvent.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, DwarvenPuzzleTube.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, CrimsonAssassinsInvitationEvent.eventDependentOnMurders(model));
+        MyLists.nonNullAdd(conditionalEvents, HomeTownEvent.eventDependentOnHomeTown(model));
         if (conditionalEvents.isEmpty()) {
             return null;
         }

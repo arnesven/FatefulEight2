@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.UpperThelnTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAR;
@@ -14,5 +15,6 @@ public class PaddyWillowbrushCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.jovial);
         addToPersonality(PersonalityTrait.anxious);
         addToPersonality(PersonalityTrait.naive);
+        setHomeTown(UpperThelnTown.NAME);
     }
 }

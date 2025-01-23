@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.LowerThelnTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.NOB;
@@ -14,5 +15,6 @@ public class DeniseBoydCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.prudish);
         addToPersonality(PersonalityTrait.playful);
         addToPersonality(PersonalityTrait.friendly);
+        setHomeTown(LowerThelnTown.NAME);
     }
 }

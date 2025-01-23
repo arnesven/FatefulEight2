@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.ArkvaleCastle;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.THF;
@@ -14,5 +15,6 @@ public class LorfirBriarfellCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.snobby);
         addToPersonality(PersonalityTrait.cold);
         addToPersonality(PersonalityTrait.calm);
+        setHomeTown(ArkvaleCastle.CASTLE_NAME);
     }
 }

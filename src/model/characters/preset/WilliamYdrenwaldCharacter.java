@@ -3,6 +3,7 @@ package model.characters.preset;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SaintQuellinTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
@@ -15,5 +16,6 @@ public class WilliamYdrenwaldCharacter extends GameCharacter {
         addToPersonality(PersonalityTrait.encouraging);
         addToPersonality(PersonalityTrait.intellectual);
         addToPersonality(PersonalityTrait.benevolent);
+        setHomeTown(SaintQuellinTown.NAME);
     }
 }

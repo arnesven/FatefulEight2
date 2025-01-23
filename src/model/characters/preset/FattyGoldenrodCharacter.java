@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.UpperThelnTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
@@ -14,5 +15,6 @@ public class FattyGoldenrodCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.unkind);
         addToPersonality(PersonalityTrait.rude);
         addToPersonality(PersonalityTrait.cold);
+        setHomeTown(UpperThelnTown.NAME);
     }
 }

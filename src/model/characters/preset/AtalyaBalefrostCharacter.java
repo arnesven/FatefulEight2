@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.CapePaxtonTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
@@ -14,5 +15,6 @@ public class AtalyaBalefrostCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.cowardly);
         addToPersonality(PersonalityTrait.naive);
         addToPersonality(PersonalityTrait.stingy);
+        setHomeTown(CapePaxtonTown.NAME);
     }
 }

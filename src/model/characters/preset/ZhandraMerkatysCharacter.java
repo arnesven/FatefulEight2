@@ -2,6 +2,8 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.LowerThelnTown;
+
 import static model.classes.Classes.*;
 import static model.classes.Classes.MIN;
 import static model.races.Race.SOUTHERN_HUMAN;
@@ -13,5 +15,6 @@ public class ZhandraMerkatysCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.rude);
         addToPersonality(PersonalityTrait.romantic);
         addToPersonality(PersonalityTrait.critical);
+        setHomeTown(LowerThelnTown.NAME);
     }
 }

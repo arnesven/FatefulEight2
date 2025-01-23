@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.EastDurhamTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.WIZ;
@@ -14,5 +15,6 @@ public class LeodorSunshadowCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.unkind);
         addToPersonality(PersonalityTrait.cold);
         addToPersonality(PersonalityTrait.intellectual);
+        setHomeTown(EastDurhamTown.NAME);
     }
 }

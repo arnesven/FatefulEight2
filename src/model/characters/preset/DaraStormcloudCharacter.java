@@ -3,6 +3,7 @@ package model.characters.preset;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.EbonshireTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAR;
@@ -15,5 +16,6 @@ public class DaraStormcloudCharacter extends GameCharacter {
         addToPersonality(PersonalityTrait.greedy);
         addToPersonality(PersonalityTrait.critical);
         addToPersonality(PersonalityTrait.lawful);
+        setHomeTown(EbonshireTown.NAME);
     }
 }

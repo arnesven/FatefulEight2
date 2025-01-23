@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SunblazeCastle;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.THF;
@@ -14,5 +15,6 @@ public class HazelVanDevriesCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.rude);
         addToPersonality(PersonalityTrait.brave);
         addToPersonality(PersonalityTrait.romantic);
+        setHomeTown(SunblazeCastle.CASTLE_NAME);
     }
 }

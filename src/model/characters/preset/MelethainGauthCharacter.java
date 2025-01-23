@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.EbonshireTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAR;
@@ -14,5 +15,6 @@ public class MelethainGauthCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.aggressive);
         addToPersonality(PersonalityTrait.mischievous);
         addToPersonality(PersonalityTrait.romantic);
+        setHomeTown(EbonshireTown.NAME);
     }
 }

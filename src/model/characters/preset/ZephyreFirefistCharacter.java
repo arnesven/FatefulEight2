@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.RoukonTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAG;
@@ -14,5 +15,6 @@ public class ZephyreFirefistCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.prudish);
         addToPersonality(PersonalityTrait.diplomatic);
         addToPersonality(PersonalityTrait.generous);
+        setHomeTown(RoukonTown.NAME);
     }
 }

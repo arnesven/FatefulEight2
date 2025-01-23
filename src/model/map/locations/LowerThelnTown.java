@@ -10,8 +10,10 @@ import java.awt.*;
 import java.util.List;
 
 public class LowerThelnTown extends TownLocation {
+    public static final String NAME = "Lower Theln";
+
     public LowerThelnTown() {
-        super("Lower Theln", "Mayor Engels", true);
+        super(NAME, "Mayor Engels", true);
     }
 
     @Override

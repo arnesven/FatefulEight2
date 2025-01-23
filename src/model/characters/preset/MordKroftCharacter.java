@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.LittleErindeTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAR;
@@ -14,5 +15,6 @@ public class MordKroftCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.jovial);
         addToPersonality(PersonalityTrait.romantic);
         addToPersonality(PersonalityTrait.gluttonous);
+        setHomeTown(LittleErindeTown.NAME);
     }
 }

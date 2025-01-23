@@ -2,6 +2,8 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SunblazeCastle;
+
 import static model.classes.Classes.*;
 import static model.classes.Classes.NOB;
 import static model.races.Race.WOOD_ELF;
@@ -13,5 +15,6 @@ public class RiboxAnariCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.irritable);
         addToPersonality(PersonalityTrait.aggressive);
         addToPersonality(PersonalityTrait.friendly);
+        setHomeTown(SunblazeCastle.CASTLE_NAME);
     }
 }

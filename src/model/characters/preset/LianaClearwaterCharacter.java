@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.CapePaxtonTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SPY;
@@ -14,5 +15,6 @@ public class LianaClearwaterCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.encouraging);
         addToPersonality(PersonalityTrait.diplomatic);
         addToPersonality(PersonalityTrait.prudish);
+        setHomeTown(CapePaxtonTown.NAME);
     }
 }

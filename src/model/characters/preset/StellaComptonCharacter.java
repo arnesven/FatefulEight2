@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.ArdhCastle;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SPY;
@@ -14,5 +15,6 @@ public class StellaComptonCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.aggressive);
         addToPersonality(PersonalityTrait.romantic);
         addToPersonality(PersonalityTrait.narcissistic);
+        setHomeTown(ArdhCastle.CASTLE_NAME);
     }
 }

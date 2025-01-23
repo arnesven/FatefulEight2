@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.AckervilleTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.WIZ;
@@ -14,5 +15,6 @@ public class EthelthaneVeldtCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.cowardly);
         addToPersonality(PersonalityTrait.forgiving);
         addToPersonality(PersonalityTrait.calm);
+        setHomeTown(AckervilleTown.NAME);
     }
 }

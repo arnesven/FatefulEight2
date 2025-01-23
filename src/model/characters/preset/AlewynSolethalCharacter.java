@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.BogdownCastle;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.MAG;
@@ -14,5 +15,6 @@ public class AlewynSolethalCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.jovial);
         addToPersonality(PersonalityTrait.diplomatic);
         addToPersonality(PersonalityTrait.greedy);
+        setHomeTown(BogdownCastle.CASTLE_NAME);
     }
 }

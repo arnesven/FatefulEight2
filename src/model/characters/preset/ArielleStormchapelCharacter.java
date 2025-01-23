@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.EastDurhamTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.PAL;
@@ -14,5 +15,6 @@ public class ArielleStormchapelCharacter extends model.characters.GameCharacter 
         addToPersonality(PersonalityTrait.snobby);
         addToPersonality(PersonalityTrait.jovial);
         addToPersonality(PersonalityTrait.romantic);
+        setHomeTown(EastDurhamTown.NAME);
     }
 }

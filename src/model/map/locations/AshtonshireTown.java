@@ -9,8 +9,10 @@ import java.awt.*;
 import java.util.List;
 
 public class AshtonshireTown extends TownLocation {
+    public static final String NAME = "Ashtonshire";
+
     public AshtonshireTown() {
-        super("Ashtonshire", "Sheriff Alderborne", false);
+        super(NAME, "Sheriff Alderborne", false);
     }
 
     @Override

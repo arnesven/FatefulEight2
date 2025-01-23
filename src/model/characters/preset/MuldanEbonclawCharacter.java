@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.AckervilleTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.SOR;
@@ -14,5 +15,6 @@ public class MuldanEbonclawCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.stingy);
         addToPersonality(PersonalityTrait.diplomatic);
         addToPersonality(PersonalityTrait.forgiving);
+        setHomeTown(AckervilleTown.NAME);
     }
 }

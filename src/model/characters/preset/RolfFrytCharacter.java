@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SouthMeadhomeTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.WIT;
@@ -14,5 +15,6 @@ public class RolfFrytCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.unkind);
         addToPersonality(PersonalityTrait.gluttonous);
         addToPersonality(PersonalityTrait.snobby);
+        setHomeTown(SouthMeadhomeTown.NAME);
     }
 }

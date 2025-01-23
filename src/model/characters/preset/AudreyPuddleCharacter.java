@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.UrnTownTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.ART;
@@ -14,5 +15,6 @@ public class AudreyPuddleCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.cowardly);
         addToPersonality(PersonalityTrait.playful);
         addToPersonality(PersonalityTrait.encouraging);
+        setHomeTown(UrnTownTown.NAME);
     }
 }

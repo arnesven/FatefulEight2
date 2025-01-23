@@ -2,6 +2,7 @@ package model.characters.preset;
 
 import model.characters.PersonalityTrait;
 import model.classes.CharacterClass;
+import model.map.locations.SouthMeadhomeTown;
 
 import static model.classes.Classes.*;
 import static model.classes.Classes.CAP;
@@ -14,5 +15,6 @@ public class HurinHammerfallCharacter extends model.characters.GameCharacter {
         addToPersonality(PersonalityTrait.encouraging);
         addToPersonality(PersonalityTrait.friendly);
         addToPersonality(PersonalityTrait.calm);
+        setHomeTown(SouthMeadhomeTown.NAME);
     }
 }
