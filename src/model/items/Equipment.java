@@ -208,4 +208,8 @@ public class Equipment implements Serializable {
     public boolean applyArmorToMagicAttacks() {
         return clothing instanceof MytheriumArmor;
     }
+
+    public int getTotalCost() {
+        return weapon.getCost() + clothing.getCost() + (accessory != null ? accessory.getCost() : 0);
+    }
 }

@@ -90,7 +90,6 @@ public abstract class AdvancedDailyActionState extends GameState {
                     }
                 }
             }
-            System.out.println("Advanced daily action loop");
         }
 
         return daily.getDailyAction(model, this);
