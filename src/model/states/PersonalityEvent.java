@@ -17,7 +17,7 @@ public class PersonalityEvent extends DailyEventState {
     private static final String KEY_PREFIX = "PersonalityEvent-";
     private PersonalityTraitEvent innerEvent = null;
 
-    public PersonalityEvent(Model model) {
+    private PersonalityEvent(Model model) {
         super(model);
         System.out.println("Generating Personality Event.");
         List<GameCharacter> candidates = MyLists.filter(model.getParty().getPartyMembers(),
@@ -42,6 +42,14 @@ public class PersonalityEvent extends DailyEventState {
         if (innerEvent == null) {
             System.out.println("No event generated.");
         }
+    }
+
+    public static PersonalityEvent makeEvent(Model model) {
+        PersonalityEvent event = new PersonalityEvent(model);
+        if (event.innerEvent == null) {
+            return null;
+        }
+        return event;
     }
 
     private boolean alreadyUsedTrait(Model model, PersonalityTrait pt) {

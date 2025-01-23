@@ -105,6 +105,7 @@ public abstract class WorldHex {
         MyLists.nonNullAdd(conditionalEvents, DwarvenPuzzleTube.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, CrimsonAssassinsInvitationEvent.eventDependentOnMurders(model));
         MyLists.nonNullAdd(conditionalEvents, HomeTownEvent.eventDependentOnHomeTown(model));
+        MyLists.nonNullAdd(conditionalEvents, PersonalityEvent.makeEvent(model));
         if (conditionalEvents.isEmpty()) {
             return null;
         }
@@ -434,7 +435,6 @@ public abstract class WorldHex {
                 new PartySalaryEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
-                new PersonalityEvent(model),
                 new CheckForVampireEvent(model)
                 // TODO: Two Party members fall in love and want to settle down
         ));
