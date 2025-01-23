@@ -8,6 +8,7 @@ import model.classes.SkillCheckResult;
 import model.items.spells.LevitateSpell;
 import model.items.spells.Spell;
 import model.states.DailyEventState;
+import util.MyLists;
 import util.MyRandom;
 import view.subviews.CollapsingTransition;
 import view.subviews.ImageSubView;
@@ -96,12 +97,7 @@ public abstract class RiverEvent extends DailyEventState {
     }
 
     private Spell getLevitateSpell(Model model) {
-        for (Spell sp : model.getParty().getInventory().getSpells()) {
-            if (sp instanceof LevitateSpell) {
-                return sp;
-            }
-        }
-        return null;
+        return MyLists.find(model.getParty().getSpells(), sp -> sp instanceof LevitateSpell);
     }
 
     protected abstract void doRiverEvent(Model model);

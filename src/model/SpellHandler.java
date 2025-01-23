@@ -40,7 +40,7 @@ public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
     }
 
     public void acceptSkillBoostingSpells(Party party, Skill skill) {
-        for (Spell spell : party.getInventory().getSpells()) {
+        for (Spell spell : party.getSpells()) {
             if (spell instanceof SkillBoostingSpell && ((SkillBoostingSpell) spell).boostsSkill(skill)) {
                 acceptSpell(spell.getName());
             }

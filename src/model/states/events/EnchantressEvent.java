@@ -369,7 +369,7 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     private boolean hasSpell(Model model, Class<MindControlSpell> mindControlSpellClass) {
-        for (Spell sp : model.getParty().getInventory().getSpells()) {
+        for (Spell sp : model.getParty().getSpells()) {
             if (sp.getClass().isAssignableFrom(mindControlSpellClass)) {
                 return true;
             }

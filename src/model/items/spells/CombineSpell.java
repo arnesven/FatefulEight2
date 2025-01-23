@@ -96,7 +96,7 @@ public class CombineSpell extends AuxiliarySpell {
     private List<Spell> findUniqueSpells(Model model) {
         List<Spell> result = new ArrayList<>();
         Set<String> set = new HashSet<>();
-        for (Spell sp : model.getParty().getInventory().getSpells()) {
+        for (Spell sp : model.getParty().getSpells()) {
             if (isCombatSpell(sp) && !set.contains(sp.getName())) {
                 result.add(sp);
                 set.add(sp.getName());

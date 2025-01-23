@@ -80,6 +80,7 @@ public class Party implements Serializable {
     private Headquarters headquarters = null;
     private boolean drawPartyVertically = false;
     private final List<DiscoveredRoute> discoveredRoutes = new ArrayList<>();
+    private final List<Item> permanentlyLearnedItems = new ArrayList<>();
 
     public Party() {
         cursorSprites = makeCursorSprites();
@@ -1014,5 +1015,17 @@ public class Party implements Serializable {
 
     public HeldQuestData getHeldDataFor(Quest quest) {
         return heldQuests.get(quest.getName());
+    }
+
+    public void permanentlyLearn(Item it) {
+        permanentlyLearnedItems.add(it);
+    }
+
+    public List<Spell> getSpells() {
+        List<Spell> spells = new ArrayList<>(inventory.getSpells());
+        spells.addAll(MyLists.transform(MyLists.filter(permanentlyLearnedItems,
+                it -> it instanceof Spell),
+                it -> (Spell)it));
+        return spells;
     }
 }

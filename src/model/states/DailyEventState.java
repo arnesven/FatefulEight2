@@ -201,7 +201,7 @@ public abstract class DailyEventState extends GameState {
             }
         }
         ResurrectSpell resSpell = null;
-        for (Spell sp : model.getParty().getInventory().getSpells()) {
+        for (Spell sp : model.getParty().getSpells()) {
             if (sp instanceof ResurrectSpell) {
                 resSpell = (ResurrectSpell) sp;
                 options.add("Cast " + resSpell.getName());

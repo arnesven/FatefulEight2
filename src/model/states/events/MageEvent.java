@@ -100,8 +100,8 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
     private boolean favoriteSpell(Model model) {
         if (withIntro) {
             portraitSay("So friend, please tell me, which is your favorite spell?");
-            if (model.getParty().getInventory().getSpells().isEmpty() ||
-                    MyRandom.rollD10() > model.getParty().getInventory().getSpells().size() + 5) {
+            if (model.getParty().getSpells().isEmpty() ||
+                    MyRandom.rollD10() > model.getParty().getSpells().size() + 5) {
                 MyPair<Boolean, GameCharacter> result = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.MagicAny, 6);
                 if (result.first) {
                     Spell wanted = model.getItemDeck().getRandomSpell();
@@ -123,7 +123,7 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
                     randomSayIfPersonality(PersonalityTrait.unkind, new ArrayList<>(), "Hah... you are hardly a prodigy.");
                 }
             } else {
-                leaderSay("Uhm... " + model.getParty().getInventory().getSpells().get(0).getName() + "?");
+                leaderSay("Uhm... " + model.getParty().getSpells().get(0).getName() + "?");
                 portraitSay("Yes, that's an excellent one!");
             }
         }

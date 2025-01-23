@@ -311,14 +311,20 @@ public class InventoryView extends SelectableListMenu {
 
         }
 
+
+        public String getName() {
+            if (itemToEquip instanceof Spell || itemToEquip instanceof Scroll) {
+                return  "Cast";
+            }
+            if (itemToEquip instanceof UsableItem) {
+                return ((UsableItem)itemToEquip).getUsageVerb();
+            }
+            return "Equip";
+        }
+
         @Override
         protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
-            String label = "Equip";
-            if (itemToEquip instanceof Spell || itemToEquip instanceof Scroll) {
-                label = "Cast";
-            } else if (itemToEquip instanceof UsableItem) {
-                label = ((UsableItem)itemToEquip).getUsageVerb();
-            }
+            String label = getName();
             return List.of(new TextDecoration(label+"?", xStart+1, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
         }
 
@@ -410,7 +416,7 @@ public class InventoryView extends SelectableListMenu {
         @Override
         protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
             return List.of(
-                    new SelectableListContent(xStart + 1, yStart + 1, "Equip") {
+                    new SelectableListContent(xStart + 1, yStart + 1, equipItemMenu.getName()) {
                         @Override
                         public void performAction(Model model, int x, int y) {
                             setInnerMenu(equipItemMenu, model);

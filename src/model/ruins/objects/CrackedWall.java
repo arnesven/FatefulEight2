@@ -10,6 +10,7 @@ import model.ruins.themes.DungeonTheme;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
 import sound.SoundEffects;
+import util.MyLists;
 import view.sprites.ExplosionAnimation;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
@@ -58,7 +59,7 @@ public class CrackedWall extends DungeonDoor {
             }
         }
         ErodeSpell erodeSpell = null;
-        for (Spell sp : model.getParty().getInventory().getSpells()) {
+        for (Spell sp : model.getParty().getSpells()) {
             if (sp instanceof ErodeSpell) {
                 erodeSpell = (ErodeSpell) sp;
             }

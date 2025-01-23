@@ -12,6 +12,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import sound.SoundEffects;
 import view.*;
+import view.party.SelectableListMenu;
 import view.sprites.DamageValueEffect;
 
 public abstract class Spell extends Item {
@@ -187,5 +188,29 @@ public abstract class Spell extends Item {
     @Override
     public boolean isSellable() {
         return true;
+    }
+
+    @Override
+    public boolean hasDualUseInMenu() {
+        return true;
+    }
+
+    @Override
+    public String getDualUseLabel() {
+        return "Learn";
+    }
+
+    @Override
+    public SelectableListMenu getDualUseMenu(GameView innerView, int x, int y) {
+        return new YesNoMessageView(innerView,
+                "Are you sure you want to learn " + getName() + " permanently? " +
+                        "This will remove it from your inventory but your party " +
+                        "members will still be able to cast it.") {
+            @Override
+            protected void doAction(Model model) {
+                model.getParty().getInventory().remove(Spell.this);
+                model.getParty().permanentlyLearn(Spell.this);
+            }
+        };
     }
 }

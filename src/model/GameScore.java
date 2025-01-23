@@ -33,7 +33,7 @@ public class GameScore extends HashMap<String, Integer> {
 
     private static Integer spellsCollected(Model model) {
         Set<String> spells = new HashSet<>();
-        for (Spell sp : model.getParty().getInventory().getSpells()) {
+        for (Spell sp : model.getParty().getSpells()) {
             spells.add(sp.getName());
         }
         return spells.size();

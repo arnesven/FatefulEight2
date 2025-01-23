@@ -78,7 +78,7 @@ public class ShopSubView extends TopMenuSubView {
     }
 
     private boolean hasSpell(Model model, Spell it) {
-        return MyLists.find(model.getParty().getInventory().getSpells(),
+        return MyLists.find(model.getParty().getSpells(),
                 (Spell sp) -> sp.getName().equals(it.getName())) != null;
     }
 

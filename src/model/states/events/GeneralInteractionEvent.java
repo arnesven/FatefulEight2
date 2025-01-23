@@ -198,7 +198,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     }
 
     private boolean tryUseTelekinesis(GameCharacter thief) {
-        Spell sp = MyLists.find(getModel().getParty().getInventory().getSpells(),
+        Spell sp = MyLists.find(getModel().getParty().getSpells(),
                 s -> s instanceof TelekinesisSpell);
         if (sp != null) {
             print("Would you like " + thief.getFirstName() + " to use " + sp.getName() +

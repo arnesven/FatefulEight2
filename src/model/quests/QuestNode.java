@@ -47,7 +47,7 @@ public abstract class QuestNode {
         boolean atLeastOneSpell = false;
         for (String spellName : spellCallbacks.keySet()) {
             model.getSpellHandler().acceptSpell(spellName);
-            for (Spell sp : model.getParty().getInventory().getSpells()) {
+            for (Spell sp : model.getParty().getSpells()) {
                 if (sp.getName().equals(spellName)) {
                     atLeastOneSpell = true;
                 }

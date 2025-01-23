@@ -59,7 +59,7 @@ public class KidsWantFireworksEvent extends DailyEventState {
         if (MyLists.any(model.getParty().getPartyMembers(), gc -> invisibilityAbility.possessesAbility(model, gc))) {
             options.add("Go invisible");
         }
-        if (MyLists.any(model.getParty().getInventory().getSpells(), sp -> sp instanceof FireworksSpell)) {
+        if (MyLists.any(model.getParty().getSpells(), sp -> sp instanceof FireworksSpell)) {
             options.add("Do fireworks");
         }
         options.add("Drive kids off");

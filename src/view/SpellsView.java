@@ -53,7 +53,7 @@ public class SpellsView extends SelectableListMenu {
             spellMap.put(color, new ArrayList<>());
         }
 
-        for (Spell spell : model.getParty().getInventory().getSpells()) {
+        for (Spell spell : model.getParty().getSpells()) {
             boolean found = false;
             for (Spell sp : spellMap.get(spell.getColor())) {
                 if (sp.getName().equals(spell.getName())) {
