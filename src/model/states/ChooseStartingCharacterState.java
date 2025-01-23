@@ -3,18 +3,13 @@ package model.states;
 import control.FatefulEight;
 import model.Model;
 import model.characters.GameCharacter;
-import model.horses.HorseItemAdapter;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.clothing.JustClothes;
-import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
-import util.MyRandom;
 import view.*;
-import view.help.TutorialStartDialog;
 import view.party.CharacterCreationView;
-import view.subviews.ArrowMenuSubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,10 +66,10 @@ public class ChooseStartingCharacterState extends GameState {
             }
         }
         println("");
-        model.transitionToDialog(new SelectGameDifficultyView(model));
-
-        print("You have selected your starting character: ");
+        model.transitionToDialog(new SelectInitialSettingsView(model));
         model.getParty().add(gc);
+        print("You have selected your starting character: ");
+        model.getLog().waitForAnimationToFinish();
         println(gc.getFullName() + " the " + gc.getRace().getName() + " " + gc.getCharClass().getFullName() + ".");
         return model.getCurrentHex().getDailyActionState(model);
     }

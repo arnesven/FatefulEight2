@@ -118,17 +118,7 @@ public abstract class StartingCharacterView extends SelectableListMenu {
 
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-        List<ListContent> content = buildContent(model, 0, 0);
-        if (content.get(getSelectedRow()) instanceof CarouselListContent) {
-            CarouselListContent carousel = (CarouselListContent) content.get(getSelectedRow());
-            if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-                carousel.turnLeft(model);
-                madeChanges();
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-                carousel.turnRight(model);
-                madeChanges();
-            }
-        }
+        super.handleCarousels(keyEvent, model);
     }
 
     public GameCharacter getFinalCharacter() {

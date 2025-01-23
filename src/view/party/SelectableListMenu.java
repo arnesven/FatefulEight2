@@ -337,6 +337,22 @@ public abstract class SelectableListMenu extends GameView {
         }
     }
 
+    protected boolean handleCarousels(KeyEvent keyEvent, Model model) {
+        List<ListContent> content = buildContent(model, 0, 0);
+        if (content.get(getSelectedRow()) instanceof CarouselListContent) {
+            CarouselListContent carousel = (CarouselListContent) content.get(getSelectedRow());
+            if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+                carousel.turnLeft(model);
+                madeChanges();
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+                carousel.turnRight(model);
+                madeChanges();
+            }
+            return true;
+        }
+        return false;
+    }
+
     protected static void print(ScreenHandler screenHandler, int x, int y, String text, MyColors fgColor) {
         BorderFrame.drawString(screenHandler, text, x, y, fgColor, MyColors.BLUE);
     }

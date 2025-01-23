@@ -94,18 +94,7 @@ public class JukeboxDialog extends SelectableListMenu {
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setTimeToTransition(true);
         } else {
-            List<ListContent> content = buildContent(model, 0, 0);
-            if (content.get(getSelectedRow()) instanceof CarouselListContent) {
-                CarouselListContent carousel = (CarouselListContent) content.get(getSelectedRow());
-                if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-                    carousel.turnLeft(model);
-                    madeChanges();
-
-                } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    carousel.turnRight(model);
-                    madeChanges();
-                }
-            }
+            super.handleCarousels(keyEvent, model);
             if (getSelectedRow() == 0) {
                 playSelectedSong();
             }

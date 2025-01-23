@@ -126,7 +126,6 @@ public class Model {
         log = new GameLog();
         gameData = new GameData();
         state = new ChooseStartingCharacterState(this);
-        gameData.party.setStartingPosition(MyRandom.sample(WorldBuilder.INN_LOCATIONS));
         System.out.println("Set state to ChooseStartingCharacterState");
         caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
         gameStarted = true;
@@ -558,5 +557,9 @@ public class Model {
 
     public boolean partyIsInOverworldPosition(Point position) {
         return !gameData.inUnderworld && position.equals(getParty().getPosition());
+    }
+
+    public void setStartingPosition(Point position) {
+        gameData.party.setStartingPosition(position);
     }
 }

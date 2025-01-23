@@ -521,18 +521,8 @@ public class CharacterCreationView extends SelectableListMenu {
                 madeChanges();
             }
         }
-        List<ListContent> content = buildContent(model, 0, 0);
-        if (content.get(getSelectedRow()) instanceof CarouselListContent) {
-            CarouselListContent carousel = (CarouselListContent) content.get(getSelectedRow());
-            if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-                carousel.turnLeft(model);
-                madeChanges();
-                rebuildAppearance();
-            } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-                carousel.turnRight(model);
-                madeChanges();
-                rebuildAppearance();
-            }
+        if (super.handleCarousels(keyEvent, model)) {
+            rebuildAppearance();
         }
     }
 
