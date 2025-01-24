@@ -83,6 +83,7 @@ public class DungeonMonster extends CenterDungeonObject {
         if (combat.fled()) {
             exploreRuinsState.println("The monsters chase you out of the dungeon!");
             exploreRuinsState.setDungeonExited(true);
+            enemies.removeIf(Enemy::isDead);
         } else {
             exploreRuinsState.getCurrentRoom().removeObject(this);
             exploreRuinsState.addDefeatedMonster(this);
