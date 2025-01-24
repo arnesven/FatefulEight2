@@ -19,10 +19,14 @@ public class LearnPermanentlyDialog extends YesNoMessageView {
 
     @Override
     protected void doAction(Model model) {
-        model.getParty().getInventory().remove(item);
-        model.getParty().permanentlyLearn(item);
         if (disposeOuter) {
             outerView.setTimeToTransition(true);
+        }
+        boolean success = model.getParty().permanentlyLearn(item);
+        if (success) {
+            model.getParty().getInventory().remove(item);
+        } else {
+            model.transitionToDialog(new SimpleMessageView(this, "You have already learned that."));
         }
     }
 }

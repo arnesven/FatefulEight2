@@ -18,6 +18,7 @@ import model.items.*;
 import model.items.designs.CraftingDesign;
 import model.items.potions.AntidotePotion;
 import model.items.potions.CommonPoison;
+import model.items.potions.HealthPotion;
 import model.items.spells.*;
 import model.items.weapons.CalixaberSword;
 import model.items.weapons.Claymore;
@@ -1021,8 +1022,12 @@ public class Party implements Serializable {
         return heldQuests.get(quest.getName());
     }
 
-    public void permanentlyLearn(Item it) {
-        permanentlyLearnedItems.add(it);
+    public boolean permanentlyLearn(Item it) {
+        if (!MyLists.any(permanentlyLearnedItems, it2 -> it2.getName().equals(it.getName()))) {
+            permanentlyLearnedItems.add(it);
+            return true;
+        }
+        return false;
     }
 
     public List<Spell> getSpells() {
