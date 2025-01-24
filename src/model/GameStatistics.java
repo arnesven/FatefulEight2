@@ -360,4 +360,8 @@ public class GameStatistics {
     public static int getPotionsBrewed() { return get("potionsbrewed"); }
 
     public static void incrementPotionsBrewed() { increment("potionsbrewed", 1);}
+
+    public static int getMagicDuels() { return get("magicduels"); }
+
+    public static void incrementMagicDuels() { increment("magicduels", 1);}
 }

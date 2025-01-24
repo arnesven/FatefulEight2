@@ -1,5 +1,6 @@
 package model.states.duel;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
@@ -109,6 +110,7 @@ public class MagicDuelEvent extends DailyEventState {
                 model.getTutorial().magicDuels(model);
             }
         }
+        GameStatistics.incrementMagicDuels();
 
         SetupMagicDuelSubView setupSubview = new SetupMagicDuelSubView(opponent, selectedCharacter,
                 showOpposColor ? opposColor : null,
