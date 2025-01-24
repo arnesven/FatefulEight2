@@ -417,7 +417,7 @@ public class BrrbitsReward extends Quest {
         public QuestEdge run(Model model, QuestState state) {
             state.println("The thick forest you've been traveling through has now become more of a swamp.");
             state.println("Suddenly, strange gelatinous blobs appear all around the party.");
-            state.leaderSay("Uh-oh, those blobs look vicious. We've better protected " + FROGMAN_NAME +
+            state.leaderSay("Uh-oh, those blobs look vicious. We've better protect " + FROGMAN_NAME +
                     " if we ever want to find out where he's taking us.");
             theme = new GrassCombatTheme();
             return super.run(model, state);

@@ -46,7 +46,7 @@ public class RestoreMansionTask extends SummonTask {
             portraitSay("There are numerous my friend! Hiring fees, permit costs, window-tax...");
             randomSayIfPersonality(PersonalityTrait.stingy, new ArrayList<>(), "Oh come on...");
         }
-        print("How would you like to help the " + location.getLordTitle() + "?");
+        println("How would you like to help the " + location.getLordTitle() + "?");
         int chosen = multipleOptionArrowMenu(model, 24, 24, List.of("Demolish mansion", "Pay materials and gold", "Not now"));
         if (chosen == 0) {
             leaderSay("Sounds like the cost would be far greater than the gain. But we will tear the building down for you.");
