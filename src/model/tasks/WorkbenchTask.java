@@ -12,17 +12,17 @@ import util.MyStrings;
 
 import java.awt.*;
 
-public abstract class CraftItemTask extends DestinationTask {
+public abstract class WorkbenchTask extends DestinationTask {
     private final String verb;
 
-    public CraftItemTask(String verb) {
+    public WorkbenchTask(String verb) {
         super(null, "Use the work bench in a town or castle to " + verb + " an item.");
         this.verb = verb;
     }
 
     public static DailyEventState makeFirstTimeAtCraftingBenchEvent(Model model) {
         if (model.getCurrentHex().getLocation() instanceof UrbanLocation &&
-            !MyLists.any(model.getParty().getDestinationTasks(), dt -> dt instanceof CraftItemTask)) {
+            !MyLists.any(model.getParty().getDestinationTasks(), dt -> dt instanceof WorkbenchTask)) {
             return new CraftItemTaskEvent(model);
         }
         return null;
@@ -72,38 +72,50 @@ public abstract class CraftItemTask extends DestinationTask {
             leaderSay("Looks like somebody has left some useful stuff here. Maybe we can make something out of it?");
             println("You gain 3 materials.");
             model.getParty().getInventory().addToMaterials(3);
-            model.getParty().addDestinationTask(new CraftItemTask("craft") {
-                @Override
-                public boolean isCompleted() {
-                    return GameStatistics.getItemsCrafted() > 0;
-                }
-            });
-            model.getParty().addDestinationTask(new CraftItemTask("upgrade") {
-                @Override
-                public boolean isCompleted() {
-                    return GameStatistics.getItemsUpgraded() > 0;
-                }
-            });
+            model.getParty().addDestinationTask(new CraftItemTask());
+            model.getParty().addDestinationTask(new UpgradeItemTask());
             JournalEntry.printJournalUpdateMessage(model);
             model.getLog().waitForAnimationToFinish();
+        }
+    }
+
+    private static class UpgradeItemTask extends WorkbenchTask {
+        public UpgradeItemTask() {
+            super("upgrade");
+        }
+
+        @Override
+        public boolean isCompleted() {
+            return GameStatistics.getItemsUpgraded() > 0;
+        }
+    }
+
+    private static class CraftItemTask extends WorkbenchTask {
+        public CraftItemTask() {
+            super("craft");
+        }
+
+        @Override
+        public boolean isCompleted() {
+            return GameStatistics.getItemsCrafted() > 0;
         }
     }
 
     private class CraftItemJorunalEntry implements JournalEntry {
         @Override
         public String getName() {
-            return MyStrings.capitalize(CraftItemTask.this.verb) + " an item.";
+            return MyStrings.capitalize(WorkbenchTask.this.verb) + " an item.";
         }
 
         @Override
         public String getText() {
-            return CraftItemTask.this.getDestinationDescription() +
+            return WorkbenchTask.this.getDestinationDescription() +
                     (isComplete() ? "\n\nCompleted" : "");
         }
 
         @Override
         public boolean isComplete() {
-            return CraftItemTask.this.isCompleted();
+            return WorkbenchTask.this.isCompleted();
         }
 
         @Override

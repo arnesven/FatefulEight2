@@ -364,4 +364,8 @@ public class GameStatistics {
     public static int getMagicDuels() { return get("magicduels"); }
 
     public static void incrementMagicDuels() { increment("magicduels", 1);}
+
+    public static int getPotionsDistilled() { return get("potionsdistilled"); }
+
+    public static void incrementPotionsDistilled() { increment("potionsdistilled", 1);}
 }

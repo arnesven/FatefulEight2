@@ -173,6 +173,7 @@ public class StatisticsView extends SelectableListMenu {
         }
 
         result.add(makeIntLine(leftColumn, row++, "Potions brewed", GameStatistics.getPotionsBrewed()));
+        result.add(makeIntLine(leftColumn, row++, "Potions distilled", GameStatistics.getPotionsDistilled()));
         List<String> recipes = MyLists.transform(model.getParty().getLearnedPotionRecipes(),
                 pr -> pr.getBrewable().getName());
         if (recipes.size() > 0) {

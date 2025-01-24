@@ -181,6 +181,7 @@ public class AlchemySpell extends ImmediateSpell {
                 model.getParty().partyMemberSay(model, caster, List.of("I've got it!", "Eureka!", "That's it!",
                         "Finally!", "I understand now.", "Of course, it makes sense now."));
             }
+            GameStatistics.incrementPotionsDistilled();
         } else {
             int cost = ingredientCost;
             state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
