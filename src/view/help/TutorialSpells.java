@@ -15,7 +15,8 @@ public class TutorialSpells extends ExpandableHelpDialog {
             "Combat spells can be cast in combat and are either straight-out attacks " +
             "or have some other negative or positive effect on the target.\n\n" +
             "Non-combat spells can be cast in different situations, like during events, quests " +
-            "or other game phases. Non-combat spells are cast from the Inventory or Spell Menu.";
+            "or other game phases. Non-combat spells are cast from the Inventory or Spell Menu.\n\n" +
+            "Spells can be learned permanently, see Learning.";
 
     public TutorialSpells(GameView view) {
         super(view, "Spells", TEXT, false);

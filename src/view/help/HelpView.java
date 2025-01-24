@@ -168,6 +168,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
                 new HotKeysHelpChapter(null),
                 new ImbuementsHelpChapter(null),
                 new TutorialLeaderDialog(null),
+                new LearningHelpChapter(null),
                 new TutorialLoans(null),
                 new TutorialMagicDuels(null),
                 new TutorialNotoriety(null),
