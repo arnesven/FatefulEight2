@@ -24,8 +24,7 @@ public class SpecialDeliveryQuest extends MainQuest {
     public static final String QUEST_NAME = "Special Delivery";
     private static final String INTRO_TEXT = "You note down the details about the witch's client. " +
             "Wary of the 'third party', you set out to deliver the special potion.";
-    private static final String END_TEXT = "Having delivered the potion, you return to the witch. " +
-            "In addition to the information you want she agrees to give you a portion of the payment of the potion.";
+    private static final String END_TEXT = "Having delivered the potion, you've been given a portion of the payment for the potion.";
     private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
     private boolean fightInTown;
 

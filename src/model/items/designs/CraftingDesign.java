@@ -37,8 +37,8 @@ public class CraftingDesign extends WeightlessItem {
 
     @Override
     public boolean isCraftable() {
-        return false;
-    }
+        return true;
+    } // Enables crafting of the inner item
 
     @Override
     public boolean isSellable() {

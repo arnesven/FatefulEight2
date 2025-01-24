@@ -60,12 +60,12 @@ public class CraftItemState extends GameState {
         for (Item it : allItems) {
             if (it instanceof CraftingDesign) {
                 int cost = calculateCost((CraftingDesign) it);
-                if (model.getParty().getInventory().getMaterials() > cost) {
+                if (model.getParty().getInventory().getMaterials() >= cost) {
                     optionNames.add(((CraftingDesign)it).getCraftableName() + " (" + cost + ")");
                 }
             } else {
                 int cost = calculateCost(it);
-                if (model.getParty().getInventory().getMaterials() > cost) {
+                if (model.getParty().getInventory().getMaterials() >= cost) {
                     optionNames.add(it.getName() + " (" + cost + ")");
                 }
             }

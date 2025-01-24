@@ -51,7 +51,7 @@ public class MusicalPerformanceInnWork extends InnWorkAction {
             state.println("And plays a lovely tune. Some patrons sing along with the song. When it's over there " +
                     "are definitely more people in the tavern than earlier.");
         } else if (result.isSuccessful()) {
-            state.println("And plays a nice little melody on " + GameState.hisOrHer(gc.getGender())+ " instrument." +
+            state.println("And plays a nice little melody on " + GameState.hisOrHer(gc.getGender())+ " instrument. " +
                     "The patrons seem pleased and when it's over and there " +
                     "are more of them in the tavern than earlier.");
         }
