@@ -5,6 +5,7 @@ import model.TimeOfDay;
 import model.actions.*;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.states.dailyaction.FindResourcesDailyAction;
+import model.tasks.CraftItemTask;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import view.combat.TownCombatTheme;
@@ -105,7 +106,7 @@ public abstract class WorldHex {
         MyLists.nonNullAdd(conditionalEvents, DwarvenPuzzleTube.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, CrimsonAssassinsInvitationEvent.eventDependentOnMurders(model));
         MyLists.nonNullAdd(conditionalEvents, HomeTownEvent.eventDependentOnHomeTown(model));
-        MyLists.nonNullAdd(conditionalEvents, PersonalityEvent.makeEvent(model));
+        MyLists.nonNullAdd(conditionalEvents, CraftItemTask.makeFirstTimeAtCraftingBenchEvent(model));
         if (conditionalEvents.isEmpty()) {
             return null;
         }
@@ -435,7 +436,8 @@ public abstract class WorldHex {
                 new PartySalaryEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
                 new PartyMemberWantsToLeaveEvent(model),
-                new CheckForVampireEvent(model)
+                new CheckForVampireEvent(model),
+                new PersonalityEvent(model)
                 // TODO: Two Party members fall in love and want to settle down
         ));
     }
