@@ -95,8 +95,8 @@ public class AssassinationDestinationTask extends DestinationTask {
 
     public static AssassinationDestinationTask getInfoBrokerTask(Model model) {
         return (AssassinationDestinationTask) MyLists.find(model.getParty().getDestinationTasks(),
-                dt -> model.partyIsInOverworldPosition(dt.getPosition()) &&
-                        dt instanceof AssassinationDestinationTask &&
+                dt -> dt instanceof AssassinationDestinationTask &&
+                        model.partyIsInOverworldPosition(dt.getPosition()) &&
                         !dt.isCompleted() &&
                         !dt.isFailed(model) &&
                         ((AssassinationDestinationTask) dt).getWrit().isInfoBrokerFound());

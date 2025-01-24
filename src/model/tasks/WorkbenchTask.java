@@ -104,7 +104,7 @@ public abstract class WorkbenchTask extends DestinationTask {
     private class CraftItemJorunalEntry implements JournalEntry {
         @Override
         public String getName() {
-            return MyStrings.capitalize(WorkbenchTask.this.verb) + " an item.";
+            return MyStrings.capitalize(WorkbenchTask.this.verb) + " an item";
         }
 
         @Override

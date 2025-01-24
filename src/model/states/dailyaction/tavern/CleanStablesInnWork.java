@@ -13,7 +13,7 @@ public class CleanStablesInnWork extends InnWorkAction {
         state.println("You spend the rest of the day cleaning up the filthy stables.");
         boolean success = model.getParty().doCollaborativeSkillCheck(model, state, Skill.Labor, 5);
         if (success) {
-            state.bartenderSay(model, "Wow! I'm sure the ponies will be please. Good work. Here's your pay.");
+            state.bartenderSay(model, "Wow! I'm sure the ponies will be pleased. Good work. Here's your pay.");
             model.getParty().addToGold(5);
             state.println("You got 5 gold.");
         } else {
