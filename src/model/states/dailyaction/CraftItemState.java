@@ -61,7 +61,7 @@ public class CraftItemState extends GameState {
             if (it instanceof CraftingDesign) {
                 int cost = calculateCost((CraftingDesign) it);
                 if (model.getParty().getInventory().getMaterials() >= cost) {
-                    optionNames.add(((CraftingDesign)it).getCraftableName() + " (" + cost + ")");
+                    optionNames.add(((CraftingDesign)it).getCraftableName() + " (d/" + cost + ")");
                 }
             } else {
                 int cost = calculateCost(it);
