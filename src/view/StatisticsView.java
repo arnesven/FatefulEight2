@@ -106,7 +106,7 @@ public class StatisticsView extends SelectableListMenu {
             Headquarters hq = model.getParty().getHeadquarters();
             result.add(makeTitleLine(leftColumn, row++, "HEADQUARTERS"));
             result.add(makeStringLine(leftColumn, row++, 24, 32, "Location", hq.getLocationName().replace("the", "")));
-            result.add(makeStringLine(leftColumn, row++, 44, 12, "Size", HeadquarterAppearanceGetSizeName(hq.getSize())));
+            result.add(makeStringLine(leftColumn, row++, 44, 12, "Size", hq.getSizeName()));
             String hqChars = hq.getCharacters().size() + "/" + hq.getMaxCharacters();
             result.add(makeStringLine(leftColumn, row++, 46, 10, "Characters", hqChars));
         }
@@ -176,23 +176,6 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Horse races participated in", GameStatistics.getHorseRaces()));
 
         return result;
-    }
-
-    private String HeadquarterAppearanceGetSizeName(int size) {
-        switch (size) { // TODO: Move to HeadquartersAppearance (breaks save)
-            case SMALL_SIZE:
-                return "Small";
-            case MEDIUM_SIZE:
-                return "Medium";
-            case LARGE_SIZE:
-                return "Large";
-            case GRAND_SIZE:
-                return "Grand";
-            case MAJESTIC_SIZE:
-                return "Majestic";
-            default:
-                throw new IllegalArgumentException("Headquarters size not supporter: " + size);
-        }
     }
 
     private ListContent makeTitleLine(int leftColumn, int row, String text) {

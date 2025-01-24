@@ -49,6 +49,10 @@ public abstract class Item implements Serializable, Comparable<Item> {
     public abstract boolean isCraftable();
     public abstract boolean isSellable();
 
+    public boolean isStackable() {
+        return false;
+    }
+
     public int getSpeedModifier() {
         return 0;
     }

@@ -20,6 +20,11 @@ public abstract class Potion extends UsableItem {
         return true;
     }
 
+    @Override
+    public boolean isStackable() {
+        return true;
+    }
+
     static String getPotionPrefixForHigherTier(int tier) {
         switch (tier) {
             case 1:

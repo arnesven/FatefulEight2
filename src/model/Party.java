@@ -19,6 +19,7 @@ import model.items.designs.CraftingDesign;
 import model.items.potions.AntidotePotion;
 import model.items.potions.CommonPoison;
 import model.items.spells.*;
+import model.items.weapons.CalixaberSword;
 import model.items.weapons.Claymore;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;

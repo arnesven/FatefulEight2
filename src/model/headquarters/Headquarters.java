@@ -332,4 +332,21 @@ public class Headquarters implements Serializable {
         newHQ.getItems().addAll(getItems());
         getItems().clear();
     }
+
+    public String getSizeName() {
+        switch (size) {
+            case SMALL_SIZE:
+                return "Small";
+            case MEDIUM_SIZE:
+                return "Medium";
+            case LARGE_SIZE:
+                return "Large";
+            case GRAND_SIZE:
+                return "Grand";
+            case MAJESTIC_SIZE:
+                return "Majestic";
+            default:
+                throw new IllegalArgumentException("Headquarters size not supporter: " + size);
+        }
+    }
 }

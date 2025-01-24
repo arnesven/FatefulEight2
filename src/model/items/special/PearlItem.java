@@ -33,6 +33,11 @@ public abstract class PearlItem extends WeightlessItem {
     }
 
     @Override
+    public boolean isStackable() {
+        return true;
+    }
+
+    @Override
     public String getSound() {
         return "wood-small";
     }

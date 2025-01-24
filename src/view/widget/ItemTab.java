@@ -38,7 +38,7 @@ public abstract class ItemTab {
     private Map<Item, Integer> makeItemMap(Model model) {
         Map<Item, Integer> result = new HashMap<>();
         for (Item it : getItemsFromSource(model)) {
-            if (isStackable(it)) {
+            if (it.isStackable()) {
                 Item other = MyLists.find(new ArrayList<>(result.keySet()), it2 -> it2.getName().equals(it.getName()));
                 if (other != null) {
                     result.put(other, result.get(other) + 1);
@@ -51,11 +51,6 @@ public abstract class ItemTab {
         }
         return result;
     }
-
-    private boolean isStackable(Item it) {
-        return it instanceof Potion || it instanceof PearlItem; // TODO: Move to item classes.
-    }
-
     public void invalidate() {
         cachedMap = null;
     }
