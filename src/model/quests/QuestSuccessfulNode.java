@@ -63,8 +63,8 @@ public class QuestSuccessfulNode extends QuestNode {
         } else {
             state.println(".");
         }
-        if (model.getCurrentHex().getLocation() instanceof UrbanLocation) {
-            WorldHex hex = model.getWorld().getHex(state.getStartingLocation());
+        WorldHex hex = model.getWorld().getHex(state.getStartingLocation());
+        if (hex.getLocation() instanceof UrbanLocation) {
             model.getQuestDeck().setSuccessfulIn(model, state.getQuest(), hex.getLocation());
         }
         reward.giveYourself(model);
