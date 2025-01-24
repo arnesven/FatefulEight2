@@ -267,15 +267,24 @@ public class PartyView extends SelectableListMenu {
                 int skillsEndRow = printSkills(model.getScreenHandler(), gc, y);
 
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow,
-                        "Armor Class " + (gc.getCharClass().canUseHeavyArmor() ? "HEAVY" : "LIGHT"));
+                        "Armor Class ");
+                printArmorClass(model.getScreenHandler(), rightColumnX+12, skillsEndRow,
+                        gc.getCharClass().canUseHeavyArmor());
+
                 ++skillsEndRow;
-                print(model.getScreenHandler(), rightColumnX, ++skillsEndRow,
+                print(model.getScreenHandler(), rightColumnX, skillsEndRow,
                             String.format("Avg Damage %1.1f", gc.calcAverageDamage()));
                 ++skillsEndRow;
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, "Other Classes");
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, gc.getOtherClasses());
             }
         });
+    }
+
+    private void printArmorClass(ScreenHandler screenHandler, int x, int y, boolean canUseHeavyArmor) {
+        String text = canUseHeavyArmor ? "HEAVY" : "LIGHT";
+        MyColors bgColor = canUseHeavyArmor ? MyColors.BLACK : MyColors.BLUE;
+        BorderFrame.drawString(screenHandler, text, x, y, MyColors.WHITE, bgColor);
     }
 
     private void drawEquipment(Model model, GameCharacter gc, int x, int y) {
