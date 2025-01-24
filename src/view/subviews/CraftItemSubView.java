@@ -40,7 +40,7 @@ public class CraftItemSubView extends SubView {
 
     @Override
     protected String getUnderText(Model model) {
-        return "Crafting " + toCraft.getName() + "...";
+        return "Crafting " + toCraft.getName() + ". Materials: " + model.getParty().getInventory().getMaterials();
     }
 
     @Override
