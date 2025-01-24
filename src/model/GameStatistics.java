@@ -356,4 +356,8 @@ public class GameStatistics {
     public static int getGoblinsKilled() {
         return get("goblinskilled");
     }
+
+    public static int getPotionsBrewed() { return get("potionsbrewed"); }
+
+    public static void incrementPotionsBrewed() { increment("potionsbrewed", 1);}
 }

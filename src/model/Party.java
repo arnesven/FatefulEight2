@@ -15,13 +15,13 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
+import model.items.clothing.GlassArmor;
 import model.items.designs.CraftingDesign;
-import model.items.potions.AntidotePotion;
-import model.items.potions.CommonPoison;
-import model.items.potions.HealthPotion;
+import model.items.potions.*;
 import model.items.spells.*;
 import model.items.weapons.CalixaberSword;
 import model.items.weapons.Claymore;
+import model.items.weapons.Warhammer;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.map.WorldBuilder;
@@ -1030,19 +1030,27 @@ public class Party implements Serializable {
         return false;
     }
 
+    public List<Spell> getLearnedSpells() {
+        return MyLists.transform(MyLists.filter(permanentlyLearnedItems,
+                it -> it instanceof Spell),
+                it -> (Spell)it);
+    }
+
     public List<Spell> getSpells() {
         List<Spell> spells = new ArrayList<>(inventory.getSpells());
-        spells.addAll(MyLists.transform(MyLists.filter(permanentlyLearnedItems,
-                it -> it instanceof Spell),
-                it -> (Spell)it));
+        spells.addAll(getLearnedSpells());
         return spells;
+    }
+
+    public List<PotionRecipe> getLearnedPotionRecipes() {
+        return MyLists.transform(MyLists.filter(permanentlyLearnedItems,
+                it -> it instanceof PotionRecipe),
+                it -> (PotionRecipe)it);
     }
 
     public List<PotionRecipe> getPotionRecipes() {
         List<PotionRecipe> recipes = new ArrayList<>(inventory.getRecipes());
-        recipes.addAll(MyLists.transform(MyLists.filter(permanentlyLearnedItems,
-                it -> it instanceof PotionRecipe),
-                it -> (PotionRecipe)it));
+        recipes.addAll(getLearnedPotionRecipes());
         return recipes;
     }
 

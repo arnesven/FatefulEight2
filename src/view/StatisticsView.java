@@ -6,12 +6,15 @@ import model.Summon;
 import model.headquarters.HeadquarterAppearance;
 import model.headquarters.Headquarters;
 import model.headquarters.HeadquartersAction;
+import model.items.Item;
+import model.items.PotionRecipe;
 import model.map.TempleLocation;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
 import model.states.events.OrcsEvent;
+import util.MyLists;
 import util.MyPair;
 import util.MyStrings;
 import view.party.DrawableObject;
@@ -117,6 +120,19 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeIntLine(leftColumn, row++, "Items sold", GameStatistics.getItemsSold()));
         result.add(makeIntLine(leftColumn, row++, "Items crafted", GameStatistics.getItemsCrafted()));
         result.add(makeIntLine(leftColumn, row++, "Items upgraded", GameStatistics.getItemsUpgraded()));
+        List<String> craftingDesigns = MyLists.transform(model.getParty().getLearnedCraftingDesigns(),
+                cd -> cd.getCraftable().getName());
+        if (craftingDesigns.size() > 0) {
+            result.add(new SelectableListContent(leftColumn, row++,
+                    format(46, 10, "Crafting designs learned", "" + craftingDesigns.size())) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setInnerMenu(new SimpleListView(model.getView(), craftingDesigns, "Learned Crafting Designs"), model);
+                }
+            });
+        } else {
+            result.add(makeIntLine(leftColumn, row++, "Crafting designs learned", 0));
+        }
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "COMBAT"));
@@ -142,6 +158,34 @@ public class StatisticsView extends SelectableListMenu {
         result.add(makeTitleLine(leftColumn, row++, "MAGIC"));
         result.add(makeIntLine(leftColumn, row++, "Spell casts attempted", GameStatistics.getSpellCastsAttempted()));
         result.add(makeIntLine(leftColumn, row++, "Spell casts successes", GameStatistics.getSpellSuccesses()));
+        List<String> spellsLearned = MyLists.transform(model.getParty().getLearnedSpells(),
+                Item::getName);
+        if (spellsLearned.size() > 0) {
+            result.add(new SelectableListContent(leftColumn, row++,
+                    format(46, 10, "Spells learned", "" + spellsLearned.size())) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setInnerMenu(new SimpleListView(model.getView(), spellsLearned, "Learned Spells"), model);
+                }
+            });
+        } else {
+            result.add(makeIntLine(leftColumn, row++, "Spells learned", 0));
+        }
+
+        result.add(makeIntLine(leftColumn, row++, "Potions brewed", GameStatistics.getPotionsBrewed()));
+        List<String> recipes = MyLists.transform(model.getParty().getLearnedPotionRecipes(),
+                pr -> pr.getBrewable().getName());
+        if (recipes.size() > 0) {
+            result.add(new SelectableListContent(leftColumn, row++,
+                    format(46, 10, "Potion recipes learned", "" + recipes.size())) {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setInnerMenu(new SimpleListView(model.getView(), recipes, "Learned Potion Recipes"), model);
+                }
+            });
+        } else {
+            result.add(makeIntLine(leftColumn, row++, "Potion recipes learned", 0));
+        }
 
         row++;
         result.add(makeTitleLine(leftColumn, row++, "CRIME"));

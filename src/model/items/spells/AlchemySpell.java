@@ -1,5 +1,6 @@
 package model.items.spells;
 
+import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.items.Item;
@@ -185,6 +186,7 @@ public class AlchemySpell extends ImmediateSpell {
             state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
             model.getParty().getInventory().addToIngredients(-cost);
             model.getParty().getInventory().addItem(selectedPotion.copy());
+            GameStatistics.incrementPotionsBrewed();
         }
         model.getParty().partyMemberSay(model, caster, List.of("Bubble bubble!", "Ahh, what an aroma.",
                 "I'm cooking!", "It took a little time, but now it's done.", "Let's save this for later.",
