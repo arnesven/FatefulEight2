@@ -30,7 +30,8 @@ public class TutorialVampires extends ExpandableHelpDialog {
         for (VampireAbility vab : VampirismCondition.getAllAbilities()) {
             helpDialogs.add(vab.makeHelpChapter(view));
         }
-        helpDialogs.add(new TutorialFeeding(view));
+        helpDialogs.add(new FeedingOnParty(view));
+        helpDialogs.add(new TutorialFeedingTown(view));
         helpDialogs.add(new BloodTypesHelpChapter(view));
         helpDialogs.sort(Comparator.comparing(HelpDialog::getTitle));
         return helpDialogs;

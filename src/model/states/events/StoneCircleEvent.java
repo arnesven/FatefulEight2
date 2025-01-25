@@ -92,12 +92,7 @@ public class StoneCircleEvent extends DailyEventState {
         }
 
         if (model.getParty().size() > 1 && !cureVampirismRitualEvent.wasCured()) {
-            CheckForVampireEvent checkForVampireEvent = new CheckForVampireEvent(model);
-            if (vampire == model.getParty().getLeader()) {
-                checkForVampireEvent.vampireIsLeader(model, vampire, other);
-            } else {
-                checkForVampireEvent.vampireNotLeader(model, vampire, other);
-            }
+            new CheckForVampireEvent(model).dealWithVampire(model, vampire, other);
         }
     }
 

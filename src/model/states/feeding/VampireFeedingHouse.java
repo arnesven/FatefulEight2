@@ -260,7 +260,7 @@ public class VampireFeedingHouse {
         return false;
     }
 
-    private void applyRaceSpecificEffect(Model model, GameState state, GameCharacter vampire, AdvancedAppearance victim) {
+    public static void applyRaceSpecificEffect(Model model, GameState state, GameCharacter vampire, AdvancedAppearance victim) {
         if (victim.getRace().id() != vampire.getRace().id()) {
             if (victim.getRace().id() == Race.HALFLING.id()) {
                 int spRecovered = MyRandom.rollD6();
@@ -298,7 +298,7 @@ public class VampireFeedingHouse {
         fullyRecoverStamina(state, vampire);
     }
 
-    private void fullyRecoverStamina(GameState state, GameCharacter vampire) {
+    private static void fullyRecoverStamina(GameState state, GameCharacter vampire) {
         vampire.addToSP(9999);
         state.println(vampire.getFullName() + "'s Stamina has fully recovered.");
     }

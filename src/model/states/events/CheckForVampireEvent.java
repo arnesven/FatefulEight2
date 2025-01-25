@@ -56,14 +56,8 @@ public class CheckForVampireEvent extends DailyEventState {
                 "on some nights you just disappear for hours. Please tell me there is a good explanations for all of this!");
         partyMemberSay(vampire, "Uhm, well... Fine I'm a vampire. Are you happy?");
         println(other.getFirstName() + " is visibly shaken by the news.");
-        if (vampCond.hasMesmerizeAbility()) {
-            print("Do you want to let " + vampire.getFirstName() + " use " +
-                    hisOrHer(vampire.getGender()) + " Mesmerize ability on " + other.getFirstName() + "? (Y/N) ");
-            if (yesNoInput()) {
-                tryMesmerize(model, vampire, other, vampCond);
-                model.setInCombat(false);
-                return;
-            }
+        if (askForMesmerize(model, vampire, other, vampCond)) {
+            return;
         }
 
         if (model.getParty().size() > 2) {
@@ -73,37 +67,52 @@ public class CheckForVampireEvent extends DailyEventState {
             partyMemberSay(other, "Yikes... A vampire? Really. I mean, I had my suspicions, " +
                     "but deep down I really just thought I was imagining things!");
         }
+        dealWithVampire(model, vampire, other);
+        model.setInCombat(false);
+    }
+
+    protected boolean askForMesmerize(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
+        if (vampCond.hasMesmerizeAbility()) {
+            print("Do you want to let " + vampire.getFirstName() + " use " +
+                    hisOrHer(vampire.getGender()) + " Mesmerize ability on " + other.getFirstName() + "? (Y/N) ");
+            if (yesNoInput()) {
+                if (!tryMesmerize(model, vampire, other, vampCond)) {
+                    dealWithVampire(model, vampire, other);
+                }
+                model.setInCombat(false);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean tryMesmerize(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
+        partyMemberSay(other, "Yikes... Hey...");
+        println(vampire.getFirstName() + " stares with an intense and captivating gaze into " +
+                other.getFirstName() + "'s eyes.");
+        if (MyRandom.rollD10() < vampire.getLevel() + vampCond.getStage()) {
+            println(other.getFirstName() + "'s eyelids drop slightly, and " + heOrShe(other.getGender()) + " seems frozen in place.");
+            partyMemberSay(other, "I... I... I forgot what I was going to say...");
+            partyMemberSay(vampire, "Don't worry about it " + other.getFirstName() + ", it was probably not important.");
+            partyMemberSay(other, "Uh... yeah. I feel kind of weird. I think I'll just sit down for a minute.");
+            return true;
+        }
+        println(other.getFirstName() + " pushes " + vampire.getName() + " away!");
+        other.addToAttitude(vampire, -30);
+        partyMemberSay(other, "Help! " + vampire.getFirstName() + " Is a vampire and " + heOrShe(vampire.getGender()) +
+                " is trying to hypnotize me!");
+        return false;
+    }
+
+    protected void dealWithVampire(Model model, GameCharacter vampire, GameCharacter other) {
         if (model.getParty().getLeader() == vampire) {
             vampireIsLeader(model, vampire, other);
         } else {
             vampireNotLeader(model, vampire, other);
         }
-        model.setInCombat(false);
     }
 
-    private void tryMesmerize(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
-        partyMemberSay(other, "Yikes... Hey guys...");
-        println(vampire.getFirstName() + " stares with an intense and captivating gaze into " +
-                other.getFirstName() + "'s eyes.");
-        if (MyRandom.rollD10() < vampire.getLevel() - vampCond.getStage()) {
-            println(other.getFirstName() + "'s eyelids drop slightly, and " + heOrShe(other.getGender()) + " seems frozen in place.");
-            partyMemberSay(other, "I... I... I forgot what I was going to say...");
-            partyMemberSay(vampire, "Don't worry about it " + other.getFirstName() + ", it was probably not important.");
-            partyMemberSay(other, "Uh... yeah. I feel kind of weird. I think I'll just sit down for a minute.");
-        } else {
-            println(other.getFirstName() + " pushes " + vampire.getName() + " away!");
-            other.addToAttitude(vampire, -30);
-            partyMemberSay(other, "Help! " + vampire.getFirstName() + " Is a vampire and " + heOrShe(vampire.getGender()) +
-                    " is trying to hypnotize me!");
-            if (model.getParty().getLeader() == vampire) {
-                vampireIsLeader(model, vampire, other);
-            } else {
-                vampireNotLeader(model, vampire, other);
-            }
-        }
-    }
-
-    protected void vampireNotLeader(Model model, GameCharacter vampire, GameCharacter other) {
+    private void vampireNotLeader(Model model, GameCharacter vampire, GameCharacter other) {
         if (vampire.getAttitude(other) >= ATTITUDE_THRESHOLD) {
             partyMemberSay(other, "I think we both know we can't continue being " +
                     "in the same party. I think you should leave.");
@@ -127,7 +136,7 @@ public class CheckForVampireEvent extends DailyEventState {
         }
     }
 
-    protected void vampireIsLeader(Model model, GameCharacter vampire, GameCharacter other) {
+    private void vampireIsLeader(Model model, GameCharacter vampire, GameCharacter other) {
         if (other.getAttitude(vampire) >= ATTITUDE_THRESHOLD) {
             String imOrWere = (model.getParty().size() > 2 ? "We're" : "I'm");
             String iveOrWeve = (model.getParty().size() > 2 ? "We've" : "I've");

@@ -10,10 +10,7 @@ import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.states.dailyaction.tavern.HireGuideAction;
 import model.states.dailyaction.LodgingState;
-import model.states.events.CheckForVampireEvent;
-import model.states.events.MoveAwayFromCurrentPositionEvent;
-import model.states.events.PartyMemberWantsToLeaveEvent;
-import model.states.events.VampireProwlNightEvent;
+import model.states.events.*;
 import model.states.feeding.VampireFeedingState;
 import model.tasks.BountyDestinationTask;
 import model.tasks.DestinationTask;
@@ -480,33 +477,55 @@ public class EveningState extends GameState {
     }
 
     private void checkForVampireFeeding(Model model, boolean inTavern) {
-        if (model.getCurrentHex().getLocation() == null ||
-                !(model.getCurrentHex().getLocation() instanceof UrbanLocation)) {
+        boolean isUrbanLocation = model.getCurrentHex().getLocation() != null &&
+                (model.getCurrentHex().getLocation() instanceof UrbanLocation);
+        boolean vampiresInParty = MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire);
+
+        if (isUrbanLocation && !vampiresInParty && MyRandom.rollD6() + MyRandom.rollD6() <= 3) {
+            new VampireProwlNightEvent(model, inTavern).run(model);
             return;
         }
-        if (!MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire)) {
-            int roll = MyRandom.rollD6() + MyRandom.rollD6();
-            if (roll <= 3) { // 1 in 12 chance.
-                new VampireProwlNightEvent(model, inTavern).run(model);
-            }
-            return;
-        }
-        List<GameCharacter> characters = new ArrayList<>(model.getParty().getPartyMembers());
-        characters.sort(Comparator.comparingInt(GameCharacter::getSP));
-        characters.removeIf((GameCharacter gc) -> !CheckForVampireEvent.isVampire(gc) ||
-                gc.getSP() == gc.getMaxSP());
-        if (characters.isEmpty()) {
-            return;
-        }
-        while (!characters.isEmpty()) {
-            GameCharacter vampire = characters.remove(0);
-            print(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
-                    " go on the prowl tonight to find a suitable victim? (Y/N) "); // TODO: Feed on party member
-            if (yesNoInput()) {
-                VampireFeedingState feedingState = new VampireFeedingState(model, vampire);
-                feedingState.run(model);
-                break;
+
+        List<GameCharacter> vampires = MyLists.filter(model.getParty().getPartyMembers(),
+                                    gc -> CheckForVampireEvent.isVampire(gc) && gc.getSP() < gc.getMaxSP());
+        vampires.sort(Comparator.comparingInt(GameCharacter::getSP));
+        List<GameCharacter> nonVampires = MyLists.filter(model.getParty().getPartyMembers(),
+                gc -> !CheckForVampireEvent.isVampire(gc));
+        while (!vampires.isEmpty()) {
+            GameCharacter vampire = vampires.remove(0);
+            if (isUrbanLocation) {
+                if (partyVampireFeedInUrbanLocation(model, vampire, nonVampires)) {
+                    break;
+                }
+
+            } else if (!nonVampires.isEmpty()) {
+                print(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
+                        " feed on another party member? (Y/N) ");
+                if (yesNoInput()) {
+                    new FeedOnPartyMemberEvent(model, vampire).doTheEvent(model);
+                    break;
+                }
             }
         }
     }
+
+    private boolean partyVampireFeedInUrbanLocation(Model model, GameCharacter vampire, List<GameCharacter> nonVampires) {
+        println(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
+                " go on the prowl tonight? ");
+        model.getLog().waitForAnimationToFinish();
+        List<String> options = new ArrayList<>(List.of("Find victim in town", "Refrain"));
+        if (!nonVampires.isEmpty()) {
+            options.add(0, "Feed on party member");
+        }
+        int chosen = multipleOptionArrowMenu(model, 24, 24, options);
+        if (options.get(chosen).contains("party")) {
+            new FeedOnPartyMemberEvent(model, vampire).doTheEvent(model);
+        } else if (options.get(chosen).contains("town")) {
+            new VampireFeedingState(model, vampire).run(model);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
 }

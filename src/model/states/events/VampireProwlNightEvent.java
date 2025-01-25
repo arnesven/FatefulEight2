@@ -13,6 +13,7 @@ import model.items.Equipment;
 import model.races.AllRaces;
 import model.races.Race;
 import model.states.DailyEventState;
+import model.states.GameState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyRandom;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VampireProwlNightEvent extends DailyEventState {
+    public static final int DETECT_VAMPIRE_PERCEPTION_DIFFICULTY = 6;
     private final boolean inTavern;
     private GameCharacter vampireCharacter;
 
@@ -52,9 +54,7 @@ public class VampireProwlNightEvent extends DailyEventState {
                 "Something approaches " + hisOrHer(victim.getGender()) + " bed...");
         print("Press enter to continue...");
         waitForReturn();
-        SkillCheckResult result = victim.testSkill(model, Skill.Perception, 6);
-        println("Perception " + result.asString() + ".");
-        if (result.isFailure()) {
+        if (failsToDetectVampire(model, this, victim)) {
             makeVampire(model, victim);
         } else {
             model.getParty().forceEyesClosed(victim, false);
@@ -105,7 +105,13 @@ public class VampireProwlNightEvent extends DailyEventState {
         model.getParty().unbenchAll();
     }
 
-    private void makeVampire(Model model, GameCharacter victim) {
+    protected boolean failsToDetectVampire(Model model, GameState state, GameCharacter victim) {
+        SkillCheckResult result = victim.testSkill(model, Skill.Perception, DETECT_VAMPIRE_PERCEPTION_DIFFICULTY);
+        state.println("Perception " + result.asString() + ".");
+        return result.isFailure();
+    }
+
+    protected void makeVampire(Model model, GameCharacter victim) {
         println("A sharp pain in the neck! Then, just as suddenly, it is gone and a strange, " +
                 "but pleasant sensation falls upon " + victim.getFirstName() + ". " + heOrSheCap(victim.getGender()) +
                 " falls into a deeper sleep and have odd dreams filled with violence, lust and the sense of immortality.");
