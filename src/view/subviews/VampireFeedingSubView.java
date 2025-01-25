@@ -2,7 +2,6 @@ package view.subviews;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.enemies.BatEnemy;
 import model.quests.*;
 import model.states.feeding.VampireFeedingHouse;
 import model.states.feeding.VampireFeedingState;
@@ -31,6 +30,12 @@ public class VampireFeedingSubView extends AvatarSubView {
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
     private static final Sprite GROUND_DAY_SPRITE = new Sprite16x16("feedinggroundday", "feeding.png", 0x14, MyColors.GREEN,
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
+    private static final Sprite TOWN_BG_DECORE_EXTRA_PATH = new Sprite16x16("extrapath", "feeding.png", 0x16, MyColors.BLACK,
+            MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
+
+    private final Sprite townBgDecoreLeft;
+    private final Sprite townBgDecoreRight;
+    private final Sprite townBgDecoreFar;
 
     private final Sprite[][] houseSpritesLit;
     private final Sprite[][] houseSpritesBlack;
@@ -49,6 +54,12 @@ public class VampireFeedingSubView extends AvatarSubView {
         this.house = house;
         houseSpritesLit = loadHouseSprites(MyColors.YELLOW, house.getColor());
         houseSpritesBlack = loadHouseSprites(MyColors.BLACK, house.getColor());
+        townBgDecoreLeft = new Sprite32x32("feedingtownbgdecoreleft", "feeding.png", 0x12, MyColors.BLACK,
+                HOUSE_CONTOUR_COLOR, ROOF_COLOR, VampireFeedingHouse.randomHouseColor());
+        townBgDecoreRight = new Sprite32x32("feedingtownbgdecoreright", "feeding.png", 0x13, MyColors.BLACK,
+                HOUSE_CONTOUR_COLOR, ROOF_COLOR, VampireFeedingHouse.randomHouseColor());
+        townBgDecoreFar = new Sprite16x32("feedingtownbgdecoreright", "feeding.png", 0x07, MyColors.BLACK,
+                HOUSE_CONTOUR_COLOR, ROOF_COLOR, VampireFeedingHouse.randomHouseColor());
     }
 
     @Override
@@ -251,8 +262,26 @@ public class VampireFeedingSubView extends AvatarSubView {
         }
     }
 
-    public static void drawGroundNight(Model model) {
+    public void drawGroundNight(Model model) {
         drawGround(model, GROUND_SPRITE);
+        {
+            Point loc = convertToScreen(new Point(0, 1));
+            loc.y += 2;
+            model.getScreenHandler().register(townBgDecoreLeft.getName(), loc, townBgDecoreLeft);
+            model.getScreenHandler().register(townBgDecoreRight.getName(), new Point(loc.x + 4, loc.y), townBgDecoreRight);
+            model.getScreenHandler().register(TOWN_BG_DECORE_EXTRA_PATH.getName(), new Point(loc.x, loc.y + 4), TOWN_BG_DECORE_EXTRA_PATH);
+            for (int i = 0; i < 4; ++i) {
+                model.getScreenHandler().register(townBgDecoreFar.getName(), new Point(loc.x + 8 + i * 2, loc.y), townBgDecoreFar);
+            }
+        }
+        {
+            Point loc = convertToScreen(new Point(5, 1));
+            loc.y += 2;
+            loc.x += house.getWidth()*2;
+            for (int i = 0; i < 6 - house.getWidth(); ++i) {
+                model.getScreenHandler().register(townBgDecoreFar.getName(), new Point(loc.x + i * 2, loc.y), townBgDecoreFar);
+            }
+        }
     }
 
     public static void drawGroundDay(Model model) {

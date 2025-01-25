@@ -60,13 +60,17 @@ public class VampireFeedingHouse {
                 this.lockDifficulty = 0;
             }
         }
-        color = MyRandom.sample(HOUSE_COLORS);
+        color = randomHouseColor();
         windowOpen = MyRandom.randInt(2) * (stories - 1);
         this.vampire = vampire;
         VampirismCondition cond = ((VampirismCondition)vampire.getCondition(VampirismCondition.class));
         this.canDoBat = cond.hasBatAbility();
         this.canDoMesmerize = cond.hasMesmerizeAbility();
         makeNodes();
+    }
+
+    public static MyColors randomHouseColor() {
+        return MyRandom.sample(HOUSE_COLORS);
     }
 
     private void makeNodes() {
