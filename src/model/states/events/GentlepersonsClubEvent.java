@@ -13,10 +13,13 @@ import model.horses.HorseItemAdapter;
 import model.items.Item;
 import model.items.potions.FineWine;
 import model.items.special.CollectorItem;
+import model.journal.JournalEntry;
 import model.map.UrbanLocation;
 import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.TrainingState;
+import model.tasks.DestinationTask;
+import model.tasks.JoinGentlepersonsClubTask;
 import util.*;
 import view.LogView;
 import view.subviews.CollapsingTransition;
@@ -65,7 +68,11 @@ public class GentlepersonsClubEvent extends DailyEventState {
             handleMember(model);
         } else {
             askToBecomeMember(model);
-            // TODO: If not member. Get Join Gentleperson's Club Destination Task.
+            if (!isMember(model) && !MyLists.any(model.getParty().getDestinationTasks(), dt ->
+                    dt instanceof JoinGentlepersonsClubTask)) {
+                model.getParty().addDestinationTask(new JoinGentlepersonsClubTask(model));
+                JournalEntry.printJournalUpdateMessage(model);
+            }
         }
         println("You leave the Gentleperson's Club.");
     }
@@ -138,7 +145,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
 
     private void askToBecomeMember(Model model) {
         leaderSay("Uhm, no... What is this place?");
-        portraitSay("This is the Gentleperson's Club, a exclusive sorority for aristocrats, " +
+        portraitSay("This is the Gentleperson's Club, an exclusive sorority for aristocrats, " +
                 "artists, actors, musicians or anybody who appreciates the aesthetics of the finer points of life.");
         leaderSay("And what do your members generally do here?");
         portraitSay("Members come here to make connections, discuss arts, exchange ideas or just relax.");
@@ -159,6 +166,12 @@ public class GentlepersonsClubEvent extends DailyEventState {
                 leaderSay("Here's the " + MEMBERSHIP_FEE + " gold. Do we get a membership card or something?");
                 portraitSay("No need. We'll make sure all of our locations know your name and appearance, you're one of us now.");
                 leaderSay("That's nice of you.");
+
+                DestinationTask task = MyLists.find(model.getParty().getDestinationTasks(),
+                        dt -> dt instanceof JoinGentlepersonsClubTask);
+                if (task != null) {
+                    ((JoinGentlepersonsClubTask)task).setCompleted(true);
+                }
                 portraitSay("Right this way to the club common rooms. Oh, and members always receive a free drink upon arrival.");
                 randomSayIfPersonality(PersonalityTrait.gluttonous, new ArrayList<>(), "Free booze? This place is great!");
                 leaderSay("Sure, we'll have a drink");
