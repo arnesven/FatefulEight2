@@ -107,7 +107,6 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        return new GentlepersonsClubEvent(model); /*
         if (model.getMainStory().isFugitive() &&
                 model.getCurrentHex().getLocation().getName().equals(model.getMainStory().getCastleName())) {
             return new FugitiveTownEvent(model);
@@ -150,7 +149,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
             }
             return MyRandom.sample(dailyEvents);
         }
-        return new NoEventState(model); */
+        return new NoEventState(model);
     }
 
     @Override
