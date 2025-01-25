@@ -33,9 +33,7 @@ public class VampireFeedingSubView extends AvatarSubView {
     private static final Sprite TOWN_BG_DECORE_EXTRA_PATH = new Sprite16x16("extrapath", "feeding.png", 0x16, MyColors.BLACK,
             MyColors.GRAY, MyColors.WHITE, MyColors.CYAN);
 
-    private final Sprite townBgDecoreLeft;
-    private final Sprite townBgDecoreRight;
-    private final Sprite townBgDecoreFar;
+    private final Sprite[] townBgDecore;
 
     private final Sprite[][] houseSpritesLit;
     private final Sprite[][] houseSpritesBlack;
@@ -54,12 +52,21 @@ public class VampireFeedingSubView extends AvatarSubView {
         this.house = house;
         houseSpritesLit = loadHouseSprites(MyColors.YELLOW, house.getColor());
         houseSpritesBlack = loadHouseSprites(MyColors.BLACK, house.getColor());
-        townBgDecoreLeft = new Sprite32x32("feedingtownbgdecoreleft", "feeding.png", 0x12, MyColors.BLACK,
-                HOUSE_CONTOUR_COLOR, ROOF_COLOR, VampireFeedingHouse.randomHouseColor());
-        townBgDecoreRight = new Sprite32x32("feedingtownbgdecoreright", "feeding.png", 0x13, MyColors.BLACK,
-                HOUSE_CONTOUR_COLOR, ROOF_COLOR, VampireFeedingHouse.randomHouseColor());
-        townBgDecoreFar = new Sprite16x32("feedingtownbgdecoreright", "feeding.png", 0x07, MyColors.BLACK,
-                HOUSE_CONTOUR_COLOR, ROOF_COLOR, VampireFeedingHouse.randomHouseColor());
+        townBgDecore = makeTownBackgroundDecoreSprites(VampireFeedingHouse.randomHouseColor(),
+                VampireFeedingHouse.randomHouseColor(),
+                VampireFeedingHouse.randomHouseColor());
+
+    }
+
+    public static Sprite[] makeTownBackgroundDecoreSprites(MyColors leftColor, MyColors midColor, MyColors farColor) {
+        Sprite[] result = new Sprite[3];
+        result[0] = new Sprite32x32("feedingtownbgdecoreleft", "feeding.png", 0x12, MyColors.BLACK,
+                HOUSE_CONTOUR_COLOR, ROOF_COLOR, leftColor);
+        result[1] = new Sprite32x32("feedingtownbgdecoreright", "feeding.png", 0x13, MyColors.BLACK,
+                HOUSE_CONTOUR_COLOR, ROOF_COLOR, midColor);
+        result[2] = new Sprite16x32("feedingtownbgdecoreright", "feeding.png", 0x07, MyColors.BLACK,
+                HOUSE_CONTOUR_COLOR, ROOF_COLOR, farColor);
+        return result;
     }
 
     @Override
@@ -264,28 +271,35 @@ public class VampireFeedingSubView extends AvatarSubView {
 
     public void drawGroundNight(Model model) {
         drawGround(model, GROUND_SPRITE);
+        drawSurroundingHouse(model, townBgDecore, house.getWidth());
+    }
+
+    public static void drawGroundDay(Model model) {
+        drawGround(model, GROUND_DAY_SPRITE);
+    }
+
+    public static void drawSurroundingHouse(Model model, Sprite[] townBgDecore, int houseWidth) {
+        Sprite far = townBgDecore[2];
         {
+            Sprite left = townBgDecore[0];
+            Sprite right = townBgDecore[1];
             Point loc = convertToScreen(new Point(0, 1));
             loc.y += 2;
-            model.getScreenHandler().register(townBgDecoreLeft.getName(), loc, townBgDecoreLeft);
-            model.getScreenHandler().register(townBgDecoreRight.getName(), new Point(loc.x + 4, loc.y), townBgDecoreRight);
+            model.getScreenHandler().register(left.getName(), loc, left);
+            model.getScreenHandler().register(right.getName(), new Point(loc.x + 4, loc.y), right);
             model.getScreenHandler().register(TOWN_BG_DECORE_EXTRA_PATH.getName(), new Point(loc.x, loc.y + 4), TOWN_BG_DECORE_EXTRA_PATH);
             for (int i = 0; i < 4; ++i) {
-                model.getScreenHandler().register(townBgDecoreFar.getName(), new Point(loc.x + 8 + i * 2, loc.y), townBgDecoreFar);
+                model.getScreenHandler().register(far.getName(), new Point(loc.x + 8 + i * 2, loc.y), far);
             }
         }
         {
             Point loc = convertToScreen(new Point(5, 1));
             loc.y += 2;
-            loc.x += house.getWidth()*2;
-            for (int i = 0; i < 6 - house.getWidth(); ++i) {
-                model.getScreenHandler().register(townBgDecoreFar.getName(), new Point(loc.x + i * 2, loc.y), townBgDecoreFar);
+            loc.x += houseWidth*2;
+            for (int i = 0; i < 6 - houseWidth; ++i) {
+                model.getScreenHandler().register(far.getName(), new Point(loc.x + i * 2, loc.y), far);
             }
         }
-    }
-
-    public static void drawGroundDay(Model model) {
-        drawGround(model, GROUND_DAY_SPRITE);
     }
 
     private static Sprite[][] loadHouseSprites(MyColors windowColor, MyColors facadeColor) {

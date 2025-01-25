@@ -6,6 +6,7 @@ import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.headquarters.Headquarters;
 import model.horses.Horse;
+import model.states.feeding.VampireFeedingHouse;
 import view.BorderFrame;
 import view.MyColors;
 import view.combat.GrassCombatTheme;
@@ -36,10 +37,13 @@ public class HeadquartersSubView extends SubView {
     private final SteppingMatrix<GameCharacter> characterMatrix;
     private boolean cursorEnabled = false;
     private Sprite cursor = CombatCursorSprite.DEFAULT_CURSOR;
+    private int selSize = 1;
+    private Sprite[] townBgSprites;
 
     public HeadquartersSubView(Model model) {
         this.characterMatrix = new SteppingMatrix<>(MATRIX_COLUMNS, MATRIX_ROWS);
         characterMatrix.addElements(model.getParty().getHeadquarters().getCharacters());
+        townBgSprites = VampireFeedingSubView.makeTownBackgroundDecoreSprites(MyColors.PINK, MyColors.WHITE, MyColors.LIGHT_YELLOW);
     }
 
     @Override
@@ -155,10 +159,12 @@ public class HeadquartersSubView extends SubView {
             drawSky(model);
         }
         drawGrass(model);
+        Headquarters hq = model.getParty().getHeadquarters();
+        VampireFeedingSubView.drawSurroundingHouse(model, townBgSprites,
+                hq.getSize() < 5 ? 1 : 3);
         drawRoom(model, 3, 3 + model.getParty().getHeadquarters().getSize());
-        Point p = convertToScreen(new Point(6, 2));
-        p.x -= 2;
-        model.getParty().getHeadquarters().drawYourself(model, p);
+        Point p = convertToScreen(new Point(4, 2));
+        hq.drawYourself(model, p);
     }
 
     public static void drawSky(Model model) {
