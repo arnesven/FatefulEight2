@@ -49,7 +49,7 @@ public class VampireFeedingHouse {
         this.width = MyRandom.randInt(1, 3);
         this.stories = MyRandom.randInt(1, 3);
         this.dwellers = MyRandom.randInt(1, width*stories + 1);
-        this.sleeping = MyRandom.randInt(0, dwellers);
+        this.sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
         this.lockDifficulty = (sleeping < dwellers && MyRandom.rollD6()==6) ? 0 : MyRandom.randInt(6, 8);
         color = MyRandom.sample(HOUSE_COLORS);
         windowOpen = MyRandom.randInt(2) * (stories - 1);

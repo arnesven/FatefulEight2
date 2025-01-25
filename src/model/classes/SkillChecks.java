@@ -8,6 +8,7 @@ import model.items.StaminaRecoveryItem;
 import model.items.weapons.UnarmedCombatWeapon;
 import model.states.ExploreRuinsState;
 import model.states.GameState;
+import model.states.events.CheckForVampireEvent;
 import util.MyLists;
 import util.MyRandom;
 import view.InventoryView;
@@ -27,7 +28,8 @@ public class SkillChecks {
             }
             if (performer.getSP() == 0) {
                 if (!model.isInCombat() && MyLists.any(model.getParty().getInventory().getAllItems(),
-                        (Item p) -> p instanceof StaminaRecoveryItem)) {
+                        (Item p) -> p instanceof StaminaRecoveryItem) &&
+                        !CheckForVampireEvent.isVampire(performer)) {
                     event.print(performer.getFirstName() + " is out of Stamina, but you " +
                             "have items in your inventory which you can raise stamina. " +
                             "Do you want to use one? (Y/N) ");

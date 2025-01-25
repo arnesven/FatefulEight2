@@ -131,7 +131,7 @@ public class CheckForVampireEvent extends DailyEventState {
 
     }
 
-    private static boolean isVampire(GameCharacter gc) {
+    public static boolean isVampire(GameCharacter gc) {
         return gc.hasCondition(VampirismCondition.class);
     }
 

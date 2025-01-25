@@ -9,6 +9,7 @@ import model.classes.normal.SpyClass;
 import model.map.UrbanLocation;
 import model.states.events.ChangeClassEvent;
 import util.MyLists;
+import view.subviews.SubView;
 
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class BecomeASpyForMeTask extends SummonTask {
         } else {
             portraitSay("But it would seem you do not have the right skill set for this.");
             println(location.getLordName() + " is offering to train you in the ways of spycraft, ");
+            SubView previous = model.getSubView();
             new ChangeClassEvent(model, Classes.SPY).areYouInterested(model);
+            model.setSubView(previous);
             if (hasASpy(model.getParty())) {
                 portraitSay("Splendid! Now all you need to do is to sign this contract.");
                 signContract(model);

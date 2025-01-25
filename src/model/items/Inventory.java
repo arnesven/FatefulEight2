@@ -14,6 +14,7 @@ import model.items.spells.CombatSpell;
 import model.items.spells.Spell;
 import model.items.weapons.*;
 import model.states.fishing.Fish;
+import util.MyLists;
 
 import java.io.Serializable;
 import java.util.*;
@@ -175,7 +176,7 @@ public class Inventory implements Serializable {
         return sets;
     }
 
-    public List<CombatSpell> getCombatSpells() {
+    public List<CombatSpell> getCombatSpells() { // TODO: Remove (breaks save)
         List<CombatSpell> result = new ArrayList<>();
         for (Spell sp : spells) {
             if (sp instanceof CombatSpell) {
@@ -206,13 +207,7 @@ public class Inventory implements Serializable {
     public void addToLockpicks(int i) { this.lockpicks += i; }
 
     public List<Scroll> getCombatScrolls() {
-        List<Scroll> result = new ArrayList<>();
-        for (Scroll scroll : scrolls) {
-            if (scroll.getSpell() instanceof CombatSpell) {
-                result.add(scroll);
-            }
-        }
-        return result;
+        return MyLists.filter(scrolls, sc -> sc.getSpell() instanceof CombatSpell);
     }
 
     public List<Item> getPearls() {

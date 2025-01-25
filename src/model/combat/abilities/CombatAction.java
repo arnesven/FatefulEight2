@@ -13,9 +13,12 @@ import model.combat.Combatant;
 import model.combat.conditions.Condition;
 import model.combat.conditions.FatigueCondition;
 import model.items.UsableItem;
+import model.items.spells.AuxiliarySpell;
 import model.items.spells.CombatSpell;
+import model.items.spells.Spell;
 import model.states.CombatEvent;
 import sprites.CombatSpeechBubble;
+import util.MyLists;
 import util.MyRandom;
 import view.help.HelpDialog;
 import view.subviews.CombatSubView;
@@ -126,7 +129,7 @@ public abstract class CombatAction {
                 result.add(new ItemCombatAction(usableItems, target));
             }
 
-            List<CombatSpell> combatSpells = model.getParty().getInventory().getCombatSpells();
+            List<CombatSpell> combatSpells = getCombatSpells(model.getParty().getSpells());
             if (!combatSpells.isEmpty()) {
                 result.add(new SpellCombatAction(combatSpells, target));
             }
@@ -154,6 +157,18 @@ public abstract class CombatAction {
         });
         for (Condition cond : character.getConditions()) {
             cond.manipulateCombatActions(result);
+        }
+        return result;
+    }
+
+    private static List<CombatSpell> getCombatSpells(List<Spell> spells) {
+        List<CombatSpell> result = new ArrayList<>();
+        for (Spell sp : spells) {
+            if (sp instanceof CombatSpell) {
+                result.add((CombatSpell) sp);
+            }  else if (sp instanceof AuxiliarySpell && ((AuxiliarySpell)sp).canBeCastInCombat()) {
+                result.add(((AuxiliarySpell)sp).getCombatSpell());
+            }
         }
         return result;
     }
