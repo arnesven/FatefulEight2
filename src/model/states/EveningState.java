@@ -10,6 +10,7 @@ import model.map.UrbanLocation;
 import model.quests.Quest;
 import model.states.dailyaction.tavern.HireGuideAction;
 import model.states.dailyaction.LodgingState;
+import model.states.events.CheckForVampireEvent;
 import model.states.events.MoveAwayFromCurrentPositionEvent;
 import model.states.events.PartyMemberWantsToLeaveEvent;
 import model.states.events.VampireProwlNightEvent;
@@ -483,8 +484,7 @@ public class EveningState extends GameState {
                 !(model.getCurrentHex().getLocation() instanceof UrbanLocation)) {
             return;
         }
-        if (!MyLists.any(model.getParty().getPartyMembers(),
-                (GameCharacter gc) -> gc.hasCondition(VampirismCondition.class))) {
+        if (!MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire)) {
             int roll = MyRandom.rollD6() + MyRandom.rollD6();
             if (roll <= 3) { // 1 in 12 chance.
                 new VampireProwlNightEvent(model, inTavern).run(model);
@@ -493,7 +493,7 @@ public class EveningState extends GameState {
         }
         List<GameCharacter> characters = new ArrayList<>(model.getParty().getPartyMembers());
         characters.sort(Comparator.comparingInt(GameCharacter::getSP));
-        characters.removeIf((GameCharacter gc) -> !gc.hasCondition(VampirismCondition.class) ||
+        characters.removeIf((GameCharacter gc) -> !CheckForVampireEvent.isVampire(gc) ||
                 gc.getSP() == gc.getMaxSP());
         if (characters.isEmpty()) {
             return;
@@ -501,7 +501,7 @@ public class EveningState extends GameState {
         while (!characters.isEmpty()) {
             GameCharacter vampire = characters.remove(0);
             print(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
-                    " go on the prowl tonight to find a suitable victim? (Y/N) ");
+                    " go on the prowl tonight to find a suitable victim? (Y/N) "); // TODO: Feed on party member
             if (yesNoInput()) {
                 VampireFeedingState feedingState = new VampireFeedingState(model, vampire);
                 feedingState.run(model);

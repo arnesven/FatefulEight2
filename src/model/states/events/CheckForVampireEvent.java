@@ -11,6 +11,7 @@ import model.enemies.VampireAttackBehavior;
 import model.log.GameLog;
 import model.states.DailyEventState;
 import util.MyLists;
+import util.MyRandom;
 import view.LogView;
 
 import java.util.ArrayList;
@@ -45,16 +46,26 @@ public class CheckForVampireEvent extends DailyEventState {
         if (result.isSuccessful()) {
             persuadeSuccess(model, vampire, other);
         } else {
-            persuadeFailed(model, vampire, other);
+            persuadeFailed(model, vampire, other, vampCond);
         }
     }
 
-    private void persuadeFailed(Model model, GameCharacter vampire, GameCharacter other) {
+    private void persuadeFailed(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
         model.setInCombat(true);
         partyMemberSay(other, "Well, you're skin looks paler than before, your teeth are pointier and " +
                 "on some nights you just disappear for hours. Please tell me there is a good explanations for all of this!");
         partyMemberSay(vampire, "Uhm, well... Fine I'm a vampire. Are you happy?");
         println(other.getFirstName() + " is visibly shaken by the news.");
+        if (vampCond.hasMesmerizeAbility()) {
+            print("Do you want to let " + vampire.getFirstName() + " use " +
+                    hisOrHer(vampire.getGender()) + " Mesmerize ability on " + other.getFirstName() + "? (Y/N) ");
+            if (yesNoInput()) {
+                tryMesmerize(model, vampire, other, vampCond);
+                model.setInCombat(false);
+                return;
+            }
+        }
+
         if (model.getParty().size() > 2) {
             partyMemberSay(other, "Yikes... Hey guys... I think you better know that " +
                     vampire.getFirstName() + " just confessed to being a vampire.");
@@ -68,6 +79,28 @@ public class CheckForVampireEvent extends DailyEventState {
             vampireNotLeader(model, vampire, other);
         }
         model.setInCombat(false);
+    }
+
+    private void tryMesmerize(Model model, GameCharacter vampire, GameCharacter other, VampirismCondition vampCond) {
+        partyMemberSay(other, "Yikes... Hey guys...");
+        println(vampire.getFirstName() + " stares with an intense and captivating gaze into " +
+                other.getFirstName() + "'s eyes.");
+        if (MyRandom.rollD10() < vampire.getLevel() - vampCond.getStage()) {
+            println(other.getFirstName() + "'s eyelids drop slightly, and " + heOrShe(other.getGender()) + " seems frozen in place.");
+            partyMemberSay(other, "I... I... I forgot what I was going to say...");
+            partyMemberSay(vampire, "Don't worry about it " + other.getFirstName() + ", it was probably not important.");
+            partyMemberSay(other, "Uh... yeah. I feel kind of weird. I think I'll just sit down for a minute.");
+        } else {
+            println(other.getFirstName() + " pushes " + vampire.getName() + " away!");
+            other.addToAttitude(vampire, -30);
+            partyMemberSay(other, "Help! " + vampire.getFirstName() + " Is a vampire and " + heOrShe(vampire.getGender()) +
+                    " is trying to hypnotize me!");
+            if (model.getParty().getLeader() == vampire) {
+                vampireIsLeader(model, vampire, other);
+            } else {
+                vampireNotLeader(model, vampire, other);
+            }
+        }
     }
 
     protected void vampireNotLeader(Model model, GameCharacter vampire, GameCharacter other) {
