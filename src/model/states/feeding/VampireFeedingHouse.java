@@ -29,7 +29,7 @@ public class VampireFeedingHouse {
     private final int stories;
     private final int dwellers;
     private final int sleeping;
-    private final int lockDifficulty;
+    private int lockDifficulty;
     private final int windowOpen;
     private final MyColors color;
     private final boolean canDoBat;
@@ -50,7 +50,16 @@ public class VampireFeedingHouse {
         this.stories = MyRandom.randInt(1, 3);
         this.dwellers = MyRandom.randInt(1, width*stories + 1);
         this.sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
-        this.lockDifficulty = (sleeping < dwellers && MyRandom.rollD6()==6) ? 0 : MyRandom.randInt(6, 8);
+        this.lockDifficulty = MyRandom.randInt(6, 8);
+        if (sleeping < dwellers) { // Some awake
+            if (MyRandom.rollD10() >= 9) {
+                this.lockDifficulty = 0;
+            }
+        } else { // All sleeping
+            if (MyRandom.rollD6() + MyRandom.rollD6() == 12) {
+                this.lockDifficulty = 0;
+            }
+        }
         color = MyRandom.sample(HOUSE_COLORS);
         windowOpen = MyRandom.randInt(2) * (stories - 1);
         this.vampire = vampire;

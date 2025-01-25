@@ -1,6 +1,7 @@
 package model.states.dailyaction.tavern;
 
 import model.Model;
+import model.Party;
 import model.TimeOfDay;
 import model.items.FoodDummyItem;
 import model.items.Item;
@@ -30,7 +31,7 @@ public class TalkToBartenderNode extends DailyActionNode {
     private boolean workDone = false;
     private final List<Item> itemsForSale;
 
-    public TalkToBartenderNode(boolean inTown) {
+    public TalkToBartenderNode(Model model, boolean inTown) {
         super("Talk to bartender");
         this.inTown = inTown;
         itemsForSale = new ArrayList<>(List.of(new ObolsDummyItem(10),
@@ -41,11 +42,13 @@ public class TalkToBartenderNode extends DailyActionNode {
         for (int i = MyRandom.randInt(3); i > 0; --i) {
             itemsForSale.add(new WinePotion());
         }
-        if (MyRandom.randInt(4) != 0) {
-            itemsForSale.add(new TentUpgradeItem());
-        }
-        if (MyRandom.randInt(4) == 0) {
-            itemsForSale.add(new LargeTentUpgradeItem());
+        if (model.getParty().getInventory().getTentSize() != Party.MAXIMUM_PARTY_SIZE) {
+            if (MyRandom.randInt(4) != 0) {
+                itemsForSale.add(new TentUpgradeItem());
+            }
+            if (MyRandom.randInt(4) == 0) {
+                itemsForSale.add(new LargeTentUpgradeItem());
+            }
         }
         if (MyRandom.randInt(4) == 0) {
             itemsForSale.add(new FishingPole());

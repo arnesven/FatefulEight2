@@ -26,7 +26,7 @@ public class TavernDailyActionState extends AdvancedDailyActionState {
             addNode(2, 5, new RecruitNode(model));
         }
         addNode(6, 1, new LodgingNode(freeLodging));
-        addNode(2, 3, new TalkToBartenderNode(inTown));
+        addNode(2, 3, new TalkToBartenderNode(model, inTown));
         addNode(5, 5, new TalkToPartyNode());
         if (model.getParty().getActiveTravellers().isEmpty()) {
             addNode(2, 2, new TravellerNode(model));
