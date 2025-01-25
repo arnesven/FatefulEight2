@@ -98,6 +98,7 @@ public class LeagueOfMagesEvent extends DailyEventState {
                     break;
                 } else if (options.get(index).contains("membership")) {
                     askAboutMembership(model, castle);
+                    // TODO: If not member, get Join League of mages destination task.
                 } else {
                     leaderSay("We would like to use the dormitory.");
                     portraitSay("Of course. It's down the hall to the right. Please leave them " +

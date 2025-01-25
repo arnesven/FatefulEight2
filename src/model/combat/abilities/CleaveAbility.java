@@ -53,7 +53,9 @@ public class CleaveAbility extends StaminaCombatAbility implements SkillAbilityC
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
-        return target instanceof Enemy && performer.getEquipment().getWeapon().isOfType(AxeWeapon.class);
+        return target instanceof Enemy &&
+                target.canBeAttackedBy(performer) &&
+                performer.getEquipment().getWeapon().isOfType(AxeWeapon.class);
     }
 
     @Override

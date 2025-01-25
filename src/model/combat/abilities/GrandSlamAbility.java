@@ -44,6 +44,7 @@ public class GrandSlamAbility extends StaminaCombatAbility implements SkillAbili
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return model.getParty().getFrontRow().contains(performer) &&
+                target.canBeAttackedBy(performer) &&
                 performer.getEquipment().getWeapon().isOfType(BluntWeapon.class);
     }
 

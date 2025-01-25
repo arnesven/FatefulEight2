@@ -65,6 +65,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
             handleMember(model);
         } else {
             askToBecomeMember(model);
+            // TODO: If not member. Get Join Gentleperson's Club Destination Task.
         }
         println("You leave the Gentleperson's Club.");
     }

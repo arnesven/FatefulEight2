@@ -56,6 +56,7 @@ public class ImpaleAbility extends StaminaCombatAbility implements SkillAbilityC
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return model.getParty().getFrontRow().contains(performer) &&
+                target.canBeAttackedBy(performer) &&
                 performer.getEquipment().getWeapon().isOfType(PolearmWeapon.class);
     }
 

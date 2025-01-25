@@ -51,6 +51,7 @@ public class FeintAbility extends StaminaCombatAbility implements SkillAbilityCo
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
         return model.getParty().getFrontRow().contains(performer) &&
+                target.canBeAttackedBy(performer) &&
                 performer.getEquipment().getWeapon().isOfType(BladedWeapon.class);
     }
 
