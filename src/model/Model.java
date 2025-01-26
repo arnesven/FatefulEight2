@@ -96,7 +96,7 @@ public class Model {
             caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
             state = getCurrentHex().getDailyActionState(this);
             System.out.println("Loading from file, setting state to " + state);
-            log.setContent(gameData.logContent);
+            log.setContent(gameData.logContent); // TODO: Inn moved to starting location when restarting game.
             SoundEffects.gameLoaded();
         } catch (FileNotFoundException | CorruptSaveFileException ex) {
             ex.printStackTrace();

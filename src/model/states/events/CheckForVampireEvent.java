@@ -90,7 +90,7 @@ public class CheckForVampireEvent extends DailyEventState {
         partyMemberSay(other, "Yikes... Hey...");
         println(vampire.getFirstName() + " stares with an intense and captivating gaze into " +
                 other.getFirstName() + "'s eyes.");
-        if (MyRandom.rollD10() < vampire.getLevel() + vampCond.getStage()) {
+        if (MyRandom.rollD10() < vampire.getLevel() + vampCond.getStage() - other.getLevel()) {
             println(other.getFirstName() + "'s eyelids drop slightly, and " + heOrShe(other.getGender()) + " seems frozen in place.");
             partyMemberSay(other, "I... I... I forgot what I was going to say...");
             partyMemberSay(vampire, "Don't worry about it " + other.getFirstName() + ", it was probably not important.");
