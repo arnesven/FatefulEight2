@@ -70,13 +70,20 @@ public class CaveSpelunkerEvent extends DailyEventState {
         CharacterAppearance appearance = PortraitSubView.makeRandomPortrait(Classes.TRAVELLER, race, gender);
         showExplicitPortrait(model, appearance, "Spelunker");
         portraitSay("Water... food... please help me...");
-        print("Do you give the " + who + " some of your rations? (Y/N) ");
-        if (yesNoInput()) {
-            println("You quickly pull out some bread and water and help the " + who + " sit up.");
+        if (model.getParty().getFood() > 0) {
+            print("Do you give the " + who + " some of your rations? (Y/N) ");
+            if (yesNoInput()) {
+                println("You quickly pull out some bread and water and help the " + who + " sit up.");
+                model.getParty().addToFood(-1);
+            } else {
+                leaderSay("Uhm... sorry, we're all out...");
+                randomSayIfPersonality(PersonalityTrait.generous, List.of(model.getParty().getLeader()),
+                        "What's wrong with you " + model.getParty().getLeader().getFirstName() + "?");
+            }
+        } else if (model.getParty().getLeader().hasPersonality(PersonalityTrait.stingy)) {
+            leaderSay("I wouldn't give you any even if I had some!");
         } else {
-            leaderSay("Uhm... sorry, we're all out...");
-            randomSayIfPersonality(PersonalityTrait.generous, List.of(model.getParty().getLeader()),
-                    "What's wrong with you " + model.getParty().getLeader().getFirstName() + "?");
+            leaderSay("I'm sorry, we have nothing ourselves.");
         }
         println("After a little while the " + who + " seems to have regained enough strength to talk a little.");
         portraitSay("There were six of us... exploring a cave near " + townOrCity.getPlaceName() + ". I'm the only one " +

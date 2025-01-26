@@ -515,7 +515,7 @@ public class EveningState extends GameState {
         model.getLog().waitForAnimationToFinish();
         List<String> options = new ArrayList<>(List.of("Find victim in town", "Refrain"));
         if (!nonVampires.isEmpty()) {
-            options.add(0, "Feed on party member");
+            options.add(1, "Feed on party member");
         }
         int chosen = multipleOptionArrowMenu(model, 24, 24, options);
         if (options.get(chosen).contains("party")) {

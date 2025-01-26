@@ -9,6 +9,7 @@ import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.HigherTierItemSprite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HigherTierAccessory extends Accessory implements HigherTierItem {
@@ -89,10 +90,11 @@ public class HigherTierAccessory extends Accessory implements HigherTierItem {
 
 
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        List<MyPair<Skill, Integer>> bonuses = inner.getSkillBonuses();
+        List<MyPair<Skill, Integer>> bonuses = new ArrayList<>(inner.getSkillBonuses());
         for (MyPair<Skill, Integer> pair : bonuses) {
             pair.second += tier;
         }
+        bonuses.removeIf(p -> p.second == 0);
         return bonuses;
     }
 
