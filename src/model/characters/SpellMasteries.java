@@ -34,7 +34,6 @@ public class SpellMasteries implements Serializable {
             return false;
         }
         if (pair.second.equals(masterySpell.getThresholds()[pair.first])) {
-            model.getTutorial().spellMasteries(model);
             pair.first++;
             return true;
         }
@@ -60,7 +59,13 @@ public class SpellMasteries implements Serializable {
         if (pair.first >= masterSpell.getThresholds().length) {
             return 100;
         }
+        int prev = 0;
+        if (pair.first > 0) {
+            prev = masterSpell.getThresholds()[pair.first - 1];
+        }
+
         int currentThresh = masterSpell.getThresholds()[pair.first];
-        return (int)Math.round(pair.second * 100.0 / currentThresh);
+        return (int)Math.round((pair.second - prev) * 100.0 /
+                (currentThresh - prev));
     }
 }

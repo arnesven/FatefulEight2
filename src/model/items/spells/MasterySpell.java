@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.items.accessories.MasterRing;
 import model.states.GameState;
+import view.LogView;
 import view.MyColors;
 
 public abstract class MasterySpell extends Spell {
@@ -19,8 +20,9 @@ public abstract class MasterySpell extends Spell {
             for (int i = 0; i < masteryTimes; ++i) {
                 boolean updated = caster.getMasteries().registerSuccessfullCast(model, this);
                 if (updated) {
-                    state.println(caster.getName() + " has achieved mastery level " +
-                            getMasteryLevel(caster) + " for " + getName() + "!");
+                    model.getLog().addAnimated(LogView.PURPLE_COLOR + caster.getName() + " has achieved mastery level " +
+                            getMasteryLevel(caster) + " for " + getName() + "!\n" + LogView.DEFAULT_COLOR);
+                    model.getTutorial().spellMasteries(model);
                 }
             }
         }
@@ -45,6 +47,6 @@ public abstract class MasterySpell extends Spell {
     }
 
     public Integer[] getThresholds() {
-        return new Integer[]{10, 25, 50, 100};
+        return new Integer[]{7, 10, 23, 40};
     }
 }

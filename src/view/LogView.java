@@ -17,13 +17,14 @@ public class LogView extends GameView {
     public static final char DEFAULT_COLOR = (char)0xF0;
     public static final char WHITE_COLOR = (char)0xFA;
     public static final char GOLD_COLOR = (char)0xFC;
+    public static final char PURPLE_COLOR = (char)0xF5;
 
     private static final String SPECIAL_CHARS = makeSpecialCharsString();
     public static final MyColors DEFAULT_TEXT_COLOR = MyColors.LIGHT_GREEN;
 
     private static final MyColors[] COLOR_FOR_CHAR = new MyColors[]{
             DEFAULT_TEXT_COLOR, MyColors.LIGHT_RED,
-            MyColors.CYAN, MyColors.YELLOW, MyColors.GRAY, MyColors.PEACH,
+            MyColors.CYAN, MyColors.YELLOW, MyColors.GRAY, MyColors.PURPLE,
             MyColors.TAN, MyColors.LIGHT_YELLOW, MyColors.LIGHT_BLUE, MyColors.GREEN,
             MyColors.WHITE, MyColors.ORANGE, MyColors.GOLD, MyColors.LIGHT_GRAY,
             MyColors.BEIGE};
