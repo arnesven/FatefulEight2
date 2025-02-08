@@ -13,11 +13,16 @@ import view.sprites.Sprite;
 
 public class WerewolfFormSpell extends CombatSpell {
 
+    public static final String SPELL_NAME = "Werewolf Form";
     private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
     public static final int TURNS = 5;
 
     public WerewolfFormSpell() {
-        super("Werewolf Form", 40, MyColors.GREEN, 8, 4, false);
+        super(SPELL_NAME, 40, MyColors.GREEN, 8, 4, false);
+    }
+
+    public static String getMagicExpertTips() {
+        return "I know a druid who is a master at Werewolf Form. When he casts the spell, he gains strong health regeneration.";
     }
 
     @Override

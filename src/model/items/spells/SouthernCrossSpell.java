@@ -12,10 +12,15 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class SouthernCrossSpell extends ImmediateSpell {
+    public static final String SPELL_NAME = "Southern Cross";
     private static final Sprite SPRITE = new ItemSprite(6, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public SouthernCrossSpell() {
-        super("Southern Cross", 26, MyColors.WHITE, 11, 3);
+        super(SPELL_NAME, 26, MyColors.WHITE, 11, 3);
+    }
+
+    public static String getMagicExpertTips() {
+        return "The amount healed with " + SPELL_NAME + " increases as you gain levels of mastery in that spell.";
     }
 
     @Override

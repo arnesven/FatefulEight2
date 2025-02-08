@@ -13,12 +13,17 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class BlessSpell extends ImmediateSpell {
+    public static final String SPELL_NAME = "Bless";
     private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
     private static final int DURATION_DAYS = 3;
     private GameCharacter target;
 
     public BlessSpell() {
-        super("Bless", 14, MyColors.WHITE, 7, 2);
+        super(SPELL_NAME, 14, MyColors.WHITE, 7, 2);
+    }
+
+    public static String getMagicExpertTips() {
+        return "A master of the Bless spell will cast it with prolonged duration.";
     }
 
     @Override

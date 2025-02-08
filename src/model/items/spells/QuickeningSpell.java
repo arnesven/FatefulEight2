@@ -12,10 +12,15 @@ import view.sprites.UpArrowAnimation;
 
 public class QuickeningSpell extends CombatSpell {
     public static final int SPEED_BONUS = 6;
+    public static final String SPELL_NAME = "Quickening";
     private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
 
     public QuickeningSpell() {
-        super("Quickening", 14, COLORLESS, 7, 0, false);
+        super(SPELL_NAME, 14, COLORLESS, 7, 0, false);
+    }
+
+    public static String getMagicExpertTips() {
+        return "When you become a master at Quickening, the speed boost last longer on your target.";
     }
 
     @Override

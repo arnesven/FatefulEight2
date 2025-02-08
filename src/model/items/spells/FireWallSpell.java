@@ -11,10 +11,15 @@ import view.sprites.Sprite;
 
 public class FireWallSpell extends CombatSpell {
 
+    public static final String SPELL_NAME = "Fire Wall";
     private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
     public FireWallSpell() {
-        super("Fire Wall", 28, MyColors.RED, 9, 3, false);
+        super(SPELL_NAME, 28, MyColors.RED, 9, 3, false);
+    }
+
+    public static String getMagicExpertTips() {
+        return "The damage of Fire Wall is based on your level of mastery with the spell.";
     }
 
     @Override

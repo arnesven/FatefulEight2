@@ -22,10 +22,16 @@ import view.MyColors;
 import view.sprites.*;
 
 public class RaiseBoneWalkerSpell extends SummonCombatSpell {
+    public static final String SPELL_NAME = "Raise Bone Walker";
     private static final Sprite SPRITE = new CombatSpellSprite(9, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public RaiseBoneWalkerSpell() {
-        super("Raise Bone Walker", 34, MyColors.BLACK, 10, 3);
+        super(SPELL_NAME, 34, MyColors.BLACK, 10, 3);
+    }
+
+    public static String getMagicExpertTips() {
+        return "When you attain levels of mastery in Raise Bone Walker, " +
+                "your animated servants will be both tougher and more deadly.";
     }
 
     @Override

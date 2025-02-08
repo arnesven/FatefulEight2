@@ -16,10 +16,15 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class WeakenSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Weaken";
     private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public WeakenSpell() {
-        super("Weaken", 18, MyColors.BLACK, 9, 1);
+        super(SPELL_NAME, 18, MyColors.BLACK, 9, 1);
+    }
+
+    public static String getMagicExpertTips() {
+        return "The effect of Weaken lasts longer if you gain some levels of mastery in that spell.";
     }
 
     @Override

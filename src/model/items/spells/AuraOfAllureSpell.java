@@ -8,9 +8,10 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class AuraOfAllureSpell extends SkillBoostingSpell {
+    public static final String SPELL_NAME = "Aura of Allure";
     private static final Sprite SPRITE = new ItemSprite(2, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
     public AuraOfAllureSpell() {
-        super("Aura of Allure", 12, MyColors.WHITE, 8, 1);
+        super(SPELL_NAME, 12, MyColors.WHITE, 8, 1);
     }
 
     @Override

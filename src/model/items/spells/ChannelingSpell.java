@@ -15,14 +15,14 @@ import view.subviews.ArrowMenuSubView;
 import java.util.List;
 
 public class ChannelingSpell extends SkillBoostingSpell {
+    public static final String SPELL_NAME = "Channeling";
     private static final Sprite SPRITE =  new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);;
-    private static final String NAME = "Channeling";
     private static final int DIFFICULTY = 10;
     private static final int HP_COST = 1;
     private Skill skill = null;
 
     public ChannelingSpell() {
-        super(NAME, 24, COLORLESS, DIFFICULTY, HP_COST);
+        super(SPELL_NAME, 24, COLORLESS, DIFFICULTY, HP_COST);
     }
 
     @Override

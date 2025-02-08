@@ -12,11 +12,17 @@ import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
 
 public class GiantGrowthSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Giant Growth";
     private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
 
 
     public GiantGrowthSpell() {
-        super("Giant Growth", 20, MyColors.GREEN, 8, 2);
+        super(SPELL_NAME, 20, MyColors.GREEN, 8, 2);
+    }
+
+    public static String getMagicExpertTips() {
+        return "A combatant targeted with Giant Growth will deal more damage in combat. How much damage? It depends on " +
+                "your level of mastery with the spell";
     }
 
     @Override

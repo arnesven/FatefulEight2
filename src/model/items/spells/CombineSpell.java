@@ -23,16 +23,21 @@ import java.util.Set;
 
 public class CombineSpell extends AuxiliarySpell {
 
+    public static final String SPELL_NAME = "Combine";
     private static final String COMBINE_COMBAT_SPELL_NAME = "COMBO";
     private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
     private List<Spell> combinedResult = null;
 
     public CombineSpell() {
-        super("Combine", 68, COLORLESS, 5, 0);
+        super(SPELL_NAME, 68, COLORLESS, 5, 0);
     }
 
     public static int getResultingHealthCost(List<Spell> combined) {
         return MyLists.maximum(combined, Spell::getHPCost) + combined.size() - 1;
+    }
+
+    public static String getMagicExpertTips() {
+        return "Combine is a very powerful spell. A master of combine can more than two spells.";
     }
 
     @Override

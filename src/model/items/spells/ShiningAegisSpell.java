@@ -10,10 +10,15 @@ import view.MyColors;
 import view.sprites.*;
 
 public class ShiningAegisSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Shining Aegis";
     private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public ShiningAegisSpell() {
-        super("Shining Aegis", 12, MyColors.WHITE, 8, 1);
+        super(SPELL_NAME, 12, MyColors.WHITE, 8, 1);
+    }
+
+    public static String getMagicExpertTips() {
+        return "When you become a master of the Shining Aegis spell, the effect will last longer.";
     }
 
     @Override

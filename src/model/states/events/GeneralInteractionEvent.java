@@ -536,12 +536,16 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         leaderSay(MyRandom.sample(List.of("Tell me what you know about " + topic + ".",
                 "Know anything about " + topic + "?",
                 "Can you tell me anything about " + topic + "?")));
-        String answer = GeneralInteractionConversations.getReplyFor(model, victim, topic);
+        String answer = getCustomTopicReply(model, victim, topic);
         if (answer == null) {
             portraitSay("I'm sorry, but I don't know anything about " + topic + ".");
         } else {
             portraitSay(answer);
         }
+    }
+
+    protected String getCustomTopicReply(Model model, GameCharacter victim, String topic) {
+        return GeneralInteractionConversations.getReplyFor(model, victim, topic);
     }
 
     private boolean canAskAboutPuzzleTubes(Model model) {

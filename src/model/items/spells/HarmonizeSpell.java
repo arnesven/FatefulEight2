@@ -17,10 +17,15 @@ import view.sprites.CombatSpellSprite;
 import view.sprites.Sprite;
 
 public class HarmonizeSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Harmonize";
     private static final Sprite SPRITE = new CombatSpellSprite(0, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
 
     public HarmonizeSpell() {
-        super("Harmonize", 20, MyColors.GREEN, 9, 2, true);
+        super(SPELL_NAME, 20, MyColors.GREEN, 9, 2, true);
+    }
+
+    public static String getMagicExpertTips() {
+        return "A master of the spell Harmonize can calm down beasts faster than a novice.";
     }
 
     @Override

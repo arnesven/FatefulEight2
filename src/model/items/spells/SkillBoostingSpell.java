@@ -14,6 +14,10 @@ public abstract class SkillBoostingSpell extends AuxiliarySpell {
         super(name, cost, color, difficulty, hpCost);
     }
 
+    public static String getMagicExpertTips(String spellName) {
+        return "When you gain levels of mastery in the " + spellName + " spell, the effect of the spell will get stronger.";
+    }
+
     protected abstract Skill getBoostingSkill();
 
     @Override

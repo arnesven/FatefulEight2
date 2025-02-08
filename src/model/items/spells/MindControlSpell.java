@@ -8,10 +8,11 @@ import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class MindControlSpell extends SkillBoostingSpell {
+    public static final String SPELL_NAME = "Mind Control";
     private static final Sprite SPRITE = new ItemSprite(6, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public MindControlSpell() {
-        super("Mind Control", 16, MyColors.BLUE, 8, 2);
+        super(SPELL_NAME, 16, MyColors.BLUE, 8, 2);
     }
 
     @Override

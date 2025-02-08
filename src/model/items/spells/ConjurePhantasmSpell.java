@@ -15,10 +15,15 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class ConjurePhantasmSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Conjure Phantasm";
     private static final Sprite SPRITE = new CombatSpellSprite(4, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
 
     public ConjurePhantasmSpell() {
-        super("Conjure Phantasm", 24, MyColors.BLUE, 10, 2);
+        super(SPELL_NAME, 24, MyColors.BLUE, 10, 2);
+    }
+
+    public static String getMagicExpertTips() {
+        return "When you gain mastery levels in Conjure Phantasm, you can target more enemies.";
     }
 
     @Override

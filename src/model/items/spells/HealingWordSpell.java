@@ -12,10 +12,15 @@ import view.sprites.*;
 import java.util.List;
 
 public class HealingWordSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Healing Word";
     private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
 
     public HealingWordSpell() {
-        super("Healing Word", 16, MyColors.WHITE, 8, 2);
+        super(SPELL_NAME, 16, MyColors.WHITE, 8, 2);
+    }
+
+    public static String getMagicExpertTips() {
+        return "The amount healed by the Healing Word spell is based on your level of mastery with that spell.";
     }
 
     @Override

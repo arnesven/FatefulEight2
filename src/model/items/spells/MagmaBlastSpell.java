@@ -16,10 +16,16 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class MagmaBlastSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Magma Blast";
     private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
     public MagmaBlastSpell() {
-        super("Magma Blast", 36, MyColors.RED, 11, 4);
+        super(SPELL_NAME, 36, MyColors.RED, 11, 4);
+    }
+
+    public static String getMagicExpertTips() {
+        return "When you gain levels of mastery in " + SPELL_NAME +
+                ", you both deal more damage and can target more opponents.";
     }
 
     @Override

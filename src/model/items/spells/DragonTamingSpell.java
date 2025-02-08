@@ -27,13 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DragonTamingSpell extends AuxiliarySpell {
+    public static final String SPELL_NAME = "Dragon Taming";
     private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
     private static final int DIFFICULTY = 8;
     private static final int HP_COST = 1;
     private static final String DESCRIPTION = "Attract a dragon or try to tame it.";
 
     public DragonTamingSpell() {
-        super("Dragon Taming", 85, COLORLESS, DIFFICULTY, HP_COST);
+        super(SPELL_NAME, 85, COLORLESS, DIFFICULTY, HP_COST);
+    }
+
+    public static String getMagicExpertTips() {
+        return "Taming a dragon with the Dragon Taming spell is very difficult to pull off, but practice makes perfect!";
     }
 
     @Override

@@ -1,6 +1,8 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.items.spells.*;
 import util.MyPair;
 import util.MyRandom;
 
@@ -18,8 +20,11 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
             "Tired of walking? Check out Teleport.",
             "Southern Cross is a powerful healing spell, but you can only use it under the right conditions.",
             "The Resurrect spell is a real life saver, literally. But it is exhausting, and takes a long time to cast.",
-            "I once knew a Magician who liked to use Telekinesis while gambling. He made quite a bit of money, until he got caught."
+            "I once knew a Magician who liked to use Telekinesis while gambling. He made quite a bit of money, until he got caught.",
+            "Alchemy is a very good spell to know. Ingredients can be found most everywhere.",
+            "Imbue is a spell for enchanting weapons. Very useful if you are going to take on some tough adversaries."
     );
+
     private static final List<String> VAMPIRE_TIPS = List.of(
             "Vampires need to feed on humanoid creatures to sustain themselves. That's why they're drawn to towns and castles.",
             "Vampirism can be cured. Look for stone circles out on the plains. Such places are often frequented by druids who know the right rituals for curing vampirism.",
@@ -41,6 +46,8 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
             "Unstable potions can explode. Be careful with them!"
     );
 
+    private static final Map<String, String> CUSTOM_TOPIC_TIPS = makeCustomTopics();
+
     public MagicExpertGeneralInteractionEvent(Model model, String interactText, int stealMoney) {
         super(model, interactText, stealMoney);
     }
@@ -53,6 +60,54 @@ public abstract class MagicExpertGeneralInteractionEvent extends GeneralInteract
                 MyRandom.sample(SPELL_TIPS)));
         map.put("vampires", new MyPair<>("Know anything about vampires?",
                 MyRandom.sample(VAMPIRE_TIPS)));
+        return map;
+    }
+
+    protected String getCustomTopicReply(Model model, GameCharacter victim, String topic) {
+        String reply = CUSTOM_TOPIC_TIPS.get(topic);
+        if (reply != null) {
+            return reply;
+        }
+        return super.getCustomTopicReply(model, victim, topic);
+    }
+
+    private static Map<String, String> makeCustomTopics() {
+        Map<String, String> map = new HashMap<>(Map.of(
+                CombineSpell.SPELL_NAME.toLowerCase(), CombineSpell.getMagicExpertTips(),
+                BoneArmorSpell.SPELL_NAME.toLowerCase(), BoneArmorSpell.getMagicExpertTips(),
+                BlessSpell.SPELL_NAME.toLowerCase(), BlessSpell.getMagicExpertTips(),
+                ChainLightningSpell.SPELL_NAME.toLowerCase(), ChainLightningSpell.getMagicExpertTips(),
+                ConjurePhantasmSpell.SPELL_NAME.toLowerCase(), ConjurePhantasmSpell.getMagicExpertTips(),
+                DragonTamingSpell.SPELL_NAME.toLowerCase(), DragonTamingSpell.getMagicExpertTips(),
+                WerewolfFormSpell.SPELL_NAME.toLowerCase(), WerewolfFormSpell.getMagicExpertTips(),
+                DrainLifeSpell.SPELL_NAME.toLowerCase(), DrainLifeSpell.getMagicExpertTips(),
+                EntropicBoltSpell.SPELL_NAME.toLowerCase(), EntropicBoltSpell.getMagicExpertTips(),
+                FireWallSpell.SPELL_NAME.toLowerCase(), FireWallSpell.getMagicExpertTips()
+        ));
+
+        map.putAll(Map.of(
+                GiantGrowthSpell.SPELL_NAME.toLowerCase(), GiantGrowthSpell.getMagicExpertTips(),
+                HarmonizeSpell.SPELL_NAME.toLowerCase(), HarmonizeSpell.getMagicExpertTips(),
+                HealingWordSpell.SPELL_NAME.toLowerCase(), HealingWordSpell.getMagicExpertTips(),
+                MagmaBlastSpell.SPELL_NAME.toLowerCase(), MagmaBlastSpell.getMagicExpertTips(),
+                QuickeningSpell.SPELL_NAME.toLowerCase(), QuickeningSpell.getMagicExpertTips(),
+                RaiseBoneWalkerSpell.SPELL_NAME.toLowerCase(), RaiseBoneWalkerSpell.getMagicExpertTips(),
+                ShiningAegisSpell.SPELL_NAME.toLowerCase(), ShiningAegisSpell.getMagicExpertTips(),
+                SouthernCrossSpell.SPELL_NAME.toLowerCase(), SouthernCrossSpell.getMagicExpertTips(),
+                WeakenSpell.SPELL_NAME.toLowerCase(), WeakenSpell.getMagicExpertTips()
+        ));
+
+        map.putAll(Map.of(
+                AuraOfAllureSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(AuraOfAllureSpell.SPELL_NAME),
+                CallOfTheWildSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(CallOfTheWildSpell.SPELL_NAME),
+                ChannelingSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(ChannelingSpell.SPELL_NAME),
+                DarkShroudSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(DarkShroudSpell.SPELL_NAME),
+                MindControlSpell.SPELL_NAME.toLowerCase(),  SkillBoostingSpell.getMagicExpertTips(MindControlSpell.SPELL_NAME),
+                OpeningSpell.SPELL_NAME.toLowerCase(), SkillBoostingSpell.getMagicExpertTips(OpeningSpell.SPELL_NAME)
+            ));
+
+        map.put("mastery", MasterySpell.getMagicExpertTips());
+        map.put("masteries", MasterySpell.getMagicExpertTips());
         return map;
     }
 }

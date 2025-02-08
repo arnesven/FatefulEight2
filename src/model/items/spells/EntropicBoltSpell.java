@@ -11,10 +11,15 @@ import view.MyColors;
 import view.sprites.*;
 
 public class EntropicBoltSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Entropic Bolt";
     private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
 
     public EntropicBoltSpell() {
-        super("Entropic Bolt", 32, MyColors.RED, 10, 2);
+        super(SPELL_NAME, 32, MyColors.RED, 10, 2);
+    }
+
+    public static String getMagicExpertTips() {
+        return "The damage of Entropic Bolt is based on your level, along with your level of mastery.";
     }
 
     @Override

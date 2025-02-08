@@ -11,10 +11,11 @@ import view.sprites.Sprite;
 
 public class DarkShroudSpell extends SkillBoostingSpell {
 
+    public static final String SPELL_NAME = "Dark Shroud";
     private static final Sprite SPRITE = new ItemSprite(13, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public DarkShroudSpell() {
-        super("Dark Shroud", 16, MyColors.BLACK, 9, 1);
+        super(SPELL_NAME, 16, MyColors.BLACK, 9, 1);
     }
 
     @Override

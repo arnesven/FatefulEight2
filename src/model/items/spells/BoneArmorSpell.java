@@ -14,10 +14,16 @@ import view.MyColors;
 import view.sprites.*;
 
 public class BoneArmorSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Bone Armor";
     private static final Sprite SPRITE = new CombatSpellSprite(2, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public BoneArmorSpell() {
-        super("Bone Armor", 34, MyColors.BLACK, 9, 2, false); // 9, 2
+        super(SPELL_NAME, 34, MyColors.BLACK, 9, 2, false); // 9, 2
+    }
+
+    public static String getMagicExpertTips() {
+        return "I once knew a powerful Sorcereress who was a master of Bone Armor. " +
+                "It provided a powerful protection in combat.";
     }
 
     @Override

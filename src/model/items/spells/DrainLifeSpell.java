@@ -14,10 +14,15 @@ import view.MyColors;
 import view.sprites.*;
 
 public class DrainLifeSpell extends CombatSpell {
+    public static final String SPELL_NAME = "Drain Life";
     private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
 
     public DrainLifeSpell() {
-        super("Drain Life", 18, MyColors.BLACK, 8, 3, false);
+        super(SPELL_NAME, 18, MyColors.BLACK, 8, 3, false);
+    }
+
+    public static String getMagicExpertTips() {
+        return "Drain life becomes much more powerful when your get some mastery levels in it.";
     }
 
     @Override
