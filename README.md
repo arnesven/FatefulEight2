@@ -10,7 +10,7 @@ Features:
 - Lots of items to equip your characters with.
 - 20+ Quests, 100+ Random Events
 - Create your own custom characters
-- 30 spells, with unique and interesting effects.
+- 48 spells, with unique and interesting effects.
 - Item Crafting and Alchemy
 - Informative tutorial (which can be turned off)
 - Save in up to 3 slot + autosave
