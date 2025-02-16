@@ -140,9 +140,10 @@ public class PartyMemberWantsToLeaveEvent extends DailyEventState {
                             List.of("Me too.", "I'm leaving too.", "I'm out of here too.", "Yeah. I'm out."));
                     model.getLog().waitForAnimationToFinish();
                     model.getParty().remove(s, false, false, 0);
-                    printAlert(gc.getName() + " has left the party!");
+                    printAlert(s.getName() + " has left the party!");
                 }
                 separtists.add(gc);
+                printAlert(gc.getName() + " attacks you!");
                 runCombat(transformToEnemies(separtists), model.getCurrentHex().getCombatTheme(), true);
                 setCurrentTerrainSubview(model);
                 model.setInCombat(false);
