@@ -23,6 +23,8 @@ import java.util.Set;
 
 public class CraftItemState extends GameState {
 
+    private static final Skill SALVAGE_SKILL = Skill.Labor;
+
     public CraftItemState(Model model) {
         super(model);
     }
@@ -204,13 +206,16 @@ public class CraftItemState extends GameState {
         Item itemToSalvage = salvageableItems.get(selected);
 
         SubView previous = model.getSubView();
-        model.setSubView(new SalvageItemSubView(previous, itemToSalvage));
-        print("Are you sure you want to attempt to salvage " + itemToSalvage.getName() + "? (Y/N) ");
+        SalvageItemSubView salvageView = new SalvageItemSubView(previous, itemToSalvage);
+        model.setSubView(salvageView);
+        print("Which party member should attempt to salvage the " + itemToSalvage.getName() + "? ");
+        GameCharacter salvager = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+        setMinMaxInView(salvageView, salvager, itemToSalvage);
+        print("Are you sure you want " + salvager.getFirstName() + " to attempt to salvage materials from " +
+                itemToSalvage.getName() + "? (Y/N) ");
         if (yesNoInput()) {
-            print("Which party member should attempt to salvage the " + itemToSalvage.getName() + "? ");
-            GameCharacter salvager = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, salvager, Skill.Labor, 5, 5, 0);
-            int materialsGained = Math.max(0, (itemToSalvage.getCost() + result.getModifiedRoll() - 5) / 5);
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, salvager, SALVAGE_SKILL, 5, 5, 0);
+            int materialsGained = materialsFromSalvage(itemToSalvage.getCost(), result.getModifiedRoll());
             println("The " + itemToSalvage.getName() + " was destroyed.");
             if (result.isSuccessful() && materialsGained > 0) {
                 println(salvager.getFirstName() + " managed to salvage " + materialsGained +
@@ -229,6 +234,20 @@ public class CraftItemState extends GameState {
             model.getParty().getInventory().remove(itemToSalvage);
         }
         model.setSubView(previous);
+    }
+
+    private void setMinMaxInView(SalvageItemSubView salvageView, GameCharacter salvager, Item itemToSalvage) {
+        int min = 0;
+        int salvagerRank = salvager.getRankForSkill(SALVAGE_SKILL);
+        for (int roll = 1; roll <= 10 && min == 0; ++roll) {
+            min = materialsFromSalvage(itemToSalvage.getCost(), salvagerRank + roll);
+        }
+        int max = materialsFromSalvage(itemToSalvage.getCost(), salvagerRank + 10);
+        salvageView.setMinAndMax(min, max);
+    }
+
+    private int materialsFromSalvage(int cost, int modifiedRoll) {
+        return Math.max(0, (cost + modifiedRoll - 5) / 5);
     }
 
     private int showMenu(Model model, List<String> names) {

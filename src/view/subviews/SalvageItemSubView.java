@@ -3,6 +3,7 @@ package view.subviews;
 import model.Model;
 import model.items.Item;
 import model.items.MaterialsDummyItem;
+import util.MyPair;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.ArrowSprites;
@@ -11,6 +12,7 @@ public class SalvageItemSubView extends SubView {
     private final Item itemToSalvage;
     private final SubView previous;
     private final MaterialsDummyItem materials;
+    private MyPair<Integer, Integer> expectedMaterials = null;
 
     public SalvageItemSubView(SubView previous, Item itemToSalvage) {
         this.previous = previous;
@@ -29,6 +31,11 @@ public class SalvageItemSubView extends SubView {
         }
         materials.drawYourself(model.getScreenHandler(), X_OFFSET + 22, y);
         BorderFrame.drawString(model.getScreenHandler(), "Materials", X_OFFSET+18, y + 4, MyColors.WHITE);
+        if (expectedMaterials != null) {
+            BorderFrame.drawString(model.getScreenHandler(),
+                    String.format("%d-%d", expectedMaterials.first, expectedMaterials.second),
+                    X_OFFSET+22, y + 5, MyColors.WHITE);
+        }
     }
 
     @Override
@@ -39,5 +46,9 @@ public class SalvageItemSubView extends SubView {
     @Override
     protected String getTitleText(Model model) {
         return previous.getTitleText(model);
+    }
+
+    public void setMinAndMax(int min, int max) {
+        this.expectedMaterials = new MyPair<>(min, max);
     }
 }
