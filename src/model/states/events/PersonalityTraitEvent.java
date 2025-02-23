@@ -5,6 +5,9 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.states.DailyEventState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class PersonalityTraitEvent extends DailyEventState {
     private final GameCharacter mainCharacter;
     private final PersonalityTrait trait;
@@ -23,5 +26,11 @@ public abstract class PersonalityTraitEvent extends DailyEventState {
 
     public PersonalityTrait getTrait() {
         return trait;
+    }
+
+    protected void benchAllButMain(Model model) {
+        List<GameCharacter> allButMain = new ArrayList<>(model.getParty().getPartyMembers());
+        allButMain.remove(mainCharacter);
+        model.getParty().benchPartyMembers(allButMain);
     }
 }

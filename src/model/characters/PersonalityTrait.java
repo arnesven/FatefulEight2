@@ -177,9 +177,9 @@ public enum PersonalityTrait {
             case stingy:
                 // return new CantAffordThatThingEvent(model, this, mainCharacter);
             case romantic:
-                return new DeadlyLoverEvent(model, this, mainCharacter);
+                return new BoyfriendGirlfriendEvent(model, mainCharacter);
             case naive:
-                // return ?
+                return new DeadlyLoverEvent(model, this, mainCharacter);
             case diplomatic:
                 // return new FeudingFamiliesEvent(model, this, mainCharacter);
             case cold:

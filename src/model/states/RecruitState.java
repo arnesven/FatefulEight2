@@ -64,6 +64,10 @@ public class RecruitState extends GameState {
         }
     }
 
+    public void setStartingGold(GameCharacter gc, int amount) {
+        startingGoldMap.put(gc, amount);
+    }
+
     private void setLevels(List<GameCharacter> recruitables) {
         double partyLevel = MyLists.doubleAccumulate(getModel().getParty().getPartyMembers(),
                                                      GameCharacter::getLevel);

@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
+import model.characters.PersonalityTrait;
 import model.items.puzzletube.DwarvenPuzzleTube;
 import model.states.dailyaction.FindResourcesDailyAction;
 import model.tasks.AlchemyTask;
@@ -440,7 +441,6 @@ public abstract class WorldHex {
                 new PartyMemberWantsToLeaveEvent(model),
                 new CheckForVampireEvent(model),
                 new PersonalityEvent(model)
-                // TODO: Two Party members fall in love and want to settle down
         ));
     }
 

@@ -5,7 +5,9 @@ import model.TimeOfDay;
 import model.actions.DailyAction;
 import model.actions.StayInHexAction;
 import model.states.GameState;
+import model.states.NullGameState;
 import model.states.StayInHexState;
+import model.states.events.NoEventState;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import view.MyColors;
@@ -20,6 +22,7 @@ import java.util.List;
 class StayHereNode extends DailyActionNode {
     private static final Sprite SPRITE = new Sprite32x32("stayhere", "world_foreground.png", 0x12,
             TownSubView.STREET_COLOR, TownSubView.PATH_COLOR, MyColors.GRAY, MyColors.BROWN);
+    private boolean canceled = false;
 
     public StayHereNode() {
         super("Stay in town (resolve an event)");
@@ -34,13 +37,11 @@ class StayHereNode extends DailyActionNode {
                 actions.add(dt.getDailyAction(model));
             }
         }
-        if (actions.size() == 1) {
-            return actions.get(0).getState();
-        }
 
         state.print("What event would you like to resolve? ");
         int[] selectedAction = new int[1];
         List<String> optionList = MyLists.transform(actions, DailyAction::getName);
+        optionList.add("Cancel");
         model.setSubView(new ArrowMenuSubView(model.getSubView(),
                 optionList, 30, 18, ArrowMenuSubView.NORTH_WEST) {
             @Override
@@ -50,6 +51,10 @@ class StayHereNode extends DailyActionNode {
             }
         });
         state.waitForReturn();
+        if (selectedAction[0] == optionList.size()-1) {
+            canceled = true;
+            return new NullGameState();
+        }
         return actions.get(selectedAction[0]).getState();
     }
 
@@ -69,11 +74,13 @@ class StayHereNode extends DailyActionNode {
 
     @Override
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
-        model.setTimeOfDay(TimeOfDay.EVENING);
+        if (!canceled) {
+            model.setTimeOfDay(TimeOfDay.EVENING);
+        }
     }
 
     @Override
     public boolean returnNextState() {
-        return true;
+        return !canceled;
     }
 }
