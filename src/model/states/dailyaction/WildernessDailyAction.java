@@ -20,15 +20,10 @@ public class WildernessDailyAction extends DailyAction {
     public static void addActionsIfApplicable(Model model, List<DailyAction> actions) {
         if (notDoneYetToday(model) && !model.getParty().isOnRoad()) {
             actions.add(new WildernessDailyAction("Find Resources", new FindResourcesState(model)));
-            if (model.getCurrentHex().getRivers() != 0 && hasFishingPole(model)) {
+            if (model.getCurrentHex().getRivers() != 0 && FishingState.countFishingPoles(model) > 0) {
                 actions.add(new WildernessDailyAction("Go Fishing", new FishingState(model)));
             }
         }
-    }
-
-    private static boolean hasFishingPole(Model model) {
-        return MyLists.any(model.getParty().getInventory().getAllItems(), it -> it instanceof FishingPole) ||
-                MyLists.any(model.getParty().getPartyMembers(), gc -> gc.getEquipment().getWeapon().isOfType(FishingPole.class));
     }
 
     private static boolean notDoneYetToday(Model model) {

@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
 import model.items.Item;
 import model.items.weapons.FishingPole;
 import model.items.weapons.Weapon;
@@ -16,8 +17,12 @@ import util.MyRandom;
 import view.sprites.MiniPictureSprite;
 import view.subviews.MiniPictureSubView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FishingState extends GameState {
     private static final MiniPictureSprite SPRITE = new MiniPictureSprite(0x32);
+    private static final int ATTEMPTS_PER_PERSON_LONG = 2;
     private MiniPictureSubView miniSubView;
 
     public FishingState(Model model) {
@@ -30,28 +35,61 @@ public class FishingState extends GameState {
         this.miniSubView = new MiniPictureSubView(model.getSubView(), SPRITE, "Fishing");
         model.setSubView(miniSubView);
         model.getTutorial().fishing(model);
-        if (!findFishingPole(model)) {
+        if (countFishingPoles(model) == 0) {
             println("Unfortunately, you don't have a fishing pole.");
             return model.getCurrentHex().getDailyActionState(model);
         }
-        goFishing(model);
+        multipleFishingAttempts(model, 1);
         print("If you wish to travel today you must leave now. Do you want to continue fishing? (Y/N) ");
         if (!yesNoInput()) {
             return model.getCurrentHex().getDailyActionState(model);
         }
-        goFishing(model);
-        goFishing(model);
+        multipleFishingAttempts(model, ATTEMPTS_PER_PERSON_LONG);
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 
-    private void goFishing(Model model) {
+    private void multipleFishingAttempts(Model model, int attemptsPerPerson) {
+        int fishingAttempts = Math.min(model.getParty().size(), countFishingPoles(model)) * attemptsPerPerson;
+        println("You have " + fishingAttempts + " fishing attempts.");
+        Map<GameCharacter, Integer> fishingCounts = new HashMap<>();
+        GameCharacter lastFisher = model.getParty().getPartyMember(0);
+        for (int i = 0; i < fishingAttempts; ++i) {
+            lastFisher = goFishing(model, attemptsPerPerson, fishingCounts, lastFisher);
+        }
+    }
+
+    private GameCharacter goFishing(Model model, int maxAttempts, Map<GameCharacter, Integer> counts, GameCharacter fisher) {
+        fisher = selectFisher(model, maxAttempts, counts, fisher);
+        tryToCatchFish(model, fisher);
+        return fisher;
+    }
+
+    private GameCharacter selectFisher(Model model, int maxAttempts, Map<GameCharacter, Integer> counts, GameCharacter fisher) {
+        while (true) {
+            print("Which character do you want to fish with next? ");
+            fisher = model.getParty().partyMemberInput(model, this, fisher);
+            if (!counts.containsKey(fisher)) {
+                counts.put(fisher, 1);
+                break;
+            }
+            if (counts.get(fisher) == maxAttempts) {
+                println(fisher.getName() + " cannot fish more right now.");
+            } else {
+                counts.put(fisher, counts.get(fisher) + 1);
+                break;
+            }
+        }
+        return fisher;
+    }
+
+    private void tryToCatchFish(Model model, GameCharacter fisher) {
         Fish fish = generateFish();
-        MyPair<Boolean, GameCharacter> pair = model.getParty().doSoloSkillCheckWithPerformer(model, this, Skill.Survival, fish.getDifficulty());
-        if (pair.first) {
+        SkillCheckResult checkResult = model.getParty().doSkillCheckWithReRoll(model, this, fisher, Skill.Survival, fish.getDifficulty(), 10, 0);
+        if (checkResult.isSuccessful()) {
             GameStatistics.recordMaximumFish(fish.getWeight());
-            partyMemberSay(pair.second, "Oh, it's a " + fish.getName().toLowerCase() + ".");
+            partyMemberSay(fisher, "Oh, it's a " + fish.getName().toLowerCase() + ".");
             if (model.getParty().size() > 1 && fish.getWeight() > 1500) {
-                partyMemberSay(model.getParty().getRandomPartyMember(pair.second), "Nice catch!");
+                partyMemberSay(model.getParty().getRandomPartyMember(fisher), "Nice catch!");
             }
             print("Do you want to convert the " + fish.getName().toLowerCase() + " into " +
                     fish.getRations() + " rations? (Y/N) ");
@@ -61,7 +99,7 @@ public class FishingState extends GameState {
                 model.getParty().getInventory().add(fish);
             }
         } else {
-            partyMemberSay(pair.second, "Not a bite.");
+            partyMemberSay(fisher, "Not a bite.");
         }
     }
 
@@ -85,12 +123,11 @@ public class FishingState extends GameState {
         return new TunaFish();
     }
 
-    private boolean findFishingPole(Model model) {
-        if (MyLists.any(model.getParty().getInventory().getAllItems(), (Item it) ->
-                (it instanceof Weapon && ((Weapon) it).isOfType(FishingPole.class)))) {
-            return true;
-        }
-        return MyLists.any(model.getParty().getPartyMembers(), (GameCharacter gc) ->
-                gc.getEquipment().getWeapon().isOfType(FishingPole.class));
+    public static int countFishingPoles(Model model) {
+        int polesInInventory = MyLists.intAccumulate(model.getParty().getInventory().getAllItems(), (Item it) ->
+                (it instanceof Weapon && ((Weapon) it).isOfType(FishingPole.class)) ? 1 : 0);
+        int polesEquipped = MyLists.intAccumulate(model.getParty().getPartyMembers(), (GameCharacter gc) ->
+                gc.getEquipment().getWeapon().isOfType(FishingPole.class) ? 1 : 0);
+        return polesInInventory + polesEquipped;
     }
 }

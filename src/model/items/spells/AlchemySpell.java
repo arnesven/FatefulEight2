@@ -81,7 +81,7 @@ public class AlchemySpell extends ImmediateSpell {
             }
             subView.setContents(selectedPotion, ingredientCost);
             state.print("Are you sure you want to ");
-            if (distill) {
+            if (distill) { // TODO: Reduce the amount of ingredients you get from distill, otherwise you can get inf ingredients when you have a recipe
                 state.print("use up " + selectedPotion.getName() + " to recover " + ingredientCost + " ingredients");
             } else {
                 state.print("spend " + ingredientCost + " ingredients to brew " + selectedPotion.getName());
