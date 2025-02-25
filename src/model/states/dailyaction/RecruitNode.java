@@ -17,9 +17,7 @@ import view.subviews.PortraitSubView;
 import view.subviews.TavernSubView;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 public class RecruitNode extends DailyActionNode {
@@ -74,15 +72,23 @@ public class RecruitNode extends DailyActionNode {
         model.getScreenHandler().put(p.x, p.y, getBackgroundSprite());
         Sprite fg = getForegroundSprite();
         model.getScreenHandler().register("objectforeground", p, fg);
-        List<GameCharacter> recruitables = defaultGuys;
+        Set<GameCharacter> recruitables = new HashSet<>(model.getLingeringRecruitables());
         if (this.recruitState != null) {
-             recruitables = recruitState.getRecruitables();
+             recruitables.addAll(recruitState.getRecruitables());
         }
-        for (int i = 0; i < Math.min(3, recruitables.size()); ++i) {
-            AvatarSprite avatarSprite = recruitables.get(i).getAvatarSprite();
+        if (recruitables.isEmpty()) {
+            recruitables.addAll(defaultGuys);
+        }
+        int i = 0;
+        for (GameCharacter gc : recruitables) {
+            AvatarSprite avatarSprite = gc.getAvatarSprite();
             avatarSprite.synch();
             Point pos = new Point(p.x + offsets.get(i).x, p.y + offsets.get(i).y);
             model.getScreenHandler().register(avatarSprite.getName(), pos, avatarSprite);
+            i++;
+            if (i == 3) {
+                break;
+            }
         }
     }
 

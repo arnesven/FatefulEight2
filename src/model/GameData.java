@@ -1,5 +1,6 @@
 package model;
 
+import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.items.ItemDeck;
 import model.mainstory.MainStory;
@@ -36,4 +37,5 @@ public class GameData implements Serializable {
     public int worldState = WorldBuilder.ORIGINAL;
     public List<MapObject> mapObjects = new ArrayList<>();
     public WarHandler warHandler = new WarHandler();
+    public List<GameCharacter> lingeringRecruitables = new ArrayList<>();
 }

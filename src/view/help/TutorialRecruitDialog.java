@@ -16,8 +16,8 @@ public class TutorialRecruitDialog extends ExpandableHelpDialog {
             "New characters never bring more than a basic weapon with them but they sometimes " +
             "contribute a little bit of gold to the party's communal purse.\n\n" +
             "Your party can have at most eight party members, but initially your party can only consist of " +
-            "up to four party members. The remaining four slots will be locked until  " +
-            " you upgrade your. Tent upgrades can be purchased at inns and taverns " +
+            "up to four party members. The remaining four slots will be locked until " +
+            "you upgrade your tent. Tent upgrades can be purchased at inns and taverns " +
             "and can be bought multiple times.";
     private static final String TEXT_CONTD =
             "Think carefully about what characters you draft to your party. For instance, " +

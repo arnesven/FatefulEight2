@@ -343,6 +343,14 @@ public class Model {
         gameData.itemDeck.setStandardItemTier((int)GameState.calculateAverageLevel(this));
         gameData.settings.getMiscFlags().put("innworkdone", false);
         gameData.warHandler.updateWars(this);
+        if (!gameData.lingeringRecruitables.isEmpty()) {
+            if (gameData.lingeringRecruitables.size() > 5) {
+                gameData.lingeringRecruitables.remove(0);
+            }
+            if (gameData.lingeringRecruitables.size() > 1 || MyRandom.flipCoin()) {
+                gameData.lingeringRecruitables.remove(0);
+            }
+        }
     }
 
     public void setDay(int day) {
@@ -561,5 +569,9 @@ public class Model {
 
     public void setStartingPosition(Point position) {
         gameData.party.setStartingPosition(position);
+    }
+
+    public List<GameCharacter> getLingeringRecruitables() {
+        return gameData.lingeringRecruitables;
     }
 }

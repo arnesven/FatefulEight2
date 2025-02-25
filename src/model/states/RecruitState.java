@@ -31,8 +31,10 @@ public class RecruitState extends GameState {
         super(model);
         recruitables.addAll(model.getAllCharacters());
         recruitables.removeAll(model.getParty().getPartyMembers());
-
+        recruitables.removeAll(model.getLingeringRecruitables());
         recruitResult = rollOnRecruitTable(model);
+        recruitResult.first = Math.max(0, recruitResult.first - model.getLingeringRecruitables().size());
+
         Collections.shuffle(recruitables);
         while (recruitables.size() > recruitResult.first) {
             recruitables.remove(0);
@@ -40,6 +42,7 @@ public class RecruitState extends GameState {
         setRandomClasses(recruitables);
         setLevels(recruitables);
         setGold(recruitables);
+        recruitables.addAll(model.getLingeringRecruitables());
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         model.getParty().setRecruitmentPersistence(recruitables);
@@ -89,32 +92,7 @@ public class RecruitState extends GameState {
         }
 
         if (recruitables.size() > 0) {
-            RecruitSubView subView = new RecruitSubView(this, recruitMatrix, startingGoldMap);
-            model.setSubView(subView);
-
-            do {
-                print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
-                        " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
-                        recruitableNames() + ".");
-                waitForReturn();
-
-                int topCommand = subView.getTopIndex();
-                if (topCommand == 2) { // Exit
-                    break;
-                }
-                if (topCommand == 1) { // Dismiss
-                    if (model.getParty().size() > 1){
-                        dismiss(model);
-                    } else {
-                        println("You cannot dismiss your last party member.");
-                    }
-                } else if (topCommand == -1){ // Selecting in matrix
-                    recruitSelectedCharacter(model);
-                    if (recruitables.size() == 0) {
-                        break;
-                    }
-                }
-            } while (true);
+            recruitFromView(model);
         } else {
             if (recruitResult.second.equals("")) {
                 println("You spend some time asking around, but there aren't any adventurers to recruit.");
@@ -123,6 +101,39 @@ public class RecruitState extends GameState {
             }
         }
         return new EveningState(model);
+    }
+
+    private void recruitFromView(Model model) {
+        RecruitSubView subView = new RecruitSubView(this, recruitMatrix, startingGoldMap);
+        model.setSubView(subView);
+        do {
+            print("There " + (recruitables.size() == 1 ? "is " : "are ") + noOfRecruitables() +
+                    " adventurer" + (recruitables.size() > 0 ? "s" : "") + " interested in joining your party, " +
+                    recruitableNames() + ".");
+            waitForReturn();
+
+            int topCommand = subView.getTopIndex();
+            if (topCommand == 2) { // Exit
+                break;
+            }
+            if (topCommand == 1) { // Dismiss
+                if (model.getParty().size() > 1){
+                    dismiss(model);
+                } else {
+                    println("You cannot dismiss your last party member.");
+                }
+            } else if (topCommand == -1){ // Selecting in matrix
+                recruitSelectedCharacter(model);
+                if (recruitables.size() == 0) {
+                    break;
+                }
+            }
+        } while (true);
+        for (GameCharacter gc : recruitMatrix.getElementList()) {
+            if (!model.getLingeringRecruitables().contains(gc)) {
+                model.getLingeringRecruitables().add(gc);
+            }
+        }
     }
 
     private void recruitSelectedCharacter(Model model) {
