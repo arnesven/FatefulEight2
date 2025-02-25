@@ -103,7 +103,7 @@ public class EveningState extends GameState {
         }
 
         candidates.add(mainDissident);
-        Collections.sort(candidates, (gc1, gc2) -> {
+        candidates.sort((gc1, gc2) -> {
             int total1 = gc1.getRankForSkill(Skill.Leadership) * 10 + gc1.getSpeed();
             int total2 = gc2.getRankForSkill(Skill.Leadership) * 10 + gc2.getSpeed();
             return total2 - total1;
@@ -124,12 +124,16 @@ public class EveningState extends GameState {
         }
         print("Do you agree to make " + proposedLeader.getName() + " the leader of the party? (Y/N) ");
         if (yesNoInput()) {
+            GameCharacter oldLeader = model.getParty().getLeader();
             leaderSay("Fine... I give up. " + proposedLeader.getFirstName() + ", good luck...");
             model.getParty().setLeader(proposedLeader);
             leaderSay("Thanks. Okay people, follow my lead.");
             int dissidentAttitudeTowardNewLeader = mainDissident.getAttitude(model.getParty().getLeader());
-            if (dissidentAttitudeTowardNewLeader < 0) {
+            if (dissidentAttitudeTowardNewLeader < 0) { // Can this even happen?
                 mainDissident.addToAttitude(model.getParty().getLeader(), -dissidentAttitudeTowardNewLeader);
+            }
+            if (oldLeader != model.getParty().getLeader() && mainDissident != oldLeader) {
+                mainDissident.addToAttitude(oldLeader, 1);
             }
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
                 if (gc != model.getParty().getLeader()) {

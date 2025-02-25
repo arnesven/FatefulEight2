@@ -34,12 +34,16 @@ public class TravelBySeaState extends GameState {
             int cost = ship.second * model.getParty().size();
             println("This ship is departing for the " + ship.first.getName() + " soon." +
                     " The captain will take your party for " + cost + " gold. The voyage takes 2 days.");
-            print("Do you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
-            if (yesNoInput()) {
-                model.getParty().addToGold(-cost);
-                travelTo(model, ship.first);
+            if (cost > model.getParty().getGold()) {
+                println("Unfortunately you cannot afford to take the trip right now.");
             } else {
-                println("Ok. But come back soon if you change your mind. The ship will not wait for you.");
+                print("Do you want to travel to " + ship.first.getTownName() + "? (Y/N) ");
+                if (yesNoInput()) {
+                    model.getParty().addToGold(-cost);
+                    travelTo(model, ship.first);
+                } else {
+                    println("Ok. But come back soon if you change your mind. The ship will not wait for you.");
+                }
             }
         }
         return model.getCurrentHex().getDailyActionState(model);
