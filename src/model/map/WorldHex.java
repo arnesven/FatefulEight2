@@ -3,15 +3,13 @@ package model.map;
 import model.Model;
 import model.TimeOfDay;
 import model.actions.*;
-import model.characters.PersonalityTrait;
 import model.items.puzzletube.DwarvenPuzzleTube;
-import model.states.dailyaction.FindResourcesDailyAction;
+import model.states.dailyaction.WildernessDailyAction;
 import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import view.combat.TownCombatTheme;
-import model.states.dailyaction.FishingDailyAction;
 import model.states.events.SaberfishEvent;
 import model.states.*;
 import model.states.events.*;
@@ -214,8 +212,7 @@ public abstract class WorldHex {
         if (model.getMainStory().isStarted()) {
             actions.addAll(model.getMainStory().getDailyActionsForHex(model, this));
         }
-        FishingDailyAction.addActionIfApplicable(model, actions);
-        FindResourcesDailyAction.addActionIfApplicable(model, actions);
+        WildernessDailyAction.addActionsIfApplicable(model, actions);
         if (model.getParty().isOnRoad()) {
             actions.add(new GetOffRoadAction(model));
         } else if (hasRoad()) {
