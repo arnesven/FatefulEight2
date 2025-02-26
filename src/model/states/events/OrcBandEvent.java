@@ -19,6 +19,11 @@ public class OrcBandEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a band of orcs";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party is taking a little rest by the side of the road " +
                 "when they hear footsteps approaching, many footsteps. " +

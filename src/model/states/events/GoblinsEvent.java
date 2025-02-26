@@ -16,6 +16,11 @@ public class GoblinsEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a throng of goblins";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         print("A horde of goblins are coming straight for you! Do you turn and run? (Y/N) ");
         if (yesNoInput()) {

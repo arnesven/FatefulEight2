@@ -19,6 +19,11 @@ public class MonumentEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some kind of monument";
+    }
+
+    @Override
     public GuideData getGuideData() {
         return new GuideData("Visit monument", "There's an interesting monument not far from here");
     }

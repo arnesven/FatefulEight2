@@ -16,8 +16,13 @@ public class CairnEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some cairns";
+    }
+
+    @Override
     public GuideData getGuideData() {
-        return new GuideData("Visit cairns", "Just around that bend we'll find some cairns");
+        return new GuideData("Visit cairns", "Just around that bend we'll find " + getDistantDescription());
     }
 
     @Override

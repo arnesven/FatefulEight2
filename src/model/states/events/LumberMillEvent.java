@@ -18,8 +18,13 @@ public class LumberMillEvent extends SimpleGeneralInteractionEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a lumber mill";
+    }
+
+    @Override
     public GuideData getGuideData() {
-        return new GuideData("Go to lumber mill", "There's a lumber mill nearby");
+        return new GuideData("Go to lumber mill", "There's " + getDistantDescription() + " nearby");
     }
 
     @Override

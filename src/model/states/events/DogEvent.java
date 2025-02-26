@@ -17,6 +17,11 @@ public class DogEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a small animal, it's a dog";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().hasDog()) {
             showExplicitPortrait(model, dogPortrait, "Dog");

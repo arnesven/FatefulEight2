@@ -24,6 +24,11 @@ public class FarmersChildEvent extends FarmerEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "Two people, probably a farmer with a son or daughter";
+    }
+
+    @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
         print("The farmer begs you to take " + hisOrHer(getPortrait().getGender()) + " teenage " +

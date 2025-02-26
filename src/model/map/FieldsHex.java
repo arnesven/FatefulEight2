@@ -37,7 +37,7 @@ public class FieldsHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         if (MyRandom.rollD10() >= 4) {
             List<DailyEventState> events = new ArrayList<>();
             events.add(new HalflingEvent(model));     // 4%

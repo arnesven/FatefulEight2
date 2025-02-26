@@ -37,6 +37,11 @@ public class OrcishStrongholdEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a stronghold, I see some orcs patrolling the walls";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Hold up a minute. That's some kind of fort or something up there."));
         model.getParty().randomPartyMemberSay(model, List.of("An orcish stronghold... Could be dangerous."));

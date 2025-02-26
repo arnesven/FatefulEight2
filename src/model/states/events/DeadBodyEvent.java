@@ -19,6 +19,11 @@ public class DeadBodyEvent extends RiverEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "somebody lying down, perhaps a dead body";
+    }
+
+    @Override
     protected void doRiverEvent(Model model) {
         println("The party encounters a dead body. This person has" +
                 " been dead for a while. There are remains " +

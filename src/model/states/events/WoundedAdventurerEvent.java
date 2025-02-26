@@ -19,6 +19,11 @@ public class WoundedAdventurerEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "somebody lying down, perhaps a dead body";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         boolean gender = MyRandom.randInt(2) == 0;
         List<GameCharacter> list = new ArrayList<>();

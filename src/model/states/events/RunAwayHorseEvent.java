@@ -19,6 +19,11 @@ public class RunAwayHorseEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a horse, without a rider";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You spot a horse up ahead.");
         leaderSay("A rider?");

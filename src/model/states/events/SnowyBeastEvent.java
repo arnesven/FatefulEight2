@@ -12,6 +12,11 @@ public class SnowyBeastEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a large animal, a beast with white fur";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("This beast is covered in white fur. It has tusks, " +
                 "horns and a terrible temper. It is coming straight for the " +

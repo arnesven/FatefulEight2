@@ -32,7 +32,7 @@ public class TroubadourEvent extends MeetTravellerEvent {
     }
 
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        portraitSay("I've got a gig at an inn, but uh, I'm a little weary of travelling along. Will you escort me?");
+        portraitSay("I've got a gig at an inn, but uh, I'm a little weary of travelling alone. Will you escort me?");
         return super.doMainEventAndShowDarkDeeds(model);
     }
 

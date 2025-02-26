@@ -24,6 +24,11 @@ public class FarmersHorseRaceEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "A farmer with a horse";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party comes upon a little farm. You hear the familiar neighing of horses.");
         boolean gender = MyRandom.flipCoin();

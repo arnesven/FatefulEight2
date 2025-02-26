@@ -43,6 +43,7 @@ public abstract class WorldHex {
     private HexLocation hexLocation;
     private BackgroundMusic music;
     private List<WaterPath> waterPaths = new ArrayList<>();
+    private MyPair<DailyEventState, Integer> preparedEvent;
 
 
     public WorldHex(MyColors color, int roads, int rivers, HexLocation location, int worldState) {
@@ -66,10 +67,15 @@ public abstract class WorldHex {
         if (tutorialEvent != null) {
             return tutorialEvent;
         }
-        DailyEventState conditionalEvent = conditionalEvent(model);
-        if (conditionalEvent != null) {
-            return conditionalEvent;
+
+        List<DailyEventState> conditionals = new ArrayList<>();
+        MyLists.nonNullAdd(conditionals, popPreparedEvent(model));
+        MyLists.nonNullAdd(conditionals, conditionalEvent(model));
+
+        if (!conditionals.isEmpty()) {
+            return MyRandom.sample(conditionals);
         }
+
         DailyEventState eventToReturn;
         if (hexLocation != null && !hexLocation.isDecoration()) {
             eventToReturn = hexLocation.generateEvent(model);
@@ -82,6 +88,15 @@ public abstract class WorldHex {
             eventToReturn = generatePartyEvent(model);
         }
         return eventToReturn;
+    }
+
+    public DailyEventState generateEventFromDistance(Model model) {
+        List<DailyEventState> events = new ArrayList<>();
+        if (hasRoad()) {
+            events.add(generateOnRoadEvent(model));
+        }
+        events.add(generateTerrainSpecificEvent(model));
+        return MyRandom.sample(events);
     }
 
     private DailyEventState generateTerrainEventWithGuide(Model model) {
@@ -456,4 +471,30 @@ public abstract class WorldHex {
     }
 
     public abstract ResourcePrevalence getResourcePrevalences();
+
+    public boolean isHighGround() {
+        return hexLocation instanceof MountainLocation || hexLocation instanceof HillsLocation;
+    }
+
+    public void pushPreparedEvent(DailyEventState event, int day) {
+        this.preparedEvent = new MyPair<>(event, day);
+    }
+
+    private DailyEventState popPreparedEvent(Model model) {
+        DailyEventState result = null;
+        if (preparedEvent != null) {
+            if (preparedEvent.second == model.getDay()) {
+                result = preparedEvent.first;
+            }
+            preparedEvent = null;
+        }
+        return result;
+    }
+
+    public DailyEventState getPreparedEvent(int day) {
+        if (preparedEvent == null || preparedEvent.second != day) {
+            return null;
+        }
+        return preparedEvent.first;
+    }
 }

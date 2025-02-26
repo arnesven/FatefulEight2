@@ -14,6 +14,11 @@ public class DragonEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a very large creature... holy hells, it's a dragon";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("Suddenly a powerful gust of wind catches the party off " +
                 "guard. Then, the horror...");

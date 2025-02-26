@@ -25,6 +25,11 @@ public class StarvingFarmerEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "Two farmers";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party comes to a farmstead. Working in a nearby field is a man and a woman, both look " +
                 "pale and thin.");

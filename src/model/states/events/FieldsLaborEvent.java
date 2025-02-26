@@ -30,6 +30,11 @@ public abstract class FieldsLaborEvent extends FarmerEvent {
         this.failText = failText;
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a farmer working on his farm";
+    }
+
     protected abstract boolean makeSkillRolls(Model model);
 
     @Override

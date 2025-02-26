@@ -24,6 +24,11 @@ public class GhostTownEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a town, but it looks deserted";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         this.miniSubView = new MiniPictureSubView(model.getSubView(), SPRITE, "An abandoned town?");
         model.setSubView(miniSubView);

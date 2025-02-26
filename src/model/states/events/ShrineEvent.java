@@ -21,8 +21,13 @@ public class ShrineEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a shrine";
+    }
+
+    @Override
     public GuideData getGuideData() {
-        return new GuideData("Visit shrine", "We're close to a shrine");
+        return new GuideData("Visit shrine", "We're close to " + getDistantDescription());
     }
 
     @Override

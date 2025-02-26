@@ -11,6 +11,11 @@ public class CaveEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a cave";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Hey, there's a cave here!",
                 "Looks like a system of caves.", "A cave. Should we explore it?"));

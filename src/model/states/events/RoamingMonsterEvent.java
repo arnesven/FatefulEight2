@@ -13,6 +13,11 @@ public abstract class RoamingMonsterEvent extends DailyEventState {
         super(model);
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a group of people or creatures, can't make out the details";
+    }
+
     protected List<Enemy> makeNomadEnemies() {
         List<Enemy> result = new ArrayList<>();
         int num = getSuggestedNumberOfEnemies(getModel(), new NomadEnemy('A'));

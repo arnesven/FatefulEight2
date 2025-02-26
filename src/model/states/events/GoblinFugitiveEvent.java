@@ -27,7 +27,11 @@ public class GoblinFugitiveEvent extends DailyEventState {
     public GoblinFugitiveEvent(Model model) {
         super(model);
         goblinChar = new GoblinCharacter();
+    }
 
+    @Override
+    public String getDistantDescription() {
+        return "some goblins. Looks like one of them is being chased by the others";
     }
 
     @Override

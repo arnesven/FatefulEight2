@@ -42,6 +42,11 @@ public class EnchantressEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a hamlet";
+    }
+
+    @Override
     public boolean haveFledCombat() {
         return false;
     }
@@ -52,7 +57,7 @@ public class EnchantressEvent extends DailyEventState {
                 getModel().getParty().size() < 3 || getModel().getCurrentHex().hasRoad()) {
             return super.getGuideData();
         }
-        return new GuideData("Visit strange hamlet", "There's a hamlet nearby, " +
+        return new GuideData("Visit strange hamlet", "There's " + getDistantDescription() + " nearby, " +
                 "but everybody there is acting very strange, like they're under a spell or something");
     }
 

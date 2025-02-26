@@ -29,7 +29,12 @@ public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
 
     @Override
     public GuideData getGuideData() {
-        return new GuideData("Visit Sorcerer", "We're close to a stone tower, a sorcerer lives within");
+        return new GuideData("Visit Sorcerer", "We're close to " + getDistantDescription() + ", a sorcerer lives within");
+    }
+
+    @Override
+    public String getDistantDescription() {
+        return "a stone tower";
     }
 
     @Override

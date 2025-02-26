@@ -15,6 +15,7 @@ import model.headquarters.Headquarters;
 import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
+import model.items.accessories.Spyglass;
 import model.items.clothing.GlassArmor;
 import model.items.designs.CraftingDesign;
 import model.items.potions.*;

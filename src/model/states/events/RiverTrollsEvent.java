@@ -25,6 +25,11 @@ public class RiverTrollsEvent extends RiverEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "three large creatures, they're trolls";
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return !gotToCross;
     }

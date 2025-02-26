@@ -19,6 +19,11 @@ public class StormEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some bad weather looming on the horizon";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Storm"));
         println("Dark clouds are looming and drops start to fall on your " +

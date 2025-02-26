@@ -50,6 +50,11 @@ public abstract class RitualEvent extends DailyEventState {
         beams = new ArrayList<>();
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "some robed figures standing in a circle";
+    }
+
     protected abstract CombatTheme getTheme();
     protected abstract boolean runEventIntro(Model model, List<GameCharacter> ritualists);
     protected abstract void runEventOutro(Model model, boolean success, int power);

@@ -6,8 +6,11 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.items.Equipment;
 import model.items.accessories.Buckler;
+import model.items.accessories.Spyglass;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.Longsword;
+import model.states.GameState;
+import model.travellers.Traveller;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -16,7 +19,7 @@ import java.util.List;
 
 public class LostExplorerEvent extends MeetTravellerEvent {
     public LostExplorerEvent(Model model) {
-        super(model, makeLostExplorer(), MyRandom.randInt(20, 100), ProvokedStrategy.FIGHT_IF_ADVANTAGE, 10);
+        super(model, makeLostExplorer(), MyRandom.randInt(20, 100), ProvokedStrategy.FIGHT_IF_ADVANTAGE, 5);
     }
 
     @Override
@@ -43,6 +46,16 @@ public class LostExplorerEvent extends MeetTravellerEvent {
                 Classes.NO_OTHER_CLASSES, new Equipment(new Longsword(), new LeatherArmor(), new Buckler()));
         explorer.setLevel(MyRandom.randInt(3, 4));
         return explorer;
+    }
+
+    @Override
+    protected void doUponCompletion(Model model, GameState state, Traveller traveller) {
+        traveller.travellerSay(model, state, "Actually, I think I'll be taking a break from exploring for a while, perhaps " +
+                "permanently. You can have this Spyglass, it's handy when you are in places with a good view.");
+        state.leaderSay("Thanks!");
+        Spyglass spy = new Spyglass();
+        state.println("The party received a " + spy.getName() + ".");
+        spy.addYourself(model.getParty().getInventory());
     }
 
     @Override

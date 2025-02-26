@@ -18,6 +18,11 @@ public class OutpostEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a little hut";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("I see some chimney smoke over there."));
         println("It appears to be a little hut. It's too small to be called an inn, but the owner is offering a warm " +

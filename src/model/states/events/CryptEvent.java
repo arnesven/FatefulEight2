@@ -23,8 +23,13 @@ public class CryptEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a crypt";
+    }
+
+    @Override
     public GuideData getGuideData() {
-        return new GuideData("Go to crypt", "I'm pretty sure there's a crypt not far from here. " +
+        return new GuideData("Go to crypt", "I'm pretty sure there's " + getDistantDescription() + " not far from here. " +
                 "It's an interesting landmark, but kind of spooky");
     }
 

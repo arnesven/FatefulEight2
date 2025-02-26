@@ -13,6 +13,11 @@ public class SpidersEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some large creatures, it's spiders";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("An unnerving chittering echoes around the party " +
                 "members. Giant spiders are surrounding them. These " +

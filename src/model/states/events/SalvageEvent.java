@@ -21,6 +21,11 @@ public abstract class SalvageEvent extends DailyEventState {
         this.amount = amount;
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a" + text;
+    }
+
     protected abstract MiniPictureSprite getMinipicSprite();
 
     protected abstract String getMinipicSubviewText();

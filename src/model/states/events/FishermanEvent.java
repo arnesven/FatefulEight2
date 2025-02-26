@@ -16,6 +16,11 @@ public class FishermanEvent extends RiverEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a fisherman";
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return false;
     }

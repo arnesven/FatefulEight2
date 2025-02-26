@@ -18,6 +18,11 @@ public class CrocodilesEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some large reptilian creatures";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("As the party tries to cross a wetland by stepping on " +
                 "floating logs they soon realize, they are not logs at all! " +

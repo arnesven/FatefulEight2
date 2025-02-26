@@ -31,7 +31,7 @@ public class DesertHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
         if (roll == 2) {
             return new DogEvent(model);

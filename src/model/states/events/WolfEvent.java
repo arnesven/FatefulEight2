@@ -21,6 +21,11 @@ public class WolfEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some creatures, wolves";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You suddenly hear something.");
         leaderSay("Is that howling? Maybe it's just the wind.");

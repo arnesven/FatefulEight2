@@ -100,6 +100,8 @@ public class Traveller implements Serializable {
             state.println("The party receives " + (gold/2) + " gold.");
             model.getParty().addToGold((gold/2));
         }
+        runCompleteHook(model, state);
+
         if (model.getParty().getLeader().hasPersonality(PersonalityTrait.rude)) {
             state.leaderSay("Smell you later traveller!");
         } else {
@@ -110,6 +112,9 @@ public class Traveller implements Serializable {
         JournalEntry.printJournalUpdateMessage(model);
     }
 
+    protected void runCompleteHook(Model model, GameState state) {
+
+    }
 
     public void abandon(Model model, GameState state) {
         state.println(name + " approaches you. " + DailyEventState.heOrSheCap(appearance.getGender()) + " looks annoyed.");
@@ -121,7 +126,7 @@ public class Traveller implements Serializable {
         JournalEntry.printJournalUpdateMessage(model);
     }
 
-    private void travellerSay(Model model, GameState state, String text) {
+    public void travellerSay(Model model, GameState state, String text) {
         SubView view = model.getSubView();
         if (view instanceof TavernSubView) {
             ((TavernSubView)view).addCalloutAtTraveller(text.length());

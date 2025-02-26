@@ -38,6 +38,11 @@ public class OtherPartyEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a group of people";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You come upon a small campsite, this one seems to be in use by a group of people.");
         model.getParty().randomPartyMemberSay(model, List.of("Looks like a company of adventurers."));

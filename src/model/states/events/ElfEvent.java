@@ -20,6 +20,11 @@ public class ElfEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some people... I think they are elves";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         int dieRoll = MyRandom.rollD6();
         print("The party encounters a ");

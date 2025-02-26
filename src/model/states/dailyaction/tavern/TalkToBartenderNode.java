@@ -6,6 +6,7 @@ import model.TimeOfDay;
 import model.items.FoodDummyItem;
 import model.items.Item;
 import model.items.ObolsDummyItem;
+import model.items.accessories.Spyglass;
 import model.items.potions.BeerPotion;
 import model.items.potions.WinePotion;
 import model.items.special.LargeTentUpgradeItem;
@@ -52,6 +53,9 @@ public class TalkToBartenderNode extends DailyActionNode {
         }
         if (MyRandom.randInt(4) == 0) {
             itemsForSale.add(new FishingPole());
+        }
+        if (MyRandom.randInt(6) == 0) {
+            itemsForSale.add(new Spyglass());
         }
     }
 

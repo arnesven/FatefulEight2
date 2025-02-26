@@ -31,7 +31,7 @@ public class HillsHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         return generateHillsEvent(model);
     }
 

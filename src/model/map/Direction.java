@@ -48,7 +48,7 @@ public class Direction {
         throw new IllegalStateException("Illegal direction " + dir + ".");
     }
 
-    public static String longNameForDirection(int dir) {
+    public static String getLongNameForDirection(int dir) {
         switch (dir) {
             case NORTH:
                 return "north";

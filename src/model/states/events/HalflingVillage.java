@@ -26,6 +26,11 @@ public class HalflingVillage extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a little village";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc.getRace().id() == Race.HALFLING.id()) {

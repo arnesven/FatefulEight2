@@ -23,6 +23,11 @@ public class CourierEvent extends DailyEventState {
         this.race = Race.ALL;
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a person traveling alone";
+    }
+
     public CourierEvent(Model model) {
         this(model, true);
     }

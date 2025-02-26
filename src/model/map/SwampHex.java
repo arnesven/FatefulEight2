@@ -43,7 +43,7 @@ public class SwampHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
         int dieRoll = MyRandom.rollD10();
         if (dieRoll == 2) {

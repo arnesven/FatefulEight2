@@ -10,6 +10,11 @@ public class MountainWolfEvent extends WolfEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some creatures, wolves";
+    }
+
+    @Override
     protected String getExtraText() {
         return " These wolves seem bigger and more ferocious than the ones you've seen before.";
     }

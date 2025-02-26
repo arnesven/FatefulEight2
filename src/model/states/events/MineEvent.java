@@ -26,7 +26,12 @@ public class MineEvent extends DailyEventState {
 
     @Override
     public GuideData getGuideData() {
-        return new GuideData("Go to mine", "There's a mine nearby");
+        return new GuideData("Go to mine", "There's " + getDistantDescription() + " nearby");
+    }
+
+    @Override
+    public String getDistantDescription() {
+        return "a mine";
     }
 
     @Override

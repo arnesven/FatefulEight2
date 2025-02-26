@@ -5,7 +5,14 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.items.Equipment;
+import model.items.Item;
+import model.items.accessories.AnkhPendant;
+import model.items.accessories.HolyChalice;
+import model.items.accessories.Tiara;
 import model.items.weapons.LongStaff;
+import model.items.weapons.Scepter;
+import model.states.GameState;
+import model.travellers.Traveller;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -24,6 +31,22 @@ public class MonkEvent extends MeetTravellerEvent {
                 Classes.NO_OTHER_CLASSES, new Equipment(new LongStaff()));
         monk.setLevel(MyRandom.randInt(1, 4));
         return monk;
+    }
+
+    @Override
+    protected void doUponCompletion(Model model, GameState state, Traveller traveller) {
+        traveller.travellerSay(model, state, "I really appreciate you escorting me. " +
+                "I want to do something special for you, I want you to have this.");
+        leaderSay("What's this?");
+        traveller.travellerSay(model, state, "A relic.");
+        Item it = MyRandom.sample(List.of(new AnkhPendant(), new Scepter(), new Tiara(), new HolyChalice()));
+        println("The party receives a " + it.getName() + ".");
+        if (it.getCost() > 30) {
+            leaderSay("Wow! Thanks a lot!");
+        } else {
+            leaderSay("Uh... thanks.");
+        }
+        it.addYourself(model.getParty().getInventory());
     }
 
     @Override

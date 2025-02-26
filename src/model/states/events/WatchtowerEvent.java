@@ -24,6 +24,11 @@ public class WatchtowerEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "an old watch tower";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Watchtower"));
         println("Up on a hill, an ancient watchtower sits silently and " +

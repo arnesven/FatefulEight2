@@ -18,6 +18,11 @@ public class RedKnightEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "Two people, one is lying down, the other is standing up and is wearing armor";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().isSpecialCharacterMarked(redKnightChar)) {
             new NoEventState(model).doEvent(model);

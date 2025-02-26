@@ -18,7 +18,7 @@ public class BrokenWagonEvent extends SalvageEvent {
     @Override
     public GuideData getGuideData() {
         return new GuideData("Find broken wagon",
-                "I was here recently and noticed a broken down wagon. It may still be here");
+                "I was here recently and noticed " + getDistantDescription() + ". It may still be here");
     }
 
     @Override

@@ -33,7 +33,13 @@ public class TallSpireEvent extends DailyEventState {
 
     @Override
     public GuideData getGuideData() {
-        return new GuideData("Go to tall spire", "There is a tall spire nearby. It is said a recluse live at the top");
+        return new GuideData("Go to tall spire",
+                "There is " + getDistantDescription() + " nearby. It is said a recluse live at the top");
+    }
+
+    @Override
+    public String getDistantDescription() {
+        return "a tall spire";
     }
 
     @Override

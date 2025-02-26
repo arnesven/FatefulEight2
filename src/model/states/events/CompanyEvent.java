@@ -22,6 +22,11 @@ public class CompanyEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a company of soldiers";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         leaderSay("Hmm... That looks like a company of soldiers up ahead.");
         print("Do you get get off the road? (Y/N) ");

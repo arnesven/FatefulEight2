@@ -46,6 +46,11 @@ public class DiggingGameEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a farmer lying down in a field";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (!doIntro(model)) {
             return;

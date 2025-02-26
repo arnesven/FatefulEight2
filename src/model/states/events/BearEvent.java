@@ -13,6 +13,11 @@ public class BearEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a large animal, it's a bear";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("A large bear grunts at the party. It seems hungry.");
         print("Do you want to try and avoid fighting the bear? (Y/N) ");

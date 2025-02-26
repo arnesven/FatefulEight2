@@ -33,6 +33,11 @@ public class NomadCampEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a nomad camp";
+    }
+
+    @Override
     public GuideData getGuideData() {
         return new GuideData("Visit nomad camp", "There's a camp nearby. It's the home of a nomadic tribe");
     }

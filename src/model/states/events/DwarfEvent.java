@@ -16,6 +16,11 @@ public class DwarfEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some people... I think they are dwarves";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         print("The party encounters a dwarf. This particular dwarf is a");
         int dieRoll = MyRandom.rollD10();

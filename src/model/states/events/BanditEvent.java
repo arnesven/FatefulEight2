@@ -23,6 +23,11 @@ public class BanditEvent extends DailyEventState {
         this.race = Race.ALL;
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a few people, looks like bandits";
+    }
+
     public void setRace(Race race) {
         this.race = race;
     }

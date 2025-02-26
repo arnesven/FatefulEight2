@@ -17,6 +17,11 @@ public class VulturesEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some large birds, vultures";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("Vultures have been circling over the party for some time now. Their shadows looming bigger and bigger.");
         model.getParty().randomPartyMemberSay(model, List.of("Those big turkeys are really getting annoying!"));

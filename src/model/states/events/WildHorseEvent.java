@@ -12,6 +12,11 @@ public class WildHorseEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a wild horse";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You spot a wild horse up ahead, peacefully grazing by the side of the path.");
         leaderSay("Perhaps we can tame it?");

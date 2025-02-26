@@ -33,6 +33,11 @@ public class RareBirdEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a small creature, looks like a bird with a colorful plumage";
+    }
+
+    @Override
     public GuideData getGuideData() {
         return new GuideData("Find rare bird", "I know a spot where I've seen rare birds make their nests");
     }

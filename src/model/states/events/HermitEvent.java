@@ -23,6 +23,11 @@ public class HermitEvent extends GeneralInteractionEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a small hut";
+    }
+
+    @Override
     public GuideData getGuideData() {
         return new GuideData("Seek out hermit", "I've heard that an old Hermit lives nearby");
     }

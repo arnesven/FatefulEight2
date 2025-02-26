@@ -34,6 +34,11 @@ public class WitchKingEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a stronghold, but I can't see any people there";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().isSpecialCharacterMarked(witchKingChar)) {
             new NoEventState(model).doEvent(model);

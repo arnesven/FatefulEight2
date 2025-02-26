@@ -25,6 +25,11 @@ public class EaglesEvent extends AlternativeTravelEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some large creatures, they look like eagles";
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

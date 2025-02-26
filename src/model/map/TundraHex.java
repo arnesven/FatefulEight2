@@ -32,7 +32,7 @@ public class TundraHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         int roll = MyRandom.rollD10();
         Point position = model.getWorld().getPositionForHex(this);
         if (position.y < 10 && MyRandom.randInt(3) == 0) {

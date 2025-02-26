@@ -13,7 +13,13 @@ public class OasisEvent extends DailyEventState {
 
     @Override
     public GuideData getGuideData() {
-        return new GuideData("Go to oasis", "There's an oasis just beyond those dunes");
+        return new GuideData("Go to oasis",
+                "There's " + getDistantDescription() + " just beyond those dunes");
+    }
+
+    @Override
+    public String getDistantDescription() {
+        return "an oasis";
     }
 
     @Override

@@ -28,6 +28,11 @@ public class ElvenCampEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a camp site, with some people around it";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party stumbles upon a clearing where a roaring " +
                 "campfire is burning and delicious meat is roasting on " +

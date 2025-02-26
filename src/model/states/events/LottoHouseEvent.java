@@ -32,6 +32,17 @@ public class LottoHouseEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a little hut";
+    }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Go to lotto house",
+                "a little hut where you can pay money to get to open chests. The owner calls it the 'lotto house'");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You pass a little hut. In front, there's a sign saying 'Lotto House - Try your luck!'.");
         print("Do you enter? (Y/N) ");

@@ -20,6 +20,11 @@ public class OrcsEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a group of orcs";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party encounters a group of orcs.");
         if (interactWithOrcs(model)) {

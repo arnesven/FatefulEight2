@@ -32,7 +32,7 @@ public class PlainsHex extends WorldHex {
 
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         int dieRoll = MyRandom.rollD10();
         if (dieRoll == 4) {
             return new DogEvent(model);

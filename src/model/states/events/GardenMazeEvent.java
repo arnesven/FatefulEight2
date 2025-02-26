@@ -18,19 +18,6 @@ import java.util.List;
 
 public class GardenMazeEvent extends DailyEventState {
 
-    private static final String[] MAZE_PLAN = new String[]{
-            "   # # # # #   ",
-            " +#+#+#+#+#+ + ",
-            "       # #   # ",
-            " +#+#+#+#+#+ + ",
-            "       # #   # ",
-            " +#+#+#+#+#+ + ",
-            "       # #   # ",
-            " +#+#+ +#+#+ + ",
-            "   #     # # # ",
-            " +#+#+ +#+#+ + ",
-            "             # ",
-    };
     private static final int BET_SIZE = 10;
     private static final List<String> STATUE_NAMES = List.of("Cassandra", "Belladonna", "Adromeda",
             "Evelina", "Francesca", "Galexia", "Hubertina", "Inderella", "Kassiopeia", "Leonidia",

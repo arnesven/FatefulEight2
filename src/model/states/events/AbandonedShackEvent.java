@@ -14,7 +14,7 @@ public class AbandonedShackEvent extends SalvageEvent {
     @Override
     public GuideData getGuideData() {
         return new GuideData("Find abandoned shack",
-                "I was here recently and noticed an abandoned shack.");
+                "I was here recently and noticed " + getDistantDescription() + ".");
     }
 
     @Override

@@ -27,6 +27,11 @@ public class RopeBridgeEvent extends RiverEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a river with a rope bridge across it";
+    }
+
+    @Override
     public boolean eventPreventsCrossing(Model model) {
         return walkAway;
     }

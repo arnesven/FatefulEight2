@@ -15,6 +15,11 @@ public class FriendEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "one person traveling alone";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         print("One of the party members encounters an old friend. After speaking a bit, the friend ");
         List<GameCharacter> list = model.getAvailableCharactersOfRace(Race.ALL);

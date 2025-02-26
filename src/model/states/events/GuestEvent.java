@@ -17,6 +17,11 @@ public class GuestEvent extends DailyEventState {
         this.appearance = appearance;
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a quite farmstead";
+    }
+
     public GuestEvent(Model model) {
         this(model, PortraitSubView.makeRandomPortrait(Classes.FARMER));
     }

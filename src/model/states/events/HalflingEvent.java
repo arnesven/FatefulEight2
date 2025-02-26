@@ -7,14 +7,24 @@ import model.states.DailyEventState;
 import util.MyRandom;
 
 public class HalflingEvent extends DailyEventState {
+    private final int dieRoll;
+
     public HalflingEvent(Model model) {
         super(model);
+        this.dieRoll = MyRandom.rollD10();
+    }
+
+    @Override
+    public String getDistantDescription() {
+        if (dieRoll <= 6 || dieRoll == 10) {
+            return "a person traveling alone. I think it's a halfling";
+        }
+        return "some people... I think they're halflings";
     }
 
     @Override
     protected void doEvent(Model model) {
         print("The party encounters a halfling. This particular halfling is a");
-        int dieRoll = MyRandom.rollD10();
         if (dieRoll <= 2) {
             println(" stranger asking for directions.");
             ThiefEvent thief = new ThiefEvent(model, false);

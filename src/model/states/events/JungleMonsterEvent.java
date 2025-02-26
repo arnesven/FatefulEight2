@@ -12,6 +12,11 @@ public class JungleMonsterEvent extends RoamingMonsterEvent{
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a group of creatures, but I can't make out what kind";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         boolean ambush = MyRandom.flipCoin();
         println("The party " + (ambush?"is ambushed by":"encounters") + " some monsters roaming the jungle!");

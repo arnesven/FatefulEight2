@@ -15,6 +15,11 @@ public class HalfOrcEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some people... I think they're half-orcs.";
+    }
+
+    @Override
     public boolean haveFledCombat() {
         return didFlee;
     }

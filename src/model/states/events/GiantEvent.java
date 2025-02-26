@@ -12,6 +12,11 @@ public class GiantEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a strange large rock formation";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("What seemed to be a rocky outcropping was actually the " +
                 "closed fist of a stone giant. The humongous creature " +

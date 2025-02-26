@@ -359,4 +359,8 @@ public abstract class DailyEventState extends GameState {
     public GuideData getGuideData() {
         return null;
     }
+
+    public String getDistantDescription() {
+        return null;
+    }
 }

@@ -50,6 +50,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
     public static final int ASSAULT_NOTORIETY = 10;
     private final int stealMoney;
     private final String interactText;
+    private final List<Enemy> companions;
 
     public enum ProvokedStrategy {
         ALWAYS_ESCAPE,
@@ -61,6 +62,19 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
         super(model);
         this.interactText = interactText;
         this.stealMoney = stealMoney;
+        this.companions = getVictimCompanions(model);
+    }
+
+    @Override
+    public String getDistantDescription() {
+        int groupSize = 1 + companions.size();
+        if (groupSize > 7) {
+            return "a large group of people";
+        }
+        if (groupSize == 1) {
+            return "a person traveling alone";
+        }
+        return MyStrings.numberWord(groupSize) + " people";
     }
 
     @Override
@@ -69,7 +83,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
             return;
         }
         if (darkDeedsMenu(getVictimCharacter(model),
-                getVictimCompanions(model), getProvokedStrategy(), true)) {
+                companions, getProvokedStrategy(), true)) {
             return;
         }
         if (partyIsCreepy(model)) {
@@ -79,7 +93,7 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
                 return;
             }
         }
-        if (darkDeedsMenu(getVictimCharacter(model), getVictimCompanions(model),
+        if (darkDeedsMenu(getVictimCharacter(model), companions,
                 getProvokedStrategy(), false)) {
             return;
         }

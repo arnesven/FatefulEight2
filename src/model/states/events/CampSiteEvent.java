@@ -15,21 +15,36 @@ import java.util.List;
 
 public class CampSiteEvent extends DailyEventState {
 
+    private static final int NOBODY_THRESHOLD = 6;
+    private static final int FEW_POEPLE_THRESHOLD = 9;
+    private final int roll;
     private DailyEventState innerEvent = null;
 
     public CampSiteEvent(Model model) {
         super(model);
+        this.roll = MyRandom.rollD10();
+    }
+
+    @Override
+    public String getDistantDescription() {
+        String result = "a campsite";
+        if (roll < NOBODY_THRESHOLD) {
+            result += ", there's nobody there";
+        } else if (roll < FEW_POEPLE_THRESHOLD) {
+            result += " with a few people";
+        } else {
+            result += " with a whole bunch of people";
+        }
+        return result;
     }
 
     @Override
     protected void doEvent(Model model) {
         print("Up in the distance, the party spots a camp site. ");
-        int roll = MyRandom.rollD10();
 
-
-        if (roll < 6) {
+        if (roll < NOBODY_THRESHOLD) {
            println("It looks like there's nobody there.");
-        } else if (roll < 9) {
+        } else if (roll < FEW_POEPLE_THRESHOLD) {
             println("It looks like there's a few people at the camp site.");
         } else {
             println("It looks like there's a whole crowd of people at the camp site.");

@@ -16,6 +16,11 @@ public class FrogmenScoutsEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "some creatures, looks like frogmen";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().size() > 1) {
             GameCharacter talker = model.getParty().getRandomPartyMember(model.getParty().getLeader());

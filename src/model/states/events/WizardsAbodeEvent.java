@@ -32,6 +32,11 @@ public class WizardsAbodeEvent extends MagicExpertGeneralInteractionEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a little hut";
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIZ, Race.randomRace(), false);
         showExplicitPortrait(model, portrait, "Wizard");

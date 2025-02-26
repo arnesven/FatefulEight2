@@ -39,6 +39,11 @@ public class OrcsBattleEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "an army camp";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("The party comes upon an army camp.");
         if (WorldBuilder.isInExtendedRegion(model.getParty().getPosition())) {

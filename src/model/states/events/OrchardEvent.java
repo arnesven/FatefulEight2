@@ -14,6 +14,11 @@ public class OrchardEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "an orchard";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.FARMER, "Farmer");
         println("The party suddenly finds itself in a lovely orchard, " +

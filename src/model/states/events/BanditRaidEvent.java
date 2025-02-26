@@ -13,6 +13,11 @@ public class BanditRaidEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a group of people, looks like bandits";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         showRandomPortrait(model, Classes.BANDIT, "Bandits");
         println("This farmstead has been plagued by bandits for some time.");

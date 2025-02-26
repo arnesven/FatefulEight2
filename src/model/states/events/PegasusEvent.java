@@ -18,6 +18,11 @@ public class PegasusEvent extends AlternativeTravelEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a large creature, it's a pegasus";
+    }
+
+    @Override
     protected boolean eventIntro(Model model) {
         println("A winged horse lands in front of the party. It seems to be " +
                 "willing to give them a ride.");

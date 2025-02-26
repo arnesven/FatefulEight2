@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.enemies.Enemy;
 import model.map.HexLocation;
+import model.states.GameState;
 import model.states.dailyaction.tavern.AcceptTravellerState;
 import model.travellers.Traveller;
 
@@ -34,11 +35,18 @@ public abstract class MeetTravellerEvent extends GeneralInteractionEvent {
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         List<Point> path = getPathToDestination(model);
         HexLocation location = model.getWorld().getHex(path.get(path.size()-1)).getLocation();
-        Traveller t = new Traveller(traveller.getName(), traveller.getAppearance(), location, path.size(), extraReward);
+        Traveller t = new Traveller(traveller.getName(), traveller.getAppearance(), location, path.size(), extraReward) {
+            @Override
+            protected void runCompleteHook(Model model, GameState state) {
+                doUponCompletion(model, state, this);
+            }
+        };
         AcceptTravellerState accept = new AcceptTravellerState(model, this, t);
         accept.run(model);
         return !model.getParty().getActiveTravellers().contains(t);
     }
+
+    protected void doUponCompletion(Model model, GameState state, Traveller traveller) { }
 
     protected abstract List<Point> getPathToDestination(Model model);
 

@@ -15,6 +15,11 @@ public class StoneCircleEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a stone circle";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         AdvancedAppearance app = PortraitSubView.makeRandomPortrait(Classes.DRU);
         showExplicitPortrait(model, app, "Druid");
@@ -32,7 +37,8 @@ public class StoneCircleEvent extends DailyEventState {
 
     @Override
     public GuideData getGuideData() {
-        return new GuideData("Find Stone circle", "We're close to a stone circle. Druids sometimes perform rituals there");
+        return new GuideData("Find Stone circle",
+                "We're close to " + getDistantDescription() + ". Druids sometimes perform rituals there");
     }
 
     private boolean vampireInParty(Model model) {

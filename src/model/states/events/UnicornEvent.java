@@ -19,6 +19,11 @@ public class UnicornEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a wild horse";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Unicorn"));
         println("A shimmering horse-like creature approaches the party. " +

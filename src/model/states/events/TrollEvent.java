@@ -14,6 +14,11 @@ public class TrollEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "an old watch tower";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.getParty().randomPartyMemberSay(model, List.of("Hey, that looks like a nice rest spot up ahead... Is that an old church?"));
         model.getParty().randomPartyMemberSay(model, List.of("The ruins of an old watch tower."));

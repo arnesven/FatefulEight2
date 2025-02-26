@@ -12,16 +12,14 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class HolyChalice extends ShieldItem {
-    private static final Sprite SPRITE = new ItemSprite(15, 11,
-            MyColors.YELLOW, MyColors.GOLD, MyColors.RED);
+public class Spyglass extends ShieldItem {
+    private static final Sprite SPRITE = new ItemSprite(8, 16, MyColors.BROWN, MyColors.PEACH, MyColors.CYAN);
 
     private static final Sprite[] SHIELD_SPRITES = makeShiftedSpriteSet(
-            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.YELLOW, MyColors.PINK, MyColors.BEIGE));
+            new AvatarItemSprite(0x64, MyColors.BROWN, MyColors.PEACH, MyColors.PINK, MyColors.BEIGE));
 
-
-    public HolyChalice() {
-        super("Holy Chalice", 60, false, 1);
+    public Spyglass() {
+        super("Spyglass", 15, false, 1);
     }
 
     @Override
@@ -31,19 +29,22 @@ public class HolyChalice extends ShieldItem {
 
     @Override
     public List<MyPair<Skill, Integer>> getSkillBonuses() {
-        return List.of(new MyPair<>(Skill.MagicWhite, 2),
-                       new MyPair<>(Skill.MagicGreen, 2),
-                       new MyPair<>(Skill.Persuade, 2));
+        return List.of(new MyPair<>(Skill.Perception, 2));
     }
 
     @Override
-    public int getHealthBonus() {
-        return 2;
+    public int getWeight() {
+        return 1000;
     }
 
     @Override
     public Item copy() {
-        return new HolyChalice();
+        return new Spyglass();
+    }
+
+    @Override
+    public String getSound() {
+        return "click";
     }
 
     @Override
@@ -54,6 +55,11 @@ public class HolyChalice extends ShieldItem {
     @Override
     public Prevalence getPrevalence() {
         return Prevalence.rare;
+    }
+
+    @Override
+    public String getExtraText() {
+        return "Can be used to peer into nearby hexes from hills and mountains";
     }
 
     @Override

@@ -5,8 +5,11 @@ import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.items.Equipment;
+import model.items.Item;
 import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.LongStaff;
+import model.states.GameState;
+import model.travellers.Traveller;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -27,6 +30,21 @@ public class PilgrimEvent extends MeetTravellerEvent {
                 Classes.NO_OTHER_CLASSES, new Equipment(new LongStaff(), new PilgrimsCloak(), null));
         pilgrim.setLevel(MyRandom.randInt(1, 4));
         return pilgrim;
+    }
+
+    @Override
+    protected void doUponCompletion(Model model, GameState state, Traveller traveller) {
+        traveller.travellerSay(model, state, "I can't believe I'm finally here.");
+        leaderSay("Are you sure you want to stay here? Places like these can be dangerous.");
+        traveller.travellerSay(model, state, "Of course. I'll be fine. As a special thank you, take this item.");
+        Item it = model.getItemDeck().draw(1).get(0);
+        println("The party receives a " + it.getName() + " from the Pilgrim.");
+        if (it.getCost() < 16) {
+            leaderSay("Uh... thanks.");
+        } else {
+            leaderSay("Thank you.");
+        }
+        it.addYourself(model.getParty().getInventory());
     }
 
     @Override

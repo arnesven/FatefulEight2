@@ -36,6 +36,11 @@ public class HuntingEvent extends DailyEventState {
         doHunting(model);
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "a large animal, but I can't tell what kind";
+    }
+
     public void doHunting(Model model) {
         boolean result = model.getParty().doSoloSkillCheck(model, this, Skill.Survival, 7);
         if (!result) {

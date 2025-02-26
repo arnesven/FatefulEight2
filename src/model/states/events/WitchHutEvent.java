@@ -32,6 +32,11 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a little hut";
+    }
+
+    @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.portrait = PortraitSubView.makeRandomPortrait(Classes.WIT);
         showExplicitPortrait(model, portrait, "Witch");

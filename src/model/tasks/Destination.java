@@ -119,7 +119,7 @@ public class Destination implements Serializable {
             if (loc instanceof TempleLocation || loc instanceof RuinsLocation || loc instanceof UrbanLocation ||
                     loc instanceof InnLocation) {
                 int direction = Direction.opposite(Direction.getDirectionForDxDy(position, dxdy));
-                String directionName = Direction.longNameForDirection(direction);
+                String directionName = Direction.getLongNameForDirection(direction);
                 description.append(" just ").append(directionName).append(" of the ").append(loc.getName());
                 foundLandMark = true;
             }
@@ -130,7 +130,7 @@ public class Destination implements Serializable {
             List<Point> path = model.getWorld().shortestPathToNearestTownOrCastle();
             Point dxdy = new Point(path.get(1).x - path.get(0).x, path.get(1).y - path.get(0).y);
             int direction = Direction.opposite(Direction.getDirectionForDxDy(position, dxdy));
-            String directionName = Direction.longNameForDirection(direction);
+            String directionName = Direction.getLongNameForDirection(direction);
             HexLocation loc = model.getWorld().getHex(path.get(path.size()-1)).getLocation();
             description.append(" ").append(directionName).append(" of the ").append(loc.getName());
         }

@@ -60,7 +60,7 @@ public class SeaHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         return new NoEventState(model);
     }
 

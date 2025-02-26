@@ -19,8 +19,14 @@ public class AltarEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "an altar";
+    }
+
+    @Override
     public GuideData getGuideData() {
-        return new GuideData("Go to altar", "There's an altar at the top of this mountain.");
+        return new GuideData("Go to altar", "There's " + getDistantDescription() +
+                " at the top of this mountain.");
     }
 
     @Override

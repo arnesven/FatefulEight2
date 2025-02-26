@@ -16,6 +16,11 @@ public class BlackKnightEvent extends RiverEvent {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a narrow bridge crossing a river, guarded by one person";
+    }
+
+    @Override
     public GuideData getGuideData() {
         return new GuideData("Meet black knight",
                 "There's a crossing not far from here, but it's guarded by a stubborn black knight");

@@ -43,6 +43,10 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         this.task = battleDestinationTask;
     }
 
+    @Override
+    public String getDistantDescription() {
+        return "an army camp";
+    }
 
     @Override
     protected void doEvent(Model model) {

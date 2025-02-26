@@ -31,7 +31,7 @@ public class MountainHex extends WorldHex {
     }
 
     @Override
-    protected DailyEventState generateTerrainSpecificEvent(Model model) {
+    public DailyEventState generateTerrainSpecificEvent(Model model) {
         return generateMountainEvent(model);
     }
 

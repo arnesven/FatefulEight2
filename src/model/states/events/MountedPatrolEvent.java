@@ -27,6 +27,11 @@ public class MountedPatrolEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a mounted patrol";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         model.setSubView(new MiniPictureSubView(model.getSubView(), SPRITE, "Mounted Patrol"));
         println("You spot a mounted patrol up ahead. They approach you.");

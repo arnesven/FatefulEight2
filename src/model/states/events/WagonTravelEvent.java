@@ -16,6 +16,11 @@ public class WagonTravelEvent extends DailyEventState {
     }
 
     @Override
+    public String getDistantDescription() {
+        return "a horse and wagon";
+    }
+
+    @Override
     protected void doEvent(Model model) {
         if (model.getParty().hasHorses()) {
             new NoEventState(model).doEvent(model);
