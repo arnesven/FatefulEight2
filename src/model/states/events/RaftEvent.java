@@ -14,7 +14,7 @@ class RaftEvent extends AlternativeTravelEvent {
     private final String description;
 
     public RaftEvent(Model model, String description) {
-        super(model);
+        super(model, true);
         this.sprite = new RaftSprite();
         this.description = description;
     }

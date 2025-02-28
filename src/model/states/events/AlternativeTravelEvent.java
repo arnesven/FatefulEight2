@@ -4,6 +4,7 @@ import model.Model;
 import model.map.SeaHex;
 import model.map.World;
 import model.states.DailyEventState;
+import model.states.TravelBySeaState;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
 import view.subviews.EmptySubView;
@@ -15,8 +16,11 @@ import java.util.List;
 
 public abstract class AlternativeTravelEvent extends DailyEventState {
 
-    public AlternativeTravelEvent(Model model) {
+    private final boolean isWaterTravel;
+
+    public AlternativeTravelEvent(Model model, boolean isWaterTravel) {
         super(model);
+        this.isWaterTravel = isWaterTravel;
     }
 
     protected abstract Sprite getSprite();
@@ -39,11 +43,16 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
         Point selectedPos = selectDirection(model, mapSubView);
         model.getWorld().setAlternativeAvatar(null);
         mapSubView.setAvatarEnabled(false);
-        mapSubView.addMovementAnimation(
-                sprite,
-                model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                model.getWorld().translateToScreen(selectedPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
-        mapSubView.waitForAnimation();
+        if (isWaterTravel) {
+            TravelBySeaState.travelBySea(model, model.getWorld().getHex(selectedPos),
+                    this, sprite, false, false);
+        } else {
+            mapSubView.addMovementAnimation(
+                    sprite,
+                    model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
+                    model.getWorld().translateToScreen(selectedPos, model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
+            mapSubView.waitForAnimation();
+        }
         CollapsingTransition.transition(model, new EmptySubView());
         model.getCurrentHex().travelFrom(model);
         model.getParty().setPosition(selectedPos);

@@ -11,7 +11,7 @@ public class FlyWithDragonState extends AlternativeTravelEvent {
     private final Sprite sprite;
 
     public FlyWithDragonState(Model model) {
-        super(model);
+        super(model, false);
         this.sprite = model.getParty().getTamedDragons().values().iterator().next().getFlyingSprite();
     }
 

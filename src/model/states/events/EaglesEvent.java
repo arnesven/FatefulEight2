@@ -16,7 +16,7 @@ public class EaglesEvent extends AlternativeTravelEvent {
     private static final MiniPictureSprite MINI_PIC_SPRITE = new MiniPictureSprite(0x02);
 
     public EaglesEvent(Model model) {
-        super(model);
+        super(model, false);
     }
 
     @Override

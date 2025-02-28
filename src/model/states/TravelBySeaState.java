@@ -1,9 +1,9 @@
 package model.states;
 
 import model.Model;
-import model.map.DiscoveredRoute;
-import model.map.TownLocation;
-import model.map.UrbanLocation;
+import model.map.*;
+import util.Arithmetics;
+import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
@@ -51,47 +51,75 @@ public class TravelBySeaState extends GameState {
 
     private void travelTo(Model model, TownLocation first) {
         didTravel = true;
-        travelBySea(model, ship, this);
+        travelBySea(model, first.getHex(), this, SHIP_AVATAR, first.getTownName(), true, true);
     }
 
-    public static void travelBySea(Model model, MyPair<TownLocation, Integer> ship, GameState state) {
-        MapSubView mapSubView = new SeaTravelMapSubView(model, ship.first);
-        CollapsingTransition.transition(model, mapSubView);
-        Point newPosition = model.getWorld().getPositionForHex(ship.first.getHex());
-
-        if (model.getCurrentHex().getLocation() != null) {
-            DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(),
-                    model.getCurrentHex().getLocation(), ship.first, DiscoveredRoute.SHIP);
+    private static void travelBySea(Model model, WorldHex hex, GameState state,
+                                    Sprite shipAvatar, String destinationName,
+                                    boolean voyageTakesTwoDays, boolean withViewTransition) {
+        Point viewPoint = new Point(model.getParty().getPosition());
+        MapSubView mapSubView = new SeaTravelMapSubView(model, destinationName, viewPoint);
+        if (withViewTransition) {
+            CollapsingTransition.transition(model, mapSubView);
+        } else {
+            model.setSubView(mapSubView);
         }
+        Point newPosition = model.getWorld().getPositionForHex(hex);
 
-        model.getWorld().dijkstrasBySea(ship.first.getHex());
+        model.getWorld().dijkstrasBySea(hex);
 
         Point currentPos = model.getParty().getPosition();
-        do {
-            Point closest = model.getWorld().findClosestWaterPath(currentPos);
-            if (closest.equals(currentPos)) {
-                break;
+        try {
+            int innerPos = WaterTravelAnimations.findWaterDirection(model, currentPos);
+            do {
+                Point closest = model.getWorld().findClosestWaterPath(currentPos);
+                if (closest.equals(currentPos)) {
+                    break;
+                }
+                innerPos = WaterTravelAnimations.animateMovementAlongWaterEdges(
+                        model, mapSubView, currentPos, viewPoint, closest, innerPos, shipAvatar);
+                model.getParty().setPosition(closest);
+                currentPos = closest;
+                if (viewPoint.distance(currentPos) > 3) {
+                    viewPoint.x = currentPos.x;
+                    viewPoint.y = currentPos.y;
+                }
+            } while (!(currentPos.x == newPosition.x && currentPos.y == newPosition.y));
+            if (!currentPos.equals(newPosition)) {
+                WaterTravelAnimations.animateMovementAlongWaterEdges(
+                        model, mapSubView, currentPos, viewPoint, newPosition, innerPos, shipAvatar);
             }
-            mapSubView.addMovementAnimation(
-                    SHIP_AVATAR,
-                    model.getWorld().translateToScreen(currentPos, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),
-                    model.getWorld().translateToScreen(closest, currentPos, MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES));
-            mapSubView.waitForAnimation();
-            mapSubView.removeMovementAnimation();
-            model.getParty().setPosition(closest);
-            currentPos = closest;
-        } while (!(currentPos.x == newPosition.x && currentPos.y == newPosition.y));
-
+        } catch (WaterTravelAnimations.FaultyWaterTravelException fwte) {
+            System.err.println(fwte.getMessage());
+        }
 
         model.getCurrentHex().travelFrom(model);
-        state.stepToNextDay(model);
-        state.println("The party spends the day on the ship traveling to the " + ship.first.getName());
-        state.stepToNextDay(model);
+        if (voyageTakesTwoDays) {
+            state.stepToNextDay(model);
+            state.println("The party spends the day on the ship traveling to " + destinationName);
+            state.stepToNextDay(model);
+        }
         System.out.println("TravelBySeaState: after step to next day.");
         model.getParty().setPosition(newPosition);
         System.out.println("TravelBySeaState: after set Position.");
         model.getCurrentHex().travelTo(model);
         System.out.println("TravelBySeaState: Done with travelTo");
+    }
+
+    public static void travelBySea(Model model, TownLocation town, GameState state,
+                                   boolean voyageTakesTwoDays, boolean withViewTransition) {
+        if (model.getCurrentHex().getLocation() != null) {
+            DiscoveredRoute.uniqueAdd(model, model.getParty().getDiscoveredRoutes(),
+                    model.getCurrentHex().getLocation(), town, DiscoveredRoute.SHIP);
+        }
+       travelBySea(model, town.getHex(), state, SHIP_AVATAR, town.getTownName(), voyageTakesTwoDays, withViewTransition);
+    }
+
+    public static void travelBySea(Model model, WorldHex hex, GameState state, Sprite avatar,
+                                   boolean voyageTakesTwoDays, boolean withViewTransition) {
+        Point p = model.getWorld().getPositionForHex(hex);
+        travelBySea(model, hex, state, avatar, "(" + p.x + "," + p.y + ")",
+                voyageTakesTwoDays, withViewTransition);
     }
 
     public boolean didTravel() {
@@ -100,11 +128,13 @@ public class TravelBySeaState extends GameState {
 
 
     private static class SeaTravelMapSubView extends MapSubView {
-        private final TownLocation destination;
+        private final String destination;
+        private final Point viewPoint;
 
-        public SeaTravelMapSubView(Model model, TownLocation first) {
+        public SeaTravelMapSubView(Model model, String destination, Point viewPoint) {
             super(model);
-            this.destination = first;
+            this.destination = destination;
+            this.viewPoint = viewPoint;
         }
 
         @Override
@@ -114,12 +144,12 @@ public class TravelBySeaState extends GameState {
 
         @Override
         protected String getUnderText(Model model) {
-            return "You are traveling by sea to " + destination.getTownName() + ".";
+            return "You are traveling by sea to " + destination + ".";
         }
 
         @Override
         public void specificDrawArea(Model model) {
-            model.getWorld().drawYourself(model, model.getParty().getPosition(), model.getParty().getPosition(),
+            model.getWorld().drawYourself(model, viewPoint, model.getParty().getPosition(),
                     MAP_WIDTH_HEXES, MAP_HEIGHT_HEXES, Y_OFFSET, model.getParty().getPosition(), false);
         }
     }

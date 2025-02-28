@@ -173,7 +173,7 @@ public class VisitMonasteryEvent extends DailyEventState {
         print("Are you ready to travel to " + destinations.get(selected).getTownName() + "? (Y/N) ");
         if (yesNoInput()) {
             leaderSay("Yes. Let's go.");
-            TravelBySeaState.travelBySea(model, new MyPair<>(destinations.get(0), 0), this);
+            TravelBySeaState.travelBySea(model, destinations.get(selected), this, false, true);
             return true;
         }
         leaderSay("On second thought, no, there was something I wanted to do first.");

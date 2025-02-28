@@ -14,7 +14,7 @@ public class PegasusEvent extends AlternativeTravelEvent {
     private Sprite pegasusSprite = new PegasusSprite();
 
     public PegasusEvent(Model model) {
-        super(model);
+        super(model, false);
     }
 
     @Override

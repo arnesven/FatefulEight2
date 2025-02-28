@@ -24,7 +24,7 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
     private boolean endAtSea = false;
 
     public TravelByCharteredBoat(Model model) {
-        super(model);
+        super(model, true);
     }
 
     @Override
@@ -70,12 +70,14 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
             return super.getEveningState(model);
         }
         DailyEventState event = null;
-        if (checkForPirateEvent(model)) {
-            event = new PirateShipEvent(model);
-        } else if (checkForStormEvent(model)) {
-            event = new StormAtSeaEvent(model);
-        } else if (checkForSeaMonsterEvent(model)) {
-            event = new SeaMonsterEvent(model);
+        if (model.getCurrentHex() instanceof SeaHex) {
+            if (checkForPirateEvent(model)) {
+                event = new PirateShipEvent(model);
+            } else if (checkForStormEvent(model)) {
+                event = new StormAtSeaEvent(model);
+            } else if (checkForSeaMonsterEvent(model)) {
+                event = new SeaMonsterEvent(model);
+            }
         }
         if (event != null) {
             event.doTheEvent(model);
