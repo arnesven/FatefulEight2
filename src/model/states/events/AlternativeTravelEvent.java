@@ -40,13 +40,17 @@ public abstract class AlternativeTravelEvent extends DailyEventState {
         model.getWorld().setAlternativeAvatar(sprite);
         ExplicitTravelSubView mapSubView = new ExplicitTravelSubView(model);
         CollapsingTransition.transition(model, mapSubView);
-        Point selectedPos = selectDirection(model, mapSubView);
-        model.getWorld().setAlternativeAvatar(null);
-        mapSubView.setAvatarEnabled(false);
+        Point selectedPos;
         if (isWaterTravel) {
+            model.getWorld().setAlternativeAvatar(null);
+            mapSubView.setAvatarEnabled(false);
+            selectedPos = selectDirection(model, mapSubView);
             TravelBySeaState.travelBySea(model, model.getWorld().getHex(selectedPos),
                     this, sprite, false, false);
         } else {
+            selectedPos = selectDirection(model, mapSubView);
+            model.getWorld().setAlternativeAvatar(null);
+            mapSubView.setAvatarEnabled(false);
             mapSubView.addMovementAnimation(
                     sprite,
                     model.getWorld().translateToScreen(model.getParty().getPosition(), model.getParty().getPosition(), MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES),

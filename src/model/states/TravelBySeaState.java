@@ -76,8 +76,7 @@ public class TravelBySeaState extends GameState {
                 if (closest.equals(currentPos)) {
                     break;
                 }
-                innerPos = WaterTravelAnimations.animateMovementAlongWaterEdges(
-                        model, mapSubView, currentPos, viewPoint, closest, innerPos, shipAvatar);
+                innerPos = addAnimation(model, mapSubView, currentPos, viewPoint, closest, innerPos, shipAvatar);
                 model.getParty().setPosition(closest);
                 currentPos = closest;
                 if (viewPoint.distance(currentPos) > 3) {
@@ -86,8 +85,10 @@ public class TravelBySeaState extends GameState {
                 }
             } while (!(currentPos.x == newPosition.x && currentPos.y == newPosition.y));
             if (!currentPos.equals(newPosition)) {
-                WaterTravelAnimations.animateMovementAlongWaterEdges(
-                        model, mapSubView, currentPos, viewPoint, newPosition, innerPos, shipAvatar);
+                innerPos = addAnimation(model, mapSubView, currentPos, viewPoint, newPosition, innerPos, shipAvatar);
+            }
+            if (model.getWorld().getHex(newPosition) instanceof SeaHex) {
+                WaterTravelAnimations.addAnimationToMiddle(model, mapSubView, currentPos, viewPoint, innerPos, shipAvatar);
             }
         } catch (WaterTravelAnimations.FaultyWaterTravelException fwte) {
             System.err.println(fwte.getMessage());
@@ -104,6 +105,18 @@ public class TravelBySeaState extends GameState {
         System.out.println("TravelBySeaState: after set Position.");
         model.getCurrentHex().travelTo(model);
         System.out.println("TravelBySeaState: Done with travelTo");
+    }
+
+    private static int addAnimation(Model model, MapSubView mapSubView, Point currentPos,
+                                     Point viewPoint, Point closest, int innerPos, Sprite shipAvatar) {
+        if (model.getWorld().getHex(currentPos) instanceof SeaHex) {
+            innerPos = WaterTravelAnimations.animateMovementOverSeaHex(model,
+                    mapSubView, currentPos, viewPoint, closest, innerPos, shipAvatar);
+        } else {
+            innerPos = WaterTravelAnimations.animateMovementAlongWaterEdges(
+                    model, mapSubView, currentPos, viewPoint, closest, innerPos, shipAvatar);
+        }
+        return innerPos;
     }
 
     public static void travelBySea(Model model, TownLocation town, GameState state,

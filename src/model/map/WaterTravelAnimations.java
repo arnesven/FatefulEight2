@@ -24,9 +24,38 @@ public class WaterTravelAnimations {
             Direction.SOUTH, Direction.SOUTH_WEST, Direction.NORTH_WEST,
             Direction.NORTH, Direction.NORTH_EAST, Direction.SOUTH_EAST);
 
+
+    public static void addAnimationToMiddle(Model model, MapSubView mapSubView,
+                                            Point currentPos, Point viewPoint,
+                                            int innerPos, Sprite shipAvatar) {
+        System.out.println("Animating to middle");
+        Point fromPos = model.getWorld().translateToScreen(currentPos, viewPoint,
+                MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES);
+        Point fromPos2 = waterOffset(fromPos, innerPos);
+        Point middlePos = middleOfHex(fromPos);
+        animate(mapSubView, shipAvatar, fromPos2, middlePos);
+    }
+
+    public static int animateMovementOverSeaHex(Model model, MapSubView mapSubView,
+                                                Point currentPos, Point viewPoint, Point closest,
+                                                int innerPos, Sprite shipAvatar) {
+        System.out.println("Animating over sea");
+        Point fromPos = model.getWorld().translateToScreen(currentPos, viewPoint,
+                MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES);
+        Point fromPos2 = waterOffset(fromPos, innerPos);
+        java.util.List<Integer> interPath = findInterPath(model, currentPos, closest, innerPos);
+
+        int destinationDir = interPath.get(interPath.size() - 1);
+        Point toPos = waterOffset(fromPos, destinationDir);
+        animate(mapSubView, shipAvatar, fromPos2, toPos);
+
+        return adjustNextPosition(destinationDir);
+    }
+
     public static int animateMovementAlongWaterEdges(Model model, MapSubView mapSubView,
                                                      Point currentPos, Point viewPoint, Point closest, int innerPos,
                                                      Sprite shipAvatar) {
+        System.out.println("Animating along edges");
         Point fromPos = model.getWorld().translateToScreen(currentPos, viewPoint,
                 MapSubView.MAP_WIDTH_HEXES, MapSubView.MAP_HEIGHT_HEXES);
 
@@ -38,11 +67,15 @@ public class WaterTravelAnimations {
             int nextDir = interPath.get(i + 1);
             Point fromPos2 = waterOffset(fromPos, dir);
             Point toPos = waterOffset(fromPos, nextDir); // closest
-            mapSubView.addMovementAnimation(shipAvatar, fromPos2, toPos);
-            mapSubView.waitForAnimation();
-            mapSubView.removeMovementAnimation();
+            animate(mapSubView, shipAvatar, fromPos2, toPos);
         }
         return adjustNextPosition(interPath.get(interPath.size()-1));
+    }
+
+    private static void animate(MapSubView mapSubView, Sprite shipAvatar, Point from, Point to) {
+        mapSubView.addMovementAnimation(shipAvatar, from, to);
+        mapSubView.waitForAnimation();
+        mapSubView.removeMovementAnimation();
     }
 
     public static int findWaterDirection(Model model, Point currentPos) {
@@ -166,6 +199,11 @@ public class WaterTravelAnimations {
                 return new Point(currentPos.x + size/2, currentPos.y - size);
         }
         return currentPos;
+    }
+
+    private static Point middleOfHex(Point currentPos) {
+        int size = 4;
+        return new Point(currentPos.x, currentPos.y - size/2);
     }
 
     public static class FaultyWaterTravelException extends IllegalStateException {
