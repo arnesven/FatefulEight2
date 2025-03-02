@@ -2,10 +2,12 @@ package model.states.events;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.classes.Skill;
 import model.states.DailyEventState;
 import util.MyRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ColdEvent extends DailyEventState {
@@ -26,6 +28,7 @@ public class ColdEvent extends DailyEventState {
                 List.of("Brrr... I'm so cold!", "My pants, they're like ice.",
                         "I'm shaking so much that I feel like I'm dancing.",
                         "Can we please go someplace warmer?")));
+        randomSayIfPersonality(PersonalityTrait.jovial, new ArrayList<>(), "At least you look cool!");
 
         println("The frigid cold has the some of the party members shivering to their " +
                 "teeth. They must consume more food to stay warm.");

@@ -1,7 +1,9 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.classes.Skill;
 import model.states.DailyEventState;
 
 import java.util.ArrayList;
@@ -14,6 +16,11 @@ public class DehydrationEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        List<GameCharacter> gcs =
+                model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Endurance, 8);
+        if (gcs.isEmpty()) {
+            return;
+        }
         model.getParty().randomPartyMemberSay(model,
                 List.of("My throat is like sand.", "I'm sooo thirsty.",
                         "Anybody else feel like a drink?",
@@ -22,7 +29,7 @@ public class DehydrationEvent extends DailyEventState {
                 "I would tell a joke, but my humor is to dry!");
         println("The intense sun beats down mercilessly. The party " +
                 "members are severely perspiring and must constantly " +
-                "replenish their bodily fluids. Each party member consumes an extra ration.");
-        model.getParty().addToFood(-model.getParty().size());
+                "replenish their bodily fluids. Some party members consumes an extra ration.");
+        model.getParty().addToFood(-gcs.size());
     }
 }
