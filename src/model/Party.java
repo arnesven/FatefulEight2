@@ -30,6 +30,7 @@ import model.quests.HeldQuestData;
 import model.quests.Quest;
 import model.states.GameState;
 import model.states.SpellCastException;
+import model.states.fishing.BreamFish;
 import model.tasks.DestinationTask;
 import model.travellers.Traveller;
 import model.travellers.TravellerCollection;

@@ -156,7 +156,7 @@ public abstract class GameState implements GameStateConstants {
                 model.setSubView(getPrevious());
             }
         });
-        waitForReturnSilently();
+        waitForReturnSilently(true);
         return selectedAction[0];
     }
 

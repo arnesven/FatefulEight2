@@ -11,9 +11,12 @@ import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
 import sound.SoundEffects;
+import util.MyLists;
 import view.*;
 import view.party.SelectableListMenu;
 import view.sprites.DamageValueEffect;
+
+import java.util.List;
 
 public abstract class Spell extends Item {
     public static final MyColors COLORLESS = MyColors.PURPLE;
@@ -205,4 +208,21 @@ public abstract class Spell extends Item {
         return new LearnPermanentlyDialog(innerView, this, "cast", false);
     }
 
+    public static void giveCueMessage(Model model) {
+        for (GameCharacter gc : MyLists.filter(model.getParty().getPartyMembers(),
+                gc -> !model.getParty().getBench().contains(gc))) {
+            if (gc.testSkillHidden(Skill.SpellCasting, 6, 0).isSuccessful()) {
+                model.getParty().partyMemberSay(model, gc,
+                        List.of("Don't we have a spell for this?",
+                                "If only some magic could help us here...",
+                                "I know just the magic trick for this!",
+                                "I'm getting a tingling sensation...",
+                                "Wait... can we cast a spell here?",
+                                "Does anyone know a good spell for this situation?",
+                                "I think my sixth sense is trying to tell me something...",
+                                "Perhaps there's a magical way to solve this."));
+                break;
+            }
+        }
+    }
 }

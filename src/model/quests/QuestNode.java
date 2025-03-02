@@ -57,19 +57,7 @@ public abstract class QuestNode {
         java.util.List<GameCharacter> partyMembers = new ArrayList<>(model.getParty().getPartyMembers());
         Collections.shuffle(partyMembers);
         if (atLeastOneSpell) {
-            for (GameCharacter gc : partyMembers) {
-                if (gc.getRankForSkill(Skill.MagicAny) > 0) {
-                    model.getParty().partyMemberSay(model, gc,
-                            List.of("Don't we have a spell for this?",
-                                    "If only some magic could help us here...",
-                                    "I know just the magic trick for this!",
-                                    "I'm getting a tingling sensation...",
-                                    "Wait... can we cast a spell here?",
-                                    "Does anyone know a good spell for this situation?",
-                                    "I think my sixth sense is trying to tell me something..."));
-                    break;
-                }
-            }
+            Spell.giveCueMessage(model);
         }
     }
 
