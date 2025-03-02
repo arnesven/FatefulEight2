@@ -81,13 +81,15 @@ public class RecruitNode extends DailyActionNode {
         }
         int i = 0;
         for (GameCharacter gc : recruitables) {
-            AvatarSprite avatarSprite = gc.getAvatarSprite();
-            avatarSprite.synch();
-            Point pos = new Point(p.x + offsets.get(i).x, p.y + offsets.get(i).y);
-            model.getScreenHandler().register(avatarSprite.getName(), pos, avatarSprite);
-            i++;
-            if (i == 3) {
-                break;
+            if (!model.getParty().getPartyMembers().contains(gc)) {
+                AvatarSprite avatarSprite = gc.getAvatarSprite();
+                avatarSprite.synch();
+                Point pos = new Point(p.x + offsets.get(i).x, p.y + offsets.get(i).y);
+                model.getScreenHandler().register(avatarSprite.getName(), pos, avatarSprite);
+                i++;
+                if (i == 3) {
+                    break;
+                }
             }
         }
     }
