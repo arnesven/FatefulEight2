@@ -38,6 +38,7 @@ public class LumberMillEvent extends SimpleGeneralInteractionEvent {
                 " awaits and good beer and bread. Stories are shared and the lumberjack tells of " +
                 "the many strange things that lay hidden in these parts of the forest.");
         print("The Lumberjack offers to train you in the ways of being a Forester, ");
+        // TODO: Options: Cut some wood (gain materials)
         changeClassEvent.areYouInterested(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, getPortrait(), "Lumberjack");

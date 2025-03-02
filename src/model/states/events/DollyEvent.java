@@ -34,7 +34,7 @@ public class DollyEvent extends DailyEventState {
                 "This really isn't any of our business.")));
         didSay = didSay || randomSayIfPersonality(PersonalityTrait.playful, new ArrayList<>(), "Hey kid, wanna see a magic trick?");
 
-        print("Do you offer to look for the dolly? (Y/N) ");
+        print("Do you offer to look for the dolly? (Y/N) "); // TODO: More options: Craft dolly, Buy dolly
         if (yesNoInput()) {
             boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 10);
             if (result) {
