@@ -650,6 +650,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void wages(Model model) {
+        runOnce("wages", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialWages(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

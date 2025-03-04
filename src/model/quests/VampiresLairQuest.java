@@ -58,7 +58,7 @@ public class VampiresLairQuest extends MainQuest {
         if (questWasSuccess) {
            possiblyRecruitCaid(model, state);
         }
-        return Quest.endOfQuestProcedure(model, state, questWasSuccess, 0);
+        return Quest.endOfQuestProcedure(model, state, questWasSuccess, getReward().getGold() > 0);
     }
 
     @Override

@@ -3,17 +3,21 @@ package model.quests;
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.characters.appearance.SilhouetteAppearance;
 import model.states.GameState;
+import model.states.PayWagesState;
 import model.states.QuestState;
 import model.states.events.ForcedMovementEvent;
 import model.states.events.MoveAwayFromCurrentPositionEvent;
 import sound.BackgroundMusic;
+import util.MyRandom;
 import view.BorderFrame;
 import view.MyColors;
 import view.combat.CombatTheme;
 import view.combat.DungeonTheme;
+import view.subviews.ArrowMenuSubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -180,27 +184,42 @@ public abstract class Quest {
     }
 
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
-        return endOfQuestProcedure(model, state, questWasSuccess, moveAfter);
+        return endOfQuestProcedure(model, state, questWasSuccess, reward.getGold() > 0);
     }
 
-    protected static GameState endOfQuestProcedure(Model model, QuestState state, boolean questWasSuccess, int moveSteps) {
+    protected static GameState endOfQuestProcedure(Model model, QuestState state,
+                                                   boolean questWasSuccess, boolean payWages) {
         state.print("Press enter to continue.");
         state.waitForReturn();
         QuestState.setCurrentTerrainSubview(model);
         model.getParty().stopHoldingQuest(state.getQuest());
         model.setTimeOfDay(TimeOfDay.EVENING);
-        adjustAttitudes(model, questWasSuccess);
+        if (!questWasSuccess) {
+            state.partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of(
+                    "That could have gone better.",
+                    "We need to do better.",
+                    "Was it just bad luck?",
+                    "I hope things will turn around soon.",
+                    "I don't think this was my fault.",
+                    "Let's not blame anybody, OK?")));
+            adjustAttitudes(model, -10);
+        } else if (payWages) {
+            new PayWagesState(model).run(model);
+        } else {
+            state.partyMemberSay(model.getParty().getRandomPartyMember(), MyRandom.sample(List.of(
+                    "Go us!", "This was a good experience for me.",
+                    "I think we're doing pretty well.", "Times are good!",
+                    "We all contributed on this one.", "Good team work everybody."
+            )));
+            adjustAttitudes(model, 7);
+        }
         return model.getCurrentHex().getEveningState(model, false, false);
     }
 
-    private static void adjustAttitudes(Model model, boolean questWasSuccess) {
+    private static void adjustAttitudes(Model model, int attitude) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc != model.getParty().getLeader()) {
-                if (questWasSuccess) {
-                    gc.addToAttitude(model.getParty().getLeader(), 10);
-                } else {
-                    gc.addToAttitude(model.getParty().getLeader(), -10);
-                }
+                gc.addToAttitude(model.getParty().getLeader(), attitude);
             }
         }
     }
