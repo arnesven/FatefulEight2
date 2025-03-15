@@ -75,10 +75,8 @@ public class TopText {
     }
 
     private int addLockpicks(Model model, int col) {
-        model.getScreenHandler().put(col+2, 0, LOCKPICKS_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d",
-                model.getParty().getInventory().getLockpicks()), col, 0, MyColors.WHITE);
-        return col + 4;
+        return printWithIcon(model, col, String.format("%2d",
+                model.getParty().getInventory().getLockpicks()), LOCKPICKS_ICON_SPRITE, MyColors.WHITE);
     }
 
     private boolean isFlagSet(Model model, String key) {
@@ -110,73 +108,61 @@ public class TopText {
     }
 
     private int addObols(Model model, int col) {
-        model.getScreenHandler().put(col + 4, 0, OBOL_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getObols()), col, 0, MyColors.LIGHT_GRAY);
-        return col + 6;
+        return printWithIcon(model, col, String.format("%4d", model.getParty().getObols()), OBOL_ICON_SPRITE, MyColors.LIGHT_GRAY);
     }
 
     private int addNotoriety(Model model, int col) {
-        model.getScreenHandler().put(col+3, 0, NOTORIETY_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(),
-                String.format("%3d", model.getParty().getNotoriety()),
-                col, 0, MyColors.RED);
-        return col + 5;
+        return printWithIcon(model,  col, String.format("%3d", model.getParty().getNotoriety()), NOTORIETY_SPRITE, MyColors.RED);
     }
 
     private int addMaterials(Model model, int col) {
-        model.getScreenHandler().put(col+3, 0, MATERIALS_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(),
-                String.format("%3d", model.getParty().getInventory().getMaterials()),
-                col, 0, MyColors.LIGHT_GRAY);
-        return col + 5;
+        return printWithIcon(model, col, String.format("%3d", model.getParty().getInventory().getMaterials()),
+                MATERIALS_ICON_SPRITE, MyColors.LIGHT_GRAY);
     }
 
     private int addIngredients(Model model, int col) {
-        model.getScreenHandler().put(col+3, 0, INGREDIENTS_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(),
-                String.format("%3d", model.getParty().getInventory().getIngredients()),
-                col, 0, MyColors.LIGHT_GREEN);
-        return col + 5;
+        return printWithIcon(model, col, String.format("%3d", model.getParty().getInventory().getIngredients()),
+                INGREDIENTS_ICON_SPRITE, MyColors.LIGHT_GREEN);
     }
 
     private int addReputation(Model model, int col) {
-        model.getScreenHandler().put(col+3, 0, REP_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d",  model.getParty().getReputation()), col, 0, MyColors.WHITE);
-        return col + 5;
+        return printWithIcon(model, col,
+                String.format("%3d",  model.getParty().getReputation()),
+                REP_ICON_SPRITE, MyColors.WHITE);
+    }
+
+    private int printWithIcon(Model model, int col, String format, CharSprite icon, MyColors textColor) {
+        model.getScreenHandler().put(col+format.length(), 0, icon);
+        BorderFrame.drawString(model.getScreenHandler(), format, col, 0, textColor);
+        return col + format.length() + 2;
     }
 
     private int addHorses(Model model, int col) {
-        model.getScreenHandler().put(col+4, 0, HORSES_ICON_SPRITE);
         MyColors horsesColor = MyColors.LIGHT_RED;
         if (model.getParty().getHorseHandler().canRide(model.getParty().getPartyMembers())){
             horsesColor = MyColors.LIGHT_GREEN;
         }
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%2d/%1d",  model.getParty().getHorseHandler().getFullBloods(),
-                model.getParty().getHorseHandler().getPonies()), col, 0, horsesColor);
-        return col + 6;
+        return printWithIcon(model, col, String.format("%2d/%1d",  model.getParty().getHorseHandler().getFullBloods(),
+                model.getParty().getHorseHandler().getPonies()), HORSES_ICON_SPRITE, horsesColor);
     }
 
     private int addAlighment(Model model, int col) {
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", DailyEventState.getPartyAlignment(model)), col, 0, MyColors.WHITE);
-        model.getScreenHandler().put(col+3, 0, ALIGNMENT_ICON_SPRITE);
-        return col + 5;
+        return printWithIcon(model, col, String.format("%3d", DailyEventState.getPartyAlignment(model)),
+                ALIGNMENT_ICON_SPRITE, MyColors.WHITE);
     }
 
     private int addFood(Model model, int col) {
-        model.getScreenHandler().put(col+3, 0, FOOD_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%3d", model.getParty().getFood()), col, 0, MyColors.PEACH);
-        return col + 5;
+        return printWithIcon(model, col, String.format("%3d", model.getParty().getFood()), FOOD_ICON_SPRITE, MyColors.PEACH);
     }
 
     private int addGold(Model model, int col) {
-        model.getScreenHandler().put(col + 4, 0, GOLD_ICON_SPRITE);
-        BorderFrame.drawString(model.getScreenHandler(), String.format("%4d", model.getParty().getGold()), col, 0, MyColors.LIGHT_YELLOW);
-        return col + 6;
+        return printWithIcon(model, col, String.format("%4d", model.getParty().getGold()), GOLD_ICON_SPRITE, MyColors.LIGHT_YELLOW);
     }
 
     private int addDay(Model model, int col) {
-        BorderFrame.drawString(model.getScreenHandler(), String.format("DAY %d", model.getDay()), 0, 0, MyColors.CYAN);
-        return col + 8;
+        String dayAsString = String.format("DAY %d", model.getDay());
+        BorderFrame.drawString(model.getScreenHandler(), dayAsString, 0, 0, MyColors.CYAN);
+        return col + dayAsString.length() + 2;
     }
 
     protected void drawKeyTexts(Model model) {
