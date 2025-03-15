@@ -207,7 +207,7 @@ public enum PersonalityTrait {
             case encouraging:
                 return new FamousPainterEvent(model, this, mainCharacter); // You were the only one who believed in me
             case intellectual:
-                // return new GuildHallEvent(model, this, mainCharacter);
+                // return new BookWithMissingPagesEvent(model, this, mainCharacter);
             case cowardly:
                 // return new NightmareEvent(model, this, mainCharacter);
             case narcissistic:

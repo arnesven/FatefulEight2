@@ -90,7 +90,7 @@ public class StatisticsView extends SelectableListMenu {
         List<ListContent> result = new ArrayList<>();
         result.add(makeTitleLine(leftColumn, row++, "PARTY"));
         String partySize = model.getParty().size() + "/" + model.getParty().getInventory().getTentSize();
-        result.add(new SelectableListContent(leftColumn, row++, format(46, 10, "Current party size", partySize)) {
+        result.add(new PermanentlyEnabledListContent(leftColumn, row++, format(46, 10, "Current party size", partySize)) {
             @Override
             public void performAction(Model model, int x, int y) {
                 setInnerMenu(new PartyCompositionView(model), model);
@@ -123,7 +123,7 @@ public class StatisticsView extends SelectableListMenu {
         List<String> craftingDesigns = MyLists.transform(model.getParty().getLearnedCraftingDesigns(),
                 cd -> cd.getCraftable().getName());
         if (craftingDesigns.size() > 0) {
-            result.add(new SelectableListContent(leftColumn, row++,
+            result.add(new PermanentlyEnabledListContent(leftColumn, row++,
                     format(46, 10, "Crafting designs learned", "" + craftingDesigns.size())) {
                 @Override
                 public void performAction(Model model, int x, int y) {
@@ -161,7 +161,7 @@ public class StatisticsView extends SelectableListMenu {
         List<String> spellsLearned = MyLists.transform(model.getParty().getLearnedSpells(),
                 Item::getName);
         if (spellsLearned.size() > 0) {
-            result.add(new SelectableListContent(leftColumn, row++,
+            result.add(new PermanentlyEnabledListContent(leftColumn, row++,
                     format(46, 10, "Spells learned", "" + spellsLearned.size())) {
                 @Override
                 public void performAction(Model model, int x, int y) {
@@ -177,7 +177,7 @@ public class StatisticsView extends SelectableListMenu {
         List<String> recipes = MyLists.transform(model.getParty().getLearnedPotionRecipes(),
                 pr -> pr.getBrewable().getName());
         if (recipes.size() > 0) {
-            result.add(new SelectableListContent(leftColumn, row++,
+            result.add(new PermanentlyEnabledListContent(leftColumn, row++,
                     format(46, 10, "Potion recipes learned", "" + recipes.size())) {
                 @Override
                 public void performAction(Model model, int x, int y) {

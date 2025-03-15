@@ -19,6 +19,7 @@ import view.MyColors;
 import view.help.TutorialClassesDialog;
 import view.sprites.Sprite;
 import view.sprites.Sprite8x8;
+import view.widget.ArmorClassWidget;
 import view.widget.InputBufferWidget;
 
 import java.awt.*;
@@ -242,9 +243,8 @@ public class CharacterCreationView extends SelectableListMenu {
         }
 
         if (lastCharacter.getCharClass().id() != Classes.None.id()) {
-            BorderFrame.drawString(model.getScreenHandler(),
-                    "Armor Class " + (lastCharacter.getCharClass().canUseHeavyArmor() ? "HEAVY" : "LIGHT"),
-                    midX, ++row, MyColors.WHITE, MyColors.BLUE);
+            ArmorClassWidget.drawYourself(model.getScreenHandler(), midX, ++row,
+                    lastCharacter.getCharClass().canUseHeavyArmor());
         }
     }
 

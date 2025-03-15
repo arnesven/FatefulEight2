@@ -15,6 +15,7 @@ import view.*;
 import view.help.RaceAndClassHelpDialog;
 import view.sprites.ArrowSprites;
 import view.subviews.SubView;
+import view.widget.ArmorClassWidget;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -266,10 +267,8 @@ public class PartyView extends SelectableListMenu {
                 drawEquipment(model, gc, x+1, y+9);
                 int skillsEndRow = printSkills(model.getScreenHandler(), gc, y);
 
-                print(model.getScreenHandler(), rightColumnX, ++skillsEndRow,
-                        "Armor Class ");
-                printArmorClass(model.getScreenHandler(), rightColumnX+12, skillsEndRow,
-                        gc.getCharClass().canUseHeavyArmor());
+                ArmorClassWidget.drawYourself(model.getScreenHandler(), rightColumnX,
+                        ++skillsEndRow, gc.getCharClass().canUseHeavyArmor());
 
                 ++skillsEndRow;
                 print(model.getScreenHandler(), rightColumnX, skillsEndRow,
@@ -279,12 +278,6 @@ public class PartyView extends SelectableListMenu {
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, gc.getOtherClasses());
             }
         });
-    }
-
-    private void printArmorClass(ScreenHandler screenHandler, int x, int y, boolean canUseHeavyArmor) {
-        String text = canUseHeavyArmor ? "HEAVY" : "LIGHT";
-        MyColors bgColor = canUseHeavyArmor ? MyColors.BLACK : MyColors.BLUE;
-        BorderFrame.drawString(screenHandler, text, x, y, MyColors.WHITE, bgColor);
     }
 
     private void drawEquipment(Model model, GameCharacter gc, int x, int y) {
