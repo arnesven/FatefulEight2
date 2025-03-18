@@ -84,22 +84,23 @@ public class CraftItemState extends GameState {
         model.setSubView(new CraftItemSubView(previous, triplet.first, triplet.second, triplet.third));
         print("Are you sure you want to spend " + triplet.second +
                 " materials to attempt to craft " + triplet.first.getName() + "? (Y/N) ");
-        if (yesNoInput() && makeItemFromMaterials(model, triplet.first, triplet.second, "craft", triplet.third)) {
+        if (yesNoInput() && makeItemFromMaterials(model, this, triplet.first, triplet.second, "craft", triplet.third)) {
             GameStatistics.incrementItemsCrafted(1);
             model.getParty().getInventory().addItem(triplet.first.copy());
         }
         model.setSubView(previous);
     }
 
-    private boolean makeItemFromMaterials(Model model, Item selectedItem, Integer materialCost, String actionName, boolean fromCraftingDesign) {
+    public static boolean makeItemFromMaterials(Model model, GameState state, Item selectedItem, Integer materialCost,
+                                                String actionName, boolean fromCraftingDesign) {
         GameCharacter crafter = null;
         if (model.getParty().size() > 1) {
-            println("Which party member should attempt to " + actionName + " the " + selectedItem.getName() + "?");
-            crafter = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+            state.println("Which party member should attempt to " + actionName + " the " + selectedItem.getName() + "?");
+            crafter = model.getParty().partyMemberInput(model, state, model.getParty().getPartyMember(0));
         } else {
             crafter = model.getParty().getPartyMembers().get(0);
-            print(crafter.getName() + " is preparing to " + actionName + " an item. Press enter to continue.");
-            waitForReturn();
+            state.print(crafter.getName() + " is preparing to " + actionName + " an item. Press enter to continue.");
+            state.waitForReturn();
         }
         int difficulty = calculateDifficulty(selectedItem);
         Skill[] steps;
@@ -110,7 +111,7 @@ public class CraftItemState extends GameState {
         }
         boolean failure = false;
         for (Skill step : steps) {
-            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, this, crafter, step,
+            SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, crafter, step,
                     difficulty + MyRandom.randInt(-1, 1), 5, 0);
             if (!result.isSuccessful()) {
                 failure = true;
@@ -119,11 +120,11 @@ public class CraftItemState extends GameState {
         }
         model.getParty().getInventory().addToMaterials(-materialCost);
         if (failure) {
-            println(crafter.getName() + " has failed to " + actionName + " " + selectedItem.getName() +
+            state.println(crafter.getName() + " has failed to " + actionName + " " + selectedItem.getName() +
                     " and wasted " + materialCost + " materials while doing so.");
             return false;
         }
-        println(crafter.getName() + " used " + materialCost + " materials to " +
+        state.println(crafter.getName() + " used " + materialCost + " materials to " +
                 actionName + " " + selectedItem.getName() + "!");
         return true;
     }
@@ -308,7 +309,7 @@ public class CraftItemState extends GameState {
         print("Are you sure you want to attempt to upgrade " + selectedItem.getName() + " to " +
                 potentialItem.getName() + " (cost of " + selectedItem.getCost() + " materials)" +"? (Y/N) ");
         if (yesNoInput()) {
-            if (makeItemFromMaterials(model, selectedItem, selectedItem.getCost(), "upgrade", false)) {
+            if (makeItemFromMaterials(model, this, selectedItem, selectedItem.getCost(), "upgrade", false)) {
                 GameStatistics.incrementItemsUpgraded(1);
                 model.getParty().getInventory().remove(selectedItem);
                 potentialItem.addYourself(model.getParty().getInventory());
