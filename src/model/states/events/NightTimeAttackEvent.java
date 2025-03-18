@@ -10,7 +10,7 @@ import model.states.DailyEventState;
 import view.combat.CombatTheme;
 import java.util.List;
 
-public abstract class NightTimeAttackEvent extends DailyEventState {
+public abstract class NightTimeAttackEvent extends NightTimeEvent {
     private final int perceptionDifficulty;
     private final String perceptionSuccessString;
     private final CombatTheme combatTheme;

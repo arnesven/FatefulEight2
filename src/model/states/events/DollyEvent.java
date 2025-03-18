@@ -36,7 +36,7 @@ public class DollyEvent extends DailyEventState {
 
         print("Do you offer to look for the dolly? (Y/N) "); // TODO: More options: Craft dolly, Buy dolly
         if (yesNoInput()) {
-            boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 10);
+            boolean result = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Search, 8);
             if (result) {
                 println("After spending some time searching, you finally find the dolly under a bush, not far from " +
                         "where you first encountered the mother and child. You hand the dolly over to the child, who grabs " +

@@ -1,6 +1,7 @@
 package model.states.feeding;
 
 import model.Model;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.quests.QuestEdge;
 import model.quests.QuestFailNode;
@@ -32,6 +33,7 @@ public class VampireFeedingState extends GameState {
         List<GameCharacter> others = new ArrayList<>(model.getParty().getPartyMembers());
         others.remove(vampire);
         model.getParty().benchPartyMembers(others);
+        model.setTimeOfDay(TimeOfDay.NIGHT);
         println(vampire.getFirstName() + " sneaks out at night to find a victim to feed on.");
         model.getTutorial().vampireFeeding(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);

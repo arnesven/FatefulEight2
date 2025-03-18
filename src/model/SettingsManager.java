@@ -27,6 +27,7 @@ public class SettingsManager implements Serializable {
     private static final int MAX_DIFFICULTY = 2;
 
     public SettingsManager() {
+        miscFlags.put(TopText.TIME_OF_DAY_SETTINGS_FLAG, true);
         miscFlags.put(TopText.GOLD_SETTINGS_FLAG, true);
         miscFlags.put(TopText.OBOLS_SETTINGS_FLAG, false);
         miscFlags.put(TopText.FOOD_SETTINGS_FLAG, true);

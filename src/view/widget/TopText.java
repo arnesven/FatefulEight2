@@ -5,8 +5,10 @@ import model.states.DailyEventState;
 import view.BorderFrame;
 import view.MyColors;
 import view.sprites.CharSprite;
+import view.sprites.Sprite;
 
 public class TopText {
+    public static final String TIME_OF_DAY_SETTINGS_FLAG = "showTimeOfDayInTopBar";
     public static final String GOLD_SETTINGS_FLAG = "showGoldInTopBar";
     public static final String OBOLS_SETTINGS_FLAG = "showObolsInTopBar";
     public static final String FOOD_SETTINGS_FLAG = "showFoodInTopBar";
@@ -32,10 +34,17 @@ public class TopText {
     public static final CharSprite HORSES_ICON_SPRITE = CharSprite.make(0x15, MyColors.BEIGE, MyColors.BLACK, MyColors.BLACK);
     public static final CharSprite NOTORIETY_SPRITE = CharSprite.make(0x16, MyColors.RED, MyColors.BLACK, MyColors.BLACK);
     public static final CharSprite WEIGHT_ICON_SPRITE = CharSprite.make(0x17, MyColors.GRAY, MyColors.BLACK, MyColors.BLACK);
+    public static final CharSprite MORNING_ICON = makeTimeOfDaySprite(0x19, MyColors.YELLOW, MyColors.GREEN, MyColors.YELLOW);
+    public static final CharSprite MIDDAY_ICON = makeTimeOfDaySprite(0x1A, MyColors.YELLOW, MyColors.YELLOW, MyColors.YELLOW);
+    public static final CharSprite EVENING_ICON = makeTimeOfDaySprite(0x19, MyColors.ORANGE, MyColors.GREEN, MyColors.GREEN);
+    public static final CharSprite NIGHT_ICON = makeTimeOfDaySprite(0x1A, MyColors.BLACK, MyColors.WHITE, MyColors.BLACK);
 
     public void drawYourself(Model model) {
         int col = 0;
         col = addDay(model, col);
+        if (isFlagSet(model, TIME_OF_DAY_SETTINGS_FLAG)) {
+            col = addTimeOfDay(model, col);
+        }
         if (isFlagSet(model, GOLD_SETTINGS_FLAG)) {
             col = addGold(model, col);
         }
@@ -72,6 +81,25 @@ public class TopText {
         if (isFlagSet(model, KEY_REMINDERS_SETTINGS_FLAG)) {
             drawKeyTexts(model);
         }
+    }
+
+    private int addTimeOfDay(Model model, int col) {
+        Sprite icon = null;
+        switch (model.getTimeOfDay()) {
+            case MORNING:
+                icon = MORNING_ICON;
+                break;
+            case MIDDAY:
+                icon = MIDDAY_ICON;
+                break;
+            case EVENING:
+                icon = EVENING_ICON;
+                break;
+            default:
+                icon = NIGHT_ICON;
+        }
+        model.getScreenHandler().put(col-1, 0, icon);
+        return col+1;
     }
 
     private int addLockpicks(Model model, int col) {
@@ -162,7 +190,7 @@ public class TopText {
     private int addDay(Model model, int col) {
         String dayAsString = String.format("DAY %d", model.getDay());
         BorderFrame.drawString(model.getScreenHandler(), dayAsString, 0, 0, MyColors.CYAN);
-        return col + dayAsString.length() + 2;
+        return col + dayAsString.length() + 1;
     }
 
     protected void drawKeyTexts(Model model) {
@@ -172,6 +200,12 @@ public class TopText {
     private static CharSprite makeAlignmentSprite() {
         CharSprite spr = CharSprite.make(0x14, MyColors.GRAY, MyColors.WHITE, MyColors.BLACK);
         spr.setColor4(MyColors.GREEN);
+        return spr;
+    }
+
+    private static CharSprite makeTimeOfDaySprite(int num, MyColors color1, MyColors colors2, MyColors color4) {
+        CharSprite spr = CharSprite.make(num, color1, colors2, MyColors.BLACK);
+        spr.setColor4(color4);
         return spr;
     }
 }

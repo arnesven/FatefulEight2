@@ -23,10 +23,10 @@ import view.subviews.PortraitSubView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VampireProwlNightEvent extends DailyEventState {
+public class VampireProwlNightEvent extends NightTimeEvent {
     public static final int DETECT_VAMPIRE_PERCEPTION_DIFFICULTY = 6;
     private final boolean inTavern;
-    private GameCharacter vampireCharacter;
+    private final GameCharacter vampireCharacter;
 
     public VampireProwlNightEvent(Model model, boolean inTavern) {
         super(model);

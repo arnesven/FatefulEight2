@@ -43,6 +43,7 @@ public abstract class DailyEventState extends GameState {
 
     @Override
     public final GameState run(Model model) {
+        doStartOfEventHook(model);
         doEvent(model);
         removePortraitSubView(model);
         if (model.getParty().isWipedOut()) {
@@ -53,6 +54,12 @@ public abstract class DailyEventState extends GameState {
                 return new RunAwayState(model);
             }
         }
+        return doEndOfEventHook(model);
+    }
+
+    protected void doStartOfEventHook(Model model) { }
+
+    protected GameState doEndOfEventHook(Model model) {
         if (MyRandom.rollD10() <= model.getParty().getPartyMembers().size() - 5 && allowPartyEvent()) {
             return WorldHex.generatePartyEvent(model);
         }

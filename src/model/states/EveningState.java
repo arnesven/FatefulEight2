@@ -1,6 +1,7 @@
 package model.states;
 
 import model.Model;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.VampirismCondition;
@@ -52,6 +53,7 @@ public class EveningState extends GameState {
     @Override
     public final GameState run(Model model) {
         setSubView(model);
+        model.setTimeOfDay(TimeOfDay.EVENING);
         print("Evening has come. ");
         model.getTutorial().evening(model);
         checkForQuest(model);
