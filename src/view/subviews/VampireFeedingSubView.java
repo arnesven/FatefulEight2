@@ -41,15 +41,17 @@ public class VampireFeedingSubView extends AvatarSubView {
     private final GameCharacter character;
     private final VampireFeedingHouse house;
     private final VampireFeedingState state;
+    private final boolean onFarm;
     private boolean avatarEnabled = true;
     private Random random = new Random(1234);
     private Point smokePosition;
     private RunOnceAnimationSprite puffAnimation;
 
-    public VampireFeedingSubView(VampireFeedingState state, GameCharacter vampire, VampireFeedingHouse house) {
+    public VampireFeedingSubView(VampireFeedingState state, GameCharacter vampire, VampireFeedingHouse house, boolean onFarm) {
         this.state = state;
         this.character = vampire;
         this.house = house;
+        this.onFarm = onFarm;
         houseSpritesLit = loadHouseSprites(MyColors.YELLOW, house.getColor());
         houseSpritesBlack = loadHouseSprites(MyColors.BLACK, house.getColor());
         townBgDecore = makeTownBackgroundDecoreSprites(VampireFeedingHouse.randomHouseColor(),
@@ -271,7 +273,9 @@ public class VampireFeedingSubView extends AvatarSubView {
 
     public void drawGroundNight(Model model) {
         drawGround(model, GROUND_SPRITE);
-        drawSurroundingHouse(model, townBgDecore, house.getWidth());
+        if (!onFarm) {
+            drawSurroundingHouse(model, townBgDecore, house.getWidth());
+        }
     }
 
     public static void drawGroundDay(Model model) {

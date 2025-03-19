@@ -31,6 +31,7 @@ public class TutorialVampires extends ExpandableHelpDialog {
             helpDialogs.add(vab.makeHelpChapter(view));
         }
         helpDialogs.add(new FeedingOnParty(view));
+        helpDialogs.add(new FeedingOnFarm(view));
         helpDialogs.add(new TutorialFeedingTown(view));
         helpDialogs.add(new BloodTypesHelpChapter(view));
         helpDialogs.sort(Comparator.comparing(HelpDialog::getTitle));

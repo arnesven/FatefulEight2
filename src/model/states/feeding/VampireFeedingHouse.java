@@ -45,21 +45,12 @@ public class VampireFeedingHouse {
     private AdvancedAppearance portrait = null;
     private boolean openEyes;
 
-    public VampireFeedingHouse(GameCharacter vampire) {
-        this.width = MyRandom.randInt(1, 3);
-        this.stories = MyRandom.randInt(1, 3);
-        this.dwellers = MyRandom.randInt(1, width*stories + 1);
-        this.sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
-        this.lockDifficulty = MyRandom.randInt(6, 8);
-        if (sleeping < dwellers) { // Some awake
-            if (MyRandom.rollD10() >= 9) {
-                this.lockDifficulty = 0;
-            }
-        } else { // All sleeping
-            if (MyRandom.rollD6() + MyRandom.rollD6() == 12) {
-                this.lockDifficulty = 0;
-            }
-        }
+    public VampireFeedingHouse(GameCharacter vampire, int width, int stories, int dwellers, int sleeping, int lockDifficulty) {
+        this.width = width;
+        this.stories = stories;
+        this.dwellers = dwellers;
+        this.sleeping = sleeping;
+        this.lockDifficulty = lockDifficulty;
         color = randomHouseColor();
         windowOpen = MyRandom.randInt(2) * (stories - 1);
         this.vampire = vampire;
@@ -71,6 +62,42 @@ public class VampireFeedingHouse {
 
     public static MyColors randomHouseColor() {
         return MyRandom.sample(HOUSE_COLORS);
+    }
+
+    public static VampireFeedingHouse makeTownHouse(GameCharacter vampire) {
+        int width = MyRandom.randInt(1, 3);
+        int stories = MyRandom.randInt(1, 3);
+        int dwellers = MyRandom.randInt(1, width*stories + 1);
+        int sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
+        int lockDifficulty = MyRandom.randInt(6, 8);
+        if (sleeping < dwellers) { // Some awake
+            if (MyRandom.rollD10() >= 9) {
+                lockDifficulty = 0;
+            }
+        } else { // All sleeping
+            if (MyRandom.rollD6() + MyRandom.rollD6() == 12) {
+                lockDifficulty = 0;
+            }
+        }
+        return new VampireFeedingHouse(vampire, width, stories, dwellers, sleeping, lockDifficulty);
+    }
+
+    public static VampireFeedingHouse makeFarmHouse(GameCharacter vampire) {
+        int width = MyRandom.randInt(2, 3);
+        int stories = MyRandom.randInt(1, 2);
+        int dwellers = MyRandom.randInt(1, width*stories + 1);
+        int sleeping = Math.max(MyRandom.randInt(0, dwellers), MyRandom.randInt(0, dwellers));
+        int lockDifficulty = MyRandom.randInt(5, 7); // Farm people have lower quality locks and lock their doors less often
+        if (sleeping < dwellers) { // Some awake
+            if (MyRandom.rollD10() > 1) {
+                lockDifficulty = 0;
+            }
+        } else { // All sleeping
+            if (MyRandom.rollD6() > 4) {
+                lockDifficulty = 0;
+            }
+        }
+        return new VampireFeedingHouse(vampire, width, stories, dwellers, sleeping, lockDifficulty);
     }
 
     private void makeNodes() {

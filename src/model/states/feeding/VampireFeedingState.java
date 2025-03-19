@@ -19,12 +19,15 @@ import java.util.List;
 public class VampireFeedingState extends GameState {
     public static final int NOTORIETY_FOR_BEING_SPOTTED = 25;
     private final GameCharacter vampire;
-    private static final int NO_OF_ATTEMPTS = 3;
+    private final int noOfAttempts;
+    private final boolean onFarm;
     private QuestNode currentNode = null;
 
-    public VampireFeedingState(Model model, GameCharacter vampire) {
+    public VampireFeedingState(Model model, GameCharacter vampire, boolean onFarm) {
         super(model);
         this.vampire = vampire;
+        this.onFarm = onFarm;
+        this.noOfAttempts = onFarm ? 1 : 3;
     }
 
     @Override
@@ -37,10 +40,11 @@ public class VampireFeedingState extends GameState {
         println(vampire.getFirstName() + " sneaks out at night to find a victim to feed on.");
         model.getTutorial().vampireFeeding(model);
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.mysticSong);
-        for (int i = 0; i < NO_OF_ATTEMPTS; ++i) {
-            VampireFeedingHouse house = new VampireFeedingHouse(vampire);
+        for (int i = 0; i < noOfAttempts; ++i) {
+            VampireFeedingHouse house = onFarm ? VampireFeedingHouse.makeFarmHouse(vampire)
+                    : VampireFeedingHouse.makeTownHouse(vampire);
             currentNode = house.getJunctions().get(0);
-            VampireFeedingSubView subView = new VampireFeedingSubView(this, vampire, house);
+            VampireFeedingSubView subView = new VampireFeedingSubView(this, vampire, house, onFarm);
             SnakeTransition.transition(model, subView);
 
             do {
@@ -56,7 +60,7 @@ public class VampireFeedingState extends GameState {
                 break;
             }
 
-            if (i < NO_OF_ATTEMPTS - 1) {
+            if (i < noOfAttempts - 1) {
                 println(vampire.getFirstName() + " leaves the house. But the night is still young. Press enter to continue.");
                 waitForReturn();
             } else {

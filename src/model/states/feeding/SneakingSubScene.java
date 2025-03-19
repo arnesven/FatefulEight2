@@ -3,6 +3,7 @@ package model.states.feeding;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.map.FieldsHex;
 import model.quests.QuestEdge;
 import model.states.GameState;
 import model.states.events.GeneralInteractionEvent;
@@ -34,9 +35,13 @@ class SneakingSubScene extends FeedingSubScene {
                 state.println("You have been spotted!");
                 state.printQuote(GameState.manOrWomanCap(MyRandom.flipCoin()), "HEY! Get out of here you creep!");
                 GeneralInteractionEvent.addToNotoriety(model, state, VampireFeedingState.NOTORIETY_FOR_BEING_SPOTTED);
-                state.println(vampire.getFirstName() + " flees the house with haste before the constables arrive. " +
-                        "There is now much commotion among the townspeople and there is no point in " +
-                        "continuing the prowl tonight.");
+                if (model.getCurrentHex() instanceof FieldsHex) { // Feeding on farm
+                    state.println(vampire.getFirstName() + " flees the house with haste.");
+                } else {
+                    state.println(vampire.getFirstName() + " flees the house with haste before the constables arrive. " +
+                            "There is now much commotion among the townspeople and there is no point in " +
+                            "continuing the prowl tonight.");
+                }
                 return getFailEdge();
             }
             state.printQuote(GameState.manOrWomanCap(MyRandom.flipCoin()),

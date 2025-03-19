@@ -486,7 +486,8 @@ public class EveningState extends GameState {
     private void checkForVampireFeeding(Model model, boolean inTavern) {
         boolean isUrbanLocation = model.getCurrentHex().getLocation() != null &&
                 (model.getCurrentHex().getLocation() instanceof UrbanLocation);
-        if (checkForVampireAttack(model, isUrbanLocation)) {
+        boolean isFarmLocation = model.getCurrentHex() instanceof FieldsHex;
+        if (checkForVampireAttack(model, isUrbanLocation, isFarmLocation)) {
             new VampireProwlNightEvent(model, inTavern).run(model);
             return;
         }
@@ -498,8 +499,8 @@ public class EveningState extends GameState {
                 gc -> !CheckForVampireEvent.isVampire(gc));
         while (!vampires.isEmpty()) {
             GameCharacter vampire = vampires.remove(0);
-            if (isUrbanLocation) {
-                if (partyVampireFeedInUrbanLocation(model, vampire, nonVampires)) {
+            if (isUrbanLocation || isFarmLocation) {
+                if (partyVampireFeedInUrbanLocation(model, vampire, nonVampires, isFarmLocation)) {
                     break;
                 }
 
@@ -514,29 +515,29 @@ public class EveningState extends GameState {
         }
     }
 
-    private boolean checkForVampireAttack(Model model, boolean isUrbanLocation) {
+    private boolean checkForVampireAttack(Model model, boolean isUrbanLocation, boolean isFarmLocation) {
         if (MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire)) {
             return false;
         }
-        boolean isFarmLocation = model.getCurrentHex() instanceof FieldsHex;
         int twoDice = MyRandom.rollD6() + MyRandom.rollD6();
         return (isUrbanLocation && twoDice <= 3) || // 1 in 12 chance
                 (isFarmLocation && twoDice == 2);   // 1 in 36 chance
     }
 
-    private boolean partyVampireFeedInUrbanLocation(Model model, GameCharacter vampire, List<GameCharacter> nonVampires) {
+    private boolean partyVampireFeedInUrbanLocation(Model model, GameCharacter vampire, List<GameCharacter> nonVampires, boolean onFarm) {
         println(vampire.getName() + " can feel the vampiric urge to feed. Does " + heOrShe(vampire.getGender()) +
                 " go on the prowl tonight? ");
         model.getLog().waitForAnimationToFinish();
-        List<String> options = new ArrayList<>(List.of("Find victim in town", "Refrain"));
+        String firstOption = "Find victim " + (onFarm ? "on farm" : "in town");
+        List<String> options = new ArrayList<>(List.of(firstOption, "Refrain"));
         if (!nonVampires.isEmpty()) {
             options.add(1, "Feed on party member");
         }
         int chosen = multipleOptionArrowMenu(model, 24, 24, options);
         if (options.get(chosen).contains("party")) {
             new FeedOnPartyMemberEvent(model, vampire).doTheEvent(model);
-        } else if (options.get(chosen).contains("town")) {
-            new VampireFeedingState(model, vampire).run(model);
+        } else if (options.get(chosen).contains("victim")) {
+            new VampireFeedingState(model, vampire, onFarm).run(model);
         } else {
             return false;
         }
