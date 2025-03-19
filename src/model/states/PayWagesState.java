@@ -51,7 +51,7 @@ public class PayWagesState extends GameState{
             } else {
                 println(leader.getName() + " paid " + wages +
                         " gold to each other party member.");
-                model.getParty().addToGold(wages * (model.getParty().size()-1));
+                model.getParty().addToGold(-1 * wages * (model.getParty().size()-1));
                 adjustAttitudes(model, wages/2);
                 if (rando.hasPersonality(PersonalityTrait.greedy)) {
                     partyMemberSay(rando, "I expected more.");

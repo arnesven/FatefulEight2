@@ -6,6 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.VampirismCondition;
 import model.items.Inventory;
+import model.map.FieldsHex;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.quests.Quest;
@@ -485,9 +486,7 @@ public class EveningState extends GameState {
     private void checkForVampireFeeding(Model model, boolean inTavern) {
         boolean isUrbanLocation = model.getCurrentHex().getLocation() != null &&
                 (model.getCurrentHex().getLocation() instanceof UrbanLocation);
-        boolean vampiresInParty = MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire);
-
-        if (isUrbanLocation && !vampiresInParty && MyRandom.rollD6() + MyRandom.rollD6() <= 3) {
+        if (checkForVampireAttack(model, isUrbanLocation)) {
             new VampireProwlNightEvent(model, inTavern).run(model);
             return;
         }
@@ -513,6 +512,16 @@ public class EveningState extends GameState {
                 }
             }
         }
+    }
+
+    private boolean checkForVampireAttack(Model model, boolean isUrbanLocation) {
+        if (MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire)) {
+            return false;
+        }
+        boolean isFarmLocation = model.getCurrentHex() instanceof FieldsHex;
+        int twoDice = MyRandom.rollD6() + MyRandom.rollD6();
+        return (isUrbanLocation && twoDice <= 3) || // 1 in 12 chance
+                (isFarmLocation && twoDice == 2);   // 1 in 36 chance
     }
 
     private boolean partyVampireFeedInUrbanLocation(Model model, GameCharacter vampire, List<GameCharacter> nonVampires) {

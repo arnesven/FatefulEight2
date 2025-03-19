@@ -47,17 +47,13 @@ public class CryptEvent extends DailyEventState {
         if (dieRol == 1) {
             innerEvent = new PuzzleInTheCryptEvent(model);
             innerEvent.doTheEvent(model);
-        } else if (dieRol < 4) {
+        } else if (dieRol == 2) {
             innerEvent = new NecromancerRitual(model);
             innerEvent.doTheEvent(model);
-        } else if (dieRol < 6) {
-            innerEvent = new GhostCryptEvent(model);
-            innerEvent.doTheEvent(model);
-            if (!innerEvent.haveFledCombat()) {
-                findLoot(model);
-            }
-        } else if (dieRol < 8) {
-            innerEvent = new SkeletonCryptEvent(model);
+        } else if (dieRol < 9) {
+            innerEvent = MyRandom.sample(List.of(new GhostCryptEvent(model),
+                    new SkeletonCryptEvent(model),
+                    new VampireCryptEvent(model)));
             innerEvent.doTheEvent(model);
             if (!innerEvent.haveFledCombat()) {
                 findLoot(model);
