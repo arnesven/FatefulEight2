@@ -11,6 +11,10 @@ import model.combat.conditions.VampirismCondition;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.enemies.VampireAttackBehavior;
+import model.items.Equipment;
+import model.items.accessories.*;
+import model.items.clothing.LeatherArmor;
+import model.items.weapons.*;
 import model.map.UrbanLocation;
 import model.states.events.VampireProwlNightEvent;
 import util.MyLists;
@@ -24,15 +28,25 @@ import view.subviews.SubView;
 import java.util.List;
 
 public class ConvinceVampireToLeaveTask extends SummonTask {
-    private final Summon summon;
     private final UrbanLocation location;
-    private static GameCharacter vampire;
+    private static GameCharacter vampire = null;
 
     public ConvinceVampireToLeaveTask(Summon summon, Model model, UrbanLocation location) {
         super(model);
-        this.summon = summon;
         this.location = location;
-        vampire = VampireProwlNightEvent.generateVampireCharacter();
+        if (vampire == null) {
+            vampire = VampireProwlNightEvent.generateVampireCharacter();
+            vampire.setLevel((int) Math.ceil(calculateAverageLevel(model)));
+            vampire.setEquipment(new Equipment(randomWeapon(), new LeatherArmor(), randomAccessory()));
+        }
+    }
+
+    private Accessory randomAccessory() {
+        return MyRandom.sample(List.of(new GrayRing(), new Crown(), new HeraldicShield(), new Pentagram(), new SkullRing()));
+    }
+
+    private Weapon randomWeapon() {
+        return MyRandom.sample(List.of(new Longsword(), new Katana(), new MorningStar(), new BattleAxe(), new Glaive(), new SkullWand()));
     }
 
     @Override
