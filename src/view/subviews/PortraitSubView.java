@@ -207,6 +207,10 @@ public class PortraitSubView extends SubView {
         partyAnimations.setVampireFeedingLookEnabledFor(appearance, CHAR_LOCATION);
     }
 
+    public void removeVampireFeedingLook() {
+        partyAnimations.removeVampireFeedingLookFor(appearance);
+    }
+
     public void forceEyesClosed(boolean closed) {
         partyAnimations.forceEyesClosed(appearance, closed);
     }

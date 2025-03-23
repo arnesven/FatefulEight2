@@ -25,7 +25,7 @@ public enum Skill implements Comparable<Skill> {
     MagicWhite("Magic (White)", "knowledge about white magic. White magic is associated with light, healing, warmth and the element of air."),    // 1
     MagicAny("Magic (Any)", "knowledge about any magic.\n\nCharacters do not have ranks in this skill. When a game effect refers to this skill it uses the character's best rank from any of Black, Blue, Green, Red or White magic."),        // 3
     Perception("Perception", "representing a character's senses. Most of the time this skill will be used for vision but it may represent a character's hearing, smell or taste as well."),       // 16
-    Persuade("Persuade", "representing a character's ability to negotiate, sweet-talk, intimidate or cajole others into doing their bidding."),           // 22
+    Persuade("Persuade", "representing a character's ability to negotiate, sweet-talk, intimidate or cajole others into doing their bidding. This skill is also used when a character is lying."),           // 22
     Polearms("Polearms", "handling spears, glaives, halberds, pikes and the like."),           // 1
     Search("Search", "represents a character's ability to find things that are hidden. Where the perception skill only represents a character's senses, this skill includes applying method to the searching in order to do it effectively."),               // 14
     Security("Security", "knowledge about locks and other security devices, like safes, traps and secret doors. This also includes knowledge about how to disable or bypass security devices."),           // 12

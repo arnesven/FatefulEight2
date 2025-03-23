@@ -30,14 +30,7 @@ public class VampireProwlNightEvent extends NightTimeEvent {
 
     public VampireProwlNightEvent(Model model, boolean inTavern) {
         super(model);
-        Race race = MyRandom.sample(AllRaces.getAllRaces());
-        CharacterAppearance vampirePortrait = PortraitSubView.makeOldPortrait(Classes.VAMPIRE, race, MyRandom.flipCoin());
-        GameCharacter gc = new GameCharacter("", "", race, Classes.VAMPIRE,
-                vampirePortrait, Classes.NO_OTHER_CLASSES, new Equipment());
-        VampirismCondition cond = new VampirismCondition(5, 0);
-        gc.addCondition(cond);
-        cond.updateAppearance(gc);
-        vampireCharacter = gc;
+        vampireCharacter = generateVampireCharacter();
         this.inTavern = inTavern;
     }
 
@@ -72,9 +65,9 @@ public class VampireProwlNightEvent extends NightTimeEvent {
                 }
                 if (MyRandom.flipCoin()) {
                     removePortraitSubView(model);
-                       println("But the vampire turns into a bat and flies away.");
-                       partyMemberSay(victim, "That was creepy. Don't think I'll sleep more tonight.");
-                       leaderSay("I'll keep watch and raise the alarm if the monster returns.");
+                    println("But the vampire turns into a bat and flies away.");
+                    partyMemberSay(victim, "That was creepy. Don't think I'll sleep more tonight.");
+                    leaderSay("I'll keep watch and raise the alarm if the monster returns.");
                 } else {
                     println("The vampire attacks you!");
                     if (inTavern) {
@@ -112,20 +105,35 @@ public class VampireProwlNightEvent extends NightTimeEvent {
     }
 
     protected void makeVampire(Model model, GameCharacter victim) {
-        println("A sharp pain in the neck! Then, just as suddenly, it is gone and a strange, " +
+        makeCharacterIntoVampire(model, this, victim, true);
+    }
+
+    public static void makeCharacterIntoVampire(Model model, GameState state, GameCharacter victim, boolean random) {
+        state.println("A sharp pain in the neck! Then, just as suddenly, it is gone and a strange, " +
                 "but pleasant sensation falls upon " + victim.getFirstName() + ". " + heOrSheCap(victim.getGender()) +
                 " falls into a deeper sleep and have odd dreams filled with violence, lust and the sense of immortality.");
         int hpLoss = victim.getHP()-1;
         if (hpLoss > 0) {
-            println(victim.getName() + " lost "+ hpLoss + " HP and all stamina.");
+            state.println(victim.getName() + " lost "+ hpLoss + " HP and all stamina.");
             victim.addToHP(-hpLoss);
             victim.addToSP(-victim.getSP());
         }
-        if (MyRandom.rollD10() < 7) {
-            VampirismCondition.makeVampire(model, this, victim);
+        if (MyRandom.rollD10() < 7 || !random) {
+            VampirismCondition.makeVampire(model, state, victim);
         } else {
-            println("Apart from feeling incredibly weak, " + victim.getFirstName() +
+            state.println("Apart from feeling incredibly weak, " + victim.getFirstName() +
                     " seems to be otherwise unaffected by the ordeal.");
         }
+    }
+
+    public static GameCharacter generateVampireCharacter() {
+        Race race = MyRandom.sample(AllRaces.getAllRaces());
+        CharacterAppearance vampirePortrait = PortraitSubView.makeOldPortrait(Classes.VAMPIRE, race, MyRandom.flipCoin());
+        GameCharacter gc = new GameCharacter("Vampire", "", race, Classes.VAMPIRE,
+                vampirePortrait, Classes.NO_OTHER_CLASSES, new Equipment());
+        VampirismCondition cond = new VampirismCondition(5, 0);
+        gc.addCondition(cond);
+        cond.updateAppearance(gc);
+        return gc;
     }
 }
