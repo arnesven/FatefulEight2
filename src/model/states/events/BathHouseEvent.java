@@ -271,14 +271,9 @@ public class BathHouseEvent extends DailyEventState {
             } else if (model.getCurrentHex().getLocation() instanceof UrbanLocation &&
                     !model.getParty().hasSummon((UrbanLocation) model.getCurrentHex().getLocation())){
                 String lordHome;
-                HexLocation location = model.getCurrentHex().getLocation();
-                if (location instanceof TownLocation) {
-                    lordHome = "town hall";
-                } else {
-                    lordHome = "the castle";
-                }
-                portraitSay("Just come by " + lordHome + " later. I have something I need help with.");
-                model.getParty().addSummon((UrbanLocation) location);
+                UrbanLocation location = (UrbanLocation) model.getCurrentHex().getLocation();
+                portraitSay("Just come by the " + location.getLordDwelling().toLowerCase() + " later. I have something I need help with.");
+                model.getParty().addSummon(location);
                 leaderSay("I'm looking forward to it.");
                 portraitSay("Bye for now.");
                 println("You excuse yourself from the lord.");

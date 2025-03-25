@@ -419,8 +419,8 @@ public abstract class WorldHex {
 
     public CombatTheme getCombatTheme() {
         if (getLocation() != null) {
-            if (getLocation() instanceof TownLocation || getLocation() instanceof CastleLocation) {
-                return new TownCombatTheme();
+            if (getLocation() instanceof UrbanLocation) {
+                return ((UrbanLocation)getLocation()).getCombatTheme();
             }
         }
         return new GrassCombatTheme();

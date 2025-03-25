@@ -91,19 +91,18 @@ public class GeneralInteractionConversations {
         for (UrbanLocation urb : model.getWorld().getLordLocations()) {
             if (urb.getPlaceName().toLowerCase().contains(topic)) {
                 if (model.getWorld().getHex(model.getParty().getPosition()).getLocation() == urb) {
-                    String townOrCastle = urb instanceof TownLocation ? "town" : "castle";
-                    return "It's the " + townOrCastle + " we are currently in.";
+                    return "It's the " + urb.getLocationType() + " we are currently in.";
                 }
-                String result;
+                String result = null;
                 if (urb instanceof TownLocation) {
                     Point pos = model.getWorld().getPositionForLocation((HexLocation) urb);
                     result = MyStrings.capitalize(urb.getPlaceName()) + "? It's a town in the " +
                             CastleLocation.placeNameToKingdom(model.getWorld().getKingdomForPosition(pos).getPlaceName()) + ". " +
                             urb.getGeographicalDescription();
-                } else {
+                } else if (urb instanceof CastleLocation) {
                     result = "It's a kingdom, ruled from the castle by the same name. " +
                             urb.getGeographicalDescription();
-                }
+                } // Other urban location will give "Dunno" answer.
                 return result;
             }
             if (urb.getLordName().toLowerCase().contains(topic)) {

@@ -436,7 +436,9 @@ public class World implements Serializable {
 
     public List<Point> shortestPathToNearestTownOrCastle(int rank) {
         return generalShortestPath(rank,
-                (WorldHex hex) -> hex.getLocation() != null && hex.getLocation() instanceof UrbanLocation);
+                (WorldHex hex) -> hex.getLocation() != null &&
+                        (hex.getLocation() instanceof TownLocation ||
+                         hex.getLocation() instanceof CastleLocation));
     }
 
     public List<Point> shortestPathToNearestTownOrCastle() {

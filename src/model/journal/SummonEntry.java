@@ -51,10 +51,7 @@ public class SummonEntry implements JournalEntry {
             bldr.append("The " + urb.getLordTitle() + " of " + urb.getPlaceName() +
                     " has requested your presence.\n\n");
             bldr.append((urb.getLordGender() ? "She" : "He") + " asks that you visit " +
-                    (urb.getLordGender() ? "her" : "him") + " at the ");
-            if (urb instanceof TownLocation) {
-                bldr.append("town hall of ");
-            }
+                    (urb.getLordGender() ? "her" : "him") + " at the " + urb.getLordDwelling() + " in " + urb.getPlaceName());
             bldr.append(urb.getPlaceName());
             bldr.append(".\n\n");
             bldr.append("You have no additional information.");
