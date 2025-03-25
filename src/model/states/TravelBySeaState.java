@@ -22,7 +22,11 @@ public class TravelBySeaState extends GameState {
 
     public TravelBySeaState(Model model) {
         super(model);
-        this.ship = rollOnTable(model, (TownLocation)model.getCurrentHex().getLocation());
+        if (model.getCurrentHex().getLocation() instanceof TownLocation) {
+            this.ship = rollOnTable(model, (TownLocation) model.getCurrentHex().getLocation());
+        } else {
+            this.ship = new MyPair<>(null, 0);
+        }
     }
 
     @Override

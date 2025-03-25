@@ -141,6 +141,7 @@ public class WorldBuilder {
         Map<Point, HexContents> contents = new HashMap<>();
 
         addNorthernContents(contents);
+        addWesternContents(contents);
         addEvilTower(contents, getFortressPosition(EXPAND_NORTH), EXPAND_NORTH);
         addTomb(contents, 19, 5, "Haarfagre", 0, 0);
         addTomb(contents, 35, 8, "Vorhundren", 0, 0);
@@ -323,6 +324,10 @@ public class WorldBuilder {
             default:
                 return new Point(5, 5);
         }
+    }
+
+    private static void addWesternContents(Map<Point, HexContents> contents) {
+        contents.put(new Point(8, 17), new HexContents(new PirateHavenLocation(), NONE, NONE));
     }
 
     private static void addSouthernContents(Map<Point, HexContents> contents) {

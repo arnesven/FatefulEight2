@@ -19,10 +19,7 @@ import model.items.puzzletube.MysteryOfTheTubesDestinationTask;
 import model.items.spells.Spell;
 import model.items.spells.TelekinesisSpell;
 import model.journal.JournalEntry;
-import model.map.CastleLocation;
-import model.map.HexLocation;
-import model.map.UrbanLocation;
-import model.map.WorldHex;
+import model.map.*;
 import model.map.wars.KingdomWar;
 import model.races.Race;
 import model.states.DailyEventState;
@@ -341,7 +338,9 @@ public abstract class GeneralInteractionEvent extends DailyEventState {
 
     public static DailyEventState eventDependentOnNotoriety(Model model, WorldHex worldHex) {
         if (model.getParty().getNotoriety() > 0) {
-            if (worldHex.getLocation() != null && worldHex.getLocation() instanceof UrbanLocation) {
+            if (worldHex.getLocation() != null &&
+                    (worldHex.getLocation() instanceof TownLocation ||
+                     worldHex.getLocation() instanceof CastleLocation)) {
                 if (MyRandom.rollD10() < Math.min(5, model.getParty().getNotoriety() / 10)) {
                     return new ConstableEvent(model);
                 }

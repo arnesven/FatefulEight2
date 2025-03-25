@@ -142,7 +142,7 @@ public class CastleSubView extends DailyActionSubView {
             if (getMatrix().getElementAt(townPoint.x, townPoint.y) == null &&
                     rnd.nextDouble() > (1.0- TOWN_DENSITY)) {
                 p = convertToScreen(townPoint);
-                Sprite townHouse = TownSubView.TOWN_HOUSES[rnd.nextInt(3)];
+                Sprite townHouse = TownSubView.TOWN_HOUSES[rnd.nextInt(TownSubView.TOWN_HOUSES.length)];
                 model.getScreenHandler().register(townHouse.getName(), p, townHouse);
             }
         }

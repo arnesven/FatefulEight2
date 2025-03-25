@@ -13,49 +13,21 @@ import view.subviews.TownSubView;
 
 import java.awt.Point;
 
-public class TownDailyActionState extends AdvancedDailyActionState {
-
-    private final UrbanLocation urbanLocation;
+public class TownDailyActionState extends TownishDailyActionState {
 
     public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation,
                                 boolean freeLodging, boolean freeRations) {
-        super(model);
-        this.urbanLocation = urbanLocation;
-        super.addNode(3, 4, new StayHereNode());
-        super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
-        super.addNode(3, 3, new TownHallNode());
-        addTentOrHq(model, freeRations);
-        super.addNode(2, TOWN_MATRIX_ROWS-1, new WorkBenchNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
-        super.addNode(4, TOWN_MATRIX_ROWS-1, new StableNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
-        addNode(7, 2, new SaveGameNode());
-        addNode(7, 1, new FlagPoleNode());
-        addTravelNodes(model, isCoastal);
-        addShopsAndMore(model);
+        super(model, isCoastal, urbanLocation, freeLodging, freeRations);
         model.getMainStory().handleTownSetup(this);
     }
 
-    private void addTentOrHq(Model model, boolean freeRations) {
-        if (model.getParty().hasHeadquartersIn(urbanLocation)) {
-            super.addNode(0, TOWN_MATRIX_ROWS - 1, new HeadquartersNode(model));
-        } else {
-            super.addNode(0, TOWN_MATRIX_ROWS - 1, new CampOutsideOfTownNode(freeRations, model,
-                    TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT, "Make camp on the outskirts of town"));
-        }
+    public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
+        this(model, isCoastal, urbanLocation, false, false);
     }
 
-    private void addShopsAndMore(Model model) {
-        for (GeneralShopNode shop : urbanLocation.getShops(model)) {
-            addNode(shop.getColumn(), shop.getRow(), shop);
-        }
-        Point careerOfficePosition = urbanLocation.getCareerOfficePosition();
-        if (careerOfficePosition != null) {
-            addNode(careerOfficePosition.x, careerOfficePosition.y, new CareerOfficeNode());
-        }
-    }
-
-    private void addTravelNodes(Model model, boolean isCoastal) {
-        super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y,
-                new TravelNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
+    @Override
+    protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
+        super.addTravelNodes(model, isCoastal, urbanLocation);
         if (isCoastal) {
             if (!urbanLocation.noBoat()) {
                 if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 1) {
@@ -73,26 +45,23 @@ public class TownDailyActionState extends AdvancedDailyActionState {
         }
     }
 
-    public TownDailyActionState(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
-        this(model, isCoastal, urbanLocation, false, false);
+    @Override
+    protected void addTent(Model model, boolean freeRations, UrbanLocation urbanLocation) {
+        if (model.getParty().hasHeadquartersIn(urbanLocation)) {
+            super.addNode(0, TOWN_MATRIX_ROWS - 1, new HeadquartersNode(model));
+        } else {
+            super.addTent(model, freeRations, urbanLocation);
+        }
     }
 
     @Override
-    protected Point getStartingPosition() {
-        return new Point(3, 5);
-    }
-
-    @Override
-    protected DailyActionSubView makeSubView(Model model, AdvancedDailyActionState advancedDailyActionState, SteppingMatrix<DailyActionNode> matrix) {
-        return urbanLocation.makeActionSubView(model, advancedDailyActionState, matrix);
-    }
-
-    public TownLocation getTown() {
-        return (TownLocation) urbanLocation;
-    }
-
-    @Override
-    protected BackgroundMusic getSound() {
-        return BackgroundMusic.citySong;
+    protected void addShopsAndMore(Model model, UrbanLocation urbanLocation) {
+        super.addNode(3, 3, new TownHallNode());
+        super.addShopsAndMore(model, urbanLocation);
+        Point careerOfficePosition = urbanLocation.getCareerOfficePosition();
+        if (careerOfficePosition != null) {
+            addNode(careerOfficePosition.x, careerOfficePosition.y, new CareerOfficeNode());
+        }
+        super.addNode(4, TOWN_MATRIX_ROWS-1, new StableNode(model, TownSubView.GROUND_COLOR, TownSubView.GROUND_COLOR_NIGHT));
     }
 }
