@@ -5,7 +5,7 @@ import model.SteppingMatrix;
 import model.headquarters.Headquarters;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
-import model.states.dailyaction.GeneralShopNode;
+import model.states.dailyaction.shops.GeneralShopNode;
 import view.combat.CombatTheme;
 import view.combat.TownCombatTheme;
 import view.sprites.Sprite;

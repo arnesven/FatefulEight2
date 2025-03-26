@@ -6,6 +6,7 @@ import model.TimeOfDay;
 import model.actions.Loan;
 import model.states.GameState;
 import model.states.dailyaction.*;
+import model.states.dailyaction.town.CampOutsideOfTownNode;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import view.subviews.DailyActionSubView;

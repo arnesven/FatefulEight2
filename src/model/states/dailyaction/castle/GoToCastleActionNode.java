@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.castle;
 
 import model.Model;
 import model.SteppingMatrix;
@@ -12,6 +12,9 @@ import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.VisitLordDailyActionState;
 import model.states.events.LeagueOfMagesEvent;
 import util.MyPair;
 import view.sprites.Sprite;

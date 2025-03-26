@@ -1,10 +1,12 @@
-package model.states.dailyaction;
+package model.states.dailyaction.castle;
 
 import model.Model;
 import model.journal.JournalEntry;
 import model.map.CastleLocation;
 import model.map.wars.KingdomWar;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.tasks.BattleDestinationTask;
 import model.tasks.DestinationTask;
 import util.MyLists;

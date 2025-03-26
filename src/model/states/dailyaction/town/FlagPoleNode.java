@@ -1,10 +1,12 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.Summon;
 import model.map.HexLocation;
 import model.map.UrbanLocation;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

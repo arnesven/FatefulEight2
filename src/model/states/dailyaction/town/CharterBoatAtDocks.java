@@ -1,7 +1,9 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.town.GoTheDocksNode;
 import model.states.events.TravelByCharteredBoat;
 
 public class CharterBoatAtDocks extends GoTheDocksNode {

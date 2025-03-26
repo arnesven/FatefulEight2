@@ -1,9 +1,11 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.TimeOfDay;
 import model.states.GameState;
 import model.states.TravelBySeaState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;

@@ -1,7 +1,9 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.TimeOfDay;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import view.sprites.Sprite;
 import view.subviews.CareerOfficeSubView;
 import view.subviews.TavernSubView;

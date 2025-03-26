@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.shops;
 
 import model.GameStatistics;
 import model.Model;
@@ -11,6 +11,8 @@ import model.map.UrbanLocation;
 import model.states.EveningState;
 import model.states.GameState;
 import model.states.ShopState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.events.GeneralInteractionEvent;
 import util.MyLists;
 import util.MyRandom;

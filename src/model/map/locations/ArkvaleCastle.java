@@ -3,10 +3,9 @@ package model.map.locations;
 import model.Model;
 import model.map.CastleLocation;
 import model.races.Race;
-import model.states.dailyaction.GeneralShopNode;
-import model.states.dailyaction.GrandEmporium;
-import model.states.dailyaction.MagicSuperShop;
-import model.states.dailyaction.RoyalArmory;
+import model.states.dailyaction.shops.GeneralShopNode;
+import model.states.dailyaction.shops.GrandEmporium;
+import model.states.dailyaction.shops.RoyalArmory;
 import view.MyColors;
 
 import java.awt.*;

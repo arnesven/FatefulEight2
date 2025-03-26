@@ -1,7 +1,9 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.tavern.TavernDailyActionState;
 import view.MyColors;
 import view.sprites.SignSprite;

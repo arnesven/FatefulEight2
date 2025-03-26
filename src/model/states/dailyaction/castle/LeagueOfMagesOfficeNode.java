@@ -1,9 +1,10 @@
-package model.states.dailyaction;
+package model.states.dailyaction.castle;
 
 import model.Model;
 import model.TimeOfDay;
 import model.states.GameState;
-import model.states.events.GentlepersonsClubEvent;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.events.LeagueOfMagesEvent;
 import view.MyColors;
 import view.sprites.SignSprite;
@@ -13,19 +14,19 @@ import view.subviews.TownSubView;
 
 import java.awt.*;
 
-public class GentlepersonsClubNode extends DailyActionNode {
+public class LeagueOfMagesOfficeNode extends DailyActionNode {
 
-    private static final Sprite SPRITE = new Sprite32x32("gentleclub", "world_foreground.png", 0x22,
+    private static final Sprite SPRITE = new Sprite32x32("shopping", "world_foreground.png", 0x22,
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.LIGHT_YELLOW);
-    private static final Sprite SIGN = new SignSprite("clubsign", 0x1A1, MyColors.LIGHT_GRAY, MyColors.BLUE);
+    private static final Sprite SIGN = new SignSprite("leaguesign", 0x1A0, MyColors.RED, MyColors.LIGHT_YELLOW);
 
-    public GentlepersonsClubNode() {
-        super("Gentleperson's Club");
+    public LeagueOfMagesOfficeNode() {
+        super("League of mages office");
     }
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new GentlepersonsClubEvent(model);
+        return new LeagueOfMagesEvent(model);
     }
 
     @Override

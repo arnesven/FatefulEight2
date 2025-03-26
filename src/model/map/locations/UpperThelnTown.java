@@ -2,8 +2,8 @@ package model.map.locations;
 
 import model.Model;
 import model.map.TownLocation;
-import model.states.dailyaction.GeneralShopNode;
-import model.states.dailyaction.WeaponShopNode;
+import model.states.dailyaction.shops.GeneralShopNode;
+import model.states.dailyaction.shops.WeaponShopNode;
 
 import java.awt.*;
 import java.util.List;

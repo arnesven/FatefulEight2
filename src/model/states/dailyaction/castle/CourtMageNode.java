@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.castle;
 
 import model.Model;
 import model.items.spells.TeleportSpell;
@@ -7,6 +7,8 @@ import model.map.DiscoveredRoute;
 import model.map.WorldHex;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.events.LeagueOfMagesEvent;
 import util.MyRandom;
 import view.sprites.Sprite;

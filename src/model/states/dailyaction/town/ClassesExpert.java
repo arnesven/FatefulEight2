@@ -1,9 +1,11 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.town.CareerOfficePersonNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;

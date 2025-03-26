@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.shops;
 
 import model.Model;
 import model.items.Item;

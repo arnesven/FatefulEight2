@@ -1,10 +1,11 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
 import util.MyPair;
 import view.subviews.CollapsingTransition;
 import view.subviews.SubView;

@@ -1,9 +1,10 @@
-package model.states.dailyaction;
+package model.states.dailyaction.shops;
 
 import model.items.ItemDeck;
 import model.Model;
 import model.items.Item;
 import model.items.Prevalence;
+import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.SignSprite;

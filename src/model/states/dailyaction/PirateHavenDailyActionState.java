@@ -3,6 +3,7 @@ package model.states.dailyaction;
 import model.Model;
 import model.map.UrbanLocation;
 import model.map.locations.PirateHavenLocation;
+import model.states.dailyaction.town.CharterBoatAtDocks;
 
 public class PirateHavenDailyActionState extends TownishDailyActionState {
     public PirateHavenDailyActionState(Model model, PirateHavenLocation pirateHavenLocation) {

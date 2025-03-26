@@ -1,7 +1,8 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.states.dailyaction.*;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;

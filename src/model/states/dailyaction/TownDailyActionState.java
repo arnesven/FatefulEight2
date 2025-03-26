@@ -1,14 +1,8 @@
 package model.states.dailyaction;
 
 import model.Model;
-import model.SteppingMatrix;
-import model.TimeOfDay;
-import model.map.HexLocation;
-import model.map.TownLocation;
 import model.map.UrbanLocation;
-import sound.BackgroundMusic;
-import view.MyColors;
-import view.subviews.DailyActionSubView;
+import model.states.dailyaction.town.*;
 import view.subviews.TownSubView;
 
 import java.awt.Point;

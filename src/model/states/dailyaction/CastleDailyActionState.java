@@ -2,17 +2,19 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.SteppingMatrix;
-import model.TimeOfDay;
 import model.map.CastleLocation;
-import model.states.GameState;
+import model.states.dailyaction.castle.GentlepersonsClubNode;
+import model.states.dailyaction.castle.GoToCastleActionNode;
+import model.states.dailyaction.castle.LeagueOfMagesOfficeNode;
+import model.states.dailyaction.shops.GeneralShopNode;
+import model.states.dailyaction.tavern.TavernNode;
+import model.states.dailyaction.town.CampOutsideOfTownNode;
+import model.states.dailyaction.town.FlagPoleNode;
 import model.states.events.GentlepersonsClubEvent;
 import model.states.events.LeagueOfMagesEvent;
 import sound.BackgroundMusic;
-import sound.ClientSoundManager;
-import view.MyColors;
 import view.subviews.CastleSubView;
 import view.subviews.DailyActionSubView;
-import view.subviews.TownSubView;
 
 import java.awt.*;
 

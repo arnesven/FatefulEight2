@@ -1,9 +1,11 @@
-package model.states.dailyaction;
+package model.states.dailyaction.tavern;
 
 import model.Model;
 import model.races.AllRaces;
 import model.races.Race;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.tavern.HireGuideAction;
 import util.MyRandom;
 import view.MyColors;

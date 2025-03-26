@@ -7,6 +7,7 @@ import model.mainstory.FugitiveTownEvent;
 import model.states.*;
 import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.*;
+import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.events.*;
 import model.states.warehouse.WarehouseEvent;
 import util.MyRandom;

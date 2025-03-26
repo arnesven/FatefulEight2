@@ -1,4 +1,4 @@
-package model.states.dailyaction;
+package model.states.dailyaction.town;
 
 import model.Model;
 import model.SteppingMatrix;
@@ -7,6 +7,9 @@ import model.TimeOfDay;
 import model.items.puzzletube.FindPuzzleDestinationTask;
 import model.map.UrbanLocation;
 import model.states.GameState;
+import model.states.dailyaction.AdvancedDailyActionState;
+import model.states.dailyaction.DailyActionNode;
+import model.states.dailyaction.VisitLordDailyActionState;
 import model.states.events.SilentNoEventState;
 import util.MyRandom;
 import view.MyColors;

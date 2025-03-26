@@ -5,6 +5,7 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.races.Race;
 import model.states.dailyaction.*;
+import model.states.dailyaction.tavern.RecruitNode;
 import model.states.dailyaction.tavern.TavernDailyActionState;
 import sprites.CombatSpeechBubble;
 import util.MyPair;
