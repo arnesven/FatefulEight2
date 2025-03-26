@@ -5,6 +5,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.items.accessories.LargeShield;
 import model.items.accessories.Spyglass;
+import model.items.potions.RumPotion;
 import model.items.weapons.*;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyRandom;
@@ -14,6 +15,8 @@ import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 import view.subviews.TownSubView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PirateShop extends GeneralShopNode {
@@ -44,11 +47,15 @@ public class PirateShop extends GeneralShopNode {
 
     @Override
     protected List<Item> makeInventory(Model model) {
-        List<Item> list = model.getItemDeck().draw(ITEMS, MyRandom.randInt(12, 24),
+        List<Item> list = model.getItemDeck().draw(ITEMS, MyRandom.randInt(10, 20),
                 Prevalence.unspecified, 0.05);
         if (MyRandom.randInt(3) == 0) {
             list.add(new Musket());
         }
+        for (int i = 0; i < MyRandom.randInt(5); ++i) {
+            list.add(new RumPotion());
+        }
+        Collections.sort(list);
         return list;
     }
 

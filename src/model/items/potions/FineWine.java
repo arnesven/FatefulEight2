@@ -10,4 +10,9 @@ public class FineWine extends WinePotion {
     public int getCost() {
         return 4;
     }
+
+    @Override
+    protected int getStrength() {
+        return 6;
+    }
 }
