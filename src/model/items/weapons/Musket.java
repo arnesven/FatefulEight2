@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class Musket extends SlugThrowers {
+public class Musket extends SlugThrower {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(14, 16);
 

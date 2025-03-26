@@ -4,7 +4,7 @@ import model.items.Item;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
-public class Pistol extends SlugThrowers implements PairableWeapon {
+public class Pistol extends SlugThrower implements PairableWeapon {
     private static final Sprite SPRITE = new ItemSprite(12, 16);
 
     public Pistol() {

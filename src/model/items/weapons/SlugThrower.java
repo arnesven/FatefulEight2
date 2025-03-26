@@ -7,13 +7,13 @@ import view.sprites.AvatarItemSprite;
 import view.sprites.RangedStrikeEffect;
 import view.sprites.RunOnceAnimationSprite;
 
-public abstract class SlugThrowers extends Weapon {
+public abstract class SlugThrower extends Weapon {
     private static final AvatarItemSprite[] ON_AVATAR_SPRITES = makeShiftedSpriteSet(new AvatarItemSprite(0x10,
             MyColors.BROWN, MyColors.BROWN, MyColors.BROWN, MyColors.PINK));
 
     private final boolean isTwoHanded;
 
-    public SlugThrowers(String name, int cost, int[] damageTable, boolean twoHanded) {
+    public SlugThrower(String name, int cost, int[] damageTable, boolean twoHanded) {
         super(name, cost, Skill.Perception, damageTable);
         this.isTwoHanded = twoHanded;
     }
