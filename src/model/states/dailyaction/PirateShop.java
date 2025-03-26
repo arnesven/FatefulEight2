@@ -4,6 +4,7 @@ import model.Model;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.accessories.LargeShield;
+import model.items.accessories.PirateCaptainsHat;
 import model.items.accessories.Spyglass;
 import model.items.potions.RumPotion;
 import model.items.weapons.*;
@@ -16,7 +17,6 @@ import view.sprites.Sprite32x32;
 import view.subviews.TownSubView;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class PirateShop extends GeneralShopNode {
@@ -29,7 +29,7 @@ public class PirateShop extends GeneralShopNode {
     private static final List<Item> ITEMS = List.of(
             new Scimitar(), new Rapier(), new Cutlass(), new Cutlass(),
             new BoatHook(), new Pistol(), new LargeShield(), new Harpoons(),
-            new Spyglass()
+            new Spyglass(), new PirateCaptainsHat()
     );
 
     public PirateShop(Model model, int col, int row) {
@@ -58,6 +58,10 @@ public class PirateShop extends GeneralShopNode {
         }
         Collections.sort(list);
         return list;
+    }
+
+    public static List<Item> getPirateItems() {
+        return ITEMS;
     }
 
     @Override

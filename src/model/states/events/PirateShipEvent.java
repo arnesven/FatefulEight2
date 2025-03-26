@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.PersonCombatLoot;
+import model.combat.loot.PirateLoot;
 import model.enemies.Enemy;
 import model.enemies.HumanoidEnemy;
 import model.races.Race;
@@ -72,7 +73,7 @@ public class PirateShipEvent extends DailyEventState {
 
         @Override
         public CombatLoot getLoot(Model model) {
-            return new PersonCombatLoot(model);
+            return new PirateLoot(model);
         }
 
         @Override

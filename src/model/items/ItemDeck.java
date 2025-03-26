@@ -163,7 +163,7 @@ public class ItemDeck extends ArrayList<Item> {
     public static List<HeadGearItem> allHeadGear() {
         return List.of(new LeatherCap(), new JestersHat(), new PaintedMask(), new Crown(), new BoneMask(),
                 new WolfHead(), new Circlet(), new Tiara(), new Diadem(), new SkullCap(), new Helm(),
-                new FullHelm(), new GreatHelm());
+                new FullHelm(), new GreatHelm(), new PirateCaptainsHat());
     }
 
     public static List<GlovesItem> allGloves() {
