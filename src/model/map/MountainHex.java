@@ -62,7 +62,7 @@ public class MountainHex extends WorldHex {
                     new CaveEvent(model),
                     new CaveEvent(model),
                     new BanishDaemonRitualEvent(model),
-                    new LostExplorerEvent(model)
+                    new LostExplorerEvent(model) // TODO: WaterfallEvent
             ));
         }
         return new NoEventState(model);

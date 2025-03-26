@@ -28,7 +28,8 @@ public class PirateShop extends GeneralShopNode {
 
     private static final List<Item> ITEMS = List.of(
             new Scimitar(), new Rapier(), new Cutlass(), new Cutlass(),
-            new BoatHook(), new Pistol(), new LargeShield(), new Spyglass()
+            new BoatHook(), new Pistol(), new LargeShield(), new Harpoons(),
+            new Spyglass()
     );
 
     public PirateShop(Model model, int col, int row) {
