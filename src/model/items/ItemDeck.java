@@ -356,7 +356,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<? extends Weapon> allSpecialWeapons() {
-        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol());
+        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol(), new Musket());
     }
 
     public void setStandardItemTier(int averageLevel) {

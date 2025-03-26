@@ -44,8 +44,12 @@ public class PirateShop extends GeneralShopNode {
 
     @Override
     protected List<Item> makeInventory(Model model) {
-        return model.getItemDeck().draw(ITEMS, MyRandom.randInt(12, 24),
+        List<Item> list = model.getItemDeck().draw(ITEMS, MyRandom.randInt(12, 24),
                 Prevalence.unspecified, 0.05);
+        if (MyRandom.randInt(3) == 0) {
+            list.add(new Musket());
+        }
+        return list;
     }
 
     @Override

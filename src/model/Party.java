@@ -17,6 +17,7 @@ import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
 import model.items.spells.*;
+import model.items.weapons.Musket;
 import model.map.DiscoveredRoute;
 import model.map.UrbanLocation;
 import model.quests.HeldQuestData;
@@ -82,6 +83,7 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
+        inventory.add(new Musket());
     }
 
     public void setStartingPosition(Point position) {
