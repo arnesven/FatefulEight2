@@ -21,7 +21,7 @@ public class Harpoons extends PolearmWeapon {
 
     @Override
     public Item copy() {
-        return new Javelins();
+        return new Harpoons();
     }
 
     @Override

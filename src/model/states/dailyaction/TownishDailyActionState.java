@@ -22,12 +22,16 @@ public class TownishDailyActionState extends AdvancedDailyActionState {
         super(model);
         this.urbanLocation = urbanLocation;
         super.addNode(3, 4, new StayHereNode());
-        super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
+        addTavernNode(model, freeLodging, urbanLocation);
         addTent(model, freeRations, urbanLocation);
         addNode(7, 2, new SaveGameNode());
         addNode(7, 1, new FlagPoleNode());
         addTravelNodes(model, isCoastal, urbanLocation);
         addShopsAndMore(model, urbanLocation);
+    }
+
+    public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
+        super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new TavernNode(freeLodging));
     }
 
     protected void addTent(Model model, boolean freeRations, UrbanLocation urbanLocation) {

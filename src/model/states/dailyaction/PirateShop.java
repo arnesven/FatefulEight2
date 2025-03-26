@@ -6,6 +6,7 @@ import model.items.Prevalence;
 import model.items.accessories.LargeShield;
 import model.items.accessories.PirateCaptainsHat;
 import model.items.accessories.Spyglass;
+import model.items.clothing.PirateVest;
 import model.items.potions.RumPotion;
 import model.items.weapons.*;
 import model.states.dailyaction.shops.GeneralShopNode;
@@ -29,7 +30,7 @@ public class PirateShop extends GeneralShopNode {
     private static final List<Item> ITEMS = List.of(
             new Scimitar(), new Rapier(), new Cutlass(), new Cutlass(),
             new BoatHook(), new Pistol(), new LargeShield(), new Harpoons(),
-            new Spyglass(), new PirateCaptainsHat()
+            new Spyglass(), new PirateVest(), new PirateCaptainsHat()
     );
 
     public PirateShop(Model model, int col, int row) {

@@ -41,12 +41,16 @@ public class TavernNode extends DailyActionNode {
         return INN_SIGN;
     }
 
+    protected Sprite getBackgroundSpriteTop() {
+        return SPRITE2;
+    }
+
     @Override
     public void drawYourself(Model model, Point p) {
         model.getScreenHandler().register(getBackgroundSprite().getName(), new Point(p), getBackgroundSprite());
         Point p2 = new Point(p);
         p2.y -= 4;
-        model.getScreenHandler().register(SPRITE2.getName(), p2, SPRITE2);
+        model.getScreenHandler().register(getBackgroundSpriteTop().getName(), p2, getBackgroundSpriteTop());
         Sprite fg = getForegroundSprite();
         if (fg != null) {
             p.x += 2;

@@ -3,6 +3,8 @@ package model.states.dailyaction;
 import model.Model;
 import model.map.UrbanLocation;
 import model.map.locations.PirateHavenLocation;
+import model.states.dailyaction.tavern.PirateTavernNode;
+import model.states.dailyaction.tavern.TavernNode;
 import model.states.dailyaction.town.CharterBoatAtDocks;
 
 public class PirateHavenDailyActionState extends TownishDailyActionState {
@@ -16,5 +18,9 @@ public class PirateHavenDailyActionState extends TownishDailyActionState {
         if (model.getDay() % urbanLocation.charterBoatEveryNDays() == 0) {
             addNode(3, 0, new CharterBoatAtDocks(model));
         }
+    }
+
+    public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {
+        super.addNode(urbanLocation.getTavernPosition().x, urbanLocation.getTavernPosition().y, new PirateTavernNode(freeLodging));
     }
 }
