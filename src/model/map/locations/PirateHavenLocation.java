@@ -99,10 +99,8 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
         return false;
     }
 
-
-    // TODO: Replace with pirate shop
     public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new GeneralShopNode(model, 2, 4));
+        return List.of(new PirateShop(model, 2, 4));
     }
 
     @Override

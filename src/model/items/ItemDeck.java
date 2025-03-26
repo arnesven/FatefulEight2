@@ -307,15 +307,14 @@ public class ItemDeck extends ArrayList<Item> {
         allWeapons.addAll(allWands());
         allWeapons.addAll(allBows());
         allWeapons.addAll(allSpears());
-        allWeapons.add(new Lute());
-        allWeapons.add(new FishingPole());
-        allWeapons.add(new ThrowingStars());
+        allWeapons.addAll(allSpecialWeapons());
         return allWeapons;
     }
 
     public static List<? extends Weapon> allSpears() {
         return List.of(new WoodenSpear(), new Spear(), new Javelins(), new Trident(),
-                new Glaive(), new Halberd(), new Pike(), new ShortSpear(), new BecDeCorbin(), new Naginata());
+                new Glaive(), new Halberd(), new Pike(), new ShortSpear(), new BecDeCorbin(), new Naginata(),
+                new BoatHook());
     }
 
     public static List<? extends Weapon> allBows() {
@@ -345,7 +344,7 @@ public class ItemDeck extends ArrayList<Item> {
                 new OrcishKnife(), new RitualDagger(), new Scimitar(), new Falchion(), new Wakizashi(),
                 new Broadsword(), new Longsword(), new Estoc(), new Rapier(), new Katana(), new TwoHandedSword(),
                 new Claymore(), new BastardSword(), new Zweihander(), new DaiKatana(), new TwinDaggers(),
-                new TwinKukris(), new Sai(), new TwinSais());
+                new TwinKukris(), new Sai(), new TwinSais(), new Cutlass());
     }
 
 
@@ -354,6 +353,10 @@ public class ItemDeck extends ArrayList<Item> {
                 new DismembermentImbuement(), new ExtraDamageImbuement(), new FreezeImbuement(),
                 new PoisonImbuement(), new StunImbuement(), new VigorImbuement(),
                 new FinesseImbuement());
+    }
+
+    public static List<? extends Weapon> allSpecialWeapons() {
+        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol());
     }
 
     public void setStandardItemTier(int averageLevel) {
