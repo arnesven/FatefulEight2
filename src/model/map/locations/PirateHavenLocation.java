@@ -182,6 +182,8 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
                     new KidsWantFireworksEvent(model),
                     new WarehouseEvent(model),
                     new PirateFightEvent(model),
+                    new DrunkenPirateEvent(model),
+                    // TODO: Pirate club, must fit in as pirates => wear pirate gear.
                     new GuideEvent(model, 1)
             ));
         }

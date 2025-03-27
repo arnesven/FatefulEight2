@@ -7,7 +7,7 @@ import view.MyColors;
 import view.sprites.ClothesSprite;
 import view.sprites.PortraitSprite;
 
-public class SamuraiClass extends CaptainClass {
+public class SamuraiClass extends CaptainClass { // TODO: Extend Prestige class instead
 
     private static final MyColors ARMOR_COLOR = MyColors.DARK_RED;
     private static final MyColors SECONDARY_COLOR = MyColors.GRAY_RED;

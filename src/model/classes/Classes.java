@@ -3,6 +3,7 @@ package model.classes;
 import model.classes.normal.*;
 import model.classes.npcs.*;
 import model.classes.prestige.NinjaClass;
+import model.classes.prestige.PirateCaptainClass;
 import model.classes.prestige.SamuraiClass;
 import model.classes.special.*;
 
@@ -34,6 +35,7 @@ public interface Classes {
     // Prestige Classes:
     CharacterClass NINJA = new NinjaClass(); // TODO: Develop this and use these ?
     CharacterClass SAMURAI = new SamuraiClass();
+    CharacterClass PIRATE_CAPTAIN = new PirateCaptainClass();
 
     CharacterClass[] allClasses = new CharacterClass[]{None,
             AMZ, ART, ASN, BBN, BRD, BKN, CAP, FOR, DRU, MAG,

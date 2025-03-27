@@ -83,7 +83,6 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
-        inventory.add(new Musket());
     }
 
     public void setStartingPosition(Point position) {
