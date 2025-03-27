@@ -57,6 +57,7 @@ public class PirateShop extends GeneralShopNode {
         for (int i = 0; i < MyRandom.randInt(5); ++i) {
             list.add(new RumPotion());
         }
+        list.addAll(model.getItemDeck().draw(MyRandom.randInt(3, 6), Prevalence.common));
         Collections.sort(list);
         return list;
     }
