@@ -29,6 +29,7 @@ public class TutorialClassesDialog extends ExpandableHelpDialog {
         for (CharacterClass characterClass : Classes.allClasses) {
             subsections.add(new SpecificClassHelpDialog(view, characterClass));
         }
+        subsections.add(new TutorialPrestigeClasses(view));
         return subsections;
     }
 

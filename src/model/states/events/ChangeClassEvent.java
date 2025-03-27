@@ -5,6 +5,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import model.classes.prestige.PrestigeClass;
 import model.states.DailyEventState;
 import model.states.GameState;
 import view.subviews.ChangeClassSubView;
@@ -20,7 +21,12 @@ public class ChangeClassEvent extends DailyEventState {
     public ChangeClassEvent(Model model, CharacterClass targetClass) {
         super(model);
         this.targetClasss = targetClass;
-        candidates = model.getParty().getMembersEligibleFor(targetClass);
+        if (targetClass instanceof PrestigeClass) {
+            candidates = PrestigeClass.getMembersEligibleFor(model.getParty().getPartyMembers(),
+                    (PrestigeClass)targetClass);
+        } else {
+            candidates = model.getParty().getMembersEligibleFor(targetClass);
+        }
         if (!candidates.isEmpty()) {
             matrix = new SteppingMatrix<>(3, 3);
             matrix.addElements(candidates);
@@ -33,7 +39,11 @@ public class ChangeClassEvent extends DailyEventState {
         model.setSubView(subView);
         do {
             print("Do you want to change the class of any of the characters? ");
-            model.getTutorial().classes(model);
+            if (targetClasss instanceof PrestigeClass) {
+                model.getTutorial().prestigeClasses(model);
+            } else {
+                model.getTutorial().classes(model);
+            }
             waitForReturn();
 
             int topAction = subView.getTopIndex();

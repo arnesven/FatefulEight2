@@ -1,10 +1,17 @@
 package model.classes.prestige;
 
+import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import util.MyLists;
 import view.MyColors;
 
+import java.util.List;
+
 public abstract class PrestigeClass extends CharacterClass {
-    protected PrestigeClass(String name, String shortname, int hp, int speed, boolean canUseHeavyArmor, int startGold, WeightedSkill[] skillBonuses) {
+    public static final int MINIMUM_LEVEL = 1; // TODO: 5
+
+    protected PrestigeClass(String name, String shortname, int hp, int speed,
+                            boolean canUseHeavyArmor, int startGold, WeightedSkill[] skillBonuses) {
         super(name, shortname, hp, speed, canUseHeavyArmor, startGold, skillBonuses);
     }
 
@@ -18,13 +25,15 @@ public abstract class PrestigeClass extends CharacterClass {
         return 0x14;
     }
 
-    @Override
-    public String getDescription() {
-        return "* Prestige Class *";
-    }
+    protected abstract boolean canBecomeFrom(CharacterClass charClass);
 
     @Override
     public String getHowToLearn() {
         return "";
+    }
+
+    public static List<GameCharacter> getMembersEligibleFor(List<GameCharacter> partyMembers, PrestigeClass targetClass) {
+        return MyLists.filter(partyMembers, gc -> gc.getLevel() >= MINIMUM_LEVEL &&
+                targetClass.canBecomeFrom(gc.getCharClass()));
     }
 }

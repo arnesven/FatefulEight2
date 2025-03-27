@@ -1,8 +1,11 @@
 package model.classes.prestige;
 
 import model.characters.appearance.CharacterAppearance;
+import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.classes.Looks;
 import model.classes.Skill;
+import model.classes.normal.*;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.accessories.Spyglass;
@@ -10,6 +13,8 @@ import model.items.clothing.FancyJerkin;
 import model.items.weapons.Cutlass;
 import model.items.weapons.Dirk;
 import model.races.Race;
+import util.MyLists;
+import util.MyStrings;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;
@@ -19,12 +24,22 @@ import java.util.List;
 
 
 public class PirateCaptainClass extends PrestigeClass {
+    private static final List<Class<? extends CharacterClass>> FROM_CLASSES = List.of(
+            ArtisanClass.class,
+            AssassinClass.class,
+            BardClass.class,
+            CaptainClass.class,
+            MagicianClass.class,
+            NobleClass.class,
+            SpyClass.class,
+            ThiefClass.class);
 
     private static final MyColors HAT_COLOR_BASE = MyColors.DARK_BROWN;
     private static final MyColors HAT_HIGH_LIGHT = MyColors.GOLD;
+    private final String descriptionClasses;
 
     public PirateCaptainClass() {
-        super("Pirate Captain", "PCN", 8, 6,
+        super("Pirate Cap'n", "PCN", 8, 6,
                 false, 10, new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 3),
                         new WeightedSkill(Skill.Blades, 5),
@@ -39,6 +54,14 @@ public class PirateCaptainClass extends PrestigeClass {
                         new WeightedSkill(Skill.Sneak, 4),
                         new WeightedSkill(Skill.Survival, 3)
                 });
+        this.descriptionClasses = MyLists.commaAndJoin(FROM_CLASSES, x ->
+                x.getSimpleName().replace("Class", ""));
+    }
+
+
+    @Override
+    protected boolean canBecomeFrom(CharacterClass charClass) {
+        return MyLists.any(FROM_CLASSES, cc -> charClass.getClass().isAssignableFrom(cc));
     }
 
     @Override
@@ -56,6 +79,15 @@ public class PirateCaptainClass extends PrestigeClass {
     @Override
     public boolean isBackRowCombatant() {
         return false;
+    }
+
+    @Override
+    public String getDescription() {
+        return "A cunning, and versatile fighter, the Pirate Captain has many fine " +
+                "qualities, and some not-so-fine ones too! " +
+                "This Prestige Class can only be taken on by characters of one of the following classes: " +
+                descriptionClasses + ".";
+
     }
 
     @Override
