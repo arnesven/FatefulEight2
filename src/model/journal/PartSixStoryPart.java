@@ -128,13 +128,13 @@ public class PartSixStoryPart extends StoryPart {
             leaderSay("Everix, can you hear me?");
             model.getLog().waitForAnimationToFinish();
             forcePortraitEyes(false);
-            portraitSay("Uhh... what. Where am I.");
-            leaderSay("It's all right Everix. You're safe.");
+            portraitSay("Uhh... what? Where am I?");
+            leaderSay("It's all right Everix, you're safe.");
             portraitSay("Oh, it's you...");
             println("Slowly, Everix gets up.");
             leaderSay("Didn't expect to see us again did you?");
-            portraitSay("No. But I'm glad to see you. Last thing I remember " + castle.getLordName() +
-                    "'s thugs were beating me up, interrogating me.");
+            portraitSay("No. But I'm glad to see you. The last thing I remember is " + castle.getLordName() +
+                    "'s thugs beating me up, and interrogating me.");
             leaderSay("Interrogating you, about what?");
             portraitSay("They were asking about you and that damn crimson pearl.");
             leaderSay("About us? And the pearl? Wait a minute, Everix, let's back up. " +

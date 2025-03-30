@@ -550,7 +550,7 @@ public class EscapeTheDungeonQuest extends MainQuest {
             if (other != null) {
                 partyMemberSay(other, "Is she alive?");
             }
-            leaderSay("She's breathing... she's been knocked unconscious bu those goons.");
+            leaderSay("She's breathing... she's been knocked unconscious by those goons.");
             if (other != null) {
                 partyMemberSay(other, "We can't just leave her here, or she'll meet the same " +
                         "fate as that advisor fellow.");
