@@ -27,6 +27,11 @@ public class WorldBuilder {
     public static final Point HUNTERS_INN_POSITION = new Point(21, 25);
     public static final Point WATERFRONT_INN_POISITION = new Point(26, 13);
 
+    public static final Point PIRATE_HAVEN_LOCATION = new Point(8, 17);
+    public static final Point VIKING_VILLAGE_LOCATION = new Point(26, 2);
+    public static final Point JUNGLE_PYRAMID_LOCATION = new Point(26, 40);
+    public static final Point FAR_EASTERN_TOWN_LOCATION = new Point(49, 26);
+
     public static final List<Point> INN_LOCATIONS = List.of(CROSSROADS_INN_POSITION,
             HUNTERS_INN_POSITION, WATERFRONT_INN_POISITION);
     public static final Point FAITH_ISLAND_POSITION = new Point(22, 15);
@@ -327,7 +332,7 @@ public class WorldBuilder {
     }
 
     private static void addWesternContents(Map<Point, HexContents> contents) {
-        contents.put(new Point(8, 17), new HexContents(new PirateHavenLocation(), NONE, NONE));
+        contents.put(PIRATE_HAVEN_LOCATION, new HexContents(new PirateHavenLocation(), NONE, NONE));
     }
 
     private static void addSouthernContents(Map<Point, HexContents> contents) {

@@ -4,31 +4,56 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
+import model.mainstory.*;
 import model.map.CastleLocation;
+import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.EscapeTheDungeonQuest;
 import model.quests.Quest;
-import model.quests.SpecialDeliveryQuest;
 import model.states.DailyEventState;
-import model.states.GameState;
 import model.states.dailyaction.TownDailyActionState;
+import model.tasks.DestinationTask;
 import util.MyLists;
 import util.MyStrings;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartSixStoryPart extends StoryPart {
     private final String castle;
+    private final GainSupportOfRemotePeopleTask gainSupportOfRemotePeopleTask;
+    private final List<GainSupportOfNeighborKingdomTask> gainSupportOfNeighborKingdomTasks;
     private int internalStep = 0;
 
-    public PartSixStoryPart(String castleName) {
+    public PartSixStoryPart(Model model, String castleName) {
         this.castle = castleName;
+        this.gainSupportOfRemotePeopleTask = model.getMainStory().makeRemoteKingdomSupportTask(model);
+        this.gainSupportOfNeighborKingdomTasks = model.getMainStory().makeNeighborKingdomTasks(model);
     }
 
     @Override
     public List<JournalEntry> getJournalEntries() {
-        return List.of(new EscapeTheDungeonJournalEntry(castle));
+        if (internalStep <= 2) {
+            return List.of(new EscapeTheDungeonJournalEntry(castle));
+        }
+        if (allSupportTasksDone()) {
+            return List.of(new LeadTheAssaultJournalEntry(castle));
+        }
+        List<JournalEntry> entries = MyLists.transform(gainSupportOfNeighborKingdomTasks,
+                task -> task.getJournalEntry(null));
+        entries.add(gainSupportOfRemotePeopleTask.getJournalEntry(null));
+        return entries;
+    }
+
+    private boolean allSupportTasksDone() {
+        return MyLists.all(getAllSupportTasks(), DestinationTask::isCompleted);
+    }
+
+    private List<DestinationTask> getAllSupportTasks() {
+        List<DestinationTask> tasks = new ArrayList<>(gainSupportOfNeighborKingdomTasks);
+        tasks.add(gainSupportOfRemotePeopleTask);
+        return tasks;
     }
 
     @Override
@@ -52,8 +77,18 @@ public class PartSixStoryPart extends StoryPart {
     @Override
     public void drawMapObjects(Model model, int x, int y, int screenX, int screenY) {
         Point witchPoint = model.getMainStory().getWitchPosition();
-        if (witchPoint.x == x && witchPoint.y == y && internalStep > 1) {
+        if (witchPoint.x == x && witchPoint.y == y && internalStep == 2) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
+        }
+        if (internalStep > 2) {
+            for (DestinationTask dt : getAllSupportTasks()) {
+                if (!dt.isCompleted()) {
+                    Point p = dt.getPosition();
+                    if (p.x == x && p.y == y) {
+                        model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
+                    }
+                }
+            }
         }
     }
 
@@ -65,10 +100,25 @@ public class PartSixStoryPart extends StoryPart {
         }
         Point witchPoint = model.getMainStory().getWitchPosition();
         Point hexPoint = model.getWorld().getPositionForHex(worldHex);
-        if (witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
+        if (internalStep == 2 && witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
             return List.of(new DailyAction("Visit Witch", new VisitWitchEvent(model)));
         }
         return super.getDailyActions(model, worldHex);
+    }
+
+    @Override
+    public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {
+        if (model.getMainStory().isFugitive(model)) {
+            return new GetOutOfCastleEvent(model);
+        }
+        if (internalStep == 3) {
+            for (GainSupportOfNeighborKingdomTask task : gainSupportOfNeighborKingdomTasks) {
+                if (task.isAtLocation(model, location)) {
+                    return new GetSupportFromLordEvent(model, location, task);
+                }
+            }
+        }
+        return super.getVisitLordEvent(model, location);
     }
 
     @Override
@@ -169,9 +219,11 @@ public class PartSixStoryPart extends StoryPart {
             leaderSay("Did you tell them about your friend the Witch?");
             portraitSay("No, I never got around to it. What did she tell you about the crimson pearl? " +
                     "What's all this about really?");
+            String direction = model.getMainStory().getExpandDirectionName().toLowerCase();
             println("You spend some time filling Everix in on what you've found out about " +
                     "the crimson pearl and the quad. You tell about your adventures at the Ancient Stronghold," +
-                    " and the latest events at " + castle.getName() + ", including your encounter with Damal the advisor.");
+                    " and the latest events at " + castle.getName() + ", including your encounter with Damal the advisor " +
+                    "and Damal's story about the mysterious envoy from the " + direction + ".");
             portraitSay("That's quite the tale. And now you can add 'escaped from prison' to the end of it. " +
                     castle.getLordName() + "'s men will be looking high and lo for you now. Your probably the most wanted " +
                     "individuals in the kingdom.");
@@ -183,7 +235,7 @@ public class PartSixStoryPart extends StoryPart {
         }
     }
 
-    private static class VisitWitchEvent extends DailyEventState {
+    private class VisitWitchEvent extends DailyEventState {
         private final CharacterAppearance witchAppearance;
 
         public VisitWitchEvent(Model model) {
@@ -201,7 +253,31 @@ public class PartSixStoryPart extends StoryPart {
         @Override
         protected void doEvent(Model model) {
             showExplicitPortrait(model, witchAppearance, "Witch");
-            portraitSay("Oh... you lot.");
+            String expandDir = model.getMainStory().getExpandDirectionName().toLowerCase();
+            portraitSay("Oh... you lot. You must gain the support of the kingdoms surrounding " + castle + ", as well as the " +
+                    model.getMainStory().getRemotePeopleName() + " of the " + expandDir + ".");
+            progress();
+        }
+    }
+
+    private static class LeadTheAssaultJournalEntry extends MainStoryTask {
+        public LeadTheAssaultJournalEntry(String castle) {
+            super("Assault on " + castle);
+        }
+
+        @Override
+        public String getText() {
+            return "ASdf";
+        }
+
+        @Override
+        public boolean isComplete() {
+            return false;
+        }
+
+        @Override
+        public Point getPosition(Model model) {
+            return model.getMainStory().getCastlePosition(model);
         }
     }
 }

@@ -89,7 +89,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        if (model.getMainStory().isFugitive()) {
+        if (model.getMainStory().isFugitive(model)) {
             return new FugitiveTownEvent(model);
         }
         if (MyRandom.rollD10() >= 3) {

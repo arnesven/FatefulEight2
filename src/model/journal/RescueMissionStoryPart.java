@@ -79,7 +79,7 @@ public class RescueMissionStoryPart extends StoryPart {
                 (caidQuestPosition == null ||
                         (caidQuestPosition.x == model.getParty().getPosition().x &&
                          caidQuestPosition.y == model.getParty().getPosition().y))
-                && !model.getMainStory().isFugitive();
+                && !model.getMainStory().isFugitive(model);
     }
 
     @Override

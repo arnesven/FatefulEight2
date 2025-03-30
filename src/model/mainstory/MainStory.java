@@ -10,7 +10,6 @@ import model.map.UrbanLocation;
 import model.map.WorldBuilder;
 import model.map.WorldHex;
 import model.quests.*;
-import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
@@ -263,7 +262,22 @@ public class MainStory implements Serializable {
         return getQuest(AncientStrongholdQuest.QUEST_NAME).isCompleted(model);
     }
 
-    public boolean isFugitive() {
-        return MyLists.any(storyParts, (StoryPart sp) -> sp instanceof PartSixStoryPart);
+    public boolean isFugitive(Model model) {
+        if (model.getWorld().getKingdomForPosition(model.getParty().getPosition()).getName() == spawnData.getCastle()) {
+            return MyLists.any(storyParts, (StoryPart sp) -> sp instanceof PartSixStoryPart);
+        }
+        return false;
+    }
+
+    public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {
+        return spawnData.makeRemoteKingdomSupportTask(model);
+    }
+
+    public String getRemotePeopleName() {
+        return spawnData.remotePeopleName();
+    }
+
+    public List<GainSupportOfNeighborKingdomTask> makeNeighborKingdomTasks(Model model) {
+        return spawnData.makeNeighborKingdomTasks(model);
     }
 }

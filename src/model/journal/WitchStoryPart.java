@@ -80,7 +80,7 @@ public class WitchStoryPart extends StoryPart {
     @Override
     public List<DailyAction> getDailyActions(Model model, WorldHex worldHex) {
         Point hexPoint = model.getWorld().getPositionForHex(worldHex);
-        if (!model.getMainStory().isFugitive() && witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
+        if (!model.getMainStory().isFugitive(model) && witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
             String name = "Find Witch";
             if (internalStep > FIND_WITCH) {
                 name = "Visit Witch";

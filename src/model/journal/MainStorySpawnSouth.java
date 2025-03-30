@@ -1,11 +1,13 @@
 package model.journal;
 
+import model.Model;
+import model.mainstory.GainSupportOfJungleTribeTask;
+import model.mainstory.GainSupportOfRemotePeopleTask;
 import model.map.WorldBuilder;
-import model.map.locations.ArdhCastle;
-import model.map.locations.BullsVilleTown;
-import model.map.locations.SouthMeadhomeTown;
+import model.map.locations.*;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 
 public class MainStorySpawnSouth extends MainStorySpawnLocation {
     public MainStorySpawnSouth() {
@@ -15,6 +17,14 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
               new BullsVilleTown().getName(),
               WorldBuilder.EXPAND_SOUTH,
               new Point(36, 29),
-              new Point(33, 23));
+              new Point(33, 23),
+                "Jungle Tribe",
+                WorldBuilder.JUNGLE_PYRAMID_LOCATION,
+                List.of(new SunblazeCastle().getName(), new ArkvaleCastle().getName()));
+    }
+
+    @Override
+    public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {
+        return new GainSupportOfJungleTribeTask(model);
     }
 }

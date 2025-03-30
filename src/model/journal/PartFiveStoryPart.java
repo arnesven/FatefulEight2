@@ -58,7 +58,7 @@ public class PartFiveStoryPart extends StoryPart {
 
     @Override
     protected StoryPart getNextStoryPart(Model model, int track) {
-        return new PartSixStoryPart(castleName);
+        return new PartSixStoryPart(model, castleName);
     }
 
     @Override

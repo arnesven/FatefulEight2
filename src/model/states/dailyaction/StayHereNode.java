@@ -38,6 +38,8 @@ class StayHereNode extends DailyActionNode {
             }
         }
 
+        actions.addAll(model.getMainStory().getDailyActionsForHex(model, model.getCurrentHex()));
+
         state.print("What event would you like to resolve? ");
         int[] selectedAction = new int[1];
         List<String> optionList = MyLists.transform(actions, DailyAction::getName);
