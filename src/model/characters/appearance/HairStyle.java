@@ -68,23 +68,25 @@ public abstract class HairStyle implements Serializable {
             new BigHairStyle(),
             new HeartHairStyle(new PuyetHairStyle(), true, true, "Heart"),
             new HeartHairStyle(new PigTailHairStyle(0x9, true, 0x26, "Braids"), false, false, "Heart/Braids"),
-            new OldManHairStyle()
+            new OldManHairStyle(),
+            new WildSideHairStyle(),
+            new HeartHairStyle(new WildSideHairStyle(), false, true, "Heart/Wild"),
+            new StylishHairStyle(),
+            new LongBangsHairStyle()
     };
 
     public static HairStyle[] femaleHairStyles = new HairStyle[]{
-            allHairStyles[1],
-            allHairStyles[2], allHairStyles[3],
+            allHairStyles[1], allHairStyles[2], allHairStyles[3],
             allHairStyles[4], allHairStyles[5],
-            allHairStyles[6], allHairStyles[7],
-            allHairStyles[8],
+            allHairStyles[6], allHairStyles[7], allHairStyles[8],
             allHairStyles[9], allHairStyles[11], allHairStyles[13],
             allHairStyles[14], allHairStyles[17], allHairStyles[18],
             allHairStyles[21], allHairStyles[22], allHairStyles[25],
             allHairStyles[26], allHairStyles[27], allHairStyles[28],
-            allHairStyles[29],
-            allHairStyles[32], allHairStyles[33],
+            allHairStyles[29], allHairStyles[32], allHairStyles[33],
             allHairStyles[34], allHairStyles[35],
-            allHairStyles[39], allHairStyles[40]};
+            allHairStyles[39], allHairStyles[40], allHairStyles[43],
+            allHairStyles[44], allHairStyles[45]};
 
     public static HairStyle[] maleHairStyles = new HairStyle[]{
             allHairStyles[0], allHairStyles[8], allHairStyles[10],
@@ -95,7 +97,7 @@ public abstract class HairStyle implements Serializable {
             allHairStyles[23], allHairStyles[24], allHairStyles[25],
             allHairStyles[30], allHairStyles[31],
             allHairStyles[36], allHairStyles[37], allHairStyles[38],
-            allHairStyles[41]};
+            allHairStyles[41], allHairStyles[42]};
 
     private final boolean onTop;
     private final boolean inForehead;
