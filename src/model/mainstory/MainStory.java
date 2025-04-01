@@ -262,11 +262,12 @@ public class MainStory implements Serializable {
         return getQuest(AncientStrongholdQuest.QUEST_NAME).isCompleted(model);
     }
 
-    public boolean isFugitive(Model model) {
-        if (model.getWorld().getKingdomForPosition(model.getParty().getPosition()).getName() == spawnData.getCastle()) {
-            return MyLists.any(storyParts, (StoryPart sp) -> sp instanceof PartSixStoryPart);
-        }
-        return false;
+    public boolean isFugitive() {
+        return MyLists.any(storyParts, (StoryPart sp) -> sp instanceof PartSixStoryPart);
+    }
+
+    public boolean isPersonaNonGrata(Model model) {
+        return isFugitive() && model.getWorld().getKingdomForPosition(model.getParty().getPosition()).getName().equals(spawnData.getCastle());
     }
 
     public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {

@@ -157,7 +157,7 @@ public class CommandOutpostDailyEventState extends DailyEventState {
             }
             print("Would you like to search through the battle field for any salvageable equipment? (Y/N) ");
             if (yesNoInput()) {
-                lootBattlefield(model);
+                lootBattlefield(model, this);
             }
         } else {
             warIsOver = war.advance(!givenByAggressor);
@@ -183,7 +183,7 @@ public class CommandOutpostDailyEventState extends DailyEventState {
                         (GameCharacter gc) -> model.getParty().giveXP(model, gc, 50));
                 print("Would you like to search through the battle field for any salvageable equipment? (Y/N) ");
                 if (yesNoInput()) {
-                    lootBattlefield(model);
+                    lootBattlefield(model, this);
                 }
             } else {
                 println("In the hectic aftermath of the lost battle, you see the general barking order at " +
@@ -229,22 +229,22 @@ public class CommandOutpostDailyEventState extends DailyEventState {
     }
 
 
-    private void lootBattlefield(Model model) {
+    public static void lootBattlefield(Model model, GameState state) {
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             SkillCheckResult result = gc.testSkill(model, Skill.Search);
             if (result.getModifiedRoll() < 5) {
-                println(gc.getName() + " finds nothing.");
+                state.println(gc.getName() + " finds nothing.");
             } else if (result.getModifiedRoll() < 7) {
                 int materials = MyRandom.randInt(2, 5);
                 model.getParty().getInventory().addToMaterials(materials);
-                println(gc.getName() + " finds " + materials + " materials.");
+                state.println(gc.getName() + " finds " + materials + " materials.");
             } else if (result.getModifiedRoll() < 10) {
                 Item equipment = generateCombatEquipment();
-                println(gc.getName() + " finds a " + equipment.getName() + ".");
+                state.println(gc.getName() + " finds a " + equipment.getName() + ".");
             } else {
                 Item equipment = generateNiceCombatEquipment();
-                println(gc.getName() + " finds " + equipment.getName() + "!");
-                partyMemberSay(gc, MyRandom.sample(List.of("Lucky!", "Wow. Nice!", "A good find.",
+                state.println(gc.getName() + " finds " + equipment.getName() + "!");
+                state.partyMemberSay(gc, MyRandom.sample(List.of("Lucky!", "Wow. Nice!", "A good find.",
                         "Better not let this go to waste.", "This belongs to me now.",
                         "Rather good quality item this.", "Jackpot!")));
 
@@ -252,13 +252,13 @@ public class CommandOutpostDailyEventState extends DailyEventState {
         }
     }
 
-    private Item generateNiceCombatEquipment() {
+    private static Item generateNiceCombatEquipment() {
         return MyRandom.sample(List.of(new Pike(), new Katana(), new Estoc(), new Halberd(),
                 new GreatAxe(), new RepeatingCrossbow(), new FullPlateArmor(), new Brigandine(),
                 new LeatherArmor(), new GreatHelm()));
     }
 
-    private Item generateCombatEquipment() {
+    private static Item generateCombatEquipment() {
         return MyRandom.sample(List.of(new RustyChestPlate(), new RustyRingMail(), new Spear(),
                 new LongBow(), new Longsword(), new Broadsword(), new LargeShield(), new SkullCap(),
                 new LeatherCap()));

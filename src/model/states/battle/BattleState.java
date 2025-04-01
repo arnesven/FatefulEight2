@@ -363,4 +363,8 @@ public class BattleState extends GameState {
     public boolean isOnBattlefield(BattleUnit currentUnit) {
         return units.getElementList().contains(currentUnit);
     }
+
+    public boolean hasBeenRouted(BattleUnit bu) {
+        return bu.getCount() > 0 && !units.getElementList().contains(bu);
+    }
 }

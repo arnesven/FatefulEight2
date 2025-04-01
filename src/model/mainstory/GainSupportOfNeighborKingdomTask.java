@@ -11,17 +11,35 @@ import model.tasks.DestinationTask;
 
 import java.awt.*;
 
-public class GainSupportOfNeighborKingdomTask extends DestinationTask {
+public abstract class GainSupportOfNeighborKingdomTask extends DestinationTask {
     private final String neighbor;
+    private final String otherNeighbor;
     private final String kingdom;
+    private final Point battlePosition;
     private boolean completed;
+    private int stage = 0;
 
-    public GainSupportOfNeighborKingdomTask(String neighbor, Point position, String kingdom) {
+    public GainSupportOfNeighborKingdomTask(String neighbor, Point position, String kingdom, String otherNeighbor,
+                                            Point battlePosition) {
         super(position, "");
         this.neighbor = neighbor;
         this.kingdom = kingdom;
+        this.otherNeighbor = otherNeighbor;
         this.completed = false;
+        this.battlePosition = battlePosition;
     }
+
+    @Override
+    public Point getPosition() {
+        if (stage == 0) {
+            return super.getPosition();
+        }
+        return battlePosition;
+    }
+
+    protected abstract GameState makeBattleEvent(Model model, CastleLocation defender, CastleLocation invader);
+
+    protected abstract VisitLordEvent innerMakeLordEvent(Model model, UrbanLocation neighbor, CastleLocation kingdom);
 
     @Override
     public JournalEntry getJournalEntry(Model model) {
@@ -35,7 +53,9 @@ public class GainSupportOfNeighborKingdomTask extends DestinationTask {
 
     @Override
     public DailyAction getDailyAction(Model model) {
-        return null;
+        CastleLocation defender = model.getWorld().getCastleByName(neighbor);
+        CastleLocation invader = model.getWorld().getCastleByName(kingdom);
+        return new DailyAction("Go to war camp", makeBattleEvent(model, defender, invader));
     }
 
     @Override
@@ -45,7 +65,7 @@ public class GainSupportOfNeighborKingdomTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return false;
+        return stage > 0;
     }
 
     @Override
@@ -58,7 +78,19 @@ public class GainSupportOfNeighborKingdomTask extends DestinationTask {
     }
 
     public void setCompleted(boolean b) {
-        this.completed = true;
+        this.completed = b;
+    }
+
+    public VisitLordEvent makeLordEvent(Model model, UrbanLocation neighbor) {
+        return innerMakeLordEvent(model, neighbor, model.getWorld().getCastleByName(otherNeighbor));
+    }
+
+    public void progress() {
+        this.stage++;
+    }
+
+    public int getStage() {
+        return stage;
     }
 
     private class GainSupportOfKingdomJournalEntry extends MainStoryTask {
@@ -68,8 +100,12 @@ public class GainSupportOfNeighborKingdomTask extends DestinationTask {
 
         @Override
         public String getText() {
-            return "Travel to the " + CastleLocation.placeNameToKingdom(neighbor) + " and gain their support " +
-                    "to overthrow the mad ruler of " + kingdom + ".\n\n" + (isComplete() ? "Completed" : "");
+            if (stage == 0) {
+                return "Travel to the " + CastleLocation.placeNameToKingdom(neighbor) + " and gain their support " +
+                        "to overthrow the mad ruler of " + kingdom + ".";
+            }
+            return "Aid " + CastleLocation.placeNameShort(neighbor) + " in their fight against an invading force."
+                    + (isComplete() ? ".\n\nCompleted" : "");
         }
 
         @Override

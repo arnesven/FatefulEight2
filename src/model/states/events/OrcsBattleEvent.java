@@ -3,7 +3,6 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
@@ -17,11 +16,9 @@ import model.map.*;
 import model.map.wars.KingdomWar;
 import model.map.wars.PitchedBattleSite;
 import model.states.DailyEventState;
-import model.states.ShopState;
 import model.states.battle.*;
 import util.MyLists;
 import util.MyRandom;
-import view.ChooseBattleReinforcementsView;
 import view.MyColors;
 import view.subviews.PortraitSubView;
 
@@ -32,10 +29,18 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class OrcsBattleEvent extends DailyEventState {
+    private final boolean forceBattle;
+    private boolean victorious;
     private boolean freeLodging = false;
 
-    public OrcsBattleEvent(Model model) {
+    public OrcsBattleEvent(Model model, boolean forceBattle) {
         super(model);
+        this.forceBattle = forceBattle;
+        this.victorious = false;
+    }
+
+    public OrcsBattleEvent(Model model) {
+        this(model, false);
     }
 
     @Override
@@ -46,7 +51,7 @@ public class OrcsBattleEvent extends DailyEventState {
     @Override
     protected void doEvent(Model model) {
         println("The party comes upon an army camp.");
-        if (WorldBuilder.isInExtendedRegion(model.getParty().getPosition())) {
+        if (forceBattle || WorldBuilder.isInExtendedRegion(model.getParty().getPosition())) {
             println("The scene is pretty busy and nobody seems to take not of you entering the camp.");
             fightBattle(model);
 
@@ -112,11 +117,10 @@ public class OrcsBattleEvent extends DailyEventState {
         CharacterAppearance fieldGeneralAppearance = PortraitSubView.makeRandomPortrait(Classes.PAL);
         CommandOutpostDailyEventState.intro(this, fieldGeneralAppearance.getRace());
         showExplicitPortrait(model, fieldGeneralAppearance, "Field General");
-        portraitSay("Hello there. Are you the new recruits? Are are you the military tacticians my lord has sent me?");
+        portraitSay("Hello there. Are you the new recruits? Or are you the military tacticians my lord has sent me?");
         leaderSay("Uhm. Depends. What's going on here?");
         portraitSay("Those damnable orcs, and their lesser minions have gathered an army " +
                 "which is threatening the realm. But this can't be news to you. Now please, I'm very busy. What is your business here?");
-        boolean victorious;
         CastleLocation castle = findClosestCastle(model);
         KingdomWar war = makeWar(model, castle);
         int choice = multipleOptionArrowMenu(model, 24, 26, List.of("Join a unit", "Direct the battle", "Don't get involved"));
@@ -268,5 +272,9 @@ public class OrcsBattleEvent extends DailyEventState {
         return new GuideData("Go to battle camp",
                 "I saw a battle camp over in that direction, lot's of soldiers. " +
                 "It looked like they were getting ready for a battle or something.");
+    }
+
+    protected boolean wasVictorious() {
+        return victorious;
     }
 }

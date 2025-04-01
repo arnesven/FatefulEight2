@@ -62,7 +62,7 @@ public class ImprovedBattleAI extends BattleAI {
                                             BattleUnit currentUnit) {
         ShootBattleAction shootBattleAction = new SilentShootBattleAction(currentUnit, battleState);
         List<BattleUnit> unitsInRange = shootBattleAction.getUnitsInRange(battleState);
-        unitsInRange.removeIf((BattleUnit bu) -> bu.getOrigin().equals(currentUnit.getOrigin()));
+        unitsInRange.removeIf((BattleUnit bu) -> bu.getOrigin().equals(currentUnit.getOrigin())); // TODO: This will make goblin bowmen to often shoot at orc warriors, intended?
         if (unitsInRange.isEmpty()) {
             return false;
         }
@@ -207,7 +207,7 @@ public class ImprovedBattleAI extends BattleAI {
     private List<BattleUnit> findDistances(BattleUnit currentUnit, BattleState battleState,
                                            List<List<MyPair<Integer, BattleDirection>>> grid) {
         List<BattleUnit> result = new ArrayList<>(battleState.getOpposingUnits(currentUnit));
-        result.removeIf((BattleUnit bu) -> bu.getCount() == 0);
+        result.removeIf((BattleUnit bu) -> bu.getCount() == 0 || battleState.hasBeenRouted(bu));
         result.sort((b1, b2) -> {
             Point pos1 = battleState.getPositionForUnit(b1);
             Point pos2 = battleState.getPositionForUnit(b2);

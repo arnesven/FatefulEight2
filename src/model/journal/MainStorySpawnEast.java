@@ -1,8 +1,7 @@
 package model.journal;
 
 import model.Model;
-import model.mainstory.GainSupportOfHonorableWarriorsTask;
-import model.mainstory.GainSupportOfRemotePeopleTask;
+import model.mainstory.*;
 import model.map.WorldBuilder;
 import model.map.locations.*;
 
@@ -19,12 +18,22 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
               new Point(40, 10),
               new Point(33, 11),
                 "Honorable Warriors",
-                WorldBuilder.FAR_EASTERN_TOWN_LOCATION,
-                List.of(new BogdownCastle().getName(), new ArdhCastle().getName()));
+                WorldBuilder.FAR_EASTERN_TOWN_LOCATION);
     }
 
     @Override
     public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {
         return new GainSupportOfHonorableWarriorsTask();
+    }
+
+    @Override
+    public List<GainSupportOfNeighborKingdomTask> makeNeighborKingdomTasks(Model model) {
+        String castle1 = new BogdownCastle().getName();
+        String castle2 = new ArdhCastle().getName();
+        GainSupportOfNeighborKingdomTask task1 = new GainSupportOfNeighborKingdomByFightingKingdomTask(castle1,
+                model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(castle1)), getCastle(), castle2, new Point(19, 10));
+        GainSupportOfNeighborKingdomByFightingOrcsTask task2 = new GainSupportOfNeighborKingdomByFightingOrcsTask(castle2,
+                model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(castle2)), getCastle(), castle1, new Point(38, 20));
+        return List.of(task1, task2);
     }
 }

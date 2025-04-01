@@ -103,18 +103,25 @@ public class PartSixStoryPart extends StoryPart {
         if (internalStep == 2 && witchPoint.x == hexPoint.x && witchPoint.y == hexPoint.y) {
             return List.of(new DailyAction("Visit Witch", new VisitWitchEvent(model)));
         }
+        if (internalStep == 3) {
+            for (DestinationTask dt : getAllSupportTasks()) {
+                if (model.partyIsInOverworldPosition(dt.getPosition()) && dt.givesDailyAction(model)) {
+                    return List.of(dt.getDailyAction(model));
+                }
+            }
+        }
         return super.getDailyActions(model, worldHex);
     }
 
     @Override
     public VisitLordEvent getVisitLordEvent(Model model, UrbanLocation location) {
-        if (model.getMainStory().isFugitive(model)) {
+        if (model.getMainStory().isPersonaNonGrata(model)) {
             return new GetOutOfCastleEvent(model);
         }
         if (internalStep == 3) {
             for (GainSupportOfNeighborKingdomTask task : gainSupportOfNeighborKingdomTasks) {
                 if (task.isAtLocation(model, location)) {
-                    return new GetSupportFromLordEvent(model, location, task);
+                    return task.makeLordEvent(model, location);
                 }
             }
         }

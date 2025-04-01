@@ -18,7 +18,7 @@ public class GoblinBowmanUnit extends GoblinBattleUnit {
     private static final Sprite[] four = makeSpriteSet(6, 12, MyColors.BLACK, MyColors.TAN, MyColors.ORC_GREEN, MyColors.RED);
 
     public GoblinBowmanUnit(int count) {
-        super("Goblin Bowmen", count, -1, 3, 4, 32, 5);
+        super("Bowmen", count, -1, 3, 4, 32, 5);
     }
 
     @Override

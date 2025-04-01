@@ -107,8 +107,7 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
 
     @Override
     public DailyEventState generateEvent(Model model) {
-        if (model.getMainStory().isFugitive(model) &&
-                model.getCurrentHex().getLocation().getName().equals(model.getMainStory().getCastleName())) {
+        if (model.getMainStory().isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
         int dieRoll = MyRandom.rollD10();
