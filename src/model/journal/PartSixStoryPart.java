@@ -3,6 +3,7 @@ package model.journal;
 import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.mainstory.*;
 import model.map.CastleLocation;
@@ -244,12 +245,15 @@ public class PartSixStoryPart extends StoryPart {
 
     private class VisitWitchEvent extends DailyEventState {
         private final CharacterAppearance witchAppearance;
+        private final CharacterAppearance everixAppearance;
 
         public VisitWitchEvent(Model model) {
             super(model);
             WitchStoryPart witchStoryPart = (WitchStoryPart) MyLists.find(model.getMainStory().getStoryParts(),
                     (StoryPart sp) -> sp instanceof WitchStoryPart);
             this.witchAppearance = witchStoryPart.getWitchAppearance();
+            InitialStoryPart init = ((InitialStoryPart)model.getMainStory().getStoryParts().get(0));
+            this.everixAppearance = init.getEverixPortrait();
         }
 
         @Override
@@ -259,11 +263,91 @@ public class PartSixStoryPart extends StoryPart {
 
         @Override
         protected void doEvent(Model model) {
-            showExplicitPortrait(model, witchAppearance, "Witch");
-            String expandDir = model.getMainStory().getExpandDirectionName().toLowerCase();
-            portraitSay("Oh... you lot. You must gain the support of the kingdoms surrounding " + castle + ", as well as the " +
-                    model.getMainStory().getRemotePeopleName() + " of the " + expandDir + ".");
+            showWitch(model);
+
+            portraitSay("Oh... you lot. I was wondering when you...");
+            showEverix(model);
+            portraitSay("It's been a long time Edwina.");
+            showWitch(model);
+            portraitSay("Everix, what happened to you?");
+            showEverix(model);
+            CastleLocation castle = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
+            portraitSay(castle.getLordName() + "'s thugs got me. It's alright, just some light bruising.");
+            showWitch(model);
+            portraitSay(castle.getLordTitle() + " " + castle.getLordName() + " must have really lost his mind, " +
+                    "I keep hearing word about people trying to leave " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
+            leaderSay("Why do people want to leave?");
+            portraitSay("Because " + castle.getLordName() + "'s troops are everywhere, and they are harassing everybody. Lately it feels " +
+                            "like the " + CastleLocation.placeNameToKingdom(castle.getPlaceName()) + " is turning in to a big prison. " +
+                    "Why "  + heOrShe(castle.getLordGender()) + "'s trying to make all of " + hisOrHer(castle.getLordGender()) + " miserable?");
+            leaderSay(iOrWeCap() + " think he may be under the influence of one of those crimson pearls.");
+            portraitSay("What makes you think that?");
+            leaderSay("We met one of " + castle.getLordName() + "'s former advisors in the dungeons below " + castle.getPlaceName() + ". " +
+                    "Just a few weeks ago a strange envoy had arrived at the castle bringing gifts. She was acting suspiciously... it was around that time " +
+                    castle.getLordTitle() + " " + castle.getLordName() + " went nuts.");
+            showEverix(model);
+            portraitSay("I'm sure this envoy is working for whoever is behind all of this.");
+            showWitch(model);
+            portraitSay("It certainly seems that way. What did they look like?");
+            leaderSay("Let me see... I think Damal mentioned she was tall, dark and fair.");
+            portraitSay("That's not much to work with I'm afraid.");
+            leaderSay("We have to get back to the castle and try to find her, and interrogate her!");
+            portraitSay("I don't think you'll be able to get anywhere near " + castle.getPlaceName() + " at the moment.");
+            showEverix(model);
+            portraitSay("Not with " + castle.getLordName() + " patrolling every inch of the kingdom in search of you. " +
+                    "You'll be lucky if you can get into any town in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
+            boolean said = randomSayIfPersonality(PersonalityTrait.aggressive, List.of(model.getParty().getLeader()), "Let them come! I'll send them all to hell!");
+            if (said) {
+                leaderSay("Calm down. We can't get carried away.");
+            } else {
+                randomSayIfPersonality(PersonalityTrait.cowardly, List.of(model.getParty().getLeader()), "Can't we just go somewhere far far away where " +
+                        castle.getLordName() + " won't ever find us?");
+            }
+            leaderSay("We need a plan.");
+            showWitch(model);
+            portraitSay("Indeed, and allies.");
+            leaderSay("Hmm... we're a little thin in that section I'm afraid.");
+            portraitSay("Not necessarily. Right now " + CastleLocation.placeNameShort(castle.getPlaceName()) + "'s neighboring kingdoms " +
+                    "are being subjected to " + castle.getLordName() + "'s spies and agents, as well as scores of fugitives. " +
+                    "And I hear the orcish raids have spread to other kingdoms while mysteriously stopped in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ". " +
+                    "I don't think those rulers are so happy with " + castle.getLordTitle() + " " + castle.getLordName() + " right now.");
+            said = randomSayIfPersonality(PersonalityTrait.intellectual, List.of(), "We could seize the opportunity and win them to our cause.");
+            if (!said) {
+                leaderSay("How does that help us?");
+                portraitSay("We could seize this opportunity to win them to our cause.");
+            }
+            portraitSay("Have them lend us some support, maybe even some armed forces. With them on our side we should be " +
+                    "able to stage a big enough diversion that a small assault on " + castle.getPlaceName() + " could be successful. Then you could finally confront " +
+                    castle.getLordTitle() + " " + castle.getLordName() + " and track down our mystery woman.");
+            leaderSay("Perhaps... It seems risky.");
+            showEverix(model);
+            portraitSay("You could even the odds a bit. You could try to gain the support of the " + model.getMainStory().getRemotePeopleName() + ".");
+            leaderSay("The " + model.getMainStory().getRemotePeopleName() + "?");
+            showWitch(model);
+            portraitSay("Yes, they reside in the lands to the " + model.getMainStory().getExpandDirectionName().toLowerCase() +
+                    ". With them on your side as well you are sure to prevail!");
+            leaderSay("Well, we've got to get out of " + CastleLocation.placeNameShort(castle.getPlaceName()) +
+                    " anyway. We might as well take a little tour and try to make some new friends.");
+            randomSayIfPersonality(PersonalityTrait.brave, List.of(model.getParty().getLeader()), "Sounds like a great adventure! What are we waiting for?");
+            showEverix(model);
+            portraitSay("I don't think I'm up for the trip. I need to recuperate here for a while.");
+            showWitch(model);
+            portraitSay("Stay here as long as you wish Everix. You're welcome to stay too, but I would get going sooner rather than later. " +
+                    "This kingdom's suffering is increasing day by day.");
+            leaderSay(iveOrWeve() + " got a big journey in front of " + meOrUs() + ".");
+            portraitSay("Be safe in your travels. Keep a low profile, at least while in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
+            showEverix(model);
+            portraitSay("Thank you for rescuing me. I owe you one.");
+            leaderSay("Goodbye.");
             progress();
+        }
+
+        private void showEverix(Model model) {
+            showExplicitPortrait(model, everixAppearance, "Everix");
+        }
+
+        private void showWitch(Model model) {
+            showExplicitPortrait(model, witchAppearance, "Witch");
         }
     }
 
