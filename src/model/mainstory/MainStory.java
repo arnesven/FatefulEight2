@@ -38,9 +38,20 @@ public class MainStory implements Serializable {
     private boolean caidQuestDone;
 
 
-    public MainStory() { }
+    public MainStory() {
+        List<MainStorySpawnLocation> spawnDataList = List.of(
+                new MainStorySpawnEast(),
+                new MainStorySpawnSouth(),
+                new MainStorySpawnNorth(),
+                new MainStorySpawnWest()
+        );
+        spawnData = MyRandom.sample(spawnDataList);
+    }
 
-    public void progressStoryForTesting(Model model, MainStoryStep part) {
+    public void progressStoryForTesting(Model model, MainStoryStep part, MainStorySpawnLocation spawnData) {
+        if (spawnData != null) {
+            this.spawnData = spawnData;
+        }
         System.out.println("Part ordinal is " + part.ordinal());
         for (MainStoryStep p : MainStoryStep.values()) {
             if (part.ordinal() >= p.ordinal()) {
@@ -84,13 +95,6 @@ public class MainStory implements Serializable {
     }
 
     public void setupStory(GameCharacter whosUncle) {
-        List<MainStorySpawnLocation> townsAndCastles = List.of(
-                new MainStorySpawnEast(),
-                new MainStorySpawnSouth(),
-                new MainStorySpawnNorth(),
-                new MainStorySpawnWest()
-        );
-        spawnData = MyRandom.sample(townsAndCastles);
         storyParts.add(new InitialStoryPart(whosUncle, spawnData.getTown()));
         spawnData.setAncientStrongholdCode(AncientStrongholdModel.generateCode());
     }

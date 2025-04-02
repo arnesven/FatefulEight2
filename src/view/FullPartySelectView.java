@@ -1,5 +1,6 @@
 package view;
 
+import model.journal.*;
 import model.mainstory.MainStoryStep;
 import model.Model;
 import model.characters.GameCharacter;
@@ -13,7 +14,6 @@ import model.items.ItemDeck;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
-import model.journal.CaidCharacter;
 import util.Arithmetics;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
@@ -33,7 +33,7 @@ public class FullPartySelectView extends SelectableListMenu {
     private static final int COLUMN_SKIP = 36;
     private static final int MAX_GOLD = 100000;
     private static final int INVENTORY_TAB = 9;
-    private static final int INVENTORY_VSKIP = 12;
+    private static final int INVENTORY_VSKIP = 13;
     private static final int MAX_NOTORIETY = 1000;
     private final int maxCharacters;
     private final Model model;
@@ -54,6 +54,9 @@ public class FullPartySelectView extends SelectableListMenu {
     private int expandDirection = 0;
     private int startingDay = 1;
     private final List<Item> otherItems = new ArrayList<>();
+    private final List<MainStorySpawnLocation> mainStorySpawnLocations = new ArrayList<>(List.of(
+            new MainStorySpawnEast(), new MainStorySpawnNorth(), new MainStorySpawnWest(), new MainStorySpawnSouth()));
+    private int selectedMainSpawn = 0;
     private MainStoryStep mainStoryProgression = MainStoryStep.NOT_STARTED;
 
     public FullPartySelectView(Model model) {
@@ -72,6 +75,7 @@ public class FullPartySelectView extends SelectableListMenu {
         this.levels = new int[]{1,1,1,1,1,1,1,1};
         this.equipments = new Equipment[]{new Equipment(), new Equipment(), new Equipment(), new Equipment(),
                                           new Equipment(), new Equipment(), new Equipment(), new Equipment()};
+        mainStorySpawnLocations.add(0, null);
     }
 
     @Override
@@ -111,6 +115,7 @@ public class FullPartySelectView extends SelectableListMenu {
                 BorderFrame.drawString(model.getScreenHandler(), "World ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Day: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Expanded: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Main Spawn: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Main Story: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
 
                 y = yStart+INVENTORY_VSKIP;
@@ -262,7 +267,19 @@ public class FullPartySelectView extends SelectableListMenu {
                 expandDirection = Arithmetics.incrementWithWrap(expandDirection, 0x10);
             }
         });
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP + INVENTORY_TAB + 5, partyRow++, makeSpawnString()) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedMainSpawn = Arithmetics.decrementWithWrap(selectedMainSpawn, mainStorySpawnLocations.size());
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                selectedMainSpawn = Arithmetics.incrementWithWrap(selectedMainSpawn, mainStorySpawnLocations.size());
+            }
+        });
         partyRow += 1;
+
         content.add(new CarouselListContent(xStart + COLUMN_SKIP + 2, partyRow, mainStoryProgression.makeNiceString() ) {
             @Override
             public void turnLeft(Model model) {
@@ -394,6 +411,17 @@ public class FullPartySelectView extends SelectableListMenu {
         return content;
     }
 
+    private String makeSpawnString() {
+        String result;
+        MainStorySpawnLocation loc = mainStorySpawnLocations.get(selectedMainSpawn);
+        if (loc == null) {
+            result = "Random";
+        } else {
+            result = loc.getClass().getSimpleName().replace("MainStorySpawn", "");
+        }
+        return String.format("%-6s", result);
+    }
+
     private String worldStateToString(int expandDirections) {
         String[] dirStrings = {
                 "----", "---E", "--S-", "--SE",
@@ -501,7 +529,7 @@ public class FullPartySelectView extends SelectableListMenu {
         model.getParty().addToNotoriety(startingNotoriety - model.getParty().getNotoriety());
         model.setWorldState(expandDirection);
         model.setDay(startingDay);
-        model.progressMainStory(mainStoryProgression);
+        model.progressMainStoryForTesting(mainStoryProgression, mainStorySpawnLocations.get(selectedMainSpawn));
     }
 
     private static class SetAllEquipmentMenu extends SelectableListMenu {

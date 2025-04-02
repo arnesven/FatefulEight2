@@ -92,9 +92,12 @@ public enum MainStoryStep {
     }),
     ESCAPE_QUEST_DONE((model, mainStory) -> {
        mainStory.getStoryParts().get(7).progress();      // Escape from castle dungeon quest done
+    }),
+    EVERIX_TALKED_TO((model, mainStory) -> {
+       mainStory.getStoryParts().get(7).progress();       // Wake Everix up and talk to her.
     });
 
-    MainStoryProgressor progressor;
+    private final MainStoryProgressor progressor;
 
     MainStoryStep(MainStoryProgressor prog) {
         progressor = prog;

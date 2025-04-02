@@ -8,6 +8,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.items.ItemDeck;
 import model.items.spells.Spell;
+import model.journal.MainStorySpawnLocation;
 import model.log.GameLog;
 import model.mainstory.MainStory;
 import model.mainstory.MainStoryStep;
@@ -148,8 +149,8 @@ public class Model {
         gameStarted = true;
     }
 
-    public void progressMainStory(MainStoryStep part) {
-        gameData.mainStory.progressStoryForTesting(this, part);
+    public void progressMainStoryForTesting(MainStoryStep part, MainStorySpawnLocation spawnData) {
+        gameData.mainStory.progressStoryForTesting(this, part, spawnData);
     }
 
     public boolean gameStarted() {
