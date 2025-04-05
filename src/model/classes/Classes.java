@@ -62,7 +62,7 @@ public interface Classes {
     CharacterClass CULTIST = new CultistNPCClass();
     CharacterClass GARDENER = new GardenerNPCClass();
     CharacterClass ARTIST = new ArtistNPCClass();
-
+    CharacterClass PIRATE = new PirateClass();
 
     // Special Classes:
     CharacterClass BONE_WALKER = new BoneWalkerClass();
