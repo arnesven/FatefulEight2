@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
@@ -22,6 +23,7 @@ import view.subviews.PortraitSubView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.awt.*;
 
@@ -38,6 +40,7 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
             new String[]{"Harley", "Harper", "Hayden"});
 
     private final List<PotentialMutineer> potentialMutineers;
+    private final PotentialMutineer realMutineer;
 
     public MainStorySpawnWest() {
         super(new LittleErindeTown().getName(),
@@ -50,6 +53,7 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
               "Pirates",
                WorldBuilder.PIRATE_HAVEN_LOCATION);
         this.potentialMutineers = makePotentialMutineers();
+        this.realMutineer = MyRandom.sample(potentialMutineers);
     }
 
     @Override
@@ -71,24 +75,48 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
     private List<PotentialMutineer> makePotentialMutineers() {
         List<String> names = MyLists.transform(ALL_PIRATE_NAMES, arr -> arr[MyRandom.randInt(arr.length)]);
         Collections.shuffle(names);
+
         List<Race> races = new ArrayList<>(List.of(Race.HIGH_ELF, Race.DARK_ELF, Race.WOOD_ELF,
                 Race.HALF_ORC, Race.HALFLING, Race.DWARF, Race.NORTHERN_HUMAN, Race.SOUTHERN_HUMAN));
+        Collections.shuffle(races);
+
         List<MyColors> colorList = new ArrayList<>(List.of(MyColors.DARK_RED, MyColors.DARK_GREEN, MyColors.ORANGE,
                 MyColors.RED, MyColors.DARK_BLUE, MyColors.CYAN, MyColors.PURPLE, MyColors.GOLD));
-        Collections.shuffle(races);
+
+        List<PersonalityTrait> traits = new ArrayList<>(PotentialMutineer.PERSONALITIES);
+        Collections.shuffle(traits);
+
+        List<Boolean> everyOther = List.of(true, true, true, true, false, false, false, false);
+
+        List<Boolean> femaleBody = new ArrayList<>(everyOther);
+        Collections.shuffle(femaleBody);
+
+        List<Boolean> likesRum = new ArrayList<>(everyOther);
+        Collections.shuffle(likesRum);
+
+        List<Boolean> usesPistol = new ArrayList<>(everyOther);
+        Collections.shuffle(usesPistol);
+
         List<PotentialMutineer> list = new ArrayList<>();
         int transIndex = MyRandom.randInt(names.size());
         for (int i = 0; i < names.size(); ++i) {
-            boolean femaleBody = i < 4;
-            boolean likesRum = (i / 2) % 2 == 0;
-            boolean usesPistol = i % 2 == 0;
             CharacterClass cls = new PirateClass(colorList.get(i));
-            AdvancedAppearance app = PortraitSubView.makeRandomPortrait(cls, races.get(i), femaleBody);
+            AdvancedAppearance app = PortraitSubView.makeRandomPortrait(cls, races.get(i), femaleBody.get(i));
             GameCharacter chara = new GameCharacter(names.get(i), "", races.get(i),
                     cls, app, Classes.NO_OTHER_CLASSES,
-                    new Equipment(usesPistol ? new Pistol() : new Cutlass(), new LeatherTunic(), null));
-            list.add(new PotentialMutineer(chara, i == transIndex, likesRum));
+                    new Equipment(usesPistol.get(i) ? new Pistol() : new Cutlass(), new LeatherTunic(), null));
+            list.add(new PotentialMutineer(chara, traits.get(i % traits.size()), i == transIndex, likesRum.get(i),
+                    MyRandom.rollD6() == 1));
         }
+        list.sort(Comparator.comparing(PotentialMutineer::getName));
         return list;
+    }
+
+    public List<PotentialMutineer> getPotentialMutineers() {
+        return potentialMutineers;
+    }
+
+    public PotentialMutineer getRealMutineer() {
+        return realMutineer;
     }
 }

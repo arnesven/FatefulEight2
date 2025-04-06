@@ -1,5 +1,5 @@
 package model.quests;
 
 public enum QuestDifficulty {
-    EASY, MEDIUM, HARD
+    EASY, MEDIUM, HARD, VERY_HARD;
 }

@@ -73,7 +73,7 @@ public class PirateCaptainClass extends PrestigeClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         return new AvatarSprite(race, 0x380, MyColors.DARK_RED, race.getColor(), MyColors.DARK_BLUE,
-                appearance.getNormalHair(), CharacterAppearance.noHair());
+                appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 
     @Override

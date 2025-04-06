@@ -51,7 +51,7 @@ public class PirateClass extends SpecialCharacterClass {
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
         return new AvatarSprite(race, 0x3A0, MyColors.WHITE, race.getColor(), shirtAndHatColor,
-                appearance.getNormalHair(), CharacterAppearance.noHair());
+                appearance.getBackHairOnly(), appearance.getHalfBackHair());
     }
 
     @Override
