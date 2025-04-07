@@ -10,6 +10,7 @@ import model.races.HumanRace;
 import model.states.DailyEventState;
 import model.states.QuestState;
 import util.MyLists;
+import util.MyRandom;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,12 @@ class TalkToCrewEvent extends DailyEventState {
         this.state = state;
         this.crew = potentialMutineers;
         this.blockTalk = new HashSet<>();
+        for (PotentialMutineer pot : potentialMutineers) {
+            if ((pot.isUnkind() && MyRandom.flipCoin()) ||
+                    (pot.isAggressive() && MyRandom.randInt(3) == 0)) {
+                blockTalk.add(pot);
+            }
+        }
     }
 
     @Override
@@ -52,7 +59,7 @@ class TalkToCrewEvent extends DailyEventState {
         showExplicitPortrait(model, person.getAppearance(), person.getName());
         do {
             println("What would you like to ask " + person.getName() + " about?");
-            List<String> topics = List.of("Gender", "Race", "Personality", "Return");
+            List<String> topics = List.of("Gender", "Race", "Personality", "Mutiny", "Return");
             int choice = multipleOptionArrowMenu(model, 24, 24, topics);
             if (choice == 0) {
                 if (talkAboutGender(model, person)) {
@@ -65,7 +72,14 @@ class TalkToCrewEvent extends DailyEventState {
                     return;
                 }
             } else if (choice == 2) {
-                talkAboutPersonality(model, person);
+                if (talkAboutPersonality(model, person)) {
+                    blockTalk.add(person);
+                    return;
+                }
+            } else if (choice == 3) {
+                talkAboutMutiny(model, person);
+                blockTalk.add(person);
+                return;
             } else {
                 println("You walk away from " + person.getName() + ".");
                 return;
@@ -73,7 +87,7 @@ class TalkToCrewEvent extends DailyEventState {
         } while (true);
     }
 
-    private void talkAboutPersonality(Model model, PotentialMutineer person) {
+    private boolean talkAboutPersonality(Model model, PotentialMutineer person) {
         List<String> questions = List.of("Do you prefer blades or pistols?",
                 "Do you prefer rum or wine?");
         int choice = multipleOptionArrowMenu(model, 24, 24, questions);
@@ -83,6 +97,19 @@ class TalkToCrewEvent extends DailyEventState {
         } else {
             answerDrinkQuestions(model, person);
         }
+        int target = 0;
+        if (person.isAggressive()) {
+            target = 1;
+        } else if (person.isUnkind()) {
+            target = 2;
+        }
+        if (MyRandom.randInt(3) < target) {
+            portraitSay(MyRandom.sample(List.of("Why are you asking me all these questions?", "Enough talk!",
+                    "Bla bla bla! I have better things to do than standing her talking to you.")));
+            println(person.getName() + " walks of in annoyance.");
+            return true;
+        }
+        return false;
     }
 
     private void answerWeaponQuestion(Model model, PotentialMutineer person) {
@@ -163,13 +190,13 @@ class TalkToCrewEvent extends DailyEventState {
             }
             String extra = "";
             if (person.isAggressive()) {
-                extra = " So What?";
+                extra = " So what?";
             }
-            portraitSay("Yes, I'm " + (person.getGender() ? "woman" : "man") + "." + extra);
+            portraitSay("Yes, I'm a " + (person.getGender() ? "woman" : "man") + "." + extra);
         } else {
             if (person.isUnkind() || person.isAggressive()) {
                 println(person.getName() + " frowns and recoils!");
-                portraitSay("What are you insinuating? I'm obviously a " + (person.getGender() ? "woman" : "man") + "!");
+                portraitSay("What are you implying? I'm obviously a " + (person.getGender() ? "woman" : "man") + "!");
                 println(person.getName() + " is annoyed and walks away.");
                 return true;
             }
@@ -226,7 +253,7 @@ class TalkToCrewEvent extends DailyEventState {
                 return true;
             }
             if (person.isAggressive()) {
-                portraitSay("Yes, I'm" + article + " " + races.get(choice) + ". So What?");
+                portraitSay("Yes, I'm" + article + " " + races.get(choice) + ". So what?");
             } else {
                 portraitSay("Yes, I'm" + article + " " + races.get(choice) + ". At your service!");
             }
@@ -256,5 +283,32 @@ class TalkToCrewEvent extends DailyEventState {
             portraitSay("What? Obviously not.");
         }
         return false;
+    }
+
+    private void talkAboutMutiny(Model model, PotentialMutineer person) {
+        if (MyRandom.flipCoin()) {
+            leaderSay("Uhm... what are your general feelings about mutiny?");
+            if (person.isJovial()) {
+                portraitSay("Oh I love it! It's one of my favorite pastimes on the ship.");
+                leaderSay("Seriously?");
+                portraitSay("Hehehe");
+                println(person.getName() + " just laughs and walks away.");
+            } else {
+                portraitSay("I... hey, did the Captain put you up to this? I'm out of here.");
+                println(person.getName() + " stomps off.");
+            }
+        } else {
+            leaderSay("Say... you wouldn't happen to be the mutineer, would you?");
+            if (person.isJovial()) {
+                portraitSay("Oh no, you found me out! Darn it, and I was so close to getting away with it too!");
+                leaderSay("Getting away with... I'm not sure I understand.");
+                portraitSay("Hehehe");
+                println(person.getName() + " just laughs and walks away.");
+            } else {
+                portraitSay("I don't feel comfortable talking about this. We're done.");
+                println(person.getName() + " stomps off.");
+            }
+        }
+
     }
 }
