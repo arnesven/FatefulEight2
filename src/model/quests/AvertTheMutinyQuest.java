@@ -3,10 +3,7 @@ package model.quests;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
-import model.characters.appearance.AdvancedAppearance;
-import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.EyePatchDetail;
-import model.characters.appearance.FaceDetail;
+import model.characters.appearance.*;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.enemies.CrowEnemy;
@@ -25,16 +22,23 @@ import model.races.ElvenRace;
 import model.races.HumanRace;
 import model.races.Race;
 import model.states.DailyEventState;
+import model.states.GameState;
 import model.states.QuestState;
 import sound.BackgroundMusic;
 import util.MyLists;
 import view.MyColors;
 import view.combat.CombatTheme;
-import view.combat.DesertCombatTheme;
 import view.combat.IslandCombatTheme;
+import view.sprites.Sprite;
+import view.sprites.Sprite32x32;
+import view.sprites.WaterSprayFrontSprite;
+import view.sprites.WaterSpraySprite;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.PortraitSubView;
+import view.widget.QuestBackground;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AvertTheMutinyQuest extends Quest {
@@ -46,12 +50,16 @@ public class AvertTheMutinyQuest extends Quest {
     private static final String END_TEXT = "The mutineer is shackled and hauled off the ship. " +
             "Captain Blackbone rewards the party and promises to be a friend and ally for the future.";
 
-    private static final int COLLABORATIVE_CHECK_DIFFICULTY = 1; // TODO: 14
-    private static final int COLLECTIVE_CHECK_DIFFICULTY = 1; // TODO: 7
+    private static final int COLLABORATIVE_CHECK_DIFFICULTY = 14;
+    private static final int COLLECTIVE_CHECK_DIFFICULTY = 7;
     private final List<PotentialMutineer> potentialMutineers;
     private final PotentialMutineer realMutineer;
     private final AdvancedAppearance firstMatePortrait;
-    private CharacterAppearance blackbonePortrait;
+    private final CharacterAppearance blackbonePortrait;
+    private final Sprite blackboneAvatar;
+    private static List<QuestBackground> backgroundSprites = makeBackgroundSprites();
+    private final Sprite waterSprayFront = new WaterSprayFrontSprite();
+    private final Sprite[] waterSpray = new Sprite[]{new WaterSpraySprite(0), new WaterSpraySprite(1), new WaterSpraySprite(2)};
 
     public AvertTheMutinyQuest() {
         super("Avert the Mutiny", "Captain Blackbone", QuestDifficulty.VERY_HARD,
@@ -60,6 +68,7 @@ public class AvertTheMutinyQuest extends Quest {
         this.potentialMutineers = storySpawn.getPotentialMutineers();
         this.realMutineer = storySpawn.getRealMutineer();
         blackbonePortrait = PortraitSubView.makeRandomPortrait(Classes.PIRATE_CAPTAIN);
+        blackboneAvatar = Classes.PIRATE_CAPTAIN.getAvatar(blackbonePortrait.getRace(), blackbonePortrait);
         firstMatePortrait = PortraitSubView.makeRandomPortrait(Classes.PIRATE);
         firstMatePortrait.setFaceDetail(new EyePatchDetail());
         firstMatePortrait.setDetailColor(MyColors.BLACK);
@@ -93,8 +102,8 @@ public class AvertTheMutinyQuest extends Quest {
                                     "The crew have become restless, we must divert their attention with some entertainment."),
                             new SearchForHiddenCacheSubScene(5, 5))),
                        new QuestScene("Set up secret meeting", List.of(
-                            new CollaborativeSkillCheckSubScene(3, 4, Skill.SeekInfo, COLLABORATIVE_CHECK_DIFFICULTY,
-                                    "TODO: Talk about nightly meeting"))),
+                            new CollaborativeSkillCheckSubScene(3, 3, Skill.SeekInfo, COLLABORATIVE_CHECK_DIFFICULTY,
+                                    "No way we'll get to know anything around here until we start rubbing some elbows with these pirates."))),
                        new QuestScene("Accuse mutineer", List.of(
                             new AccuseMutineerSubScene(3, 8))),
                        new QuestScene("Sailing", List.of(
@@ -105,9 +114,9 @@ public class AvertTheMutinyQuest extends Quest {
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
-        QuestStartPointWithoutDecision start = new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(4).get(0)), "Part of this ship, part of the crew!");
-        SimpleJunction beforeAccuse = new SimpleJunction(3, 7, new QuestEdge(scenes.get(3).get(0)));
-        SimpleJunction beforeSail = new SimpleJunction(1, 0, new QuestEdge(scenes.get(4).get(0)));
+        QuestStartPointWithoutDecision start = new QuestStartPointWithoutDecision(new QuestEdge(scenes.get(4).get(0)), "Part of the ship, part of the crew!");
+        SimpleJunction beforeAccuse = new SimpleJunction(3, 7, new QuestEdge(scenes.get(3).get(0)), "Make accusation.");
+        SimpleJunction beforeSail = new SimpleJunction(1, 0, new QuestEdge(scenes.get(4).get(0)), "Continue investigation.");
         QuestDecisionPoint gather = new QuestDecisionPoint(7, 6,
                 List.of(new QuestEdge(beforeSail, QuestEdge.VERTICAL),
                         new QuestEdge(beforeAccuse, QuestEdge.VERTICAL)), "What's our next move?");
@@ -121,33 +130,57 @@ public class AvertTheMutinyQuest extends Quest {
                 new QuestEdge(interrogate)
         ),"We need some kind of activity which could lead us " +
                 "to a clue about the identity of the mutineer.");
-        StoryJunctionWithEvent nightlyMeet = new NightlyMeetNode(3, 6, new QuestEdge(gather));
-        return List.of(start, decision, talk, gather, nightlyMeet, interrogate, beforeAccuse, beforeSail);
+        StoryJunctionWithEvent nightlyMeet = new NightlyMeetNode(3, 4, new QuestEdge(gather, QuestEdge.VERTICAL));
+        StoryJunction forceGuess = new StoryJunction(2, 7, new QuestEdge(beforeAccuse)) {
+            @Override
+            protected void doAction(Model model, QuestState state) {
+                boolean gender = blackbonePortrait.getGender();
+                state.println("Captain Blackbone approaches you. You have performed poorly as pirates and " +
+                        GameState.heOrShe(gender) + " wants you off the ship as soon as possible. " +
+                        GameState.heOrSheCap(gender) + " offers you chance to redeem yourself if you can tell " +
+                        GameState.himOrHer(gender) + " who the mutineer is now.");
+            }
+        };
+        return List.of(start, decision, talk, gather, nightlyMeet, interrogate, beforeAccuse, beforeSail, forceGuess);
+    }
+
+    @Override
+    public List<QuestBackground> getDecorations() {
+        return List.of(new QuestBackground(new Point(4, 8), blackboneAvatar),
+                new QuestBackground(new Point(4, 5), waterSprayFront, false),
+                new QuestBackground(new Point(5, 5), waterSpray[0], false),
+                new QuestBackground(new Point(6, 5), waterSpray[1], false),
+                new QuestBackground(new Point(7, 5), waterSpray[2], false));
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return backgroundSprites;
     }
 
     @Override
     protected void connectScenesToJunctions(List<QuestScene> scenes, List<QuestJunction> junctions) {
         scenes.get(0).get(0).connectSuccess(junctions.get(1));
-        scenes.get(0).get(0).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
+        scenes.get(0).get(0).connectFail(junctions.get(8), QuestEdge.VERTICAL);
 
         scenes.get(1).get(0).connectSuccess(scenes.get(1).get(1), QuestEdge.VERTICAL);
 
         scenes.get(1).get(1).connectSuccess(junctions.get(3), QuestEdge.VERTICAL);
-        scenes.get(1).get(1).connectFail(getFailEndingNode());
+        scenes.get(1).get(1).connectFail(junctions.get(8));
 
         scenes.get(1).get(2).connectSuccess(junctions.get(3), QuestEdge.VERTICAL);
-        scenes.get(1).get(2).connectFail(getFailEndingNode());
+        scenes.get(1).get(2).connectFail(junctions.get(8));
 
         scenes.get(1).get(3).connectSuccess(junctions.get(3), QuestEdge.VERTICAL);
         scenes.get(1).get(3).connectFail(scenes.get(1).get(2));
 
-        scenes.get(2).get(0).connectFail(getFailEndingNode());
+        scenes.get(2).get(0).connectFail(junctions.get(8));
         scenes.get(2).get(0).connectSuccess(junctions.get(4));
 
         scenes.get(3).get(0).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
         scenes.get(3).get(0).connectSuccess(getSuccessEndingNode());
 
-        scenes.get(4).get(0).connectFail(getFailEndingNode());
+        scenes.get(4).get(0).connectFail(junctions.get(8), QuestEdge.VERTICAL);
         scenes.get(4).get(0).connectSuccess(scenes.get(0).get(0));
     }
 
@@ -166,10 +199,10 @@ public class AvertTheMutinyQuest extends Quest {
     }
 
     private class CombatMonkeysSubScene extends CombatSubScene {
+
         public CombatMonkeysSubScene(int col, int row) {
             super(col, row, makeMonkeys());
         }
-
         @Override
         public QuestEdge run(Model model, QuestState state) {
             state.println("As the crew drag several extremely heavy chests of swag ashore, " +
@@ -192,14 +225,14 @@ public class AvertTheMutinyQuest extends Quest {
         protected String getCombatDetails() {
             return "Monkeys";
         }
+
     }
 
-
     private class TalkToCrewNode extends StoryJunctionWithEvent {
+
         public TalkToCrewNode(int col, int row, QuestEdge edge) {
             super(col, row, edge);
         }
-
         @Override
         public DailyEventState makeEvent(Model model, QuestState state) {
             return new TalkToCrewEvent(model, state, potentialMutineers);
@@ -209,13 +242,13 @@ public class AvertTheMutinyQuest extends Quest {
         public String getDescription() {
             return "Talk to crew";
         }
-    }
 
+    }
     private class AccuseMutineerSubScene extends ConditionSubScene {
+
         public AccuseMutineerSubScene(int col, int row) {
             super(col, row);
         }
-
         @Override
         public String getDescription() {
             return "Make a decision.";
@@ -246,13 +279,13 @@ public class AvertTheMutinyQuest extends Quest {
                     ". Blackbone is unconvinced and he dismisses you in disgust.");
             return getFailEdge();
         }
-    }
 
+    }
     private class InterrogateFirstMateNode extends StoryJunctionWithEvent {
+
         public InterrogateFirstMateNode(int col, int row, QuestEdge edge) {
             super(col, row, edge);
         }
-
         @Override
         public DailyEventState makeEvent(Model model, QuestState state) {
             return new DailyEventState(model) {
@@ -293,13 +326,13 @@ public class AvertTheMutinyQuest extends Quest {
         public String getDescription() {
             return "Question first mate";
         }
-    }
 
+    }
     private class NightlyMeetNode extends StoryJunctionWithEvent {
+
         public NightlyMeetNode(int col, int row, QuestEdge edge) {
             super(col, row, edge);
         }
-
         @Override
         public DailyEventState makeEvent(Model model, QuestState state) {
             return new DailyEventState(model) {
@@ -416,14 +449,14 @@ public class AvertTheMutinyQuest extends Quest {
         public String getDescription() {
             return "Nightly secret meeting with mutineer";
         }
-    }
 
+    }
     private class SearchForHiddenCacheSubScene extends CollaborativeSkillCheckSubScene {
+
         public SearchForHiddenCacheSubScene(int col, int row) {
             super(col, row, Skill.Search, COLLABORATIVE_CHECK_DIFFICULTY,
                     "Let's search the ship for hidden caches.");
         }
-
         @Override
         protected void subSceneOutro(Model model, QuestState state, boolean skillSuccess) {
             if (skillSuccess) {
@@ -442,5 +475,62 @@ public class AvertTheMutinyQuest extends Quest {
                 state.leaderSay("All that work, and we didn't find more than a few rats and some empty bottles.");
             }
         }
+
+    }
+    private static List<QuestBackground> makeBackgroundSprites() {
+        MyColors waterColor = MyColors.LIGHT_BLUE;
+        MyColors skyColor = MyColors.CYAN;
+        List<QuestBackground> bg = new ArrayList<>();
+        Sprite32x32[][] island = new Sprite32x32[2][5];
+        for (int row = 0; row < island[0].length; ++row) {
+            for (int col = 0; col < island.length; ++col) {
+                island[col][row] = new Sprite32x32("mutinybg1", "quest.png", 0xA6 + 0x10*row + col,
+                        MyColors.DARK_GREEN, MyColors.LIGHT_YELLOW, waterColor, skyColor);
+                bg.add(new QuestBackground(new Point(col, row), island[col][row], false));
+            }
+        }
+
+        Sprite32x32[][] ship = new Sprite32x32[5][5];
+        for (int row = 0; row < ship[0].length; ++row) {
+            for (int col = 0; col < ship.length; ++col) {
+                MyColors[] colors = new MyColors[]{waterColor, MyColors.WHITE, MyColors.BEIGE, MyColors.WHITE};
+                if (row < 1) {
+                    colors[0] = skyColor;
+                    if (col == 0) {
+                        colors[1] = MyColors.CYAN;
+                    }
+                } else if (row > 3) {
+                    colors[1] = MyColors.GOLD;
+                    colors[2] = MyColors.DARK_BROWN;
+                    colors[3] = MyColors.BROWN;
+                } else if (col < 1) {
+                    colors[1] = MyColors.BROWN;
+                }
+
+                ship[col][row] = new Sprite32x32("mutinybg2", "quest.png", 0xA8 + 0x10*row + col,
+                        colors[0], colors[1], colors[2], colors[3]);
+                bg.add(new QuestBackground(new Point(col+3, row+1), ship[col][row], false));
+            }
+        }
+
+        for (int row = 0; row < 2; ++row) {
+            bg.add(new QuestBackground(new Point(2, row), ship[1][0], false));
+        }
+        for (int col = 3; col < 8; ++col) {
+            bg.add(new QuestBackground(new Point(col, 0), ship[1][0], false));
+        }
+
+        for (int row = 2; row < 5; ++row) {
+            bg.add(new QuestBackground(new Point(2, row), ship[0][1], false));
+        }
+
+        for (int col = 0; col < 8; ++col) {
+            if (col < 3) {
+                bg.add(new QuestBackground(new Point(col, 5), ship[0][1], false));
+            }
+            bg.add(new QuestBackground(new Point(col, 6), ship[0][1], false));
+        }
+
+        return bg;
     }
 }

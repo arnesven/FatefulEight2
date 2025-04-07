@@ -25,7 +25,7 @@ public class QuestDeck implements Serializable {
 
     private static List<Quest> makeAllQuests() {
         return List.of(
-                new AbandonedMineQuest(),
+//                new AbandonedMineQuest(),
                 new AvertTheMutinyQuest()
 //                new ArenaQuest(),
 //                new BrrbitsReward(),

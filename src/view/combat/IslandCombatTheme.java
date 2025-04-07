@@ -10,8 +10,8 @@ import java.util.Random;
 public class IslandCombatTheme extends CombatTheme {
     private static final MyColors TREE_COLOR = MyColors.DARK_GREEN;
     private static final MyColors SAND_COLOR = MyColors.LIGHT_YELLOW;
-    private static final MyColors WATER_COLOR = MyColors.CYAN;
-    private static final MyColors SKY_COLOR = MyColors.LIGHT_BLUE;
+    private static final MyColors WATER_COLOR = MyColors.LIGHT_BLUE;
+    private static final MyColors SKY_COLOR = MyColors.CYAN;
     private final Sprite[] beachSprites;
     private final Sprite[] grassSprites;
     private final Sprite32x32 seascapeUL;
