@@ -1,6 +1,7 @@
 package model.items.clothing;
 
 import model.items.Item;
+import model.items.PirateItem;
 import model.items.Prevalence;
 import util.MyLists;
 import util.MyRandom;
@@ -10,7 +11,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class PirateVest extends Clothing {
+public class PirateVest extends Clothing implements PirateItem {
 
     private static final List<MyColors> COLORS = List.of(MyColors.DARK_GREEN, MyColors.DARK_RED,
             MyColors.GOLD, MyColors.BROWN, MyColors.DARK_BLUE);

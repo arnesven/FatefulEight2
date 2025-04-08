@@ -3,6 +3,7 @@ package model.items.accessories;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
+import model.items.PirateItem;
 import model.items.Prevalence;
 import util.MyPair;
 import view.MyColors;
@@ -12,7 +13,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class Spyglass extends ShieldItem {
+public class Spyglass extends ShieldItem implements PirateItem {
     private static final Sprite SPRITE = new ItemSprite(8, 16, MyColors.BROWN, MyColors.PEACH, MyColors.CYAN);
 
     private static final Sprite[] SHIELD_SPRITES = makeShiftedSpriteSet(

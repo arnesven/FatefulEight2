@@ -29,6 +29,7 @@ import java.awt.*;
 
 public class MainStorySpawnWest extends MainStorySpawnLocation {
 
+    public static final String CAPTAIN_NAME = "Blackbone";
     private static final List<String[]> ALL_PIRATE_NAMES = List.of(
             new String[]{"Avery", "Alex", "August"},
             new String[]{"Bailey", "Blake", "Brook"},

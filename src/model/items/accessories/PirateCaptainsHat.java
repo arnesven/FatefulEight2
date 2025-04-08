@@ -2,6 +2,7 @@ package model.items.accessories;
 
 import model.classes.Skill;
 import model.items.Item;
+import model.items.PirateItem;
 import model.items.Prevalence;
 import util.MyPair;
 import util.MyRandom;
@@ -11,7 +12,7 @@ import view.sprites.Sprite;
 
 import java.util.List;
 
-public class PirateCaptainsHat extends HeadGearItem {
+public class PirateCaptainsHat extends HeadGearItem implements PirateItem {
     private static final List<MyColors> BAND_COLORS = List.of(MyColors.RED, MyColors.ORANGE,
             MyColors.BEIGE, MyColors.DARK_RED, MyColors.DARK_PURPLE, MyColors.BLUE);
     private final ItemSprite sprite;

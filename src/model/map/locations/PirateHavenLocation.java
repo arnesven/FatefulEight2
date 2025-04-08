@@ -43,6 +43,11 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
     }
 
     @Override
+    public boolean hasLodging() {
+        return true;
+    }
+
+    @Override
     protected Sprite getUpperSprite() {
         return HexLocationSprite.make("piratehavenupper", 0x1A2, MyColors.BLACK, MyColors.PEACH, MyColors.DARK_RED, MyColors.LIGHT_BLUE);
     }
@@ -90,7 +95,7 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
 
     @Override
     public Point getTavernPosition() {
-        return new Point(3, 3);
+        return new Point(4, 3);
     }
 
 

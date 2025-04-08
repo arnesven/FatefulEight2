@@ -17,6 +17,11 @@ public class BeerPotion extends IntoxicatingPotion {
     }
 
     @Override
+    public String getTypicalGlass() {
+        return "tankard";
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

@@ -1,12 +1,13 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.PirateItem;
 import view.sprites.RangedStrikeEffect;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class Harpoons extends PolearmWeapon {
+public class Harpoons extends PolearmWeapon implements PirateItem {
 
     private static final Sprite SPRITE = new TwoHandedItemSprite(0, 17);
 

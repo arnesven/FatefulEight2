@@ -18,6 +18,11 @@ public class RumPotion extends IntoxicatingPotion {
     }
 
     @Override
+    public String getTypicalGlass() {
+        return "mug";
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }

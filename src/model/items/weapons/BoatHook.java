@@ -1,11 +1,12 @@
 package model.items.weapons;
 
 import model.items.Item;
+import model.items.PirateItem;
 import model.items.Prevalence;
 import view.sprites.Sprite;
 import view.sprites.TwoHandedItemSprite;
 
-public class BoatHook extends PolearmWeapon {
+public class BoatHook extends PolearmWeapon implements PirateItem {
     private static final Sprite SPRITE = new TwoHandedItemSprite(11, 16);
 
     public BoatHook() {

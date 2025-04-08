@@ -17,6 +17,11 @@ public class WinePotion extends IntoxicatingPotion {
     }
 
     @Override
+    public String getTypicalGlass() {
+        return "cup";
+    }
+
+    @Override
     protected Sprite getSprite() {
         return SPRITE;
     }
