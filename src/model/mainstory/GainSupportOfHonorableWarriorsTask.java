@@ -1,11 +1,15 @@
 package model.mainstory;
 
 import model.Model;
+import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.map.WorldBuilder;
+import model.quests.Quest;
+import util.MyTriplet;
 
 import java.awt.*;
+import java.util.List;
 
 public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopleTask {
     private final boolean completed;
@@ -38,5 +42,11 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     @Override
     public boolean isCompleted() {
         return completed;
+    }
+
+
+    @Override
+    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
+        return null;
     }
 }

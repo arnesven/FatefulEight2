@@ -151,6 +151,8 @@ public class MainStory implements Serializable {
         map.put(vampireQuest.getName(), vampireQuest);
         EscapeTheDungeonQuest escapeQuest = new EscapeTheDungeonQuest();
         map.put(escapeQuest.getName(), escapeQuest);
+        AvertTheMutinyQuest mutinyQuest = new AvertTheMutinyQuest();
+        map.put(mutinyQuest.getName(), mutinyQuest);
         return map;
     }
 

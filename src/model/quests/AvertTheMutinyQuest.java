@@ -41,7 +41,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AvertTheMutinyQuest extends Quest {
+public class AvertTheMutinyQuest extends MainQuest {
+    public static final String QUEST_NAME = "Avert the Mutiny";
     private static final String INTRO_TEXT =
             "The renowned pirate captain Blackbone has contracted the party to investigate a rumor that " +
             "there is a mutineer among his crew. He has narrowed it down to eight crew members. The party must pose as " +
@@ -55,20 +56,18 @@ public class AvertTheMutinyQuest extends Quest {
     private final List<PotentialMutineer> potentialMutineers;
     private final PotentialMutineer realMutineer;
     private final AdvancedAppearance firstMatePortrait;
-    private final CharacterAppearance blackbonePortrait;
-    private final Sprite blackboneAvatar;
-    private static List<QuestBackground> backgroundSprites = makeBackgroundSprites();
+    private CharacterAppearance blackbonePortrait;
+    private Sprite blackboneAvatar;
+    private static final List<QuestBackground> backgroundSprites = makeBackgroundSprites();
     private final Sprite waterSprayFront = new WaterSprayFrontSprite();
     private final Sprite[] waterSpray = new Sprite[]{new WaterSpraySprite(0), new WaterSpraySprite(1), new WaterSpraySprite(2)};
 
     public AvertTheMutinyQuest() {
-        super("Avert the Mutiny", "Captain Blackbone", QuestDifficulty.VERY_HARD,
+        super(QUEST_NAME, "Captain Blackbone", QuestDifficulty.VERY_HARD,
                 new Reward(1, 200, 0), 0, INTRO_TEXT, END_TEXT);
         MainStorySpawnWest storySpawn = new MainStorySpawnWest(); // Get this from the main story
         this.potentialMutineers = storySpawn.getPotentialMutineers();
         this.realMutineer = storySpawn.getRealMutineer();
-        blackbonePortrait = PortraitSubView.makeRandomPortrait(Classes.PIRATE_CAPTAIN);
-        blackboneAvatar = Classes.PIRATE_CAPTAIN.getAvatar(blackbonePortrait.getRace(), blackbonePortrait);
         firstMatePortrait = PortraitSubView.makeRandomPortrait(Classes.PIRATE);
         firstMatePortrait.setFaceDetail(new EyePatchDetail());
         firstMatePortrait.setDetailColor(MyColors.BLACK);
@@ -80,8 +79,19 @@ public class AvertTheMutinyQuest extends Quest {
     }
 
     @Override
+    public void setPortrait(CharacterAppearance unclePortrait) {
+        blackbonePortrait = unclePortrait;
+        blackboneAvatar = Classes.PIRATE_CAPTAIN.getAvatar(blackbonePortrait.getRace(), blackbonePortrait);
+    }
+
+    @Override
     public CharacterAppearance getPortrait() {
         return blackbonePortrait;
+    }
+
+    @Override
+    public MainQuest copy() {
+        return new AvertTheMutinyQuest();
     }
 
     @Override

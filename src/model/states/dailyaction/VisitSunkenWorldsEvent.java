@@ -2,6 +2,7 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.classes.SpecificArtisanClass;
@@ -12,6 +13,12 @@ import model.items.potions.IntoxicatingPotion;
 import model.items.potions.RumPotion;
 import model.items.potions.WinePotion;
 import model.journal.MainStorySpawnWest;
+import model.journal.PartSixStoryPart;
+import model.journal.StoryPart;
+import model.mainstory.GainSupportOfPiratesTask;
+import model.map.CastleLocation;
+import model.map.WorldBuilder;
+import model.map.locations.SunblazeCastle;
 import model.states.DailyEventState;
 import model.states.EveningState;
 import model.states.GameState;
@@ -48,7 +55,7 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
 
         String randomCaptain = MyRandom.sample(CAPTAIN_NAMES);
         if (isMainStoryTriggered(model)) {
-            randomCaptain = MainStorySpawnWest.CAPTAIN_NAME;
+            randomCaptain = GainSupportOfPiratesTask.CAPTAIN_NAME;
         }
 
         portraitSay("Your in luck newcomer. Tonight drinks are on the generous, " +
@@ -104,7 +111,20 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                 }
             } else if (choice == 3) {
                 if (isMainStoryTriggered(model)) {
-                    println("You look around for Captain " + randomCaptain + ". Finally you get an opportunity to sit down with TODO");
+                    CharacterAppearance app = getGainSupportTask(model).getCaptainAppearance();
+                    println("You look around for Captain " + randomCaptain + ". Finally you get an opportunity to sit down with " + himOrHer(app.getGender()) + ".");
+                    showExplicitPortrait(model, app, "Captain " + GainSupportOfPiratesTask.CAPTAIN_NAME);
+                    portraitSay("I know you, you're the leader of that wanted gang.");
+                    leaderSay("What?");
+                    SunblazeCastle sunblaze = new SunblazeCastle();
+                    portraitSay("Yes. I've heard all of " + CastleLocation.placeNameShort(sunblaze.getPlaceName()) +
+                            " is looking for you. What did you do to piss off " + sunblaze.getLordName() + "?");
+                    leaderSay("Oh, nothing really. " + sunblaze.getLordName() + " isn't quite " + himOrHer(sunblaze.getLordGender()) + "self nowadays.");
+                    portraitSay("I'll say. That whole kingdom is coming to pieces. It's not been good for business actually.");
+                    leaderSay("I thought you just had a good haul?");
+                    portraitSay(""); // TODO: More, make deal with Blackbone, you find his mutineer, he'll raid the southern shores of Sunblaze until Elozi has been overthrown.
+                    getGainSupportTask(model).setBlackboneMet(true);
+                    removePortraitSubView(model);
                 } else {
                     println("You look around for Captain " + randomCaptain + " but can only catch a glimpse, as the notorious pirate is " +
                             "a very popular person tonight.");
@@ -119,6 +139,16 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
         } else {
             println("You leave the Sunken Worlds.");
         }
+    }
+
+    private GainSupportOfPiratesTask getGainSupportTask(Model model) {
+        return ((GainSupportOfPiratesTask)getStoryPartSix(model).getRemotePeopleTask());
+    }
+
+    private PartSixStoryPart getStoryPartSix(Model model) {
+        List<StoryPart> storyParts = model.getMainStory().getStoryParts();
+        StoryPart lastStoryPart = storyParts.get(storyParts.size() - 1);
+        return (PartSixStoryPart) lastStoryPart;
     }
 
     private void getDrinkFromBar(Model model, GameCharacter gc) {
@@ -139,6 +169,16 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
     }
 
     private boolean isMainStoryTriggered(Model model) {
+        if (model.getMainStory().getExpandDirection() == WorldBuilder.EXPAND_WEST) {
+            List<StoryPart> storyParts = model.getMainStory().getStoryParts();
+            StoryPart lastStoryPart = storyParts.get(storyParts.size() - 1);
+            if (lastStoryPart instanceof PartSixStoryPart) {
+                PartSixStoryPart partSix = (PartSixStoryPart) lastStoryPart;
+                if (partSix.witchTalkedTo()) {
+                    return !partSix.getRemotePeopleTask().isCompleted();
+                }
+            }
+        }
         return false;
     }
 }

@@ -2,10 +2,14 @@ package model.mainstory;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
+import model.quests.Quest;
 import model.tasks.DestinationTask;
+import util.MyTriplet;
 
 import java.awt.*;
+import java.util.List;
 
 public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public GainSupportOfRemotePeopleTask(Point position) {
@@ -31,4 +35,6 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public boolean givesDailyAction(Model model) {
         return false;
     }
+
+    public abstract MyTriplet<String, CharacterAppearance, String> addQuests(Model model);
 }

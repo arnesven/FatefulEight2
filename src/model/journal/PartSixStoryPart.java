@@ -10,12 +10,14 @@ import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.EscapeTheDungeonQuest;
+import model.quests.MainQuest;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import util.MyStrings;
+import util.MyTriplet;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -72,7 +74,10 @@ public class PartSixStoryPart extends StoryPart {
 
     @Override
     public void addQuests(Model model, List<Quest> quests) {
-
+        MyTriplet<String, CharacterAppearance, String> triplet = gainSupportOfRemotePeopleTask.addQuests(model);
+        if (triplet != null) {
+            quests.add(getQuestAndSetPortrait(triplet.first, triplet.second, triplet.third));
+        }
     }
 
     @Override
@@ -132,6 +137,14 @@ public class PartSixStoryPart extends StoryPart {
     @Override
     protected boolean isCompleted() {
         return false;
+    }
+
+    public boolean witchTalkedTo() {
+        return internalStep >= 2;
+    }
+
+    public GainSupportOfRemotePeopleTask getRemotePeopleTask() {
+        return gainSupportOfRemotePeopleTask;
     }
 
     private class EscapeTheDungeonJournalEntry extends MainStoryTask {
