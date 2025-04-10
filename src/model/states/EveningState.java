@@ -518,9 +518,9 @@ public class EveningState extends GameState {
         if (MyLists.any(model.getParty().getPartyMembers(), CheckForVampireEvent::isVampire)) {
             return false;
         }
-        int twoDice = MyRandom.rollD6() + MyRandom.rollD6();
-        return (isUrbanLocation && twoDice <= 3) || // 1 in 12 chance
-                (isFarmLocation && twoDice == 2);   // 1 in 36 chance
+        int twoDice = MyRandom.rollD10() + MyRandom.rollD10();
+        return (isUrbanLocation && twoDice <= 4) || // 6% chance
+                (isFarmLocation && twoDice <= 3);   // 3% chance
     }
 
     private boolean partyVampireFeedInUrbanLocation(Model model, GameCharacter vampire, List<GameCharacter> nonVampires, boolean onFarm) {

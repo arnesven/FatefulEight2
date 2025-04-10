@@ -113,7 +113,7 @@ public class MainStory implements Serializable {
     }
 
     public boolean isStarted() {
-        return spawnData != null;
+        return !storyParts.isEmpty();
     }
 
     public void addQuests(Model model, List<Quest> quests) {

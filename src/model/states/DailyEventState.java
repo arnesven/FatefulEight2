@@ -316,8 +316,10 @@ public abstract class DailyEventState extends GameState {
             if (Classes.ALIGNMENT.containsKey(gc.getCharClass().id())) {
                 modifier = Classes.ALIGNMENT.get(gc.getCharClass().id());
             }
-            event.println("... " + gc.getFirstName() + " is a " + gc.getCharClass().getFullName() + ": " + MyStrings.withPlus(modifier));
-            sum += modifier;
+            if (gc.getCharClass().id() != Classes.None.id()) {
+                event.println("... " + gc.getFirstName() + " is a " + gc.getCharClass().getFullName() + ": " + MyStrings.withPlus(modifier));
+                sum += modifier;
+            }
         }
         event.println("... Total party alignment: " + MyStrings.withPlus(sum));
         return sum;
