@@ -24,11 +24,17 @@ public class InventoryView extends SelectableListMenu {
     private static final int WIDTH = 48;
     private static final int HEIGHT = 30;
     private static AnimatedCharSprite arrowSprite = new MovingRightArrow(MyColors.WHITE, MyColors.BLUE);
+    public static final int POTIONS_TAB_INDEX = 5;
     private static ItemTab[] tabNames = makeTabs();
     private int selectedTab = 0;
 
-    public InventoryView(GameView previous) {
+    public InventoryView(GameView previous, int startTab) {
         super(previous, WIDTH-29, HEIGHT-4);
+        selectedTab = startTab;
+    }
+
+    public InventoryView(GameView previous) {
+        this(previous, 0);
     }
 
     @Override

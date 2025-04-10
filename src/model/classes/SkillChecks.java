@@ -34,7 +34,7 @@ public class SkillChecks {
                             "have items in your inventory which you can raise stamina. " +
                             "Do you want to use one? (Y/N) ");
                     if (event.yesNoInput()) {
-                        model.transitionToDialog(new InventoryView(model.getView()));
+                        model.transitionToDialog(new InventoryView(model.getView(), InventoryView.POTIONS_TAB_INDEX));
                     } else {
                         break;
                     }
