@@ -215,6 +215,8 @@ public abstract class GameState implements GameStateConstants {
 
     protected String iveOrWeve() { return model.getParty().size() == 1 ? "I've":"we've"; }
 
+    protected String iWasOrWeWere() { return model.getParty().size() == 1 ? "I was" : "we were"; }
+
     protected String imOrWere() { return model.getParty().size() == 1 ? "I'm":"We're"; }
 
     protected String myOrOur() { return model.getParty().size() == 1 ? "my":"our"; }

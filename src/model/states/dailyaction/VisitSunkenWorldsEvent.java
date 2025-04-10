@@ -62,7 +62,7 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                 "notorious and glorious, Captain " + randomCaptain + "!");
         leaderSay("Seriously? It's an open bar?");
         portraitSay("Yes. The captain has had a very good haul and is celebrating with anyone who call themselves pirates.");
-        leaderSay("Three cheers for Captain " + randomCaptain);
+        leaderSay("Three cheers for Captain " + randomCaptain + "!");
         model.getLog().waitForAnimationToFinish();
         removePortraitSubView(model);
 
@@ -114,15 +114,51 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
                     CharacterAppearance app = getGainSupportTask(model).getCaptainAppearance();
                     println("You look around for Captain " + randomCaptain + ". Finally you get an opportunity to sit down with " + himOrHer(app.getGender()) + ".");
                     showExplicitPortrait(model, app, "Captain " + GainSupportOfPiratesTask.CAPTAIN_NAME);
-                    portraitSay("I know you, you're the leader of that wanted gang.");
+                    portraitSay("I know you! You're the leader of that wanted gang.");
                     leaderSay("What?");
                     SunblazeCastle sunblaze = new SunblazeCastle();
                     portraitSay("Yes. I've heard all of " + CastleLocation.placeNameShort(sunblaze.getPlaceName()) +
                             " is looking for you. What did you do to piss off " + sunblaze.getLordName() + "?");
-                    leaderSay("Oh, nothing really. " + sunblaze.getLordName() + " isn't quite " + himOrHer(sunblaze.getLordGender()) + "self nowadays.");
-                    portraitSay("I'll say. That whole kingdom is coming to pieces. It's not been good for business actually.");
-                    leaderSay("I thought you just had a good haul?");
-                    portraitSay(""); // TODO: More, make deal with Blackbone, you find his mutineer, he'll raid the southern shores of Sunblaze until Elozi has been overthrown.
+                    leaderSay("Oh, nothing really. " + sunblaze.getLordName() + " isn't quite " + himOrHer(sunblaze.getLordGender()) + "self these days.");
+                    portraitSay("I'll say. That whole kingdom is coming to pieces. But the world has gone pretty crazy in these parts too.");
+                    leaderSay("Crazy? What do you mean?");
+                    portraitSay("There's been a huge surge in orcish activity. We used to encounter orcish pirates every once in a while. But now, " +
+                            "you can barely leave port without bumping into an orc ship. And they're way better equipped than they used to be. They're more " +
+                            "like war ships than pirate raiding parties.");
+                    leaderSay("They are war ships. Orc armies have been deployed to the western shores of " + CastleLocation.placeNameShort(sunblaze.getPlaceName()) +
+                            ", and more recently I've heard orc attacks have spread to other kingdoms as well.");
+                    portraitSay("Blasted greenskins. It's not good for business you know. I was lucky I got a good haul this time. " +
+                            "But what have got the orcs so riled up?");
+                    leaderSay("Actually, " + iOrWe() + " have been investigating the matter. Or " + iWasOrWeWere() + ", until " +
+                            sunblaze.getLordTitle() + " " + sunblaze.getLordName() + " turned on us. " + iOrWeCap() + " think there is " +
+                            " a connection between " + hisOrHer(sunblaze.getLordGender()) + " sudden despotic behavior and the orcish uprising.");
+                    portraitSay("How intriguing!");
+                    leaderSay("Yes. The theory is that " + sunblaze.getLordTitle() + " " + sunblaze.getLordName() + " has been put under some kind " +
+                            "of spell by a cabal of ancient evil sorcerers, called the Quad.");
+                    portraitSay("The Quad? I think I've heard of that. Thought it just an old wives tale. So... what do you intend to do?");
+                    leaderSay(iOrWeCap() + " have to get back to " + sunblaze.getPlaceName() + ". It's our only lead. And in any case, we can't allow " +
+                            sunblaze.getLordName() + " to continue his mad rule. In fact, " + iOrWe() + "'ve been looking for an influential pirate lord like yourself to " +
+                            "rally the pirate captains in support of this cause.");
+                    portraitSay("Now wait just a minute...");
+                    leaderSay("Captain " + GainSupportOfPiratesTask.CAPTAIN_NAME + ", we need your help!");
+                    portraitSay("And you thought you could convince a notorious pirate to aid you for the greater good? What's in it for me?");
+                    leaderSay("You said yourself that the current state of things was bad for business. If you help us overthrow " + sunblaze.getLordName() +
+                            ", the orcish activity will stop.");
+                    portraitSay("You don't really know that for sure.");
+                    leaderSay("No, I don't. But the way I see it, you have two choices. Either, you can sit here and enjoy your last big score, " +
+                            "knowing that these lands will soon be overrun with " + sunblaze.getLordName() + "'s forces, rampaging orcs, or something worse. " +
+                            "Or you can join me, and go down in history as the Pirate Lord who stepped up to the challenge and fought for freedom and justice!");
+                    portraitSay("That does sound pretty good.... Okay you've convinced me, but there's a problem.");
+                    leaderSay("What is it?");
+                    portraitSay("I've had a good run. But after a few close calls with those orcish sea scum, I've had to hire many new hands. " +
+                            "Most are good lads and lasses, but the other night, my first mate overheard a worrying conversation " +
+                            "here at the Sunken Worlds. There's a mutineer on my crew! I've narrowed it down to eight, but I need help figuring out who it is.");
+                    leaderSay("Seems easy enough.");
+                    portraitSay("It would be, for somebody acting like their part of the crew. Join my crew for a while. Find out who the mutineer is! " +
+                            "Then I promise I'll pull strings, gather every captain I know, and put together a force to be reckoned with!");
+                    leaderSay("Sounds fair! When do I start?");
+                    portraitSay("As soon as you like. But tonight, let's celebrate!");
+                    leaderSay("Can't argue with that. My thanks " + GainSupportOfPiratesTask.CAPTAIN_NAME + ".");
                     getGainSupportTask(model).setBlackboneMet(true);
                     removePortraitSubView(model);
                 } else {
