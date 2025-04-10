@@ -45,6 +45,10 @@ public class CampOutsideOfTownNode extends DailyActionNode {
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         if (!state.isMorning()) {
+            if (model.getParty().getFood() < model.getParty().size()) {
+                state.print("You do not have enough rations for your whole party to eat this evening. Are you sure you want to end the day? (Y/N) ");
+                return state.yesNoInput();
+            }
             return true;
         }
         state.println("It's too early to make camp yet!");

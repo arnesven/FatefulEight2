@@ -4,13 +4,11 @@ import model.Model;
 import model.Party;
 import model.SteppingMatrix;
 import model.characters.*;
-import model.combat.conditions.VampirismCondition;
 import model.headquarters.TransferCharacterHeadquartersAction;
 import model.map.UrbanLocation;
 import model.races.Dwarf;
 import model.races.ElvenRace;
 import model.races.HalfOrc;
-import model.states.dailyaction.HeadquartersDailyActionState;
 import util.MyLists;
 import util.MyPair;
 import util.MyRandom;
@@ -41,8 +39,8 @@ public class RecruitState extends GameState {
         }
         setRandomClasses(recruitables);
         setLevels(recruitables);
-        setGold(recruitables);
         recruitables.addAll(model.getLingeringRecruitables());
+        setGold(recruitables);
         recruitMatrix = new SteppingMatrix<>(2, 3);
         recruitMatrix.addElements(recruitables);
         model.getParty().setRecruitmentPersistence(recruitables);

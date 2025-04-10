@@ -6,9 +6,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.conditions.VampirismCondition;
 import model.items.Inventory;
-import model.map.FieldsHex;
-import model.map.HexLocation;
-import model.map.UrbanLocation;
+import model.map.*;
 import model.quests.Quest;
 import model.states.dailyaction.tavern.HireGuideAction;
 import model.states.dailyaction.LodgingState;
@@ -485,7 +483,8 @@ public class EveningState extends GameState {
 
     private void checkForVampireFeeding(Model model, boolean inTavern) {
         boolean isUrbanLocation = model.getCurrentHex().getLocation() != null &&
-                (model.getCurrentHex().getLocation() instanceof UrbanLocation);
+                (model.getCurrentHex().getLocation() instanceof TownLocation ||
+                (model.getCurrentHex().getLocation() instanceof CastleLocation));
         boolean isFarmLocation = model.getCurrentHex() instanceof FieldsHex;
         if (checkForVampireAttack(model, isUrbanLocation, isFarmLocation)) {
             new VampireProwlNightEvent(model, inTavern).run(model);

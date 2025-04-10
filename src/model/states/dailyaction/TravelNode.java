@@ -41,6 +41,10 @@ class TravelNode extends DailyActionNode {
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState townDailyActionState, Model model) {
         if (townDailyActionState.isMorning()) {
+            if (model.getParty().getFood() < model.getParty().size()*3 && model.getParty().getGold() > 0) {
+                townDailyActionState.print("You are about to leave town but are rather low on rations. Are you sure you want to leave? (Y/N) ");
+                return townDailyActionState.yesNoInput();
+            }
             return true;
         }
         townDailyActionState.println("It's too late in the day to travel. You will have to wait until tomorrow.");
