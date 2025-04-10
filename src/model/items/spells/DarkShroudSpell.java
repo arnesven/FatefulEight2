@@ -1,10 +1,7 @@
 package model.items.spells;
 
-import model.Model;
-import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.items.Item;
-import model.states.GameState;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
