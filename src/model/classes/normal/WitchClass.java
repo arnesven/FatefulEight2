@@ -5,6 +5,7 @@ import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
 import model.items.Item;
+import model.items.special.MagicBroom;
 import model.items.spells.DarkShroudSpell;
 import model.items.spells.PoisonGasSpell;
 import model.items.spells.TransfigurationSpell;
@@ -80,6 +81,6 @@ public class WitchClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new PoisonGasSpell(), new DarkShroudSpell(), new TransfigurationSpell());
+        return List.of(new PoisonGasSpell(), new MagicBroom(), new TransfigurationSpell());
     }
 }

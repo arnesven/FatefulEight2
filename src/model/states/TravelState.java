@@ -3,11 +3,14 @@ package model.states;
 import model.Model;
 import model.items.Inventory;
 import model.items.Item;
+import model.items.special.MagicBroom;
 import model.map.Direction;
 import model.map.UrbanLocation;
 import model.states.events.RiverEvent;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
+import util.MyLists;
+import view.sprites.FlyingWitchSprite;
 import view.sprites.RidingSprite;
 import view.sprites.Sprite;
 import view.subviews.EmptySubView;
@@ -37,8 +40,16 @@ public class TravelState extends GameState {
             return model.getCurrentHex().getDailyActionState(model);
         }
 
-        boolean riding = checkForRiding(model);
-        if (riding) {
+        boolean riding = false;
+        boolean flying = checkForFlying(model);
+        if (!flying) {
+            riding = checkForRiding(model);
+        }
+        if (flying) {
+            ClientSoundManager.playBackgroundMusic(BackgroundMusic.happyMandolin);
+            spriteToUse = new FlyingWitchSprite(model.getParty().getLeader().getRace().getColor());
+            model.getWorld().setAlternativeAvatar(spriteToUse);
+        } else if (riding) {
             ClientSoundManager.playBackgroundMusic(BackgroundMusic.ridingSong);
             spriteToUse = new RidingSprite(model.getParty().getLeader(), model.getParty().getHorseHandler().get(0));
             model.getWorld().setAlternativeAvatar(spriteToUse);
@@ -47,14 +58,14 @@ public class TravelState extends GameState {
             spriteToUse = model.getParty().getLeader().getAvatarSprite();
         }
 
-        GameState state = travelOneStep(model, mapSubView, true);
+        GameState state = travelOneStep(model, mapSubView, true, flying);
         if (state != null) {
             return state;
         }
-        if (riding) {
+        if (riding || flying) {
             mapSubView = new MapSubView(model);
             CollapsingTransition.transition(model, mapSubView);
-            state = travelOneStep(model, mapSubView, false);
+            state = travelOneStep(model, mapSubView, false, flying);
             model.getWorld().setAlternativeAvatar(null);
             if (state != null) {
                 return state;
@@ -156,6 +167,22 @@ public class TravelState extends GameState {
         return x;
     }
 
+    protected boolean checkForFlying(Model model) {
+        List<Item> brooms = MyLists.transform(model.getParty().getPartyMembers(), pm -> pm.getEquipment().getWeapon());
+        brooms.addAll(model.getParty().getInventory().getAllItems());
+        brooms = MyLists.filter(brooms, it -> it instanceof MagicBroom);
+        String broomStr = brooms.size() == 1 ? "a magic broom" : "magic brooms";
+        if (!brooms.isEmpty()) {
+            if (brooms.size() < model.getParty().size()) {
+                println("You have " + broomStr + " but your whole party cannot fly.");
+                return false;
+            }
+            print("You have " + broomStr + ", do you wish to attempt to fly? (Y/N) ");
+            return yesNoInput();
+        }
+        return false;
+    }
+
     protected boolean checkForRiding(Model model) {
         if (!model.getParty().hasHorses()) {
             return false;
@@ -172,7 +199,7 @@ public class TravelState extends GameState {
         return false;
     }
 
-    private GameState travelOneStep(Model model, MapSubView mapSubView, boolean cancelEnabled) {
+    private GameState travelOneStep(Model model, MapSubView mapSubView, boolean cancelEnabled, boolean flying) {
         Point selectedDir = selectDirection(model, mapSubView);
         if (selectedDir.x == 0 && selectedDir.y == 0) {
             if (cancelEnabled) {
@@ -186,7 +213,7 @@ public class TravelState extends GameState {
         Point newPosition = new Point(model.getParty().getPosition());
         model.getWorld().move(newPosition, selectedDir.x, selectedDir.y);
 
-        if (checkRiverCrossing(model, mapSubView)) {
+        if (!flying && checkRiverCrossing(model, mapSubView)) {
             println("The party comes to a river.");
             CollapsingTransition.transition(model, RiverEvent.subView);
             RiverEvent river = model.getCurrentHex().generateRiverEvent(model);
