@@ -59,7 +59,7 @@ public class FaceDancingSpell extends ImmediateSpell {
             }
         } else {
             AdvancedAppearance appearance = PortraitSubView.makeRandomPortrait(target.getCharClass(), target.getRace(), target.getGender());
-            target.setAppearance(appearance);
+            target.setAppearance(appearance); // TODO:: Add transition animation a la change class.
             state.println(target.getFirstName() + "'s appearance has changed!");
             state.partyMemberSay(target, MyRandom.sample(List.of("Ouch", "Hey, that hurt.",
                     "Ooof... wait, what just happened?", "The pain...", "Aaaaah!")));

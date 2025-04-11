@@ -18,4 +18,9 @@ public abstract class ImmediateSpell extends AuxiliarySpell {
         model.getSpellHandler().tryCast(this, gc);
         return gc.getFirstName() + " is casting " + getName() + "...";
     }
+
+    @Override
+    public void triggerInterrupt(GameCharacter caster) {
+        // Do not throw exception
+    }
 }

@@ -58,4 +58,11 @@ public class SpellHandler extends ArrayList<MyPair<Spell, GameCharacter>> {
     public void setCreatureComfortsCastOnDay(int day) {
         creatureComfortsCastOn = day;
     }
+
+    public void pollCastSpells() {
+        if (spellReady()) {
+            MyPair<Spell, GameCharacter> pair = getCastSpell();
+            pair.first.triggerInterrupt(pair.second);
+        }
+    }
 }

@@ -101,9 +101,8 @@ public abstract class GameState implements GameStateConstants {
             if (model.getLog().inputReady()) {
                 return model.getLog().getInput();
             }
-            if (stopForSpell && model.getSpellHandler().spellReady()) {
-                MyPair<Spell, GameCharacter> pair = model.getSpellHandler().getCastSpell();
-                throw new SpellCastException(pair.first, pair.second);
+            if (stopForSpell) {
+                model.getSpellHandler().pollCastSpells();
             }
             sleep(20);
         }
@@ -340,9 +339,8 @@ public abstract class GameState implements GameStateConstants {
 
     public <E> void waitUntil(E arg, Predicate<E> test, boolean withSpell) {
         while (!test.test(arg) && !getModel().gameExited()) {
-            if (withSpell && model.getSpellHandler().spellReady()) {
-                MyPair<Spell, GameCharacter> pair = model.getSpellHandler().getCastSpell();
-                throw new SpellCastException(pair.first, pair.second);
+            if (withSpell) {
+                model.getSpellHandler().pollCastSpells();
             }
             sleep(20);
         }

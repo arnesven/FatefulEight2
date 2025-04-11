@@ -10,6 +10,7 @@ import model.items.Item;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.SpellCastException;
 import sound.SoundEffects;
 import util.MyLists;
 import view.*;
@@ -224,5 +225,9 @@ public abstract class Spell extends Item {
                 break;
             }
         }
+    }
+
+    public void triggerInterrupt(GameCharacter caster) {
+        throw new SpellCastException(this, caster);
     }
 }
