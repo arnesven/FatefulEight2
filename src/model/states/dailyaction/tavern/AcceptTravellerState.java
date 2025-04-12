@@ -22,7 +22,7 @@ public class AcceptTravellerState extends GameState {
     public GameState run(Model model) {
         if (model.getParty().getActiveTravellers().size() == TravellerCollection.MAX_ACTIVE) {
             println("This " + traveller.getRace().getName() + " traveller is looking for an escort. However " +
-                    "you area already escorting " + MyStrings.numberWord(TravellerCollection.MAX_ACTIVE) +
+                    "you are already escorting " + MyStrings.numberWord(TravellerCollection.MAX_ACTIVE) +
                     " travellers and cannot take on any more.");
         } else {
             println(traveller.getAcceptString());

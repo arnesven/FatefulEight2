@@ -2,13 +2,11 @@ package model.travellers;
 
 import model.Model;
 import model.characters.PersonalityTrait;
-import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
 import model.map.HexLocation;
 import model.races.Race;
 import model.states.DailyEventState;
-import model.states.EveningState;
 import model.states.GameState;
 import util.MyRandom;
 import view.subviews.SubView;
@@ -25,15 +23,18 @@ public class Traveller implements Serializable {
     private final String destination;
     private final int time;
     private final int gold;
+    private final TravellerCompletionHook completionHook;
     private int acceptedOnDay = 0;
 
-    public Traveller(String name, CharacterAppearance appearance, HexLocation destination, int distance, int extraReward) {
+    public Traveller(String name, CharacterAppearance appearance, HexLocation destination,
+                     int distance, int extraReward, TravellerCompletionHook hook) {
         this.name = name;
         this.appearance = appearance;
         this.destination = destination.getName();
         this.time = MyRandom.randInt(distance-1, (int)(distance*1.5));
         this.gold = MyRandom.randInt(distance/2, distance*2) +
                 MyRandom.randInt(distance/2, distance*2) + extraReward;
+        this.completionHook = hook;
     }
 
     public String getAcceptString() {
@@ -100,7 +101,7 @@ public class Traveller implements Serializable {
             state.println("The party receives " + (gold/2) + " gold.");
             model.getParty().addToGold((gold/2));
         }
-        runCompleteHook(model, state);
+        completionHook.run(model, state, this);
 
         if (model.getParty().getLeader().hasPersonality(PersonalityTrait.rude)) {
             state.leaderSay("Smell you later traveller!");
@@ -110,10 +111,6 @@ public class Traveller implements Serializable {
         state.println("You part ways with " + name + ".");
         model.getParty().completeTraveller(this);
         JournalEntry.printJournalUpdateMessage(model);
-    }
-
-    protected void runCompleteHook(Model model, GameState state) {
-
     }
 
     public void abandon(Model model, GameState state) {

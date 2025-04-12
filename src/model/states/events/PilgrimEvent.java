@@ -10,6 +10,7 @@ import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.LongStaff;
 import model.states.GameState;
 import model.travellers.Traveller;
+import model.travellers.TravellerCompletionHook;
 import util.MyPair;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class PilgrimEvent extends MeetTravellerEvent {
     public PilgrimEvent(Model model) {
         super(model, makePilgrim(), MyRandom.randInt(5, 10), ProvokedStrategy.ALWAYS_ESCAPE,
-                MyRandom.randInt(15, 35));
+                MyRandom.randInt(15, 35), new PilgrimCompletion());
     }
 
     private static GameCharacter makePilgrim() {
@@ -30,21 +31,6 @@ public class PilgrimEvent extends MeetTravellerEvent {
                 Classes.NO_OTHER_CLASSES, new Equipment(new LongStaff(), new PilgrimsCloak(), null));
         pilgrim.setLevel(MyRandom.randInt(1, 4));
         return pilgrim;
-    }
-
-    @Override
-    protected void doUponCompletion(Model model, GameState state, Traveller traveller) {
-        traveller.travellerSay(model, state, "I can't believe I'm finally here.");
-        leaderSay("Are you sure you want to stay here? Places like these can be dangerous.");
-        traveller.travellerSay(model, state, "Of course. I'll be fine. As a special thank you, take this item.");
-        Item it = model.getItemDeck().draw(1).get(0);
-        println("The party receives a " + it.getName() + " from the Pilgrim.");
-        if (it.getCost() < 16) {
-            leaderSay("Uh... thanks.");
-        } else {
-            leaderSay("Thank you.");
-        }
-        it.addYourself(model.getParty().getInventory());
     }
 
     @Override
@@ -65,5 +51,22 @@ public class PilgrimEvent extends MeetTravellerEvent {
                 "The ruins? They're spectacular. Apart from being remnants from a bygone age, " +
                         "their usually filled with treasures. But beware, the ones I've poked my nose into " +
                         "were also addled with monsters."));
+    }
+
+    private static class PilgrimCompletion extends TravellerCompletionHook {
+        @Override
+        public void run(Model model, GameState state, Traveller traveller) {
+            traveller.travellerSay(model, state, "I can't believe I'm finally here.");
+            state.leaderSay("Are you sure you want to stay here? Places like these can be dangerous.");
+            traveller.travellerSay(model, state, "Of course. I'll be fine. As a special thank you, take this item.");
+            Item it = model.getItemDeck().draw(1).get(0);
+            state.println("The party receives a " + it.getName() + " from the Pilgrim.");
+            if (it.getCost() < 16) {
+                state.leaderSay("Uh... thanks.");
+            } else {
+                state.leaderSay("Thank you.");
+            }
+            it.addYourself(model.getParty().getInventory());
+        }
     }
 }

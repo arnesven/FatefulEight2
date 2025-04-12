@@ -11,6 +11,7 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.tavern.AcceptTravellerState;
 import model.travellers.Traveller;
+import model.travellers.TravellerCompletionHook;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -80,7 +81,7 @@ public class TravellerNode extends DailyActionNode {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         List<Point> points = model.getWorld().shortestPathToNearestTownOrCastle(rank);
         HexLocation loc = model.getWorld().getHex(points.get(points.size()-1)).getLocation();
-        return new Traveller("Traveller", appearance, loc, points.size(), 0);
+        return new Traveller("Traveller", appearance, loc, points.size(), 0, new TravellerCompletionHook());
     }
 
     @Override

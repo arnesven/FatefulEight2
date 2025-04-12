@@ -7,6 +7,7 @@ import model.map.HexLocation;
 import model.states.GameState;
 import model.states.dailyaction.tavern.AcceptTravellerState;
 import model.travellers.Traveller;
+import model.travellers.TravellerCompletionHook;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,12 +17,15 @@ public abstract class MeetTravellerEvent extends GeneralInteractionEvent {
     private final GameCharacter traveller;
     private final ProvokedStrategy provokedStrategy;
     private final int extraReward;
+    private final TravellerCompletionHook completionHook;
 
-    public MeetTravellerEvent(Model model, GameCharacter traveller, int stealMoney, ProvokedStrategy provokedStrategy, int extraReward) {
+    public MeetTravellerEvent(Model model, GameCharacter traveller, int stealMoney,
+                              ProvokedStrategy provokedStrategy, int extraReward, TravellerCompletionHook hook) {
         super(model, "Talk to", stealMoney);
         this.traveller = traveller;
         this.provokedStrategy = provokedStrategy;
         this.extraReward = extraReward;
+        this.completionHook = hook;
     }
 
     @Override
@@ -35,18 +39,12 @@ public abstract class MeetTravellerEvent extends GeneralInteractionEvent {
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
         List<Point> path = getPathToDestination(model);
         HexLocation location = model.getWorld().getHex(path.get(path.size()-1)).getLocation();
-        Traveller t = new Traveller(traveller.getName(), traveller.getAppearance(), location, path.size(), extraReward) {
-            @Override
-            protected void runCompleteHook(Model model, GameState state) {
-                doUponCompletion(model, state, this);
-            }
-        };
+        Traveller t = new Traveller(traveller.getName(), traveller.getAppearance(),
+                location, path.size(), extraReward, completionHook);
         AcceptTravellerState accept = new AcceptTravellerState(model, this, t);
         accept.run(model);
         return !model.getParty().getActiveTravellers().contains(t);
     }
-
-    protected void doUponCompletion(Model model, GameState state, Traveller traveller) { }
 
     protected abstract List<Point> getPathToDestination(Model model);
 

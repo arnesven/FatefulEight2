@@ -13,6 +13,7 @@ import model.items.weapons.LongStaff;
 import model.items.weapons.Scepter;
 import model.states.GameState;
 import model.travellers.Traveller;
+import model.travellers.TravellerCompletionHook;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class MonkEvent extends MeetTravellerEvent {
     public MonkEvent(Model model) {
         super(model, makeMonk(), MyRandom.randInt(4, 8), ProvokedStrategy.FIGHT_IF_ADVANTAGE,
-                MyRandom.randInt(10, 25));
+                MyRandom.randInt(10, 25), new MonkCompletion());
     }
 
     private static GameCharacter makeMonk() {
@@ -31,22 +32,6 @@ public class MonkEvent extends MeetTravellerEvent {
                 Classes.NO_OTHER_CLASSES, new Equipment(new LongStaff()));
         monk.setLevel(MyRandom.randInt(1, 4));
         return monk;
-    }
-
-    @Override
-    protected void doUponCompletion(Model model, GameState state, Traveller traveller) {
-        traveller.travellerSay(model, state, "I really appreciate you escorting me. " +
-                "I want to do something special for you, I want you to have this.");
-        leaderSay("What's this?");
-        traveller.travellerSay(model, state, "A relic.");
-        Item it = MyRandom.sample(List.of(new AnkhPendant(), new Scepter(), new Tiara(), new HolyChalice()));
-        println("The party receives a " + it.getName() + ".");
-        if (it.getCost() > 30) {
-            leaderSay("Wow! Thanks a lot!");
-        } else {
-            leaderSay("Uh... thanks.");
-        }
-        it.addYourself(model.getParty().getInventory());
     }
 
     @Override
@@ -59,5 +44,23 @@ public class MonkEvent extends MeetTravellerEvent {
     @Override
     protected String getVictimSelfTalk() {
         return "I'm a monk. I spend most of my time at the temple, praying and doing chores.";
+    }
+
+    private static class MonkCompletion extends TravellerCompletionHook {
+        @Override
+        public void run(Model model, GameState state, Traveller traveller) {
+            traveller.travellerSay(model, state, "I really appreciate you escorting me. " +
+                    "I want to do something special for you, I want you to have this.");
+            state.leaderSay("What's this?");
+            traveller.travellerSay(model, state, "A relic.");
+            Item it = MyRandom.sample(List.of(new AnkhPendant(), new Scepter(), new Tiara(), new HolyChalice()));
+            state.println("The party receives a " + it.getName() + ".");
+            if (it.getCost() > 30) {
+                state.leaderSay("Wow! Thanks a lot!");
+            } else {
+                state.leaderSay("Uh... thanks.");
+            }
+            it.addYourself(model.getParty().getInventory());
+        }
     }
 }

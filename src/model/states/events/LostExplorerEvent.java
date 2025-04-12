@@ -11,6 +11,7 @@ import model.items.clothing.LeatherArmor;
 import model.items.weapons.Longsword;
 import model.states.GameState;
 import model.travellers.Traveller;
+import model.travellers.TravellerCompletionHook;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -19,7 +20,8 @@ import java.util.List;
 
 public class LostExplorerEvent extends MeetTravellerEvent {
     public LostExplorerEvent(Model model) {
-        super(model, makeLostExplorer(), MyRandom.randInt(20, 100), ProvokedStrategy.FIGHT_IF_ADVANTAGE, 5);
+        super(model, makeLostExplorer(), MyRandom.randInt(20, 100), ProvokedStrategy.FIGHT_IF_ADVANTAGE, 5,
+                new LostExplorerCompletionHook());
     }
 
     @Override
@@ -49,18 +51,20 @@ public class LostExplorerEvent extends MeetTravellerEvent {
     }
 
     @Override
-    protected void doUponCompletion(Model model, GameState state, Traveller traveller) {
-        traveller.travellerSay(model, state, "Actually, I think I'll be taking a break from exploring for a while, perhaps " +
-                "permanently. You can have this Spyglass, it's handy when you are in places with a good view.");
-        state.leaderSay("Thanks!");
-        Spyglass spy = new Spyglass();
-        state.println("The party received a " + spy.getName() + ".");
-        spy.addYourself(model.getParty().getInventory());
-    }
-
-    @Override
     protected List<Point> getPathToDestination(Model model) {
         model.getWorld().dijkstrasByLand(model.getParty().getPosition());
         return model.getWorld().shortestPathToNearestTownOrCastle(0);
+    }
+
+    private static class LostExplorerCompletionHook extends TravellerCompletionHook {
+        @Override
+        public void run(Model model, GameState state, Traveller traveller) {
+            traveller.travellerSay(model, state, "Actually, I think I'll be taking a break from exploring for a while, perhaps " +
+                    "permanently. You can have this Spyglass, it's handy when you are in places with a good view.");
+            state.leaderSay("Thanks!");
+            Spyglass spy = new Spyglass();
+            state.println("The party received a " + spy.getName() + ".");
+            spy.addYourself(model.getParty().getInventory());
+        }
     }
 }

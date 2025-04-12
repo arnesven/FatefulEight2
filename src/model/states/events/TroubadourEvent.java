@@ -8,6 +8,7 @@ import model.items.Equipment;
 import model.items.weapons.LongStaff;
 import model.items.weapons.Lute;
 import model.states.DailyEventState;
+import model.travellers.TravellerCompletionHook;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
 
@@ -16,7 +17,8 @@ import java.util.List;
 
 public class TroubadourEvent extends MeetTravellerEvent {
     public TroubadourEvent(Model model) {
-        super(model, makeTroubadour(), MyRandom.randInt(10, 40), ProvokedStrategy.FIGHT_IF_ADVANTAGE, 15);
+        super(model, makeTroubadour(), MyRandom.randInt(10, 40),
+                ProvokedStrategy.FIGHT_IF_ADVANTAGE, 15, new TravellerCompletionHook());
     }
 
     @Override
