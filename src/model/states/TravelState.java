@@ -35,13 +35,13 @@ public class TravelState extends GameState {
         CollapsingTransition.transition(model, mapSubView);
         model.getTutorial().travel(model);
 
+        boolean flying = checkForFlying(model);
         if (!checkForOverEncumberance(model)) {
             println("Travel canceled.");
             return model.getCurrentHex().getDailyActionState(model);
         }
 
         boolean riding = false;
-        boolean flying = checkForFlying(model);
         if (!flying) {
             riding = checkForRiding(model);
         }
@@ -177,8 +177,16 @@ public class TravelState extends GameState {
                 println("You have " + broomStr + " but your whole party cannot fly.");
                 return false;
             }
-            print("You have " + broomStr + ", do you wish to attempt to fly? (Y/N) ");
-            return yesNoInput();
+            String extra = "";
+            if (model.getParty().hasHorses()) {
+                extra = "(You will have to leave your horses behind)";
+            }
+            print("You have " + broomStr + ", do you wish to attempt to fly? " + extra + " (Y/N) ");
+            boolean choice = yesNoInput();
+            if (choice) {
+                model.getParty().getHorseHandler().abandonHorses(model);
+            }
+            return choice;
         }
         return false;
     }
