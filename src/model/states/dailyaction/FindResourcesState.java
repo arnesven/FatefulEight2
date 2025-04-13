@@ -58,7 +58,11 @@ public class FindResourcesState extends GameState {
                     println(gc.getFirstName() + " found " + resourcesFound +
                             " " + resourceType + ". (" + skill1.getName() + " " + skill1Result.asString() + ", " +
                             skill2.getName()+ " " + skill2Result.asString() + ")");
-                    model.getParty().getInventory().addToIngredients(resourcesFound);
+                    if (resourceType.equals("ingredients")) {
+                        model.getParty().getInventory().addToIngredients(resourcesFound);
+                    } else {
+                        model.getParty().getInventory().addToMaterials(resourcesFound);
+                    }
                 }
                 if (gc.getSP() > 0 && MyRandom.rollD6() == 1) {
                     println(gc.getFirstName() + " lost 1 Stamina while searching for " + resourceType + ".");

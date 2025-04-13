@@ -342,6 +342,11 @@ public class PartyView extends SelectableListMenu {
         }
 
         protected abstract SelectableListMenu getSubMenu(Model model, int x, int y, GameCharacter gc);
+
+        @Override
+        public boolean isEnabled(Model model) {
+            return !model.getParty().getBench().contains(gc) && super.isEnabled(model);
+        }
     }
 
     private class OpenWeaponMenuListContent extends OpenEquipMenuListContent {

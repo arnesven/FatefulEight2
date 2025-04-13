@@ -20,7 +20,7 @@ public abstract class SkillBoostingPotion extends Potion {
         this.skills = skills;
         StringBuilder bldr = new StringBuilder(", for the rest of the day +" + getBoostAmount() + " to: ");
         bldr.append(MyLists.commaAndJoin(skills, Skill::getName));
-        this.description = bldr.substring(0, bldr.length()-2);
+        this.description = bldr.substring(0, bldr.length());
     }
 
     @Override

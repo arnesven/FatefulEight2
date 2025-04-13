@@ -23,7 +23,7 @@ public class AntidotePotion extends Potion {
 
     @Override
     public String getShoppingDetails() {
-        return ", cures Poison for one party member.";
+        return ", Cures Poison for one party member.";
     }
 
     @Override

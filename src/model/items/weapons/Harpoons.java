@@ -2,6 +2,7 @@ package model.items.weapons;
 
 import model.items.Item;
 import model.items.PirateItem;
+import model.items.Prevalence;
 import view.sprites.RangedStrikeEffect;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
@@ -28,6 +29,11 @@ public class Harpoons extends PolearmWeapon implements PirateItem {
     @Override
     public int getCriticalTarget() {
         return 9;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.veryRare;
     }
 
     @Override

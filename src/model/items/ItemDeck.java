@@ -37,7 +37,7 @@ public class ItemDeck extends ArrayList<Item> {
             Item it;
             do {
                 it = MyRandom.sample(source);
-            } while (it.getPrevalence() != prevalence && prevalence != Prevalence.unspecified);
+            } while (!prevalenceOk(it.getPrevalence(), prevalence));
 
             if (tierOffset > 0 && it.supportsHigherTier()) {
                 drawn.add(it.makeHigherTierCopy(tierOffset));
@@ -48,6 +48,13 @@ public class ItemDeck extends ArrayList<Item> {
             }
         }
         return drawn;
+    }
+
+    private static boolean prevalenceOk(Prevalence itemPrevalence, Prevalence requestedPrevalence) {
+        if (requestedPrevalence == Prevalence.unspecified) {
+            return itemPrevalence != Prevalence.unique && itemPrevalence != Prevalence.veryRare;
+        }
+        return itemPrevalence == requestedPrevalence;
     }
 
     private int randomizeTier(double higherTierChance) {
