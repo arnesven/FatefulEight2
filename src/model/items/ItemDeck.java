@@ -6,6 +6,7 @@ import model.items.clothing.*;
 import model.items.designs.CraftingDesign;
 import model.items.imbuements.*;
 import model.items.potions.*;
+import model.items.special.MagicBroom;
 import model.items.spells.*;
 import model.items.weapons.SkullWand;
 import model.items.weapons.*;
@@ -356,7 +357,7 @@ public class ItemDeck extends ArrayList<Item> {
     }
 
     public static List<? extends Weapon> allSpecialWeapons() {
-        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol(), new Musket());
+        return List.of(new Lute(), new FishingPole(), new ThrowingStars(), new Pistol(), new Musket(), new MagicBroom());
     }
 
     public void setStandardItemTier(int averageLevel) {

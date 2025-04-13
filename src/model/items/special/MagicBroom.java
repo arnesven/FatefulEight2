@@ -1,6 +1,7 @@
 package model.items.special;
 
 import model.items.Item;
+import model.items.Prevalence;
 import model.items.weapons.BluntWeapon;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -23,6 +24,11 @@ public class MagicBroom extends BluntWeapon {
     @Override
     public int getWeight() {
         return 1000;
+    }
+
+    @Override
+    public Prevalence getPrevalence() {
+        return Prevalence.veryRare;
     }
 
     @Override

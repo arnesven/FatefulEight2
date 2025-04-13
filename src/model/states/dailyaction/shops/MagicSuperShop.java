@@ -2,6 +2,8 @@ package model.states.dailyaction.shops;
 
 import model.Model;
 import model.items.Item;
+import model.items.special.MagicBroom;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.SignSprite;
 import view.sprites.Sprite;

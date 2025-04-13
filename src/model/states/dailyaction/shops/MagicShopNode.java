@@ -4,6 +4,7 @@ import model.items.ItemDeck;
 import model.Model;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.special.MagicBroom;
 import model.items.weapons.MagesStaff;
 import model.items.weapons.OldStaff;
 import model.items.weapons.Weapon;
@@ -56,6 +57,9 @@ public class MagicShopNode extends GeneralShopNode {
                     inventory.add(new OldStaff());
                 }
             }
+        }
+        if (MyRandom.rollD10() == 1) {
+            inventory.add(new MagicBroom());
         }
         Collections.sort(inventory);
         return inventory;
