@@ -16,7 +16,7 @@ import view.subviews.CombatSubView;
 import java.util.List;
 
 public class GazeOfDeathSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(0, true);
 
     public GazeOfDeathSpell() {
         super("Gaze of Death", 26, MyColors.BLACK, 8, 0);

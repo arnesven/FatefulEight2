@@ -2,11 +2,12 @@ package model.items.spells;
 
 import model.items.Item;
 import view.MyColors;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class DispelSpell extends QuestSpell {
-    private static final Sprite SPRITE = new ItemSprite(14, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
+    private static final Sprite SPRITE = new ColorlessSpellSprite(0, false);
 
     public DispelSpell() {
         super("Dispel", 12, COLORLESS, 9, 1);

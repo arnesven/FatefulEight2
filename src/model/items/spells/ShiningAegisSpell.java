@@ -11,7 +11,7 @@ import view.sprites.*;
 
 public class ShiningAegisSpell extends CombatSpell {
     public static final String SPELL_NAME = "Shining Aegis";
-    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new WhiteSpellSprite(1, true);
 
     public ShiningAegisSpell() {
         super(SPELL_NAME, 12, MyColors.WHITE, 8, 1);

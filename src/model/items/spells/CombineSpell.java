@@ -10,8 +10,7 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import util.MyLists;
 import util.MyPair;
-import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 import view.subviews.CombineSpellSubView;
 import view.subviews.SubView;
@@ -25,7 +24,7 @@ public class CombineSpell extends AuxiliarySpell {
 
     public static final String SPELL_NAME = "Combine";
     private static final String COMBINE_COMBAT_SPELL_NAME = "COMBO";
-    private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
+    private static final Sprite SPRITE = new ColorlessSpellSprite(2, true);
     private List<Spell> combinedResult = null;
 
     public CombineSpell() {

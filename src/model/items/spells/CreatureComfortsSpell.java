@@ -6,11 +6,12 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.states.GameState;
 import view.MyColors;
+import view.sprites.BlueSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class CreatureComfortsSpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new ItemSprite(1, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(3, false);
 
     public CreatureComfortsSpell() {
         super("Creature Comforts", 20, MyColors.BLUE, 7, 4);

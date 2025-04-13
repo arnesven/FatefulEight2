@@ -8,7 +8,7 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.BlueSpellSprite;
 import view.sprites.RunOnceAnimationSprite;
 import view.sprites.Sprite;
 
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ConjurePhantasmSpell extends CombatSpell {
     public static final String SPELL_NAME = "Conjure Phantasm";
-    private static final Sprite SPRITE = new CombatSpellSprite(4, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(2, true);
 
     public ConjurePhantasmSpell() {
         super(SPELL_NAME, 24, MyColors.BLUE, 10, 2);

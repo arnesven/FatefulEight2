@@ -11,10 +11,11 @@ import util.MyStrings;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+import view.sprites.WhiteSpellSprite;
 
 public class BlessSpell extends ImmediateSpell {
     public static final String SPELL_NAME = "Bless";
-    private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new WhiteSpellSprite(6, false);
     private static final int DURATION_DAYS = 3;
     private GameCharacter target;
 

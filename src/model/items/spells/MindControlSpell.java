@@ -3,13 +3,12 @@ package model.items.spells;
 import model.classes.Skill;
 import model.items.Item;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
+import view.sprites.BlueSpellSprite;
 import view.sprites.Sprite;
 
 public class MindControlSpell extends SkillBoostingSpell {
     public static final String SPELL_NAME = "Mind Control";
-    private static final Sprite SPRITE = new ItemSprite(6, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(1, false);
 
     public MindControlSpell() {
         super(SPELL_NAME, 16, MyColors.BLUE, 8, 2);

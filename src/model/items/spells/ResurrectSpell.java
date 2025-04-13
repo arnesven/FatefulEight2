@@ -13,10 +13,11 @@ import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.ShinyRingEffect;
 import view.sprites.Sprite;
+import view.sprites.WhiteSpellSprite;
 
 public class ResurrectSpell extends CombatSpell implements FullRoundSpell {
 
-    private static final Sprite SPRITE = new ItemSprite(9, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new WhiteSpellSprite(7, true);
 
     public ResurrectSpell() {
         super("Resurrect", 75, MyColors.WHITE, 10, 4, false); // Diff 10, cost 4

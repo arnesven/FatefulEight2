@@ -8,11 +8,11 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.RedSpellSprite;
 import view.sprites.Sprite;
 
 public class ErodeSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(5, true);
 
     public ErodeSpell() {
         super("Erode", 12, MyColors.RED, 7, 1, true);

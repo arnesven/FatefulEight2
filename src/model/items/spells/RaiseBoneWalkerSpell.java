@@ -23,7 +23,7 @@ import view.sprites.*;
 
 public class RaiseBoneWalkerSpell extends SummonCombatSpell {
     public static final String SPELL_NAME = "Raise Bone Walker";
-    private static final Sprite SPRITE = new CombatSpellSprite(9, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(2, true);
 
     public RaiseBoneWalkerSpell() {
         super(SPELL_NAME, 34, MyColors.BLACK, 10, 3);

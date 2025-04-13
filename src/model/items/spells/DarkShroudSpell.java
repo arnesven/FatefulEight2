@@ -3,13 +3,14 @@ package model.items.spells;
 import model.classes.Skill;
 import model.items.Item;
 import view.MyColors;
+import view.sprites.BlackSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 
 public class DarkShroudSpell extends SkillBoostingSpell {
 
     public static final String SPELL_NAME = "Dark Shroud";
-    private static final Sprite SPRITE = new ItemSprite(13, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(4, false);
 
     public DarkShroudSpell() {
         super(SPELL_NAME, 16, MyColors.BLACK, 9, 1);

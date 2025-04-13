@@ -8,13 +8,13 @@ import model.items.Item;
 import model.states.CombatEvent;
 import util.MyStrings;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.GreenSpellSprite;
 import view.sprites.Sprite;
 
 public class WerewolfFormSpell extends CombatSpell {
 
     public static final String SPELL_NAME = "Werewolf Form";
-    private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
+    private static final Sprite SPRITE = new GreenSpellSprite(7, true);
     public static final int TURNS = 5;
 
     public WerewolfFormSpell() {

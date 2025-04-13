@@ -8,6 +8,7 @@ import model.items.Prevalence;
 import model.states.GameState;
 import util.MyPair;
 import view.MyColors;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransmuteSpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new ItemSprite(0, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
-    private static List<TransmuteAction> transmuteTable = makeTransmuteTable();
+    private static final Sprite SPRITE = new ColorlessSpellSprite(1, false);
+    private static final List<TransmuteAction> transmuteTable = makeTransmuteTable();
     private TransmuteAction selectedSource;
     private MyPair<String, Double> selectedTarget;
     private int amount;

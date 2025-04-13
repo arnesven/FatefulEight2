@@ -7,12 +7,11 @@ import model.items.Item;
 import model.states.CombatEvent;
 import model.states.GameState;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
+import view.sprites.BlackSpellSprite;
 import view.sprites.Sprite;
 
 public class BlackPactSpell extends AuxiliarySpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(8, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(1, true);
 
     public BlackPactSpell() {
         super("Black Pact", 16, MyColors.BLACK, 11, 3);

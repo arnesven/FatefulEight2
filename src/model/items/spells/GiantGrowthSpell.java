@@ -7,13 +7,13 @@ import model.combat.conditions.GiantGrowthCondition;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.GreenSpellSprite;
 import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
 
 public class GiantGrowthSpell extends CombatSpell {
     public static final String SPELL_NAME = "Giant Growth";
-    private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
+    private static final Sprite SPRITE = new GreenSpellSprite(4, true);
 
 
     public GiantGrowthSpell() {

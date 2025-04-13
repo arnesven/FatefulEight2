@@ -9,11 +9,11 @@ import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.sprites.BindDaemonAnimation;
-import view.sprites.CombatSpellSprite;
+import view.sprites.RedSpellSprite;
 import view.sprites.Sprite;
 
 public class BindDaemonSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(8, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(3, true);
 
     public BindDaemonSpell() {
         super("Bind Daemon", 14, MyColors.RED, 13, 3, true);

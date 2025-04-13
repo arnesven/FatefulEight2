@@ -18,8 +18,7 @@ import java.util.List;
 public class ChainLightningSpell extends CombatSpell {
 
     public static final String SPELL_NAME = "Chain Lightning";
-    private static final Sprite SPRITE = new CombatSpellSprite(9, 8,
-            MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(7, true);
 
     public ChainLightningSpell() {
         super(SPELL_NAME, 55, MyColors.RED, 11, 3, false);

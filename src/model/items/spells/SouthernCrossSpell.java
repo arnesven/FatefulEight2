@@ -8,12 +8,13 @@ import model.states.GameState;
 import view.MyColors;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+import view.sprites.WhiteSpellSprite;
 
 import java.util.List;
 
 public class SouthernCrossSpell extends ImmediateSpell {
     public static final String SPELL_NAME = "Southern Cross";
-    private static final Sprite SPRITE = new ItemSprite(6, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new WhiteSpellSprite(4, false);
 
     public SouthernCrossSpell() {
         super(SPELL_NAME, 26, MyColors.WHITE, 11, 3);

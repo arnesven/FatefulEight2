@@ -6,11 +6,11 @@ import model.combat.Combatant;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.BlueSpellSprite;
 import view.sprites.Sprite;
 
 public class EscapeSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(5, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(4, true);
 
     public EscapeSpell() {
         super("Escape", 24, MyColors.BLUE, 7, 2, true);

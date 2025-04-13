@@ -15,7 +15,7 @@ import view.sprites.*;
 
 public class DrainLifeSpell extends CombatSpell {
     public static final String SPELL_NAME = "Drain Life";
-    private static final Sprite SPRITE = new CombatSpellSprite(1, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(6, true);
 
     public DrainLifeSpell() {
         super(SPELL_NAME, 18, MyColors.BLACK, 8, 3, false);

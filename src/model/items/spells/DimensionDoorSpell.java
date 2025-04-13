@@ -6,11 +6,11 @@ import model.items.Item;
 import model.states.GameState;
 import model.states.dailyaction.HeadquartersDailyActionState;
 import view.MyColors;
-import view.sprites.ItemSprite;
+import view.sprites.BlueSpellSprite;
 import view.sprites.Sprite;
 
 public class DimensionDoorSpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new ItemSprite(2, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(8, false);
 
     public DimensionDoorSpell() {
         super("Dimenson Door", 38, MyColors.BLUE, 8, 4);

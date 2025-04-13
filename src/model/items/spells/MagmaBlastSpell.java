@@ -8,16 +8,13 @@ import model.items.Item;
 import model.states.CombatEvent;
 import util.MyRandom;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
-import view.sprites.DamageValueEffect;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 import java.util.List;
 
 public class MagmaBlastSpell extends CombatSpell {
     public static final String SPELL_NAME = "Magma Blast";
-    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(1, true);
 
     public MagmaBlastSpell() {
         super(SPELL_NAME, 36, MyColors.RED, 11, 4);

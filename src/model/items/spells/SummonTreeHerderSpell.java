@@ -2,29 +2,23 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
-import model.characters.appearance.CharacterAppearance;
 import model.characters.preset.LonnieLiebgott;
-import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.Prevalence;
-import model.items.accessories.GreatHelm;
-import model.items.accessories.HeraldicShield;
-import model.items.clothing.ChainMail;
 import model.items.clothing.LeatherArmor;
-import model.items.clothing.PlateMailArmor;
 import model.items.weapons.*;
 import model.races.Race;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.GreenSpellSprite;
 import view.sprites.Sprite;
 
 public class SummonTreeHerderSpell extends SummonCombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(3, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
+    private static final Sprite SPRITE = new GreenSpellSprite(6, true);
 
     public SummonTreeHerderSpell() {
         super("Summon Tree Herder", 46, MyColors.GREEN, 10, 3); // 10

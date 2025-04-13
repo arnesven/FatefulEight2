@@ -11,8 +11,7 @@ import model.items.weapons.Weapon;
 import model.states.GameState;
 import util.MyLists;
 import util.MyRandom;
-import view.MyColors;
-import view.sprites.ItemSprite;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
 
@@ -20,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImbueWeaponSpell extends ImmediateSpell {
-    private static final Sprite SPRITE = new ItemSprite(4, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
+    private static final Sprite SPRITE = new ColorlessSpellSprite(6, false);
     private Weapon weaponToImbue;
 
     public ImbueWeaponSpell() {

@@ -8,6 +8,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.BlueSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 import view.subviews.PortraitSubView;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class FaceDancingSpell extends ImmediateSpell {
 
-    private static final Sprite SPRITE = new ItemSprite(3, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(6,false);
     private static final int DAMAGE = 4;
     private GameCharacter target;
     private int lower;

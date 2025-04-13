@@ -9,7 +9,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.BlackSpellSprite;
 import view.sprites.DownArrowAnimation;
 import view.sprites.Sprite;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class WeakenSpell extends CombatSpell {
     public static final String SPELL_NAME = "Weaken";
-    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(3, true);
 
     public WeakenSpell() {
         super(SPELL_NAME, 18, MyColors.BLACK, 9, 1);

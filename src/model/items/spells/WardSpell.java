@@ -7,12 +7,12 @@ import model.combat.conditions.WardCondition;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
 import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
+import view.sprites.WhiteSpellSprite;
 
 public class WardSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(5, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new WhiteSpellSprite(2, true);
 
     public WardSpell() {
         super("Ward", 12, MyColors.WHITE, 8, 0, false);

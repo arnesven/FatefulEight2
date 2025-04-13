@@ -2,12 +2,11 @@ package model.items.spells;
 
 import model.items.Item;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
+import view.sprites.RedSpellSprite;
 import view.sprites.Sprite;
 
 public class FireworksSpell extends QuestSpell {
-    private static final Sprite SPRITE = new ItemSprite(1, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(0, false);
 
     public FireworksSpell() {
         super("Fireworks", 12, MyColors.RED, 9, 2);

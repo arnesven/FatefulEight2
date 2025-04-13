@@ -8,12 +8,12 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.GreenSpellSprite;
 import view.sprites.SmokeBallAnimation;
 import view.sprites.Sprite;
 
 public class TransfigurationSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(4, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
+    private static final Sprite SPRITE = new GreenSpellSprite(0, true);
 
     public TransfigurationSpell() {
         super("Transfiguration", 28, MyColors.GREEN, 10, 3);

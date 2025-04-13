@@ -1,13 +1,11 @@
 package model.items.spells;
 
 import model.items.Item;
-import model.items.Prevalence;
-import view.MyColors;
-import view.sprites.ItemSprite;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 
 public class TelekinesisSpell extends QuestSpell {
-    private static final Sprite SPRITE = new ItemSprite(5, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
+    private static final Sprite SPRITE = new ColorlessSpellSprite(7, false);
 
     public TelekinesisSpell() {
         super("Telekinesis", 12, COLORLESS, 7, 1);

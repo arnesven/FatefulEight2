@@ -15,7 +15,7 @@ import view.sprites.*;
 
 public class BoneArmorSpell extends CombatSpell {
     public static final String SPELL_NAME = "Bone Armor";
-    private static final Sprite SPRITE = new CombatSpellSprite(2, 8, MyColors.BROWN, MyColors.GRAY, MyColors.RED);
+    private static final Sprite SPRITE = new BlackSpellSprite(7, true);
 
     public BoneArmorSpell() {
         super(SPELL_NAME, 34, MyColors.BLACK, 9, 2, false); // 9, 2

@@ -6,13 +6,13 @@ import model.combat.Combatant;
 import model.items.Item;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.RedSpellSprite;
 import view.sprites.Sprite;
 
 public class FireWallSpell extends CombatSpell {
 
     public static final String SPELL_NAME = "Fire Wall";
-    private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(6, true);
 
     public FireWallSpell() {
         super(SPELL_NAME, 28, MyColors.RED, 9, 3, false);

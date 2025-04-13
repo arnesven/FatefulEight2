@@ -13,12 +13,12 @@ import view.GameView;
 import view.MyColors;
 import view.help.ConditionHelpDialog;
 import view.sprites.CharSprite;
-import view.sprites.CombatSpellSprite;
+import view.sprites.GreenSpellSprite;
 import view.sprites.Sprite;
 
 public class HarmonizeSpell extends CombatSpell {
     public static final String SPELL_NAME = "Harmonize";
-    private static final Sprite SPRITE = new CombatSpellSprite(0, 8, MyColors.BEIGE, MyColors.GREEN, MyColors.WHITE);
+    private static final Sprite SPRITE = new GreenSpellSprite(2, true);
 
     public HarmonizeSpell() {
         super(SPELL_NAME, 20, MyColors.GREEN, 9, 2, true);

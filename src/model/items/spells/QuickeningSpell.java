@@ -5,15 +5,14 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.items.Item;
 import model.states.CombatEvent;
-import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
 
 public class QuickeningSpell extends CombatSpell {
     public static final int SPEED_BONUS = 6;
     public static final String SPELL_NAME = "Quickening";
-    private static final Sprite SPRITE = new CombatSpellSprite(13, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
+    private static final Sprite SPRITE = new ColorlessSpellSprite(3, true);
 
     public QuickeningSpell() {
         super(SPELL_NAME, 14, COLORLESS, 7, 0, false);

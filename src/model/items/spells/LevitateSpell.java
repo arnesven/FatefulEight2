@@ -2,11 +2,10 @@ package model.items.spells;
 
 import model.items.Item;
 import view.MyColors;
-import view.sprites.ItemSprite;
-import view.sprites.Sprite;
+import view.sprites.*;
 
 public class LevitateSpell extends QuestSpell {
-    private static final Sprite SPRITE = new ItemSprite(15, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(0, false);
 
     public LevitateSpell() {
         super("Levitate", 24, MyColors.BLUE, 10, 2);

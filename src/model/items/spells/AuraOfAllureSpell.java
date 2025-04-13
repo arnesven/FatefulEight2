@@ -3,13 +3,12 @@ package model.items.spells;
 import model.classes.Skill;
 import model.items.Item;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
-import view.sprites.ItemSprite;
 import view.sprites.Sprite;
+import view.sprites.WhiteSpellSprite;
 
 public class AuraOfAllureSpell extends SkillBoostingSpell {
     public static final String SPELL_NAME = "Aura of Allure";
-    private static final Sprite SPRITE = new ItemSprite(2, 8, MyColors.BROWN, MyColors.WHITE, MyColors.DARK_GRAY);
+    private static final Sprite SPRITE = new WhiteSpellSprite(5, false);
     public AuraOfAllureSpell() {
         super(SPELL_NAME, 12, MyColors.WHITE, 8, 1);
     }

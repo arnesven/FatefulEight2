@@ -6,6 +6,7 @@ import model.items.Item;
 import model.items.Prevalence;
 import model.states.GameState;
 import view.MyColors;
+import view.sprites.BlueSpellSprite;
 import view.sprites.ItemSprite;
 import view.sprites.Sprite;
 import view.subviews.CollapsingTransition;
@@ -27,7 +28,7 @@ public class TeleportSpell extends ImmediateSpell {
         }
     }
 
-    private static final Sprite SPRITE = new ItemSprite(2, 8, MyColors.BROWN, MyColors.BLUE, MyColors.WHITE);
+    private static final Sprite SPRITE = new BlueSpellSprite(5, false);
     private static final String X_KEY = "Teleport-X";
     private static final String Y_KEY = "Teleport-Y";
     private static final String CAVES_KEY = "Teleport-Caves";

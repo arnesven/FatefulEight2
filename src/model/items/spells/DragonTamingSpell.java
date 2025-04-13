@@ -19,8 +19,7 @@ import model.states.CombatEvent;
 import model.states.GameState;
 import model.states.RunAwayState;
 import model.states.events.DragonEvent;
-import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import java.util.List;
 
 public class DragonTamingSpell extends AuxiliarySpell {
     public static final String SPELL_NAME = "Dragon Taming";
-    private static final Sprite SPRITE = new CombatSpellSprite(12, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);
+    private static final Sprite SPRITE = new ColorlessSpellSprite(4, true);
     private static final int DIFFICULTY = 8;
     private static final int HP_COST = 1;
     private static final String DESCRIPTION = "Attract a dragon or try to tame it.";

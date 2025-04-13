@@ -7,8 +7,7 @@ import model.combat.Combatant;
 import model.items.Item;
 import model.states.CombatEvent;
 import model.states.GameState;
-import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 import view.subviews.ArrowMenuSubView;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class ChannelingSpell extends SkillBoostingSpell {
     public static final String SPELL_NAME = "Channeling";
-    private static final Sprite SPRITE =  new CombatSpellSprite(3, 8, MyColors.BROWN, MyColors.PEACH, MyColors.BLACK);;
+    private static final Sprite SPRITE =  new ColorlessSpellSprite(5, false);
     private static final int DIFFICULTY = 10;
     private static final int HP_COST = 1;
     private Skill skill = null;

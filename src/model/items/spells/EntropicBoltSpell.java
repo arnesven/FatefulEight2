@@ -12,7 +12,7 @@ import view.sprites.*;
 
 public class EntropicBoltSpell extends CombatSpell {
     public static final String SPELL_NAME = "Entropic Bolt";
-    private static final Sprite SPRITE = new CombatSpellSprite(7, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(2, true);
 
     public EntropicBoltSpell() {
         super(SPELL_NAME, 32, MyColors.RED, 10, 2);

@@ -10,12 +10,12 @@ import model.items.weapons.UnarmedCombatWeapon;
 import model.items.weapons.Weapon;
 import model.states.CombatEvent;
 import view.MyColors;
-import view.sprites.CombatSpellSprite;
+import view.sprites.RedSpellSprite;
 import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
 
 public class BurningWeaponSpell extends CombatSpell {
-    private static final Sprite SPRITE = new CombatSpellSprite(10, 8, MyColors.BROWN, MyColors.DARK_RED, MyColors.WHITE);
+    private static final Sprite SPRITE = new RedSpellSprite(4, true);
 
     public BurningWeaponSpell() {
         super("Burning Weapon", 20, MyColors.RED, 9, 2);
