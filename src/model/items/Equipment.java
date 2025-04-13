@@ -212,4 +212,8 @@ public class Equipment implements Serializable {
     public int getTotalCost() {
         return weapon.getCost() + clothing.getCost() + (accessory != null ? accessory.getCost() : 0);
     }
+
+    public boolean contains(Item it) {
+        return weapon == it || clothing == it || accessory == it;
+    }
 }

@@ -152,7 +152,7 @@ public class ChooseStartingCharacterState extends GameState {
         return null;
     }
 
-    private void addSelectedItem(Model model, GameCharacter gc, Item startingItem) {
+    public static void addSelectedItem(Model model, GameCharacter gc, Item startingItem) {
         assert startingItem != null;
         boolean canEquip = Equipment.canEquip(startingItem, gc).equals("");
         if (canEquip) {

@@ -5,6 +5,7 @@ import model.Party;
 import model.SteppingMatrix;
 import model.characters.*;
 import model.headquarters.TransferCharacterHeadquartersAction;
+import model.items.Item;
 import model.map.UrbanLocation;
 import model.races.Dwarf;
 import model.races.ElvenRace;
@@ -60,7 +61,7 @@ public class RecruitState extends GameState {
         startingGoldMap = new HashMap<>();
         for (GameCharacter gc : recruitables) {
             int amount = Math.max(0, MyRandom.randInt(gc.getCharClass().getStartingGold()-10,
-                                                      gc.getCharClass().getStartingGold()+10));
+                                                      gc.getCharClass().getStartingGold()));
             startingGoldMap.put(gc, amount);
         }
     }
@@ -95,7 +96,8 @@ public class RecruitState extends GameState {
             if (recruitResult.second.equals("")) {
                 println("You spend some time asking around, but there aren't any adventurers to recruit.");
             } else {
-                println("There are some adventurers here, but they are unwilling to join because '" + recruitResult.second + "'.");
+                println("There are some adventurers here, but they are unwilling to join because '" +
+                        recruitResult.second + "'.");
             }
         }
         return new EveningState(model);
@@ -149,6 +151,12 @@ public class RecruitState extends GameState {
                 model.getParty().addToGold(amount);
                 println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
             }
+            Item it = MyRandom.sample(gc.getCharClass().getStartingItems()).copy();
+            ChooseStartingCharacterState.addSelectedItem(model, gc, it);
+            if (!gc.getEquipment().contains(it)) {
+                println(gc.getName() + " contributed a " + it.getName() + " to the party.");
+            }
+
             model.getTutorial().leader(model);
         }
     }
@@ -225,17 +233,17 @@ public class RecruitState extends GameState {
 
     private boolean partyHasAHalfOrc(Party party) {
         return party.getPartyMembers().stream().anyMatch(
-                (Predicate<GameCharacter>) gameCharacter -> gameCharacter.getRace() instanceof HalfOrc);
+                gameCharacter -> gameCharacter.getRace() instanceof HalfOrc);
     }
 
     private boolean partyHasADwarf(Party party) {
         return party.getPartyMembers().stream().anyMatch(
-                (Predicate<GameCharacter>) gameCharacter -> gameCharacter.getRace() instanceof Dwarf);
+                gameCharacter -> gameCharacter.getRace() instanceof Dwarf);
     }
 
     private boolean partyHasAnElf(Party party) {
         return party.getPartyMembers().stream().anyMatch(
-                (Predicate<GameCharacter>) gameCharacter -> gameCharacter.getRace() instanceof ElvenRace);
+                gameCharacter -> gameCharacter.getRace() instanceof ElvenRace);
     }
 
     private MyPair<Integer, String> getModifiers(Model model) {
