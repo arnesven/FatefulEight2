@@ -75,7 +75,7 @@ public abstract class CharacterClass implements Serializable {
 
     public abstract AvatarSprite getAvatar(Race race, CharacterAppearance appearance);
 
-    public abstract Equipment getStartingEquipment();
+    public abstract Equipment getDefaultEquipment();
 
     public abstract boolean isBackRowCombatant();
 

@@ -47,7 +47,7 @@ public class DruidClass extends CharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new Club());
     }
 
@@ -99,14 +99,14 @@ public class DruidClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new SummonFamiliarSpell(), new GiantGrowthSpell(), new AlchmyPackage());
+        return List.of(new SummonFamiliarSpell(), new GiantGrowthSpell(), new AlchemyPackage());
     }
 
-    private class AlchmyPackage extends InventoryDummyItem {
+    private static class AlchemyPackage extends InventoryDummyItem {
         private final Sprite SPRITE = new ItemSprite(14, 7, MyColors.WHITE,
                 MyColors.LIGHT_GREEN, MyColors.CYAN);
 
-        public AlchmyPackage() {
+        public AlchemyPackage() {
             super("Alchemy Package", 10);
         }
 
@@ -133,7 +133,7 @@ public class DruidClass extends CharacterClass {
 
         @Override
         public Item copy() {
-            return new AlchmyPackage();
+            return new AlchemyPackage();
         }
     }
 }

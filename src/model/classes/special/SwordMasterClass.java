@@ -59,7 +59,7 @@ public class SwordMasterClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new ShortSword());
     }
 

@@ -59,7 +59,7 @@ public class MinerClass extends CharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new Hatchet());
     }
 

@@ -48,7 +48,7 @@ public class PriestClass extends CharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new LongStaff());
     }
 

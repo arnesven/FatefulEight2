@@ -38,7 +38,7 @@ public abstract class StartingCharacterView extends SelectableListMenu {
         classSet = gc.getClasses();
         gc.setClass(classSet[selectedClass]);
         gc.addToHP(1000); // Start with max hp for class.
-        gc.setEquipment(classSet[selectedClass].getStartingEquipment());
+        gc.setEquipment(classSet[selectedClass].getDefaultEquipment());
         Sprite.resetCallCount();
         return gc;
     }

@@ -41,7 +41,7 @@ public class WitchKingClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new OldStaff(), new MesmersRobes(), new Crown());
     }
 

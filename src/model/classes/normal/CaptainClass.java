@@ -8,6 +8,7 @@ import model.items.Equipment;
 import model.items.Item;
 import model.items.accessories.*;
 import model.items.clothing.RustyRingMail;
+import model.items.weapons.Broadsword;
 import model.items.weapons.Longsword;
 import model.items.weapons.WoodenSpear;
 import model.races.Race;
@@ -65,7 +66,7 @@ public class CaptainClass extends CharacterClass {
 
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new WoodenSpear());
     }
 
@@ -98,6 +99,6 @@ public class CaptainClass extends CharacterClass {
 
     @Override
     public List<Item> getStartingItems() {
-        return List.of(new Longsword(), new RustyRingMail(), new Helm());
+        return List.of(new Broadsword(), new RustyRingMail(), new Helm());
     }
 }

@@ -37,7 +37,7 @@ public class ArcanistClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new OldWand());
     }
 

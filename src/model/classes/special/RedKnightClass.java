@@ -46,7 +46,7 @@ public class RedKnightClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new BastardSword(), new RedKnightsArmor(), new RedKnightsHelm());
     }
 

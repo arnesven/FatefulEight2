@@ -10,7 +10,6 @@ import model.classes.Skill;
 import model.items.weapons.Weapon;
 import model.races.Race;
 import util.Arithmetics;
-import util.MyPair;
 import util.MyRandom;
 import view.BorderFrame;
 import view.DrawingArea;
@@ -231,7 +230,7 @@ public class CharacterCreationView extends SelectableListMenu {
             BorderFrame.drawString(model.getScreenHandler(), String.format("%-13s%2d", s.getName(),
                     lastCharacter.getRankForSkill(s)), midX, row++, MyColors.WHITE, MyColors.BLUE);
         }
-        Weapon w = lastCharacter.getCharClass().getStartingEquipment().getWeapon();
+        Weapon w = lastCharacter.getCharClass().getDefaultEquipment().getWeapon();
         if (w != null) {
             BorderFrame.drawString(model.getScreenHandler(),
                     "Default gear: ",

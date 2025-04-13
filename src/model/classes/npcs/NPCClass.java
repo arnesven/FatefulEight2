@@ -29,7 +29,7 @@ public abstract class NPCClass extends CharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment();
     }
 

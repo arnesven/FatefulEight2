@@ -47,7 +47,7 @@ public class ForesterClass extends CharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new Hatchet());
     }
 

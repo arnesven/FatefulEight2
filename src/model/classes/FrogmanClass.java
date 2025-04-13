@@ -22,7 +22,7 @@ public class FrogmanClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment();
     }
 

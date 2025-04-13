@@ -63,7 +63,7 @@ public class ThiefClass extends CharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new Dirk());
     }
 

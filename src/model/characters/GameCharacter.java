@@ -89,7 +89,7 @@ public class GameCharacter extends Combatant {
 
     public GameCharacter(String firstName, String lastName, Race race,
                          CharacterClass charClass, CharacterAppearance appearance, CharacterClass[] classes) {
-        this(firstName, lastName, race, charClass, appearance, classes, charClass.getStartingEquipment());
+        this(firstName, lastName, race, charClass, appearance, classes, charClass.getDefaultEquipment());
     }
 
     public static int getXPForNextLevel(int level) {
@@ -657,7 +657,7 @@ public class GameCharacter extends Combatant {
 
     public void setRandomStartingClass() {
         setClass(MyRandom.sample(Arrays.asList(classes)));
-        this.equipment = charClass.getStartingEquipment();
+        this.equipment = charClass.getDefaultEquipment();
         super.setCurrentHp(getMaxHP());
     }
 

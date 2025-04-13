@@ -44,7 +44,7 @@ public class EnchantressClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new UnarmedCombatWeapon(), new EnchantressDress(), null);
     }
 

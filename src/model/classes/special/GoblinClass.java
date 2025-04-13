@@ -41,7 +41,7 @@ public class GoblinClass extends SpecialCharacterClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new Glaive(), new LeatherArmor(), new SkullCap());
     }
 

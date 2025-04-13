@@ -96,7 +96,7 @@ public class PirateCaptainClass extends PrestigeClass {
     }
 
     @Override
-    public Equipment getStartingEquipment() {
+    public Equipment getDefaultEquipment() {
         return new Equipment(new Dirk());
     }
 

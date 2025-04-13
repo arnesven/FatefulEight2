@@ -5,7 +5,9 @@ import model.Party;
 import model.SteppingMatrix;
 import model.characters.*;
 import model.headquarters.TransferCharacterHeadquartersAction;
+import model.items.HorseStartingItem;
 import model.items.Item;
+import model.items.spells.Spell;
 import model.map.UrbanLocation;
 import model.races.Dwarf;
 import model.races.ElvenRace;
@@ -154,7 +156,14 @@ public class RecruitState extends GameState {
             Item it = MyRandom.sample(gc.getCharClass().getStartingItems()).copy();
             ChooseStartingCharacterState.addSelectedItem(model, gc, it);
             if (!gc.getEquipment().contains(it)) {
-                println(gc.getName() + " contributed a " + it.getName() + " to the party.");
+                String extra = "";
+                if (it instanceof Spell) {
+                    extra = "spell, ";
+                }
+                if (it instanceof HorseStartingItem) {
+                    extra = "horse, ";
+                }
+                println(gc.getName() + " contributed a " + extra + it.getName() + " to the party.");
             }
 
             model.getTutorial().leader(model);
