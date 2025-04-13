@@ -1,6 +1,7 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.headquarters.*;
@@ -19,12 +20,14 @@ import java.util.List;
 public class HeadquartersDailyActionState extends GameState {
     public static final int LABOR_RANKS_REQUIRED_FOR_EXPAND = 5;
     public static final int LEADERSHIP_REQUIRED_RANKS_FOR_ASSIGNMENTS = 3;
-    private final AdvancedDailyActionState previousState;
+    private final GameState previousState;
     private static final Point MENU_LOCATION = new Point(24, 19);
+    private final boolean fromSpell;
 
-    public HeadquartersDailyActionState(Model model, AdvancedDailyActionState state) {
+    public HeadquartersDailyActionState(Model model, GameState state, boolean fromSpell) {
         super(model);
         this.previousState = state;
+        this.fromSpell = fromSpell;
     }
 
     @Override
@@ -59,7 +62,7 @@ public class HeadquartersDailyActionState extends GameState {
                     }
             ));
 
-            if (!previousState.isMorning()) {
+            if (model.getTimeOfDay() != TimeOfDay.MORNING && !fromSpell) {
                 actions.add(new RestAtHeadquartersAction(model));
             }
             if (canDoExpand(model)) {

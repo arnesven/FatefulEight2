@@ -1,5 +1,6 @@
 package view;
 
+import model.headquarters.Headquarters;
 import model.journal.*;
 import model.mainstory.MainStoryStep;
 import model.Model;
@@ -14,7 +15,9 @@ import model.items.ItemDeck;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
+import model.map.UrbanLocation;
 import util.Arithmetics;
+import util.MyLists;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
 import view.sprites.Sprite;
@@ -53,11 +56,13 @@ public class FullPartySelectView extends SelectableListMenu {
     private int startingNotoriety = 0;
     private int expandDirection = 0;
     private int startingDay = 1;
+    private int selectedHeadquarters = 0;
     private final List<Item> otherItems = new ArrayList<>();
     private final List<MainStorySpawnLocation> mainStorySpawnLocations = new ArrayList<>(List.of(
             new MainStorySpawnEast(), new MainStorySpawnNorth(), new MainStorySpawnWest(), new MainStorySpawnSouth()));
     private int selectedMainSpawn = 0;
     private MainStoryStep mainStoryProgression = MainStoryStep.NOT_STARTED;
+    private final List<String> headquartersLocations;
 
     public FullPartySelectView(Model model) {
         super(model.getView(), 58, DrawingArea.WINDOW_ROWS-1);
@@ -76,6 +81,10 @@ public class FullPartySelectView extends SelectableListMenu {
         this.equipments = new Equipment[]{new Equipment(), new Equipment(), new Equipment(), new Equipment(),
                                           new Equipment(), new Equipment(), new Equipment(), new Equipment()};
         mainStorySpawnLocations.add(0, null);
+        headquartersLocations = new ArrayList<>();
+        headquartersLocations.add("None");
+        headquartersLocations.addAll(MyLists.transform(model.getWorld().getLordLocations(),
+                UrbanLocation::getPlaceName));
     }
 
     @Override
@@ -126,6 +135,8 @@ public class FullPartySelectView extends SelectableListMenu {
                 BorderFrame.drawString(model.getScreenHandler(), "Ingrs: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Mtrls: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawString(model.getScreenHandler(), "Picks: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawString(model.getScreenHandler(), "Headquarters: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
+                y++;
                 BorderFrame.drawString(model.getScreenHandler(), "Other: ", x + COLUMN_SKIP, y++, MyColors.WHITE, MyColors.BLUE);
 
                 for (Item it : otherItems) {
@@ -358,6 +369,18 @@ public class FullPartySelectView extends SelectableListMenu {
                 startingLockpicks = Arithmetics.incrementWithWrap(startingLockpicks, MAX_GOLD);
             }
         });
+        inventoryRow++;
+        content.add(new CarouselListContent(xStart + COLUMN_SKIP, inventoryRow++, headquartersLocations.get(selectedHeadquarters)) {
+            @Override
+            public void turnLeft(Model model) {
+                selectedHeadquarters = Arithmetics.decrementWithWrap(selectedHeadquarters, headquartersLocations.size());
+            }
+
+            @Override
+            public void turnRight(Model model) {
+                selectedHeadquarters = Arithmetics.incrementWithWrap(selectedHeadquarters, headquartersLocations.size());
+            }
+        });
         content.add(new SelectableListContent(xStart + COLUMN_SKIP + INVENTORY_TAB-1, inventoryRow, "ADD") {
             @Override
             public void performAction(Model model, int x, int y) {
@@ -530,6 +553,10 @@ public class FullPartySelectView extends SelectableListMenu {
         model.setWorldState(expandDirection);
         model.setDay(startingDay);
         model.progressMainStoryForTesting(mainStoryProgression, mainStorySpawnLocations.get(selectedMainSpawn));
+        if (selectedHeadquarters != 0) {
+            UrbanLocation loc = model.getWorld().getUrbanLocationByPlaceName(headquartersLocations.get(selectedHeadquarters));
+            model.getParty().setHeadquarters(model, new Headquarters(loc, Headquarters.MEDIUM_SIZE));
+        }
     }
 
     private static class SetAllEquipmentMenu extends SelectableListMenu {

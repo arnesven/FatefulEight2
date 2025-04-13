@@ -108,7 +108,7 @@ public class ClearOutCultistsHouseTask extends SummonTask {
     private void getHouse(Model model) {
         leaderSay("Okay. It's a deal. " + iOrWeCap() + " will move in.");
         portraitSay("Fantastic. I guess I'll see you around town then.");
-        model.getParty().setHeadquarters(model, this, location.getRealEstate());
+        model.getParty().setHeadquarters(model, location.getRealEstate());
     }
 
     private void goldReward(Model model) {

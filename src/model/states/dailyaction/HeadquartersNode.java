@@ -20,7 +20,7 @@ public class HeadquartersNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return new HeadquartersDailyActionState(model, state);
+        return new HeadquartersDailyActionState(model, state, false);
     }
 
     @Override

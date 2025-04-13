@@ -972,7 +972,7 @@ public class Party implements Serializable {
         return headquarters;
     }
 
-    public void setHeadquarters(Model model, GameState state, Headquarters hq) {
+    public void setHeadquarters(Model model, Headquarters hq) {
         if (headquarters == null) {
             model.getTutorial().headquarters(model);
             model.getLog().addAnimated(LogView.GOLD_COLOR + "You have established your headquarters in " +

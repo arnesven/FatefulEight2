@@ -327,7 +327,8 @@ public abstract class WorldHex {
 
     public boolean hasLord() {
         if (hexLocation != null) {
-            return hexLocation instanceof UrbanLocation;
+            return hexLocation instanceof TownLocation ||
+                    hexLocation instanceof CastleLocation;
         }
         return false;
     }

@@ -114,7 +114,7 @@ public class RestoreMansionTask extends SummonTask {
         model.getParty().getInventory().addToMaterials(-MATERIALS_AND_GOLD_COST);
         model.getParty().addToGold(-MATERIALS_AND_GOLD_COST);
         portraitSay("Wonderful! I'll make all the arrangements then. Here are the keys to your new property!");
-        model.getParty().setHeadquarters(model, this, mansion);
+        model.getParty().setHeadquarters(model, mansion);
         summon.increaseStep();
     }
 
