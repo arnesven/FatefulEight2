@@ -28,7 +28,7 @@ public class SpellsView extends SelectableListMenu {
     private Map<MyColors, List<Spell>> spellMap = new HashMap<>();
 
     public SpellsView(GameView previous) {
-        super(previous, 50, 37);
+        super(previous, 3 * COLUMN_WIDTH + 4, 37);
         tabNames = makeTabs();
     }
 
@@ -42,8 +42,7 @@ public class SpellsView extends SelectableListMenu {
             }
             offset += tabNames[i].getName().length() + 2;
         }
-        print(model.getScreenHandler(), x+1, y+2, "_________________________________________________");
-
+        print(model.getScreenHandler(), x+1, y+2, "________________________________________________________________________");
     }
 
     @Override
@@ -161,13 +160,13 @@ public class SpellsView extends SelectableListMenu {
 
     private ItemTab[] makeTabs() {
         return new ItemTab[]{
-                new ItemTab("White|") {
+                new ItemTab("White |") {
                     @Override
                     public List<? extends Item> getItemsFromSource(Model model) {
                         return spellMap.get(MyColors.WHITE);
                     }
                 },
-                new ItemTab("Red  |") {
+                new ItemTab("Red   |") {
                     @Override
                     public List<? extends Item> getItemsFromSource(Model model) {
                         return spellMap.get(MyColors.RED);
@@ -179,19 +178,19 @@ public class SpellsView extends SelectableListMenu {
                         return spellMap.get(MyColors.BLUE);
                     }
                 },
-                new ItemTab("Green|") {
+                new ItemTab("Green |") {
                     @Override
                     public List<? extends Item> getItemsFromSource(Model model) {
                         return spellMap.get(MyColors.GREEN);
                     }
                 },
-                new ItemTab("Black|") {
+                new ItemTab("Black |") {
                     @Override
                     public List<? extends Item> getItemsFromSource(Model model) {
                         return spellMap.get(MyColors.BLACK);
                     }
                 },
-                new ItemTab("None  ") {
+                new ItemTab("Colorless") {
                     @Override
                     public List<? extends Item> getItemsFromSource(Model model) {
                         return spellMap.get(Spell.COLORLESS);

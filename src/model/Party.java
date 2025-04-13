@@ -82,6 +82,9 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
+        for (Item it : ItemDeck.allSpells()) {
+            it.addYourself(inventory);
+        }
     }
 
     public void setStartingPosition(Point position) {
