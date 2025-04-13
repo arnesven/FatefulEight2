@@ -136,7 +136,7 @@ public class OtherPartyEvent extends DailyEventState {
                 otherPartyMemberSay(gc, MyRandom.sample(
                         List.of("Spectacular!", "Wonderful!", "Please, do more!",
                                 "Encore!", "I love it!", "You are great!", "This was some high quality entertainment.",
-                                "I like what I see.", "Good stuff!", "Satisfying.")));
+                                "I like what I see.", "Good stuff!", "Satisfying.", "Bravo!")));
                 attitudeMap.put(gc, attitudeMap.get(gc) + diff);
             } else {
                 println(gc.getName() + " is not entertained by the performance.");

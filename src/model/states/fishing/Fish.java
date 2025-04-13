@@ -8,7 +8,7 @@ import util.MyRandom;
 
 public abstract class Fish extends UsableItem {
 
-    private static final double WEIGHT_PER_RATION = 650.0;
+    private static final double WEIGHT_PER_RATION = 450.0;
     private final int weight;
     private final int difficulty;
 
