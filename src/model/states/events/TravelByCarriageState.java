@@ -35,18 +35,20 @@ public class TravelByCarriageState extends GameState {
         if (carriage.first == null) {
             println("This carriage will not be departing today. " +
                     "If you want to travel with it you will have to come back again tomorrow.");
-        } if (model.getParty().size() > limit) {
-            println("The driver can't take your party, since there are too many of you.");
         } else {
-            int cost = Math.max(1, carriage.second * model.getParty().size() / 2);
-            println("This carriage is departing for the " + carriage.first.getName() + " soon." +
-                    " The driver will take your party for " + cost + " gold. The trip takes 3 days.");
-            print("Do you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
-            if (yesNoInput()) {
-                model.getParty().addToGold(-cost);
-                travelTo(model, carriage);
+            if (model.getParty().size() > limit) {
+                println("The driver can't take your party, since there are too many of you.");
             } else {
-                println("Ok. But come back soon if you change your mind. The carriage will not wait for you.");
+                int cost = Math.max(1, carriage.second * model.getParty().size() / 2);
+                println("This carriage is departing for the " + carriage.first.getName() + " soon." +
+                        " The driver will take your party for " + cost + " gold. The trip takes 3 days.");
+                print("Do you want to travel to " + carriage.first.getTownName() + "? (Y/N) ");
+                if (yesNoInput()) {
+                    model.getParty().addToGold(-cost);
+                    travelTo(model, carriage);
+                } else {
+                    println("Ok. But come back soon if you change your mind. The carriage will not wait for you.");
+                }
             }
         }
         return model.getCurrentHex().getDailyActionState(model);

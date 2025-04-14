@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.combat.Combatant;
 import model.combat.abilities.SkillAbilityCombatAction;
+import model.enemies.Enemy;
 import model.states.CombatEvent;
 import view.MyColors;
 import view.help.HelpDialog;
@@ -41,7 +42,7 @@ public class SniperShotCombatAction extends StaminaCombatAbility implements Skil
 
     @Override
     protected boolean meetsOtherRequirements(Model model, GameCharacter performer, Combatant target) {
-        return performer.getEquipment().getWeapon().isRangedAttack();
+        return performer.getEquipment().getWeapon().isRangedAttack() && target instanceof Enemy;
     }
 
     @Override
