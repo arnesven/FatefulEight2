@@ -25,7 +25,7 @@ import view.subviews.*;
 import java.awt.*;
 import java.util.List;
 
-public class PirateHavenLocation extends HexLocation implements UrbanLocation {
+public class PirateHavenLocation extends TownishLocation {
 
     private static final Sprite BOBBING_SHIP = new PirateHavenBobbingShipSprite();
     private static final String DESCRIPTION = "A shanty town where pirates, robbers and bandits have their hideouts.";
@@ -74,18 +74,8 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
     }
 
     @Override
-    public boolean isDecoration() {
-        return false;
-    }
-
-    @Override
     public HelpDialog getHelpDialog(GameView view) {
         return new PirateHavenHelpDialog(view);
-    }
-
-    @Override
-    public String getLordName() {
-        throw new IllegalStateException("Should not be called!");
     }
 
     @Override
@@ -97,7 +87,6 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
     public Point getTavernPosition() {
         return new Point(4, 3);
     }
-
 
     @Override
     public boolean noBoat() {
@@ -114,48 +103,13 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
     }
 
     @Override
-    public Point getTravelNodePosition() {
-        return new Point(AdvancedDailyActionState.TOWN_MATRIX_COLUMNS-1, AdvancedDailyActionState.TOWN_MATRIX_ROWS-2);
-    }
-
-    @Override
     public String getLocationType() {
         return "Town";
     }
 
     @Override
-    public String getLordDwelling() {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
-    public String getLordTitle() {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
-    public boolean getLordGender() {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
-    public Sprite getExitSprite() {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
     public int charterBoatEveryNDays() {
         return 1;
-    }
-
-    @Override
-    public Point getCareerOfficePosition() {
-        throw new IllegalStateException("Should not be called!");
-    }
-
-    @Override
-    public Headquarters getRealEstate() {
-        throw new IllegalStateException("Should not be called!");
     }
 
     @Override
@@ -188,7 +142,6 @@ public class PirateHavenLocation extends HexLocation implements UrbanLocation {
                     new WarehouseEvent(model),
                     new PirateFightEvent(model),
                     new DrunkenPirateEvent(model),
-                    // TODO: Pirate club, must fit in as pirates => wear pirate gear.
                     new GuideEvent(model, 1)
             ));
         }

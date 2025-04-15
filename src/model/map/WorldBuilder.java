@@ -30,7 +30,7 @@ public class WorldBuilder {
     public static final Point PIRATE_HAVEN_LOCATION = new Point(8, 17);
     public static final Point VIKING_VILLAGE_LOCATION = new Point(26, 2);
     public static final Point JUNGLE_PYRAMID_LOCATION = new Point(26, 40);
-    public static final Point FAR_EASTERN_TOWN_LOCATION = new Point(49, 26);
+    public static final Point EASTERN_PALACE_LOCATION = new Point(45, 14);
 
     public static final List<Point> INN_LOCATIONS = List.of(CROSSROADS_INN_POSITION,
             HUNTERS_INN_POSITION, WATERFRONT_INN_POISITION);
@@ -50,7 +50,7 @@ public class WorldBuilder {
                     WORLD_WIDTH - 2 * EXTRA_WIDTH,
                     WORLD_HEIGHT - 2 * EXTRA_HEIGHT);
 
-    private static String[] worldTemplate = new String[]{
+    private static final String[] worldTemplate = new String[]{
             "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
             "sssssttuuTTTTTTuuuTTTTTTTuuTTTtTTTtTTTTTttTTTTTTTTTtt",
             "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuutuTTTuuTTuuTTuuuTuu",
@@ -62,14 +62,14 @@ public class WorldBuilder {
             "sssssssstttWWTTWWTWWTTtsssstTTtuTTTtTuttssssssttttttt",
             "ssttttttWWuTuWWWTTTtttssssttTTtttTTTttttttstttttttttt",
             "ssssstttttTuWuTuTuttttsssttttTtTuTTTTTtttsstWuWuuWWuu",
-            "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWXXWWW",
-            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtsstXXXxxXxXXX",
-            "stppptssppppbbspbbhpspsssppwbwhfpMhwbfssssXXXXXXXXXXX",
-            "pppppsspppppssssspppsssssssphwhpMMhhbsssssssXXXXXXxXX",
-            "ssppppsssppsshpsssssssppssshhhphhMhwwwwbssssXXXXxxxXX",
-            "ssspppsssssshhhhhsssssssssfspwwpphpwwwMMXXXXdXXXXXXXX",
+            "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWhTWWW",
+            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtsstopphMhMMxX",
+            "stppptssppppbbspbbhpspsssppwbwhfpMhwbfsssssfffwwwwXXX",
+            "pppppsspppppssssspppsssssssphwhpMMhhbsssssssfpfwoXxXX",
+            "ssppppsssppsshpsssssssppssshhhphhMhwwwwbsssspfwwwxxXX",
+            "ssspppsssssshhhhhsssssssssfspwwpphpwwwMMbbwMypXXwXXXX",
             "spppsspppsphhphhhppfhpwswfwppMMwMffwwhpXXXXxxXXbXpxxX",
-            "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMXddXXXXxXXdDDd",
+            "sssspppppssphpphpfwwwwwhwwwfpppMffMwMMMXddXXbXxXXdDDd",
             "sspppffppssspppphpfwwhpppwpphpppMMdwddddXdDDDXXMXXXDd",
             "ssppfMMpppsspppphffwwwwpwwphhhfhfdddddddDddXXXMbXXXXX",
             "ssppfMhpppssMMMhffffwwwpwwwwwffpffDDpDXXXXXXXbMsbXXpX",
@@ -96,7 +96,7 @@ public class WorldBuilder {
         int rivers = 0;
         HexLocation location = null;
         if (contents != null) {
-            roads = contents.roads;;
+            roads = contents.roads;
             rivers = contents.rivers;
             location = contents.location;
         }
@@ -138,6 +138,8 @@ public class WorldBuilder {
             return new WastelandHills(roads, rivers, state);
         } else if (c == 'J') {
             return new SwampMountain(roads, rivers, state);
+        } else if (c == 'y') {
+            return new WastelandHex(roads, rivers, location, state);
         }
         throw new IllegalStateException("No hex can be created for token '" + c + "'");
     }
@@ -166,9 +168,9 @@ public class WorldBuilder {
 
         addTown(contents, 32, 12, new UrnTownTown(), NORTH | SOUTH, 0);
         addRoadsAndRivers(contents,36, 12, SOUTH_WEST | NORTH, 0);
+        addRoadsAndRivers(contents, 42, 11, 0, SOUTH);
         addTomb(contents, 42, 12, "Kzinric", 0, SOUTH | SOUTH_EAST | NORTH_EAST | NORTH);
         addRoadsAndRivers(contents, 43, 12, 0, SOUTH_WEST);
-        addRoadsAndRivers(contents, 43, 13, 0, NORTH_WEST);
 
         addCastle(contents, 15, 13, new BogdownCastle(), 0, 0);
         addRuins(contents, 19, 13, "Urh", 0, 0);
@@ -387,10 +389,21 @@ public class WorldBuilder {
     }
 
     private static void addEasternContents(Map<Point, HexContents> contents) {
-        addRoadsAndRivers(contents, 44, 14, 0, SOUTH);
+        addRoadsAndRivers(contents, 46, 12, 0, SOUTH | SOUTH_EAST);
+        addRoadsAndRivers(contents, 47, 12, 0, SOUTH);
 
-        addRoadsAndRivers(contents, 44, 15, 0, NORTH | NORTH_EAST);
-        addRoadsAndRivers(contents, 45, 15, 0, SOUTH | SOUTH_WEST);
+        addRoadsAndRivers(contents, 43, 13, SOUTH_EAST, NORTH_WEST);
+        addRoadsAndRivers(contents, 44, 13, NORTH_WEST | SOUTH_EAST, 0);
+        addRoadsAndRivers(contents, 45, 13, 0, SOUTH_EAST);
+        addRoadsAndRivers(contents, 46, 13, 0, SOUTH_WEST | NORTH | NORTH_WEST);
+        addRoadsAndRivers(contents, 47, 13, 0, NORTH_WEST | NORTH);
+
+        addRoadsAndRivers(contents, 44, 14, 0, SOUTH | SOUTH_EAST);
+        contents.put(EASTERN_PALACE_LOCATION, new HexContents(new EasternPalaceLocation(), NONE, SOUTH | SOUTH_EAST | NORTH_EAST));
+        addRoadsAndRivers(contents, 46, 14, 0, NORTH_WEST);
+
+        addRoadsAndRivers(contents, 44, 15, NORTH_EAST, NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 45, 15, SOUTH_WEST | NORTH, SOUTH | SOUTH_WEST | NORTH | NORTH_WEST);
         addRoadsAndRivers(contents, 46, 15, 0, SOUTH | SOUTH_WEST);
 
         addRoadsAndRivers(contents, 41, 16, 0, SOUTH_EAST);

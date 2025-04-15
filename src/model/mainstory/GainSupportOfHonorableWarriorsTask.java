@@ -15,7 +15,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     private final boolean completed;
 
     public GainSupportOfHonorableWarriorsTask() {
-        super(WorldBuilder.FAR_EASTERN_TOWN_LOCATION);
+        super(WorldBuilder.EASTERN_PALACE_LOCATION);
         this.completed = true;
     }
 
