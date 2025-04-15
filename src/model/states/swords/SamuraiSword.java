@@ -16,8 +16,8 @@ public abstract class SamuraiSword {
     private final boolean inscription;
     private final Sprite[] sprites;
 
-    public SamuraiSword(String name, MyColors color, boolean inscription, Item innerItem, int spriteMapColumn) {
-        this.name = name;
+    public SamuraiSword(MyColors color, boolean inscription, Item innerItem, int spriteMapColumn) {
+        this.name = innerItem.getName();
         this.color = color;
         this.inscription = inscription;
         this.item = innerItem;
@@ -45,4 +45,6 @@ public abstract class SamuraiSword {
     protected void drawInscription(Model model, int x, int y, Sprite sprite) {
         model.getScreenHandler().put(x, y + 3 * 4, sprite);
     }
+
+    public abstract int getCursorOffset();
 }

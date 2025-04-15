@@ -5,6 +5,11 @@ import view.MyColors;
 
 public class MediumSamuraiSword extends SamuraiSword {
     public MediumSamuraiSword(MyColors color, boolean inscription) {
-        super("Katana", color, inscription, new Katana(), 0);
+        super(color, inscription, new Katana(), 0);
+    }
+
+    @Override
+    public int getCursorOffset() {
+        return 2;
     }
 }
