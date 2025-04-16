@@ -80,7 +80,7 @@ public class EasternPalaceLocation extends TownishLocation {
 
     @Override
     public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new EasternPalaceShopNode(model, 2, 2));
+        return List.of(new EasternPalaceShopNode(model, 1, 5));
     }
 
     @Override

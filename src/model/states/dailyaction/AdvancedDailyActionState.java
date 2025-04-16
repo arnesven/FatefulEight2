@@ -12,7 +12,9 @@ import view.help.TutorialStartDialog;
 import view.subviews.*;
 
 import java.awt.*;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public abstract class AdvancedDailyActionState extends GameState {
 
@@ -23,6 +25,7 @@ public abstract class AdvancedDailyActionState extends GameState {
     private SteppingMatrix<DailyActionNode> matrix;
     private boolean firstTimeEvening = true;
     private boolean firstTimeDayTime = true;
+    private final Set<Integer> blockedPositions = new HashSet<>();
 
     public AdvancedDailyActionState(Model model) {
         super(model);
@@ -135,4 +138,11 @@ public abstract class AdvancedDailyActionState extends GameState {
 
     public boolean isEvening() { return getModel().getTimeOfDay() == TimeOfDay.EVENING; }
 
+    public boolean isPositionBlocked(int col, int row) {
+        return blockedPositions.contains(row * 1000 + col);
+    }
+
+    protected void blockPosition(int col, int row) {
+        blockedPositions.add(row * 1000 + col);
+    }
 }

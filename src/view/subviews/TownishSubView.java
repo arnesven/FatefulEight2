@@ -36,6 +36,7 @@ public class TownishSubView extends DailyActionSubView {
     private final String townName;
     private final double townDensity;
     private final Sprite[] townHouses;
+    private final AdvancedDailyActionState state;
 
     public TownishSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                        boolean isCoastal, String townName, double townDensity, Sprite[] townHouseSprites) {
@@ -44,6 +45,7 @@ public class TownishSubView extends DailyActionSubView {
         this.townName = townName;
         this.townDensity = townDensity;
         this.townHouses = townHouseSprites;
+        this.state = state;
     }
 
     @Override
@@ -57,14 +59,20 @@ public class TownishSubView extends DailyActionSubView {
         Random rnd = new Random(townName.hashCode());
         for (int col = 0; col < 8; col++) {
             for (int row = 1; row < 8; row++) {
-                if (getMatrix().getElementAt(col, row) == null && rnd.nextDouble() > (1.0- townDensity)
-                        && !((1 < col && col < 5) && (2 < row && row < 6))) {
+                if (getMatrix().getElementAt(col, row) == null
+                        && rnd.nextDouble() > (1.0- townDensity)
+                        && isOutsideTownSquare(col, row)
+                        && !state.isPositionBlocked(col, row)) {
                     Point p = convertToScreen(new Point(col, row));
                     Sprite townHouse = townHouses[rnd.nextInt(townHouses.length)];
                     model.getScreenHandler().register(townHouse.getName(), p, townHouse);
                 }
             }
         }
+    }
+
+    private boolean isOutsideTownSquare(int col, int row) {
+        return !((1 < col && col < 5) && (2 < row && row < 6));
     }
 
     @Override
