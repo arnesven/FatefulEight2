@@ -3,6 +3,7 @@ package model.races;
 import model.characters.appearance.ThickNeck;
 import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.PortraitSprite;
@@ -64,5 +65,10 @@ public class HalfOrc extends Race {
     @Override
     public String getShortDescription() {
         return "hardy, stout and rugged, but most of them aren't as rough as you think.";
+    }
+
+    @Override
+    public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
+        return mouthIndex == 7 || MyRandom.randInt(6) == 0; // Try to get tusks more often.
     }
 }

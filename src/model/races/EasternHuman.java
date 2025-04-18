@@ -18,10 +18,12 @@ public class EasternHuman extends HumanRace {
     private static final List<MyColors> HAIR_COLORS = List.of(MyColors.DARK_GRAY,
             MyColors.DARK_BROWN, MyColors.GRAY, MyColors.BROWN, MyColors.DARK_RED);
 
+    private static final List<Integer> NOSES = List.of(0x1, 0x8, 0x9, 0xA, 0xD, 0x18, 0x4A, 0x4B);
+
     public EasternHuman() {
         super("Human", MyColors.BEIGE,
                 new Skill[]{Skill.Logic, Skill.SeekInfo, Skill.UnarmedCombat},
-                "Eastern humans are prevalent in the far east of the world. " +
+                "Eastern humans are found in the far east of the world. " +
                         "Their attributes are notably average in many regards. Eastern humans take up " +
                         "all kinds of professions but it is not " +
                         "uncommon for them to be Warriors, Scholars, Poets, and Artisans.");
@@ -45,5 +47,10 @@ public class EasternHuman extends HumanRace {
     @Override
     public CharacterEyes getRandomOldEyes() {
         return EYES.get(MyRandom.randInt(2) + 1);
+    }
+
+    @Override
+    public int getRandomNose() {
+        return MyRandom.sample(NOSES);
     }
 }

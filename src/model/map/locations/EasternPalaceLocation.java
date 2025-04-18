@@ -16,6 +16,8 @@ import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyLists;
 import view.GameView;
 import view.MyColors;
+import view.combat.CombatTheme;
+import view.combat.GrassCombatTheme;
 import view.help.HelpDialog;
 import view.sprites.HexLocationSprite;
 import view.sprites.Sprite;
@@ -36,6 +38,11 @@ public class EasternPalaceLocation extends TownishLocation {
         super("Eastern Palace");
         subView = new ImageSubView("palace", "EASTERN PALACE",
                 "You are at the Eastern Palace.", true);
+    }
+
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new GrassCombatTheme();
     }
 
     @Override

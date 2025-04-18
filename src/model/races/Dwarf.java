@@ -66,7 +66,7 @@ public class Dwarf extends Race {
 
     @Override
     public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
-        return gender || PortraitSubView.isBeardyMouth(mouthIndex) || MyRandom.randInt(4) == 0;
-        // Unbearded male dwarf 1 in 4.
+        return super.isRandomMouthOk(gender, mouthIndex) &&
+                (gender || PortraitSubView.isBeardyMouth(mouthIndex) || MyRandom.randInt(4) == 0);
     }
 }
