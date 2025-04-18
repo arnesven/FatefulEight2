@@ -21,7 +21,7 @@ public class PirateHavenSubView extends TownishSubView {
 
     public PirateHavenSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                               boolean isCoastal, String name) {
-        super(state, matrix, isCoastal, name, TOWN_DENSITY, HOUSE_SPRITES);
+        super(state, matrix, isCoastal, name, TOWN_DENSITY, true, HOUSE_SPRITES);
     }
 
     @Override

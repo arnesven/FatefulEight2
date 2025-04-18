@@ -8,6 +8,8 @@ import model.states.dailyaction.tavern.EasternTavernNode;
 import model.states.dailyaction.tavern.PirateTavernNode;
 import model.states.dailyaction.tavern.TavernNode;
 
+import java.awt.*;
+
 public class EasternPalaceDailyActionState extends TownishDailyActionState {
     public EasternPalaceDailyActionState(Model model, EasternPalaceLocation easternPalaceLocation) {
         super(model, false, easternPalaceLocation, false, false);
@@ -16,6 +18,9 @@ public class EasternPalaceDailyActionState extends TownishDailyActionState {
         blockPosition(2, 1);
         blockPosition(4, 2);
         blockPosition(4, 1);
+        Point p = easternPalaceLocation.getTavernPosition();
+        p.y = p.y - 1;
+        blockPosition(p.x, p.y);
     }
 
     public void addTavernNode(Model model, boolean freeLodging, UrbanLocation urbanLocation) {

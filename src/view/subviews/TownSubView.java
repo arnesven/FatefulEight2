@@ -22,6 +22,6 @@ public class TownSubView extends TownishSubView {
 
     public TownSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
                        boolean isCoastal, String townName) {
-        super(state, matrix, isCoastal, townName, TOWN_DENSITY, TOWN_HOUSES);
+        super(state, matrix, isCoastal, townName, TOWN_DENSITY, true, TOWN_HOUSES);
     }
 }

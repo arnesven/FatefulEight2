@@ -37,15 +37,18 @@ public class TownishSubView extends DailyActionSubView {
     private final double townDensity;
     private final Sprite[] townHouses;
     private final AdvancedDailyActionState state;
+    private boolean hasLargeTownSquare;
 
     public TownishSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix,
-                       boolean isCoastal, String townName, double townDensity, Sprite[] townHouseSprites) {
+                       boolean isCoastal, String townName, double townDensity, boolean hasLargeTownSquare,
+                          Sprite[] townHouseSprites) {
         super(state, matrix);
         this.isCoastal = isCoastal;
         this.townName = townName;
         this.townDensity = townDensity;
         this.townHouses = townHouseSprites;
         this.state = state;
+        this.hasLargeTownSquare = hasLargeTownSquare;
     }
 
     @Override
@@ -71,7 +74,7 @@ public class TownishSubView extends DailyActionSubView {
         }
     }
 
-    private boolean isOutsideTownSquare(int col, int row) {
+    protected boolean isOutsideTownSquare(int col, int row) {
         return !((1 < col && col < 5) && (2 < row && row < 6));
     }
 
@@ -85,7 +88,7 @@ public class TownishSubView extends DailyActionSubView {
         return "TOWN";
     }
 
-    private void drawDocks(Model model) {
+    protected void drawDocks(Model model) {
         Sprite waterSprite;
         Sprite dockSprite;
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
@@ -141,7 +144,7 @@ public class TownishSubView extends DailyActionSubView {
                         spr = GrassCombatTheme.grassSprites[random.nextInt(GrassCombatTheme.grassSprites.length)];
                     }
                     model.getScreenHandler().put(p.x, p.y, spr);
-                } else if (1 <= col && col <= 5 && 2 <= row && row <= 6) {
+                } else if (1 <= col && col <= 5 && 2 <= row && row <= 6 && hasLargeTownSquare) {
                     model.getScreenHandler().put(p.x, p.y, STREET_INNER);
                 } else {
                     model.getScreenHandler().put(p.x, p.y, street);

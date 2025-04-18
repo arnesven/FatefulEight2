@@ -399,7 +399,8 @@ public class WorldBuilder {
         addRoadsAndRivers(contents, 47, 13, 0, NORTH_WEST | NORTH);
 
         addRoadsAndRivers(contents, 44, 14, 0, SOUTH | SOUTH_EAST);
-        contents.put(EASTERN_PALACE_LOCATION, new HexContents(new EasternPalaceLocation(), NONE, SOUTH | SOUTH_EAST | NORTH_EAST));
+        contents.put(EASTERN_PALACE_LOCATION, new HexContents(new EasternPalaceLocation(),
+                NORTH_WEST | SOUTH | SOUTH_EAST | SOUTH_WEST, SOUTH | SOUTH_EAST | NORTH_EAST));
         addRoadsAndRivers(contents, 46, 14, 0, NORTH_WEST);
 
         addRoadsAndRivers(contents, 44, 15, NORTH_EAST, NORTH | NORTH_EAST);
