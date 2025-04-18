@@ -95,7 +95,11 @@ public enum MainStoryStep {
     }),
     EVERIX_TALKED_TO((model, mainStory) -> {
        mainStory.getStoryParts().get(7).progress();       // Wake Everix up and talk to her.
+    }),
+    WITCH_MET_AGAIN((model, mainStory) -> {
+        mainStory.getStoryParts().get(7).progress();       // Meet witch and get kingdom and remote people tasks.
     });
+
 
     private final MainStoryProgressor progressor;
 

@@ -16,9 +16,9 @@ public class EasternHuman extends HumanRace {
             new CharacterEyes(0x19D, 0x19E, "", 6)
     );
     private static final List<MyColors> HAIR_COLORS = List.of(MyColors.DARK_GRAY,
-            MyColors.DARK_BROWN, MyColors.GRAY, MyColors.BROWN, MyColors.DARK_RED);
+            MyColors.DARK_BROWN, MyColors.GRAY, MyColors.BROWN, MyColors.DARK_RED, MyColors.TAN);
 
-    private static final List<Integer> NOSES = List.of(0x1, 0x8, 0x9, 0xA, 0xD, 0x18, 0x4A, 0x4B);
+    private static final List<Integer> NOSES = List.of(0x2, 0xA, 0xB, 0xC, 0xE, 0x18, 0x4A, 0x4B);
 
     public EasternHuman() {
         super("Human", MyColors.BEIGE,
