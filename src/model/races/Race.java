@@ -4,6 +4,7 @@ import model.characters.appearance.*;
 import model.classes.Skill;
 import util.MyRandom;
 import view.MyColors;
+import view.party.CharacterCreationView;
 import view.sprites.FaceSpriteWithHair;
 import view.sprites.PortraitSprite;
 
@@ -15,6 +16,7 @@ public abstract class Race implements Serializable {
     public static final Race HALF_ORC = new HalfOrc();
     public static final Race NORTHERN_HUMAN = new NorthernHuman();
     public static final Race SOUTHERN_HUMAN = new SouthernHuman();
+    public static final Race EASTERN_HUMAN = new EasternHuman();
     public static final Race HIGH_ELF = new HighElf();
     public static final Race DARK_ELF = new DarkElf();
     public static final Race WOOD_ELF = new WoodElf();
@@ -26,7 +28,7 @@ public abstract class Race implements Serializable {
     public static final Race DOG = new DogRace();
     public static final Race ORC = new OrcRace();
     public static final Race[] allRaces = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC};
-    public static final Race[] allRacesIncludingMinor = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC, ORC};
+    public static final Race[] allRacesIncludingMinor = new Race[]{NORTHERN_HUMAN, SOUTHERN_HUMAN, HIGH_ELF, WOOD_ELF, DARK_ELF, HALFLING, DWARF, HALF_ORC, ORC, EASTERN_HUMAN};
     public static final Race FROGMAN = new FrogmanRace();
     public static final Race LIZARDMAN = new LizardmanRace(); // TODO
     private static int nextRaceId = 0;
@@ -157,4 +159,48 @@ public abstract class Race implements Serializable {
     }
 
     public String getShortDescription() { return "Unused"; }
+
+    public MyColors getRandomHairColor(boolean gender) {
+        return HairStyle.randomHairColor();
+    }
+
+    public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
+        return mouthIndex != 7;
+    }
+
+    public CharacterEyes getRandomEyes() {
+        return CharacterEyes.allEyes[MyRandom.randInt(CharacterEyes.allEyes.length)];
+    }
+
+    public int getRandomNose() {
+        return CharacterCreationView.noseSet[MyRandom.randInt(CharacterCreationView.noseSet.length)];
+    }
+
+    public HairStyle getRandomHairStyle(boolean gender) {
+        return HairStyle.randomHairStyle(gender);
+    }
+
+    public void setRandomDetail(AdvancedAppearance appearance) {
+        if (MyRandom.randInt(50) == 0) {
+            appearance.setFaceDetail(new EyePatchDetail());
+            appearance.setDetailColor(MyColors.BLACK);
+        } else {
+            boolean glasses = MyRandom.rollD10() == 10;
+            boolean earrings = MyRandom.rollD10() == 10;
+            if (glasses && earrings) {
+                appearance.setFaceDetail(new GlassesAndEarringsDetail());
+            } else if (glasses) {
+                appearance.setFaceDetail(new GlassesDetail());
+            } else if (earrings) {
+                appearance.setFaceDetail(new EarringsDetail());
+            }
+            int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
+            appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
+        }
+    }
+
+    public CharacterEyes getRandomOldEyes() {
+        CharacterEyes[] oldEyes = new CharacterEyes[]{CharacterEyes.allEyes[3], CharacterEyes.allEyes[5], CharacterEyes.allEyes[7]};
+        return oldEyes[MyRandom.randInt(oldEyes.length)];
+    }
 }

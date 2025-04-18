@@ -2,6 +2,10 @@ package model.map.locations;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.journal.PartSixStoryPart;
+import model.journal.StoryPart;
+import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
@@ -9,6 +13,7 @@ import model.states.dailyaction.EasternPalaceDailyActionState;
 import model.states.dailyaction.PirateHavenDailyActionState;
 import model.states.dailyaction.shops.EasternPalaceShopNode;
 import model.states.dailyaction.shops.GeneralShopNode;
+import util.MyLists;
 import view.GameView;
 import view.MyColors;
 import view.help.HelpDialog;
@@ -66,6 +71,29 @@ public class EasternPalaceLocation extends TownishLocation {
     @Override
     public GameState getEveningState(Model model, boolean freeLodge, boolean freeRations) {
         return new EasternPalaceDailyActionState(model, this);
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        GainSupportOfHonorableWarriorsTask task = getHonorableWarriorsTask(model);
+        if (task != null && !task.isCompleted()) {
+            DailyEventState event = task.generateEvent(model);
+            if (event != null) {
+                return event;
+            }
+        }
+        return super.generateEvent(model);
+    }
+
+    private GainSupportOfHonorableWarriorsTask getHonorableWarriorsTask(Model model) {
+        StoryPart part = MyLists.last(model.getMainStory().getStoryParts());
+        if (part instanceof PartSixStoryPart) {
+            PartSixStoryPart partSix = (PartSixStoryPart) part;
+            if (partSix.getRemotePeopleTask() instanceof GainSupportOfHonorableWarriorsTask) {
+                return (GainSupportOfHonorableWarriorsTask) partSix.getRemotePeopleTask();
+            }
+        }
+        return null;
     }
 
     @Override

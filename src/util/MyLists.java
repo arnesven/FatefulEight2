@@ -1,5 +1,6 @@
 package util;
 
+import model.journal.StoryPart;
 import model.states.DailyEventState;
 
 import java.util.ArrayList;
@@ -164,5 +165,9 @@ public class MyLists {
             return true;
         }
         return false;
+    }
+
+    public static <E> E last(List<E> list) {
+        return list.get(list.size()-1);
     }
 }

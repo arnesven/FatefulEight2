@@ -42,58 +42,41 @@ public class PortraitSubView extends SubView {
         }
         MyColors hairColor;
         do {
-            hairColor = HairStyle.randomHairColor();
+            hairColor = raceToUse.getRandomHairColor(gender);
         } while (hairColor == raceToUse.getColor());
 
         int mouthIndex;
         do {
             mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
         } while ((gender && isBeardyMouth(mouthIndex)) || // woman with beard
-                (raceToUse.id() == Race.DWARF.id() &&
-                        !gender && !isBeardyMouth(mouthIndex) && MyRandom.flipCoin())); // un-bearded dwarf man 50% of the time
-
+                !raceToUse.isRandomMouthOk(gender, mouthIndex));
         int mouth = CharacterCreationView.mouthSet[mouthIndex];
-        int nose = CharacterCreationView.noseSet[MyRandom.randInt(CharacterCreationView.noseSet.length)];
-        CharacterEyes eyes = CharacterEyes.allEyes[MyRandom.randInt(CharacterEyes.allEyes.length)];
-        HairStyle hair = HairStyle.randomHairStyle(gender);
+
+        int nose = race.getRandomNose();
+        CharacterEyes eyes = race.getRandomEyes();
+        HairStyle hair = race.getRandomHairStyle(gender);
         Beard beard;
         do {
             beard = Beard.allBeards[MyRandom.randInt(Beard.allBeards.length)];
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
-        setDetail(appearance);
+        race.setRandomDetail(appearance);
         if (gender) { // makup
              if (MyRandom.randInt(3) == 0) {
                  appearance.setMascaraColor(CharacterCreationView.makeupColorSet[
                          MyRandom.randInt(CharacterCreationView.makeupColorSet.length)]);
              }
             if (MyRandom.randInt(3) == 0) {
-                appearance.setLipColor(CharacterCreationView.makeupColorSet[
-                        MyRandom.randInt(CharacterCreationView.makeupColorSet.length)]);
+                MyColors lipColor = CharacterCreationView.makeupColorSet[
+                        MyRandom.randInt(CharacterCreationView.makeupColorSet.length)];
+                if (lipColor != raceToUse.getColor()) {
+                    appearance.setLipColor(lipColor);
+                }
             }
         }
         appearance.setClass(cls);
         return appearance;
-    }
-
-    private static void setDetail(AdvancedAppearance appearance) {
-        if (MyRandom.randInt(50) == 0) {
-            appearance.setFaceDetail(new EyePatchDetail());
-            appearance.setDetailColor(MyColors.BLACK);
-        } else {
-            boolean glasses = MyRandom.rollD10() == 10;
-            boolean earrings = MyRandom.rollD10() == 10;
-            if (glasses && earrings) {
-                appearance.setFaceDetail(new GlassesAndEarringsDetail());
-            } else if (glasses) {
-                appearance.setFaceDetail(new GlassesDetail());
-            } else if (earrings) {
-                appearance.setFaceDetail(new EarringsDetail());
-            }
-            int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
-            appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
-        }
     }
 
     public static AdvancedAppearance makeRandomPortrait(CharacterClass cls, Race race) {
@@ -186,19 +169,19 @@ public class PortraitSubView extends SubView {
         int mouthIndex;
         do {
             mouthIndex = MyRandom.randInt(CharacterCreationView.mouthSet.length);
-        } while (gender && isBeardyMouth(mouthIndex));
+        } while (gender && isBeardyMouth(mouthIndex) || (!raceToUse.isRandomMouthOk(gender, mouthIndex)));
+
         int mouth = CharacterCreationView.mouthSet[mouthIndex];
-        int nose = CharacterCreationView.noseSet[MyRandom.randInt(CharacterCreationView.noseSet.length)];
-        CharacterEyes[] oldEyes = new CharacterEyes[]{CharacterEyes.allEyes[3], CharacterEyes.allEyes[5], CharacterEyes.allEyes[7]};
-        CharacterEyes eyes = oldEyes[MyRandom.randInt(oldEyes.length)];
-        HairStyle hair = HairStyle.randomHairStyle(gender);
+        int nose = raceToUse.getRandomNose();
+        CharacterEyes eyes = raceToUse.getRandomOldEyes();
+        HairStyle hair = raceToUse.getRandomHairStyle(gender);
         Beard beard;
         do {
             beard = Beard.allBeards[MyRandom.randInt(Beard.allBeards.length)];
         } while (beard.isTrueBeard() != isBeardyMouth(mouthIndex));
         appearance = new AdvancedAppearance(raceToUse, gender,
                 hairColor, mouth, nose, eyes, hair, beard);
-        setDetail(appearance);
+        raceToUse.setRandomDetail(appearance);
         appearance.setClass(cls);
         return appearance;
     }

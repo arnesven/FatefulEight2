@@ -3,8 +3,10 @@ package model.races;
 import model.characters.appearance.HunkyNeck;
 import model.characters.appearance.TorsoNeck;
 import model.classes.Skill;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.PortraitSprite;
+import view.subviews.PortraitSubView;
 
 public class Dwarf extends Race {
     public Dwarf() {
@@ -60,5 +62,11 @@ public class Dwarf extends Race {
     @Override
     public String getShortDescription() {
         return "short, stocky individuals. More often with beards than not.";
+    }
+
+    @Override
+    public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
+        return gender || PortraitSubView.isBeardyMouth(mouthIndex) || MyRandom.randInt(4) == 0;
+        // Unbearded male dwarf 1 in 4.
     }
 }

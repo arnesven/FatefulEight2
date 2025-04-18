@@ -8,6 +8,7 @@ import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
 import model.items.weapons.Weapon;
+import model.races.EasternHuman;
 import model.races.Race;
 import util.Arithmetics;
 import util.MyRandom;
@@ -34,7 +35,8 @@ public class CharacterCreationView extends SelectableListMenu {
     private final List<InputBufferWidget> buffers = new ArrayList<>();
     private boolean gender = true;
     private static Race[] raceSet = Race.allRaces;
-    private static final CharacterEyes[] eyeSet = CharacterEyes.allEyes;
+    private static final CharacterEyes[] eyeSet = makeEyeSet();
+
     // DO NOT CHANGE THE ORDER OF noseSet or mouthSet, IT WILL AFFECT PRESET CHARACTERS
     public static final Integer[] noseSet = new Integer[]{0, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xb, 0xC, 0xD, 0xE, 0xF};
     public static final Integer[] mouthSet = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
@@ -652,5 +654,19 @@ public class CharacterCreationView extends SelectableListMenu {
         accessory = MyRandom.randInt(accessorySet.length);
         selectedDetailColor = MyRandom.randInt(detailColorSet.length);
         rebuildAppearance();
+    }
+
+
+    private static CharacterEyes[] makeEyeSet() {
+        CharacterEyes[] result = new CharacterEyes[CharacterEyes.allEyes.length +
+                EasternHuman.EYES.toArray().length];
+        int index = 0;
+        for (CharacterEyes eyes : CharacterEyes.allEyes) {
+            result[index++] = eyes;
+        }
+        for (CharacterEyes eyes : EasternHuman.EYES) {
+            result[index++] = eyes;
+        }
+        return result;
     }
 }
