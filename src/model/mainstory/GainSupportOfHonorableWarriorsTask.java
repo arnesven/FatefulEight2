@@ -1,15 +1,23 @@
 package model.mainstory;
 
 import model.Model;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.CharacterEyes;
+import model.characters.appearance.OldManHairStyle;
+import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.classes.NoClass;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.map.WorldBuilder;
 import model.quests.Quest;
+import model.races.AllRaces;
 import model.races.Race;
 import model.states.DailyEventState;
 import util.MyTriplet;
+import view.MyColors;
+import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.util.List;
@@ -69,13 +77,28 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
 
         @Override
         protected void doEvent(Model model) {
+            step++;
             println("As you" + (model.getParty().size() > 1 ? "r party" : "") +
                     " stroll into this exotic town you notice everybody is staring at you. " +
                     "Children are pointing, some laughing, some clinging to their parents. A man approaches you.");
             showRandomPortrait(model, Classes.FARMER, Race.EASTERN_HUMAN,"Villager");
             portraitSay("You don't belong here outsider. What's your business?");
-            waitForReturn();
-            step++;
+            leaderSay("We've come to conduct diplomatic negotiations with your people. Who among you do you call leader?");
+            portraitSay("Our Lord Shingen rules this land. But he will surely not see a lowly outsider as yourself.");
+            leaderSay("Why not? " + imOrWere() + " not just some scruffy vagabond" + (model.getParty().size() > 1 ? "s." : "."));
+            portraitSay("Nevertheless, I'm sure our lord will not meet with you. " +
+                    "You had better go see old Miko, he is wise and knows most about western affairs among us. He will advise you.");
+            leaderSay("Fine, show " + meOrUs() + " to this Miko fellow.");
+            println("The villager shows you to an old mill. Inside, an old, blind emaciated man sits on the floor.");
+            portraitSay("Miko, these outsiders are from the west. They say they have urgent business with Lord Shingen.");
+            model.getLog().waitForAnimationToFinish();
+            CharacterClass grayNoneClass = new NoClass(MyColors.DARK_BLUE);
+            AdvancedAppearance app = (AdvancedAppearance) PortraitSubView.makeOldPortrait(grayNoneClass, AllRaces.EASTERN_HUMAN, false);
+            app.setHairStyle(new OldManHairStyle());
+            app.setClass(grayNoneClass);
+            showExplicitPortrait(model, app, "Miko");
+            forcePortraitEyes(true);
+            waitForReturnSilently();
         }
     }
 }

@@ -12,19 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NoClass extends CharacterClass {
-    protected NoClass() {
+    private final MyColors shirtColor;
+
+    public NoClass(MyColors shirtColor) {
         super("", "NONE", 3, 3, false, 0,
                 new WeightedSkill[]{});
+        this.shirtColor = shirtColor;
+    }
+
+    public NoClass() {
+        this(MyColors.BEIGE);
     }
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
-        Looks.putOnLooseShirt(characterAppearance, MyColors.BEIGE);
+        Looks.putOnLooseShirt(characterAppearance, shirtColor);
     }
 
     @Override
     public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
-        return new AvatarSprite(race, 0x220, MyColors.BEIGE, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
+        return new AvatarSprite(race, 0x220, shirtColor, race.getColor(), appearance.getNormalHair(), appearance.getFullBackHair());
     }
 
     @Override
@@ -39,7 +46,7 @@ public class NoClass extends CharacterClass {
 
     @Override
     protected MyColors getIconColor() {
-        return MyColors.BEIGE;
+        return shirtColor;
     }
 
     @Override
