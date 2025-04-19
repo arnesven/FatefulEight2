@@ -2,6 +2,8 @@ package model.states.dailyaction;
 
 import model.Model;
 import model.TimeOfDay;
+import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.map.locations.EasternPalaceLocation;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -28,7 +30,11 @@ public class WaterMillNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return null;
+        GainSupportOfHonorableWarriorsTask task = EasternPalaceLocation.getHonorableWarriorsTask(model);
+        if (task != null) {
+            return task.generateEvent(model, true);
+        }
+        throw new IllegalStateException("No remote people task found!");
     }
 
     @Override
@@ -50,12 +56,12 @@ public class WaterMillNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        return false;
+        return true;
     }
 
     @Override
     public Point getCursorShift() {
-        return new Point(0, -2);
+        return new Point(0, -4);
     }
 
     @Override

@@ -41,6 +41,11 @@ public class EasternPalaceLocation extends TownishLocation {
     }
 
     @Override
+    public boolean hasLodging() {
+        return true;
+    }
+
+    @Override
     public CombatTheme getCombatTheme() {
         return new GrassCombatTheme();
     }
@@ -84,7 +89,7 @@ public class EasternPalaceLocation extends TownishLocation {
     public DailyEventState generateEvent(Model model) {
         GainSupportOfHonorableWarriorsTask task = getHonorableWarriorsTask(model);
         if (task != null && !task.isCompleted()) {
-            DailyEventState event = task.generateEvent(model);
+            DailyEventState event = task.generateEvent(model, false);
             if (event != null) {
                 return event;
             }
@@ -92,7 +97,7 @@ public class EasternPalaceLocation extends TownishLocation {
         return super.generateEvent(model);
     }
 
-    private GainSupportOfHonorableWarriorsTask getHonorableWarriorsTask(Model model) {
+    public static GainSupportOfHonorableWarriorsTask getHonorableWarriorsTask(Model model) {
         StoryPart part = MyLists.last(model.getMainStory().getStoryParts());
         if (part instanceof PartSixStoryPart) {
             PartSixStoryPart partSix = (PartSixStoryPart) part;
