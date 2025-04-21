@@ -10,7 +10,6 @@ import model.states.GameState;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.EasternPalaceDailyActionState;
-import model.states.dailyaction.PirateHavenDailyActionState;
 import model.states.dailyaction.shops.EasternPalaceShopNode;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyLists;

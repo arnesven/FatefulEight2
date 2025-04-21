@@ -9,7 +9,6 @@ import model.tasks.AlchemyTask;
 import model.tasks.WorkbenchTask;
 import model.tasks.DestinationTask;
 import util.MyLists;
-import view.combat.TownCombatTheme;
 import model.states.events.SaberfishEvent;
 import model.states.*;
 import model.states.events.*;
