@@ -18,6 +18,7 @@ import model.items.spells.Spell;
 import model.items.weapons.Katana;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
+import model.mainstory.honorable.MeetLordShingenEvent;
 import model.mainstory.honorable.MikoAppearance;
 import model.map.WorldBuilder;
 import model.quests.Quest;
@@ -32,7 +33,9 @@ import util.MyStrings;
 import util.MyTriplet;
 import view.MyColors;
 import view.combat.MountainCombatTheme;
+import view.sprites.PortraitSprite;
 import view.subviews.ArrowMenuSubView;
+import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -42,16 +45,18 @@ import java.util.List;
 
 public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopleTask {
 
-
     private enum ShingenWeapon {Wakisashis, Katana, DaiKatana;};
 
 
     private static final int INITIAL_STEP = 0;
     private static final int NO_SUBTASK_PERFORMED = 1;
+    private static final int MIKOS_TASK_DONE = 2;
 
     private final boolean completed;
+
     private final List<SubTask> subTasks;
     private final MikoAppearance mikoAppearance;
+    private final AdvancedAppearance shingenPortrait;
     private final MyColors swordColor;
     private final ShingenWeapon shingenWeapon;
     private int step = INITIAL_STEP;
@@ -63,10 +68,15 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         this.mikoAppearance = new MikoAppearance();
         this.swordColor = MyRandom.sample(PickSamuraiSwordState.SWORD_COLORS);
         this.shingenWeapon = ShingenWeapon.values()[MyRandom.randInt(ShingenWeapon.values().length)];
+        this.shingenPortrait = PortraitSubView.makeRandomPortrait(Classes.SAMURAI, AllRaces.EASTERN_HUMAN, false);
         subTasks.add(new RepairHousesSubTask(swordColor));
         subTasks.add(new FightBanditsSubTask());
         subTasks.add(new HealTheSickSubTask());
         subTasks.add(new TeachSpellCastingSubStask());
+    }
+
+    public boolean hasDoneMikosTask() {
+        return step > NO_SUBTASK_PERFORMED;
     }
 
     @Override
@@ -99,10 +109,17 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         return completed;
     }
 
+    public CharacterAppearance getShingenPortrait() {
+        return shingenPortrait;
+    }
 
     @Override
     public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
         return null;
+    }
+
+    public DailyEventState makeLordShingenEvent(Model model) {
+        return new MeetLordShingenEvent(model, this);
     }
 
     public DailyEventState generateEvent(Model model, boolean waterMill) {
@@ -163,7 +180,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                     println("You step inside the old mill. The turning of the big wooden wheel thumps eerily. " +
                             "Upstairs you find an old, blind emaciated man sitting on the floor");
                 }
-                step++;
+                step = NO_SUBTASK_PERFORMED;
                 model.getLog().waitForAnimationToFinish();
                 showMiko(model);
                 forcePortraitEyes(true);
@@ -212,7 +229,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 if (success) {
                     portraitSay("Your help to our village will surely have been noticed by Shingen.");
                     subTasks.remove(selected);
-                    step++;
+                    step = MIKOS_TASK_DONE;
                 }
             } else { // Step 1 => Not performed any subtask or SUBTASK PERFORMED
                 setCurrentTerrainSubview(model);
@@ -254,7 +271,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             if (step == NO_SUBTASK_PERFORMED && success) {
                 portraitSay("Your help to our village will surely have been noticed by Shingen.");
                 subTasks.remove(selected);
-                step++;
+                step = MIKOS_TASK_DONE;
             }
         }
 
@@ -345,7 +362,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             model.getParty().getInventory().addToMaterials(-10);
             event.println("After a full days labor, and using up the materials you brought, " +
                     "you have many improvements and repairs to the buildings. You even manage to hang some of the " +
-                    "Honorable Warriors " + bannerColor.name().toLowerCase() + " banners, flapping in the wind.");
+                    "Honorable Warriors " + bannerColor.name().replace("_", " ").toLowerCase() + " banners, flapping in the wind.");
             event.println("Now that the task is completed, you return to Miko's home.");
             event.showMiko(model);
             return true;

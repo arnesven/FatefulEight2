@@ -1,6 +1,10 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
+import model.characters.GameCharacter;
+import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.map.locations.EasternPalaceLocation;
 import model.states.GameState;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -18,7 +22,7 @@ public class VisitEasternPalaceNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return null;
+        return new EasternPalaceMajordomoEvent(model);
     }
 
     @Override
@@ -42,7 +46,11 @@ public class VisitEasternPalaceNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        return false;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            state.println("The palace is closed at this time. Try again tomorrow.");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -63,5 +71,39 @@ public class VisitEasternPalaceNode extends DailyActionNode {
             }
         }
         return result;
+    }
+
+    private static class EasternPalaceMajordomoEvent extends GameState {
+        public EasternPalaceMajordomoEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        public GameState run(Model model) {
+            GainSupportOfHonorableWarriorsTask task = EasternPalaceLocation.getHonorableWarriorsTask(model);
+            if (task == null) {
+                printQuote("Palace Majordomo", "Our Lord is busy meditating. Please return at another time.");
+                return null;
+            }
+            if (task.hasDoneMikosTask()) {
+                printQuote("Palace Majordomo", "Outsider... wait, I've heard of you, you're the one who's been " +
+                        "helping around in town.");
+                leaderSay("Yes. We need to see Lord Shingen.");
+                printQuote("Palace Majordomo", "Hmm... there seems to be a narrow slot in Lord Shingens busy schedule. " +
+                        "Please follow me.");
+                task.makeLordShingenEvent(model).doTheEvent(model);
+            } else {
+                printQuote("Palace Majordomo", "You are an outsider. You have no business here.");
+                leaderSay("Actually, we have urgent business. We need to see Lord Shingen.");
+                printQuote("Palace Majordomo", "Lord Shingen is wary of outsiders, especially from the west. Now begone!");
+                leaderSay("Rude.");
+                if (model.getParty().size() > 1) {
+                    GameCharacter other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
+                    partyMemberSay(other, "What do we do now?");
+                    leaderSay("We'll figure something out. I'm sure.");
+                }
+            }
+            return null;
+        }
     }
 }
