@@ -20,6 +20,7 @@ import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.mainstory.honorable.MeetLordShingenEvent;
 import model.mainstory.honorable.MikoAppearance;
+import model.mainstory.honorable.ShingenAppearance;
 import model.map.WorldBuilder;
 import model.quests.Quest;
 import model.races.AllRaces;
@@ -56,7 +57,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
 
     private final List<SubTask> subTasks;
     private final MikoAppearance mikoAppearance;
-    private final AdvancedAppearance shingenPortrait;
+    private AdvancedAppearance shingenPortrait = null;
     private final MyColors swordColor;
     private final ShingenWeapon shingenWeapon;
     private int step = INITIAL_STEP;
@@ -68,7 +69,6 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         this.mikoAppearance = new MikoAppearance();
         this.swordColor = MyRandom.sample(PickSamuraiSwordState.SWORD_COLORS);
         this.shingenWeapon = ShingenWeapon.values()[MyRandom.randInt(ShingenWeapon.values().length)];
-        this.shingenPortrait = PortraitSubView.makeRandomPortrait(Classes.SAMURAI, AllRaces.EASTERN_HUMAN, false);
         subTasks.add(new RepairHousesSubTask(swordColor));
         subTasks.add(new FightBanditsSubTask());
         subTasks.add(new HealTheSickSubTask());
@@ -110,6 +110,9 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     public CharacterAppearance getShingenPortrait() {
+        if (shingenPortrait == null) {
+            this.shingenPortrait = new ShingenAppearance(swordColor);
+        }
         return shingenPortrait;
     }
 
@@ -159,6 +162,8 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             leaderSay("Fine, show " + meOrUs() + " to this Miko fellow.");
             println("The villager shows you to an old mill. Inside, an old, blind emaciated man sits on the floor.");
             portraitSay("Miko, these outsiders are from the west. They say they have urgent business with Lord Shingen.");
+            model.getLog().waitForReturn();
+            removePortraitSubView(model);
             new VisitMikosHomeEvent(model, false).doEvent(model);
 
         }

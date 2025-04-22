@@ -53,4 +53,9 @@ public class EasternHuman extends HumanRace {
     public int getRandomNose() {
         return MyRandom.sample(NOSES);
     }
+
+    @Override
+    public MyColors getMouthDefaultColor() {
+        return MyColors.DARK_BROWN;
+    }
 }

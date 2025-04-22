@@ -318,7 +318,9 @@ public abstract class CharacterAppearance implements Serializable {
         PortraitSprite compound = new PortraitSprite("adsfsdaf", "face.png", 0x0F, sprs) {
             @Override
             public void setSkinColor(MyColors color) {
-                sprs.get(0).setColor1(color);
+                if (sprs.get(0) instanceof PortraitSprite) {
+                    ((PortraitSprite) sprs.get(0)).setSkinColor(color);
+                }
             }
         };
         setSprite(x, y, compound);

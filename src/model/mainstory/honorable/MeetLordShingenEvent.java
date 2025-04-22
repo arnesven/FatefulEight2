@@ -14,9 +14,11 @@ public class MeetLordShingenEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        model.getLog().waitForAnimationToFinish();
+        setCurrentTerrainSubview(model);
         println("You finally meet with Lord Shingen");
         showExplicitPortrait(model, task.getShingenPortrait(), "Lord Shingen");
         portraitSay("Ah yes... The westerner I've heard so much about. I've heard old Miko has had you running errands for us.");
-        model.getLog().waitForReturn();
+        waitForReturn();
     }
 }
