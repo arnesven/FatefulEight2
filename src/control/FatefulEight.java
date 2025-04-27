@@ -33,6 +33,7 @@ public class FatefulEight extends JFrame {
                 DrawingArea.getMagnification()*400+30);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        this.setUndecorated(true);
         this.add(this.drawingArea, BorderLayout.CENTER);
         this.setVisible(true);
     }
