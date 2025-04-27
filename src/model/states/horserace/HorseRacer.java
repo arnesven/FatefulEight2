@@ -1,7 +1,7 @@
 package model.states.horserace;
 
 import model.Model;
-import model.characters.GameCharacter;;
+import model.characters.GameCharacter;
 import model.classes.Skill;
 import model.horses.Horse;
 import view.sprites.RidingSprite;
