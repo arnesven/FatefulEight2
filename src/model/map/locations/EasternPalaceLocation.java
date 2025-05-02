@@ -11,6 +11,7 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.EasternPalaceDailyActionState;
 import model.states.dailyaction.shops.EasternPalaceShopNode;
+import model.states.dailyaction.shops.EasternPalaceWeaponShopNode;
 import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyLists;
 import view.GameView;
@@ -119,7 +120,8 @@ public class EasternPalaceLocation extends TownishLocation {
 
     @Override
     public List<GeneralShopNode> getShops(Model model) {
-        return List.of(new EasternPalaceShopNode(model, 1, 5));
+        return List.of(new EasternPalaceShopNode(model, 1, 5),
+                       new EasternPalaceWeaponShopNode(model, 1, 3));
     }
 
     @Override

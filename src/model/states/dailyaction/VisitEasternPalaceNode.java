@@ -55,7 +55,7 @@ public class VisitEasternPalaceNode extends DailyActionNode {
 
     @Override
     public void setTimeOfDay(Model model, AdvancedDailyActionState state) {
-
+        model.setTimeOfDay(TimeOfDay.EVENING);
     }
 
     private static Sprite[][] makePalaceSprites() {

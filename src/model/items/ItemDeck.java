@@ -30,6 +30,10 @@ public class ItemDeck extends ArrayList<Item> {
         Collections.shuffle(this);
     }
 
+    public double getStandardHigherTierChance() {
+        return higherTierChance;
+    }
+
     public List<Item> draw(List<? extends Item> source, int count, Prevalence prevalence, double higherTierChance) {
         List<Item> drawn = new ArrayList<>();
         for (int i = count; i > 0; --i) {

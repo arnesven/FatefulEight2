@@ -4,8 +4,6 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.CharacterEyes;
-import model.characters.appearance.OldManHairStyle;
 import model.classes.*;
 import model.combat.CombatAdvantage;
 import model.enemies.BanditArcherEnemy;
@@ -15,15 +13,10 @@ import model.enemies.Enemy;
 import model.items.Item;
 import model.items.potions.HealthPotion;
 import model.items.spells.Spell;
-import model.items.weapons.Katana;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
-import model.mainstory.honorable.MeetLordShingenEvent;
-import model.mainstory.honorable.MikoAppearance;
-import model.mainstory.honorable.ShingenAppearance;
+import model.mainstory.honorable.*;
 import model.map.WorldBuilder;
-import model.quests.Quest;
-import model.races.AllRaces;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -34,9 +27,7 @@ import util.MyStrings;
 import util.MyTriplet;
 import view.MyColors;
 import view.combat.MountainCombatTheme;
-import view.sprites.PortraitSprite;
 import view.subviews.ArrowMenuSubView;
-import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -46,17 +37,17 @@ import java.util.List;
 
 public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopleTask {
 
-    private enum ShingenWeapon {Wakisashis, Katana, DaiKatana;};
-
-
     private static final int INITIAL_STEP = 0;
+
     private static final int NO_SUBTASK_PERFORMED = 1;
     private static final int MIKOS_TASK_DONE = 2;
-
+    private static final int SHINGEN_MET = 3;
     private final boolean completed;
 
     private final List<SubTask> subTasks;
+
     private final MikoAppearance mikoAppearance;
+    private final boolean shingenLikesInscriptions;
     private AdvancedAppearance shingenPortrait = null;
     private final MyColors swordColor;
     private final ShingenWeapon shingenWeapon;
@@ -69,6 +60,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         this.mikoAppearance = new MikoAppearance();
         this.swordColor = MyRandom.sample(PickSamuraiSwordState.SWORD_COLORS);
         this.shingenWeapon = ShingenWeapon.values()[MyRandom.randInt(ShingenWeapon.values().length)];
+        this.shingenLikesInscriptions = MyRandom.flipCoin();
         subTasks.add(new RepairHousesSubTask(swordColor));
         subTasks.add(new FightBanditsSubTask());
         subTasks.add(new HealTheSickSubTask());
@@ -77,6 +69,10 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
 
     public boolean hasDoneMikosTask() {
         return step > NO_SUBTASK_PERFORMED;
+    }
+
+    public void setShingenMet() {
+        step = SHINGEN_MET;
     }
 
     @Override
@@ -88,8 +84,10 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                     return "Gain the support of the Honorable Warriors in the Far Eastern town.";
                 } else if (step <= NO_SUBTASK_PERFORMED) {
                     return "Complete one of Miko's tasks to gain enough trust to get an audience with Lord Shingen.";
+                } else if (step <= MIKOS_TASK_DONE) {
+                    return "Request an audience with Lord Shingen.";
                 }
-                return "Request an audience with Lord Shingen.";
+                return "Find a suitable sword to present to Lord Shingen as a symbol of your commitment to one another.";
             }
 
             @Override
@@ -122,6 +120,9 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     public DailyEventState makeLordShingenEvent(Model model) {
+        if (step == SHINGEN_MET) {
+            return new PresentSwordToShingenEvent(model, this);
+        }
         return new MeetLordShingenEvent(model, this);
     }
 
@@ -134,6 +135,14 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             }
         }
         return null;
+    }
+
+    public ShingenWeapon getShingenWeapon() {
+        return shingenWeapon;
+    }
+
+    public boolean doesShingenLikeInscriptions() {
+        return shingenLikesInscriptions;
     }
 
     private class JustArrivedInTownEvent extends DailyEventState {
@@ -255,11 +264,29 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         private void secondTimeDoTasks(Model model) {
             println("You approach old Miko. He's sitting still on the floor.");
             portraitSay("You have returned.");
+
+            if (step >= SHINGEN_MET) {
+                leaderSay("Lord Shingen wants us to bring him a fine sword. Do you have any suggestions?");
+                portraitSay("Don't get the rubbish from the local peddlers. " +
+                        "There's a weapon smith who lives in the hills north east of here. She makes " +
+                        "very fine weapons. One of those should be suitable for lord Shingen.");
+                leaderSay("Sounds ideal. Is it far?");
+                portraitSay("The trip takes a day or two.");
+                leaderSay(imOrWere() + " off then.");
+                if (doesShingenLikeInscriptions()) {
+                    portraitSay("Make sure you get a weapon with an inscription, that will please Lord Shingen.");
+                } else {
+                    portraitSay("Just make sure the weapon doesn't have an inscription. I happen to know Lord " +
+                            "Shingen finds inscriptions on weapons tacky, and a waste of time.");
+                }
+                leaderSay("Thanks for the advice.");
+            }
+
             leaderSay("What were the tasks that needed to be done?");
             for (SubTask st : subTasks) {
                 portraitSay(st.description);
             }
-            print("Which task do you want to do?");
+            println("Which task do you want to do?");
             List<String> options = MyLists.transform(subTasks, st -> st.name);
             options.add("Cancel");
             int count = multipleOptionArrowMenu(model, 24, 24, options);

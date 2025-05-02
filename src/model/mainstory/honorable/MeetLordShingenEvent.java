@@ -28,7 +28,7 @@ public class MeetLordShingenEvent extends DailyEventState {
         String kingdom = CastleLocation.placeNameToKingdom(arkvale.getPlaceName());
         portraitSay("Indeed. We have had a surge in orcish activity, and the forces of the " +
                 kingdom +
-                "have begin infringing on our territory in the west. Are you an envoy of " +
+                " have begin infringing on our territory in the west. Are you an envoy of " +
                 arkvale.getLordTitle() + " " + arkvale.getLordName() + "?");
         leaderSay("No, or yes... It's complicated.");
         portraitSay("I don't understand. Are you or are you not?");
@@ -59,5 +59,6 @@ public class MeetLordShingenEvent extends DailyEventState {
                 "commitment to each other, and I will give your proposal sincere consideration.");
         leaderSay("Alright. " + iOrWeCap() + " will return with a sword. Goodbye for now.");
         leaderSay("Farewell.");
+        task.setShingenMet();
     }
 }
