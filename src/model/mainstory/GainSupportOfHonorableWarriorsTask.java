@@ -1,6 +1,7 @@
 package model.mainstory;
 
 import model.Model;
+import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
@@ -21,6 +22,7 @@ import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.PickSamuraiSwordState;
+import model.states.swords.SamuraiSword;
 import util.MyLists;
 import util.MyRandom;
 import util.MyStrings;
@@ -42,6 +44,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     private static final int NO_SUBTASK_PERFORMED = 1;
     private static final int MIKOS_TASK_DONE = 2;
     private static final int SHINGEN_MET = 3;
+    private static final int SMITH_TIP_GOTTEN = 4;
     private final boolean completed;
 
     private final List<SubTask> subTasks;
@@ -87,7 +90,12 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
                 } else if (step <= MIKOS_TASK_DONE) {
                     return "Request an audience with Lord Shingen.";
                 }
-                return "Find a suitable sword to present to Lord Shingen as a symbol of your commitment to one another.";
+                String extra = "";
+                if (step == SMITH_TIP_GOTTEN) {
+                    extra = " Get a special weapon from the weapon smith who lives north east of the Eastern Palace.";
+                }
+                return "Find a suitable sword to present to Lord Shingen as a symbol of your commitment to one another." +
+                        extra;
             }
 
             @Override
@@ -120,7 +128,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     public DailyEventState makeLordShingenEvent(Model model) {
-        if (step == SHINGEN_MET) {
+        if (step >= SHINGEN_MET) {
             return new PresentSwordToShingenEvent(model, this);
         }
         return new MeetLordShingenEvent(model, this);
@@ -144,6 +152,8 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     public boolean doesShingenLikeInscriptions() {
         return shingenLikesInscriptions;
     }
+
+    public MyColors getShingenColor() { return swordColor; }
 
     private class JustArrivedInTownEvent extends DailyEventState {
         public JustArrivedInTownEvent(Model model) {
@@ -266,6 +276,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             portraitSay("You have returned.");
 
             if (step >= SHINGEN_MET) {
+                step = SMITH_TIP_GOTTEN;
                 leaderSay("Lord Shingen wants us to bring him a fine sword. Do you have any suggestions?");
                 portraitSay("Don't get the rubbish from the local peddlers. " +
                         "There's a weapon smith who lives in the hills north east of here. She makes " +
@@ -394,7 +405,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
             model.getParty().getInventory().addToMaterials(-10);
             event.println("After a full days labor, and using up the materials you brought, " +
                     "you have many improvements and repairs to the buildings. You even manage to hang some of the " +
-                    "Honorable Warriors " + bannerColor.name().replace("_", " ").toLowerCase() + " banners, flapping in the wind.");
+                    "Honorable Warriors " + SamuraiSword.colorToString(bannerColor) + " banners, flapping in the wind.");
             event.println("Now that the task is completed, you return to Miko's home.");
             event.showMiko(model);
             return true;

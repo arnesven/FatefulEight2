@@ -77,7 +77,7 @@ public class ArcheryState extends GameState {
         for (int i = 0; i < shotsPerShooter; ++i) {
             targetSubView.setCursorEnabled(true);
             if (i == 0) {
-                print("Aim at the target with the arrow keys. Use space to change the power of the shot. Press enter to fire.");
+                print("Aim at the target with the arrow keys. Use SPACE to change the power of the shot. Press enter to fire.");
             } else {
                 print("You have " + (shotsPerShooter - i) + " shots remaining. Press enter to fire.");
             }

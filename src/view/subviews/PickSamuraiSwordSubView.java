@@ -12,6 +12,8 @@ import java.util.List;
 
 public class PickSamuraiSwordSubView extends SubView {
     private final SteppingMatrix<SamuraiSword> matrix;
+    private boolean transition = false;
+    private SamuraiSword selectedSword = null;
 
     public PickSamuraiSwordSubView(List<SamuraiSword> swords) {
         super(0);
@@ -63,6 +65,30 @@ public class PickSamuraiSwordSubView extends SubView {
 
     @Override
     public boolean handleKeyEvent(KeyEvent keyEvent, Model model) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+            selectedSword = matrix.getSelectedElement();
+            transition = true;
+        }
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            transition = true;
+        }
         return matrix.handleKeyEvent(keyEvent);
+    }
+
+    public boolean timeToTransition() {
+        return transition;
+    }
+
+    public SamuraiSword getSelectedSword() {
+        return selectedSword;
+    }
+
+    public void clearSelected() {
+        selectedSword = null;
+        transition = false;
+    }
+
+    public void removeSelected() {
+        matrix.remove(matrix.getSelectedElement());
     }
 }

@@ -1,23 +1,25 @@
 package model.states.swords;
 
 import model.Model;
-import model.items.Item;
+import model.items.SpecialEasternWeapon;
+import model.items.weapons.Weapon;
+import model.mainstory.honorable.ShingenWeapon;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
 
-public abstract class SamuraiSword {
+import java.io.Serializable;
+
+public abstract class SamuraiSword implements Serializable {
     private static final MyColors BLADE_DARK_COLOR = MyColors.GRAY;
     private static final MyColors BLADE_LIGHT_COLOR = MyColors.LIGHT_GRAY;
     private static final MyColors BLADE_HILT_COLOR = MyColors.GOLD;
-    private final Item item;
-    private final String name;
+    private final Weapon item;
     private final MyColors color;
     private final boolean inscription;
     private final Sprite[] sprites;
 
-    public SamuraiSword(MyColors color, boolean inscription, Item innerItem, int spriteMapColumn) {
-        this.name = innerItem.getName();
+    public SamuraiSword(MyColors color, boolean inscription, Weapon innerItem, int spriteMapColumn) {
         this.color = color;
         this.inscription = inscription;
         this.item = innerItem;
@@ -47,4 +49,34 @@ public abstract class SamuraiSword {
     }
 
     public abstract int getCursorOffset();
+
+    public abstract boolean matchesWeaponType(ShingenWeapon shingenWeapon);
+
+    public String getTypeName() {
+        return item.getName();
+    }
+
+    public boolean hasInscription() {
+        return inscription;
+    }
+
+    public String getColorName() {
+        return colorToString(color);
+    }
+
+    public int getCost() {
+        return item.getCost() + 66;
+    }
+
+    public static String colorToString(MyColors color) {
+        return color.name().replace("_", " ").toLowerCase();
+    }
+
+    public Weapon makeItem() {
+        return new SpecialEasternWeapon(this);
+    }
+
+    public Weapon getInnerItem() {
+        return item;
+    }
 }

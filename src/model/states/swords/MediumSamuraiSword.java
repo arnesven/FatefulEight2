@@ -1,6 +1,7 @@
 package model.states.swords;
 
 import model.items.weapons.Katana;
+import model.mainstory.honorable.ShingenWeapon;
 import view.MyColors;
 
 public class MediumSamuraiSword extends SamuraiSword {
@@ -11,5 +12,10 @@ public class MediumSamuraiSword extends SamuraiSword {
     @Override
     public int getCursorOffset() {
         return 2;
+    }
+
+    @Override
+    public boolean matchesWeaponType(ShingenWeapon shingenWeapon) {
+        return shingenWeapon == ShingenWeapon.Katana;
     }
 }

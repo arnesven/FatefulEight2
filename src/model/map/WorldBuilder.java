@@ -1,5 +1,6 @@
 package model.map;
 
+import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.map.locations.*;
 
 import java.awt.*;
@@ -31,6 +32,7 @@ public class WorldBuilder {
     public static final Point VIKING_VILLAGE_LOCATION = new Point(26, 2);
     public static final Point JUNGLE_PYRAMID_LOCATION = new Point(26, 40);
     public static final Point EASTERN_PALACE_LOCATION = new Point(45, 14);
+    public static final Point EASTERN_SMITH_LOCATION = new Point(46, 12);
 
     public static final List<Point> INN_LOCATIONS = List.of(CROSSROADS_INN_POSITION,
             HUNTERS_INN_POSITION, WATERFRONT_INN_POISITION);
@@ -63,7 +65,7 @@ public class WorldBuilder {
             "ssttttttWWuTuWWWTTTtttssssttTTtttTTTttttttstttttttttt",
             "ssssstttttTuWuTuTuttttsssttttTtTuTTTTTtttsstWuWuuWWuu",
             "ssttssttttttttTtwthTfpssspfttththuMTptwttsWWWWWWhTWWW",
-            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtsstopphMhMMxX",
+            "sttttsstttttttbwbwhhpfpssswwwwwfpMMwffwtsstopppMhMMxX",
             "stppptssppppbbspbbhpspsssppwbwhfpMhwbfsssssfffwwwwXXX",
             "pppppsspppppssssspppsssssssphwhpMMhhbsssssssfpfwoXxXX",
             "ssppppsssppsshpsssssssppssshhhphhMhwwwwbsssspfwwwxxXX",
@@ -389,7 +391,8 @@ public class WorldBuilder {
     }
 
     private static void addEasternContents(Map<Point, HexContents> contents) {
-        addRoadsAndRivers(contents, 46, 12, 0, SOUTH | SOUTH_EAST);
+        contents.put(EASTERN_SMITH_LOCATION,
+                new HexContents(new HillsWithHutLocation(), SOUTH_WEST, SOUTH | SOUTH_EAST));
         addRoadsAndRivers(contents, 47, 12, 0, SOUTH);
 
         addRoadsAndRivers(contents, 43, 13, SOUTH_EAST, NORTH_WEST);

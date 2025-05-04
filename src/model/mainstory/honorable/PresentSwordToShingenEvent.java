@@ -2,12 +2,15 @@ package model.mainstory.honorable;
 
 import model.Model;
 import model.items.Item;
+import model.items.SpecialEasternWeapon;
 import model.items.weapons.*;
 import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.states.DailyEventState;
 import util.MyLists;
+import view.MyColors;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PresentSwordToShingenEvent extends DailyEventState {
@@ -33,7 +36,10 @@ public class PresentSwordToShingenEvent extends DailyEventState {
                 new BlandEasternWeaponGiftOption(model, new DaiKatana(), ShingenWeapon.DaiKatana == task.getShingenWeapon()),
                 new OtherBladeGiftOption(model)));
 
-        // TODO: Add options for special eastern weapon
+        for (Item it : MyLists.filter(model.getParty().getInventory().getAllItems(), it -> it instanceof SpecialEasternWeapon)) {
+            options.add(1, new SpecialGiftOption((SpecialEasternWeapon)it, task.getShingenWeapon(), task.doesShingenLikeInscriptions(),
+                    task.getShingenColor()));
+        }
 
         List<GiftOptions> filteredOptions = MyLists.filter(options, GiftOptions::isValid);
         do {
@@ -42,7 +48,10 @@ public class PresentSwordToShingenEvent extends DailyEventState {
 
             GiftOptions opt = filteredOptions.get(choice);
             filteredOptions.remove(opt);
-            opt.presentToShingen(model);
+            if (opt.presentToShingen(model)) {
+                finalizeAlliance(model);
+                break;
+            }
             if (opt.getName().equals("Nothing")) {
                 break;
             }
@@ -60,10 +69,14 @@ public class PresentSwordToShingenEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
     }
 
+    private void finalizeAlliance(Model model) {
+
+    }
+
     private abstract class GiftOptions {
         public abstract String getName();
         public abstract boolean isValid();
-        public abstract void presentToShingen(Model model);
+        public abstract boolean presentToShingen(Model model);
     }
 
     private class NothingGiftOption extends GiftOptions {
@@ -77,11 +90,12 @@ public class PresentSwordToShingenEvent extends DailyEventState {
         }
 
         @Override
-        public void presentToShingen(Model model) {
+        public boolean presentToShingen(Model model) {
             leaderSay("Not yet. Are you sure this is absolutely necessary?");
             portraitSay("Customs must be obeyed. My ancestors would not look kindly if I scorned them.");
             leaderSay("Alright. I'll be back with a nice sword for you.");
             portraitSay("Splendid. Until then.");
+            return false;
         }
     }
 
@@ -110,11 +124,12 @@ public class PresentSwordToShingenEvent extends DailyEventState {
                             !w.isOfType(SmallBladedWeapon.class) &&
                             !w.isOfType(Wakizashi.class) &&
                             !w.isOfType(Katana.class) &&
-                            !w.isOfType(DaiKatana.class)));
+                            !w.isOfType(DaiKatana.class) &&
+                            !w.isOfType(SpecialEasternWeapon.class)));
         }
 
         @Override
-        public void presentToShingen(Model model) {
+        public boolean presentToShingen(Model model) {
            println("As you bring out the " + getName() + " and hand it to Shingen, he frowns visibly.");
            portraitSay("What in the world is this?");
            leaderSay("Uhm, a " + getName() + ". I thought you might like it.");
@@ -126,6 +141,7 @@ public class PresentSwordToShingenEvent extends DailyEventState {
                    "blade as a token of our lasting alliance.");
            leaderSay("I shall. Goodbye for now.");
            portraitSay("Good bye.");
+            return false;
         }
     }
 
@@ -139,7 +155,7 @@ public class PresentSwordToShingenEvent extends DailyEventState {
         }
 
         @Override
-        public void presentToShingen(Model model) {
+        public boolean presentToShingen(Model model) {
             println("You bring out a " + getName() + " and ceremoniously present it to Shingen.");
             leaderSay("I present to you this blade.");
             println("Shingen inspects the " + getName() + ".");
@@ -163,6 +179,106 @@ public class PresentSwordToShingenEvent extends DailyEventState {
             portraitSay("Customs must be obeyed. My ancestors would not look kindly if I scorned them.");
             leaderSay("Alright. I'll be back with a nice sword for you.");
             portraitSay("Splendid. Until then.");
+            return false;
+        }
+    }
+
+    private class SpecialGiftOption extends GiftOptions {
+        private final SpecialEasternWeapon blade;
+        private final boolean matchingWeapon;
+        private final boolean shingenLikesInscriptions;
+        private final boolean matchesColor;
+
+        public SpecialGiftOption(SpecialEasternWeapon blade, ShingenWeapon shingenWeapon,
+                                 boolean shingenLikesInscriptions, MyColors shingenColor) {
+            this.blade = blade;
+            this.matchingWeapon = blade.matchesWeaponType(shingenWeapon);
+            this.shingenLikesInscriptions = shingenLikesInscriptions;
+            this.matchesColor = blade.matchesColor(shingenColor);
+        }
+
+        @Override
+        public String getName() {
+            return blade.getName();
+        }
+
+        @Override
+        public boolean isValid() {
+            return true;
+        }
+
+        @Override
+        public boolean presentToShingen(Model model) {
+            println("You bring out a " + getName() + " and ceremoniously present it to Shingen.");
+            leaderSay("I present to you this blade.");
+            println("Shingen inspects the " + getName() + ".");
+
+            portraitSay("Ah yes... very fine indeed! You must have visited the smith in the " +
+                    "hills for this blade.");
+
+            List<String> likes = new ArrayList<>();
+            List<String> dislikes = new ArrayList<>();
+            if (matchingWeapon) {
+                likes.add("I like this type of weapon. It reminds me of when I was young and foolish and would " +
+                        "charge into battle armed with something like this.");
+            } else {
+                dislikes.add("I don't like this type of blade. It doesn't fit my fighting style.");
+            }
+
+            if (shingenLikesInscriptions) {
+                if (blade.hasInscription()) {
+                    likes.add("I like the inscription here, 'Honor'. Very suitable indeed.");
+                } else {
+                    dislikes.add("It's a shame it doesn't have an inscription. The blade looks naked without one.");
+                }
+            } else {
+                if (blade.hasInscription()) {
+                    dislikes.add("I don't like the inscription. It cheapens the blade in my opinion.");
+                } else {
+                    likes.add("I'm happy there's no foolish inscription on the blade.");
+                }
+            }
+
+            if (matchesColor) {
+                likes.add("I particularly like the color of the hilt. It matches the emblem of our clan.");
+            } else {
+                dislikes.add("The color of the hilt is wrong, it reminds me of the banners of our enemies.");
+            }
+
+            Collections.shuffle(likes);
+            Collections.shuffle(dislikes);
+
+            if (dislikes.isEmpty()) {
+                for (String like : likes) {
+                    portraitSay(like);
+                }
+                portraitSay("I daresay, this blade is perfect! The ultimate symbol of our coming alliance!");
+                model.getParty().getInventory().remove(blade);
+                return true;
+            }
+            if (likes.isEmpty()) {
+                portraitSay("But, I'm afraid I don't care for this blade at all.");
+                leaderSay("What!? Why not? What's wrong with it?");
+            } else {
+                if (likes.size() == 1) {
+                    portraitSay("It's not quite to my liking. I can't be seen with such a blade.");
+                } else if (likes.size() == 2) {
+                    portraitSay("The blade is fine, but it's not quite right.");
+                }
+                leaderSay("What's wrong with it?");
+                portraitSay("It's not all bad.");
+                for (String like : likes) {
+                    portraitSay(like);
+                }
+                portraitSay("However...");
+            }
+            for (String dislike : dislikes) {
+                portraitSay(dislike);
+            }
+            println("Lord Shingen hands the " + getName() + " back to you.");
+            portraitSay("Please return with a more suitable blade.");
+            leaderSay("I will.");
+            return false;
         }
     }
 }

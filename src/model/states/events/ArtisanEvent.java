@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.SpecificArtisanClass;
 import model.combat.loot.CombatLoot;
@@ -86,7 +87,7 @@ public class ArtisanEvent extends GeneralInteractionEvent {
                 subType.getItemType() + " at a discount.");
         itemList.add(subType.getItem(model));
         this.portrait = PortraitSubView.makeRandomPortrait(
-                new SpecificArtisanClass(subType.getShirtColor(), subType.getApronColor()), race);
+                subType.makeArtisanSubClass(), race);
         showExplicitPortrait(model, portrait, subType.getName());
         return true;
     }
@@ -266,12 +267,8 @@ public class ArtisanEvent extends GeneralInteractionEvent {
             return true;
         }
 
-        public MyColors getShirtColor() {
-            return shirtColor;
-        }
-
-        public MyColors getApronColor() {
-            return apronColor;
+        public CharacterClass makeArtisanSubClass() {
+            return new SpecificArtisanClass(shirtColor, apronColor);
         }
     }
 
