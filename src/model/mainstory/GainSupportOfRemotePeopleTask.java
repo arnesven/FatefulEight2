@@ -37,4 +37,6 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     }
 
     public abstract MyTriplet<String, CharacterAppearance, String> addQuests(Model model);
+
+    public abstract void setQuestSuccessful();
 }

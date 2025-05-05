@@ -153,6 +153,8 @@ public class MainStory implements Serializable {
         map.put(escapeQuest.getName(), escapeQuest);
         AvertTheMutinyQuest mutinyQuest = new AvertTheMutinyQuest();
         map.put(mutinyQuest.getName(), mutinyQuest);
+        NightAtTheTheaterQuest nightAtTheater = new NightAtTheTheaterQuest();
+        map.put(nightAtTheater.getName(), nightAtTheater);
         return map;
     }
 

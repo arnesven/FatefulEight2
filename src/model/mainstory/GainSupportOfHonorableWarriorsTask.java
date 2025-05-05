@@ -1,7 +1,6 @@
 package model.mainstory;
 
 import model.Model;
-import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
@@ -18,6 +17,8 @@ import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.mainstory.honorable.*;
 import model.map.WorldBuilder;
+import model.map.locations.EasternPalaceLocation;
+import model.quests.NightAtTheTheaterQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
@@ -45,7 +46,8 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     private static final int MIKOS_TASK_DONE = 2;
     private static final int SHINGEN_MET = 3;
     private static final int SMITH_TIP_GOTTEN = 4;
-    private final boolean completed;
+    private static final int SWORD_GIVEN = 5;
+    private boolean completed;
 
     private final List<SubTask> subTasks;
 
@@ -78,17 +80,40 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         step = SHINGEN_MET;
     }
 
+    public void setSwordGiven() {
+        this.step = SWORD_GIVEN;
+    }
+
+    @Override
+    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
+        if (model.getCurrentHex().getLocation() instanceof EasternPalaceLocation &&
+                step == SWORD_GIVEN && !isCompleted()) {
+            return new MyTriplet<>(NightAtTheTheaterQuest.QUEST_NAME, shingenPortrait, "Lord Shingen");
+        }
+        return null;
+    }
+
+    @Override
+    public void setQuestSuccessful() {
+        completed = true;
+    }
+
     @Override
     public JournalEntry getJournalEntry(Model model) {
         return new MainStoryTask("The Honorable Warriors") {
             @Override
             public String getText() {
+                if (completed) {
+                    return "Gain the support of the Honorable Warriors in the Far Eastern town.\n\nCompleted";
+                }
                 if (step == INITIAL_STEP) {
                     return "Gain the support of the Honorable Warriors in the Far Eastern town.";
                 } else if (step <= NO_SUBTASK_PERFORMED) {
                     return "Complete one of Miko's tasks to gain enough trust to get an audience with Lord Shingen.";
                 } else if (step <= MIKOS_TASK_DONE) {
                     return "Request an audience with Lord Shingen.";
+                } else if (step == SWORD_GIVEN) {
+                    return "Complete the quest '" + NightAtTheTheaterQuest.QUEST_NAME + "'.";
                 }
                 String extra = "";
                 if (step == SMITH_TIP_GOTTEN) {
@@ -122,14 +147,9 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
         return shingenPortrait;
     }
 
-    @Override
-    public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
-        return null;
-    }
-
     public DailyEventState makeLordShingenEvent(Model model) {
         if (step >= SHINGEN_MET) {
-            return new PresentSwordToShingenEvent(model, this);
+            return new PresentSwordToShingenEvent(model, this, true);
         }
         return new MeetLordShingenEvent(model, this);
     }

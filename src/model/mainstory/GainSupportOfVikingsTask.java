@@ -12,6 +12,8 @@ import java.awt.*;
 import java.util.List;
 
 public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
+    private boolean completed = false;
+
     public GainSupportOfVikingsTask(Model model) {
         super(WorldBuilder.VIKING_VILLAGE_LOCATION);
     }
@@ -38,12 +40,17 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
     @Override
     public boolean isCompleted() {
-        return true;
+        return completed;
     }
 
 
     @Override
     public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
         return null;
+    }
+
+    @Override
+    public void setQuestSuccessful() {
+        this.completed = true;
     }
 }

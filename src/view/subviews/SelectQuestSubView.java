@@ -69,7 +69,7 @@ public class SelectQuestSubView extends SubView {
                 MyColors.WHITE, MyColors.BLACK);
         drawProvider(model, xStart, yStart, quest);
 
-        drawDifficulty(model, quest.getName().length() + xStart + 2, yStart, quest);
+        drawDifficulty(model, quest.getName().length() + xStart + 1, yStart, quest);
         drawRewards(model, xStart, yStart, quest);
         drawDetails(model, xStart, yStart, quest);
     }

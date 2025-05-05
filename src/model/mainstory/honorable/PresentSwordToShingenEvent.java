@@ -15,19 +15,26 @@ import java.util.List;
 
 public class PresentSwordToShingenEvent extends DailyEventState {
     private final GainSupportOfHonorableWarriorsTask task;
+    private final boolean withIntro;
 
-    public PresentSwordToShingenEvent(Model model, GainSupportOfHonorableWarriorsTask gainSupportOfHonorableWarriorsTask) {
+    public PresentSwordToShingenEvent(Model model, GainSupportOfHonorableWarriorsTask gainSupportOfHonorableWarriorsTask,
+                                      boolean withIntro) {
         super(model);
         this.task = gainSupportOfHonorableWarriorsTask;
+        this.withIntro = withIntro;
     }
 
     @Override
     protected void doEvent(Model model) {
-        model.getLog().waitForAnimationToFinish();
-        setCurrentTerrainSubview(model);
-        println("You enter into Lord Shingen's throne room once gain.");
-        showExplicitPortrait(model, task.getShingenPortrait(), "Lord Shingen");
-        portraitSay("Ah, you have returned. Do you have a gift for me?");
+        if (withIntro) {
+            model.getLog().waitForAnimationToFinish();
+            setCurrentTerrainSubview(model);
+            println("You enter into Lord Shingen's throne room once gain.");
+            showExplicitPortrait(model, task.getShingenPortrait(), "Lord Shingen");
+            portraitSay("Ah, you have returned. Do you have a gift for me?");
+        } else {
+            showExplicitPortrait(model, task.getShingenPortrait(), "Lord Shingen");
+        }
         println("What would you like to present to Lord Shingen as a gift?");
 
         List<GiftOptions> options = new ArrayList<>(List.of(new NothingGiftOption(),
@@ -70,7 +77,19 @@ public class PresentSwordToShingenEvent extends DailyEventState {
     }
 
     private void finalizeAlliance(Model model) {
-
+        task.setSwordGiven();
+        leaderSay("So, can we count on your support to overthrow queen Valstine?");
+        portraitSay("Of course. I'll ready my forces at once.");
+        leaderSay("Excellent!");
+        portraitSay("However, the men and women will want to be properly inspired.");
+        leaderSay("Don't tell me there's more for " + meOrUs() + "...");
+        portraitSay("No no, you've done quite enough friend. I have something quite special in mind. " +
+                "We have an excellent theatre group here in our town. I know they have been devoutly practicing their new piece.");
+        leaderSay("Oh, that sounds nice.");
+        portraitSay("Yes. Please join me at the amphitheater tomorrow. Afterward, we can discuss the final details " +
+                "of our new alliance.");
+        leaderSay(iOrWeCap() + " will! Thank you Lord Shingen.");
+        portraitSay("Good bye then.");
     }
 
     private abstract class GiftOptions {

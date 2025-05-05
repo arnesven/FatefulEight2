@@ -12,6 +12,8 @@ import java.awt.*;
 import java.util.List;
 
 public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask {
+    private boolean completed = false;
+
     public GainSupportOfJungleTribeTask(Model model) {
         super(WorldBuilder.JUNGLE_PYRAMID_LOCATION);
     }
@@ -21,7 +23,8 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
         return new MainStoryTask("The Jungle Tribe") {
             @Override
             public String getText() {
-                return "Travel to the southern continent and gain the support of the Jungle Tribe which inhabits that area.";
+                return "Travel to the southern continent and gain the support of the Jungle Tribe which inhabits that area." +
+                        (completed ? "\n\nCompleted" : "");
             }
 
             @Override
@@ -38,11 +41,16 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
 
     @Override
     public boolean isCompleted() {
-        return true;
+        return completed;
     }
 
     @Override
     public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
         return null;
+    }
+
+    @Override
+    public void setQuestSuccessful() {
+        this.completed = true;
     }
 }

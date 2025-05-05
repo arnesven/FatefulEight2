@@ -21,6 +21,7 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     public static final String CAPTAIN_NAME = "Blackbone";
     private final AdvancedAppearance blackboneAppearance;
     private boolean blackboneMet = false;
+    private boolean completed = false;
 
     public GainSupportOfPiratesTask(Model model) {
         super(WorldBuilder.PIRATE_HAVEN_LOCATION);
@@ -35,7 +36,8 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
                 if (blackboneMet) {
                     return "Complete the quest '" + AvertTheMutinyQuest.QUEST_NAME + "'.";
                 }
-                return "Travel to the Pirate Haven in the western archipelago and gain the support of the pirates.";
+                return "Travel to the Pirate Haven in the western archipelago and gain the support of the pirates." +
+                        (completed ? "\n\nCompleted" : "");
             }
 
             @Override
@@ -52,7 +54,7 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
 
     @Override
     public boolean isCompleted() {
-        return false;
+        return completed;
     }
 
     public CharacterAppearance getCaptainAppearance() {
@@ -70,5 +72,10 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
             return new MyTriplet<>(AvertTheMutinyQuest.QUEST_NAME, blackboneAppearance, "Captain " + CAPTAIN_NAME);
         }
         return null;
+    }
+
+    @Override
+    public void setQuestSuccessful() {
+        this.completed = true;
     }
 }

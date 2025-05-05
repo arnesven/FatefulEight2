@@ -1,9 +1,12 @@
 package model.mainstory.honorable;
 
 import model.Model;
+import model.items.weapons.BladedWeapon;
+import model.items.weapons.HigherTierWeapon;
 import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.map.CastleLocation;
 import model.states.DailyEventState;
+import util.MyLists;
 
 public class MeetLordShingenEvent extends DailyEventState {
     private final GainSupportOfHonorableWarriorsTask task;
@@ -54,11 +57,21 @@ public class MeetLordShingenEvent extends DailyEventState {
         portraitSay("My grandfather once formed such an alliance with one of the kingdoms of old. If I recall " +
                 "correctly, the Grand Duchess of Ardh brought my grandfather a magnificent sword. It was a masterfully " +
                 "crafted item. The gesture proved that the Duchess was serious about the alliance.");
-        leaderSay("You want a sword? What all of the ones hanging on the wall?");
+        leaderSay("You want a sword? What about all of the ones hanging on the wall?");
         portraitSay("Our customs may seem strange. But formality must be observed. Bring me a sword worthy of our " +
                 "commitment to each other, and I will give your proposal sincere consideration.");
+        task.setShingenMet();
+        if (MyLists.find(model.getParty().getInventory().getAllItems(), it -> it instanceof BladedWeapon ||
+                (it instanceof HigherTierWeapon && ((HigherTierWeapon)it).isOfType(BladedWeapon.class))) != null) {
+            print("Do you want to present a sword to Lord Shingen now? (Y/N) ");
+            if (yesNoInput()) {
+                leaderSay("Actually, " + iOrWe() + " have a sword of good quality with us.");
+                portraitSay("You do? How interesting. You are cut from a finer cloth than other westerners I've met.");
+                new PresentSwordToShingenEvent(model, task, false).doEvent(model);
+                return;
+            }
+        }
         leaderSay("Alright. " + iOrWeCap() + " will return with a sword. Goodbye for now.");
         leaderSay("Farewell.");
-        task.setShingenMet();
     }
 }
