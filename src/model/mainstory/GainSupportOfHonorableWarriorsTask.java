@@ -87,8 +87,9 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     @Override
     public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
         if (model.getCurrentHex().getLocation() instanceof EasternPalaceLocation &&
-                step == SWORD_GIVEN && !isCompleted()) {
-            return new MyTriplet<>(NightAtTheTheaterQuest.QUEST_NAME, shingenPortrait, "Lord Shingen");
+                // step == SWORD_GIVEN &&  // TODO: Bring back
+                !isCompleted()) {
+            return new MyTriplet<>(NightAtTheTheaterQuest.QUEST_NAME, getShingenPortrait(), "Lord Shingen");
         }
         return null;
     }

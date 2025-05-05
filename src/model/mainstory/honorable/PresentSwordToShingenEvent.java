@@ -78,11 +78,11 @@ public class PresentSwordToShingenEvent extends DailyEventState {
 
     private void finalizeAlliance(Model model) {
         task.setSwordGiven();
-        leaderSay("So, can we count on your support to overthrow queen Valstine?");
-        portraitSay("Of course. I'll ready my forces at once.");
+        leaderSay("So, can we count on your support to overthrow Queen Valstine?");
+        portraitSay("Of course. I'll ready my forces at once. The Honorable Warriors will answer this call!");
         leaderSay("Excellent!");
         portraitSay("However, the men and women will want to be properly inspired.");
-        leaderSay("Don't tell me there's more for " + meOrUs() + "...");
+        leaderSay("Don't tell me there's more for " + meOrUs() + " to...");
         portraitSay("No no, you've done quite enough friend. I have something quite special in mind. " +
                 "We have an excellent theatre group here in our town. I know they have been devoutly practicing their new piece.");
         leaderSay("Oh, that sounds nice.");

@@ -8,7 +8,7 @@ import view.MyColors;
 public class NinjaClass extends AssassinClass {
 
     public NinjaClass() {
-        super("Ninja", "NJA", MyColors.DARK_PURPLE);
+        super("Ninja", "NJA", MyColors.DARK_GRAY);
     }
 
     @Override
