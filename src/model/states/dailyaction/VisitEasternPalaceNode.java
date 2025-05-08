@@ -58,7 +58,7 @@ public class VisitEasternPalaceNode extends DailyActionNode {
         model.setTimeOfDay(TimeOfDay.EVENING);
     }
 
-    private static Sprite[][] makePalaceSprites() {
+    public static Sprite[][] makePalaceSprites() {
         MyColors[] color1 = new MyColors[]{MyColors.WHITE, MyColors.WHITE, MyColors.WHITE, MyColors.DARK_GRAY};
         MyColors[] color3 = new MyColors[]{MyColors.RED, MyColors.RED, MyColors.BROWN, MyColors.DARK_GREEN};
         MyColors[] color2 = new MyColors[]{MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.DARK_GRAY, MyColors.LIGHT_GRAY};
