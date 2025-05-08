@@ -5,15 +5,19 @@ import model.SteppingMatrix;
 import model.journal.PartSixStoryPart;
 import model.journal.StoryPart;
 import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.races.AllRaces;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.beangame.BeanGameEvent;
 import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.EasternPalaceDailyActionState;
 import model.states.dailyaction.shops.EasternPalaceShopNode;
 import model.states.dailyaction.shops.EasternPalaceWeaponShopNode;
 import model.states.dailyaction.shops.GeneralShopNode;
+import model.states.events.*;
 import util.MyLists;
+import util.MyRandom;
 import view.GameView;
 import view.MyColors;
 import view.combat.CombatTheme;
@@ -93,6 +97,18 @@ public class EasternPalaceLocation extends TownishLocation {
             if (event != null) {
                 return event;
             }
+        }
+        if (MyRandom.rollD10() >= 3) {
+            return MyRandom.sample(List.of(
+                new GardenMazeEvent(model, AllRaces.EASTERN_HUMAN),
+                new ArcherEvent(model),
+                new BarbershopEvent(model, AllRaces.EASTERN_HUMAN),
+                new BeanGameEvent(model, AllRaces.EASTERN_HUMAN),
+                new SamuraiMonkEvent(model),
+                new MarketEvent(model),
+                new SmithEvent(model, AllRaces.EASTERN_HUMAN),
+                new GuideEvent(model, 2, AllRaces.EASTERN_HUMAN)
+            ));
         }
         return super.generateEvent(model);
     }

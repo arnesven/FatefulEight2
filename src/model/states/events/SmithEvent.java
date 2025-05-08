@@ -11,6 +11,7 @@ import model.items.Item;
 import model.items.clothing.HeavyArmorClothing;
 import model.items.clothing.LeatherArmor;
 import model.items.weapons.*;
+import model.races.Race;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -19,10 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SmithEvent extends GeneralInteractionEvent {
+    private final Race smithRace;
     private AdvancedAppearance portrait;
 
-    public SmithEvent(Model model) {
+    public SmithEvent(Model model, Race smithRace) {
         super(model, "Talk to", MyRandom.randInt(40, 60));
+        this.smithRace = smithRace;
+    }
+
+    public SmithEvent(Model model) {
+        this(model, Race.randomRace());
     }
 
     @Override
@@ -32,7 +39,7 @@ public class SmithEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doIntroAndContinueWithEvent(Model model) {
-        this.portrait = PortraitSubView.makeRandomPortrait(Classes.ART);
+        this.portrait = PortraitSubView.makeRandomPortrait(new ArtisanEvent.Smith().makeArtisanSubClass(), smithRace);
         showExplicitPortrait(model, portrait, "Smith");
         println("The smith stands in the heat from the furnace. " + heOrSheCap(portrait.getGender()) + " is banging with a mallet on an " +
                 "anvil.");

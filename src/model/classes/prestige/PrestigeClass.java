@@ -8,7 +8,7 @@ import view.MyColors;
 import java.util.List;
 
 public abstract class PrestigeClass extends CharacterClass {
-    public static final int MINIMUM_LEVEL = 1; // TODO: 5
+    public static final int MINIMUM_LEVEL = 5;
 
     protected PrestigeClass(String name, String shortname, int hp, int speed,
                             boolean canUseHeavyArmor, int startGold, WeightedSkill[] skillBonuses) {

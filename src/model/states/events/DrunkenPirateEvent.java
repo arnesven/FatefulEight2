@@ -19,6 +19,12 @@ public class DrunkenPirateEvent extends DailyEventState {
     }
 
     @Override
+    public GuideData getGuideData() {
+        return new GuideData("Find drunken captain",
+                "There's a pirate captain who's always drunk. Kind of funny but also kind of sad");
+    }
+
+    @Override
     protected void doEvent(Model model) {
         println("You pass by an ally, and something stirs in the corner of your eye. " +
                 "You flinch, thinking it may be a rat, but realize it's a person lying on the ground.");

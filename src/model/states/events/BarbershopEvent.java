@@ -6,6 +6,7 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyStrings;
 import view.subviews.ChangeClassTransitionSubView;
@@ -16,9 +17,15 @@ import java.util.ArrayList;
 
 public class BarbershopEvent extends DailyEventState {
     private static final int COST = 5;
+    private final Race barberRace;
+
+    public BarbershopEvent(Model model, Race barberRace) {
+        super(model);
+        this.barberRace = barberRace;
+    }
 
     public BarbershopEvent(Model model) {
-        super(model);
+        this(model, Race.randomRace());
     }
 
     @Override
@@ -30,7 +37,7 @@ public class BarbershopEvent extends DailyEventState {
     protected void doEvent(Model model) {
         println("You enter a shop.");
         leaderSay("Wait this isn't a shop...");
-        CharacterAppearance barberAppearance = PortraitSubView.makeRandomPortrait(Classes.BARBER);
+        CharacterAppearance barberAppearance = PortraitSubView.makeRandomPortrait(Classes.BARBER, barberRace);
         showExplicitPortrait(model, barberAppearance, "Barber");
         portraitSay("This sir, is a barber shop!");
         leaderSay("Uh...");

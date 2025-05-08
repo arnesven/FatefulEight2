@@ -10,6 +10,7 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.classes.SkillChecks;
 import model.items.spells.TelekinesisSpell;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.SpellCastException;
 import model.states.events.GuideData;
@@ -32,10 +33,16 @@ import java.util.List;
 public class BeanGameEvent extends DailyEventState {
 
     private static final String BEAN_GAME_FIRST_TIME = "BEAN_GAME_FIRST_TIME";
+    private final Race gamblerRace;
     private AdvancedAppearance gamblerAppearance;
 
-    public BeanGameEvent(Model model) {
+    public BeanGameEvent(Model model, Race gamblerRace) {
         super(model);
+        this.gamblerRace = gamblerRace;
+    }
+
+    public BeanGameEvent(Model model) {
+        this(model, Race.randomRace());
     }
 
     @Override
@@ -46,7 +53,7 @@ public class BeanGameEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
-        this.gamblerAppearance = PortraitSubView.makeRandomPortrait(Classes.THF);
+        this.gamblerAppearance = PortraitSubView.makeRandomPortrait(Classes.THF, gamblerRace);
         println("As you walk down a street, a " + manOrWoman(gamblerAppearance.getGender()) + " calls out to you.");
         model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, gamblerAppearance, "Gambler");

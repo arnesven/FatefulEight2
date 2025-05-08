@@ -2,6 +2,7 @@ package model.states.events;
 
 import model.Model;
 import model.classes.Classes;
+import model.races.Race;
 import model.states.DailyEventState;
 import util.MyLists;
 import util.MyRandom;
@@ -11,19 +12,25 @@ import java.util.List;
 
 public class GuideEvent extends DailyEventState {
     private final int cost;
+    private final Race guideRace;
 
     public interface GuideTalkInterface {
         void guideTalk(String line);
     }
 
-    public GuideEvent(Model model, int cost) {
+    public GuideEvent(Model model, int cost, Race guideRace) {
         super(model);
         this.cost = cost;
+        this.guideRace = guideRace;
     }
 
-    @Override
+    public GuideEvent(Model model, int cost) {
+        this(model, cost, Race.randomRace());
+    }
+
+                      @Override
     protected void doEvent(Model model) {
-        showRandomPortrait(model, Classes.None, "Guide");
+        showRandomPortrait(model, Classes.None, guideRace, "Guide");
         model.getParty().randomPartyMemberSay(model, List.of("This place is pretty big. I wonder where..."));
         portraitSay("Where the tavern is? Where the general store is? The smith?");
         model.getParty().randomPartyMemberSay(model, List.of("Uhm... can we help you?"));

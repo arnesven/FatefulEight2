@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
+import model.races.Race;
 import model.states.DailyEventState;
 import model.states.maze.GardenMaze;
 import sound.BackgroundMusic;
@@ -25,15 +26,27 @@ public class GardenMazeEvent extends DailyEventState {
             "Talandria", "Vitriola", "Wolverina");
     private static final String MAZE_WINS_KEY = "GARDENER_MAZE_WINS";
     private static final int MAX_WINS = 5;
+    private final Race gardernerRace;
     private Point startingPoint;
 
-    public GardenMazeEvent(Model model) {
+    public GardenMazeEvent(Model model, Race gardernerRace) {
         super(model);
+        this.gardernerRace = gardernerRace;
+    }
+
+    public GardenMazeEvent(Model model) {
+        this(model, Race.randomRace());
+    }
+
+    @Override
+    public GuideData getGuideData() {
+        return new GuideData("Visit garden maze",
+                "There's a gardener who's made a big maze in a garden");
     }
 
     @Override
     protected void doEvent(Model model) {
-        AdvancedAppearance gardener = PortraitSubView.makeRandomPortrait(Classes.GARDENER);
+        AdvancedAppearance gardener = PortraitSubView.makeRandomPortrait(Classes.GARDENER, gardernerRace);
         println("You thought you were heading into town but it seems this road is taking you in the opposite direction. " +
                 "You come to a large mansion with a vast garden. The garden has neatly trimmed bushes, hedges and trees. " +
                 "A gardener is trimming the lawn near the house. " + heOrSheCap(gardener.getGender()) + " approaches you.");
