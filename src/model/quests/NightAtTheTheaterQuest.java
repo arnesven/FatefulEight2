@@ -12,6 +12,8 @@ import model.mainstory.GainSupportOfHonorableWarriorsTask;
 import model.mainstory.honorable.HonorableWarriorAlly;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
+import model.quests.scenes.StoryJunctionWithEvent;
+import model.states.DailyEventState;
 import model.states.QuestState;
 import model.states.dailyaction.VisitEasternPalaceNode;
 import sound.BackgroundMusic;
@@ -19,10 +21,11 @@ import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
 import view.combat.CombatTheme;
-import view.combat.MansionTheme;
 import view.combat.NightGrassCombatTheme;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
+import view.subviews.CollapsingTransition;
+import view.subviews.SubView;
 import view.widget.QuestBackground;
 
 import java.awt.*;
@@ -34,7 +37,8 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
     public static final String QUEST_NAME = "Night at the Theater";
     private static final String INTRO_TEXT = "Lord Shinigen has invited you to a special event at the theater of the Eastern Palace. " +
             "Lots of people are attending the event.";
-    private static final String END_TEXT = "TODO: outro";
+    private static final String END_TEXT = "To thank you again, Lord Shingen hands you a purse of coins so that you may " +
+            "equip yourself adequately for the quests to come.";
     private static final int TOTAL_NUMBER_OF_NINJAS = 18;
     private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
     private static final List<QuestBackground> DECORATIONS = makeDecorations();
@@ -62,9 +66,18 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
 
     @Override
     protected List<QuestJunction> buildJunctions(List<QuestScene> scenes) {
+
+        StoryJunctionWithEvent endingEvent = new StoryJunctionWithEvent(6, 7,
+                new QuestEdge(getSuccessEndingNode())) {
+            @Override
+            public DailyEventState makeEvent(Model model, QuestState state) {
+                return new DiscoverNinjaOriginsEvent(model);
+            }
+        };
+
         return List.of(new TheaterStartPoint(
                 new QuestEdge(scenes.get(0).get(0), QuestEdge.VERTICAL),
-                "This will be a nice change to all the drama we've had lately."));
+                "This will be a nice change to all the drama we've had lately."), endingEvent);
     }
 
     @Override
@@ -73,10 +86,10 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         scenes.get(0).get(0).connectFail(scenes.get(1).get(0));
 
         scenes.get(1).get(0).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
-        scenes.get(1).get(0).connectSuccess(getSuccessEndingNode());
+        scenes.get(1).get(0).connectSuccess(junctions.get(1));
 
         scenes.get(2).get(0).connectFail(getFailEndingNode(), QuestEdge.VERTICAL);
-        scenes.get(2).get(0).connectSuccess(getSuccessEndingNode());
+        scenes.get(2).get(0).connectSuccess(junctions.get(1));
     }
 
     @Override
@@ -174,9 +187,11 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         @Override
         public QuestEdge run(Model model, QuestState state) {
             state.println("In the middle of the play, a swarm of masked enemies rush into the theater. " +
-                    "The Honorable Warriors are caught off guard by the attack, and in the confusion, " +
-                    "the party is split up.");
+                    "The Honorable Warriors are caught off guard by the attack.");
             List<List<GameCharacter>> groups = divideIntoGroups(model);
+            if (groups.size() > 1) {
+                state.println("In the confusion, the party is split up.");
+            }
 
             SimpleJunction dummySucces = new SimpleJunction(0, 0, new QuestEdge(this));
             SimpleJunction dummyFail = new SimpleJunction(0, 0, new QuestEdge(this));
@@ -320,6 +335,36 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         public TheaterStartPoint(QuestEdge questEdge, String talk) {
             super(questEdge, talk);
             setRow(1);
+        }
+    }
+
+    private class DiscoverNinjaOriginsEvent extends DailyEventState {
+        public DiscoverNinjaOriginsEvent(Model model) {
+            super(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            SubView oldSubview = model.getSubView();
+            setCurrentTerrainSubview(model);
+            println("In the aftermath of the fight, Lord Shingen seeks you out.");
+            showExplicitPortrait(model, getPortrait(), "Lord Shingen");
+            portraitSay("You fought well my friend. What a cowardly attack!");
+            println("You look down at the masked enemies who lay slain around you.");
+            leaderSay("Yes, but who are they?");
+            portraitSay("They're dressed as shadow assassins - ninjas. But they don't quite look human.");
+            println("You crouch down and remove one of the masks.");
+            leaderSay("An orc. Most likely a lackey of the Quad.");
+            portraitSay("Orcs have been attacking us more frequently lately, but never in this insidious fashion. " +
+                    "What's gotten into them.");
+            leaderSay("It's a long story. Suffice to say, we need to get to the bottom of the mystery of the quad, and the " +
+                    "answer lies within Arkvale Castle.");
+            portraitSay("So it seems. I will ready my men. We will assault Arkvale from the east. " +
+                    "This should draw the attention away from your endevour.");
+            leaderSay("Many thanks Lord Shingen.");
+            portraitSay("Until we meed again " + model.getParty().getLeader().getName() + ".");
+            model.getLog().waitForAnimationToFinish();
+            CollapsingTransition.transition(model, oldSubview);
         }
     }
 }

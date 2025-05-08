@@ -38,7 +38,7 @@ public class MeetLordShingenEvent extends DailyEventState {
         leaderSay(iOrWeCap() + " were investigating a matter for the " + arkvale.getLordTitle() + ". The quest " +
                 "finally brought " + meOrUs() + " to the ancient stronghold to the east of these lands. But when " + iOrWe() + " returned " +
                 iOrWe() + " were wrongfully imprisoned. " + iOrWeCap() + " narrowly escaped " + kingdom +
-                " alive. It seems the " + arkvale.getLordTitle() + " has been possessed or controlled by an evil force. " +
+                " alive. It seems the " + arkvale.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                 "Because of this, the kingdom has been descended into disorder.");
         portraitSay("I see. And now you seek refuge here?");
         leaderSay("For a time perhaps. " + iOrWeCap() + " aim to rally the support of the kingdoms surrounding " +
