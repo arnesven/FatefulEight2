@@ -5,6 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.*;
+import model.classes.prestige.SamuraiClass;
 import model.combat.CombatAdvantage;
 import model.enemies.BanditArcherEnemy;
 import model.enemies.BanditEnemy;
@@ -143,9 +144,30 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
 
     public CharacterAppearance getShingenPortrait() {
         if (shingenPortrait == null) {
-            this.shingenPortrait = new ShingenAppearance(swordColor);
+            this.shingenPortrait = new ShingenAppearance(makeShingenClass());
         }
         return shingenPortrait;
+    }
+
+    public SamuraiClass makeShingenClass() {
+        MyColors factionColor = swordColor;
+        MyColors armorColor = factionColor;
+        MyColors secondaryColor = MyColors.DARK_GRAY;
+        MyColors helmetColor = factionColor;
+        if (factionColor == MyColors.BLUE) {
+            armorColor = MyColors.DARK_BLUE;
+        } else if (factionColor == MyColors.DARK_RED) {
+            secondaryColor = MyColors.GRAY_RED;
+            helmetColor = MyColors.RED;
+        } else if (factionColor == MyColors.DARK_GRAY) {
+            armorColor = MyColors.GRAY;
+            helmetColor = MyColors.LIGHT_GRAY;
+        } else if (factionColor == MyColors.DARK_GREEN) {
+            helmetColor = MyColors.GREEN;
+        } else if (factionColor == MyColors.DARK_PURPLE) {
+            helmetColor = MyColors.PURPLE;
+        }
+        return new SamuraiClass(armorColor, secondaryColor, helmetColor);
     }
 
     public DailyEventState makeLordShingenEvent(Model model) {

@@ -1,13 +1,36 @@
 package model.classes.prestige;
 
 import model.characters.appearance.CharacterAppearance;
-import model.classes.normal.CaptainClass;
+import model.classes.CharacterClass;
+import model.classes.Skill;
+import model.classes.normal.*;
 import model.classes.Looks;
+import model.items.Equipment;
+import model.items.Item;
+import model.items.accessories.FullHelm;
+import model.items.clothing.LeatherArmor;
+import model.items.clothing.PlateMailArmor;
+import model.items.weapons.Katana;
+import model.items.weapons.Wakizashi;
+import model.races.Race;
+import util.MyLists;
 import view.MyColors;
+import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;
 import view.sprites.PortraitSprite;
 
-public class SamuraiClass extends CaptainClass { // TODO: Extend Prestige class instead
+import java.util.List;
+
+public class SamuraiClass extends PrestigeClass {
+
+    private static final List<Class<? extends CharacterClass>> FROM_CLASSES = List.of(
+            BlackKnightClass.class,
+            BarbarianClass.class,
+            CaptainClass.class,
+            MarksmanClass.class,
+            MinerClass.class,
+            NobleClass.class,
+            PaladinClass.class);
 
     private static final MyColors DEFAULT_ARMOR_COLOR = MyColors.DARK_RED;
     private static final MyColors DEFAULT_SECONDARY_COLOR = MyColors.GRAY_RED;
@@ -17,7 +40,19 @@ public class SamuraiClass extends CaptainClass { // TODO: Extend Prestige class 
     private final MyColors helmetDetail;
 
     public SamuraiClass(MyColors armorColor, MyColors secondaryColor, MyColors helmetDetail) {
-        super("Samurai", "SAM");
+        super("Samurai", "SAM", 10, 7, true, 10, new WeightedSkill[]{
+                new WeightedSkill(Skill.Acrobatics, 3),
+                new WeightedSkill(Skill.Blades, 5),
+                new WeightedSkill(Skill.Bows, 3),
+                new WeightedSkill(Skill.Endurance, 4),
+                new WeightedSkill(Skill.Leadership, 4),
+                new WeightedSkill(Skill.Labor, 3),
+                new WeightedSkill(Skill.Logic, 4),
+                new WeightedSkill(Skill.Persuade, 3),
+                new WeightedSkill(Skill.Polearms, 3),
+                new WeightedSkill(Skill.Survival, 4),
+                new WeightedSkill(Skill.Sneak, 3),
+        });
         this.armorColor = armorColor;
         this.secondaryColor = secondaryColor;
         this.helmetDetail = helmetDetail;
@@ -32,6 +67,32 @@ public class SamuraiClass extends CaptainClass { // TODO: Extend Prestige class 
         Looks.putOnTunic(characterAppearance, secondaryColor);
         Looks.putOnLightArmor(characterAppearance, armorColor, secondaryColor);
         putOnSamuraiHelm(characterAppearance);
+    }
+
+    @Override
+    public AvatarSprite getAvatar(Race race, CharacterAppearance appearance) {
+        return new AvatarSprite(race, 0x3C0, armorColor, race.getColor(), helmetDetail,
+                appearance.getBackHairOnly(), appearance.getHalfBackHair());
+    }
+
+    @Override
+    public Equipment getDefaultEquipment() {
+        return new Equipment(new Wakizashi(), new LeatherArmor(), null);
+    }
+
+    @Override
+    public boolean isBackRowCombatant() {
+        return false;
+    }
+
+    @Override
+    public String getDescription() {
+        return "A disciplined fighter, trained for pitched battles and assaults, as well as serving as body guards.";
+    }
+
+    @Override
+    public List<Item> getStartingItems() {
+        return List.of(new Katana(), new PlateMailArmor(), new FullHelm());
     }
 
     private void putOnSamuraiHelm(CharacterAppearance characterAppearance) {
@@ -53,4 +114,8 @@ public class SamuraiClass extends CaptainClass { // TODO: Extend Prestige class 
         }
     }
 
+    @Override
+    protected boolean canBecomeFrom(CharacterClass charClass) {
+        return MyLists.any(FROM_CLASSES, cc -> charClass.getClass().isAssignableFrom(cc));
+    }
 }

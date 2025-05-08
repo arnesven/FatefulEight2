@@ -19,7 +19,7 @@ public class EasternPalaceWeaponShopNode extends WeaponShopNode {
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.RED, MyColors.WHITE);
 
     private static final List<Weapon> EASTERN_WEAPONS = List.of(
-            new Katana(), new DaiKatana(), new Wakizashi(), new Naginata(), new ThrowingStars(), new ThrowingKnives()
+            new Katana(), new DaiKatana(), new Wakizashi(), new Naginata(), new Nunchuck(), new ThrowingStars(), new ThrowingKnives()
     );
 
     public EasternPalaceWeaponShopNode(Model model, int col, int row) {

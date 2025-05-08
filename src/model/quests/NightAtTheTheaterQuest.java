@@ -1,32 +1,42 @@
 package model.quests;
 
+import model.Model;
 import model.characters.GameCharacter;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.RandomAppearance;
+import model.classes.CharacterClass;
 import model.classes.Classes;
 import model.classes.Skill;
+import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.enemies.OrcishBombThrowerEnemy;
 import model.enemies.OrcishNinjaEnemy;
 import model.enemies.OrcishNinjaStarThrowerEnemy;
-import model.items.Equipment;
-import model.items.accessories.SkullCap;
-import model.items.clothing.LeatherArmor;
-import model.items.weapons.Longsword;
+import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.mainstory.honorable.HonorableWarriorAlly;
 import model.quests.scenes.CombatSubScene;
 import model.quests.scenes.SoloSkillCheckSubScene;
-import model.races.AllRaces;
-import model.states.battle.MilitiaUnit;
+import model.states.QuestState;
 import sound.BackgroundMusic;
+import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
+import view.combat.CombatTheme;
+import view.combat.MansionTheme;
+import view.sprites.Sprite32x32;
+import view.widget.QuestBackground;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NightAtTheTheaterQuest extends RemotePeopleQuest {
     public static final String QUEST_NAME = "Night at the Theater";
     private static final String INTRO_TEXT = "TODO: intro";
     private static final String END_TEXT = "TODO: outro";
+    private static final int TOTAL_NUMBER_OF_NINJAS = 18;
+    private static final List<QuestBackground> BACKGROUND_SPRITES = makeBackground();
 
     public NightAtTheTheaterQuest() {
         super(QUEST_NAME, "Lord Shingen", QuestDifficulty.VERY_HARD, new Reward(1, 200, 0),
@@ -69,7 +79,7 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
 
     @Override
     public MyColors getBackgroundColor() {
-        return MyColors.BLACK;
+        return MyColors.GREEN;
     }
 
     @Override
@@ -77,32 +87,38 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         return BackgroundMusic.darkQuestSong;
     }
 
-    private static class GatheredFightCombatSubScene extends CombatSubScene {
+    private static List<Enemy> makeOrcishNinjas(int count) {
+        List<Enemy> enemies = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            int roll = MyRandom.rollD6();
+            if (roll < 3) {
+                enemies.add(new OrcishNinjaEnemy('A'));
+            } else if (roll < 5) {
+                enemies.add(new OrcishBombThrowerEnemy('B'));
+            } else {
+                enemies.add(new OrcishNinjaStarThrowerEnemy('C'));
+            }
+        }
+        return enemies;
+    }
+
+    private List<GameCharacter> makeHonorableWarriorAllies(int count) {
+        GainSupportOfHonorableWarriorsTask task = (GainSupportOfHonorableWarriorsTask) getTask();
+        List<GameCharacter> result = new ArrayList<>();
+        for (int i = 0; i < count; ++i) {
+            result.add(new HonorableWarriorAlly(task.makeShingenClass()));
+        }
+        return result;
+    }
+
+    private class GatheredFightCombatSubScene extends CombatSubScene {
         public GatheredFightCombatSubScene(int col, int row) {
-            super(col, row, makeEnemies(), true);
+            super(col, row, makeOrcishNinjas(TOTAL_NUMBER_OF_NINJAS), true);
         }
 
         @Override
         protected List<GameCharacter> getAllies() {
-            // TODO: Use Samurai Class
-            return List.of(new GameCharacter("Honorable", "Warrior", AllRaces.EASTERN_HUMAN, Classes.CAP, new RandomAppearance(AllRaces.EASTERN_HUMAN),
-                    Classes.NO_OTHER_CLASSES,
-                    new Equipment(new Longsword(), new LeatherArmor(), new SkullCap())));
-        }
-
-        private static List<Enemy> makeEnemies() {
-            List<Enemy> enemies = new ArrayList<>();
-            for (int i = 0; i < 22; i++) {
-                int roll = MyRandom.rollD6();
-                if (roll < 3) {
-                    enemies.add(new OrcishNinjaEnemy('A'));
-                } else if (roll < 5) {
-                    enemies.add(new OrcishBombThrowerEnemy('B'));
-                } else {
-                    enemies.add(new OrcishNinjaStarThrowerEnemy('C'));
-                }
-            }
-            return enemies;
+            return makeHonorableWarriorAllies(6);
         }
 
         @Override
@@ -111,9 +127,119 @@ public class NightAtTheTheaterQuest extends RemotePeopleQuest {
         }
     }
 
-    private static class DistributedCombatSubScene extends GatheredFightCombatSubScene {
+    @Override
+    public CombatTheme getCombatTheme() {
+        return new MansionTheme();
+    }
+
+    private class DistributedCombatSubScene extends QuestSubScene {
+
+        private static final Sprite32x32 SPRITE = new Sprite32x32("storyjunc", "quest.png", 0x0C,
+                MyColors.BLACK, MyColors.WHITE, MyColors.RED, MyColors.BROWN);
+
         public DistributedCombatSubScene(int col, int row) {
             super(col, row);
         }
+
+        @Override
+        protected MyColors getSuccessEdgeColor() {
+            return MyColors.LIGHT_GREEN;
+        }
+
+        @Override
+        public String getDetailedDescription() {
+            return "???";
+        }
+
+        @Override
+        public void drawYourself(Model model, int xPos, int yPos) {
+            model.getScreenHandler().register(SPRITE.getName(), new Point(xPos, yPos), SPRITE, 1);
+        }
+
+        @Override
+        public String getDescription() {
+            return "???";
+        }
+
+        @Override
+        public QuestEdge run(Model model, QuestState state) {
+            state.println("In the confusion, the party is split up!");
+            List<List<GameCharacter>> groups = divideIntoGroups(model);
+
+            SimpleJunction dummySucces = new SimpleJunction(0, 0, new QuestEdge(this));
+            SimpleJunction dummyFail = new SimpleJunction(0, 0, new QuestEdge(this));
+
+            for (List<GameCharacter> group : groups) {
+                List<GameCharacter> nonGroup = new ArrayList<>(model.getParty().getPartyMembers());
+                nonGroup.removeAll(group);
+                model.getParty().benchPartyMembers(nonGroup);
+                state.partyMemberSay(group.get(0), "Get ready for a fight! Wait, where are the others?");
+                int enemiesPerGroup = (int)Math.round((double)TOTAL_NUMBER_OF_NINJAS / groups.size());
+                CombatSubScene combat = makeSmallCombatSubscene(enemiesPerGroup);
+                combat.connectFail(dummyFail);
+                combat.connectSuccess(dummySucces);
+                QuestEdge result = combat.run(model, state);
+                model.getParty().unbenchAll();
+                if (result == combat.getFailEdge() || MyLists.all(group, Combatant::isDead)) {
+                    state.println("The group has failed its combat!");
+                    return getFailEdge();
+                }
+            }
+            state.println("All groups completed their combats.");
+            return getSuccessEdge();
+        }
+
+        private CombatSubScene makeSmallCombatSubscene(int enemyCount) {
+            return new CombatSubScene(0, 0, makeOrcishNinjas(enemyCount), true) {
+                @Override
+                protected String getCombatDetails() {
+                    return "Mysterious Ninjas";
+                }
+
+                @Override
+                protected List<GameCharacter> getAllies() {
+                    return makeHonorableWarriorAllies(2);
+                }
+            };
+        }
+
+        private List<List<GameCharacter>> divideIntoGroups(Model model) {
+            int twoGroups = model.getParty().size() / 2;
+            List<GameCharacter> partyMembers = new ArrayList<>(model.getParty().getPartyMembers());
+            Collections.shuffle(partyMembers);
+            List<List<GameCharacter>> groups = new ArrayList<>();
+            for (int i = 0; i < twoGroups; ++i) {
+                List<GameCharacter> group = new ArrayList<>(partyMembers.subList(0, 2));
+                partyMembers.removeAll(partyMembers.subList(0, 2));
+                groups.add(group);
+            }
+            if (!partyMembers.isEmpty()) {
+                if (groups.isEmpty()) {
+                    List<GameCharacter> finalGroup = new ArrayList<>(partyMembers);
+                    groups.add(finalGroup);
+                } else {
+                    groups.getLast().addAll(partyMembers);
+                }
+            }
+            return groups;
+        }
+    }
+
+    @Override
+    public List<QuestBackground> getBackgroundSprites() {
+        return BACKGROUND_SPRITES;
+    }
+
+
+    private static List<QuestBackground> makeBackground() {
+        Sprite32x32 stageleft = new Sprite32x32("stageleft", "quest.png", 0x58,
+                MyColors.GREEN, MyColors.BROWN, MyColors.RED, MyColors.DARK_GRAY);
+        Sprite32x32 stageright = new Sprite32x32("stageright", "quest.png", 0x59,
+                MyColors.GREEN, MyColors.BROWN, MyColors.RED, MyColors.DARK_GRAY);
+
+        List<QuestBackground> bg = new ArrayList<>();
+        bg.add(new QuestBackground(new Point(3, 3), stageleft, false));
+        bg.add(new QuestBackground(new Point(4, 3), stageright, false));
+        return bg;
     }
 }

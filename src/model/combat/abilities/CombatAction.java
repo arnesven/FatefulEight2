@@ -176,7 +176,8 @@ public abstract class CombatAction {
     private static void performFleeFromBattle(Model model, CombatEvent combatEvent, GameCharacter character) {
         boolean fleeSuccess = false;
         if (model.getParty().size() > 1) {
-            SkillCheckResult result = character.testSkill(model, Skill.Leadership, 3 + model.getParty().size());
+            SkillCheckResult result = character.testSkill(model, Skill.Leadership,
+                    3 + model.getParty().size() - model.getParty().getBench().size());
             combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
             if (result.isSuccessful()) {
                 combatEvent.leaderSay(MyRandom.sample(List.of("Retreat!", "Fall back!", "Let's get out of here!",

@@ -5,7 +5,7 @@ import view.GameView;
 
 public class ParryAbilityHelpChapter extends SubChapterHelpDialog {
     private static final String TEXT = "A character with at least " + ParryAbility.BLADES_RANKS_REQUIREMENT + " ranks " +
-            "of Blades has a chance to parry incoming physical (non-magic) attacks in combat.\n\n" +
+            "of Blades has a chance to parry incoming physical (non-magic), non-ranged attacks in combat.\n\n" +
             "The chance to parry an attack is proportional to the character's blade skill level.\n\n" +
             "    Skill   Chance\n" +
             "      3       10%\n" +

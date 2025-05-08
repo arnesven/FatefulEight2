@@ -30,7 +30,7 @@ public class ParryAbility extends PassiveCombatAction implements SkillAbilityCom
 
     public static boolean checkForParry(Model model, CombatEvent combatEvent, GameCharacter character, Enemy enemy) {
         if (getPassiveCombatAbility().canDoAbility(character) && character.getEquipment().getWeapon().isOfType(BladedWeapon.class) &&
-            enemy.getAttackBehavior().isPhysicalAttack()) {
+            enemy.getAttackBehavior().isPhysicalAttack() && !enemy.getAttackBehavior().canAttackBackRow()) {
             combatEvent.println(character.getFirstName() + " parried " + enemy.getName() + "'s attack!");
             int chance = Math.min(5, character.getRankForSkill(Skill.Blades) - BLADES_RANKS_REQUIREMENT + 1);
             return MyRandom.rollD10() <= chance;

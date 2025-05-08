@@ -21,6 +21,10 @@ public abstract class RemotePeopleQuest extends MainQuest {
         this.task = ((PartSixStoryPart)storyPart).getRemotePeopleTask();
     }
 
+    public GainSupportOfRemotePeopleTask getTask() {
+        return task;
+    }
+
     @Override
     public GameState endOfQuest(Model model, QuestState state, boolean questWasSuccess) {
         GameState toReturn = super.endOfQuest(model, state, questWasSuccess);
