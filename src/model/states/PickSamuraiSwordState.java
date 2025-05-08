@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class PickSamuraiSwordState extends DailyEventState {
-    // TODO: Use this
     public static final List<MyColors> SWORD_COLORS =
             List.of(MyColors.BLUE, MyColors.DARK_PURPLE, MyColors.DARK_GREEN, MyColors.DARK_RED, MyColors.DARK_GRAY);
 

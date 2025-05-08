@@ -4,6 +4,7 @@ import model.characters.appearance.LizardmanAppearance;
 import model.characters.special.GoblinAppearance;
 import model.classes.CharacterClass;
 import model.classes.Classes;
+import model.races.EasternHuman;
 import model.races.FrogmanAppearance;
 import model.races.OrcAppearance;
 import model.races.Race;
@@ -28,6 +29,7 @@ public class TutorialRaces extends ExpandableHelpDialog {
     @Override
     protected List<HelpDialog> makeSubSections(GameView view) {
         List<HelpDialog> subsections = new ArrayList<>();
+        subsections.add(new SpecificRaceHelpDialog(view, Race.EASTERN_HUMAN, PortraitSubView.makeRandomPortrait(Classes.None, Race.EASTERN_HUMAN)));
         for (Race race : Race.allRaces) {
             subsections.add(new SpecificRaceHelpDialog(view, race, PortraitSubView.makeRandomPortrait(Classes.None, race)));
         }
