@@ -1,6 +1,7 @@
 package model.states;
 
 import model.GameStatistics;
+import model.characters.PersonalityTrait;
 import model.combat.abilities.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
 import model.combat.abilities.SneakAttackCombatAction;
@@ -92,6 +93,7 @@ public class CombatEvent extends DailyEventState {
         BackgroundMusic previousSong = ClientSoundManager.getCurrentBackgroundMusic();
         startMusic();
         StripedTransition.transition(model, subView);
+        partyMemberComment(model);
         addAllies(new ArrayList<>(model.getParty().getTamedDragons().values()));
         if (allies.size() > 0) {
             model.getTutorial().allies(model);
@@ -685,4 +687,34 @@ public class CombatEvent extends DailyEventState {
         result.addAll(enemies);
         return result;
     }
+
+
+    private void partyMemberComment(Model model) {
+        if (model.getParty().size() == 1) {
+            return;
+        }
+        List<MyPair<PersonalityTrait, String>> comments = new ArrayList<>();
+        comments.add(new MyPair<>(PersonalityTrait.critical, "Everybody mind your tactics!"));
+        comments.add(new MyPair<>(PersonalityTrait.cold, "If we die, we die."));
+        comments.add(new MyPair<>(PersonalityTrait.anxious, "Let's just get this over with."));
+        comments.add(new MyPair<>(PersonalityTrait.irritable, "What, another fight?"));
+        comments.add(new MyPair<>(PersonalityTrait.unkind, "Don't anybody get in my way."));
+        comments.add(new MyPair<>(PersonalityTrait.snobby, "Fighting is such a chore."));
+        comments.add(new MyPair<>(PersonalityTrait.jovial, "These guys seem friendly. Hey! Why don't we be pals?"));
+        comments.add(new MyPair<>(PersonalityTrait.naive, "This will be easy. Right?"));
+        comments.add(new MyPair<>(PersonalityTrait.narcissistic, "Just leave it to me."));
+        comments.add(new MyPair<>(PersonalityTrait.aggressive, "Let's get em!"));
+        comments.add(new MyPair<>(PersonalityTrait.romantic, "A battle, how exciting!"));
+        comments.add(new MyPair<>(PersonalityTrait.lawful, "This is self defense."));
+        Collections.shuffle(comments);
+        for (MyPair<PersonalityTrait, String> pair : comments) {
+            if (randomSayIfPersonality(pair.first, List.of(), pair.second)) {
+                return;
+            }
+            if (MyRandom.randInt(4) == 0) {
+                break;
+            }
+        }
+    }
+
 }

@@ -308,7 +308,8 @@ public class ShopState extends GameState {
         Collections.shuffle(comments);
         
         for (MyPair<PersonalityTrait, String> pair : comments) {
-            if (randomSayIfPersonality(pair.first, List.of(), pair.second)) {
+            if (who.hasPersonality(pair.first)) {
+                partyMemberSay(who, pair.second);
                 return;
             }
             if (MyRandom.randInt(4) == 0) {
