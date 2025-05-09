@@ -1,9 +1,15 @@
 package model.states.events;
 
 import model.Model;
+import model.characters.GameCharacter;
+import model.combat.CombatAdvantage;
+import model.combat.abilities.CombatAction;
 import model.enemies.*;
 import model.states.DailyEventState;
+import model.states.GameState;
+import view.combat.MansionTheme;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PeskyCrowEvent extends DailyEventState {

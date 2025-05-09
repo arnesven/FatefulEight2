@@ -36,6 +36,7 @@ import java.util.function.Predicate;
 
 public class CombatEvent extends DailyEventState {
 
+    private static final int MAX_NUMBER_OF_ALLIES = 16;
     private final CombatStatistics combatStats;
     private final List<GameCharacter> participants;
     private final List<Enemy> enemies = new ArrayList<>();
@@ -475,7 +476,7 @@ public class CombatEvent extends DailyEventState {
 
     public void addAllies(List<GameCharacter> gcs) {
         MyLists.forEach(allies, combatMatrix::remove);
-        this.allies.addAll(gcs);
+        this.allies.addAll(gcs.subList(0, Math.min(gcs.size(), MAX_NUMBER_OF_ALLIES)));
         combatMatrix.addAllies(allies);
     }
 

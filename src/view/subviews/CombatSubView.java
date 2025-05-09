@@ -7,6 +7,7 @@ import model.combat.Combatant;
 import model.enemies.Enemy;
 import model.states.CombatEvent;
 import model.states.CombatMatrix;
+import util.MyLists;
 import view.BorderFrame;
 import view.combat.CombatTheme;
 import view.sprites.CombatCursorSprite;
@@ -153,9 +154,42 @@ public class CombatSubView extends SubView {
     }
 
     private void drawInitiativeOrder(Model model) {
-        int col = 0; // TODO: Fix when initiative bar is looong! (For instance EscapeFromDungeonQuest)
-        int xPosStart = X_OFFSET + (X_MAX - X_OFFSET) / 2 - combat.getInitiativeOrder().size();
         List<Combatant> initOrder = new ArrayList<>(combat.getInitiativeOrder());
+        if (initOrder.size() >= (X_MAX - X_OFFSET) / 2) {
+            drawOverflowingInitOrder(model, initOrder);
+        } else {
+            drawCenteredInitOrder(model, initOrder);
+        }
+    }
+
+    private void drawOverflowingInitOrder(Model model, List<Combatant> initOrder) {
+        int xPos = X_OFFSET + 1;
+        int overflowBy = initOrder.size() - ((X_MAX - X_OFFSET) / 2);
+        int combatantIndex = initOrder.indexOf(MyLists.find(initOrder, this::isCombatantsTurn));
+        int numberToSkip = Math.min(overflowBy, combatantIndex);
+        for (Combatant combatant : initOrder) {
+            if (numberToSkip > 0) {
+                numberToSkip--;
+            } else {
+                if (isCombatantsTurn(combatant)) {
+                    model.getScreenHandler().put(xPos - 1, Y_MAX - 1,
+                            INITIATIVE_MARKER);
+                }
+                model.getScreenHandler().put(xPos, Y_MAX - 1, getInitiativeSymbol(combatant, model));
+                xPos += 2;
+            }
+            if (xPos >= X_MAX) {
+                break;
+            }
+        }
+        if (combatantIndex < overflowBy) {
+            model.getScreenHandler().put(X_MAX-1, Y_MAX - 1, CharSprite.make((char)0x7E, MyColors.WHITE));
+        }
+    }
+
+    private void drawCenteredInitOrder(Model model, List<Combatant> initOrder) {
+        int col = 0;
+        int xPosStart = X_OFFSET + (X_MAX - X_OFFSET) / 2 - combat.getInitiativeOrder().size();
         for (Combatant combatant : initOrder) {
             if (isCombatantsTurn(combatant)) {
                 model.getScreenHandler().put(xPosStart + col - 1, Y_MAX - 1 ,
