@@ -2,9 +2,11 @@ package model.map.locations;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.journal.PartSixStoryPart;
 import model.mainstory.honorable.EasternSmithEvent;
 import model.map.HillsHex;
 import model.map.HillsLocation;
+import model.states.DailyEventState;
 import view.GameView;
 import view.MyColors;
 import view.ScreenHandler;
@@ -44,6 +46,14 @@ public class HillsWithHutLocation extends HillsLocation {
     @Override
     public SubView getImageSubView() {
         return hillsHex.getImageSubView();
+    }
+
+    @Override
+    public DailyEventState generateEvent(Model model) {
+        if (model.getMainStory().getStoryParts().getLast() instanceof PartSixStoryPart) {
+            return new EasternSmithEvent(model);
+        }
+        return hillsHex.generateEvent(model);
     }
 
     @Override
