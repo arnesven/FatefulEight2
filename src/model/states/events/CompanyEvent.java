@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
@@ -10,6 +11,7 @@ import model.enemies.Enemy;
 import model.enemies.SoldierEnemy;
 import model.enemies.SoldierLeaderEnemy;
 import model.items.accessories.ShieldItem;
+import model.items.special.TentUpgradeItem;
 import model.states.CombatEvent;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -68,8 +70,10 @@ public class CompanyEvent extends DailyEventState {
 
         if (selectedChoice == 0) {
             foodAndSpLoss(model, loss);
+            possiblyGetTent(model);
         } else if (selectedChoice == 1) {
             tryEntertainment(model, loss);
+            possiblyGetTent(model);
         } else if (selectedChoice == 2) {
             List<Enemy> enemies = new ArrayList<>();
             for (int i = 0; i < soldiers - 2; i++){
@@ -82,6 +86,15 @@ public class CompanyEvent extends DailyEventState {
         } else {
             println("You quickly scurry away from the company of soldiers.");
             setFledCombat(true);
+        }
+    }
+
+    private void possiblyGetTent(Model model) {
+        if (model.getParty().getInventory().getTentSize() < Party.MAXIMUM_PARTY_SIZE) {
+            if (MyRandom.flipCoin()) {
+                println("The sloppy soldiers leave some gear behind. The party finds a tent!");
+                new TentUpgradeItem().addYourself(model.getParty().getInventory());
+            }
         }
     }
 

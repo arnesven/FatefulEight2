@@ -1,10 +1,13 @@
 package model.states.events;
 
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.classes.Skill;
+import model.items.Inventory;
 import model.items.Item;
 import model.items.Prevalence;
+import model.items.special.LargeTentUpgradeItem;
 import model.items.special.TentUpgradeItem;
 import model.states.DailyEventState;
 import util.MyLists;
@@ -103,11 +106,15 @@ public class CampSiteEvent extends DailyEventState {
 
     private void abandoned(Model model) {
         println("The camp seems to have been hastily abandoned.");
-        TentUpgradeItem tent = new TentUpgradeItem();
-        println("The party finds a " + tent.getName() + "!");
-        tent.addYourself(model.getParty().getInventory());
-
         leaderSay("Let's search this area and see if we can find any salvageable supplies");
+        if (model.getParty().getInventory().getTentSize() <= Party.MAXIMUM_PARTY_SIZE) {
+            if (MyRandom.flipCoin()) {
+                boolean large = MyRandom.flipCoin();
+                println("There's an abandoned tent here. It is showing some wear and tear, but it is still usable.");
+                TentUpgradeItem item = large ? new LargeTentUpgradeItem() : new TentUpgradeItem();
+                item.addYourself(model.getParty().getInventory());
+            }
+        }
         List<GameCharacter> failers = model.getParty().doCollectiveSkillCheckWithFailers(model, this, Skill.Search, 7);
         for (GameCharacter gc : MyLists.filter(model.getParty().getPartyMembers(), p -> !failers.contains(p))) {
             int roll2 = MyRandom.rollD6();

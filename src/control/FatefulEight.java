@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class FatefulEight extends JFrame {
 
@@ -63,6 +64,7 @@ public class FatefulEight extends JFrame {
     }
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.US);
         if (args.length == 1 && args[0].equals("--debug")) {
             debug = true;
         }
