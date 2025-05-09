@@ -4,13 +4,16 @@ import model.GameStatistics;
 import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
+import model.characters.PersonalityTrait;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.MyLists;
+import util.MyPair;
 import util.MyRandom;
+import view.MyColors;
 import view.SimpleMessageView;
 import view.subviews.ArrowMenuSubView;
 import view.subviews.CollapsingTransition;
@@ -263,10 +266,7 @@ public class ShopState extends GameState {
                 println(it.getName() + " was equipped by " + didAction[0].getName() + ".");
             } else {
                 println("");
-                partyMemberSay(didAction[0], MyRandom.sample(List.of("For me? Okay.", "I'll take care of it.",
-                        "New equipment, good.", "A fine item from the looks of it.", "This should come in handy.",
-                        "I'll take that.", "I'll make good use of this.", "I've been looking for something like that.",
-                        "Perfect!", "Thank you.", "I appreciate that.", "Alright, I'll use that.")));
+                partyMemberCommentOnEquip(model, didAction[0], it);
             }
             for (Item it2 : model.getParty().getInventory().getAllItems()) {
                 if (!sellItems.getElementList().contains(it2)) {
@@ -279,6 +279,48 @@ public class ShopState extends GameState {
 
         println(it.getName() + " was put into inventory.");
         return false;
+    }
+
+    private void partyMemberCommentOnEquip(Model model, GameCharacter who, Item what) {
+        if (who.hasPersonality(PersonalityTrait.prudish) && what instanceof Clothing) {
+            partyMemberSay(who, MyRandom.sample(List.of("Eeek! Look away while I'm changing.",
+                    "Okay I'll put it on. Don't look while I'm changing!",
+                    "Don't think I'm undressing in front of you.")));
+            return;
+        }
+        List<MyPair<PersonalityTrait, String>> comments = new ArrayList<>();
+        comments.add(new MyPair<>(PersonalityTrait.critical, "I guess it will have to do."));
+        comments.add(new MyPair<>(PersonalityTrait.cold, "Not sure I'll use it much, but okay."));
+        comments.add(new MyPair<>(PersonalityTrait.anxious, "I hope I get to use it soon!"));
+        comments.add(new MyPair<>(PersonalityTrait.friendly, "Thank you so much!3"));
+        comments.add(new MyPair<>(PersonalityTrait.irritable, "Re-equipping again? Make up your mind already!#"));
+        comments.add(new MyPair<>(PersonalityTrait.generous, "For me? But I didn't get you anything..."));
+        comments.add(new MyPair<>(PersonalityTrait.unkind, "Meh."));
+        comments.add(new MyPair<>(PersonalityTrait.greedy, "It's a good start, but I need some other things too."));
+        comments.add(new MyPair<>(PersonalityTrait.snobby, "It's quite plain... Alright, if I have to."));
+        comments.add(new MyPair<>(PersonalityTrait.jovial, "You want me to sell this?"));
+        comments.add(new MyPair<>(PersonalityTrait.rude, "I don't want it. I have to? Alright...#"));
+        comments.add(new MyPair<>(PersonalityTrait.naive, "A present? For me? Yay!3"));
+        comments.add(new MyPair<>(PersonalityTrait.narcissistic, "It doesn't really suit me, but I'll take it anyway."));
+        comments.add(new MyPair<>(PersonalityTrait.stingy, "I hope you don't expect me to give you anything."));
+        comments.add(new MyPair<>(PersonalityTrait.playful, "Now I'll be ready for action!"));
+        comments.add(new MyPair<>(PersonalityTrait.romantic, "It's what I always wanted!3"));
+        Collections.shuffle(comments);
+        
+        for (MyPair<PersonalityTrait, String> pair : comments) {
+            if (randomSayIfPersonality(pair.first, List.of(), pair.second)) {
+                return;
+            }
+            if (MyRandom.randInt(4) == 0) {
+                break;
+            }
+        }
+        
+        partyMemberSay(who, MyRandom.sample(List.of("For me? Okay.", "I'll take care of it.",
+                "New equipment, good.", "A fine item from the looks of it.", "This should come in handy.",
+                "I'll take that.", "I'll make good use of this.", "I've been looking for something like that.",
+                "Perfect!", "Thank you.", "I appreciate that.", "Alright, I'll use that.", "I like it.",
+                "I think I deserved that.")));
     }
 
     public boolean maySell(Model model) {
