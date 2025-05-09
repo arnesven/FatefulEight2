@@ -107,6 +107,7 @@ public class EasternPalaceLocation extends TownishLocation {
                 new SamuraiMonkEvent(model),
                 new MarketEvent(model),
                 new SmithEvent(model, AllRaces.EASTERN_HUMAN),
+                new NinjaEvent(model),
                 new GuideEvent(model, 2, AllRaces.EASTERN_HUMAN)
             ));
         }

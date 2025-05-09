@@ -10,13 +10,9 @@ import model.items.spells.LevitateSpell;
 import model.items.weapons.Dirk;
 import model.items.Equipment;
 import model.items.weapons.ThrowingKnives;
-import model.items.weapons.ThrowingStars;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
-import view.sprites.FaceAndClothesSprite;
-import view.sprites.ClothesSprite;
-import view.sprites.FaceAndClothesSpriteWithBack;
 
 import java.util.List;
 
