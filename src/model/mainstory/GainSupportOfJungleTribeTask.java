@@ -6,6 +6,7 @@ import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.map.WorldBuilder;
 import model.quests.Quest;
+import util.MyPair;
 import util.MyTriplet;
 
 import java.awt.*;
@@ -52,5 +53,10 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     @Override
     public void setQuestSuccessful() {
         this.completed = true;
+    }
+
+    @Override
+    public void addFactionString(List<MyPair<String, String>> result) {
+        // TODO
     }
 }

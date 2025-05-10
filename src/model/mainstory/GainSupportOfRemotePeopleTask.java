@@ -6,6 +6,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
 import model.quests.Quest;
 import model.tasks.DestinationTask;
+import util.MyPair;
 import util.MyTriplet;
 
 import java.awt.*;
@@ -39,4 +40,6 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public abstract MyTriplet<String, CharacterAppearance, String> addQuests(Model model);
 
     public abstract void setQuestSuccessful();
+
+    public abstract void addFactionString(List<MyPair<String, String>> result);
 }

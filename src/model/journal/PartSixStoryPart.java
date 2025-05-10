@@ -16,6 +16,7 @@ import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
 import model.tasks.DestinationTask;
 import util.MyLists;
+import util.MyPair;
 import util.MyStrings;
 import util.MyTriplet;
 
@@ -57,6 +58,11 @@ public class PartSixStoryPart extends StoryPart {
         List<DestinationTask> tasks = new ArrayList<>(gainSupportOfNeighborKingdomTasks);
         tasks.add(gainSupportOfRemotePeopleTask);
         return tasks;
+    }
+
+    @Override
+    public void addFactionStrings(List<MyPair<String, String>> result) {
+        gainSupportOfRemotePeopleTask.addFactionString(result);
     }
 
     @Override

@@ -42,17 +42,21 @@ public class StatisticsView extends SelectableListMenu {
 
     private List<MyPair<String, String>> findFactionStatuses(Model model) {
         List<MyPair<String, String>> result = new ArrayList<>();
+        List<MyPair<String, String>> mainStoryFactions = model.getMainStory().getFactionStrings();
+        result.addAll(mainStoryFactions);
         for (Map.Entry<String, Summon> summon : model.getParty().getSummons().entrySet()) {
-            if (summon.getValue().getStep() > 0) {
-                String description = "Acquainted";
-                if (summon.getValue().getStep() == 2) {
-                    description = "Friend";
+            if (!MyLists.any(result, p -> p.first.equals(summon.getKey()))) {
+                if (summon.getValue().getStep() > 0) {
+                    String description = "Acquainted";
+                    if (summon.getValue().getStep() == 2) {
+                        description = "Friend";
+                    }
+                    UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(summon.getKey());
+                    if (model.getParty().hasHeadquartersIn(urb)) {
+                        description = "Resident (HQ)";
+                    }
+                    result.add(new MyPair<>(MyStrings.capitalize(summon.getKey()), description));
                 }
-                UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(summon.getKey());
-                if (model.getParty().hasHeadquartersIn(urb)) {
-                    description = "Resident (HQ)";
-                }
-                result.add(new MyPair<>(MyStrings.capitalize(summon.getKey()), description));
             }
         }
         for (TempleLocation temple : model.getWorld().getTempleLocations()) {
@@ -70,6 +74,7 @@ public class StatisticsView extends SelectableListMenu {
         if (!orcsFaction.equals("")) {
             result.add(new MyPair<>("Orcish Tribes", orcsFaction));
         }
+
         return result;
     }
 

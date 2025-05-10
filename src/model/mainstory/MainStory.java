@@ -14,6 +14,7 @@ import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
 import model.states.dailyaction.TownDailyActionState;
 import util.MyLists;
+import util.MyPair;
 import util.MyRandom;
 import view.MyColors;
 
@@ -288,5 +289,16 @@ public class MainStory implements Serializable {
 
     public List<GainSupportOfNeighborKingdomTask> makeNeighborKingdomTasks(Model model) {
         return spawnData.makeNeighborKingdomTasks(model);
+    }
+
+    public List<MyPair<String, String>> getFactionStrings() {
+        List<MyPair<String, String>> result = new ArrayList<>();
+        if (isFugitive()) {
+            result.add(new MyPair<>(spawnData.getCastle(), "Persona Non Grata"));
+        }
+        for (StoryPart sp : storyParts) {
+            sp.addFactionStrings(result);
+        }
+        return result;
     }
 }

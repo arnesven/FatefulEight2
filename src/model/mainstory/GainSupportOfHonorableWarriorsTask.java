@@ -25,10 +25,7 @@ import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.PickSamuraiSwordState;
 import model.states.swords.SamuraiSword;
-import util.MyLists;
-import util.MyRandom;
-import util.MyStrings;
-import util.MyTriplet;
+import util.*;
 import view.MyColors;
 import view.combat.MountainCombatTheme;
 import view.subviews.ArrowMenuSubView;
@@ -48,6 +45,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     private static final int SHINGEN_MET = 3;
     private static final int SMITH_TIP_GOTTEN = 4;
     private static final int SWORD_GIVEN = 5;
+    private static final String REMOTE_PEOPLE_NAME = "The Honorable Warriors";
     private boolean completed;
 
     private final List<SubTask> subTasks;
@@ -101,8 +99,17 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     @Override
+    public void addFactionString(List<MyPair<String, String>> result) {
+        if (step == SWORD_GIVEN) {
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Ally"));
+        } else if (step >= MIKOS_TASK_DONE) {
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Friend"));
+        }
+    }
+
+    @Override
     public JournalEntry getJournalEntry(Model model) {
-        return new MainStoryTask("The Honorable Warriors") {
+        return new MainStoryTask(REMOTE_PEOPLE_NAME) {
             @Override
             public String getText() {
                 if (completed) {

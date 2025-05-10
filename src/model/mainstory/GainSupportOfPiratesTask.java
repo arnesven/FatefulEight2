@@ -11,6 +11,7 @@ import model.map.WorldBuilder;
 import model.map.locations.PirateHavenLocation;
 import model.quests.AvertTheMutinyQuest;
 import model.quests.Quest;
+import util.MyPair;
 import util.MyTriplet;
 import view.subviews.PortraitSubView;
 
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     public static final String CAPTAIN_NAME = "Blackbone";
+    private static final String REMOTE_PEOPLE_NAME = "Pirates of the Western Coast";
     private final AdvancedAppearance blackboneAppearance;
     private boolean blackboneMet = false;
     private boolean completed = false;
@@ -30,7 +32,7 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
 
     @Override
     public JournalEntry getJournalEntry(Model model) {
-        return new MainStoryTask("Pirates of the Western Coast") {
+        return new MainStoryTask(REMOTE_PEOPLE_NAME) {
             @Override
             public String getText() {
                 if (blackboneMet) {
@@ -50,6 +52,15 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
                 return GainSupportOfPiratesTask.this.getPosition();
             }
         };
+    }
+
+    @Override
+    public void addFactionString(List<MyPair<String, String>> result) {
+        if (completed) {
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Ally"));
+        } else if (blackboneMet) {
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Friend"));
+        }
     }
 
     @Override

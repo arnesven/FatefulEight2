@@ -11,6 +11,7 @@ import model.quests.MainQuest;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
+import util.MyPair;
 import view.sprites.Sprite;
 import view.sprites.SpriteQuestMarker;
 
@@ -65,5 +66,9 @@ public abstract class StoryPart implements Serializable {
 
     public String getHexInfo(Point position) {
         return null;
+    }
+
+    public void addFactionStrings(List<MyPair<String, String>> result) {
+
     }
 }
