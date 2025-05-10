@@ -43,6 +43,9 @@ public abstract class DailyEventState extends GameState {
 
     @Override
     public final GameState run(Model model) {
+        if (model.getParty().isWipedOut()) {
+            return new GameOverState(model);
+        }
         doStartOfEventHook(model);
         doEvent(model);
         removePortraitSubView(model);
