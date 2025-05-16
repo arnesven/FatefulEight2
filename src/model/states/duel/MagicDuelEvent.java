@@ -19,6 +19,7 @@ import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.AnimationManager;
 import view.subviews.MagicDuelSubView;
 import view.subviews.SetupMagicDuelSubView;
 import view.subviews.StripedTransition;
@@ -147,6 +148,7 @@ public class MagicDuelEvent extends DailyEventState {
         print("Press enter to continue.");
         waitForReturn();
         ClientSoundManager.playBackgroundMusic(previousMusic);
+        AnimationManager.unregister(subView);
     }
 
     private void drainStamina(Model model, MagicDuelist duelist) {
