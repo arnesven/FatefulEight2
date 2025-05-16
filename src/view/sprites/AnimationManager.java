@@ -33,4 +33,12 @@ public class AnimationManager {
         animatons.remove(ani);
         pausableAnimations.remove(ani);
     }
+
+    public static void printAnimations() {
+        System.out.println("Number of animations: " + animatons.size());
+        System.out.println("Pausable Animations (" + pausableAnimations.size() + "): ");
+        for (Animation animation : pausableAnimations) {
+            System.out.println("  " + animation.toString());
+        }
+    }
 }

@@ -3,6 +3,7 @@ package view.subviews;
 import model.Model;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.AnimationManager;
 import view.sprites.FilledBlockSprite;
 
 public class StripedTransition extends TransitionView {
@@ -63,5 +64,6 @@ public class StripedTransition extends TransitionView {
         model.setSubView(transition);
         transition.waitToBeOver();
         model.setSubView(subView);
+        AnimationManager.unregister(transition);
     }
 }

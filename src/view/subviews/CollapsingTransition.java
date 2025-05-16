@@ -2,6 +2,7 @@ package view.subviews;
 
 import model.Model;
 import view.MyColors;
+import view.sprites.AnimationManager;
 import view.sprites.FilledBlockSprite;
 import view.sprites.Sprite;
 
@@ -48,6 +49,7 @@ public class CollapsingTransition extends TransitionView {
         model.setSubView(spiral);
         spiral.waitToBeOver();
         model.setSubView(nextSubView);
+        AnimationManager.unregister(spiral);
     }
 
 }

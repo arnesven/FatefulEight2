@@ -282,6 +282,9 @@ public class Model {
             if (gameStartFileName != null) {
                 startGameFromSave(gameStartFileName);
             }
+            if (FatefulEight.inDebugMode()) {
+                AnimationManager.printAnimations();
+            }
         }
     }
 

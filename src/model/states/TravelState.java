@@ -243,6 +243,7 @@ public class TravelState extends GameState {
         CollapsingTransition.transition(model, new EmptySubView());
 
         moveToHex(model, selectedDir, mapSubView);
+        mapSubView.removeMovementAnimation();
         return null;
     }
 
