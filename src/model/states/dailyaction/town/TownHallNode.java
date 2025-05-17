@@ -11,6 +11,7 @@ import model.states.dailyaction.AdvancedDailyActionState;
 import model.states.dailyaction.DailyActionNode;
 import model.states.dailyaction.VisitLordDailyActionState;
 import model.states.events.SilentNoEventState;
+import model.tasks.MonsterHuntDestinationTask;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.Sprite;
@@ -39,6 +40,7 @@ public class TownHallNode extends DailyActionNode {
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         UrbanLocation location = ((UrbanLocation)model.getCurrentHex().getLocation());
         if (model.getParty().getSummons().containsKey(location.getPlaceName()) ||
+                MonsterHuntDestinationTask.hasTaskAtCurrentLocation(model) ||
                 FindPuzzleDestinationTask.hasTaskAtCurrentLocation(model)) {
             state.println("You have been admitted to town hall!");
             admitted = true;

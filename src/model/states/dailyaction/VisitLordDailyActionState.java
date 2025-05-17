@@ -11,6 +11,7 @@ import model.journal.StoryPart;
 import model.map.UrbanLocation;
 import model.states.GameState;
 import model.states.events.SilentNoEventState;
+import model.tasks.MonsterHuntDestinationTask;
 import model.tasks.SummonTask;
 import util.MyLists;
 import view.sprites.Sprite;
@@ -55,6 +56,9 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
             if (FindPuzzleDestinationTask.hasTaskAtCurrentLocation(model)) {
                 return new MakeDealForPuzzleTubeDailyAction(model, location);
             }
+            if (MonsterHuntDestinationTask.hasTaskAtCurrentLocation(model)) {
+                return new GetPaidForMonstersDailyAction(model, location);
+            }
             return new AnswerSummonDailyAction(model);
         }
 
@@ -65,7 +69,8 @@ public abstract class VisitLordDailyActionState extends AdvancedDailyActionState
 
         @Override
         public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-            if (FindPuzzleDestinationTask.hasTaskAtCurrentLocation(model)) {
+            if (FindPuzzleDestinationTask.hasTaskAtCurrentLocation(model) ||
+                    MonsterHuntDestinationTask.hasTaskAtCurrentLocation(model)) {
                 return true;
             }
             if (summon == null) {

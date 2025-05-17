@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.enemies.Enemy;
 import model.headquarters.Headquarters;
 import model.mainstory.FugitiveTownEvent;
 import model.states.*;
@@ -11,6 +12,7 @@ import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.events.*;
 import model.states.warehouse.WarehouseEvent;
 import util.MyRandom;
+import util.MyTriplet;
 import view.GameView;
 import view.MyColors;
 import view.help.HelpDialog;
@@ -21,6 +23,7 @@ import view.sprites.Sprite32x32;
 import view.subviews.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TownLocation extends HexLocation implements UrbanLocation {
@@ -115,6 +118,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new MageEvent(model),
                     new MarketEvent(model),
                     new MayorEvent(model),
+                    new MonsterHuntEvent(model, this),
                     new MuggingEvent(model),
                     new OrcRaidEvent(model),
                     new PlayEvent(model),
@@ -211,7 +215,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public HelpDialog getHelpDialog(GameView view) {
-        return new TownHelpDialog(view);
+        return null;
     }
 
     @Override

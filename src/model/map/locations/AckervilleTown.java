@@ -1,6 +1,7 @@
 package model.map.locations;
 
 import model.Model;
+import model.map.MonsterHuntData;
 import model.map.TownLocation;
 import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.dailyaction.shops.WeaponShopNode;

@@ -69,7 +69,7 @@ public abstract class WorkbenchTask extends DestinationTask {
                 other = model.getParty().getRandomPartyMember(model.getParty().getLeader());
             }
             partyMemberSay(other, "If " + iOrWe() + " find some materials we could make or upgrade some gear.");
-            leaderSay("Looks like somebody has left some useful stuff here. Maybe we can make something out of it?");
+            leaderSay("Looks like somebody has left some useful stuff here. Maybe " + iOrWe() + " can make something out of it?");
             println("You gain 3 materials.");
             model.getParty().getInventory().addToMaterials(3);
             model.getParty().addDestinationTask(new CraftItemTask());

@@ -3,6 +3,7 @@ package model.enemies;
 import model.Model;
 import model.combat.loot.CombatLoot;
 import model.combat.loot.MonsterCombatLoot;
+import model.enemies.behaviors.EnemyAttackBehavior;
 import model.enemies.behaviors.ParalysisAttackBehavior;
 import view.MyColors;
 import view.sprites.LoopingSprite;
@@ -11,8 +12,12 @@ import view.sprites.Sprite;
 public class SpiderEnemy extends BeastEnemy {
     private static final Sprite SPRITE = new SpiderSprite();
 
+    public SpiderEnemy(char a, String name, int aggressiveness, EnemyAttackBehavior attackBehavior) {
+        super(a, name, aggressiveness, attackBehavior);
+    }
+
     public SpiderEnemy(char a) {
-        super(a, "Spider", NORMAL, new ParalysisAttackBehavior(1));
+        this(a, "Spider", NORMAL, new ParalysisAttackBehavior(1));
     }
 
     @Override

@@ -60,12 +60,20 @@ public class GuideEvent extends DailyEventState {
     public void chooseFromGuidableEvents(Model model, GuideTalkInterface talkFunc) {
         List<DailyEventState> events = new ArrayList<>();
         int numberOfEvents = MyRandom.randInt(4, 6);
-        while (events.size() < numberOfEvents) {
+        int tries = 0;
+        while (events.size() < numberOfEvents && tries < 100) {
             DailyEventState event = model.getCurrentHex().getLocation().generateEvent(model);
             if (event.isGuidable() && !MyLists.any(events,
                     (DailyEventState ev) -> ev.getGuideData().getName().equals(event.getGuideData().getName()))) {
                 events.add(event);
             }
+            tries++;
+        }
+
+        if (events.isEmpty()) {
+            talkFunc.guideTalk("Actually... I can't think of a single thing!");
+            leaderSay("Well that's disappointing!");
+            return;
         }
 
         talkFunc.guideTalk("Let's see... ");
