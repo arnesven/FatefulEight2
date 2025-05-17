@@ -8,6 +8,7 @@ import model.states.DailyEventState;
 import model.tasks.Destination;
 import model.tasks.MonsterHunt;
 import model.tasks.MonsterHuntDestinationTask;
+import util.MyLists;
 import util.MyRandom;
 
 import java.awt.*;
@@ -15,11 +16,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class MonsterHuntEvent extends DailyEventState {
+    private static final int DISTANCE_THRESHOLD = 5;
     private final TownLocation turnInTown;
+    private final boolean withIntro;
 
-    public MonsterHuntEvent(Model model, TownLocation turnInTown) {
+    public MonsterHuntEvent(Model model, TownLocation turnInTown, boolean withIntro) {
         super(model);
         this.turnInTown = turnInTown;
+        this.withIntro = withIntro;
+    }
+
+    public MonsterHuntEvent(Model model, TownLocation turnInTown) {
+        this(model, turnInTown, true);
     }
 
     @Override
@@ -31,6 +39,9 @@ public class MonsterHuntEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        if (withIntro) {
+            println("You pass by a noticeboard, a note catches your eye.");
+        }
         List<MonsterHuntData> monsterHuntData = findMonsterHuntData(model, turnInTown);
         if (monsterHuntData.isEmpty()) {
             new NoEventState(model).run(model);
@@ -40,14 +51,16 @@ public class MonsterHuntEvent extends DailyEventState {
         MonsterHunt monsterHunt = new MonsterHunt(turnInTown.getPlaceName(),
                 Destination.makeDestination(model, huntData.getPosition(), huntData.getDwelling(), "a"),
                 huntData.getEnemy(), huntData.getReward());
-        println("You pass by a noticeboard, a note catches your eye. It says: 'Monster Hunters Needed! " +
+        println("The note says: 'Monster Hunters Needed! " +
                 "The " + turnInTown.getLordTitle() + " of the " + turnInTown.getName() + " is offering a reward of " +
                 monsterHunt.getReward() + " gold pieces to the one who can slay the " +
                 monsterHunt.getMonster().getName() + " who resides in " + monsterHunt.getDestination() + "'");
         leaderSay("A " + monsterHunt.getMonster().getName() + " huh? We could take care of it.");
         print("Do you take the note? (Y/N) ");
         if (yesNoInput()) {
-            println("You rip the note off the noticeboard.");
+            if (withIntro) {
+                println("You rip the note off the noticeboard.");
+            }
             leaderSay(iOrWeCap() + "'ll deal with the monster terrorizing the people of " + turnInTown.getTownName() + ".");
             randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(), "Are you sure this is a good idea?");
             randomSayIfPersonality(PersonalityTrait.brave, new ArrayList<>(), "Finally, some real adventuring work!");
@@ -67,7 +80,8 @@ public class MonsterHuntEvent extends DailyEventState {
 
         List<Point> path = model.getWorld().generalShortestPath(0, wh -> wh instanceof SwampHex);
         System.out.println("Nearest swamp is " + path.size() + " hexes away.");
-        if (path.size() > 7) {
+        System.out.println(MyLists.commaAndJoin(path, p -> "(" + p.x + "," + p.y + ") "));
+        if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
             monsterHunts.add(new MonsterHuntData(path.getLast(), "burrow", new GiantSpider('A'), path.size()-1));
@@ -75,7 +89,8 @@ public class MonsterHuntEvent extends DailyEventState {
 
         path = model.getWorld().generalShortestPath(0, wh -> wh instanceof DesertHex);
         System.out.println("Nearest desert is " + path.size() + " hexes away.");
-        if (path.size() > 7) {
+        System.out.println(MyLists.commaAndJoin(path, p -> "(" + p.x + "," + p.y + ") "));
+        if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
             monsterHunts.add(new MonsterHuntData(path.getLast(), "hole", new GiantScorpion('A'), path.size()-1));
@@ -83,7 +98,8 @@ public class MonsterHuntEvent extends DailyEventState {
 
         path = model.getWorld().generalShortestPath(0, wh -> wh instanceof WoodsHex);
         System.out.println("Nearest woods is " + path.size() + " hexes away.");
-        if (path.size() > 7) {
+        System.out.println(MyLists.commaAndJoin(path, p -> "(" + p.x + "," + p.y + ") "));
+        if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
             monsterHunts.add(new MonsterHuntData(path.getLast(), "cave", new WerewolfEnemy('A'), path.size()-1));
@@ -91,7 +107,8 @@ public class MonsterHuntEvent extends DailyEventState {
 
         path = model.getWorld().generalShortestPath(1, wh -> wh instanceof PlainsHex);
         System.out.println("Nearest plains is " + path.size() + " hexes away.");
-        if (path.size() > 7) {
+        System.out.println(MyLists.commaAndJoin(path, p -> "(" + p.x + "," + p.y + ") "));
+        if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
             monsterHunts.add(new MonsterHuntData(path.getLast(), "crypt", new VampireEnemy('A'), path.size()-1));
@@ -99,7 +116,8 @@ public class MonsterHuntEvent extends DailyEventState {
 
         path = model.getWorld().generalShortestPath(0, wh -> wh instanceof MountainHex);
         System.out.println("Nearest mountains is " + path.size() + " hexes away.");
-        if (path.size() > 7) {
+        System.out.println(MyLists.commaAndJoin(path, p -> "(" + p.x + "," + p.y + ") "));
+        if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
             monsterHunts.add(new MonsterHuntData(path.getLast(), "nest", DragonEnemy.generateDragon('A'), path.size()-1));
@@ -107,7 +125,8 @@ public class MonsterHuntEvent extends DailyEventState {
 
         path = model.getWorld().generalShortestPath(0, wh -> wh instanceof HillsHex);
         System.out.println("Nearest hills is " + path.size() + " hexes away.");
-        if (path.size() > 7) {
+        System.out.println(MyLists.commaAndJoin(path, p -> "(" + p.x + "," + p.y + ") "));
+        if (path.size() > DISTANCE_THRESHOLD) {
             System.out.println("  Discarding");
         } else {
             monsterHunts.add(new MonsterHuntData(path.getLast(), "cave", new WerebearEnemy('A'), path.size()-1));

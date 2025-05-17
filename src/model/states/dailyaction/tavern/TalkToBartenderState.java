@@ -33,7 +33,9 @@ public class TalkToBartenderState extends GameState {
             new SharpenKnivesInnWork(),
             new SharpenKnivesInnWork(),
             new OfferDeliveryInnWork(),
-            new OfferDeliveryInnWork()
+            new OfferDeliveryInnWork(),
+            new MonsterHuntInnWork(),
+            new MonsterHuntInnWork()
     );
 
     private final TalkToBartenderNode talkToBartenderNode;
@@ -102,11 +104,13 @@ public class TalkToBartenderState extends GameState {
                 model.getParty().getLeader().getRankForSkill(Skill.Persuade));
         if (result.isSuccessful()) {
             println("(Seek Info " + result.asString() + ")");
-            while (works.size() < 2) {
+            int tries = 0;
+            while (works.size() < 2 && tries < 100) {
                 InnWorkAction work2 = MyRandom.sample(ALL_INN_WORKS);
                 if (!work2.getName().equals(works.get(0).getName())) {
                     works.add(work2);
                 }
+                tries++;
             }
             Collections.shuffle(works);
         }

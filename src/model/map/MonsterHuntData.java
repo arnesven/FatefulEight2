@@ -14,7 +14,7 @@ public class MonsterHuntData {
         this.point = p;
         this.dwelling = dwelling;
         this.enemy = enemy;
-        this.reward = 2 * enemy.getThreat() + enemy.getThreat() / 2 * distance;
+        this.reward = 3 * enemy.getThreat() / 2 + enemy.getThreat() / 2 * distance;
     }
 
     public Point getPosition() {
