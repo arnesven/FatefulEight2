@@ -71,7 +71,7 @@ public class BountyDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return state < BOUNTY_KILLED && model.getParty().getPosition().equals(bounty.getPosition());
+        return state < BOUNTY_KILLED && model.partyIsInOverworldPosition(bounty.getPosition());
     }
 
     public CombatTheme getCombatTheme() {
