@@ -182,20 +182,19 @@ public abstract class Race implements Serializable {
 
     public void setRandomDetail(AdvancedAppearance appearance) {
         if (MyRandom.randInt(50) == 0) {
-            appearance.setFaceDetail(new EyePatchDetail());
+            appearance.addFaceDetail(new EyePatchDetail());
             appearance.setDetailColor(MyColors.BLACK);
         } else {
-            boolean glasses = MyRandom.rollD10() == 10;
-            boolean earrings = MyRandom.rollD10() == 10;
-            if (glasses && earrings) {
-                appearance.setFaceDetail(new GlassesAndEarringsDetail());
-            } else if (glasses) {
-                appearance.setFaceDetail(new GlassesDetail());
-            } else if (earrings) {
-                appearance.setFaceDetail(new EarringsDetail());
+            if (MyRandom.rollD10() == 10) {
+                appearance.addFaceDetail(new GlassesDetail());
+                int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
+                appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
             }
-            int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
-            appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
+            if (MyRandom.rollD10() == 10) {
+                appearance.addFaceDetail(new EarringsDetail());
+                int detailColor = MyRandom.randInt(CharacterCreationView.detailColorSet.length);
+                appearance.setDetailColor(CharacterCreationView.detailColorSet[detailColor]);
+            }
         }
     }
 

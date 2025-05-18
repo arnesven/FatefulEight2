@@ -24,7 +24,7 @@ public class CaidCharacter extends GameCharacter {
             super(Race.NORTHERN_HUMAN, false, MyColors.BEIGE, CharacterCreationView.mouthSet[4],
                     CharacterCreationView.noseSet[5], CharacterEyes.allEyes[2], HairStyle.allHairStyles[25],
                     Beard.allBeards[22]);
-            setFaceDetail(new HeadBandDetail());
+            addFaceDetail(new HeadBandDetail());
             setDetailColor(MyColors.DARK_RED);
         }
     }

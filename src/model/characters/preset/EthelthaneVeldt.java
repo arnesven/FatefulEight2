@@ -13,7 +13,7 @@ public class EthelthaneVeldt extends AdvancedAppearance {
                 CharacterEyes.allEyes[0],
                 new SpecialMordKroftHairStyle(),
                 Beard.allBeards[12]);
-        setFaceDetail(new GlassesDetail());
+        addFaceDetail(new GlassesDetail());
         setDetailColor(MyColors.CYAN);
     }
 }

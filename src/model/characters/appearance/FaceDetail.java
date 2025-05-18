@@ -5,10 +5,9 @@ import view.MyColors;
 
 import java.io.Serializable;
 
-public abstract class FaceDetail implements Serializable {
-    public static final FaceDetail NO_FACE_DETAIL = new NoFaceDetail();
+public abstract class FaceDetail implements Serializable, Comparable<FaceDetail> {
     public static final FaceDetail[] ALL_DETAILS = new FaceDetail[]{
-            NO_FACE_DETAIL, new GlassesDetail(), new EarringsDetail(), new GlassesAndEarringsDetail(),
+            new GlassesDetail(), new EarringsDetail(),
             new EyePatchDetail(), new HeadBandDetail()};
 
     public MyColors color = MyColors.WHITE;
@@ -33,14 +32,8 @@ public abstract class FaceDetail implements Serializable {
         return this.name;
     }
 
-    private static class NoFaceDetail extends FaceDetail {
-        public NoFaceDetail() {
-            super("None");
-        }
-
-        @Override
-        public void applyYourself(AdvancedAppearance appearance, Race race, boolean coversEars) {
-
-        }
+    @Override
+    public int compareTo(FaceDetail o) {
+        return this.name.compareTo(o.name);
     }
 }

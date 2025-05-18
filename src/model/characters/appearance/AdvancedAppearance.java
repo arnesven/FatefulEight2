@@ -1,6 +1,7 @@
 package model.characters.appearance;
 
 import model.races.Race;
+import util.MyLists;
 import util.MyPair;
 import view.MyColors;
 import view.ScreenHandler;
@@ -21,7 +22,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     private Sprite32x32 avatarFullBackHair;
     private Sprite32x32 avatarHalfBackHair;
     private Sprite avatarFacial;
-    private FaceDetail detail = FaceDetail.NO_FACE_DETAIL;
+    private List<FaceDetail> faceDetails = new ArrayList<>();
     private boolean raceSpecificEars = true;
     private int[] ears;
     private MyColors eyeballColor = MyColors.WHITE;
@@ -185,7 +186,9 @@ public class AdvancedAppearance extends CharacterAppearance {
     @Override
     public CharacterAppearance copy() {
         AdvancedAppearance app = new AdvancedAppearance(super.getRace(), super.isFemale(), getHairColor(), mouth, nose, eyes, hairStyle, beard);
-        app.setFaceDetail(detail);
+        for (FaceDetail faceDetail : faceDetails) {
+            app.addFaceDetail(faceDetail);
+        }
         app.setLipColor(getLipColor());
         app.setMascaraColor(getMascaraColor());
         return app;
@@ -200,7 +203,9 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     @Override
     public void applyDetail(Race race, boolean coversEars) {
-        detail.applyYourself(this, race, coversEars);
+        for (FaceDetail faceDetail : faceDetails) {
+            faceDetail.applyYourself(this, race, coversEars);
+        }
     }
 
     @Override
@@ -258,13 +263,13 @@ public class AdvancedAppearance extends CharacterAppearance {
         return super.getOuterFrameSprite(i);
     }
 
-    public void setFaceDetail(FaceDetail detail) {
-        this.detail = detail;
+    public void addFaceDetail(FaceDetail detail) {
+        this.faceDetails.add(detail);
         setBlinkSprites();
     }
 
     public void setDetailColor(MyColors color) {
-        detail.setColor(color);
+        this.faceDetails.getLast().setColor(color);
         setBlinkSprites();
     }
 
@@ -308,7 +313,7 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     public void drawBlink(ScreenHandler screenHandler, int x, int y) {
-        if (detail instanceof EyePatchDetail) {
+        if (MyLists.any(faceDetails, fd -> fd instanceof EyePatchDetail)) {
             screenHandler.register("blinkright", new Point(x+1, y), getBlinkRight());
         } else {
             super.drawBlink(screenHandler, x, y);
@@ -316,10 +321,14 @@ public class AdvancedAppearance extends CharacterAppearance {
     }
 
     protected MyPair<Sprite8x8, Sprite8x8> makeBlinkSprites(MyColors mascaraColor) {
-        if (detail instanceof GlassesDetail || detail instanceof GlassesAndEarringsDetail) {
+        if (faceDetails == null) {
+            return super.makeBlinkSprites(mascaraColor);
+        }
+        FaceDetail detail = MyLists.find(faceDetails, fd -> fd instanceof GlassesDetail);
+        if (detail != null) {
             return new MyPair<>(new Sprite8x8("blinkleftwglasses", "mouth.png", 0x33,
-                            MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE),
-                                new Sprite8x8("blinkrightwclasses", "mouth.png", 0x34,
+                    MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE),
+                    new Sprite8x8("blinkrightwclasses", "mouth.png", 0x34,
                             MyColors.BLACK, mascaraColor, detail.color, MyColors.BEIGE));
         }
         return super.makeBlinkSprites(mascaraColor);
@@ -327,7 +336,7 @@ public class AdvancedAppearance extends CharacterAppearance {
 
     @Override
     public void drawDrawLook(ScreenHandler screenHandler, boolean left, int x, int y) {
-        if (!(detail instanceof EyePatchDetail)) {
+        if (!(MyLists.any(faceDetails, detail -> detail instanceof EyePatchDetail))) {
             super.drawDrawLook(screenHandler, left, x, y);
         }
     }

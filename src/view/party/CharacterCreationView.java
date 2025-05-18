@@ -11,6 +11,7 @@ import model.items.weapons.Weapon;
 import model.races.EasternHuman;
 import model.races.Race;
 import util.Arithmetics;
+import util.MyLists;
 import util.MyRandom;
 import view.BorderFrame;
 import view.DrawingArea;
@@ -25,6 +26,7 @@ import view.widget.InputBufferWidget;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CharacterCreationView extends SelectableListMenu {
@@ -43,9 +45,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final Beard[] beardSet = Beard.allBeards;
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
-    public static final MyColors[] detailColorSet = new MyColors[]{
-            MyColors.GRAY, MyColors.GOLD, MyColors.CYAN, MyColors.WHITE, MyColors.DARK_BLUE,
-            MyColors.ORANGE, MyColors.RED, MyColors.PINK, MyColors.LIGHT_GREEN, MyColors.BLACK};
+    public static final MyColors[] detailColorSet = MyColors.values();
     public static final MyColors[] makeupColorSet = new MyColors[]{MyColors.BLUE,
             MyColors.BLACK, MyColors.DARK_GREEN, MyColors.DARK_BLUE, MyColors.DARK_BROWN,
             MyColors.GREEN, MyColors.BLUE, MyColors.RED,
@@ -67,8 +67,9 @@ public class CharacterCreationView extends SelectableListMenu {
     private int other1 = 0;
     private int other2 = 0;
     private int other3 = 0;
-    private int accessory = 0;
+    private List<Integer> accessories = new ArrayList<>();
     private int selectedDetailColor = 0;
+    private List<Integer> detailColors = new ArrayList<>();
     private int selectedEars = 0;
     private int selectedMascara = 0;
     private int selectedLipColor = 0;
@@ -111,8 +112,10 @@ public class CharacterCreationView extends SelectableListMenu {
         }
         app.setRaceSpecificEars(selectedEars == 0);
         app.setEars(earSet[selectedEars]);
-        app.setFaceDetail(accessorySet[accessory]);
-        app.setDetailColor(detailColorSet[selectedDetailColor]);
+        for (int i = 0; i < accessories.size(); ++i) {
+            app.addFaceDetail(accessorySet[accessories.get(i)]);
+            app.setDetailColor(detailColorSet[detailColors.get(i)]);
+        }
         if (selectedMascara > 0) {
             app.setMascaraColor(makeupColorSet[selectedMascara]);
         }
@@ -177,7 +180,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         "Gender", "", "Race", "", "", "",
                         "Eyes", "Eye Shadow", "Nose",
                         "Mouth", "Lipstick", "Beard", "Ears", "Shoulders", "Neck", "",
-                        "Hair", "  Color", "", "Detail", "  Color", "", "", "",
+                        "Hair", "  Color", "", "Details", "  Color", "", "", "",
                         "Class", "", "Other Class 1", "",
                         "Other Class 2", "", "Other Class 3"};
                 for (int i = 0; i < labels.length; ++i) {
@@ -253,7 +256,7 @@ public class CharacterCreationView extends SelectableListMenu {
     protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
         return List.of(new InputFieldContent(xStart + COLUMN_SKIP, yStart + 3, 0),
                 new InputFieldContent(xStart + COLUMN_SKIP, yStart + 5, 1),
-                new SelectableListContent(xStart + 3, yStart + 7, (showSkeleton?"Hide":"Show") + " Skeleton") {
+                new SelectableListContent(xStart + 3, yStart + 7, (showSkeleton ? "Hide" : "Show") + " Skeleton") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         showSkeleton = !showSkeleton;
@@ -295,7 +298,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedEyes = Arithmetics.incrementWithWrap(selectedEyes, eyeSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 16, selectedMascara==0?"NONE": makeupColorSet[selectedMascara].toString().replace("_", " ")) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 16, selectedMascara == 0 ? "NONE" : makeupColorSet[selectedMascara].toString().replace("_", " ")) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedMascara = Arithmetics.decrementWithWrap(selectedMascara, makeupColorSet.length);
@@ -328,7 +331,7 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedMouth = Arithmetics.incrementWithWrap(selectedMouth, mouthSet.length);
                     }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 19, selectedLipColor==0?"NONE": makeupColorSet[selectedLipColor].toString().replace("_", " ")) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 19, selectedLipColor == 0 ? "NONE" : makeupColorSet[selectedLipColor].toString().replace("_", " ")) {
                     @Override
                     public void turnLeft(Model model) {
                         selectedLipColor = Arithmetics.decrementWithWrap(selectedLipColor, makeupColorSet.length);
@@ -406,24 +409,48 @@ public class CharacterCreationView extends SelectableListMenu {
                         selectedHairColor = Arithmetics.incrementWithWrap(selectedHairColor, hairColorSet.length);
                     }
                 },
-                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 28, accessorySet[accessory].getName()) {
+                new SelectableListContent(xStart + COLUMN_SKIP, yStart + 28, getAccessoryLabel()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         setInnerMenu(new SelectAccessoryMenu(CharacterCreationView.this, x, y), model);
                     }
+
+                    @Override
+                    public boolean isEnabled(Model model) {
+                        return accessories.size() < accessorySet.length;
+                    }
                 },
-                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 29, detailColorSet[selectedDetailColor].toString().replace("_", " ")) {
+                new CarouselListContent(xStart + COLUMN_SKIP, yStart + 29, getAccessoryColorLabel()) {
                     @Override
                     public void turnLeft(Model model) {
-                        selectedDetailColor = Arithmetics.decrementWithWrap(selectedDetailColor, detailColorSet.length);
+                        if (!detailColors.isEmpty()) {
+                            selectedDetailColor = Arithmetics.decrementWithWrap(selectedDetailColor, detailColorSet.length);
+                            detailColors.set(detailColors.size() - 1, selectedDetailColor);
+                        }
                     }
 
                     @Override
                     public void turnRight(Model model) {
-                        selectedDetailColor = Arithmetics.incrementWithWrap(selectedDetailColor, detailColorSet.length);
+                        if (!detailColors.isEmpty()) {
+                            selectedDetailColor = Arithmetics.incrementWithWrap(selectedDetailColor, detailColorSet.length);
+                            detailColors.set(detailColors.size() - 1, selectedDetailColor);
+                        }
                     }
                 },
-                new SelectableListContent(xStart + 3, yStart + 31, "About Classes") {
+                new SelectableListContent(xStart+3, yStart + 30, "Remove last") {
+                    @Override
+                    public void performAction(Model model, int x, int y) {
+                        detailColors.removeLast();
+                        int removed = accessories.removeLast();
+                        rebuildAppearance();
+                    }
+
+                    @Override
+                    public boolean isEnabled(Model model) {
+                        return !accessories.isEmpty();
+                    }
+                },
+                new SelectableListContent(xStart + 3, yStart + 32, "About Classes") {
                     @Override
                     public void performAction(Model model, int x, int y) {
                         model.transitionToDialog(new TutorialClassesDialog(model.getView()));
@@ -498,6 +525,20 @@ public class CharacterCreationView extends SelectableListMenu {
         );
     }
 
+    private String getAccessoryColorLabel() {
+        if (accessories.isEmpty()) {
+            return "N/A";
+        }
+        return detailColorSet[detailColors.getLast()].toString().replace("_", " ");
+    }
+
+    private String getAccessoryLabel() {
+        if (accessories.isEmpty()) {
+            return "None";
+        }
+        return accessorySet[accessories.getLast()].getName();
+    }
+
     private boolean nameOk(int i) {
         return buffers.get(i-1).hasChanged();
     }
@@ -535,7 +576,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
         public SelectAccessoryMenu(GameView partyView, int x, int y) {
-            super(partyView, 10, accessorySet.length+1, x, y);
+            super(partyView, 10, accessorySet.length+2, x, y);
         }
 
         @Override
@@ -551,12 +592,24 @@ public class CharacterCreationView extends SelectableListMenu {
                 result.add(new SelectableListContent(xStart + 1, yStart + 1 + finalAccessory, accessorySet[finalAccessory].getName()) {
                     @Override
                     public void performAction(Model model, int x, int y) {
-                        CharacterCreationView.this.accessory = finalAccessory;
+                        CharacterCreationView.this.accessories.add(finalAccessory);
+                        CharacterCreationView.this.detailColors.add(selectedDetailColor);
                         setTimeToTransition(true);
                         rebuildAppearance();
                     }
+
+                    @Override
+                    public boolean isEnabled(Model model) {
+                        return !accessories.contains(finalAccessory);
+                    }
                 });
             }
+            result.add(new SelectableListContent(xStart + 1, yStart + 1 + accessorySet.length, "CANCEL") {
+                @Override
+                public void performAction(Model model, int x, int y) {
+                    setTimeToTransition(true);
+                }
+            });
             return result;
         }
 
@@ -651,8 +704,13 @@ public class CharacterCreationView extends SelectableListMenu {
         selectedMascara = MyRandom.randInt(makeupColorSet.length);
         selectedHairStyle = MyRandom.randInt(hairStyleSet.length);
         selectedBeard = MyRandom.randInt(beardSet.length);
-        accessory = MyRandom.randInt(accessorySet.length);
-        selectedDetailColor = MyRandom.randInt(detailColorSet.length);
+        if (MyRandom.rollD6() > 3) {
+            accessories.clear();
+            int randomAccessory = MyRandom.randInt(accessorySet.length);
+            accessories.add(randomAccessory);
+            detailColors.clear();
+            detailColors.add(MyRandom.randInt(detailColorSet.length));
+        }
         rebuildAppearance();
     }
 

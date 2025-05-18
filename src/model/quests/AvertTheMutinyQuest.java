@@ -69,7 +69,7 @@ public class AvertTheMutinyQuest extends MainQuest {
         this.potentialMutineers = storySpawn.getPotentialMutineers();
         this.realMutineer = storySpawn.getRealMutineer();
         firstMatePortrait = PortraitSubView.makeRandomPortrait(Classes.PIRATE);
-        firstMatePortrait.setFaceDetail(new EyePatchDetail());
+        firstMatePortrait.addFaceDetail(new EyePatchDetail());
         firstMatePortrait.setDetailColor(MyColors.BLACK);
         firstMatePortrait.setClass(Classes.PIRATE);
         System.out.println("Real mutineer is " + realMutineer.getName() + " the " +

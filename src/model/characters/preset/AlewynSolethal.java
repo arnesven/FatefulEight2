@@ -12,7 +12,9 @@ public class AlewynSolethal extends AdvancedAppearance {
                 CharacterCreationView.noseSet[4], CharacterEyes.allEyes[2],
                 new BunsWithLongHairStyle(new FemaleLongHairStyle("Buns/Long"), true, "Buns/Long"),
                 Beard.allBeards[11]);
-        setFaceDetail(new GlassesAndEarringsDetail());
+        addFaceDetail(new GlassesDetail());
+        setDetailColor(MyColors.GOLD);
+        addFaceDetail(new EarringsDetail());
         setDetailColor(MyColors.GOLD);
         setLipColor(MyColors.LIGHT_RED);
     }

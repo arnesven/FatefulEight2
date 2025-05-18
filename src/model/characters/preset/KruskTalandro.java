@@ -8,7 +8,7 @@ public class KruskTalandro extends AdvancedAppearance {
     public KruskTalandro() {
         super(Race.HALF_ORC, false, MyColors.DARK_GRAY, 7, 2,
                 new NormalSmallEyes(), new BaldHairStyle(), new Beard(0x09, 0x00));
-        setFaceDetail(new GlassesDetail());
+        addFaceDetail(new GlassesDetail());
         setDetailColor(MyColors.DARK_GRAY);
     }
 
