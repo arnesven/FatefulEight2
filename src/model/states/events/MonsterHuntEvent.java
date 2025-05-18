@@ -55,6 +55,7 @@ public class MonsterHuntEvent extends DailyEventState {
                 "The " + turnInTown.getLordTitle() + " of the " + turnInTown.getName() + " is offering a reward of " +
                 monsterHunt.getReward() + " gold pieces to the one who can slay the " +
                 monsterHunt.getMonster().getName() + " who resides in " + monsterHunt.getDestination() + "'");
+        model.getTutorial().monsterHunts(model);
         leaderSay("A " + monsterHunt.getMonster().getName() + " huh? We could take care of it.");
         print("Do you take the note? (Y/N) ");
         if (yesNoInput()) {
@@ -68,7 +69,7 @@ public class MonsterHuntEvent extends DailyEventState {
         } else {
             leaderSay("But, perhaps there's lower hanging fruit elsewhere. " +
                      iOrWeCap() + "'ll let somebody else deal with the " + monsterHunt.getMonster().getName() + ".");
-            randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(), "Exactly, why risk our necks?");
+            randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(), "Exactly. Why risk our necks?");
         }
     }
 

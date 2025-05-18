@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MonsterHuntDestinationTask extends DestinationTask {
+    public static final int TRACK_DIFFICULTY = 7;
     private final MonsterHunt monsterHunt;
     private boolean completed = false;
 
@@ -146,7 +147,7 @@ public class MonsterHuntDestinationTask extends DestinationTask {
         protected void doEvent(Model model) {
             if (!monsterHunt.isTracked()) {
                 println("You attempt to track the monster mentioned on the note from " + monsterHunt.getTurnInTownName() + ".");
-                boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Survival, 7);
+                boolean success = model.getParty().doCollaborativeSkillCheck(model, this, Skill.Survival, TRACK_DIFFICULTY);
                 if (!success) {
                     println("You spend hours searching for the " + monsterHunt.getMonster().getName() +
                             ", but are unable to locate its lair.");
