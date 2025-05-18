@@ -1,5 +1,7 @@
 package model.classes.normal;
 
+import model.characters.appearance.AdvancedAppearance;
+import model.characters.appearance.BowInHandDetail;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Looks;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class MarksmanClass extends CharacterClass {
     private static final MyColors ARMOR_COLOR = MyColors.BROWN;
+    private final BowInHandDetail bow;
 
     public MarksmanClass() {
         super("Marksman", "MAR", 8, 6, false, 14,
@@ -34,6 +37,7 @@ public class MarksmanClass extends CharacterClass {
                         new WeightedSkill(Skill.Sneak, 4),
                         new WeightedSkill(Skill.Survival, 3)
                 });
+        this.bow = new BowInHandDetail();
     }
 
     @Override
@@ -41,6 +45,10 @@ public class MarksmanClass extends CharacterClass {
         Looks.putOnTunic(characterAppearance, MyColors.DARK_GRAY);
         Looks.putOnLightArmor(characterAppearance, ARMOR_COLOR, MyColors.DARK_GRAY);
         putOnLeatherCap(characterAppearance, ARMOR_COLOR);
+        if (characterAppearance instanceof AdvancedAppearance) {
+            bow.applyYourself((AdvancedAppearance) characterAppearance,
+                    characterAppearance.getRace());
+        }
     }
 
     private void putOnLeatherCap(CharacterAppearance characterAppearance, MyColors color) {

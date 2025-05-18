@@ -1,6 +1,8 @@
 package model.classes.normal;
 
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.SpiralStaffDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
@@ -15,6 +17,8 @@ import view.sprites.AvatarSprite;
 import java.util.List;
 
 public class WizardClass extends CharacterClass {
+    private final SpiralStaffDetail staff;
+
     public WizardClass() {
         super("Wizard", "WIZ", 5, 3, false, 24,
                 new WeightedSkill[]{
@@ -30,12 +34,17 @@ public class WizardClass extends CharacterClass {
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.SpellCasting, 5)
                 });
+        this.staff = new SpiralStaffDetail();
     }
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnPointyHat(characterAppearance, MyColors.BLUE, MyColors.DARK_BLUE, MyColors.DARK_BLUE);
         Looks.putOnRobe(characterAppearance, MyColors.BLUE, MyColors.LIGHT_BLUE);
+        if (characterAppearance instanceof AdvancedAppearance) {
+            staff.applyYourself((AdvancedAppearance) characterAppearance,
+                    characterAppearance.getRace());
+        }
     }
 
     @Override

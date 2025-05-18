@@ -1,6 +1,8 @@
 package model.classes.normal;
 
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.EvilStaffDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
@@ -20,6 +22,8 @@ import view.sprites.ClothesSpriteWithBack;
 import java.util.List;
 
 public class SorcererClass extends CharacterClass {
+    private final EvilStaffDetail staff;
+
     public SorcererClass() {
         super("Sorcerer", "SOR", 8, 4, false, 28,
                 new WeightedSkill[]{
@@ -33,12 +37,17 @@ public class SorcererClass extends CharacterClass {
                         new WeightedSkill(Skill.Sneak, 3),
                         new WeightedSkill(Skill.SpellCasting, 5)
                 });
+        this.staff = new EvilStaffDetail();
     }
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, MyColors.DARK_GRAY, MyColors.RED);
         putOnHelm(characterAppearance);
+        if (characterAppearance instanceof AdvancedAppearance) {
+            staff.applyYourself((AdvancedAppearance) characterAppearance,
+                    characterAppearance.getRace());
+        }
     }
 
     private static void putOnHelm(CharacterAppearance characterAppearance) {

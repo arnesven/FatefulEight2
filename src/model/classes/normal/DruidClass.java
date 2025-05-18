@@ -1,6 +1,8 @@
 package model.classes.normal;
 
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.GnarledStaffDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
@@ -18,6 +20,8 @@ import view.sprites.Sprite;
 import java.util.List;
 
 public class DruidClass extends CharacterClass {
+    private final GnarledStaffDetail staff;
+
     public DruidClass() {
         super("Druid", "D", 6, 4, false, 12,
                 new WeightedSkill[]{
@@ -32,12 +36,17 @@ public class DruidClass extends CharacterClass {
                         new WeightedSkill(Skill.SpellCasting, 2),
                         new WeightedSkill(Skill.Survival, 5)
                 });
+        this.staff = new GnarledStaffDetail();
     }
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, MyColors.DARK_GREEN, MyColors.GREEN);
         Looks.putOnHood(characterAppearance, MyColors.DARK_GREEN);
+        if (characterAppearance instanceof AdvancedAppearance) {
+            staff.applyYourself((AdvancedAppearance) characterAppearance,
+                    characterAppearance.getRace());
+        }
     }
 
     @Override
