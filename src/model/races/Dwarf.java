@@ -67,6 +67,6 @@ public class Dwarf extends Race {
     @Override
     public boolean isRandomMouthOk(boolean gender, int mouthIndex) {
         return super.isRandomMouthOk(gender, mouthIndex) &&
-                (gender || PortraitSubView.isBeardyMouth(mouthIndex) || MyRandom.randInt(4) == 0);
+                (gender || PortraitSubView.isBeardyMouth(mouthIndex) || MyRandom.randInt(99) == 0); // TODO: Lower this to like 7
     }
 }

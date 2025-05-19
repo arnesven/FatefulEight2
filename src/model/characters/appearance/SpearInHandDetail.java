@@ -3,7 +3,6 @@ package model.characters.appearance;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.ClothesSprite;
-import view.sprites.FaceSprite;
 import view.sprites.Sprite8x8;
 
 public class SpearInHandDetail extends StaffHandDetail {

@@ -46,11 +46,7 @@ public class CharacterCreationView extends SelectableListMenu {
     private static final MyColors[] hairColorSet = HairStyle.allHairColors;
     private static final HairStyle[] hairStyleSet = HairStyle.allHairStyles;
     public static final MyColors[] detailColorSet = MyColors.values();
-    public static final MyColors[] makeupColorSet = new MyColors[]{MyColors.BLUE,
-            MyColors.BLACK, MyColors.DARK_GREEN, MyColors.DARK_BLUE, MyColors.DARK_BROWN,
-            MyColors.GREEN, MyColors.BLUE, MyColors.RED,
-            MyColors.LIGHT_GREEN, MyColors.LIGHT_BLUE, MyColors.LIGHT_RED,
-            MyColors.PURPLE, MyColors.GOLD, MyColors.LIGHT_GRAY, MyColors.BEIGE};
+    private static final MyColors[] makeupColorSet = MyColors.values();
     private static final CharacterClass[] classSet = Classes.allClasses;
     private static final Ears[] earSet = Ears.allEars;
     private static final String[] shoulderSet = ShouldersFactory.shoulderNames;

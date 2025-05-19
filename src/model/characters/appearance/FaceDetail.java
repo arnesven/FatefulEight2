@@ -8,7 +8,7 @@ import java.io.Serializable;
 public abstract class FaceDetail implements Serializable, Comparable<FaceDetail> {
     public static final FaceDetail[] ALL_DETAILS = new FaceDetail[]{
             new GlassesDetail(), new EarringsDetail(),
-            new EyePatchDetail(), new HeadBandDetail()};
+            new EyePatchDetail(), new HeadBandDetail(), new RougeDetail()};
 
     public MyColors color = MyColors.WHITE;
     public String name;
