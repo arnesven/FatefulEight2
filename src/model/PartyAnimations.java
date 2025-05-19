@@ -3,6 +3,8 @@ package model;
 import model.characters.GameCharacter;
 import model.characters.appearance.CharacterAppearance;
 import util.MyRandom;
+import view.sprites.Animation;
+import view.sprites.AnimationManager;
 import view.sprites.DieRollAnimation;
 import view.ScreenHandler;
 
@@ -82,11 +84,18 @@ public class PartyAnimations implements Serializable {
         Point p = new Point(pOrig.x, pOrig.y);
         p.x += 3;
         p.y += 2;
-        speakingAnimations.remove(appearance);
+        if (speakingAnimations.containsKey(appearance)) {
+            speakingAnimations.get(appearance).unregister();
+            speakingAnimations.remove(appearance);
+        }
         speakingAnimations.put(appearance, new SpeakingAnimation(calloutNum, p, length, appearance, vampireTeeth));
     }
 
     public DieRollAnimation addDieRollAnimation(Point location, int unmodifiedRoll) {
+        if (dieRollAnimations.containsKey(location)) {
+            dieRollAnimations.get(location).unregisterYourself();
+            dieRollAnimations.remove(location);
+        }
         DieRollAnimation animation = new DieRollAnimation(unmodifiedRoll);
         dieRollAnimations.put(location, animation);
         return animation;
@@ -145,5 +154,11 @@ public class PartyAnimations implements Serializable {
 
     public void removeVampireFeedingLookFor(CharacterAppearance app) {
         this.feedingLooks.remove(app);
+    }
+
+    public void unregisterAll() {
+        for (SpeakingAnimation a : speakingAnimations.values()) {
+            a.unregister();
+        }
     }
 }

@@ -294,6 +294,7 @@ public abstract class DailyEventState extends GameState {
     protected void removePortraitSubView(Model model) {
         if (portraitSubView != null) {
             model.setSubView(portraitSubView.getPreviousSubView());
+            portraitSubView.dispose();
         }
         portraitSubView = null;
     }

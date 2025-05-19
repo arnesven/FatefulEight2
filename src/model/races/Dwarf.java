@@ -61,7 +61,7 @@ public class Dwarf extends Race {
 
     @Override
     public String getShortDescription() {
-        return "short, stocky individuals. More often with beards than not.";
+        return "short, strong, stocky individuals. More often with beards than not.";
     }
 
     @Override

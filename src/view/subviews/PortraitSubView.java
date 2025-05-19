@@ -199,4 +199,8 @@ public class PortraitSubView extends SubView {
     public void forceEyesClosed(boolean closed) {
         partyAnimations.forceEyesClosed(appearance, closed);
     }
+
+    public void dispose() {
+        partyAnimations.unregisterAll();
+    }
 }
