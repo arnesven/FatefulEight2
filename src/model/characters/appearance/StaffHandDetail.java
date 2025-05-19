@@ -5,7 +5,9 @@ import view.MyColors;
 import view.sprites.FaceSprite;
 import view.sprites.Sprite8x8;
 
-public abstract class StaffHandDetail {
+import java.io.Serializable;
+
+public abstract class StaffHandDetail implements Serializable {
     private final MyColors orbColor;
     private MyColors staffColor;
 
