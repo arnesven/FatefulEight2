@@ -1,6 +1,8 @@
 package model.classes.normal;
 
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.CrossInHandDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
@@ -20,6 +22,8 @@ import view.sprites.AvatarSprite;
 import java.util.List;
 
 public class PriestClass extends CharacterClass {
+    private final CrossInHandDetail cross;
+
     public PriestClass() {
         super("Priest", "PRI", 5, 3, false, 15,
                 new WeightedSkill[]{
@@ -35,11 +39,16 @@ public class PriestClass extends CharacterClass {
                         new WeightedSkill(Skill.Sneak, 2),
                         new WeightedSkill(Skill.SpellCasting, 2)
                 });
+        this.cross = new CrossInHandDetail();
     }
 
     @Override
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnRobe(characterAppearance, MyColors.LIGHT_YELLOW, MyColors.YELLOW);
+        if (characterAppearance instanceof AdvancedAppearance) {
+            cross.applyYourself((AdvancedAppearance) characterAppearance,
+                    characterAppearance.getRace());
+        }
     }
 
     @Override

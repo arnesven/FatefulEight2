@@ -1,6 +1,8 @@
 package model.classes.normal;
 
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
+import model.characters.appearance.SpearInHandDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AmazonClass extends CharacterClass {
+    private final SpearInHandDetail spear;
+
     public AmazonClass() {
         super("Amazon", "AMZ", 7, 7, false, 8,
                 new WeightedSkill[]{
@@ -35,6 +39,7 @@ public class AmazonClass extends CharacterClass {
                         new WeightedSkill(Skill.Sneak, 4),
                         new WeightedSkill(Skill.Survival, 5)
                 });
+        this.spear = new SpearInHandDetail();
     }
 
     @Override
@@ -67,6 +72,10 @@ public class AmazonClass extends CharacterClass {
     @Override
     public void finalizeLook(CharacterAppearance appearance) {
         Looks.putOnNecklace(appearance);
+        if (appearance instanceof AdvancedAppearance) {
+            spear.applyYourself((AdvancedAppearance) appearance,
+                    appearance.getRace());
+        }
     }
 
     @Override
