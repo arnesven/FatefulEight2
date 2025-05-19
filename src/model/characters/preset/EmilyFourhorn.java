@@ -9,7 +9,7 @@ public class EmilyFourhorn extends AdvancedAppearance {
     public EmilyFourhorn() {
         super(Race.NORTHERN_HUMAN, true, MyColors.RED, CharacterCreationView.mouthSet[2],
                 CharacterCreationView.noseSet[2], CharacterEyes.allEyes[8], new BunsHairStyle(), Beard.allBeards[0]);
-        addFaceDetail(new EarringsDetail());
+        addFaceDetail(new RoundEarringsDetail());
         setDetailColor(MyColors.ORANGE);
         setMascaraColor(MyColors.LIGHT_GRAY);
     }

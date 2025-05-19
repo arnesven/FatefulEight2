@@ -572,7 +572,7 @@ public class CharacterCreationView extends SelectableListMenu {
 
     private class SelectAccessoryMenu extends FixedPositionSelectableListMenu {
         public SelectAccessoryMenu(GameView partyView, int x, int y) {
-            super(partyView, 10, accessorySet.length+2, x, y);
+            super(partyView, 11, accessorySet.length+2, x, y);
         }
 
         @Override

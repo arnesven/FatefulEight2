@@ -11,7 +11,7 @@ public class JennaWildflower extends AdvancedAppearance {
                 CharacterCreationView.noseSet[3], CharacterEyes.allEyes[3],
                 new HeartHairStyle(new PuyetHairStyle(), true, true, "Heart"),
                 Beard.allBeards[8]);
-        addFaceDetail(new EarringsDetail());
+        addFaceDetail(new TriangularEarringsDetail());
         setDetailColor(MyColors.WHITE);
     }
 }

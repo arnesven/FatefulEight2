@@ -12,5 +12,7 @@ public class ZephyreFirefist extends AdvancedAppearance {
                 new RoughLongHairStyle(),
                 Beard.allBeards[10]);
         setLipColor(MyColors.DARK_BROWN);
+        addFaceDetail(new RougeDetail());
+        setDetailColor(MyColors.GRAY_RED);
     }
 }

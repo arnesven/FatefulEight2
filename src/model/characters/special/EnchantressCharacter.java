@@ -19,7 +19,7 @@ public class EnchantressCharacter extends GameCharacter {
             super(Race.WOOD_ELF, true, MyColors.PEACH, CharacterCreationView.mouthSet[1],
                     CharacterCreationView.noseSet[1], CharacterEyes.allEyes[8],
                     HairStyle.allHairStyles[1], Beard.allBeards[10]);
-            addFaceDetail(new EarringsDetail());
+            addFaceDetail(new RoundEarringsDetail());
             setDetailColor(MyColors.LIGHT_GREEN);
             setMascaraColor(MyColors.LIGHT_RED);
             setLipColor(MyColors.RED);

@@ -230,7 +230,7 @@ public class DeadlyLoverEvent extends PersonalityTraitEvent {
         if (race.id() == Race.NORTHERN_HUMAN.id() || race.id() == Race.SOUTHERN_HUMAN.id()) {
             app.setNeck(new SlenderNeck());
         }
-        app.addFaceDetail(new EarringsDetail());
+        app.addFaceDetail(new TriangularEarringsDetail());
         app.setDetailColor(MyColors.GOLD);
         app.setClass(Classes.BEAUTY);
         return app;
