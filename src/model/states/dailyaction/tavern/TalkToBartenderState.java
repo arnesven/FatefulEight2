@@ -5,6 +5,8 @@ import model.TimeOfDay;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.classes.SkillChecks;
+import model.items.Item;
+import model.items.potions.RevivingElixir;
 import model.states.GameState;
 import model.states.TradeWithBartenderState;
 import model.states.dailyaction.BuyHorseState;
@@ -133,6 +135,16 @@ public class TalkToBartenderState extends GameState {
                 "Now I run this place, and I'm doing pretty well for myself, but I do sometimes dream back to the " +
                 "good old days when I was in a party of adventurers. The things we accomplished...");
         leaderSay("Got any good advice on adventuring?");
+        if (model.getDay() < 8 && !model.getSettings().getMiscFlags().containsKey("gotelixir")) {
+            model.getSettings().getMiscFlags().put("gotelixir", true);
+            bartenderSay(model, "Don't get ahead of yourself! It's a dangerous world out there. In fact, I was " +
+                    "saving this for myself if I ever got back into adventuring. Don't think that's ever going to " +
+                    "happen though, he he. Heck, you can have it.");
+            Item elixir = new RevivingElixir();
+            println("You got " + elixir.getName() + " from the bartender!");
+            elixir.addYourself(model.getParty().getInventory());
+            return;
+        }
         String line = MyRandom.sample(List.of(
                 "Keep your party members well rested and you will be more " +
                         "likely to succeed in your endeavors. We have rooms here with very comfortable beds.",
