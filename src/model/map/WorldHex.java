@@ -114,6 +114,7 @@ public abstract class WorldHex {
 
     private DailyEventState conditionalEvent(Model model) {
         List<DailyEventState> conditionalEvents = new ArrayList<>();
+        MyLists.nonNullAdd(conditionalEvents, LetterFromMotherEvent.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, Loan.eventDependentOnLoan(model, this));
         MyLists.nonNullAdd(conditionalEvents, GeneralInteractionEvent.eventDependentOnNotoriety(model, this));
         MyLists.nonNullAdd(conditionalEvents, CaveSpelunkerEvent.generateEvent(model));

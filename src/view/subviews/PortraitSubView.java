@@ -72,7 +72,7 @@ public class PortraitSubView extends SubView {
                     appearance.setLipColor(lipColor);
                 }
             }
-            if (MyRandom.randInt(6) == 0) {
+            if (MyRandom.randInt(10) == 0) {
                 appearance.addFaceDetail(new RougeDetail());
                 appearance.setDetailColor(MakeUpColors.randomRougeColor(raceToUse));
             }
