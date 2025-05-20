@@ -11,10 +11,7 @@ import sprites.CombatSpeechBubble;
 import util.MyPair;
 import view.MyColors;
 import view.combat.GrassCombatTheme;
-import view.sprites.FirePlaceSprite;
-import view.sprites.RunOnceAnimationSprite;
-import view.sprites.Sprite;
-import view.sprites.Sprite32x32;
+import view.sprites.*;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -121,6 +118,7 @@ public class TavernSubView extends DailyActionSubView {
             model.getScreenHandler().register(effect.first.getName(), effect.second, effect.first, 3);
             if (effect.first.isDone()) {
                 otherEffects.remove(effect);
+                AnimationManager.unregister(effect.first);
             }
         }
     }

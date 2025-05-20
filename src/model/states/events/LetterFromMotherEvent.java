@@ -20,7 +20,7 @@ public class LetterFromMotherEvent extends DailyEventState {
 
     public static DailyEventState generateEvent(Model model) {
         if (!model.getSettings().getMiscFlags().containsKey(GOT_THIS_EVENT) &&
-                model.getDay() > 14 && GameStatistics.getGoldEarned() < 100) {
+                model.getDay() > 14 && GameStatistics.getGoldEarned() < 150) {
             return new LetterFromMotherEvent(model);
         }
         return null;

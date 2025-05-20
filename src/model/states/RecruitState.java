@@ -153,19 +153,20 @@ public class RecruitState extends GameState {
                 model.getParty().addToGold(amount);
                 println(gc.getName() + " contributed " + amount + " gold to the party's collective purse.");
             }
-            Item it = MyRandom.sample(gc.getCharClass().getStartingItems()).copy();
-            ChooseStartingCharacterState.addSelectedItem(model, gc, it);
-            if (!gc.getEquipment().contains(it)) {
-                String extra = "";
-                if (it instanceof Spell) {
-                    extra = "spell, ";
+            if (!gc.getCharClass().getStartingItems().isEmpty()) {
+                Item it = MyRandom.sample(gc.getCharClass().getStartingItems()).copy();
+                ChooseStartingCharacterState.addSelectedItem(model, gc, it);
+                if (!gc.getEquipment().contains(it)) {
+                    String extra = "";
+                    if (it instanceof Spell) {
+                        extra = "spell, ";
+                    }
+                    if (it instanceof HorseStartingItem) {
+                        extra = "horse, ";
+                    }
+                    println(gc.getName() + " contributed a " + extra + it.getName() + " to the party.");
                 }
-                if (it instanceof HorseStartingItem) {
-                    extra = "horse, ";
-                }
-                println(gc.getName() + " contributed a " + extra + it.getName() + " to the party.");
             }
-
             model.getTutorial().leader(model);
         }
     }
