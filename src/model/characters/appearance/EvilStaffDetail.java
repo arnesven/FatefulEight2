@@ -5,8 +5,12 @@ import view.MyColors;
 
 public class EvilStaffDetail extends StaffHandDetail {
 
+    public EvilStaffDetail(MyColors staffColor, MyColors orbColor) {
+        super(staffColor, orbColor);
+    }
+
     public EvilStaffDetail() {
-        super(MyColors.DARK_GRAY, MyColors.RED);
+        this(MyColors.DARK_GRAY, MyColors.RED);
     }
 
     @Override

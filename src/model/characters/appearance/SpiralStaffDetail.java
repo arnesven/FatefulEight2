@@ -5,8 +5,12 @@ import view.MyColors;
 
 public class SpiralStaffDetail extends StaffHandDetail {
 
+    public SpiralStaffDetail(MyColors staffColor, MyColors orbColor) {
+        super(staffColor, orbColor);
+    }
+
     public SpiralStaffDetail() {
-        super(MyColors.WHITE, MyColors.CYAN);
+        this(MyColors.WHITE, MyColors.CYAN);
     }
 
     @Override
