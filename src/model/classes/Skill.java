@@ -46,6 +46,34 @@ public enum Skill implements Comparable<Skill> {
             // level  1  2  3  4  5  6  7  8  9
     };
 
+      /*      // Linear Weights
+            new int[]{0, 1, 1, 1, 2, 2, 2, 3, 3}, // Weight 1
+            new int[]{1, 1, 2, 2, 2, 3, 3, 3, 4}, // Weight 2
+            new int[]{1, 1, 2, 2, 3, 3, 4, 4, 5}, // Weight 3
+            new int[]{2, 2, 3, 3, 4, 4, 5, 5, 6}, // Weight 4
+            new int[]{2, 3, 3, 4, 4, 5, 5, 6, 6}, // Weight 5
+            new int[]{3, 3, 4, 4, 5, 5, 6, 6, 7}  // Weight 6
+            // level  1  2  3  4  5  6  7  8  9 */
+
+    /*      // Polynomial Weights
+            new int[]{0, 1, 1, 1, 1, 2, 2, 3, 4}, // Weight 1
+            new int[]{1, 1, 1, 1, 2, 2, 3, 4, 5}, // Weight 2
+            new int[]{1, 1, 1, 2, 2, 2, 3, 4, 6}, // Weight 3
+            new int[]{1, 1, 2, 2, 3, 3, 4, 5, 6}, // Weight 4
+            new int[]{1, 1, 2, 3, 3, 4, 5, 7, 8}, // Weight 5
+            new int[]{1, 2, 2, 3, 3, 4, 6, 7, 9}  // Weight 6
+            // level  1  2  3  4  5  6  7  8  9 */
+
+   /*      // Logarithmic Weights
+            new int[]{0, 1, 2, 3, 3, 3, 3, 3, 4}, // Weight 1
+            new int[]{1, 2, 3, 3, 3, 3, 4, 4, 5}, // Weight 2
+            new int[]{1, 2, 3, 3, 4, 4, 5, 5, 5}, // Weight 3
+            new int[]{1, 2, 3, 4, 5, 5, 6, 6, 6}, // Weight 4
+            new int[]{2, 3, 4, 5, 5, 6, 6, 6, 7}, // Weight 5
+            new int[]{3, 4, 5, 5, 6, 7, 7, 7, 7}  // Weight 6
+            // level  1  2  3  4  5  6  7  8  9 */
+
+
     private static final Map<String, List<Skill>> ATTRIBUTES =
             Map.of("Wits",       List.of(Skill.Logic, Skill.Perception, Skill.Search, Skill.SpellCasting, Skill.Survival),
                     "Strength",  List.of(Skill.Acrobatics, Skill.Axes, Skill.BluntWeapons, Skill.Endurance, Skill.Labor),
