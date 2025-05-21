@@ -170,4 +170,19 @@ public class HigherTierWeapon extends Weapon implements HigherTierItem, Pairable
     public int getAttackBonus() {
         return inner.getAttackBonus();
     }
+
+    @Override
+    public boolean isTwoHanded() {
+        return inner.isTwoHanded();
+    }
+
+    @Override
+    public boolean isSellable() {
+        return inner.isSellable();
+    }
+
+    @Override
+    public boolean isCraftable() {
+        return inner.isCraftable();
+    }
 }

@@ -43,7 +43,7 @@ public class Equipment implements Serializable {
     }
 
     public static String canEquip(Item item, GameCharacter person) {
-        if (item instanceof Clothing && !person.canChangeClothing()) {
+        if ((item instanceof Clothing) && !person.canChangeClothing()) {
             return person.getFirstName() + " cannot unequip clothing.";
         }
 

@@ -41,16 +41,6 @@ public class ThrowingStars extends Weapon {
     }
 
     @Override
-    public boolean isCraftable() {
-        return true;
-    }
-
-    @Override
-    public boolean isSellable() {
-        return true;
-    }
-
-    @Override
     public Item copy() {
         return new ThrowingStars();
     }
