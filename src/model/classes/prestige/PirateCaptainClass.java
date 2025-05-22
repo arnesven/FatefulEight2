@@ -1,10 +1,7 @@
 package model.classes.prestige;
 
 import model.characters.appearance.CharacterAppearance;
-import model.classes.CharacterClass;
-import model.classes.Classes;
-import model.classes.Looks;
-import model.classes.Skill;
+import model.classes.*;
 import model.classes.normal.*;
 import model.items.Equipment;
 import model.items.Item;
@@ -14,7 +11,6 @@ import model.items.weapons.Cutlass;
 import model.items.weapons.Dirk;
 import model.races.Race;
 import util.MyLists;
-import util.MyStrings;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 import view.sprites.ClothesSprite;

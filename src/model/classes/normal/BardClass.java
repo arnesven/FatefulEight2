@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.Item;
 import model.items.ObolsDummyItem;
 import model.items.accessories.JestersHat;

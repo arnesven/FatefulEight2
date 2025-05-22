@@ -3,6 +3,7 @@ package model.classes.special;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.RedKnightsHelm;
 import model.items.clothing.RedKnightsArmor;

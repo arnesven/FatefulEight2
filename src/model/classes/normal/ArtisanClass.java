@@ -4,6 +4,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.MaterialsDummyItem;
@@ -13,7 +14,6 @@ import model.items.weapons.Longsword;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.AvatarSprite;
-import view.sprites.ClothesSprite;
 
 import java.util.List;
 

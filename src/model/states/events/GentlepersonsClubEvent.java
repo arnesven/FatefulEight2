@@ -666,7 +666,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
             for (CharacterClass charClass : Classes.allClasses) {
                 int distance = 0;
                 for (MyPair<Skill, Integer> p : deficiencies) {
-                    int weight = Math.min(RATING_MAX_RANK, charClass.getWeightForSkill(p.first));
+                    int weight = Math.min(RATING_MAX_RANK, charClass.getWeightForSkill(p.first).getWeight());
                     int diff = Math.min(p.second, weight) - p.second;
                     distance += diff*diff;
                 }

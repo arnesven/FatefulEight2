@@ -290,8 +290,7 @@ public class GameCharacter extends Combatant {
     }
 
     public int getUnmodifiedRankForSkill(Skill skill) {
-        return Skill.getRankForSkill(charClass.getWeightForSkill(skill), getLevel())
-                + race.getBonusForSkill(skill);
+        return charClass.getWeightForSkill(skill).getRank(getLevel()) + race.getBonusForSkill(skill);
     }
 
     private int internalGetRankForSkill(Skill skill) {

@@ -6,9 +6,6 @@ import model.horses.*;
 import model.items.Equipment;
 import model.items.HorseStartingItem;
 import model.items.Item;
-import model.items.clothing.LeatherArmor;
-import model.items.spells.EntropicBoltSpell;
-import model.items.weapons.ShortSword;
 import model.races.Race;
 import view.MyColors;
 import view.sprites.*;
@@ -64,13 +61,13 @@ public abstract class CharacterClass implements Serializable {
 
     public void takeClothesOff(CharacterAppearance characterAppearance) { };
 
-    public int getWeightForSkill(Skill skill) {
+    public WeightedSkill getWeightForSkill(Skill skill) {
         for (WeightedSkill ws : skillBonuses) {
-            if (ws.skill.areEqual(skill)) {
-                return ws.weight;
+            if (ws.getSkill().areEqual(skill)) {
+                return ws;
             }
         }
-        return 0;
+        return new NoSkillBonus();
     }
 
     public abstract AvatarSprite getAvatar(Race race, CharacterAppearance appearance);
@@ -82,7 +79,7 @@ public abstract class CharacterClass implements Serializable {
     public List<Skill> getSkills() {
         List<Skill> result = new ArrayList<>();
         for (WeightedSkill ws : skillBonuses) {
-            result.add(ws.skill);
+            result.add(ws.getSkill());
         }
         return result;
     }
@@ -145,15 +142,6 @@ public abstract class CharacterClass implements Serializable {
 
     public boolean showHairInBack() {
         return true;
-    }
-
-    protected static class WeightedSkill implements Serializable {
-        public Skill skill;
-        public int weight;
-        public WeightedSkill(Skill skill, int weight) {
-            this.skill = skill;
-            this.weight = weight;
-        }
     }
 
     public static List<CharacterClass> getSelectableClasses() {

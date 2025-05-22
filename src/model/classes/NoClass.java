@@ -4,7 +4,6 @@ import model.characters.appearance.CharacterAppearance;
 import model.items.Equipment;
 import model.items.Item;
 import model.races.Race;
-import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarSprite;
 

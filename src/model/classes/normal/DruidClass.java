@@ -6,6 +6,7 @@ import model.characters.appearance.GnarledStaffDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.*;
 import model.items.spells.AlchemySpell;
 import model.items.spells.GiantGrowthSpell;

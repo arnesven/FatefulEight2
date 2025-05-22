@@ -1,6 +1,7 @@
 package view.help;
 
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import view.GameView;
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ public class SkillsHelpChapter extends ExpandableHelpDialog {
     private static String makeText() {
         StringBuilder bldr = new StringBuilder(TEXT);
         bldr.append("Level  W1 W2 W3 W4 W5 W6\n");
-        for (int level = 0; level < Skill.RANK_MATRIX[0].length; ++level) {
+        for (int level = 0; level < WeightedSkill.MAX_LEVEL; ++level) {
             bldr.append("    ").append(level + 1).append("  ");
-            for (int weight = 0; weight < Skill.RANK_MATRIX.length; ++weight) {
-                bldr.append(Skill.RANK_MATRIX[weight][level] + "  ");
+            for (int weight = 0; weight < WeightedSkill.MAX_WEIGHT; ++weight) {
+                bldr.append(WeightedSkill.getRankForWeight(weight, level)).append("  ");
             }
             bldr.append("\n");
         }

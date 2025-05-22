@@ -3,7 +3,7 @@ package model.classes.special;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
 import model.classes.Skill;
-import model.classes.special.SpecialCharacterClass;
+import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.weapons.ShortSword;
 import model.races.Race;

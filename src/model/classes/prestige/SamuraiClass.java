@@ -3,6 +3,7 @@ package model.classes.prestige;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.classes.normal.*;
 import model.classes.Looks;
 import model.items.Equipment;

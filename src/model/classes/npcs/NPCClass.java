@@ -3,6 +3,7 @@ package model.classes.npcs;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.Item;
 import model.races.Race;

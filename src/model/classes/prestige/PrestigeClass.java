@@ -2,6 +2,7 @@ package model.classes.prestige;
 
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import model.classes.WeightedSkill;
 import util.MyLists;
 import view.MyColors;
 

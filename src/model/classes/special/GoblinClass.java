@@ -2,6 +2,7 @@ package model.classes.special;
 
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.accessories.SkullCap;
 import model.items.clothing.LeatherArmor;

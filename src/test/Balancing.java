@@ -247,7 +247,7 @@ public class Balancing {
     private static int calcClassScore(CharacterClass charClass) {
         int sum = 0;
         for (Skill s : charClass.getSkills()) {
-            sum += charClass.getWeightForSkill(s);
+            sum += charClass.getWeightForSkill(s).getWeight();
         }
         sum += charClass.getHP();
         sum += charClass.getSpeed() / 2;

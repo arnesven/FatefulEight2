@@ -1,6 +1,7 @@
 package model.classes.special;
 
 import model.classes.CharacterClass;
+import model.classes.WeightedSkill;
 import model.items.Item;
 import view.MyColors;
 

@@ -2,6 +2,7 @@ package model.classes.special;
 
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Looks;
+import model.classes.WeightedSkill;
 import model.classes.normal.NobleClass;
 import model.classes.Skill;
 import model.items.Equipment;

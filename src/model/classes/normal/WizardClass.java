@@ -6,6 +6,7 @@ import model.characters.appearance.SpiralStaffDetail;
 import model.classes.CharacterClass;
 import model.classes.Looks;
 import model.classes.Skill;
+import model.classes.WeightedSkill;
 import model.items.Equipment;
 import model.items.Item;
 import model.items.spells.*;
