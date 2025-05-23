@@ -4,7 +4,7 @@ import view.GameView;
 
 import java.util.List;
 
-public class TutorialRecruitDialog extends ExpandableHelpDialog {
+public class TutorialRecruitDialog extends HelpDialog {
 
     private static final String TEXT =
             "Recruitment can be performed at Inns, Towns and Castles.\n\n" +
@@ -26,21 +26,6 @@ public class TutorialRecruitDialog extends ExpandableHelpDialog {
             "respective races. The initial attitude toward the leader or of the leader is never negative.";
 
     public TutorialRecruitDialog(GameView previous) {
-        super(previous, "Recruiting", TEXT, false);
-    }
-
-    public static HelpDialog makeContdDialog(GameView view) {
-        return new TutorialRecruitContd(view);
-    }
-
-    @Override
-    protected List<HelpDialog> makeSubSections(GameView view) {
-        return List.of(makeContdDialog(view));
-    }
-
-    private static class TutorialRecruitContd extends SubChapterHelpDialog {
-        public TutorialRecruitContd(GameView view) {
-            super(view, "Recruiting (cont'd)", TEXT_CONTD);
-        }
+        super(previous, "Recruiting", new String[]{TEXT, TEXT_CONTD});
     }
 }

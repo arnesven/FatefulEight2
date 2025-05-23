@@ -48,12 +48,6 @@ public class TutorialHandler implements Serializable {
         });
     }
 
-    public void recruitContd(Model model) {
-        runOnce("recruitContd", () -> {
-            model.transitionToDialog(TutorialRecruitDialog.makeContdDialog(model.getView()));
-        });
-    }
-
     public void shopping(Model model) {
         runOnce("shopping", () -> {
             model.transitionToDialog(new TutorialShoppingDialog(model.getView()));

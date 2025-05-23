@@ -70,6 +70,10 @@ public class HelpView extends TwoPaneSelectableListMenu {
                 }
             }
         }
+        chapters.get(index).specificHandleEvent(keyEvent, model);
+        if (chapters.get(index).hasChanges()) {
+            madeChanges();
+        }
     }
 
     private void filterChapters(Model model) {

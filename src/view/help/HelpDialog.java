@@ -1,11 +1,13 @@
 package view.help;
 
 import model.Model;
+import util.Arithmetics;
 import util.MyStrings;
 import view.GameView;
 import view.MyColors;
 import view.party.DrawableObject;
 import view.party.SelectableListMenu;
+import view.sprites.ArrowSprites;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -16,22 +18,33 @@ public class HelpDialog extends SelectableListMenu {
     private static final int DIALOG_HEIGHT = 20;
 
     private final int textWidth;
-    private final String text;
+    private final String[] texts;
     private final String title;
+    private final int numberOfPages;
+    private int currentPage = 0;
+
+    public HelpDialog(GameView previous, int width, int height, String titles, String[] texts) {
+        super(previous, width, height);
+        this.numberOfPages = texts.length;
+        this.textWidth = width-1;
+        this.title = titles;
+        this.texts = texts;
+    }
 
     public HelpDialog(GameView previous, int width, int height, String title, String text) {
-        super(previous, width, height);
-        this.textWidth = width-1;
-        this.title = title;
-        this.text = text;
+        this(previous, width, height, title, new String[]{text});
     }
 
     public HelpDialog(GameView previous, int height, String title, String text) {
         this(previous, DIALOG_WIDTH, height, title, text);
     }
 
-    public HelpDialog(GameView previous, String title, String text) {
-        this(previous, DIALOG_WIDTH, getHeightForText(text)+6, title, text);
+    public HelpDialog(GameView previous, String title, String[] texts) {
+        this(previous, DIALOG_WIDTH, getHeightForText(texts[0])+6, title, texts);
+    }
+
+    public HelpDialog(GameView previous, String title, String texts) {
+        this(previous, title, new String[]{texts});
     }
 
     protected static int getHeightForText(String text) {
@@ -41,8 +54,13 @@ public class HelpDialog extends SelectableListMenu {
     @Override
     protected List<DrawableObject> buildDecorations(Model model, int xStart, int yStart) {
         List<DrawableObject> textContent = new ArrayList<>();
-        textContent.add(new TextDecoration(title.toUpperCase(), xStart+2, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
-        String[] parts = MyStrings.partitionWithLineBreaks(text, textWidth);
+        String titleText = title.toUpperCase();
+        if (numberOfPages > 1) {
+            titleText += " (PAGE " + (currentPage + 1) + "/" + numberOfPages+ ")";
+            model.getScreenHandler().put(xStart + 2 + titleText.length() + 1, yStart + 1, ArrowSprites.RIGHT);
+        }
+        textContent.add(new TextDecoration(titleText, xStart+2, yStart+1, MyColors.WHITE, MyColors.BLUE, false));
+        String[] parts = MyStrings.partitionWithLineBreaks(getText(), textWidth);
         for (int i = 0 ; i < parts.length; ++i) {
             textContent.add(new TextDecoration(parts[i], xStart+2, yStart+3+i, MyColors.WHITE, MyColors.BLUE, false));
         }
@@ -66,10 +84,16 @@ public class HelpDialog extends SelectableListMenu {
 
     @Override
     protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
-
+        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+            goToNextPage();
+            madeChanges();
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+            goToPreviousPage();
+            madeChanges();
+        }
     }
 
-    public String getText() { return text; }
+    public String getText() { return texts[currentPage]; }
 
     public String getTitle() {
         return title;
@@ -87,5 +111,13 @@ public class HelpDialog extends SelectableListMenu {
 
     public List<HelpDialog> getSubSections() {
         return new ArrayList<>();
+    }
+
+    public void goToNextPage() {
+        currentPage = Arithmetics.incrementWithWrap(currentPage, numberOfPages);
+    }
+
+    public void goToPreviousPage() {
+        currentPage = Arithmetics.decrementWithWrap(currentPage, numberOfPages);
     }
 }
