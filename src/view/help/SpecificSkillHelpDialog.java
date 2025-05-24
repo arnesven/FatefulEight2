@@ -34,7 +34,8 @@ public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
                     skiAb -> " " + skiAb.getName() + " (" + skiAb.getRequiredRanks() + ")\n");
         }
 
-        return getGoverningAttribute(s) + s.getDescription() + abiExtra;
+        return "Short Name: " + s.getShortName() + "\n" +
+                getGoverningAttribute(s) + s.getDescription() + abiExtra;
     }
 
     private static String getGoverningAttribute(Skill s) {

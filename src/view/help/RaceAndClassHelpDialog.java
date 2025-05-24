@@ -36,5 +36,10 @@ public class RaceAndClassHelpDialog extends SelectableListMenu {
     }
 
     @Override
-    protected void specificHandleEvent(KeyEvent keyEvent, Model model) { }
+    protected void specificHandleEvent(KeyEvent keyEvent, Model model) {
+        classHelpDialog.specificHandleEvent(keyEvent, model);
+        if (classHelpDialog.hasChanges()) {
+            madeChanges();
+        }
+    }
 }

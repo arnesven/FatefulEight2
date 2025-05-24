@@ -14,6 +14,10 @@ public class SubChapterHelpDialog extends HelpDialog {
         super(previous, title, text);
     }
 
+    public SubChapterHelpDialog(GameView previous, String title, String[] texts) {
+        super(previous, title, texts);
+    }
+
     public void setLevel(int level) {
         this.prefix = "" + ((char)0x7D);
         for (int i = 0; i < level-1; ++i) {

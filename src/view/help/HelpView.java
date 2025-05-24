@@ -69,10 +69,11 @@ public class HelpView extends TwoPaneSelectableListMenu {
                     madeChanges();
                 }
             }
-        }
-        chapters.get(index).specificHandleEvent(keyEvent, model);
-        if (chapters.get(index).hasChanges()) {
-            madeChanges();
+        } else {
+            chapters.get(index).specificHandleEvent(keyEvent, model);
+            if (chapters.get(index).hasChanges()) {
+                madeChanges();
+            }
         }
     }
 
@@ -95,7 +96,7 @@ public class HelpView extends TwoPaneSelectableListMenu {
         String cap = MyStrings.capitalize(searchKey);
         String lowerCase = searchKey.toLowerCase();
         for (HelpDialog chap : chapters) {
-            if (chap.getText().contains(searchKey) ||
+            if (chap.getText().contains(searchKey) || // TODO: Make search also look at other pages.
                     chap.getText().contains(cap) ||
                     chap.getText().contains(lowerCase)) {
                 searchResults.add(chap);

@@ -120,4 +120,8 @@ public class HelpDialog extends SelectableListMenu {
     public void goToPreviousPage() {
         currentPage = Arithmetics.decrementWithWrap(currentPage, numberOfPages);
     }
+
+    protected int getCurrentPage() {
+        return currentPage;
+    }
 }
