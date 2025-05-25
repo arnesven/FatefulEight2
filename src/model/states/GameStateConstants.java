@@ -92,7 +92,9 @@ public interface GameStateConstants {
             "Tobert",
             "Todd",
             "Trevor",
-            "Voldo"
+            "Ulaf",
+            "Voldo",
+            "Xaul"
     );
 
     List<String> COMMON_LAST_NAMES = List.of(
