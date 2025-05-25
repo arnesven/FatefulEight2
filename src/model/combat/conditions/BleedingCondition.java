@@ -31,6 +31,9 @@ public class BleedingCondition extends Condition {
     @Override
     public void endOfCombatRoundTrigger(Model model, GameState state, Combatant comb) {
         super.endOfCombatRoundTrigger(model, state, comb);
+        if (comb.isDead()) {
+            return;
+        }
         state.println(comb.getName() + " takes 1 damage from bleeding.");
         comb.addToHP(-1);
         if (state instanceof CombatEvent) {
