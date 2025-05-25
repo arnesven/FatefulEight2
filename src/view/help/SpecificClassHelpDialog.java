@@ -52,13 +52,14 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
             }
         });
         yOff += 3;
-        textContent.add(new DrawableObject(xStart + xOff, yStart + yOff) {
+        textContent.add(new DrawableObject(xStart + xOff - 3, yStart + yOff) {
             @Override
             public void drawYourself(Model model, int x, int y) {
                 int i = 0;
                 for (Skill s : charClass.getSkills()) {
+                    String skillString = s.getName() + " (" + s.getShortName() + ")";
                     print(model.getScreenHandler(), x, y + (i++),
-                            String.format("%-16sW%1d", s.getName(), charClass.getWeightForSkill(s).getWeight()));
+                            String.format("%-20sW%1d", skillString, charClass.getWeightForSkill(s).getWeight()));
                 }
             }
         });
