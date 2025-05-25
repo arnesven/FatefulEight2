@@ -30,6 +30,9 @@ public class SkillsHelpChapter extends ExpandableHelpDialog {
         }
 
         bldr.append("\n");
+        bldr.append("A Skill Weight marked with a + or a - indicates shift in the table either up or down. " +
+                "Plus-weighted skills yield a rank one level earlier, whereas minus-weighted skills yields a rank one level later.");
+        bldr.append("\n\n");
         bldr.append("Most skills have a governing attribute; Strength, Dexterity, Charisma or Wits.\n\n");
         bldr.append("Some skills grant Combat Abilities when a character reaches a required number of ranks.");
 
