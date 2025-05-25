@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HelpDialog extends SelectableListMenu {
-    private static final int DIALOG_WIDTH = 35;
+    protected static final int DIALOG_WIDTH = 35;
     private static final int DIALOG_HEIGHT = 20;
 
     private final int textWidth;

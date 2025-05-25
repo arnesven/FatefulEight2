@@ -67,7 +67,9 @@ public class AbilityCombatAction extends CombatAction {
         list.add(new InvisibilityCombatAction());
         list.add(new MagicMissileCombatAction());
         list.add(new CurseCombatAction());
-        list.add(new BalladCombatAction());
+        if (performer != null) {
+            list.add(new BalladCombatAction());
+        }
         if (performer != null && StaffOfDeimosItem.canDoAbility(performer)) {
             list.add(StaffOfDeimosItem.makeCombatAbility(performer));
         }

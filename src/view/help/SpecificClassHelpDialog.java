@@ -5,15 +5,18 @@ import model.characters.GameCharacter;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.WeightedSkill;
+import model.combat.abilities.AbilityCombatAction;
+import model.combat.abilities.SkillAbilityCombatAction;
+import util.MyLists;
+import util.MyPair;
 import util.MyStrings;
 import view.GameView;
 import view.party.DrawableObject;
 import view.sprites.Sprite;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class SpecificClassHelpDialog extends SubChapterHelpDialog {
     private final CharacterClass charClass;
@@ -74,27 +77,58 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
     private static String makeClassTable(CharacterClass characterClass) {
         StringBuilder bld = new StringBuilder();
         Map<String, Integer> oldRanks = new HashMap<>();
+        bld.append("LVL SKILL ADVANCEMENTS\n");
+
+        List<SkillAbilityCombatAction> skillAbilities = new ArrayList<>();
+        skillAbilities.addAll(MyLists.transform(MyLists.filter(AbilityCombatAction.getAllCombatAbilities(null),
+                combAb -> combAb instanceof SkillAbilityCombatAction),
+               combAb -> (SkillAbilityCombatAction)combAb));
+        skillAbilities.addAll(MyLists.transform(MyLists.filter(AbilityCombatAction.getAllPassiveCombatActions(),
+                passAb -> passAb instanceof SkillAbilityCombatAction),
+                passAb -> (SkillAbilityCombatAction)passAb));
+
         for (int level = 1; level <= 9; ++level) {
-            bld.append("Level ").append(level).append("\n");
-            StringBuilder skillBldr = new StringBuilder();
+            bld.append(" ").append(level).append("  ");
+            List<MyPair<Skill, Integer>> newRanks = new ArrayList<>();
+            Set<SkillAbilityCombatAction> newAbilities = new HashSet<>();
             for (Skill s : Skill.values()) {
                 int rank = characterClass.getWeightForSkill(s).getRank(level);
                 if (rank > 0) {
                     if (!oldRanks.containsKey(s.getShortName()) || oldRanks.get(s.getShortName()) != rank) {
                         oldRanks.put(s.getShortName(), rank);
-                        skillBldr.append(s.getShortName()).append(" ").append(rank).append(", ");
+                        newRanks.add(new MyPair<>(s, rank));
+                        int finalLevel = level;
+                        newAbilities.addAll(MyLists.filter(skillAbilities,
+                                skiAb -> skiAb.getLinkedSkills().contains(s) &&
+                                        (skiAb.getRequiredRanks() == rank || (finalLevel == 1 && skiAb.getRequiredRanks() <= rank))));
                     }
                 }
             }
-            if (skillBldr.isEmpty()) {
+
+
+            if (newRanks.isEmpty()) {
                 bld.append("-\n");
             } else {
-                String[] parts = MyStrings.partition(skillBldr.toString(), 34);
-                for (String part : parts) {
-                    bld.append(part).append("\n");
+                int column = 0;
+                for (MyPair<Skill, Integer> newRank : newRanks) {
+                    if (column == 4) {
+                        bld.append("\n    ");
+                        column = 0;
+                    }
+                    bld.append(String.format("%-4s%2d ", newRank.first.getShortName(), newRank.second));
+                    column++;
+                }
+                if (!newAbilities.isEmpty()) {
+                    String abiStr = MyStrings.makeString(newAbilities.stream().toList(), e -> e.getName() + ", ");
+                    for (String part : MyStrings.partition(abiStr, DIALOG_WIDTH - 5)) {
+                        if (part.endsWith(", ")) {
+                            part = part.substring(0, part.length() - 2);
+                        }
+                        bld.append("\n    ").append(part);
+                    }
                 }
             }
-            bld.append("\n");
+            bld.append("\n\n");
         }
         return bld.toString();
     }
