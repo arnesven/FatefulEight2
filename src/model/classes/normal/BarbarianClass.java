@@ -29,9 +29,9 @@ public class BarbarianClass extends CharacterClass {
                         new WeightedSkill(Skill.Axes, 5),
                         new WeightedSkill(Skill.Blades, 2),
                         new WeightedSkill(Skill.BluntWeapons, 3),
-                        new WeightedSkill(Skill.Endurance, 5),
-                        new WeightedSkill(Skill.Labor, 4),
-                        new WeightedSkill(Skill.Perception, 1),
+                        new WeightedSkill(Skill.Endurance, 4),
+                        new WeightedSkillMinus(Skill.Labor, 4),
+                        new WeightedSkillMinus(Skill.Perception, 1),
                         new WeightedSkill(Skill.Survival, 5)
                 });
     }

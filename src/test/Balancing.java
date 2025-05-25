@@ -220,8 +220,8 @@ public class Balancing {
     public static void runClassesAnalysis(Model model) {
         CharacterClass baselineClass = Classes.BBN;
 
-        int baselineScore = calcClassScore(baselineClass);
-        System.out.println("Name                 Score  Diff");
+        double baselineScore = calcClassScore(baselineClass);
+        System.out.println("Name                   Score  Diff");
         List<CharacterClass> classes = new ArrayList<>(Arrays.asList(Classes.allClasses));
         classes.add(Classes.GOBLIN);
         classes.add(Classes.WITCH_KING);
@@ -231,9 +231,9 @@ public class Balancing {
         classes.add(Classes.SWORD_MASTER);
 
         for (CharacterClass cls : classes) {
-            int score = calcClassScore(cls);
-            int diff = score - baselineScore;
-            String tableRow = String.format("%-20s %4d %4d", cls.getFullName(), score, diff);
+            double score = calcClassScore(cls);
+            double diff = score - baselineScore;
+            String tableRow = String.format("%-20s %6.1f %6.1f", cls.getFullName(), score, diff);
             if (diff < -5) {
                 System.err.println(tableRow + " TO WEAK?");
             } else if (diff > 5) {
@@ -244,15 +244,15 @@ public class Balancing {
         }
     }
 
-    private static int calcClassScore(CharacterClass charClass) {
-        int sum = 0;
+    private static double calcClassScore(CharacterClass charClass) {
+        double sum = 0;
         for (Skill s : charClass.getSkills()) {
-            sum += charClass.getWeightForSkill(s).getWeight();
+            sum += charClass.getWeightForSkill(s).getBalancingScore();
         }
-        sum += charClass.getHP();
-        sum += charClass.getSpeed() / 2;
-        sum += charClass.getStartingGold() / 3;
-        sum += charClass.canUseHeavyArmor() ? 8 : 0;
+        sum += charClass.getHP() * 1.5;
+        sum += charClass.getSpeed() / 2.0;
+        sum += charClass.getStartingGold() / 5.0;
+        sum += charClass.canUseHeavyArmor() ? 6 : 0;
         return sum;
     }
 }

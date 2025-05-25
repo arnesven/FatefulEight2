@@ -25,16 +25,16 @@ public class PriestClass extends CharacterClass {
     public PriestClass() {
         super("Priest", "PRI", 5, 3, false, 15,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.BluntWeapons, 3),
+                        new WeightedSkillPlus(Skill.BluntWeapons, 3),
                         new WeightedSkill(Skill.Entertain, 4),
                         new WeightedSkill(Skill.Labor, 3),
                         new WeightedSkill(Skill.Leadership, 4),
                         new WeightedSkill(Skill.Logic, 4),
-                        new WeightedSkill(Skill.MagicWhite, 4),
+                        new WeightedSkillPlus(Skill.MagicWhite, 4),
                         new WeightedSkill(Skill.Perception, 2),
                         new WeightedSkill(Skill.Persuade, 4),
                         new WeightedSkill(Skill.SeekInfo, 3),
-                        new WeightedSkill(Skill.Sneak, 2),
+                        new WeightedSkillPlus(Skill.Sneak, 2),
                         new WeightedSkill(Skill.SpellCasting, 2)
                 });
         this.cross = new CrossInHandDetail();

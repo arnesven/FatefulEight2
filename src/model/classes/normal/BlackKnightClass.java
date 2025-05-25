@@ -21,15 +21,15 @@ public class BlackKnightClass extends CharacterClass {
     public BlackKnightClass() {
         super("Black Knight", "BKN", 8, 6, true, 16,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Blades, 3),
+                        new WeightedSkillPlus(Skill.Blades, 3),
                         new WeightedSkill(Skill.BluntWeapons, 5),
                         new WeightedSkill(Skill.Endurance, 2),
                         new WeightedSkill(Skill.Labor, 2),
                         new WeightedSkill(Skill.Leadership, 2),
                         new WeightedSkill(Skill.Perception, 4),
-                        new WeightedSkill(Skill.Persuade, 2),
+                        new WeightedSkillPlus(Skill.Persuade, 2),
                         new WeightedSkill(Skill.Search, 1),
-                        new WeightedSkill(Skill.Survival, 2)
+                        new WeightedSkillPlus(Skill.Survival, 2)
                 });
     }
 

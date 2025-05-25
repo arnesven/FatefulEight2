@@ -26,7 +26,7 @@ public class AmazonClass extends CharacterClass {
         super("Amazon", "AMZ", 7, 7, false, 8,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 4),
-                        new WeightedSkill(Skill.Bows, 4),
+                        new WeightedSkillPlus(Skill.Bows, 4),
                         new WeightedSkill(Skill.Endurance, 3),
                         new WeightedSkill(Skill.MagicGreen, 2),
                         new WeightedSkill(Skill.Perception, 4),

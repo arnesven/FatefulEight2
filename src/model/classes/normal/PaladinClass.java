@@ -26,14 +26,13 @@ public class PaladinClass extends CharacterClass {
         super("Paladin", "PAL", 10, 4, true, 20,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 3),
-                        new WeightedSkill(Skill.BluntWeapons, 4),
+                        new WeightedSkillMinus(Skill.BluntWeapons, 4),
                         new WeightedSkill(Skill.Endurance, 3),
                         new WeightedSkill(Skill.Labor, 1),
                         new WeightedSkill(Skill.Leadership, 4),
-                        new WeightedSkill(Skill.MagicWhite, 3),
+                        new WeightedSkillPlus(Skill.MagicWhite, 2),
                         new WeightedSkill(Skill.Perception, 2),
-                        new WeightedSkill(Skill.Polearms, 4),
-                        new WeightedSkill(Skill.Survival, 1)
+                        new WeightedSkill(Skill.Polearms, 4)
                 });
     }
 

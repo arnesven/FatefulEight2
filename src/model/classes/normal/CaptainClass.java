@@ -23,17 +23,17 @@ public class CaptainClass extends CharacterClass {
     private static final MyColors SECONDARY_COLOR = MyColors.DARK_GRAY;
 
     protected CaptainClass(String className, String shortName) {
-        super(className, shortName, 8, 5, true, 16,
+        super(className, shortName, 8, 4, true, 14,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 4),
-                        new WeightedSkill(Skill.Bows, 2),
+                        new WeightedSkillMinus(Skill.Bows, 2),
                         new WeightedSkill(Skill.Endurance, 3),
-                        new WeightedSkill(Skill.Leadership, 5),
+                        new WeightedSkillMinus(Skill.Leadership, 5),
                         new WeightedSkill(Skill.Logic, 2),
                         new WeightedSkill(Skill.Perception, 3),
-                        new WeightedSkill(Skill.Polearms, 3),
+                        new WeightedSkillMinus(Skill.Polearms, 3),
                         new WeightedSkill(Skill.Search, 3),
-                        new WeightedSkill(Skill.Security, 2),
+                        new WeightedSkillMinus(Skill.Security, 2),
                         new WeightedSkill(Skill.Survival, 3)
                 });
     }

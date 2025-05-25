@@ -26,16 +26,16 @@ public class DruidClass extends CharacterClass {
     public DruidClass() {
         super("Druid", "D", 6, 4, false, 12,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Blades, 2),
+                        new WeightedSkillPlus(Skill.Blades, 2),
                         new WeightedSkill(Skill.BluntWeapons, 4),
                         new WeightedSkill(Skill.Endurance, 4),
                         new WeightedSkill(Skill.Labor, 3),
-                        new WeightedSkill(Skill.Leadership, 3),
+                        new WeightedSkillPlus(Skill.Leadership, 3),
                         new WeightedSkill(Skill.Logic, 3),
                         new WeightedSkill(Skill.MagicGreen, 5),
                         new WeightedSkill(Skill.Sneak, 2),
                         new WeightedSkill(Skill.SpellCasting, 2),
-                        new WeightedSkill(Skill.Survival, 5)
+                        new WeightedSkillPlus(Skill.Survival, 5)
                 });
         this.staff = new GnarledStaffDetail();
     }

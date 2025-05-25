@@ -22,15 +22,15 @@ public class SpyClass extends CharacterClass {
     public SpyClass() {
         super("Spy", "SPY", 6, 5, false, 16,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Acrobatics, 2),
+                        new WeightedSkillMinus(Skill.Acrobatics, 2),
                         new WeightedSkill(Skill.Blades, 2),
-                        new WeightedSkill(Skill.Logic, 5),
+                        new WeightedSkillPlus(Skill.Logic, 4),
                         new WeightedSkill(Skill.Perception, 6),
-                        new WeightedSkill(Skill.Persuade, 4),
-                        new WeightedSkill(Skill.Search, 5),
+                        new WeightedSkillMinus(Skill.Persuade, 4),
+                        new WeightedSkillMinus(Skill.Search, 5),
                         new WeightedSkill(Skill.Security, 5),
                         new WeightedSkill(Skill.SeekInfo, 5),
-                        new WeightedSkill(Skill.Sneak, 5)
+                        new WeightedSkillMinus(Skill.Sneak, 5)
                 });
     }
 

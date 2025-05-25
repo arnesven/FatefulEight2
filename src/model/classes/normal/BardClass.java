@@ -19,17 +19,17 @@ import java.util.List;
 
 public class BardClass extends CharacterClass {
     public BardClass() {
-        super("Bard", "BRD", 6, 5, false, 18,
+        super("Bard", "BRD", 6, 5, false, 16,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 3),
-                        new WeightedSkill(Skill.BluntWeapons, 2),
+                        new WeightedSkillMinus(Skill.BluntWeapons, 2),
                         new WeightedSkill(Skill.Entertain, 5),
                         new WeightedSkill(Skill.Leadership, 3),
                         new WeightedSkill(Skill.Logic, 3),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 6),
-                        new WeightedSkill(Skill.Security, 3),
-                        new WeightedSkill(Skill.SeekInfo, 4),
+                        new WeightedSkillMinus(Skill.Security, 3),
+                        new WeightedSkillMinus(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.Sneak, 4)
                 });
     }

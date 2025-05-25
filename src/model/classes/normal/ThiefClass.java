@@ -26,16 +26,16 @@ public class ThiefClass extends CharacterClass {
     public ThiefClass() {
         super("Thief", "T", 6, 6, false, 12,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Acrobatics, 4),
+                        new WeightedSkillMinus(Skill.Acrobatics, 4),
                         new WeightedSkill(Skill.Blades, 3),
                         new WeightedSkill(Skill.BluntWeapons, 1),
-                        new WeightedSkill(Skill.Entertain, 2),
+                        new WeightedSkillPlus(Skill.Entertain, 1),
                         new WeightedSkill(Skill.Logic, 3),
-                        new WeightedSkill(Skill.Perception, 5),
-                        new WeightedSkill(Skill.Persuade, 3),
+                        new WeightedSkillPlus(Skill.Perception, 4),
+                        new WeightedSkillMinus(Skill.Persuade, 3),
                         new WeightedSkill(Skill.Search, 5),
                         new WeightedSkill(Skill.Security, 5),
-                        new WeightedSkill(Skill.SeekInfo, 3),
+                        new WeightedSkillMinus(Skill.SeekInfo, 3),
                         new WeightedSkill(Skill.Sneak, 5)
                 });
     }

@@ -21,16 +21,16 @@ public class WitchClass extends CharacterClass {
     public WitchClass() {
         super("Witch", "WIT", 6, 5, false, 18,
                 new WeightedSkill[]{
-                        new WeightedSkill(Skill.Blades, 2),
-                        new WeightedSkill(Skill.Logic, 4),
+                        new WeightedSkillPlus(Skill.Blades, 2),
+                        new WeightedSkillPlus(Skill.Logic, 4),
                         new WeightedSkill(Skill.MagicBlack, 5),
-                        new WeightedSkill(Skill.MagicGreen, 2),
+                        new WeightedSkillPlus(Skill.MagicGreen, 2),
                         new WeightedSkill(Skill.Perception, 3),
                         new WeightedSkill(Skill.Persuade, 2),
-                        new WeightedSkill(Skill.Search, 3),
-                        new WeightedSkill(Skill.Sneak, 2),
-                        new WeightedSkill(Skill.SpellCasting, 3),
-                        new WeightedSkill(Skill.Survival, 3),
+                        new WeightedSkillMinus(Skill.Search, 4),
+                        new WeightedSkillMinus(Skill.Sneak, 3),
+                        new WeightedSkillPlus(Skill.SpellCasting, 3),
+                        new WeightedSkillPlus(Skill.Survival, 3),
                 });
     }
 

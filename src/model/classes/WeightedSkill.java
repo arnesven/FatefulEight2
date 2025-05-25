@@ -42,10 +42,37 @@ public class WeightedSkill implements Serializable {
         return weight;
     }
 
+    public double getBalancingScore() {
+        return weight;
+    }
+
     public Skill getSkill() {
         return skill;
     }
 
+    public String asString() {
+        return weight + "";
+    }
+
+//    public static final int[][] RANK_MATRIX = new int[][]{
+//                      0, 0, 0, 1, 1, 1, 2, 2, 3}, // Weight 1-
+//            new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3}, // Weight 1
+//                      0, 1, 1, 1, 2, 2, 3, 3, 3}, // Weight 1+
+//                      1, 1, 1, 1, 2, 2, 3, 3, 3}, // Weight 2-
+//            new int[]{1, 1, 1, 2, 2, 3, 3, 3, 4}, // Weight 2
+//                      1, 1, 2, 2, 3, 3, 3, 4, 4}, // Weight 2+
+//                      2, 2, 2, 3, 3, 3, 4, 4, 5}, // Weight 3-
+//            new int[]{2, 2, 3, 3, 3, 4, 4, 5, 5}, // Weight 3
+//                      2, 3, 3, 3, 4, 4, 5, 5, 5}, // Weight 3+
+//            new int[]{2, 3, 3, 4, 4, 5, 5, 5, 6}, // Weight 4
+//                      3, 3, 4, 4, 5, 5, 5, 6, 6}, // Weight 4+
+//                      2, 2, 3, 4, 5, 5, 6, 6, 6}, // Weight 5-
+//            new int[]{2, 3, 4, 5, 5, 6, 6, 6, 6}, // Weight 5
+//                      3, 4, 5, 5, 6, 6, 6, 6, 6}, // Weight 5+
+//            new int[]{3, 4, 5, 5, 6, 7, 7, 7, 7}, // Weight 6
+//                      4, 5, 5, 6, 7, 7, 7, 7, 7}  // Weight 6+
+//            // level  1  2  3  4  5  6  7  8  9
+//    };
 
 
 /*

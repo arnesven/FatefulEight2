@@ -25,13 +25,13 @@ public class ForesterClass extends CharacterClass {
                         new WeightedSkill(Skill.Axes, 5),
                         new WeightedSkill(Skill.BluntWeapons, 1),
                         new WeightedSkill(Skill.Bows, 3),
-                        new WeightedSkill(Skill.Endurance, 5),
+                        new WeightedSkillMinus(Skill.Endurance, 4),
                         new WeightedSkill(Skill.Entertain, 1),
-                        new WeightedSkill(Skill.Labor, 5),
+                        new WeightedSkillMinus(Skill.Labor, 4),
                         new WeightedSkill(Skill.Leadership, 4),
                         new WeightedSkill(Skill.Perception, 2),
-                        new WeightedSkill(Skill.Search, 4),
-                        new WeightedSkill(Skill.Survival, 5)
+                        new WeightedSkillMinus(Skill.Search, 4),
+                        new WeightedSkillMinus(Skill.Survival, 5)
                 });
     }
 

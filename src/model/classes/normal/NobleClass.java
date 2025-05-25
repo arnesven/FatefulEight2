@@ -23,16 +23,16 @@ public class NobleClass extends CharacterClass {
     private static final MyColors DETAIL_COLOR = MyColors.CYAN;
 
     public NobleClass() {
-        super("Noble", "N", 7, 5, false, 35,
+        super("Noble", "N", 7, 4, false, 30,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 1),
-                        new WeightedSkill(Skill.Blades, 3),
+                        new WeightedSkillMinus(Skill.Blades, 3),
                         new WeightedSkill(Skill.Bows, 3),
                         new WeightedSkill(Skill.Entertain, 4),
                         new WeightedSkill(Skill.Leadership, 5),
                         new WeightedSkill(Skill.Logic, 3),
                         new WeightedSkill(Skill.Perception, 2),
-                        new WeightedSkill(Skill.Persuade, 5),
+                        new WeightedSkillMinus(Skill.Persuade, 5),
                         new WeightedSkill(Skill.Search, 2),
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.Sneak, 1)

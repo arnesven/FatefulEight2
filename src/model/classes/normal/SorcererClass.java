@@ -27,13 +27,13 @@ public class SorcererClass extends CharacterClass {
         super("Sorcerer", "SOR", 8, 4, false, 28,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Blades, 2),
-                        new WeightedSkill(Skill.BluntWeapons, 4),
+                        new WeightedSkillPlus(Skill.BluntWeapons, 4),
                         new WeightedSkill(Skill.Endurance, 2),
                         new WeightedSkill(Skill.Logic, 4),
                         new WeightedSkill(Skill.MagicBlack, 2),
-                        new WeightedSkill(Skill.MagicRed, 3),
-                        new WeightedSkill(Skill.Persuade, 2),
-                        new WeightedSkill(Skill.Sneak, 3),
+                        new WeightedSkillPlus(Skill.MagicRed, 3),
+                        new WeightedSkillMinus(Skill.Persuade, 3),
+                        new WeightedSkillPlus(Skill.Sneak, 3),
                         new WeightedSkill(Skill.SpellCasting, 5)
                 });
         this.staff = new EvilStaffDetail();

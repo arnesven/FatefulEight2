@@ -59,7 +59,7 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
                 for (Skill s : charClass.getSkills()) {
                     String skillString = s.getName() + " (" + s.getShortName() + ")";
                     print(model.getScreenHandler(), x, y + (i++),
-                            String.format("%-20sW%1d", skillString, charClass.getWeightForSkill(s).getWeight()));
+                            String.format("%-20sW%s", skillString, charClass.getWeightForSkill(s).asString()));
                 }
             }
         });

@@ -21,15 +21,15 @@ public class AssassinClass extends CharacterClass {
     private final MyColors clothingColor;
 
     protected AssassinClass(String className, String classShortName, MyColors suitColor) {
-        super(className, classShortName, 6, 7, false, 14,
+        super(className, classShortName, 6, 7, false, 16,
                 new WeightedSkill[] {
                         new WeightedSkill(Skill.Acrobatics, 5),
                         new WeightedSkill(Skill.Blades, 5),
                         new WeightedSkill(Skill.Bows, 3),
-                        new WeightedSkill(Skill.MagicBlue, 2),
+                        new WeightedSkillMinus(Skill.MagicBlue, 2),
                         new WeightedSkill(Skill.Perception, 3),
                         new WeightedSkill(Skill.Search, 4),
-                        new WeightedSkill(Skill.Security, 4),
+                        new WeightedSkillMinus(Skill.Security, 4),
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.Sneak, 5)}
                 );

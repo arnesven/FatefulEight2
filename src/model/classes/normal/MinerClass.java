@@ -20,11 +20,11 @@ import java.util.List;
 
 public class MinerClass extends CharacterClass {
     public MinerClass() {
-        super("Miner", "MIN", 12, 3, true, 10,
+        super("Miner", "MIN", 12, 2, true, 5,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Axes, 5),
-                        new WeightedSkill(Skill.BluntWeapons, 3),
-                        new WeightedSkill(Skill.Endurance, 5),
+                        new WeightedSkillMinus(Skill.BluntWeapons, 3),
+                        new WeightedSkillMinus(Skill.Endurance, 5),
                         new WeightedSkill(Skill.Entertain, 1),
                         new WeightedSkill(Skill.Labor, 5),
                         new WeightedSkill(Skill.Perception, 2),
