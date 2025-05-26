@@ -28,10 +28,10 @@ public class WizardClass extends CharacterClass {
                         new WeightedSkill(Skill.Logic, 5),
                         new WeightedSkill(Skill.MagicBlack, 2),
                         new WeightedSkill(Skill.MagicBlue, 4),
-                        new WeightedSkill(Skill.MagicGreen, 4),
+                        new WeightedSkillMinus(Skill.MagicGreen, 4),
                         new WeightedSkill(Skill.MagicRed, 2),
                         new WeightedSkill(Skill.Perception, 4),
-                        new WeightedSkill(Skill.Search, 2),
+                        new WeightedSkillPlus(Skill.Search, 2),
                         new WeightedSkill(Skill.SeekInfo, 4),
                         new WeightedSkill(Skill.SpellCasting, 5)
                 });

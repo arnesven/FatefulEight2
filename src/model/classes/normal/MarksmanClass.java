@@ -32,7 +32,7 @@ public class MarksmanClass extends CharacterClass {
                         new WeightedSkill(Skill.Endurance, 3),
                         new WeightedSkill(Skill.Leadership, 2),
                         new WeightedSkill(Skill.Perception, 5),
-                        new WeightedSkill(Skill.Polearms, 2),
+                        new WeightedSkillPlus(Skill.Polearms, 2),
                         new WeightedSkill(Skill.Search, 4),
                         new WeightedSkill(Skill.Sneak, 4),
                         new WeightedSkill(Skill.Survival, 3)

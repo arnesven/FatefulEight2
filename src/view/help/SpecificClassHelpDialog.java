@@ -88,8 +88,8 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
                 passAb -> passAb instanceof SkillAbilityCombatAction),
                 passAb -> (SkillAbilityCombatAction)passAb));
 
-        for (int level = 1; level <= 9; ++level) {
-            bld.append(" ").append(level).append("  ");
+        for (int level = 1; level <= 10; ++level) {
+            bld.append(String.format("%2d  ", level));
             List<MyPair<Skill, Integer>> newRanks = new ArrayList<>();
             Set<SkillAbilityCombatAction> newAbilities = new HashSet<>();
             for (Skill s : Skill.values()) {
