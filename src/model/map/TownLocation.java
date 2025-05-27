@@ -95,7 +95,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
         if (model.getMainStory().isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
-        if (MyRandom.rollD10() >= 3) {
+        if (MyRandom.rollD10() >= 2) {
             return MyRandom.sample(List.of(
                     new AcceptDeliveryEvent(model),
                     new AlchemistEvent(model),

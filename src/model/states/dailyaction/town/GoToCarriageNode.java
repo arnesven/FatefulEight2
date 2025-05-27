@@ -13,15 +13,16 @@ import view.subviews.TownSubView;
 
 public class GoToCarriageNode extends DailyActionNode {
 
-    private static Sprite sprite;
+    private static Sprite DAY_SPRITE = new Sprite32x32("carriage", "world_foreground.png", 0xD1,
+                                                      TownSubView.GROUND_COLOR, TownSubView.PATH_COLOR, MyColors.BROWN);
+    private static Sprite NIGHT_SPRITE = new Sprite32x32("carriage", "world_foreground.png", 0xD1,
+            TownSubView.GROUND_COLOR_NIGHT, TownSubView.PATH_COLOR, MyColors.BLACK);
     private final TravelByCarriageState travelState;
+    private final Model model;
 
     public GoToCarriageNode(Model model) {
         super("Go to carriage");
-        sprite = new Sprite32x32("carriage", "world_foreground.png", 0xD1,
-                model.getTimeOfDay() == TimeOfDay.EVENING ? TownSubView.GROUND_COLOR_NIGHT : TownSubView.GROUND_COLOR,
-                TownSubView.PATH_COLOR,
-                model.getTimeOfDay() == TimeOfDay.EVENING ? MyColors.BLACK : MyColors.BROWN);
+        this.model = model;
         travelState = new TravelByCarriageState(model);
     }
 
@@ -38,7 +39,10 @@ public class GoToCarriageNode extends DailyActionNode {
 
     @Override
     public Sprite getBackgroundSprite() {
-        return sprite;
+        if (model.getTimeOfDay() == TimeOfDay.EVENING) {
+            return NIGHT_SPRITE;
+        }
+        return DAY_SPRITE;
     }
 
     @Override
