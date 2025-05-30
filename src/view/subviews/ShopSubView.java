@@ -22,6 +22,7 @@ public class ShopSubView extends TopMenuSubView {
     private final String seller;
     private final Map<Item, Integer> priceMap;
     private final ShopState state;
+    private final int partyMaxMercantile;
     private SteppingMatrix<Item> matrix;
     private boolean isBuying;
     private static final Sprite crossSprite = new Sprite32x32("crosssprite", "combat.png", 0x00, MyColors.BLACK, MyColors.CYAN, MyColors.RED);
@@ -29,13 +30,14 @@ public class ShopSubView extends TopMenuSubView {
     private boolean overflow = false;
 
     public ShopSubView(SteppingMatrix<Item> items, boolean isBuying, String seller,
-                       Map<Item, Integer> prices, ShopState state) {
+                       Map<Item, Integer> prices, ShopState state, int partyMaxMercantile) {
         super(5, new int[]{X_OFFSET + 3, X_OFFSET+13, X_OFFSET+24});
         this.matrix = items;
         this.isBuying = isBuying;
         this.seller = seller;
         this.priceMap = prices;
         this.state = state;
+        this.partyMaxMercantile = partyMaxMercantile;
         setTopCursorIndex(getDefaultIndex());
     }
 
@@ -157,7 +159,7 @@ public class ShopSubView extends TopMenuSubView {
         if (isBuying) {
             cost = priceMap.get(it);
         } else {
-            cost = it.getSellValue();
+            cost = it.getSellValue(this.partyMaxMercantile);
         }
         return it.getName() + " " + cost + " gold, " +
                 it.getWeight() / 1000.0 + " kg" +

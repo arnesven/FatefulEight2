@@ -15,7 +15,7 @@ public class SkillsView extends SelectableListMenu {
     private static final int ROW_OFFSET = 14;
 
     public SkillsView(GameView previous) {
-        super(previous, 45, 38);
+        super(previous, 45, 39);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class ObolsDummyItem extends InventoryDummyItem {
     }
 
     @Override
-    public int getSellValue() {
+    public int getSellValue(int mercantileRank) {
         return getCost();
     }
 }

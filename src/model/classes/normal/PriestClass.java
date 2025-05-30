@@ -31,6 +31,7 @@ public class PriestClass extends CharacterClass {
                         new WeightedSkill(Skill.Leadership, 4),
                         new WeightedSkill(Skill.Logic, 4),
                         new WeightedSkillPlus(Skill.MagicWhite, 4),
+                        new WeightedSkill(Skill.Mercantile, 1),
                         new WeightedSkill(Skill.Perception, 2),
                         new WeightedSkill(Skill.Persuade, 4),
                         new WeightedSkill(Skill.SeekInfo, 3),

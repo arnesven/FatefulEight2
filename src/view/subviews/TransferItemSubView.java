@@ -12,7 +12,7 @@ public class TransferItemSubView extends ShopSubView {
 
     public TransferItemSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller,
                                HashMap<Item, Integer> prices, TransferItemState transferItemState) {
-        super(buyItems, isBuying, seller, prices, transferItemState);
+        super(buyItems, isBuying, seller, prices, transferItemState, 0);
         this.seller = seller;
     }
 

@@ -29,6 +29,7 @@ public class ArtisanClass extends CharacterClass {
                         new WeightedSkill(Skill.Entertain, 2),
                         new WeightedSkill(Skill.Labor, 5),
                         new WeightedSkillPlus(Skill.Logic, 4),
+                        new WeightedSkill(Skill.Mercantile, 5),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 2),
                         new WeightedSkill(Skill.Search, 2),

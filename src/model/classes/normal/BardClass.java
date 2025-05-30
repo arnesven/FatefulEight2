@@ -26,6 +26,7 @@ public class BardClass extends CharacterClass {
                         new WeightedSkill(Skill.Entertain, 5),
                         new WeightedSkill(Skill.Leadership, 3),
                         new WeightedSkill(Skill.Logic, 3),
+                        new WeightedSkill(Skill.Mercantile, 2),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 6),
                         new WeightedSkillMinus(Skill.Security, 3),

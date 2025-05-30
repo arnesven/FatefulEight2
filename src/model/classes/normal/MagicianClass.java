@@ -28,6 +28,7 @@ public class MagicianClass extends CharacterClass {
                         new WeightedSkill(Skill.Logic, 4),
                         new WeightedSkill(Skill.MagicBlue, 4),
                         new WeightedSkill(Skill.MagicWhite, 3),
+                        new WeightedSkill(Skill.Mercantile, 3),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 4),
                         new WeightedSkill(Skill.Security, 3),

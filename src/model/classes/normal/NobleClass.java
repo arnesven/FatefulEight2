@@ -31,6 +31,7 @@ public class NobleClass extends CharacterClass {
                         new WeightedSkill(Skill.Entertain, 4),
                         new WeightedSkill(Skill.Leadership, 5),
                         new WeightedSkill(Skill.Logic, 3),
+                        new WeightedSkill(Skill.Mercantile, 4),
                         new WeightedSkill(Skill.Perception, 2),
                         new WeightedSkillMinus(Skill.Persuade, 5),
                         new WeightedSkill(Skill.Search, 2),

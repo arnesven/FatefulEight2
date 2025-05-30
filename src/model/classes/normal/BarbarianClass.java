@@ -23,7 +23,7 @@ public class BarbarianClass extends CharacterClass {
     private static final MyColors CLOTHING_COLOR = MyColors.BROWN;
 
     public BarbarianClass() {
-        super("Barbarian", "BBN", 11, 4, true, 5,
+        super("Barbarian", "BBN", 11, 4, true, 10,
                 new WeightedSkill[]{
                         new WeightedSkill(Skill.Acrobatics, 1),
                         new WeightedSkill(Skill.Axes, 5),

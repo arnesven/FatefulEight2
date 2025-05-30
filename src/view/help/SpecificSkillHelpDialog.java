@@ -35,7 +35,7 @@ public class SpecificSkillHelpDialog extends SubChapterHelpDialog {
         }
 
         return "Short Name: " + s.getShortName() + "\n" +
-                getGoverningAttribute(s) + s.getDescription() + abiExtra;
+                getGoverningAttribute(s) + s.getDescription() + abiExtra + s.getMiscHelpText();
     }
 
     private static String getGoverningAttribute(Skill s) {

@@ -1,5 +1,7 @@
 package model.classes;
 
+import model.states.ShopState;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +22,7 @@ public enum Skill implements Comparable<Skill> {
     MagicRed("Magic (Red)", "MaR", "knowledge about red magic. Red magic is associated with destruction, chaos and the element of fire."),        // 0
     MagicWhite("Magic (White)", "MaW", "knowledge about white magic. White magic is associated with light, healing, warmth and the element of air."),    // 1
     MagicAny("Magic (Any)", "MaA", "knowledge about any magic.\n\nCharacters do not have ranks in this skill. When a game effect refers to this skill it uses the character's best rank from any of Black, Blue, Green, Red or White magic."),        // 3
+    Mercantile("Mercantile", "Mer", "appraising goods, bargaining and conducting business."),
     Perception("Perception", "Perc", "representing a character's senses. Most of the time this skill will be used for vision but it may represent a character's hearing, smell or taste as well."),       // 16
     Persuade("Persuade", "Pers", "representing a character's ability to negotiate, sweet-talk, intimidate or cajole others into doing their bidding. This skill is also used when a character is lying."),           // 22
     Polearms("Polearms", "Pol", "handling spears, glaives, halberds, pikes and the like."),           // 1
@@ -90,5 +93,20 @@ public enum Skill implements Comparable<Skill> {
 
     public String getShortName() {
         return shortName;
+    }
+
+    public String getMiscHelpText() {
+        if (this == Mercantile) {
+            StringBuilder table = new StringBuilder("    Rank Rate\n");
+            for (int rank = 0; rank < 11; rank++) {
+                int percentage = (int) (100.0 * (ShopState.getSellRateForMercantile(rank)));
+                table.append(String.format("      %2d %2d", rank, percentage)).append("%\n");
+            }
+            table.append("     etc.\n");
+
+            return "\n\nThe party member with the highest rank of Mercantile will determine the amount of " +
+                    "gold you gain when selling items.\n\n" + table.toString();
+        }
+        return "";
     }
 }

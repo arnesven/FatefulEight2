@@ -5,6 +5,7 @@ import model.Model;
 import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.classes.Skill;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
@@ -25,7 +26,7 @@ import java.util.*;
 public class ShopState extends GameState {
 
     private final ShopSubView subView;
-    private final String seller;
+    private final int partyMaxMercantile;
     private boolean warnAboutManyItems = false;
     private HashMap<Item, Integer> prices;
     private SteppingMatrix<Item> buyItems;
@@ -40,7 +41,6 @@ public class ShopState extends GameState {
         this.itemsForSale = itemsForSale;
         buyItems = new SteppingMatrix<>(8, 8);
         sellItems = new SteppingMatrix<>(8, 8);
-        this.seller = seller;
         boolean overflow = false;
         if (itemsForSale.size() > buyItems.getRows()*buyItems.getColumns()) {
             buyItems.addElements(itemsForSale.subList(0, buyItems.getRows()*buyItems.getColumns()));
@@ -58,6 +58,7 @@ public class ShopState extends GameState {
         makePricesMap(itemsForSale, specialPrices);
         this.subView = makeSubView(buyItems, true, seller, prices, this);
         subView.setOverflowWarning(overflow);
+        this.partyMaxMercantile = MyLists.maximum(model.getParty().getPartyMembers(), gc -> gc.getRankForSkill(Skill.Mercantile));
     }
 
     public ShopState(Model model, String seller, List<Item> itemsForSale) {
@@ -65,7 +66,7 @@ public class ShopState extends GameState {
     }
 
     protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller, HashMap<Item, Integer> prices, ShopState shopState) {
-        return new ShopSubView(buyItems, true, seller, prices, this);
+        return new ShopSubView(buyItems, true, seller, prices, this, partyMaxMercantile);
     }
 
     public List<Item> getSellableItems(Model model) {
@@ -227,11 +228,30 @@ public class ShopState extends GameState {
     }
 
     protected void itemJustSold(Model model, Item it, SteppingMatrix<Item> buyItems, HashMap<Item, Integer> prices) {
-        int money = it.getCost() / 2;
+        int money = getSellValue(model, it);
         model.getParty().addToGold(money);
         println("You sold " + it.getName() + " for " + money + " gold.");
         GameStatistics.incrementItemsSold(1);
         SoundEffects.sellItem();
+    }
+
+    private int getSellValue(Model model, Item it) {
+        return it.getSellValue(partyMaxMercantile);
+    }
+
+    public static double getSellRateForMercantile(int maxMercantile) {
+        if (maxMercantile == 0) {
+            return 0.4;
+        }
+        if (maxMercantile <= 3) {   // 0.5   0.6   0.7
+            return getSellRateForMercantile(0) + maxMercantile / 10.0;
+        }
+        if (maxMercantile <= 6) {   // 0.75  0.80  0.85
+            return getSellRateForMercantile(3) + (maxMercantile - 3) / 20.0;
+        }
+        // 0.86 0.87 0.88 0.89 ...
+        return getSellRateForMercantile(6) + (maxMercantile - 6) / 100.0;
+
     }
 
     private boolean checkForImmediateEquip(Model model, Item it, int xPos, int yPos) {

@@ -7,6 +7,7 @@ import model.combat.conditions.Condition;
 import model.enemies.Enemy;
 import model.items.spells.Spell;
 import model.states.CombatEvent;
+import model.states.ShopState;
 import util.MyPair;
 import view.AnalyzeDialog;
 import view.GameView;
@@ -159,8 +160,8 @@ public abstract class Item implements Serializable, Comparable<Item> {
         return bldr.toString().toUpperCase();
     }
 
-    public int getSellValue() {
-        return getCost() / 2;
+    public int getSellValue(int mercantileRank) {
+        return (int)Math.round(ShopState.getSellRateForMercantile(mercantileRank) * getCost());
     }
 
     public boolean grantsConditionImmunity(Condition cond) {
