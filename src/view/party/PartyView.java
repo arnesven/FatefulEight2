@@ -67,17 +67,9 @@ public class PartyView extends SelectableListMenu {
         int y = yStart+3;
 
         if (model.getParty().getLeader() == gc) {
-            addListContent(content, x, y++, "Leader");
+            addDisabledListContent(content, x, y++, "Leader");
         } else if (model.getParty().getBench().contains(gc)) {
-            content.add(new SelectableListContent(x, y++, "Absent from party") {
-                @Override
-                public void performAction(Model model, int x, int y) { }
-
-                @Override
-                public boolean isEnabled(Model model) {
-                    return false;
-                }
-            });
+            addDisabledListContent(content, x, y++, "Absent from party");
         } else {
             content.add(new SelectableListContent(x, y++, "Not Leader") {
                 @Override
@@ -104,10 +96,7 @@ public class PartyView extends SelectableListMenu {
             });
         }
 
-        addListContent(content, x, y++, String.format("Health %9s", gc.getHP() + "/" + gc.getMaxHP()));
-        addListContent(content, x, y++, String.format("Stamina %8s", gc.getSP() + "/" + gc.getMaxSP()));
-        addListContent(content, x, y++, String.format("Armor %10d", gc.getAP()));
-        addListContent(content, x, y++, String.format("Speed %10d", gc.getSpeed()));
+        y += 4;
         String status = gc.getStatus();
         if (status.length() >= 16) {
             status = status.substring(0, 7) + " ...";
@@ -144,21 +133,9 @@ public class PartyView extends SelectableListMenu {
         y+=1;
         Weapon w = gc.getEquipment().getWeapon();
         x -= 3;
-        if (!(w instanceof UnarmedCombatWeapon)) {
-            content.add(new OpenWeaponMenuListContent(x, y++, gc, w.getName()));
-            addListContent(content, x, y++, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString());
-            addListContent(content, x, y++, getAttackString(w));
-            addListContent(content, x, y++, getBonusesAsString(w));
-            String extra = w.getExtraText();
-            if (extra.length() > rightColumnX - SubView.X_OFFSET) {
-                extra = extra.substring(0, rightColumnX - SubView.X_OFFSET);
-            }
-            addListContent(content, x, y++, extra);
-        } else {
-            content.add(new OpenWeaponMenuListContent(x, y++, gc, "NO WEAPON"));
-            addListContent(content, x, y++, w.getExtraText());
-            y+=3;
-        }
+        String weaponLabel = (w instanceof UnarmedCombatWeapon ? "NO WEAPON" : w.getName());
+        content.add(new OpenWeaponMenuListContent(x, y++, gc, weaponLabel));
+        y+=4;
 
         content.add(new OpenEquipMenuListContent(x, y++, gc, gc.getEquipment().getClothing().getName()) {
             @Override
@@ -171,16 +148,12 @@ public class PartyView extends SelectableListMenu {
                 return super.isEnabled(model) && gc.canChangeClothing();
             }
         });
-        addListContent(content, x, y++, getArmorString(gc.getEquipment().getClothing(), true));
-        addListContent(content, x, y++, getBonusesAsString(gc.getEquipment().getClothing()));
-        y += 2;
+        y += 4;
 
         Accessory accessory = gc.getEquipment().getAccessory();
         if (accessory != null) {
             content.add(new OpenAccessoryMenuListContent(x, y++, gc, accessory.getName()));
-            addListContent(content, x, y++, getArmorString(accessory, false) + " " +  getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory));
-            addListContent(content, x, y++, getBonusesAsString(accessory));
-            addListContent(content, x, y++, accessory.getExtraText());
+            y += 3;
         } else {
             content.add(new OpenAccessoryMenuListContent(x, y++, gc, "NO ACCESSORY"));
         }
@@ -211,10 +184,16 @@ public class PartyView extends SelectableListMenu {
         return "Speed " + accessory.getSpeedModifier();
     }
 
-    private void addListContent(List<ListContent> content, int x, int y, String text) {
-        if (!text.equals("")) {
-            content.add(new ListContent(x, y, text));
-        }
+    private void addDisabledListContent(List<ListContent> content, int x, int y, String text) {
+        content.add(new SelectableListContent(x, y, text) {
+            @Override
+            public void performAction(Model model, int x, int y) { }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return false;
+            }
+        });
     }
 
     private String getAttackString(Weapon w) {
@@ -264,6 +243,47 @@ public class PartyView extends SelectableListMenu {
                 model.getScreenHandler().put(x+1, y+7, ArrowSprites.LEFT);
                 model.getScreenHandler().put(x+7, y+7, ArrowSprites.RIGHT);
 
+                int newY = y + 2;
+                int rightOfPortraitX = xStart + 9;
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Health %9s", gc.getHP() + "/" + gc.getMaxHP()));
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Stamina %8s", gc.getSP() + "/" + gc.getMaxSP()));
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Armor %10d", gc.getAP()));
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, String.format("Speed %10d", gc.getSpeed()));
+
+                newY += 3;
+                Weapon w = gc.getEquipment().getWeapon();
+                rightOfPortraitX -= 3;
+                if (!(w instanceof UnarmedCombatWeapon)) {
+                    newY++;
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString());
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getAttackString(w));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(w));
+                    String extra = w.getExtraText();
+                    if (extra.length() > rightColumnX - SubView.X_OFFSET) {
+                        extra = extra.substring(0, rightColumnX - SubView.X_OFFSET);
+                    }
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, extra);
+                } else {
+                    newY++;
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, w.getExtraText());
+                    newY+=3;
+                }
+
+                newY++;
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, getArmorString(gc.getEquipment().getClothing(), true));
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(gc.getEquipment().getClothing()));
+                newY +=2;
+
+                Accessory accessory = gc.getEquipment().getAccessory();
+                if (accessory != null) {
+                    newY++;
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getArmorString(accessory, false) + " " +  getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(accessory));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, accessory.getExtraText());
+                } else {
+                    newY++;
+                }
+
                 drawEquipment(model, gc, x+1, y+9);
                 int skillsEndRow = printSkills(model.getScreenHandler(), gc, y);
 
@@ -272,7 +292,7 @@ public class PartyView extends SelectableListMenu {
 
                 ++skillsEndRow;
                 print(model.getScreenHandler(), rightColumnX, skillsEndRow,
-                            String.format("Avg Damage %1.1f", gc.calcAverageDamage()));
+                        String.format("Avg Damage %1.1f", gc.calcAverageDamage()));
                 ++skillsEndRow;
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, "Other Classes");
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, gc.getOtherClasses());
