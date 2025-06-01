@@ -28,6 +28,7 @@ import java.util.*;
 public class ShopState extends GameState {
 
     public static final int HAGGLE_LIMIT = 30;
+    public static final int HAGGLE_DIFFICULTY = 7;
     private final ShopSubView subView;
     private final int partyMaxMercantile;
     private final String seller;
@@ -237,14 +238,16 @@ public class ShopState extends GameState {
         } else {
             haggler = model.getParty().getPartyMember(0);
         }
-        SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(model, this, haggler, Skill.Mercantile, 7, 0, haggler.getRankForSkill(Skill.Persuade));
+        SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(model, this, haggler, Skill.Mercantile, HAGGLE_DIFFICULTY,
+                0, haggler.getRankForSkill(Skill.Persuade));
         if (result.isFailure()) {
             printQuote(seller, "Hmph. My prices are final. Accept them or walk away.");
             preventHaggling();
             return false;
         }
         printQuote(seller, "I guess I can let it go for a little less.");
-        int newPrice = (int) Math.round((1.0 - (result.getModifiedRoll() - 6) * 0.05) * it.getCost());
+        // TODO: Limit... no negative prices!
+        int newPrice = (int) Math.round((1.0 - getHaggleDiscount(result.getModifiedRoll())) * it.getCost());
         printQuote(seller, "How about " + newPrice + " gold?");
         if (newPrice > model.getParty().getGold()) {
             leaderSay("Naw... can't afford that.");
@@ -260,6 +263,20 @@ public class ShopState extends GameState {
         printQuote(seller, "Just wasting my time, huh? Just buy something already.");
         preventHaggling();
         return false;
+    }
+
+    public static double getHaggleDiscount(int modifiedRoll) {
+        double[] discounts = new double[]{
+            //   0     1     2     3     4     5     6     7     8     9
+                0.05, 0.07, 0.09, 0.12, 0.15, 0.19, 0.23, 0.28, 0.33, 0.38,
+            //   10    11    12    13    14    15    16    17    18    19
+                0.42, 0.46, 0.50, 0.54, 0.58, 0.62, 0.66, 0.69, 0.72, 0.75
+        };
+        int index = modifiedRoll - HAGGLE_DIFFICULTY;
+        if (index >= discounts.length) {
+            return discounts[discounts.length - 1];
+        }
+        return discounts[index];
     }
 
     private void preventHaggling() {
