@@ -22,6 +22,7 @@ public class DwarvenCityEvent extends DailyEventState {
     private int[] prices;
     private boolean parkVisited = false;
     private boolean palaceVisited = false;
+    private final boolean[] haggleFlag = new boolean[]{true};
 
     @Override
     public GuideData getGuideData() {
@@ -142,7 +143,7 @@ public class DwarvenCityEvent extends DailyEventState {
                     break;
                 case 1:
                     println("The dwarven shop has all kinds of items. You browse the wares while the proprietor eyes you with suspicion.");
-                    ShopState shop = new ShopState(model, "Dwarven Shop", shopInventory, prices);
+                    ShopState shop = new ShopState(model, "Dwarven Shop", shopInventory, prices, haggleFlag);
                     shop.run(model);
                     break;
                 case 2:

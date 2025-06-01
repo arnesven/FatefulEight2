@@ -35,6 +35,7 @@ public abstract class ShoppingNode extends DailyActionNode {
     private static final String OUT_OF_BUSINESS_FLAG_SUFFIX = "out-of-business";
     private List<Item> shopInventory;
     private boolean triedBreakIn = false;
+    private boolean[] haggleFlag = new boolean[]{true};
 
     public ShoppingNode(Model model, String name) {
         super(name);
@@ -53,7 +54,7 @@ public abstract class ShoppingNode extends DailyActionNode {
             triedBreakIn = true;
             return state;
         }
-        return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory));
+        return new ShopState(model, getName(), shopInventory, getSpecialPrices(shopInventory), haggleFlag);
     }
 
     private void breakIntoShop(Model model, AdvancedDailyActionState state) {

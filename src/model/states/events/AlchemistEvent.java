@@ -87,7 +87,7 @@ public class AlchemistEvent extends DailyEventState {
                 result.second[i] = p.getCost();
             }
         }
-        ShopState shop = new ShopState(model, "Alchemist", result.first, result.second);
+        ShopState shop = new ShopState(model, "Alchemist", result.first, result.second, new boolean[]{true});
         shop.run(model);
     }
 }

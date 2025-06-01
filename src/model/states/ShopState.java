@@ -6,6 +6,8 @@ import model.SteppingMatrix;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.classes.Skill;
+import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
@@ -25,8 +27,10 @@ import java.util.*;
 
 public class ShopState extends GameState {
 
+    public static final int HAGGLE_LIMIT = 30;
     private final ShopSubView subView;
     private final int partyMaxMercantile;
+    private final String seller;
     private boolean warnAboutManyItems = false;
     private HashMap<Item, Integer> prices;
     private SteppingMatrix<Item> buyItems;
@@ -35,9 +39,11 @@ public class ShopState extends GameState {
     private boolean showingBuyItems = true;
     private boolean sellingEnabled = true;
     private boolean mayOnlyBuyOne = false;
+    private boolean[] haggleFlag;
 
-    public ShopState(Model model, String seller, List<Item> itemsForSale, int[] specialPrices) {
+    public ShopState(Model model, String seller, List<Item> itemsForSale, int[] specialPrices, boolean[] haggleFlag) {
         super(model);
+        this.seller = seller;
         this.itemsForSale = itemsForSale;
         buyItems = new SteppingMatrix<>(8, 8);
         sellItems = new SteppingMatrix<>(8, 8);
@@ -48,6 +54,7 @@ public class ShopState extends GameState {
         } else {
             buyItems.addElements(itemsForSale);
         }
+        this.haggleFlag = haggleFlag;
         List<Item> itemsToSell = getSellableItems(model);
         if (itemsToSell.size() > sellItems.getColumns() * sellItems.getRows()) {
             itemsToSell = itemsToSell.subList(0, sellItems.getColumns() * sellItems.getRows());
@@ -61,8 +68,8 @@ public class ShopState extends GameState {
         this.partyMaxMercantile = MyLists.maximum(model.getParty().getPartyMembers(), gc -> gc.getRankForSkill(Skill.Mercantile));
     }
 
-    public ShopState(Model model, String seller, List<Item> itemsForSale) {
-        this(model, seller, itemsForSale, null);
+    public ShopState(Model model, String seller, List<Item> itemsForSale, boolean[] haggleFlag) {
+        this(model, seller, itemsForSale, null, haggleFlag);
     }
 
     protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller, HashMap<Item, Integer> prices, ShopState shopState) {
@@ -119,6 +126,7 @@ public class ShopState extends GameState {
             List<String> buySellActions = new ArrayList<>();
             if (showingBuyItems) {
                 buySellActions.add(getAcquireVerb());
+                addHaggleAction(model, matrixToUse.getSelectedElement(), buySellActions);
             } else {
                 buySellActions.add(getRelinquishVerb());
             }
@@ -137,6 +145,8 @@ public class ShopState extends GameState {
                         selectedAction[0] = 'B';
                     } else if (buySellActions.get(cursorPos).equals(getRelinquishVerb())) {
                         selectedAction[0] = 'S';
+                    } else if (buySellActions.get(cursorPos).equals("Haggle")) {
+                        selectedAction[0] = 'H';
                     } else if (buySellActions.get(cursorPos).equals("Analyze")) {
                         selectedAction[0] = 'A';
                     }
@@ -146,7 +156,12 @@ public class ShopState extends GameState {
             waitForReturnSilently();
             if (selectedAction[0] == 'B') {
                 Item it = buyItems.getSelectedElement();
-                if (purchaseItem(model, it, xPos, yPos)) {
+                if (purchaseItem(model, it, xPos, yPos, it.getCost())) {
+                    break;
+                }
+            } else if (selectedAction[0] == 'H') {
+                Item it = buyItems.getSelectedElement();
+                if (haggleForItem(model, it, xPos, yPos)) {
                     break;
                 }
             } else if (selectedAction[0] == 'S' && maySell(model)) {
@@ -161,6 +176,12 @@ public class ShopState extends GameState {
         return new EveningState(model);
     }
 
+    private void addHaggleAction(Model model, Item it, List<String> buySellActions) {
+        if (haggleFlag[0] && it.getCost() > GameState.calculateAverageLevel(model) * HAGGLE_LIMIT) {
+            buySellActions.add("Haggle");
+        }
+    }
+
     protected String getRelinquishVerb() {
         return "Sell";
     }
@@ -169,8 +190,7 @@ public class ShopState extends GameState {
         return "Buy";
     }
 
-    protected boolean purchaseItem(Model model, Item it, int xPos, int yPos) {
-        int cost = prices.get(it);
+    protected boolean purchaseItem(Model model, Item it, int xPos, int yPos, int cost) {
         if (cost > model.getParty().getGold()) {
             println("You cannot afford that.");
         } else {
@@ -206,6 +226,44 @@ public class ShopState extends GameState {
             }
         }
         return false;
+    }
+
+    protected boolean haggleForItem(Model model, Item it, int xPos, int yPos) {
+        model.getTutorial().haggling(model);
+        GameCharacter haggler;
+        if (model.getParty().size() > 1) {
+            print("Who would you like to haggle for " + it.getName() + "? ");
+            haggler = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
+        } else {
+            haggler = model.getParty().getPartyMember(0);
+        }
+        SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(model, this, haggler, Skill.Mercantile, 7, 0, haggler.getRankForSkill(Skill.Persuade));
+        if (result.isFailure()) {
+            printQuote(seller, "Hmph. My prices are final. Accept them or walk away.");
+            preventHaggling();
+            return false;
+        }
+        printQuote(seller, "I guess I can let it go for a little less.");
+        int newPrice = (int) Math.round((1.0 - (result.getModifiedRoll() - 6) * 0.05) * it.getCost());
+        printQuote(seller, "How about " + newPrice + " gold?");
+        if (newPrice > model.getParty().getGold()) {
+            leaderSay("Naw... can't afford that.");
+            printQuote(seller, "Well, I just can't go any lower.");
+            preventHaggling();
+            return false;
+        }
+
+        print("Do you accept the haggled price? (Y/N) ");
+        if (yesNoInput()) {
+            return purchaseItem(model, it, xPos, yPos, newPrice);
+        }
+        printQuote(seller, "Just wasting my time, huh? Just buy something already.");
+        preventHaggling();
+        return false;
+    }
+
+    private void preventHaggling() {
+        haggleFlag[0] = false;
     }
 
     protected boolean sellThisItem(Model model, Item it) {

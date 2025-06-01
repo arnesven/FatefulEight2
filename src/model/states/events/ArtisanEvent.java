@@ -94,8 +94,8 @@ public class ArtisanEvent extends GeneralInteractionEvent {
 
     @Override
     protected boolean doMainEventAndShowDarkDeeds(Model model) {
-        ShopState shop = new ShopState(model, subType.getName().toLowerCase(), itemList,
-                new int[]{itemList.get(0).getCost()/2});
+        ShopState shop = new ShopState(model, subType.getName(), itemList,
+                new int[]{itemList.get(0).getCost()/2}, new boolean[]{true});
         shop.setSellingEnabled(false);
         portraitSay("This is a finely crafted item. I can't let it go for less.");
         print("Press enter to continue.");

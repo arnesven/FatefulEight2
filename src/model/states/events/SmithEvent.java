@@ -58,7 +58,7 @@ public class SmithEvent extends GeneralInteractionEvent {
             }
         } while (true);
 
-        ShopState shop = new ShopState(model, "Smith", items, new int[]{items.get(0).getCost()/2});
+        ShopState shop = new ShopState(model, "Smith", items, new int[]{items.get(0).getCost()/2}, new boolean[]{false});
         shop.run(model);
         print("The smith also offers to instruct you in the ways of being an Artisan, ");
         ChangeClassEvent change = new ChangeClassEvent(model, Classes.ART);

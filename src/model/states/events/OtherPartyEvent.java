@@ -327,7 +327,7 @@ public class OtherPartyEvent extends DailyEventState {
             for (Item it : otherInventory) {
                 prices[i++] = Math.max(1, (int)Math.ceil(it.getCost() * (1.0 - (attitudeMap.get(leader) / 100.0))));
             }
-            this.shop = new ShopState(model, "OTHER PARTY", otherInventory, prices);
+            this.shop = new ShopState(model, "Other Party", otherInventory, prices, new boolean[]{true});
         }
         this.shop.run(model);
     }

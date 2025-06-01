@@ -91,7 +91,7 @@ public class OrcishStrongholdEvent extends DailyEventState {
         for (int i = 0; i < items.size(); ++i) {
             prices[i] = items.get(i).getCost() / 3 + 3;
         }
-        ShopState shopState = new ShopState(model, "Orc Stronghold", items, prices);
+        ShopState shopState = new ShopState(model, "Orc Quartermaster", items, prices, new boolean[]{true});
         shopState.setSellingEnabled(false);
         shopState.run(model);
 

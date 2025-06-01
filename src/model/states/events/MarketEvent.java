@@ -91,7 +91,7 @@ public class MarketEvent extends DailyEventState {
             prices[i + 4] = items.get(i + 4).getCost();
             prices[i + 8] = items.get(i + 8).getCost() + 10;
         }
-        ShopState shop = new ShopState(model, "Pushy Merchant", items, prices);
+        ShopState shop = new ShopState(model, "Pushy Merchant", items, prices, new boolean[]{true});
         shop.setSellingEnabled(false);
         shop.run(model);
     }

@@ -56,8 +56,8 @@ public class WitchHutEvent extends MagicExpertGeneralInteractionEvent {
         List<Item> itemList = new ArrayList<>();
         Potion pot = model.getItemDeck().getRandomPotion();
         itemList.addAll(List.of(pot.copy(), pot.copy(), pot.copy()));
-        ShopState shop = new ShopState(model, "witch", itemList,
-                new int[]{pot.getCost()/2, pot.getCost()/2, pot.getCost()/2});
+        ShopState shop = new ShopState(model, "Witch", itemList,
+                new int[]{pot.getCost()/2, pot.getCost()/2, pot.getCost()/2}, new boolean[]{true});
         shop.setSellingEnabled(false);
         print("Press enter to continue.");
         waitForReturn();

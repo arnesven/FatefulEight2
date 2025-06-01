@@ -138,7 +138,7 @@ public class MageEvent extends MagicExpertGeneralInteractionEvent {
         for (int i = 0; i < prices.length; ++i) {
             prices[i] = Math.max(1, spellsbooks.get(i).getCost() + MyRandom.randInt(-6, 6));
         }
-        ShopState shop = new ShopState(model, "Mage", spellsbooks, prices);
+        ShopState shop = new ShopState(model, "Mage", spellsbooks, prices, new boolean[]{true});
         shop.run(model);
         setCurrentTerrainSubview(model);
         showExplicitPortrait(model, appearance, "Mage");

@@ -29,7 +29,7 @@ public class BeverageTentEvent extends DailyEventState {
                 itemsForSale.add(new FineWine());
             }
         }
-        ShopState state = new ShopState(model, "Beverage Tent", itemsForSale);
+        ShopState state = new ShopState(model, "Beverage Wench", itemsForSale, new boolean[]{true});
         state.setSellingEnabled(false);
         state.run(model);
     }

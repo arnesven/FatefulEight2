@@ -262,7 +262,7 @@ public class ZeppelinStoryPart extends StoryPart {
                 }
                 potions.add(new PotionRecipe(new ZeppelinFuel()));
                 prices[prices.length-1] = potions.get(potions.size()-1).getCost();
-                ShopState shopState = new ShopState(model, "Xelbi", potions, prices);
+                ShopState shopState = new ShopState(model, "Xelbi", potions, prices, new boolean[]{false});
                 shopState.setSellingEnabled(false);
                 ShopState.pressToEnterShop(this);
                 shopState.run(model);

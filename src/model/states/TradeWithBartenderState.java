@@ -13,7 +13,7 @@ public class TradeWithBartenderState extends ShopState {
     private ObolsDummyItem sellableObols = null;
 
     public TradeWithBartenderState(Model model, List<Item> items) {
-        super(model, "Bartender", items, makePrices(items));
+        super(model, "Bartender", items, makePrices(items), new boolean[]{false});
         refreshObols();
     }
 
@@ -51,7 +51,7 @@ public class TradeWithBartenderState extends ShopState {
     }
 
     @Override
-    protected boolean purchaseItem(Model model, Item it, int xPos, int yPos) {
+    protected boolean purchaseItem(Model model, Item it, int xPos, int yPos, int cost) {
         if (it instanceof ObolsDummyItem) {
             buyObols(model);
             refreshObols();
@@ -65,7 +65,7 @@ public class TradeWithBartenderState extends ShopState {
             model.getLog().addAnimated("Your tent is already at its maximum size.\n");
             return false;
         }
-        return super.purchaseItem(model, it, xPos, yPos);
+        return super.purchaseItem(model, it, xPos, yPos, cost);
     }
 
     private void sellObols(Model model) {

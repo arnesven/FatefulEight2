@@ -64,8 +64,8 @@ public class SorcerersTowerEvent extends MagicExpertGeneralInteractionEvent {
         changeClassEvent.areYouInterested(model);
         println("The sorcerer also offers to sell you a spell at a discount of 5 gold.");
         List<Item> items = new ArrayList<>(List.of(model.getItemDeck().getRandomSpell()));
-        ShopState shop = new ShopState(model, "sorcerer", items,
-                new int[]{Math.max(1, items.get(0).getCost() - 5)});
+        ShopState shop = new ShopState(model, "Sorcerer", items,
+                new int[]{Math.max(1, items.get(0).getCost() - 5)}, new boolean[]{true});
         shop.setSellingEnabled(false);
         shop.run(model);
         setCurrentTerrainSubview(model);

@@ -132,7 +132,7 @@ public class NomadCampEvent extends DailyEventState {
                         items.get(4).getCost() + 10, items.get(5).getCost() + 10};
             }
 
-            ShopState merchantShop = new ShopState(model, "nomad trader", items, prices);
+            ShopState merchantShop = new ShopState(model, "Nomad Trader", items, prices, new boolean[]{true});
             merchantShop.setSellingEnabled(false);
             merchantShop.run(model);
 
@@ -164,7 +164,7 @@ public class NomadCampEvent extends DailyEventState {
             } else {
                 prices = new int[]{5};
             }
-            ShopState merchantShop = new ShopState(model, "nomad trader", items, prices);
+            ShopState merchantShop = new ShopState(model, "Nomad Trader", items, prices, new boolean[]{true});
             merchantShop.run(model);
         }
 

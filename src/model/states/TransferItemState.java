@@ -14,7 +14,7 @@ public class TransferItemState extends ShopState {
     private final List<Item> stashItems;
 
     public TransferItemState(Model model, String name, List<Item> stashItems) {
-        super(model, name, stashItems, new int[stashItems.size()]);
+        super(model, name, stashItems, new int[stashItems.size()], new boolean[]{false});
         this.stashItems = stashItems;
     }
 

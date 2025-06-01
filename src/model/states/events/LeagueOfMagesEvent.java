@@ -244,7 +244,7 @@ public class LeagueOfMagesEvent extends DailyEventState {
             for (int i = items.size() - 3; i < items.size(); ++i) {
                 costs[i] = items.get(i).getCost();
             }
-            shop = new ShopState(model, "League Wizard", items, costs);
+            shop = new ShopState(model, "League Wizard", items, costs, new boolean[]{true});
         }
         shop.run(model);
     }

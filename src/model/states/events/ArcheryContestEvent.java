@@ -438,7 +438,7 @@ public class ArcheryContestEvent extends TournamentEvent {
     private void buyBow(Model model) {
         List<Item> items = new ArrayList<>();
         items.add(new CompetitionBow());
-        ShopState merchantShop = new ShopState(model, "Contest Official", items, new int[]{14});
+        ShopState merchantShop = new ShopState(model, "Contest Official", items, new int[]{14}, new boolean[]{false});
         merchantShop.setSellingEnabled(false);
         merchantShop.run(model);
         setCurrentTerrainSubview(model);

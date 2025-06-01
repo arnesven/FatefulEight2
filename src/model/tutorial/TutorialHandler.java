@@ -665,6 +665,13 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    public void haggling(Model model) {
+        runOnce("haggling", () -> {
+            model.getLog().waitForAnimationToFinish();
+            model.transitionToDialog(new TutorialHaggling(model.getView()));
+        });
+    }
+
     private interface TutorialStep {
         void doStep();
     }

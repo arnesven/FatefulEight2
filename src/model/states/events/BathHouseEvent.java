@@ -264,7 +264,7 @@ public class BathHouseEvent extends DailyEventState {
                 for (Item it : items) {
                     costs[index++] = it.getCost() / 2;
                 }
-                ShopState shop = new ShopState(model, "Prude Merchant", items, costs);
+                ShopState shop = new ShopState(model, "Prude Merchant", items, costs, new boolean[]{true});
                 shop.run(model);
                 setCurrentTerrainSubview(model);
                 println("You excuse yourself from the merchant.");
