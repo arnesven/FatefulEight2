@@ -262,7 +262,7 @@ public class IncapacitateNPCEvent extends DailyEventState {
     private void intimidate(Model model) {
         print("Who should attempt to frighten " + npc.getName() + "?");
         GameCharacter talker = model.getParty().partyMemberInput(model, this, model.getParty().getPartyMember(0));
-        SkillCheckResult result = model.getParty().doIntimidationSkillCheck(model, this, talker, 0, 20);
+        SkillCheckResult result = model.getParty().doIntimidationSkillCheck(model, this, talker, 8, 20);
         if (result.isSuccessful()) {
             partyMemberSay(talker, "Listen " + npc.getName() + ". You better skedaddle if you know what's good for you. " +
                     "We don't want anybody to get hurt, do we?");
