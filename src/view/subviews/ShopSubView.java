@@ -157,7 +157,7 @@ public class ShopSubView extends TopMenuSubView {
 
     protected String getItemInfo(Item it) {
         int cost;
-        if (isBuying) {
+        if (priceMap.containsKey(it)) {
             cost = priceMap.get(it);
         } else {
             cost = it.getSellValue(this.partyMaxMercantile);

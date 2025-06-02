@@ -158,7 +158,7 @@ public class ShopState extends GameState {
             waitForReturnSilently();
             if (selectedAction[0] == 'B') {
                 Item it = buyItems.getSelectedElement();
-                if (purchaseItem(model, it, xPos, yPos, it.getCost())) {
+                if (purchaseItem(model, it, xPos, yPos, prices.get(it))) {
                     break;
                 }
             } else if (selectedAction[0] == 'H') {
@@ -247,8 +247,7 @@ public class ShopState extends GameState {
             return false;
         }
         printQuote(seller, "I guess I can let it go for a little less.");
-        // TODO: Limit... no negative prices!
-        int newPrice = (int) Math.round((1.0 - getHaggleDiscount(result.getModifiedRoll())) * it.getCost());
+        int newPrice = (int) Math.round((1.0 - getHaggleDiscount(result.getModifiedRoll())) * prices.get(it));
         printQuote(seller, "How about " + newPrice + " gold?");
         if (newPrice > model.getParty().getGold()) {
             leaderSay("Naw... can't afford that.");
@@ -259,6 +258,9 @@ public class ShopState extends GameState {
 
         print("Do you accept the haggled price? (Y/N) ");
         if (yesNoInput()) {
+            leaderSay(MyRandom.sample(List.of("You've got yourself a deal.", "Done!",
+                    "Nice doing business with you.", "The price is acceptable.", "I accept.", "I agree.")));
+            prices.put(it, newPrice);
             return purchaseItem(model, it, xPos, yPos, newPrice);
         }
         printQuote(seller, "Just wasting my time, huh? Just buy something already.");
@@ -304,7 +306,12 @@ public class ShopState extends GameState {
     }
 
     protected void itemJustSold(Model model, Item it, SteppingMatrix<Item> buyItems, HashMap<Item, Integer> prices) {
-        int money = getSellValue(model, it);
+        int money;
+        if (prices.containsKey(it)) {
+            money = prices.get(it);
+        } else {
+            money = getSellValue(model, it);
+        }
         model.getParty().addToGold(money);
         println("You sold " + it.getName() + " for " + money + " gold.");
         GameStatistics.incrementItemsSold(1);
