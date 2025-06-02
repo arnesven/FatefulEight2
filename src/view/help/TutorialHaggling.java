@@ -6,8 +6,8 @@ import view.GameView;
 public class TutorialHaggling extends HelpDialog {
     private static final String TEXT =
             "Sometimes you can haggle with people in order to bring down prices. " +
-            "You can only haggle over items which cost " + ShopState.HAGGLE_LIMIT +
-            " times your average party level.\n\n" +
+            "You can only haggle over items which cost at least " + ShopState.HAGGLE_LIMIT +
+            " gold.\n\n" +
             "When a character haggles, he or she rolls a " +
             "Mercantile Skill Check with a difficulty of " + ShopState.HAGGLE_DIFFICULTY +
             ". This skill check receives a bonus from the character's " +

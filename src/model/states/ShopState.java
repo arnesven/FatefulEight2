@@ -27,7 +27,7 @@ import java.util.*;
 
 public class ShopState extends GameState {
 
-    public static final int HAGGLE_LIMIT = 30;
+    public static final int HAGGLE_LIMIT = 40;
     public static final int HAGGLE_DIFFICULTY = 7;
     private final ShopSubView subView;
     private final int partyMaxMercantile;
@@ -64,16 +64,17 @@ public class ShopState extends GameState {
         }
         sellItems.addElements(itemsToSell);
         makePricesMap(itemsForSale, specialPrices);
-        this.subView = makeSubView(buyItems, true, seller, prices, this);
+        partyMaxMercantile = MyLists.maximum(model.getParty().getPartyMembers(), gc -> gc.getRankForSkill(Skill.Mercantile));
+        this.subView = makeSubView(buyItems, true, seller, prices, this, partyMaxMercantile);
         subView.setOverflowWarning(overflow);
-        this.partyMaxMercantile = MyLists.maximum(model.getParty().getPartyMembers(), gc -> gc.getRankForSkill(Skill.Mercantile));
     }
 
     public ShopState(Model model, String seller, List<Item> itemsForSale, boolean[] haggleFlag) {
         this(model, seller, itemsForSale, null, haggleFlag);
     }
 
-    protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller, HashMap<Item, Integer> prices, ShopState shopState) {
+    protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying, String seller,
+                                      HashMap<Item, Integer> prices, ShopState shopState, int partyMaxMercantile) {
         return new ShopSubView(buyItems, true, seller, prices, this, partyMaxMercantile);
     }
 
@@ -178,7 +179,7 @@ public class ShopState extends GameState {
     }
 
     private void addHaggleAction(Model model, Item it, List<String> buySellActions) {
-        if (haggleFlag[0] && it.getCost() > GameState.calculateAverageLevel(model) * HAGGLE_LIMIT) {
+        if (haggleFlag[0] && it.getCost() >= HAGGLE_LIMIT) {
             buySellActions.add("Haggle");
         }
     }
@@ -239,7 +240,7 @@ public class ShopState extends GameState {
             haggler = model.getParty().getPartyMember(0);
         }
         SkillCheckResult result = SkillChecks.doSkillCheckWithReRoll(model, this, haggler, Skill.Mercantile, HAGGLE_DIFFICULTY,
-                0, haggler.getRankForSkill(Skill.Persuade));
+                5, haggler.getRankForSkill(Skill.Persuade));
         if (result.isFailure()) {
             printQuote(seller, "Hmph. My prices are final. Accept them or walk away.");
             preventHaggling();

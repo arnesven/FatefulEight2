@@ -39,6 +39,7 @@ public class ShopSubView extends TopMenuSubView {
         this.state = state;
         this.partyMaxMercantile = partyMaxMercantile;
         setTopCursorIndex(getDefaultIndex());
+        System.out.println("Party max mercantile: " + partyMaxMercantile);
     }
 
     protected int getDefaultIndex() {
