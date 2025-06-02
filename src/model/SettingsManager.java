@@ -24,7 +24,7 @@ public class SettingsManager implements Serializable {
     private final Map<String, Integer> miscCounters = new HashMap<>();
     private boolean animateDieRolls = true;
     private int gameDifficulty = 1;
-    private static final int MAX_DIFFICULTY = 2;
+    public static final int MAX_DIFFICULTY = 3;
 
     public SettingsManager() {
         miscFlags.put(TopText.TIME_OF_DAY_SETTINGS_FLAG, true);
@@ -44,7 +44,9 @@ public class SettingsManager implements Serializable {
     }
 
     public void toggleAutosave() {
-        autosave = !autosave;
+        if (gameDifficulty != MAX_DIFFICULTY) {
+            autosave = !autosave;
+        }
     }
 
     public boolean autosaveEnabled() {
@@ -143,17 +145,25 @@ public class SettingsManager implements Serializable {
                 return "EASY";
             case 1:
                 return "NORMAL";
-            case MAX_DIFFICULTY:
+            case 2:
                 return "HARD";
+            case MAX_DIFFICULTY:
+                return "IMPOS";
         }
         throw new IllegalStateException("Illegal game difficulty: " + gameDifficulty);
     }
 
     public void cycleGameDifficulty() {
         gameDifficulty = Arithmetics.incrementWithWrap(gameDifficulty, MAX_DIFFICULTY+1);
+        if (gameDifficulty == MAX_DIFFICULTY && autosave) {
+            autosave = false;
+        }
     }
 
     public void setGameDifficulty(int difficulty) {
         this.gameDifficulty = difficulty;
+        if (gameDifficulty == MAX_DIFFICULTY && autosave) {
+            autosave = false;
+        }
     }
 }

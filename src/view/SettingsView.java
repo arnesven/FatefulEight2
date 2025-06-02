@@ -44,6 +44,11 @@ public class SettingsView extends SelectableListMenu {
             public void performAction(Model model, int x, int y) {
                 model.getSettings().toggleAutosave();
             }
+
+            @Override
+            public boolean isEnabled(Model model) {
+                return model.getSettings().getGameDifficulty() != SettingsManager.MAX_DIFFICULTY;
+            }
         });
 
         y += 2;

@@ -18,7 +18,7 @@ public class SelectInitialSettingsView extends SelectableListMenu {
     private static final int HEIGHT = 26;
     private static final String DIFFICULTY_INTRO_TEXT = "Game Difficulty\n(can be changed at any time in the settings menu)";
     private static final String LOCATION_INTRO_TEXT = "Starting Location";
-    private static final String[] DIFFICULTIES = new String[]{"EASY", "NORMAL", "HARD"};
+    private static final String[] DIFFICULTIES = new String[]{"EASY", "NORMAL", "HARD", "IMPOSSIBLE"};
     private static final String[] LOCATIONS = new String[]{"Crossroads Inn", "Waterfront Inn", "Hunter's Inn"};
     private static final int DIFFICULTY_START_Y = 4;
     private static final int LOCATION_START_Y = 15;
@@ -76,7 +76,9 @@ public class SelectInitialSettingsView extends SelectableListMenu {
         case 1:
             return "No adjustment.";
         case 2:
-            return "Tasks and combat events are slightly harder.";
+            return "Skill checks and combat events are slightly harder.";
+        case 3:
+            return "Skill checks and combat events are much harder. Autosaving disabled.";
         }
         throw new IllegalStateException("Illegal difficulty: " + selectedRow);
     }
