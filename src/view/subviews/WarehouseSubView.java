@@ -33,16 +33,18 @@ public class WarehouseSubView extends AvatarSubView {
     private final AvatarSprite avatar;
 
     private final List<KeyEvent> moveQueue = new ArrayList<>();
+    private final int tries;
     private boolean avatarEnabled = true;
     private final Point avatarPos;
     private int moveCount = 0;
     private boolean telekinesisOn = false;
 
-    public WarehouseSubView(Model model, Warehouse warehouse) {
+    public WarehouseSubView(Model model, Warehouse warehouse, int triesRemaining) {
         this.avatar = model.getParty().getLeader().getAvatarSprite();
         this.combinedSprites = makeCombinedSprites(avatar);
         this.warehouse = warehouse;
         this.avatarPos = warehouse.getPlayerStartingPosition();
+        this.tries = triesRemaining;
     }
 
     @Override
@@ -54,6 +56,9 @@ public class WarehouseSubView extends AvatarSubView {
         }
         BorderFrame.drawString(model.getScreenHandler(), "Moves: " + moveCount,
                 X_OFFSET, Y_OFFSET, MyColors.WHITE);
+        BorderFrame.drawString(model.getScreenHandler(), "Tries Left: " + tries,
+                X_MAX - 13, Y_OFFSET, MyColors.WHITE);
+
     }
 
     private void drawFloor(Model model) {

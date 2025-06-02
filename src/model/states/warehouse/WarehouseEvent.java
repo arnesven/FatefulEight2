@@ -10,6 +10,7 @@ import model.states.ShootBallsState;
 import model.states.SpellCastException;
 import model.states.events.GuideData;
 import util.MyRandom;
+import util.MyStrings;
 import view.GameView;
 import view.SimpleMessageView;
 import view.subviews.CollapsingTransition;
@@ -57,7 +58,8 @@ public class WarehouseEvent extends DailyEventState {
             return;
         }
         Warehouse warehouse = new Warehouse();
-        WarehouseSubView subView = new WarehouseSubView(model, warehouse);
+        int triesRemaining = 5;
+        WarehouseSubView subView = new WarehouseSubView(model, warehouse, triesRemaining);
         CollapsingTransition.transition(model, subView);
         model.getSpellHandler().acceptSpell(new TelekinesisSpell().getName());
         do {
@@ -75,17 +77,25 @@ public class WarehouseEvent extends DailyEventState {
                     } else if (choice == 2) {
                         subView.setTelekinesisEnabled(false);
                     } else {
-                        leaderSay(MyRandom.sample(List.of("I think I messed up. Can I do over?",
-                                "Not yet. I'm just starting over.")));
-                        subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()));
-                        CollapsingTransition.transition(model, subView);
+                        if (triesRemaining == 0) {
+                            println("You can't start over. This is your last try.");
+                        } else {
+                            leaderSay(MyRandom.sample(List.of("I think I messed up. Can I do over?",
+                                    "Not yet. I'm just starting over.")));
+                            triesRemaining--;
+                            String tries = triesRemaining > 1 ? "tries" : "try";
+                            println("You have " + MyStrings.numberWord(triesRemaining) + " " + tries + " remaining.");
+                            subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()), triesRemaining);
+                            CollapsingTransition.transition(model, subView);
+                        }
                     }
                 }
                 if (subView.checkForRemove()) {
                     printQuote("Worker", "What's this? This isn't the one I wanted.");
                     leaderSay("Sorry...");
                     model.getLog().waitForAnimationToFinish();
-                    subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()));
+                    triesRemaining--;
+                    subView = new WarehouseSubView(model, new Warehouse(warehouse.getTemplate()), triesRemaining);
                     CollapsingTransition.transition(model, subView);
                 }
             } catch (SpellCastException sce) {
