@@ -536,7 +536,9 @@ public class Party implements Serializable {
         int bonus = 0;
         for (GameCharacter gc : performers) {
             if (!bench.contains(gc)) {
-                if (gc != performer) {
+                if (gc.getAttitude(performer) <= -20) {
+                    event.println(gc.getFirstName() + " refuses to help " + performer.getFirstName() + "!");
+                } else if (gc != performer) {
                     SkillCheckResult assistResult = gc.testSkill(model, skill, getCollaborativeDifficulty(performer, gc));
                     if (assistResult.isSuccessful()) {
                         giveXP(model, gc, 5);

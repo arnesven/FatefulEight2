@@ -39,7 +39,7 @@ public enum Skill implements Comparable<Skill> {
             Map.of("Wits",       List.of(Skill.Logic, Skill.Perception, Skill.Search, Skill.SpellCasting, Skill.Survival),
                     "Strength",  List.of(Skill.Acrobatics, Skill.Axes, Skill.BluntWeapons, Skill.Endurance, Skill.Labor),
                     "Dexterity", List.of(Skill.Blades, Skill.Bows, Skill.Polearms, Skill.Sneak, Skill.Security),
-                    "Charisma",  List.of(Skill.Entertain, Skill.Leadership, Skill.Persuade, Skill.SeekInfo));
+                    "Charisma",  List.of(Skill.Entertain, Skill.Leadership, Skill.Mercantile, Skill.Persuade, Skill.SeekInfo));
 
     private final String name;
     private final String shortName;

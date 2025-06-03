@@ -16,7 +16,7 @@ import java.util.Map;
 public class EndOfGameDialog extends SelectableListMenu {
 
     private static final int DIALOG_WIDTH = 35;
-    private static final int DIALOG_HEIGHT = 40;
+    private static final int DIALOG_HEIGHT = 41;
     private String title = "";
     private String text = "";
     private static final String TIME_TEXT =
@@ -42,6 +42,7 @@ public class EndOfGameDialog extends SelectableListMenu {
     @Override
     public void transitionedTo(Model model) {
         super.transitionedTo(model);
+        ClientSoundManager.stopPlayingBackgroundSound();
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.endingSong);
         if (model.getParty().getReputation() == Model.REP_TO_WIN) {
             title = "congratulations!";

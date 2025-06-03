@@ -65,6 +65,7 @@ public class OrcsEvent extends DailyEventState {
                     decreaseAttitude(model);
                     return false;
                 }
+                return true;
             }
         }
         decreaseAttitude(model);

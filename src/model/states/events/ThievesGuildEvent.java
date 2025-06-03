@@ -39,7 +39,7 @@ public class ThievesGuildEvent extends DailyEventState {
                     "We're not gonna pass on this chance are we?");
             randomSayIfPersonality(PersonalityTrait.lawful, List.of(model.getParty().getLeader()),
                     "We could get in trouble if we go along with this. I would advise against it.");
-            print("Are you? (Y/N) ");
+            print("Are you in? (Y/N) ");
             if (yesNoInput()) {
                 portraitSay("That's what I like to hear. Which part of the heist do you think " +
                         "you could help with the most, breaking and entering (Y) or infiltrating the grounds (N)?");

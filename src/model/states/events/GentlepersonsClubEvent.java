@@ -400,7 +400,7 @@ public class GentlepersonsClubEvent extends DailyEventState {
             leaderSay("Which is?");
             portraitSay("A wonderful plot twist! The sorcerer is actually the king's father, the princesses grandfather! " +
                     "Now, about the ending...");
-            print("What suggestion do you have for the screenwriter's play? ");
+            println("What suggestion do you have for the screenwriter's play? ");
             int count = multipleOptionArrowMenu(model, 24, 24, List.of("Catharsis and compromise",
                     "Betrayal and blood", "Reduce complexity"));
             if (count == 0) {
