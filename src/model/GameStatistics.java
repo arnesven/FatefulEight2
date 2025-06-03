@@ -9,6 +9,10 @@ public class GameStatistics {
     }
 
     private static void increment(String key, int addition) {
+        if (model == null) {
+            System.err.println("Cannot increment in GameStatistics, model is null.");
+            return;
+        }
         int total = 0;
         if (model.getSettings().getMiscCounters().containsKey(key)) {
             total = model.getSettings().getMiscCounters().get(key);

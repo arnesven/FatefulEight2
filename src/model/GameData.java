@@ -5,6 +5,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.items.ItemDeck;
 import model.mainstory.MainStory;
 import model.map.WorldBuilder;
+import model.map.WorldType;
 import model.map.objects.MapObject;
 import model.map.wars.WarHandler;
 import model.ruins.RuinsDungeon;
@@ -29,6 +30,7 @@ public class GameData implements Serializable {
     public TutorialHandler tutorial = new TutorialHandler();
     public boolean freePlay = false;
     public boolean inUnderworld = false;
+    public WorldType currentWorld = WorldType.original;
     public int caveSystemSeed = MyRandom.randInt(Integer.MAX_VALUE);
     public Map<String, RuinsDungeon> dungeons = new HashMap<>();
     public SettingsManager settings = new SettingsManager();

@@ -40,6 +40,7 @@ public class WorldBuilder {
     public static final Point MONASTERY_POSITION = new Point(FAITH_ISLAND_POSITION.x + 1, FAITH_ISLAND_POSITION.y);
     public static final int WORLD_WIDTH = 53;
     public static final int WORLD_HEIGHT = 38;
+    public static final Rectangle OTHER_BOUNDS = new Rectangle(0, 0, 20, 12);
     private static final int EXTRA_WIDTH = 14;
     private static final int EXTRA_HEIGHT = 10;
     public static final int ORIGINAL = 0;
@@ -513,7 +514,14 @@ public class WorldBuilder {
     }
 
 
-    public static WorldHex[][] buildWorld() {
+    public static WorldHex[][] buildWorld(WorldType type) {
+        if (type == WorldType.original) {
+            return makeOriginalWorld();
+        }
+        return makeOtherWorld();
+    }
+
+    private static WorldHex[][] makeOriginalWorld() {
         WorldHex[][] hexes = new WorldHex[WORLD_WIDTH][WORLD_HEIGHT];
         Map<Point, HexContents> hexContents = makeHexContents();
         for (int y = 0; y < worldTemplate.length; ++y) {
@@ -528,7 +536,17 @@ public class WorldBuilder {
         }
 
         makeSeaBorders(hexes);
+        return hexes;
+    }
 
+    private static WorldHex[][] makeOtherWorld() {
+        WorldHex[][] hexes = new WorldHex[OTHER_BOUNDS.width][OTHER_BOUNDS.height];
+        for (int y = 0; y < hexes[0].length; ++y) {
+            for (int x = 0; x < hexes.length; ++x) {
+                hexes[x][y] = new PlainsHex(0, 0, null, ORIGINAL);
+            }
+        }
+        makeSeaBorders(hexes);
         return hexes;
     }
 

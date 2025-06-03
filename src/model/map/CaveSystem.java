@@ -20,7 +20,7 @@ public class CaveSystem extends World {
                     Direction.SOUTH_EAST, SOUTH, Direction.SOUTH_WEST);
 
     public CaveSystem(World overWorld, int seed) {
-        super(makeHexes(overWorld, seed));
+        super(makeHexes(overWorld, seed), WorldBuilder.getWorldBounds(overWorld.getCurrentState()));
     }
 
     private static WorldHex[][] makeHexes(World overWorld, int seed) {

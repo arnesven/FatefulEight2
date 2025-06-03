@@ -31,16 +31,16 @@ public class World implements Serializable {
     private static final Sprite DESTINATION_SPRITE = new SpriteQuestMarker();
     private Sprite alternativeAvatar = null;
     private int currentState;
+    private Rectangle bounds;
 
-    public World(WorldHex[][] hexes) {
+    public World(WorldHex[][] hexes, Rectangle bounds) {
         this.hexes = hexes;
+        this.bounds = bounds;
         waterWays = makeWaterWays();
-        currentState = WorldBuilder.ORIGINAL;
         kingdoms = findKingdoms();
     }
 
     public Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
-        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
         Interval xVals = calcInterval(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
         Interval yVals = calcInterval(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
         int startX = (DrawingArea.WINDOW_COLUMNS - mapXRange*4)/2;
@@ -84,7 +84,6 @@ public class World implements Serializable {
                              int mapXRange, int mapYRange, int startX, int yOffset, Point cursorPos,
                              boolean avatarEnabled, MapFilter filter) {
         ScreenHandler screenHandler = model.getScreenHandler();
-        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
         Interval xVals = calcInterval(viewPoint.x, mapXRange, bounds.x, bounds.x + bounds.width);
         Interval yVals = calcInterval(viewPoint.y, mapYRange, bounds.y, bounds.y + bounds.height);
         screenHandler.clearSpace(startX, (DrawingArea.WINDOW_COLUMNS - startX),
@@ -195,7 +194,6 @@ public class World implements Serializable {
 
 
     public void move(Point position, int dx, int dy) {
-        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
         if (position.x == bounds.x && dx < 0) {
             dx = 0;
         }
@@ -503,6 +501,7 @@ public class World implements Serializable {
 
     public void setCurrentState(int currState) {
         this.currentState = currState;
+        this.bounds = WorldBuilder.getWorldBounds(currState);
     }
 
     public Point getPositionForLocation(HexLocation location) {
@@ -526,7 +525,6 @@ public class World implements Serializable {
     }
 
     public Point getRandomPositionWithinBounds() {
-        Rectangle bounds = WorldBuilder.getWorldBounds(currentState);
         return new Point(MyRandom.randInt(bounds.x, bounds.x+bounds.width-1),
                 MyRandom.randInt(bounds.y, bounds.y+bounds.height-1));
     }

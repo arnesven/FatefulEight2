@@ -45,7 +45,9 @@ public class Model {
     private FatefulEight frame;
     private GameData gameData;
 
-    private World world = new World(WorldBuilder.buildWorld());
+    private World world = new World(WorldBuilder.buildWorld(WorldType.original),
+                                        WorldBuilder.getWorldBounds(WorldBuilder.ORIGINAL));
+    private World lastWorld = null;
     private CaveSystem caveSystem;
     private GameView gameView;
     private SubView subView;
@@ -93,8 +95,11 @@ public class Model {
             initialize();
             subView = new EmptySubView();
             gameData = readGameData(filename);
-            setWorldState(gameData.worldState);
             caveSystem = new CaveSystem(world, gameData.caveSystemSeed);
+            setWorldState(gameData.worldState);
+            if (gameData.currentWorld != WorldType.original) {
+                goBetweenWorlds(gameData.currentWorld, gameData.party.getPosition());
+            }
             state = getCurrentHex().getDailyActionState(this);
             System.out.println("Loading from file, setting state to " + state);
             log.setContent(gameData.logContent); // TODO: Inn moved to starting location when restarting game.
@@ -528,11 +533,13 @@ public class Model {
             currState++;
         }
         this.world.setCurrentState(currState);
+        this.caveSystem.setCurrentState(currState);
     }
 
     public void setWorldState(int worldState) {
         gameData.worldState = worldState;
         this.world.setCurrentState(gameData.worldState);
+        this.caveSystem.setCurrentState(gameData.worldState);
     }
 
     public void resetMainStory() {
@@ -577,5 +584,19 @@ public class Model {
 
     public List<GameCharacter> getLingeringRecruitables() {
         return gameData.lingeringRecruitables;
+    }
+
+    public void goBetweenWorlds(WorldType worldType, Point position) {
+        gameData.currentWorld = worldType;
+        if (worldType == WorldType.other) {
+            lastWorld = world;
+            world = new World(WorldBuilder.buildWorld(WorldType.other), WorldBuilder.OTHER_BOUNDS);
+        } else {
+            world = lastWorld;
+        }
+        gameData.party.setPosition(position);
+        if (!getCurrentHex().hasRoad()) {
+            gameData.party.setOnRoad(false);
+        }
     }
 }
