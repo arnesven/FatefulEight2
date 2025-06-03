@@ -16,10 +16,7 @@ import util.MyRandom;
 import util.MyTriplet;
 import view.subviews.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class CraftItemState extends GameState {
 
@@ -54,6 +51,11 @@ public class CraftItemState extends GameState {
         List<Item> allItems = getAllItems(model);
         allItems.removeIf((Item it) -> it instanceof BookItem || it instanceof Scroll);
         allItems.addAll(model.getParty().getLearnedCraftingDesigns());
+        allItems.sort((o1, o2) -> { // This should put crafting designs at the top of the list, important for later
+            int i1 = o1 instanceof CraftingDesign ? 0 : 1;
+            int i2 = o2 instanceof CraftingDesign ? 0 : 1;
+            return i1 - i2;
+        });
         if (allItems.isEmpty()) {
             println("You cannot craft since you do not have any suitable items or crafting designs.");
         }

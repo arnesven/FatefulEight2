@@ -86,7 +86,9 @@ public class FightInUnitDuringBattleEvent extends GameState {
             allies.removeIf(Combatant::isDead);
             setCurrentTerrainSubview(model);
             leaderSay("That was a tough fight...");
-            println("You barely have time to catch your breath before another group of enemies approach.");
+            if (count < 2 && !enemyUnits.isEmpty()) {
+                println("You barely have time to catch your breath before another group of enemies approach.");
+            }
         }
         victorious = true;
         return model.getCurrentHex().getEveningState(model, false, false);

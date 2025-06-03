@@ -254,7 +254,7 @@ public class PartyView extends SelectableListMenu {
                 Weapon w = gc.getEquipment().getWeapon();
                 rightOfPortraitX -= 3;
                 if (!(w instanceof UnarmedCombatWeapon)) {
-                    newY++;
+                    newY++; // TODO: Cap these strings so they're not too long.
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString());
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, getAttackString(w));
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(w));

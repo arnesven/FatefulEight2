@@ -355,6 +355,10 @@ public class PartSixStoryPart extends StoryPart {
                     "This kingdom's suffering is increasing day by day.");
             leaderSay(iveOrWeve() + " got a big journey in front of " + meOrUs() + ".");
             portraitSay("Be safe in your travels. Keep a low profile, at least while in " + CastleLocation.placeNameShort(castle.getPlaceName()) + ".");
+            portraitSay("I have some provisions stowed away for situations such as these. Here, you can have them.");
+            println("You gained 100 rations.");
+            model.getParty().addToFood(100);
+            leaderSay("Thank you very much. This will help a lot.");
             showEverix(model);
             portraitSay("Thank you for rescuing me. I owe you one.");
             leaderSay("Goodbye.");

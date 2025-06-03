@@ -11,7 +11,7 @@ public class GoblinWolfRiderEnemy extends GoblinEnemy {
     public GoblinWolfRiderEnemy(char a) {
         super(a, "Goblin Wolf Rider", new MeleeAttackBehavior());
     }
-
+// TODO: Fix cursor shift for this enemy (not right in y-axis)
     @Override
     public int getSpeed() {
         return 10;

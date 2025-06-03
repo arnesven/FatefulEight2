@@ -56,7 +56,12 @@ public class WaterMillNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
-        return true;
+        GainSupportOfHonorableWarriorsTask task = EasternPalaceLocation.getHonorableWarriorsTask(model);
+        if (task != null) {
+            return true;
+        }
+        state.println("It's just some old mill.");
+        return false;
     }
 
     @Override

@@ -149,6 +149,7 @@ public class InvestInShopEvent extends DailyEventState {
             leaderSay("I think " + iOrWe() + " need some time to think about this.");
             portraitSay("I understand. One should always think carefully before entering into a partnership.");
         } else {
+            // TODO: Add destination task so you can always ask about business when in town.
             if (model.getParty().getGold() < investment) {
                 leaderSay("I would love to invest " + investment + " gold, but " + iOrWe() +
                         " just don't have the money right now.");
