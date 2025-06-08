@@ -68,8 +68,8 @@ public class StormEvent extends DailyEventState {
                     println(gc.getName() + " loses 1 stamina from the storm.");
                     gc.addToSP(-1);
                 }
-                model.getParty().getHorseHandler().someHorsesRunAway(model);
             }
+            model.getParty().getHorseHandler().someHorsesRunAway(model);
             for (GameCharacter gc : toRemove) {
                 printAlert(gc.getName() + " has died from the exertion. Press enter to continue.");
                 waitForReturn();
