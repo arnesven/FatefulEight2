@@ -4,6 +4,7 @@ import model.Model;
 import model.actions.DailyAction;
 import model.items.MysteriousMap;
 import model.journal.JournalEntry;
+import model.map.UrbanLocation;
 import model.states.events.DigForTreasureEvent;
 
 import java.awt.*;
@@ -45,7 +46,8 @@ public class TreasureHuntTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        return !isFailed(model) && !completed;
+        return !isFailed(model) && !completed
+                && !(model.getCurrentHex().getLocation() instanceof UrbanLocation);
     }
 
     @Override
