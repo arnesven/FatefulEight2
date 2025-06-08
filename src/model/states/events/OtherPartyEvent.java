@@ -1,6 +1,7 @@
 package model.states.events;
 
 import model.Model;
+import model.Party;
 import model.characters.GameCharacter;
 import model.classes.*;
 import model.classes.normal.BardClass;
@@ -377,6 +378,12 @@ public class OtherPartyEvent extends DailyEventState {
                 if (result.isSuccessful()) {
                     otherLeaderSay("Alright. I accept.");
                     leaderSay("Great!");
+                    if (!model.getParty().getInventory().tentIsMaxSize()) {
+                        println("Your tent has been expanded to its maximum size.");
+                    }
+                    while (!model.getParty().getInventory().tentIsMaxSize()) {
+                        model.getParty().getInventory().addToTentSize();
+                    }
                     for (GameCharacter gc : otherPartyMembers) {
                         giveRandomEquipment(model, gc);
                         model.getParty().add(gc);
