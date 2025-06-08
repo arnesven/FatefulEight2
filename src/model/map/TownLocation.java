@@ -92,6 +92,8 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
 
     @Override
     public DailyEventState generateEvent(Model model) {
+        return new InvestInShopEvent(model); /*
+
         if (model.getMainStory().isPersonaNonGrata(model)) {
             return new FugitiveTownEvent(model);
         }
@@ -141,7 +143,7 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
                     new GuideEvent(model, 2)
             ));
         }
-        return new NoEventState(model);
+        return new NoEventState(model); */
     }
 
     @Override

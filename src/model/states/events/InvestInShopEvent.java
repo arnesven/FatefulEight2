@@ -4,9 +4,11 @@ import model.Model;
 import model.classes.Classes;
 import model.headquarters.Headquarters;
 import model.items.Item;
+import model.journal.JournalEntry;
 import model.map.UrbanLocation;
 import model.states.DailyEventState;
 import model.states.ShopState;
+import model.tasks.ReturnToInvestedInShopTask;
 import util.MyRandom;
 
 import java.util.List;
@@ -23,6 +25,9 @@ public class InvestInShopEvent extends DailyEventState {
 
     @Override
     public GuideData getGuideData() {
+        if (hasInvestmentHere(getModel())) {
+            return null;
+        }
         return new GuideData("Go to empty shop",
                 "I know a particular shop in town. It's been around for ages, but... I don't think it's doing too well. " +
                         "I went in there recently and they didn't have a single thing for sale!");
@@ -102,7 +107,7 @@ public class InvestInShopEvent extends DailyEventState {
                 itemRows++;
             }
             List<Item> stock = model.getItemDeck().draw(itemRows * 8);
-            ShopState shopState = new ShopState(model, "Partnership Trader", stock, new boolean[]{true});
+            ShopState shopState = new ShopState(model, "Investment Trader", stock, new boolean[]{true});
             print("Press enter to continue.");
             waitForReturn();
             shopState.run(model);
@@ -149,7 +154,6 @@ public class InvestInShopEvent extends DailyEventState {
             leaderSay("I think " + iOrWe() + " need some time to think about this.");
             portraitSay("I understand. One should always think carefully before entering into a partnership.");
         } else {
-            // TODO: Add destination task so you can always ask about business when in town.
             if (model.getParty().getGold() < investment) {
                 leaderSay("I would love to invest " + investment + " gold, but " + iOrWe() +
                         " just don't have the money right now.");
@@ -170,6 +174,9 @@ public class InvestInShopEvent extends DailyEventState {
                 }
                 leaderSay("Wonderful. Well until we see each other again then.");
                 portraitSay("See you around... partner.");
+                JournalEntry.printJournalUpdateMessage(model);
+                model.getParty().addDestinationTask(new ReturnToInvestedInShopTask(model.getParty().getPosition(),
+                        (UrbanLocation) model.getCurrentHex().getLocation(), investment));
             }
         }
     }
