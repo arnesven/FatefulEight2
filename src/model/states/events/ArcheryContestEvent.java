@@ -93,7 +93,8 @@ public class ArcheryContestEvent extends TournamentEvent {
         showOfficial();
         portraitSay("Thank you. Naturally you will need a bow. You are allowed to use your own, but we do " +
                 "sell excellent bows made especially for competitions.");
-        if (chosen.getEquipment().getWeapon() instanceof CrossbowWeapon) {
+        if (chosen.getEquipment().getWeapon() != null &&
+            chosen.getEquipment().getWeapon().isOfType(CrossbowWeapon.class)) {
             partyMemberSay(chosen, "Can I use a crossbow?");
             portraitSay("It is allowed, but I wouldn't recommend it. Crossbows are easy enough to aim with, but it is " +
                     "not very easy to adjust the power of the shot.");
@@ -432,7 +433,8 @@ public class ArcheryContestEvent extends TournamentEvent {
     }
 
     private boolean bowEquipped(GameCharacter chosen) {
-        return chosen.getEquipment().getWeapon() instanceof BowWeapon;
+        return chosen.getEquipment().getWeapon() != null &&
+                chosen.getEquipment().getWeapon().isOfType(BowWeapon.class);
     }
 
     private void buyBow(Model model) {
