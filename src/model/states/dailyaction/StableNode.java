@@ -5,9 +5,7 @@ import model.TimeOfDay;
 import model.horses.Horse;
 import model.horses.HorseHandler;
 import model.states.GameState;
-import model.states.events.NoEventState;
 import util.MyRandom;
-import util.MyStrings;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -29,12 +27,13 @@ public class StableNode extends DailyActionNode {
                 dayColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.ORANGE);
         nightSprite = new Sprite32x32("stablestown", "world_foreground.png", 0xAA,
                 nightColor, TownSubView.PATH_COLOR, MyColors.BROWN, MyColors.ORANGE);
-        this.horses = makeHorses();
+        this.horses = makeHorses(model);
     }
 
-    private List<Horse> makeHorses() {
+    private List<Horse> makeHorses(Model model) {
         List<Horse> result = new ArrayList<>();
-        int numberOfHorses = MyRandom.randInt(1, 3) + MyRandom.randInt(1, 4);
+        int numberOfHorses = MyRandom.randInt(1, model.getParty().size()) +
+                MyRandom.randInt(1, model.getParty().size());
         for (int i = numberOfHorses; i > 0; --i) {
             result.add(HorseHandler.generateHorse());
         }
