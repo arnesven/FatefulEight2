@@ -11,6 +11,7 @@ import model.classes.SkillChecks;
 import model.items.*;
 import model.items.accessories.Accessory;
 import model.items.clothing.Clothing;
+import model.items.potions.Potion;
 import model.items.weapons.Weapon;
 import sound.SoundEffects;
 import util.MyLists;
@@ -24,6 +25,7 @@ import view.subviews.ShopSubView;
 import view.subviews.SubView;
 
 import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class ShopState extends GameState {
 
@@ -82,7 +84,30 @@ public class ShopState extends GameState {
         List<Item> itemsToSell = new ArrayList<>();
         itemsToSell.addAll(model.getParty().getInventory().getAllItems());
         itemsToSell.removeIf((Item it) -> !it.isSellable());
+        groupPotions(itemsToSell);
         return itemsToSell;
+    }
+
+    private void groupPotions(List<Item> itemsToSell) {
+        Map<String, Integer> counts = new HashMap<>();
+        for (Item it : itemsToSell) {
+            if (it instanceof Potion) {
+                if (counts.containsKey(it.getName())) {
+                    counts.put(it.getName(), counts.get(it.getName()) + 1);
+                } else {
+                    counts.put(it.getName(), 1);
+                }
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+            if (entry.getValue() > 1) {
+                Potion inner = (Potion)MyLists.find(itemsToSell, it -> it.getName().equals(entry.getKey()));
+                itemsToSell.removeIf(it -> it.getName().equals(entry.getKey()));
+                itemsToSell.add(new SellPotionDummyItem(inner, entry.getValue()));
+            }
+        }
+
     }
 
     public static void pressToEnterShop(DailyEventState state) {
@@ -290,7 +315,6 @@ public class ShopState extends GameState {
         if (!isCurrentlyEquipped(model, it)) {
             sellItems.remove(it);
             itemJustSold(model, it, buyItems, prices);
-            SoundEffects.sellItem();
             model.getParty().getInventory().remove(it);
             if (getSellableItems(model).size() == 0) {
                 if (buyItems.getElementList().isEmpty()) {
@@ -299,6 +323,12 @@ public class ShopState extends GameState {
                     toggleBuySell(model);
                 }
             }
+        } else if (it instanceof SellPotionDummyItem) {
+            SellPotionDummyItem dummy = ((SellPotionDummyItem)it);
+            Item inner = dummy.getInnerItem();
+            itemJustSold(model, inner, buyItems, prices);
+            model.getParty().getInventory().remove(inner);
+            dummy.decrement();
         } else {
             println("You cannot sell an item that is currently equipped.");
         }
