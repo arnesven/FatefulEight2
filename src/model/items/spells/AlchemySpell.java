@@ -29,6 +29,7 @@ public class AlchemySpell extends ImmediateSpell {
     private Potion selectedPotion;
     private int ingredientCost = 0;
     private boolean distill = false;
+    private int brewCount = 1;
 
     public AlchemySpell() {
         super("Alchemy", 5, MyColors.GREEN, 6, 0);
@@ -81,15 +82,41 @@ public class AlchemySpell extends ImmediateSpell {
                 return false;
             }
             subView.setContents(selectedPotion, ingredientCost);
-            state.print("Are you sure you want to ");
             if (distill) { // TODO: Reduce the amount of ingredients you get from distill, otherwise you can get inf ingredients when you have a recipe
-                state.print("use up " + selectedPotion.getName() + " to recover " + ingredientCost + " ingredients");
+                state.print("Are you sure you want to use up " + selectedPotion.getName() + " to recover " + ingredientCost + " ingredients");
             } else {
-                state.print("spend " + ingredientCost + " ingredients to brew " + selectedPotion.getName());
+                int maxNumber = model.getParty().getInventory().getIngredients() / ingredientCost;
+                if (maxNumber > 1) {
+                    state.print("You have enough ingredients to brew " + maxNumber + " " + selectedPotion.getName() + ", do you want to brew more than one? (Y/N) ");
+                    if (state.yesNoInput()) {
+                        brewMultiple(state, selectedPotion, maxNumber);
+                        return true;
+                    }
+                }
+                state.print("Are you sure you want to spend " + ingredientCost + " ingredients to brew " + selectedPotion.getName());
             }
             state.print("? (Y/N) ");
         } while (!state.yesNoInput());
         return true;
+    }
+
+    private void brewMultiple(GameState state, Potion selectedPotion, int maxNumber) {
+        int amount;
+        do {
+            state.print("How many " + selectedPotion.getName() + " do you want to brew (max " + maxNumber + ")? ");
+            String line = state.lineInput();
+            try {
+                amount = Integer.parseInt(line);
+                if (amount > maxNumber || amount <= 0) {
+                    state.println("Please enter an integer between 1 and " + maxNumber + ".");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException nfe) {
+                state.println("Please enter an integer between 1 and " + maxNumber + ".");
+            }
+        } while (true);
+        this.brewCount = amount;
     }
 
     private void setSelectedPotionAndCost(Model model, GameState state, Set<String> setOfPotions) {
@@ -185,10 +212,12 @@ public class AlchemySpell extends ImmediateSpell {
             GameStatistics.incrementPotionsDistilled();
         } else {
             int cost = ingredientCost;
-            state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
-            model.getParty().getInventory().addToIngredients(-cost);
-            model.getParty().getInventory().addItem(selectedPotion.copy());
-            GameStatistics.incrementPotionsBrewed();
+            for (int i = 0; i < brewCount; i++) {
+                state.println(caster.getName() + " used up " + cost + " ingredients to brew a " + selectedPotion.getName() + ".");
+                model.getParty().getInventory().addToIngredients(-cost);
+                model.getParty().getInventory().addItem(selectedPotion.copy());
+                GameStatistics.incrementPotionsBrewed();
+            }
         }
         model.getParty().partyMemberSay(model, caster, List.of("Bubble bubble!", "Ahh, what an aroma.",
                 "I'm cooking!", "It took a little time, but now it's done.", "Let's save this for later.",
