@@ -13,12 +13,14 @@ public class VampireAbilityInfoDialog extends SelectableListMenu {
     private final int width;
     private final String[] parts;
     private final boolean withSelect;
+    private final GameView viewToTransition;
 
     public VampireAbilityInfoDialog(GameView previous, int width, String[] parts, boolean withSelect) {
         super(previous, width, parts.length + 6);
         this.width = width;
         this.parts = parts;
         this.withSelect = withSelect;
+        this.viewToTransition = previous;
     }
     
     @Override
@@ -42,7 +44,8 @@ public class VampireAbilityInfoDialog extends SelectableListMenu {
                 @Override
                 public void performAction(Model model, int x, int y) {
                     VampireAbilityInfoDialog.this.setTimeToTransition(true);
-                    getPrevious().setTimeToTransition(true);
+                    viewToTransition.setTimeToTransition(true);
+                    System.out.println("Setting time to transition");
                 }
             });
         }

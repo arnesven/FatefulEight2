@@ -76,7 +76,7 @@ public class VampirismCondition extends Condition {
     public void endOfDayTrigger(Model model, GameState state, Combatant comb) {
         if (model.getDay() != dayAdded &&
                 ((model.getDay() - dayAdded) % PROGRESS_EVERY_N_DAYS) == 0) {
-            progress(model, (GameCharacter) comb);
+            progress(model, state, (GameCharacter) comb);
         }
     }
 
@@ -95,7 +95,7 @@ public class VampirismCondition extends Condition {
         return new VampirismHelpView(view, this);
     }
 
-    public void progress(Model model, GameCharacter owner) {
+    public void progress(Model model, GameState state, GameCharacter owner) {
         if (originalAppearance == null) {
             originalAppearance = owner.getAppearance();
         }
@@ -108,9 +108,9 @@ public class VampirismCondition extends Condition {
         model.getLog().waitForAnimationToFinish();
         VampireStageProgressionSubView subView = new VampireStageProgressionSubView(model, owner, this);
         model.setSubView(subView);
-        do {
-            model.getLog().waitForReturnSilently();
-        } while (!subView.isDone());
+
+        state.waitUntil(subView, VampireStageProgressionSubView::isDone);
+
         VampireAbility chosen = subView.getChosenVampireAbility();
         model.getLog().addAnimated(owner.getName() + " learned the vampire ability " + chosen.getName() + ".\n");
         learnAbility(chosen);

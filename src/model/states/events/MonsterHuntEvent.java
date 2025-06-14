@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.enemies.*;
+import model.journal.JournalEntry;
 import model.map.*;
 import model.states.DailyEventState;
 import model.tasks.Destination;
@@ -66,6 +67,7 @@ public class MonsterHuntEvent extends DailyEventState {
             randomSayIfPersonality(PersonalityTrait.cowardly, new ArrayList<>(), "Are you sure this is a good idea?");
             randomSayIfPersonality(PersonalityTrait.brave, new ArrayList<>(), "Finally, some real adventuring work!");
             model.getParty().addDestinationTask(new MonsterHuntDestinationTask(monsterHunt));
+            JournalEntry.printJournalUpdateMessage(model);
         } else {
             leaderSay("But, perhaps there's lower hanging fruit elsewhere. " +
                      iOrWeCap() + "'ll let somebody else deal with the " + monsterHunt.getMonster().getName() + ".");

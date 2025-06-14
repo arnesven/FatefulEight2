@@ -73,7 +73,7 @@ public class MainGameView extends GameView {
                 if (vampCond == null) {
                     target.addCondition(new VampirismCondition(VampirismCondition.INITIAL_STAGE, model.getDay()));
                 } else {
-                    vampCond.progress(model, target);
+                    //vampCond.progress(model, target);
                 }
             }
         } else if (keyEvent.isControlDown()) {
