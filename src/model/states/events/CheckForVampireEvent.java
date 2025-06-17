@@ -167,6 +167,7 @@ public class CheckForVampireEvent extends DailyEventState {
             }
             if (!enemies.isEmpty()) {
                 println("Your former party members attack you!");
+                model.getParty().unbenchAll();
                 runCombat(enemies);
             }
         }

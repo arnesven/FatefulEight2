@@ -181,7 +181,7 @@ public abstract class CombatAction {
             combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
             if (result.isSuccessful()) {
                 combatEvent.leaderSay(MyRandom.sample(List.of("Retreat!", "Fall back!", "Let's get out of here!",
-                        "They're to strong, let's go!", "There's no point, let's get out of here.")));
+                        "They're too strong, let's go!", "There's no point, let's get out of here.")));
                 combatEvent.addSpecialEffect(model.getParty().getLeader(), new CombatSpeechBubble());
                 fleeSuccess = true;
             }
