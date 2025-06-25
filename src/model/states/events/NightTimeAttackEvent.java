@@ -38,7 +38,7 @@ public abstract class NightTimeAttackEvent extends NightTimeEvent {
             portraitSay("Ruff ruff ruff!");
             partyMemberSay(rando, "What is it " + boyOrGirl(app.getGender()) + "? You sense something?");
             println(rando.getName() + " looks around worriedly. Then suddenly " +
-                    heOrShe(rando.getGender()) + perceptionSuccessString + "!");
+                    heOrShe(rando.getGender()) + " " + perceptionSuccessString + "!");
             spotted = true;
         } else {
             SkillCheckResult result = rando.testSkill(model, Skill.Perception, perceptionDifficulty);
