@@ -125,7 +125,7 @@ public class TownishSubView extends DailyActionSubView {
         }
     }
 
-    private void drawStreet(Model model) {
+    protected void drawStreet(Model model) {
         Sprite street = STREET_DAY;
         if (model.getTimeOfDay() == TimeOfDay.EVENING) {
             street = STREET_EVENING;

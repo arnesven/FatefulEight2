@@ -21,8 +21,12 @@ public class SeaHex extends WorldHex {
 
     public static SubView SUB_VIEW = new ImageSubView("ship", "THE SEA", "You are sailing the sea.");
 
+    public SeaHex(int state, HexLocation loc) {
+        super(MyColors.LIGHT_BLUE, 0, Direction.ALL, loc, state);
+    }
+
     public SeaHex(int state) {
-        super(MyColors.LIGHT_BLUE, 0, Direction.ALL, null, state);
+        this(state, null);
     }
 
     @Override

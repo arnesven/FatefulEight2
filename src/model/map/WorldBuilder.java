@@ -29,7 +29,7 @@ public class WorldBuilder {
     public static final Point WATERFRONT_INN_POISITION = new Point(26, 13);
 
     public static final Point PIRATE_HAVEN_LOCATION = new Point(8, 17);
-    public static final Point VIKING_VILLAGE_LOCATION = new Point(26, 2);
+    public static final Point VIKING_VILLAGE_LOCATION = new Point(19, 3);
     public static final Point JUNGLE_PYRAMID_LOCATION = new Point(26, 40);
     public static final Point EASTERN_PALACE_LOCATION = new Point(45, 14);
     public static final Point EASTERN_SMITH_LOCATION = new Point(46, 12);
@@ -57,7 +57,7 @@ public class WorldBuilder {
             "ssssstTTTTTTTTTTTTTTTTttTTTTTTTTTTTuuTTTTTTTTTTTTTTTT",
             "sssssttuuTTTTTTuuuTTTTTTTuuTTTtTTTtTTTTTttTTTTTTTTTtt",
             "sttstttuTTTTTTTuuuuuuuuuuTTTTuuuuutuTTTuuTTuuTTuuuTuu",
-            "stssttttWWWWWTTWWWWWWWWWTTWWWWWWWTTTTWWWWWWWWWWWWWWWW",
+            "stssttttWWWWWTTWWWWtWWWWTTWWWWWWWTTTTWWWWWWWWWWWWWWWW",
             "sssssttWWWWWWWTTTWWWWWWWWWWWWTTTTWTTuWWWWWWWWWWWWWWWW",
             "sssssssttttWWWWuTTTttttTtTTTTuttuTTTuttWWtttssWWutttt",
             "ssstsssssttttWWWuuuTTTTTTtttttuTTTuttttttssssssWWuWtt",
@@ -375,8 +375,25 @@ public class WorldBuilder {
     }
 
     private static void addNorthernContents(Map<Point, HexContents> contents) {
+
         addInn(contents, 30, 1, "Frigid Slab Inn", SOUTH_EAST, 0);
         addRoadsAndRivers(contents, 31, 2, NORTH_WEST | SOUTH, 0);
+
+        addRoadsAndRivers(contents, 20, 2, 0, SOUTH);
+        contents.put(VIKING_VILLAGE_LOCATION, new HexContents(new VikingVillageLocation(), 0, SOUTH_EAST));
+        addRoadsAndRivers(contents, 20, 3, 0, NORTH_WEST | NORTH | NORTH_EAST);
+        addRoadsAndRivers(contents, 21, 3, 0, SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 21, 4, 0, NORTH | NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 22, 3, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 22, 4, 0, NORTH_WEST | SOUTH_WEST | SOUTH);
+        addRoadsAndRivers(contents, 21, 5, 0, NORTH_EAST);
+        addRoadsAndRivers(contents, 22, 5, 0, NORTH | NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 23, 5, 0, SOUTH_WEST);
+        addRoadsAndRivers(contents, 23, 6, 0, NORTH_WEST | SOUTH_WEST);
+        addRoadsAndRivers(contents, 22, 6, 0, NORTH_EAST | SOUTH_EAST);
+        addRoadsAndRivers(contents, 23, 7, 0, NORTH_WEST | SOUTH_WEST);
+        addRoadsAndRivers(contents, 22, 7, 0, NORTH_EAST);
+
         addRoadsAndRivers(contents, 31, 3, NORTH | SOUTH, 0);
         addRoadsAndRivers(contents, 31, 4, NORTH | SOUTH, 0);
 
