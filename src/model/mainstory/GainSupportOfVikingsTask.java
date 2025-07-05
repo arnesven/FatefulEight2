@@ -6,6 +6,7 @@ import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.map.WorldBuilder;
 import model.quests.Quest;
+import model.states.DailyEventState;
 import util.MyPair;
 import util.MyTriplet;
 
@@ -58,5 +59,9 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     @Override
     public void addFactionString(List<MyPair<String, String>> result) {
         // TODO
+    }
+
+    public DailyEventState generateEvent(Model model) {
+        return new JustArrivedInVikingTownEvent(model);
     }
 }

@@ -2,7 +2,10 @@ package model.map.locations;
 
 import model.Model;
 import model.SteppingMatrix;
+import model.journal.PartSixStoryPart;
+import model.journal.StoryPart;
 import model.mainstory.GainSupportOfHonorableWarriorsTask;
+import model.mainstory.GainSupportOfVikingsTask;
 import model.map.HexLocation;
 import model.races.AllRaces;
 import model.states.DailyEventState;
@@ -15,6 +18,7 @@ import model.states.dailyaction.VikingVillageDailyActionState;
 import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.events.*;
 import model.states.warehouse.WarehouseEvent;
+import util.MyLists;
 import util.MyRandom;
 import view.GameView;
 import view.MyColors;
@@ -76,13 +80,13 @@ public class VikingVillageLocation extends TownishLocation {
 
     @Override
     public DailyEventState generateEvent(Model model) {
-//        GainSupportOfHonorableWarriorsTask task = getHonorableWarriorsTask(model);
-//        if (task != null && !task.isCompleted()) {
-//            DailyEventState event = task.generateEvent(model, false);
-//            if (event != null) {
-//                return event;
-//            }
-//        }
+        GainSupportOfVikingsTask task = getVikingTask(model);
+        if (task != null && !task.isCompleted()) {
+            DailyEventState event = task.generateEvent(model);
+            if (event != null) {
+                return event;
+            }
+        }
         if (MyRandom.rollD10() >= 4) {
             return MyRandom.sample(List.of(
                     new BeanGameEvent(model, AllRaces.NORTHERN_HUMAN),
@@ -98,6 +102,17 @@ public class VikingVillageLocation extends TownishLocation {
             ));
         }
         return super.generateEvent(model);
+    }
+
+    public static GainSupportOfVikingsTask getVikingTask(Model model) {
+        StoryPart part = MyLists.last(model.getMainStory().getStoryParts());
+        if (part instanceof PartSixStoryPart) {
+            PartSixStoryPart partSix = (PartSixStoryPart) part;
+            if (partSix.getRemotePeopleTask() instanceof GainSupportOfVikingsTask) {
+                return (GainSupportOfVikingsTask) partSix.getRemotePeopleTask();
+            }
+        }
+        return null;
     }
 
     @Override
