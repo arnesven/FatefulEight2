@@ -42,13 +42,13 @@ public class PirateCaptainClass extends PrestigeClass {
                         new WeightedSkill(Skill.Entertain, 3),
                         new WeightedSkill(Skill.Endurance, 3),
                         new WeightedSkill(Skill.Leadership, 5),
+                        new WeightedSkill(Skill.Mercantile, 3),
                         new WeightedSkill(Skill.Perception, 4),
                         new WeightedSkill(Skill.Persuade, 4),
                         new WeightedSkill(Skill.Search, 4),
                         new WeightedSkill(Skill.Security, 3),
                         new WeightedSkill(Skill.SeekInfo, 5),
-                        new WeightedSkill(Skill.Sneak, 4),
-                        new WeightedSkill(Skill.Survival, 3)
+                        new WeightedSkill(Skill.Sneak, 4)
                 });
         this.descriptionClasses = MyLists.commaAndJoin(FROM_CLASSES, x ->
                 x.getSimpleName().replace("Class", ""));

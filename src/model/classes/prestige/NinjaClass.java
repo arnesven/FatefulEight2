@@ -28,6 +28,7 @@ public class NinjaClass extends PrestigeClass {
             WitchClass.class);
 
     private final MyColors clothingColor;
+    private final String descriptionClasses;
 
     public NinjaClass() {
         super("Ninja", "NJA", 8, 9, false, 10,
@@ -43,6 +44,8 @@ public class NinjaClass extends PrestigeClass {
                         new WeightedSkill(Skill.UnarmedCombat, 4)}
         );
         this.clothingColor = MyColors.DARK_GRAY;
+        this.descriptionClasses = MyLists.commaAndJoin(FROM_CLASSES, x ->
+                x.getSimpleName().replace("Class", ""));
     }
 
     @Override
@@ -95,7 +98,9 @@ public class NinjaClass extends PrestigeClass {
 
     @Override
     public String getDescription() {
-        return "Ninjas are individuals who belong to a covert guild of shadow assassins from the east.";
+        return "Ninjas are individuals who belong to a covert guild of shadow assassins from the east." +
+                "This Prestige Class can only be taken on by characters of one of the following classes: " +
+                descriptionClasses + ".";
     }
 
     @Override

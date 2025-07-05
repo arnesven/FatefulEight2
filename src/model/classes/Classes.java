@@ -5,6 +5,7 @@ import model.classes.npcs.*;
 import model.classes.prestige.NinjaClass;
 import model.classes.prestige.PirateCaptainClass;
 import model.classes.prestige.SamuraiClass;
+import model.classes.prestige.VikingClass;
 import model.classes.special.*;
 
 import java.util.Map;
@@ -36,6 +37,7 @@ public interface Classes {
     CharacterClass NINJA = new NinjaClass();
     CharacterClass SAMURAI = new SamuraiClass();
     CharacterClass PIRATE_CAPTAIN = new PirateCaptainClass();
+    CharacterClass VIKING = new VikingClass();
 
     CharacterClass[] allClasses = new CharacterClass[]{None,
             AMZ, ART, ASN, BBN, BRD, BKN, CAP, FOR, DRU, MAG,

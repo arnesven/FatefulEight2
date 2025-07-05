@@ -39,6 +39,7 @@ public class SamuraiClass extends PrestigeClass {
     private final MyColors armorColor;
     private final MyColors secondaryColor;
     private final MyColors helmetDetail;
+    private final String descriptionClasses;
 
     public SamuraiClass(MyColors armorColor, MyColors secondaryColor, MyColors helmetDetail) {
         super("Samurai", "SAM", 10, 7, true, 10, new WeightedSkill[]{
@@ -57,6 +58,8 @@ public class SamuraiClass extends PrestigeClass {
         this.armorColor = armorColor;
         this.secondaryColor = secondaryColor;
         this.helmetDetail = helmetDetail;
+        this.descriptionClasses = MyLists.commaAndJoin(FROM_CLASSES, x ->
+                x.getSimpleName().replace("Class", ""));
     }
 
     public SamuraiClass() {
@@ -88,7 +91,9 @@ public class SamuraiClass extends PrestigeClass {
 
     @Override
     public String getDescription() {
-        return "A disciplined fighter, trained for pitched battles and assaults, as well as serving as body guards.";
+        return "A disciplined fighter, trained for pitched battles and assaults, as well as serving as body guards." +
+        "This Prestige Class can only be taken on by characters of one of the following classes: " +
+                descriptionClasses + ".";
     }
 
     @Override
