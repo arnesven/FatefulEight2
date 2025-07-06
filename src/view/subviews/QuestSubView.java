@@ -22,7 +22,9 @@ public class QuestSubView extends AvatarSubView {
     private MyColors backgroundColor;
     private Sprite bgSprite;
     private final SteppingMatrix<QuestNode> matrix;
-    private static final LoopingSprite questCursor = new QuestCursorSprite();
+    private static final LoopingSprite WHITE_CURSOR = new QuestCursorSprite(MyColors.WHITE);
+    private static final LoopingSprite BLACK_CURSOR = new QuestCursorSprite(MyColors.BLACK);
+    private LoopingSprite questCursor;
     private boolean avatarEnabled;
     private boolean edgesEnabled = true;
     private boolean subScenesEnabled = true;
@@ -31,6 +33,7 @@ public class QuestSubView extends AvatarSubView {
         this.state = state;
         this.quest = quest;
         this.matrix = matrix;
+        questCursor = WHITE_CURSOR;
         avatarEnabled = true;
         backgroundColor = quest.getBackgroundColor();
         bgSprite = new FilledBlockSprite(backgroundColor);
@@ -206,5 +209,13 @@ public class QuestSubView extends AvatarSubView {
 
     public synchronized void addSpecialEffect(Point position, RunOnceAnimationSprite sprite) {
         addOngoingEffect(new MyPair<>(convertToScreen(position), sprite));
+    }
+
+    public void setCursorBlack(boolean enabled) {
+        if (enabled) {
+            questCursor = BLACK_CURSOR;
+        } else {
+            questCursor = WHITE_CURSOR;
+        }
     }
 }

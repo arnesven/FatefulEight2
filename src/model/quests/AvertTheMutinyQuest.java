@@ -41,7 +41,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AvertTheMutinyQuest extends MainQuest {
+public class AvertTheMutinyQuest extends RemotePeopleQuest {
     public static final String QUEST_NAME = "Avert the Mutiny";
     private static final String INTRO_TEXT =
             "The renowned pirate captain Blackbone has contracted the party to investigate a rumor that " +

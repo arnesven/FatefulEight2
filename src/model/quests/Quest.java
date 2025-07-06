@@ -263,4 +263,8 @@ public abstract class Quest {
             new ForcedMovementEvent(model, path).doTheEvent(model);
         }
     }
+
+    public boolean hasBlackCursor() {
+        return false;
+    }
 }

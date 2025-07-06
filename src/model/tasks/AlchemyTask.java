@@ -69,6 +69,9 @@ public abstract class AlchemyTask extends DestinationTask {
                 leaderSay("Alchemy? Isn't that about turning lesser compounds into gold?.");
                 partyMemberSay(other, "It's more than that. You can brew all kinds of potions. " +
                         "We just need some ingredients first, or we can distill any potion we already have.");
+                partyMemberSay(other, "In fact. I found these earlier. Maybe we can use them!");
+                println("The party got 5 ingredients.");
+                model.getParty().getInventory().addToIngredients(5);
                 leaderSay("Okay, let's just not blow ourselves up.");
 
             } else {

@@ -30,7 +30,7 @@ public class JustArrivedInVikingTownEvent extends DailyEventState {
             println("You turn around and head out of town.");
             return;
         }
-        
+
         leaderSay("Can we perhaps talk to your leader?");
         portraitSay("That's it. You'll be sorry.");
         println("The viking stomps off in anger.");

@@ -121,8 +121,10 @@ public abstract class WorldHex {
         MyLists.nonNullAdd(conditionalEvents, DwarvenPuzzleTube.generateEvent(model));
         MyLists.nonNullAdd(conditionalEvents, CrimsonAssassinsInvitationEvent.eventDependentOnMurders(model));
         MyLists.nonNullAdd(conditionalEvents, HomeTownEvent.eventDependentOnHomeTown(model));
-        MyLists.nonNullAdd(conditionalEvents, WorkbenchTask.makeFirstTimeAtCraftingBenchEvent(model));
-        MyLists.nonNullAdd(conditionalEvents, AlchemyTask.makeAlchemySpellGottenEvent(model));
+        if (model.getTutorial().isTutorialEnabled()) {
+            MyLists.nonNullAdd(conditionalEvents, WorkbenchTask.makeFirstTimeAtCraftingBenchEvent(model));
+            MyLists.nonNullAdd(conditionalEvents, AlchemyTask.makeAlchemySpellGottenEvent(model));
+        }
         if (conditionalEvents.isEmpty()) {
             return null;
         }

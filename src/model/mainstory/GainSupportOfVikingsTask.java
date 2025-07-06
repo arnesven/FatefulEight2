@@ -5,7 +5,9 @@ import model.characters.appearance.CharacterAppearance;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.map.WorldBuilder;
-import model.quests.Quest;
+import model.map.locations.EasternPalaceLocation;
+import model.map.locations.VikingVillageLocation;
+import model.quests.SavageVikingsQuest;
 import model.states.DailyEventState;
 import util.MyPair;
 import util.MyTriplet;
@@ -15,6 +17,7 @@ import java.util.List;
 
 public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     private boolean completed = false;
+    private int step = 0;
 
     public GainSupportOfVikingsTask(Model model) {
         super(WorldBuilder.VIKING_VILLAGE_LOCATION);
@@ -48,12 +51,17 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
     @Override
     public MyTriplet<String, CharacterAppearance, String> addQuests(Model model) {
+        if (model.getCurrentHex().getLocation() instanceof VikingVillageLocation &&
+                step == 0) {
+            return new MyTriplet<>(SavageVikingsQuest.QUEST_NAME,
+                    model.getParty().getLeader().getAppearance(), "Yourself");
+        }
         return null;
     }
 
     @Override
     public void setQuestSuccessful() {
-        this.completed = true;
+        step++;
     }
 
     @Override

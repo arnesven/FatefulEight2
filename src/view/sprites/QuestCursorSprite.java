@@ -3,11 +3,15 @@ package view.sprites;
 import view.MyColors;
 
 public class QuestCursorSprite extends LoopingSprite {
-    public QuestCursorSprite() {
+    public QuestCursorSprite(MyColors color) {
         super("questcursor", "quest.png", 0, 32, 32);
         setFrames(2);
-        setColor1(MyColors.WHITE);
-        setColor2(MyColors.WHITE);
-        setColor3(MyColors.WHITE);
+        setColor1(color);
+        setColor2(color);
+        setColor3(color);
+    }
+
+    public QuestCursorSprite() {
+        this(MyColors.WHITE);
     }
 }

@@ -36,6 +36,9 @@ public class QuestState extends GameState {
         matrix.setSelectedElement(quest.getStartNode());
         cursorEnabled = true;
         questSubView = new QuestSubView(this, quest, matrix);
+        if (quest.hasBlackCursor()) {
+            questSubView.setCursorBlack(true);
+        }
         this.startingPosition = questStartingPos;
     }
 

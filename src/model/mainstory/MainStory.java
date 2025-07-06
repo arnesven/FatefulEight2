@@ -156,6 +156,8 @@ public class MainStory implements Serializable {
         map.put(mutinyQuest.getName(), mutinyQuest);
         NightAtTheTheaterQuest nightAtTheater = new NightAtTheTheaterQuest();
         map.put(nightAtTheater.getName(), nightAtTheater);
+        SavageVikingsQuest vikingsQuest = new SavageVikingsQuest();
+        map.put(vikingsQuest.getName(), vikingsQuest);
         return map;
     }
 
