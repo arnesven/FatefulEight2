@@ -38,6 +38,7 @@ public interface Classes {
     CharacterClass SAMURAI = new SamuraiClass();
     CharacterClass PIRATE_CAPTAIN = new PirateCaptainClass();
     CharacterClass VIKING = new VikingClass();
+    CharacterClass VIKING_CHIEF = new VikingChiefClass();
 
     CharacterClass[] allClasses = new CharacterClass[]{None,
             AMZ, ART, ASN, BBN, BRD, BKN, CAP, FOR, DRU, MAG,

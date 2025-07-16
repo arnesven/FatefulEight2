@@ -82,7 +82,7 @@ public class VikingVillageLocation extends TownishLocation {
     public DailyEventState generateEvent(Model model) {
         GainSupportOfVikingsTask task = getVikingTask(model);
         if (task != null && !task.isCompleted()) {
-            DailyEventState event = task.generateEvent(model);
+            DailyEventState event = task.generateEvent(model, false);
             if (event != null) {
                 return event;
             }
@@ -132,7 +132,7 @@ public class VikingVillageLocation extends TownishLocation {
 
     @Override
     public List<GeneralShopNode> getShops(Model model) {
-        return List.of();
+        return List.of(); // TODO: Viking shop
     }
 
     @Override

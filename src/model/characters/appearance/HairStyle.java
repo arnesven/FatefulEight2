@@ -4,6 +4,7 @@ import model.characters.*;
 import model.characters.preset.MordKroftHairStyle;
 import model.characters.preset.TorhildHairstyle;
 import model.characters.preset.VzaniHairStyle;
+import model.mainstory.vikings.FlameTipsHair;
 import util.MyRandom;
 import view.MyColors;
 import view.sprites.*;
@@ -72,7 +73,8 @@ public abstract class HairStyle implements Serializable {
             new WildSideHairStyle(),
             new HeartHairStyle(new WildSideHairStyle(), false, true, "Heart/Wild"),
             new StylishHairStyle(),
-            new LongBangsHairStyle()
+            new LongBangsHairStyle(),
+            new FlameTipsHair()
     };
 
     public static HairStyle[] femaleHairStyles = new HairStyle[]{
@@ -97,7 +99,7 @@ public abstract class HairStyle implements Serializable {
             allHairStyles[23], allHairStyles[24], allHairStyles[25],
             allHairStyles[30], allHairStyles[31],
             allHairStyles[36], allHairStyles[37], allHairStyles[38],
-            allHairStyles[41], allHairStyles[42]};
+            allHairStyles[41], allHairStyles[42], allHairStyles[46]};
 
     private final boolean onTop;
     private final boolean inForehead;

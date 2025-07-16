@@ -1,7 +1,12 @@
 package model.states.dailyaction;
 
 import model.Model;
+import model.TimeOfDay;
+import model.mainstory.GainSupportOfVikingsTask;
+import model.map.locations.VikingVillageLocation;
 import model.states.GameState;
+import model.states.events.NoEventState;
+import model.states.events.SilentNoEventState;
 import view.MyColors;
 import view.sprites.Sprite;
 import view.sprites.Sprite32x32;
@@ -22,7 +27,11 @@ public class VisitLonghouseNode extends DailyActionNode {
 
     @Override
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
-        return null;
+        GainSupportOfVikingsTask task = VikingVillageLocation.getVikingTask(model);
+        if (task != null) {
+            return task.generateEvent(model, true);
+        }
+        return new SilentNoEventState(model);
     }
 
     @Override
@@ -40,6 +49,14 @@ public class VisitLonghouseNode extends DailyActionNode {
 
     @Override
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
+        if (VikingVillageLocation.getVikingTask(model) == null) {
+            state.println("The Longhouse is closed.");
+            return false;
+        }
+        if (model.getTimeOfDay() != TimeOfDay.EVENING) {
+            state.println("The Longhouse is during the day. Return in the evening.");
+            return false;
+        }
         return true;
     }
 

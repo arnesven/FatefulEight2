@@ -58,20 +58,20 @@ public class VikingClass extends PrestigeClass {
     public void putClothesOn(CharacterAppearance characterAppearance) {
         Looks.putOnTunic(characterAppearance, MyColors.DARK_RED);
         CaptainClass.putOnHalfHelm(characterAppearance);
-        putOnHorns(characterAppearance);
+        putOnHorns(characterAppearance, MyColors.GOLD);
     }
 
-    public static void putOnHorns(CharacterAppearance characterAppearance) {
+    public static void putOnHorns(CharacterAppearance characterAppearance, MyColors hornsColor) {
         for (int j = 0; j < 2; ++j) {
             for (int i = 0; i < 2; ++i) {
                 Sprite8x8 mask = new Sprite8x8("vikinghornsl" + i, "clothes.png", 0x1A2 + 0x10*j + i);
                 mask.setColor1(MyColors.DARK_GRAY);
-                mask.setColor3(MyColors.GOLD);
+                mask.setColor3(hornsColor);
                 characterAppearance.addSpriteOnTop(1 + i, 0 + j, mask);
 
                 mask = new Sprite8x8("vikinghornsr" + i, "clothes.png", 0x1A4 + 0x10*j + i);
                 mask.setColor1(MyColors.DARK_GRAY);
-                mask.setColor3(MyColors.GOLD);
+                mask.setColor3(hornsColor);
                 characterAppearance.addSpriteOnTop(4 + i, 0 + j, mask);
             }
         }

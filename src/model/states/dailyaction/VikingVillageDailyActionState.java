@@ -5,10 +5,8 @@ import model.map.UrbanLocation;
 import model.map.locations.VikingVillageLocation;
 import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.dailyaction.tavern.VikingTavernNode;
-import model.states.dailyaction.town.CharterBoatAtDocks;
 import model.states.dailyaction.town.SnowyCampOutsideOfTownNode;
 import view.MyColors;
-import view.subviews.TownSubView;
 
 import java.awt.*;
 
