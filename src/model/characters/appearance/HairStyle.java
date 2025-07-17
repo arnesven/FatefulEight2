@@ -74,7 +74,8 @@ public abstract class HairStyle implements Serializable {
             new HeartHairStyle(new WildSideHairStyle(), false, true, "Heart/Wild"),
             new StylishHairStyle(),
             new LongBangsHairStyle(),
-            new FlameTipsHair()
+            new FlameTipsHair(),
+            new CurlyHair()
     };
 
     public static HairStyle[] femaleHairStyles = new HairStyle[]{
@@ -88,7 +89,7 @@ public abstract class HairStyle implements Serializable {
             allHairStyles[29], allHairStyles[32], allHairStyles[33],
             allHairStyles[34], allHairStyles[35],
             allHairStyles[39], allHairStyles[40], allHairStyles[43],
-            allHairStyles[44], allHairStyles[45]};
+            allHairStyles[44], allHairStyles[45], allHairStyles[47]};
 
     public static HairStyle[] maleHairStyles = new HairStyle[]{
             allHairStyles[0], allHairStyles[8], allHairStyles[10],

@@ -12,8 +12,12 @@ public class SwimAttire implements PortraitClothing {
 
     private final MyColors swimsuitColor;
 
+    public SwimAttire(MyColors swimsuitColor) {
+        this.swimsuitColor = swimsuitColor;
+    }
+
     public SwimAttire() {
-        this.swimsuitColor = randomSwimSuitColor();
+        this(randomSwimSuitColor());
     }
 
     @Override

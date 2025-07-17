@@ -286,11 +286,16 @@ public class SpellsView extends SelectableListMenu {
         protected List<ListContent> buildContent(Model model, int xStart, int yStart) {
             List<ListContent> content = new ArrayList<>();
             content.add(new SelectableListContent(xStart + 1, yStart + 1, "Cast") {
-                               @Override
-                               public void performAction(Model model, int x, int y) {
-                                   setInnerMenu(new CastByWhomMenu(SpellMidMenu.this, x, y, spell), model);
-                               }
-                           });
+                           @Override
+                           public void performAction(Model model, int x, int y) {
+                               setInnerMenu(new CastByWhomMenu(SpellMidMenu.this, x, y, spell), model);
+                           }
+
+                            @Override
+                            public boolean isEnabled(Model model) {
+                                return model.getParty().getBench().size() < model.getParty().size();
+                            }
+            });
             content.add(new SelectableListContent(xStart + 1, yStart + 2, "Analyze") {
                             @Override
                             public void performAction(Model model, int x, int y) {

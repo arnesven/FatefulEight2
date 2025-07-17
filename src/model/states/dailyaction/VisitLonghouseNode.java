@@ -20,6 +20,7 @@ public class VisitLonghouseNode extends DailyActionNode {
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.WHITE, MyColors.GOLD);
     private static final Sprite SPRITE2 = new Sprite32x32("longhouseright", "world_foreground.png", 0xDD,
             MyColors.YELLOW, TownSubView.PATH_COLOR, MyColors.WHITE, MyColors.GOLD);
+    private int lastVisitedOnDay = 0;
 
     public VisitLonghouseNode() {
         super("Visit Longhouse");
@@ -29,6 +30,7 @@ public class VisitLonghouseNode extends DailyActionNode {
     public GameState getDailyAction(Model model, AdvancedDailyActionState state) {
         GainSupportOfVikingsTask task = VikingVillageLocation.getVikingTask(model);
         if (task != null) {
+            lastVisitedOnDay = model.getDay();
             return task.generateEvent(model, true);
         }
         return new SilentNoEventState(model);
@@ -51,6 +53,10 @@ public class VisitLonghouseNode extends DailyActionNode {
     public boolean canBeDoneRightNow(AdvancedDailyActionState state, Model model) {
         if (VikingVillageLocation.getVikingTask(model) == null) {
             state.println("The Longhouse is closed.");
+            return false;
+        }
+        if (lastVisitedOnDay == model.getDay()) {
+            state.println("The Longhouse is now closed. Try again tomorrow.");
             return false;
         }
         if (model.getTimeOfDay() != TimeOfDay.EVENING) {
