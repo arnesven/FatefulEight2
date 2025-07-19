@@ -52,7 +52,9 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
                 }
 
                 if (step >= WRESTLING_CONTEST_DONE) {
-                    first += "\n\nYou have passed Loki's tests."; // TODO
+                    first += "\n\nYou have passed Loki's initial tests. The final test is to accompany " +
+                            "the Vikings on a raid on the Sixth Order monks on Faith Island. " +
+                            "\n\nAlternatively you could warn the monks of the upcoming raid.";
                 } else if (step >= LOKI_MET) {
                     first += "\n\nIn order to ally with the Vikings, you must prove to Chieftain Loki that you are " +
                             "a true viking by passing certain 'tests'.";

@@ -58,7 +58,7 @@ public class TravelBySeaState extends GameState {
         travelBySea(model, first.getHex(), this, SHIP_AVATAR, first.getTownName(), true, true);
     }
 
-    private static void travelBySea(Model model, WorldHex hex, GameState state,
+    public static void travelBySea(Model model, WorldHex hex, GameState state,
                                     Sprite shipAvatar, String destinationName,
                                     boolean voyageTakesTwoDays, boolean withViewTransition) {
         Point viewPoint = new Point(model.getParty().getPosition());

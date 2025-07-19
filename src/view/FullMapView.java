@@ -3,10 +3,7 @@ package view;
 import control.FatefulEight;
 import model.Model;
 import model.map.World;
-import model.map.objects.DiscoveredTravelRoutesFilter;
-import model.map.objects.KingdomFilter;
-import model.map.objects.MapFilter;
-import model.map.objects.UnderworldLegendFilter;
+import model.map.objects.*;
 import util.Arithmetics;
 import view.help.SpecificTerrainHelpDialog;
 import view.widget.FullMapTopText;
@@ -27,9 +24,14 @@ public class FullMapView extends GameView {
     private World worldToDraw;
     private int viewType = 0;
     private MapFilter currentFilter = null;
+    private int maxViews;
 
     public FullMapView(GameView previous, Point startCursorPos) {
         super(true);
+        maxViews = MAX_VIEW_TYPES;
+        if (FatefulEight.inDebugMode()) {
+            maxViews++;
+        }
         this.previousView = previous;
         if (startCursorPos != null) {
             cursorPos = new Point(startCursorPos.x, startCursorPos.y);
@@ -112,8 +114,11 @@ public class FullMapView extends GameView {
     }
 
     private void cycleView(Model model) {
-        viewType = Arithmetics.incrementWithWrap(viewType, MAX_VIEW_TYPES);
-        if (viewType == 3) {
+        viewType = Arithmetics.incrementWithWrap(viewType, maxViews);
+        if (viewType == 4) {
+            currentFilter = new WaterPathDistancesFilter();
+            worldToDraw = model.getWorld();
+        } else if (viewType == 3) {
             currentFilter = new UnderworldLegendFilter();
             worldToDraw = model.getCaveSystem();
         } else if (viewType == 2) {

@@ -143,7 +143,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
     private void lokiExplainsRealTest(Model model) {
         portraitSay("I like your spirit! The final test is the most straight forward. You must join us on " +
-                "an upcoming raid.");
+                "our upcoming raid.");
         leaderSay("A raid? Like, with pillaging?");
         portraitSay("Yes. We will sail south to Faith Island and raid the monastary of the Sixth Order Monks. " +
                 "Those pious bastards have gotten fat from donations from gullible pilgrims.");
@@ -152,7 +152,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         portraitSay("Yes of course! Then we shall be brothers for all time, and we will stand by you in your " +
                 "return to depose the King of Bogdown.");
         leaderSay("I understand. When do we leave?");
-        portraitSay("Join us down by the docks whenever you are ready.");
+        portraitSay("At first light tomorrow. Join us down by the docks whenever you are ready.");
     }
 
     // Wrappers
@@ -171,7 +171,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
     private static abstract class LokiIllusionContest {
 
-        private static final int ACTUAL_DIFFICULTY = 1; // TODO: 13
+        private static final int ACTUAL_DIFFICULTY = 13;
         private static final int MAGIC_DIFFICULTY = 10;
 
         private final Model model;
@@ -605,7 +605,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         @Override
         protected void illusionDifficultyFailed(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
             event.println("And time after time, Old Elle escapes " + partyMember.getFirstName() + "'s grip. " +
-                    "Finally it is " + partyMember.getFirstName() + " " + GameState.hisOrHer(partyMember.getGender()) +
+                    "Finally it is " + partyMember.getFirstName() + " " + GameState.himOrHer(partyMember.getGender()) +
                     "self who is beaten down into submission.");
         }
 

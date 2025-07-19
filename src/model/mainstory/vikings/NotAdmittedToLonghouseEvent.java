@@ -21,7 +21,7 @@ public class NotAdmittedToLonghouseEvent extends DailyEventState {
         println("Two large, very aggressive looking vikings are guarding the entrance to the longhouse.");
         print("Do you attempt to persuade them to let you enter? (Y/N) ");
         if (yesNoInput()) {
-            boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 1); // TODO: 20
+            boolean success = model.getParty().doSoloSkillCheck(model, this, Skill.Persuade, 20);
             if (success) {
                 println("Just as the guards are about to pound you to oblivion, you manage to explain " +
                         "the reason for your presence in a concise and convincing manner. Baffled by your eloquence " +

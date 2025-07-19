@@ -5,6 +5,7 @@ import model.map.UrbanLocation;
 import model.map.locations.VikingVillageLocation;
 import model.states.dailyaction.shops.GeneralShopNode;
 import model.states.dailyaction.tavern.VikingTavernNode;
+import model.states.dailyaction.town.CharterBoatAtDocks;
 import model.states.dailyaction.town.SnowyCampOutsideOfTownNode;
 import view.MyColors;
 
@@ -43,6 +44,7 @@ public class VikingVillageDailyActionState extends TownishDailyActionState {
     protected void addTravelNodes(Model model, boolean isCoastal, UrbanLocation urbanLocation) {
         super.addNode(urbanLocation.getTravelNodePosition().x, urbanLocation.getTravelNodePosition().y,
                 new TravelNode(model, MyColors.WHITE, MyColors.LIGHT_GRAY));
-        addNode(3, 0, new LongboatNode(model));
+        addNode(1, 0, new CharterBoatAtDocks(model));
+        addNode(4, 0, new LongboatNode(model));
     }
 }
