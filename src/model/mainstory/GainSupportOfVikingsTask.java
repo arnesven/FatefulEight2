@@ -132,13 +132,12 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
         if (step == COMPLETED_MONASTARY_RAIDED) {
             result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Ally"));
         } else if (step == INITIAL_STEP) {
-            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Persona Non Grata"));
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Enemy"));
+        } else if (step == COMPLETED_RAID_REPELLED) {
+            result.add(new MyPair<>(VisitMonasteryEvent.FACTION_NAME, "Ally"));
+            result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Friend"));
         } else {
             result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Friend"));
-        }
-
-        if (step == COMPLETED_RAID_REPELLED) {
-            result.add(new MyPair<>(VisitMonasteryEvent.FACTION_NAME, "Ally"));
         }
     }
 

@@ -45,6 +45,11 @@ public class MeetWithChieftainEvent extends DailyEventState {
         }
         model.getLog().waitForAnimationToFinish();
         CollapsingTransition.transition(model, GuildHallImageSubView.getInstance("Longhouse"));
+
+        if (task.isCompleted()) {
+            lokiReminisces(model);
+            return;
+        }
         meetLoki(model);
         portraitSay("There are tests which must be passed. You must overcome several challenges!");
         println("You can hear the vikings around you sniggering.");
@@ -81,6 +86,21 @@ public class MeetWithChieftainEvent extends DailyEventState {
                 println("You leave the longhouse.");
             }
         }
+    }
+
+    private void lokiReminisces(Model model) {
+        showChieftainPortrait(model);
+        portraitSay("We meet again friend.");
+        if (task.isMonastaryRaided()) {
+            portraitSay("That was a legendary raid. We should do one again sometime.");
+        } else {
+            portraitSay("It's too bad you didn't come with us for the raid on the Sixth Order monastary. " +
+                    "We could have needed your help on that one.");
+            leaderSay("I'm sorry. " + iOrWeCap() + " had other matters to attend to.");
+            portraitSay("Some other time then?");
+        }
+        leaderSay("Perhaps. See you around Loki.");
+        portraitSay("Farewell friend.");
     }
 
     private void meetLoki(Model model) {
