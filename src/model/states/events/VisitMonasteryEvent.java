@@ -3,7 +3,10 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
+import model.mainstory.GainSupportOfVikingsTask;
 import model.map.TownLocation;
+import model.map.WorldHex;
+import model.map.locations.VikingVillageLocation;
 import model.states.DailyEventState;
 import model.states.TravelBySeaState;
 import util.MyLists;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisitMonasteryEvent extends DailyEventState {
+    public static final String FACTION_NAME = "Sixth Order";
     private static final String FIRST_TIME_KEY = "firstTimeAtMonastery";
     private static final String PREVIOUS_DONATION_KEY = "previousDonation";
     private static final String PREVIOUS_REP_INCREASES = "previousRepIncreases";
@@ -42,6 +46,12 @@ public class VisitMonasteryEvent extends DailyEventState {
 
     @Override
     protected void doEvent(Model model) {
+        GainSupportOfVikingsTask vikingTask = VikingVillageLocation.getVikingTask(model);
+        if (vikingTask != null && vikingTask.isMonastaryRaided()) {
+            monastaryInRuins(model);
+            return;
+        }
+
         if (!hasVisited(model)) {
             println("As you walk up a hill on this island you see a huge structure towering in front of you.");
             leaderSay("A castle? No... wait, it looks like a monastery.");
@@ -96,6 +106,29 @@ public class VisitMonasteryEvent extends DailyEventState {
                 }
                 portraitSay("How else can I help you?");
             } while (true);
+        }
+    }
+
+    private void monastaryInRuins(Model model) {
+        println("You approach the Monastary. It seems nobody has been here since " +
+                "it was raided. It is now a desolate place, fallen into disrepair.");
+        leaderSay("Now the Monastary will never be restored. The Sixth Order is no more.");
+        randomSayIfPersonality(PersonalityTrait.cold, List.of(), "Who cares?");
+        println("Down by the dock you see a small skiff moored. You approach and see that it is a fishing vessel.");
+        model.getLog().waitForAnimationToFinish();
+        showRandomPortrait(model, Classes.FARMER, "Fisherman");
+        portraitSay("Huh? Nobody ever comes here anymore. This place was quite lovely while the monks were " +
+                "tending it. Who are you?");
+        leaderSay("Just some pilgrims. Can we travel with you back to the mainland?");
+        portraitSay("Fine by me, I was heading back anyway. I can take you to Lower Theln.");
+        print("Travel by boat to Lower Theln?");
+        if (yesNoInput()) {
+            leaderSay("Thanks");
+            TownLocation destination = model.getWorld().getTownByName("Lower Theln");
+            TravelBySeaState.travelBySea(model, destination, this, false, true);
+        } else {
+            leaderSay("On second thought, " + iOrWe() + " will stay a little longer.");
+            portraitSay("Alright. Safe travels.");
         }
     }
 

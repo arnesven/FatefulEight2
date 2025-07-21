@@ -17,7 +17,7 @@ public abstract class VikingEnemy extends HumanoidEnemy {
 
     @Override
     public CombatLoot getLoot(Model model) {
-        return new StandardCombatLoot(model); // TODO: new VikingLoot(model);
+        return new StandardCombatLoot(model);
     }
 
     @Override

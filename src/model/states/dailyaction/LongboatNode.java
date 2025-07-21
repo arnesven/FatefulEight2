@@ -73,7 +73,7 @@ public class LongboatNode extends GoTheDocksNode {
             print("Board the ship and go on the raid? (Y/N) ");
             if (yesNoInput()) {
                 travelled = true;
-                return new RaidSixthOrderMonastaryEvent(model);
+                return new RaidSixthOrderMonastaryEvent(model, vikingTask);
             }
             return model.getCurrentHex().getDailyActionState(model);
         }

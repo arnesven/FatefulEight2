@@ -105,7 +105,7 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
                 }
                 model.getSettings().getMiscFlags().put(VISITED_FAITH_ISLAND_KEY, true);
             } else {
-                leaderSay("Looks like we're back on Faith Island again.");
+                leaderSay("Looks like we're back on the Isle of Faith again.");
             }
             model.getParty().setPosition(WorldBuilder.FAITH_ISLAND_POSITION);
         }

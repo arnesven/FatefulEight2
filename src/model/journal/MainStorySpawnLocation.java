@@ -34,7 +34,7 @@ public abstract class MainStorySpawnLocation implements Serializable {
         this.remotePeoplePosition = remotePeoplePosition;
     }
 
-    public abstract GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model);
+    public abstract GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model);
 
     public abstract List<GainSupportOfNeighborKingdomTask> makeNeighborKingdomTasks(Model model);
 

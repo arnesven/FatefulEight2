@@ -5,26 +5,23 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
-import model.characters.appearance.HunkyNeck;
-import model.classes.Classes;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.items.spells.DispelSpell;
 import model.mainstory.GainSupportOfVikingsTask;
 import model.map.CastleLocation;
-import model.map.locations.VikingVillageLocation;
-import model.races.HunkyShoulders;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.SpellCastException;
 import util.MyPair;
-import view.MyColors;
 import view.subviews.CollapsingTransition;
 import view.subviews.GuildHallImageSubView;
-import view.subviews.PortraitSubView;
 
 import java.util.List;
+
+import static model.mainstory.GainSupportOfVikingsTask.CHIEFTAIN_NAME;
+import static model.mainstory.GainSupportOfVikingsTask.CHIEFTAIN;
 
 public class MeetWithChieftainEvent extends DailyEventState {
     private final boolean withIntro;
@@ -37,7 +34,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
     }
 
     private void showChieftainPortrait(Model model) {
-        showExplicitPortrait(model, task.getChieftainPortrait(), "Chieftain Loki");
+        showExplicitPortrait(model, task.getChieftainPortrait(), CHIEFTAIN);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         portraitSay("There are tests which must be passed. You must overcome several challenges!");
         println("You can hear the vikings around you sniggering.");
         randomSayIfPersonality(PersonalityTrait.irritable, List.of(), "What's so funny?");
-        leaderSay("Go on Loki. What are these challenges?");
+        leaderSay("Go on " + CHIEFTAIN_NAME + ". What are these challenges?");
 
         portraitSay("Hmmm... let me think. Let me recall. What were the ancient rites...");
         randomSayIfPersonality(PersonalityTrait.critical, List.of(),
@@ -96,11 +93,11 @@ public class MeetWithChieftainEvent extends DailyEventState {
             model.getLog().waitForAnimationToFinish();
             showChieftainPortrait(model);
             portraitSay("So you're the outsider who's been causing all the commotion in our village. " +
-                    "I'm Loki, the chieftain of our tribe.");
+                    "I'm " + CHIEFTAIN_NAME + ", the chieftain of our tribe.");
             leaderSay("Yes. But we are friends, not foes.");
             portraitSay("Indeed? Outsiders rarely come here. Those that do are often not friendly. Those that " +
                     "are seldom prepared for this harsh environment.");
-            println("With the last remark, Loki smiles cruelly. And laughs are heard from the other vikings in the hall.");
+            println("With the last remark, " + CHIEFTAIN_NAME + " smiles cruelly. And laughs are heard from the other vikings in the hall.");
             portraitSay("Now please explain why you have come.");
             leaderSay("As you have surely noticed, the regions south of here have been more tumultuous lately.");
             CastleLocation bogdown = model.getWorld().getCastleByName(model.getMainStory().getCastleName());
@@ -117,7 +114,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
                     " alive. It seems the " + bogdown.getLordTitle() + " has been possessed or controlled by an evil force known as the Quad. " +
                     "Because of this, the kingdom has been descended into disorder.");
             portraitSay("I understand. But why seek refuge here? Some call us madmen for settling in this land.");
-            println("The vikings in the hall laugh heartily at Loki's joke.");
+            println("The vikings in the hall laugh heartily at " + CHIEFTAIN_NAME + "'s joke.");
             leaderSay("We do not seek refuge, but allies. " + iOrWeCap() + " aim to rally the support of the kingdoms surrounding " +
                     kingdom + ". We intend to return to " + kingdom + " to overthrow " +
                     bogdown.getLordName() + " and root out the evil presence.");
@@ -126,16 +123,22 @@ public class MeetWithChieftainEvent extends DailyEventState {
             leaderSay("When we sack " + bogdown.getPlaceName() + " you can take all the spoils you want. Surely you must have fantasized " +
                     "about such an opportunity?");
             portraitSay("Perhaps I have...");
-            leaderSay("So. What will it be Chieftain Loki? Will you partake in history? Or will you sit here, by your frozen hearth, " +
+            leaderSay("So. What will it be " + CHIEFTAIN +
+                    "? Will you partake in history? Or will you sit here, by your frozen hearth, " +
                     "and wait for a better chance?");
-            portraitSay("This crusade of yours, it has some appeal, but there is a problem.");
+            portraitSay("You think we are craven outcasts, shuddering way out here in the cold, with no prospects? We are explorers, " +
+                    "traders and feared warriors. Our voyages take us far and wide, and we carry out many raids, bringing back riches. " +
+                    "For instance, soon we will carry out a raid on the monastary on the Isle of Faith.");
+            leaderSay("How great of you.");
+            portraitSay("Still, this crusade of yours, it has some appeal. But there is a problem.");
             leaderSay("What's the problem?");
             portraitSay("Only a true viking could compel our tribe to undertake such a venture. And you, are no viking.");
             leaderSay("That is true. But how does one become a true viking?");
             task.setLokiMet();
         } else {
             println("Many viking men and women are sitting at the tables. " +
-                    "You approach Chieftain Loki, who is sitting in his chair at the end of the hall.");
+                    "You approach " + CHIEFTAIN
+                    + ", who is sitting in his chair at the end of the hall.");
             model.getLog().waitForAnimationToFinish();
             showChieftainPortrait(model);
         }
@@ -145,7 +148,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         portraitSay("I like your spirit! The final test is the most straight forward. You must join us on " +
                 "our upcoming raid.");
         leaderSay("A raid? Like, with pillaging?");
-        portraitSay("Yes. We will sail south to Faith Island and raid the monastary of the Sixth Order Monks. " +
+        portraitSay("Yes. We will sail south to the Isle of Faith and raid the monastary of the Sixth Order Monks. " +
                 "Those pious bastards have gotten fat from donations from gullible pilgrims.");
         leaderSay("And, if " + iOrWe() + " do this, " + iOrWe() +
                 " will be considered true viking" + (model.getParty().size() > 1 ? "s":"") + "?");
@@ -254,7 +257,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         protected abstract void illusionDispelled(Model model, MeetWithChieftainEvent event, GameCharacter partyMember);
 
         private boolean passedTest(String opponentName) {
-            event.println("Loki actually seems somewhat impressed");
+            event.println("" + CHIEFTAIN_NAME + " actually seems somewhat impressed");
             event.portraitSay("Alas, you could not beat " + opponentName + ". Still, your effort is commendable.");
             event.leaderSay("Does this mean I'm not a true viking?");
             event.portraitSay("Perhaps not. But at least the guests of my hall are entertained, perhaps you would like to take another test anyway?");
@@ -269,7 +272,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         }
 
         private void failedTest(String extra) {
-            event.println("Chieftain Loki doesn't seem very impressed.");
+            event.println(CHIEFTAIN + " doesn't seem very impressed.");
             event.portraitSay("I expected more! I don't think you can call yourself a true viking.");
             event.leaderSay("So that's it? I failed?");
             event.portraitSay("That's it for tonight at least. Why don't you come back another night and try your " +
@@ -296,7 +299,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
             event.partyMemberSay(partyMember, "I'm ravenous. I can perform this task.");
             event.portraitSay("Good. I will choose one from my tribe. Don't worry, I won't pick the best, that would be unfair. " +
                     "Now who should I choose. Hmmm...");
-            event.println("Loki gazes around upon the vikings sitting in the hall.");
+            event.println("" + CHIEFTAIN_NAME + " gazes around upon the vikings sitting in the hall.");
 
             event.portraitSay("Ah! Yes, young " + lagiName + ", he will do well.");
             model.getLog().waitForReturn();
@@ -316,7 +319,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected String getBlueMagicHint() {
-            return "This is not what it seems. That Loki guy is using some kind of spell here, " +
+            return "This is not what it seems. That " + CHIEFTAIN_NAME + " guy is using some kind of spell here, " +
                     "but I can't quite figure out what.";
         }
 
@@ -355,7 +358,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         @Override
         protected void illusionDifficultyPassed(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
             event.println("Somehow though, " + partyMember.getName() + " manages to finish eating quicker than " +
-                    lagiName + ". Loki seems completely surprised!");
+                    lagiName + ". " + CHIEFTAIN_NAME + " seems completely surprised!");
             event.removePortraitSubView(model);
             event.showChieftainPortrait(model);
             event.portraitSay("That... that was amazing.");
@@ -386,10 +389,10 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected void illusionDispelled(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
-            event.println("As if a veil is pulled back, the effect of Loki's spell dissipates. " +
+            event.println("As if a veil is pulled back, the effect of " + CHIEFTAIN_NAME + "'s spell dissipates. " +
                     lagiName + " fades away and it becomes clear that " + partyMember.getFirstName() +
                     "'s opponent is nothing more than the roaring fire in the middle of the longhouse.");
-            event.leaderSay("Hey, what are you trying to pull Loki?");
+            event.leaderSay("Hey, what are you trying to pull " + CHIEFTAIN_NAME + "?");
             model.getLog().waitForAnimationToFinish();
             event.showChieftainPortrait(model);
             event.portraitSay("Haha! You got me! Forgive me for adding some magical spice to this " +
@@ -416,7 +419,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
             event.partyMemberSay(partyMember, "I could use the exercise. I can perform this task.");
             event.portraitSay("Good. Now let's make some room in here while I think about who among us should be " +
                     "your opponent in this race.");
-            event.println("As Loki appears to think hard, the vikings in the hall quickly pull the tables back against the walls to " +
+            event.println("As " + CHIEFTAIN_NAME + " appears to think hard, the vikings in the hall quickly pull the tables back against the walls to " +
                     "form platforms for them to sit upon. In no time at all, the longhouse has turned into a miniature stadium.");
             event.portraitSay("Ah yes, I have it! I know just the one who shall oppose you. Young Hugi is quick. Don't worry, " +
                     "she's not the quickest of us. Many of us can outrun Hugi. But for you, an outsider, she will be a " +
@@ -425,7 +428,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
             AdvancedAppearance hugiAppearance = new HugiAppearance();
             event.removePortraitSubView(model);
             event.showExplicitPortrait(model, hugiAppearance, "Hugi");
-            event.println("A young woman steps out from behind Loki. She's a wisp of a girl, definitely not the athletic type.");
+            event.println("A young woman steps out from behind " + CHIEFTAIN_NAME + ". She's a wisp of a girl, definitely not the athletic type.");
             event.partyMemberSay(partyMember, "She doesn't look very fast. This should be easy.");
             event.println("The vikings on tables laugh out loud.");
             event.partyMemberSay(partyMember, "Did I say something funny?");
@@ -433,14 +436,14 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected String getBlueMagicHint() {
-            return "Something's off about this. Loki must be using some kind of spell here, " +
+            return "Something's off about this. " + CHIEFTAIN_NAME + " must be using some kind of spell here, " +
                     "but I can't quite figure out what.";
         }
 
         @Override
         protected void prepareForContest(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
             event.println(partyMember.getName() + " and Hugi line up at one end of the longhouse. They are to dash over to the other side, around " +
-                    "Loki's chair, and back again.");
+                    "" + CHIEFTAIN_NAME + "'s chair, and back again.");
             event.println(partyMember.getName() + " is preparing to compete in race against Hugi, press enter to continue.");
             event.waitForReturn(true);
             model.getParty().benchPartyMembers(List.of(partyMember));
@@ -462,7 +465,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         @Override
         protected void illusionDifficultyPassed(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
             model.getParty().unbenchAll();
-            event.println("Somehow though, " + partyMember.getName() + " manages to outrun Hugi. Loki appears totally flabbergasted!");
+            event.println("Somehow though, " + partyMember.getName() + " manages to outrun Hugi. " + CHIEFTAIN_NAME + " appears totally flabbergasted!");
             event.partyMemberSay(partyMember, "By golly, she's fast...");
             if (model.getParty().getLeader() != partyMember) {
                 event.leaderSay("Good work " + partyMember.getName() + "!");
@@ -473,7 +476,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected void illusionDifficultyFailed(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
-            event.println(partyMember.getFirstName() + " has only taken a few steps, and Hugi has already rounded Loki's chair.");
+            event.println(partyMember.getFirstName() + " has only taken a few steps, and Hugi has already rounded " + CHIEFTAIN_NAME + "'s chair.");
             if (model.getParty().getLeader() != partyMember) {
                 event.leaderSay("Come on " + partyMember.getFirstName() + "!");
             }
@@ -481,7 +484,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected String actualDifficultyPassed(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
-            event.println(partyMember.getFirstName() + " has just rounded Loki's chair when Hugi is back at the start.");
+            event.println(partyMember.getFirstName() + " has just rounded " + CHIEFTAIN_NAME + "'s chair when Hugi is back at the start.");
             model.getParty().unbenchAll();
             event.println(partyMember.getFirstName() + " returns, completely out of breath.");
             event.partyMemberSay(partyMember, "She's too fast... I just can't...");
@@ -505,14 +508,14 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected void illusionDispelled(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
-            event.println("As if a veil is pulled back, the effect of Loki's spell dissipates. " +
-                    "Hugi fades into a whiff of smoke and appears to be sucked into Loki's forehead.");
-            event.leaderSay("Hey, what kind of illusion is this Loki?");
+            event.println("As if a veil is pulled back, the effect of " + CHIEFTAIN_NAME + "'s spell dissipates. " +
+                    "Hugi fades into a whiff of smoke and appears to be sucked into " + CHIEFTAIN_NAME + "'s forehead.");
+            event.leaderSay("Hey, what kind of illusion is this " + CHIEFTAIN_NAME + "?");
             model.getLog().waitForAnimationToFinish();
             event.showChieftainPortrait(model);
             event.portraitSay("Haha! You got me! I just wanted to make the race a little more interesting. " +
-                    "My thinking was, what better opponent than thought itself? So you see, Hugi was just as " +
-                    "quick as a thought, a figment of my imagination. But no matter, no matter! " +
+                    "My thinking was, what better opponent than thought itself? So you see Hug is an old word for thought and, " +
+                    "Hugi was just as quick as a thought, but no more than a figment of my imagination. But no matter, no matter! " +
                     "This was not the real test of a true viking, oh no.");
             event.leaderSay("Hmph, then what is the real test?");
         }
@@ -526,7 +529,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected void lokiAnnouncesTest(MeetWithChieftainEvent event) {
-            event.leaderSay("I'm getting annoyed by these tests of yours Loki. Are you sure they are necessary?");
+            event.leaderSay("I'm getting annoyed by these tests of yours " + CHIEFTAIN_NAME + ". Are you sure they are necessary?");
             event.portraitSay("Of course! The ancient rites must be obeyed. But your anger comes at a good moment, " +
                     "because for this test you may need some.");
             event.leaderSay("What do you mean?");
@@ -543,12 +546,12 @@ public class MeetWithChieftainEvent extends DailyEventState {
             event.portraitSay("Me? Oh no. I'm afraid I would be too much for you. It wouldn't be a fair fight at all.");
             event.partyMemberSay(partyMember, "Then just pick anybody. I'm ready for anything!");
             event.portraitSay("Indeed? Well...");
-            event.println("Loki looks around.");
+            event.println("" + CHIEFTAIN_NAME + " looks around.");
             event.portraitSay("I dare say, there is nobody here which wouldn't make a fool out of you, so much are we your betters.");
             event.partyMemberSay(partyMember, "Seriously?");
             event.portraitSay("Ah, but wait. Who's that over by the door? See that crouched figure? It's my old grandmother Elle. " +
                     "Sure, she was a strong woman in her day... but now I fear she's lost most of her vitality. Come over here Elle.");
-            event.println("A venerable old woman, who walks with a cane, slowly approaches Loki.");
+            event.println("A venerable old woman, who walks with a cane, slowly approaches " + CHIEFTAIN_NAME + ".");
             model.getLog().waitForAnimationToFinish();
             CharacterAppearance elleAppearance = new OldElleAppearance();
             event.showExplicitPortrait(model, elleAppearance, "Old Elle");
@@ -569,7 +572,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected String getBlueMagicHint() {
-            return "There's something funny going on here. Loki is casting some kind of illusion, " +
+            return "There's something funny going on here. " + CHIEFTAIN_NAME + " is casting some kind of illusion, " +
                     "but I can't quite figure out what.";
         }
 
@@ -583,7 +586,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected int getSkillBonus(GameCharacter partyMember) {
-            return partyMember.getRankForSkill(Skill.Acrobatics);
+            return partyMember.getRankForSkill(Skill.Acrobatics) + partyMember.getRankForSkill(Skill.Endurance);
         }
 
         @Override
@@ -595,7 +598,7 @@ public class MeetWithChieftainEvent extends DailyEventState {
         @Override
         protected void illusionDifficultyPassed(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
             event.println("Amazingly enough, after an epic struggle" + partyMember.getName() +
-                    " manages to pin Elle to the floor. Loki seems shocked.");
+                    " manages to pin Elle to the floor. " + CHIEFTAIN_NAME + " seems shocked.");
             event.showChieftainPortrait(model);
             event.portraitSay("That... that was... that... that should not have been possible. " +
                     "How did you do that?");
@@ -626,16 +629,17 @@ public class MeetWithChieftainEvent extends DailyEventState {
 
         @Override
         protected void illusionDispelled(Model model, MeetWithChieftainEvent event, GameCharacter partyMember) {
-            event.println("As if a veil is pulled back, the effect of Loki's spell dissipates. " +
+            event.println("As if a veil is pulled back, the effect of " + CHIEFTAIN_NAME + "'s spell dissipates. " +
                     "Old Elle seems to turn to dry paper, then collapses into a dust pile on the floor.");
-            event.leaderSay("Hey, what kind of magic trick is this Loki?");
+            event.leaderSay("Hey, what kind of magic trick is this " + CHIEFTAIN_NAME + "?");
             model.getLog().waitForAnimationToFinish();
             event.showChieftainPortrait(model);
             event.portraitSay("Haha! You got me! I just wanted to make the fight a little bit more fun. " +
-                    "You see, who is a more formidable opponent than time itself? The one adversary no warrior can escape." +
+                    "You see, who is a more formidable opponent than time itself? Elle is just an old word for age, " +
+                    "The one adversary no warrior can escape, old age." +
                     " But no matter, no matter! " +
                     "This was not the real test of a true viking, oh no.");
-            event.leaderSay("I'm getting very weary of these tests Loki. I'm getting the feeling you're " +
+            event.leaderSay("I'm getting very weary of these tests " + CHIEFTAIN_NAME + ". I'm getting the feeling you're " +
                     "just wasting our time for your own entertainment.");
         }
     }

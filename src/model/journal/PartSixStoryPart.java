@@ -10,7 +10,6 @@ import model.map.CastleLocation;
 import model.map.UrbanLocation;
 import model.map.WorldHex;
 import model.quests.EscapeTheDungeonQuest;
-import model.quests.MainQuest;
 import model.quests.Quest;
 import model.states.DailyEventState;
 import model.states.dailyaction.TownDailyActionState;
@@ -32,7 +31,7 @@ public class PartSixStoryPart extends StoryPart {
 
     public PartSixStoryPart(Model model, String castleName) {
         this.castle = castleName;
-        this.gainSupportOfRemotePeopleTask = model.getMainStory().makeRemoteKingdomSupportTask(model);
+        this.gainSupportOfRemotePeopleTask = model.getMainStory().makeRemotePeopleSupportTask(model);
         this.gainSupportOfNeighborKingdomTasks = model.getMainStory().makeNeighborKingdomTasks(model);
     }
 
@@ -41,12 +40,12 @@ public class PartSixStoryPart extends StoryPart {
         if (internalStep <= 2) {
             return List.of(new EscapeTheDungeonJournalEntry(castle));
         }
-        if (allSupportTasksDone()) {
-            return List.of(new LeadTheAssaultJournalEntry(castle));
-        }
         List<JournalEntry> entries = MyLists.transform(gainSupportOfNeighborKingdomTasks,
                 task -> task.getJournalEntry(null));
         entries.add(gainSupportOfRemotePeopleTask.getJournalEntry(null));
+        if (allSupportTasksDone()) {
+            entries.add(new LeadTheAssaultJournalEntry(castle));
+        }
         return entries;
     }
 

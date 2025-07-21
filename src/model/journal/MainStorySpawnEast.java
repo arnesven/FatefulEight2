@@ -22,7 +22,7 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
     }
 
     @Override
-    public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {
+    public GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model) {
         return new GainSupportOfHonorableWarriorsTask();
     }
 

@@ -70,7 +70,8 @@ public abstract class GainSupportOfNeighborKingdomTask extends DestinationTask {
 
     @Override
     public boolean isCompleted() {
-        return completed;
+        return true; // TODO: Remove
+        // return completed;
     }
 
     public boolean isAtLocation(Model model, UrbanLocation location) {

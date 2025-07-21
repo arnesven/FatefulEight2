@@ -281,8 +281,8 @@ public class MainStory implements Serializable {
         return isFugitive() && model.getWorld().getKingdomForPosition(model.getParty().getPosition()).getName().equals(spawnData.getCastle());
     }
 
-    public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {
-        return spawnData.makeRemoteKingdomSupportTask(model);
+    public GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model) {
+        return spawnData.makeRemotePeopleSupportTask(model);
     }
 
     public String getRemotePeopleName() {

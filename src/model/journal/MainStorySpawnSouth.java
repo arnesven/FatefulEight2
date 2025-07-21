@@ -22,7 +22,7 @@ public class MainStorySpawnSouth extends MainStorySpawnLocation {
     }
 
     @Override
-    public GainSupportOfRemotePeopleTask makeRemoteKingdomSupportTask(Model model) {
+    public GainSupportOfRemotePeopleTask makeRemotePeopleSupportTask(Model model) {
         return new GainSupportOfJungleTribeTask(model);
     }
 

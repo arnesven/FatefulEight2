@@ -9,10 +9,12 @@ import model.journal.MainStoryTask;
 import model.mainstory.vikings.MeetWithChieftainEvent;
 import model.mainstory.vikings.NotAdmittedToLonghouseEvent;
 import model.map.WorldBuilder;
+import model.map.locations.MonasteryLocation;
 import model.map.locations.VikingVillageLocation;
 import model.quests.SavageVikingsQuest;
 import model.races.Race;
 import model.states.DailyEventState;
+import model.states.events.VisitMonasteryEvent;
 import util.MyPair;
 import util.MyTriplet;
 import view.subviews.PortraitSubView;
@@ -21,6 +23,8 @@ import java.awt.*;
 import java.util.List;
 
 public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
+    public static final String CHIEFTAIN = "Chieftain Loki";
+    public static final String CHIEFTAIN_NAME = "Loki";
     private static final String REMOTE_PEOPLE_NAME = "The Vikings";
 
     public static final int INITIAL_STEP = 0;
@@ -29,10 +33,12 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     private static final int EATING_CONTEST_DONE = 3;
     private static final int SPRINTING_CONTEST_DONE = 4;
     private static final int WRESTLING_CONTEST_DONE = 5;
+    private static final int COMPLETED_MONASTARY_RAIDED = 6;
+    private static final int MONKS_WARNED = 7;
+    private static final int COMPLETED_RAID_REPELLED = 8;
 
     private final AdvancedAppearance chieftainPortrait;
 
-    private boolean completed = false;
     private int step = INITIAL_STEP;
 
     public GainSupportOfVikingsTask(Model model) {
@@ -47,17 +53,40 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
             @Override
             public String getText() {
                 String first = "Gain the support of the Vikings of the North.";
+
+                if (step == MONKS_WARNED) {
+                    return first + "\n\n" +
+                            "Instead of gaining the support of the Vikings you have warned the Sixth Order Monks " +
+                            "on the Isle of Faith about the Viking raid. The monks have asked you to arm them " +
+                            "and train them to defend themselves against the Vikings.";
+                }
+
+                if (step == COMPLETED_RAID_REPELLED) {
+                    return first + "\n\n" +
+                            "Instead of gaining the support of the Vikings you aided the Sixth Order Monks " +
+                            "on the Isle of Faith against a Viking raid. You have gained the support of the " +
+                            "Sixth Order Monk.\n\nCompleted";
+                }
+
+                if (step == COMPLETED_MONASTARY_RAIDED) {
+                    return first + "\n\n" +
+                            "You proved yourself as a True Viking by participating in a raid on the Monastary " +
+                            "on the Isle of Faith. You have gained the support of the Vikings of the North.\n\n" +
+                            "Completed";
+                }
+
                 if (step > INITIAL_STEP) {
                     first += "\n\nYou have managed to persuade the vikings you are not an enemy.";
                 }
 
                 if (step >= WRESTLING_CONTEST_DONE) {
                     first += "\n\nYou have passed Loki's initial tests. The final test is to accompany " +
-                            "the Vikings on a raid on the Sixth Order monks on Faith Island. " +
+                            "the Vikings on a raid on the Sixth Order monks on the Isle of Faith. " +
                             "\n\nAlternatively you could warn the monks of the upcoming raid.";
                 } else if (step >= LOKI_MET) {
-                    first += "\n\nIn order to ally with the Vikings, you must prove to Chieftain Loki that you are " +
-                            "a true viking by passing certain 'tests'.";
+                    first += "\n\nIn order to ally with the Vikings, you must prove to " + CHIEFTAIN + " that you are " +
+                            "a true viking by passing certain 'tests'."  +
+                            "\n\nAlternatively you could warn the monks on the Isle of Faith of the upcoming Viking raid.";
                 }
                 return first;
             }
@@ -69,6 +98,9 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
             @Override
             public Point getPosition(Model model) {
+                if (step >= WRESTLING_CONTEST_DONE) {
+                    return WorldBuilder.MONASTERY_POSITION;
+                }
                 return GainSupportOfVikingsTask.this.getPosition();
             }
         };
@@ -76,7 +108,7 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
     @Override
     public boolean isCompleted() {
-        return completed;
+        return step == COMPLETED_MONASTARY_RAIDED || step == COMPLETED_RAID_REPELLED;
     }
 
 
@@ -97,12 +129,16 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
     @Override
     public void addFactionString(List<MyPair<String, String>> result) {
-        if (isCompleted()) { // TODO: Only if helped in raid
+        if (step == COMPLETED_MONASTARY_RAIDED) {
             result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Ally"));
         } else if (step == INITIAL_STEP) {
             result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Persona Non Grata"));
         } else {
             result.add(new MyPair<>(REMOTE_PEOPLE_NAME, "Friend"));
+        }
+
+        if (step == COMPLETED_RAID_REPELLED) {
+            result.add(new MyPair<>(VisitMonasteryEvent.FACTION_NAME, "Ally"));
         }
     }
 
@@ -125,34 +161,42 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     }
 
     public boolean isEatingContestDone() {
-        return step >= GainSupportOfVikingsTask.EATING_CONTEST_DONE;
+        return step >= EATING_CONTEST_DONE;
     }
 
     public void setEatingContestDone() {
-        step = GainSupportOfVikingsTask.EATING_CONTEST_DONE;
+        step = EATING_CONTEST_DONE;
     }
 
     public boolean isSprintingContestDone() {
-        return step >= GainSupportOfVikingsTask.SPRINTING_CONTEST_DONE;
+        return step >= SPRINTING_CONTEST_DONE;
     }
 
     public void setSprintingContestDone() {
-        step = GainSupportOfVikingsTask.SPRINTING_CONTEST_DONE;
+        step = SPRINTING_CONTEST_DONE;
     }
 
     public boolean isWrestlingContestDone() {
-        return step >= GainSupportOfVikingsTask.WRESTLING_CONTEST_DONE;
+        return step >= WRESTLING_CONTEST_DONE;
     }
 
     public void setWrestlingContestDone() {
-        step = GainSupportOfVikingsTask.WRESTLING_CONTEST_DONE;
+        step = WRESTLING_CONTEST_DONE;
     }
 
     public void setLokiMet() {
-        step = GainSupportOfVikingsTask.LOKI_MET;
+        step = LOKI_MET;
     }
 
     public boolean isLokiMet() {
-        return step >= GainSupportOfVikingsTask.LOKI_MET;
+        return step >= LOKI_MET;
+    }
+
+    public void setMonastaryRaided() {
+        step = COMPLETED_MONASTARY_RAIDED;
+    }
+
+    public boolean isMonastaryRaided() {
+        return step == COMPLETED_MONASTARY_RAIDED;
     }
 }

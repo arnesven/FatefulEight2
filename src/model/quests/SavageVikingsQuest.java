@@ -120,7 +120,7 @@ public class SavageVikingsQuest extends RemotePeopleQuest {
         public VikingCombatScene(int col, int row) {
             super(col, row, List.of(VIKING_COMBAT_AVATAR, VIKING_COMBAT_AVATAR,
                     VIKING_COMBAT_AVATAR, VIKING_COMBAT_AVATAR)); // To make difficulty hard
-            setTimeLimit(3);
+            setTimeLimit(2);
         }
 
         @Override
