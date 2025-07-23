@@ -51,6 +51,12 @@ public class MeetWithChieftainEvent extends DailyEventState {
             return;
         }
         meetLoki(model);
+        if (task.isMonksWarned()) {
+            portraitSay("Oh, it's you. I'm sorry we, but we don't have time for more games right now. " +
+                    "I'm completely occupied with planning our upcoming raid. You'll have to come back later.");
+            leaderSay("I understand");
+            return;
+        }
         portraitSay("There are tests which must be passed. You must overcome several challenges!");
         println("You can hear the vikings around you sniggering.");
         randomSayIfPersonality(PersonalityTrait.irritable, List.of(), "What's so funny?");

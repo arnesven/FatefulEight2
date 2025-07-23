@@ -3,15 +3,20 @@ package model.states.events;
 import model.Model;
 import model.characters.PersonalityTrait;
 import model.classes.Classes;
+import model.items.Item;
 import model.mainstory.GainSupportOfVikingsTask;
+import model.mainstory.vikings.BeforeTrainMonksEveningState;
+import model.mainstory.vikings.DonateEquipmentToMonastaryState;
 import model.map.TownLocation;
-import model.map.WorldHex;
 import model.map.locations.VikingVillageLocation;
 import model.states.DailyEventState;
+import model.states.GameState;
+import model.states.TransferItemState;
 import model.states.TravelBySeaState;
 import util.MyLists;
-import util.MyPair;
 import util.MyRandom;
+import util.MyStrings;
+import view.subviews.SubView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,19 +91,39 @@ public class VisitMonasteryEvent extends DailyEventState {
                     "can take you to a nearby port. Just talk to us again when you're ready to leave.");
             leaderSay("Thanks.");
             portraitSay("Please, excuse me now. I have matters to attend to. Again, welcome.");
-            leaderSay("Bye...");
+            if (canWarn(vikingTask)) {
+                print("Do you wish to warn the monk about the Viking raid? (Y/N) ");
+                if (yesNoInput()) {
+                    warnMonks(model, vikingTask);
+                }
+            } else {
+                leaderSay("Bye...");
+            }
             model.getTutorial().monastery(model);
             model.getSettings().getMiscFlags().put(FIRST_TIME_KEY, true);
         } else {
             showRandomPortrait(model, Classes.PRI, "Sixth Monk");
             portraitSay("Traveller. I hope you find our monastery to your liking. How can I help you?");
             do {
-                int selected = multipleOptionArrowMenu(model, 24, 24, List.of("Make Donation", "Ask to Leave", "Cancel"));
+                List<String> options = new ArrayList<>(List.of("Make Donation", "Ask to Leave", "Cancel"));
+                if (canWarn(vikingTask)) {
+                    options.add(2, "Warn about Vikings");
+                }
+                if (vikingTask != null && vikingTask.isMonksWarned() && !vikingTask.hasDonatedEnoughEquipment()) {
+                    options.add(2, "Give Equipment");
+                }
+                int selected = multipleOptionArrowMenu(model, 24, 24, options);
                 if (selected == 0) {
                     makeDonation(model);
                 } else if (selected == 1) {
                     if (travelBySea(model)) {
                         this.didLeave = true;
+                        break;
+                    }
+                } else if (options.get(selected).contains("Warn")) {
+                    warnMonks(model, vikingTask);
+                } else if (options.get(selected).contains("Equipment")) {
+                    if (donateEquipment(model, vikingTask)) {
                         break;
                     }
                 } else {
@@ -109,27 +134,9 @@ public class VisitMonasteryEvent extends DailyEventState {
         }
     }
 
-    private void monastaryInRuins(Model model) {
-        println("You approach the Monastary. It seems nobody has been here since " +
-                "it was raided. It is now a desolate place, fallen into disrepair.");
-        leaderSay("Now the Monastary will never be restored. The Sixth Order is no more.");
-        randomSayIfPersonality(PersonalityTrait.cold, List.of(), "Who cares?");
-        println("Down by the dock you see a small skiff moored. You approach and see that it is a fishing vessel.");
-        model.getLog().waitForAnimationToFinish();
-        showRandomPortrait(model, Classes.FARMER, "Fisherman");
-        portraitSay("Huh? Nobody ever comes here anymore. This place was quite lovely while the monks were " +
-                "tending it. Who are you?");
-        leaderSay("Just some pilgrims. Can we travel with you back to the mainland?");
-        portraitSay("Fine by me, I was heading back anyway. I can take you to Lower Theln.");
-        print("Travel by boat to Lower Theln?");
-        if (yesNoInput()) {
-            leaderSay("Thanks");
-            TownLocation destination = model.getWorld().getTownByName("Lower Theln");
-            TravelBySeaState.travelBySea(model, destination, this, false, true);
-        } else {
-            leaderSay("On second thought, " + iOrWe() + " will stay a little longer.");
-            portraitSay("Alright. Safe travels.");
-        }
+    private boolean canWarn(GainSupportOfVikingsTask vikingTask) {
+        return vikingTask != null && vikingTask.isLokiMet() &&
+                !vikingTask.isMonksWarned() && !vikingTask.isCompleted();
     }
 
     private void makeDonation(Model model) {
@@ -181,7 +188,7 @@ public class VisitMonasteryEvent extends DailyEventState {
                 model.getParty().addToReputation(repIncreases);
                 donation -= repIncreases * GOLD_PER_REP;
                 leaderSay("I'm just glad we could help.");
-                
+
                 Integer previousIncreases = model.getSettings().getMiscCounters().get(PREVIOUS_REP_INCREASES);
                 if (previousIncreases == null) {
                     previousIncreases = 0;
@@ -197,8 +204,8 @@ public class VisitMonasteryEvent extends DailyEventState {
         leaderSay("We would like to leave. Is there a boat we can use?");
         portraitSay("Of course. " + generateBrotherName() + " will take you. Where would you like to go?");
         List<TownLocation> destinations = List.of(model.getWorld().getTownByName("Cape Paxton"),
-                                                    model.getWorld().getTownByName("Ebonshire"),
-                                                    model.getWorld().getTownByName("Lower Theln"));
+                model.getWorld().getTownByName("Ebonshire"),
+                model.getWorld().getTownByName("Lower Theln"));
         List<String> options = MyLists.transform(destinations, TownLocation::getTownName);
         int selected = multipleOptionArrowMenu(model, 24, 24, options);
         leaderSay("Can he take us to " + destinations.get(selected).getTownName() + "?");
@@ -212,6 +219,107 @@ public class VisitMonasteryEvent extends DailyEventState {
         leaderSay("On second thought, no, there was something I wanted to do first.");
         portraitSay("Alright.");
         return false;
+    }
+
+    private void warnMonks(Model model, GainSupportOfVikingsTask vikingTask) {
+        leaderSay("Just a minute. " + iOrWeCap() + "'ve come here to warn you about a grave threat.");
+        portraitSay("By the Holy! Whatever is this threat?");
+        leaderSay("A tribe of Vikings are planning to raid your monastary.");
+        portraitSay("Oh the horror. What should we do?");
+        leaderSay("Perhaps you could evacuate?");
+        portraitSay("Impossible, we can't abandon our cause here at the monastary. But maybe we could " +
+                "defend ourselves?");
+        leaderSay("Do you have any combat training, or weapons?");
+        portraitSay("Alas, we have neither. Perhaps you can help us?");
+        leaderSay("Yes. How many of you are there?");
+        portraitSay("There's several dozen of us, but I'd say only about twenty which are of fighting age.");
+        leaderSay("Then we'll need about twenty swords, shields and armors.");
+        portraitSay("Good heavens. Can you procure them for us?");
+        leaderSay("I can, but it will be costly.");
+        portraitSay("We have some gold. Let me fetch it. One moment, I'll be right back.");
+        println("The monk rushes off into the monastary. After a few moment, the monk returns with a leather sack.");
+        portraitSay("This is all we have. I hope it is enough. I think we'll need armor and shields too.");
+        println("The party receives 650 gold!");
+        model.getParty().addToGold(650);
+        leaderSay("It's a start at least. " + iOrWeCap() + " will have to travel to the mainland to get the equipment. " +
+                "While " + imOrWere() + " away you should build barricades and work improve the fortifications around the monastary.");
+        portraitSay("I'll spread the word. Bless your soul for doing this!");
+        leaderSay("It's the right thing to do.");
+        randomSayIfPersonality(PersonalityTrait.lawful, List.of(model.getParty().getLeader()), "It truly is.");
+        randomSayIfPersonality(PersonalityTrait.cold, List.of(model.getParty().getLeader()), "It's a waste of time, is what it is.");
+        vikingTask.setMonksWarned();
+    }
+
+    private boolean donateEquipment(Model model, GainSupportOfVikingsTask vikingTask) {
+        leaderSay(iOrWeCap() + " have got some equipment for you to arm yourself with.");
+        portraitSay("Splendid! What do you have.");
+        model.getLog().waitForReturn();
+        List<Item> donatedItems = new ArrayList<>();
+        SubView previous = model.getSubView();
+        TransferItemState transfer = new DonateEquipmentToMonastaryState(model, donatedItems);
+        transfer.setSellingMode(model);
+        transfer.run(model);
+        model.setSubView(previous);
+        if (donatedItems.isEmpty()) {
+            leaderSay("Actually, let me hang on to the stuff for now.");
+            portraitSay("Oh, okay. Whatever you think is best.");
+            return false;
+        }
+        List<Item> rejected = vikingTask.donateEquipmentToMonastary(donatedItems);
+        if (!rejected.isEmpty()) {
+            portraitSay("Some of this will not be of any use.");
+            for (Item it : rejected) {
+                it.addYourself(model.getParty().getInventory());
+            }
+            println("The monk handed some items back to you.");
+        }
+        if (vikingTask.hasDonatedEnoughEquipment()) {
+            portraitSay("Thank you! I think we now have everything we need to properly defend ourselves against the raid.");
+            leaderSay("Good. Distribute the equipment to every able person. " +
+                    "And spread the word that combat training begins first thing tomorrow.");
+            portraitSay("I will do that.");
+            return true;
+        }
+        portraitSay("Thank you. I think we still need some more equipment to defend " +
+                "ourselves against the viking raid.");
+        boolean said = randomSayIfPersonality(PersonalityTrait.greedy, List.of(), "This stuff isn't cheap you know. Got any more money?");
+        if (said) {
+            portraitSay("We already gave you all the money we had! Please, we really need that equipment.");
+        }
+        leaderSay("It's coming. I promise.");
+        return false;
+    }
+
+    @Override
+    protected GameState getEveningState(Model model) {
+        GainSupportOfVikingsTask task = VikingVillageLocation.getVikingTask(model);
+        if (task != null && task.isMonksWarned() && task.hasDonatedEnoughEquipment()) {
+            return new BeforeTrainMonksEveningState(model);
+        }
+        return super.getEveningState(model);
+    }
+
+    private void monastaryInRuins(Model model) {
+        println("You approach the Monastary. It seems nobody has been here since " +
+                "it was raided. It is now a desolate place, fallen into disrepair.");
+        leaderSay("Now the Monastary will never be restored. The Sixth Order is no more.");
+        randomSayIfPersonality(PersonalityTrait.cold, List.of(), "Who cares?");
+        println("Down by the dock you see a small skiff moored. You approach and see that it is a fishing vessel.");
+        model.getLog().waitForAnimationToFinish();
+        showRandomPortrait(model, Classes.FARMER, "Fisherman");
+        portraitSay("Huh? Nobody ever comes here anymore. This place was quite lovely while the monks were " +
+                "tending it. Who are you?");
+        leaderSay("Just some pilgrims. Can we travel with you back to the mainland?");
+        portraitSay("Fine by me, I was heading back anyway. I can take you to Lower Theln.");
+        print("Travel by boat to Lower Theln?");
+        if (yesNoInput()) {
+            leaderSay("Thanks");
+            TownLocation destination = model.getWorld().getTownByName("Lower Theln");
+            TravelBySeaState.travelBySea(model, destination, this, false, true);
+        } else {
+            leaderSay("On second thought, " + iOrWe() + " will stay a little longer.");
+            portraitSay("Alright. Safe travels.");
+        }
     }
 
     private String generateBrotherName() {

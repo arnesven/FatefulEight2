@@ -61,7 +61,7 @@ public class WorldBuilder {
             "sssssttWWWWWWWTTTWWWWWWWWWWWWTTTTWTTuWWWWWWWWWWWWWWWW",
             "sssssssttttWWWWuTTTttttTtTTTTuttuTTTuttWWtttssWWutttt",
             "ssstsssssttttWWWuuuTTTTTTtttttuTTTuttttttssssssWWuWtt",
-            "sssssssssstttWWWWWuWuTTtsstttuTTTTutWWttttssstsWWtttt",
+            "sssssssssstttWWtWWuWuTTtsstttuTTTTutWWttttssstsWWtttt",
             "sssssssstttWWTTWWTWWTTtsssstTTtuTTTtTuttssssssttttttt",
             "ssttttttWWuTuWWWTTTtttssssttTTtttTTTttttttstttttttttt",
             "ssssstttttTuWuTuTuttttsssttttTtTuTTTTTtttsstWuWuuWWuu",
@@ -153,7 +153,7 @@ public class WorldBuilder {
         addNorthernContents(contents);
         addWesternContents(contents);
         addEvilTower(contents, getFortressPosition(EXPAND_NORTH), EXPAND_NORTH);
-        addTomb(contents, 19, 5, "Haarfagre", 0, 0);
+        addTomb(contents, 15, 7, "Haarfagre", 0, 0);
         addTomb(contents, 35, 8, "Vorhundren", 0, 0);
 
         addRoadsAndRivers(contents,26, 10, SOUTH_WEST | SOUTH_EAST, 0);

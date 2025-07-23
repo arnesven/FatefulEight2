@@ -18,8 +18,10 @@ public class TransferItemState extends ShopState {
         this.stashItems = stashItems;
     }
 
+    @Override
     protected ShopSubView makeSubView(SteppingMatrix<Item> buyItems, boolean isBuying,
-                                      String seller, HashMap<Item, Integer> prices, ShopState shopState) {
+                                      String seller, HashMap<Item, Integer> prices, ShopState shopState,
+                                      int partyMaxMercantile) {
         return new TransferItemSubView(buyItems, true, seller, prices, this);
     }
 

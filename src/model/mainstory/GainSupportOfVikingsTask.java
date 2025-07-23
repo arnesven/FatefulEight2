@@ -4,17 +4,21 @@ import model.Model;
 import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
+import model.items.Item;
+import model.items.accessories.ShieldItem;
+import model.items.clothing.Clothing;
+import model.items.weapons.Weapon;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.mainstory.vikings.MeetWithChieftainEvent;
 import model.mainstory.vikings.NotAdmittedToLonghouseEvent;
 import model.map.WorldBuilder;
-import model.map.locations.MonasteryLocation;
 import model.map.locations.VikingVillageLocation;
 import model.quests.SavageVikingsQuest;
 import model.races.Race;
 import model.states.DailyEventState;
 import model.states.events.VisitMonasteryEvent;
+import util.MyLists;
 import util.MyPair;
 import util.MyTriplet;
 import view.subviews.PortraitSubView;
@@ -41,6 +45,12 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
     private int step = INITIAL_STEP;
 
+    public static final int SWORDS_AND_ARMOR_REQUIRED = 20;
+    public static final int SHIELDS_REQUIRED = 10;
+    private int donatedWeapons = 0;
+    private int donatedArmor = 0;
+    private int donatedShields = 0;
+
     public GainSupportOfVikingsTask(Model model) {
         super(WorldBuilder.VIKING_VILLAGE_LOCATION);
         chieftainPortrait = PortraitSubView.makeRandomPortrait(Classes.VIKING_CHIEF, Race.NORTHERN_HUMAN, false);
@@ -50,6 +60,7 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     public JournalEntry getJournalEntry(Model model) {
         return new MainStoryTask(REMOTE_PEOPLE_NAME) {
 
+
             @Override
             public String getText() {
                 String first = "Gain the support of the Vikings of the North.";
@@ -58,14 +69,18 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
                     return first + "\n\n" +
                             "Instead of gaining the support of the Vikings you have warned the Sixth Order Monks " +
                             "on the Isle of Faith about the Viking raid. The monks have asked you to arm them " +
-                            "and train them to defend themselves against the Vikings.";
+                            "and train them to defend themselves against the Vikings.\n\n" +
+                            "Weapons given: " + donatedWeapons  + "/" + SWORDS_AND_ARMOR_REQUIRED + "\n" +
+                            "Armor given: " + donatedArmor  + "/" + SWORDS_AND_ARMOR_REQUIRED + "\n" +
+                            "Shields given: " + donatedShields  + "/" + SHIELDS_REQUIRED + "\n\n" +
+                            "The Sixth Monks cannot don heavy armor or use heavy shields.";
                 }
 
                 if (step == COMPLETED_RAID_REPELLED) {
                     return first + "\n\n" +
                             "Instead of gaining the support of the Vikings you aided the Sixth Order Monks " +
                             "on the Isle of Faith against a Viking raid. You have gained the support of the " +
-                            "Sixth Order Monk.\n\nCompleted";
+                            "Sixth Order Monks.\n\nCompleted";
                 }
 
                 if (step == COMPLETED_MONASTARY_RAIDED) {
@@ -197,5 +212,39 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
 
     public boolean isMonastaryRaided() {
         return step == COMPLETED_MONASTARY_RAIDED;
+    }
+
+    public void setMonksWarned() {
+        step = MONKS_WARNED;
+    }
+
+    public boolean isMonksWarned() {
+        return step == MONKS_WARNED;
+    }
+
+    public void setMonastaryDefended() {
+        step = COMPLETED_RAID_REPELLED;
+    }
+
+    public static boolean canItemBeDonated(Item it) {
+        return it instanceof Weapon ||
+                (it instanceof Clothing && !(((Clothing) it).isHeavy())) ||
+                (it instanceof ShieldItem && !((ShieldItem) it).isHeavy());
+    }
+
+    public boolean hasDonatedEnoughEquipment() {
+        return donatedWeapons >= SWORDS_AND_ARMOR_REQUIRED &&
+                donatedArmor >= SWORDS_AND_ARMOR_REQUIRED &&
+                donatedShields >= SHIELDS_REQUIRED;
+    }
+
+    public List<Item> donateEquipmentToMonastary(List<Item> donatedItems) {
+        donatedWeapons += MyLists.intAccumulate(donatedItems,
+                it -> it instanceof Weapon ? 1 : 0);
+        donatedArmor += MyLists.intAccumulate(donatedItems,
+                it -> (it instanceof Clothing && !(((Clothing) it).isHeavy())) ? 1 : 0);
+        donatedShields += MyLists.intAccumulate(donatedItems,
+                it -> (it instanceof ShieldItem && !((ShieldItem) it).isHeavy()) ? 1 : 0);
+        return MyLists.filter(donatedItems, it -> !canItemBeDonated(it));
     }
 }

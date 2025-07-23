@@ -19,6 +19,15 @@ public class SellPotionDummyItem extends InventoryDummyItem {
         makeSprite();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof SellPotionDummyItem) {
+            SellPotionDummyItem other = (SellPotionDummyItem) obj;
+            return inner.getName().equals(other.getName()) && count == other.count;
+        }
+        return super.equals(obj);
+    }
+
     private void makeSprite() {
         char x = (char)('0' + count);
         if (count > 9) {

@@ -43,7 +43,7 @@ public class MainStory implements Serializable {
         List<MainStorySpawnLocation> spawnDataList = List.of(
                 new MainStorySpawnEast(),
                 //new MainStorySpawnSouth(), // TODO: Add when finished
-                //new MainStorySpawnNorth(), // TODO: Add when finished
+                new MainStorySpawnNorth(),
                 new MainStorySpawnWest()
         );
         spawnData = MyRandom.sample(spawnDataList);

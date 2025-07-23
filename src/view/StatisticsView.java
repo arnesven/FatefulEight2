@@ -204,7 +204,7 @@ public class StatisticsView extends SelectableListMenu {
         row++;
         result.add(makeTitleLine(leftColumn, row++, "FACTIONS"));
         for (MyPair<String, String> p : factionStatus) {
-            result.add(makeStringLine(leftColumn, row++, 40, 16, p.first, p.second));
+            result.add(makeStringLine(leftColumn, row++, 39, 17, p.first, p.second));
         }
 
         row++;

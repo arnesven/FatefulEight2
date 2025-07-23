@@ -51,8 +51,10 @@ public class LongboatNode extends GoTheDocksNode {
         public GameState run(Model model) {
             GainSupportOfVikingsTask vikingTask = VikingVillageLocation.getVikingTask(model);
             if (vikingTask == null || !vikingTask.isWrestlingContestDone() ||
+                    vikingTask.isMonksWarned() ||
+                    vikingTask.isCompleted() ||
                     model.getTimeOfDay() == TimeOfDay.EVENING) {
-                println("The ship is moored at the dock, but there is nobody aboard or near it.");
+                        println("The ship is moored at the dock, but there is nobody aboard or near it.");
                 return model.getCurrentHex().getDailyActionState(model);
             }
 

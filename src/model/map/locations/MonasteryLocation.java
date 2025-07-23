@@ -17,6 +17,7 @@ import view.sprites.Sprite;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonasteryLocation extends HexLocation {
@@ -66,6 +67,11 @@ public class MonasteryLocation extends HexLocation {
 
     @Override
     public List<DailyAction> getDailyActions(Model model) {
-        return List.of(new DailyAction("Buy Rations", new BuyRationsState(model)));
+        List<DailyAction> acts = new ArrayList<>();
+        if (VisitMonasteryEvent.hasVisited(model)) {
+            acts.add(new DailyAction("Talk to Monks", new VisitMonasteryEvent(model)));
+            acts.add(new DailyAction("Buy Rations", new BuyRationsState(model)));
+        }
+        return acts;
     }
 }

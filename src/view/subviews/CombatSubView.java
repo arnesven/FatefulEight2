@@ -9,6 +9,7 @@ import model.states.CombatEvent;
 import model.states.CombatMatrix;
 import util.MyLists;
 import view.BorderFrame;
+import view.DrawingArea;
 import view.combat.CombatTheme;
 import view.sprites.CombatCursorSprite;
 import util.MyPair;
@@ -91,8 +92,9 @@ public class CombatSubView extends SubView {
 
     private void drawRoundCounter(Model model) {
         if (splashAnimationCountDown > 0) {
-            BorderFrame.drawCentered(model.getScreenHandler(), splash,
-                    Y_OFFSET  + (Y_MAX - Y_OFFSET) / 2 + 2, MyColors.WHITE, MyColors.BLACK);
+            int col = (DrawingArea.WINDOW_COLUMNS - splash.length()) / 2;
+            BorderFrame.drawStringInForeground(model.getScreenHandler(), splash,
+                    col, Y_OFFSET  + (Y_MAX - Y_OFFSET) / 2 + 2, MyColors.WHITE, MyColors.BLACK);
             splashAnimationCountDown--;
         }
     }

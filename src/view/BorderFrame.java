@@ -69,7 +69,7 @@ public class BorderFrame {
     public static void drawStringInForeground(ScreenHandler screenHandler, String s, int col, int row, MyColors color, MyColors bgColor) {
         for (int i = 0; i < s.length(); ++i) {
             Sprite charSprite = CharSprite.make(s.charAt(i), color, MyColors.CYAN, bgColor);
-            screenHandler.register(charSprite.getName(), new Point(col+i, row), charSprite);
+            screenHandler.register(charSprite.getName(), new Point(col+i, row), charSprite, 3);
         }
     }
 
