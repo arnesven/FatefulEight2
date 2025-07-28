@@ -6,9 +6,7 @@ import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.mainstory.*;
-import model.map.CastleLocation;
-import model.map.UrbanLocation;
-import model.map.WorldHex;
+import model.map.*;
 import model.quests.EscapeTheDungeonQuest;
 import model.quests.Quest;
 import model.states.DailyEventState;
@@ -22,6 +20,7 @@ import util.MyTriplet;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PartSixStoryPart extends StoryPart {
     private final String castle;
@@ -150,6 +149,13 @@ public class PartSixStoryPart extends StoryPart {
 
     public GainSupportOfRemotePeopleTask getRemotePeopleTask() {
         return gainSupportOfRemotePeopleTask;
+    }
+
+    public void setSupportTasksCompleted() {
+        gainSupportOfRemotePeopleTask.setCompleted();
+        for (GainSupportOfNeighborKingdomTask task : gainSupportOfNeighborKingdomTasks) {
+            task.setCompleted(true);
+        }
     }
 
     private class EscapeTheDungeonJournalEntry extends MainStoryTask {
@@ -373,14 +379,21 @@ public class PartSixStoryPart extends StoryPart {
         }
     }
 
-    private static class LeadTheAssaultJournalEntry extends MainStoryTask {
+    private class LeadTheAssaultJournalEntry extends MainStoryTask {
+        private final String castle;
+        private Point assaultPoint;
+
         public LeadTheAssaultJournalEntry(String castle) {
             super("Assault on " + castle);
+            this.castle = castle;
+            this.assaultPoint = null;
         }
 
         @Override
         public String getText() {
-            return "ASdf";
+            return "The time has come to get back into " + castle + " and get to the bottom of the mystery of " +
+                    "the crimson pearl, the quad and the strange advisor who appears to have driven the regent mad.\n\n" +
+                    "Meet with the forces of the neighboring kingdoms at the rendezvous point and lead the assault.";
         }
 
         @Override
@@ -390,7 +403,23 @@ public class PartSixStoryPart extends StoryPart {
 
         @Override
         public Point getPosition(Model model) {
-            return model.getMainStory().getCastlePosition(model);
+            if (assaultPoint == null) {
+                setAssaultPoint(model);
+            }
+            return assaultPoint;
+        }
+
+        private void setAssaultPoint(Model model) {
+            Map<Integer, Integer> expandDirMap = Map.of(
+                    WorldBuilder.EXPAND_EAST, Direction.SOUTH,
+                    WorldBuilder.EXPAND_NORTH, Direction.SOUTH_EAST,
+                    WorldBuilder.EXPAND_WEST, Direction.NORTH_EAST,
+                    WorldBuilder.EXPAND_SOUTH, Direction.NORTH);
+            Point castlePoint = new Point(model.getMainStory().getCastlePosition(model));
+            int expandDir = model.getMainStory().getExpandDirection();
+            Point dxdy = Direction.getDxDyForDirection(castlePoint, expandDirMap.get(expandDir));
+            model.getWorld().move(castlePoint, dxdy.x, dxdy.y);
+            assaultPoint = castlePoint;
         }
     }
 }

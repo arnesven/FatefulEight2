@@ -156,6 +156,11 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
         }
     }
 
+    @Override
+    public void setCompleted() {
+        step = COMPLETED_MONASTARY_RAIDED;
+    }
+
     public DailyEventState generateEvent(Model model, boolean fromLonghouse) {
         if (fromLonghouse) {
             if (step == INITIAL_STEP) {

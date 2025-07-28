@@ -601,6 +601,7 @@ public class World implements Serializable {
     }
 
     private void makeWaterWays() {
+        System.out.print(", Making waterways");
         int[] directions = new int[]{Direction.NORTH, Direction.NORTH_EAST, Direction.SOUTH_EAST,
                 Direction.SOUTH, Direction.SOUTH_WEST, Direction.NORTH_WEST};
         Set<WaterPath> paths = new HashSet<>();
@@ -622,6 +623,7 @@ public class World implements Serializable {
             }
         }
         waterWays = paths;
+        System.out.println(" - done");
     }
 
     private WaterPath getOppositeWaterPath(Set<WaterPath> paths, int x, int y, int dir) {

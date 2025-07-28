@@ -59,4 +59,9 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     public void addFactionString(List<MyPair<String, String>> result) {
         // TODO
     }
+
+    @Override
+    public void setCompleted() {
+        this.completed = true;
+    }
 }

@@ -108,6 +108,11 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     }
 
     @Override
+    public void setCompleted() {
+        completed = true;
+    }
+
+    @Override
     public JournalEntry getJournalEntry(Model model) {
         return new MainStoryTask(REMOTE_PEOPLE_NAME) {
             @Override

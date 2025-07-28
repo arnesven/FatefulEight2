@@ -64,6 +64,11 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     }
 
     @Override
+    public void setCompleted() {
+        completed = true;
+    }
+
+    @Override
     public boolean isCompleted() {
         return completed;
     }

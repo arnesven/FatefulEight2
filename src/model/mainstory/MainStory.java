@@ -53,10 +53,12 @@ public class MainStory implements Serializable {
         if (spawnData != null) {
             this.spawnData = spawnData;
         }
-        System.out.println("Part ordinal is " + part.ordinal());
+        System.out.println("Progressing main story to step " + part.ordinal());
         for (MainStoryStep p : MainStoryStep.values()) {
             if (part.ordinal() >= p.ordinal()) {
+                System.out.print("  Step " + p.ordinal());
                 p.progress(model, this);
+                System.out.println(" done (" + p.toString() + ")");
             }
         }
     }

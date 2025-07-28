@@ -4,6 +4,7 @@ import model.Model;
 import model.characters.GameCharacter;
 import model.characters.preset.KruskTalandro;
 import model.classes.Classes;
+import model.journal.PartSixStoryPart;
 import model.journal.ZeppelinStoryPart;
 import model.races.Race;
 import util.MyStrings;
@@ -98,6 +99,10 @@ public enum MainStoryStep {
     }),
     WITCH_MET_AGAIN((model, mainStory) -> {
         mainStory.getStoryParts().get(7).progress();       // Meet witch and get kingdom and remote people tasks.
+    }),
+    THREE_SUPPORT_GOT((model, mainStory) -> {
+        PartSixStoryPart partSix = (PartSixStoryPart) mainStory.getStoryParts().get(7);
+        partSix.setSupportTasksCompleted();
     });
 
 

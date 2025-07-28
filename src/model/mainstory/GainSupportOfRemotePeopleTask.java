@@ -42,4 +42,6 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public abstract void setQuestSuccessful();
 
     public abstract void addFactionString(List<MyPair<String, String>> result);
+
+    public abstract void setCompleted(); // For testing
 }
