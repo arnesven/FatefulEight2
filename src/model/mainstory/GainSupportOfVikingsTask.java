@@ -52,7 +52,7 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     private int donatedShields = 0;
 
     public GainSupportOfVikingsTask(Model model) {
-        super(WorldBuilder.VIKING_VILLAGE_LOCATION);
+        super("Vikings", WorldBuilder.VIKING_VILLAGE_LOCATION);
         chieftainPortrait = PortraitSubView.makeRandomPortrait(Classes.VIKING_CHIEF, Race.NORTHERN_HUMAN, false);
     }
 
@@ -159,6 +159,21 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     @Override
     public void setCompleted() {
         step = COMPLETED_MONASTARY_RAIDED;
+    }
+
+    @Override
+    public boolean supportsFromTheSea() {
+        return true;
+    }
+
+    @Override
+    public CharacterAppearance getLeaderPortrait() {
+        return chieftainPortrait;
+    }
+
+    @Override
+    public String getLeaderName() {
+        return CHIEFTAIN_NAME;
     }
 
     public DailyEventState generateEvent(Model model, boolean fromLonghouse) {

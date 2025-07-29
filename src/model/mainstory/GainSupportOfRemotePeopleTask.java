@@ -13,8 +13,11 @@ import java.awt.*;
 import java.util.List;
 
 public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
-    public GainSupportOfRemotePeopleTask(Point position) {
+    private final String name;
+
+    public GainSupportOfRemotePeopleTask(String name, Point position) {
         super(position, "");
+        this.name = name;
     }
 
     @Override
@@ -44,4 +47,14 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public abstract void addFactionString(List<MyPair<String, String>> result);
 
     public abstract void setCompleted(); // For testing
+
+    public abstract boolean supportsFromTheSea();
+
+    public String getRemotePeopleName() {
+        return name;
+    }
+
+    public abstract CharacterAppearance getLeaderPortrait();
+
+    public abstract String getLeaderName();
 }

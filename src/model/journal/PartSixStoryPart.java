@@ -4,18 +4,21 @@ import model.Model;
 import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.PersonalityTrait;
+import model.characters.appearance.AdvancedAppearance;
 import model.characters.appearance.CharacterAppearance;
 import model.mainstory.*;
 import model.map.*;
-import model.quests.EscapeTheDungeonQuest;
-import model.quests.Quest;
+import model.quests.*;
 import model.states.DailyEventState;
+import model.states.GameState;
+import model.states.QuestState;
 import model.states.dailyaction.TownDailyActionState;
 import model.tasks.DestinationTask;
 import util.MyLists;
 import util.MyPair;
 import util.MyStrings;
 import util.MyTriplet;
+import view.LogView;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class PartSixStoryPart extends StoryPart {
     private final List<GainSupportOfNeighborKingdomTask> gainSupportOfNeighborKingdomTasks;
     private  Point assaultPoint;
     private int internalStep = 0;
+    private boolean completed = false;
 
     public PartSixStoryPart(Model model, String castleName) {
         this.castle = castleName;
@@ -88,7 +92,7 @@ public class PartSixStoryPart extends StoryPart {
 
     @Override
     protected StoryPart getNextStoryPart(Model model, int track) {
-        return null;
+        return new PartSevenStoryPart(model, castle);
     }
 
     @Override
@@ -135,6 +139,9 @@ public class PartSixStoryPart extends StoryPart {
                 }
             }
         }
+        if (allSupportTasksDone() && model.partyIsInOverworldPosition(assaultPoint)) {
+            return List.of(new DailyAction("Go to Rendezvous", new GoToRendezvousEvent(model, castle)));
+        }
         return super.getDailyActions(model, worldHex);
     }
 
@@ -155,7 +162,7 @@ public class PartSixStoryPart extends StoryPart {
 
     @Override
     protected boolean isCompleted() {
-        return false;
+        return completed;
     }
 
     public boolean witchTalkedTo() {
@@ -404,19 +411,138 @@ public class PartSixStoryPart extends StoryPart {
 
         @Override
         public String getText() {
+            if (completed) {
+                return "You gained the support of the neighboring kingdoms of " + castle + ". While the castle is stormed " +
+                        "by troops, you sneak inside the castle to unravel the mystery of the Crimson pearl, the Quad and the " +
+                        "strange envoy who appears to have driven the regent mad.\n\nCompleted";
+            }
             return "The time has come to get back into " + castle + " and get to the bottom of the mystery of " +
-                    "the crimson pearl, the quad and the strange advisor who appears to have driven the regent mad.\n\n" +
+                    "the Crimson Pearl, the Quad and the strange envoy who appears to have driven the regent mad.\n\n" +
                     "Meet with the forces of the neighboring kingdoms at the rendezvous point and lead the assault.";
         }
 
         @Override
         public boolean isComplete() {
-            return false;
+            return completed;
         }
 
         @Override
         public Point getPosition(Model model) {
             return assaultPoint;
+        }
+    }
+
+    private class GoToRendezvousEvent extends DailyEventState {
+        private final String castle;
+        private final CastleLocation enemyKingdom;
+        private final CastleLocation kingdom1;
+        private final CastleLocation kingdom2;
+        private boolean questStarted = false;
+
+        public GoToRendezvousEvent(Model model, String castle) {
+            super(model);
+            this.castle = castle;
+            enemyKingdom = model.getWorld().getCastleByName(castle);
+            kingdom1 = gainSupportOfNeighborKingdomTasks.getFirst().getKingdom(model);
+            kingdom2 = gainSupportOfNeighborKingdomTasks.getLast().getKingdom(model);
+        }
+
+        @Override
+        protected void doEvent(Model model) {
+            println("At the rendezvous point, many tents and pavilions have been erected. There are soldiers everywhere and you " +
+                    "can spot banners from both " + CastleLocation.placeNameToKingdom(kingdom1.getPlaceName()) +
+                    " and " + CastleLocation.placeNameToKingdom(kingdom2.getPlaceName()) + ".");
+            leaderSay("The armies of " + CastleLocation.placeNameToKingdom(castle) +
+                    " must really be in disarray if all of these soldiers where able " +
+                    "to set up camp right on " + enemyKingdom.getLordName() + "'s doorstep.");
+            println("A larger more grand tent is located atop a small hill. There are guards posted outside, you figure " +
+                    "whoever is commanding these soldiers are in there. You step into the tent and are surprised " +
+                    "to see some familiar faces.");
+            model.getLog().waitForAnimationToFinish();
+            showLord1(model);
+            portraitSay("Speak of the devil! We were just talking about you.");
+            showLord2(model);
+            portraitSay("I'm glad you made it. We were beginning to think you wouldn't come.");
+            println(kingdom1.getLordName() + " and " + kingdom2.getLordName() + " are standing by a war table surrounded " +
+                    "by there highest ranking officials.");
+            leaderSay("My lords. What are you doing here?");
+            showLord1(model);
+            portraitSay("We wanted to see this through for ourselves. And honestly, when our scouts reported very little " +
+                    "in the way of resisting forces in our paths to get here, we just couldn't hold back.");
+            leaderSay("What's happened. Where are " + enemyKingdom.getLordName() + "'s armies?");
+            showLord2(model);
+            portraitSay("It appears, that, when we both attacked " + CastleLocation.placeNameShort(enemyKingdom.getPlaceName()) +
+                    " simultaneously, their forces were spread too thin.");
+            showLord1(model);
+            portraitSay("My spies have also learned that they have quite the problem with morale, people are defecting.");
+            if (gainSupportOfRemotePeopleTask.supportsFromTheSea()) {
+                showLord2(model);
+                portraitSay("And, we've had reports that " + gainSupportOfRemotePeopleTask.getRemotePeopleName() +
+                        " have been raiding the shores of " + CastleLocation.placeNameShort(enemyKingdom.getPlaceName()) + ".");
+            } else {
+                showExplicitPortrait(model, gainSupportOfRemotePeopleTask.getLeaderPortrait(), gainSupportOfRemotePeopleTask.getLeaderName());
+                portraitSay("Those cowards are fleeing before my warriors before we can even get close.");
+                leaderSay(gainSupportOfRemotePeopleTask.getLeaderName() + "! What are you doing here?");
+                portraitSay("I promised you my support didn't I? I am a man of my word.");
+                leaderSay("Undeniably! It is great to have you here.");
+            }
+            showLord2(model);
+            portraitSay("Well, we're all here, why don't we look over these battle plans? Are you leading the assault " +
+                    model.getParty().getLeader().getFirstName() + "?");
+            leaderSay("Uhm...");
+            InitialStoryPart init = ((InitialStoryPart)model.getMainStory().getStoryParts().get(0));
+            CharacterAppearance everixPortrait = init.getEverixPortrait();
+            showExplicitPortrait(model, everixPortrait, "Everix");
+            portraitSay("I would advise against it.");
+            println("You turn around and see Everix and the Witch of the Woods in the entrance to the tent.");
+            leaderSay("Everix. What are you doing here?");
+            portraitSay("I have a personal vendetta with " + enemyKingdom.getLordName() +
+                    ". I won't soon forget what " + heOrShe(enemyKingdom.getLordGender()) + " did to my village.");
+            leaderSay("Of course. You have as much right as anybody to see " + enemyKingdom.getLordName() + " brought to justice. " +
+                    "But, we aren't assaulting the castle?");
+            portraitSay("Oh by all means! But if we want to take the mysterious envoy by surprise I would suggest a stealthier approach. " +
+                    "We want answers, remember?");
+            leaderSay("We got out from the dungeons through the sewers. I'm sure we can find our way back in again.");
+            println("Everix nods, then she faces " + kingdom1.getLordName() + " and " + kingdom2.getLordName() + ".");
+            portraitSay("Give us a few hours, then have your soldiers storm the castle. " +
+                    "That should make it a little easier sneaking around in there.");
+            showLord1(model);
+            portraitSay("That sounds like a good plan. You find " + enemyKingdom.getLordName() +
+                    ", and that envoy fellow, and we'll take care of the rest.");
+            model.getLog().addAnimated(LogView.GOLD_COLOR +
+                    "WARNING! Once you proceed from here, you will not be able to return for some time. \n" + LogView.DEFAULT_COLOR);
+            print("Are you ready to go now? (Y/N) ");
+            if (yesNoInput()) {
+                leaderSay("Yes " + imOrWere() + " ready. Let's go.");
+                portraitSay("Alright. Good luck!");
+                transitionStep(model);
+                questStarted = true;
+                completed = true;
+            } else {
+                leaderSay("Not quite yet, there are still some things that need to be prepared.");
+                portraitSay("Okay. Return here when you are ready. But don't take too long. " +
+                        "It's hard to say how long we can hold this position.");
+                leaderSay("I'll be quick, I promise.");
+            }
+        }
+
+        private void showLord1(Model model) {
+            removePortraitSubView(model);
+            showExplicitPortrait(model, model.getLordPortrait(kingdom1), kingdom1.getLordName());
+        }
+
+        private void showLord2(Model model) {
+            removePortraitSubView(model);
+            showExplicitPortrait(model, model.getLordPortrait(kingdom2), kingdom2.getLordName());
+        }
+
+        @Override
+        protected GameState getEveningState(Model model) {
+            if (questStarted) {
+                MainQuest q = MainStory.getQuest(MindMachineQuest.QUEST_NAME);
+                return new QuestState(model, q, model.getParty().getPosition());
+            }
+            return super.getEveningState(model);
         }
     }
 }

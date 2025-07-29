@@ -85,6 +85,10 @@ public abstract class GainSupportOfNeighborKingdomTask extends DestinationTask {
         return innerMakeLordEvent(model, neighbor, model.getWorld().getCastleByName(otherNeighbor));
     }
 
+    public CastleLocation getKingdom(Model model) {
+        return model.getWorld().getCastleByName(neighbor);
+    }
+
     public void progress() {
         this.stage++;
     }

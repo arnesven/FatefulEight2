@@ -26,7 +26,7 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     private boolean completed = false;
 
     public GainSupportOfPiratesTask(Model model) {
-        super(WorldBuilder.PIRATE_HAVEN_LOCATION);
+        super("Pirates", WorldBuilder.PIRATE_HAVEN_LOCATION);
         this.blackboneAppearance = PortraitSubView.makeRandomPortrait(Classes.PIRATE_CAPTAIN);
     }
 
@@ -66,6 +66,21 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     @Override
     public void setCompleted() {
         completed = true;
+    }
+
+    @Override
+    public boolean supportsFromTheSea() {
+        return true;
+    }
+
+    @Override
+    public CharacterAppearance getLeaderPortrait() {
+        return blackboneAppearance;
+    }
+
+    @Override
+    public String getLeaderName() {
+        return "Captain" + CAPTAIN_NAME;
     }
 
     @Override

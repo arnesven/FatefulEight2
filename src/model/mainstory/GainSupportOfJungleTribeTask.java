@@ -2,12 +2,15 @@ package model.mainstory;
 
 import model.Model;
 import model.characters.appearance.CharacterAppearance;
+import model.classes.Classes;
 import model.journal.JournalEntry;
 import model.journal.MainStoryTask;
 import model.map.WorldBuilder;
 import model.quests.Quest;
+import model.races.Race;
 import util.MyPair;
 import util.MyTriplet;
+import view.subviews.PortraitSubView;
 
 import java.awt.*;
 import java.util.List;
@@ -16,7 +19,7 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     private boolean completed = false;
 
     public GainSupportOfJungleTribeTask(Model model) {
-        super(WorldBuilder.JUNGLE_PYRAMID_LOCATION);
+        super("Jungle Tribe", WorldBuilder.JUNGLE_PYRAMID_LOCATION);
     }
 
     @Override
@@ -63,5 +66,20 @@ public class GainSupportOfJungleTribeTask extends GainSupportOfRemotePeopleTask 
     @Override
     public void setCompleted() {
         this.completed = true;
+    }
+
+    @Override
+    public boolean supportsFromTheSea() {
+        return false;
+    }
+
+    @Override
+    public CharacterAppearance getLeaderPortrait() {
+        return PortraitSubView.makeRandomPortrait(Classes.AMZ, Race.SOUTHERN_HUMAN); // TODO: Fix
+    }
+
+    @Override
+    public String getLeaderName() {
+        return "TODO";
     }
 }

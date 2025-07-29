@@ -58,7 +58,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     private int step = INITIAL_STEP;
 
     public GainSupportOfHonorableWarriorsTask() {
-        super(WorldBuilder.EASTERN_PALACE_LOCATION);
+        super("Honorable Warriors", WorldBuilder.EASTERN_PALACE_LOCATION);
         this.completed = false;
         this.subTasks = new ArrayList<>();
         this.mikoAppearance = new MikoAppearance();
@@ -110,6 +110,21 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     @Override
     public void setCompleted() {
         completed = true;
+    }
+
+    @Override
+    public boolean supportsFromTheSea() {
+        return false;
+    }
+
+    @Override
+    public CharacterAppearance getLeaderPortrait() {
+        return getShingenPortrait();
+    }
+
+    @Override
+    public String getLeaderName() {
+        return "Lord Shingen";
     }
 
     @Override
