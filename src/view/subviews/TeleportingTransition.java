@@ -24,8 +24,8 @@ public class TeleportingTransition extends TransitionView {
     private final boolean inCaves;
     private boolean flipped = false;
 
-    public TeleportingTransition(SubView fromView, SubView toView, String title, int stepsStart, Point position, boolean inCaves) {
-        super(fromView, toView, title, stepsStart);
+    public TeleportingTransition(SubView fromView, SubView toView, String title, Point position, boolean inCaves) {
+        super(fromView, toView, title, STEPS_START);
         this.position = position;
         randomSeed = MyRandom.randInt(100000);
         this.inCaves = inCaves;
@@ -34,12 +34,7 @@ public class TeleportingTransition extends TransitionView {
     @Override
     protected void drawAnimation(Model model, int steps) {
         if (steps == 0) {
-            model.getParty().setPosition(position);
-            if (inCaves) {
-                model.enterCaveSystem(false);
-            } else {
-                model.exitCaveSystem(false);
-            }
+            moveParty(model, position, inCaves);
             this.flipped = true;
         }
 
@@ -61,6 +56,15 @@ public class TeleportingTransition extends TransitionView {
         }
     }
 
+    protected void moveParty(Model model, Point position, boolean inCaves) {
+        model.getParty().setPosition(position);
+        if (inCaves) {
+            model.enterCaveSystem(false);
+        } else {
+            model.exitCaveSystem(false);
+        }
+    }
+
     @Override
     protected boolean stepsAreDone(int steps) {
         return steps >= STEPS_START;
@@ -68,7 +72,7 @@ public class TeleportingTransition extends TransitionView {
 
     public static void transition(Model model, SubView nextSubView, Point position, boolean inCaves) {
         TransitionView spiral = new TeleportingTransition(model.getSubView(), nextSubView,
-                nextSubView.getTitleText(model), STEPS_START, position, inCaves);
+                nextSubView.getTitleText(model), position, inCaves);
         model.setSubView(spiral);
         spiral.waitToBeOver();
         model.setSubView(nextSubView);

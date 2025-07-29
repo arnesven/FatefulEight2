@@ -3,6 +3,7 @@ package model.journal;
 import model.Model;
 import model.mainstory.GainSupportOfNeighborKingdomTask;
 import model.mainstory.GainSupportOfRemotePeopleTask;
+import model.map.World;
 import view.MyColors;
 
 import java.awt.*;
@@ -79,4 +80,6 @@ public abstract class MainStorySpawnLocation implements Serializable {
     public Point getRemotePeoplePosition() {
         return remotePeoplePosition;
     }
+
+    public abstract World buildPastWorld();
 }

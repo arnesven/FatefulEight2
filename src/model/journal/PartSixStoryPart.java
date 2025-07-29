@@ -539,7 +539,8 @@ public class PartSixStoryPart extends StoryPart {
         @Override
         protected GameState getEveningState(Model model) {
             if (questStarted) {
-                MainQuest q = MainStory.getQuest(MindMachineQuest.QUEST_NAME);
+                MainQuest q = getQuestAndSetPortrait(MindMachineQuest.QUEST_NAME, model.getParty().getLeader().getAppearance(),
+                        "Yourself");
                 return new QuestState(model, q, model.getParty().getPosition());
             }
             return super.getEveningState(model);

@@ -2,6 +2,7 @@ package model.journal;
 
 import model.Model;
 import model.mainstory.*;
+import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;
 
@@ -35,5 +36,10 @@ public class MainStorySpawnEast extends MainStorySpawnLocation {
         GainSupportOfNeighborKingdomByFightingOrcsTask task2 = new GainSupportOfNeighborKingdomByFightingOrcsTask(castle2,
                 model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(castle2)), getCastle(), castle1, new Point(38, 20));
         return List.of(task1, task2);
+    }
+
+    @Override
+    public World buildPastWorld() {
+        return WorldBuilder.buildPastWorld(new Point(30, 10));
     }
 }

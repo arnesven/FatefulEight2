@@ -5,10 +5,7 @@ import model.actions.DailyAction;
 import model.characters.GameCharacter;
 import model.characters.special.WillisCharacter;
 import model.journal.*;
-import model.map.TownLocation;
-import model.map.UrbanLocation;
-import model.map.WorldBuilder;
-import model.map.WorldHex;
+import model.map.*;
 import model.quests.*;
 import model.states.EveningState;
 import model.states.InitialLeadsEveningState;
@@ -306,5 +303,9 @@ public class MainStory implements Serializable {
             sp.addFactionStrings(result);
         }
         return result;
+    }
+
+    public World buildPastWorld() {
+        return spawnData.buildPastWorld();
     }
 }

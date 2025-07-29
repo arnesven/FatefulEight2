@@ -13,6 +13,7 @@ import model.items.weapons.Cutlass;
 import model.items.weapons.Pistol;
 import model.mainstory.*;
 import model.mainstory.pirates.PotentialMutineer;
+import model.map.World;
 import model.map.WorldBuilder;
 import model.map.locations.*;
 import model.races.Race;
@@ -70,6 +71,11 @@ public class MainStorySpawnWest extends MainStorySpawnLocation {
         GainSupportOfNeighborKingdomByFightingOrcsTask task2 = new GainSupportOfNeighborKingdomByFightingOrcsTask(castle2,
                 model.getWorld().getPositionForLocation(model.getWorld().getLocationByName(castle2)), getCastle(), castle1, new Point(11, 12));
         return List.of(task1, task2);
+    }
+
+    @Override
+    public World buildPastWorld() {
+        return WorldBuilder.buildPastWorld(new Point(0, 14));
     }
 
     private List<PotentialMutineer> makePotentialMutineers() {

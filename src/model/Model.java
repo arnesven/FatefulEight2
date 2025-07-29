@@ -46,7 +46,8 @@ public class Model {
     private GameData gameData;
 
     private World world = new World(WorldBuilder.buildWorld(WorldType.original),
-                                        WorldBuilder.getWorldBounds(WorldBuilder.ORIGINAL));
+                                        WorldBuilder.getWorldBounds(WorldBuilder.ORIGINAL),
+                                WorldType.original);
     private World lastWorld = null;
     private CaveSystem caveSystem;
     private GameView gameView;
@@ -588,9 +589,9 @@ public class Model {
 
     public void goBetweenWorlds(WorldType worldType, Point position) {
         gameData.currentWorld = worldType;
-        if (worldType == WorldType.other) {
+        if (worldType != WorldType.original) {
             lastWorld = world;
-            world = new World(WorldBuilder.buildWorld(WorldType.other), WorldBuilder.OTHER_BOUNDS);
+            world = gameData.mainStory.buildPastWorld();
         } else {
             world = lastWorld;
         }

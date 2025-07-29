@@ -26,6 +26,7 @@ import java.util.function.Predicate;
 
 public class World implements Serializable {
 
+    private final WorldType type;
     private Set<WaterPath> waterWays;
     private final Map<CastleLocation, List<Point>> kingdoms;
     private Map<WorldHex, Integer> landNodes;
@@ -37,11 +38,18 @@ public class World implements Serializable {
     private int currentState;
     private Rectangle bounds;
 
-    public World(WorldHex[][] hexes, Rectangle bounds) {
+    public World(WorldHex[][] hexes, Rectangle bounds, WorldType type) {
         this.hexes = hexes;
         this.bounds = bounds;
+        this.type = type;
         makeWaterWays();
-        kingdoms = findKingdoms();
+        if (type == WorldType.original) {
+            kingdoms = findKingdoms();
+        } else {
+            kingdoms = new HashMap<>();
+            currentState = WorldBuilder.EXPAND_EAST | WorldBuilder.EXPAND_NORTH |
+                    WorldBuilder.EXPAND_SOUTH | WorldBuilder.EXPAND_WEST;
+        }
     }
 
     public Point translateToScreen(Point logicPosition, Point viewPoint, int mapXRange, int mapYRange) {
@@ -274,7 +282,12 @@ public class World implements Serializable {
     }
 
     public boolean canTravelTo(Model model, Point p) {
-        Rectangle bounds = WorldBuilder.getWorldBounds(getCurrentState());
+        Rectangle bounds;
+        if (type == WorldType.original) {
+            bounds = WorldBuilder.getWorldBounds(getCurrentState());
+        } else {
+            bounds = this.bounds;
+        }
         if (p.x < bounds.x || p.x >= bounds.x + bounds.width) {
             return false;
         }
