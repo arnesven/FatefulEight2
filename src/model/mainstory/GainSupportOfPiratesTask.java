@@ -26,7 +26,7 @@ public class GainSupportOfPiratesTask extends GainSupportOfRemotePeopleTask {
     private boolean completed = false;
 
     public GainSupportOfPiratesTask(Model model) {
-        super("Pirates", WorldBuilder.PIRATE_HAVEN_LOCATION);
+        super(WorldBuilder.PIRATE_HAVEN_LOCATION);
         this.blackboneAppearance = PortraitSubView.makeRandomPortrait(Classes.PIRATE_CAPTAIN);
     }
 

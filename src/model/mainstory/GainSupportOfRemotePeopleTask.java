@@ -13,11 +13,9 @@ import java.awt.*;
 import java.util.List;
 
 public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
-    private final String name;
 
-    public GainSupportOfRemotePeopleTask(String name, Point position) {
+    public GainSupportOfRemotePeopleTask(Point position) {
         super(position, "");
-        this.name = name;
     }
 
     @Override
@@ -49,10 +47,6 @@ public abstract class GainSupportOfRemotePeopleTask extends DestinationTask {
     public abstract void setCompleted(); // For testing
 
     public abstract boolean supportsFromTheSea();
-
-    public String getRemotePeopleName() {
-        return name;
-    }
 
     public abstract CharacterAppearance getLeaderPortrait();
 

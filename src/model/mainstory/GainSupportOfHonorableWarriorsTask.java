@@ -58,7 +58,7 @@ public class GainSupportOfHonorableWarriorsTask extends GainSupportOfRemotePeopl
     private int step = INITIAL_STEP;
 
     public GainSupportOfHonorableWarriorsTask() {
-        super("Honorable Warriors", WorldBuilder.EASTERN_PALACE_LOCATION);
+        super(WorldBuilder.EASTERN_PALACE_LOCATION);
         this.completed = false;
         this.subTasks = new ArrayList<>();
         this.mikoAppearance = new MikoAppearance();

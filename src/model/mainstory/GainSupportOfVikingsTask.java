@@ -52,7 +52,7 @@ public class GainSupportOfVikingsTask extends GainSupportOfRemotePeopleTask {
     private int donatedShields = 0;
 
     public GainSupportOfVikingsTask(Model model) {
-        super("Vikings", WorldBuilder.VIKING_VILLAGE_LOCATION);
+        super(WorldBuilder.VIKING_VILLAGE_LOCATION);
         chieftainPortrait = PortraitSubView.makeRandomPortrait(Classes.VIKING_CHIEF, Race.NORTHERN_HUMAN, false);
     }
 

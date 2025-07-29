@@ -477,7 +477,7 @@ public class PartSixStoryPart extends StoryPart {
             portraitSay("My spies have also learned that they have quite the problem with morale, people are defecting.");
             if (gainSupportOfRemotePeopleTask.supportsFromTheSea()) {
                 showLord2(model);
-                portraitSay("And, we've had reports that " + gainSupportOfRemotePeopleTask.getRemotePeopleName() +
+                portraitSay("And, we've had reports that " + model.getMainStory().getRemotePeopleName() +
                         " have been raiding the shores of " + CastleLocation.placeNameShort(enemyKingdom.getPlaceName()) + ".");
             } else {
                 showExplicitPortrait(model, gainSupportOfRemotePeopleTask.getLeaderPortrait(), gainSupportOfRemotePeopleTask.getLeaderName());
