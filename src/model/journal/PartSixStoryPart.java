@@ -26,12 +26,27 @@ public class PartSixStoryPart extends StoryPart {
     private final String castle;
     private final GainSupportOfRemotePeopleTask gainSupportOfRemotePeopleTask;
     private final List<GainSupportOfNeighborKingdomTask> gainSupportOfNeighborKingdomTasks;
+    private  Point assaultPoint;
     private int internalStep = 0;
 
     public PartSixStoryPart(Model model, String castleName) {
         this.castle = castleName;
         this.gainSupportOfRemotePeopleTask = model.getMainStory().makeRemotePeopleSupportTask(model);
         this.gainSupportOfNeighborKingdomTasks = model.getMainStory().makeNeighborKingdomTasks(model);
+        setAssaultPoint(model);
+    }
+
+    private void setAssaultPoint(Model model) {
+        Map<Integer, Integer> expandDirMap = Map.of(
+                WorldBuilder.EXPAND_EAST, Direction.SOUTH,
+                WorldBuilder.EXPAND_NORTH, Direction.SOUTH_EAST,
+                WorldBuilder.EXPAND_WEST, Direction.NORTH_EAST,
+                WorldBuilder.EXPAND_SOUTH, Direction.NORTH);
+        Point castlePoint = new Point(model.getMainStory().getCastlePosition(model));
+        int expandDir = model.getMainStory().getExpandDirection();
+        Point dxdy = Direction.getDxDyForDirection(castlePoint, expandDirMap.get(expandDir));
+        model.getWorld().move(castlePoint, dxdy.x, dxdy.y);
+        assaultPoint = castlePoint;
     }
 
     @Override
@@ -381,12 +396,10 @@ public class PartSixStoryPart extends StoryPart {
 
     private class LeadTheAssaultJournalEntry extends MainStoryTask {
         private final String castle;
-        private Point assaultPoint;
 
         public LeadTheAssaultJournalEntry(String castle) {
             super("Assault on " + castle);
             this.castle = castle;
-            this.assaultPoint = null;
         }
 
         @Override
@@ -403,23 +416,7 @@ public class PartSixStoryPart extends StoryPart {
 
         @Override
         public Point getPosition(Model model) {
-            if (assaultPoint == null) {
-                setAssaultPoint(model);
-            }
             return assaultPoint;
-        }
-
-        private void setAssaultPoint(Model model) {
-            Map<Integer, Integer> expandDirMap = Map.of(
-                    WorldBuilder.EXPAND_EAST, Direction.SOUTH,
-                    WorldBuilder.EXPAND_NORTH, Direction.SOUTH_EAST,
-                    WorldBuilder.EXPAND_WEST, Direction.NORTH_EAST,
-                    WorldBuilder.EXPAND_SOUTH, Direction.NORTH);
-            Point castlePoint = new Point(model.getMainStory().getCastlePosition(model));
-            int expandDir = model.getMainStory().getExpandDirection();
-            Point dxdy = Direction.getDxDyForDirection(castlePoint, expandDirMap.get(expandDir));
-            model.getWorld().move(castlePoint, dxdy.x, dxdy.y);
-            assaultPoint = castlePoint;
         }
     }
 }

@@ -300,8 +300,8 @@ public class PartThreeStoryPart extends StoryPart {
                             "was soon widespread rebellion in the land. At first, it seemed the Quad would manage to beat it down, but finally " +
                             "they were driven out of the capital, banished to a remote land.");
                     portraitSay("However, the Quad swore to return one day, even more powerful, and it was prophesied that " +
-                            "their spirits would live on and come back to seek revenge after two-hundred years.");
-                    leaderSay("Wait a minute... the year 2424... plus two-hundred... that's this year!");
+                            "their spirits would live on and come back to seek revenge after a thousand years.");
+                    leaderSay("Wait a minute... the year 2424... plus one thousand... that's this year!");
                     portraitSay("It would seem so. There's also a map here. It shows the location of the last known " +
                             "stronghold of the Quad. Here, you take it.");
                     leaderSay("Wow, this map shows a part of the world I've never seen before. And there's the stronghold. " +
