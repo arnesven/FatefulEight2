@@ -111,4 +111,11 @@ public abstract class HexLocation implements Serializable {
     }
 
     public abstract HelpDialog getHelpDialog(GameView view);
+
+    public HexLocation makePastSelf() {
+        if (isDecoration()) {
+            return this;
+        }
+        return null;
+    }
 }

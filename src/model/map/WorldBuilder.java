@@ -558,9 +558,10 @@ public class WorldBuilder {
         WorldHex[][] hexes = new WorldHex[bounds.width][bounds.height];
         for (int y = 0; y < hexes[0].length; ++y) {
             for (int x = 0; x < hexes.length; ++x) {
-                hexes[x][y] = originalHexes[x + upperLeftPoint.x][y + upperLeftPoint.y];
+                hexes[x][y] = originalHexes[x + upperLeftPoint.x][y + upperLeftPoint.y].makePastSelf(new Point(x, y));
             }
         }
+        makeSeaBorders(hexes);
         World result = new World(hexes, bounds, WorldType.thePast);
         return result;
     }

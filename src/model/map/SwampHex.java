@@ -10,6 +10,7 @@ import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.List;
 
 public class SwampHex extends WorldHex {
@@ -93,5 +94,10 @@ public class SwampHex extends WorldHex {
     @Override
     public DailyEventState generateDogEvent(Model model) {
         return MyRandom.sample(List.of(new SwampRaftEvent(model), new WoundedAdventurerEvent(model), new MushroomsEvent(model)));
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastSeaHex(getState());
     }
 }

@@ -2,9 +2,11 @@ package model.map.locations;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.map.CastleLocation;
 import model.map.HexLocation;
 import model.states.DailyEventState;
 import model.states.GameState;
+import model.states.dailyaction.shops.GeneralShopNode;
 import util.MyPair;
 import view.GameView;
 import view.MyColors;

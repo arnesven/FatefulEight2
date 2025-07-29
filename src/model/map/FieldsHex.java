@@ -9,6 +9,7 @@ import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +67,10 @@ public class FieldsHex extends WorldHex {
     @Override
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.POOR, ResourcePrevalence.POOR);
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastPlainsHex(getRivers(), getState(), null);
     }
 }

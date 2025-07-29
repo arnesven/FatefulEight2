@@ -339,6 +339,13 @@ public abstract class WorldHex {
         return hexLocation;
     }
 
+    public HexLocation makePastLocation() {
+        if (hexLocation == null) {
+            return null;
+        }
+        return hexLocation.makePastSelf();
+    }
+
     public boolean canTravelTo(Model model) {
         return true;
     }
@@ -499,5 +506,13 @@ public abstract class WorldHex {
             return null;
         }
         return preparedEvent.first;
+    }
+
+    public abstract WorldHex makePastSelf(Point position);
+
+    protected int getNumberOfBorderingRiver() {
+        List<Integer> direction = List.of(Direction.NORTH, Direction.NORTH_EAST, Direction.SOUTH_EAST,
+                Direction.SOUTH, Direction.SOUTH_WEST, Direction.NORTH_WEST);
+        return MyLists.intAccumulate(direction, dir -> getRiversInDirection(dir) ? 1 : 0);
     }
 }

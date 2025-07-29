@@ -89,4 +89,14 @@ public class TundraHex extends WorldHex {
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.POOR);
     }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        if (position.y >= 6) {
+            return new PastPlainsHex(getRivers(), getState(), makePastLocation());
+        } else if ((position.x * 199 + position.y * 53) % 4 == 0) {
+            return new PastTundraWoodsHex(getRivers(), getState());
+        }
+        return new PastTundraHex(getRivers(), getState(), makePastLocation());
+    }
 }

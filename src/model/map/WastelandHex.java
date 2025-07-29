@@ -11,6 +11,7 @@ import view.combat.CombatTheme;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
+import java.awt.*;
 import java.util.List;
 
 public class WastelandHex extends WorldHex {
@@ -89,5 +90,10 @@ public class WastelandHex extends WorldHex {
     @Override
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.POOR);
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastWastelandHex(getRivers(), getState(), makePastLocation());
     }
 }

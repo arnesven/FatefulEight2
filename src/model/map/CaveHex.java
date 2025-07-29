@@ -162,4 +162,9 @@ public class CaveHex extends WorldHex {
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.FAIR, ResourcePrevalence.FAIR);
     }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        throw new IllegalStateException("No caves in the past!");
+    }
 }

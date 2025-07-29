@@ -8,6 +8,7 @@ import view.MyColors;
 import view.subviews.ImageSubView;
 import view.subviews.SubView;
 
+import java.awt.*;
 import java.util.List;
 
 public class JungleHex extends WorldHex {
@@ -69,5 +70,10 @@ public class JungleHex extends WorldHex {
     @Override
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.GOOD, ResourcePrevalence.POOR);
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastJungleHex(getRivers(), getState());
     }
 }

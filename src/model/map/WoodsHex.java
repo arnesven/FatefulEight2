@@ -98,4 +98,9 @@ public class WoodsHex extends WorldHex {
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.FAIR, ResourcePrevalence.POOR);
     }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastDeepWoodsHex(getRivers(), getState());
+    }
 }

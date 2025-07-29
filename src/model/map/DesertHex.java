@@ -10,6 +10,7 @@ import view.subviews.SubView;
 import view.subviews.ImageSubView;
 import view.MyColors;
 
+import java.awt.*;
 import java.util.List;
 
 public class DesertHex extends WorldHex {
@@ -92,5 +93,10 @@ public class DesertHex extends WorldHex {
     @Override
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.NON_EXISTENT, ResourcePrevalence.NON_EXISTENT);
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastDesertHex(getRivers(), getState(), makePastLocation());
     }
 }

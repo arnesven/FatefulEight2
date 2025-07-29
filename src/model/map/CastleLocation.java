@@ -237,4 +237,9 @@ public abstract class CastleLocation extends HexLocation implements UrbanLocatio
     }
 
     public abstract List<Point> getExtraKingdomPositions();
+
+    @Override
+    public HexLocation makePastSelf() {
+        return null;
+    }
 }

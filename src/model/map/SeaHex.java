@@ -13,6 +13,8 @@ import view.subviews.SubView;
 import view.MyColors;
 import view.sprites.SeaHexSprite;
 
+import java.awt.*;
+
 public class SeaHex extends WorldHex {
     private static final SeaHexSprite SPRITE_UL = new SeaHexSprite(0xA0);
     private static final SeaHexSprite SPRITE_UR = new SeaHexSprite(0xA4);
@@ -92,5 +94,10 @@ public class SeaHex extends WorldHex {
     @Override
     public GameState getEveningState(Model model, boolean freeLodging, boolean freeRations) {
         return new EveningAtSeaState(model);
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastSeaHex(getState());
     }
 }

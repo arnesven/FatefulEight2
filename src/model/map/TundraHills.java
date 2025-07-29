@@ -2,6 +2,8 @@ package model.map;
 
 import view.MyColors;
 
+import java.awt.*;
+
 public class TundraHills extends TundraHex {
     public TundraHills(int roads, int rivers, int state) {
         super(roads, rivers, new HillsLocation(MyColors.WHITE), state);
@@ -10,5 +12,13 @@ public class TundraHills extends TundraHex {
     @Override
     public String getTerrainName() {
         return "tundra hills";
+    }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        if (position.y >= 6) {
+            return new PastHillsHex(getRivers(), getState());
+        }
+        return super.makePastSelf(position);
     }
 }

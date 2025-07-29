@@ -80,4 +80,14 @@ public class PlainsHex extends WorldHex {
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.FAIR, ResourcePrevalence.NON_EXISTENT);
     }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        if (super.getNumberOfBorderingRiver() == 1) {
+            return new PastSwampHex(getRivers(), getState());
+        } else if ((position.x * 199 + position.y * 53) % 4 == 0) {
+            return new PastWoodsLocation(getRivers(), getState());
+        }
+        return new PastPlainsHex(getRivers(), getState(), makePastLocation());
+    }
 }

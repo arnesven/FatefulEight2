@@ -231,4 +231,9 @@ public abstract class TownLocation extends HexLocation implements UrbanLocation 
     public boolean isCoastal() {
         return isCoastal;
     }
+
+    @Override
+    public HexLocation makePastSelf() {
+        return null;
+    }
 }

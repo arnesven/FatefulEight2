@@ -101,4 +101,9 @@ public class MountainHex extends WorldHex {
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.POOR, ResourcePrevalence.GOOD);
     }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastMountainHex(getRivers(), getState());
+    }
 }

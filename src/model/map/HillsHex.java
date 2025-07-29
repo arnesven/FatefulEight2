@@ -96,4 +96,9 @@ public class HillsHex extends WorldHex {
     public ResourcePrevalence getResourcePrevalences() {
         return new ResourcePrevalence(ResourcePrevalence.POOR, ResourcePrevalence.FAIR);
     }
+
+    @Override
+    public WorldHex makePastSelf(Point position) {
+        return new PastHillsHex(getRivers(), getState());
+    }
 }
