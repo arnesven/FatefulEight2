@@ -31,6 +31,7 @@ public class BossRoom extends LargeDungeonRoom {
                 "Now you shall all meet your end.", "Fools! Die for my happiness!"));
         exploreRuinsState.printQuote(boss.getName(), line);
         exploreRuinsState.waitForReturn();
+
         super.entryTrigger(model, exploreRuinsState);
         if (!exploreRuinsState.isDungeonExited()) {
             exploreRuinsState.println("Congratulations! You have vanquished the boss of this ruin. The party gains 1 reputation.");

@@ -44,7 +44,7 @@ public class HealthPotion extends Potion {
     @Override
     public Item copy() {
         return new HealthPotion();
-    }
+    } // TODO: Fix so that tier is passed, for now alchemy cannot make these
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {

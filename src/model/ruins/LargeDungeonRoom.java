@@ -17,7 +17,7 @@ public class LargeDungeonRoom extends DungeonRoom {
     @Override
     public void entryTrigger(Model model, ExploreRuinsState exploreRuinsState) {
         super.entryTrigger(model, exploreRuinsState);
-        setRelativeAvatarPosition(new Point(2, 1));
+        setRelativeAvatarPosition(new Point(2, 1)); // TODO: Fix, this is what moves the avatar again after fighting the boss
         exploreRuinsState.moveCharacterToCenterAnimation(model, getRelativeAvatarPosition());
     }
 

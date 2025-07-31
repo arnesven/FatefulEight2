@@ -49,7 +49,7 @@ public class GoToCastleActionNode extends DailyActionNode {
             if (model.getParty().getSummons().containsKey(location.getPlaceName())) {
                 state.print("Are you visiting the " + location.getLordTitle() +
                         " to discuss the mystery of the Crimson Pearl (Y) or do you have other business with " +
-                        GameState.hisOrHer(location.getLordGender()) + " (N)? ");
+                        GameState.himOrHer(location.getLordGender()) + " (N)? ");
                 if (state.yesNoInput()) {
                     return mainStoryEvent;
                 }
