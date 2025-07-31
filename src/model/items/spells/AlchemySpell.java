@@ -53,6 +53,7 @@ public class AlchemySpell extends ImmediateSpell {
     @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
         model.getTutorial().alchemy(model);
+        brewCount = 1;
         if (model.getParty().getInventory().getPotions().isEmpty() && model.getParty().getPotionRecipes().isEmpty()) {
             state.println(caster.getName() + " was preparing to cast Alchemy, but you do not have any potions or recipes.");
             return false;

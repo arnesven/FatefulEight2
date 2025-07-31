@@ -134,12 +134,7 @@ public class EveningState extends GameState {
                 mainDissident.addToAttitude(model.getParty().getLeader(), -dissidentAttitudeTowardNewLeader);
             }
             if (oldLeader != model.getParty().getLeader() && mainDissident != oldLeader) {
-                mainDissident.addToAttitude(oldLeader, 1);
-            }
-            for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                if (gc != model.getParty().getLeader()) {
-                    gc.addToAttitude(model.getParty().getLeader(), 1);
-                }
+                mainDissident.addToAttitude(oldLeader, MyRandom.randInt(1, 3));
             }
             println(mainDissident.getName() + " has been appeased.");
         } else {
