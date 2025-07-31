@@ -20,6 +20,7 @@ import model.states.battle.*;
 import util.MyLists;
 import util.MyRandom;
 import view.MyColors;
+import view.sprites.DieRollAnimation;
 import view.subviews.PortraitSubView;
 
 import java.awt.*;
@@ -186,6 +187,7 @@ public class OrcsBattleEvent extends DailyEventState {
     }
 
     private void lootBattlefield(Model model) {
+        DieRollAnimation.setAnimationBlocks(false);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             SkillCheckResult result = gc.testSkill(model, Skill.Search);
             if (result.getModifiedRoll() < 5) {
@@ -206,6 +208,7 @@ public class OrcsBattleEvent extends DailyEventState {
 
             }
         }
+        DieRollAnimation.setAnimationBlocks(true);
     }
 
     private Item generateNiceCombatEquipment() {

@@ -106,7 +106,7 @@ public class DoppelgangerEvent extends PersonalityTraitEvent {
                 "We're going to come out, and you will have to tell us which one is the real me. If you get it wrong, I'm leaving the party.");
         leaderSay("Don't be ridiculous!");
         printQuote(main.getName(), "Too late, we're doing this!");
-        println("The two " + main.getFirstName() + " come out from the house. They look very much alike, even their clothes are the same.");
+        println("The two " + main.getFirstName() + "s come out from the house. They look very much alike, even their clothes are the same.");
         CharacterAppearance realPerson = main.getAppearance().copy();
         realPerson.setClass(Classes.None);
         CharacterAppearance left = realPerson;

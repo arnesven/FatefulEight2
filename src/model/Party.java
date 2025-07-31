@@ -538,23 +538,36 @@ public class Party implements Serializable {
         }
         model.getSpellHandler().unacceptSkillBoostingSpells(skill);
 
-        int bonus = 0;
+
+        List<GameCharacter> helpers = new ArrayList<>();
         for (GameCharacter gc : performers) {
             if (!bench.contains(gc)) {
                 if (gc.getAttitude(performer) <= -20) {
                     event.println(gc.getFirstName() + " refuses to help " + performer.getFirstName() + "!");
                 } else if (gc != performer) {
-                    SkillCheckResult assistResult = gc.testSkill(model, skill, getCollaborativeDifficulty(performer, gc));
-                    if (assistResult.isSuccessful()) {
-                        giveXP(model, gc, 5);
-                        event.println(gc.getFirstName() + " helps out (" + assistResult.asString() + ").");
-                        bonus++;
-                    } else {
-                        event.println(gc.getFirstName() + " fumbles (" + assistResult.asString() + ").");
-                    }
+                    helpers.add(gc);
                 }
             }
         }
+
+        int bonus = 0;
+        DieRollAnimation.setAnimationBlocks(false);
+        for (int gci = 0; gci < helpers.size(); ++gci) {
+            GameCharacter gc = helpers.get(gci);
+            if (gci == helpers.size()-1) {
+                DieRollAnimation.setAnimationBlocks(true);
+            }
+            SkillCheckResult assistResult = gc.testSkill(model, skill, getCollaborativeDifficulty(performer, gc));
+            if (assistResult.isSuccessful()) {
+                giveXP(model, gc, 5);
+                event.println(gc.getFirstName() + " helps out (" + assistResult.asString() + ").");
+                bonus++;
+            } else {
+                event.println(gc.getFirstName() + " fumbles (" + assistResult.asString() + ").");
+            }
+        }
+
+        DieRollAnimation.setAnimationBlocks(true);
         SkillCheckResult result = doSkillCheckWithReRoll(model, event, performer, skill, difficulty, 15, bonus);
         if (result.isSuccessful() && size() > 1) {
             partyMemberSay(model, getLeader(), List.of("We did it!", "Good job team!", "We're great!", "Alright!",

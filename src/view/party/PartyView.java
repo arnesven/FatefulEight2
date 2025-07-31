@@ -279,7 +279,11 @@ public class PartyView extends SelectableListMenu {
                     newY++;
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, getArmorString(accessory, false) + " " +  getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory));
                     print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(accessory));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, accessory.getExtraText());
+                    String extra = accessory.getExtraText();
+                    if (extra.length() > rightColumnX - SubView.X_OFFSET) {
+                        extra = extra.substring(0, rightColumnX - SubView.X_OFFSET);
+                    }
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, extra);
                 } else {
                     newY++;
                 }

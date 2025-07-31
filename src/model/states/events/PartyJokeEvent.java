@@ -32,12 +32,12 @@ public class PartyJokeEvent extends DailyEventState {
         model.getParty().partyMemberSay(model, joker, JOKE_LIST);
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (gc != joker) {
-                int diff = MyRandom.rollD10() - 5 + getBonus(joker);
+                int diff = MyRandom.rollD10() - 5 + getJokerBonus(joker) + getListenerBonus(gc);
                 if (diff >= 0) {
                     println(gc.getFirstName() + " enjoyed the joke.");
                     gc.addToAttitude(joker, diff);
                     joker.addToAttitude(gc, diff/2);
-                    if (getBonus(gc) > 0) {
+                    if (getJokerBonus(gc) > 0) {
                         model.getParty().partyMemberSay(model, gc,
                                 List.of("HAHAHAHAHA", "Hehehe, so funny... ouch, I'm getting a cramp.",
                                         "Tell another one!"));
@@ -56,7 +56,14 @@ public class PartyJokeEvent extends DailyEventState {
         showPartyAttitudesSubView(model);
     }
 
-    private int getBonus(GameCharacter gc) {
+    private int getListenerBonus(GameCharacter gc) {
+        if (gc.hasPersonality(PersonalityTrait.critical) || gc.hasPersonality(PersonalityTrait.unkind)) {
+            return -4;
+        }
+        return getJokerBonus(gc);
+    }
+
+    private int getJokerBonus(GameCharacter gc) {
         return gc.hasPersonality(PersonalityTrait.jovial) || gc.hasPersonality(PersonalityTrait.playful) ? 2 : 0;
     }
 }

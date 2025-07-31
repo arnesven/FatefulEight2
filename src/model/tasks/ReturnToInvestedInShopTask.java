@@ -24,7 +24,7 @@ public class ReturnToInvestedInShopTask extends DestinationTask {
         return new JournalEntry() {
             @Override
             public String getName() {
-                return "Shop Investment: " + townName;
+                return "Investment: " + townName;
             }
 
             @Override

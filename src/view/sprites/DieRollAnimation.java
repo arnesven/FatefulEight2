@@ -10,6 +10,7 @@ import java.io.IOException;
 public class DieRollAnimation extends RunOnceAnimationSprite {
 
     private static final int MAX_SHIFT = 55;
+    private static boolean animationBocks = true;
     private final int number;
     private final Sprite16x16 stillFrame;
     private RunOnceAnimationSprite sparkAnimation = null;
@@ -25,6 +26,10 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
         this.number = faceNumber;
         setAnimationDelay(8);
 
+    }
+
+    public static void setAnimationBlocks(boolean blocking) {
+        animationBocks = blocking;
     }
 
     @Override
@@ -76,7 +81,7 @@ public class DieRollAnimation extends RunOnceAnimationSprite {
     }
 
     public boolean blocksGame() {
-        return !super.isDone();
+        return animationBocks && !super.isDone();
     }
 
     public void startTwinkle() {

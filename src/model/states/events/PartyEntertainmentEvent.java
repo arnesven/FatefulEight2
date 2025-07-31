@@ -13,6 +13,7 @@ import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyLists;
 import util.MyRandom;
+import view.sprites.DieRollAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
         }
         ClientSoundManager.playBackgroundMusic(BackgroundMusic.happyMandolin);
         int entertainmentQuality = 0;
+        DieRollAnimation.setAnimationBlocks(false);
         for (GameCharacter gc : entertainers) {
             entertainmentQuality += gc.testSkill(model, Skill.Entertain).getModifiedRoll();
             if (gc.getSP() > 0) {
@@ -77,6 +79,7 @@ public class PartyEntertainmentEvent extends DailyEventState {
                 entertainmentQuality -= 5;
             }
         }
+        DieRollAnimation.setAnimationBlocks(true);
 
         for (GameCharacter gc : model.getParty().getPartyMembers()) {
             if (!entertainers.contains(gc)) {

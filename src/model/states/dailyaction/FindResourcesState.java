@@ -6,8 +6,11 @@ import model.classes.Skill;
 import model.classes.SkillCheckResult;
 import model.states.GameState;
 import util.MyRandom;
+import view.sprites.DieRollAnimation;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FindResourcesState extends GameState {
     private static final int SCORE_QUOTIENT = 12;
@@ -47,13 +50,26 @@ public class FindResourcesState extends GameState {
     private GameState generalCollectResources(Model model, String resourceType, Skill skill1, Skill skill2, int prevalence) {
         println("The party spends some time searching the " + model.getCurrentHex().getTerrainName().toLowerCase() + " for " + resourceType + ".");
         for (int i = 0; i < MAX_COLLECT_TIMES; ++i) {
+            DieRollAnimation.setAnimationBlocks(false);
+            Map<GameCharacter, SkillCheckResult> firstResults = new HashMap<>();
+            for (int gci = 0; gci < model.getParty().size(); ++gci) {
+                GameCharacter gc = model.getParty().getPartyMember(gci);
+                if (gci == model.getParty().size() - 1) {
+                    DieRollAnimation.setAnimationBlocks(true);
+                }
+                firstResults.put(gc, gc.testSkill(model, skill1));
+            }
+
+            DieRollAnimation.setAnimationBlocks(false);
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                SkillCheckResult skill1Result = gc.testSkill(model, skill1);
                 SkillCheckResult skill2Result = gc.testSkill(model, skill2);
+                SkillCheckResult skill1Result = firstResults.get(gc);
                 int score = skill1Result.getModifiedRoll() + skill2Result.getModifiedRoll();
                 int resourcesFound = prevalence * (score / SCORE_QUOTIENT);
                 if (resourcesFound == 0) {
-                    println(gc.getFirstName() + " didn't find anything.");
+                    println(gc.getFirstName() + " didn't find anything. (" + skill1.getName() + " " +
+                            skill1Result.asString() + ", " +
+                            skill2.getName()+ " " + skill2Result.asString() + ")");
                 } else {
                     println(gc.getFirstName() + " found " + resourcesFound +
                             " " + resourceType + ". (" + skill1.getName() + " " + skill1Result.asString() + ", " +
@@ -69,6 +85,7 @@ public class FindResourcesState extends GameState {
                     gc.addToSP(-1);
                 }
             }
+            DieRollAnimation.setAnimationBlocks(true);
             if (i == 0) {
                 print("If you wish to travel today you must leave now. Do you want to continue looking for " + resourceType + "? (Y/N) ");
                 if (!yesNoInput()) {
