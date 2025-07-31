@@ -9,6 +9,7 @@ import model.map.TownLocation;
 import model.quests.HelpWillisQuest;
 import model.quests.Quest;
 import model.quests.TroubleInTheLibraryQuest;
+import model.quests.WillisEndingEvent;
 import model.states.DailyEventState;
 import model.states.GameState;
 import model.states.dailyaction.*;
@@ -327,6 +328,10 @@ public class PartThreeStoryPart extends StoryPart {
                         portraitSay("Uh, thanks. I guess.");
                     }
                 }
+            } else if (internalStep > LIBRARY_CLEANED && WillisEndingEvent.canWillisBeRecruited(model)) {
+                new WillisEndingEvent(model, model.getMainStory().getWillisCharacter().getAppearance()).doTheEvent(model);
+            } else {
+                println("The library is closed at the moment.");
             }
         }
 

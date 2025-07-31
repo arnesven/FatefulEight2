@@ -52,7 +52,6 @@ public class SummonEntry implements JournalEntry {
                     " has requested your presence.\n\n");
             bldr.append((urb.getLordGender() ? "She" : "He") + " asks that you visit " +
                     (urb.getLordGender() ? "her" : "him") + " at the " + urb.getLordDwelling() + " in " + urb.getPlaceName());
-            bldr.append(urb.getPlaceName());
             bldr.append(".\n\n");
             bldr.append("You have no additional information.");
         } else {

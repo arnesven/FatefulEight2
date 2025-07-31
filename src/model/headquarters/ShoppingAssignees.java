@@ -21,7 +21,7 @@ public class ShoppingAssignees extends ArrayList<GameCharacter> {
                     logEntry.append(MyLists.commaAndJoin(this, GameCharacter::getName));
                     logEntry.append(" could not go shopping, no gold in headquarters.\n");
                 } else {
-                    int goldToSpend = Math.min(hq.getGold(), (int) Math.ceil(hq.getMaxCharacters() / 5.0));
+                    int goldToSpend = Math.min(hq.getGold(), (int) Math.ceil(hq.getFoodLimit() / 5.0));
                     hq.addToGold(-goldToSpend);
                     hq.addToFood(goldToSpend * 5);
                     logEntry.append(MyLists.commaAndJoin(this, GameCharacter::getName));

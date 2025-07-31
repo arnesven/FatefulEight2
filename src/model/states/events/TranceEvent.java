@@ -3,6 +3,7 @@ package model.states.events;
 import model.Model;
 import model.characters.GameCharacter;
 import model.classes.CharacterClass;
+import model.classes.Classes;
 import model.states.DailyEventState;
 import util.MyRandom;
 
@@ -27,7 +28,7 @@ public class TranceEvent extends DailyEventState {
             }
         }
 
-        if (trancer == null) {
+        if (trancer == null || !hasOtherClasses(trancer)) {
             model.getParty().randomPartyMemberSay(model, List.of("Well, that was a waste of time..."));
         } else {
             println(trancer.getName() + " has fallen into a trance!");
@@ -41,5 +42,14 @@ public class TranceEvent extends DailyEventState {
             change.areYouInterested(model);
         }
 
+    }
+
+    private boolean hasOtherClasses(GameCharacter trancer) {
+        for (CharacterClass cls : trancer.getClasses()) {
+            if (cls.id() != trancer.getCharClass().id()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -12,7 +12,8 @@ public class ParryAbilityHelpChapter extends SubChapterHelpDialog {
             "      4       20%\n" +
             "      5       30%\n" +
             "      6       40%\n" +
-            "      7+      50%\n";
+            "      7+      50%\n\n" +
+            "The character must be equipped with a Blade weapon to use this ability.";
 
     public ParryAbilityHelpChapter(GameView view) {
         super(view, "Parry", TEXT);

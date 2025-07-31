@@ -65,7 +65,7 @@ public class TransferResourceAction extends HeadquartersAction {
                 deposit = state.yesNoInput();
             }
             do {
-                state.print("How much " + getName().toLowerCase() + " would you like to " + (deposit ? "deposit" : "withdraw") + "?");
+                state.print("How much " + getName().toLowerCase() + " would you like to " + (deposit ? "deposit" : "withdraw") + "? ");
                 try {
                     int amount = Integer.parseInt(state.lineInput());
                     if (amount < 0) {
