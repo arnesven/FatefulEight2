@@ -83,9 +83,9 @@ public class PlainsHex extends WorldHex {
 
     @Override
     public WorldHex makePastSelf(Point position) {
-        if (super.getNumberOfBorderingRiver() == 1) {
+        if (super.getNumberOfBorderingRiver() == 1 && getLocation() == null) {
             return new PastSwampHex(getRivers(), getState());
-        } else if ((position.x * 199 + position.y * 53) % 4 == 0) {
+        } else if ((position.x * 199 + position.y * 53) % 4 == 0 && getLocation() == null) {
             return new PastWoodsLocation(getRivers(), getState());
         }
         return new PastPlainsHex(getRivers(), getState(), makePastLocation());

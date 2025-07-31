@@ -600,4 +600,8 @@ public class Model {
             gameData.party.setOnRoad(false);
         }
     }
+
+    public boolean isInOriginalWorld() {
+        return gameData.currentWorld == WorldType.original;
+    }
 }

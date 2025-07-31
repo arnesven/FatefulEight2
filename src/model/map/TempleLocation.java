@@ -112,4 +112,9 @@ public class TempleLocation extends HexLocation {
         return List.of(new DailyAction("Buy Rations", new BuyRationsState(model)),
                 new DailyAction("Training", new TrainingState(model)));
     }
+
+    @Override
+    public HexLocation makePastSelf() {
+        return this;
+    }
 }

@@ -3,6 +3,8 @@ package view;
 import control.FatefulEight;
 import model.Model;
 import model.map.World;
+import model.map.WorldBuilder;
+import model.map.WorldType;
 import model.map.objects.*;
 import util.Arithmetics;
 import view.help.SpecificTerrainHelpDialog;
@@ -165,7 +167,16 @@ public class FullMapView extends GameView {
                     model.transitionToDialog(new SimpleMessageView(model.getView(), "You have moved into the overworld."));
                     model.exitCaveSystem(false);
                 }
+            } else if (keyEvent.getKeyCode() == KeyEvent.VK_F11) {
+                if (model.isInOriginalWorld()) {
+                    model.goBetweenWorlds(WorldType.thePast, new Point(5, 5));
+                    model.transitionToDialog(new SimpleMessageView(model.getView(), "You have traveled to the past."));
+                } else {
+                    model.goBetweenWorlds(WorldType.original, WorldBuilder.CROSSROADS_INN_POSITION);
+                    model.transitionToDialog(new SimpleMessageView(model.getView(), "You have traveled back to the future."));
+                }
             }
+
         }
 
         return false;

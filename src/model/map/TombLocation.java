@@ -2,6 +2,7 @@ package model.map;
 
 import model.Model;
 import model.actions.DailyAction;
+import model.map.locations.AncientCityLocation;
 import model.states.ExploreTombState;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
@@ -85,5 +86,10 @@ public class TombLocation extends HexLocation {
         public ExploreTombDailyAction(Model model, String name) {
             super("Explore Tomb", new ExploreTombState(model, name));
         }
+    }
+
+    @Override
+    public HexLocation makePastSelf() {
+        return new AncientCityLocation(getName().replace("Tomb of ", ""));
     }
 }

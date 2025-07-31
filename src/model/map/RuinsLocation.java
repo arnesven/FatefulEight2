@@ -3,6 +3,7 @@ package model.map;
 import model.Model;
 import model.actions.DailyAction;
 import model.actions.ExploreRuinsDailyAction;
+import model.map.locations.AncientCityLocation;
 import sound.BackgroundMusic;
 import sound.ClientSoundManager;
 import util.MyPair;
@@ -79,5 +80,10 @@ public class RuinsLocation extends HexLocation {
     @Override
     public HelpDialog getHelpDialog(GameView view) {
         return new TutorialDungeons(view);
+    }
+
+    @Override
+    public HexLocation makePastSelf() {
+        return new AncientCityLocation(getName().replace("Ruins of ", ""));
     }
 }
