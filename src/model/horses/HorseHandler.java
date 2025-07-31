@@ -104,7 +104,7 @@ public class HorseHandler extends ArrayList<Horse> {
     }
 
     public void someHorsesRunAway(Model model) {
-        if (size() > 0) {
+        if (size() > 0) { // TODO: horses can find their way back to HQ?
             int times = size();
             for (int i = 0; i < times; ++i) {
                 if (MyRandom.flipCoin()) {

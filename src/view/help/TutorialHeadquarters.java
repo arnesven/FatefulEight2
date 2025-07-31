@@ -11,7 +11,7 @@ public class TutorialHeadquarters extends ExpandableHelpDialog {
     private static final String TEXT =
             "If you acquire real estate in a town or castle, the house will become the " +
             "headquarters for your party and replaces the 'Make Camp' action in town. " +
-            "Spending a night at your there will consume rations, but sleeping in real " +
+            "Spending a night there will consume rations, but sleeping in real " +
             "beds makes your party members recover stamina, just like staying at a tavern or inn.\n\n" +
             "At your headquarters you can store any amount of gold, rations, ingredients, materials and items. " +
             "You can also keep a number of horses and characters which you don't want in your party at the moment (see Sizes). " +

@@ -58,6 +58,13 @@ public class AncientStrongholdQuest extends MainQuest {
     protected void resetQuest() {
         super.resetQuest();
         getSuccessEndingNode().move(4, 0);
+        for (QuestScene scene : getScenes()) {
+            for (QuestSubScene subScene : scene) {
+                if (subScene instanceof StrongholdCombatSubScene) {
+                    ((StrongholdCombatSubScene) subScene).resetEnemiesFought();
+                }
+            }
+        }
     }
 
     @Override
@@ -156,6 +163,7 @@ public class AncientStrongholdQuest extends MainQuest {
         private final int floorNumber;
         private final QuestSubScene previous;
         private boolean pearlsFound = false;
+        private boolean enemiesFought = false;
 
         public StrongholdCombatSubScene(int col, int row, int floorNumber, QuestSubScene previous) {
             super(col, row);
@@ -173,25 +181,37 @@ public class AncientStrongholdQuest extends MainQuest {
             return floorNumberText(floorNumber) + " Floor";
         }
 
+        public void resetEnemiesFought() {
+            enemiesFought = false;
+        }
+
         @Override
         public QuestEdge run(Model model, QuestState state) {
             if (MyRandom.flipCoin()) {
                 boolean surprise = MyRandom.flipCoin();
                 state.print("The party encounters a group of enemies! ");
                 if (surprise) {
-                    state.print(" They seem to have been caught off guard by your presence! ");
+                    state.print("They seem to have been caught off guard by your presence! ");
                 }
-                state.print("Press enter to continue.");
-                state.waitForReturn();
-                AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
-                CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
-                        state.getCombatTheme(), true, surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
-                combat.addExtraLoot(enemySet.getPearls());
-                combat.run(model);
-                if (!model.getParty().isWipedOut()) {
-                    state.transitionToQuestView(model);
-                } else {
-                    return new QuestEdge(state.getQuest().getFailEndingNode());
+                boolean skipCombat = false;
+                if (enemiesFought) {
+                    state.print("They are actively avoiding you. Do you want to attack them? (Y/N) ");
+                    skipCombat = !state.yesNoInput();
+                }
+                if (!skipCombat) {
+                    state.print("Press enter to continue.");
+                    enemiesFought = true;
+                    state.waitForReturn();
+                    AncientStrongholdEnemySet enemySet = new AncientStrongholdEnemySet(floorNumber);
+                    CombatEvent combat = new CombatEvent(model, enemySet.getEnemies(),
+                            state.getCombatTheme(), true, surprise ? CombatAdvantage.Party : CombatAdvantage.Neither);
+                    combat.addExtraLoot(enemySet.getPearls());
+                    combat.run(model);
+                    if (!model.getParty().isWipedOut()) {
+                        state.transitionToQuestView(model);
+                    } else {
+                        return new QuestEdge(state.getQuest().getFailEndingNode());
+                    }
                 }
             } else if (!pearlsFound) {
                 MyPair<SkillCheckResult, GameCharacter> result = state.doPassiveSkillCheck(Skill.Perception, 8);
