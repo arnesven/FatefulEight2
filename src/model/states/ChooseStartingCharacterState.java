@@ -16,6 +16,8 @@ import java.util.List;
 
 public class ChooseStartingCharacterState extends GameState {
 
+    private CharacterCreationView charCreation = null;
+
     public ChooseStartingCharacterState(Model model) {
         super(model);
     }
@@ -123,7 +125,9 @@ public class ChooseStartingCharacterState extends GameState {
     }
 
     private GameCharacter characterCreation(Model model) {
-        CharacterCreationView charCreation = new CharacterCreationView(model.getView());
+        if (charCreation == null) {
+            this.charCreation = new CharacterCreationView(model.getView());
+        }
         while (true) {
             model.transitionToDialog(charCreation);
             print(" ");
