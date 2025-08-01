@@ -77,6 +77,10 @@ public abstract class AdvancedDailyActionState extends GameState {
             model.getTutorial().theInn(model);
             waitForReturnSilently();
             daily = matrix.getSelectedElement();
+            model.handleCastSpells();
+            if (model.getSubView() != subView) {
+                CollapsingTransition.transition(model, subView);
+            }
             if (daily.canBeDoneRightNow(this, model)) {
                 Point destination = new Point(matrix.getSelectedPoint());
                 subView.animateMovement(model, new Point(currentPosition.x, currentPosition.y), destination);

@@ -294,7 +294,7 @@ public class Model {
         }
     }
 
-    private void handleCastSpells() {
+    public void handleCastSpells() {
         while (!spellHandler.isEmpty()) {
             MyPair<Spell, GameCharacter> spellAndChar = spellHandler.getCastSpell();
             spellAndChar.first.castYourself(this, state, spellAndChar.second);
