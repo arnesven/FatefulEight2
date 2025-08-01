@@ -181,7 +181,7 @@ public class TravelState extends GameState {
             if (model.getParty().hasHorses()) {
                 extra = "(You will have to leave your horses behind)";
             }
-            print("You have " + broomStr + ", do you wish to attempt to fly? " + extra + " (Y/N) ");
+            print("You have " + broomStr + ", do you wish to attempt to fly? " + extra + "(Y/N) ");
             boolean choice = yesNoInput();
             if (choice) {
                 model.getParty().getHorseHandler().abandonHorses(model);
