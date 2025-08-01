@@ -182,7 +182,12 @@ public class VampiresLairQuest extends MainQuest {
             state.printQuote("Caid", "Wow, that's a lot of thralls, and they're coming straight for us. " +
                     "I really don't want to hurt them but it seems like we won't even be able to take a swing at " +
                     "the vampire before we cut some of them down.");
-            return super.run(model, state);
+            QuestEdge toReturn = super.run(model, state);
+            if (caidCharacter.isDead()) {
+                state.leaderSay("Caid... He is dead. We better get out of here while we still can.");
+                return getFailEdge();
+            }
+            return toReturn;
         }
 
         @Override

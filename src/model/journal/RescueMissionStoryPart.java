@@ -5,10 +5,7 @@ import model.characters.GameCharacter;
 import model.characters.appearance.AdvancedAppearance;
 import model.classes.Classes;
 import model.mainstory.VisitLordEvent;
-import model.map.CastleLocation;
-import model.map.MountainHex;
-import model.map.TownLocation;
-import model.map.UrbanLocation;
+import model.map.*;
 import model.quests.Quest;
 import model.quests.RescueMissionQuest;
 import model.quests.SpecialDeliveryQuest;
@@ -73,12 +70,12 @@ public class RescueMissionStoryPart extends StoryPart {
     }
 
     private boolean giveCaidQuest(Model model) {
-        return model.getCurrentHex() instanceof MountainHex &&
+        return model.getCurrentHex().getLocation() != null &&
+                model.getCurrentHex().getLocation() instanceof MountainLocation &&
                 internalStep >= COMPLETED &&
                 !model.getMainStory().isCaidQuestDone() &&
-                (caidQuestPosition == null ||
-                        (caidQuestPosition.x == model.getParty().getPosition().x &&
-                         caidQuestPosition.y == model.getParty().getPosition().y))
+                !model.getMainStory().getCaidCharacter().isDead() &&
+                (caidQuestPosition == null || model.partyIsInOverworldPosition(caidQuestPosition))
                 && !model.getMainStory().isFugitive();
     }
 

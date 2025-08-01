@@ -576,7 +576,8 @@ public class Model {
     }
 
     public boolean partyIsInOverworldPosition(Point position) {
-        return !gameData.inUnderworld && position.equals(getParty().getPosition());
+        return gameData.currentWorld == WorldType.original &&
+                !gameData.inUnderworld && position.equals(getParty().getPosition());
     }
 
     public void setStartingPosition(Point position) {
