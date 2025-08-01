@@ -10,6 +10,8 @@ import model.items.weapons.Lute;
 import model.states.CombatEvent;
 import sound.SoundEffects;
 
+import java.util.List;
+
 public class BalladCombatAction extends InspireCombatAction {
     @Override
     public String getName() {
@@ -22,6 +24,13 @@ public class BalladCombatAction extends InspireCombatAction {
         return model.getParty().doSkillCheckWithReRoll(model, combat, performer,
                 Skill.Entertain, 8, 0, 1);
     }
+
+
+//    @Override // TODO: Add this below. (save breaking)
+//    @Override
+//    public List<Skill> getLinkedSkills() {
+//        return List.of(Skill.Entertain);
+//    }
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {

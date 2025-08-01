@@ -271,7 +271,8 @@ public class MainStory implements Serializable {
     }
 
     public boolean isCompleted(Model model) {
-        return getQuest(AncientStrongholdQuest.QUEST_NAME).isCompleted(model);
+        return false; // TODO: Update when done.
+        //return getQuest(AncientStrongholdQuest.QUEST_NAME).isCompleted(model);
     }
 
     public boolean isFugitive() {
@@ -297,7 +298,8 @@ public class MainStory implements Serializable {
     public List<MyPair<String, String>> getFactionStrings() {
         List<MyPair<String, String>> result = new ArrayList<>();
         if (isFugitive()) {
-            result.add(new MyPair<>(spawnData.getCastle(), "Persona Non Grata"));
+            result.add(new MyPair<>(CastleLocation.placeNameToKingdom(spawnData.getCastle()),
+                    "Persona Non Grata"));
         }
         for (StoryPart sp : storyParts) {
             sp.addFactionStrings(result);

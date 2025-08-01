@@ -4,6 +4,8 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
+import java.awt.*;
+
 public class OrcBoarRiderEnemy extends OrcWarrior {
 
     private static final Sprite SPRITE = new MountedOrcWarriorSprite();
@@ -26,6 +28,11 @@ public class OrcBoarRiderEnemy extends OrcWarrior {
     @Override
     protected int getHeight() {
         return 2;
+    }
+
+    @Override
+    public Point getCursorShift() {
+        return new Point(0, 3);
     }
 
     @Override
