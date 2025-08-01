@@ -9,7 +9,8 @@ public class TutorialQuickCasting extends SubChapterHelpDialog {
     private static final String TEXT = "A character with at least " +
             QuickCastPassiveCombatAction.MINIMUM_RANKS_REQUIRED + " ranks of Spell Casting can perform the " +
             "quick cast ability in combat. Quick Casting allows a character to take a special round at the " +
-            "beginning of combat in which a spell may be cast.";
+            "beginning of combat in which a spell may be cast.\n\n" +
+            "If the party is ambushed, Quick Casting is not available.";
 
     public TutorialQuickCasting(GameView view) {
         super(view, "Quick Casting", TEXT);

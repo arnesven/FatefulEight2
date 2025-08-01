@@ -93,9 +93,16 @@ public class SitInDungeonState extends GameState {
             leaderSay("I'd offer you some water... but, well I don't have any.");
             subView.portraitSay(model, this, "Yes, it seems my " + castle.getLordTitle() +
                     "'s hospitality has taken a bit of a downward turn. It saddens me greatly.");
-            leaderSay("Who are you?");
-            subView.portraitSay(model, this, "My name is Damal. I've been an advisor to the " +
-                    castle.getLordTitle() + " for a good fifteen years. Up until a few days ago that is.");
+            if (model.getParty().getPartyMembers().contains(model.getMainStory().getCaidCharacter())) {
+                partyMemberSay(model.getMainStory().getCaidCharacter(),
+                        "Why, it's Damal. He's an advisor to the " + castle.getLordTitle() +
+                                ". He's been at the court almost as long as I have.");
+                subView.portraitSay(model, this, "That's right. But I'm an advisor no more.");
+            } else {
+                leaderSay("Who are you?");
+                subView.portraitSay(model, this, "My name is Damal. I've been an advisor to the " +
+                        castle.getLordTitle() + " for a good fifteen years. Up until a few days ago that is.");
+            }
             leaderSay("You fell out of the lord's favor?");
             subView.portraitSay(model, this, "I'll say. We were good friends too. But then, all of a " +
                     "sudden I was arrested, for seemingly no reason at all.");

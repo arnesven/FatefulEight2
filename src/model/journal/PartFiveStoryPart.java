@@ -152,9 +152,18 @@ public class PartFiveStoryPart extends StoryPart {
                     "swayed by the voices of serpents!");
             leaderSay("Who are you calling serpents? I don't like the sound of this.");
             portraitSay("But no more! I have decided to turn the tables on this evil!");
-            leaderSay("My lord! It is true what you say about the attacks in the border lands, we must...");
+            leaderSay("My lord! If it is true what you say about the attacks in the border lands, we must...");
             portraitSay("We must nothing! Least not anything which you would advise. Guards, arrest these " +
                     "jackals!");
+            if (model.getParty().getPartyMembers().contains(model.getMainStory().getCaidCharacter())) {
+                partyMemberSay(model.getMainStory().getCaidCharacter(),
+                        "Arrest us? My Lord! I've been nothing but loyal to you all my life. And so have these adventurers!");
+                portraitSay("I'm sorry Caid, but you seem to be in league with these traitors.");
+            }
+            if (model.getParty().getPartyMembers().contains(model.getMainStory().getWillisCharacter())) {
+                partyMemberSay(model.getMainStory().getWillisCharacter(),
+                        "This is madness! We've done nothing wrong.");
+            }
             leaderSay("This is some kind of misunderstanding! We're innocent!");
             portraitSay("Lock them in the dungeons!");
             println("Before you can reach for your weapons the " + castle.getLordTitle() + "'s guards seize you " +
@@ -186,7 +195,7 @@ public class PartFiveStoryPart extends StoryPart {
                     (Item it) -> !getsToKeep(it));
             model.getLog().addAnimated(LogView.GOLD_COLOR + "Your belongings have been taken from you!\n" + LogView.DEFAULT_COLOR);
             EscapeTheDungeonQuest q = (EscapeTheDungeonQuest)getQuestAndSetPortrait(EscapeTheDungeonQuest.QUEST_NAME,
-                    new SilhouetteAppearance(), "Yourself");
+                    model.getParty().getLeader().getAppearance(), "Yourself");
             q.setLootRewardItems(belongings,
                     model.getParty().getGold(),
                     model.getParty().getObols(),

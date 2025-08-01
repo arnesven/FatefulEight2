@@ -111,7 +111,9 @@ public class CombatEvent extends DailyEventState {
             setFormation(model);
         }
         combatStats.startCombat(enemies, participants, allies);
-        runQuickCastTurns(model);
+        if (advantage != CombatAdvantage.Enemies) {
+            runQuickCastTurns(model);
+        }
         runCombatLoop(model);
         model.getLog().waitForAnimationToFinish();
         handleLootAndSummary(model);

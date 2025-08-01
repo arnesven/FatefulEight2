@@ -29,11 +29,11 @@ public abstract class SummonTask extends DailyEventState {
             leaderSay("It seems this new house is smaller than our old one.");
             portraitSay("Yes, you are right. Some of your friends and horses would not fit in the new house.");
         }
-        print("Sell your old home and transfer any belongings, characters and horses to the new one? ");
+        print("Sell your old home and transfer any belongings, characters and horses to the new one? (Y/N) ");
         if (yesNoInput()) {
             leaderSay("Alright, let's do it.");
             portraitSay("Good. I'll make all the arrangements. Consider your former residence sold.");
-            print(location.getLordName() + " hands you " + sellPrice + " gold.");
+            println(location.getLordName() + " hands you " + sellPrice + " gold.");
             model.getParty().addToGold(sellPrice);
             current.transferTo(hq);
             return true;
