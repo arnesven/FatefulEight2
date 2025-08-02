@@ -10,6 +10,7 @@ import model.combat.abilities.SpecialAbilityCombatAction;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
+import model.states.GameState;
 import view.MyColors;
 import view.help.HelpDialog;
 import view.help.TutorialRegenerate;
@@ -36,7 +37,11 @@ public class RegenerationCombatAction extends SpecialAbilityCombatAction impleme
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().regenerate(model);
         SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE);
-        combat.println(performer.getFirstName() + " attempts Regenerate on " + target.getName() + ", " +
+        String targetString = target.getName();
+        if (performer == target) {
+            targetString = GameState.himOrHer(performer.getGender()) + "self";
+        }
+        combat.println(performer.getFirstName() + " attempts Regenerate on " + targetString + ", " +
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
         if (result.getModifiedRoll() < DIFFICULTY || target.hasCondition(RegenerationCondition.class)) {
             combat.println("But it failed.");

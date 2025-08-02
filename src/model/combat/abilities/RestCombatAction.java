@@ -20,6 +20,7 @@ import view.sprites.RunOnceAnimationSprite;
 import java.util.List;
 
 public class RestCombatAction extends SpecialAbilityCombatAction {
+    public static final int LEVEL_REQUIRED = 3;
     private boolean another;
 
     public RestCombatAction() {
@@ -35,9 +36,7 @@ public class RestCombatAction extends SpecialAbilityCombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().combatResting(model);
-        boolean fullHP = performer.getHP() == performer.getMaxHP();
-        boolean fullSP = performer.getSP() == performer.getMaxSP();
-        if (fullHP && fullSP && !performer.hasCondition(FatigueCondition.class)) {
+        if (isFullyRested(performer)) {
             combat.println(performer.getFirstName() + " is already fully rested!");
             this.another = true;
             return;
@@ -46,9 +45,9 @@ public class RestCombatAction extends SpecialAbilityCombatAction {
         RunOnceAnimationSprite restAni = new CurlySpiralAnimation(MyColors.WHITE);
         combat.addSpecialEffect(performer, restAni);
         combat.waitUntil(restAni, RunOnceAnimationSprite::isDone);
-        if (fullHP) {
+        if (performer.getHP() == performer.getMaxHP()) {
             recoverSP(combat, performer);
-        } else if (fullSP) {
+        } else if (performer.getSP() == performer.getMaxSP()) {
             recoverHP(combat, performer);
         } else {
             if (MyRandom.flipCoin()) {
@@ -65,6 +64,12 @@ public class RestCombatAction extends SpecialAbilityCombatAction {
                 performer.removeCondition(FatigueCondition.class);
             }
         }
+    }
+
+    public static boolean isFullyRested(GameCharacter performer) {
+        boolean fullHP = performer.getHP() == performer.getMaxHP();
+        boolean fullSP = performer.getSP() == performer.getMaxSP();
+        return fullHP && fullSP && !performer.hasCondition(FatigueCondition.class);
     }
 
     private void recoverHP(CombatEvent combat, GameCharacter performer) {
@@ -89,7 +94,7 @@ public class RestCombatAction extends SpecialAbilityCombatAction {
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {
-        return performer.getLevel() >= 3;
+        return performer.getLevel() >= LEVEL_REQUIRED;
     }
 
     @Override

@@ -16,7 +16,7 @@ import view.help.HelpDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbilityCombatAction extends CombatAction {
+public final class AbilityCombatAction extends CombatAction {
     private final GameCharacter performer;
     private final Combatant target;
 

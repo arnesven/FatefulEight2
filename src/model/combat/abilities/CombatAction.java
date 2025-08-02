@@ -1,8 +1,6 @@
 package model.combat.abilities;
 
-import model.GameStatistics;
 import model.Model;
-import model.actions.BasicCombatAction;
 import model.actions.EquipItemCombatAction;
 import model.actions.ItemCombatAction;
 import model.actions.SpellCombatAction;
@@ -17,11 +15,7 @@ import model.items.spells.AuxiliarySpell;
 import model.items.spells.CombatSpell;
 import model.items.spells.Spell;
 import model.states.CombatEvent;
-import sprites.CombatSpeechBubble;
-import util.MyLists;
-import util.MyRandom;
 import view.help.HelpDialog;
-import view.subviews.CombatSubView;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -98,20 +92,10 @@ public abstract class CombatAction {
     public static List<CombatAction> getCombatActions(Model model, GameCharacter character, Combatant target, CombatEvent combatEvent) {
         List<CombatAction> result = new ArrayList<>();
         if (character.canAttackInCombat() && target.canBeAttackedBy(character) && !combatEvent.isInQuickCast()) {
-            result.add(new BasicCombatAction("Attack", true, !character.getEquipment().getWeapon().isRangedAttack()) {
-                @Override
-                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    performer.performAttack(model, combat, target);
-                }
-            });
+            result.add(new AttackCombatAction(!character.getEquipment().getWeapon().isRangedAttack()));
         }
         if (character.isLeader() && combatEvent.fleeingEnabled() && !combatEvent.isInQuickCast()) {
-            result.add(new BasicCombatAction("Flee", false, false) {
-                @Override
-                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    performFleeFromBattle(model, combat, performer);
-                }
-            });
+            result.add(new FleeCombatAction());
         }
 
         if (character == target && !combatEvent.isInQuickCast()) {
@@ -141,26 +125,11 @@ public abstract class CombatAction {
         }
 
         if (combatEvent.canDelay(character)  && !combatEvent.isInQuickCast()) {
-            result.add(new BasicCombatAction("Delay", false, false) {
-                @Override
-                protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                    combat.delayCombatant(performer);
-                }
-            });
+            result.add(new DelayCombatAction());
         }
 
-        result.add(new BasicCombatAction("Pass", false, false) {
-            @Override
-            protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-                combat.println("");
-            }
-        });
-        result.add(new BasicCombatAction("Auto", false, false) {
-            @Override
-            protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
-
-            }
-        });
+        result.add(new PassCombatAction());
+        result.add(new AutomaticCombatAction());
         for (Condition cond : character.getConditions()) {
             cond.manipulateCombatActions(result);
         }
@@ -179,39 +148,4 @@ public abstract class CombatAction {
         return result;
     }
 
-    private static void performFleeFromBattle(Model model, CombatEvent combatEvent, GameCharacter character) {
-        boolean fleeSuccess = false;
-        if (model.getParty().size() > 1) {
-            SkillCheckResult result = character.testSkill(model, Skill.Leadership,
-                    3 + model.getParty().size() - model.getParty().getBench().size());
-            combatEvent.println("Trying to escape from combat (Leadership " + result.asString() + ").");
-            if (result.isSuccessful()) {
-                combatEvent.leaderSay(MyRandom.sample(List.of("Retreat!", "Fall back!", "Let's get out of here!",
-                        "They're too strong, let's go!", "There's no point, let's get out of here.")));
-                combatEvent.addSpecialEffect(model.getParty().getLeader(), new CombatSpeechBubble());
-                fleeSuccess = true;
-            }
-        } else {
-            int d10 = MyRandom.rollD10();
-            combatEvent.print("Trying to escape from combat (D10 roll=" + d10 + ")");
-            if (d10 >= 5) {
-                combatEvent.println(" >=5, SUCCESS.");
-                combatEvent.leaderSay("I'm out of here.");
-                combatEvent.addSpecialEffect(model.getParty().getLeader(), new CombatSpeechBubble());
-                fleeSuccess = true;
-            } else {
-                combatEvent.println(" <5 FAIL. Can't get away!");
-            }
-        }
-        if (fleeSuccess) {
-            GameStatistics.incrementCombatsFled();
-            if (model.getSubView() instanceof CombatSubView) {
-                ((CombatSubView)model.getSubView()).enableFleeingAnimation();
-            }
-            combatEvent.setPartyFled(true);
-            for (GameCharacter gc : new ArrayList<>(combatEvent.getAllies())) {
-                combatEvent.removeAlly(gc);
-            }
-        }
-    }
 }

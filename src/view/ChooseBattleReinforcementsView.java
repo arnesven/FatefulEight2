@@ -64,7 +64,7 @@ public class ChooseBattleReinforcementsView extends SelectableListMenu {
 
                 BorderFrame.drawCentered(model.getScreenHandler(), "Select one unit type to", y++, MyColors.WHITE, MyColors.BLUE);
                 BorderFrame.drawCentered(model.getScreenHandler(), "reinforce with high priority", y++, MyColors.WHITE, MyColors.BLUE);
-                BorderFrame.drawCentered(model.getScreenHandler(), "and one with low priority", y++, MyColors.WHITE, MyColors.BLUE);
+                BorderFrame.drawCentered(model.getScreenHandler(), "and one with medium priority", y++, MyColors.WHITE, MyColors.BLUE);
 
                 y += 2;
                 for (BattleUnit bu : unitCounts.keySet()) {

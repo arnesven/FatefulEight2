@@ -403,7 +403,6 @@ public class Party implements Serializable {
                 : gc.getEquipment().getAccessory().getExperienceFactor();
         xp = (int)Math.round(xp * factor);
         GameStatistics.incrementTotalXP(xp);
-        System.out.println(gc.getName() + " got " + xp + " XP.");
         model.getTutorial().attributes(model);
         boolean levelUp = false;
         if (gc.getXpToNextLevel() <= xp) {

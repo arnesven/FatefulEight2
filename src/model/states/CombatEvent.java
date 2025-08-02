@@ -4,6 +4,7 @@ import model.GameStatistics;
 import model.characters.PersonalityTrait;
 import model.combat.abilities.AbilityCombatAction;
 import model.actions.QuickCastPassiveCombatAction;
+import model.combat.abilities.AutomaticCombatAction;
 import model.combat.abilities.SneakAttackCombatAction;
 import model.combat.abilities.CombatAction;
 import model.combat.CombatAdvantage;
@@ -64,6 +65,9 @@ public class CombatEvent extends DailyEventState {
     private MyPair<GameCharacter, Integer> flameWall = null;
     private boolean inQuickCast = false;
     private static int songCounter = 0;
+    private boolean autoCombat;
+    private final List<String> autoTranscript = new ArrayList<>();
+    private String transcriptTemporary = "";
 
     public CombatEvent(Model model, List<Enemy> startingEnemies, CombatTheme theme, boolean fleeingEnabled, CombatAdvantage advantage) {
         super(model);
@@ -131,7 +135,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private void runQuickCastTurns(Model model) {
-        subView.displaySplashMessage("QUICK CAST");
+        displaySplash("QUICK CAST");
         MyLists.forEach(
                 MyLists.filter(
                         MyLists.transform(
@@ -185,19 +189,31 @@ public class CombatEvent extends DailyEventState {
 
     private void handleLootAndSummary(Model model) {
         List<CombatLoot> combatLoot = null;
+        autoTranscript.add(transcriptTemporary);
+        if (!autoTranscript.isEmpty()) {
+            setAutoCombatEnabled(false);
+        }
         if (isWipedOut()) {
             print("You have been wiped out! ");
         } else if (partyFled) {
             print("You have have fled battle. ");
         } else if (roundCounter > timeLimit) {
             print("Combat has been interrupted. ");
-            subView.displaySplashMessage("INTERRUPT");
+            displaySplash("INTERRUPT");
         } else {
             println("You are victorious in battle!");
             combatLoot = combatStats.generateCombatLoot(model);
             combatLoot.addAll(extraLoot);
             combatStats.calculateStatistics(roundCounter-1);
             StripedTransition.transition(model, new CombatSummarySubView(combatStats, combatLoot));
+        }
+        if (!autoTranscript.isEmpty()) {
+            println("Do you want to add the automatic combat transcript to the log? (Y/N) ");
+            if (yesNoInput()) {
+                for (String s : autoTranscript) {
+                    println(s);
+                }
+            }
         }
 
         print("Press enter to continue.");
@@ -212,14 +228,16 @@ public class CombatEvent extends DailyEventState {
     }
 
     private void setFormation(Model model) {
-        selectingFormation = true;
         backMovers.clear();
-        combatMatrix.moveSelectedToParty();
-        subView.displaySplashMessage("FORMATION");
-        print("Use SPACE to toggle a character's formation. Press enter when you are done.");
-        getModel().getTutorial().combatFormation(getModel());
-        waitForReturn();
-        selectingFormation = false;
+        if (!autoCombat) {
+            selectingFormation = true;
+            combatMatrix.moveSelectedToParty();
+            displaySplash("FORMATION");
+            print("Use SPACE to toggle a character's formation. Press enter when you are done.");
+            getModel().getTutorial().combatFormation(getModel());
+            waitForReturn();
+            selectingFormation = false;
+        }
     }
 
     private boolean frontRowIsOverrun(Model model) {
@@ -227,7 +245,7 @@ public class CombatEvent extends DailyEventState {
     }
 
     private void doCombatRound(Model model) {
-        subView.displaySplashMessage("ROUND " + roundCounter);
+        displaySplash("ROUND " + roundCounter);
         for ( ; currentInit < initiativeOrder.size() && !combatDone(model) ; currentInit++) {
             Combatant turnTaker = initiativeOrder.get(currentInit);
             if (turnTaker instanceof Enemy) {
@@ -242,6 +260,7 @@ public class CombatEvent extends DailyEventState {
                     handleCharacterTurn(model, turnTaker, false);
                 }
             }
+            checkForAutoCombatStop(model);
         }
         if (!combatDone(model)) {
             handleSneakAttacks(model);
@@ -278,10 +297,18 @@ public class CombatEvent extends DailyEventState {
                 model.getTutorial().combatActions(model);
             }
             do {
-                waitToProceed();
+                if (autoCombat) {
+                    MyPair<CombatAction, Combatant> pair = AutomaticCombatAction.takeAutoCombatAction(model, this, character, isQuickCast);
+                    selectedCombatAction = pair.first;
+                    selectedTarget = pair.second;
+                } else {
+                    waitToProceed();
+                }
                 selectedCombatAction.executeCombatAction(model, this, character, selectedTarget);
                 if (!selectedCombatAction.takeAnotherAction()) {
                     break;
+                } else {
+                    System.out.println(selectedCombatAction.getName() + " cannot be done, player must choose something else.");
                 }
                 selectedCombatAction = null;
             } while (true);
@@ -317,7 +344,7 @@ public class CombatEvent extends DailyEventState {
         List<GameCharacter> back = new ArrayList<>();
         back.addAll(model.getParty().getBackRow());
         if (anyAlive(back) && frontRowIsOverrun(model)) {
-            subView.displaySplashMessage("OVERRUN!");
+            displaySplash("OVERRUN!");
             printAlert("Party overrun by enemies! All characters in back row are moved to front.");
             model.getLog().waitForAnimationToFinish();
             MyLists.forEach(back, (GameCharacter gc) -> toggleFormationFor(model, gc));
@@ -393,7 +420,11 @@ public class CombatEvent extends DailyEventState {
             if (!gc.isDead()) {
                 model.getParty().giveXP(model, gc, 5);
                 if (gc == killer) {
-                    model.getParty().giveXP(model, gc, combatStats.getKillsFor(killer)*5);
+                    int xpGained = combatStats.getKillsFor(killer)*5;
+                    if (autoCombat) {
+                        println(killer.getName() + " killed " + enemy.getName() + ", receiving " + xpGained + " XP.");
+                    }
+                    model.getParty().giveXP(model, gc, xpGained);
                 }
             }
         }
@@ -437,7 +468,7 @@ public class CombatEvent extends DailyEventState {
                 subView.addSpecialEffect(target, killAnimation);
             }
             destroyEnemy(getModel(), (Enemy)target, damager);
-            if (MyRandom.rollD10() > 5 && getModel().getParty().getPartyMembers().contains(damager)) {
+            if (!autoCombat && MyRandom.rollD10() > 5 && getModel().getParty().getPartyMembers().contains(damager)) {
                 getModel().getParty().partyMemberSay(getModel(), damager,
                         List.of("Vanquished!", "Destroyed!", "Don't mess with me.",
                                 "That one won't be bothering us any more.",
@@ -579,6 +610,9 @@ public class CombatEvent extends DailyEventState {
     }
 
     public void tookDamageTalk(GameCharacter gameCharacter, int damage) {
+        if (autoCombat) {
+            return;
+        }
         if (damage > 0 && gameCharacter.getHP() < 3) {
             partyMemberSay(gameCharacter, MyRandom.sample(List.of("I'm dying!",
                     "I need healing!", "I don't feel so good...", "I need aid!")));
@@ -720,4 +754,66 @@ public class CombatEvent extends DailyEventState {
         }
     }
 
+    public void setAutoCombatEnabled(boolean enabled) {
+        if (enabled) {
+            println("Automatic combat enabled.");
+        }
+        this.autoCombat = enabled;
+        if (getModel().getSettings().animateDieRollsEnabled() == autoCombat) {
+            getModel().getSettings().toggleAnimateDieRolls();
+        }
+        if (!autoCombat) {
+            println("Automatic combat disabled");
+        }
+    }
+
+
+    private void checkForAutoCombatStop(Model model) {
+        GameCharacter victim = MyLists.find(model.getParty().getPartyMembers(),
+                gc -> gc.getHP() < AutomaticCombatAction.STOP_IF_HP_FALLS_BELOW);
+        if (victim != null) {
+            setAutoCombatEnabled(false);
+            print(victim.getName());
+            if (victim.isDead()) {
+                printAlert(victim.getName() + " has been slain in combat!");
+            } else {
+                println(victim.getName() + " is below " + AutomaticCombatAction.STOP_IF_HP_FALLS_BELOW + " Health Points.");
+            }
+        }
+    }
+
+    @Override
+    public void println(String s) {
+        if (!autoCombat) {
+            super.println(s);
+        } else {
+            autoTranscript.add(transcriptTemporary + s);
+            transcriptTemporary = "";
+        }
+    }
+
+    @Override
+    public void print(String s) {
+        if (!autoCombat) {
+            super.print(s);
+        } else {
+            transcriptTemporary += s;
+        }
+    }
+
+    @Override
+    public void printAlert(String s) {
+        if (!autoCombat) {
+            super.printAlert(s);
+        } else {
+            autoTranscript.add(s);
+            transcriptTemporary = "";
+        }
+    }
+
+    private void displaySplash(String s) {
+        if (!autoCombat) {
+            subView.displaySplashMessage(s);
+        }
+    }
 }

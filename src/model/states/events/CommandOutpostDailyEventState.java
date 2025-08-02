@@ -25,6 +25,7 @@ import util.MyRandom;
 import view.ChooseBattleReinforcementsView;
 import view.ChooseStartingItemView;
 import view.MyColors;
+import view.sprites.DieRollAnimation;
 import view.subviews.PortraitSubView;
 
 import java.util.*;
@@ -230,7 +231,12 @@ public class CommandOutpostDailyEventState extends DailyEventState {
 
 
     public static void lootBattlefield(Model model, GameState state) {
-        for (GameCharacter gc : model.getParty().getPartyMembers()) {
+        DieRollAnimation.setAnimationBlocks(false);
+        for (int gci = 0; gci < model.getParty().size(); ++gci) {
+            if (gci == model.getParty().size() - 1) {
+                DieRollAnimation.setAnimationBlocks(true);
+            }
+            GameCharacter gc = model.getParty().getPartyMember(gci);
             SkillCheckResult result = gc.testSkill(model, Skill.Search);
             if (result.getModifiedRoll() < 5) {
                 state.println(gc.getName() + " finds nothing.");

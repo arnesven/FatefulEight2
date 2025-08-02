@@ -11,6 +11,7 @@ import model.combat.conditions.InvisibilityCondition;
 import model.items.weapons.StaffWeapon;
 import model.items.weapons.WandWeapon;
 import model.states.CombatEvent;
+import model.states.GameState;
 import view.help.HelpDialog;
 import view.help.TutorialInvisibility;
 import view.sprites.SmokeBallAnimation;
@@ -36,7 +37,11 @@ public class InvisibilityCombatAction extends SpecialAbilityCombatAction impleme
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         model.getTutorial().invisibility(model);
         SkillCheckResult result = performer.testSkill(model, SKILL_TO_USE);
-        combat.println(performer.getFirstName() + " attempts Invisibility on " + target.getName() + ", " +
+        String targetString = target.getName();
+        if (performer == target) {
+            targetString = GameState.himOrHer(performer.getGender()) + "self";
+        }
+        combat.println(performer.getFirstName() + " attempts Invisibility on " + targetString + ", " +
                 SKILL_TO_USE.getName() + " " + result.asString() + ".");
         if (result.getModifiedRoll() < DIFFICULTY || target.hasCondition(InvisibilityCondition.class)) {
             combat.println("But it failed.");

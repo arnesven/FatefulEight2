@@ -99,7 +99,7 @@ public class SpecificClassHelpDialog extends SubChapterHelpDialog {
                         oldRanks.put(s.getShortName(), rank);
                         newRanks.add(new MyPair<>(s, rank));
                         int finalLevel = level;
-                        newAbilities.addAll(MyLists.filter(skillAbilities,
+                        newAbilities.addAll(MyLists.filter(skillAbilities, // TODO: This shows Combat Prowess at the wrong level for some classes (e.g. Amazon)
                                 skiAb -> skiAb.getLinkedSkills().contains(s) &&
                                         (skiAb.getRequiredRanks() == rank || (finalLevel == 1 && skiAb.getRequiredRanks() <= rank))));
                     }

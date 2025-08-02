@@ -17,10 +17,14 @@ public class MountedEnemy extends Enemy {
         this.inner = innerEnemy;
         this.sprite = new RidingSprite(inner, HorseHandler.generateHorse());
         setCurrentHp(innerEnemy.getMaxHP());
+        setCurrentHp(getMaxHP());
     }
 
     @Override
     public int getMaxHP() {
+        if (inner == null) {
+            return 1;
+        }
         return inner.getMaxHP();
     }
 

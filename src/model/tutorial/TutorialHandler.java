@@ -672,6 +672,14 @@ public class TutorialHandler implements Serializable {
         });
     }
 
+    // TODO: Repair (breaks save), don't forget to fix call site in CombatAction.java.
+//    public void automaticCombat(Model model) {
+//        runOnce("autocombat", () -> {
+//            model.getLog().waitForAnimationToFinish();
+//            model.transitionToDialog(new TutorialAutoCombat(model.getView()));
+//        });
+//    }
+
     private interface TutorialStep {
         void doStep();
     }

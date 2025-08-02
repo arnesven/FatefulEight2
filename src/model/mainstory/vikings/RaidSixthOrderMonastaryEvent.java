@@ -6,6 +6,8 @@ import model.characters.PersonalityTrait;
 import model.characters.appearance.CharacterAppearance;
 import model.classes.Classes;
 import model.combat.CombatAdvantage;
+import model.combat.loot.CombatLoot;
+import model.combat.loot.PersonCombatLoot;
 import model.enemies.Enemy;
 import model.enemies.FormerPartyMemberEnemy;
 import model.items.Equipment;
@@ -120,7 +122,7 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
     private List<Enemy> makeMonkEnemies() {
         List<Enemy> enms = new ArrayList<>();
         for (int i = MyRandom.randInt(5, 10); i > 0; --i) {
-            enms.add(new FormerPartyMemberEnemy(makeMonk()));
+            enms.add(new MonkEnemy(makeMonk()));
         }
         return enms;
     }
@@ -135,5 +137,16 @@ public class RaidSixthOrderMonastaryEvent extends DailyEventState {
         GameCharacter monk = new GameCharacter("Sixth Monk", "", appearance.getRace(), Classes.PRI, appearance,
                 Classes.NO_OTHER_CLASSES, eq);
         return monk;
+    }
+
+    private class MonkEnemy extends FormerPartyMemberEnemy {
+        public MonkEnemy(GameCharacter gameCharacter) {
+            super(gameCharacter);
+        }
+
+        @Override
+        public CombatLoot getLoot(Model model) {
+            return new PersonCombatLoot(model);
+        }
     }
 }

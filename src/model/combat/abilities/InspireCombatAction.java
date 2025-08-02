@@ -10,9 +10,7 @@ import model.combat.conditions.Condition;
 import model.items.weapons.Lute;
 import model.states.CombatEvent;
 import util.MyRandom;
-import view.GameView;
 import view.MyColors;
-import view.help.ConditionHelpDialog;
 import view.help.HelpDialog;
 import view.help.TutorialInspire;
 import view.sprites.CharSprite;
@@ -71,8 +69,6 @@ public class InspireCombatAction extends SpecialAbilityCombatAction implements S
                 Skill.Leadership, 8, 0, isLeader);
     }
 
-    private static final Sprite SPRITE = CharSprite.make((char)(0xD8), MyColors.BLACK, MyColors.PINK, MyColors.CYAN);
-
     public Condition getCondition() {
         return new InspiredCondition(1);
     }
@@ -97,40 +93,4 @@ public class InspireCombatAction extends SpecialAbilityCombatAction implements S
         return LEADERSHIP_RANKS_REQUIREMENT;
     }
 
-    private static class InspiredCondition extends Condition {
-
-        private final int bonus;
-
-        public InspiredCondition(int bonus) {
-            super("Inspired", "INS");
-            setDuration(2);
-            this.bonus = bonus;
-        }
-
-        @Override
-        protected boolean noCombatTurn() {
-            return false;
-        }
-
-        @Override
-        public Sprite getSymbol() {
-            return SPRITE;
-        }
-
-        @Override
-        public int getAttackBonus() {
-            return bonus;
-        }
-
-        @Override
-        public ConditionHelpDialog getHelpView(GameView view) {
-            return new ConditionHelpDialog(view, this, "A condition indicated that this combatant is inspired, " +
-                    "thus enjoying a bonus to combat rolls.");
-        }
-
-        @Override
-        public boolean removeAtEndOfCombat() {
-            return true;
-        }
-    }
 }
