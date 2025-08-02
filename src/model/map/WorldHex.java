@@ -62,7 +62,6 @@ public abstract class WorldHex {
     public abstract String getTerrainName();
 
     public DailyEventState generateEvent(Model model) {
-        return new BatsEvent(model); /*
         DailyEventState tutorialEvent = model.getTutorial().getTutorialEvent(model);
         if (tutorialEvent != null) {
             return tutorialEvent;
@@ -87,7 +86,7 @@ public abstract class WorldHex {
         if (eventToReturn instanceof NoEventState) {
             eventToReturn = generatePartyEvent(model);
         }
-        return eventToReturn; */
+        return eventToReturn;
     }
 
     public DailyEventState generateEventFromDistance(Model model) {

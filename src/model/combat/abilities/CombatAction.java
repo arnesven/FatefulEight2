@@ -155,6 +155,12 @@ public abstract class CombatAction {
                 combat.println("");
             }
         });
+        result.add(new BasicCombatAction("Auto", false, false) {
+            @Override
+            protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
+
+            }
+        });
         for (Condition cond : character.getConditions()) {
             cond.manipulateCombatActions(result);
         }
