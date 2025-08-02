@@ -87,7 +87,10 @@ public class AbilityCombatAction extends CombatAction {
         return List.of(QuickCastPassiveCombatAction.getInstance(),
                 CelerityVampireAbility.getPassiveCombatAbility(),
                 ClawsVampireAbility.getPassiveCombatAbility(),
-                ParryAbility.getPassiveCombatAbility());
+                ParryAbility.getPassiveCombatAbility(),
+                CombatProwessAbility.getPassiveCombatAbility()
+                // list.add(new CombatProwess()); // Multiple attacks carries over to other enemies
+        );
     }
 
     public static List<PassiveCombatAction> getPassiveCombatActions(GameCharacter gc) {

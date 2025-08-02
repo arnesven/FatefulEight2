@@ -10,9 +10,7 @@ import model.characters.appearance.CharacterAppearance;
 import model.classes.CharacterClass;
 import model.classes.Skill;
 import model.classes.SkillCheckResult;
-import model.combat.abilities.DefendCombatAction;
-import model.combat.abilities.ParryAbility;
-import model.combat.abilities.RiposteCombatAction;
+import model.combat.abilities.*;
 import model.combat.conditions.*;
 import model.enemies.Enemy;
 import model.items.*;
@@ -214,7 +212,13 @@ public class GameCharacter extends Combatant {
         model.getTutorial().combatAttacks(model);
         for (int i = 0; i < equipment.getWeapon().getNumberOfAttacks(); i++) {
             if (target.isDead()) {
-                return;
+                if (CombatProwessAbility.checkForMultiTargetAttack(this) && !combatEvent.getEnemies().isEmpty()) {
+                    List<Enemy> others = MyLists.filter(combatEvent.getEnemies(), e -> e.canBeAttackedBy(this));
+                    target = MyRandom.sample(others);
+                    combatEvent.println(getName() + " also attacks " + target.getName() + ".");
+                } else {
+                    return;
+                }
             }
             doOneAttack(model, combatEvent, target, false, 0, equipment.getWeapon().getCriticalTarget());
             if (i < equipment.getWeapon().getNumberOfAttacks() - 1) {
