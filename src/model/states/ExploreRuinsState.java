@@ -5,10 +5,8 @@ import model.SteppingMatrix;
 import model.TimeOfDay;
 import model.characters.GameCharacter;
 import model.ruins.*;
-import model.ruins.objects.DungeonMonster;
-import model.ruins.objects.DungeonObject;
-import model.ruins.objects.StairsDown;
-import model.ruins.objects.StairsUp;
+import model.ruins.objects.*;
+import util.MyLists;
 import util.MyPair;
 import view.combat.CaveTheme;
 import view.combat.CombatTheme;
@@ -16,10 +14,8 @@ import view.combat.DungeonTheme;
 import view.subviews.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 public class ExploreRuinsState extends GameState {
 
@@ -79,12 +75,30 @@ public class ExploreRuinsState extends GameState {
             populateMatrix();
             if (matrix.getElementList().contains(selected)) {
                 matrix.setSelectedElement(selected);
+            } else if (selected instanceof DungeonDoor) {
+                setOtherDoorAsSelected(selected);
             }
         } while (!dungeonExited);
         model.setSubView(new DungeonStatsSubView(dungeon, dungeonType, visitedRooms.size(),
                 visitedLevels.size(), defeatedMonsters.size(), mapsFound.size()));
         print("Press enter to continue.");
         waitForReturn();
+    }
+
+    private void setOtherDoorAsSelected(DungeonObject selected) {
+        List<DungeonDoor> doors = MyLists.filter(MyLists.transform(MyLists.filter(matrix.getElementList(),
+                dobj -> dobj instanceof DungeonDoor),
+                dobj -> (DungeonDoor) dobj),
+                 door -> door.getLinkedDoor() != selected);
+        if (doors.isEmpty()) {
+            return;
+        }
+        doors.sort((o1, o2) -> {
+            int score1 = o1 instanceof OpenDoor ? 0 : 1;
+            int score2 = o2 instanceof OpenDoor ? 0 : 1;
+            return score1 - score2;
+        });
+        matrix.setSelectedElement(doors.getFirst());
     }
 
     private void populateMatrix() {
