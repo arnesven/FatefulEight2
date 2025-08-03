@@ -26,11 +26,10 @@ public class BalladCombatAction extends InspireCombatAction {
     }
 
 
-//    @Override // TODO: Add this below. (save breaking)
-//    @Override
-//    public List<Skill> getLinkedSkills() {
-//        return List.of(Skill.Entertain);
-//    }
+    @Override
+    public List<Skill> getLinkedSkills() {
+        return List.of(Skill.Entertain);
+    }
 
     @Override
     public boolean possessesAbility(Model model, GameCharacter performer) {

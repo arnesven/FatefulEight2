@@ -176,18 +176,6 @@ public class Inventory implements Serializable {
         return sets;
     }
 
-    public List<CombatSpell> getCombatSpells() { // TODO: Remove (breaks save)
-        List<CombatSpell> result = new ArrayList<>();
-        for (Spell sp : spells) {
-            if (sp instanceof CombatSpell) {
-                result.add((CombatSpell) sp);
-            }  else if (sp instanceof AuxiliarySpell && ((AuxiliarySpell)sp).canBeCastInCombat()) {
-                result.add(((AuxiliarySpell)sp).getCombatSpell());
-            }
-        }
-        return result;
-    }
-
     public int getIngredients() {
         return ingredients;
     }

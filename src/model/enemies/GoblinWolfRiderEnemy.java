@@ -5,13 +5,15 @@ import view.MyColors;
 import view.sprites.LoopingSprite;
 import view.sprites.Sprite;
 
+import java.awt.*;
+
 public class GoblinWolfRiderEnemy extends GoblinEnemy {
     private static final Sprite SPRITE = new GoblinWolfRiderEnemySprite();
 
     public GoblinWolfRiderEnemy(char a) {
         super(a, "Goblin Wolf Rider", new MeleeAttackBehavior());
     }
-// TODO: Fix cursor shift for this enemy (not right in y-axis)
+
     @Override
     public int getSpeed() {
         return 10;
@@ -35,6 +37,11 @@ public class GoblinWolfRiderEnemy extends GoblinEnemy {
     @Override
     protected int getHeight() {
         return 2;
+    }
+
+    @Override
+    public Point getCursorShift() {
+        return new Point(0, 3);
     }
 
     @Override

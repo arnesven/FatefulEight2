@@ -28,7 +28,7 @@ public class AutomaticCombatAction extends BasicCombatAction {
     @Override
     protected void doAction(Model model, CombatEvent combat, GameCharacter performer, Combatant target) {
         combat.print("Are you sure you want to enable automatic combat? (Y/N) ");
-        //model.getTutorial().automaticCombat(model); TODO: Repair
+        model.getTutorial().automaticCombat(model);
         if (!combat.yesNoInput()) {
             return;
         }

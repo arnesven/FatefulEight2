@@ -8,6 +8,7 @@ import model.items.PirateItem;
 import model.items.Prevalence;
 import model.states.CombatEvent;
 import util.MyPair;
+import util.MyRandom;
 import view.MyColors;
 import view.sprites.AvatarItemSprite;
 import view.sprites.ItemSprite;
@@ -69,10 +70,4 @@ public class Spyglass extends ShieldItem implements PirateItem {
     public Sprite getOnAvatarSprite(GameCharacter gameCharacter) {
         return SHIELD_SPRITES[gameCharacter.getCharClass().getWeaponShift(gameCharacter) + 1];
     }
-
-    // TODO: Feature
-//    @Override
-//    public void wielderWasAttackedBy(Enemy enemy, CombatEvent combatEvent) {
-//        // has a chance to break spyglass
-//    }
 }
