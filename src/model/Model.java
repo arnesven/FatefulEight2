@@ -605,4 +605,11 @@ public class Model {
     public boolean isInOriginalWorld() {
         return gameData.currentWorld == WorldType.original;
     }
+
+    public World getOriginalWorld() {
+        if (isInOriginalWorld()) {
+            return world;
+        }
+        return lastWorld;
+    }
 }

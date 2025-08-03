@@ -59,7 +59,8 @@ public class Equipment implements Serializable {
                 && person.getEquipment().getAccessory().isOffHandItem()) {
             return "Cannot equip a two-handed weapon while an off-hand item is equipped.";
         }
-        if (item instanceof ShieldItem && person.getEquipment().getWeapon().isTwoHanded()) {
+        if (item instanceof Accessory && ((Accessory) item).isOffHandItem() &&
+                person.getEquipment().getWeapon().isTwoHanded()) {
             return "Cannot equip an off-hand item while a two-handed weapon is equipped.";
         }
 

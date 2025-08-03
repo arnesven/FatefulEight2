@@ -8,6 +8,8 @@ import model.map.WorldType;
 import model.map.objects.*;
 import util.Arithmetics;
 import view.help.SpecificTerrainHelpDialog;
+import view.sprites.Animation;
+import view.sprites.AnimationManager;
 import view.widget.FullMapTopText;
 import view.widget.TopText;
 
@@ -46,6 +48,7 @@ public class FullMapView extends GameView {
 
     @Override
     public void transitionedTo(Model model) {
+        AnimationManager.synchAnimations();
         if (model.isInCaveSystem()) {
             worldToDraw = model.getCaveSystem();
         } else {

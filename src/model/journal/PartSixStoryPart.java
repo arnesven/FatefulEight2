@@ -109,7 +109,9 @@ public class PartSixStoryPart extends StoryPart {
         if (witchPoint.x == x && witchPoint.y == y && internalStep == 2) {
             model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
         }
-        if (internalStep > 2) {
+        if (allSupportTasksDone() && assaultPoint.x == x && assaultPoint.y == y) {
+            model.getScreenHandler().register(MAP_SPRITE.getName(), new Point(screenX, screenY), MAP_SPRITE, 1);
+        } else if (internalStep > 2) {
             for (DestinationTask dt : getAllSupportTasks()) {
                 if (!dt.isCompleted()) {
                     Point p = dt.getPosition();

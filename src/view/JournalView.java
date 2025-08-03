@@ -85,7 +85,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
 
     private void addSummons(Model model) {
         for (Map.Entry<String, Summon> entry : model.getParty().getSummons().entrySet()) {
-            UrbanLocation urb = model.getWorld().getUrbanLocationByPlaceName(entry.getKey());
+            UrbanLocation urb = model.getOriginalWorld().getUrbanLocationByPlaceName(entry.getKey());
             questsAndTasks.add(new SummonEntry(model, urb, entry.getValue()));
         }
     }
@@ -120,6 +120,9 @@ public class JournalView extends TwoPaneSelectableListMenu {
                         textColor, MyColors.BLUE);
             }
             if (je.getPosition(model) != null) {
+                if (!model.isInOriginalWorld()) {
+                    textColor = MyColors.GRAY;
+                }
                 BorderFrame.drawString(model.getScreenHandler(), "Press F3 to see in map.",
                         x+1, y + parts.length + 5, textColor, MyColors.BLUE);
             }
@@ -170,7 +173,7 @@ public class JournalView extends TwoPaneSelectableListMenu {
 
     @Override
     public void specificHandleEvent(KeyEvent keyEvent, Model model, int index) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_F3) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_F3 && model.isInOriginalWorld()) {
             if (!questsAndTasks.isEmpty()) {
                 Point position = questsAndTasks.get(index).getPosition(model);
                 this.nextView = new FullMapView(this, position);

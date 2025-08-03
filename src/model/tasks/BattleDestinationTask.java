@@ -51,7 +51,7 @@ public class BattleDestinationTask extends DestinationTask {
 
     @Override
     public boolean givesDailyAction(Model model) {
-        if (isCompleted() || isFailed(model)) {
+        if (isCompleted() || isFailed(model) || !model.isInOriginalWorld()) {
             return false;
         }
         CastleLocation castle = (CastleLocation) model.getWorld().getUrbanLocationByPlaceName(givenBy);
