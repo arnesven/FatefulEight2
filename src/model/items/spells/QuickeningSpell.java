@@ -5,6 +5,8 @@ import model.characters.GameCharacter;
 import model.combat.Combatant;
 import model.items.Item;
 import model.states.CombatEvent;
+import view.MyColors;
+import view.sprites.BlackSpellSprite;
 import view.sprites.ColorlessSpellSprite;
 import view.sprites.Sprite;
 import view.sprites.UpArrowAnimation;
@@ -12,10 +14,10 @@ import view.sprites.UpArrowAnimation;
 public class QuickeningSpell extends CombatSpell {
     public static final int SPEED_BONUS = 6;
     public static final String SPELL_NAME = "Quickening";
-    private static final Sprite SPRITE = new ColorlessSpellSprite(3, true);
+    private static final Sprite SPRITE = new BlackSpellSprite(8, true);
 
     public QuickeningSpell() {
-        super(SPELL_NAME, 14, COLORLESS, 7, 0, false);
+        super(SPELL_NAME, 14, MyColors.BLACK, 7, 0, false);
     }
 
     public static String getMagicExpertTips() {

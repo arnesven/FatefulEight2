@@ -273,11 +273,11 @@ public class ItemDeck extends ArrayList<Item> {
                 new PoisonGasSpell(),
                 new DrainLifeSpell(),
                 new BoneArmorSpell(),
+                new QuickeningSpell(),
                 // COLORLESS
                 new DispelSpell(),
                 new TransmuteSpell(),
                 new CombineSpell(),
-                new QuickeningSpell(),
                 new DragonTamingSpell(),
                 new ChannelingSpell(),
                 new ImbueWeaponSpell(),
