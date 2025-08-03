@@ -48,11 +48,6 @@ public class Scroll extends UsableItem {
         return "paper";
     }
 
-    @Override
-    public Prevalence getPrevalence() {
-        return Prevalence.rare;
-    }
-
     public String castFromMenu(Model model, GameCharacter gc) {
         String toReturn = spell.castFromMenu(model, gc);
         if (toReturn.contains("is casting")) {

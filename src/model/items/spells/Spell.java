@@ -55,6 +55,20 @@ public abstract class Spell extends Item {
     public abstract String getDescription();
 
     public boolean castYourself(Model model, GameState state, GameCharacter caster) {
+        boolean castResult = sufferDamageAndDoSkillCheck(model, state, caster);
+        if (castResult) {
+            GameStatistics.incrementSpellSuccesses();
+            state.println(getName() + " was successfully cast.");
+            SoundEffects.playSpellSuccess();
+            successfullyCastHook(model, state, caster);
+        } else {
+            state.println(getName() + " failed.");
+            SoundEffects.playSpellFail();
+        }
+        return castResult;
+    }
+
+    protected boolean sufferDamageAndDoSkillCheck(Model model, GameState state, GameCharacter caster) {
         GameStatistics.incrementSpellsAttempts();
         state.println(caster.getName() + " tries to cast " + getName() + "...");
         model.getTutorial().spells(model);
@@ -81,15 +95,6 @@ public abstract class Spell extends Item {
         int castingBonus = caster.getRankForSkill(Skill.SpellCasting);
         SkillCheckResult result = model.getParty().doSkillCheckWithReRoll(model, state, caster,
                 getSkillForColor(color), difficulty, getExperience(), castingBonus);
-        if (result.isSuccessful()) {
-            GameStatistics.incrementSpellSuccesses();
-            state.println(getName() + " was successfully cast.");
-            SoundEffects.playSpellSuccess();
-            successfullyCastHook(model, state, caster);
-        } else {
-            state.println(getName() + " failed.");
-            SoundEffects.playSpellFail();
-        }
         return result.isSuccessful();
     }
 
@@ -229,5 +234,9 @@ public abstract class Spell extends Item {
 
     public void triggerInterrupt(GameCharacter caster) {
         throw new SpellCastException(this, caster);
+    }
+
+    public boolean canExistsAsScroll() {
+        return true;
     }
 }

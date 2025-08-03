@@ -282,14 +282,17 @@ public class ItemDeck extends ArrayList<Item> {
                 new ChannelingSpell(),
                 new ImbueWeaponSpell(),
                 new TelekinesisSpell(),
-                new SummonShipSpell()
+                new SummonShipSpell(),
+                new ScrollMakingSpell()
                 );
     }
 
     public static List<Scroll> allScrolls() {
         List<Scroll> result = new ArrayList<>();
         for (Spell sp : allSpells()) {
-            result.add(new Scroll(sp));
+            if (sp.canExistsAsScroll()) {
+                result.add(new Scroll(sp));
+            }
         }
         return result;
     }
