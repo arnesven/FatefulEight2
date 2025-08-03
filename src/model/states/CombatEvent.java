@@ -189,8 +189,9 @@ public class CombatEvent extends DailyEventState {
 
     private void handleLootAndSummary(Model model) {
         List<CombatLoot> combatLoot = null;
-        autoTranscript.add(transcriptTemporary);
-        if (!autoTranscript.isEmpty()) {
+        boolean askAboutTranscript = false;
+        if (autoCombat) {
+            askAboutTranscript = true;
             setAutoCombatEnabled(false);
         }
         if (isWipedOut()) {
@@ -207,9 +208,10 @@ public class CombatEvent extends DailyEventState {
             combatStats.calculateStatistics(roundCounter-1);
             StripedTransition.transition(model, new CombatSummarySubView(combatStats, combatLoot));
         }
-        if (!autoTranscript.isEmpty()) {
+        if (askAboutTranscript) {
             println("Do you want to add the automatic combat transcript to the log? (Y/N) ");
             if (yesNoInput()) {
+                autoTranscript.add(transcriptTemporary);
                 for (String s : autoTranscript) {
                     println(s);
                 }
