@@ -2,6 +2,8 @@ package model.items.spells;
 
 import model.Model;
 import model.characters.GameCharacter;
+import model.classes.SkillCheckResult;
+import model.classes.SkillChecks;
 import model.items.Item;
 import model.items.Prevalence;
 import model.items.Scroll;
@@ -21,7 +23,7 @@ public class ScrollMakingSpell extends ImmediateSpell {
     private Spell selectedSpell;
 
     public ScrollMakingSpell() {
-        super(SPELL_NAME, 12, COLORLESS, 10, 3);
+        super(SPELL_NAME, 12, COLORLESS, 7, 3);
         selectedSpell = null;
     }
 
@@ -74,18 +76,21 @@ public class ScrollMakingSpell extends ImmediateSpell {
         boolean castSuccess = selectedSpell.sufferDamageAndDoSkillCheck(model, state, caster);
         model.getParty().getInventory().addToMaterials(-1);
         if (castSuccess) {
-            // TODO: Also pass a magic (ANY) test based on the spells cost.
-            Scroll scroll = new Scroll(selectedSpell);
-            state.println(caster.getName() + " grafted the effect of the spell onto some parchment. " +
-                    "A scroll was created, " + selectedSpell.getName() + " (" + scroll.getName() + "). " +
-                    "Used up 1 material.");
-            model.getParty().partyMemberSay(model, caster, List.of("Spectacular!",
-                            "The smell of this ink... it's intoxicating.", "A new scroll.",
-                            "This will come in handy.", "That's done. I'm satisfied."));
-            scroll.addYourself(model.getParty().getInventory());
-        } else {
-            state.println(caster.getName() + " failed to make the scroll and wasted 1 material in the process.");
+            SkillCheckResult secondCastResult = model.getParty().doSkillCheckWithReRoll(model, state, caster,
+                    Spell.getSkillForColor(selectedSpell.getColor()), 5 + selectedSpell.getCost() / 7, 0, 0);
+            if (secondCastResult.isSuccessful()) {
+                Scroll scroll = new Scroll(selectedSpell);
+                state.println(caster.getName() + " grafted the effect of the spell onto some parchment. " +
+                        "A scroll was created, " + selectedSpell.getName() + " (" + scroll.getName() + "). " +
+                        "Used up 1 material.");
+                model.getParty().partyMemberSay(model, caster, List.of("Spectacular!",
+                        "The smell of this ink... it's intoxicating.", "A new scroll.",
+                        "This will come in handy.", "That's done. I'm satisfied."));
+                scroll.addYourself(model.getParty().getInventory());
+                return;
+            }
         }
+        state.println(caster.getName() + " failed to make the scroll and wasted 1 material in the process.");
     }
 
     @Override
