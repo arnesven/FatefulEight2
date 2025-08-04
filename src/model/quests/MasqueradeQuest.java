@@ -51,7 +51,7 @@ public class MasqueradeQuest extends Quest {
     private static final Sprite PLANT = new Sprite32x32("plant", "world_foreground.png", 0x45,
             MyColors.DARK_GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.CYAN);
     private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
-            MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+            MyColors.GRAY, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
     private static final CharacterAppearance PORTRAIT = PortraitSubView.makeRandomPortrait(Classes.OFFICIAL);
 
     private static final List<QuestBackground> BG_SPRITES = makeBackground();

@@ -33,7 +33,9 @@ public class TownHallSubView extends DailyActionSubView {
     private static final Sprite THRONE = new Sprite32x32("throne", "world_foreground.png", 0x66,
             MyColors.DARK_BROWN, MyColors.GOLD, MyColors.RED, MyColors.CYAN);
     private static final Sprite WINDOW = new Sprite32x32("window", "world_foreground.png", 0x35,
-            MyColors.BLACK, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+            MyColors.GRAY, MyColors.BLACK, MyColors.GREEN, MyColors.CYAN);
+    private static final Sprite EVENING_WINDOW = new Sprite32x32("eveningwindow", "world_foreground.png", 0x35,
+            MyColors.GRAY, MyColors.BLACK, MyColors.DARK_GREEN, MyColors.DARK_BLUE);
     private final boolean drawLord;
 
     public TownHallSubView(AdvancedDailyActionState state, SteppingMatrix<DailyActionNode> matrix, boolean drawLord) {
@@ -69,10 +71,14 @@ public class TownHallSubView extends DailyActionSubView {
     }
 
     private void drawDecorations(Model model) {
-        drawForeground(model, 1, 0, WINDOW);
-        drawForeground(model, 3, 0, WINDOW); // TODO: If !drawLord, make evening window.
-        drawForeground(model, 4, 0, WINDOW);
-        drawForeground(model, 6, 0, WINDOW);
+        Sprite window = WINDOW;
+        if (!drawLord) {
+            window = EVENING_WINDOW;
+        }
+        drawForeground(model, 1, 0, window);
+        drawForeground(model, 3, 0, window); // TODO: If !drawLord, make evening window.
+        drawForeground(model, 4, 0, window);
+        drawForeground(model, 6, 0, window);
         drawForeground(model, 0, 1, PLANT);
         drawForeground(model, 7, 1, PLANT);
         drawForeground(model, 0, 6, PLANT);
