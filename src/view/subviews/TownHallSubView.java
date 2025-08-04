@@ -76,7 +76,7 @@ public class TownHallSubView extends DailyActionSubView {
             window = EVENING_WINDOW;
         }
         drawForeground(model, 1, 0, window);
-        drawForeground(model, 3, 0, window); // TODO: If !drawLord, make evening window.
+        drawForeground(model, 3, 0, window);
         drawForeground(model, 4, 0, window);
         drawForeground(model, 6, 0, window);
         drawForeground(model, 0, 1, PLANT);
