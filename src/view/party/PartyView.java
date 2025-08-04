@@ -253,37 +253,30 @@ public class PartyView extends SelectableListMenu {
                 newY += 3;
                 Weapon w = gc.getEquipment().getWeapon();
                 rightOfPortraitX -= 3;
+                int capSize = rightColumnX - xStart - 7;
                 if (!(w instanceof UnarmedCombatWeapon)) {
-                    newY++; // TODO: Cap these strings so they're not too long.
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString());
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getAttackString(w));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(w));
-                    String extra = w.getExtraText();
-                    if (extra.length() > rightColumnX - SubView.X_OFFSET) {
-                        extra = extra.substring(0, rightColumnX - SubView.X_OFFSET);
-                    }
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, extra);
+                    newY++;
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getSkill().getName().replace(" Weapons","") + " " + w.getDamageTableAsString()));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getAttackString(w)));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(w)));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText()));
                 } else {
                     newY++;
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, w.getExtraText());
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, w.getExtraText()));
                     newY+=3;
                 }
 
                 newY++;
-                print(model.getScreenHandler(), rightOfPortraitX, newY++, getArmorString(gc.getEquipment().getClothing(), true));
-                print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(gc.getEquipment().getClothing()));
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getArmorString(gc.getEquipment().getClothing(), true)));
+                print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(gc.getEquipment().getClothing())));
                 newY +=2;
 
                 Accessory accessory = gc.getEquipment().getAccessory();
                 if (accessory != null) {
                     newY++;
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getArmorString(accessory, false) + " " +  getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory));
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, getBonusesAsString(accessory));
-                    String extra = accessory.getExtraText();
-                    if (extra.length() > rightColumnX - SubView.X_OFFSET) {
-                        extra = extra.substring(0, rightColumnX - SubView.X_OFFSET);
-                    }
-                    print(model.getScreenHandler(), rightOfPortraitX, newY++, extra);
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getArmorString(accessory, false) + " " +  getSpeedString(accessory) + getHealthString(accessory) + getSPString(accessory)));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, getBonusesAsString(accessory)));
+                    print(model.getScreenHandler(), rightOfPortraitX, newY++, cap(capSize, accessory.getExtraText()));
                 } else {
                     newY++;
                 }
@@ -302,6 +295,13 @@ public class PartyView extends SelectableListMenu {
                 print(model.getScreenHandler(), rightColumnX, ++skillsEndRow, gc.getOtherClasses());
             }
         });
+    }
+
+    private String cap(int length, String s) {
+        if (s.length() < length) {
+            return s;
+        }
+        return s.substring(0, length);
     }
 
     private void drawEquipment(Model model, GameCharacter gc, int x, int y) {
