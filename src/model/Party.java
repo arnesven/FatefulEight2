@@ -16,6 +16,9 @@ import model.horses.DogHorse;
 import model.horses.HorseHandler;
 import model.items.*;
 import model.items.designs.CraftingDesign;
+import model.items.potions.HealthPotion;
+import model.items.potions.RejuvenationPotion;
+import model.items.potions.StaminaPotion;
 import model.items.potions.VampirismPotion;
 import model.items.spells.*;
 import model.map.DiscoveredRoute;
@@ -83,6 +86,10 @@ public class Party implements Serializable {
 
     public Party() {
         cursorSprites = makeCursorSprites();
+        Item p = new HealthPotion().makeHigherTierCopy(1);
+        p.addYourself(getInventory());
+        new RejuvenationPotion().makeHigherTierCopy(1).addYourself(getInventory());
+        new HealthPotion().makeHigherTierCopy(2).addYourself(getInventory());
     }
 
     public void setStartingPosition(Point position) {

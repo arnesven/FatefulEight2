@@ -28,11 +28,11 @@ public abstract class Potion extends UsableItem {
     static String getPotionPrefixForHigherTier(int tier) {
         switch (tier) {
             case 1:
-                return "Greater";
+                return "Large";
             case 2:
-                return "Superior";
+                return "Grand";
             case 3:
-                return "Premium";
+                return "Huge";
         }
         return "Extreme";
     }

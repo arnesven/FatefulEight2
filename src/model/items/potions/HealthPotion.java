@@ -16,6 +16,7 @@ public class HealthPotion extends Potion {
             new ItemSprite(12, 6, MyColors.WHITE, MyColors.DARK_RED),
             new ItemSprite(13, 6, MyColors.WHITE, MyColors.DARK_RED),
     };
+    private final int tier;
 
     private int healingAmount = 5;
     private final Sprite sprite;
@@ -23,10 +24,12 @@ public class HealthPotion extends Potion {
     public HealthPotion() {
         super("Health Potion", 10);
         sprite = SPRITE;
+        tier = 0;
     }
 
     protected HealthPotion(int tier) {
         super(getPotionPrefixForHigherTier(tier) + " Health Potion", ((tier*2)+1)*10);
+        this.tier = tier;
         healingAmount = 5 + tier*3;
         sprite = getHigherTierSprite(tier);
     }
@@ -43,8 +46,11 @@ public class HealthPotion extends Potion {
 
     @Override
     public Item copy() {
-        return new HealthPotion();
-    } // TODO: Fix so that tier is passed, for now alchemy cannot make these
+        if (tier == 0) {
+            return new HealthPotion();
+        }
+        return new HealthPotion(tier);
+    }
 
     @Override
     public String useYourself(Model model, GameCharacter gc) {

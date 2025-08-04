@@ -20,17 +20,20 @@ public class RejuvenationPotion extends Potion implements StaminaRecoveryItem {
             new ItemSprite(13, 6, MyColors.WHITE, MyColors.DARK_PURPLE),
     };
     private final Sprite sprite;
+    private final int tier;
     private int healAmount = 3;
 
     public RejuvenationPotion() {
         super("Rejuvenation Potion", 6);
         this.sprite = SPRITE;
+        tier = 0;
     }
 
     private RejuvenationPotion(int tier) {
-        super(getHigherTierPrefix(tier) + " Rejuvenation Potion", 10 * (tier*2 + 1));
+        super(getPotionPrefixForHigherTier(tier) + " Rejuvenation Potion", 10 * (tier*2 + 1));
         healAmount = 3 + tier*2;
         this.sprite = getHigherTierSprite(tier);
+        this.tier = tier;
     }
 
     @Override
@@ -45,7 +48,10 @@ public class RejuvenationPotion extends Potion implements StaminaRecoveryItem {
 
     @Override
     public Item copy() {
-        return new RejuvenationPotion();
+        if (tier == 0) {
+            return new RejuvenationPotion();
+        }
+        return new RejuvenationPotion(tier);
     }
 
     @Override
