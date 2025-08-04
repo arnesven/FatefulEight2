@@ -63,8 +63,8 @@ public class WoodsHex extends WorldHex {
             events.add(new SecretGardenEvent(model));
             events.add(new RareBirdEvent(model));
             events.add(new CampSiteEvent(model));
-            // TODO: LadyOfTheLakeEvent
-            // TODO: CentaurEvent
+            // FEATURE: LadyOfTheLakeEvent
+            // FEATURE: CentaurEvent
             return MyRandom.sample(events);
         }
         return new NoEventState(model);

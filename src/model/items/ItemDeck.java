@@ -306,16 +306,16 @@ public class ItemDeck extends ArrayList<Item> {
                 new SeaTravelBook(),
                 new ElfOriginBook(),
                 new GelatinousBlobBook());
-        // TODO: Travel Guide to the Four Kingdoms (info about ingredient/material prevalences, and more)
-        // TODO: Advanced Archery
-        // TODO: The Finer Points of Alchemy (useless)
-        // TODO: Grave Robber's Handbook (useful tips for dungeons)
-        // TODO: On the Tenacity of Dwarves (useless)
-        // TODO: On the Peculiarities of Half-Orcs (useless)
-        // TODO: On the Ingenuity of Halflings (useless)
-        // TODO: Horse Racing 101
-        // TODO: Runny Card Game for Dummies
-        // TODO: Battle Tactics Basics
+        // FEATURE: Travel Guide to the Four Kingdoms (info about ingredient/material prevalences, and more)
+        // FEATURE: Advanced Archery
+        // FEATURE: The Finer Points of Alchemy (useless)
+        // FEATURE: Grave Robber's Handbook (useful tips for dungeons)
+        // FEATURE: On the Tenacity of Dwarves (useless)
+        // FEATURE: On the Peculiarities of Half-Orcs (useless)
+        // FEATURE: On the Ingenuity of Halflings (useless)
+        // FEATURE: Horse Racing 101
+        // FEATURE: Runny Card Game for Dummies
+        // FEATURE: Battle Tactics Basics
     }
 
     public static List<Weapon> allWeapons() {

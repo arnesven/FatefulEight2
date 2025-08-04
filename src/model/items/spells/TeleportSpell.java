@@ -78,7 +78,7 @@ public class TeleportSpell extends ImmediateSpell {
     @Override
     protected void applyAuxiliaryEffect(Model model, GameState state, GameCharacter caster) {
         TeleportPosition tpPos = loadMarkedPosition(model);
-        if (tpPos != null) { // TODO: Add option: teleport to HQ.
+        if (tpPos != null) { // FEATURE: Add option: teleport to HQ.
             state.print("Do you want to return to your previously marked location (Y) or" +
                     " do you want to mark your current location (N)? ");
             if (state.yesNoInput()) {

@@ -45,7 +45,7 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
         model.getLog().waitForAnimationToFinish();
         showExplicitPortrait(model, ultimateAdversaryPortrait, "Ultimate Adversary");
         leaderSay("Uh-oh");
-        portraitSay("At last..."); // TODO: Add special dialog for Witch King
+        portraitSay("At last..."); // FEATURE: Add special dialog for Witch King
         leaderSay("Hey there... sorry... did we wake you up?");
         portraitSay("At last, some mortal fool has come to release me...");
         leaderSay("Actually we just thought there was some loot in here. We're not here to set you free.");
@@ -98,8 +98,8 @@ public class ConfrontUltimateAdversaryEvent extends DailyEventState {
             new SingleItemCombatLoot(new SwordOfVigor()).giveYourself(model.getParty());
             new SingleItemCombatLoot(new LightningJavelins()).giveYourself(model.getParty());
             new SingleItemCombatLoot(new AxeOfDismemberment()).giveYourself(model.getParty());
-            // TODO: Flail of fear
-            // TODO: Bow of True Shot
+            // FEATURE: Flail of fear
+            // FEATURE: Bow of True Shot
             FortressAtUtmostEdgeState.setFatueCleared(model);
             println(LogView.GOLD_COLOR + "Congratulations! You have defeated the Ultimate " +
                     "Adversary in the Fortress at the Utmost Edge!" + LogView.DEFAULT_COLOR);

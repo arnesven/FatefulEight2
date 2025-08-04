@@ -241,7 +241,7 @@ public class OrcsBattleEvent extends DailyEventState {
         for (int i = 0; i < 5; ++i) {
             result.add(units.remove(0));
         }
-        if (MyRandom.flipCoin()) { // TODO: Add more fun units, like War Chariot, Orc Champion, Goblin shaman, Rock Lobber
+        if (MyRandom.flipCoin()) { // FEATURE: Add more fun units, like War Chariot, Orc Champion, Goblin shaman, Rock Lobber
             result.add(new GoblinWolfRiderUnit(MyRandom.randInt(6, 12)));
         } else {
             result.add(new OrcBoarRiderUnit(MyRandom.randInt(5, 9)));

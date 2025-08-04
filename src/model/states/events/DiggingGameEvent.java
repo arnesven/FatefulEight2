@@ -101,7 +101,7 @@ public class DiggingGameEvent extends DailyEventState {
             leaderSay("Darn it...");
             printQuote("Farmer", "And now... the agreement was, dig up the rest of the boulders.");
             leaderSay("Fair enough.");
-            // TODO: Attack farmer, or just leave -> blacklisted?
+            // FEATURE: Attack farmer, or just leave -> blacklisted?
             boolean success = model.getParty().doCollectiveSkillCheck(model, this, Skill.Labor, 4);
             revealAllBoulders(matrix);
             println("You spend the rest of the day clearing the meadow from boulders.");

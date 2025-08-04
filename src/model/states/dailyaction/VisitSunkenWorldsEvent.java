@@ -199,7 +199,7 @@ public class VisitSunkenWorldsEvent extends DailyEventState {
     @Override
     protected GameState getEveningState(Model model) {
         if (allPassedOut) {
-            return new LodgingState(model, true); // TODO: Special evening state where you sleep on the floor, then wake up and can recruit a special character.
+            return new LodgingState(model, true); // FEATURE: Special evening state where you sleep on the floor, then wake up and can recruit a special character.
         }
         return new NoLodgingState(model, false);
     }

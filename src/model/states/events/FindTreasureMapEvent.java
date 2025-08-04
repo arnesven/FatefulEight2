@@ -30,7 +30,11 @@ public class FindTreasureMapEvent extends DailyEventState {
         state.println("You got a Mysterious Map!");
         MysteriousMap map = new MysteriousMap(model);
         model.getParty().getInventory().add(map);
-        model.getParty().addDestinationTask(map.getDestinationTask()); // TODO: Make sure this is added in all places where you can get a mysterious map!
+        addDestinationTask(model, map);
+    }
+
+    public static void addDestinationTask(Model model, MysteriousMap map) {
+        model.getParty().addDestinationTask(map.getDestinationTask());
     }
 
     private boolean hasTreasureMap(Model model) {

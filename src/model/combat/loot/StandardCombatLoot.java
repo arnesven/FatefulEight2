@@ -30,11 +30,7 @@ public class StandardCombatLoot extends CombatLoot {
         }
         gold = (int)Math.round(getGoldFactor(model) * gold);
         if (dieRoll >= 10) {
-            if (MyRandom.randInt(100) == 0) {
-                items.add(new MysteriousMap(model));
-            } else {
-                items.add(makeItem(model, 0.5));
-            }
+            items.add(makeItem(model, 0.5));
         }
     }
 

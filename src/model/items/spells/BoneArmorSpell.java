@@ -114,7 +114,7 @@ public class BoneArmorSpell extends CombatSpell {
 
         @Override
         public boolean hasSpecialAvatar() {
-            return false; // TODO: Make avatar for bone armor.
+            return false; // FEATURE: Make avatar for bone armor.
         }
 
         @Override

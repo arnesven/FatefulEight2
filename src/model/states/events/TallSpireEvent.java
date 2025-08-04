@@ -218,7 +218,7 @@ public class TallSpireEvent extends DailyEventState {
             if (dieRol < 5) {
                 return generateSpellQuestion(model, exploreRuinsState);
             }
-            // TODO: Add potion question
+            // FEATURE: Add potion question
             return generateBookQuestion(model, exploreRuinsState);
         }
 

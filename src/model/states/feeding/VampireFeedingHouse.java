@@ -279,7 +279,7 @@ public class VampireFeedingHouse {
             applyRaceSpecificEffect(model, state, vampire, victim);
             model.getLog().waitForAnimationToFinish();
             model.getParty().disableVampireLookFor(vampire);
-            // TODO: Progress vampires vampire condition extra
+            // FEATURE: Progress vampires vampire condition extra
             return true;
         }
         VampireFeedingHouse.this.setPortrait(null);

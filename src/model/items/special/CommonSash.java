@@ -22,7 +22,7 @@ public class CommonSash extends Accessory implements SocketedItem {
     private JewelryItem jewelry1 = null;
     private JewelryItem jewelry2 = null;
 
-    public CommonSash() { // TODO: This item is not in use... it needs to get a common super class with fashionable sash.
+    public CommonSash() { // FEATURE: This item is not in use... it needs to get a common super class with fashionable sash.
         super("Common Sash", 38);
     }
 

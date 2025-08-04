@@ -138,7 +138,7 @@ public class ConvinceVampireToLeaveTask extends SummonTask {
             randomSayIfPersonality(PersonalityTrait.gluttonous, List.of(), "I'm getting hungry.");
             leaderSay("Let's get out of here.");
             println("You walk away from the house and return to the " + location.getLordTitle() + ".");
-            // TODO: Give option to wait through the night, then catch the vampire while he/she is on the prowl.
+            // FEATURE: Give option to wait through the night, then catch the vampire while he/she is on the prowl.
             return false;
         }
         if (choice == 1) {

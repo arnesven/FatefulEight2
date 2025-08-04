@@ -30,7 +30,7 @@ public class SummonShipSpell extends ImmediateSpell {
 
     @Override
     protected boolean preCast(Model model, GameState state, GameCharacter caster) {
-        // TODO: Ask if you want to summon zeppelin
+        // FEATURE: Ask if you want to summon zeppelin
         if (!hexEmpty(model) || model.getCurrentHex().getRivers() == 0) {
             state.println(caster.getName() + " was attempting to cast Summon Ship, " +
                     "but the spell cannot be cast in the party's current location.");

@@ -6,6 +6,7 @@ import model.items.Inventory;
 import model.items.Item;
 import model.items.MysteriousMap;
 import model.items.UsableItem;
+import model.states.events.FindTreasureMapEvent;
 import util.MyRandom;
 
 import java.util.List;
@@ -46,7 +47,9 @@ public abstract class Parcel extends UsableItem {
                 return "The " + getName().toLowerCase() +
                         " contained nothing but some uninteresting pieces of parchment.";
             }
-            inner = new MysteriousMap(model);
+            MysteriousMap map = new MysteriousMap(model);
+            inner = map;
+            FindTreasureMapEvent.addDestinationTask(model, map);
         }
         inner.addYourself(model.getParty().getInventory());
         return "The " + getName().toLowerCase() + " contained " + inner.getName() + ".";

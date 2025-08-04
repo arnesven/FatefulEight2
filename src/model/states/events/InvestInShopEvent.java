@@ -93,7 +93,7 @@ public class InvestInShopEvent extends DailyEventState {
                 leaderSay("Very good. Keep up the good work.");
             }
         }
-        int choice = multipleOptionArrowMenu(model, 24, 24, List.of("Browse wares", "Leave shop")); // TODO: Invest more
+        int choice = multipleOptionArrowMenu(model, 24, 24, List.of("Browse wares", "Leave shop")); // FEATURE: Invest more
         if (choice == 0) {
             leaderSay("Can I buy something now?");
             portraitSay("Of course. I would give you a discount. But there really isn't any point, " +

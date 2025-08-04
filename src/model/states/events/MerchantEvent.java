@@ -14,6 +14,7 @@ import model.items.Item;
 import model.items.MysteriousMap;
 import model.items.clothing.PilgrimsCloak;
 import model.items.weapons.ShortSword;
+import model.states.GameState;
 import model.states.ShopState;
 import util.MyRandom;
 import view.subviews.PortraitSubView;
@@ -25,6 +26,7 @@ public class MerchantEvent extends GeneralInteractionEvent {
     private final boolean withIntro;
     private final CharacterAppearance apperance;
     private ArrayList<Item> items;
+    private MysteriousMap map;
 
     public MerchantEvent(Model model, boolean withIntro, CharacterAppearance app) {
         super(model, "Trade with", MyRandom.randInt(20, 100));
@@ -41,13 +43,24 @@ public class MerchantEvent extends GeneralInteractionEvent {
     protected boolean doIntroAndContinueWithEvent(Model model) {
         this.items = new ArrayList<>();
         items.addAll(model.getItemDeck().draw(6));
-        items.add(new MysteriousMap(model));
+        if (MyRandom.flipCoin()) {
+            this.map = new MysteriousMap(model);
+            items.add(map);
+        }
         if (withIntro) {
             println("The party encounters a large wagon with tons of wares stacked upon it. " +
                     "Beside it stands a plump character in fancy clothing.");
             showExplicitPortrait(model, apperance, "Merchant");
         }
         return true;
+    }
+
+    @Override
+    protected GameState doEndOfEventHook(Model model) {
+        if (map != null && model.getParty().getInventory().getAllItems().contains(map)) {
+            FindTreasureMapEvent.addDestinationTask(model, map);
+        }
+        return super.doEndOfEventHook(model);
     }
 
     @Override

@@ -103,7 +103,7 @@ public class Model {
             }
             state = getCurrentHex().getDailyActionState(this);
             System.out.println("Loading from file, setting state to " + state);
-            log.setContent(gameData.logContent); // TODO: Inn moved to starting location when restarting game.
+            log.setContent(gameData.logContent);
             SoundEffects.gameLoaded();
         } catch (FileNotFoundException | CorruptSaveFileException ex) {
             ex.printStackTrace();

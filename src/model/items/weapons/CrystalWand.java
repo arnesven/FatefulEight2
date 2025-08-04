@@ -13,7 +13,7 @@ public class CrystalWand extends WandWeapon {
 
     public CrystalWand() {
         super("Crystal Wand", 150, Skill.MagicAny, new int[]{9, 11, 12, 14});
-        // TODO: Add some fun imbuement.
+        // FEATURE: Add some fun imbuement.
     }
 
     @Override

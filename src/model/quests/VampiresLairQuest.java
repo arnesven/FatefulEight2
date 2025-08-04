@@ -47,7 +47,7 @@ public class VampiresLairQuest extends MainQuest {
 
     @Override
     protected List<String> getSpecialRewards() {
-        return List.of("Recruit", "Caid"); // TODO: Caid can teach you how to become a SWM?
+        return List.of("Recruit", "Caid"); // FEATURE: Caid can teach you how to become a SWM?
     }
 
     @Override

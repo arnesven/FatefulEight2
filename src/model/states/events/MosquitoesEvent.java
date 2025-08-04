@@ -27,7 +27,7 @@ public class MosquitoesEvent extends DailyEventState {
         } else {
             println("Each party member suffers 1 damage and exhausts 1 SP.");
             for (GameCharacter gc : model.getParty().getPartyMembers()) {
-                gc.addToSP(-1); // TODO: Can get infected (Poison)
+                gc.addToSP(-1); // FEATURE: Can get infected (Poison)
                 if (gc.getHP() > 1) {
                     gc.addToHP(-1);
                 }

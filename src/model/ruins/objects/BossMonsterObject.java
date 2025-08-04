@@ -21,7 +21,7 @@ public class BossMonsterObject extends DungeonMonster {
             case 3:
             case 4:
                 return new WarlockEnemy('A');
-            case 5: // TODO: make more bosses.
+            case 5: // FEATURE: make more bosses.
             case 6:
                 return new DoomMageEnemy('A');
             case 7:

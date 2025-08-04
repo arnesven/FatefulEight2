@@ -161,7 +161,7 @@ public class BrrbitsReward extends Quest {
             @Override
             protected void doAction(Model model, QuestState state) {
                 state.leaderSay("No " + FROGMAN_NAME + ", we're staying here taming these horses.");
-                state.println("Your party starts trying to round up the horses."); // TODO: Could be a chance of Brrbit waiting for you?
+                state.println("Your party starts trying to round up the horses."); // FEATURE: Could be a chance of Brrbit waiting for you?
                 state.println(FROGMAN_NAME + " is clearly upset by your refusal to follow him. He stomps his feet " +
                         "and babbles for a few minutes but then quickly shuffles off.");
                 for (GameCharacter gc : model.getParty().getPartyMembers()) {

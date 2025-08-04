@@ -22,7 +22,6 @@ import java.util.List;
 
 public class WarehouseEvent extends DailyEventState {
     private int otherBoxCount = 0;
-    // TODO: Max 5 tries or somesuch
     public WarehouseEvent(Model m) {
         super(m);
     }

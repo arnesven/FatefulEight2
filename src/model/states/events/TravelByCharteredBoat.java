@@ -77,7 +77,7 @@ public class TravelByCharteredBoat extends AlternativeTravelEvent {
                 event = new StormAtSeaEvent(model);
             } else if (checkForSeaMonsterEvent(model)) {
                 event = new SeaMonsterEvent(model);
-            } // TODO: Add MermaidEvent
+            } // FEATURE: Add MermaidEvent
         }
         if (event != null) {
             event.doTheEvent(model);
